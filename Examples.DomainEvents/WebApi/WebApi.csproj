@@ -74,6 +74,10 @@
       <HintPath>..\packages\Ninject.Extensions.ContextPreservation.3.2.0.0\lib\net45-full\Ninject.Extensions.ContextPreservation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ninject.Extensions.Conventions, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Extensions.Conventions.3.2.0.0\lib\net45-full\Ninject.Extensions.Conventions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ninject.Extensions.NamedScope, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.Extensions.NamedScope.3.2.0.0\lib\net45-full\Ninject.Extensions.NamedScope.dll</HintPath>
       <Private>True</Private>
@@ -185,12 +189,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="NinjectConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="NLog.config" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -199,7 +204,24 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Domain.Catalog\Domain.Catalog.csproj">
+      <Project>{97AE121D-5B15-4DE3-B03F-B012B76C2D4B}</Project>
+      <Name>Domain.Catalog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain.Logging\Domain.Logging.csproj">
+      <Project>{FAC42343-B78D-44D2-982D-7FE5AA13B9A5}</Project>
+      <Name>Domain.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain.Order\Domain.Order.csproj">
+      <Project>{99D3254C-6007-432F-A66A-BCEC112BD2BE}</Project>
+      <Name>Domain.Order</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain.Statistics\Domain.Statistics.csproj">
+      <Project>{44BCE996-E703-493A-90F3-28FBFEF13352}</Project>
+      <Name>Domain.Statistics</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>

@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Domain.Catalog;
+using Domain.Logging;
+using Domain.Order;
+using Domain.Statistics;
 using MediatR;
 using Ninject;
 using Ninject.Components;
@@ -19,7 +23,8 @@ namespace WebApi
 
             kernel.Load(Assembly.GetExecutingAssembly());
             ConfigureMediator(kernel);
-            
+            LoadModules(kernel);
+
             return kernel;
         });
 
@@ -29,6 +34,14 @@ namespace WebApi
             kernel.Bind<SingleInstanceFactory>().ToMethod(ctx => t => ctx.Kernel.Get(t));
             kernel.Bind<MultiInstanceFactory>().ToMethod(ctx => t => ctx.Kernel.GetAll(t));
             kernel.Bind<IMediator>().To<Mediator>();
+        }
+
+        private static void LoadModules(KernelBase kernel)
+        {
+            kernel.Load<CatalogNinjectModule>();
+            kernel.Load<OrderNinjectModule>();
+            kernel.Load<LoggingNinjectModule>();
+            kernel.Load<StatisticsNinjectModule>();
         }
 
         private class ContravariantBindingResolver : NinjectComponent, IBindingResolver
