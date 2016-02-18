@@ -1,0 +1,85 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.DAL", "KnightFrank.Antares.DAL\KnightFrank.Antares.DAL.csproj", "{2525AF42-F89C-48D8-89A7-74449702C627}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.Domain", "KnightFrank.Antares.Domain\KnightFrank.Antares.Domain.csproj", "{5987D78C-856D-4315-8B8B-BAF00C286AFF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A3B5D41B-4D2C-4ADA-BC7E-9BE07B12630E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.API", "KnightFrank.Antares.API\KnightFrank.Antares.API.csproj", "{0F7A831A-FEB0-41F9-A1E0-AB8205327B48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.Domain.UnitTests", "KnightFrank.Antares.Domain.UnitTests\KnightFrank.Antares.Domain.UnitTests.csproj", "{6904112B-8FF0-4934-AA02-8C46037356A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.API.IntegrationTests", "KnightFrank.Antares.API.IntegrationTests\KnightFrank.Antares.API.IntegrationTests.csproj", "{0DD04333-5AE5-4422-A27A-4FF050F50DBF}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "wwwroot", "wwwroot\", "{8B5A8ADC-3F97-4D0D-A7D2-C32CCEDB429F}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_52005"
+		Debug.AspNetCompiler.PhysicalPath = "wwwroot\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52005\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_52005"
+		Release.AspNetCompiler.PhysicalPath = "wwwroot\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52005\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "52005"
+		SlnRelativePath = "wwwroot\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.UI.Tests", "KnightFrank.Antares.Ui.Tests\KnightFrank.Antares.UI.Tests.csproj", "{66D03143-B339-4767-8A9F-8306164BC88A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2525AF42-F89C-48D8-89A7-74449702C627}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2525AF42-F89C-48D8-89A7-74449702C627}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2525AF42-F89C-48D8-89A7-74449702C627}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2525AF42-F89C-48D8-89A7-74449702C627}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5987D78C-856D-4315-8B8B-BAF00C286AFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5987D78C-856D-4315-8B8B-BAF00C286AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5987D78C-856D-4315-8B8B-BAF00C286AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5987D78C-856D-4315-8B8B-BAF00C286AFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F7A831A-FEB0-41F9-A1E0-AB8205327B48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F7A831A-FEB0-41F9-A1E0-AB8205327B48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F7A831A-FEB0-41F9-A1E0-AB8205327B48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F7A831A-FEB0-41F9-A1E0-AB8205327B48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6904112B-8FF0-4934-AA02-8C46037356A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6904112B-8FF0-4934-AA02-8C46037356A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6904112B-8FF0-4934-AA02-8C46037356A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6904112B-8FF0-4934-AA02-8C46037356A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DD04333-5AE5-4422-A27A-4FF050F50DBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DD04333-5AE5-4422-A27A-4FF050F50DBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DD04333-5AE5-4422-A27A-4FF050F50DBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DD04333-5AE5-4422-A27A-4FF050F50DBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B5A8ADC-3F97-4D0D-A7D2-C32CCEDB429F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B5A8ADC-3F97-4D0D-A7D2-C32CCEDB429F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B5A8ADC-3F97-4D0D-A7D2-C32CCEDB429F}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B5A8ADC-3F97-4D0D-A7D2-C32CCEDB429F}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{66D03143-B339-4767-8A9F-8306164BC88A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66D03143-B339-4767-8A9F-8306164BC88A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66D03143-B339-4767-8A9F-8306164BC88A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66D03143-B339-4767-8A9F-8306164BC88A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6904112B-8FF0-4934-AA02-8C46037356A3} = {A3B5D41B-4D2C-4ADA-BC7E-9BE07B12630E}
+		{0DD04333-5AE5-4422-A27A-4FF050F50DBF} = {A3B5D41B-4D2C-4ADA-BC7E-9BE07B12630E}
+		{66D03143-B339-4767-8A9F-8306164BC88A} = {A3B5D41B-4D2C-4ADA-BC7E-9BE07B12630E}
+	EndGlobalSection
+EndGlobal
