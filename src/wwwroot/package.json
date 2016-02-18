@@ -1,0 +1,7 @@
+{
+  "name": "KnightFrank.Antares.wwwroot",
+  "version": "1.0.0",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
