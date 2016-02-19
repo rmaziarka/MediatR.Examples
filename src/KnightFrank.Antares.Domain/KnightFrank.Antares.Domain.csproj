@@ -43,9 +43,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KnightFrank.Antares.Dal\KnightFrank.Antares.DAL.csproj">
+    <ProjectReference Include="..\KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj">
       <Project>{2525af42-f89c-48d8-89a7-74449702c627}</Project>
-      <Name>KnightFrank.Antares.DAL</Name>
+      <Name>KnightFrank.Antares.Dal</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

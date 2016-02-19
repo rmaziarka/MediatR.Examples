@@ -5,7 +5,7 @@ using Objectivity.Test.Automation.Common.Types;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace KnightFrank.Antares.UI.Tests.Extensions
+namespace KnightFrank.Antares.UITests.Extensions
 {
     public static class DriverExtensions
     {

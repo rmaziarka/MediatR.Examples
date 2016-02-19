@@ -7,8 +7,8 @@
     <ProjectGuid>{2525AF42-F89C-48D8-89A7-74449702C627}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KnightFrank.Antares.DAL</RootNamespace>
-    <AssemblyName>KnightFrank.Antares.DAL</AssemblyName>
+    <RootNamespace>KnightFrank.Antares.Dal</RootNamespace>
+    <AssemblyName>KnightFrank.Antares.Dal</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

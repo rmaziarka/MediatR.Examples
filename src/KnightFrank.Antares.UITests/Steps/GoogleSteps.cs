@@ -1,10 +1,10 @@
 ﻿using System;
-using KnightFrank.Antares.UI.Tests.Pages;
+using KnightFrank.Antares.UITests.Pages;
 using Objectivity.Test.Automation.Common;
 using TechTalk.SpecFlow;
 using Xunit;
 
-namespace KnightFrank.Antares.UI.Tests.Steps
+namespace KnightFrank.Antares.UITests.Steps
 {
     [Binding]
     public class GoogleSteps

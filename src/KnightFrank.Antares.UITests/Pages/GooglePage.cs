@@ -1,11 +1,11 @@
 ﻿using System;
-using KnightFrank.Antares.UI.Tests.Extensions;
+using KnightFrank.Antares.UITests.Extensions;
 using Objectivity.Test.Automation.Common;
 using Objectivity.Test.Automation.Common.Extensions;
 using Objectivity.Test.Automation.Common.Types;
 using Objectivity.Test.Automation.Tests.PageObjects;
 
-namespace KnightFrank.Antares.UI.Tests.Pages
+namespace KnightFrank.Antares.UITests.Pages
 {
     public class GooglePage : ProjectPageBase
     {

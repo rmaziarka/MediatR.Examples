@@ -6,8 +6,8 @@
     <ProjectGuid>{0DD04333-5AE5-4422-A27A-4FF050F50DBF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KnightFrank.Antares.API.IntegrationTests</RootNamespace>
-    <AssemblyName>KnightFrank.Antares.API.IntegrationTests</AssemblyName>
+    <RootNamespace>KnightFrank.Antares.Api.IntegrationTests</RootNamespace>
+    <AssemblyName>KnightFrank.Antares.Api.IntegrationTests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -53,13 +53,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KnightFrank.Antares.Api\KnightFrank.Antares.API.csproj">
+    <ProjectReference Include="..\KnightFrank.Antares.Api\KnightFrank.Antares.Api.csproj">
       <Project>{0f7a831a-feb0-41f9-a1e0-ab8205327b48}</Project>
-      <Name>KnightFrank.Antares.API</Name>
+      <Name>KnightFrank.Antares.Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KnightFrank.Antares.Dal\KnightFrank.Antares.DAL.csproj">
+    <ProjectReference Include="..\KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj">
       <Project>{2525af42-f89c-48d8-89a7-74449702c627}</Project>
-      <Name>KnightFrank.Antares.DAL</Name>
+      <Name>KnightFrank.Antares.Dal</Name>
     </ProjectReference>
     <ProjectReference Include="..\KnightFrank.Antares.Domain\KnightFrank.Antares.Domain.csproj">
       <Project>{5987d78c-856d-4315-8b8b-baf00c286aff}</Project>

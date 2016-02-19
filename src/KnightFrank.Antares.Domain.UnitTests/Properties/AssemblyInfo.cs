@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
@@ -8,8 +7,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("KnightFrank.Antares.Domain.UnitTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("KnightFrank.Antares.Domain.UnitTests")]
+[assembly: AssemblyCompany("Knight Frank LLP")]
+[assembly: AssemblyProduct("Knight Frank Antares")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
