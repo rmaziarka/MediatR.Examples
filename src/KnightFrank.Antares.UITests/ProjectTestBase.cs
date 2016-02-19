@@ -22,16 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace Objectivity.Test.Automation.Tests.Features
+using System;
+using Objectivity.Test.Automation.Common;
+using Objectivity.Test.Automation.Common.Logger;
+using TechTalk.SpecFlow;
+using Xunit;
+
+namespace KnightFrank.Antares.UITests
 {
-    using System;
-
-    using Xunit;
-    using Common;
-    using Common.Logger;
-
-    using TechTalk.SpecFlow;
-
     /// <summary>
     /// The base class for all tests
     /// </summary>
@@ -46,7 +44,7 @@ namespace Objectivity.Test.Automation.Tests.Features
         /// </summary>
         public ProjectTestBase(ScenarioContext scenarioContext)
         {
-            if (scenarioContext == null) throw new ArgumentNullException("scenarioContext");
+            if (scenarioContext == null) throw new ArgumentNullException(nameof(scenarioContext));
             this.scenarioContext = scenarioContext;
         }
 
@@ -57,25 +55,19 @@ namespace Objectivity.Test.Automation.Tests.Features
         {
             get
             {
-                return this.DriverContext.LogTest;
+                return DriverContext.LogTest;
             }
 
             set
             {
-                this.DriverContext.LogTest = value;
+                DriverContext.LogTest = value;
             }
         }
 
         /// <summary>
         /// The browser manager
         /// </summary>
-        protected DriverContext DriverContext
-        {
-            get
-            {
-                return this.driverContext;
-            }
-        }
+        protected DriverContext DriverContext => driverContext;
 
         /// <summary>
         /// Before the class.
@@ -101,11 +93,11 @@ namespace Objectivity.Test.Automation.Tests.Features
         [Before]
         public void BeforeTest()
         {
-            this.DriverContext.CurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            this.DriverContext.TestTitle = this.scenarioContext.ScenarioInfo.Title;
-            this.LogTest.LogTestStarting(this.driverContext);
-            this.DriverContext.Start();
-            this.scenarioContext["DriverContext"] = this.DriverContext;
+            DriverContext.CurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            DriverContext.TestTitle = scenarioContext.ScenarioInfo.Title;
+            LogTest.LogTestStarting(driverContext);
+            DriverContext.Start();
+            scenarioContext["DriverContext"] = DriverContext;
         }
 
         /// <summary>
@@ -114,11 +106,11 @@ namespace Objectivity.Test.Automation.Tests.Features
         [After]
         public void AfterTest()
         {
-            this.DriverContext.IsTestFailed = this.scenarioContext.TestError != null;
-            this.SaveTestDetailsIfTestFailed(this.driverContext);
-            this.DriverContext.Stop();
-            this.LogTest.LogTestEnding(this.driverContext);
-            if (this.IsVerifyFailedAndClearMessages(this.driverContext))
+            DriverContext.IsTestFailed = scenarioContext.TestError != null;
+            SaveTestDetailsIfTestFailed(driverContext);
+            DriverContext.Stop();
+            LogTest.LogTestEnding(driverContext);
+            if (IsVerifyFailedAndClearMessages(driverContext))
             {
                 Assert.True(false);
             }
