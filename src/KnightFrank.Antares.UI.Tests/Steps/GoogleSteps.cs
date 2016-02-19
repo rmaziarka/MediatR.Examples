@@ -10,14 +10,13 @@ namespace KnightFrank.Antares.UI.Tests.Steps
     public class GoogleSteps
     {
         private readonly DriverContext driverContext;
-        private readonly ScenarioContext scenarioContext;
 
         public GoogleSteps(ScenarioContext scenarioContext)
         {
-            if (scenarioContext == null) throw new ArgumentNullException("scenarioContext");
-            this.scenarioContext = scenarioContext;
+            if (scenarioContext == null) throw new ArgumentNullException(nameof(scenarioContext));
+            var sc = scenarioContext;
 
-            driverContext = this.scenarioContext["DriverContext"] as DriverContext;
+            driverContext = sc["DriverContext"] as DriverContext;
         }
 
         [Given(@"User navigates to google page")]
