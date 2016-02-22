@@ -17,15 +17,15 @@ namespace KnightFrank.Antares.UITests.Tests
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class GoogleFeature : Xunit.IClassFixture<GoogleFeature.FixtureData>, System.IDisposable
+    public partial class ContactsFeature : Xunit.IClassFixture<ContactsFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "GoogleTests.feature"
+#line 1 "ContactTests.feature"
 #line hidden
         
-        public GoogleFeature()
+        public ContactsFeature()
         {
             this.TestInitialize();
         }
@@ -33,7 +33,7 @@ namespace KnightFrank.Antares.UITests.Tests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Google", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Contacts", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -62,7 +62,7 @@ namespace KnightFrank.Antares.UITests.Tests
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void SetFixture(GoogleFeature.FixtureData fixtureData)
+        public virtual void SetFixture(ContactsFeature.FixtureData fixtureData)
         {
         }
         
@@ -72,19 +72,30 @@ namespace KnightFrank.Antares.UITests.Tests
         }
         
         [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Google")]
-        [Xunit.TraitAttribute("Description", "Search using google")]
-        public virtual void SearchUsingGoogle()
+        [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
+        [Xunit.TraitAttribute("Description", "Create contact using valid details")]
+        public virtual void CreateContactUsingValidDetails()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Search using google", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create contact using valid details", ((string[])(null)));
 #line 3
 this.ScenarioSetup(scenarioInfo);
 #line 4
- testRunner.Given("User navigates to google page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("User navigates to create contact page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Title",
+                        "First Name",
+                        "Surname"});
+            table1.AddRow(new string[] {
+                        "Miss",
+                        "Sarah",
+                        "Conor"});
 #line 5
- testRunner.When("User looks for \'Objectivity\' in google", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 6
- testRunner.Then("results should be visible", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("User fills in contact details on create contact page", ((string)(null)), table1, "When ");
+#line 8
+  testRunner.And("User clicks save button on create contact page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 9
+ testRunner.Then("New contact should be created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -96,12 +107,12 @@ this.ScenarioSetup(scenarioInfo);
             
             public FixtureData()
             {
-                GoogleFeature.FeatureSetup();
+                ContactsFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                GoogleFeature.FeatureTearDown();
+                ContactsFeature.FeatureTearDown();
             }
         }
     }

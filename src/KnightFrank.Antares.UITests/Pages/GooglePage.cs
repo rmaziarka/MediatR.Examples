@@ -8,8 +8,6 @@ namespace KnightFrank.Antares.UITests.Pages
 {
     public class GooglePage : ProjectPageBase
     {
-        private readonly Uri GooglePageAddress = new Uri(BaseConfiguration.Protocol + "://" + BaseConfiguration.Host);
-
         public GooglePage(DriverContext driverContext) : base(driverContext)
         {
         }
@@ -20,7 +18,7 @@ namespace KnightFrank.Antares.UITests.Pages
 
         public GooglePage OpenGooglePage()
         {
-            Driver.NavigateTo(GooglePageAddress);
+            new CommonPage(DriverContext).NavigateToPage("Home");
             return this;
         }
 
