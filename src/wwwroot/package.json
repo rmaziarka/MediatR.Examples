@@ -1,8 +1,6 @@
 {
   "name": "KnightFrank.Antares.wwwroot",
   "version": "1.0.0",
-  "license": "",
-  "repository": { },
   "description": "KnightFrank.Antares web application",
   "devDependencies": {
     "gulp": "^3.9.1"

@@ -234,3 +234,7 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+bin/
+BuildDeploy/BuildDeploy/*.log.txt
+BuildDeploy/BuildDeploy/logs/*

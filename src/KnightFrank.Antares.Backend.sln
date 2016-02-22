@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.API", "KnightFrank.Antares.Api\KnightFrank.Antares.API.csproj", "{0F7A831A-FEB0-41F9-A1E0-AB8205327B48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.DAL", "KnightFrank.Antares.Dal\KnightFrank.Antares.DAL.csproj", "{2525AF42-F89C-48D8-89A7-74449702C627}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.Domain", "KnightFrank.Antares.Domain\KnightFrank.Antares.Domain.csproj", "{5987D78C-856D-4315-8B8B-BAF00C286AFF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F11B8914-8C3F-4E4A-9A8B-A60539397EC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.API.IntegrationTests", "KnightFrank.Antares.Api.IntegrationTests\KnightFrank.Antares.API.IntegrationTests.csproj", "{0DD04333-5AE5-4422-A27A-4FF050F50DBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.Domain.UnitTests", "KnightFrank.Antares.Domain.UnitTests\KnightFrank.Antares.Domain.UnitTests.csproj", "{6904112B-8FF0-4934-AA02-8C46037356A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.UITests", "KnightFrank.Antares.UITests\KnightFrank.Antares.UITests.csproj", "{66D03143-B339-4767-8A9F-8306164BC88A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F7A831A-FEB0-41F9-A1E0-AB8205327B48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F7A831A-FEB0-41F9-A1E0-AB8205327B48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F7A831A-FEB0-41F9-A1E0-AB8205327B48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F7A831A-FEB0-41F9-A1E0-AB8205327B48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2525AF42-F89C-48D8-89A7-74449702C627}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2525AF42-F89C-48D8-89A7-74449702C627}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2525AF42-F89C-48D8-89A7-74449702C627}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2525AF42-F89C-48D8-89A7-74449702C627}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5987D78C-856D-4315-8B8B-BAF00C286AFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5987D78C-856D-4315-8B8B-BAF00C286AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5987D78C-856D-4315-8B8B-BAF00C286AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5987D78C-856D-4315-8B8B-BAF00C286AFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DD04333-5AE5-4422-A27A-4FF050F50DBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DD04333-5AE5-4422-A27A-4FF050F50DBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DD04333-5AE5-4422-A27A-4FF050F50DBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DD04333-5AE5-4422-A27A-4FF050F50DBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6904112B-8FF0-4934-AA02-8C46037356A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6904112B-8FF0-4934-AA02-8C46037356A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6904112B-8FF0-4934-AA02-8C46037356A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6904112B-8FF0-4934-AA02-8C46037356A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66D03143-B339-4767-8A9F-8306164BC88A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66D03143-B339-4767-8A9F-8306164BC88A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66D03143-B339-4767-8A9F-8306164BC88A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66D03143-B339-4767-8A9F-8306164BC88A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0DD04333-5AE5-4422-A27A-4FF050F50DBF} = {F11B8914-8C3F-4E4A-9A8B-A60539397EC3}
+		{6904112B-8FF0-4934-AA02-8C46037356A3} = {F11B8914-8C3F-4E4A-9A8B-A60539397EC3}
+		{66D03143-B339-4767-8A9F-8306164BC88A} = {F11B8914-8C3F-4E4A-9A8B-A60539397EC3}
+	EndGlobalSection
+EndGlobal

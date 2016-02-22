@@ -1,0 +1,4 @@
+[submodule "ObjectivityBSS"]
+	path = ObjectivityBSS
+	url = https://github.com/ObjectivityBSS/PSCI.git
+	branch = master
