@@ -5,5 +5,5 @@ function Build-Backend {
         $Version
     )
 		
-	Build-WebPackage -ProjectPath 'KnightFrank.Antares.Backend.sln' -RestoreNuGet $true -Version $Version	
+	Build-WebPackage -ProjectPath 'KnightFrank.Antares.Backend.sln' -PackageName 'KnightFrank.Antares.Api' -RestoreNuGet -Version $Version	
 }

@@ -5,5 +5,5 @@ function Build-Local {
         $Version
     )
 		
-	Invoke-MsBuild -ProjectPath 'KnightFrank.Antares.Backend.sln' -RestoreNuGet $true -Version $Version
+	Invoke-MsBuild -ProjectPath 'KnightFrank.Antares.Backend.sln' -RestoreNuGet -Version $Version
 }
