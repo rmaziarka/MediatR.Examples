@@ -36,14 +36,14 @@
     <Compile Include="build.ps1" />
     <Compile Include="build\Build-All.ps1" />
     <Compile Include="build\Build-Local.ps1" />
-    <Compile Include="build\Build-WebAPI.ps1" />
+    <Compile Include="build\Build-Backend.ps1" />
     <Compile Include="build\Build-Database.ps1" />
     <Compile Include="build\Run-Tests.ps1" />
     <Compile Include="build\Build-Frontend.ps1" />
     <Compile Include="deploy.ps1" />
-    <Compile Include="deploy\steps\Configure-IISLocal.ps1" />
-    <Compile Include="deploy\steps\Configure-IISProvision.ps1" />
-    <Compile Include="deploy\steps\Configure-IIS.ps1" />
+    <Compile Include="deploy\steps\ConfigureIISLocal.ps1" />
+    <Compile Include="deploy\steps\ConfigureIISProvision.ps1" />
+    <Compile Include="deploy\steps\ConfigureIIS.ps1" />
     <Compile Include="deploy\steps\Deploy-Database.ps1" />
     <Compile Include="deploy\steps\Deploy-WebClient.ps1" />
     <Compile Include="deploy\steps\Deploy-WebAPI.ps1" />
@@ -52,7 +52,7 @@
     <Compile Include="localDeploy\deploy.bat" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="localDeploy\compileAndRunTests.bat" />
+    <Content Include="localDeploy\buildAndRunTests.bat" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="Build" />
