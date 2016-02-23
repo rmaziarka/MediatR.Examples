@@ -1,11 +1,15 @@
-﻿using System;
-using KnightFrank.Antares.UITests.Pages;
-using Objectivity.Test.Automation.Common;
-using TechTalk.SpecFlow;
-using Xunit;
-
-namespace KnightFrank.Antares.UITests.Steps
+﻿namespace KnightFrank.Antares.UITests.Steps
 {
+    using System;
+
+    using KnightFrank.Antares.UITests.Pages;
+
+    using Objectivity.Test.Automation.Common;
+
+    using TechTalk.SpecFlow;
+
+    using Xunit;
+
     [Binding]
     public class GoogleSteps
     {
@@ -13,16 +17,20 @@ namespace KnightFrank.Antares.UITests.Steps
 
         public GoogleSteps(ScenarioContext scenarioContext)
         {
-            if (scenarioContext == null) throw new ArgumentNullException(nameof(scenarioContext));
-            var sc = scenarioContext;
+            if (scenarioContext == null)
+            {
+                throw new ArgumentNullException(nameof(scenarioContext));
+            }
 
-            driverContext = sc["DriverContext"] as DriverContext;
+            ScenarioContext sc = scenarioContext;
+
+            this.driverContext = sc["DriverContext"] as DriverContext;
         }
 
         [Given(@"User navigates to google page")]
         public void OpenGooglePage()
         {
-            var googlePage = new GooglePage(driverContext).OpenGooglePage();
+            GooglePage googlePage = new GooglePage(this.driverContext).OpenGooglePage();
             ScenarioContext.Current["GooglePage"] = googlePage;
         }
 

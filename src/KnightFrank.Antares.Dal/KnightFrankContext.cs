@@ -1,7 +1,7 @@
-﻿using System.Data.Entity;
-
-namespace KnightFrank.Antares.Dal
+﻿namespace KnightFrank.Antares.Dal
 {
+    using System.Data.Entity;
+
     public class KnightFrankContext : DbContext
     {
         public KnightFrankContext()

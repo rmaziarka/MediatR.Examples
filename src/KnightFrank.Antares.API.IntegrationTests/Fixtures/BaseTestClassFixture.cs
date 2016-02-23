@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using Microsoft.Owin.Testing;
 
 namespace KnightFrank.Antares.Api.IntegrationTests.Fixtures
@@ -13,12 +10,12 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Fixtures
 
         public BaseTestClassFixture()
         {
-            Server = TestServer.Create<Startup>();
+            this.Server = TestServer.Create<Startup>();
         }
 
         public void Dispose()
         {
-            Server.Dispose();
+            this.Server.Dispose();
         }
     }
 }

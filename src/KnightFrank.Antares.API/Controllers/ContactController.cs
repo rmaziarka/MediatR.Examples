@@ -1,27 +1,28 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
-using KnightFrank.Antares.API.Models;
-
-namespace KnightFrank.Antares.API.Controllers
+﻿namespace KnightFrank.Antares.API.Controllers
 {
+    using System.Collections.Generic;
+    using System.Web.Http;
+
+    using KnightFrank.Antares.API.Models;
+
     /// <summary>
-    /// Controller class for contacts
+    ///     Controller class for contacts
     /// </summary>
     [RoutePrefix("api/contacts")]
     public class ContactController : ApiController
     {
         /// <summary>
-        /// Get contact list
+        ///     Get contact list
         /// </summary>
         /// <returns>Contact entity collection</returns>
         [HttpGet]
         public IEnumerable<ContactDto> GetContacts()
         {
-            return new [] { new ContactDto() { FirstName = "value", Surname = "value" } };
+            return new[] { new ContactDto { FirstName = "value", Surname = "value" } };
         }
 
         /// <summary>
-        /// Get contact
+        ///     Get contact
         /// </summary>
         /// <param name="id">Contact id</param>
         /// <returns>Contact entity</returns>
@@ -29,31 +30,31 @@ namespace KnightFrank.Antares.API.Controllers
         [Route("{id}")]
         public ContactDto GetContact(int id)
         {
-            return new ContactDto() {FirstName = "value", Surname = "value"};
+            return new ContactDto { FirstName = "value", Surname = "value" };
         }
 
         /// <summary>
-        /// Create contact
+        ///     Create contact
         /// </summary>
         /// <param name="contact">Contact entity</param>
         [HttpPost]
-        public void CreateContact([FromBody]ContactDto contact)
+        public void CreateContact([FromBody] ContactDto contact)
         {
         }
 
         /// <summary>
-        /// Update contact
+        ///     Update contact
         /// </summary>
         /// <param name="id">Contact id</param>
         /// <param name="contact">Contact entity</param>
         [HttpPut]
         [Route("{id}")]
-        public void UpdateContact(int id, [FromBody]ContactDto contact)
+        public void UpdateContact(int id, [FromBody] ContactDto contact)
         {
         }
 
         /// <summary>
-        /// Delete contact
+        ///     Delete contact
         /// </summary>
         /// <param name="id">Contact id</param>
         [HttpDelete]

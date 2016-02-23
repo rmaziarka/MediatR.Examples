@@ -1,30 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
+
 using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
 using Xunit;
 
 namespace KnightFrank.Antares.Api.IntegrationTests.Controllers
 {
+    using System.Net.Http;
+
     public class ContactControllerTestClass : IClassFixture<BaseTestClassFixture>
     {
-        private readonly BaseTestClassFixture _fixture;
+        private readonly BaseTestClassFixture fixture;
 
         private const string ApiUrl = "/api/contact";
 
         public ContactControllerTestClass(BaseTestClassFixture fixture)
         {
-            _fixture = fixture;
+            this.fixture = fixture;
         }
 
         [Fact]
         public async void GetContact_ShouldReturnValidResult()
         {
-            var requestUrl = $"{ApiUrl}/1";
-            var response = await _fixture.Server.HttpClient.GetAsync(requestUrl);
+            string requestUrl = $"{ApiUrl}/1";
+            HttpResponseMessage response = await this.fixture.Server.HttpClient.GetAsync(requestUrl);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }

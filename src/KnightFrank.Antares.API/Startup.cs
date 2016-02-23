@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Owin;
 
 namespace KnightFrank.Antares.Api
@@ -10,7 +6,7 @@ namespace KnightFrank.Antares.Api
     /// <summary>
     /// Owin startup class.
     /// </summary>
-    public partial class Startup
+    public class Startup
     {
         /// <summary>
         /// Owin configuration.

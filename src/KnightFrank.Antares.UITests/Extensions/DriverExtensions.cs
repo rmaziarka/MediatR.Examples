@@ -1,12 +1,14 @@
-﻿using System;
-using Objectivity.Test.Automation.Common;
-using Objectivity.Test.Automation.Common.Extensions;
-using Objectivity.Test.Automation.Common.Types;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-
-namespace KnightFrank.Antares.UITests.Extensions
+﻿namespace KnightFrank.Antares.UITests.Extensions
 {
+    using System;
+
+    using Objectivity.Test.Automation.Common;
+    using Objectivity.Test.Automation.Common.Extensions;
+    using Objectivity.Test.Automation.Common.Types;
+
+    using OpenQA.Selenium;
+    using OpenQA.Selenium.Support.UI;
+
     public static class DriverExtensions
     {
         public static void WaitForAngularToFinish(this IWebDriver webDriver)
@@ -21,23 +23,18 @@ namespace KnightFrank.Antares.UITests.Extensions
             {
                 new WebDriverWait(webDriver, TimeSpan.FromSeconds(timeout)).Until(
                     driver =>
-                    {
-                        var javaScriptExecutor = driver as IJavaScriptExecutor;
-                        return javaScriptExecutor != null
-                               &&
-                               javaScriptExecutor.ExecuteAsyncScript(
-                                   "var callback = arguments[arguments.length - 1];" +
-                                   "var el = document.querySelector('html');" +
-                                   "if (!window.angular) " +
-                                   "{callback('false')}" +
-                                   "if (angular.getTestability) " +
-                                   "{angular.getTestability(el).whenStable(function(){callback('true')});} " +
-                                   "else " +
-                                   "{if (!angular.element(el).injector())" +
-                                   "{callback('false')}" +
-                                   "var browser = angular.element(el).injector().get('$browser');" +
-                                   "browser.notifyWhenNoOutstandingRequests(function(){callback('true')});}").Equals("true");
-                    });
+                        {
+                            var javaScriptExecutor = driver as IJavaScriptExecutor;
+                            return javaScriptExecutor != null
+                                   && javaScriptExecutor.ExecuteAsyncScript(
+                                       "var callback = arguments[arguments.length - 1];"
+                                       + "var el = document.querySelector('html');" + "if (!window.angular) "
+                                       + "{callback('false')}" + "if (angular.getTestability) "
+                                       + "{angular.getTestability(el).whenStable(function(){callback('true')});} " + "else "
+                                       + "{if (!angular.element(el).injector())" + "{callback('false')}"
+                                       + "var browser = angular.element(el).injector().get('$browser');"
+                                       + "browser.notifyWhenNoOutstandingRequests(function(){callback('true')});}").Equals("true");
+                        });
             }
             catch (InvalidOperationException)
             {
