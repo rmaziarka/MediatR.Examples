@@ -1,0 +1,87 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "KnightFrank-Antares-ServicePlan-SKU": {
+      "type": "string",
+      "allowedValues": [
+        "Free",
+        "Shared",
+        "Basic",
+        "Standard"
+      ],
+      "defaultValue": "Free"
+    },
+    "KnightFrank-Antares-ServicePlan-Size": {
+      "type": "string",
+      "allowedValues": [
+        "0",
+        "1",
+        "2"
+      ],
+      "defaultValue": "0"
+    }
+  },
+  "variables": {
+    "ResourceGroupNameTokens": "[split(resourceGroup().name, '-')]",
+    "ResourceNameSuffix": "[variables('ResourceGroupNameTokens')[sub(length(variables('ResourceGroupNameTokens')), 1)]]",
+    "ResourceNamePrefix": "[substring(resourceGroup().name, 3, sub(length(resourceGroup().name), add(3, length(variables('ResourceNameSuffix')))))]",
+    "AppServicePlanName": "[concat(variables('ResourceNamePrefix'), 'Sp-', variables('ResourceNameSuffix'))]",
+    "WebApiName": "[concat(variables('ResourceNamePrefix'), 'Wa-Api-', variables('ResourceNameSuffix'))]",
+    "WebAppName": "[concat(variables('ResourceNamePrefix'), 'Wa-App-', variables('ResourceNameSuffix'))]"
+  },
+  "resources": [
+    {
+      "name": "[variables('AppServicePlanName')]",
+      "type": "Microsoft.Web/serverfarms",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2014-06-01",
+      "dependsOn": [ ],
+      "tags": {
+        "displayName": "KnightFrank-Antares-ServicePlan"
+      },
+      "properties": {
+        "name": "[variables('AppServicePlanName')]",
+        "sku": "[parameters('KnightFrank-Antares-ServicePlan-SKU')]",
+        "workerSize": "[parameters('KnightFrank-Antares-ServicePlan-Size')]",
+        "numberOfWorkers": 1
+      }
+    },
+    {
+      "name": "[variables('WebApiName')]",
+      "type": "Microsoft.Web/sites",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-08-01",
+      "dependsOn": [
+        "[concat('Microsoft.Web/serverfarms/', variables('AppServicePlanName'))]"
+      ],
+      "tags": {
+        "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', variables('AppServicePlanName'))]": "Resource",
+        "displayName": "KnightFrank-Antares-WebApi"
+      },
+      "properties": {
+        "name": "[variables('WebApiName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', variables('AppServicePlanName'))]"
+      }
+    },
+    {
+      "name": "[variables('WebAppName')]",
+      "type": "Microsoft.Web/sites",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-08-01",
+      "dependsOn": [
+        "[concat('Microsoft.Web/serverfarms/', variables('AppServicePlanName'))]"
+      ],
+      "tags": {
+        "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', variables('AppServicePlanName'))]": "Resource",
+        "displayName": "KnightFrank-Antares-WebApp"
+      },
+      "properties": {
+        "name": "[variables('WebAppName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', variables('AppServicePlanName'))]"
+      }
+    }
+  ],
+  "outputs": {
+  }
+}
