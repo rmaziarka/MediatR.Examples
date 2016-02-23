@@ -4,8 +4,12 @@
     <id>KnightFrank.Client</id>
     <title>KnightFrank Client</title>
     <version>1.0.0</version>
-    <owners>Your name</owners>
+    <authors>KnightFrank</authors>
+    <owners>KnightFrank</owners>
+    <licenseUrl>http://yourcompany.com</licenseUrl>
+    <projectUrl>http://yourcompany.com</projectUrl>	
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>KnightFrank Client</description>
+	<releaseNotes>release notes</releaseNotes>
   </metadata>
 </package>
