@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Configuration;
+
 using Objectivity.Test.Automation.Common;
 using Objectivity.Test.Automation.Common.Extensions;
+
 using Xunit;
 
 namespace KnightFrank.Antares.UITests.Pages
@@ -27,10 +29,10 @@ namespace KnightFrank.Antares.UITests.Pages
             switch (page.ToLower())
             {
                 case "home":
-                    Driver.NavigateTo(GetUrl());
+                    this.Driver.NavigateTo(GetUrl());
                     break;
                 case "new contact":
-                    Driver.NavigateTo(GetUrl("NewContactPage"));
+                    this.Driver.NavigateTo(GetUrl("NewContactPage"));
                     break;
                 default:
                     Assert.True(false, "Page does not exist");

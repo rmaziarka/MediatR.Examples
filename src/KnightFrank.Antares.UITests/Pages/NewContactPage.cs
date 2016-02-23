@@ -10,38 +10,38 @@ namespace KnightFrank.Antares.UITests.Pages
         {
         }
 
-        private readonly ElementLocator contactTitle = new ElementLocator(Locator.Id, "");
-        private readonly ElementLocator contactFirstName = new ElementLocator(Locator.Id, "");
-        private readonly ElementLocator contactSurname = new ElementLocator(Locator.Id, "");
-        private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "");
+        private readonly ElementLocator contactTitle = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator contactFirstName = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator contactSurname = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, string.Empty);
 
         public NewContactPage OpenNewContactPage()
         {
-            new CommonPage(DriverContext).NavigateToPage("New Contact");
+            new CommonPage(this.DriverContext).NavigateToPage("New Contact");
             return this;
         }
 
         public NewContactPage SetTitle(string title)
         {
-            Driver.GetElement(contactTitle).SendKeys(title);
+            this.Driver.GetElement(this.contactTitle).SendKeys(title);
             return this;
         }
 
         public NewContactPage SetFirstName(string firstName)
         {
-            Driver.GetElement(contactFirstName).SendKeys(firstName);
+            this.Driver.GetElement(this.contactFirstName).SendKeys(firstName);
             return this;
         }
 
         public NewContactPage SetSurname(string surname)
         {
-            Driver.GetElement(contactSurname).SendKeys(surname);
+            this.Driver.GetElement(this.contactSurname).SendKeys(surname);
             return this;
         }
 
         public NewContactPage SaveNewContact()
         {
-            Driver.GetElement(saveButton).Click();
+            this.Driver.GetElement(this.saveButton).Click();
             return this;
         }
     }

@@ -13,15 +13,15 @@ namespace KnightFrank.Antares.UITests.Steps
         public NewContactSteps(ScenarioContext scenarioContext)
         {
             if (scenarioContext == null) throw new ArgumentNullException(nameof(scenarioContext));
-            var sc = scenarioContext;
+            ScenarioContext sc = scenarioContext;
 
-            driverContext = sc["DriverContext"] as DriverContext;
+            this.driverContext = sc["DriverContext"] as DriverContext;
         }
 
         [Given(@"User navigates to create contact page")]
         public void OpenNewContactPage()
         {
-            var newContactPage = new NewContactPage(driverContext).OpenNewContactPage();
+            NewContactPage newContactPage = new NewContactPage(this.driverContext).OpenNewContactPage();
             ScenarioContext.Current["NewContactPage"] = newContactPage;
         }
 
