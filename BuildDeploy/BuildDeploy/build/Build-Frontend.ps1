@@ -6,13 +6,14 @@ function Build-Frontend {
     )
 
     $configPaths = Get-ConfigurationPaths
-    
+    $path = Join-Path -Path $configPaths.ProjectRootPath -ChildPath 'wwwroot'
+	$outputPath = Join-Path -Path $configPaths.ProjectRootPath -ChildPath '../bin/KnightFrank.Antares.WebClient/KnightFrank.Antares.WebClient.zip'	
 	$stackName = "build"
+	
 	Write-Host "npm package restore"
 	
     Push-Location -Path (Join-Path -Path $configPaths.ProjectRootPath -ChildPath 'wwwroot') -StackName $stackName;
-	
-	
+		
 	& "npm" install --supress-warnings
 		if ($LastExitCode -ne 0) {
 			Write-Error "Npm package restore failed";
@@ -28,7 +29,7 @@ function Build-Frontend {
 	}
     
 	# TODO perhaps use Build-DirPackage
-    Compress-With7Zip -PathsToCompress @("./index.html","./web.config") -OutputFile "../../bin/KnightFrank.Antares.WebClient/KnightFrank.Antares.WebClient.zip" -IncludeRecurse $true
+	New-Zip -Path $path -Include @("index.html","web.config") -OutputFile $outputPath
 
 	Pop-Location -StackName $stackName
 }
