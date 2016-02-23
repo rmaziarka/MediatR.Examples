@@ -3,6 +3,15 @@
   "version": "1.0.0",
   "description": "KnightFrank.Antares web application",
   "devDependencies": {
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "gulp-clean-old": "^0.2.5",
+    "gulp-load-plugins": "^1.2.0",
+    "gulp-ng-annotate": "^1.1.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-tslint": "^4.3.2",
+    "gulp-typescript": "^2.11.0",
+    "gulp-util": "^3.0.7",
+    "tslint": "^3.4.0",
+    "run-sequence": "^1.1.5"
   }
 }
