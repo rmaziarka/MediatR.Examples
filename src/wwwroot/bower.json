@@ -1,0 +1,11 @@
+{
+  "name": "KnightFrank.Antares",
+  "description": "KnightFrank.Antares web application",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ]
+}
