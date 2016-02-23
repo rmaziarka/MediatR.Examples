@@ -32,7 +32,7 @@
             output: clientApp,
             outputAllJs: clientApp + '**/*.js',
             outputAllJsMap: clientApp + '**/*.js.map',
-            libTypingsAllTs: root + 'libs/typings/**/*.ts'
+            libTypingsAllTs: root + 'typings/main/**/*.ts'
         },
         vendors: []
     }

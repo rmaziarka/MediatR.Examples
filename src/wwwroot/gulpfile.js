@@ -18,7 +18,7 @@
 /* is found or for angular standard injections, ex controllers
 *  @return {Stream}
 */
-gulp.task('ts-annotate', ['ts-compile'], function () {
+gulp.task('ts-annotate', function () {
     return gulp.src(config.ts.outputAllJs)
 		.pipe($.ngAnnotate())
 		.pipe(gulp.dest(config.ts.output));
