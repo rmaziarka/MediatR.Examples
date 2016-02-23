@@ -1,16 +1,17 @@
-﻿using System;
-using System.Configuration;
-
-using Objectivity.Test.Automation.Common;
-using Objectivity.Test.Automation.Common.Extensions;
-
-using Xunit;
-
-namespace KnightFrank.Antares.UITests.Pages
+﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using System;
+    using System.Configuration;
+
+    using Objectivity.Test.Automation.Common;
+    using Objectivity.Test.Automation.Common.Extensions;
+
+    using Xunit;
+
     public class CommonPage : ProjectPageBase
     {
-        public CommonPage(DriverContext driverContext) : base(driverContext)
+        public CommonPage(DriverContext driverContext)
+            : base(driverContext)
         {
         }
 

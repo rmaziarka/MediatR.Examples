@@ -1,17 +1,17 @@
-﻿using System;
-
-using Microsoft.Owin.Testing;
-
-namespace KnightFrank.Antares.Api.IntegrationTests.Fixtures
+﻿namespace KnightFrank.Antares.Api.IntegrationTests.Fixtures
 {
+    using System;
+
+    using Microsoft.Owin.Testing;
+
     public class BaseTestClassFixture : IDisposable
     {
-        public TestServer Server { get; }
-
         public BaseTestClassFixture()
         {
             this.Server = TestServer.Create<Startup>();
         }
+
+        public TestServer Server { get; }
 
         public void Dispose()
         {

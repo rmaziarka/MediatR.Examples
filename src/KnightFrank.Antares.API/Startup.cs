@@ -1,15 +1,16 @@
-﻿using System.Web.Http;
-using Owin;
-
-namespace KnightFrank.Antares.Api
+﻿namespace KnightFrank.Antares.Api
 {
+    using System.Web.Http;
+
+    using Owin;
+
     /// <summary>
-    /// Owin startup class.
+    ///     Owin startup class.
     /// </summary>
     public class Startup
     {
         /// <summary>
-        /// Owin configuration.
+        ///     Owin configuration.
         /// </summary>
         /// <param name="app">Application builder.</param>
         public void Configuration(IAppBuilder app)

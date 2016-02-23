@@ -1,19 +1,23 @@
-﻿using Objectivity.Test.Automation.Common;
-using Objectivity.Test.Automation.Common.Extensions;
-using Objectivity.Test.Automation.Common.Types;
-
-namespace KnightFrank.Antares.UITests.Pages
+﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using Objectivity.Test.Automation.Common;
+    using Objectivity.Test.Automation.Common.Extensions;
+    using Objectivity.Test.Automation.Common.Types;
+
     public class NewContactPage : ProjectPageBase
     {
-        public NewContactPage(DriverContext driverContext) : base(driverContext)
-        {
-        }
+        private readonly ElementLocator contactFirstName = new ElementLocator(Locator.Id, string.Empty);
+
+        private readonly ElementLocator contactSurname = new ElementLocator(Locator.Id, string.Empty);
 
         private readonly ElementLocator contactTitle = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator contactFirstName = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator contactSurname = new ElementLocator(Locator.Id, string.Empty);
+
         private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, string.Empty);
+
+        public NewContactPage(DriverContext driverContext)
+            : base(driverContext)
+        {
+        }
 
         public NewContactPage OpenNewContactPage()
         {

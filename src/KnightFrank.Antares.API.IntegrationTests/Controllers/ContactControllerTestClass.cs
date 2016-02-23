@@ -1,17 +1,17 @@
-﻿using System.Net;
-
-using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
-using Xunit;
-
-namespace KnightFrank.Antares.Api.IntegrationTests.Controllers
+﻿namespace KnightFrank.Antares.Api.IntegrationTests.Controllers
 {
+    using System.Net;
     using System.Net.Http;
+
+    using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
+
+    using Xunit;
 
     public class ContactControllerTestClass : IClassFixture<BaseTestClassFixture>
     {
-        private readonly BaseTestClassFixture fixture;
-
         private const string ApiUrl = "/api/contact";
+
+        private readonly BaseTestClassFixture fixture;
 
         public ContactControllerTestClass(BaseTestClassFixture fixture)
         {

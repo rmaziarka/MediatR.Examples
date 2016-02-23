@@ -1,7 +1,7 @@
-﻿using Xunit;
-
-namespace KnightFrank.Antares.Domain.UnitTests
+﻿namespace KnightFrank.Antares.Domain.UnitTests
 {
+    using Xunit;
+
     public class UnitTest1
     {
         [Fact]

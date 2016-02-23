@@ -1,10 +1,13 @@
-﻿using System;
-using KnightFrank.Antares.UITests.Pages;
-using Objectivity.Test.Automation.Common;
-using TechTalk.SpecFlow;
-
-namespace KnightFrank.Antares.UITests.Steps
+﻿namespace KnightFrank.Antares.UITests.Steps
 {
+    using System;
+
+    using KnightFrank.Antares.UITests.Pages;
+
+    using Objectivity.Test.Automation.Common;
+
+    using TechTalk.SpecFlow;
+
     [Binding]
     public class NewContactSteps
     {
@@ -12,7 +15,11 @@ namespace KnightFrank.Antares.UITests.Steps
 
         public NewContactSteps(ScenarioContext scenarioContext)
         {
-            if (scenarioContext == null) throw new ArgumentNullException(nameof(scenarioContext));
+            if (scenarioContext == null)
+            {
+                throw new ArgumentNullException(nameof(scenarioContext));
+            }
+
             ScenarioContext sc = scenarioContext;
 
             this.driverContext = sc["DriverContext"] as DriverContext;
@@ -30,15 +37,17 @@ namespace KnightFrank.Antares.UITests.Steps
         {
             var newContactPage = ScenarioContext.Current.Get<NewContactPage>("NewContactPage");
 
-            if (!table.Rows[0]["Title"].Equals(""))
+            if (!table.Rows[0]["Title"].Equals(string.Empty))
             {
                 newContactPage.SetTitle(table.Rows[0]["Title"]);
             }
-            if (!table.Rows[0]["First Name"].Equals(""))
+
+            if (!table.Rows[0]["First Name"].Equals(string.Empty))
             {
                 newContactPage.SetFirstName(table.Rows[0]["First Name"]);
             }
-            if (!table.Rows[0]["Surname"].Equals(""))
+
+            if (!table.Rows[0]["Surname"].Equals(string.Empty))
             {
                 newContactPage.SetSurname(table.Rows[0]["Surname"]);
             }

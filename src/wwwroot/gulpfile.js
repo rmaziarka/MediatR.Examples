@@ -86,7 +86,7 @@ gulp.task('default', function () {
  * Inject all the spec files into the specRunner.html
  * @return {Stream}
  */
-gulp.task('build-specs', function (done) {
+gulp.task('build-specs', function () {
     log('building the spec runner');
 
     var wiredep = require('wiredep').stream;
