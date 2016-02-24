@@ -133,3 +133,4 @@ AUTHORS text
 *.woff2 binary
 *.pyc binary
 *.pdf binary
+*.exe binary
