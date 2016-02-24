@@ -16,9 +16,11 @@
         /// </summary>
         /// <returns>Contact entity collection</returns>
         [HttpGet]
+        [Route("")]
         public IEnumerable<ContactDto> GetContacts()
         {
-            return new[] { new ContactDto { FirstName = "value", Surname = "value" } };
+            return new[]
+            { new ContactDto { FirstName = "John", Surname = "Doe" }, new ContactDto { FirstName = "David", Surname = "Dummy" } };
         }
 
         /// <summary>
@@ -30,7 +32,7 @@
         [Route("{id}")]
         public ContactDto GetContact(int id)
         {
-            return new ContactDto { FirstName = "value", Surname = "value" };
+            return new ContactDto { FirstName = "John", Surname = "Doe" };
         }
 
         /// <summary>
