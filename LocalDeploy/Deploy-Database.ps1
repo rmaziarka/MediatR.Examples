@@ -1,0 +1,46 @@
+function Deploy-Database {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string] 
+        $ProjectRootPath
+    )	
+
+	$packageName = 'KnightFrank.Antares.Dal'
+	$outputPath = Join-Path -Path $ProjectRootPath -ChildPath "\LocalDeploy\Migrations\$packageName"		
+	$buildConfiguration = 'Release'
+
+	$buildParams = @{
+		PackagePath = $outputPath
+		ProjectPath = Join-Path -Path $ProjectRootPath -ChildPath '\src\KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj'
+		PackageName = $packageName
+		MigrationsDir = Join-Path -Path $ProjectRootPath -ChildPath "\src\KnightFrank.Antares.Dal\bin\$buildConfiguration"
+		EntityFrameworkDir = Join-Path -Path $ProjectRootPath -ChildPath '\src\packages\EntityFramework.6.1.3' 
+		BuildConfiguration = $buildConfiguration
+	}
+
+	$deployParams = @{	
+		PackagePath = $outputPath
+		DatabaseName = 'KnightFrank.Antares'
+		ConnectionString = "Server=localhost;Database=KnightFrank.Antares;Integrated Security=SSPI"
+		MigrateAssembly = 'KnightFrank.Antares.Dal.dll'
+		DefaultAppPoolUserName = "IIS AppPool\KnightFrank.Antares.WebAPI"
+	}
+	 
+	Build-EntityFrameworkMigrations @buildParams
+	Deploy-EntityFrameworkMigrations @deployParams
+	
+	$Username = $deployParams.DefaultAppPoolUserName
+	$DatabaseName = $deployParams.DatabaseName
+	
+	Invoke-SqlQuery -DatabaseName $deployParams.DatabaseName -InputFile 'sql/Update-SqlLogin.sql'`
+			-SqlVariable "Username = $Username"
+
+	Invoke-SqlQuery -DatabaseName $deployParams.DatabaseName -InputFile 'sql/Update-SqlUser.sql'`
+			-SqlVariable "Username = $Username","DatabaseName = $DatabaseName"
+
+	Invoke-SqlQuery -DatabaseName $deployParams.DatabaseName -InputFile 'sql/Update-SqlUserRole.sql'`
+			-SqlVariable "Username = $Username","DatabaseName = $DatabaseName","Role = db_datareader"
+
+	Invoke-SqlQuery -DatabaseName $deployParams.DatabaseName -InputFile 'sql/Update-SqlUserRole.sql'`
+			-SqlVariable "Username = $Username","DatabaseName = $DatabaseName","Role = db_datawriter"
+}
