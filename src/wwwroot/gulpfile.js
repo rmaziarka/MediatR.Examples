@@ -12,23 +12,57 @@
     }),
     runSequence = require('run-sequence');
 
+/**
+ * Wire-up the bower dependencies and custom js files
+ * @return {Stream}
+ */
+gulp.task('_js-inject', function () {
+    log('Wiring the bower dependencies into the html');
+
+    var wiredep = require('wiredep').stream;
+    var options = config.getWiredepDefaultOptions();
+
+    return gulp
+        .src(config.index)
+        .pipe(wiredep(options))
+        .pipe(inject(config.js.appFiles, '', config.js.order))
+        .pipe(gulp.dest(config.root));
+});
+
+/**
+ * Created and inject bundles
+ */
+gulp.task('bundle', function (callback) {
+    runSequence('_js-clean', 'ts', '_js-inject', callback);
+});
+
+
+/**
+* Removes all *.js and *.js.map files from ./app
+* @return {Stream}
+*/
+gulp.task('_js-clean', function () {
+    return gulp
+        .src([config.js.all, config.js.maps])
+        .pipe($.clean());
+});
 
 /**
 *  Processess javascript files and adds dependency injection annotations ($inject) where /* @ngInject */
 /* is found or for angular standard injections, ex controllers
 *  @return {Stream}
 */
-gulp.task('ts-annotate', function () {
-    return gulp.src(config.ts.outputAllJs)
+gulp.task('_js-annotate', function () {
+    return gulp.src(config.js.appFiles)
 		.pipe($.ngAnnotate())
-		.pipe(gulp.dest(config.ts.output));
+		.pipe(gulp.dest(config.app));
 });
 
 /**
  * Lint all typescript files
  * @return {Stream}
  */
-gulp.task('ts-lint', function () {    
+gulp.task('_ts-lint', function () {    
     return gulp
         .src(config.ts.allTs)
         .pipe($.tslint())
@@ -39,7 +73,7 @@ gulp.task('ts-lint', function () {
  * Compiling Typescript --> Javascript
  * @return {Stream}
  */
-gulp.task('ts-compile', function () {    
+gulp.task('_ts-compile', function () {    
     var tsResult = gulp
         .src([config.ts.allTs, config.ts.libTypingsAllTs])
         .pipe($.sourcemaps.init())
@@ -48,17 +82,7 @@ gulp.task('ts-compile', function () {
     tsResult.dts.pipe(gulp.dest('.'));
 
     return tsResult.js.pipe($.sourcemaps.write('.'))
-                      .pipe(gulp.dest(config.ts.output));
-});
-
-/**
-* Removes all *.js and *.js.map files from ./app
-* @return {Stream}
-*/
-gulp.task('ts-clean', function () {
-    return gulp
-        .src([config.ts.outputAllJs, config.ts.outputAllJsMap])
-        .pipe($.clean());
+                      .pipe(gulp.dest(config.app));
 });
 
 /**
@@ -66,8 +90,8 @@ gulp.task('ts-clean', function () {
 *  @return {Stream}
 */
 gulp.task('ts', function (callback) {
-    log('TypeScript --> JavaScript ...');
-    runSequence('ts-lint', 'ts-compile', 'ts-annotate', callback);    
+    log('Compiling typescript to javascript');
+    runSequence('_ts-lint', '_ts-compile', '_js-annotate', callback);    
 });
 
 /**
@@ -77,17 +101,12 @@ gulp.task('ts-watch', function () {
     gulp.watch([config.ts.allTs], ['ts']);
 });
 
-gulp.task('default', function () {
-    // place code for your default task here
-});
-
-
 /**
  * Inject all the spec files into the specRunner.html
  * @return {Stream}
  */
-gulp.task('build-specs', function () {
-    log('building the spec runner');
+gulp.task('specs-build', function () {
+    log('Building the spec runner');
 
     var wiredep = require('wiredep').stream;
     var options = config.getWiredepDefaultOptions();
@@ -97,17 +116,50 @@ gulp.task('build-specs', function () {
     return gulp
         .src(config.specRunner)
         .pipe(wiredep(options))
-        .pipe(inject(config.jsTest, '', config.jsOrder))
-        .pipe(inject(config.specsAndMocks, 'specs', ['**/*']))
-        .pipe($.inject(gulp.src(''), {
-            starttag: '<!-- inject:vendors -->',
-            transform: function () {
-                return config.vendors.map(function (v) {
-                    return '<script src="' + v + '"></script>';
-                }).join('\r\n');
-            }
-        }))
+        .pipe(inject(config.js.appFilesToTest, '', config.js.order))
+        .pipe(inject(config.js.specsAndMocks, 'specs', ['**/*']))
         .pipe(gulp.dest(config.root));
+});
+
+/**
+ * Building everything
+ * @return {Stream}
+ */
+gulp.task('build', ['_optimize'], function () {
+    log('Building everything');
+
+    gulp.src(config.build.temp)
+        .pipe($.clean());
+
+    gulp.src(config.nuspec)
+        .pipe(gulp.dest(config.build.output));
+
+    log('Deployed to build folder');
+});
+
+/**
+ * Building everything in local env
+ * @return {Stream}
+ */
+gulp.task('build-local', function (callback) {
+    runSequence('bundle', 'specs-build', callback);
+});
+
+/**
+ * Optimizing javascript, css and html files and saving these in build folder
+ * @return {Stream}
+ */
+gulp.task('_optimize', ['bundle'], function () {
+    log('Optimizing javascript, css and html files and saving these in build folder');
+
+    // TODO add angular and configure template cache for html files
+    //var templateCache = config.temp + config.templateCache.file;
+
+    return gulp
+        .src(config.index)
+        //.pipe(inject(templateCache, 'templates'))
+        .pipe($.useref())
+        .pipe(gulp.dest(config.build.output));
 });
 
 

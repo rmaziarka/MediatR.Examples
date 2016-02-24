@@ -249,3 +249,4 @@ src/wwwroot/app/**/*.js.map
 # bower libraries
 src/wwwroot/libs
 
+src/wwwroot/build/*

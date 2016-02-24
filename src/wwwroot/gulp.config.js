@@ -1,6 +1,7 @@
 ﻿module.exports = function () {
     var root = './';
     var clientApp = root + 'app/';
+    var build = './build/';
     var specRunnerFile = 'specRunner.html';
     var bower = {
         json: require('./bower.json'),
@@ -9,30 +10,44 @@
     };
 
     var config = {
-        bower: bower,
-        jsOrder: [
-            '**/app.module.js',
-            '**/*.module.js',
-            '**/*.js'
-        ],
-        jsTest: [
-            clientApp + '**/*.module.js',
-            clientApp + '**/*.module.config.js',
-            clientApp + '**/*.module.const.js',
-            clientApp + '**/*.js',
-            '!' + clientApp + '**/*.spec.js',
-            '!' + clientApp + '**/*.mock.js',
-            '!' + clientApp + '**/*.route.js'
-        ],
-        root: root,
+        index: 'index.html',
         specRunner: root + specRunnerFile,
-        specsAndMocks: [clientApp + '**/*.spec.js', clientApp + '**/*.mock.js'],
+        nuspec: 'wwwroot.nuspec',
+        bower: bower,
+        root: root,
+        app: clientApp,
+        js: {
+            all: clientApp + '**/*.js',
+            maps: clientApp + '**/*.js.map',
+            appFiles: [
+                clientApp + '**/*.js',
+                '!' + clientApp + '**/*.spec.js',
+                '!' + clientApp + '**/*.mock.js'
+            ],
+            appFilesToTest: [
+                clientApp + '**/*.js',
+                '!' + clientApp + '**/*.spec.js',
+                '!' + clientApp + '**/*.mock.js',
+                '!' + clientApp + '**/*.route.js',
+                '!' + clientApp + '**/*.config.js',
+            ],
+            specsAndMocks: [
+                clientApp + '**/*.spec.js',
+                clientApp + '**/*.mock.js'
+            ],
+            order: [
+                '**/app.module.js',
+                '**/*.module.js',
+                '**/*.js'
+            ]
+        },
         ts: {
             allTs: clientApp + '**/*.ts',
-            output: clientApp,
-            outputAllJs: clientApp + '**/*.js',
-            outputAllJsMap: clientApp + '**/*.js.map',
             libTypingsAllTs: root + 'typings/main/**/*.ts'
+        },
+        build: {
+            output: build,
+            temp: './.tmp/'
         },
         vendors: []
     }

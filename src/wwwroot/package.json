@@ -8,7 +8,7 @@
   "devDependencies": {
     "bower": "^1.6.8",
     "gulp": "^3.9.1",
-    "gulp-clean-old": "^0.2.5",
+    "gulp-clean": "^0.3.1",
     "gulp-if": "^2.0.0",
     "gulp-inject": "^3.0.0",
     "gulp-load-plugins": "^1.2.0",
@@ -17,6 +17,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-tslint": "^4.3.2",
     "gulp-typescript": "^2.11.0",
+    "gulp-useref": "^3.0.7",
     "gulp-util": "^3.0.7",
     "jasmine-core": "^2.4.1",
     "run-sequence": "^1.1.5",
