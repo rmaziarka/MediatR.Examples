@@ -14,12 +14,19 @@
     <!-- inject:testlibraries:js -->
     <!-- endinject -->
     <!-- bower:js -->
+    <script src="libs/angular/angular.js"></script>
+    <script src="libs/angular-ui-router/release/angular-ui-router.js"></script>
     <!-- endbower -->
     <!-- inject:js -->
+    <script src="app/app.module.js"></script>
+    <script src="app/backoffice/app.backoffice.module.js"></script>
+    <script src="app/frontoffice/app.frontoffice.module.js"></script>
     <script src="app/dummy.js"></script>
+    <script src="app/frontoffice/contact/add/contactAdd.ctrl.js"></script>
     <!-- endinject -->
     <!-- inject:specs:js -->
     <script src="app/dummy.spec.js"></script>
+    <script src="app/frontoffice/contact/add/contactAdd.ctrl.spec.js"></script>
     <!-- endinject -->
 </body>
 </html>
