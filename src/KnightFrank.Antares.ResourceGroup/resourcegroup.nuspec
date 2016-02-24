@@ -11,8 +11,8 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>KnightFrank Azure Resource Group Templates</description>
 	  <releaseNotes>release notes</releaseNotes>
-    <files>
-      <file src="Templates\*.*" target="content" />
-    </files>
   </metadata>
+  <files>
+    <file src="Templates\*.*" target="content" />
+  </files>
 </package>
