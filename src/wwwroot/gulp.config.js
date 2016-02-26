@@ -47,7 +47,16 @@
         },
         build: {
             output: build,
-            temp: './.tmp/'
+            temp: './.tmp/',
+            templateCache: {
+                file: 'templates.js',
+                options: {
+                    module: 'app',
+                    standAlone: false,
+                    root: 'app/'
+                }
+            },
+            htmltemplates: clientApp + '**/*.html',
         },
         vendors: []
     }

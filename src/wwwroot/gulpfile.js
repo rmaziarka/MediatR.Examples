@@ -146,18 +146,47 @@ gulp.task('build-local', function (callback) {
 });
 
 /**
+ * Remove all js and html from the build and temp folders
+ * @param  {Function} done - callback when complete
+ */
+gulp.task('_clean-code', function () {
+    var files = [].concat(
+        config.temp + '**/*.js',
+        config.build + 'js/**/*.js',
+        config.build + 'js/**/*.js.map',
+        config.build + '**/*.html'
+    );
+
+    gulp.src(files)
+        .pipe($.clean());
+});
+
+gulp.task('_build-templatecache', ['_clean-code'], function () {
+    log('Creating templates caches in build folder');
+
+    return gulp
+        .src(config.build.htmltemplates)
+        .pipe($.minifyHtml({ empty: true }))
+        .pipe($.angularTemplatecache(
+            config.build.templateCache.file,
+            config.build.templateCache.options
+        ))
+        .pipe(gulp.dest(config.build.temp));
+});
+
+/**
  * Optimizing javascript, css and html files and saving these in build folder
  * @return {Stream}
  */
-gulp.task('_optimize', ['bundle'], function () {
+gulp.task('_optimize', ['bundle', '_build-templatecache'], function () {
     log('Optimizing javascript, css and html files and saving these in build folder');
 
     // TODO add angular and configure template cache for html files
-    //var templateCache = config.temp + config.templateCache.file;
+    var templateCache = config.build.temp + config.build.templateCache.file;
 
     return gulp
         .src(config.index)
-        //.pipe(inject(templateCache, 'templates'))
+        .pipe(inject(templateCache, 'templates'))
         .pipe($.useref())
         .pipe(gulp.dest(config.build.output));
 });
