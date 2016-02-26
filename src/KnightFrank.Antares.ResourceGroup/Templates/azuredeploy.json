@@ -98,7 +98,9 @@
     "VmNicName": "[concat(variables('ResourceNamePrefix'), 'Vm-Nic-', variables('ResourceNameSuffix'))]",
     "SecurityGroup-Admins-Name": "[concat(variables('VmName'), '-Admins')]",
     "SecurityGroup-PowerUsers-Name": "[concat(variables('VmName'), '-PowerUsers')]",
-    "SecurityGroup-Contributors-Name": "[concat(variables('VmName'), '-Contributors')]"
+    "SecurityGroup-Contributors-Name": "[concat(variables('VmName'), '-Contributors')]",
+    "VmHostName": "kf-antares",
+    "DnsName":  "[toLower(variables('VmName'))]"
   },
   "resources": [
     {
@@ -209,7 +211,10 @@
       },
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
-        "idleTimeoutInMinutes": 4
+        "idleTimeoutInMinutes": 4,
+        "dnsSettings": {
+          "domainNameLabel": "[variables('DnsName')]"
+        }
       }
     },
     {
@@ -218,7 +223,8 @@
       "location": "[resourceGroup().location]",
       "apiVersion": "2015-06-15",
       "dependsOn": [
-        "[concat('Microsoft.Network/virtualNetworks/', variables('VirtualNetworkName'))]"
+        "[concat('Microsoft.Network/virtualNetworks/', variables('VirtualNetworkName'))]",
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('sqlPublicIP'))]"
       ],
       "tags": {
         "displayName": "KnightFrank-Antares-VmNic"
@@ -258,7 +264,7 @@
           "vmSize": "[variables('VmVmSize')]"
         },
         "osProfile": {
-          "computerName": "kf-antares",
+          "computerName": "[variables('VmHostName')]",
           "adminUsername": "[parameters('VmAdminUserName')]",
           "adminPassword": "[parameters('VmAdminPassword')]"
         },
@@ -310,6 +316,20 @@
               "priority": 100,
               "direction": "Inbound"
             }
+          },
+          {
+            "name": "sql-rule",
+            "properties": {
+              "description": "Allow sql connection",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "1433",
+              "sourceAddressPrefix": "Internet",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 110,
+              "direction": "Inbound"
+            }
           }
         ]
       }
@@ -323,22 +343,7 @@
         "displayName": "KnightFrank-Antares-SecurityGroup-PowerUsers"
       },
       "properties": {
-        "securityRules": [
-          {
-            "name": "rdp-rule",
-            "properties": {
-              "description": "Allow RDP",
-              "protocol": "Tcp",
-              "sourcePortRange": "*",
-              "destinationPortRange": "3389",
-              "sourceAddressPrefix": "Internet",
-              "destinationAddressPrefix": "*",
-              "access": "Allow",
-              "priority": 100,
-              "direction": "Inbound"
-            }
-          }
-        ]
+        "securityRules": []
       }
     },
     {
@@ -350,22 +355,7 @@
         "displayName": "KnightFrank-Antares-SecurityGroup-Contributors"
       },
       "properties": {
-        "securityRules": [
-          {
-            "name": "rdp-rule",
-            "properties": {
-              "description": "Allow RDP",
-              "protocol": "Tcp",
-              "sourcePortRange": "*",
-              "destinationPortRange": "3389",
-              "sourceAddressPrefix": "Internet",
-              "destinationAddressPrefix": "*",
-              "access": "Allow",
-              "priority": 100,
-              "direction": "Inbound"
-            }
-          }
-        ]
+        "securityRules": []
       }
     }
   ],
