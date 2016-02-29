@@ -16,7 +16,7 @@
         <releaseNotes>release notes</releaseNotes>
     </metadata>
     <files>
-        <file src="..\packages\EntityFramework.6.1.3\tools\migrate.exe" target="tools"/>
+        <file src="..\packages\EntityFramework.6.1.3\tools\migrate.exe"/>
         <file src="bin\*.*"/>
     </files>
 </package>
