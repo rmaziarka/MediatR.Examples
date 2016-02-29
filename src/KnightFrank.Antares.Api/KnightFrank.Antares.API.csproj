@@ -210,7 +210,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51935</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:81</IISUrl>
+          <IISUrl>http://dev.api.antares.knightfrank.com</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
