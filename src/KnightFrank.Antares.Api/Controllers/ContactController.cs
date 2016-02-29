@@ -4,6 +4,9 @@
     using System.Web.Http;
 
     using KnightFrank.Antares.API.Models;
+    using KnightFrank.Antares.Domain.Contact.Commands;
+
+    using MediatR;
 
     /// <summary>
     ///     Controller class for contacts
@@ -11,6 +14,13 @@
     [RoutePrefix("api/contacts")]
     public class ContactController : ApiController
     {
+        private IMediator mediator;
+
+        public ContactController(IMediator mediator)
+        {
+            this.mediator = mediator;
+        }
+        
         /// <summary>
         ///     Get contact list
         /// </summary>
@@ -40,8 +50,10 @@
         /// </summary>
         /// <param name="contact">Contact entity</param>
         [HttpPost]
-        public void CreateContact([FromBody] ContactDto contact)
+        [Route("")]
+        public int CreateContact([FromBody] CreateContactCommand command)
         {
+            return this.mediator.Send(command);
         }
 
         /// <summary>
@@ -51,8 +63,9 @@
         /// <param name="contact">Contact entity</param>
         [HttpPut]
         [Route("{id}")]
-        public void UpdateContact(int id, [FromBody] ContactDto contact)
+        public void UpdateContact(int id, [FromBody] UpdateContactCommand command)
         {
+            this.mediator.Send(command);
         }
 
         /// <summary>
