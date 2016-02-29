@@ -57,8 +57,17 @@ function Build-EntityFrameworkMigrations {
             throw "$toolName cannot be found - tried $($pathsToCheck -join ', ') (package '$PackageName')."
         }
     }  
+    
+	$buildSucceeded = Invoke-MsBuild -Path $ProjectPath -Params "/target:Clean;Build /property:Configuration=$BuildConfiguration" -ShowBuildWindow -AutoLaunchBuildLog
 
-	Invoke-MsBuild -Path $ProjectPath -Params "/target:Clean;Build /property:Configuration=$BuildConfiguration"
+    if ($buildSucceeded)
+    { 
+        Write-Host -Object "DAL build completed successfully." 
+    }
+    else
+    {         
+        throw "DAL build failed. Check the build log file for errors."
+    }
 
     $MigrationsFileWildcard = '*.dll'
 
