@@ -41,6 +41,7 @@ namespace KnightFrank.Antares.Api
         private static void ConfigureMediator(KernelBase kernel)
         {
             kernel.Bind<SingleInstanceFactory>().ToMethod(ctx => t => ctx.Kernel.Get(t));
+            kernel.Bind<MultiInstanceFactory>().ToMethod(ctx => t => ctx.Kernel.GetAll(t));
 
             kernel.Bind<IMediator>().To<Mediator>();
         }

@@ -15,7 +15,7 @@
     public class ContactController : ApiController
     {
         private IMediator mediator;
-
+        
         public ContactController(IMediator mediator)
         {
             this.mediator = mediator;
@@ -26,7 +26,6 @@
         /// </summary>
         /// <returns>Contact entity collection</returns>
         [HttpGet]
-        [Route("")]
         public IEnumerable<ContactDto> GetContacts()
         {
             return new[]
@@ -39,18 +38,16 @@
         /// <param name="id">Contact id</param>
         /// <returns>Contact entity</returns>
         [HttpGet]
-        [Route("{id}")]
         public ContactDto GetContact(int id)
         {
             return new ContactDto { FirstName = "John", Surname = "Doe" };
         }
 
         /// <summary>
-        ///     Create contact
+        /// Create contact
         /// </summary>
-        /// <param name="contact">Contact entity</param>
+        /// <param name="command">Contact entity</param>
         [HttpPost]
-        [Route("")]
         public int CreateContact([FromBody] CreateContactCommand command)
         {
             return this.mediator.Send(command);
@@ -60,9 +57,8 @@
         ///     Update contact
         /// </summary>
         /// <param name="id">Contact id</param>
-        /// <param name="contact">Contact entity</param>
+        /// <param name="command">Contact entity</param>
         [HttpPut]
-        [Route("{id}")]
         public void UpdateContact(int id, [FromBody] UpdateContactCommand command)
         {
             this.mediator.Send(command);
@@ -73,7 +69,6 @@
         /// </summary>
         /// <param name="id">Contact id</param>
         [HttpDelete]
-        [Route("{id}")]
         public void DeleteContact(int id)
         {
         }
