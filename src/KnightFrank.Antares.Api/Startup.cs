@@ -2,6 +2,9 @@
 {
     using System.Web.Http;
 
+    using Ninject.Web.Common.OwinHost;
+    using Ninject.Web.WebApi.OwinHost;
+
     using Owin;
 
     /// <summary>
@@ -20,7 +23,12 @@
 
             WebApiConfig.Register(config);
 
-            app.UseWebApi(server);
+            var kernel = NinjectWebCommon.CreateKernel();
+
+            app
+                .UseNinjectMiddleware(() => kernel)
+                .UseNinjectWebApi(server)
+                .UseWebApi(server);
         }
     }
 }

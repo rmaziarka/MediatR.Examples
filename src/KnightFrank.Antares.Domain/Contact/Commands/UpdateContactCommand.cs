@@ -1,6 +1,8 @@
-﻿namespace KnightFrank.Antares.Domain
+﻿namespace KnightFrank.Antares.Domain.Contact.Commands
 {
-    public class Contact
+    using MediatR;
+
+    public class UpdateContactCommand : IRequest
     {
         public int Id { get; set; }
 

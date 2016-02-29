@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.Dal", "KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj", "{2525AF42-F89C-48D8-89A7-74449702C627}"
 EndProject
@@ -39,8 +39,6 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "wwwroot", "wwwroot\", "{8B5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.UITests", "KnightFrank.Antares.UITests\KnightFrank.Antares.UITests.csproj", "{66D03143-B339-4767-8A9F-8306164BC88A}"
 EndProject
-Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "KnightFrank.Antares.ResourceGroup", "KnightFrank.Antares.ResourceGroup\KnightFrank.Antares.ResourceGroup.deployproj", "{40065076-3CCC-4B36-A5B3-52B83842D705}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,15 +66,13 @@ Global
 		{0DD04333-5AE5-4422-A27A-4FF050F50DBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DD04333-5AE5-4422-A27A-4FF050F50DBF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8B5A8ADC-3F97-4D0D-A7D2-C32CCEDB429F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B5A8ADC-3F97-4D0D-A7D2-C32CCEDB429F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B5A8ADC-3F97-4D0D-A7D2-C32CCEDB429F}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{8B5A8ADC-3F97-4D0D-A7D2-C32CCEDB429F}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{66D03143-B339-4767-8A9F-8306164BC88A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{66D03143-B339-4767-8A9F-8306164BC88A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66D03143-B339-4767-8A9F-8306164BC88A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66D03143-B339-4767-8A9F-8306164BC88A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{40065076-3CCC-4B36-A5B3-52B83842D705}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{40065076-3CCC-4B36-A5B3-52B83842D705}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{40065076-3CCC-4B36-A5B3-52B83842D705}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
