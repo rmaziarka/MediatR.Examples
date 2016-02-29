@@ -59,14 +59,6 @@
     "VmAdminPassword": {
       "type": "securestring"
     },
-    "DbUserName": {
-      "type": "string",
-      "defaultValue": "kfa",
-      "minLength": 1
-    },
-    "DbPassword": {
-      "type": "securestring"
-    },
     "VmWindowsOSVersion": {
       "type": "string",
       "defaultValue": "2012-R2-Datacenter",
@@ -76,19 +68,7 @@
         "2012-R2-Datacenter",
         "Windows-Server-Technical-Preview"
       ]
-    },
-      "_artifactsLocation": {
-          "type": "string",
-          "metadata": {
-              "description": "Auto-generated container in staging storage account to receive post-build staging folder upload"
-          }
-      },
-      "_artifactsLocationSasToken": {
-          "type": "securestring",
-          "metadata": {
-              "description": "Auto-generated token to access _artifactsLocation"
-          }
-      }
+    }
   },
   "variables": {
     "ResourceGroupNameTokens": "[split(resourceGroup().name, '-')]",
@@ -120,8 +100,7 @@
     "SecurityGroup-PowerUsers-Name": "[concat(variables('VmName'), '-PowerUsers')]",
     "SecurityGroup-Contributors-Name": "[concat(variables('VmName'), '-Contributors')]",
     "VmHostName": "kf-antares",
-    "DnsName":  "[toLower(variables('VmName'))]",
-      "SqlServerConfigurationFunction": "SqlServerConfiguration.ps1\\Main"
+    "DnsName":  "[toLower(variables('VmName'))]"
   },
   "resources": [
     {
@@ -314,35 +293,7 @@
         }
       },
         "resources": [
-            {
-                "name": "SqlServer",
-                "type": "extensions",
-                "location": "[resourceGroup().location]",
-                "apiVersion": "2015-06-15",
-                "dependsOn": [
-                    "[concat('Microsoft.Compute/virtualMachines/', variables('VmName'))]"
-                ],
-                "tags": {
-                    "displayName": "SqlServer"
-                },
-                "properties": {
-                    "publisher": "Microsoft.Powershell",
-                    "type": "DSC",
-                    "typeHandlerVersion": "2.9",
-                    "autoUpgradeMinorVersion": true,
-                    "settings": {
-                        "modulesUrl": "[concat(parameters('_artifactsLocation'), '/', 'dsc.zip')]",
-                        "sasToken": "[parameters('_artifactsLocationSasToken')]",
-                        "configurationFunction": "[variables('SqlServerConfigurationFunction')]",
-                        "properties": {
-                          "nodeName": "[variables('VmName')]",
-                          "dbUserName": "[parameters('DbUserName')]",
-                          "dbPassword":  "[parameters('DbPassword')]"
-                        }
-                    },
-                    "protectedSettings": { }
-                }
-            }
+            
         ]
     },
     {
