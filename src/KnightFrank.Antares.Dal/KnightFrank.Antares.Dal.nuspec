@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  For more info on this file format visit http://docs.nuget.org/docs/reference/nuspec-reference.
+-->
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>KnightFrank.Antares.Dal</id>
+        <title>KnightFrank.Antares.Dal</title>
+        <version>1.0.0</version>
+        <authors>KnightFrank</authors>
+        <owners>KnightFrank</owners>
+        <licenseUrl>http://yourcompany.com</licenseUrl>
+        <projectUrl>http://yourcompany.com</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>KnightFrank Client</description>
+        <releaseNotes>release notes</releaseNotes>
+    </metadata>
+    <files>
+        <file src="..\packages\EntityFramework.6.1.3\tools\migrate.exe" />
+        <file src="bin\**\*.*" />
+    </files>
+</package>
