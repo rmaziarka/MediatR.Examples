@@ -1,29 +1,25 @@
-using KnightFrank.Antares.API;
-
-using WebActivatorEx;
-
-[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
-
 namespace KnightFrank.Antares.API
 {
     using System;
     using System.Collections.Specialized;
+    using System.IO;
     using System.Web.Configuration;
     using System.Web.Http;
 
     using Swashbuckle.Application;
 
-    public class SwaggerConfig
+    public static class SwaggerConfig
     {
-        public static void Register()
+        private static readonly NameValueCollection config = WebConfigurationManager.AppSettings;
+
+        public static void Register(HttpConfiguration configuration)
         {
-            NameValueCollection config = WebConfigurationManager.AppSettings;
             if (!Convert.ToBoolean(config["EnableSwagger"]))
             {
                 return;
             }
 
-            GlobalConfiguration.Configuration.EnableSwagger(
+            configuration.EnableSwagger(
                 c =>
                     {
                         // By default, the service root url is inferred from the request used to access the docs.
@@ -197,9 +193,18 @@ namespace KnightFrank.Antares.API
                             });
         }
 
-        protected static string GetXmlCommentsPath()
+        private static string GetXmlCommentsPath()
         {
-            return $"{AppDomain.CurrentDomain.BaseDirectory}\\bin\\KnightFrank.Antares.API.XML";
+            if (string.IsNullOrEmpty(config["ApiDocumentationPath"]))
+            {
+                return string.Empty;
+            }
+
+            var pathSeparator = '\\';
+
+            // TODO: check AppDomain.CurrentDomain.BaseDirectory behaviour against Azure 
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory.TrimEnd(pathSeparator),
+                config["ApiDocumentationPath"].TrimStart(pathSeparator));
         }
     }
 }

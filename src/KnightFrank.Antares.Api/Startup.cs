@@ -2,10 +2,14 @@
 {
     using System.Web.Http;
 
+    using KnightFrank.Antares.API;
+
     using Ninject.Web.Common.OwinHost;
     using Ninject.Web.WebApi.OwinHost;
 
     using Owin;
+
+    using Swashbuckle.Application;
 
     /// <summary>
     ///     Owin startup class.
@@ -24,6 +28,8 @@
             WebApiConfig.Register(config);
 
             var kernel = NinjectWebCommon.CreateKernel();
+
+            SwaggerConfig.Register(config);
 
             app
                 .UseNinjectMiddleware(() => kernel)
