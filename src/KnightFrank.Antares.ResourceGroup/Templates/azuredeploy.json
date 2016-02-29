@@ -59,6 +59,14 @@
     "VmAdminPassword": {
       "type": "securestring"
     },
+    "DbUserName": {
+      "type": "string",
+      "defaultValue": "kfa",
+      "minLength": 1
+    },
+    "DbPassword": {
+      "type": "securestring"
+    },
     "VmWindowsOSVersion": {
       "type": "string",
       "defaultValue": "2012-R2-Datacenter",
@@ -68,7 +76,19 @@
         "2012-R2-Datacenter",
         "Windows-Server-Technical-Preview"
       ]
-    }
+    },
+      "_artifactsLocation": {
+          "type": "string",
+          "metadata": {
+              "description": "Auto-generated container in staging storage account to receive post-build staging folder upload"
+          }
+      },
+      "_artifactsLocationSasToken": {
+          "type": "securestring",
+          "metadata": {
+              "description": "Auto-generated token to access _artifactsLocation"
+          }
+      }
   },
   "variables": {
     "ResourceGroupNameTokens": "[split(resourceGroup().name, '-')]",
@@ -77,7 +97,7 @@
     "AppServicePlanName": "[concat(variables('ResourceNamePrefix'), 'Sp-', variables('ResourceNameSuffix'))]",
     "WebApiName": "[concat(variables('ResourceNamePrefix'), 'Wa-Api-', variables('ResourceNameSuffix'))]",
     "WebAppName": "[concat(variables('ResourceNamePrefix'), 'Wa-App-', variables('ResourceNameSuffix'))]",
-    "StorageAccountName": "[replace(replace(concat(variables('ResourceNamePrefix'), 'St', variables('ResourceNameSuffix')), 'KnightFrank-Antares-', 'kfa'), '-', '')]",
+    "StorageAccountName": "[tolower(replace(replace(concat(variables('ResourceNamePrefix'), 'St', variables('ResourceNameSuffix')), 'KnightFrank-Antares-', 'kfa'), '-', ''))]",
     "VmName": "[concat(variables('ResourceNamePrefix'), 'Vm-Sql-', variables('ResourceNameSuffix'))]",
     "VirtualNetworkName": "[concat(variables('ResourceNamePrefix'), 'vn-', variables('ResourceNameSuffix'))]",
     "VirtualNetworkPrefix": "10.0.0.0/16",
@@ -100,7 +120,8 @@
     "SecurityGroup-PowerUsers-Name": "[concat(variables('VmName'), '-PowerUsers')]",
     "SecurityGroup-Contributors-Name": "[concat(variables('VmName'), '-Contributors')]",
     "VmHostName": "kf-antares",
-    "DnsName":  "[toLower(variables('VmName'))]"
+    "DnsName":  "[toLower(variables('VmName'))]",
+      "SqlServerConfigurationFunction": "SqlServerConfiguration.ps1\\Main"
   },
   "resources": [
     {
@@ -291,7 +312,38 @@
             }
           ]
         }
-      }
+      },
+        "resources": [
+            {
+                "name": "SqlServer",
+                "type": "extensions",
+                "location": "[resourceGroup().location]",
+                "apiVersion": "2015-06-15",
+                "dependsOn": [
+                    "[concat('Microsoft.Compute/virtualMachines/', variables('VmName'))]"
+                ],
+                "tags": {
+                    "displayName": "SqlServer"
+                },
+                "properties": {
+                    "publisher": "Microsoft.Powershell",
+                    "type": "DSC",
+                    "typeHandlerVersion": "2.9",
+                    "autoUpgradeMinorVersion": true,
+                    "settings": {
+                        "modulesUrl": "[concat(parameters('_artifactsLocation'), '/', 'dsc.zip')]",
+                        "sasToken": "[parameters('_artifactsLocationSasToken')]",
+                        "configurationFunction": "[variables('SqlServerConfigurationFunction')]",
+                        "properties": {
+                          "nodeName": "[variables('VmName')]",
+                          "dbUserName": "[parameters('DbUserName')]",
+                          "dbPassword":  "[parameters('DbPassword')]"
+                        }
+                    },
+                    "protectedSettings": { }
+                }
+            }
+        ]
     },
     {
       "apiVersion": "2015-06-15",

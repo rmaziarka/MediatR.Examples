@@ -26,7 +26,6 @@
   <!-- vertag<:>end -->
   <ItemGroup>
     <Folder Include="Scripts\" />
-    <Folder Include="Templates\" />
     <Folder Include="Tools\" />
   </ItemGroup>
   <ItemGroup>
@@ -36,6 +35,55 @@
     <Content Include="Scripts\Deploy-AzureResourceGroup.ps1" />
     <Content Include="Templates\azuredeploy.json" />
     <Content Include="Templates\azuredeploy.parameters.json" />
+    <Content Include="DSC\SqlServerConfiguration.ps1" />
+    <None Include="DSC\dscmetadata.json" />
+    <None Include="DSC\xNetworking\appveyor.yml" />
+    <None Include="DSC\xNetworking\DSCResources\MSFT_xDNSServerAddress\MSFT_xDNSServerAddress.psm1" />
+    <None Include="DSC\xNetworking\DSCResources\MSFT_xDNSServerAddress\MSFT_xDNSServerAddress.schema.mof" />
+    <None Include="DSC\xNetworking\DSCResources\MSFT_xFirewall\MSFT_xFirewall.psm1" />
+    <None Include="DSC\xNetworking\DSCResources\MSFT_xFirewall\MSFT_xFirewall.Schema.mof" />
+    <None Include="DSC\xNetworking\DSCResources\MSFT_xIPAddress\MSFT_xIPAddress.psm1" />
+    <None Include="DSC\xNetworking\DSCResources\MSFT_xIPAddress\MSFT_xIPAddress.schema.mof" />
+    <None Include="DSC\xNetworking\LICENSE" />
+    <None Include="DSC\xNetworking\README.md" />
+    <None Include="DSC\xNetworking\xNetworking.psd1" />
+    <None Include="DSC\xSQLServer\appveyor.yml" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLDatabaseRecoveryModel\MSFT_xSQLDatabaseRecoveryModel.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLDatabaseRecoveryModel\MSFT_xSQLDatabaseRecoveryModel.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerDatabaseOwner\MSFT_xSQLServerDatabaseOwner.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerDatabaseOwner\MSFT_xSQLServerDatabaseOwner.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerDatabasePermissions\MSFT_xSQLServerDatabasePermissions.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerDatabasePermissions\MSFT_xSQLServerDatabasePermissions.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerDatabaseRole\MSFT_xSQLServerDatabaseRole.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerDatabaseRole\MSFT_xSQLServerDatabaseRole.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerFailoverClusterSetup\MSFT_xSQLServerFailoverClusterSetup.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerFailoverClusterSetup\MSFT_xSQLServerFailoverClusterSetup.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerFirewall\MSFT_xSQLServerFirewall.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerFirewall\MSFT_xSQLServerFirewall.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerLogin\MSFT_xSQLServerLogin.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerLogin\MSFT_xSQLServerLogin.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerMaxDop\MSFT_xSQLServerMaxDop.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerMaxDop\MSFT_xSQLServerMaxDop.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerMemory\MSFT_xSQLServerMemory.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerMemory\MSFT_xSQLServerMemory.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerPowerPlan\MSFT_xSQLServerPowerPlan.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerPowerPlan\MSFT_xSQLServerPowerPlan.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerRSConfig\MSFT_xSQLServerRSConfig.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerRSConfig\MSFT_xSQLServerRSConfig.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerRSSecureConnectionLevel\MSFT_xSQLServerRSSecureConnectionLevel.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerRSSecureConnectionLevel\MSFT_xSQLServerRSSecureConnectionLevel.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerSetup\MSFT_xSQLServerSetup.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerSetup\MSFT_xSQLServerSetup.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\xSQLServerNetwork\xSQLServerNetwork.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\xSQLServerNetwork\xSQLServerNetwork.schema.mof" />
+    <None Include="DSC\xSQLServer\en-US\xPDT.strings.psd1" />
+    <None Include="DSC\xSQLServer\en-US\xSQLServer.strings.psd1" />
+    <None Include="DSC\xSQLServer\LICENSE" />
+    <None Include="DSC\xSQLServer\README.md" />
+    <None Include="DSC\xSQLServer\xPDT.psm1" />
+    <None Include="DSC\xSQLServer\xPDT.xml" />
+    <None Include="DSC\xSQLServer\xSQLServer.psd1" />
+    <None Include="DSC\xSQLServer\xSQLServerHelper.psm1" />
     <None Include="resourcegroup.nuspec" />
     <None Include="Scripts\configure-sql.ps1" />
   </ItemGroup>
