@@ -104,13 +104,14 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute()]
+        [Xunit.FactAttribute(Skip="Ignored")]
         [Xunit.TraitAttribute("FeatureTitle", "Note on residential sales requirement")]
         [Xunit.TraitAttribute("Description", "Save note to non existing residential sales requirement")]
         public virtual void SaveNoteToNonExistingResidentialSalesRequirement()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Save note to non existing residential sales requirement", ((string[])(null)));
-#line 13
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Save note to non existing residential sales requirement", new string[] {
+                        "ignore"});
+#line 14
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -119,27 +120,28 @@ this.ScenarioSetup(scenarioInfo);
             table3.AddRow(new string[] {
                         "2",
                         "TestNote 2"});
-#line 14
+#line 15
  testRunner.Given("User fill text box in note form for residential sales requirement", ((string)(null)), table3, "Given ");
-#line 17
-  testRunner.And("this requirement is not exist in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 18
- testRunner.When("User retreive data from DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+  testRunner.And("this requirement is not exist in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 19
- testRunner.Then("the note should not be saved in DB due to mising requirement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("User retreive data from DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 20
+ testRunner.Then("the note should not be saved in DB due to mising requirement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 21
   testRunner.And("error message should be displayed ? - ask dev how they check error message", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute()]
+        [Xunit.FactAttribute(Skip="Ignored")]
         [Xunit.TraitAttribute("FeatureTitle", "Note on residential sales requirement")]
         [Xunit.TraitAttribute("Description", "Get list of all notes from DB for specific residential sales requirement")]
         public virtual void GetListOfAllNotesFromDBForSpecificResidentialSalesRequirement()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get list of all notes from DB for specific residential sales requirement", ((string[])(null)));
-#line 22
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get list of all notes from DB for specific residential sales requirement", new string[] {
+                        "ignore"});
+#line 24
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -154,9 +156,9 @@ this.ScenarioSetup(scenarioInfo);
             table4.AddRow(new string[] {
                         "3",
                         "TestNote 3"});
-#line 23
+#line 25
  testRunner.Given("At least 3 notes exist in DB for chosen requirement", ((string)(null)), table4, "Given ");
-#line 28
+#line 30
  testRunner.When("User retreive data from DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
@@ -171,7 +173,7 @@ this.ScenarioSetup(scenarioInfo);
             table5.AddRow(new string[] {
                         "3",
                         "TestNote 3"});
-#line 29
+#line 31
  testRunner.Then("Note list should be same as", ((string)(null)), table5, "Then ");
 #line hidden
             this.ScenarioCleanup();
