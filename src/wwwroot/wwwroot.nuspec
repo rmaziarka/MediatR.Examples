@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>KnightFrank.Client</id>
+    <id>KnightFrank.Antares.Client</id>
     <title>KnightFrank Client</title>
     <version>1.0.0</version>
     <authors>KnightFrank</authors>
     <owners>KnightFrank</owners>
     <licenseUrl>http://yourcompany.com</licenseUrl>
-    <projectUrl>http://yourcompany.com</projectUrl>	
+    <projectUrl>http://yourcompany.com</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>KnightFrank Client</description>
 	<releaseNotes>release notes</releaseNotes>
