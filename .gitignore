@@ -235,9 +235,11 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 
+# Build deploy
 BuildDeploy/BuildDeploy/*.log.txt
 BuildDeploy/BuildDeploy/logs/*
-LocalDeploy/Migrations
+BuildDeploy/Migrations
+
 # Typescript definitions
 src/wwwroot/typings
 
