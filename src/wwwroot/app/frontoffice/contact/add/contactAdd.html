@@ -1,3 +1,17 @@
-﻿<div>
-    {{vm.text}}
-</div>
+﻿<form ng-submit="vm.save()" name="addContactForm" method="post" novalidate>
+    <div>
+        <label for="title">Title</label>
+        <input id="title" ng-model="vm.contact.title"/>
+    </div>
+    <div>
+        <label for="firstName">First name</label>
+        <input id="firstName" ng-model="vm.contact.firstName"/>
+    </div>
+    <div>
+        <label for="surname">Surname</label>
+        <input id="surname" ng-model="vm.contact.surname"/>
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>

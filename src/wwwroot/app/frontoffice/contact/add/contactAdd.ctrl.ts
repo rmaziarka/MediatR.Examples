@@ -1,11 +1,17 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
-module Antares {
+module Antares.Frontoffice.Contact {
     export class ContactAddController {
-        public text: string;
+        public contact: Common.Models.Dto.IContact;
 
-        constructor() {
-            this.text = 'Hello from contact add controller!';
+        private contactResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IContactResource>;
+
+        constructor(private dataAccessService: Services.DataAccessService) {
+            this.contactResource = dataAccessService.getContactResource();
+        }
+
+        public save() {
+            this.contactResource.save(this.contact);
         }
     }
 
