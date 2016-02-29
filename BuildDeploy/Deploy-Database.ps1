@@ -6,7 +6,7 @@ function Deploy-Database {
     )	
 
 	$packageName = 'KnightFrank.Antares.Dal'
-	$outputPath = Join-Path -Path $ProjectRootPath -ChildPath "\LocalDeploy\Migrations\$packageName"		
+	$outputPath = Join-Path -Path $PSScriptRoot -ChildPath "\migrations\$packageName"		
 	$buildConfiguration = 'Release'
 
 	$buildParams = @{
@@ -25,22 +25,25 @@ function Deploy-Database {
 		MigrateAssembly = 'KnightFrank.Antares.Dal.dll'
 		DefaultAppPoolUserName = "IIS AppPool\KnightFrank.Antares.WebAPI"
 	}
-	 
-	Build-EntityFrameworkMigrations @buildParams
-	Deploy-EntityFrameworkMigrations @deployParams
+	try { 
+	    Build-EntityFrameworkMigrations @buildParams
+	    Deploy-EntityFrameworkMigrations @deployParams
 	
-	$Username = $deployParams.DefaultAppPoolUserName
-	$DatabaseName = $deployParams.DatabaseName
+	    $Username = $deployParams.DefaultAppPoolUserName
+	    $DatabaseName = $deployParams.DatabaseName
 	
-	Invoke-SqlQuery -DatabaseName $deployParams.DatabaseName -InputFile 'sql/Update-SqlLogin.sql'`
-			-SqlVariable "Username = $Username"
+	    Invoke-SqlQuery -DatabaseName $deployParams.DatabaseName -InputFile 'sql/Update-SqlLogin.sql'`
+			    -SqlVariable "Username = $Username"
 
-	Invoke-SqlQuery -DatabaseName $deployParams.DatabaseName -InputFile 'sql/Update-SqlUser.sql'`
-			-SqlVariable "Username = $Username","DatabaseName = $DatabaseName"
+	    Invoke-SqlQuery -DatabaseName $deployParams.DatabaseName -InputFile 'sql/Update-SqlUser.sql'`
+			    -SqlVariable "Username = $Username","DatabaseName = $DatabaseName"
 
-	Invoke-SqlQuery -DatabaseName $deployParams.DatabaseName -InputFile 'sql/Update-SqlUserRole.sql'`
-			-SqlVariable "Username = $Username","DatabaseName = $DatabaseName","Role = db_datareader"
+	    Invoke-SqlQuery -DatabaseName $deployParams.DatabaseName -InputFile 'sql/Update-SqlUserRole.sql'`
+			    -SqlVariable "Username = $Username","DatabaseName = $DatabaseName","Role = db_datareader"
 
-	Invoke-SqlQuery -DatabaseName $deployParams.DatabaseName -InputFile 'sql/Update-SqlUserRole.sql'`
-			-SqlVariable "Username = $Username","DatabaseName = $DatabaseName","Role = db_datawriter"
+	    Invoke-SqlQuery -DatabaseName $deployParams.DatabaseName -InputFile 'sql/Update-SqlUserRole.sql'`
+			    -SqlVariable "Username = $Username","DatabaseName = $DatabaseName","Role = db_datawriter"
+    } finally {
+        Remove-Item -Path $outputPath -Force -Recurse
+    }
 }

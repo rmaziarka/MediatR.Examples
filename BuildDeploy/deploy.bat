@@ -1,3 +1,3 @@
 @pushd %~dp0
-@powershell -File Deploy.ps1
+@powershell -Command "&{.\Deploy.ps1}"
 @pause
