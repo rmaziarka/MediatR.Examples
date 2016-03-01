@@ -1,4 +1,4 @@
-﻿Feature: Contact
+﻿Feature: Contacts
 
 Scenario: Retrieve single contact details
     Given User has defined a contact details
@@ -7,7 +7,7 @@ Scenario: Retrieve single contact details
         | FirstName | Surname |
         | John      | Doe     |
 
-Scenario: Retrieve all contact details
+Scenario: Retrieve all contacts details
     Given User retrieves all contacts details
     Then contacts should have following details
         | FirstName | Surname |

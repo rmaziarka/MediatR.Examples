@@ -17,15 +17,15 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class ContactFeature : Xunit.IClassFixture<ContactFeature.FixtureData>, System.IDisposable
+    public partial class ContactsFeature : Xunit.IClassFixture<ContactsFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "ContactTests.feature"
+#line 1 "ContactsTests.feature"
 #line hidden
         
-        public ContactFeature()
+        public ContactsFeature()
         {
             this.TestInitialize();
         }
@@ -33,7 +33,7 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Contact", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Contacts", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -62,7 +62,7 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void SetFixture(ContactFeature.FixtureData fixtureData)
+        public virtual void SetFixture(ContactsFeature.FixtureData fixtureData)
         {
         }
         
@@ -72,7 +72,7 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests
         }
         
         [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Contact")]
+        [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
         [Xunit.TraitAttribute("Description", "Retrieve single contact details")]
         public virtual void RetrieveSingleContactDetails()
         {
@@ -97,11 +97,11 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Contact")]
-        [Xunit.TraitAttribute("Description", "Retrieve all contact details")]
-        public virtual void RetrieveAllContactDetails()
+        [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
+        [Xunit.TraitAttribute("Description", "Retrieve all contacts details")]
+        public virtual void RetrieveAllContactsDetails()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retrieve all contact details", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retrieve all contacts details", ((string[])(null)));
 #line 10
 this.ScenarioSetup(scenarioInfo);
 #line 11
@@ -129,12 +129,12 @@ this.ScenarioSetup(scenarioInfo);
             
             public FixtureData()
             {
-                ContactFeature.FeatureSetup();
+                ContactsFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                ContactFeature.FeatureTearDown();
+                ContactsFeature.FeatureTearDown();
             }
         }
     }

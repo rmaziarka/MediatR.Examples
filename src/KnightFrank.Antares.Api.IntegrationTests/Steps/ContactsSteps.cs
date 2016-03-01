@@ -16,13 +16,13 @@
     using Xunit;
 
     [Binding]
-    public class ContactControllerSteps : IClassFixture<BaseTestClassFixture>
+    public class ContactsControllerSteps : IClassFixture<BaseTestClassFixture>
     {
         private readonly BaseTestClassFixture fixture;
 
-        private const string ApiUrl = "/api/contact";
+        private const string ApiUrl = "/api/contacts";
 
-        public ContactControllerSteps(BaseTestClassFixture fixture)
+        public ContactsControllerSteps(BaseTestClassFixture fixture)
         {
             this.fixture = fixture;
         }
