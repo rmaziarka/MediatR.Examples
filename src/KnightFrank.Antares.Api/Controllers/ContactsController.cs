@@ -11,12 +11,11 @@
     /// <summary>
     ///     Controller class for contacts
     /// </summary>
-    [RoutePrefix("api/contacts")]
-    public class ContactController : ApiController
+    public class ContactsController : ApiController
     {
         private IMediator mediator;
         
-        public ContactController(IMediator mediator)
+        public ContactsController(IMediator mediator)
         {
             this.mediator = mediator;
         }

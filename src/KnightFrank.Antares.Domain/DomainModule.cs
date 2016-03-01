@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ninject.Extensions.Conventions;
-namespace KnightFrank.Antares.Domain
+﻿namespace KnightFrank.Antares.Domain
 {
+    using KnightFrank.Antares.Dal.Repository;
+
     using MediatR;
 
     using Ninject.Modules;
+    using Ninject.Extensions.Conventions;
 
     public class DomainModule: NinjectModule
     {
@@ -18,7 +15,8 @@ namespace KnightFrank.Antares.Domain
                  .SelectAllClasses()
                  .InheritedFrom(typeof(IRequestHandler<,>))
                  .BindAllInterfaces());
-            
+
+            this.Bind(typeof(IGenericRepository<>)).To(typeof(GenericRepository<>));
         }
     }
 }

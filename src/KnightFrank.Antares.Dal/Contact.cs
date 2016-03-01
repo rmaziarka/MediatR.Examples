@@ -1,9 +1,9 @@
 ﻿namespace KnightFrank.Antares.Dal
 {
-    public class Contact
-    {
-        public int Id { get; set; }
+    using KnightFrank.Antares.Dal.Model;
 
+    public class Contact : BaseEntity
+    {
         public string FirstName { get; set; }
 
         public string Surname { get; set; }

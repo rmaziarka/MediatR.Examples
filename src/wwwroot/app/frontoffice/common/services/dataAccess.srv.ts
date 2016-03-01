@@ -10,7 +10,7 @@ module Antares.Frontoffice.Services {
         getContactResource(): Resources.IBaseResourceClass<Resources.IContactResource> {
             //TODO move url to config
             return <Resources.IBaseResourceClass<Resources.IContactResource>>
-                this.$resource('/api/contact/:id');
+                this.$resource('http://dev.api.antares.knightfrank.com/api/contacts/:id');
         }
     }
 

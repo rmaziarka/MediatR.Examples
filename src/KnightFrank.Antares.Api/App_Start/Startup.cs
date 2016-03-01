@@ -9,17 +9,9 @@
 
     using Owin;
 
-    using Swashbuckle.Application;
-
-    /// <summary>
-    ///     Owin startup class.
-    /// </summary>
+    [assembly: Microsoft.Owin.OwinStartup(typeof(KnightFrank.Antares.Api.Startup))]
     public class Startup
     {
-        /// <summary>
-        ///     Owin configuration.
-        /// </summary>
-        /// <param name="app">Application builder.</param>
         public void Configuration(IAppBuilder app)
         {
             var config = new HttpConfiguration();
