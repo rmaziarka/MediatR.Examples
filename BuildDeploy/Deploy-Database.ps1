@@ -23,7 +23,7 @@ function Deploy-Database {
 		DatabaseName = 'KnightFrank.Antares'
 		ConnectionString = "Server=localhost;Database=KnightFrank.Antares;Integrated Security=SSPI"
 		MigrateAssembly = 'KnightFrank.Antares.Dal.dll'
-		DefaultAppPoolUserName = "IIS AppPool\KnightFrank.Antares.WebAPI"
+		DefaultAppPoolUserName = "IIS AppPool\dev.api.antares.knightfrank.com"
 	}
 	try { 
 	    Build-EntityFrameworkMigrations @buildParams
