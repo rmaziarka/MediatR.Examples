@@ -20,7 +20,7 @@
     {
         private readonly BaseTestClassFixture fixture;
 
-        private const string ApiUrl = "/api/contacts";
+        private const string ApiUrl = "/api/contact";
 
         public ContactControllerSteps(BaseTestClassFixture fixture)
         {
