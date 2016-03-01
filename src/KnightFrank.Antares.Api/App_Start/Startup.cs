@@ -1,4 +1,5 @@
-﻿namespace KnightFrank.Antares.Api
+﻿[assembly: Microsoft.Owin.OwinStartup(typeof(KnightFrank.Antares.Api.Startup))]
+namespace KnightFrank.Antares.Api
 {
     using System.Web.Http;
 
@@ -9,7 +10,6 @@
 
     using Owin;
 
-    [assembly: Microsoft.Owin.OwinStartup(typeof(KnightFrank.Antares.Api.Startup))]
     public class Startup
     {
         public void Configuration(IAppBuilder app)
