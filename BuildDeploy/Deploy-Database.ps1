@@ -32,6 +32,9 @@ function Deploy-Database {
 	    $Username = $deployParams.DefaultAppPoolUserName
 	    $DatabaseName = $deployParams.DatabaseName
 	
+        #due to the bug https://connect.microsoft.com/SQLServer/feedback/details/1420992/import-module-sqlps-may-take-longer-to-load-but-always-returns-warnings-when-the-azure-powershell-module-is-also-installed
+        #the first call to Invoke-SqlCmd will return warnings
+
 	    Invoke-SqlQuery -DatabaseName $deployParams.DatabaseName -InputFile 'sql/Update-SqlLogin.sql'`
 			    -SqlVariable "Username = $Username"
 
