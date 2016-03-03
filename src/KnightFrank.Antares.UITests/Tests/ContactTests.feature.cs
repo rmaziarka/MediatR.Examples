@@ -84,7 +84,7 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Title",
-                        "First Name",
+                        "FirstName",
                         "Surname"});
             table1.AddRow(new string[] {
                         "Miss",

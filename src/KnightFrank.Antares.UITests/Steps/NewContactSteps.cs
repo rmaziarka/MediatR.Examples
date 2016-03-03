@@ -21,7 +21,6 @@
             }
 
             ScenarioContext sc = scenarioContext;
-
             this.driverContext = sc["DriverContext"] as DriverContext;
         }
 
@@ -42,9 +41,9 @@
                 newContactPage.SetTitle(table.Rows[0]["Title"]);
             }
 
-            if (!table.Rows[0]["First Name"].Equals(string.Empty))
+            if (!table.Rows[0]["FirstName"].Equals(string.Empty))
             {
-                newContactPage.SetFirstName(table.Rows[0]["First Name"]);
+                newContactPage.SetFirstName(table.Rows[0]["FirstName"]);
             }
 
             if (!table.Rows[0]["Surname"].Equals(string.Empty))

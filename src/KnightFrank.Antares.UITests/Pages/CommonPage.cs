@@ -35,6 +35,9 @@
                 case "new contact":
                     this.Driver.NavigateTo(GetUrl("NewContactPage"));
                     break;
+                case "new residential sales requirement":
+                    this.Driver.NavigateTo(GetUrl("NewResidentialSalesRequirementPage"));
+                    break;
                 default:
                     Assert.True(false, "Page does not exist");
                     break;

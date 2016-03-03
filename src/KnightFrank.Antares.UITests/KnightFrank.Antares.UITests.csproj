@@ -90,22 +90,22 @@
   <ItemGroup>
     <Compile Include="Extensions\DriverExtensions.cs" />
     <Compile Include="Pages\CommonPage.cs" />
-    <Compile Include="Pages\GooglePage.cs" />
     <Compile Include="Pages\NewContactPage.cs" />
+    <Compile Include="Pages\NewResidentialSalesRequirementPage.cs" />
     <Compile Include="ProjectPageBase.cs" />
     <Compile Include="ProjectTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Steps\GoogleSteps.cs" />
     <Compile Include="Steps\NewContactSteps.cs" />
+    <Compile Include="Steps\NewResidentialSalesRequirementSteps.cs" />
     <Compile Include="Tests\ContactTests.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ContactTests.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\GoogleTests.feature.cs">
+    <Compile Include="Tests\ResidentialSalesRequirement.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GoogleTests.feature</DependentUpon>
+      <DependentUpon>ResidentialSalesRequirement.feature</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -120,9 +120,9 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ContactTests.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\GoogleTests.feature">
+    <None Include="Tests\ResidentialSalesRequirement.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>GoogleTests.feature.cs</LastGenOutput>
+      <LastGenOutput>ResidentialSalesRequirement.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
