@@ -6,15 +6,7 @@ namespace KnightFrank.Antares.Dal.Migrations
     {
         public Configuration()
         {
-            this.AutomaticMigrationsEnabled = true;
-        }
-
-        protected override void Seed(KnightFrankContext context)
-        {
-            context.Contacts.AddOrUpdate(
-                new Contact { Surname = "Andrew Peters" }, 
-                new Contact { Surname = "Brice Lambson" }, 
-                new Contact { Surname = "Rowan Miller" });
+            this.AutomaticMigrationsEnabled = false;
         }
     }
 }
