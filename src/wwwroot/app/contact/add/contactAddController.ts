@@ -1,6 +1,6 @@
-﻿/// <reference path="../../../typings/_all.d.ts" />
+﻿/// <reference path="../../typings/_all.d.ts" />
 
-module Antares.Frontoffice.Contact {
+module Antares.Contact {
     export class ContactAddController {
         public contact: Common.Models.Dto.IContact;
 
@@ -15,5 +15,5 @@ module Antares.Frontoffice.Contact {
         }
     }
 
-    angular.module('app.frontoffice').controller('ContactAddController', ContactAddController);
+    angular.module('app').controller('ContactAddController', ContactAddController);
 }

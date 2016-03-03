@@ -1,6 +1,6 @@
-﻿/// <reference path="../../../typings/_all.d.ts" />
+﻿/// <reference path="../../typings/_all.d.ts" />
 
-declare module Antares.Frontoffice.Common.Models.Resources {
+declare module Antares.Common.Models.Resources {
     interface IResourceParameters {
         id: number;            
     }

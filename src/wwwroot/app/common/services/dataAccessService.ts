@@ -1,6 +1,6 @@
-﻿/// <reference path="../../../typings/_all.d.ts" />
+﻿/// <reference path="../../typings/_all.d.ts" />
 
-module Antares.Frontoffice.Services {
+module Antares.Services {
     import Resources = Common.Models.Resources;
 
     export class DataAccessService {
@@ -14,5 +14,5 @@ module Antares.Frontoffice.Services {
         }
     }
 
-    angular.module('app.frontoffice').service('dataAccessService', DataAccessService);
+    angular.module('app').service('dataAccessService', DataAccessService);
 }
