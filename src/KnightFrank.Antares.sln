@@ -39,6 +39,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "wwwroot", "wwwroot\", "{8B5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.UITests", "KnightFrank.Antares.UITests\KnightFrank.Antares.UITests.csproj", "{66D03143-B339-4767-8A9F-8306164BC88A}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "KnightFrank.Antares.Database", "KnightFrank.Antares.Database\KnightFrank.Antares.Database.sqlproj", "{93A305E8-D11A-4821-B6A1-79787FAD0E93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +74,12 @@ Global
 		{66D03143-B339-4767-8A9F-8306164BC88A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66D03143-B339-4767-8A9F-8306164BC88A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66D03143-B339-4767-8A9F-8306164BC88A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93A305E8-D11A-4821-B6A1-79787FAD0E93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93A305E8-D11A-4821-B6A1-79787FAD0E93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93A305E8-D11A-4821-B6A1-79787FAD0E93}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{93A305E8-D11A-4821-B6A1-79787FAD0E93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93A305E8-D11A-4821-B6A1-79787FAD0E93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93A305E8-D11A-4821-B6A1-79787FAD0E93}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
