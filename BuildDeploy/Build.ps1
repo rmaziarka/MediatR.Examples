@@ -28,8 +28,11 @@ try
     . ".\Invoke-InstallNpm.ps1"
     . ".\Invoke-BuildWebsite.ps1"
     . ".\Invoke-RunWebsiteTests.ps1"
+
+    # ===========================================================	
+    Import-Module -Name "$PSScriptRoot\Get-Files.psm1"
     
-    Invoke-InstallNuget -ProjectSrcPath $ProjectSrcPath -PSScriptPackagePath $PSScriptPackagePath -XUnitRunnerConsoleVersion $XUnitRunnerConsoleVersion 
+    Invoke-InstallNuget -SolutionPath "$ProjectSrcPath\KnightFrank.Antares.Backend.sln" -NugetPackageOutputPath "$ProjectSrcPath\packages" -PSScriptPackagePath $PSScriptPackagePath -XUnitRunnerConsoleVersion $XUnitRunnerConsoleVersion
 
     Invoke-BuildSolution -SolutionPath "$ProjectSrcPath\KnightFrank.Antares.Backend.sln"
 

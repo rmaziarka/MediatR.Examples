@@ -4,7 +4,11 @@ function Invoke-InstallNuget
     (
         [Parameter(Mandatory=$true)]
         [string]
-        $ProjectSrcPath,
+        $SolutionPath,
+
+        [Parameter(Mandatory=$true)]
+        [string]
+        $NugetPackageOutputPath,
 
         [Parameter(Mandatory=$false)]
         [string]
@@ -43,34 +47,26 @@ function Invoke-InstallNuget
 
     # ===========================================================
     # Create \src\packages dictionary
-    # ===========================================================
-
-    $packagesOutput = Join-Path -Path $ProjectSrcPath -ChildPath 'packages'  
-     
-    if (!(Test-Path -Path $packagesOutput))
+    # ===========================================================     
+    if (!(Test-Path -Path $NugetPackageOutputPath))
     {   
-        New-Item -Path $packagesOutput -ItemType directory
-        Write-Host -Object "Created $packagesOutput"
+        New-Item -Path $NugetPackageOutputPath -ItemType directory
+        Write-Host -Object "Created $NugetPackageOutputPath"
     }
 
-    if (!(Test-Path -Path $packagesOutput))
+    if (!(Test-Path -Path $NugetPackageOutputPath))
     {
-        Write-Host -Object "Failed to create packages output directory '$packagesOutput'"
-        throw "Failed to create packages output directory '$packagesOutput'"
+        Write-Host -Object "Failed to create packages output directory '$NugetPackageOutputPath'"
+        throw "Failed to create packages output directory '$NugetPackageOutputPath'"
     }
     
     # ===========================================================
     # Nuget install
-    # ===========================================================    
-    $packages = Get-ChildItem -Path $ProjectSrcPath -Recurse -Filter "packages.config" | Select-Object -ExpandProperty FullName
-
-    foreach($package in $packages) 
+    # ===========================================================
+    & $Nuget restore $SolutionPath -OutputDirectory $NugetPackageOutputPath
+    if ($LASTEXITCODE -ne 0) 
     {
-        & $Nuget restore $package -OutputDirectory $packagesOutput
-        if ($LASTEXITCODE -ne 0) 
-        {
-            throw "Failed install $package"
-        }        
+        throw "Failed install packages for solution $SolutionPath"
     }
 
     # ===========================================================
