@@ -8,6 +8,7 @@ module Antares.Contact {
 
         constructor(private dataAccessService: Services.DataAccessService) {
             this.contactResource = dataAccessService.getContactResource();
+            console.log(kfconfig);
         }
 
         public save() {

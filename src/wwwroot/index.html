@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <title></title>
@@ -13,6 +13,8 @@
     <!-- endbuild -->
 </head>
 <body ng-app="app">
+
+    <script type="text/javascript" language="javascript" src="app/app.json"></script>
     <!-- build:js js/lib.js -->
     <!-- bower:js -->
     <script src="libs/angular/angular.js"></script>
@@ -30,7 +32,9 @@
     <!-- inject:templates:js -->
     <!-- endinject -->
     <!-- endbuild -->
-    <div><a ui-sref="contact-add">Add contact</a></div>
+    <div>
+        <a ui-sref="contact-add">Add contact</a>
+    </div>
     <div>Hello world</div>
 
     <div data-ui-view>
