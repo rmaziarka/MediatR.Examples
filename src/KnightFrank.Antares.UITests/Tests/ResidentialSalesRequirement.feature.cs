@@ -93,10 +93,47 @@ this.ScenarioSetup(scenarioInfo);
                         "SE1 9PP",
                         "London"});
 #line 5
- testRunner.When("User fills in requirement details on create residential sales requirement page", ((string)(null)), table1, "When ");
+ testRunner.When("User fills in location details on create residential sales requirement page", ((string)(null)), table1, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Type",
+                        "PriceMin",
+                        "PriceMax",
+                        "BedroomsMin",
+                        "BedroomsMax",
+                        "ReceptionRoomsMin",
+                        "ReceptionRoomsMax",
+                        "BathroomsMin",
+                        "BathroomsMax",
+                        "ParkingSpacesMin",
+                        "ParkingSpacesMax",
+                        "AreaMin",
+                        "AreaMax",
+                        "LandAreaMin",
+                        "LandAreaMax",
+                        "RequirementsNote"});
+            table2.AddRow(new string[] {
+                        "Flat",
+                        "100000",
+                        "500000",
+                        "2",
+                        "3",
+                        "2",
+                        "4",
+                        "1",
+                        "3",
+                        "2",
+                        "2",
+                        "90000",
+                        "150000",
+                        "200000",
+                        "300000",
+                        "Note"});
 #line 8
+  testRunner.And("User fills in property details on create residential sales requirement page", ((string)(null)), table2, "And ");
+#line 11
   testRunner.And("User clicks save button on create residential sales requirement page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 9
+#line 12
  testRunner.Then("New residential sales requirement should be created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

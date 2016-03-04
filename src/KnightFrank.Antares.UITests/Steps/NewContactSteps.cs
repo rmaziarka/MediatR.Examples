@@ -2,11 +2,13 @@
 {
     using System;
 
+    using KnightFrank.Antares.Dal;
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;
 
     using TechTalk.SpecFlow;
+    using TechTalk.SpecFlow.Assist;
 
     [Binding]
     public class NewContactSteps
@@ -35,20 +37,21 @@
         public void SetNewContactDetails(Table table)
         {
             var newContactPage = ScenarioContext.Current.Get<NewContactPage>("NewContactPage");
+            var contactDetails = table.CreateInstance<Contact>();
 
-            if (!table.Rows[0]["Title"].Equals(string.Empty))
+            if (!contactDetails.Title.Equals(string.Empty))
             {
-                newContactPage.SetTitle(table.Rows[0]["Title"]);
+                newContactPage.SetTitle(contactDetails.Title);
             }
 
-            if (!table.Rows[0]["FirstName"].Equals(string.Empty))
+            if (!contactDetails.FirstName.Equals(string.Empty))
             {
-                newContactPage.SetFirstName(table.Rows[0]["FirstName"]);
+                newContactPage.SetFirstName(contactDetails.FirstName);
             }
 
-            if (!table.Rows[0]["Surname"].Equals(string.Empty))
+            if (!contactDetails.Surname.Equals(string.Empty))
             {
-                newContactPage.SetSurname(table.Rows[0]["Surname"]);
+                newContactPage.SetSurname(contactDetails.Surname);
             }
         }
 

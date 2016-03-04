@@ -89,9 +89,13 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Extensions\DriverExtensions.cs" />
+    <Compile Include="Pages\AddressTemplatePage.cs" />
     <Compile Include="Pages\CommonPage.cs" />
     <Compile Include="Pages\NewContactPage.cs" />
     <Compile Include="Pages\NewResidentialSalesRequirementPage.cs" />
+    <Compile Include="Pages\NotesPage.cs" />
+    <Compile Include="Pages\OwnershipDetailsPage.cs" />
+    <Compile Include="Pages\ResidentialSalesRequirementDetailsPage.cs" />
     <Compile Include="ProjectPageBase.cs" />
     <Compile Include="ProjectTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -134,6 +138,12 @@
       <Link>IEDriverServer.exe</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj">
+      <Project>{2525af42-f89c-48d8-89a7-74449702c627}</Project>
+      <Name>KnightFrank.Antares.Dal</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
