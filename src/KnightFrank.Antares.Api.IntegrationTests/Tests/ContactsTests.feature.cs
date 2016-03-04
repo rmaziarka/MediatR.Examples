@@ -78,20 +78,31 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retrieve single contact details", ((string[])(null)));
 #line 3
-this.ScenarioSetup(scenarioInfo);
-#line 4
-    testRunner.Given("User has defined a contact details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 5
-    testRunner.When("User retrieves contact details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "FirstName",
-                        "Surname"});
+                        "Surname",
+                        "Title"});
             table1.AddRow(new string[] {
-                        "John",
-                        "Doe"});
-#line 6
-    testRunner.Then("contact should have following details", ((string)(null)), table1, "Then ");
+                        "Tomasz",
+                        "Bien",
+                        "Mister"});
+#line 4
+  testRunner.Given("User has defined a contact details", ((string)(null)), table1, "Given ");
+#line 7
+  testRunner.When("User retrieves \'specific\' contacts details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "FirstName",
+                        "Surname",
+                        "Title"});
+            table2.AddRow(new string[] {
+                        "Tomasz",
+                        "Bien",
+                        "Mister"});
+#line 8
+  testRunner.Then("contact should have following details", ((string)(null)), table2, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -102,22 +113,40 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void RetrieveAllContactsDetails()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retrieve all contacts details", ((string[])(null)));
-#line 10
-this.ScenarioSetup(scenarioInfo);
-#line 11
-    testRunner.Given("User retrieves all contacts details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 13
+ this.ScenarioSetup(scenarioInfo);
 #line hidden
-            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "FirstName",
-                        "Surname"});
-            table2.AddRow(new string[] {
-                        "John",
-                        "Doe"});
-            table2.AddRow(new string[] {
+                        "Surname",
+                        "Title"});
+            table3.AddRow(new string[] {
+                        "Tomasz",
+                        "Bien",
+                        "Mister"});
+            table3.AddRow(new string[] {
                         "David",
-                        "Dummy"});
-#line 12
-    testRunner.Then("contacts should have following details", ((string)(null)), table2, "Then ");
+                        "Dummy",
+                        "Mister"});
+#line 14
+ testRunner.Given("User has defined a contact details", ((string)(null)), table3, "Given ");
+#line 18
+  testRunner.When("User retrieves \'all\' contacts details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                        "FirstName",
+                        "Surname",
+                        "Title"});
+            table4.AddRow(new string[] {
+                        "Tomasz",
+                        "Bien",
+                        "Mister"});
+            table4.AddRow(new string[] {
+                        "David",
+                        "Dummy",
+                        "Mister"});
+#line 19
+  testRunner.Then("contacts should have following details", ((string)(null)), table4, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

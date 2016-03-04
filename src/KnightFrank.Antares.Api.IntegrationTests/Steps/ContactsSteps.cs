@@ -5,6 +5,8 @@
     using System.Net;
     using System.Net.Http;
 
+    using FluentAssertions;
+
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal;
 
@@ -18,9 +20,8 @@
     [Binding]
     public class ContactsControllerSteps : IClassFixture<BaseTestClassFixture>
     {
-        private readonly BaseTestClassFixture fixture;
-
         private const string ApiUrl = "/api/contacts";
+        private readonly BaseTestClassFixture fixture;
 
         public ContactsControllerSteps(BaseTestClassFixture fixture)
         {
@@ -28,26 +29,19 @@
         }
 
         [Given(@"User has defined a contact details")]
-        public void GetContactId()
+        public void GetContactId(Table table)
         {
-            ScenarioContext.Current["ContactID"] = "1";
+            var contact = table.CreateInstance<Contact>();
+            this.fixture.DataContext.Contacts.Add(contact);
+            this.fixture.DataContext.SaveChanges();
         }
 
-        [When(@"User retrieves contact details")]
-        public void GetContactDetails()
+        [When(@"User retrieves '(all|specific)' contacts details")]
+        public void GetContactsDetails(string getSpecificOrAllContacts)
         {
-            var contactId = ScenarioContext.Current.Get<string>("ContactID");
-            string requestUrl = $"{ApiUrl}/{contactId}";
-
-            HttpResponseMessage response = this.fixture.Server.HttpClient.GetAsync(requestUrl).Result;
-
-            ScenarioContext.Current.Set(response, "Response");
-        }
-
-        [Given(@"User retrieves all contacts details")]
-        public void GetContactsDetails()
-        {
-            string requestUrl = $"{ApiUrl}";
+            string requestUrl = getSpecificOrAllContacts.Equals("all")
+                ? $"{ApiUrl}"
+                : $"{ApiUrl}/{this.fixture.DataContext.Contacts.First().Id}";
 
             HttpResponseMessage response = this.fixture.Server.HttpClient.GetAsync(requestUrl).Result;
 
@@ -57,31 +51,25 @@
         [Then(@"contacts should have following details")]
         public void CheckContactsDetails(Table table)
         {
-            List<Contact> expectedContactsDetails = table.CreateSet<Contact>().ToList();
             var response = ScenarioContext.Current.Get<HttpResponseMessage>("Response");
-
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
+            List<Contact> expectedContactsDetails = table.CreateSet<Contact>().ToList();
             var currentContactsDetails = JsonConvert.DeserializeObject<List<Contact>>(response.Content.ReadAsStringAsync().Result);
 
-            for (var i = 0; i < currentContactsDetails.Count; i++)
-            {
-                Assert.Equal(expectedContactsDetails[i].FirstName, currentContactsDetails[i].FirstName);
-                Assert.Equal(expectedContactsDetails[i].Surname, currentContactsDetails[i].Surname);
-            }
+            currentContactsDetails.ShouldBeEquivalentTo(expectedContactsDetails);
         }
+
         [Then(@"contact should have following details")]
         public void CheckContactDetails(Table table)
         {
-            var expectedContactDetails = table.CreateInstance<Contact>();
             var response = ScenarioContext.Current.Get<HttpResponseMessage>("Response");
-
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
+            var contact = table.CreateInstance<Contact>();
             var currentContactDetails = JsonConvert.DeserializeObject<Contact>(response.Content.ReadAsStringAsync().Result);
 
-            Assert.Equal(expectedContactDetails.FirstName, currentContactDetails.FirstName);
-            Assert.Equal(expectedContactDetails.Surname, currentContactDetails.Surname);
+            currentContactDetails.ShouldBeEquivalentTo(contact);
         }
     }
 }

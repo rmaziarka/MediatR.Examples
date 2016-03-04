@@ -15,6 +15,9 @@ namespace KnightFrank.Antares.Api
 
     public class NinjectWebCommon
     {
+        /* should be used only in integration testing scenarios */
+        public static Action<IKernel> RebindAction { private get; set; }
+
         public static IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
@@ -24,6 +27,8 @@ namespace KnightFrank.Antares.Api
 
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+
+                RebindAction?.Invoke(kernel);
 
                 ConfigureMediator(kernel);
 

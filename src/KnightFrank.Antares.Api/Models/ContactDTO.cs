@@ -14,5 +14,7 @@
         ///     Last name
         /// </summary>
         public string Surname { get; set; }
+
+        public string Title { get; set; }
     }
 }

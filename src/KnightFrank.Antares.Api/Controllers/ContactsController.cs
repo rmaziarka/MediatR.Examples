@@ -28,7 +28,7 @@
         public IEnumerable<ContactDto> GetContacts()
         {
             return new[]
-            { new ContactDto { FirstName = "John", Surname = "Doe" }, new ContactDto { FirstName = "David", Surname = "Dummy" } };
+            { new ContactDto { FirstName = "Tomasz", Surname = "Bien", Title="Mister" }, new ContactDto { FirstName = "David", Surname = "Dummy", Title="Mister" } };
         }
 
         /// <summary>
@@ -39,7 +39,7 @@
         [HttpGet]
         public ContactDto GetContact(int id)
         {
-            return new ContactDto { FirstName = "John", Surname = "Doe" };
+            return new ContactDto { FirstName = "Tomasz", Surname = "Bien", Title = "Mister" };
         }
 
         /// <summary>
