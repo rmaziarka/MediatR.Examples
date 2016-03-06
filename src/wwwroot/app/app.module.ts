@@ -3,6 +3,7 @@
 module Antares {
     var app: ng.IModule = angular.module('app', [
         'ngResource',
-        'ui.router'
+        'ui.router',
+        'pascalprecht.translate'
     ]);
 }

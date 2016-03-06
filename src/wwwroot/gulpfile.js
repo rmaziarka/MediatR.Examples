@@ -30,7 +30,7 @@ gulp.task('_js-inject', function () {
 });
 
 /**
- * Created and inject bundles
+ * Creates and injects js files into index.html
  */
 gulp.task('bundle', function (callback) {
     runSequence('_js-clean', 'ts', '_js-inject', callback);
@@ -123,15 +123,21 @@ gulp.task('specs-build', function () {
 
 /**
  * Building everything
- * @return {Stream}
  */
 gulp.task('build', ['_optimize'], function () {
     log('Building everything');
 
-    gulp.src(config.build.temp)
+    log('Cleaning output folder');
+
+    gulp.src([config.build.temp])
         .pipe($.clean());
 
+    log('Copying nuspec file');
     gulp.src(config.nuspec)
+        .pipe(gulp.dest(config.build.output));
+
+    log('Copying static files');
+    gulp.src(config.build.staticFiles, { base: config.app })
         .pipe(gulp.dest(config.build.output));
 
     log('Deployed to build folder');
@@ -165,7 +171,7 @@ gulp.task('_build-templatecache', ['_clean-code'], function () {
     log('Creating templates caches in build folder');
 
     return gulp
-        .src(config.build.htmltemplates)
+        .src(config.build.htmlTemplatesSrc)
         .pipe($.minifyHtml({ empty: true }))
         .pipe($.angularTemplatecache(
             config.build.templateCache.file,

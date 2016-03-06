@@ -1,0 +1,10 @@
+﻿{
+  "COMMON": {
+    "SAVE": "Save"
+  },
+  "CONTACT": {
+    "TITLE": "Title",
+    "FIRSTNAME": "First name",
+    "SURNAME": "Surname"
+  }
+}

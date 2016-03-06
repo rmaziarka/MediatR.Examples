@@ -3,6 +3,7 @@
     var clientApp = root + 'app/';
     var build = './build/';
     var specRunnerFile = 'specRunner.html';
+    var translations = 'common/translations/';
     var bower = {
         json: require('./bower.json'),
         directory: './libs/',
@@ -56,7 +57,12 @@
                     root: 'app/'
                 }
             },
-            htmltemplates: clientApp + '**/*.html',
+            htmlTemplatesSrc: clientApp + '**/*.html',
+            translationsDest: build + translations,
+            staticFiles: [
+                translations + '*.json', // translation
+                'app.json',  // tokens
+            ]
         },
         vendors: []
     }
