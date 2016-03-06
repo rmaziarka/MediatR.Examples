@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using System.Web.Http;
 
-    using KnightFrank.Antares.API.Models;
-    using KnightFrank.Antares.Domain.Contact.Commands;
+    using Dal.Model;
+    using Domain.Contact.Commands;
 
     using MediatR;
 
@@ -14,21 +14,21 @@
     public class ContactsController : ApiController
     {
         private IMediator mediator;
-        
+
         public ContactsController(IMediator mediator)
         {
             this.mediator = mediator;
         }
-        
+
         /// <summary>
         ///     Get contact list
         /// </summary>
         /// <returns>Contact entity collection</returns>
         [HttpGet]
-        public IEnumerable<ContactDto> GetContacts()
+        public IEnumerable<Contact> GetContacts()
         {
             return new[]
-            { new ContactDto { FirstName = "Tomasz", Surname = "Bien", Title="Mister" }, new ContactDto { FirstName = "David", Surname = "Dummy", Title="Mister" } };
+            { new Contact { FirstName = "Tomasz", Surname = "Bien", Title="Mister" }, new Contact { FirstName = "David", Surname = "Dummy", Title="Mister" } };
         }
 
         /// <summary>
@@ -37,9 +37,9 @@
         /// <param name="id">Contact id</param>
         /// <returns>Contact entity</returns>
         [HttpGet]
-        public ContactDto GetContact(int id)
+        public Contact GetContact(int id)
         {
-            return new ContactDto { FirstName = "Tomasz", Surname = "Bien", Title = "Mister" };
+            return new Contact { FirstName = "Tomasz", Surname = "Bien", Title = "Mister" };
         }
 
         /// <summary>

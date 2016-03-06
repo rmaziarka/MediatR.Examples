@@ -28,6 +28,7 @@
 
             this.Bind(typeof(IGenericRepository<>)).To(typeof(GenericRepository<>));
 
+            this.Bind(typeof(IReadGenericRepository<>)).To(typeof(ReadGenericRepository<>));
             AssemblyScanner.FindValidatorsInAssembly(Assembly.GetExecutingAssembly())
                            .ForEach(x => this.Kernel.Bind(x.InterfaceType).To(x.ValidatorType));
         }

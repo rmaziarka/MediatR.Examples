@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contact.cs" />
+    <Compile Include="Model\Contact.cs" />
     <Compile Include="KnightFrankContext.cs" />
     <Compile Include="Migrations\201603020733599_InitialCreate.cs" />
     <Compile Include="Migrations\201603020733599_InitialCreate.Designer.cs">
@@ -58,7 +58,9 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\BaseEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\ReadGenericRepository.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
+    <Compile Include="Repository\IReadGenericRepository.cs" />
     <Compile Include="Repository\IGenericRepository.cs" />
   </ItemGroup>
   <ItemGroup>

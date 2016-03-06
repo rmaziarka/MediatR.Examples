@@ -173,7 +173,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ContravariantBindingResolver.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
-    <Compile Include="Models\ContactDTO.cs" />
+    <Compile Include="Core\NinjectExtentions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App_Start\Startup.cs" />
   </ItemGroup>
@@ -190,6 +190,10 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj">
+      <Project>{2525af42-f89c-48d8-89a7-74449702c627}</Project>
+      <Name>KnightFrank.Antares.Dal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KnightFrank.Antares.Domain\KnightFrank.Antares.Domain.csproj">
       <Project>{5987d78c-856d-4315-8b8b-baf00c286aff}</Project>
       <Name>KnightFrank.Antares.Domain</Name>

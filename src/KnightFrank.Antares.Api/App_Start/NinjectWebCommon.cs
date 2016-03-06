@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace KnightFrank.Antares.Api
+﻿namespace KnightFrank.Antares.Api
 {
+    using System;
+    using System.Web;
+
+    using KnightFrank.Antares.Api.Core;
+    using KnightFrank.Antares.Dal;
     using KnightFrank.Antares.Domain;
 
     using MediatR;
@@ -21,6 +21,7 @@ namespace KnightFrank.Antares.Api
         public static IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
+
             try
             {
                 kernel.Components.Add<IBindingResolver, ContravariantBindingResolver>();
@@ -28,12 +29,13 @@ namespace KnightFrank.Antares.Api
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
-                RebindAction?.Invoke(kernel);
-
+                ConfigureDependenciesInHttpRequestScope(kernel);
                 ConfigureMediator(kernel);
 
+                RebindAction?.Invoke(kernel);
+
                 kernel.Load<DomainModule>();
-                
+
                 return kernel;
             }
             catch
@@ -41,6 +43,11 @@ namespace KnightFrank.Antares.Api
                 kernel.Dispose();
                 throw;
             }
+        }
+
+        private static void ConfigureDependenciesInHttpRequestScope(StandardKernel kernel)
+        {
+            kernel.Bind<KnightFrankContext>().ToSelf().InCustomHttpContextRequestScope();
         }
 
         private static void ConfigureMediator(KernelBase kernel)

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace KnightFrank.Antares.Api
+﻿namespace KnightFrank.Antares.Api
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
 
     using Ninject.Components;
@@ -14,9 +12,6 @@ namespace KnightFrank.Antares.Api
 
     public class ContravariantBindingResolver : NinjectComponent, IBindingResolver
     {
-        /// <summary>
-        /// Returns any bindings from the specified collection that match the specified service.
-        /// </summary>
         public IEnumerable<IBinding> Resolve(Multimap<Type, IBinding> bindings, Type service)
         {
             if (service.IsGenericType)

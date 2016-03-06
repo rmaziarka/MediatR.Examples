@@ -20,7 +20,6 @@ namespace KnightFrank.Antares.Api
             WebApiConfig.Register(config);
 
             var kernel = NinjectWebCommon.CreateKernel();
-
             SwaggerConfig.Register(config);
 
             app

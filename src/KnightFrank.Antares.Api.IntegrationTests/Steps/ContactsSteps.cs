@@ -7,8 +7,9 @@
 
     using FluentAssertions;
 
-    using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
-    using KnightFrank.Antares.Dal;
+    using Fixtures;
+
+    using Dal.Model;
 
     using Newtonsoft.Json;
 
