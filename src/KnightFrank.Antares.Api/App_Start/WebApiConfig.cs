@@ -4,6 +4,8 @@
     using System.Web.Http;
     using System.Web.Http.Cors;
 
+    using KnightFrank.Antares.Api.Core;
+
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -19,6 +21,8 @@
                     ContractResolver = new CamelCasePropertyNamesContractResolver()
                 }
             });
+
+            config.Filters.Add(new ValidationExceptionFilterAttribute());
 
             // Web API configuration and services
             var cors = new EnableCorsAttribute("*", "*", "*");
