@@ -29,13 +29,21 @@ gulp.task('_js-inject', function () {
         .pipe(gulp.dest(config.root));
 });
 
+gulp.task('_styles-inject', ['sass'], function () {
+    log('Wire up css into the html, after files are ready');
+
+    return gulp
+        .src(config.index)
+        .pipe(inject(config.styles.css))
+        .pipe(gulp.dest(config.root));
+});
+
 /**
  * Creates and injects js files into index.html
  */
 gulp.task('bundle', function (callback) {
-    runSequence('_js-clean', 'ts', '_js-inject', callback);
+    runSequence('_js-clean', 'ts', '_js-inject', 'sass', '_styles-inject', callback);
 });
-
 
 /**
 * Removes all *.js and *.js.map files from ./app
@@ -62,7 +70,7 @@ gulp.task('_js-annotate', function () {
  * Lint all typescript files
  * @return {Stream}
  */
-gulp.task('_ts-lint', function () {    
+gulp.task('_ts-lint', function () {
     return gulp
         .src(config.ts.allTs)
         .pipe($.tslint())
@@ -73,7 +81,7 @@ gulp.task('_ts-lint', function () {
  * Compiling Typescript --> Javascript
  * @return {Stream}
  */
-gulp.task('_ts-compile', function () {    
+gulp.task('_ts-compile', function () {
     var tsResult = gulp
         .src([config.ts.allTs, config.ts.libTypingsAllTs])
         .pipe($.sourcemaps.init())
@@ -91,7 +99,7 @@ gulp.task('_ts-compile', function () {
 */
 gulp.task('ts', function (callback) {
     log('Compiling typescript to javascript');
-    runSequence('_ts-lint', '_ts-compile', '_js-annotate', callback);    
+    runSequence('_ts-lint', '_ts-compile', '_js-annotate', callback);
 });
 
 /**
@@ -195,6 +203,43 @@ gulp.task('_optimize', ['bundle', '_build-templatecache'], function () {
         .pipe(inject(templateCache, 'templates'))
         .pipe($.useref())
         .pipe(gulp.dest(config.build.output));
+});
+
+/**
+ * Compiling Sass --> CSS
+ * @return {Stream}
+ */
+gulp.task('sass', ['sass-lint'],function () {
+    return gulp
+        .src(config.styles.sass)
+        .pipe($.sass({
+            includePaths: config.sassPaths
+        }).on('error', $.sass.logError))
+        .pipe($.autoprefixer({
+            browsers: [
+                'Android 2.3',
+                'Android >= 4',
+                'Chrome >= 20',
+                'Firefox >= 24',
+                'Explorer >= 8',
+                'iOS >= 6',
+                'Opera >= 12',
+                'Safari >= 6']
+        }))
+        .pipe(gulp.dest(config.styles.output));
+});
+
+/**
+ * Lint all sass files
+ * @return {Stream}
+ */
+gulp.task('sass-lint', function () {
+    return gulp
+        .src(config.styles.sass)
+        .pipe($.cached('sass'))
+        .pipe($.scssLint({
+            'config': 'sass-lint.yml',
+        }))
 });
 
 

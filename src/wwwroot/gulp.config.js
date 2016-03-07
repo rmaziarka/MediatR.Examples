@@ -9,6 +9,7 @@
         directory: './libs/',
         ignorePath: ''
     };
+    var styles = root + 'styles/';
 
     var config = {
         index: 'index.html',
@@ -41,6 +42,16 @@
                 '**/*.js'
             ]
         },
+        styles: {
+            output: styles,
+            sass: styles + '**/*.scss',
+            css: styles + '*.css'
+        },
+        sassPaths: [
+            bower.directory + 'bootstrap-sass/assets/stylesheets',
+            bower.directory + 'font-awesome/scss',
+        ],
+        fonts: bower.directory + 'font-awesome/fonts/**/*.*',
         ts: {
             allTs: clientApp + '**/*.ts',
             libTypingsAllTs: root + 'typings/main/**/*.ts'
@@ -63,8 +74,8 @@
                 'app/app.json',  // tokens
             ],
             staticAppFiles: [
-                root + 'wwwroot.nuspec', 
-                root + '_web.config',  
+                root + 'wwwroot.nuspec',
+                root + '_web.config',
             ],
         },
         vendors: []

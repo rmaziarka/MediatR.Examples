@@ -251,3 +251,4 @@ src/wwwroot/app/**/*.js.map
 src/wwwroot/libs
 
 src/wwwroot/build/*
+src/wwwroot/styles/*.css
