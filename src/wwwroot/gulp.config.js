@@ -13,7 +13,6 @@
     var config = {
         index: 'index.html',
         specRunner: root + specRunnerFile,
-        nuspec: 'wwwroot.nuspec',
         bower: bower,
         root: root,
         app: clientApp,
@@ -59,10 +58,14 @@
             },
             htmlTemplatesSrc: clientApp + '**/*.html',
             translationsDest: build + translations,
-            staticFiles: [
+            staticJsonFiles: [
                 translations + '*.json', // translation
                 'app.json',  // tokens
-            ]
+            ],
+            staticAppFiles: [
+                root + 'wwwroot.nuspec', 
+                root + '_web.config',  
+            ],
         },
         vendors: []
     }

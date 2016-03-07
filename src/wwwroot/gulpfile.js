@@ -132,12 +132,12 @@ gulp.task('build', ['_optimize'], function () {
     gulp.src([config.build.temp])
         .pipe($.clean());
 
-    log('Copying nuspec file');
-    gulp.src(config.nuspec)
+    log('Copying nuspec and web.config file');
+    gulp.src(config.build.staticAppFiles)
         .pipe(gulp.dest(config.build.output));
 
     log('Copying static files');
-    gulp.src(config.build.staticFiles, { base: config.app })
+    gulp.src(config.build.staticJsonFiles, { base: config.app })
         .pipe(gulp.dest(config.build.output));
 
     log('Deployed to build folder');
