@@ -60,7 +60,7 @@
             translationsDest: build + translations,
             staticJsonFiles: [
                 translations + '*.json', // translation
-                'app.json',  // tokens
+                'app/app.json',  // tokens
             ],
             staticAppFiles: [
                 root + 'wwwroot.nuspec', 
