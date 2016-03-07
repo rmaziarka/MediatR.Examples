@@ -1,3 +1,10 @@
+param (
+    [Parameter(Mandatory = $true)]
+    [ValidatePattern('KnightFrank\.Antares\.\w+\.User')]
+    [string] $sqlUserName,
+    [string] $sqlUserPassword = '$Kf@admin2016'
+)
+
 function Get-SqlInstance { 
     param ( 
         [ValidateScript({ Test-Connection -ComputerName $_ -Quiet -Count 1 })] 
@@ -17,7 +24,7 @@ function Get-SqlInstance {
                     } 
                 } 
             } catch { 
-                Write-Error "Error: $($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)" 
+                Write-Error 'Error: $($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)' 
                 $false 
             } 
         } 
@@ -44,7 +51,7 @@ function Get-SqlLogin {
                     if ($Instance -eq 'MSSQLSERVER') { 
                         $Server = new-object ('Microsoft.SqlServer.Management.Smo.Server') $Computer 
                     } else { 
-                        $Server = new-object ('Microsoft.SqlServer.Management.Smo.Server') "$Computer`\$Instance" 
+                        $Server = new-object ('Microsoft.SqlServer.Management.Smo.Server') '$Computer`\$Instance' 
                     } 
                     if (!$Name) { 
                         $Server.Logins 
@@ -54,7 +61,7 @@ function Get-SqlLogin {
                 } 
             } 
         } catch { 
-            Write-Error "Error: $($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)" 
+            Write-Error 'Error: $($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)' 
             $false 
         } 
     } 
@@ -76,15 +83,23 @@ function New-SqlLogin {
     process { 
         try { 
             $Server = New-Object ('Microsoft.SqlServer.Management.Smo.Server') $Computername 
-            ## https://msdn.microsoft.com/en-us/library/microsoft.sqlserver.management.smo.logintype.aspx 
-            $login = New-Object -TypeName Microsoft.SqlServer.Management.Smo.Login -ArgumentList $Server, $Username 
-            $login.LoginType = 'SqlLogin'
-            $login.PasswordExpirationEnabled = $false
-            $login.Create($Password)
+            $login = $Server.Logins | where { $_.Name -eq $Username }
+            if (!$login){
+                $login = New-Object -TypeName Microsoft.SqlServer.Management.Smo.Login -ArgumentList $Server, $Username 
+                $login.LoginType = 'SqlLogin'
+                $login.PasswordExpirationEnabled = $false
+                $login.Create($Password)
+                'Sql login created'
+            } else {
+                $login.ChangePassword($Password)
+                $login.Alter()
+                'Sql login password updated'
+            }
+            
             $login.AddToRole('dbcreator')
-            'Sql login created'
+            'Sql login db role set'
         } catch { 
-            Write-Error "Error: $($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)" 
+            Write-Error 'Error: $($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)' 
             'Creating sql login failed'
         } 
     } 
@@ -103,81 +118,106 @@ function Update-LoginMode {
     process {
         try {
             $Server = New-Object ('Microsoft.SqlServer.Management.Smo.Server') $Computername 
-            $Server.Settings.LoginMode = $loginmode
-            $Server.Alter()
-            'Sql login mode updated'
+            if ($Server.Settings.LoginMode -eq 'Mixed') {
+                'Sql login mode correct - no action required'
+            } else {
+                $Server.Settings.LoginMode = $loginmode
+                $Server.Alter()
+                Restart-SqlServices
+                'Sql login mode updated'
+            }
         } catch {
-            Write-Error "Error: $($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)" 
-            'Update sql login mode failed.' 
+            Write-Error 'Error: $($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)' 
+            'Update sql login mode failed.'
         }
     }
 }
-
-$instance = Get-SqlInstance
-$instance | New-SqlLogin -Username 'kf-a' -Password '$Kf@admin'
-$instance | Update-LoginMode -loginMode 'Mixed'
-$sqlService = Get-Service -ComputerName $instance.Computername -Name $instance.Instance
 
 [System.Collections.ArrayList]$ServicesToRestart = @()
 
 function Custom-GetDependServices ($ServiceInput)
 {
-	#Write-Host "Name of `$ServiceInput: $($ServiceInput.Name)"
-	#Write-Host "Number of dependents: $($ServiceInput.DependentServices.Count)"
 	If ($ServiceInput.DependentServices.Count -gt 0)
 	{
 		ForEach ($DepService in $ServiceInput.DependentServices)
 		{
-			#Write-Host "Dependent of $($ServiceInput.Name): $($Service.Name)"
-			If ($DepService.Status -eq "Running")
+			If ($DepService.Status -eq 'Running')
 			{
-				#Write-Host "$($DepService.Name) is running."
 				$CurrentService = Get-Service -Name $DepService.Name
 				
-                # get dependancies of running service
-				Custom-GetDependServices $CurrentService                
+                Custom-GetDependServices $CurrentService                
 			}
 			Else
 			{
-				Write-Host "$($DepService.Name) is stopped. No Need to stop or start or check dependancies."
+				Write-Host '$($DepService.Name) is stopped. No Need to stop or start or check dependancies.'
 			}
 			
 		}
 	}
-    Write-Host "Service to Stop $($ServiceInput.Name)"
+    Write-Host 'Service to Stop $($ServiceInput.Name)'
     if ($ServicesToRestart.Contains($ServiceInput.Name) -eq $false)
     {
-        Write-Host "Adding service to stop $($ServiceInput.Name)"
+        Write-Host 'Adding service to stop $($ServiceInput.Name)'
         $ServicesToRestart.Add($ServiceInput.Name)
     }
 }
 
-# Get the main service
-$Service = $sqlService
+function Restart-SqlServices {
+    # Get the main service
+    $Service = Get-Service -ComputerName $instance.Computername -Name $instance.Instance
 
-# Get dependancies and stop order
-Custom-GetDependServices -ServiceInput $Service
+    # Get dependancies and stop order
+    Custom-GetDependServices -ServiceInput $Service
 
 
-Write-Host "-------------------------------------------"
-Write-Host "Stopping Services"
-Write-Host "-------------------------------------------"
-foreach($ServiceToStop in $ServicesToRestart)
-{
-    Write-Host "Stop Service $ServiceToStop"
-    Stop-Service $ServiceToStop -Verbose #-Force
+    Write-Host '-------------------------------------------'
+    Write-Host 'Stopping Services'
+    Write-Host '-------------------------------------------'
+    foreach($ServiceToStop in $ServicesToRestart)
+    {
+        Write-Host 'Stop Service $ServiceToStop'
+        Stop-Service $ServiceToStop -Verbose #-Force
+    }
+    Write-Host '-------------------------------------------'
+    Write-Host 'Starting Services'
+    Write-Host '-------------------------------------------'
+    # Reverse stop order to get start order
+    $ServicesToRestart.Reverse()
+
+    foreach($ServiceToRestart in $ServicesToRestart)
+    {
+        Write-Host 'Start Service $ServiceToRestart'
+        Start-Service $ServiceToRestart -Verbose
+    }
+    Write-Host '-------------------------------------------'
+    Write-Host 'Restart of services completed'
+    Write-Host '-------------------------------------------'
 }
-Write-Host "-------------------------------------------"
-Write-Host "Starting Services"
-Write-Host "-------------------------------------------"
-# Reverse stop order to get start order
-$ServicesToRestart.Reverse()
 
-foreach($ServiceToRestart in $ServicesToRestart)
-{
-    Write-Host "Start Service $ServiceToRestart"
-    Start-Service $ServiceToRestart -Verbose
+function Set-FirewallRule {
+    Import-Module NetSecurity
+
+    $ruleName = 'KFA_SqlPort'
+    $rule = Get-NetFirewallRule | where { $_.Name -eq $ruleName }
+    if (!$rule) {
+        New-NetFirewallRule `
+            -Name $ruleName `
+            -DisplayName 'KnightFrank.Antares.SqlPort' `
+            -Description 'Open connections to sql port (1433)' `
+            -Protocol 'tcp' `
+            -LocalPort 1433 `
+            -Direction 'Inbound' `
+            -Action 'Allow'
+              
+    } else {
+        'Firewall rule already exists - no action required'
+    }
 }
-Write-Host "-------------------------------------------"
-Write-Host "Restart of services completed"
-Write-Host "-------------------------------------------"
+
+Write-Host '-------------------------------------------'
+$instance = Get-SqlInstance
+$instance | New-SqlLogin -Username $sqlUserName -Password $sqlUserPassword
+$instance | Update-LoginMode -loginMode 'Mixed'
+Set-FirewallRule
+
+Write-Host '---------  ALL DONE  ----------------------'
