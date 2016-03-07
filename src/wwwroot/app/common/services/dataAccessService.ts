@@ -1,17 +1,24 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
-declare var KnightFrankAntaresConfig;
 
 module Antares.Services {
     import Resources = Common.Models.Resources;
-
+    
     export class DataAccessService {
+
+        private rootUrl: string;
+
         constructor(private $resource: ng.resource.IResourceService) {
+            
+        }
+        
+        setRootUrl(url: string) : void
+        {
+            this.rootUrl = url;
         }
 
         getContactResource(): Resources.IBaseResourceClass<Resources.IContactResource> {
-            //TODO move url to config
             return <Resources.IBaseResourceClass<Resources.IContactResource>>
-                this.$resource(KnightFrankAntaresConfig.api.rootUrl + '/api/contacts/:id');
+                this.$resource(this.rootUrl + '/api/contacts/:id');
         }
     }
 

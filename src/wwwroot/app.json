@@ -1,0 +1,7 @@
+{
+  "KnightFrank.Antares.Config": {
+    "Api": {
+      "RootUrl": "http://dev.api.antares.knightfrank.com"
+    }
+  }
+}

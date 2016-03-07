@@ -70,12 +70,12 @@
             htmlTemplatesSrc: clientApp + '**/*.html',
             translationsDest: build + translations,
             staticJsonFiles: [
-                translations + '*.json', // translation
-                'app/app.json'  // tokens
+                translations + '*.json', // translation              
             ],
             staticAppFiles: [
                 root + 'wwwroot.nuspec',
                 root + '_web.config',
+                root + 'app.json',  // tokens
             ],
         },
         vendors: []

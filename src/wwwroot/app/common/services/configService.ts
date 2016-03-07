@@ -1,0 +1,22 @@
+﻿/// <reference path="../../typings/_all.d.ts" />
+
+module Antares.Services {
+    import Resources = Common.Models.Resources;
+    
+    export class ConfigService {
+        public promise: ng.IPromise<string>;
+
+        constructor(private $http: ng.IHttpService) {
+            this.promise = this.getRootUrl();
+        }
+
+        public getRootUrl = (): ng.IPromise<string> =>
+        {
+            return this.$http.get('app.json').then(function (data: any) {
+                return data.data["KnightFrank.Antares.Config"].Api.RootUrl;
+            });
+        }
+    }
+
+    angular.module('app').service('configService', ConfigService);
+}

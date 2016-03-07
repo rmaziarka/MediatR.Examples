@@ -19,7 +19,12 @@ module Antares {
                 params: {},
                 templateUrl: 'app/contact/add/contactAdd.html',
                 controllerAs: 'vm',
-                controller: 'ContactAddController'
+                controller: 'ContactAddController',
+                resolve: {
+                    'rootUrl': (configService: Antares.Services.ConfigService) => {
+                        return configService.promise;
+                    }
+                }
             });
 
         $urlRouterProvider.otherwise('/app/contact/add');

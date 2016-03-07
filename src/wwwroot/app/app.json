@@ -1,5 +1,0 @@
-var KnightFrankAntaresConfig = {
-  "api": {
-    "rootUrl": "http://dev.api.antares.knightfrank.com"
-  }
-};
