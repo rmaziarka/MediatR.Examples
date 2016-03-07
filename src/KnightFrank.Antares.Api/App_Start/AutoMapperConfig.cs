@@ -19,7 +19,7 @@
 
                 foreach (var profileType in profileTypes)
                 {
-                    dynamic profile = Activator.CreateInstance(profileType);
+                    var profile = (Profile)Activator.CreateInstance(profileType);
                     cfg.AddProfile(profile);
                 }
             });

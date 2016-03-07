@@ -18,4 +18,12 @@
             this.CreateMap<ContactDto, Contact>();
         }
     }
+
+    public class ContactProfile : Profile
+    {
+        protected override void Configure()
+        {
+            this.CreateMap<Contact, ContactDto>();
+        }
+    }
 }
