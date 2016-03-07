@@ -59,6 +59,7 @@
         build: {
             output: build,
             temp: './.tmp/',
+            testInput: './.test/',
             templateCache: {
                 file: 'templates.js',
                 options: {

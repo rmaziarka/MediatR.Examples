@@ -2,11 +2,11 @@
 
 module Antares.Contact {
     export class ContactAddController {
-        public contact: Common.Models.Dto.IContact;
+        public contact: Antares.Common.Models.Dto.IContact;
 
-        private contactResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IContactResource>;
+        private contactResource: Antares.Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IContactResource>;
 
-        constructor(private dataAccessService: Services.DataAccessService) {
+        constructor(private dataAccessService: Antares.Services.DataAccessService) {
             this.contactResource = dataAccessService.getContactResource();
         }
 

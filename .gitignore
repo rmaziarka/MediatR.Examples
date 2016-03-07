@@ -252,3 +252,4 @@ src/wwwroot/libs
 
 src/wwwroot/build/*
 src/wwwroot/styles/*.css
+src/wwwroot/.test/templates.js

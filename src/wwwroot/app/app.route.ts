@@ -17,9 +17,7 @@ module Antares {
             .state('app.contact-add', {
                 url: '/contact/add',
                 params: {},
-                templateUrl: 'app/contact/add/contactAdd.html',
-                controllerAs: 'vm',
-                controller: 'ContactAddController',
+                template: '<contact-add></contact-add>',
                 resolve: {
                     'rootUrl': (configService: Antares.Services.ConfigService) => {
                         return configService.promise;

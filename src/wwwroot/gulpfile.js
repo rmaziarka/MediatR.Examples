@@ -114,11 +114,12 @@ gulp.task('ts-watch', function () {
  * Inject all the spec files into the specRunner.html
  * @return {Stream}
  */
-gulp.task('specs-build', function () {
+gulp.task('build-specs', ['_build-templatecache'], function () {
     log('Building the spec runner');
 
     var wiredep = require('wiredep').stream;
     var options = config.getWiredepDefaultOptions();
+    var templateCache = config.build.testInput + config.build.templateCache.file;
 
     options.devDependencies = true;
 
@@ -127,6 +128,7 @@ gulp.task('specs-build', function () {
         .pipe(wiredep(options))
         .pipe(inject(config.js.appFilesToTest, '', config.js.order))
         .pipe(inject(config.js.specsAndMocks, 'specs', ['**/*']))
+        .pipe(inject(templateCache, 'templates'))
         .pipe(gulp.dest(config.root));
 });
 
@@ -164,7 +166,7 @@ gulp.task('build', ['_optimize'], function () {
  * @return {Stream}
  */
 gulp.task('build-local', function (callback) {
-    runSequence('bundle', 'specs-build', callback);
+    runSequence('bundle', 'build-specs', callback);
 });
 
 /**
@@ -193,7 +195,8 @@ gulp.task('_build-templatecache', ['_clean-code'], function () {
             config.build.templateCache.file,
             config.build.templateCache.options
         ))
-        .pipe(gulp.dest(config.build.temp));
+        .pipe(gulp.dest(config.build.temp))
+        .pipe(gulp.dest(config.build.testInput));
 });
 
 /**
