@@ -8,7 +8,7 @@ module Antares {
     function initTranslations($translateProvider) {
         $translateProvider
             .useStaticFilesLoader({
-                prefix: 'common/translations/',
+                prefix: 'translations/',
                 suffix: '.json'
             })
             .registerAvailableLanguageKeys(['en'], {

@@ -145,8 +145,8 @@ gulp.task('build', ['_optimize'], function () {
         .pipe(gulp.dest(config.build.output));
 
     log('Copying static files');
-    gulp.src(config.build.staticJsonFiles, { base: config.app })
-        .pipe(gulp.dest(config.build.output));
+    gulp.src(config.build.staticJsonFiles)
+        .pipe(gulp.dest(config.build.translationsDest));
 
     log('Deployed to build folder');
 });

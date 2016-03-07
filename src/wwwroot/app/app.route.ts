@@ -7,7 +7,14 @@ module Antares {
 
     function initRoute($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('contact-add', {
+            .state('app', {
+                url: '/app',
+                abstract: true,
+                templateUrl: 'app/app.html'
+            });
+
+        $stateProvider
+            .state('app.contact-add', {
                 url: '/contact/add',
                 params: {},
                 templateUrl: 'app/contact/add/contactAdd.html',
@@ -15,6 +22,6 @@ module Antares {
                 controller: 'ContactAddController'
             });
 
-        $urlRouterProvider.otherwise('/app');
+        $urlRouterProvider.otherwise('/app/contact/add');
     }
 }

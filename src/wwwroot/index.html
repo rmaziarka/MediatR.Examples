@@ -32,19 +32,17 @@
     <!-- build:js js/app.js -->
     <!-- inject:js -->
     <script src="app/app.module.js"></script>
+    <script src="app/requirement/requirement.module.js"></script>
     <script src="app/app.module.config.js"></script>
     <script src="app/app.route.js"></script>
     <script src="app/common/services/dataAccessService.js"></script>
     <script src="app/contact/add/contactAddController.js"></script>
+    <script src="app/requirement/add/requirementAddController.js"></script>
+    <script src="app/requirement/requirement.route.js"></script>
     <!-- endinject -->
     <!-- inject:templates:js -->
     <!-- endinject -->
     <!-- endbuild -->
-    <div>
-        <a ui-sref="contact-add">Add contact</a>
-    </div>
-    <div>Hello world</div>
-
     <div data-ui-view>
     </div>
 </body>

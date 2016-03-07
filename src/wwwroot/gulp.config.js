@@ -3,7 +3,7 @@
     var clientApp = root + 'app/';
     var build = './build/';
     var specRunnerFile = 'specRunner.html';
-    var translations = 'common/translations/';
+    var translations = 'translations/';
     var bower = {
         json: require('./bower.json'),
         directory: './libs/',
@@ -71,7 +71,7 @@
             translationsDest: build + translations,
             staticJsonFiles: [
                 translations + '*.json', // translation
-                'app/app.json',  // tokens
+                'app/app.json'  // tokens
             ],
             staticAppFiles: [
                 root + 'wwwroot.nuspec',

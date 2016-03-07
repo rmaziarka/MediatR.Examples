@@ -6,5 +6,12 @@
     "TITLE": "Title",
     "FIRSTNAME": "First name",
     "SURNAME": "Surname"
+  },
+  "REQUIREMENT": {
+    "ADD": {
+      "ADD_REQUIREMENT": "Add requirement",
+      "CONTACT": "Contact",
+      "ADD": "Add"
+    }
   }
 }
