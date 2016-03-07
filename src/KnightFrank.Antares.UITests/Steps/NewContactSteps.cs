@@ -2,7 +2,7 @@
 {
     using System;
 
-    using KnightFrank.Antares.Dal;
+    using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;
