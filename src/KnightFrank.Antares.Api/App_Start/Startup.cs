@@ -22,6 +22,8 @@ namespace KnightFrank.Antares.Api
             var kernel = NinjectWebCommon.CreateKernel();
             SwaggerConfig.Register(config);
 
+            AutoMapperConfig.Configure();
+
             app
                 .UseNinjectMiddleware(() => kernel)
                 .UseNinjectWebApi(server)

@@ -33,7 +33,7 @@
         public void GetContactId(Table table)
         {
             var contact = table.CreateInstance<Contact>();
-            this.fixture.DataContext.Contacts.Add(contact);
+            this.fixture.DataContext.Contact.Add(contact);
             this.fixture.DataContext.SaveChanges();
         }
 
@@ -42,7 +42,7 @@
         {
             string requestUrl = getSpecificOrAllContacts.Equals("all")
                 ? $"{ApiUrl}"
-                : $"{ApiUrl}/{this.fixture.DataContext.Contacts.First().Id}";
+                : $"{ApiUrl}/{this.fixture.DataContext.Contact.First().Id}";
 
             HttpResponseMessage response = this.fixture.Server.HttpClient.GetAsync(requestUrl).Result;
 

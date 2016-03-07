@@ -7,7 +7,10 @@
 
     using Microsoft.Owin.Testing;
 
+    using Xunit;
+
     // ReSharper disable once ClassNeverInstantiated.Global
+    [CollectionDefinition("Database collection")]
     public class BaseTestClassFixture : IDisposable
     {
         private readonly DbContextTransaction transaction;
