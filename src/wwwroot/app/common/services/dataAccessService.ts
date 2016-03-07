@@ -1,4 +1,5 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
+declare var KnightFrankAntaresConfig;
 
 module Antares.Services {
     import Resources = Common.Models.Resources;
@@ -10,7 +11,7 @@ module Antares.Services {
         getContactResource(): Resources.IBaseResourceClass<Resources.IContactResource> {
             //TODO move url to config
             return <Resources.IBaseResourceClass<Resources.IContactResource>>
-                this.$resource('http://dev.api.antares.knightfrank.com/api/contacts/:id');
+                this.$resource(KnightFrankAntaresConfig.api.rootUrl + '/api/contacts/:id');
         }
     }
 

@@ -1,3 +1,5 @@
-var kfconfig = {
-  "url": "http://dev.app.antares.knightfrank.com/"
-}
+var KnightFrankAntaresConfig = {
+  "api": {
+    "rootUrl": "http://dev.api.antares.knightfrank.com"
+  }
+};
