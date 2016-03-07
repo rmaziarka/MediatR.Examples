@@ -9,6 +9,7 @@
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Api.IntegrationTests.SharedActions;
     using KnightFrank.Antares.Dal;
+    using KnightFrank.Antares.Dal.Model;
 
     using Newtonsoft.Json;
 
@@ -33,7 +34,7 @@
         {
             var contact = table.CreateInstance<Contact>();
             this.fixture.DataContext.Database.ExecuteSqlCommand(@"TRUNCATE TABLE [dbo].Contacts");
-            this.fixture.DataContext.Contacts.Add(contact);
+            this.fixture.DataContext.Contact.Add(contact);
             this.fixture.DataContext.SaveChanges();
         }
 
@@ -49,7 +50,7 @@
         {
             if (id.Equals("proper"))
             {
-                id = this.fixture.DataContext.Contacts.First().Id.ToString();
+                id = this.fixture.DataContext.Contact.First().Id.ToString();
             }
 
             string requestUrl = $"{ApiUrl}/" + id + "";
