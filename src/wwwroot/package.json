@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "KnightFrank.Antares web application",
   "scripts": {
-    "postinstall": "node node_modules/bower/bin/bower install"
+    "postinstall": "node node_modules/bower/bin/bower install -f"
   },
   "devDependencies": {
     "bower": "^1.6.8",
