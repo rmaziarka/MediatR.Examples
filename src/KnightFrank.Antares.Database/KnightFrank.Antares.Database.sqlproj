@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Data\PreloadContacts.sql" />
+    <None Include="database.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
