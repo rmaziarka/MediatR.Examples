@@ -69,13 +69,15 @@
             },
             htmlTemplatesSrc: clientApp + '**/*.html',
             translationsDest: build + translations,
-            staticJsonFiles: [
+            staticTranslationsFiles: [
                 translations + '*.json', // translation              
             ],
             staticAppFiles: [
                 root + 'wwwroot.nuspec',
-                root + '_web.config',
                 root + 'app.json',  // tokens
+            ],
+            webConfigFile: [
+                root + '_web.config'
             ],
         },
         vendors: []

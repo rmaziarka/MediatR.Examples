@@ -1,5 +1,6 @@
 ﻿var
     gulp = require('gulp'),
+    rename = require('gulp-rename'),
     $ = require('gulp-load-plugins')({ lazy: true }),
     config = require('./gulp.config')(),
     tsProject = $.typescript.createProject({
@@ -140,13 +141,20 @@ gulp.task('build', ['_optimize'], function () {
     gulp.src([config.build.temp])
         .pipe($.clean());
 
-    log('Copying nuspec and web.config file');
+    log('Copying static files');
     gulp.src(config.build.staticAppFiles)
         .pipe(gulp.dest(config.build.output));
 
-    log('Copying static files');
-    gulp.src(config.build.staticJsonFiles)
+    log('Copying translation files');
+    gulp.src(config.build.staticTranslationsFiles)
         .pipe(gulp.dest(config.build.translationsDest));
+
+    log('Copying web.config file');
+    gulp.src(config.build.webConfigFile)
+        .pipe(rename(function (path) {
+            path.basename = path.basename.replace('_', '');
+        }))
+        .pipe(gulp.dest(config.build.output));
 
     log('Deployed to build folder');
 });
