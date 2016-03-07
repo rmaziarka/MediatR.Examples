@@ -41,7 +41,7 @@ function Invoke-RunUnitTests
     # ===========================================================
     foreach($project in $projects) 
     {
-        $assemblyDlls = Get-ChildItem -Path $project -Recurse -Filter "*.dll" | Select-Object -ExpandProperty FullName
+        $assemblyDlls = Get-ChildItem -Path $project -Filter "*.dll" | Select-Object -ExpandProperty FullName
 
         $assemblies = @()
         foreach ($assemblyDll in $assemblyDlls) 
