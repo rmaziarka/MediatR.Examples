@@ -67,8 +67,8 @@
     <Folder Include="Scripts\Data" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Scripts\Data\PreloadContacts.sql" />
-    <None Include="database.nuspec" />
+    <None Include="Scripts\Data\PreloadContact.sql" />
+    <None Include="KnightFrank.Antares.Database.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />

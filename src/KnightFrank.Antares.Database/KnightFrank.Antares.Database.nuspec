@@ -12,4 +12,9 @@
     <description>KnightFrank Antares Database</description>
 	  <releaseNotes>release notes</releaseNotes>
   </metadata>
+    <files>
+        <file src="Scripts\*.*" target="Scripts"/>
+        <file src="bin\*.*"/>
+        <file src="Publish\*.*" target="Publish"/>
+    </files>
 </package>

@@ -1,4 +1,4 @@
-﻿MERGE dbo.Contacts c
+﻿MERGE dbo.Contact c
 USING (VALUES
 	('John', 'Smith', 'test 1'),
 	('Alan', 'Rolfe', 'test 2')
