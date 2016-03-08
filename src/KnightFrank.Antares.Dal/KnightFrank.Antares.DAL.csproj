@@ -53,6 +53,14 @@
     <Compile Include="Migrations\201603071246173_AddRequirementTable.Designer.cs">
       <DependentUpon>201603071246173_AddRequirementTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603081059172_AddEnumTables.cs" />
+    <Compile Include="Migrations\201603081059172_AddEnumTables.Designer.cs">
+      <DependentUpon>201603081059172_AddEnumTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Configuration\LocalConfiguration.cs" />
+    <Compile Include="Model\Configuration\EnumLocalisationConfiguration.cs" />
+    <Compile Include="Model\Configuration\EnumTypeItemConfiguration.cs" />
+    <Compile Include="Model\Configuration\EnumTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\RequirementConfiguration.cs" />
     <Compile Include="Model\Contact.cs" />
     <Compile Include="KnightFrankContext.cs" />
@@ -62,6 +70,10 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\BaseEntity.cs" />
+    <Compile Include="Model\EnumLocalisation.cs" />
+    <Compile Include="Model\Local.cs" />
+    <Compile Include="Model\EnumTypeItem.cs" />
+    <Compile Include="Model\EnumType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ReadGenericRepository.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
@@ -80,6 +92,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603071246173_AddRequirementTable.resx">
       <DependentUpon>201603071246173_AddRequirementTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603081059172_AddEnumTables.resx">
+      <DependentUpon>201603081059172_AddEnumTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
