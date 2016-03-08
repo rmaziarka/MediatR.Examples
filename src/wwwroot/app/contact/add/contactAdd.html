@@ -1,12 +1,12 @@
 ﻿<div class="row">
     <div class="col-md-6">
         <h2 class="page-header">Add contact</h2>
-        <form ng-submit="vm.save()" name="addContactForm" id="addContactForm" method="post" novalidate>
+        <form ng-submit="addContactForm.$valid && vm.save()" name="addContactForm" id="addContactForm" method="post" novalidate>
             <div class="form-group">
                 <h3>Basic information</h3>
             </div>
             <fieldset>
-                <div class="form-group" ng-class="{'has-error': addContactForm.$submitted || (addContactForm.title.$touched && addContactForm.title.$invalid)}">
+                <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.title.$touched) && addContactForm.title.$invalid}">
                     <div class="row">
                         <div class="col-md-3">
                             <label for="title" translate="CONTACT.TITLE"></label>
@@ -18,7 +18,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group" ng-class="{'has-error': addContactForm.$submitted || (addContactForm.firstName.$touched && addContactForm.firstName.$invalid)}">
+                <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.firstName.$touched) && addContactForm.firstName.$invalid}">
                     <div class="row">
                         <div class="col-md-6">
                             <label for="name" translate="CONTACT.FIRSTNAME"></label>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-6" ng-class="{'has-error': addContactForm.$submitted || (addContactForm.surname.$touched && addContactForm.surname.$invalid)}">
+                        <div class="col-md-6" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.surname.$touched) && addContactForm.surname.$invalid}">
                             <label for="surname" translate="CONTACT.SURNAME"></label>
                             <input type="text" class="form-control" id="surname" name="surname" required ng-maxlength="128" ng-model="vm.contact.surname">
                             <div ng-show="addContactForm.surname.$touched || addContactForm.$submitted">

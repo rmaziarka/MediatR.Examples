@@ -7,6 +7,10 @@
     "FIRSTNAME": "First name",
     "SURNAME": "Surname"
   },
+  "FORM": {
+    "FIELD_IS_REQUIRED": "Field is required",
+    "FIELD_EXCEEDED_MAX_LENGTH": "Value is too long"
+  },
   "REQUIREMENT": {
     "ADD": {
       "ADD_REQUIREMENT": "Add requirement",
