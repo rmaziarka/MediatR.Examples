@@ -1,11 +1,14 @@
 ﻿namespace KnightFrank.Antares.Dal.Repository
 {
-    using System.Linq;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
 
     using KnightFrank.Antares.Dal.Model;
 
-    public interface IReadGenericRepository<out T> where T : BaseEntity
+    public interface IReadGenericRepository<T> where T : BaseEntity
     {
-        IQueryable<T> Query();
+        IEnumerable<T> GetAll();
+        IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate);
     }
 }
