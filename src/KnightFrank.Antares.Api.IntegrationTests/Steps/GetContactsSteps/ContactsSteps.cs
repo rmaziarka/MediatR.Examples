@@ -33,8 +33,17 @@
         public void GivenCreateContact(Table table)
         {
             var contact = table.CreateInstance<Contact>();
-            this.fixture.DataContext.Database.ExecuteSqlCommand(@"TRUNCATE TABLE [dbo].Contacts");
+            this.fixture.DataContext.Database.ExecuteSqlCommand(@"DELETE FROM [dbo].Contact");
             this.fixture.DataContext.Contact.Add(contact);
+            this.fixture.DataContext.SaveChanges();
+        }
+
+        [Given(@"User has defined multiple contact details")]
+        public void GivenCreateContacts(Table table)
+        {
+            IEnumerable<Contact> set = table.CreateSet<Contact>();
+            this.fixture.DataContext.Database.ExecuteSqlCommand(@"DELETE FROM [dbo].Contact");
+            this.fixture.DataContext.Contact.AddRange(set);
             this.fixture.DataContext.SaveChanges();
         }
 
@@ -72,13 +81,11 @@
             currentContactsDetails.ShouldBeEquivalentTo(expectedContactsDetails);
         }
 
-        [Then(@"contact should have following details")]
-        public void ThenContactShouldHaveFollowingDetails(Table table)
+        [Then(@"contact should have same details as inserted")]
+        public void ThenContactShouldHaveFollowingDetails()
         {
-            var contact = table.CreateInstance<Contact>();
             var currentContactDetails = JsonConvert.DeserializeObject<Contact>(ScenarioContext.Current.GetResponseContent());
-
-            currentContactDetails.ShouldBeEquivalentTo(contact);
+            currentContactDetails.ShouldBeEquivalentTo(this.fixture.DataContext.Contact.First());
         }
 
         [Then(@"User should get (.*) error mesage")]

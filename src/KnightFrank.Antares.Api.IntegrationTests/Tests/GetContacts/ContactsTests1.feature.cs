@@ -93,7 +93,7 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.GetContacts
                         "Dummy",
                         "Mister"});
 #line 4
-  testRunner.Given("User has defined a contact details", ((string)(null)), table1, "Given ");
+  testRunner.Given("User has defined multiple contact details", ((string)(null)), table1, "Given ");
 #line 8
   testRunner.When("User retrieves all contacts details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 9
@@ -140,6 +140,21 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.GetContacts
   testRunner.When("User retrieves contacts details for proper id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 21
   testRunner.Then("User should get OK http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 22
+   testRunner.And("contact should have same details as inserted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.TheoryAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
+        [Xunit.TraitAttribute("Description", "Retrieve error messages for improper contact id")]
+        [Xunit.InlineDataAttribute("\"A\"", "BadRequest", new string[0])]
+        public virtual void RetrieveErrorMessagesForImproperContactId(string id, string statusCode, string[] exampleTags)
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retrieve error messages for improper contact id", exampleTags);
+#line 25
+ this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                         "FirstName",
@@ -149,38 +164,12 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.GetContacts
                         "Tomasz",
                         "Bien",
                         "Mister"});
-#line 22
-   testRunner.And("contact should have following details", ((string)(null)), table4, "And ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.TheoryAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "Retrieve error messages for improper contact id")]
-        [Xunit.InlineDataAttribute("-2", "BadRequest", "{bla bla}", new string[0])]
-        public virtual void RetrieveErrorMessagesForImproperContactId(string id, string statusCode, string errorMessage, string[] exampleTags)
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retrieve error messages for improper contact id", exampleTags);
 #line 26
- this.ScenarioSetup(scenarioInfo);
-#line hidden
-            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
-                        "FirstName",
-                        "Surname",
-                        "Title"});
-            table5.AddRow(new string[] {
-                        "Tomasz",
-                        "Bien",
-                        "Mister"});
-#line 27
-  testRunner.Given("User has defined a contact details", ((string)(null)), table5, "Given ");
-#line 30
+  testRunner.Given("User has defined a contact details", ((string)(null)), table4, "Given ");
+#line 29
   testRunner.When(string.Format("User retrieves contacts details for {0} id", id), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 31
+#line 30
   testRunner.Then(string.Format("User should get {0} http status code", statusCode), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 32
-   testRunner.And(string.Format("User should get {0} error mesage", errorMessage), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

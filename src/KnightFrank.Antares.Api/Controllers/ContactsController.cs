@@ -1,10 +1,18 @@
 ﻿namespace KnightFrank.Antares.API.Controllers
 {
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using System.Web;
     using System.Web.Http;
 
     using Dal.Model;
+
     using Domain.Contact.Commands;
+
+    using Dal.Repository;
+
+    using Domain.Contact;
 
     using MediatR;
 
@@ -13,11 +21,18 @@
     /// </summary>
     public class ContactsController : ApiController
     {
-        private IMediator mediator;
+        private readonly IMediator mediator;
+        private readonly IReadGenericRepository<Contact> readRepository;
 
-        public ContactsController(IMediator mediator)
+        /// <summary>
+        ///     Contacts controller constructor
+        /// </summary>
+        /// <param name="mediator">Mediator instance.</param>
+        /// <param name="readRepository">Generic read repository.</param>
+        public ContactsController(IMediator mediator, IReadGenericRepository<Contact> readRepository)
         {
             this.mediator = mediator;
+            this.readRepository = readRepository;
         }
 
         /// <summary>
@@ -25,10 +40,11 @@
         /// </summary>
         /// <returns>Contact entity collection</returns>
         [HttpGet]
-        public IEnumerable<Contact> GetContacts()
+        public IEnumerable<ContactDto> GetContacts()
         {
-            return new[]
-            { new Contact { FirstName = "Tomasz", Surname = "Bien", Title="Mister" }, new Contact { FirstName = "David", Surname = "Dummy", Title="Mister" } };
+            IEnumerable<Contact> contacts = this.readRepository.GetAll();
+            var contactsDto = AutoMapper.Mapper.Map<IEnumerable<ContactDto>>(contacts);
+            return contactsDto;
         }
 
         /// <summary>
@@ -39,7 +55,14 @@
         [HttpGet]
         public Contact GetContact(int id)
         {
-            return new Contact { FirstName = "Tomasz", Surname = "Bien", Title = "Mister" };
+            Contact contact = this.readRepository.FindBy(c => c.Id == id).FirstOrDefault();
+
+            if (contact == null)
+            {
+                throw new HttpException((int)HttpStatusCode.NotFound, "Contact not found.");
+            }
+
+            return contact;
         }
 
         /// <summary>
