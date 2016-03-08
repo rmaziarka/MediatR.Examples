@@ -47,7 +47,7 @@
             foreach (Contact contactRow in contact)
             {
                 PostRequest.SendPostRequest(this.fixture, requestUrl, contactRow);
-                contactRow.Id = int.Parse(ScenarioContext.Current.GetResponseContent());
+                contactRow.Id = new Guid(ScenarioContext.Current.GetResponseContent().Replace("\"", ""));
                 list.Add(contactRow);
         }
             ScenarioContext.Current.Set<List<Contact>>(list, "Contact List");
@@ -66,7 +66,7 @@
         {
             if (id.Equals("latest"))
             {
-                id = ScenarioContext.Current.GetResponseContent();
+                id = ScenarioContext.Current.GetResponseContent().Replace("\"", "");
             }
 
             string requestUrl = $"{ApiUrl}/" + id + "";

@@ -17,7 +17,7 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.GetContacts
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class ContactsFeature : Xunit.IClassFixture<ContactsFeature.FixtureData>, System.IDisposable
+    public partial class GetContactsFeature : Xunit.IClassFixture<GetContactsFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -25,7 +25,7 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.GetContacts
 #line 1 "ContactsTests.feature"
 #line hidden
         
-        public ContactsFeature()
+        public GetContactsFeature()
         {
             this.TestInitialize();
         }
@@ -33,7 +33,7 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.GetContacts
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Contacts", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "GetContacts", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -62,7 +62,7 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.GetContacts
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void SetFixture(ContactsFeature.FixtureData fixtureData)
+        public virtual void SetFixture(GetContactsFeature.FixtureData fixtureData)
         {
         }
         
@@ -72,13 +72,15 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.GetContacts
         }
         
         [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
+        [Xunit.TraitAttribute("FeatureTitle", "GetContacts")]
         [Xunit.TraitAttribute("Description", "Retrieve all contacts details")]
         public virtual void RetrieveAllContactsDetails()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retrieve all contacts details", ((string[])(null)));
 #line 3
  this.ScenarioSetup(scenarioInfo);
+#line 4
+ testRunner.Given("All contacts have been deleted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "FirstName",
@@ -92,12 +94,28 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.GetContacts
                         "David",
                         "Dummy",
                         "Mister"});
-#line 4
-  testRunner.Given("User has defined multiple contact details", ((string)(null)), table1, "Given ");
-#line 8
-  testRunner.When("User retrieves all contacts details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 5
+  testRunner.When("User creates a contact with following data", ((string)(null)), table1, "When ");
 #line 9
+  testRunner.When("User retrieves all contacts details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 10
   testRunner.Then("User should get OK http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 11
+   testRunner.And("contact details should be the same as already added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.TheoryAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "GetContacts")]
+        [Xunit.TraitAttribute("Description", "Retrieve error messages for improper contact id")]
+        [Xunit.InlineDataAttribute("00000000-0000-0000-0000-000000000000", "NotFound", new string[0])]
+        [Xunit.InlineDataAttribute("\"A\"", "BadRequest", new string[0])]
+        public virtual void RetrieveErrorMessagesForImproperContactId(string id, string statusCode, string[] exampleTags)
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retrieve error messages for improper contact id", exampleTags);
+#line 16
+ this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "FirstName",
@@ -107,69 +125,11 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.GetContacts
                         "Tomasz",
                         "Bien",
                         "Mister"});
-            table2.AddRow(new string[] {
-                        "David",
-                        "Dummy",
-                        "Mister"});
-#line 10
-   testRunner.And("contacts should have following details", ((string)(null)), table2, "And ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "Retrieve single contact details")]
-        public virtual void RetrieveSingleContactDetails()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retrieve single contact details", ((string[])(null)));
-#line 16
- this.ScenarioSetup(scenarioInfo);
-#line hidden
-            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
-                        "FirstName",
-                        "Surname",
-                        "Title"});
-            table3.AddRow(new string[] {
-                        "Tomasz",
-                        "Bien",
-                        "Mister"});
 #line 17
-  testRunner.Given("User has defined a contact details", ((string)(null)), table3, "Given ");
+  testRunner.When("User creates a contact with following data", ((string)(null)), table2, "When ");
 #line 20
-  testRunner.When("User retrieves contacts details for proper id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 21
-  testRunner.Then("User should get OK http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 22
-   testRunner.And("contact should have same details as inserted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.TheoryAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "Retrieve error messages for improper contact id")]
-        [Xunit.InlineDataAttribute("-2", "NotFound", new string[0])]
-        [Xunit.InlineDataAttribute("\"A\"", "BadRequest", new string[0])]
-        public virtual void RetrieveErrorMessagesForImproperContactId(string id, string statusCode, string[] exampleTags)
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retrieve error messages for improper contact id", exampleTags);
-#line 25
- this.ScenarioSetup(scenarioInfo);
-#line hidden
-            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
-                        "FirstName",
-                        "Surname",
-                        "Title"});
-            table4.AddRow(new string[] {
-                        "Tomasz",
-                        "Bien",
-                        "Mister"});
-#line 26
-  testRunner.Given("User has defined a contact details", ((string)(null)), table4, "Given ");
-#line 29
   testRunner.When(string.Format("User retrieves contacts details for {0} id", id), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 30
+#line 21
   testRunner.Then(string.Format("User should get {0} http status code", statusCode), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -182,12 +142,12 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.GetContacts
             
             public FixtureData()
             {
-                ContactsFeature.FeatureSetup();
+                GetContactsFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                ContactsFeature.FeatureTearDown();
+                GetContactsFeature.FeatureTearDown();
             }
         }
     }

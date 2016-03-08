@@ -1,4 +1,4 @@
-﻿Feature: Contacts
+﻿Feature: CreateContact
 
 Scenario: Create contact using valid details
 	Given User navigates to create contact page
