@@ -6,7 +6,6 @@
 
     public class Requirement : BaseEntity
     {
-        [Required]
         public DateTime CreateDate { get; set; }
 
         public ICollection<Contact> Contacts { get; set; }

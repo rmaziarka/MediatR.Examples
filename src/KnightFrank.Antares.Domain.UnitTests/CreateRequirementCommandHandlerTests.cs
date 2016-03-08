@@ -29,8 +29,8 @@
                 CreateDate = DateTime.UtcNow,
                 Contacts = new Collection<ContactDto>
                 {
-                    new ContactDto { Id = 1 },
-                    new ContactDto { Id = 2 }
+                    new ContactDto { Id = Guid.NewGuid() },
+                    new ContactDto { Id = Guid.NewGuid() }
                 }
             };
 

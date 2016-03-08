@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.Requirement.CommandHandlers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -9,7 +10,7 @@
 
     using MediatR;
 
-    public class CreateRequirementCommandHandler : IRequestHandler<CreateRequirementCommand, int>
+    public class CreateRequirementCommandHandler : IRequestHandler<CreateRequirementCommand, Guid>
     {
         private readonly IGenericRepository<Requirement> requirementRepository;
 
@@ -21,11 +22,11 @@
             this.contactRepository = contactRepository;
         }
 
-        public int Handle(CreateRequirementCommand message)
+        public Guid Handle(CreateRequirementCommand message)
         {
             var requirement = AutoMapper.Mapper.Map<Requirement>(message);
 
-            List<int> ids = message.Contacts.Select(x => x.Id).ToList();
+            List<Guid> ids = message.Contacts.Select(x => x.Id).ToList();
             List<Contact> existingContacts = this.contactRepository.FindBy(x => ids.Any(id => id == x.Id)).ToList();
             requirement.Contacts = existingContacts;
 

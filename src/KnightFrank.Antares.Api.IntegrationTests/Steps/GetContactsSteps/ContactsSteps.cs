@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.GetContactsSteps
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
@@ -22,7 +23,7 @@
     {
         private const string ApiUrl = "/api/contacts";
         private readonly BaseTestClassFixture fixture;
-        private int latestAddedContactId;
+        private Guid latestAddedContactId;
 
         public ContactsControllerSteps(BaseTestClassFixture fixture)
         {

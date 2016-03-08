@@ -49,14 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201603071246173_AddRequirementTable.cs" />
-    <Compile Include="Migrations\201603071246173_AddRequirementTable.Designer.cs">
-      <DependentUpon>201603071246173_AddRequirementTable.cs</DependentUpon>
+    <Compile Include="Migrations\201603081357064_InitialDataBase.cs" />
+    <Compile Include="Migrations\201603081357064_InitialDataBase.Designer.cs">
+      <DependentUpon>201603081357064_InitialDataBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201603081059172_AddEnumTables.cs" />
-    <Compile Include="Migrations\201603081059172_AddEnumTables.Designer.cs">
-      <DependentUpon>201603081059172_AddEnumTables.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Model\Configuration\ContactConfiguration.cs" />
+    <Compile Include="Model\Configuration\BaseEntityConfiguration.cs" />
     <Compile Include="Model\Configuration\LocalConfiguration.cs" />
     <Compile Include="Model\Configuration\EnumLocalisationConfiguration.cs" />
     <Compile Include="Model\Configuration\EnumTypeItemConfiguration.cs" />
@@ -64,10 +62,6 @@
     <Compile Include="Model\Configuration\RequirementConfiguration.cs" />
     <Compile Include="Model\Contact.cs" />
     <Compile Include="KnightFrankContext.cs" />
-    <Compile Include="Migrations\201603020733599_InitialCreate.cs" />
-    <Compile Include="Migrations\201603020733599_InitialCreate.Designer.cs">
-      <DependentUpon>201603020733599_InitialCreate.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\BaseEntity.cs" />
     <Compile Include="Model\EnumLocalisation.cs" />
@@ -87,14 +81,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603020733599_InitialCreate.resx">
-      <DependentUpon>201603020733599_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603071246173_AddRequirementTable.resx">
-      <DependentUpon>201603071246173_AddRequirementTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603081059172_AddEnumTables.resx">
-      <DependentUpon>201603081059172_AddEnumTables.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603081357064_InitialDataBase.resx">
+      <DependentUpon>201603081357064_InitialDataBase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

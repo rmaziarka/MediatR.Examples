@@ -1,12 +1,14 @@
 ﻿namespace KnightFrank.Antares.Domain.Contact.CommandHandlers
 {
+    using System;
+
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Contact.Commands;
 
     using MediatR;
 
-    public class CreateContactCommandHandler : IRequestHandler<CreateContactCommand, int>
+    public class CreateContactCommandHandler : IRequestHandler<CreateContactCommand, Guid>
     {
         private readonly IGenericRepository<Contact> contactRepository;
 
@@ -15,7 +17,7 @@
             this.contactRepository = contactRepository;
         }
 
-        public int Handle(CreateContactCommand message)
+        public Guid Handle(CreateContactCommand message)
         {
             var contact = new Contact
             {

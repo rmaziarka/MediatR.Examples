@@ -1,12 +1,14 @@
 ﻿namespace KnightFrank.Antares.Domain.Contact
 {
+    using System;
+
     using AutoMapper;
 
     using KnightFrank.Antares.Dal.Model;
 
     public class ContactDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
         public string Title { get; set; }

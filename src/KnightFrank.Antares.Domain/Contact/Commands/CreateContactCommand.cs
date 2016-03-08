@@ -1,8 +1,10 @@
 ﻿namespace KnightFrank.Antares.Domain.Contact.Commands
 {
+    using System;
+
     using MediatR;
 
-    public class CreateContactCommand : IRequest<int>
+    public class CreateContactCommand : IRequest<Guid>
     {
         public string FirstName { get; set; }
 

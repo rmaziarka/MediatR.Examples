@@ -7,13 +7,13 @@ namespace KnightFrank.Antares.Dal.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddRequirementTable : IMigrationMetadata
+    public sealed partial class InitialDataBase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddRequirementTable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialDataBase));
         
         string IMigrationMetadata.Id
         {
-            get { return "201603071246173_AddRequirementTable"; }
+            get { return "201603081357064_InitialDataBase"; }
         }
         
         string IMigrationMetadata.Source

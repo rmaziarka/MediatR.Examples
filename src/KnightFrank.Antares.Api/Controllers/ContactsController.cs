@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.API.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
@@ -49,7 +50,7 @@
         /// <param name="id">Contact id</param>
         /// <returns>Contact entity</returns>
         [HttpGet]
-        public Contact GetContact(int id)
+        public Contact GetContact(Guid id)
         {
             Contact contact = this.contactsRepository.FindBy(c => c.Id == id).FirstOrDefault();
 
@@ -66,7 +67,7 @@
         /// </summary>
         /// <param name="command">Contact entity</param>
         [HttpPost]
-        public int CreateContact([FromBody] CreateContactCommand command)
+        public Guid CreateContact([FromBody] CreateContactCommand command)
         {
             return this.mediator.Send(command);
         }

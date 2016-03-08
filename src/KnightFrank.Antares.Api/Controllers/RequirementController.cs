@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.Api.Controllers
 {
+    using System;
     using System.Web.Http;
 
     using MediatR;
@@ -26,7 +27,7 @@
         /// Posts this instance.
         /// </summary>
         /// <returns>Requirement identifier.</returns>
-        public int Post(CreateRequirementCommand command)
+        public Guid Post(CreateRequirementCommand command)
         {
             return this.mediator.Send(command);
         }

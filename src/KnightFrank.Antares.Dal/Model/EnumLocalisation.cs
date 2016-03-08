@@ -1,12 +1,14 @@
 ﻿namespace KnightFrank.Antares.Dal.Model
 {
+    using System;
+
     public class EnumLocalisation : BaseEntity
     {
-        public int EnumTypeItemId { get; set; }
+        public Guid EnumTypeItemId { get; set; }
 
         public virtual EnumTypeItem EnumTypeItem { get; set; }
 
-        public int LocalId { get; set; }
+        public Guid LocalId { get; set; }
 
         public virtual Local Local { get; set; }
 

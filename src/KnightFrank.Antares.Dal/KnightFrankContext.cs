@@ -17,15 +17,15 @@
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
+            modelBuilder.Configurations.Add(new ContactConfiguration());
+            modelBuilder.Configurations.Add(new RequirementConfiguration());
             modelBuilder.Configurations.Add(new EnumTypeConfiguration());
             modelBuilder.Configurations.Add(new EnumTypeItemConfiguration());
             modelBuilder.Configurations.Add(new EnumLocalisationConfiguration());
             modelBuilder.Configurations.Add(new LocalConfiguration());
-            modelBuilder.Configurations.Add(new RequirementConfiguration());
         }
 
         public DbSet<Contact> Contact { get; set; }
-
         public DbSet<Requirement> Requirement { get; set; }
 
         public DbSet<EnumType> EnumType { get; set; }
