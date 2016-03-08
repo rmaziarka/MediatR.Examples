@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
+    using System.Net.Http;
+    using System.Threading.Tasks;
 
     using FluentAssertions;
 
@@ -23,31 +25,34 @@
     {
         private const string ApiUrl = "/api/contacts";
         private readonly BaseTestClassFixture fixture;
-        private Guid latestAddedContactId;
 
         public ContactsControllerSteps(BaseTestClassFixture fixture)
         {
             this.fixture = fixture;
         }
 
-        [Given(@"User has defined a contact details")]
-        public void GivenCreateContact(Table table)
+        [Given(@"All contacts have been deleted")]
+        public void GivenDeleteAllContacts()
         {
-            var contact = table.CreateInstance<Contact>();
-            this.fixture.DataContext.Database.ExecuteSqlCommand(@"DELETE FROM [dbo].Contact");
-            this.fixture.DataContext.Contact.Add(contact);
-            this.fixture.DataContext.SaveChanges();
-            this.latestAddedContactId = contact.Id;
+            this.fixture.DataContext.Database.ExecuteSqlCommand(@"delete from [dbo].Contact");
         }
 
-        [Given(@"User has defined multiple contact details")]
-        public void GivenCreateContacts(Table table)
+        [When(@"User creates a contact with following data")]
+        public void WhenUserCreatesAContactWithFollowingData(Table table)
         {
-            IEnumerable<Contact> set = table.CreateSet<Contact>();
-            this.fixture.DataContext.Database.ExecuteSqlCommand(@"DELETE FROM [dbo].Contact");
-            this.fixture.DataContext.Contact.AddRange(set);
-            this.fixture.DataContext.SaveChanges();
+            string requestUrl = $"{ApiUrl}";
+            IEnumerable<Contact> contact = table.CreateSet<Contact>();
+            var list = new List<Contact>();
+
+            foreach (Contact contactRow in contact)
+            {
+                PostRequest.SendPostRequest(this.fixture, requestUrl, contactRow);
+                contactRow.Id = int.Parse(ScenarioContext.Current.GetResponseContent());
+                list.Add(contactRow);
         }
+            ScenarioContext.Current.Set<List<Contact>>(list, "Contact List");
+        }
+
 
         [When(@"User retrieves all contacts details")]
         public void WhenUserRetrivesAllContactsDetails()
@@ -59,9 +64,9 @@
         [When(@"User retrieves contacts details for (.*) id")]
         public void WhenUserRetrievesContactsDetailsWith(string id)
         {
-            if (id.Equals("proper"))
+            if (id.Equals("latest"))
             {
-                id = this.latestAddedContactId.ToString();
+                id = ScenarioContext.Current.GetResponseContent();
             }
 
             string requestUrl = $"{ApiUrl}/" + id + "";
@@ -71,29 +76,26 @@
         [Then(@"User should get (.*) http status code")]
         public void ThenStatusCodeShouldBe(HttpStatusCode statusCode)
         {
-            statusCode.Should().Be(ScenarioContext.Current.GetResponseHttpStatusCode());
+            ScenarioContext.Current.GetResponseHttpStatusCode().Should().Be(statusCode);
         }
 
-        [Then(@"contacts should have following details")]
-        public void ThenContactsShouldHaveFollowingDetails(Table table)
+
+        [Then(@"contact details should be the same as already added")]
+        public void ThenContactDetailsShouldBeTheSameAsAlreadyAdded()
         {
-            List<Contact> expectedContactsDetails = table.CreateSet<Contact>().ToList();
-            var currentContactsDetails = JsonConvert.DeserializeObject<List<Contact>>(ScenarioContext.Current.GetResponseContent());
-
-            currentContactsDetails.ShouldAllBeEquivalentTo(expectedContactsDetails, options => options.Excluding(c => c.Id));
+            var contactList = ScenarioContext.Current.Get<List<Contact>>("Contact List");
+            if (contactList.Count > 1)
+            {
+                var currentContactsDetails =
+                    JsonConvert.DeserializeObject<List<Contact>>(ScenarioContext.Current.GetResponseContent());
+                currentContactsDetails.ShouldBeEquivalentTo(contactList);
         }
-
-        [Then(@"contact should have same details as inserted")]
-        public void ThenContactShouldHaveFollowingDetails()
+            else
         {
             var currentContactDetails = JsonConvert.DeserializeObject<Contact>(ScenarioContext.Current.GetResponseContent());
-            currentContactDetails.ShouldBeEquivalentTo(this.fixture.DataContext.Contact.First());
+                currentContactDetails.ShouldBeEquivalentTo(contactList[0]);
         }
 
-        [Then(@"User should get (.*) error mesage")]
-        public void ThenErrorMesageShouldBeBlaBla(string expectedResponse)
-        {
-            expectedResponse.Should().Be(ScenarioContext.Current.GetResponseContent());
         }
     }
 }
