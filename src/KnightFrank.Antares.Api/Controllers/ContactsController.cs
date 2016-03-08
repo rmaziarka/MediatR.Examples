@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using System.Web;
+    using System.Net.Http;
     using System.Web.Http;
 
     using Dal.Model;
@@ -11,8 +11,6 @@
     using Domain.Contact.Commands;
 
     using Dal.Repository;
-
-    using Domain.Contact;
 
     using MediatR;
 
@@ -22,17 +20,17 @@
     public class ContactsController : ApiController
     {
         private readonly IMediator mediator;
-        private readonly IReadGenericRepository<Contact> readRepository;
+        private readonly IReadGenericRepository<Contact> contactsRepository;
 
         /// <summary>
         ///     Contacts controller constructor
         /// </summary>
         /// <param name="mediator">Mediator instance.</param>
-        /// <param name="readRepository">Generic read repository.</param>
-        public ContactsController(IMediator mediator, IReadGenericRepository<Contact> readRepository)
+        /// <param name="contactsRepository">Generic read repository.</param>
+        public ContactsController(IMediator mediator, IReadGenericRepository<Contact> contactsRepository)
         {
             this.mediator = mediator;
-            this.readRepository = readRepository;
+            this.contactsRepository = contactsRepository;
         }
 
         /// <summary>
@@ -40,11 +38,9 @@
         /// </summary>
         /// <returns>Contact entity collection</returns>
         [HttpGet]
-        public IEnumerable<ContactDto> GetContacts()
+        public IEnumerable<Contact> GetContacts()
         {
-            IEnumerable<Contact> contacts = this.readRepository.GetAll();
-            var contactsDto = AutoMapper.Mapper.Map<IEnumerable<ContactDto>>(contacts);
-            return contactsDto;
+            return this.contactsRepository.GetAll();
         }
 
         /// <summary>
@@ -55,11 +51,11 @@
         [HttpGet]
         public Contact GetContact(int id)
         {
-            Contact contact = this.readRepository.FindBy(c => c.Id == id).FirstOrDefault();
+            Contact contact = this.contactsRepository.FindBy(c => c.Id == id).FirstOrDefault();
 
             if (contact == null)
             {
-                throw new HttpException((int)HttpStatusCode.NotFound, "Contact not found.");
+                throw new HttpResponseException(this.Request.CreateErrorResponse(HttpStatusCode.NotFound,"Contact not found."));
             }
 
             return contact;

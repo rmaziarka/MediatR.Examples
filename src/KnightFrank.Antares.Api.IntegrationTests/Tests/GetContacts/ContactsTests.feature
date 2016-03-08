@@ -31,7 +31,7 @@
 
 		Examples: 
 		| id  | statusCode |
-	   #| -2  | NotFound   |
+		| -2  | NotFound   |
 		| "A" | BadRequest |
 
 

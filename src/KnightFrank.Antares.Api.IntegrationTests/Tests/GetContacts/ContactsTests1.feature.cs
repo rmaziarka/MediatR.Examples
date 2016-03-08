@@ -149,6 +149,7 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.GetContacts
         [Xunit.TheoryAttribute()]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
         [Xunit.TraitAttribute("Description", "Retrieve error messages for improper contact id")]
+        [Xunit.InlineDataAttribute("-2", "NotFound", new string[0])]
         [Xunit.InlineDataAttribute("\"A\"", "BadRequest", new string[0])]
         public virtual void RetrieveErrorMessagesForImproperContactId(string id, string statusCode, string[] exampleTags)
         {

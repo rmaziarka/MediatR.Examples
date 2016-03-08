@@ -8,7 +8,6 @@
 
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Api.IntegrationTests.SharedActions;
-    using KnightFrank.Antares.Dal;
     using KnightFrank.Antares.Dal.Model;
 
     using Newtonsoft.Json;
@@ -23,6 +22,7 @@
     {
         private const string ApiUrl = "/api/contacts";
         private readonly BaseTestClassFixture fixture;
+        private int latestAddedContactId;
 
         public ContactsControllerSteps(BaseTestClassFixture fixture)
         {
@@ -36,6 +36,7 @@
             this.fixture.DataContext.Database.ExecuteSqlCommand(@"DELETE FROM [dbo].Contact");
             this.fixture.DataContext.Contact.Add(contact);
             this.fixture.DataContext.SaveChanges();
+            this.latestAddedContactId = contact.Id;
         }
 
         [Given(@"User has defined multiple contact details")]
@@ -59,7 +60,7 @@
         {
             if (id.Equals("proper"))
             {
-                id = this.fixture.DataContext.Contact.First().Id.ToString();
+                id = this.latestAddedContactId.ToString();
             }
 
             string requestUrl = $"{ApiUrl}/" + id + "";
@@ -78,7 +79,7 @@
             List<Contact> expectedContactsDetails = table.CreateSet<Contact>().ToList();
             var currentContactsDetails = JsonConvert.DeserializeObject<List<Contact>>(ScenarioContext.Current.GetResponseContent());
 
-            currentContactsDetails.ShouldBeEquivalentTo(expectedContactsDetails);
+            currentContactsDetails.ShouldAllBeEquivalentTo(expectedContactsDetails, options => options.Excluding(c => c.Id));
         }
 
         [Then(@"contact should have same details as inserted")]
