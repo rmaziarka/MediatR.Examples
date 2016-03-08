@@ -3,7 +3,7 @@
     using System.Web.Http;
 
     using MediatR;
-    using Domain.Requirement.Command;
+    using Domain.Requirement.Commands;
 
     /// <summary>
     /// Requirement controller.
