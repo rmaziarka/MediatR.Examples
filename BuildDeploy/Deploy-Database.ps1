@@ -9,6 +9,11 @@ function Deploy-Database {
 	$outputPath = Join-Path -Path $PSScriptRoot -ChildPath "\migrations\$packageName"		
 	$buildConfiguration = 'Release'
 
+    $projectDatabasePath = Join-Path -Path $PSScriptRoot -ChildPath '\..\src\KnightFrank.Antares.Database'
+    $projectDatabaseSqlProjPath = Join-Path -Path $projectDatabasePath -ChildPath 'KnightFrank.Antares.Database.sqlproj'
+    $projectDatabaseDocpacPath = Join-Path -Path $projectDatabasePath -ChildPath "bin\$buildConfiguration\KnightFrank.Antares.Database.dacpac"
+    $ssdtProfileNamePath = Join-Path -Path $projectDatabasePath -ChildPath '\Publish\local.publish.xml'
+
 	$buildParams = @{
 		PackagePath = $outputPath
 		ProjectPath = Join-Path -Path $ProjectRootPath -ChildPath '\src\KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj'
@@ -25,8 +30,13 @@ function Deploy-Database {
 		MigrateAssembly = 'KnightFrank.Antares.Dal.dll'
 		DefaultAppPoolUserName = "IIS AppPool\dev.api.antares.knightfrank.com"
 	}
+
+    $sqlServerVersion = "2014"
+
 	try { 
+
 	    Build-EntityFrameworkMigrations @buildParams
+
 	    Deploy-EntityFrameworkMigrations @deployParams
 	
 	    $Username = $deployParams.DefaultAppPoolUserName
@@ -46,6 +56,9 @@ function Deploy-Database {
 
 	    Invoke-SqlQuery -DatabaseName $deployParams.DatabaseName -InputFile 'sql/Update-SqlUserRole.sql'`
 			    -SqlVariable "Username = $Username","DatabaseName = $DatabaseName","Role = db_datawriter"
+        
+        Build-SSDTDacpac -ProjectPath $projectDatabaseSqlProjPath -BuildConfiguration $buildConfiguration
+        Deploy-SSDTDacpac -ProjectDatabaseDocpacPath $projectDatabaseDocpacPath -ProfileName $ssdtProfileNamePath -SqlServerVersion $sqlServerVersion -ConnectionString $deployParams.ConnectionString
     } finally {
         Remove-Item -Path $outputPath -Force -Recurse
     }

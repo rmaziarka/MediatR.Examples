@@ -9,10 +9,12 @@ Push-Location $PSScriptRoot
 
 try {
 
-    . "./Deploy-Database.ps1" 
-    . "./Build-EntityFrameworkMigrations.ps1"
-	. "./Deploy-EntityFrameworkMigrations.ps1"
-	. "./Invoke-SqlQuery.ps1"
+    . ".\Deploy-Database.ps1" 
+    . ".\Build-EntityFrameworkMigrations.ps1"
+	. ".\Deploy-EntityFrameworkMigrations.ps1"
+	. ".\Invoke-SqlQuery.ps1"    
+    . ".\Build-SSDTDacpac.ps1"
+    . ".\Deploy-SSDTDacpac.ps1"
 
     Deploy-Database -ProjectRootPath $ProjectRootPath
     

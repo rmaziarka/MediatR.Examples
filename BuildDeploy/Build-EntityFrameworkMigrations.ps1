@@ -27,7 +27,7 @@ function Build-EntityFrameworkMigrations {
         $BuildConfiguration
     )
 	
-    Write-Host "Building Entity Framework migrations."
+    Write-Host -Object "Building Entity Framework migrations."
 
 	Import-Module -Name "$PSScriptRoot\Invoke-MsBuild.psm1"
 	
