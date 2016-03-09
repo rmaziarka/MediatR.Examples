@@ -30,8 +30,8 @@
 
         public DbSet<EnumType> EnumType { get; set; }
         public DbSet<EnumTypeItem> EnumTypeItem { get; set; }
-        public DbSet<EnumLocalised> EnumLocalisation { get; set; }
-        public DbSet<Locale> Local { get; set; }
+        public DbSet<EnumLocalised> EnumLocalised { get; set; }
+        public DbSet<Locale> Locale { get; set; }
 
     }
 }
