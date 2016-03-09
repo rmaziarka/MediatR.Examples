@@ -53,10 +53,14 @@
     <Compile Include="Migrations\201603081357064_InitialDataBase.Designer.cs">
       <DependentUpon>201603081357064_InitialDataBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603090706533_RenameEnumTables.cs" />
+    <Compile Include="Migrations\201603090706533_RenameEnumTables.Designer.cs">
+      <DependentUpon>201603090706533_RenameEnumTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Configuration\ContactConfiguration.cs" />
     <Compile Include="Model\Configuration\BaseEntityConfiguration.cs" />
-    <Compile Include="Model\Configuration\LocalConfiguration.cs" />
-    <Compile Include="Model\Configuration\EnumLocalisationConfiguration.cs" />
+    <Compile Include="Model\Configuration\LocaleConfiguration.cs" />
+    <Compile Include="Model\Configuration\EnumLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\EnumTypeItemConfiguration.cs" />
     <Compile Include="Model\Configuration\EnumTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\RequirementConfiguration.cs" />
@@ -64,8 +68,8 @@
     <Compile Include="KnightFrankContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\BaseEntity.cs" />
-    <Compile Include="Model\EnumLocalisation.cs" />
-    <Compile Include="Model\Local.cs" />
+    <Compile Include="Model\EnumLocalised.cs" />
+    <Compile Include="Model\Locale.cs" />
     <Compile Include="Model\EnumTypeItem.cs" />
     <Compile Include="Model\EnumType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,6 +87,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201603081357064_InitialDataBase.resx">
       <DependentUpon>201603081357064_InitialDataBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603090706533_RenameEnumTables.resx">
+      <DependentUpon>201603090706533_RenameEnumTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

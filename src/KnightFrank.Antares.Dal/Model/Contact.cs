@@ -10,6 +10,6 @@
 
         public string Title { get; set; }
 
-        public ICollection<Requirement> Requirements { get; set; }
+        public virtual ICollection<Requirement> Requirements { get; set; }
     }
 }

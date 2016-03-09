@@ -11,6 +11,6 @@
 
         public virtual EnumType EnumType { get; set; }
 
-        public virtual ICollection<EnumLocalisation> EnumLocalisations { get; set; }
+        public virtual ICollection<EnumLocalised> EnumLocaliseds { get; set; }
     }
 }

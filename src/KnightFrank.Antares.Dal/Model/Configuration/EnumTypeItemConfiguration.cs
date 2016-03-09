@@ -8,8 +8,6 @@ namespace KnightFrank.Antares.Dal.Migrations
     {
         public EnumTypeItemConfiguration()
         {
-            this.HasRequired(r => r.EnumType);
-
             this.Property(r => r.Code)
                 .HasMaxLength(40);
         }
