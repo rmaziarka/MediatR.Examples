@@ -1,16 +1,14 @@
-﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.GetContactsSteps
+﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.ContactsSteps
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
     using System.Net.Http;
-    using System.Threading.Tasks;
 
     using FluentAssertions;
 
+    using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
-    using KnightFrank.Antares.Api.IntegrationTests.SharedActions;
     using KnightFrank.Antares.Dal.Model;
 
     using Newtonsoft.Json;
@@ -26,10 +24,18 @@
         private const string ApiUrl = "/api/contacts";
         private readonly BaseTestClassFixture fixture;
 
-        public ContactsControllerSteps(BaseTestClassFixture fixture)
+        private readonly ScenarioContext scenarioContext;
+
+        public ContactsControllerSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {
             this.fixture = fixture;
+            if (scenarioContext == null)
+            {
+                throw new ArgumentNullException(nameof(scenarioContext));
+            }
+            this.scenarioContext = scenarioContext;
         }
+
 
         [Given(@"All contacts have been deleted")]
         public void GivenDeleteAllContacts()
@@ -46,19 +52,29 @@
 
             foreach (Contact contactRow in contact)
             {
-                PostRequest.SendPostRequest(this.fixture, requestUrl, contactRow);
-                contactRow.Id = new Guid(ScenarioContext.Current.GetResponseContent().Replace("\"", ""));
+                HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, contactRow);
+                this.scenarioContext.SetHttpResponseMessage(response);
+                contactRow.Id = new Guid(this.scenarioContext.GetResponseContent().Replace("\"", ""));
                 list.Add(contactRow);
-        }
-            ScenarioContext.Current.Set<List<Contact>>(list, "Contact List");
+            }
+            this.scenarioContext.Set(list, "Contact List");
         }
 
+        [When(@"Try to creates a contact with following data")]
+        public void WhenTryToCreatesAContactWithFollowingData(Table table)
+        {
+            string requestUrl = $"{ApiUrl}";
+            var contact = table.CreateInstance<Contact>();
+            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, contact);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
 
-        [When(@"User retrieves all contacts details")]
+        [When(@"User retrieves all contact details")]
         public void WhenUserRetrivesAllContactsDetails()
         {
             string requestUrl = $"{ApiUrl}";
-            GetRequest.SendGetRequest(this.fixture, requestUrl);
+            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+            this.scenarioContext.SetHttpResponseMessage(response);
         }
 
         [When(@"User retrieves contacts details for (.*) id")]
@@ -66,36 +82,36 @@
         {
             if (id.Equals("latest"))
             {
-                id = ScenarioContext.Current.GetResponseContent().Replace("\"", "");
+                id = this.scenarioContext.GetResponseContent().Replace("\"", "");
             }
 
             string requestUrl = $"{ApiUrl}/" + id + "";
-            GetRequest.SendGetRequest(this.fixture, requestUrl);
+
+            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+            this.scenarioContext.SetHttpResponseMessage(response);
         }
 
         [Then(@"User should get (.*) http status code")]
         public void ThenStatusCodeShouldBe(HttpStatusCode statusCode)
         {
-            ScenarioContext.Current.GetResponseHttpStatusCode().Should().Be(statusCode);
+            this.scenarioContext.GetResponseHttpStatusCode().Should().Be(statusCode);
         }
-
 
         [Then(@"contact details should be the same as already added")]
         public void ThenContactDetailsShouldBeTheSameAsAlreadyAdded()
         {
-            var contactList = ScenarioContext.Current.Get<List<Contact>>("Contact List");
+            var contactList = this.scenarioContext.Get<List<Contact>>("Contact List");
             if (contactList.Count > 1)
             {
                 var currentContactsDetails =
-                    JsonConvert.DeserializeObject<List<Contact>>(ScenarioContext.Current.GetResponseContent());
+                    JsonConvert.DeserializeObject<List<Contact>>(this.scenarioContext.GetResponseContent());
                 currentContactsDetails.ShouldBeEquivalentTo(contactList);
-        }
+            }
             else
-        {
-            var currentContactDetails = JsonConvert.DeserializeObject<Contact>(ScenarioContext.Current.GetResponseContent());
+            {
+                var currentContactDetails = JsonConvert.DeserializeObject<Contact>(this.scenarioContext.GetResponseContent());
                 currentContactDetails.ShouldBeEquivalentTo(contactList[0]);
-        }
-
+            }
         }
     }
 }

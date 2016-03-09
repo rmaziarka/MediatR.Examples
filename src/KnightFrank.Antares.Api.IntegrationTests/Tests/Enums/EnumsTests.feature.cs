@@ -10,22 +10,22 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace KnightFrank.Antares.Api.IntegrationTests.Tests.CreateContactTests
+namespace KnightFrank.Antares.Api.IntegrationTests.Tests.Enums
 {
     using TechTalk.SpecFlow;
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class CreateContactTestFeature : Xunit.IClassFixture<CreateContactTestFeature.FixtureData>, System.IDisposable
+    public partial class GetEnumsWebApiMethodFeature : Xunit.IClassFixture<GetEnumsWebApiMethodFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "CreateContactTests.feature"
+#line 1 "EnumsTests.feature"
 #line hidden
         
-        public CreateContactTestFeature()
+        public GetEnumsWebApiMethodFeature()
         {
             this.TestInitialize();
         }
@@ -33,7 +33,7 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.CreateContactTests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "CreateContactTest", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "GetEnums WebApi method", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -62,7 +62,7 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.CreateContactTests
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void SetFixture(CreateContactTestFeature.FixtureData fixtureData)
+        public virtual void SetFixture(GetEnumsWebApiMethodFeature.FixtureData fixtureData)
         {
         }
         
@@ -72,30 +72,23 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.CreateContactTests
         }
         
         [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "CreateContactTest")]
-        [Xunit.TraitAttribute("Description", "Create new contact")]
-        public virtual void CreateNewContact()
+        [Xunit.TraitAttribute("FeatureTitle", "GetEnums WebApi method")]
+        [Xunit.TraitAttribute("Description", "Add two numbers")]
+        [Xunit.TraitAttribute("Category", "mytag")]
+        public virtual void AddTwoNumbers()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create new contact", ((string[])(null)));
-#line 3
- this.ScenarioSetup(scenarioInfo);
-#line hidden
-            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                        "FirstName",
-                        "Surname",
-                        "Title"});
-            table1.AddRow(new string[] {
-                        "Michael",
-                        "Angel",
-                        "cheef"});
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add two numbers", new string[] {
+                        "mytag"});
 #line 4
-   testRunner.When("User creates a contact with following data", ((string)(null)), table1, "When ");
+this.ScenarioSetup(scenarioInfo);
+#line 5
+ testRunner.Given("When User creates a contact with following data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 6
+ testRunner.And("I have entered 70 into the calculator", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 7
-   testRunner.When("User retrieves contacts details for latest id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I press add", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 8
-   testRunner.Then("User should get OK http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 9
-   testRunner.And("contact details should be the same as already added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Then("the result should be 120 on the screen", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -107,12 +100,12 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.CreateContactTests
             
             public FixtureData()
             {
-                CreateContactTestFeature.FeatureSetup();
+                GetEnumsWebApiMethodFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                CreateContactTestFeature.FeatureTearDown();
+                GetEnumsWebApiMethodFeature.FeatureTearDown();
             }
         }
     }
