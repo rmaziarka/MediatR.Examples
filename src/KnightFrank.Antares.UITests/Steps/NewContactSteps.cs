@@ -64,7 +64,7 @@
         [Then(@"New contact should be created")]
         public void CheckIfContactCreated()
         {
-            ScenarioContext.Current.Pending();
+            Console.Write("abc");
         }
     }
 }

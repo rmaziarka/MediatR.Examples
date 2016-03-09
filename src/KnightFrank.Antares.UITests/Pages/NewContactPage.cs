@@ -6,10 +6,10 @@
 
     public class NewContactPage : ProjectPageBase
     {
-        private readonly ElementLocator contactFirstName = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator contactSurname = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator contactTitle = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator contactFirstName = new ElementLocator(Locator.Id, "firstName");
+        private readonly ElementLocator contactSurname = new ElementLocator(Locator.Id, "surname");
+        private readonly ElementLocator contactTitle = new ElementLocator(Locator.Id, "title");
+        private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "saveBtn");
 
         public NewContactPage(DriverContext driverContext)
             : base(driverContext)

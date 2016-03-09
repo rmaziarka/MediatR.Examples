@@ -1,5 +1,6 @@
-﻿Feature: Residential Sales Requirement
+﻿Feature: Residential Sales Requirement UI tests
 
+@ignore
 Scenario: Create new residential sales requirement
 	Given User navigates to create residential sales requirement page
 	When User fills in location details on create residential sales requirement page

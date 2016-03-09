@@ -17,7 +17,7 @@ namespace KnightFrank.Antares.UITests.Tests
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class ResidentialSalesRequirementFeature : Xunit.IClassFixture<ResidentialSalesRequirementFeature.FixtureData>, System.IDisposable
+    public partial class ResidentialSalesRequirementUITestsFeature : Xunit.IClassFixture<ResidentialSalesRequirementUITestsFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -25,7 +25,7 @@ namespace KnightFrank.Antares.UITests.Tests
 #line 1 "ResidentialSalesRequirement.feature"
 #line hidden
         
-        public ResidentialSalesRequirementFeature()
+        public ResidentialSalesRequirementUITestsFeature()
         {
             this.TestInitialize();
         }
@@ -33,7 +33,7 @@ namespace KnightFrank.Antares.UITests.Tests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Residential Sales Requirement", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Residential Sales Requirement UI tests", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -62,7 +62,7 @@ namespace KnightFrank.Antares.UITests.Tests
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void SetFixture(ResidentialSalesRequirementFeature.FixtureData fixtureData)
+        public virtual void SetFixture(ResidentialSalesRequirementUITestsFeature.FixtureData fixtureData)
         {
         }
         
@@ -71,15 +71,16 @@ namespace KnightFrank.Antares.UITests.Tests
             this.ScenarioTearDown();
         }
         
-        [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Residential Sales Requirement")]
+        [Xunit.FactAttribute(Skip="Ignored")]
+        [Xunit.TraitAttribute("FeatureTitle", "Residential Sales Requirement UI tests")]
         [Xunit.TraitAttribute("Description", "Create new residential sales requirement")]
         public virtual void CreateNewResidentialSalesRequirement()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create new residential sales requirement", ((string[])(null)));
-#line 3
-this.ScenarioSetup(scenarioInfo);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create new residential sales requirement", new string[] {
+                        "ignore"});
 #line 4
+this.ScenarioSetup(scenarioInfo);
+#line 5
  testRunner.Given("User navigates to create residential sales requirement page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
@@ -92,7 +93,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Upper Ground",
                         "SE1 9PP",
                         "London"});
-#line 5
+#line 6
  testRunner.When("User fills in location details on create residential sales requirement page", ((string)(null)), table1, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -129,11 +130,11 @@ this.ScenarioSetup(scenarioInfo);
                         "200000",
                         "300000",
                         "Note"});
-#line 8
+#line 9
   testRunner.And("User fills in property details on create residential sales requirement page", ((string)(null)), table2, "And ");
-#line 11
-  testRunner.And("User clicks save button on create residential sales requirement page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 12
+  testRunner.And("User clicks save button on create residential sales requirement page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 13
  testRunner.Then("New residential sales requirement should be created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -146,12 +147,12 @@ this.ScenarioSetup(scenarioInfo);
             
             public FixtureData()
             {
-                ResidentialSalesRequirementFeature.FeatureSetup();
+                ResidentialSalesRequirementUITestsFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                ResidentialSalesRequirementFeature.FeatureTearDown();
+                ResidentialSalesRequirementUITestsFeature.FeatureTearDown();
             }
         }
     }
