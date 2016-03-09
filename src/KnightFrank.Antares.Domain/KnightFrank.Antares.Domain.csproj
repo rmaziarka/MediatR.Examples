@@ -84,6 +84,7 @@
     <Compile Include="Enum\EnumQueryValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementCommandHandler.cs" />
+    <Compile Include="Requirement\Commands\CreateRequirementCommandValidator.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommand.cs" />
   </ItemGroup>
   <ItemGroup>
