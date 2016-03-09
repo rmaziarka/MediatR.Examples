@@ -8,7 +8,7 @@
 
     public class KnightFrankContext : DbContext
     {
-        public KnightFrankContext() : base("KnightFrankConnection")
+        public KnightFrankContext() : base("Api.Settings.SqlConnectionString")
         {
         }
 

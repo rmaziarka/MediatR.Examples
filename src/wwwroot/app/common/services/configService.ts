@@ -13,7 +13,7 @@ module Antares.Services {
         public getRootUrl = (): ng.IPromise<string> =>
         {
             return this.$http.get('app.json').then(function (data: any) {
-                return data.data["KnightFrank.Antares.Config"].Api.RootUrl;
+                return data.data["App.Settings"].Api.RootUrl;
             });
         }
     }
