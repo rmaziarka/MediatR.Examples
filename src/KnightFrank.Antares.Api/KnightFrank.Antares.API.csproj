@@ -182,6 +182,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ContravariantBindingResolver.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
+    <Compile Include="Controllers\EnumsController.cs" />
     <Compile Include="Controllers\RequirementController.cs" />
     <Compile Include="Core\NinjectExtentions.cs" />
     <Compile Include="Core\ValidationExceptionFilterAttribute.cs" />
