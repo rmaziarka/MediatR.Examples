@@ -20,6 +20,11 @@ module Antares.Services {
             return <Resources.IBaseResourceClass<Resources.IContactResource>>
                 this.$resource(this.rootUrl + '/api/contacts/:id');
         }
+
+        getRequirementResource(): Resources.IBaseResourceClass<Resources.IRequirementResource> {
+            return <Resources.IBaseResourceClass<Resources.IRequirementResource>>
+                this.$resource(this.rootUrl + '/api/requirements/:id');
+        }
     }
 
     angular.module('app').service('dataAccessService', DataAccessService);
