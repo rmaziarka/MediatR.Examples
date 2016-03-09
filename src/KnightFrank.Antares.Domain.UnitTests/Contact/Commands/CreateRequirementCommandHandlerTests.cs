@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.UnitTests
+﻿namespace KnightFrank.Antares.Domain.UnitTests.Contact.Commands
 {
     using System;
     using System.Collections.Generic;
