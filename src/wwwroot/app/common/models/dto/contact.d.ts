@@ -1,6 +1,6 @@
 ﻿declare module Antares.Common.Models.Dto {
     interface IContact {
-        id: number;
+        id: string;
         title: string;
         firstName: string;
         surname: string;

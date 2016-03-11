@@ -18,12 +18,12 @@ module Antares.Services {
 
         getContactResource(): Resources.IBaseResourceClass<Resources.IContactResource> {
             return <Resources.IBaseResourceClass<Resources.IContactResource>>
-                this.$resource(this.rootUrl + '/api/contacts/:id');
+                this.$resource(this.rootUrl + '/api/contact/:id');
         }
 
         getRequirementResource(): Resources.IBaseResourceClass<Resources.IRequirementResource> {
             return <Resources.IBaseResourceClass<Resources.IRequirementResource>>
-                this.$resource(this.rootUrl + '/api/requirements/:id');
+                this.$resource(this.rootUrl + '/api/requirement/:id');
         }
     }
 

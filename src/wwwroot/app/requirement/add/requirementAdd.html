@@ -4,7 +4,7 @@
         <h2 class="page-header" translate="REQUIREMENT.ADD.ADD_REQUIREMENT"></h2>
         <div class="row">
             <div class="col-md-6">
-                <form>
+                <form ng-submit="addRequirementForm.$valid && vm.save()" name="addRequirementForm" id="addRequirementForm" method="post" novalidate>
                     <fieldset>
                         <legend>Location requirements</legend>
                         <div class="form-group">
@@ -44,7 +44,7 @@
                     </fieldset>
                     <fieldset>
                         <legend>Property requirements</legend>
-                        <div class="form-group">
+                        <!--<div class="form-group">
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="type">Type</label>
@@ -57,138 +57,147 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <fieldset>
-                            <legend>Price</legend>
+                            <legend translate="REQUIREMENT.ADD.PRICE">Price</legend>
                             <div class="row">
                                 <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label for="price-min">Min</label>
+                                    <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.minPrice.$touched) && addRequirementForm.minPrice.$invalid}">
+                                        <label for="price-min" translate="COMMON.MIN">Min</label>
                                         <div class="input-group">
-                                            <input type="number" min="0" class="form-control" id="price-min">
+                                            <input type="number" min="0" max="{{vm.requirement.maxPrice}}" class="form-control" name="minPrice" id="price-min" ng-model="vm.requirement.minPrice">
                                             <div class="input-group-addon">GBP</div>
                                         </div>
+                                        <div ng-show="addRequirementForm.minPrice.$touched || addRequirementForm.$submitted">
+                                            <p name="validation_minPriceFormatErr" ng-show="addRequirementForm.minPrice.$error.number" class="help-block with-errors" translate="FORM.FIELD_SHOULD_BE_NUMBER"></p>
+                                            <p name="validation_minPriceNegativeErr" ng-show="addRequirementForm.minPrice.$error.min" class="help-block with-errors" translate="FORM.FIELD_SHOULD_BE_GREATER_THAN_ZERO"></p>
+                                            <p name="validation_minPriceGreaterThanMaxErr" ng-show="addRequirementForm.minPrice.$error.max" class="help-block with-errors" translate="FORM.MIN_SHOULD_BE_LESS_THAN_MAX"></p>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label for="price-max">Max</label>
+                                    <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.maxPrice.$touched) && addRequirementForm.maxPrice.$invalid}">
+                                        <label for="price-max" translate="COMMON.MAX">Max</label>
                                         <div class="input-group">
-                                            <input type="number" min="0" class="form-control" id="price-max">
+                                            <input type="number" min="0" class="form-control" name="maxPrice" id="price-max" ng-model="vm.requirement.maxPrice">
                                             <div class="input-group-addon">GBP</div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>Bedrooms</legend>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="bedrooms-min">Min</label>
-                                        <input type="number" min="0" class="form-control" id="bedrooms-min">
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="bedrooms-max">Max</label>
-                                        <input type="number" min="0" class="form-control" id="bedrooms-max">
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>Reception rooms</legend>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="reception-min">Min</label>
-                                        <input type="number" min="0" class="form-control" id="reception-min">
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="reception-max">Max</label>
-                                        <input type="number" min="0" class="form-control" id="reception-max">
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>Bathrooms</legend>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="bathrooms-min">Min</label>
-                                        <input type="number" min="0" class="form-control" id="bathrooms-min">
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="bathrooms-max">Max</label>
-                                        <input type="number" min="0" class="form-control" id="bathrooms-max">
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>Parking spaces</legend>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="parking-min">Min</label>
-                                        <input type="number" min="0" class="form-control" id="parking-min">
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="parking-max">Max</label>
-                                        <input type="number" min="0" class="form-control" id="parking-max">
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>Area</legend>
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label for="area-min">Min</label>
-                                        <div class="input-group">
-                                            <input type="number" min="0" class="form-control" id="area-min">
-                                            <div class="input-group-addon">sq. ft</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label for="area-max">Max</label>
-                                        <div class="input-group">
-                                            <input type="number" min="0" class="form-control" id="area-max">
-                                            <div class="input-group-addon">sq. ft</div>
+                                        <div ng-show="addRequirementForm.maxPrice.$touched || addRequirementForm.$submitted">
+                                            <p name="validation_maxPriceFormatErr" ng-show="addRequirementForm.maxPrice.$error.number" class="help-block with-errors" translate="FORM.FIELD_SHOULD_BE_NUMBER"></p>
+                                            <p name="validation_maxPriceValueErr" ng-show="addRequirementForm.maxPrice.$error.min" class="help-block with-errors" translate="FORM.FIELD_SHOULD_BE_GREATER_THAN_ZERO"></p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </fieldset>
                         <fieldset>
-                            <legend>Land area</legend>
+                            <legend translate="REQUIREMENT.ADD.BEDROOMS">Bedrooms</legend>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="bedrooms-min" translate="COMMON.MIN">Min</label>
+                                        <input type="number" min="0" class="form-control" id="minBedrooms" name="minBedrooms" ng-model="vm.requirement.minBedrooms">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="bedrooms-max" translate="COMMON.MAX">Max</label>
+                                        <input type="number" min="0" class="form-control" id="maxBedrooms" name="maxBedrooms" ng-model="vm.requirement.maxBedrooms">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend translate="REQUIREMENT.ADD.RECEPTIONROOMS">Reception rooms</legend>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="reception-min" translate="COMMON.MIN">Min</label>
+                                        <input type="number" min="0" class="form-control" id="reception-min" ng-model="vm.requirement.minReceptionRooms">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="reception-max" translate="COMMON.MAX">Max</label>
+                                        <input type="number" min="0" class="form-control" id="reception-max" ng-model="vm.requirement.maxReceptionRooms">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend translate="REQUIREMENT.ADD.BATHROOMS">Bathrooms</legend>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="bathrooms-min" translate="COMMON.MIN">Min</label>
+                                        <input type="number" min="0" class="form-control" id="bathrooms-min" ng-model="vm.requirement.minBathrooms">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="bathrooms-max" translate="COMMON.MAX">Max</label>
+                                        <input type="number" min="0" class="form-control" id="bathrooms-max" ng-model="vm.requirement.maxBathrooms">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend translate="REQUIREMENT.ADD.PARKINGSPACES">Parking spaces</legend>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="parking-min" translate="COMMON.MIN">Min</label>
+                                        <input type="number" min="0" class="form-control" id="parking-min" ng-model="vm.requirement.minParkingSpaces">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="parking-max" translate="COMMON.MAX">Max</label>
+                                        <input type="number" min="0" class="form-control" id="parking-max" ng-model="vm.requirement.maxParkingSpaces">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend translate="REQUIREMENT.ADD.AREA">Area</legend>
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <label for="land-min">Min</label>
+                                        <label for="area-min" translate="COMMON.MIN">Min</label>
                                         <div class="input-group">
-                                            <input type="number" min="0" class="form-control" id="land-min">
+                                            <input type="number" min="0" class="form-control" id="area-min" ng-model="vm.requirement.minArea">
                                             <div class="input-group-addon">sq. ft</div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <label for="land-max">Max</label>
+                                        <label for="area-max" translate="COMMON.MAX">Max</label>
                                         <div class="input-group">
-                                            <input type="number" min="0" class="form-control" id="land-max">
+                                            <input type="number" min="0" class="form-control" id="area-max" ng-model="vm.requirement.maxArea">
+                                            <div class="input-group-addon">sq. ft</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend translate="REQUIREMENT.ADD.LANDAREA">Land area</legend>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="land-min" translate="COMMON.MIN">Min</label>
+                                        <div class="input-group">
+                                            <input type="number" min="0" class="form-control" id="land-min" ng-model="vm.requirement.minLandArea">
+                                            <div class="input-group-addon">sq. ft</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="land-max" translate="COMMON.MAX">Max</label>
+                                        <div class="input-group">
+                                            <input type="number" min="0" class="form-control" id="land-max" ng-model="vm.requirement.maxLandArea">
                                             <div class="input-group-addon">sq. ft</div>
                                         </div>
                                     </div>
@@ -198,14 +207,14 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-10">
-                                    <label for="notes">Requirements note</label>
-                                    <textarea id="notes" rows="8" class="form-control"></textarea>
+                                    <label for="description" translate="REQUIREMENT.ADD.DESCRIPTION">Description</label>
+                                    <textarea id="description" rows="8" class="form-control" ng-model="vm.requirement.description"></textarea>
                                 </div>
                             </div>
                         </div>
                     </fieldset>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary" id="saveBtn" translate="COMMON.SAVE">Save</button>
                     </div>
                 </form>
             </div>
