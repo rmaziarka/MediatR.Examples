@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Linq.Expressions;
 
     using KnightFrank.Antares.Dal.Model;
@@ -33,8 +34,8 @@
                     new ContactDto { Id = Guid.NewGuid() }
                 }
             };
-
-            contactRepositoryMock.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(new List<Contact>());
+            
+            contactRepositoryMock.Setup(x => x.Get()).Returns(new List<Contact>().AsQueryable());
             requirementRepositoryMock.Setup(x => x.Add(It.IsAny<Requirement>()));
             requirementRepositoryMock.Setup(x => x.Save());
 

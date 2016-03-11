@@ -18,7 +18,7 @@
 
         public EnumQueryResult Handle(EnumQuery message)
         {
-            IEnumerable<EnumLocalised> enumItems = this.enumLocalisedRepository.FindBy(x => x.EnumTypeItem.EnumType.Code == message.Code && x.Locale.IsoCode == "en");
+            IEnumerable<EnumLocalised> enumItems = this.enumLocalisedRepository.Get().Where(x => x.EnumTypeItem.EnumType.Code == message.Code && x.Locale.IsoCode == "en");
 
             return new EnumQueryResult { Items = enumItems.Select(x => new EnumQueryItemResult { Id = x.Id, Value = x.Value }) };
         }

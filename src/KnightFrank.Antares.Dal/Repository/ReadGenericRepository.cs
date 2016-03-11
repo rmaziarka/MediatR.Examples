@@ -1,31 +1,36 @@
 ﻿namespace KnightFrank.Antares.Dal.Repository
 {
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
+    using System.Linq.Expressions;
 
     using KnightFrank.Antares.Dal.Model;
 
-    public class ReadGenericRepository<T> : IReadGenericRepository<T> where T : BaseEntity
+    public class ReadGenericRepository<T> : IReadGenericRepository<T>
+        where T : BaseEntity
     {
         protected KnightFrankContext DbContext;
-        protected readonly IDbSet<T> DbSet;
 
         public ReadGenericRepository(KnightFrankContext context)
         {
             this.DbContext = context;
-            this.DbSet = context.Set<T>();
         }
 
-        public virtual IEnumerable<T> GetAll()
+        public IQueryable<T> Get()
         {
-            return this.DbSet.AsEnumerable();
+            return this.DbContext.Set<T>().AsNoTracking();
         }
 
-        public IEnumerable<T> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+        public IQueryable<T> GetWithInclude(params Expression<Func<T, object>>[] paths)
         {
-            return this.DbSet.Where(predicate).AsEnumerable();
+            IQueryable<T> queryable = this.Get();
+            if (paths != null)
+            {
+                queryable = paths.Aggregate(queryable, (current, path) => current.Include(path));
+            }
+
+            return queryable;
         }
     }
 }

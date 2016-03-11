@@ -17,7 +17,7 @@
                     {
                         string propertyName = nameof(query.Code);
 
-                        EnumType enumType = enumTypeRepository.FindBy(x => x.Code == query.Code).SingleOrDefault();
+                        EnumType enumType = enumTypeRepository.Get().SingleOrDefault(x => x.Code == query.Code);
 
                         return enumType == null ? new ValidationFailure(propertyName, "Enum does not exist.") : null;
                     });

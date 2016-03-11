@@ -41,7 +41,7 @@
         [HttpGet]
         public IEnumerable<Contact> GetContacts()
         {
-            return this.contactsRepository.GetAll();
+            return this.contactsRepository.Get();
         }
 
         /// <summary>
@@ -52,7 +52,7 @@
         [HttpGet]
         public Contact GetContact(Guid id)
         {
-            Contact contact = this.contactsRepository.FindBy(c => c.Id == id).FirstOrDefault();
+            Contact contact = this.contactsRepository.Get().FirstOrDefault(c => c.Id == id);
 
             if (contact == null)
             {
