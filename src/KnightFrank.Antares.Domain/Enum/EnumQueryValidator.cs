@@ -19,8 +19,8 @@
 
                         EnumType enumType = enumTypeRepository.Get().SingleOrDefault(x => x.Code == query.Code);
 
-                return enumType == null ? new ValidationFailure(propertyName, "Enum does not exists.") : null;
-            };
+                        return enumType == null ? new ValidationFailure(propertyName, "Enum does not exists.") : null;
+                    };
 
             this.Custom(enumCodeExists);
         }
