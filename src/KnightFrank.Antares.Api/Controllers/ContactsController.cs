@@ -39,9 +39,9 @@
         /// </summary>
         /// <returns>Contact entity collection</returns>
         [HttpGet]
-        public IEnumerable<Contact> GetContacts()
+        public IEnumerable<Object> GetContacts()
         {
-            return this.contactsRepository.GetAll();
+            return this.contactsRepository.GetAll().ToList();
         }
 
         /// <summary>
@@ -56,7 +56,7 @@
 
             if (contact == null)
             {
-                throw new HttpResponseException(this.Request.CreateErrorResponse(HttpStatusCode.NotFound,"Contact not found."));
+                throw new HttpResponseException(this.Request.CreateErrorResponse(HttpStatusCode.NotFound, "Contact not found."));
             }
 
             return contact;

@@ -8,6 +8,6 @@
     {
         public DateTime CreateDate { get; set; }
 
-        public virtual ICollection<Contact> Contacts { get; set; }
+        public virtual List<Contact> Contacts { get; set; }
     }
 }

@@ -9,13 +9,25 @@
                 <h3 translate="REQUIREMENT.ADD.CONTACT"></h3>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-default" translate="REQUIREMENT.ADD.ADD"></button>
+                <button type="button" class="btn btn-default" translate="REQUIREMENT.ADD.ADD" ng-click="vm.showContactList()"></button>
             </div>
-            <div class="panel panel-default">
+            <div class="panel panel-default" ng-repeat="c in vm.contacts">
                 <div class="panel-body">
-                    Robert Redford
+                   {{c.firstName }}
                 </div>
             </div>
         </form>
+    </div>
+    <div>
+
+        <side-panel component-id="contactsSidePanel" ng-show="vm.showSidePanel === true">
+            <div>
+                <contact-list component-id='testId'>
+                </contact-list>
+                
+                <button ng-click="vm.updateContacts()">Save</button>
+                <button ng-click="vm.cancelUpdateContacts()">Cancel</button>
+            </div>
+        </side-panel>
     </div>
 </div>

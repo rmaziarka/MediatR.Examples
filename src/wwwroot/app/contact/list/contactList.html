@@ -1,0 +1,11 @@
+<div>
+    Hello world
+    <ul>
+        <li ng-repeat="contact in vm.contacts">
+            <label><input type="checkbox" ng-click="vm.toggleSelect(contact)" ng-checked="vm.isSelected(contact)" />
+            {{contact.firstName + ' ' + contact.lastName}} </label>
+        </li>
+    </ul>
+    <div ng-transclude >
+    </div>
+</div>
