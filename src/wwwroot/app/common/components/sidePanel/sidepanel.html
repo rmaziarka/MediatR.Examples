@@ -1,1 +1,9 @@
-<div class="sidePanel" id="{{vm.elementId}}"> <div ng-transclude> </div> </div>
+<div id="{{vm.elementId}}" class="slide-panel">
+    <header class="slide-panel-header">
+        <button id="close-slide-panel" type="button" class="close close-slide-panel" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3>Panel content</h3>
+    </header>
+
+    <div class="slide-panel-content" ng-transclude>
+    </div>
+</div>
