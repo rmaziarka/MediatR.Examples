@@ -1,9 +1,13 @@
-<div id="{{vm.elementId}}" class="slide-panel">
+<div class="slide-panel" ng-class="{'slide-in': vm.visible, 'slide-out': !vm.visible}">
     <header class="slide-panel-header">
-        <button id="close-slide-panel" type="button" class="close close-slide-panel" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button id="close-slide-panel" type="button" class="close close-slide-panel" aria-label="Close">
+            <span aria-hidden="true" ng-click="vm.hide()">&times;</span>
+        </button>
         <h3>Panel content</h3>
     </header>
 
-    <div class="slide-panel-content" ng-transclude>
+    <div class="slide-panel-content" ng-transclude="content">
     </div>
+    <footer class="slide-panel-footer" ng-transclude="footer">
+    </footer>
 </div>

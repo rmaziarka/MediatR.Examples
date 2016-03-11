@@ -5,25 +5,18 @@ module Antares {
         export module Component {
             class SidePanelController {
                 static $inject = ['componentRegistry'];
-                static count: number = 1;
                 private componentId: string;
-                private _element: angular.IAugmentedJQuery;
-                private elementId: string;
+                visible: boolean = false;
                 constructor(componentRegistry: Antares.Core.Service.ComponentRegistry) {
                     componentRegistry.register(this, this.componentId);
-                    this.elementId = 'sidePanelComponent' + (SidePanelController.count++);
                 }
 
-                getElement(){
-                    return this._element || (this._element = angular.element('#' + this.elementId));
-                }
-                
-                show = () => {
-                    this.getElement().show();
+                show = () =>{
+                    this.visible = true;
                 }
 
                 hide = () => {
-                    this.getElement().hide();
+                    this.visible = false;
                 }
             }
 
@@ -32,7 +25,10 @@ module Antares {
                 controller: 'sidePanelController',
                 controllerAs: 'vm',
                 templateUrl: 'app/common/components/sidePanel/sidepanel.html',
-                transclude: true,
+                transclude: {
+                    'content': '?sidePanelContent',
+                    'footer': '?sidePanelFooter'
+                },
                 bindings: {
                     componentId: '@'
                 }
