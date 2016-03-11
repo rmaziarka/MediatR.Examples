@@ -80,6 +80,8 @@
     <Compile Include="DomainModule.cs" />
     <Compile Include="Enum\EnumQuery.cs" />
     <Compile Include="Enum\EnumQueryHandler.cs" />
+    <Compile Include="Enum\EnumQueryItemResult.cs" />
+    <Compile Include="Enum\EnumQueryResultProfile.cs" />
     <Compile Include="Enum\EnumQueryResult.cs" />
     <Compile Include="Enum\EnumQueryValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
