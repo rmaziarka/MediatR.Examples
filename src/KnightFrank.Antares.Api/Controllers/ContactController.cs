@@ -18,7 +18,7 @@
     /// <summary>
     ///     Controller class for contacts
     /// </summary>
-    public class ContactsController : ApiController
+    public class ContactController : ApiController
     {
         private readonly IMediator mediator;
         private readonly IReadGenericRepository<Contact> contactsRepository;
@@ -28,7 +28,7 @@
         /// </summary>
         /// <param name="mediator">Mediator instance.</param>
         /// <param name="contactsRepository">Generic read repository.</param>
-        public ContactsController(IMediator mediator, IReadGenericRepository<Contact> contactsRepository)
+        public ContactController(IMediator mediator, IReadGenericRepository<Contact> contactsRepository)
         {
             this.mediator = mediator;
             this.contactsRepository = contactsRepository;
