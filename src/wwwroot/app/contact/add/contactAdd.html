@@ -4,45 +4,42 @@
         <form ng-submit="addContactForm.$valid && vm.save()" name="addContactForm" id="addContactForm" method="post" novalidate>
             <fieldset>
                 <legend>Basic information</legend>
-                <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.title.$touched) && addContactForm.title.$invalid}">
+                <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.title.$dirty) && addContactForm.title.$invalid}">
                     <div class="row">
                         <div class="col-md-3">
                             <label for="title" translate="CONTACT.TITLE"></label>
                             <input type="text" class="form-control" id="title" name="title" required ng-maxlength="128" ng-model="vm.contact.title">
-                            <div ng-show="addContactForm.title.$touched || addContactForm.$submitted">
-                                <p name="validation_titleRequiredErr" ng-show="addContactForm.title.$error.required" class="help-block with-errors" translate="FORM.FIELD_IS_REQUIRED"></p>
-                                <p name="validation_titleMaxLengthErr" ng-show="addContactForm.title.$error.maxlength" class="help-block with-errors" translate="FORM.FIELD_EXCEEDED_MAX_LENGTH"></p>
+                            <div ng-messages="addContactForm.title.$error" ng-show="addContactForm.$submitted || addContactForm.title.$dirty">
+                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.firstName.$touched) && addContactForm.firstName.$invalid}">
+                <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.firstName.$dirty) && addContactForm.firstName.$invalid}">
                     <div class="row">
                         <div class="col-md-6">
                             <label for="name" translate="CONTACT.FIRSTNAME"></label>
                             <input type="text" class="form-control" id="firstName" name="firstName" required ng-maxlength="128" ng-model="vm.contact.firstName">
-                            <div ng-show="addContactForm.firstName.$touched || addContactForm.$submitted">
-                                <p name="validation_firstNameRequiredErr" ng-show="addContactForm.firstName.$error.required" class="help-block with-errors" translate="FORM.FIELD_IS_REQUIRED"></p>
-                                <p name="validation_firstNameMaxLengthErr" ng-show="addContactForm.firstName.$error.maxlength" class="help-block with-errors" translate="FORM.FIELD_EXCEEDED_MAX_LENGTH"></p>
+                            <div ng-messages="addContactForm.firstName.$error" ng-show="addContactForm.$submitted || addContactForm.firstName.$dirty">
+                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.surname.$touched) && addContactForm.surname.$invalid}">
+                <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.surname.$dirty) && addContactForm.surname.$invalid}">
                     <div class="row">
                         <div class="col-md-6">
                             <label for="surname" translate="CONTACT.SURNAME"></label>
                             <input type="text" class="form-control" id="surname" name="surname" required ng-maxlength="128" ng-model="vm.contact.surname">
-                            <div ng-show="addContactForm.surname.$touched || addContactForm.$submitted">
-                                <p name="validation_surnameRequiredErr" ng-show="addContactForm.surname.$error.required" class="help-block with-errors" translate="FORM.FIELD_IS_REQUIRED"></p>
-                                <p name="validation_surnameMaxLengthErr" ng-show="addContactForm.surname.$error.maxlength" class="help-block with-errors" translate="FORM.FIELD_EXCEEDED_MAX_LENGTH"></p>
+                            <div ng-messages="addContactForm.surname.$error" ng-show="addContactForm.$submitted || addContactForm.surname.$dirty">
+                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </fieldset>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="saveBtn" translate="COMMON.SAVE" ng-disabled="addContactForm.$invalid || addContactForm.$submitted">Save</button>
+                <button type="submit" class="btn btn-primary" id="saveBtn" translate="COMMON.SAVE">Save</button>
             </div>
         </form>
     </div>

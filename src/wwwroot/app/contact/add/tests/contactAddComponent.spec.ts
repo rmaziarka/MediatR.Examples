@@ -7,14 +7,10 @@ module Antares {
 
         var pageObjectSelectors = {
             titleSelector: 'input#title',
-            titleRequiredValidatorSelector: '[name="validation_titleRequiredErr"]',
-            titleMaxLengthValidatorSelector: '[name="validation_titleMaxLengthErr"]',
             firstNameSelector: 'input#firstName',
-            firstNameRequiredValidatorSelector: '[name="validation_firstNameRequiredErr"]',
-            firstNameMaxLengthValidatorSelector: '[name="validation_firstNameMaxLengthErr"]',
             surnameSelector: 'input#surname',
-            surnameRequiredValidatorSelector: '[name="validation_surnameRequiredErr"]',
-            surnameMaxLengthValidatorSelector: '[name="validation_surnameMaxLengthErr"]'
+            requiredValidatorSelector: '[name="requiredValidationError"]',
+            maxLengthValidatorSelector: '[name="maxLengthValidationError"]'
         };
 
         beforeEach(angular.mock.module('app'));
@@ -27,63 +23,63 @@ module Antares {
             element = $compile('<contact-add></contact-add>')(scope);
             scope.$apply();
         }));
-        
+
         it('when title value is missing then required message should be displayed', () => {
-            assertRequiredValidator(null, false, pageObjectSelectors.titleSelector, pageObjectSelectors.titleRequiredValidatorSelector);
+            assertRequiredValidator(null, false, pageObjectSelectors.titleSelector);
         });
 
         it('when title value is present then required message should not be displayed', () => {
-            assertRequiredValidator('Miss', true, pageObjectSelectors.titleSelector, pageObjectSelectors.titleRequiredValidatorSelector);
+            assertRequiredValidator('Miss', true, pageObjectSelectors.titleSelector);
         });
         
         it('when title value is too long then validation message should be displayed', () => {
             var maxLength = 128;
-            assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.titleSelector, pageObjectSelectors.titleMaxLengthValidatorSelector);
+            assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.titleSelector);
         });
 
         it('when title value has max length then validation message should not be displayed', () => {
             var maxLength = 128;
-            assertMaxLengthValidator(maxLength, true, pageObjectSelectors.titleSelector, pageObjectSelectors.titleMaxLengthValidatorSelector);
+            assertMaxLengthValidator(maxLength, true, pageObjectSelectors.titleSelector);
         });
 
         /////////
 
         it('when first name value is missing then required message should be displayed', () => {
-            assertRequiredValidator(null, false, pageObjectSelectors.firstNameSelector, pageObjectSelectors.firstNameRequiredValidatorSelector);
+            assertRequiredValidator(null, false, pageObjectSelectors.firstNameSelector);
         });
 
         it('when first name value is present then required message should not be displayed', () => {
-            assertRequiredValidator('Name', true, pageObjectSelectors.firstNameSelector, pageObjectSelectors.firstNameRequiredValidatorSelector);
+            assertRequiredValidator('Name', true, pageObjectSelectors.firstNameSelector);
         });
 
         it('when first name value is too long then validation message should be displayed', () => {
             var maxLength = 128;
-            assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.firstNameSelector, pageObjectSelectors.firstNameMaxLengthValidatorSelector);
+            assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.firstNameSelector);
         });
 
         it('when first name value has max length then validation message should not be displayed', () => {
             var maxLength = 128;
-            assertMaxLengthValidator(maxLength, true, pageObjectSelectors.firstNameSelector, pageObjectSelectors.firstNameMaxLengthValidatorSelector);
+            assertMaxLengthValidator(maxLength, true, pageObjectSelectors.firstNameSelector);
         });
 
         /////////
 
         it('when surname value is missing then required message should be displayed', () => {
-            assertRequiredValidator(null, false, pageObjectSelectors.surnameSelector, pageObjectSelectors.surnameRequiredValidatorSelector);
+            assertRequiredValidator(null, false, pageObjectSelectors.surnameSelector);
         });
 
         it('when surname value is present then required message should not be displayed', () => {
-            assertRequiredValidator('Name', true, pageObjectSelectors.surnameSelector, pageObjectSelectors.surnameRequiredValidatorSelector);
+            assertRequiredValidator('Name', true, pageObjectSelectors.surnameSelector);
         });
 
         it('when surname value is too long then validation message should be displayed', () => {
             var maxLength = 128;
-            assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.surnameSelector, pageObjectSelectors.surnameMaxLengthValidatorSelector);
+            assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.surnameSelector);
         });
 
         it('when surname value has max length then validation message should not be displayed', () => {
             var maxLength = 128;
-            assertMaxLengthValidator(maxLength, true, pageObjectSelectors.surnameSelector, pageObjectSelectors.surnameMaxLengthValidatorSelector);
+            assertMaxLengthValidator(maxLength, true, pageObjectSelectors.surnameSelector);
         });
 
 
@@ -92,20 +88,20 @@ module Antares {
             return new Array(length + 1).join('x');
         }
 
-        function assertRequiredValidator(inputValue: string, expectedResult: boolean, inputSelector: string, validationMsgSelector: string) {
+        function assertRequiredValidator(inputValue: string, expectedResult: boolean, inputSelector: string) {
             var input = element.find(inputSelector);
-            var validationMsg = element.find(validationMsgSelector);
 
-            var pageObject: InputValidationAdapter = new InputValidationAdapter(input, validationMsg, scope);
+            var pageObject: InputValidationAdapter =
+                new InputValidationAdapter(input, pageObjectSelectors.requiredValidatorSelector, scope);
 
             expect(pageObject.isValidFor(inputValue)).toBe(expectedResult);
         }
         
-        function assertMaxLengthValidator(inputValueLength: number, expectedResult: boolean, inputSelector: string, validationMsgSelector: string) {
+        function assertMaxLengthValidator(inputValueLength: number, expectedResult: boolean, inputSelector: string) {
             var input = element.find(inputSelector);
-            var validationMsg = element.find(validationMsgSelector);
-
-            var pageObject: InputValidationAdapter = new InputValidationAdapter(input, validationMsg, scope);
+            
+            var pageObject: InputValidationAdapter =
+                new InputValidationAdapter(input, pageObjectSelectors.maxLengthValidatorSelector, scope);
 
             var value = generateString(inputValueLength);
 
@@ -116,14 +112,17 @@ module Antares {
     // TODO marta: move to other file
     class InputValidationAdapter {
         private pageObject = {
-            inputValidCss: 'ng-valid',
-            validatorHiddenCss: 'ng-hide'
+            inputValidCss: 'ng-valid'
         }
+
+        private validationMsg: JQuery;
 
         constructor(
             private input: ng.IAugmentedJQuery,
-            private validationMsg: ng.IAugmentedJQuery,
-            private scope: ng.IScope) { }
+            private validatorSelector: string,
+            private scope: ng.IScope) {
+
+        }
 
         public isValidFor(inputValue: string): boolean {
             this.writeValue(inputValue);
@@ -135,7 +134,7 @@ module Antares {
         }
 
         private isValidationShown(): boolean {
-            return !this.validationMsg.hasClass(this.pageObject.validatorHiddenCss);
+            return this.input.parent().find(this.validatorSelector).length > 0;
         }
 
         private writeValue(value: string) {
