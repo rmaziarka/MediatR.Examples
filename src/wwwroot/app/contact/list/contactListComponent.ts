@@ -9,8 +9,10 @@ module Antares {
             contacts: any;
             selected: { [id: string]: any } = {};
             componentId: string;
+            constructor(
+                componentRegistry: Antares.Core.Service.ComponentRegistry,
+                dataAccessService: Antares.Services.DataAccessService){
 
-            constructor(componentRegistry: Antares.Core.Service.ComponentRegistry, dataAccessService: Antares.Services.DataAccessService) {
                 componentRegistry.register(this, this.componentId);
                 this.contacts = dataAccessService.getContactResource().query();
             }

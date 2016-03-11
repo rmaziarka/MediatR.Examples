@@ -209,38 +209,32 @@
                     </div>
                 </form>
             </div>
-
             <div class="col-md-6">
                 <form>
                     <fieldset>
                         <legend translate="REQUIREMENT.ADD.CONTACT"></legend>
                         <div class="form-group">
-                            <button type="button" class="btn btn-default" translate="REQUIREMENT.ADD.ADD"></button>
+                            <button type="button" class="btn btn-default" translate="REQUIREMENT.ADD.ADD" ng-click="vm.showContactList()"></button>
                         </div>
                     </fieldset>
-                    <div class="panel panel-default">
+                    <div class="panel panel-default" ng-repeat="c in vm.contacts">
                         <div class="panel-body">
-                            Robert Redford
+                            {{c.firstName }}
                         </div>
                     </div>
+                </form>
             </div>
-            <div class="panel panel-default" ng-repeat="c in vm.contacts">
-                <div class="panel-body">
-                   {{c.firstName }}
-                </div>
-            </div>
-        </form>
-    </div>
-    <div>
 
-        <side-panel component-id="contactsSidePanel" ng-show="vm.showSidePanel === true">
-            <div>
-                <contact-list component-id='testId'>
-                </contact-list>
-                
-                <button ng-click="vm.updateContacts()">Save</button>
-                <button ng-click="vm.cancelUpdateContacts()">Cancel</button>
-            </div>
-        </side-panel>
+        </div>
+        <div>
+            <side-panel component-id="{{vm.componentIds.contactSidePanelId}}">
+                <div>
+                    <contact-list component-id="{{vm.componentIds.contactListId}}">
+                    </contact-list>
+
+                    <button ng-click="vm.updateContacts()">Save</button>
+                    <button ng-click="vm.cancelUpdateContacts()">Cancel</button>
+                </div>
+            </side-panel>
+        </div>
     </div>
-</div>

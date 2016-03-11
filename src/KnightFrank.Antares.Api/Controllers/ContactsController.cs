@@ -41,7 +41,7 @@
         [HttpGet]
         public IEnumerable<Object> GetContacts()
         {
-            return this.contactsRepository.GetAll().ToList();
+            return this.contactsRepository.Get().ToList();
         }
 
         /// <summary>
