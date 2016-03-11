@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.Enum
 {
+    using System;
     using System.Linq;
 
     using FluentValidation;
@@ -12,15 +13,16 @@
     {
         public EnumQueryValidator(IReadGenericRepository<EnumType> enumTypeRepository)
         {
-            this.Custom(
-                query =>
+            Func<EnumQuery, ValidationFailure> enumCodeExists = query =>
                     {
                         string propertyName = nameof(query.Code);
 
                         EnumType enumType = enumTypeRepository.Get().SingleOrDefault(x => x.Code == query.Code);
 
-                        return enumType == null ? new ValidationFailure(propertyName, "Enum does not exist.") : null;
-                    });
+                return enumType == null ? new ValidationFailure(propertyName, "Enum does not exists.") : null;
+            };
+
+            this.Custom(enumCodeExists);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿{
   "COMMON": {
-    "SAVE": "Save"
+    "SAVE": "Save",
+    "MIN": "Min",
+    "MAX": "Max"
   },
   "CONTACT": {
     "TITLE": "Title",
@@ -9,13 +11,24 @@
   },
   "FORM": {
     "FIELD_IS_REQUIRED": "Field is required",
-    "FIELD_EXCEEDED_MAX_LENGTH": "Value is too long"
+    "FIELD_EXCEEDED_MAX_LENGTH": "Value is too long",
+    "FIELD_SHOULD_BE_NUMBER": "Value should be a number",
+    "FIELD_SHOULD_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
+    "MIN_SHOULD_BE_LESS_THAN_MAX":  "Min value must not be greater than max value"
   },
   "REQUIREMENT": {
     "ADD": {
       "ADD_REQUIREMENT": "Add requirement",
       "CONTACT": "Contact",
-      "ADD": "Add"
+      "ADD": "Add",
+      "PRICE": "Price",
+      "BEDROOMS": "Bedrooms",
+      "RECEPTIONROOMS": "Reception rooms",
+      "BATHROOMS": "Bathrooms",
+      "PARKINGSPACES": "Parking spaces",
+      "AREA": "Area",
+      "LANDAREA": "Land area",
+      "DESCRIPTION":  "Description"
     }
   }
 }

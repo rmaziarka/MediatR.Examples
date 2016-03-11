@@ -4,6 +4,11 @@
 
     public class Contact : BaseEntity
     {
+        public Contact()
+        {
+            Requirements = new List<Requirement>();
+        }
+
         public string FirstName { get; set; }
 
         public string Surname { get; set; }

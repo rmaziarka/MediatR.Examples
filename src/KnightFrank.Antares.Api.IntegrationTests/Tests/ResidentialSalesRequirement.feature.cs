@@ -95,7 +95,8 @@ this.ScenarioSetup(scenarioInfo);
                         "MinArea",
                         "MaxArea",
                         "MinLandArea",
-                        "MaxLandArea"});
+                        "MaxLandArea",
+                        "Description"});
             table1.AddRow(new string[] {
                         "1000000",
                         "4000000",
@@ -110,7 +111,8 @@ this.ScenarioSetup(scenarioInfo);
                         "1200",
                         "2000",
                         "10000",
-                        "20000"});
+                        "20000",
+                        "RequirementDescription"});
 #line 5
  testRunner.Given("Details of requirement are provided", ((string)(null)), table1, "Given ");
 #line 8
@@ -130,7 +132,8 @@ this.ScenarioSetup(scenarioInfo);
                         "MinArea",
                         "MaxArea",
                         "MinLandArea",
-                        "MaxLandArea"});
+                        "MaxLandArea",
+                        "Description"});
             table2.AddRow(new string[] {
                         "1000000",
                         "4000000",
@@ -145,22 +148,24 @@ this.ScenarioSetup(scenarioInfo);
                         "1200",
                         "2000",
                         "10000",
-                        "20000"});
+                        "20000",
+                        "RequirementDescription"});
 #line 9
  testRunner.Then("requirement should be same as", ((string)(null)), table2, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute()]
+        [Xunit.FactAttribute(Skip="Ignored")]
         [Xunit.TraitAttribute("FeatureTitle", "Residential sales requirements")]
         [Xunit.TraitAttribute("Description", "Negative - Try save requirement to DB without contact and all detailed fields ful" +
             "lfiled")]
         public virtual void Negative_TrySaveRequirementToDBWithoutContactAndAllDetailedFieldsFullfiled()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Negative - Try save requirement to DB without contact and all detailed fields ful" +
-                    "lfiled", ((string[])(null)));
-#line 13
+                    "lfiled", new string[] {
+                        "ignore"});
+#line 14
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -177,7 +182,8 @@ this.ScenarioSetup(scenarioInfo);
                         "MinArea",
                         "MaxArea",
                         "MinLandArea",
-                        "MaxLandArea"});
+                        "MaxLandArea",
+                        "Description"});
             table3.AddRow(new string[] {
                         "1000000",
                         "4000000",
@@ -192,26 +198,28 @@ this.ScenarioSetup(scenarioInfo);
                         "1200",
                         "2000",
                         "10000",
-                        "20000"});
-#line 14
+                        "20000",
+                        "RequirementDescription"});
+#line 15
  testRunner.Given("Details of requirement are provided", ((string)(null)), table3, "Given ");
-#line 17
- testRunner.When("user retreive the data from DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 18
- testRunner.Then("requirement should not be saved in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("user retreive the data from DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 19
+ testRunner.Then("requirement should not be saved in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 20
   testRunner.And("error message should be displayed - ask dev", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute()]
+        [Xunit.FactAttribute(Skip="Ignored")]
         [Xunit.TraitAttribute("FeatureTitle", "Residential sales requirements")]
         [Xunit.TraitAttribute("Description", "Save requirements with location and all valid fields")]
         public virtual void SaveRequirementsWithLocationAndAllValidFields()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Save requirements with location and all valid fields", ((string[])(null)));
-#line 21
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Save requirements with location and all valid fields", new string[] {
+                        "ignore"});
+#line 23
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -222,11 +230,11 @@ this.ScenarioSetup(scenarioInfo);
                         "Marsh Rd",
                         "HA5 5NQ",
                         "London"});
-#line 22
+#line 24
  testRunner.Given("user fills all fields for property location", ((string)(null)), table4, "Given ");
-#line 25
+#line 27
  testRunner.When("user retreive the data form DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 26
+#line 28
  testRunner.Then("requirment should be save in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
@@ -237,19 +245,20 @@ this.ScenarioSetup(scenarioInfo);
                         "Marsh Rd",
                         "HA5 5NQ",
                         "London"});
-#line 27
+#line 29
   testRunner.And("should be same as", ((string)(null)), table5, "And ");
 #line hidden
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute()]
+        [Xunit.FactAttribute(Skip="Ignored")]
         [Xunit.TraitAttribute("FeatureTitle", "Residential sales requirements")]
         [Xunit.TraitAttribute("Description", "Negative - try save requirement with location without contact field")]
         public virtual void Negative_TrySaveRequirementWithLocationWithoutContactField()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Negative - try save requirement with location without contact field", ((string[])(null)));
-#line 31
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Negative - try save requirement with location without contact field", new string[] {
+                        "ignore"});
+#line 34
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
@@ -260,15 +269,15 @@ this.ScenarioSetup(scenarioInfo);
                         "Marsh Rd",
                         "HA5 5NQ",
                         "London"});
-#line 32
- testRunner.Given("user fills all fields for property location", ((string)(null)), table6, "Given ");
 #line 35
-  testRunner.But("applicant is not chosen from contact list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "But ");
-#line 36
- testRunner.When("user retreive the data from DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 37
- testRunner.Then("requirement should not be saved to the DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Given("user fills all fields for property location", ((string)(null)), table6, "Given ");
 #line 38
+  testRunner.But("applicant is not chosen from contact list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "But ");
+#line 39
+ testRunner.When("user retreive the data from DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 40
+ testRunner.Then("requirement should not be saved to the DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 41
   testRunner.And("error message should be displayed - ask dev", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

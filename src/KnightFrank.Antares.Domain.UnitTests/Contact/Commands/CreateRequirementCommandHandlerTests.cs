@@ -21,7 +21,7 @@
         [Fact]
         public void HandleWhenCalledShouldReturnValidId()
         {
-            var requirementRepositoryMock = new Mock<IGenericRepository<Requirement>>();
+            var requirementRepositoryMock = new Mock<IGenericRepository<Dal.Model.Requirement>>();
             var contactRepositoryMock = new Mock<IReadGenericRepository<Contact>>();
             var commandHandler = new CreateRequirementCommandHandler(requirementRepositoryMock.Object, contactRepositoryMock.Object);
 
@@ -36,7 +36,7 @@
             };
             
             contactRepositoryMock.Setup(x => x.Get()).Returns(new List<Contact>().AsQueryable());
-            requirementRepositoryMock.Setup(x => x.Add(It.IsAny<Requirement>()));
+            requirementRepositoryMock.Setup(x => x.Add(It.IsAny<Dal.Model.Requirement>()));
             requirementRepositoryMock.Setup(x => x.Save());
 
             commandHandler.Handle(command);

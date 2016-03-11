@@ -120,12 +120,13 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute()]
+        [Xunit.FactAttribute(Skip="Ignored")]
         [Xunit.TraitAttribute("FeatureTitle", "Property ownership")]
         [Xunit.TraitAttribute("Description", "Save ownership where dates are overlapping")]
         public virtual void SaveOwnershipWhereDatesAreOverlapping()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Save ownership where dates are overlapping", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Save ownership where dates are overlapping", new string[] {
+                        "ignore"});
 #line 15
 this.ScenarioSetup(scenarioInfo);
 #line 16
@@ -166,35 +167,37 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute()]
+        [Xunit.FactAttribute(Skip="Ignored")]
         [Xunit.TraitAttribute("FeatureTitle", "Property ownership")]
         [Xunit.TraitAttribute("Description", "Get property ownership list for existing property and ownership with no entry")]
         public virtual void GetPropertyOwnershipListForExistingPropertyAndOwnershipWithNoEntry()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get property ownership list for existing property and ownership with no entry", ((string[])(null)));
-#line 25
-this.ScenarioSetup(scenarioInfo);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get property ownership list for existing property and ownership with no entry", new string[] {
+                        "ignore"});
 #line 26
- testRunner.Given("Property exist in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 27
-  testRunner.But("property has not any ownership", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "But ");
+ testRunner.Given("Property exist in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 28
- testRunner.When("User send GET request to view property details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+  testRunner.But("property has not any ownership", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "But ");
 #line 29
+ testRunner.When("User send GET request to view property details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 30
  testRunner.Then("ownership from DB should be visible as empty list on property details page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute()]
+        [Xunit.FactAttribute(Skip="Ignored")]
         [Xunit.TraitAttribute("FeatureTitle", "Property ownership")]
         [Xunit.TraitAttribute("Description", "Get property ownership list for existing property and ownership with one entry")]
         public virtual void GetPropertyOwnershipListForExistingPropertyAndOwnershipWithOneEntry()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get property ownership list for existing property and ownership with one entry", ((string[])(null)));
-#line 31
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get property ownership list for existing property and ownership with one entry", new string[] {
+                        "ignore"});
+#line 33
 this.ScenarioSetup(scenarioInfo);
-#line 32
+#line 34
  testRunner.Given("Property exist in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
@@ -209,27 +212,28 @@ this.ScenarioSetup(scenarioInfo);
                         "01-05-2010",
                         "01-04-2012",
                         "Jon Snow"});
-#line 33
+#line 35
   testRunner.And("property has already ownership", ((string)(null)), table5, "And ");
-#line 36
+#line 38
  testRunner.When("User send GET request to view property details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 37
+#line 39
  testRunner.Then("ownership from DB should be visible as list on property details page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute()]
+        [Xunit.FactAttribute(Skip="Ignored")]
         [Xunit.TraitAttribute("FeatureTitle", "Property ownership")]
         [Xunit.TraitAttribute("Description", "Get property ownership list for existing property and ownership with more than 2 " +
             "entry")]
         public virtual void GetPropertyOwnershipListForExistingPropertyAndOwnershipWithMoreThan2Entry()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get property ownership list for existing property and ownership with more than 2 " +
-                    "entry", ((string[])(null)));
-#line 39
+                    "entry", new string[] {
+                        "ignore"});
+#line 42
 this.ScenarioSetup(scenarioInfo);
-#line 40
+#line 43
  testRunner.Given("Property exist in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
@@ -262,47 +266,49 @@ this.ScenarioSetup(scenarioInfo);
                         "13-11-2004",
                         "29-02-2008",
                         "Bruce Wayne"});
-#line 41
+#line 44
   testRunner.And("property has already ownership", ((string)(null)), table6, "And ");
-#line 47
+#line 50
  testRunner.When("User send GET request to view property details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 48
+#line 51
  testRunner.Then("ownership from DB should be visible as list on property details page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute()]
+        [Xunit.FactAttribute(Skip="Ignored")]
         [Xunit.TraitAttribute("FeatureTitle", "Property ownership")]
         [Xunit.TraitAttribute("Description", "Get property ownership list for non existing property")]
         public virtual void GetPropertyOwnershipListForNonExistingProperty()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get property ownership list for non existing property", ((string[])(null)));
-#line 50
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get property ownership list for non existing property", new string[] {
+                        "ignore"});
+#line 54
 this.ScenarioSetup(scenarioInfo);
-#line 51
+#line 55
  testRunner.Given("Property with id=10 not exist in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 52
+#line 56
  testRunner.When("User send GET request for ownership list for property with id=10", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 53
+#line 57
  testRunner.Then("HTTP 404 Not found should be received by user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute()]
+        [Xunit.FactAttribute(Skip="Ignored")]
         [Xunit.TraitAttribute("FeatureTitle", "Property ownership")]
         [Xunit.TraitAttribute("Description", "Get property ownership details for non existing ownership")]
         public virtual void GetPropertyOwnershipDetailsForNonExistingOwnership()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get property ownership details for non existing ownership", ((string[])(null)));
-#line 55
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get property ownership details for non existing ownership", new string[] {
+                        "ignore"});
+#line 60
 this.ScenarioSetup(scenarioInfo);
-#line 56
+#line 61
  testRunner.Given("contect with id=10 not exist in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 57
+#line 62
  testRunner.When("Users send GET request for ownership with id=10", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 58
+#line 63
  testRunner.Then("HTTP 404 Not found should be received by user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

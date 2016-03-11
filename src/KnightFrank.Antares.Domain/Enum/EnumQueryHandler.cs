@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using AutoMapper;
+
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Repository;
 
@@ -20,7 +22,7 @@
         {
             IEnumerable<EnumLocalised> enumItems = this.enumLocalisedRepository.Get().Where(x => x.EnumTypeItem.EnumType.Code == message.Code && x.Locale.IsoCode == "en");
 
-            return new EnumQueryResult { Items = enumItems.Select(x => new EnumQueryItemResult { Id = x.Id, Value = x.Value }) };
+            return Mapper.Map<EnumQueryResult>(enumItems);
         }
     }
 }

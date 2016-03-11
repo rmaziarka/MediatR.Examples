@@ -10,6 +10,7 @@ Scenario: Save note to residential sales requirement
 		| NoteId | NoteDescription |
 		| 1      | TestNote        |
 
+@ignore	
 Scenario: Save note to non existing residential sales requirement
 	Given User fill text box in note form for residential sales requirement
 		| NoteId | NoteDescription |
@@ -19,6 +20,7 @@ Scenario: Save note to non existing residential sales requirement
 	Then the note should not be saved in DB due to mising requirement
 		And error message should be displayed ? - ask dev how they check error message
 
+@ignore	
 Scenario: Get list of all notes from DB for specific residential sales requirement
 	Given At least 3 notes exist in DB for chosen requirement
 		| NoteId | NoteDescription |

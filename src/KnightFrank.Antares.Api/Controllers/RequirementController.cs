@@ -24,10 +24,11 @@
         }
 
         /// <summary>
-        /// Posts this instance.
+        /// Create requirement
         /// </summary>
         /// <returns>Requirement identifier.</returns>
-        public Guid Post(CreateRequirementCommand command)
+        [HttpPost]
+        public Guid CreateRequirement(CreateRequirementCommand command)
         {
             return this.mediator.Send(command);
         }

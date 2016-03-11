@@ -60,7 +60,7 @@ linters:
   Indentation:
     enabled: true
     character: space
-    width: 4
+    width: 2
 
   LeadingZero:
     enabled: true
@@ -105,7 +105,7 @@ linters:
 
   SingleLinePerProperty:
     enabled: true
-    allow_single_line_rule_sets: false
+    allow_single_line_rule_sets: true
 
   SingleLinePerSelector:
     enabled: true

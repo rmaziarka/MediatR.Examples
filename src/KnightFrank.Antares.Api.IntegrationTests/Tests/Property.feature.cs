@@ -136,13 +136,14 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute()]
+        [Xunit.FactAttribute(Skip="Ignored")]
         [Xunit.TraitAttribute("FeatureTitle", "Add, update and view Property")]
         [Xunit.TraitAttribute("Description", "Update property in DB")]
         public virtual void UpdatePropertyInDB()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update property in DB", ((string[])(null)));
-#line 13
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update property in DB", new string[] {
+                        "ignore"});
+#line 14
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -167,7 +168,7 @@ this.ScenarioSetup(scenarioInfo);
                         "N1C",
                         "London",
                         "Greater London"});
-#line 14
+#line 15
  testRunner.Given("Details of property are provided", ((string)(null)), table3, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -192,9 +193,9 @@ this.ScenarioSetup(scenarioInfo);
                         "N1C",
                         "London",
                         "Greater London"});
-#line 17
+#line 18
   testRunner.And("Users updates property", ((string)(null)), table4, "And ");
-#line 20
+#line 21
  testRunner.When("User retrevies data from DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
@@ -219,19 +220,20 @@ this.ScenarioSetup(scenarioInfo);
                         "N1C",
                         "London",
                         "Greater London"});
-#line 21
+#line 22
  testRunner.Then("the results should be same as", ((string)(null)), table5, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute()]
+        [Xunit.FactAttribute(Skip="Ignored")]
         [Xunit.TraitAttribute("FeatureTitle", "Add, update and view Property")]
         [Xunit.TraitAttribute("Description", "Update non exisitng property")]
         public virtual void UpdateNonExisitngProperty()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update non exisitng property", ((string[])(null)));
-#line 25
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update non exisitng property", new string[] {
+                        "ignore"});
+#line 27
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
@@ -256,7 +258,7 @@ this.ScenarioSetup(scenarioInfo);
                         "N1C",
                         "London",
                         "Greater London"});
-#line 26
+#line 28
  testRunner.Given("Property existing in DB", ((string)(null)), table6, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
@@ -281,13 +283,13 @@ this.ScenarioSetup(scenarioInfo);
                         "W2W",
                         "Liverpool",
                         ""});
-#line 29
+#line 31
   testRunner.And("Users updates property which is not existing in DB", ((string)(null)), table7, "And ");
-#line 32
- testRunner.When("User retrevies data from DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 33
- testRunner.Then("Property should not be updated in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 34
+ testRunner.When("User retrevies data from DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 35
+ testRunner.Then("Property should not be updated in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 36
   testRunner.And("HTTP 404 Not found should be received by user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
