@@ -120,23 +120,42 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Extensions\FixtureExtension.cs" />
     <Compile Include="Fixtures\BaseTestClassFixture.cs" />
     <Compile Include="Fixtures\DatabaseCollection.cs" />
     <Compile Include="Fixtures\DatabaseFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScenarioContextExtention.cs" />
-    <Compile Include="SharedActions\GetRequest.cs" />
-    <Compile Include="SharedActions\PostRequest.cs" />
-    <Compile Include="Steps\GetContactsSteps\ContactsSteps.cs" />
-    <Compile Include="Tests\CreateContactTests1.feature.cs">
+    <Compile Include="Extensions\ScenarioContextExtension.cs" />
+    <Compile Include="Steps\ContactsSteps\ContactsSteps.cs" />
+    <Compile Include="Tests\Contacts\ContactsControllerTests.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CreateContactTests.feature</DependentUpon>
+      <DependentUpon>ContactsControllerTests.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\GetContacts\ContactsTests1.feature.cs">
+    <Compile Include="Tests\Enums\EnumsTests.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ContactsTests.feature</DependentUpon>
+      <DependentUpon>EnumsTests.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\NoteOnResidentialSalesRequirement.feature.cs">
+      <DependentUpon>NoteOnResidentialSalesRequirement.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Tests\Property.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Property.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\ResidentialSalesRequirement.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResidentialSalesRequirement.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\PropertyOwnership.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PropertyOwnership.feature</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -156,16 +175,34 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Tests\CreateContactTests.feature">
+    <None Include="Tests\Contacts\ContactsControllerTests.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>CreateContactTests1.feature.cs</LastGenOutput>
+      <LastGenOutput>ContactsControllerTests.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\GetContacts\ContactsTests.feature">
+    <None Include="Tests\Enums\EnumsTests.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ContactsTests1.feature.cs</LastGenOutput>
+      <LastGenOutput>EnumsTests.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\NoteOnResidentialSalesRequirement.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>NoteOnResidentialSalesRequirement.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Property.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Property.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\ResidentialSalesRequirement.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ResidentialSalesRequirement.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\PropertyOwnership.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>PropertyOwnership.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Steps\EnumsSteps\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

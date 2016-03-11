@@ -1,15 +1,228 @@
-﻿<h2 class="page-header" translate="REQUIREMENT.ADD.ADD_REQUIREMENT"></h2>
-<div class="row">
-    <div class="col-md-6">
-    </div>
+﻿<div class="row">
+    <div class="col-md-12">
 
-    <div class="col-md-6">
-        <form>
-            <div class="form-group">
-                <h3 translate="REQUIREMENT.ADD.CONTACT"></h3>
+        <h2 class="page-header" translate="REQUIREMENT.ADD.ADD_REQUIREMENT"></h2>
+        <div class="row">
+            <div class="col-md-6">
+                <form>
+                    <fieldset>
+                        <legend>Location requirements</legend>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="country1">Country</label>
+                                    <select class="form-control" id="country1" disabled>
+                                        <option>United Kingdom</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <label for="street">Street name</label>
+                                    <input type="text" class="form-control" id="street">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="postcode">Postcode</label>
+                                    <input type="text" class="form-control" id="postcode">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="town">Town</label>
+                                    <input type="text" class="form-control" id="town">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Property requirements</legend>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="type">Type</label>
+                                    <select class="form-control" id="type">
+                                        <option>- select -</option>
+                                        <option>House</option>
+                                        <option>Flat</option>
+                                        <option>Bungalow</option>
+                                        <option>Houseboat</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <fieldset>
+                            <legend>Price</legend>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="price-min">Min</label>
+                                        <div class="input-group">
+                                            <input type="number" min="0" class="form-control" id="price-min">
+                                            <div class="input-group-addon">GBP</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="price-max">Max</label>
+                                        <div class="input-group">
+                                            <input type="number" min="0" class="form-control" id="price-max">
+                                            <div class="input-group-addon">GBP</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Bedrooms</legend>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="bedrooms-min">Min</label>
+                                        <input type="number" min="0" class="form-control" id="bedrooms-min">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="bedrooms-max">Max</label>
+                                        <input type="number" min="0" class="form-control" id="bedrooms-max">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Reception rooms</legend>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="reception-min">Min</label>
+                                        <input type="number" min="0" class="form-control" id="reception-min">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="reception-max">Max</label>
+                                        <input type="number" min="0" class="form-control" id="reception-max">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Bathrooms</legend>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="bathrooms-min">Min</label>
+                                        <input type="number" min="0" class="form-control" id="bathrooms-min">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="bathrooms-max">Max</label>
+                                        <input type="number" min="0" class="form-control" id="bathrooms-max">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Parking spaces</legend>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="parking-min">Min</label>
+                                        <input type="number" min="0" class="form-control" id="parking-min">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="parking-max">Max</label>
+                                        <input type="number" min="0" class="form-control" id="parking-max">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Area</legend>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="area-min">Min</label>
+                                        <div class="input-group">
+                                            <input type="number" min="0" class="form-control" id="area-min">
+                                            <div class="input-group-addon">sq. ft</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="area-max">Max</label>
+                                        <div class="input-group">
+                                            <input type="number" min="0" class="form-control" id="area-max">
+                                            <div class="input-group-addon">sq. ft</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Land area</legend>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="land-min">Min</label>
+                                        <div class="input-group">
+                                            <input type="number" min="0" class="form-control" id="land-min">
+                                            <div class="input-group-addon">sq. ft</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="land-max">Max</label>
+                                        <div class="input-group">
+                                            <input type="number" min="0" class="form-control" id="land-max">
+                                            <div class="input-group-addon">sq. ft</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <label for="notes">Requirements note</label>
+                                    <textarea id="notes" rows="8" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <button type="button" class="btn btn-default" translate="REQUIREMENT.ADD.ADD" ng-click="vm.showContactList()"></button>
+
+            <div class="col-md-6">
+                <form>
+                    <fieldset>
+                        <legend translate="REQUIREMENT.ADD.CONTACT"></legend>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-default" translate="REQUIREMENT.ADD.ADD"></button>
+                        </div>
+                    </fieldset>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            Robert Redford
+                        </div>
+                    </div>
             </div>
             <div class="panel panel-default" ng-repeat="c in vm.contacts">
                 <div class="panel-body">

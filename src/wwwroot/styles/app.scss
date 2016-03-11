@@ -1,1 +1,6 @@
-﻿@import '../libs/bootstrap-sass/assets/stylesheets/bootstrap';
+﻿// Bootstrap
+@import 'bootstrap';
+
+body {
+    padding-top: 50px;
+}

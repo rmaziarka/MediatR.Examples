@@ -114,7 +114,7 @@ gulp.task('ts-watch', function () {
  * Inject all the spec files into the specRunner.html
  * @return {Stream}
  */
-gulp.task('build-specs', ['_build-templatecache'], function () {
+gulp.task('build-specs', ['_build-specs-templatecache'], function () {
     log('Building the spec runner');
 
     var wiredep = require('wiredep').stream;
@@ -188,14 +188,14 @@ gulp.task('_clean-code', function () {
 gulp.task('_build-templatecache', ['_clean-code'], function () {
     log('Creating templates caches in build folder');
 
-    return gulp
-        .src(config.build.htmlTemplatesSrc)
-        .pipe($.minifyHtml({ empty: true }))
-        .pipe($.angularTemplatecache(
-            config.build.templateCache.file,
-            config.build.templateCache.options
-        ))
-        .pipe(gulp.dest(config.build.temp))
+    return buildTemplateCache()
+        .pipe(gulp.dest(config.build.temp));
+});
+
+gulp.task('_build-specs-templatecache', function () {
+    log('Creating templates caches in build folder');
+
+    return buildTemplateCache()
         .pipe(gulp.dest(config.build.testInput));
 });
 
@@ -252,6 +252,16 @@ gulp.task('sass-lint', function () {
             'config': 'sass-lint.yml',
         }))
 });
+
+function buildTemplateCache() {
+    return gulp
+        .src(config.build.htmlTemplatesSrc)
+        .pipe($.minifyHtml({ empty: true }))
+        .pipe($.angularTemplatecache(
+            config.build.templateCache.file,
+            config.build.templateCache.options
+        ));
+}
 
 
 /**

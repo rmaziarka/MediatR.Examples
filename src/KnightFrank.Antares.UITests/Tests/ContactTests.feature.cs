@@ -17,7 +17,7 @@ namespace KnightFrank.Antares.UITests.Tests
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class CreateContactFeature : Xunit.IClassFixture<CreateContactFeature.FixtureData>, System.IDisposable
+    public partial class CreateContactUITestsFeature : Xunit.IClassFixture<CreateContactUITestsFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -25,7 +25,7 @@ namespace KnightFrank.Antares.UITests.Tests
 #line 1 "ContactTests.feature"
 #line hidden
         
-        public CreateContactFeature()
+        public CreateContactUITestsFeature()
         {
             this.TestInitialize();
         }
@@ -33,7 +33,7 @@ namespace KnightFrank.Antares.UITests.Tests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "CreateContact", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Create Contact UI tests", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -62,7 +62,7 @@ namespace KnightFrank.Antares.UITests.Tests
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void SetFixture(CreateContactFeature.FixtureData fixtureData)
+        public virtual void SetFixture(CreateContactUITestsFeature.FixtureData fixtureData)
         {
         }
         
@@ -72,14 +72,14 @@ namespace KnightFrank.Antares.UITests.Tests
         }
         
         [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "CreateContact")]
+        [Xunit.TraitAttribute("FeatureTitle", "Create Contact UI tests")]
         [Xunit.TraitAttribute("Description", "Create contact using valid details")]
         public virtual void CreateContactUsingValidDetails()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create contact using valid details", ((string[])(null)));
-#line 3
-this.ScenarioSetup(scenarioInfo);
 #line 4
+this.ScenarioSetup(scenarioInfo);
+#line 5
  testRunner.Given("User navigates to create contact page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
@@ -90,11 +90,11 @@ this.ScenarioSetup(scenarioInfo);
                         "Miss",
                         "Sarah",
                         "Conor"});
-#line 5
+#line 6
  testRunner.When("User fills in contact details on create contact page", ((string)(null)), table1, "When ");
-#line 8
-  testRunner.And("User clicks save button on create contact page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 9
+  testRunner.And("User clicks save button on create contact page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 10
  testRunner.Then("New contact should be created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -107,12 +107,12 @@ this.ScenarioSetup(scenarioInfo);
             
             public FixtureData()
             {
-                CreateContactFeature.FeatureSetup();
+                CreateContactUITestsFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                CreateContactFeature.FeatureTearDown();
+                CreateContactUITestsFeature.FeatureTearDown();
             }
         }
     }

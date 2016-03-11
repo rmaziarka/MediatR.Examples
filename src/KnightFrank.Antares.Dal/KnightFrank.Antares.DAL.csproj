@@ -57,8 +57,25 @@
     <Compile Include="Migrations\201603090706533_RenameEnumTables.Designer.cs">
       <DependentUpon>201603090706533_RenameEnumTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603091204133_AddressFormTemplate.cs" />
+    <Compile Include="Migrations\201603091204133_AddressFormTemplate.Designer.cs">
+      <DependentUpon>201603091204133_AddressFormTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Address.cs" />
+    <Compile Include="Model\AddressField.cs" />
+    <Compile Include="Model\AddressFieldDefinition.cs" />
+    <Compile Include="Model\AddressFieldLabel.cs" />
+    <Compile Include="Model\AddressForm.cs" />
+    <Compile Include="Model\AddressFormEntityType.cs" />
+    <Compile Include="Model\Configuration\AddressConfiguration.cs" />
+    <Compile Include="Model\Configuration\AddressFieldConfiguration.cs" />
+    <Compile Include="Model\Configuration\AddressFieldDefinitionConfiguration.cs" />
+    <Compile Include="Model\Configuration\AddressFieldLableConfiguration.cs" />
+    <Compile Include="Model\Configuration\AddressFormConfigutration.cs" />
+    <Compile Include="Model\Configuration\AddressFormEntityTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\ContactConfiguration.cs" />
     <Compile Include="Model\Configuration\BaseEntityConfiguration.cs" />
+    <Compile Include="Model\Configuration\CountryConfiguration.cs" />
     <Compile Include="Model\Configuration\LocaleConfiguration.cs" />
     <Compile Include="Model\Configuration\EnumLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\EnumTypeItemConfiguration.cs" />
@@ -68,6 +85,7 @@
     <Compile Include="KnightFrankContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\BaseEntity.cs" />
+    <Compile Include="Model\Country.cs" />
     <Compile Include="Model\EnumLocalised.cs" />
     <Compile Include="Model\Locale.cs" />
     <Compile Include="Model\EnumTypeItem.cs" />
@@ -91,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603090706533_RenameEnumTables.resx">
       <DependentUpon>201603090706533_RenameEnumTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603091204133_AddressFormTemplate.resx">
+      <DependentUpon>201603091204133_AddressFormTemplate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

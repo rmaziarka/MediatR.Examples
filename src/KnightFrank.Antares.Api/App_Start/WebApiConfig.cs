@@ -18,7 +18,8 @@
             {
                 SerializerSettings = new JsonSerializerSettings
                 {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 }
             });
 

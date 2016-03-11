@@ -14,6 +14,7 @@
     public class NewContactSteps
     {
         private readonly DriverContext driverContext;
+        private readonly ScenarioContext scenarioContext;
 
         public NewContactSteps(ScenarioContext scenarioContext)
         {
@@ -21,50 +22,39 @@
             {
                 throw new ArgumentNullException(nameof(scenarioContext));
             }
-
-            ScenarioContext sc = scenarioContext;
-            this.driverContext = sc["DriverContext"] as DriverContext;
+            this.scenarioContext = scenarioContext;
+            this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
         }
 
         [Given(@"User navigates to create contact page")]
         public void OpenNewContactPage()
         {
             NewContactPage newContactPage = new NewContactPage(this.driverContext).OpenNewContactPage();
-            ScenarioContext.Current["NewContactPage"] = newContactPage;
+            this.scenarioContext["NewContactPage"] = newContactPage;
         }
 
         [When(@"User fills in contact details on create contact page")]
         public void SetNewContactDetails(Table table)
         {
-            var newContactPage = ScenarioContext.Current.Get<NewContactPage>("NewContactPage");
+            var newContactPage = this.scenarioContext.Get<NewContactPage>("NewContactPage");
             var contactDetails = table.CreateInstance<Contact>();
 
-            if (!contactDetails.Title.Equals(string.Empty))
-            {
-                newContactPage.SetTitle(contactDetails.Title);
-            }
-
-            if (!contactDetails.FirstName.Equals(string.Empty))
-            {
-                newContactPage.SetFirstName(contactDetails.FirstName);
-            }
-
-            if (!contactDetails.Surname.Equals(string.Empty))
-            {
-                newContactPage.SetSurname(contactDetails.Surname);
-            }
+            newContactPage.SetTitle(contactDetails.Title);
+            newContactPage.SetFirstName(contactDetails.FirstName);
+            newContactPage.SetSurname(contactDetails.Surname);
+         
         }
 
         [When(@"User clicks save button on create contact page")]
         public void SaveNewContact()
         {
-            ScenarioContext.Current.Get<NewContactPage>("NewContactPage").SaveNewContact();
+            this.scenarioContext.Get<NewContactPage>("NewContactPage").SaveNewContact();
         }
 
         [Then(@"New contact should be created")]
         public void CheckIfContactCreated()
         {
-            ScenarioContext.Current.Pending();
+            Console.Write("abc");
         }
     }
 }
