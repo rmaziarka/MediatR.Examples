@@ -1,18 +1,18 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
+///<reference path="../../../typings/main.d.ts"/>
 
 module Antares.Services {
-    import Resources = Common.Models.Resources;
-    
+    import Resources = Antares.Common.Models.Resources;
+
     export class DataAccessService {
 
-        private rootUrl: string;
+        private rootUrl: string = "";
 
         constructor(private $resource: ng.resource.IResourceService) {
-            
+
         }
-        
-        setRootUrl(url: string) : void
-        {
+
+        setRootUrl(url: string): void {
             this.rootUrl = url;
         }
 

@@ -12,7 +12,7 @@
 
 <body>
     <!-- TODO: app.json should be injected dynamically -->
-    <script type="text/javascript" language="javascript" src="app/app.json"></script>
+    <!--<script type="text/javascript" language="javascript" src="app.json"></script>-->
     <!-- inject:testlibraries:js -->
     <!-- endinject -->
     <!-- bower:js -->
@@ -30,15 +30,20 @@
     <!-- inject:js -->
     <script src="app/app.module.js"></script>
     <script src="app/requirement/requirement.module.js"></script>
+    <script src="app/common/components/sidePanel/sidepanelComponent.js"></script>
+    <script src="app/common/core/services/registry/componentRegistryService.js"></script>
+    <script src="app/common/models/dto/contact.js"></script>
     <script src="app/common/services/configService.js"></script>
     <script src="app/common/services/dataAccessService.js"></script>
     <script src="app/contact/add/contactAddComponent.js"></script>
     <script src="app/contact/add/contactAddController.js"></script>
+    <script src="app/contact/list/contactListComponent.js"></script>
     <script src="app/requirement/add/requirementAddController.js"></script>
     <!-- endinject -->
     <!-- inject:specs:js -->
     <script src="app/contact/add/tests/contactAddComponent.spec.js"></script>
     <script src="app/contact/add/tests/contactAddController.spec.js"></script>
+    <script src="app/contact/list/tests/contactListComponent.spec.js"></script>
     <!-- endinject -->
     <!-- inject:templates:js -->
     <script src=".test/templates.js"></script>

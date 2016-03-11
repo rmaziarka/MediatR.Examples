@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Services {
-    import Resources = Common.Models.Resources;
+    import Resources = Antares.Common.Models.Resources;
     
     export class ConfigService {
         public promise: ng.IPromise<string>;
