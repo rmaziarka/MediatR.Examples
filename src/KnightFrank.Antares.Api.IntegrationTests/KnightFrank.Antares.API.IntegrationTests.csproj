@@ -137,6 +137,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EnumsTests.feature</DependentUpon>
     </Compile>
+    <Compile Include="Tests\NoteOnResidentialSalesRequirement.feature.cs">
+      <DependentUpon>NoteOnResidentialSalesRequirement.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Tests\Property.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Property.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\ResidentialSalesRequirement.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResidentialSalesRequirement.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\PropertyOwnership.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PropertyOwnership.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KnightFrank.Antares.Api\KnightFrank.Antares.Api.csproj">
@@ -162,6 +182,22 @@
     <None Include="Tests\Enums\EnumsTests.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>EnumsTests.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\NoteOnResidentialSalesRequirement.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>NoteOnResidentialSalesRequirement.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Property.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Property.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\ResidentialSalesRequirement.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ResidentialSalesRequirement.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\PropertyOwnership.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>PropertyOwnership.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
