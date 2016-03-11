@@ -60,10 +60,10 @@
     <Compile Include="Migrations\201603091204133_AddressFormTemplate.cs" />
     <Compile Include="Migrations\201603091204133_AddressFormTemplate.Designer.cs">
       <DependentUpon>201603091204133_AddressFormTemplate.cs</DependentUpon>
-      </Compile> 
-    <Compile Include="Migrations\201603091313378_AddRequirementDetails.cs" />
-    <Compile Include="Migrations\201603091313378_AddRequirementDetails.Designer.cs">
-      <DependentUpon>201603091313378_AddRequirementDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603111023489_AddRequirementDetails.cs" />
+    <Compile Include="Migrations\201603111023489_AddRequirementDetails.Designer.cs">
+      <DependentUpon>201603111023489_AddRequirementDetails.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressField.cs" />
@@ -114,11 +114,11 @@
     <EmbeddedResource Include="Migrations\201603090706533_RenameEnumTables.resx">
       <DependentUpon>201603090706533_RenameEnumTables.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603091313378_AddRequirementDetails.resx">
-      <DependentUpon>201603091313378_AddRequirementDetails.cs</DependentUpon>
-      </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603091204133_AddressFormTemplate.resx">
       <DependentUpon>201603091204133_AddressFormTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603111023489_AddRequirementDetails.resx">
+      <DependentUpon>201603111023489_AddRequirementDetails.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

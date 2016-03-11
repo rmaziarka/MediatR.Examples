@@ -13,7 +13,7 @@ namespace KnightFrank.Antares.Dal.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201603091313378_AddRequirementDetails"; }
+            get { return "201603111023489_AddRequirementDetails"; }
         }
         
         string IMigrationMetadata.Source
