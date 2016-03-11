@@ -21,6 +21,8 @@ namespace KnightFrank.Antares.Domain.Requirement.Commands
             this.RuleFor(x => x.MinParkingSpaces).GreaterThanOrEqualTo(0);
             this.RuleFor(x => x.MinArea).GreaterThanOrEqualTo(0);
             this.RuleFor(x => x.MinLandArea).GreaterThanOrEqualTo(0);
+
+            this.RuleFor(x => x.Description).Length(0, 4000);
         }
     }
 }

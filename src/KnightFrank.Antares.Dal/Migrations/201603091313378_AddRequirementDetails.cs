@@ -21,12 +21,12 @@ namespace KnightFrank.Antares.Dal.Migrations
             AddColumn("dbo.Requirement", "MaxArea", c => c.Double());
             AddColumn("dbo.Requirement", "MinLandArea", c => c.Double());
             AddColumn("dbo.Requirement", "MaxLandArea", c => c.Double());
-            AddColumn("dbo.Requirement", "Note", c => c.String(maxLength: 4000));
+            AddColumn("dbo.Requirement", "Description", c => c.String(maxLength: 4000));
         }
         
         public override void Down()
         {
-            DropColumn("dbo.Requirement", "Note");
+            DropColumn("dbo.Requirement", "Description");
             DropColumn("dbo.Requirement", "MaxLandArea");
             DropColumn("dbo.Requirement", "MinLandArea");
             DropColumn("dbo.Requirement", "MaxArea");

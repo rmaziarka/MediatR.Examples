@@ -19,7 +19,7 @@ namespace KnightFrank.Antares.Dal.Migrations
             this.Property(r => r.CreateDate)
                 .IsRequired();
 
-            this.Property(r => r.Note)
+            this.Property(r => r.Description)
                 .HasMaxLength(4000);
         }
     }

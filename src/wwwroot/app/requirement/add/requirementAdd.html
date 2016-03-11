@@ -84,7 +84,7 @@
                                         </div>
                                         <div ng-show="addRequirementForm.maxPrice.$touched || addRequirementForm.$submitted">
                                             <p name="validation_maxPriceFormatErr" ng-show="addRequirementForm.maxPrice.$error.number" class="help-block with-errors" translate="FORM.FIELD_SHOULD_BE_NUMBER"></p>
-                                            <p name="validation_maxPriceValueErr" ng-show="addRequirementForm.maxPrice.$error.min" class="help-block with-errors" translate="FORM.FIELD_SHOULD_BE_GREATER_THAN_ZERO"></p>
+                                            <p name="validation_maxPriceNegativeErr" ng-show="addRequirementForm.maxPrice.$error.min" class="help-block with-errors" translate="FORM.FIELD_SHOULD_BE_GREATER_THAN_ZERO"></p>
                                         </div>
                                     </div>
                                 </div>

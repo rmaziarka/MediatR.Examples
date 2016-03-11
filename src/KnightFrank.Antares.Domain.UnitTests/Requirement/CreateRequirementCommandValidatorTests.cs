@@ -1,7 +1,7 @@
-﻿namespace KnightFrank.Antares.Domain.UnitTests
+﻿namespace KnightFrank.Antares.Domain.UnitTests.Requirement
 {
-
     using FluentValidation.TestHelper;
+
     using KnightFrank.Antares.Domain.Requirement.Commands;
 
     using Xunit;

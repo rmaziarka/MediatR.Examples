@@ -30,6 +30,6 @@
         public double? MinLandArea { get; set; }
         public double? MaxLandArea { get; set; }
 
-        public string Note { get; set; }
+        public string Description { get; set; }
     }
 }
