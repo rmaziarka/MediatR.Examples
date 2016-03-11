@@ -1,6 +1,15 @@
 ﻿// Bootstrap
+
 @import 'bootstrap';
 
-body {
-    padding-top: 50px;
-}
+// Utils
+
+@import 'utils/variables';
+
+// Base Styles
+
+@import 'base/global';
+
+// Components
+
+@import 'components/slide-panel';
