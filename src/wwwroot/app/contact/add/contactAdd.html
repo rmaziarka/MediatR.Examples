@@ -18,8 +18,8 @@
                 <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.firstName.$dirty) && addContactForm.firstName.$invalid}">
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="name" translate="CONTACT.FIRSTNAME"></label>
-                            <input type="text" class="form-control" id="firstName" name="firstName" required ng-maxlength="128" ng-model="vm.contact.firstName">
+                            <label for="first-name" translate="CONTACT.FIRSTNAME"></label>
+                            <input type="text" class="form-control" id="first-name" name="firstName" required ng-maxlength="128" ng-model="vm.contact.firstName">
                             <div ng-messages="addContactForm.firstName.$error" ng-show="addContactForm.$submitted || addContactForm.firstName.$dirty">
                                 <div ng-messages-include="app/common/views/errorMessages.html"></div>
                             </div>

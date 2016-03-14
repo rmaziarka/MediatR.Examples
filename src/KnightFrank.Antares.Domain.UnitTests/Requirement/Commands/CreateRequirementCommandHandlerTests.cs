@@ -1,10 +1,9 @@
-﻿namespace KnightFrank.Antares.Domain.UnitTests.Contact.Commands
+﻿namespace KnightFrank.Antares.Domain.UnitTests.Requirement.Commands
 {
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
-    using System.Linq.Expressions;
 
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Repository;

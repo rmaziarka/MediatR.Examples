@@ -5,9 +5,14 @@
 
     public class Requirement : BaseEntity
     {
+        public Requirement()
+        {
+            this.Contacts = new List<Contact>();
+        }
+
         public DateTime CreateDate { get; set; }
 
-        public virtual List<Contact> Contacts { get; set; }
+        public List<Contact> Contacts { get; set; }
 
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }

@@ -71,52 +71,25 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests
             this.ScenarioTearDown();
         }
         
-        [Xunit.FactAttribute(Skip="Ignored")]
+        [Xunit.FactAttribute()]
         [Xunit.TraitAttribute("FeatureTitle", "Residential sales requirements")]
         [Xunit.TraitAttribute("Description", "Save requirement to DB with contact and all detailed fields fullfiled")]
         public virtual void SaveRequirementToDBWithContactAndAllDetailedFieldsFullfiled()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Save requirement to DB with contact and all detailed fields fullfiled", new string[] {
-                        "ignore"});
-#line 4
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Save requirement to DB with contact and all detailed fields fullfiled", ((string[])(null)));
+#line 3
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                        "MinPrice",
-                        "MaxPrice",
-                        "MinBedrooms",
-                        "MaxBedrooms",
-                        "MinReceprionRooms",
-                        "MaxReceprionRooms",
-                        "MinBathrooms",
-                        "MaxBathrooms",
-                        "MinParkingSpaces",
-                        "MaxParkingSpaces",
-                        "MinArea",
-                        "MaxArea",
-                        "MinLandArea",
-                        "MaxLandArea",
-                        "Description"});
+                        "FirstName",
+                        "Surname",
+                        "Title"});
             table1.AddRow(new string[] {
-                        "1000000",
-                        "4000000",
-                        "1",
-                        "5",
-                        "0",
-                        "2",
-                        "1",
-                        "3",
-                        "1",
-                        "2",
-                        "1200",
-                        "2000",
-                        "10000",
-                        "20000",
-                        "RequirementDescription"});
-#line 5
- testRunner.Given("Details of requirement are provided", ((string)(null)), table1, "Given ");
-#line 8
- testRunner.When("user retreive the data form DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+                        "Tomasz",
+                        "Bien",
+                        "Mister"});
+#line 4
+ testRunner.When("User creates a contact with following data", ((string)(null)), table1, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "MinPrice",
@@ -150,8 +123,14 @@ this.ScenarioSetup(scenarioInfo);
                         "10000",
                         "20000",
                         "RequirementDescription"});
-#line 9
- testRunner.Then("requirement should be same as", ((string)(null)), table2, "Then ");
+#line 7
+ testRunner.When("User creates following requirement", ((string)(null)), table2, "When ");
+#line 10
+  testRunner.And("User retrieves requirement that he saved", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 11
+ testRunner.Then("User should get OK http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 12
+  testRunner.And("Requirement should be the same as added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -165,7 +144,7 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Negative - Try save requirement to DB without contact and all detailed fields ful" +
                     "lfiled", new string[] {
                         "ignore"});
-#line 14
+#line 15
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -200,13 +179,13 @@ this.ScenarioSetup(scenarioInfo);
                         "10000",
                         "20000",
                         "RequirementDescription"});
-#line 15
+#line 16
  testRunner.Given("Details of requirement are provided", ((string)(null)), table3, "Given ");
-#line 18
- testRunner.When("user retreive the data from DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 19
- testRunner.Then("requirement should not be saved in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("user retreive the data from DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 20
+ testRunner.Then("requirement should not be saved in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 21
   testRunner.And("error message should be displayed - ask dev", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -219,7 +198,7 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Save requirements with location and all valid fields", new string[] {
                         "ignore"});
-#line 23
+#line 24
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -230,11 +209,11 @@ this.ScenarioSetup(scenarioInfo);
                         "Marsh Rd",
                         "HA5 5NQ",
                         "London"});
-#line 24
+#line 25
  testRunner.Given("user fills all fields for property location", ((string)(null)), table4, "Given ");
-#line 27
- testRunner.When("user retreive the data form DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 28
+ testRunner.When("user retreive the data form DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 29
  testRunner.Then("requirment should be save in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
@@ -245,7 +224,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Marsh Rd",
                         "HA5 5NQ",
                         "London"});
-#line 29
+#line 30
   testRunner.And("should be same as", ((string)(null)), table5, "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -258,7 +237,7 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Negative - try save requirement with location without contact field", new string[] {
                         "ignore"});
-#line 34
+#line 35
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
@@ -269,15 +248,15 @@ this.ScenarioSetup(scenarioInfo);
                         "Marsh Rd",
                         "HA5 5NQ",
                         "London"});
-#line 35
+#line 36
  testRunner.Given("user fills all fields for property location", ((string)(null)), table6, "Given ");
-#line 38
-  testRunner.But("applicant is not chosen from contact list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "But ");
 #line 39
- testRunner.When("user retreive the data from DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+  testRunner.But("applicant is not chosen from contact list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "But ");
 #line 40
- testRunner.Then("requirement should not be saved to the DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("user retreive the data from DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 41
+ testRunner.Then("requirement should not be saved to the DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 42
   testRunner.And("error message should be displayed - ask dev", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

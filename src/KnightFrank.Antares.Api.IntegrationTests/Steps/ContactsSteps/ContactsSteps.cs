@@ -91,12 +91,6 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [Then(@"User should get (.*) http status code")]
-        public void ThenStatusCodeShouldBe(HttpStatusCode statusCode)
-        {
-            this.scenarioContext.GetResponseHttpStatusCode().Should().Be(statusCode);
-        }
-
         [Then(@"contact details should be the same as already added")]
         public void ThenContactDetailsShouldBeTheSameAsAlreadyAdded()
         {
