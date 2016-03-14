@@ -10,19 +10,19 @@ module Antares {
             .state('app', {
                 url: '/app',
                 abstract: true,
-                templateUrl: 'app/app.html'
+                templateUrl: 'app/app.html',
+                resolve: {
+                    'rootUrl': (configService: Antares.Services.ConfigService) => {
+                        return configService.promise;
+                    }
+                }
             });
 
         $stateProvider
             .state('app.contact-add', {
                 url: '/contact/add',
                 params: {},
-                template: '<contact-add></contact-add>',
-                resolve: {
-                    'rootUrl': (configService: Antares.Services.ConfigService) => {
-                        return configService.promise;
-                    }
-                }
+                template: '<contact-add></contact-add>'
             });
 
         $urlRouterProvider.otherwise('/app/contact/add');
