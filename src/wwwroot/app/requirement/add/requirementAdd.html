@@ -232,9 +232,9 @@
                             <button type="button" class="btn btn-default" translate="REQUIREMENT.ADD.ADD" ng-click="vm.showContactList()"></button>
                         </div>
                     </fieldset>
-                    <div class="panel panel-default" ng-repeat="c in vm.contacts">
+                    <div class="panel panel-default" ng-repeat="c in vm.requirement.contacts">
                         <div class="panel-body">
-                            {{c.firstName }}
+                            {{c.firstName }} {{ c.surname }}
                         </div>
                     </div>
                 </form>
@@ -243,9 +243,9 @@
     </div>
 </div>
 
-<side-panel component-id="{{vm.componentIds.contactSidePanelId}}">
+<side-panel component-id="vm.componentIds.contactSidePanelId">
     <side-panel-content>
-        <contact-list component-id="{{vm.componentIds.contactListId}}">
+        <contact-list component-id="vm.componentIds.contactListId">
         </contact-list>
     </side-panel-content>
     <side-panel-footer>

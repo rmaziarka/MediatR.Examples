@@ -3,8 +3,7 @@
 
 module Antares {
     export module Component {
-
-        class ContactListController {
+        export class ContactListController {
             static $inject = ['componentRegistry', 'dataAccessService'];
             contacts: any;
             selected: { [id: string]: any } = {};
@@ -27,12 +26,11 @@ module Antares {
                 return result;
             }
 
-            isSelected(contact) {
+            isSelected(contact){
                 return !!this.selected[contact.id];
             }
 
-            toggleSelect(newContact) {
-
+            toggleSelect(newContact){
                 if (this.isSelected(newContact)) {
                     delete this.selected[newContact.id];
                 }
@@ -45,12 +43,12 @@ module Antares {
         angular.module('app').controller('contactListController', ContactListController);
 
         angular.module('app').component('contactList', {
-            controller: 'contactListController',
-            controllerAs: 'vm',
-            templateUrl: 'app/contact/list/contactList.html',
+            controller : 'contactListController',
+            controllerAs : 'vm',
+            templateUrl : 'app/contact/list/contactList.html',
             transclude: true,
             bindings: {
-                componentId: '@'
+                componentId: '<'
             }
         });
 

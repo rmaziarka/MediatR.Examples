@@ -100,7 +100,9 @@
     <Compile Include="Repository\IReadGenericRepository.cs" />
     <Compile Include="Repository\IGenericRepository.cs" />
     <Compile Include="Model\Requirement.cs" />
-    <Compile Include="Seed\EntityTypeEnum.cs" />
+    <Compile Include="Seed\EntityTypeEnumData.cs" />
+    <Compile Include="Seed\CountryData.cs" />
+    <Compile Include="Seed\LocaleData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

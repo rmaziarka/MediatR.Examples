@@ -3,20 +3,23 @@
 module Antares {
     export module Common {
         export module Component {
-            class SidePanelController {
+            export class SidePanelController {
                 static $inject = ['componentRegistry'];
                 private componentId: string;
                 visible: boolean = false;
+                stateChanged: boolean = false;
                 constructor(componentRegistry: Antares.Core.Service.ComponentRegistry) {
                     componentRegistry.register(this, this.componentId);
                 }
 
                 show = () =>{
                     this.visible = true;
+                    this.stateChanged = true;
                 }
 
                 hide = () => {
                     this.visible = false;
+                    this.stateChanged = true;
                 }
             }
 
@@ -30,7 +33,7 @@ module Antares {
                     'footer': '?sidePanelFooter'
                 },
                 bindings: {
-                    componentId: '@'
+                    componentId: '<'
                 }
             });
         }

@@ -91,6 +91,7 @@
     <Compile Include="Extensions\DriverExtensions.cs" />
     <Compile Include="Pages\AddressTemplatePage.cs" />
     <Compile Include="Pages\CommonPage.cs" />
+    <Compile Include="Pages\CreatePropertyPage.cs" />
     <Compile Include="Pages\NewContactPage.cs" />
     <Compile Include="Pages\NewResidentialSalesRequirementPage.cs" />
     <Compile Include="Pages\NotesPage.cs" />
@@ -99,6 +100,12 @@
     <Compile Include="ProjectPageBase.cs" />
     <Compile Include="ProjectTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Steps\CreatePropertySteps.cs" />
+    <Compile Include="Tests\CreateProperty.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateProperty.feature</DependentUpon>
+    </Compile>
     <Compile Include="Steps\NewContactSteps.cs" />
     <Compile Include="Steps\NewResidentialSalesRequirementSteps.cs" />
     <Compile Include="Tests\ContactTests.feature.cs">
@@ -120,6 +127,10 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Tests\CreateProperty.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>CreateProperty.feature.cs</LastGenOutput>
+    </None>
     <None Include="Tests\ContactTests.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ContactTests.feature.cs</LastGenOutput>

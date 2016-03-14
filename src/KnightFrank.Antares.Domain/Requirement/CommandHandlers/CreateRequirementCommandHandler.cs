@@ -29,6 +29,7 @@
             List<Guid> ids = message.Contacts.Select(x => x.Id).ToList();
             List<Contact> existingContacts = this.contactRepository.Get().Where(x => ids.Any(id => id == x.Id)).ToList();
             requirement.Contacts = existingContacts;
+            requirement.CreateDate = DateTime.UtcNow;
 
             this.requirementRepository.Add(requirement);
             this.requirementRepository.Save();

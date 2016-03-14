@@ -1,7 +1,7 @@
-<div class="slide-panel" ng-class="{'slide-in': vm.visible, 'slide-out': !vm.visible}">
+<div class="slide-panel" ng-class="{'slide-in': vm.stateChanged && vm.visible, 'slide-out': vm.stateChanged && !vm.visible}">
     <header class="slide-panel-header">
-        <button id="close-slide-panel" type="button" class="close close-slide-panel" aria-label="Close">
-            <span aria-hidden="true" ng-click="vm.hide()">&times;</span>
+        <button id="close-slide-panel" type="button" class="close close-slide-panel" aria-label="Close" ng-click="vm.hide()">
+            <span aria-hidden="true" >&times;</span>
         </button>
         <h3>Panel content</h3>
     </header>
