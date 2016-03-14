@@ -3,17 +3,16 @@
 module Antares.Requirement.Add {
     export class RequirementAddController {
         static $inject = ['dataAccessService', 'componentRegistry'];
-        contacts: Array<any> = [];
         componentIds: any = {
-            contactListId: 'addRequirement:contactListComponent',
-            contactSidePanelId: 'addRequirement:contactSidePanelComponent',
+            contactListId : 'addRequirement:contactListComponent',
+            contactSidePanelId : 'addRequirement:contactSidePanelComponent',
         }
         components: any = {
-            contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
-            contactSidePanel: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); }
+            contactList : () =>{ return this.componentRegistry.get(this.componentIds.contactListId); },
+            contactSidePanel : () =>{ return this.componentRegistry.get(this.componentIds.contactSidePanelId); }
         }
         requirementResource: any;
-        requirement: any;
+        requirement: any = {};
 
         constructor(
             private dataAccessService: Antares.Services.DataAccessService,
@@ -22,7 +21,7 @@ module Antares.Requirement.Add {
         }
 
         updateContacts() {
-            this.contacts = this.components.contactList().getSelected();
+            this.requirement.contacts = this.components.contactList().getSelected();
             this.components.contactSidePanel().hide();
         }
 

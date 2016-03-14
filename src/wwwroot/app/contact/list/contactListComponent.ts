@@ -3,7 +3,6 @@
 
 module Antares {
     export module Component {
-
         class ContactListController {
             static $inject = ['componentRegistry', 'dataAccessService'];
             contacts: any;
@@ -50,7 +49,7 @@ module Antares {
             templateUrl: 'app/contact/list/contactList.html',
             transclude: true,
             bindings: {
-                componentId: '@'
+                componentId: '<'
             }
         });
 
