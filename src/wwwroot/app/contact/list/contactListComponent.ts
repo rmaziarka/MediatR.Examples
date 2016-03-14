@@ -10,42 +10,37 @@ module Antares {
             componentId: string;
             constructor(
                 componentRegistry: Antares.Core.Service.ComponentRegistry,
-                dataAccessService: Antares.Services.DataAccessService){
+                dataAccessService: Antares.Services.DataAccessService) {
 
                 componentRegistry.register(this, this.componentId);
                 this.contacts = dataAccessService.getContactResource().query();
             }
 
+            setSelected = (itemsToSelect: Array<string>) => {
+                this.contacts.forEach(c => { c.selected = false; });
+                if (itemsToSelect === undefined || itemsToSelect === null || itemsToSelect.length === 0) {
+                    return;
+                }
+
+                this.contacts.forEach(c => {
+                    if (itemsToSelect.indexOf(c.id) > -1) {
+                        c.selected = true;
+                    }
+                })
+            }
+
             getSelected = () => {
                 var result = [];
-                for (var contactId in this.selected) {
-                    if (this.selected.hasOwnProperty(contactId)) {
-                        result.push(this.selected[contactId]);
-                    }
-                }
-                return result;
-            }
-
-            isSelected(contact){
-                return !!this.selected[contact.id];
-            }
-
-            toggleSelect(newContact){
-                if (this.isSelected(newContact)) {
-                    delete this.selected[newContact.id];
-                }
-                else {
-                    this.selected[newContact.id] = newContact;
-                }
+                return this.contacts.filter(c => { return c.selected });
             }
         }
 
         angular.module('app').controller('contactListController', ContactListController);
 
         angular.module('app').component('contactList', {
-            controller : 'contactListController',
-            controllerAs : 'vm',
-            templateUrl : 'app/contact/list/contactList.html',
+            controller: 'contactListController',
+            controllerAs: 'vm',
+            templateUrl: 'app/contact/list/contactList.html',
             transclude: true,
             bindings: {
                 componentId: '<'

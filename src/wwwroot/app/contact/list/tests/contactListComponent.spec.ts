@@ -11,8 +11,8 @@ module Antares {
             $http;
 
         var contacts = [
-            { id : 1, firstName : 'Test1', surname : 'Test1_S', title : 'Mr' },
-            { id : 2, firstName : 'Test2', surname : 'Test2_S', title : 'Mr' }
+            { id : '1', firstName : 'Test1', surname : 'Test1_S', title : 'Mr' },
+            { id : '2', firstName : 'Test2', surname : 'Test2_S', title : 'Mr' }
         ];
 
         var controller: ContactListController;

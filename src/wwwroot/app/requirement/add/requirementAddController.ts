@@ -4,12 +4,12 @@ module Antares.Requirement.Add {
     export class RequirementAddController {
         static $inject = ['dataAccessService', 'componentRegistry', '$scope'];
         componentIds: any = {
-            contactListId : 'addRequirement:contactListComponent',
-            contactSidePanelId : 'addRequirement:contactSidePanelComponent',
+            contactListId: 'addRequirement:contactListComponent',
+            contactSidePanelId: 'addRequirement:contactSidePanelComponent',
         }
         components: any = {
-            contactList : () =>{ return this.componentRegistry.get(this.componentIds.contactListId); },
-            contactSidePanel : () =>{ return this.componentRegistry.get(this.componentIds.contactSidePanelId); }
+            contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
+            contactSidePanel: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); }
         }
         requirementResource: any;
         requirement: any = {};
@@ -20,7 +20,7 @@ module Antares.Requirement.Add {
             private $scope: ng.IScope) {
             this.requirementResource = dataAccessService.getRequirementResource();
 
-            $scope.$on('$destroy', () =>{
+            $scope.$on('$destroy', () => {
                 this.componentRegistry.deregister(this.componentIds.contactListId);
                 this.componentRegistry.deregister(this.componentIds.contactSidePanelId);
             });
@@ -36,6 +36,12 @@ module Antares.Requirement.Add {
         }
 
         showContactList = () => {
+            var selectedIds:string[] = [];
+            if (this.requirement.contacts !== undefined && this.requirement.contacts !== null) {
+                var selectedIds = <string[]>this.requirement.contacts.map(c => c.id);
+            }
+
+            this.components.contactList().setSelected(selectedIds);
             this.components.contactSidePanel().show();
         }
 
