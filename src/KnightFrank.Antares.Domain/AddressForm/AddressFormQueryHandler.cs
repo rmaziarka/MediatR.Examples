@@ -38,7 +38,7 @@
 
             if (addressForm != null)
             {
-                //TODO: to implement
+                return AutoMapper.Mapper.Map<AddressFormQueryResult>(addressForm);
             }
             
             return new AddressFormQueryResult();

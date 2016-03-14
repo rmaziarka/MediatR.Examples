@@ -10,8 +10,8 @@
 
         public bool Regex { get; set; }
 
-        public int RowOrder { get; set; }
+        public short RowOrder { get; set; }
 
-        public int ColumnOrder { get; set; }
+        public short ColumnOrder { get; set; }
     }
 }

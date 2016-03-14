@@ -9,7 +9,9 @@
     {
         protected override void Configure()
         {
-            this.CreateMap<AddressFieldDefinition, AddressFieldDefinitionResult>();
+            this.CreateMap<AddressFieldDefinition, AddressFieldDefinitionResult>()
+                .ForMember(r => r.Name, opt => opt.MapFrom(s => s.AddressField.Name))
+                .ForMember(r => r.LabelKey, opt => opt.MapFrom(s => s.AddressFieldLabel.LabelKey));
 
             this.CreateMap<AddressForm, AddressFormQueryResult>();
         }

@@ -11,6 +11,6 @@
 
         public Guid CountryId { get; set; }
 
-        public IList<AddressFieldDefinitionResult> AddressFieldDefinitions { get; set; } = new List<AddressFieldDefinitionResult>()            ;
+        public IList<AddressFieldDefinitionResult> AddressFieldFormDefinitions { get; set; } = new List<AddressFieldDefinitionResult>();
     }
 }
