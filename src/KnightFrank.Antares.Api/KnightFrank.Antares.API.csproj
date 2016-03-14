@@ -181,6 +181,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ContravariantBindingResolver.cs" />
+    <Compile Include="Controllers\AddressFormController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\EnumsController.cs" />
     <Compile Include="Controllers\RequirementController.cs" />

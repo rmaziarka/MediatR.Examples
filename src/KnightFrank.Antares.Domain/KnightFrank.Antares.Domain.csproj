@@ -69,6 +69,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddressFieldDefinition\AddressFieldDefinitionResult.cs" />
+    <Compile Include="AddressForm\AddressFormProfile.cs" />
+    <Compile Include="AddressForm\AddressFormQueryHandler.cs" />
+    <Compile Include="AddressForm\AddressFormQueryResult.cs" />
+    <Compile Include="AddressForm\AddressFormQuery.cs" />
+    <Compile Include="AddressForm\AddressFormQueryValidator.cs" />
     <Compile Include="Common\ValidatorCommandHandler.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidator.cs" />
     <Compile Include="Contact\Commands\UpdateContactCommand.cs" />
