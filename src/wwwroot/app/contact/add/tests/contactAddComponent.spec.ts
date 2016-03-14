@@ -7,7 +7,7 @@ module Antares {
 
         var pageObjectSelectors = {
             titleSelector: 'input#title',
-            firstNameSelector: 'input#firstName',
+            firstNameSelector: 'input#first-name',
             surnameSelector: 'input#surname',
             requiredValidatorSelector: '[name="requiredValidationError"]',
             maxLengthValidatorSelector: '[name="maxLengthValidationError"]'
