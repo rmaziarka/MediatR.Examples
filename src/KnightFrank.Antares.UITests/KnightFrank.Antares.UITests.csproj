@@ -91,6 +91,7 @@
     <Compile Include="Extensions\DriverExtensions.cs" />
     <Compile Include="Pages\AddressTemplatePage.cs" />
     <Compile Include="Pages\CommonPage.cs" />
+    <Compile Include="Pages\CreatePropertyPage.cs" />
     <Compile Include="Pages\NewContactPage.cs" />
     <Compile Include="Pages\NewResidentialSalesRequirementPage.cs" />
     <Compile Include="Pages\NotesPage.cs" />
