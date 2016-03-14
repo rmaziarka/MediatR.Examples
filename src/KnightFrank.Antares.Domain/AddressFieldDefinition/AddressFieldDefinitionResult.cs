@@ -8,7 +8,7 @@
 
         public bool Required { get; set; }
 
-        public bool Regex { get; set; }
+        public string RegEx { get; set; }
 
         public short RowOrder { get; set; }
 
