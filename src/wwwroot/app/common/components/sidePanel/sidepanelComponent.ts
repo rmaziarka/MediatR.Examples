@@ -3,7 +3,7 @@
 module Antares {
     export module Common {
         export module Component {
-            class SidePanelController {
+            export class SidePanelController {
                 static $inject = ['componentRegistry'];
                 private componentId: string;
                 visible: boolean = false;
