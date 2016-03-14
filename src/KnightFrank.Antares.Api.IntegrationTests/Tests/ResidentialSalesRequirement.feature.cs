@@ -73,10 +73,10 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests
         
         [Xunit.FactAttribute()]
         [Xunit.TraitAttribute("FeatureTitle", "Residential sales requirements")]
-        [Xunit.TraitAttribute("Description", "Save requirement to DB with contact and all detailed fields fullfiled")]
-        public virtual void SaveRequirementToDBWithContactAndAllDetailedFieldsFullfiled()
+        [Xunit.TraitAttribute("Description", "Save requirement to DB with contact and all detailed fields fulfilled")]
+        public virtual void SaveRequirementToDBWithContactAndAllDetailedFieldsFulfilled()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Save requirement to DB with contact and all detailed fields fullfiled", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Save requirement to DB with contact and all detailed fields fulfilled", ((string[])(null)));
 #line 3
 this.ScenarioSetup(scenarioInfo);
 #line hidden
@@ -124,27 +124,20 @@ this.ScenarioSetup(scenarioInfo);
                         "20000",
                         "RequirementDescription"});
 #line 7
- testRunner.When("User creates following requirement", ((string)(null)), table2, "When ");
-#line 10
-  testRunner.And("User retrieves requirement that he saved", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("User creates following requirement with given contact", ((string)(null)), table2, "When ");
 #line 11
  testRunner.Then("User should get OK http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 12
-  testRunner.And("Requirement should be the same as added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute(Skip="Ignored")]
+        [Xunit.FactAttribute()]
         [Xunit.TraitAttribute("FeatureTitle", "Residential sales requirements")]
-        [Xunit.TraitAttribute("Description", "Negative - Try save requirement to DB without contact and all detailed fields ful" +
-            "lfiled")]
-        public virtual void Negative_TrySaveRequirementToDBWithoutContactAndAllDetailedFieldsFullfiled()
+        [Xunit.TraitAttribute("Description", "Negative - Save requirement to DB without contact, all detailed fields fulfilled")]
+        public virtual void Negative_SaveRequirementToDBWithoutContactAllDetailedFieldsFulfilled()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Negative - Try save requirement to DB without contact and all detailed fields ful" +
-                    "lfiled", new string[] {
-                        "ignore"});
-#line 15
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Negative - Save requirement to DB without contact, all detailed fields fulfilled", ((string[])(null)));
+#line 14
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -179,85 +172,10 @@ this.ScenarioSetup(scenarioInfo);
                         "10000",
                         "20000",
                         "RequirementDescription"});
-#line 16
- testRunner.Given("Details of requirement are provided", ((string)(null)), table3, "Given ");
-#line 19
- testRunner.When("user retreive the data from DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 20
- testRunner.Then("requirement should not be saved in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 21
-  testRunner.And("error message should be displayed - ask dev", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.FactAttribute(Skip="Ignored")]
-        [Xunit.TraitAttribute("FeatureTitle", "Residential sales requirements")]
-        [Xunit.TraitAttribute("Description", "Save requirements with location and all valid fields")]
-        public virtual void SaveRequirementsWithLocationAndAllValidFields()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Save requirements with location and all valid fields", new string[] {
-                        "ignore"});
-#line 24
-this.ScenarioSetup(scenarioInfo);
-#line hidden
-            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Street name",
-                        "Postcode",
-                        "Town"});
-            table4.AddRow(new string[] {
-                        "Marsh Rd",
-                        "HA5 5NQ",
-                        "London"});
-#line 25
- testRunner.Given("user fills all fields for property location", ((string)(null)), table4, "Given ");
-#line 28
- testRunner.When("user retreive the data form DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 29
- testRunner.Then("requirment should be save in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Street name",
-                        "Postcode",
-                        "Town"});
-            table5.AddRow(new string[] {
-                        "Marsh Rd",
-                        "HA5 5NQ",
-                        "London"});
-#line 30
-  testRunner.And("should be same as", ((string)(null)), table5, "And ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.FactAttribute(Skip="Ignored")]
-        [Xunit.TraitAttribute("FeatureTitle", "Residential sales requirements")]
-        [Xunit.TraitAttribute("Description", "Negative - try save requirement with location without contact field")]
-        public virtual void Negative_TrySaveRequirementWithLocationWithoutContactField()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Negative - try save requirement with location without contact field", new string[] {
-                        "ignore"});
-#line 35
-this.ScenarioSetup(scenarioInfo);
-#line hidden
-            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Street name",
-                        "Postcode",
-                        "Town"});
-            table6.AddRow(new string[] {
-                        "Marsh Rd",
-                        "HA5 5NQ",
-                        "London"});
-#line 36
- testRunner.Given("user fills all fields for property location", ((string)(null)), table6, "Given ");
-#line 39
-  testRunner.But("applicant is not chosen from contact list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "But ");
-#line 40
- testRunner.When("user retreive the data from DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 41
- testRunner.Then("requirement should not be saved to the DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 42
-  testRunner.And("error message should be displayed - ask dev", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 15
+ testRunner.When("User creates following requirement without contact", ((string)(null)), table3, "When ");
+#line 18
+ testRunner.Then("User should get BadRequest http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

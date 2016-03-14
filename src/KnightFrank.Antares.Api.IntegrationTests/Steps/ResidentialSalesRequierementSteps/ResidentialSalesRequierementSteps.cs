@@ -35,8 +35,8 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [When(@"User creates following requirement")]
-        public void UserCreatesFollowingRequirement(Table table)
+        [When(@"User creates following requirement with given contact")]
+        public void UserCreatesFollowingRequirementWithGivenContact(Table table)
         {
             string requestUrl = $"{ApiUrl}";
             
@@ -49,26 +49,35 @@
             this.scenarioContext.Set(requirement, "Requirement");
         }
 
+        [When(@"User creates following requirement without contact")]
+        public void UserCreatesFollowingRequirementWithoutContact(Table table)
+        {
+            string requestUrl = $"{ApiUrl}";
+
+            var requirement = table.CreateInstance<Requirement>();
+            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
+            this.scenarioContext.SetHttpResponseMessage(response);
+            this.scenarioContext.Set(requirement, "Requirement");
+        }
+
         [When(@"User retrieves requirement that he saved")]
         public void WhenUserRetrievesContactsDetailsWith()
         {
-            // TODO uncomment after requirement backend is ready
-            // string id = this.scenarioContext.GetResponseContent().Replace("\"", "");
+             string id = this.scenarioContext.GetResponseContent().Replace("\"", "");
 
-            // string requestUrl = $"{ApiUrl}/" + id + "";
+             string requestUrl = $"{ApiUrl}/" + id + "";
 
-            // HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
-            // this.scenarioContext.SetHttpResponseMessage(response);
+             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
         [Then(@"Requirement should be the same as added")]
         public void ThenRequierementShouldBeTheSameAsAdded()
         {
-            // TODO uncomment after requirement backend is ready
-            // var requirement = this.scenarioContext.Get<Requirement>("Requirement");
-            // addedRequirement = JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent());            
-            // addedRequirement.ShouldBeEquivalentTo(requirement,
-            //    opt => opt.Excluding(req => req.Id).Excluding(req => req.CreateDate));
+            var tableRequirement = this.scenarioContext.Get<Requirement>("Requirement");
+            var databaseRequirement = JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent());
+            databaseRequirement.ShouldBeEquivalentTo(tableRequirement,
+                opt => opt.Excluding(req => req.Id).Excluding(req => req.CreateDate));
         }
     }
 }

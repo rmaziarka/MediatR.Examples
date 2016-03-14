@@ -1,7 +1,10 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Requirement.Commands
 {
+    using System.Collections.Generic;
+
     using FluentValidation.Results;
-    
+
+    using KnightFrank.Antares.Domain.Contact;
     using KnightFrank.Antares.Domain.Requirement.Commands;
 
     using Ploeh.AutoFixture;
@@ -32,7 +35,8 @@
                 MinParkingSpaces = 1,
                 MaxParkingSpaces = 2,
                 MinReceptionRooms = 1,
-                MaxReceptionRooms = 2
+                MaxReceptionRooms = 2,
+                Contacts = new List<ContactDto> { new ContactDto { FirstName = "Michal", Surname = "Lenartowicz", Title = "Mr" } }
             };
         }
 
@@ -251,6 +255,15 @@
             this.command.MaxLandArea = 1;
 
             TestIncorrectCommand(validator, this.command, nameof(this.command.MaxLandArea));
+        }
+
+        [Theory]
+        [AutoData]
+        public void Given_IncorrectCreateRequirementCommandWithNoContacts_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        {
+            this.command.Contacts.Clear();
+
+            TestIncorrectCommand(validator, this.command, nameof(this.command.Contacts));
         }
 
         private static void TestIncorrectCommand(CreateRequirementCommandValidator validator, CreateRequirementCommand command, string testedPropertyName)

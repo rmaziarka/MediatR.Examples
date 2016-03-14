@@ -1,42 +1,19 @@
 ﻿Feature: Residential sales requirements 
 
-Scenario: Save requirement to DB with contact and all detailed fields fullfiled
+Scenario: Save requirement to DB with contact and all detailed fields fulfilled
 	When User creates a contact with following data 
 		| FirstName | Surname | Title  |
 		| Tomasz    | Bien    | Mister | 
-	When User creates following requirement
+	When User creates following requirement with given contact
  			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceprionRooms | MaxReceprionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description            |
  			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | RequirementDescription |
-		And User retrieves requirement that he saved
+		# And User retrieves requirement that he saved
 	Then User should get OK http status code
-		And Requirement should be the same as added 
+		# And Requirement should be the same as added 
 
-@ignore	
-Scenario: Negative - Try save requirement to DB without contact and all detailed fields fullfiled
-	Given Details of requirement are provided
- 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceprionRooms | MaxReceprionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description            |
+Scenario: Negative - Save requirement to DB without contact, all detailed fields fulfilled
+	When User creates following requirement without contact			
+			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceprionRooms | MaxReceprionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description            |
  			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | RequirementDescription |
-	When user retreive the data from DB
-	Then requirement should not be saved in DB
-		And error message should be displayed - ask dev
-
-@ignore	
-Scenario: Save requirements with location and all valid fields
-	Given user fills all fields for property location
- 			| Street name | Postcode | Town   |
-			| Marsh Rd	  | HA5 5NQ  | London |
-	When user retreive the data form DB
-	Then requirment should be save in DB
-		And should be same as
-			| Street name | Postcode | Town   |
-			| Marsh Rd	  | HA5 5NQ  | London |
-
-@ignore	
-Scenario: Negative - try save requirement with location without contact field
-	Given user fills all fields for property location
-			| Street name | Postcode | Town	  |
-			| Marsh Rd	  | HA5 5NQ	 | London |
-		But applicant is not chosen from contact list
-	When user retreive the data from DB
-	Then requirement should not be saved to the DB 
-		And error message should be displayed - ask dev
+	Then User should get BadRequest http status code
+	# And error message should be displayed - ask dev
