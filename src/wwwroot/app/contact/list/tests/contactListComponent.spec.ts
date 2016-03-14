@@ -47,7 +47,7 @@ module Antares {
 
         it('when list element is clicked once then the list of selected elements should contain this element', () =>{
             var firstContact = element.find('input:checkbox:first');
-            firstContact.triggerHandler('click');
+            firstContact.click();
 
             var selectedElements = controller.getSelected();
 
@@ -59,8 +59,8 @@ module Antares {
 
         it('when list element is clicked twice then the list of selected elements should not contain this element', () =>{
             var firstContact = element.find('input:checkbox:first');
-            firstContact.triggerHandler('click');
-            firstContact.triggerHandler('click');
+            firstContact.click();
+            firstContact.click();
 
             var selectedElements = controller.getSelected();
 
