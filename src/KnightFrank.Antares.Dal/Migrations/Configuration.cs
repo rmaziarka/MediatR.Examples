@@ -13,7 +13,9 @@ namespace KnightFrank.Antares.Dal.Migrations
 
         protected override void Seed(KnightFrankContext context)
         {
-            EntityTypeEnum.Seed(context);
+            LocaleData.Seed(context);
+            CountryData.Seed(context);
+            EntityTypeEnumData.Seed(context);
 
             context.SaveChanges();
         }

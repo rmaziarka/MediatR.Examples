@@ -6,22 +6,13 @@ namespace KnightFrank.Antares.Dal.Seed
 
     using KnightFrank.Antares.Dal.Model;
 
-    internal static class EntityTypeEnum
+    internal static class EntityTypeEnumData
     {
         public static void Seed(KnightFrankContext context)
         {
-            SeedLocale(context);
             SeedEnumType(context);
             SeedEnumTypeItem(context);
             SeedEnumLocalisation(context);
-        }
-
-        private static void SeedLocale(KnightFrankContext context)
-        {
-            var enLocale = new Locale { IsoCode = "en" };
-
-            context.Locale.AddOrUpdate(x => x.IsoCode, enLocale);
-            context.SaveChanges();
         }
 
         private static void SeedEnumType(KnightFrankContext context)
