@@ -35,13 +35,17 @@ module Antares.Requirement.Add {
             this.components.contactSidePanel().hide();
         }
 
-        showContactList = () => {
-            var selectedIds:string[] = [];
-            if (this.requirement.contacts !== undefined && this.requirement.contacts !== null) {
-                var selectedIds = <string[]>this.requirement.contacts.map(c => c.id);
-            }
-
-            this.components.contactList().setSelected(selectedIds);
+        showContactList = () =>{
+            this.components.contactList()
+                .loadContacts()
+                .then(() =>{
+                    var selectedIds: string[] = [];
+                    if (this.requirement.contacts !== undefined && this.requirement.contacts !== null) {
+                        selectedIds = <string[]>this.requirement.contacts.map(c => c.id);
+                    }
+                    this.components.contactList().setSelected(selectedIds);
+                });
+            
             this.components.contactSidePanel().show();
         }
 

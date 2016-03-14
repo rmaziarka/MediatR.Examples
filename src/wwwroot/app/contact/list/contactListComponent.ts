@@ -5,15 +5,14 @@ module Antares {
     export module Component {
         export class ContactListController {
             static $inject = ['componentRegistry', 'dataAccessService'];
-            contacts: any;
+            contacts: any = [];
             selected: { [id: string]: any } = {};
             componentId: string;
             constructor(
                 componentRegistry: Antares.Core.Service.ComponentRegistry,
-                dataAccessService: Antares.Services.DataAccessService) {
+                private dataAccessService: Antares.Services.DataAccessService) {
 
                 componentRegistry.register(this, this.componentId);
-                this.contacts = dataAccessService.getContactResource().query();
             }
 
             setSelected = (itemsToSelect: Array<string>) => {
@@ -26,12 +25,16 @@ module Antares {
                     if (itemsToSelect.indexOf(c.id) > -1) {
                         c.selected = true;
                     }
-                })
+                });
             }
 
             getSelected = () => {
-                var result = [];
                 return this.contacts.filter(c => { return c.selected });
+            }
+
+            loadContacts = () => {
+                this.contacts = this.dataAccessService.getContactResource().query();
+                return this.contacts.$promise;
             }
         }
 
