@@ -103,7 +103,7 @@
   <ItemGroup>
     <Compile Include="AutoMoqDataAttribute.cs" />
     <Compile Include="BaseTestClassFixture.cs" />
-    <Compile Include="Contact\Commands\CreateRequirementCommandHandlerTests.cs" />
+    <Compile Include="Requirement\Commands\CreateRequirementCommandHandlerTests.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidatorTests.cs" />
     <Compile Include="Enum\EnumQueryValidatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
