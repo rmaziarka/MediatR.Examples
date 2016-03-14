@@ -1,6 +1,6 @@
 {
   "ambientDependencies": {
-    "angular": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#1c4a34873c9e70cce86edd0e61c559e43dfa5f75",
+    "angular": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#3cccf144977f93efb9484f5e7f62dd988acb3ebd",
     "angular-mocks": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-mocks.d.ts#4de74cb527395c13ba20b438c3a7a419ad931f1c",
     "angular-resource": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-resource.d.ts#621f12c6602bcc569bc6ad3a67a0af3ba3832618",
     "angular-ui-router": "github:DefinitelyTyped/DefinitelyTyped/angular-ui-router/angular-ui-router.d.ts#655f8c1bf3c71b0e1ba415b36309604f79326ac8",

@@ -30,6 +30,7 @@ module Antares {
                 templateUrl: 'app/common/components/sidePanel/sidepanel.html',
                 transclude: {
                     'content': '?sidePanelContent',
+                    'header': '?sidePanelHeader',
                     'footer': '?sidePanelFooter'
                 },
                 bindings: {

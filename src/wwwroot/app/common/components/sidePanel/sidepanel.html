@@ -3,7 +3,7 @@
         <button id="close-slide-panel" type="button" class="close close-slide-panel" aria-label="Close" ng-click="vm.hide()">
             <span aria-hidden="true" >&times;</span>
         </button>
-        <h3>Panel content</h3>
+        <div ng-transclude="header"></div>
     </header>
 
     <div class="slide-panel-content" ng-transclude="content">
