@@ -2,7 +2,7 @@
 
 module Antares.Requirement.Add {
     export class RequirementAddController {
-        static $inject = ['dataAccessService', 'componentRegistry'];
+        static $inject = ['dataAccessService', 'componentRegistry', '$scope'];
         contacts: Array<any> = [];
         componentIds: any = {
             contactListId: 'addRequirement:contactListComponent',
@@ -17,8 +17,14 @@ module Antares.Requirement.Add {
 
         constructor(
             private dataAccessService: Antares.Services.DataAccessService,
-            private componentRegistry) {
+            private componentRegistry: Antares.Core.Service.ComponentRegistry,
+            private $scope: ng.IScope) {
             this.requirementResource = dataAccessService.getRequirementResource();
+
+            $scope.$on('$destroy', () =>{
+                this.componentRegistry.deregister(this.componentIds.contactListId);
+                this.componentRegistry.deregister(this.componentIds.contactSidePanelId);
+            });
         }
 
         updateContacts() {
