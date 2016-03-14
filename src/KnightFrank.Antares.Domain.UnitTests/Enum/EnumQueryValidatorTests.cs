@@ -19,8 +19,8 @@
 
     using Xunit;
 
-    [Collection("CreateContactCommandValidator")]
-    [Trait("FeatureTitle", "Contacts")]
+    [Collection("EnumQueryValidator")]
+    [Trait("FeatureTitle", "Enums")]
     public class EnumQueryValidatorTests
     {
         [Theory]

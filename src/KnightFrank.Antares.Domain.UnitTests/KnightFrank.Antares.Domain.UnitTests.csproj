@@ -102,6 +102,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AddressForm\AddressFormProfileTests.cs" />
+    <Compile Include="AddressForm\AddressFormQueryValidatorTests.cs" />
     <Compile Include="AutoMoqDataAttribute.cs" />
     <Compile Include="BaseTestClassFixture.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandHandlerTests.cs" />
