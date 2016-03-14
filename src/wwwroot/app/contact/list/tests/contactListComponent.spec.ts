@@ -32,12 +32,14 @@ module Antares {
 
             scope = $rootScope.$new();
             element = $compile('<contact-list></contact-list>')(scope);
-            
-            $http.flush();
+
             scope.$apply();
 
             controller = element.controller('contactList');
-            
+            controller.loadContacts();
+
+            $http.flush();
+            scope.$apply();
         }));
 
         it('contacts should be listed', () =>{
