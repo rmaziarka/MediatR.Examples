@@ -1,14 +1,15 @@
 ﻿Feature: Residential sales requirements 
 
-@ignore	
 Scenario: Save requirement to DB with contact and all detailed fields fullfiled
-	Given Details of requirement are provided
+	When User creates a contact with following data 
+		| FirstName | Surname | Title  |
+		| Tomasz    | Bien    | Mister | 
+	When User creates following requirement
  			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceprionRooms | MaxReceprionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description            |
  			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | RequirementDescription |
-	When user retreive the data form DB
-	Then requirement should be same as
-			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceprionRooms | MaxReceprionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description            |
-			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | RequirementDescription |
+		And User retrieves requirement that he saved
+	Then User should get OK http status code
+		And Requirement should be the same as added 
 
 @ignore	
 Scenario: Negative - Try save requirement to DB without contact and all detailed fields fullfiled
