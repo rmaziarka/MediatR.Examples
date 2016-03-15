@@ -140,11 +140,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContactsControllerTests.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Enums\EnumsTests.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EnumsTests.feature</DependentUpon>
-    </Compile>
     <Compile Include="Tests\NoteOnResidentialSalesRequirement.feature.cs">
       <DependentUpon>NoteOnResidentialSalesRequirement.feature</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -192,10 +187,6 @@
     <None Include="Tests\Contacts\ContactsControllerTests.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ContactsControllerTests.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Tests\Enums\EnumsTests.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>EnumsTests.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\NoteOnResidentialSalesRequirement.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
