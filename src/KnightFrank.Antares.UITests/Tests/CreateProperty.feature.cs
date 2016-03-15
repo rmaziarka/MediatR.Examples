@@ -17,7 +17,7 @@ namespace KnightFrank.Antares.UITests.Tests
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class CreatePropertyFeature : Xunit.IClassFixture<CreatePropertyFeature.FixtureData>, System.IDisposable
+    public partial class CreatePropertyUITestsFeature : Xunit.IClassFixture<CreatePropertyUITestsFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -25,7 +25,7 @@ namespace KnightFrank.Antares.UITests.Tests
 #line 1 "CreateProperty.feature"
 #line hidden
         
-        public CreatePropertyFeature()
+        public CreatePropertyUITestsFeature()
         {
             this.TestInitialize();
         }
@@ -33,7 +33,7 @@ namespace KnightFrank.Antares.UITests.Tests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Create property", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Create Property UI tests", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -62,7 +62,7 @@ namespace KnightFrank.Antares.UITests.Tests
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void SetFixture(CreatePropertyFeature.FixtureData fixtureData)
+        public virtual void SetFixture(CreatePropertyUITestsFeature.FixtureData fixtureData)
         {
         }
         
@@ -71,22 +71,23 @@ namespace KnightFrank.Antares.UITests.Tests
             this.ScenarioTearDown();
         }
         
-        [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Create property")]
-        [Xunit.TraitAttribute("Description", "Creating a new property for UK Address")]
-        public virtual void CreatingANewPropertyForUKAddress()
+        [Xunit.FactAttribute(Skip="Ignored")]
+        [Xunit.TraitAttribute("FeatureTitle", "Create Property UI tests")]
+        [Xunit.TraitAttribute("Description", "Create new property for UK Address")]
+        public virtual void CreateNewPropertyForUKAddress()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Creating a new property for UK Address", ((string[])(null)));
-#line 3
-this.ScenarioSetup(scenarioInfo);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create new property for UK Address", new string[] {
+                        "ignore"});
 #line 4
+this.ScenarioSetup(scenarioInfo);
+#line 5
  testRunner.Given("User navigates to create property page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Country"});
             table1.AddRow(new string[] {
                         "United Kingdom"});
-#line 5
+#line 6
  testRunner.When("User selects country on create property page", ((string)(null)), table1, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -105,11 +106,11 @@ this.ScenarioSetup(scenarioInfo);
                         "W1U 8AN",
                         "London",
                         "London"});
-#line 8
+#line 9
   testRunner.And("User fills in address details on create property page", ((string)(null)), table2, "And ");
-#line 11
-  testRunner.And("User clicks save button on create property page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 12
+  testRunner.And("User clicks save button on create property page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 13
  testRunner.Then("New property should be created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -122,12 +123,12 @@ this.ScenarioSetup(scenarioInfo);
             
             public FixtureData()
             {
-                CreatePropertyFeature.FeatureSetup();
+                CreatePropertyUITestsFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                CreatePropertyFeature.FeatureTearDown();
+                CreatePropertyUITestsFeature.FeatureTearDown();
             }
         }
     }

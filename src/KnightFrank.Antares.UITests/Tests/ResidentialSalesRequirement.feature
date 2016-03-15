@@ -1,13 +1,27 @@
 ﻿Feature: Residential Sales Requirement UI tests
 
-@ignore
 Scenario: Create new residential sales requirement
-	Given User navigates to create residential sales requirement page
+	Given User navigates to create contact page
+	When User fills in contact details on create contact page
+		| Title | FirstName | Surname |
+		| Miss  | Alana     | Jones   |
+		And User clicks save button on create contact page
+	Then New contact should be created
+	When User navigates to create residential sales requirement page
+		And User selects contacts on create residential sales requirement page
+			| FirstName | Surname |
+			| Alana     | Jones   |
+		And User selects contacts on create residential sales requirement page
+			| FirstName | Surname |
+			| Alana     | Jones   |
+	Then list of applicants should contain following contacts
+		| FirstName | Surname |
+		| Alana     | Jones   |
 	When User fills in location details on create residential sales requirement page
-		| Country        | StreetName   | Postcode | Town   |
-		| United Kingdom | Upper Ground | SE1 9PP  | London |
+		| Country        | PropertyName | PropertyNumber | Line1 | Line2        | Line3 | Postcode | City   | County |
+		| United Kingdom |              |                |       | Upper Ground |       | SE1 9PP  | London |        |
 		And User fills in property details on create residential sales requirement page
-			| Type | PriceMin | PriceMax | BedroomsMin | BedroomsMax | ReceptionRoomsMin | ReceptionRoomsMax | BathroomsMin | BathroomsMax | ParkingSpacesMin | ParkingSpacesMax | AreaMin | AreaMax | LandAreaMin | LandAreaMax | RequirementsNote |
-			| Flat | 100000   | 500000   | 2           | 3           | 2                 | 4                 | 1            | 3            | 2                | 2                | 90000   | 150000  | 200000      | 300000      | Note             |
+			| Type | MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
+			| Flat | 100000   | 500000   | 2           | 3           | 2                 | 4                 | 1            | 3            | 2                | 2                | 90000   | 150000  | 200000      | 300000      | Note        |
 		And User clicks save button on create residential sales requirement page
 	Then New residential sales requirement should be created

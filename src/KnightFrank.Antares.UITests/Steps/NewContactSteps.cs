@@ -27,6 +27,7 @@
         }
 
         [Given(@"User navigates to create contact page")]
+        [When(@"User navigates to create contact page")]
         public void OpenNewContactPage()
         {
             NewContactPage newContactPage = new NewContactPage(this.driverContext).OpenNewContactPage();
@@ -42,7 +43,6 @@
             newContactPage.SetTitle(contactDetails.Title);
             newContactPage.SetFirstName(contactDetails.FirstName);
             newContactPage.SetSurname(contactDetails.Surname);
-         
         }
 
         [When(@"User clicks save button on create contact page")]
@@ -54,7 +54,7 @@
         [Then(@"New contact should be created")]
         public void CheckIfContactCreated()
         {
-            Console.Write("abc");
+            //TODO implement check if contact was created
         }
     }
 }

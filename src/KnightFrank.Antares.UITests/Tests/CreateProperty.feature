@@ -1,6 +1,7 @@
-﻿Feature: Create property
+﻿Feature: Create Property UI tests
 
-Scenario: Creating a new property for UK Address
+@ignore
+Scenario: Create new property for UK Address
 	Given User navigates to create property page
 	When User selects country on create property page
 	| Country        |
