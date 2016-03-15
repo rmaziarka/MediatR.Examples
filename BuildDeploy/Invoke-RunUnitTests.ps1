@@ -26,8 +26,8 @@ function Invoke-RunUnitTests
     # Filter project with UnitTests
     # ===========================================================
     $binDirectory = "bin\\Release"
-    # $testDlls = Get-ChildItem -Path $ProjectSrcPath -Recurse | Where-Object {$_.FullName -match ".*\\$binDirectory\\.*UnitTests.dll"} | Select-Object -ExpandProperty FullName
-    $testDlls = Get-Files -Path $ProjectSrcPath -Filter "*UnitTests.dll" -ExcludeFolder "wwwroot" -Recurse | Where-Object {$_ -match ".*\\$binDirectory\\.*"}
+    $unitTestDllMask = "*UnitTests.dll"
+    $testDlls = Get-Files -Path $ProjectSrcPath -Filter $unitTestDllMask -ExcludeFolder "wwwroot" -Recurse | Where-Object {$_ -match ".*\\$binDirectory\\.*"}
     
     $projects = @()
     foreach($testDll in $testDlls) 
@@ -41,7 +41,7 @@ function Invoke-RunUnitTests
     # ===========================================================
     foreach($project in $projects) 
     {
-        $assemblyDlls = Get-ChildItem -Path $project -Filter "*.dll" | Select-Object -ExpandProperty FullName
+        $assemblyDlls = Get-ChildItem -Path $project -Filter $unitTestDllMask | Select-Object -ExpandProperty FullName
 
         $assemblies = @()
         foreach ($assemblyDll in $assemblyDlls) 
