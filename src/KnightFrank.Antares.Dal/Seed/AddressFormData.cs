@@ -7,13 +7,12 @@
 
     using KnightFrank.Antares.Dal.Model;
 
-    internal static class AddressFormMetadata
+    internal static class AddressFormData
     {
         public static void Seed(KnightFrankContext context)
         {
             SeedAddressField(context);
             SeedAddressFieldLabel(context);
-            SeedCountry(context);
             SeedAddressForm(context);
             SeedAddressFieldDefinition(context);
             SeedAddressFormEntityTypeItem(context);
@@ -136,21 +135,6 @@
             };
 
             context.AddressFieldDefinition.AddOrUpdate(af => new { af.AddressFieldId, af.AddressFormId, af.AddressFieldLabelId }, addressFieldDefinitions.ToArray());
-            context.SaveChanges();
-        }
-
-        private static void SeedCountry(KnightFrankContext context)
-        {
-            var countries = new List<Country>
-            {
-                new Country
-                {
-                    Id = GetCountryIdByCode(context, "UK"),
-                    Code = "UK"
-                }
-            };
-
-            context.Country.AddOrUpdate(x => x.Code, countries.ToArray());
             context.SaveChanges();
         }
 

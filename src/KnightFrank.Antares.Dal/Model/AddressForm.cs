@@ -7,7 +7,7 @@
     {
         public Guid CountryId { get; set; }
         public virtual Country Country { get; set; }
-        public virtual ICollection<AddressFieldDefinition> AddressFieldFormDefinitions { get; set; }
+        public virtual ICollection<AddressFieldDefinition> AddressFieldDefinitions { get; set; }
         public virtual ICollection<AddressFormEntityType> AddressFormEntityTypes { get; set; }
     }
 }

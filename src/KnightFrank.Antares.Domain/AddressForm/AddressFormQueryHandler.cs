@@ -70,7 +70,7 @@
                     where afet == null
                     select af;
 
-                addressForm = query.Include(q => q.AddressFieldFormDefinitions).SingleOrDefault();
+                addressForm = query.Include(q => q.AddressFieldDefinitions).SingleOrDefault();
             }
 
             return AutoMapper.Mapper.Map<AddressFormQueryResult>(addressForm);
