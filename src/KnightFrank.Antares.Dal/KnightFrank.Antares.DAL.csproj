@@ -103,6 +103,7 @@
     <Compile Include="Seed\EntityTypeEnumData.cs" />
     <Compile Include="Seed\CountryData.cs" />
     <Compile Include="Seed\LocaleData.cs" />
+    <Compile Include="Seed\AddressFormMetadata.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

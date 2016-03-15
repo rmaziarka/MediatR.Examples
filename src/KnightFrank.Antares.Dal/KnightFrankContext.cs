@@ -39,7 +39,7 @@
         public DbSet<EnumTypeItem> EnumTypeItem { get; set; }
         public DbSet<EnumLocalised> EnumLocalised { get; set; }
         public DbSet<Locale> Locale { get; set; }
-        public DbSet<AddressFieldDefinition> AddressFieldFormDefinition { get; set; }
+        public DbSet<AddressFieldDefinition> AddressFieldDefinition { get; set; }
         public DbSet<AddressFieldLabel> AddressFieldLabel { get; set; }
         public DbSet<AddressField> AddressField { get; set; }
         public DbSet<Address> Address { get; set; }
