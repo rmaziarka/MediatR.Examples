@@ -270,6 +270,6 @@
     </side-panel-content>
     <side-panel-footer>
         <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()">Cancel</button>
-        <button class="btn btn-primary" type="button" ng-click="vm.updateContacts()">Save</button>
+        <button class="btn btn-primary" type="button" ng-click="vm.updateContacts()" ng-disabled="vm.loadingContacts">Save</button>
     </side-panel-footer>
 </side-panel>

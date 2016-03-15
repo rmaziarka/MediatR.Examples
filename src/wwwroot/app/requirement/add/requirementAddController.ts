@@ -13,6 +13,7 @@ module Antares.Requirement.Add {
         }
         requirementResource: any;
         requirement: any = {};
+        loadingContacts: boolean = false;
 
         constructor(
             private dataAccessService: Antares.Services.DataAccessService,
@@ -36,6 +37,7 @@ module Antares.Requirement.Add {
         }
 
         showContactList = () =>{
+            this.loadingContacts = true;
             this.components.contactList()
                 .loadContacts()
                 .then(() =>{
@@ -44,7 +46,8 @@ module Antares.Requirement.Add {
                         selectedIds = <string[]>this.requirement.contacts.map(c => c.id);
                     }
                     this.components.contactList().setSelected(selectedIds);
-                });
+                })
+                .finally(() =>{ this.loadingContacts = false; });
             
             this.components.contactSidePanel().show();
         }

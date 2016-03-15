@@ -8,6 +8,7 @@ module Antares {
             contacts: any = [];
             selected: { [id: string]: any } = {};
             componentId: string;
+            isLoading: boolean = false;
             constructor(
                 componentRegistry: Antares.Core.Service.ComponentRegistry,
                 private dataAccessService: Antares.Services.DataAccessService) {
@@ -32,9 +33,10 @@ module Antares {
                 return this.contacts.filter(c => { return c.selected });
             }
 
-            loadContacts = () => {
+            loadContacts = () =>{
+                this.isLoading = true;
                 this.contacts = this.dataAccessService.getContactResource().query();
-                return this.contacts.$promise;
+                return this.contacts.$promise.finally(() =>{ this.isLoading = false; });
             }
         }
 
