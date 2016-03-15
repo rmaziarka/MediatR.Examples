@@ -13,9 +13,6 @@ Scenario: Retrieve all contacts details
 
 @Contacts
 Scenario Outline: Retrieve error messages for improper contact id
-		When User creates a contact with following data
-		| FirstName | Surname | Title  |
-		| Tomasz    | Bien    | Mister |
 		When User retrieves contacts details for <id> id
 		Then User should get <statusCode> http status code
 
