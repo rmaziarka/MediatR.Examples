@@ -23,12 +23,13 @@
         /// <summary>
         /// Gets the enum items by code.
         /// </summary>
-        /// <param name="query">The query.</param>
+        /// <param name="code">Enum item code</param>
         /// <returns>Enum Query Result.</returns>
         [HttpGet]
         [Route("{code}/items")]
-        public EnumQueryResult GetEnumItemsByCode([FromUri] EnumQuery query)
+        public EnumQueryResult GetEnumItemsByCode(string code)
         {
+            var query = new EnumQuery { Code = code };
             return this.mediator.Send(query);
         }
     }
