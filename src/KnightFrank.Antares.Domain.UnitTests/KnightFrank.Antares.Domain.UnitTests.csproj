@@ -107,7 +107,9 @@
     <Compile Include="BaseTestClassFixture.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandHandlerTests.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidatorTests.cs" />
+    <Compile Include="Enum\EnumQueryHandlerTests.cs" />
     <Compile Include="Enum\EnumQueryValidatorTests.cs" />
+    <Compile Include="InlineAutoMoqDataAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandValidatorTests.cs" />
   </ItemGroup>
