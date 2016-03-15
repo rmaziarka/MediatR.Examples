@@ -3,6 +3,7 @@
     using System.Web.Http;
 
     using KnightFrank.Antares.Domain.Enum;
+    using KnightFrank.Antares.Domain.Enum.Queries;
 
     using MediatR;
 

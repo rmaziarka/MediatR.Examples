@@ -1,9 +1,7 @@
-﻿namespace KnightFrank.Antares.Domain.UnitTests.Enum
+﻿namespace KnightFrank.Antares.Domain.UnitTests.Enum.Queries
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Linq.Expressions;
 
     using FluentAssertions;
 
@@ -11,7 +9,7 @@
 
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Repository;
-    using KnightFrank.Antares.Domain.Enum;
+    using KnightFrank.Antares.Domain.Enum.Queries;
 
     using Moq;
 
@@ -30,10 +28,13 @@
             EnumQueryValidator validator,
             EnumQuery query)
         {
+            // Arrange
             enumTypeRepository.Setup(x => x.Get()).Returns(new List<EnumType> { new EnumType { Code = query.Code } }.AsQueryable());
 
+            // Act
             ValidationResult validationResult = validator.Validate(query);
 
+            // Asserts
             validationResult.Errors.Should().BeEmpty();
         }
 
@@ -44,10 +45,13 @@
             EnumQueryValidator validator,
             EnumQuery query)
         {
+            // Arrange
             enumTypeRepository.Setup(x => x.Get()).Returns(new List<EnumType>().AsQueryable());
 
+            // Act
             ValidationResult validationResult = validator.Validate(query);
 
+            // Asserts
             validationResult.Errors.Should().ContainSingle(x => x.ErrorMessage == "Enum does not exists.");
         }
     }

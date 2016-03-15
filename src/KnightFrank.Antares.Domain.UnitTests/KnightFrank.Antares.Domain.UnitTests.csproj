@@ -105,10 +105,10 @@
     <Compile Include="AddressForm\AddressFormQueryValidatorTests.cs" />
     <Compile Include="AutoMoqDataAttribute.cs" />
     <Compile Include="BaseTestClassFixture.cs" />
+    <Compile Include="Enum\Queries\EnumQueryValidatorTests.cs" />
+    <Compile Include="Enum\QueryHandler\EnumQueryHandlerTests.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandHandlerTests.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidatorTests.cs" />
-    <Compile Include="Enum\EnumQueryHandlerTests.cs" />
-    <Compile Include="Enum\EnumQueryValidatorTests.cs" />
     <Compile Include="InlineAutoMoqDataAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandValidatorTests.cs" />
@@ -127,9 +127,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AddressForm\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
