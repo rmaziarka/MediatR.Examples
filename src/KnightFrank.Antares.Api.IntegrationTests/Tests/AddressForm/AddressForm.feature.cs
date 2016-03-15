@@ -78,9 +78,9 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.AddressForm
         [Xunit.InlineDataAttribute("Property", "", "BadRequest", new string[0])]
         [Xunit.InlineDataAttribute("", "", "BadRequest", new string[0])]
         [Xunit.InlineDataAttribute("", "PL", "BadRequest", new string[0])]
-        [Xunit.InlineDataAttribute("bla", "PL", "NotFound", new string[0])]
-        [Xunit.InlineDataAttribute("Residential", "bla", "NotFound", new string[0])]
-        [Xunit.InlineDataAttribute("bla", "bla", "NotFound", new string[0])]
+        [Xunit.InlineDataAttribute("bla", "PL", "BadRequest", new string[0])]
+        [Xunit.InlineDataAttribute("Residential", "bla", "BadRequest", new string[0])]
+        [Xunit.InlineDataAttribute("bla", "bla", "BadRequest", new string[0])]
         public virtual void RetrieveErrorMessagesForImproperEntityTypeAndCountryCode(string entityType, string countryCode, string statusCode, string[] exampleTags)
         {
             string[] @__tags = new string[] {

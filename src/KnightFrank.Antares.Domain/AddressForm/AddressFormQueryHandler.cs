@@ -40,14 +40,14 @@
 
             if (country == null)
             {
-                throw new ArgumentException("message.country");
+                throw new DomainValidationException("message.CountryCode");
             }
 
             EnumTypeItem enumTypeItem = this.enumTypeItemRepository.Get().SingleOrDefault(i => i.Code == message.EntityType && i.EnumType.Code == "EntityType");
 
             if (enumTypeItem == null)
             {
-                throw new ArgumentException("message.enumTypeItem");
+                throw new DomainValidationException("message.EntityType");
             }
 
             AddressForm addressForm = null;

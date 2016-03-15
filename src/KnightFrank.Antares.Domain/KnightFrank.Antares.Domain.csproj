@@ -84,6 +84,7 @@
     <Compile Include="Contact\Commands\UpdateContactCommandValidator.cs" />
     <Compile Include="Contact\ContactDto.cs" />
     <Compile Include="DomainModule.cs" />
+    <Compile Include="DomainValidationException.cs" />
     <Compile Include="Enum\EnumQueryItemResult.cs" />
     <Compile Include="Enum\EnumQueryResultProfile.cs" />
     <Compile Include="Enum\EnumQueryResult.cs" />

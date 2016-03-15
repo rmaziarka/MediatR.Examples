@@ -11,9 +11,9 @@
 		| Property    |             | BadRequest |
 		|             |             | BadRequest |
 		|             | PL          | BadRequest |
-		| bla         | PL          | NotFound   |
-		| Residential | bla         | NotFound   |
-		| bla         | bla         | NotFound   |
+		| bla         | PL          | BadRequest |
+		| Residential | bla         | BadRequest |
+		| bla         | bla         | BadRequest |
 
 
 @AddressForm
