@@ -155,7 +155,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Property.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\ResidentialSalesRequirement.feature.cs">
+    <Compile Include="Tests\ResidentialSalesRequirement\ResidentialSalesRequirement.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ResidentialSalesRequirement.feature</DependentUpon>
@@ -205,7 +205,7 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Property.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\ResidentialSalesRequirement.feature">
+    <None Include="Tests\ResidentialSalesRequirement\ResidentialSalesRequirement.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ResidentialSalesRequirement.feature.cs</LastGenOutput>
     </None>
