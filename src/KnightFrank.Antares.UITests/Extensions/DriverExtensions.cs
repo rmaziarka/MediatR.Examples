@@ -28,7 +28,7 @@
                             return javaScriptExecutor != null
                                    && javaScriptExecutor.ExecuteAsyncScript(
                                        "var callback = arguments[arguments.length - 1];"
-                                       + "var el = document.querySelector('html');" + "if (!window.angular) "
+                                       + "var el = document.querySelector('body');" + "if (!window.angular) "
                                        + "{callback('false')}" + "if (angular.getTestability) "
                                        + "{angular.getTestability(el).whenStable(function(){callback('true')});} " + "else "
                                        + "{if (!angular.element(el).injector())" + "{callback('false')}"
@@ -51,6 +51,16 @@
         {
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
             wait.Until(drv => drv.GetElement(locator).Displayed && drv.GetElement(locator).Enabled);
+        }
+
+        public static void SendKeys(this IWebDriver driver, ElementLocator locator, string text)
+        {
+            if (text.Equals(string.Empty))
+            {
+                return;
+            }
+            driver.GetElement(locator).Clear();
+            driver.GetElement(locator).SendKeys(text);
         }
     }
 }

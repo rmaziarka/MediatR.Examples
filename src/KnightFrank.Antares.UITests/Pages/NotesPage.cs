@@ -2,6 +2,8 @@
 {
     using System;
 
+    using KnightFrank.Antares.UITests.Extensions;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
@@ -18,7 +20,7 @@
 
         public NotesPage SetNoteText(string noteText)
         {
-            this.Driver.GetElement(this.noteTextArea).SendKeys(noteText);
+            this.Driver.SendKeys(this.noteTextArea, noteText);
             return this;
         }
 

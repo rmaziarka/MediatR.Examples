@@ -71,25 +71,5 @@
         {
             return this.mediator.Send(command);
         }
-
-        /// <summary>
-        ///     Update contact
-        /// </summary>
-        /// <param name="id">Contact id</param>
-        /// <param name="command">Contact entity</param>
-        [HttpPut]
-        public void UpdateContact(int id, [FromBody] UpdateContactCommand command)
-        {
-            this.mediator.Send(command);
-        }
-
-        /// <summary>
-        ///     Delete contact
-        /// </summary>
-        /// <param name="id">Contact id</param>
-        [HttpDelete]
-        public void DeleteContact(int id)
-        {
-        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.Enum
+﻿namespace KnightFrank.Antares.Domain.Enum.QueryHandler
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -7,8 +7,10 @@
 
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.Enum.Queries;
 
     using MediatR;
+
     public class EnumQueryHandler : IRequestHandler<EnumQuery, EnumQueryResult>
     {
         private readonly IReadGenericRepository<EnumLocalised> enumLocalisedRepository;
@@ -20,7 +22,9 @@
 
         public EnumQueryResult Handle(EnumQuery message)
         {
-            IEnumerable<EnumLocalised> enumItems = this.enumLocalisedRepository.Get().Where(x => x.EnumTypeItem.EnumType.Code == message.Code && x.Locale.IsoCode == "en");
+            IEnumerable<EnumLocalised> enumItems =
+                this.enumLocalisedRepository.Get()
+                    .Where(x => x.EnumTypeItem.EnumType.Code == message.Code && x.Locale.IsoCode == "en");
 
             return Mapper.Map<EnumQueryResult>(enumItems);
         }

@@ -2,6 +2,7 @@
 {
     using System;
 
+    using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;
@@ -36,21 +37,21 @@
         [When(@"User selects country on create property page")]
         public void SelectCountryFromDropDownList(Table table)
         {
-            var tableCountry = table.CreateInstance<Property>();
-            this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").AddressTemplate.SelectPropertyCountry(tableCountry.Country);
+            var tableCountry = table.CreateInstance<Address>();
+            this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").AddressTemplate.SelectPropertyCountry(tableCountry.Country.Code);
         }
 
         [When(@"User fills in address details on create property page")]
         public void FillInAddressDetails(Table table)
         {
-            var addressDetails = table.CreateInstance<Property>();
+            var addressDetails = table.CreateInstance<Address>();
             var createPropertyPage = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
 
             createPropertyPage.AddressTemplate
                 .SetPropertyNumber(addressDetails.PropertyNumber)
                 .SetPropertyName(addressDetails.PropertyName)
-                .SetPropertyAddressLine2(addressDetails.AddressLine2)
-                .SetPropertyAddressLine3(addressDetails.AddressLine3)
+                .SetPropertyAddressLine2(addressDetails.Line2)
+                .SetPropertyAddressLine3(addressDetails.Line3)
                 .SetPropertyPostCode(addressDetails.Postcode)
                 .SetPropertyCity(addressDetails.City)
                 .SetPropertyCounty(addressDetails.County);
@@ -65,19 +66,7 @@
         [Then(@"New property should be created")]
         public void CheckIfPropertyCreated()
         {
-            Console.Write("abc");
-        }
-
-        internal class Property
-        {
-            public string Country { get; set; }
-            public string PropertyNumber { get; set; }
-            public string PropertyName { get; set; }
-            public string AddressLine2 { get; set; }
-            public string AddressLine3 { get; set; }
-            public string Postcode { get; set; }
-            public string City { get; set; }
-            public string County { get; set; }
+            //TODO implement check if property was created
         }
     }
 }

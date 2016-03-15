@@ -1,5 +1,7 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using KnightFrank.Antares.UITests.Extensions;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
@@ -46,25 +48,25 @@
 
         public OwnershipDetailsPage SetPurchasingDate(string date)
         {
-            this.Driver.GetElement(this.purchasingDate).SendKeys(date);
+            this.Driver.SendKeys(this.purchasingDate, date);
             return this;
         }
 
         public OwnershipDetailsPage SetSellingDate(string date)
         {
-            this.Driver.GetElement(this.sellingDate).SendKeys(date);
+            this.Driver.SendKeys(this.sellingDate, date);
             return this;
         }
 
         public OwnershipDetailsPage SetBuyingPrice(string price)
         {
-            this.Driver.GetElement(this.buyingPrice).SendKeys(price);
+            this.Driver.SendKeys(this.buyingPrice, price);
             return this;
         }
 
         public OwnershipDetailsPage SetSellingPrice(string price)
         {
-            this.Driver.GetElement(this.sellingPrice).SendKeys(price);
+            this.Driver.SendKeys(this.sellingPrice, price);
             return this;
         }
 
