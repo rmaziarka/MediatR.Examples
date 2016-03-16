@@ -42,7 +42,7 @@
 
         [Theory]
         [AutoData]
-        public void Given_CorrectCreateRequirementCommand_When_Validating_Then_NoValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_CorrectCreateRequirementCommand_When_Validating_Then_NoValidationErrors(CreateRequirementCommandValidator validator)
         {
             ValidationResult validationResult = validator.Validate(this.command);
 
@@ -51,16 +51,16 @@
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithTooLongDescription_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithTooLongDescription_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
-            this.command.Description = string.Join(string.Empty, fixture.CreateMany<char>(4001));
+            this.command.Description = string.Join(string.Empty, new Fixture().CreateMany<char>(4001));
 
             TestIncorrectCommand(validator, this.command, nameof(this.command.Description));
         }
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinPriceLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMinPriceLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MinPrice = -1;
 
@@ -69,16 +69,16 @@
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMaxPriceLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMaxPriceLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MaxPrice = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxPrice));
+            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxPrice), 2);
         }
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWitMinBedroomsLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWitMinBedroomsLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MinBedrooms = -1;
 
@@ -87,16 +87,16 @@
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMaxBedroomsLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMaxBedroomsLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MaxBedrooms = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxBedrooms));
+            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxBedrooms), 2);
         }
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWitMinReceptionRoomsLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWitMinReceptionRoomsLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MinReceptionRooms = -1;
 
@@ -105,16 +105,16 @@
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMaxReceptionRoomsLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMaxReceptionRoomsLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MaxReceptionRooms = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxReceptionRooms));
+            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxReceptionRooms), 2);
         }
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinBathroomsLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMinBathroomsLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MinBathrooms = -1;
 
@@ -123,17 +123,17 @@
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMaxBathroomsLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMaxBathroomsLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MaxBathrooms = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxBathrooms));
+            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxBathrooms), 2);
         }
 
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinParkingSpacesLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMinParkingSpacesLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MinParkingSpaces = -1;
 
@@ -142,16 +142,16 @@
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMaxParkingSpacesLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMaxParkingSpacesLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MaxParkingSpaces = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxParkingSpaces));
+            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxParkingSpaces), 2);
         }
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinAreaLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMinAreaLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MinArea = -1;
 
@@ -160,16 +160,16 @@
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMaxAreaLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMaxAreaLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MaxArea = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxArea));
+            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxArea), 2);
         }
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinLandAreaLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMinLandAreaLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MinLandArea = -1;
 
@@ -178,16 +178,16 @@
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMaxLandAreaLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMaxLandAreaLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MaxLandArea = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxLandArea));
+            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxLandArea), 2);
         }
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinPriceGreaterThanMaxPrice_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMinPriceGreaterThanMaxPrice_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MinPrice = 2;
             this.command.MaxPrice = 1;
@@ -197,7 +197,7 @@
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinBedroomsGreaterThanMaxBedrooms_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMinBedroomsGreaterThanMaxBedrooms_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MinBedrooms = 2;
             this.command.MaxBedrooms = 1;
@@ -207,7 +207,7 @@
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinReceptionRoomsGreaterThanMaxReceptionRooms_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMinReceptionRoomsGreaterThanMaxReceptionRooms_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MinReceptionRooms = 2;
             this.command.MaxReceptionRooms = 1;
@@ -217,7 +217,7 @@
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinBathroomsGreaterThanMaxBathrooms_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMinBathroomsGreaterThanMaxBathrooms_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MinBathrooms = 2;
             this.command.MaxBathrooms = 1;
@@ -228,7 +228,7 @@
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinParkingSpacesGreaterThanMaxParkingSpaces_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMinParkingSpacesGreaterThanMaxParkingSpaces_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MinParkingSpaces = 2;
             this.command.MaxParkingSpaces = 1;
@@ -238,7 +238,7 @@
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinAreaGreaterThanMaxArea_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMinAreaGreaterThanMaxArea_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MinArea = 2;
             this.command.MaxArea = 1;
@@ -249,7 +249,7 @@
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinLandAreaGreaterThanMaxLandArea_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        public void Given_IncorrectCreateRequirementCommandWithMinLandAreaGreaterThanMaxLandArea_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
         {
             this.command.MinLandArea = 2;
             this.command.MaxLandArea = 1;
@@ -266,10 +266,11 @@
             TestIncorrectCommand(validator, this.command, nameof(this.command.Contacts));
         }
 
-        private static void TestIncorrectCommand(CreateRequirementCommandValidator validator, CreateRequirementCommand command, string testedPropertyName)
+        private static void TestIncorrectCommand(CreateRequirementCommandValidator validator, CreateRequirementCommand command, string testedPropertyName, int expectedErrorCount = 1)
         {
             ValidationResult validationResult = validator.Validate(command);
             Assert.False(validationResult.IsValid);
+            Assert.Equal(expectedErrorCount, validationResult.Errors.Count);
             Assert.Contains(validationResult.Errors, failure => failure.PropertyName == testedPropertyName);
         }
     }

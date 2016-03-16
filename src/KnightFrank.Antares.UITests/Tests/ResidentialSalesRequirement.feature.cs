@@ -71,49 +71,102 @@ namespace KnightFrank.Antares.UITests.Tests
             this.ScenarioTearDown();
         }
         
-        [Xunit.FactAttribute(Skip="Ignored")]
+        [Xunit.FactAttribute()]
         [Xunit.TraitAttribute("FeatureTitle", "Residential Sales Requirement UI tests")]
         [Xunit.TraitAttribute("Description", "Create new residential sales requirement")]
         public virtual void CreateNewResidentialSalesRequirement()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create new residential sales requirement", new string[] {
-                        "ignore"});
-#line 4
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create new residential sales requirement", ((string[])(null)));
+#line 3
 this.ScenarioSetup(scenarioInfo);
-#line 5
- testRunner.Given("User navigates to create residential sales requirement page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 4
+ testRunner.Given("User navigates to create contact page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Country",
-                        "StreetName",
-                        "Postcode",
-                        "Town"});
+                        "Title",
+                        "FirstName",
+                        "Surname"});
             table1.AddRow(new string[] {
-                        "United Kingdom",
-                        "Upper Ground",
-                        "SE1 9PP",
-                        "London"});
-#line 6
- testRunner.When("User fills in location details on create residential sales requirement page", ((string)(null)), table1, "When ");
+                        "Miss",
+                        "Alana",
+                        "Jones"});
+#line 5
+ testRunner.When("User fills in contact details on create contact page", ((string)(null)), table1, "When ");
+#line 8
+  testRunner.And("User clicks save button on create contact page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 9
+ testRunner.Then("New contact should be created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 10
+ testRunner.When("User navigates to create residential sales requirement page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Type",
-                        "PriceMin",
-                        "PriceMax",
-                        "BedroomsMin",
-                        "BedroomsMax",
-                        "ReceptionRoomsMin",
-                        "ReceptionRoomsMax",
-                        "BathroomsMin",
-                        "BathroomsMax",
-                        "ParkingSpacesMin",
-                        "ParkingSpacesMax",
-                        "AreaMin",
-                        "AreaMax",
-                        "LandAreaMin",
-                        "LandAreaMax",
-                        "RequirementsNote"});
+                        "FirstName",
+                        "Surname"});
             table2.AddRow(new string[] {
+                        "Alana",
+                        "Jones"});
+#line 11
+  testRunner.And("User selects contacts on create residential sales requirement page", ((string)(null)), table2, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "FirstName",
+                        "Surname"});
+            table3.AddRow(new string[] {
+                        "Alana",
+                        "Jones"});
+#line 14
+  testRunner.And("User selects contacts on create residential sales requirement page", ((string)(null)), table3, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                        "FirstName",
+                        "Surname"});
+            table4.AddRow(new string[] {
+                        "Alana",
+                        "Jones"});
+#line 17
+ testRunner.Then("list of applicants should contain following contacts", ((string)(null)), table4, "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Country",
+                        "PropertyName",
+                        "PropertyNumber",
+                        "Line1",
+                        "Line2",
+                        "Line3",
+                        "Postcode",
+                        "City",
+                        "County"});
+            table5.AddRow(new string[] {
+                        "United Kingdom",
+                        "",
+                        "",
+                        "",
+                        "Upper Ground",
+                        "",
+                        "SE1 9PP",
+                        "London",
+                        ""});
+#line 20
+ testRunner.When("User fills in location details on create residential sales requirement page", ((string)(null)), table5, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Type",
+                        "MinPrice",
+                        "MaxPrice",
+                        "MinBedrooms",
+                        "MaxBedrooms",
+                        "MinReceptionRooms",
+                        "MaxReceptionRooms",
+                        "MinBathrooms",
+                        "MaxBathrooms",
+                        "MinParkingSpaces",
+                        "MaxParkingSpaces",
+                        "MinArea",
+                        "MaxArea",
+                        "MinLandArea",
+                        "MaxLandArea",
+                        "Description"});
+            table6.AddRow(new string[] {
                         "Flat",
                         "100000",
                         "500000",
@@ -130,11 +183,11 @@ this.ScenarioSetup(scenarioInfo);
                         "200000",
                         "300000",
                         "Note"});
-#line 9
-  testRunner.And("User fills in property details on create residential sales requirement page", ((string)(null)), table2, "And ");
-#line 12
+#line 23
+  testRunner.And("User fills in property details on create residential sales requirement page", ((string)(null)), table6, "And ");
+#line 26
   testRunner.And("User clicks save button on create residential sales requirement page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 13
+#line 27
  testRunner.Then("New residential sales requirement should be created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

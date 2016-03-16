@@ -8,7 +8,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             <label for="title" translate="CONTACT.TITLE"></label>
-                            <input type="text" class="form-control" id="title" name="title" required ng-maxlength="128" ng-model="vm.contact.title">
+                            <input type="text" class="form-control" id="title" name="title" required ng-maxlength="128" ng-model="vm.contact.title" autocomplete="off">
                             <div ng-messages="addContactForm.title.$error" ng-show="addContactForm.$submitted || addContactForm.title.$dirty">
                                 <div ng-messages-include="app/common/views/errorMessages.html"></div>
                             </div>
@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="first-name" translate="CONTACT.FIRSTNAME"></label>
-                            <input type="text" class="form-control" id="first-name" name="firstName" required ng-maxlength="128" ng-model="vm.contact.firstName">
+                            <input type="text" class="form-control" id="first-name" name="firstName" required ng-maxlength="128" ng-model="vm.contact.firstName" autocomplete="off">
                             <div ng-messages="addContactForm.firstName.$error" ng-show="addContactForm.$submitted || addContactForm.firstName.$dirty">
                                 <div ng-messages-include="app/common/views/errorMessages.html"></div>
                             </div>
@@ -30,7 +30,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="surname" translate="CONTACT.SURNAME"></label>
-                            <input type="text" class="form-control" id="surname" name="surname" required ng-maxlength="128" ng-model="vm.contact.surname">
+                            <input type="text" class="form-control" id="surname" name="surname" required ng-maxlength="128" ng-model="vm.contact.surname" autocomplete="off">
                             <div ng-messages="addContactForm.surname.$error" ng-show="addContactForm.$submitted || addContactForm.surname.$dirty">
                                 <div ng-messages-include="app/common/views/errorMessages.html"></div>
                             </div>

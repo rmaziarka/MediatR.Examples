@@ -40,7 +40,7 @@
 
             AddressForm addressForm =
                 fixture.Build<AddressForm>()
-                       .With(af => af.AddressFieldFormDefinitions, new[] { addressFieldDefinition })
+                       .With(af => af.AddressFieldDefinitions, new[] { addressFieldDefinition })
                        .Without(af => af.Country)
                        .Without(af => af.AddressFormEntityTypes)
                        .Create();
@@ -52,13 +52,13 @@
             Assert.NotNull(addressFormQueryResult);
             Assert.Equal(addressForm.Id, addressFormQueryResult.Id);
             Assert.Equal(addressForm.CountryId, addressFormQueryResult.CountryId);
-            Assert.Equal(1, addressFormQueryResult.AddressFieldFormDefinitions.Count);
-            Assert.Equal(addressField.Name, addressFormQueryResult.AddressFieldFormDefinitions[0].Name);
-            Assert.Equal(addressFieldLabel.LabelKey, addressFormQueryResult.AddressFieldFormDefinitions[0].LabelKey);
-            Assert.Equal(addressFieldDefinition.RegEx, addressFormQueryResult.AddressFieldFormDefinitions[0].RegEx);
-            Assert.Equal(addressFieldDefinition.ColumnOrder, addressFormQueryResult.AddressFieldFormDefinitions[0].ColumnOrder);
-            Assert.Equal(addressFieldDefinition.RowOrder, addressFormQueryResult.AddressFieldFormDefinitions[0].RowOrder);
-            Assert.Equal(addressFieldDefinition.Required, addressFormQueryResult.AddressFieldFormDefinitions[0].Required);
+            Assert.Equal(1, addressFormQueryResult.AddressFieldDefinitions.Count);
+            Assert.Equal(addressField.Name, addressFormQueryResult.AddressFieldDefinitions[0].Name);
+            Assert.Equal(addressFieldLabel.LabelKey, addressFormQueryResult.AddressFieldDefinitions[0].LabelKey);
+            Assert.Equal(addressFieldDefinition.RegEx, addressFormQueryResult.AddressFieldDefinitions[0].RegEx);
+            Assert.Equal(addressFieldDefinition.ColumnOrder, addressFormQueryResult.AddressFieldDefinitions[0].ColumnOrder);
+            Assert.Equal(addressFieldDefinition.RowOrder, addressFormQueryResult.AddressFieldDefinitions[0].RowOrder);
+            Assert.Equal(addressFieldDefinition.Required, addressFormQueryResult.AddressFieldDefinitions[0].Required);
         }
     }
 }

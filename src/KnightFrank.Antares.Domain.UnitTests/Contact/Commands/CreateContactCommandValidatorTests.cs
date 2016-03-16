@@ -1,5 +1,7 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Contact.Commands
 {
+    using System;
+
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Domain.Contact.Commands;
@@ -24,7 +26,7 @@
 
         [Theory]
         [AutoData]
-        public void Given_IncorrectCreateContactCommandWithTooLongFirstName_When_Validating_Then_NoValidationErrors(CreateContactCommandValidator validator, CreateContactCommand command, Fixture fixture)
+        public void Given_IncorrectCreateContactCommandWithTooLongFirstName_When_Validating_Then_ValidationErrors(CreateContactCommandValidator validator, CreateContactCommand command, Fixture fixture)
         {
             command.FirstName = string.Join(string.Empty, fixture.CreateMany<string>(5)).Substring(0, 129);
 
@@ -34,7 +36,7 @@
         [Theory]
         [InlineAutoData("")]
         [InlineAutoData((string)null)]
-        public void Given_IncorrectCreateContactCommandWithEmptyFirstName_When_Validating_Then_NoValidationErrors(string value, CreateContactCommandValidator validator, CreateContactCommand command, Fixture fixture)
+        public void Given_IncorrectCreateContactCommandWithEmptyFirstName_When_Validating_Then_ValidationErrors(string value, CreateContactCommandValidator validator, CreateContactCommand command, Fixture fixture)
         {
             command.FirstName = value;
 

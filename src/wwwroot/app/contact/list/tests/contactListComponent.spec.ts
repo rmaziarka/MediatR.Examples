@@ -11,8 +11,8 @@ module Antares {
             $http;
 
         var contacts = [
-            { id : 1, firstName : 'Test1', surname : 'Test1_S', title : 'Mr' },
-            { id : 2, firstName : 'Test2', surname : 'Test2_S', title : 'Mr' }
+            { id : '1', firstName : 'Test1', surname : 'Test1_S', title : 'Mr' },
+            { id : '2', firstName : 'Test2', surname : 'Test2_S', title : 'Mr' }
         ];
 
         var controller: ContactListController;
@@ -32,12 +32,14 @@ module Antares {
 
             scope = $rootScope.$new();
             element = $compile('<contact-list></contact-list>')(scope);
-            
-            $http.flush();
+
             scope.$apply();
 
             controller = element.controller('contactList');
-            
+            controller.loadContacts();
+
+            $http.flush();
+            scope.$apply();
         }));
 
         it('contacts should be listed', () =>{

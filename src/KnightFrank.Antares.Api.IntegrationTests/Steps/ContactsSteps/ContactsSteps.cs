@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
 
@@ -40,7 +41,7 @@
         [Given(@"All contacts have been deleted")]
         public void GivenDeleteAllContacts()
         {
-            this.fixture.DataContext.Database.ExecuteSqlCommand(@"delete from [dbo].Contact");
+            this.fixture.DataContext.Contact.RemoveRange(this.fixture.DataContext.Contact.ToList());
         }
 
         [When(@"User creates a contact with following data")]

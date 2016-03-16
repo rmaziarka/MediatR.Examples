@@ -7,6 +7,9 @@
     {
         public AutoMoqDataAttribute() : base(new Fixture().Customize(new AutoMoqCustomization()))
         {
+            this.Fixture.Behaviors.Clear();
+
+            this.Fixture.Behaviors.Add(new OmitOnRecursionBehavior());
         }
     }
 }

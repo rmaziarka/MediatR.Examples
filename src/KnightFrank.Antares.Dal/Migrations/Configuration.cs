@@ -16,6 +16,7 @@ namespace KnightFrank.Antares.Dal.Migrations
             LocaleData.Seed(context);
             CountryData.Seed(context);
             EntityTypeEnumData.Seed(context);
+            AddressFormData.Seed(context);
 
             context.SaveChanges();
         }

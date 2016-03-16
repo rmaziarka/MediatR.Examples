@@ -1,5 +1,7 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using KnightFrank.Antares.UITests.Extensions;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
@@ -10,11 +12,11 @@
         private readonly ElementLocator propertyNumber = new ElementLocator(Locator.Id, string.Empty);
         private readonly ElementLocator propertyName = new ElementLocator(Locator.Id, string.Empty);
         private readonly ElementLocator propertyAddressLine1 = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator propertyAddressLine2 = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator propertyAddressLine2 = new ElementLocator(Locator.Id, "street");
         private readonly ElementLocator propertyAddressLine3 = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator propertyCity = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator propertyCity = new ElementLocator(Locator.Id, "town");
         private readonly ElementLocator propertyCounty = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator propertyPostcode = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator propertyPostcode = new ElementLocator(Locator.Id, "postcode");
         private readonly ElementLocator propertyCountry = new ElementLocator(Locator.Id, string.Empty);
 
         public AddressTemplatePage(DriverContext driverContext) : base(driverContext)
@@ -24,56 +26,56 @@
         // Property/Unit/Flat Number
         public AddressTemplatePage SetPropertyNumber(string number)
         {
-            this.Driver.GetElement(this.propertyNumber).SendKeys(number);
+            this.Driver.SendKeys(this.propertyNumber, number);
             return this;
         }
 
         // Property/Building Name
         public AddressTemplatePage SetPropertyName(string name)
         {
-            this.Driver.GetElement(this.propertyName).SendKeys(name);
+            this.Driver.SendKeys(this.propertyName, name);
             return this;
         }
 
         // Address Line 1/Street Address/Street Number
         public AddressTemplatePage SetPropertyAddressLine1(string address)
         {
-            this.Driver.GetElement(this.propertyAddressLine1).SendKeys(address);
+            this.Driver.SendKeys(this.propertyAddressLine1, address);
             return this;
         }
 
         // Address Line 2/Street Name
         public AddressTemplatePage SetPropertyAddressLine2(string address)
         {
-            this.Driver.GetElement(this.propertyAddressLine2).SendKeys(address);
+            this.Driver.SendKeys(this.propertyAddressLine2, address);
             return this;
         }
 
         // Address Line 3
         public AddressTemplatePage SetPropertyAddressLine3(string address)
         {
-            this.Driver.GetElement(this.propertyAddressLine3).SendKeys(address);
+            this.Driver.SendKeys(this.propertyAddressLine3, address);
             return this;
         }
 
         // City
         public AddressTemplatePage SetPropertyCity(string city)
         {
-            this.Driver.GetElement(this.propertyCity).SendKeys(city);
+            this.Driver.SendKeys(this.propertyCity, city);
             return this;
         }
 
         // County/State/Province
         public AddressTemplatePage SetPropertyCounty(string county)
         {
-            this.Driver.GetElement(this.propertyCounty).SendKeys(county);
+            this.Driver.SendKeys(this.propertyCounty, county);
             return this;
         }
 
         // Postcode/Pincode/Postalcode
         public AddressTemplatePage SetPropertyPostCode(string postcode)
         {
-            this.Driver.GetElement(this.propertyPostcode).SendKeys(postcode);
+            this.Driver.SendKeys(this.propertyPostcode, postcode);
             return this;
         }
 

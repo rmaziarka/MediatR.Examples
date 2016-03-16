@@ -76,6 +76,7 @@
     <Compile Include="AddressForm\AddressFormQuery.cs" />
     <Compile Include="AddressForm\AddressFormQueryValidator.cs" />
     <Compile Include="Common\ValidatorCommandHandler.cs" />
+    <Compile Include="Contact\Commands\CreateContactCommandProfile.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidator.cs" />
     <Compile Include="Contact\Commands\UpdateContactCommand.cs" />
     <Compile Include="Contact\Commands\CreateContactCommand.cs" />
@@ -84,12 +85,13 @@
     <Compile Include="Contact\Commands\UpdateContactCommandValidator.cs" />
     <Compile Include="Contact\ContactDto.cs" />
     <Compile Include="DomainModule.cs" />
-    <Compile Include="Enum\EnumQuery.cs" />
-    <Compile Include="Enum\EnumQueryHandler.cs" />
+    <Compile Include="DomainValidationException.cs" />
     <Compile Include="Enum\EnumQueryItemResult.cs" />
     <Compile Include="Enum\EnumQueryResultProfile.cs" />
     <Compile Include="Enum\EnumQueryResult.cs" />
-    <Compile Include="Enum\EnumQueryValidator.cs" />
+    <Compile Include="Enum\Queries\EnumQuery.cs" />
+    <Compile Include="Enum\Queries\EnumQueryValidator.cs" />
+    <Compile Include="Enum\QueryHandler\EnumQueryHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementCommandHandler.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandValidator.cs" />

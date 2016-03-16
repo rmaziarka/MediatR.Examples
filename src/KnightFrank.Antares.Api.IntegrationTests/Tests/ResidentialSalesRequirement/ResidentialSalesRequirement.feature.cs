@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace KnightFrank.Antares.Api.IntegrationTests.Tests
+namespace KnightFrank.Antares.Api.IntegrationTests.Tests.ResidentialSalesRequirement
 {
     using TechTalk.SpecFlow;
     
@@ -98,8 +98,8 @@ this.ScenarioSetup(scenarioInfo);
                         "MaxPrice",
                         "MinBedrooms",
                         "MaxBedrooms",
-                        "MinReceprionRooms",
-                        "MaxReceprionRooms",
+                        "MinReceptionRooms",
+                        "MaxReceptionRooms",
                         "MinBathrooms",
                         "MaxBathrooms",
                         "MinParkingSpaces",
@@ -126,7 +126,7 @@ this.ScenarioSetup(scenarioInfo);
                         "20000",
                         "RequirementDescription"});
 #line 8
- testRunner.When("User creates following requirement with given contact", ((string)(null)), table2, "When ");
+  testRunner.And("User creates following requirement with given contact", ((string)(null)), table2, "And ");
 #line 11
   testRunner.And("User retrieves requirement that he saved", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 12
@@ -153,8 +153,8 @@ this.ScenarioSetup(scenarioInfo);
                         "MaxPrice",
                         "MinBedrooms",
                         "MaxBedrooms",
-                        "MinReceprionRooms",
-                        "MaxReceprionRooms",
+                        "MinReceptionRooms",
+                        "MaxReceptionRooms",
                         "MinBathrooms",
                         "MaxBathrooms",
                         "MinParkingSpaces",

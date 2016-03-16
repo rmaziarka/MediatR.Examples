@@ -6,7 +6,7 @@ namespace KnightFrank.Antares.Dal.Migrations
     {
         public AddressFormConfigutration()
         {
-            this.HasMany(p => p.AddressFieldFormDefinitions)
+            this.HasMany(p => p.AddressFieldDefinitions)
                 .WithRequired(p => p.AddressForm)
                 .WillCascadeOnDelete(false);
         }

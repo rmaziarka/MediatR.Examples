@@ -1,7 +1,8 @@
-<div class="panel panel-default" ng-repeat="contact in vm.contacts">
+<div ng-show="vm.isLoading">...loading data...</div>
+<div class="panel panel-default" ng-repeat="contact in vm.contacts" >
     <div class="panel-body">
         <label>
-            <input type="checkbox" ng-click="vm.toggleSelect(contact)"> {{ contact.firstName }} {{ contact.surname }}
+            <input type="checkbox" ng-model="contact.selected"> {{ contact.firstName }} {{ contact.surname }}
         </label>
     </div>
 </div>

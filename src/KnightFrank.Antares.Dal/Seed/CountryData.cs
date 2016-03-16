@@ -9,17 +9,17 @@ namespace KnightFrank.Antares.Dal.Seed
     {
         public static void Seed(KnightFrankContext context)
         {
-            var countires = new List<Country>
+            var countries = new List<Country>
                                 {
-                                    new Country { Code = "uk" }
+                                    new Country { IsoCode = "uk" }
                                 };
 
-            SeedData(countires, context);
+            SeedData(countries, context);
         }
 
-        private static void SeedData(List<Country> countires, KnightFrankContext context)
+        private static void SeedData(List<Country> countries, KnightFrankContext context)
         {
-            countires.ForEach(country => context.Country.AddOrUpdate(x => x.Code, country));
+            countries.ForEach(country => context.Country.AddOrUpdate(x => x.IsoCode, country));
             context.SaveChanges();
         }
     }
