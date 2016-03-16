@@ -79,5 +79,15 @@
             databaseRequirement.ShouldBeEquivalentTo(tableRequirement,
                 opt => opt.Excluding(req => req.Id).Excluding(req => req.CreateDate));
         }
+
+        [When(@"User retrieves requirement for (.*) id")]
+        public void WhenUserRetrievesRequirementForId(string id)
+        {
+            string requestUrl = $"{ApiUrl}/" + id + "";
+
+            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
     }
 }

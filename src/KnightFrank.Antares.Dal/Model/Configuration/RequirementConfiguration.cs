@@ -19,6 +19,12 @@ namespace KnightFrank.Antares.Dal.Migrations
 
             this.Property(r => r.Description)
                 .HasMaxLength(4000);
+
+            this.Property(r => r.MinPrice)
+                .HasPrecision(19, 4);
+
+            this.Property(r => r.MaxPrice)
+                .HasPrecision(19, 4);
         }
     }
 }

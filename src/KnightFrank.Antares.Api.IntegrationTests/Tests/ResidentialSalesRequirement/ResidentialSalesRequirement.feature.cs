@@ -128,7 +128,11 @@ this.ScenarioSetup(scenarioInfo);
 #line 8
   testRunner.And("User creates following requirement with given contact", ((string)(null)), table2, "And ");
 #line 12
+  testRunner.And("User retrieves requirement that he saved", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 12
  testRunner.Then("User should get OK http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 13
+  testRunner.And("Requirement should be the same as added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -180,6 +184,31 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.When("User creates following requirement without contact", ((string)(null)), table3, "When ");
 #line 20
  testRunner.Then("User should get BadRequest http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.TheoryAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Residential sales requirements")]
+        [Xunit.TraitAttribute("Description", "Retrieve error messages for improper requirement id")]
+        [Xunit.TraitAttribute("Category", "Requirements")]
+        [Xunit.InlineDataAttribute("00000000-0000-0000-0000-000000000000", "NotFound", new string[0])]
+        [Xunit.InlineDataAttribute("A", "BadRequest", new string[0])]
+        public virtual void RetrieveErrorMessagesForImproperRequirementId(string id, string statusCode, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "Requirements"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retrieve error messages for improper requirement id", @__tags);
+#line 23
+this.ScenarioSetup(scenarioInfo);
+#line 24
+  testRunner.When(string.Format("User retrieves requirement for {0} id", id), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 25
+  testRunner.Then(string.Format("User should get {0} http status code", statusCode), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

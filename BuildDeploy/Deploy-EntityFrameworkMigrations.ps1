@@ -11,14 +11,6 @@ function Deploy-EntityFrameworkMigrations {
         [string] 
         $ConnectionString,
 
-		[Parameter(Mandatory=$true)]
-        [string] 
-        $DatabaseName,
-
-        [Parameter(Mandatory=$true)]
-        [string] 
-        $DefaultAppPoolUserName,
-
         [Parameter(Mandatory=$true)]
         [string] 
         $PackagePath
@@ -40,4 +32,6 @@ function Deploy-EntityFrameworkMigrations {
 	{
 		throw "Migrate assembly failed with exit code: $LASTEXITCODE"
 	}
+
+    Write-Host "Deploying Entity Framework migrations completed successfully." -ForegroundColor Green
 }

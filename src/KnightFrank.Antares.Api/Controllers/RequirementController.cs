@@ -1,15 +1,21 @@
 ﻿namespace KnightFrank.Antares.Api.Controllers
 {
     using System;
+    using System.Net;
+    using System.Net.Http;
     using System.Web.Http;
 
     using MediatR;
     using Domain.Requirement.Commands;
 
+    using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Domain.Requirement;
+
     /// <summary>
     /// Requirement controller.
     /// </summary>
     /// <seealso cref="System.Web.Http.ApiController" />
+    [RoutePrefix("api/requirement")]
     public class RequirementController : ApiController
     {
         private IMediator mediator;
@@ -31,6 +37,25 @@
         public Guid CreateRequirement(CreateRequirementCommand command)
         {
             return this.mediator.Send(command);
+        }
+
+        /// <summary>
+        /// Gets the requirement by Id.
+        /// </summary>
+        /// <param name="id">Requirement Id.</param>
+        /// <returns>Requirement.</returns>
+        [HttpGet]
+        [Route("{Id}")]
+        public Requirement GetRequirementById(Guid id)
+        {
+            Requirement requirement = this.mediator.Send(new RequirementQuery { Id = id });
+
+            if (requirement == null)
+            {
+                throw new HttpResponseException(this.Request.CreateErrorResponse(HttpStatusCode.NotFound, "Requirement not found."));
+            }
+
+            return requirement;
         }
     }
 }
