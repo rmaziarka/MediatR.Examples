@@ -24,7 +24,7 @@
             {
                 new AddressFormEntityType
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "UK"),
+                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     EnumTypeItemId = GetEntityTypeItemIdByCode(context, "Property")
                 }
             };
@@ -44,7 +44,7 @@
             {
                 new AddressFieldDefinition
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "UK"),
+                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     RegEx = "[XYZ]",
                     AddressFieldId = GetAddressFieldIdByName(context, "PropertyName"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "{PropertyName}"),
@@ -54,7 +54,7 @@
                 },
                 new AddressFieldDefinition
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "UK"),
+                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     AddressFieldId = GetAddressFieldIdByName(context, "PropertyNumber"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "{PropertyNumber}"),
                     RegEx = "[ABC]",
@@ -64,7 +64,7 @@
                 },
                 new AddressFieldDefinition
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "UK"),
+                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     AddressFieldId = GetAddressFieldIdByName(context, "AddressLine1"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "{AddressLine1}"),
                     RegEx = "[ABC]",
@@ -74,7 +74,7 @@
                 },
                 new AddressFieldDefinition
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "UK"),
+                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     AddressFieldId = GetAddressFieldIdByName(context, "AddressLine2"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "{AddressLine2}"),
                     RegEx = "[ABC]",
@@ -84,7 +84,7 @@
                 },
                 new AddressFieldDefinition
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "UK"),
+                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     AddressFieldId = GetAddressFieldIdByName(context, "AddressLine3"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "{AddressLine3}"),
                     RegEx = "[ABC]",
@@ -94,7 +94,7 @@
                 },
                 new AddressFieldDefinition
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "UK"),
+                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     AddressFieldId = GetAddressFieldIdByName(context, "Postcode"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "{Postcode}"),
                     RegEx = "[ABC]",
@@ -104,7 +104,7 @@
                 },
                 new AddressFieldDefinition
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "UK"),
+                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     AddressFieldId = GetAddressFieldIdByName(context, "City"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "{City}"),
                     RegEx = "[ABC]",
@@ -114,7 +114,7 @@
                 },
                 new AddressFieldDefinition
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "UK"),
+                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     AddressFieldId = GetAddressFieldIdByName(context, "County"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "{County}"),
                     RegEx = "[ABC]",
@@ -124,7 +124,7 @@
                 },
                 new AddressFieldDefinition
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "UK"),
+                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     AddressFieldId = GetAddressFieldIdByName(context, "Country"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "{Country}"),
                     RegEx = "[ABC]",
@@ -142,7 +142,7 @@
         {
             var addressForm = new AddressForm
             {
-                CountryId = GetCountryIdByCode(context, "UK")
+                CountryId = GetCountryIdByCode(context, "GB")
             };
 
             context.AddressForm.AddOrUpdate(addressForm);
