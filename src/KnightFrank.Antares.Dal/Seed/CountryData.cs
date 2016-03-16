@@ -323,7 +323,7 @@
 					Value = svValue
 				}
 			};
-			context.CountryLocalised.AddOrUpdate(x => new { x.LocaleId, x.CountryId, x.Value }, countryLocaliseds.ToArray());
+			context.CountryLocalised.AddOrUpdate(x => new { x.LocaleId, x.CountryId }, countryLocaliseds.ToArray());
 			context.SaveChanges();
 		}
 	}
