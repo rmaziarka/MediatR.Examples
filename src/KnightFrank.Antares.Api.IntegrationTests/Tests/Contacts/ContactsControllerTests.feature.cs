@@ -125,21 +125,10 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retrieve error messages for improper contact id", @__tags);
 #line 15
 this.ScenarioSetup(scenarioInfo);
-#line hidden
-            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
-                        "FirstName",
-                        "Surname",
-                        "Title"});
-            table2.AddRow(new string[] {
-                        "Tomasz",
-                        "Bien",
-                        "Mister"});
 #line 16
-  testRunner.When("User creates a contact with following data", ((string)(null)), table2, "When ");
-#line 19
-  testRunner.When(string.Format("User retrieves contacts details for {0} id", id), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 20
-  testRunner.Then(string.Format("User should get {0} http status code", statusCode), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When(string.Format("User retrieves contacts details for {0} id", id), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 17
+ testRunner.Then(string.Format("User should get {0} http status code", statusCode), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -152,24 +141,24 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create new contact", new string[] {
                         "Contacts"});
-#line 28
+#line 25
 this.ScenarioSetup(scenarioInfo);
 #line hidden
-            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "FirstName",
                         "Surname",
                         "Title"});
-            table3.AddRow(new string[] {
+            table2.AddRow(new string[] {
                         "Michael",
                         "Angel",
                         "cheef"});
+#line 26
+ testRunner.When("User creates a contact with following data", ((string)(null)), table2, "When ");
 #line 29
-  testRunner.When("User creates a contact with following data", ((string)(null)), table3, "When ");
-#line 32
-  testRunner.When("User retrieves contacts details for latest id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 33
-  testRunner.Then("User should get OK http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 34
+ testRunner.When("User retrieves contacts details for latest id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 30
+ testRunner.Then("User should get OK http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 31
   testRunner.And("contact details should be the same as already added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -191,21 +180,21 @@ this.ScenarioSetup(scenarioInfo);
                 @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
             }
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Check if validation is invoked", @__tags);
-#line 37
+#line 34
 this.ScenarioSetup(scenarioInfo);
 #line hidden
-            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "FirstName",
                         "Surname",
                         "Title"});
-            table4.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         string.Format("{0}", firstName),
                         string.Format("{0}", surname),
                         string.Format("{0}", title)});
+#line 35
+ testRunner.When("Try to creates a contact with following data", ((string)(null)), table3, "When ");
 #line 38
-  testRunner.When("Try to creates a contact with following data", ((string)(null)), table4, "When ");
-#line 41
-  testRunner.Then("User should get BadRequest http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("User should get BadRequest http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

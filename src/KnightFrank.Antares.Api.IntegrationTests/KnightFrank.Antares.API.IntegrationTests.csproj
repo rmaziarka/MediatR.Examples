@@ -140,7 +140,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContactsControllerTests.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\NoteOnResidentialSalesRequirement.feature.cs">
+    <Compile Include="Tests\ResidentialSalesRequirement\NoteOnResidentialSalesRequirement.feature.cs">
       <DependentUpon>NoteOnResidentialSalesRequirement.feature</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -188,7 +188,7 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ContactsControllerTests.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\NoteOnResidentialSalesRequirement.feature">
+    <None Include="Tests\ResidentialSalesRequirement\NoteOnResidentialSalesRequirement.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>NoteOnResidentialSalesRequirement.feature.cs</LastGenOutput>
     </None>

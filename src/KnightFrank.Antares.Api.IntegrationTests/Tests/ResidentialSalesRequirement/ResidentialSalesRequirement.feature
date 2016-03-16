@@ -1,5 +1,6 @@
 ﻿Feature: Residential sales requirements 
 
+@ResidentialSalesRequirements 
 Scenario: Save requirement to DB with contact and all detailed fields fulfilled
 	When User creates a contact with following data 
 		| FirstName | Surname | Title  |
@@ -11,6 +12,7 @@ Scenario: Save requirement to DB with contact and all detailed fields fulfilled
 	Then User should get OK http status code
 		# And Requirement should be the same as added 
 
+@ResidentialSalesRequirements 
 Scenario: Negative - Save requirement to DB without contact, all detailed fields fulfilled
 	When User creates following requirement without contact			
 		| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description            |

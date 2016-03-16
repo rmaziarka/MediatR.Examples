@@ -111,7 +111,7 @@ this.ScenarioSetup(scenarioInfo);
                         "01-07-2015",
                         "Sarah Conor"});
 #line 9
-  testRunner.When("User update the property", ((string)(null)), table2, "When ");
+ testRunner.When("User update the property", ((string)(null)), table2, "When ");
 #line 12
  testRunner.Then("HTTP 200 OK should be received", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 13
