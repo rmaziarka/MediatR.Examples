@@ -1,8 +1,7 @@
 ﻿namespace KnightFrank.Antares.Dal.Seed
 {
 	using System;
-	using System.Collections.Generic;
-    using System.Data.Entity.Migrations;
+	using System.Data.Entity.Migrations;
 	using System.Linq;
 
 	using KnightFrank.Antares.Dal.Model;

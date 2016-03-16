@@ -1,8 +1,6 @@
 namespace KnightFrank.Antares.Dal.Migrations
 {
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.ModelConfiguration;
-    using KnightFrank.Antares.Dal.Model;
+	using KnightFrank.Antares.Dal.Model;
 
     internal sealed class EnumLocalisedConfiguration : BaseEntityConfiguration<EnumLocalised>
     {

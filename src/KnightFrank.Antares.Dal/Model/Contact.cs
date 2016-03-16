@@ -6,7 +6,7 @@
     {
         public Contact()
         {
-            Requirements = new List<Requirement>();
+	        this.Requirements = new List<Requirement>();
         }
 
         public string FirstName { get; set; }
