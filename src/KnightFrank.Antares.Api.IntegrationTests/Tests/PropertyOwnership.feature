@@ -6,7 +6,7 @@ Scenario: Save ownership where dates are not overlapping
 		And property has already ownership
 			| Id | Type     | Purchasing date | Selling date | Name     |
 			| 1  | Freehold | 01-05-2010      | 01-04-2012   | Jon Snow |
-		When User update the property
+	When User update the property
 		| Id | Type     | Purchasing date | Selling date | Name        |
 		| 2  | Freehold | 01-05-2012      | 01-07-2015   | Sarah Conor |
 	Then HTTP 200 OK should be received

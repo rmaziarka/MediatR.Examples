@@ -17,15 +17,15 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.ResidentialSalesRequire
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class ResidentialSalesRequirementsFeature : Xunit.IClassFixture<ResidentialSalesRequirementsFeature.FixtureData>, System.IDisposable
+    public partial class NoteOnResidentialSalesRequirementFeature : Xunit.IClassFixture<NoteOnResidentialSalesRequirementFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "ResidentialSalesRequirement.feature"
+#line 1 "NoteOnResidentialSalesRequirement.feature"
 #line hidden
         
-        public ResidentialSalesRequirementsFeature()
+        public NoteOnResidentialSalesRequirementFeature()
         {
             this.TestInitialize();
         }
@@ -33,7 +33,7 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.ResidentialSalesRequire
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Residential sales requirements", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Note on residential sales requirement", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -62,7 +62,7 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.ResidentialSalesRequire
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void SetFixture(ResidentialSalesRequirementsFeature.FixtureData fixtureData)
+        public virtual void SetFixture(NoteOnResidentialSalesRequirementFeature.FixtureData fixtureData)
         {
         }
         
@@ -71,15 +71,16 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.ResidentialSalesRequire
             this.ScenarioTearDown();
         }
         
-        [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Residential sales requirements")]
-        [Xunit.TraitAttribute("Description", "Save requirement to DB with contact and all detailed fields fulfilled")]
+        [Xunit.FactAttribute(Skip="Ignored")]
+        [Xunit.TraitAttribute("FeatureTitle", "Note on residential sales requirement")]
+        [Xunit.TraitAttribute("Description", "Get list of all notes for existing residential sales requirement")]
         [Xunit.TraitAttribute("Category", "ResidentialSalesRequirements")]
-        public virtual void SaveRequirementToDBWithContactAndAllDetailedFieldsFulfilled()
+        public virtual void GetListOfAllNotesForExistingResidentialSalesRequirement()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Save requirement to DB with contact and all detailed fields fulfilled", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get list of all notes for existing residential sales requirement", new string[] {
+                        "ignore",
                         "ResidentialSalesRequirements"});
-#line 4
+#line 5
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
@@ -90,7 +91,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Tomasz",
                         "Bien",
                         "Mister"});
-#line 5
+#line 6
  testRunner.When("User creates a contact with following data", ((string)(null)), table1, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -125,90 +126,67 @@ this.ScenarioSetup(scenarioInfo);
                         "10000",
                         "20000",
                         "RequirementDescription"});
-#line 8
+#line 9
   testRunner.And("User creates following requirement with given contact", ((string)(null)), table2, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Description"});
+            table3.AddRow(new string[] {
+                        "Test note description"});
+            table3.AddRow(new string[] {
+                        "Second test note description"});
 #line 12
-  testRunner.And("User retrieves requirement that he saved", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 12
+  testRunner.And("User creates note with following details for given residential sales requirement", ((string)(null)), table3, "And ");
+#line 16
+  testRunner.And("User retrieves notes for residential sales requirement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 17
  testRunner.Then("User should get OK http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 13
-  testRunner.And("Requirement should be the same as added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 18
+  testRunner.And("Notes details should be the same as already added", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Residential sales requirements")]
-        [Xunit.TraitAttribute("Description", "Negative - Save requirement to DB without contact, all detailed fields fulfilled")]
+        [Xunit.FactAttribute(Skip="Ignored")]
+        [Xunit.TraitAttribute("FeatureTitle", "Note on residential sales requirement")]
+        [Xunit.TraitAttribute("Description", "Save note to non existing residential sales requirement")]
         [Xunit.TraitAttribute("Category", "ResidentialSalesRequirements")]
-        public virtual void Negative_SaveRequirementToDBWithoutContactAllDetailedFieldsFulfilled()
+        public virtual void SaveNoteToNonExistingResidentialSalesRequirement()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Negative - Save requirement to DB without contact, all detailed fields fulfilled", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Save note to non existing residential sales requirement", new string[] {
+                        "ignore",
                         "ResidentialSalesRequirements"});
-#line 16
+#line 22
 this.ScenarioSetup(scenarioInfo);
 #line hidden
-            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
-                        "MinPrice",
-                        "MaxPrice",
-                        "MinBedrooms",
-                        "MaxBedrooms",
-                        "MinReceptionRooms",
-                        "MaxReceptionRooms",
-                        "MinBathrooms",
-                        "MaxBathrooms",
-                        "MinParkingSpaces",
-                        "MaxParkingSpaces",
-                        "MinArea",
-                        "MaxArea",
-                        "MinLandArea",
-                        "MaxLandArea",
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                         "Description"});
-            table3.AddRow(new string[] {
-                        "1000000",
-                        "4000000",
-                        "1",
-                        "5",
-                        "0",
-                        "2",
-                        "1",
-                        "3",
-                        "1",
-                        "2",
-                        "1200",
-                        "2000",
-                        "10000",
-                        "20000",
-                        "RequirementDescription"});
-#line 17
- testRunner.When("User creates following requirement without contact", ((string)(null)), table3, "When ");
-#line 20
+            table4.AddRow(new string[] {
+                        "Test note description"});
+#line 23
+ testRunner.When("User creates note with following details for non existing residential sales requi" +
+                    "rement", ((string)(null)), table4, "When ");
+#line 26
  testRunner.Then("User should get BadRequest http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
-        [Xunit.TheoryAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Residential sales requirements")]
-        [Xunit.TraitAttribute("Description", "Retrieve error messages for improper requirement id")]
-        [Xunit.TraitAttribute("Category", "Requirements")]
-        [Xunit.InlineDataAttribute("00000000-0000-0000-0000-000000000000", "NotFound", new string[0])]
-        [Xunit.InlineDataAttribute("A", "BadRequest", new string[0])]
-        public virtual void RetrieveErrorMessagesForImproperRequirementId(string id, string statusCode, string[] exampleTags)
+        [Xunit.FactAttribute(Skip="Ignored")]
+        [Xunit.TraitAttribute("FeatureTitle", "Note on residential sales requirement")]
+        [Xunit.TraitAttribute("Description", "Get list of all notes for non existing residential sales requirement")]
+        [Xunit.TraitAttribute("Category", "ResidentialSalesRequirements")]
+        public virtual void GetListOfAllNotesForNonExistingResidentialSalesRequirement()
         {
-            string[] @__tags = new string[] {
-                    "Requirements"};
-            if ((exampleTags != null))
-            {
-                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
-            }
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retrieve error messages for improper requirement id", @__tags);
-#line 23
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get list of all notes for non existing residential sales requirement", new string[] {
+                        "ignore",
+                        "ResidentialSalesRequirements"});
+#line 30
 this.ScenarioSetup(scenarioInfo);
-#line 24
-  testRunner.When(string.Format("User retrieves requirement for {0} id", id), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 25
-  testRunner.Then(string.Format("User should get {0} http status code", statusCode), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 31
+ testRunner.When("User retrieves notes for non existing residential sales requirement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 32
+ testRunner.Then("User should get BadRequest http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -220,12 +198,12 @@ this.ScenarioSetup(scenarioInfo);
             
             public FixtureData()
             {
-                ResidentialSalesRequirementsFeature.FeatureSetup();
+                NoteOnResidentialSalesRequirementFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                ResidentialSalesRequirementsFeature.FeatureTearDown();
+                NoteOnResidentialSalesRequirementFeature.FeatureTearDown();
             }
         }
     }

@@ -153,7 +153,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Angel",
                         "cheef"});
 #line 26
-  testRunner.When("User creates a contact with following data", ((string)(null)), table2, "When ");
+ testRunner.When("User creates a contact with following data", ((string)(null)), table2, "When ");
 #line 29
   testRunner.When("User retrieves contacts details for latest id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 30
@@ -192,7 +192,7 @@ this.ScenarioSetup(scenarioInfo);
                         string.Format("{0}", surname),
                         string.Format("{0}", title)});
 #line 35
-  testRunner.When("Try to creates a contact with following data", ((string)(null)), table3, "When ");
+ testRunner.When("Try to creates a contact with following data", ((string)(null)), table3, "When ");
 #line 38
   testRunner.Then("User should get BadRequest http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

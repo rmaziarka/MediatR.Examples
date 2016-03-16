@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DropCreateSeedDatabaseAlwaysInitializer.cs" />
     <Compile Include="Migrations\201603081357064_InitialDataBase.cs" />
     <Compile Include="Migrations\201603081357064_InitialDataBase.Designer.cs">
       <DependentUpon>201603081357064_InitialDataBase.cs</DependentUpon>
@@ -65,9 +66,17 @@
     <Compile Include="Migrations\201603111023489_AddRequirementDetails.Designer.cs">
       <DependentUpon>201603111023489_AddRequirementDetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603141425128_AddPrecisionToRequirementPrice.cs" />
+    <Compile Include="Migrations\201603141425128_AddPrecisionToRequirementPrice.Designer.cs">
+      <DependentUpon>201603141425128_AddPrecisionToRequirementPrice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201603151235444_RenameCountryCode.cs" />
     <Compile Include="Migrations\201603151235444_RenameCountryCode.Designer.cs">
       <DependentUpon>201603151235444_RenameCountryCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603161032474_Merge.cs" />
+    <Compile Include="Migrations\201603161032474_Merge.Designer.cs">
+      <DependentUpon>201603161032474_Merge.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressField.cs" />
@@ -104,6 +113,7 @@
     <Compile Include="Repository\IReadGenericRepository.cs" />
     <Compile Include="Repository\IGenericRepository.cs" />
     <Compile Include="Model\Requirement.cs" />
+    <Compile Include="Seed\DatabaseSeeder.cs" />
     <Compile Include="Seed\EntityTypeEnumData.cs" />
     <Compile Include="Seed\CountryData.cs" />
     <Compile Include="Seed\LocaleData.cs" />
@@ -129,6 +139,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603151235444_RenameCountryCode.resx">
       <DependentUpon>201603151235444_RenameCountryCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603141425128_AddPrecisionToRequirementPrice.resx">
+      <DependentUpon>201603141425128_AddPrecisionToRequirementPrice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603161032474_Merge.resx">
+      <DependentUpon>201603161032474_Merge.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

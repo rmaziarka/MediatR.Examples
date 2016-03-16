@@ -42,6 +42,3 @@ Scenario Outline: Check if validation is invoked
 		|           | Angel   | cheef |
 		| Michael   |         | cheef |
 		| Michael   | Angel   |       |
-
-
-

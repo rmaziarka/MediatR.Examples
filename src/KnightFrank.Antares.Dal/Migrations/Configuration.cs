@@ -13,12 +13,7 @@ namespace KnightFrank.Antares.Dal.Migrations
 
         protected override void Seed(KnightFrankContext context)
         {
-            LocaleData.Seed(context);
-            CountryData.Seed(context);
-            EntityTypeEnumData.Seed(context);
-            AddressFormData.Seed(context);
-
-            context.SaveChanges();
+            DatabaseSeeder.Seed(context);
         }
     }
 }
