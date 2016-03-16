@@ -38,7 +38,7 @@
         public void SelectCountryFromDropDownList(Table table)
         {
             var tableCountry = table.CreateInstance<Address>();
-            this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").AddressTemplate.SelectPropertyCountry(tableCountry.Country.Code);
+            this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").AddressTemplate.SelectPropertyCountry(tableCountry.Country.IsoCode);
         }
 
         [When(@"User fills in address details on create property page")]

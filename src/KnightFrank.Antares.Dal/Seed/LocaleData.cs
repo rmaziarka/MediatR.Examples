@@ -11,8 +11,14 @@ namespace KnightFrank.Antares.Dal.Seed
         {
             var locales = new List<Locale>
                               {
-                                  new Locale { IsoCode = "en" }
-                              };
+                                  new Locale { IsoCode = "cs" },
+								  new Locale { IsoCode = "de" },
+								  new Locale { IsoCode = "en" },
+								  new Locale { IsoCode = "es" },
+								  new Locale { IsoCode = "fr" },
+								  new Locale { IsoCode = "pl" },
+								  new Locale { IsoCode = "sv" }
+							  };
 
             SeedData(locales, context);
         }

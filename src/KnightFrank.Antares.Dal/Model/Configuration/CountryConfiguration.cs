@@ -6,7 +6,7 @@ namespace KnightFrank.Antares.Dal.Migrations
     {
         public CountryConfiguration()
         {
-            this.Property(p => p.Code).HasMaxLength(100);
+            this.Property(p => p.IsoCode).HasMaxLength(100);
 
             this.HasMany(p => p.AddressForms)
                 .WithRequired(p => p.Country)

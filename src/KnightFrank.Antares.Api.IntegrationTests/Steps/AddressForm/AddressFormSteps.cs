@@ -39,7 +39,7 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Steps.AddressForm
         [Given(@"Country code (.*) is present in DB")]
         public void GivenCountryCodeIsPresentInDb(string countryCode)
         {
-            var country = new Country { Code = countryCode };
+            var country = new Country { IsoCode = countryCode };
             this.fixture.DataContext.Country.Add(country);
             this.fixture.DataContext.SaveChanges();
         }

@@ -36,7 +36,7 @@
         public AddressFormQueryResult Handle(AddressFormQuery message)
         {
             // TODO custom exception
-            Country country = this.countryRepository.Get().SingleOrDefault(c => c.Code == message.CountryCode);
+            Country country = this.countryRepository.Get().SingleOrDefault(c => c.IsoCode == message.CountryCode);
 
             if (country == null)
             {
@@ -56,7 +56,7 @@
                     .Where(
                         addressFormEntityType =>
                         addressFormEntityType.EnumTypeItem.EnumType.Code == message.EntityType
-                        && addressFormEntityType.AddressForm.Country.Code == message.CountryCode)
+                        && addressFormEntityType.AddressForm.Country.IsoCode == message.CountryCode)
                     .Select(addressFormEntityType => addressFormEntityType.AddressForm)
                     .SingleOrDefault();
 

@@ -306,14 +306,14 @@
 
         private static Guid GetCountryIdByCode(KnightFrankContext context, string countryCode)
         {
-            Country country = context.Country.FirstOrDefault(c => c.Code == countryCode);
+            Country country = context.Country.FirstOrDefault(c => c.IsoCode == countryCode);
 
             return country?.Id ?? default(Guid);
         }
 
         private static Guid GetAddressFormIdByCountryCode(KnightFrankContext context, string countryCode)
         {
-            AddressForm addressForm = context.AddressForm.FirstOrDefault(af => af.Country.Code == countryCode);
+            AddressForm addressForm = context.AddressForm.FirstOrDefault(af => af.Country.IsoCode == countryCode);
 
             return addressForm?.Id ?? default(Guid);
         }

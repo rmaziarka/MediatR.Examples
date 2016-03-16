@@ -80,6 +80,7 @@
     <Compile Include="Model\Configuration\ContactConfiguration.cs" />
     <Compile Include="Model\Configuration\BaseEntityConfiguration.cs" />
     <Compile Include="Model\Configuration\CountryConfiguration.cs" />
+    <Compile Include="Model\Configuration\CountryLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\LocaleConfiguration.cs" />
     <Compile Include="Model\Configuration\EnumLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\EnumTypeItemConfiguration.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\BaseEntity.cs" />
     <Compile Include="Model\Country.cs" />
+    <Compile Include="Model\CountryLocalised.cs" />
     <Compile Include="Model\EnumLocalised.cs" />
     <Compile Include="Model\Locale.cs" />
     <Compile Include="Model\EnumTypeItem.cs" />
