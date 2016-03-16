@@ -7,17 +7,17 @@
 
     using Microsoft.Owin.Testing;
 
-    using Xunit;
-
     // ReSharper disable once ClassNeverInstantiated.Global
-    [CollectionDefinition("Database collection")]
     public class BaseTestClassFixture : IDisposable
     {
         private readonly DbContextTransaction transaction;
 
         public BaseTestClassFixture()
         {
+            Database.SetInitializer(new DropCreateSeedDatabaseAlwaysInitializer());
             this.DataContext = new KnightFrankContext();
+            this.DataContext.Database.Initialize(false);
+
             this.transaction = this.DataContext.Database.BeginTransaction();
 
             NinjectWebCommon.RebindAction =

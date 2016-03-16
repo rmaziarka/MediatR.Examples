@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DropCreateSeedDatabaseAlwaysInitializer.cs" />
     <Compile Include="Migrations\201603081357064_InitialDataBase.cs" />
     <Compile Include="Migrations\201603081357064_InitialDataBase.Designer.cs">
       <DependentUpon>201603081357064_InitialDataBase.cs</DependentUpon>
@@ -108,6 +109,7 @@
     <Compile Include="Repository\IReadGenericRepository.cs" />
     <Compile Include="Repository\IGenericRepository.cs" />
     <Compile Include="Model\Requirement.cs" />
+    <Compile Include="Seed\DatabaseSeeder.cs" />
     <Compile Include="Seed\EntityTypeEnumData.cs" />
     <Compile Include="Seed\CountryData.cs" />
     <Compile Include="Seed\LocaleData.cs" />
