@@ -106,6 +106,7 @@
     <Compile Include="AddressForm\AddressFormQueryValidatorTests.cs" />
     <Compile Include="AutoMoqDataAttribute.cs" />
     <Compile Include="BaseTestClassFixture.cs" />
+    <Compile Include="Contact\CommandHandlers\CreateContactCommandHandlerTests.cs" />
     <Compile Include="Enum\Queries\EnumQueryValidatorTests.cs" />
     <Compile Include="Enum\QueryHandler\EnumQueryHandlerTests.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandHandlerTests.cs" />

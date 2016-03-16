@@ -91,13 +91,13 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.AddressForm
             }
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retrieve error messages for improper EntityType and CountryCode", @__tags);
 #line 4
- this.ScenarioSetup(scenarioInfo);
+this.ScenarioSetup(scenarioInfo);
 #line 5
-  testRunner.Given("Country code PL is present in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("Country code PL is present in DB", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 6
-  testRunner.When(string.Format("User retrieves address template for {0} entity type and {1} contry code", entityType, countryCode), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When(string.Format("User retrieves address template for {0} entity type and {1} contry code", entityType, countryCode), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 7
-  testRunner.Then(string.Format("User should get {0} http status code", statusCode), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then(string.Format("User should get {0} http status code", statusCode), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -110,12 +110,12 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Tests.AddressForm
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get proper address template for GB", new string[] {
                         "AddressForm"});
+#line 19
+this.ScenarioSetup(scenarioInfo);
 #line 20
- this.ScenarioSetup(scenarioInfo);
+ testRunner.When("User retrieves address template for Property entity type and UK contry code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 21
-  testRunner.When("User retrieves address template for Property entity type and UK contry code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 22
-  testRunner.Then("User should get OK http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("User should get OK http status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

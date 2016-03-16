@@ -2,6 +2,8 @@
 {
     using System;
 
+    using AutoMapper;
+
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Contact.Commands;
@@ -19,12 +21,7 @@
 
         public Guid Handle(CreateContactCommand message)
         {
-            var contact = new Contact
-            {
-                FirstName = message.FirstName,
-                Surname = message.Surname,
-                Title = message.Title
-            };
+            var contact = Mapper.Map<Contact>(message);
 
             this.contactRepository.Add(contact);
             this.contactRepository.Save();

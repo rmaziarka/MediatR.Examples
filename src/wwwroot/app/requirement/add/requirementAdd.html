@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-md-6">
 
-                    <fieldset>
+                    <fieldset ng-hide="true">
                         <legend>Location requirements</legend>
                         <div class="form-group">
                             <div class="row">
@@ -229,7 +229,7 @@
                             <div class="row">
                                 <div class="col-md-10">
                                     <label for="description" translate="REQUIREMENT.ADD.DESCRIPTION">Description</label>
-                                    <textarea id="description" maxlength="4000" rows="8" class="form-control" name="description" ng-model="vm.requirement.description"></textarea>
+                                    <textarea id="description" ng-maxlength="4000" rows="8" class="form-control" name="description" ng-model="vm.requirement.description"></textarea>
                                     <div ng-messages="addRequirementForm.description.$error" ng-show="addRequirementForm.$submitted || addRequirementForm.description.$dirty">
                                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                                     </div>
