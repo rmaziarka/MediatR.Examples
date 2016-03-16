@@ -22,43 +22,37 @@ function Deploy-Database {
 		EntityFrameworkDir = Join-Path -Path $ProjectRootPath -ChildPath '\src\packages\EntityFramework.6.1.3' 
 		BuildConfiguration = $buildConfiguration
 	}
-
-	$deployParams = @{	
-		PackagePath = $outputPath
-		DatabaseName = 'KnightFrank.Antares'
-		ConnectionString = "Server=localhost;Database=KnightFrank.Antares;Integrated Security=SSPI"
-		MigrateAssembly = 'KnightFrank.Antares.Dal.dll'
-		DefaultAppPoolUserName = "IIS AppPool\dev.api.antares.knightfrank.com"
-	}
-
+	
+	$DatabaseName = 'KnightFrank.Antares'
+	$ConnectionString = "Server=localhost;Database=KnightFrank.Antares;Integrated Security=SSPI"
+	$MigrateAssembly = 'KnightFrank.Antares.Dal.dll'
+	$Username = "IIS AppPool\dev.api.antares.knightfrank.com"
     $sqlServerVersion = "2014"
 
 	try { 
 
 	    Build-EntityFrameworkMigrations @buildParams
 
-	    Deploy-EntityFrameworkMigrations @deployParams
-	
-	    $Username = $deployParams.DefaultAppPoolUserName
-	    $DatabaseName = $deployParams.DatabaseName
-	
+	    Deploy-EntityFrameworkMigrations -MigrateAssembly $MigrateAssembly -ConnectionString $ConnectionString -PackagePath $outputPath
+		
         #due to the bug https://connect.microsoft.com/SQLServer/feedback/details/1420992/import-module-sqlps-may-take-longer-to-load-but-always-returns-warnings-when-the-azure-powershell-module-is-also-installed
         #the first call to Invoke-SqlCmd will return warnings
 
-	    Invoke-SqlQuery -DatabaseName $deployParams.DatabaseName -InputFile 'sql/Update-SqlLogin.sql'`
+	    Invoke-SqlQuery -DatabaseName $DatabaseName -InputFile 'sql/Update-SqlLogin.sql'`
 			    -SqlVariable "Username = $Username"
 
-	    Invoke-SqlQuery -DatabaseName $deployParams.DatabaseName -InputFile 'sql/Update-SqlUser.sql'`
+	    Invoke-SqlQuery -DatabaseName $DatabaseName -InputFile 'sql/Update-SqlUser.sql'`
 			    -SqlVariable "Username = $Username","DatabaseName = $DatabaseName"
 
-	    Invoke-SqlQuery -DatabaseName $deployParams.DatabaseName -InputFile 'sql/Update-SqlUserRole.sql'`
+	    Invoke-SqlQuery -DatabaseName $DatabaseName -InputFile 'sql/Update-SqlUserRole.sql'`
 			    -SqlVariable "Username = $Username","DatabaseName = $DatabaseName","Role = db_datareader"
 
-	    Invoke-SqlQuery -DatabaseName $deployParams.DatabaseName -InputFile 'sql/Update-SqlUserRole.sql'`
+	    Invoke-SqlQuery -DatabaseName $DatabaseName -InputFile 'sql/Update-SqlUserRole.sql'`
 			    -SqlVariable "Username = $Username","DatabaseName = $DatabaseName","Role = db_datawriter"
         
         Build-SSDTDacpac -ProjectPath $projectDatabaseSqlProjPath -BuildConfiguration $buildConfiguration
-        Deploy-SSDTDacpac -ProjectDatabaseDocpacPath $projectDatabaseDocpacPath -ProfileName $ssdtProfileNamePath -SqlServerVersion $sqlServerVersion -ConnectionString $deployParams.ConnectionString
+        
+        Deploy-SSDTDacpac -ProjectDatabaseDocpacPath $projectDatabaseDocpacPath -ProfileName $ssdtProfileNamePath -SqlServerVersion $sqlServerVersion -ConnectionString $ConnectionString
     } finally {
         Remove-Item -Path $outputPath -Force -Recurse
     }
