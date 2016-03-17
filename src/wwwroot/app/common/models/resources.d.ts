@@ -3,7 +3,7 @@
 declare module Antares.Common.Models {
     export module Resources {
         interface IResourceParameters {
-            id: number;
+            id: string;
         }
 
         interface IBaseResourceClass<T> extends ng.resource.IResourceClass<T> {

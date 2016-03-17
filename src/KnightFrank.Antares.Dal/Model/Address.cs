@@ -16,5 +16,6 @@
         public string Postcode { get; set; }
         public string City { get; set; }
         public string County { get; set; }
+        public virtual Property Property { get; set; }
     }
 }
