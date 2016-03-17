@@ -253,3 +253,7 @@ src/wwwroot/libs
 src/wwwroot/build/*
 src/wwwroot/styles/*.css
 src/wwwroot/.test/templates.js
+
+# specflow feature.cs files
+src/KnightFrank.Antares.UITests/Tests/**/*.feature.cs
+
