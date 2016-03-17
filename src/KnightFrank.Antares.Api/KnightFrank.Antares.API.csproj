@@ -185,6 +185,7 @@
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\EnumsController.cs" />
     <Compile Include="Controllers\RequirementController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Core\MockUserMiddleware.cs" />
     <Compile Include="Core\NinjectExtentions.cs" />
     <Compile Include="Core\ValidationExceptionFilterAttribute.cs" />

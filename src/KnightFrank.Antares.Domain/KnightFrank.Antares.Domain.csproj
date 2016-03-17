@@ -99,6 +99,7 @@
     <Compile Include="Requirement\Queries\RequirementQuery.cs" />
     <Compile Include="Requirement\Queries\RequirementQueryValidator.cs" />
     <Compile Include="Requirement\QueryHandlers\RequirementQueryHandler.cs" />
+    <Compile Include="User\UserDataResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj">
