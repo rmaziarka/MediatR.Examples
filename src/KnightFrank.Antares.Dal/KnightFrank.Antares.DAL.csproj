@@ -82,6 +82,10 @@
     <Compile Include="Migrations\201603161336260_CountriesAndLocales.Designer.cs">
       <DependentUpon>201603161336260_CountriesAndLocales.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603170753482_Merge1.cs" />
+    <Compile Include="Migrations\201603170753482_Merge1.Designer.cs">
+      <DependentUpon>201603170753482_Merge1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressField.cs" />
     <Compile Include="Model\AddressFieldDefinition.cs" />
@@ -154,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603161336260_CountriesAndLocales.resx">
       <DependentUpon>201603161336260_CountriesAndLocales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603170753482_Merge1.resx">
+      <DependentUpon>201603170753482_Merge1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
