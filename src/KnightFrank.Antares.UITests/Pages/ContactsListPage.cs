@@ -10,12 +10,12 @@
 
     public class ContactsListPage : ProjectPageBase
     {
+        private readonly ElementLocator contact = new ElementLocator(Locator.XPath, "//label[normalize-space(text()) = '{0}']//input");
+        private readonly ElementLocator saveButton = new ElementLocator(Locator.CssSelector, "button[ng-click = 'vm.updateContacts()']");
+
         public ContactsListPage(DriverContext driverContext) : base(driverContext)
         {
         }
-
-        private readonly ElementLocator contact = new ElementLocator(Locator.XPath, "//label[normalize-space(text()) = '{0}']//input");
-        private readonly ElementLocator saveButton = new ElementLocator(Locator.CssSelector, "button[ng-click = 'vm.updateContacts()']");
 
         public ContactsListPage SelectContact(string firstName, string surname)
         {

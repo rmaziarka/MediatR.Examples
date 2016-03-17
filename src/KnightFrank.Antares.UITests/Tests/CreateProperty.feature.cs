@@ -91,6 +91,15 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.When("User selects country on create property page", ((string)(null)), table1, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Type"});
+            table2.AddRow(new string[] {
+                        "Flat"});
+            table2.AddRow(new string[] {
+                        "Studio flat"});
+#line 9
+  testRunner.And("User selects property types on create property page", ((string)(null)), table2, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "PropertyNumber",
                         "PropertyName",
                         "AddressLine2",
@@ -98,7 +107,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Postcode",
                         "City",
                         "County"});
-            table2.AddRow(new string[] {
+            table3.AddRow(new string[] {
                         "55",
                         "Knight Frank",
                         "Baker Street",
@@ -106,11 +115,11 @@ this.ScenarioSetup(scenarioInfo);
                         "W1U 8AN",
                         "London",
                         "London"});
-#line 9
-  testRunner.And("User fills in address details on create property page", ((string)(null)), table2, "And ");
-#line 12
-  testRunner.And("User clicks save button on create property page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
+  testRunner.And("User fills in address details on create property page", ((string)(null)), table3, "And ");
+#line 16
+  testRunner.And("User clicks save button on create property page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 17
  testRunner.Then("New property should be created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
