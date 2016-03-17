@@ -8,6 +8,7 @@
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Enum.Queries;
+    using KnightFrank.Antares.Domain.Enum.QueryResults;
 
     using MediatR;
 

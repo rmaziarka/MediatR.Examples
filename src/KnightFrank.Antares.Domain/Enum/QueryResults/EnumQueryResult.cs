@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.Enum
+﻿namespace KnightFrank.Antares.Domain.Enum.QueryResults
 {
     using System.Collections.Generic;
 

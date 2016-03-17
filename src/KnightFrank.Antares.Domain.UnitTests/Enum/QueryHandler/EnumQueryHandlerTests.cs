@@ -10,6 +10,7 @@
     using KnightFrank.Antares.Domain.Enum;
     using KnightFrank.Antares.Domain.Enum.Queries;
     using KnightFrank.Antares.Domain.Enum.QueryHandler;
+    using KnightFrank.Antares.Domain.Enum.QueryResults;
 
     using Moq;
 

@@ -86,12 +86,12 @@
     <Compile Include="Contact\ContactDto.cs" />
     <Compile Include="DomainModule.cs" />
     <Compile Include="DomainValidationException.cs" />
-    <Compile Include="Enum\EnumQueryItemResult.cs" />
-    <Compile Include="Enum\EnumQueryResultProfile.cs" />
-    <Compile Include="Enum\EnumQueryResult.cs" />
     <Compile Include="Enum\Queries\EnumQuery.cs" />
     <Compile Include="Enum\Queries\EnumQueryValidator.cs" />
     <Compile Include="Enum\QueryHandler\EnumQueryHandler.cs" />
+    <Compile Include="Enum\QueryResults\EnumQueryItemResult.cs" />
+    <Compile Include="Enum\QueryResults\EnumQueryResult.cs" />
+    <Compile Include="Enum\QueryResults\EnumQueryResultProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementCommandHandler.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandValidator.cs" />
