@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
+    using System.Collections.Generic;
 
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.UITests.Pages;
@@ -38,7 +39,8 @@
         public void SelectCountryFromDropDownList(Table table)
         {
             var tableCountry = table.CreateInstance<Address>();
-            this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").AddressTemplate.SelectPropertyCountry(tableCountry.Country.IsoCode);
+            this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage")
+                .AddressTemplate.SelectPropertyCountry(tableCountry.Country.IsoCode);
         }
 
         [When(@"User fills in address details on create property page")]
@@ -48,19 +50,31 @@
             var createPropertyPage = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
 
             createPropertyPage.AddressTemplate
-                .SetPropertyNumber(addressDetails.PropertyNumber)
-                .SetPropertyName(addressDetails.PropertyName)
-                .SetPropertyAddressLine2(addressDetails.Line2)
-                .SetPropertyAddressLine3(addressDetails.Line3)
-                .SetPropertyPostCode(addressDetails.Postcode)
-                .SetPropertyCity(addressDetails.City)
-                .SetPropertyCounty(addressDetails.County);
+                              .SetPropertyNumber(addressDetails.PropertyNumber)
+                              .SetPropertyName(addressDetails.PropertyName)
+                              .SetPropertyAddressLine2(addressDetails.Line2)
+                              .SetPropertyAddressLine3(addressDetails.Line3)
+                              .SetPropertyPostCode(addressDetails.Postcode)
+                              .SetPropertyCity(addressDetails.City)
+                              .SetPropertyCounty(addressDetails.County);
+        }
+
+        [When(@"User selects property types on create property page")]
+        public void SelectPropertyTypes(Table table)
+        {
+            var types = table.CreateInstance<List<PropertyType>>();
+            var createPropertyPage = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
+
+            foreach (PropertyType type in types)
+            {
+                createPropertyPage.SelectPropertyType(type.Type);
+            }
         }
 
         [When(@"User clicks save button on create property page")]
         public void ClickSaveButton()
         {
-            this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
+            this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").SaveProperty();
         }
 
         [Then(@"New property should be created")]
@@ -68,5 +82,10 @@
         {
             //TODO implement check if property was created
         }
+    }
+
+    internal class PropertyType
+    {
+        public string Type { get; set; }
     }
 }

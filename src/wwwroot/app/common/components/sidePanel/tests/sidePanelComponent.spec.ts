@@ -30,7 +30,7 @@ module Antares {
             scope.$apply();
 
             controller = element.controller('sidePanel');
-            panel = element.find('.slide-panel');
+            panel = element.find('.side-panel');
         }));
 
         it('side panel should be hidden on init', () => {
@@ -61,7 +61,7 @@ module Antares {
 
             expect(controller.visible).toBe(false);
             expect(controller.stateChanged).toBe(true);
-            
+
             assertCssClasses(false);
         });
 

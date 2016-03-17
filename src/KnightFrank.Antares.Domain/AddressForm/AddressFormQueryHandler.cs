@@ -50,27 +50,19 @@
                 throw new DomainValidationException("message.EntityType");
             }
 
-            AddressForm addressForm = null;
-
-            addressForm = this.addressFormEntityTypeRepository.Get()
-                    .Where(
-                        addressFormEntityType =>
-                        addressFormEntityType.EnumTypeItem.EnumType.Code == message.EntityType
-                        && addressFormEntityType.AddressForm.Country.IsoCode == message.CountryCode)
-                    .Select(addressFormEntityType => addressFormEntityType.AddressForm)
-                    .SingleOrDefault();
+            AddressForm addressForm = this.addressFormRepository.Get()
+                    .Include(af => af.AddressFieldDefinitions)
+                    .SingleOrDefault(af =>
+                        af.CountryId == country.Id &&
+                        af.AddressFormEntityTypes.Any(afet => afet.EnumTypeItemId == enumTypeItem.Id));
 
             if (addressForm == null)
             {
-                IQueryable<AddressForm> query =
-                    from af in addressFormRepository.Get().Where(i => i.CountryId == country.Id)
-                    join afet in addressFormEntityTypeRepository.Get().Where(et => et.EnumTypeItemId == enumTypeItem.Id) on af
-                        equals afet.AddressForm into result
-                    from afet in result.DefaultIfEmpty()
-                    where afet == null
-                    select af;
-
-                addressForm = query.Include(q => q.AddressFieldDefinitions).SingleOrDefault();
+                addressForm = this.addressFormRepository.Get()
+                    .Include(af => af.AddressFieldDefinitions)
+                    .SingleOrDefault(af =>
+                        af.CountryId == country.Id &&
+                        !af.AddressFormEntityTypes.Any());
             }
 
             return AutoMapper.Mapper.Map<AddressFormQueryResult>(addressForm);

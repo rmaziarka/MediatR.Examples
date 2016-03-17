@@ -1,13 +1,13 @@
-<div class="slide-panel" ng-class="{'slide-in': vm.stateChanged && vm.visible, 'slide-out': vm.stateChanged && !vm.visible}">
-    <header class="slide-panel-header">
-        <button id="close-slide-panel" type="button" class="close close-slide-panel" aria-label="Close" ng-click="vm.hide()">
+<div class="side-panel" ng-class="{'slide-in': vm.stateChanged && vm.visible, 'slide-out': vm.stateChanged && !vm.visible}">
+    <header class="side-panel-header">
+        <button id="close-side-panel" type="button" class="close close-side-panel" aria-label="Close" ng-click="vm.hide()">
             <span aria-hidden="true" >&times;</span>
         </button>
         <div ng-transclude="header"></div>
     </header>
 
-    <div class="slide-panel-content" ng-transclude="content">
+    <div class="side-panel-content" ng-transclude="content">
     </div>
-    <footer class="slide-panel-footer" ng-transclude="footer">
+    <footer class="side-panel-footer" ng-transclude="footer">
     </footer>
 </div>
