@@ -59,7 +59,7 @@
             // Act
             EnumQueryResult queryResult = handler.Handle(query);
 
-            // Asserts 
+            // Asserts
             queryResult.Items.Should().HaveCount(2);
             queryResult.Items.Should().Equal(expectedResult, (x1, x2) => x1.Value == x2.Value);
         }
