@@ -96,9 +96,9 @@
     <Compile Include="Requirement\CommandHandlers\CreateRequirementCommandHandler.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandValidator.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommand.cs" />
-    <Compile Include="Requirement\RequirementQuery.cs" />
-    <Compile Include="Requirement\RequirementQueryHandler.cs" />
-    <Compile Include="Requirement\RequirementQueryValidator.cs" />
+    <Compile Include="Requirement\Queries\RequirementQuery.cs" />
+    <Compile Include="Requirement\Queries\RequirementQueryValidator.cs" />
+    <Compile Include="Requirement\QueryHandler\RequirementQueryHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj">
@@ -110,7 +110,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="AddressFieldDefinition\QueryResults\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

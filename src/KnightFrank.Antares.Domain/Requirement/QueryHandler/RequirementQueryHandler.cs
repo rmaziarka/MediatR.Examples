@@ -1,9 +1,10 @@
-﻿namespace KnightFrank.Antares.Domain.Requirement
+﻿namespace KnightFrank.Antares.Domain.Requirement.QueryHandler
 {
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.Requirement.Queries;
 
     using MediatR;
 
