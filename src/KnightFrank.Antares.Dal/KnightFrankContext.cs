@@ -31,11 +31,12 @@
             modelBuilder.Configurations.Add(new AddressFormEntityTypeConfiguration());
             modelBuilder.Configurations.Add(new AddressFormConfigutration());
             modelBuilder.Configurations.Add(new CountryConfiguration());
-			modelBuilder.Configurations.Add(new CountryLocalisedConfiguration());
+            modelBuilder.Configurations.Add(new CountryLocalisedConfiguration());
             modelBuilder.Configurations.Add(new PropertyConfiguration());
+            modelBuilder.Configurations.Add(new OwnershipConfiguration());
         }
 
-		public DbSet<Contact> Contact { get; set; }
+        public DbSet<Contact> Contact { get; set; }
         public DbSet<Requirement> Requirement { get; set; }
 
         public DbSet<EnumType> EnumType { get; set; }
@@ -49,7 +50,8 @@
         public DbSet<AddressFormEntityType> AddressFormEntityType { get; set; }
         public DbSet<AddressForm> AddressForm { get; set; }
         public DbSet<Country> Country { get; set; }
-		public DbSet<CountryLocalised> CountryLocalised { get; set; }
+        public DbSet<CountryLocalised> CountryLocalised { get; set; }
         public DbSet<Property> Property { get; set; }
+        public DbSet<Ownership> Ownerships { get; set; }
     }
 }

@@ -1,5 +1,6 @@
-namespace KnightFrank.Antares.Dal.Migrations
+namespace KnightFrank.Antares.Dal.Model.Configuration
 {
+    using KnightFrank.Antares.Dal.Migrations;
     using KnightFrank.Antares.Dal.Model;
 
     internal sealed class CountryConfiguration : BaseEntityConfiguration<Country>
