@@ -15,7 +15,7 @@
     "FIELD_SHOULD_BE_NUMBER": "Value should be a number",
     "FIELD_SHOULD_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
     "MIN_SHOULD_BE_LESS_THAN_MAX": "Min value must not be greater than max value",
-    "FIELD_SHOULD_BE_INTEGER_NUMBER": "Value should be an integer",
+    "FIELD_SHOULD_BE_NUMBER": "Value should be number",
     "LIST_SHOULD_NOT_BE_EMPTY":  "List should contain at least one entry"
   },
   "REQUIREMENT": {
