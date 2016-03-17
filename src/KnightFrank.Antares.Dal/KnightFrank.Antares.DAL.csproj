@@ -88,16 +88,19 @@
     <Compile Include="Model\AddressFieldLabel.cs" />
     <Compile Include="Model\AddressForm.cs" />
     <Compile Include="Model\AddressFormEntityType.cs" />
+    <Compile Include="Model\Business.cs" />
     <Compile Include="Model\Configuration\AddressConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressFieldConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressFieldDefinitionConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressFieldLableConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressFormConfigutration.cs" />
     <Compile Include="Model\Configuration\AddressFormEntityTypeConfiguration.cs" />
+    <Compile Include="Model\Configuration\BusinessConfiguration.cs" />
     <Compile Include="Model\Configuration\ContactConfiguration.cs" />
     <Compile Include="Model\Configuration\BaseEntityConfiguration.cs" />
     <Compile Include="Model\Configuration\CountryConfiguration.cs" />
     <Compile Include="Model\Configuration\CountryLocalisedConfiguration.cs" />
+    <Compile Include="Model\Configuration\DepartmentConfiguration.cs" />
     <Compile Include="Model\Configuration\LocaleConfiguration.cs" />
     <Compile Include="Model\Configuration\EnumLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\EnumTypeItemConfiguration.cs" />
@@ -109,6 +112,7 @@
     <Compile Include="Model\BaseEntity.cs" />
     <Compile Include="Model\Country.cs" />
     <Compile Include="Model\CountryLocalised.cs" />
+    <Compile Include="Model\Department.cs" />
     <Compile Include="Model\EnumLocalised.cs" />
     <Compile Include="Model\Locale.cs" />
     <Compile Include="Model\EnumTypeItem.cs" />
@@ -119,6 +123,8 @@
     <Compile Include="Repository\IReadGenericRepository.cs" />
     <Compile Include="Repository\IGenericRepository.cs" />
     <Compile Include="Model\Requirement.cs" />
+    <Compile Include="Seed\DepartmentData.cs" />
+    <Compile Include="Seed\BusinessData.cs" />
     <Compile Include="Seed\DatabaseSeeder.cs" />
     <Compile Include="Seed\EntityTypeEnumData.cs" />
     <Compile Include="Seed\CountryData.cs" />

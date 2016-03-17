@@ -5,8 +5,9 @@
 
     using KnightFrank.Antares.Dal.Migrations;
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Configuration;
 
-    public class KnightFrankContext : DbContext
+	public class KnightFrankContext : DbContext
     {
         public KnightFrankContext() : base("Api.Settings.SqlConnectionString")
         {
@@ -31,11 +32,12 @@
             modelBuilder.Configurations.Add(new AddressFormConfigutration());
             modelBuilder.Configurations.Add(new CountryConfiguration());
 			modelBuilder.Configurations.Add(new CountryLocalisedConfiguration());
+			modelBuilder.Configurations.Add(new BusinessConfiguration());
+			modelBuilder.Configurations.Add(new DepartmentConfiguration());
 		}
 
 		public DbSet<Contact> Contact { get; set; }
         public DbSet<Requirement> Requirement { get; set; }
-
         public DbSet<EnumType> EnumType { get; set; }
         public DbSet<EnumTypeItem> EnumTypeItem { get; set; }
         public DbSet<EnumLocalised> EnumLocalised { get; set; }
@@ -48,5 +50,7 @@
         public DbSet<AddressForm> AddressForm { get; set; }
         public DbSet<Country> Country { get; set; }
 		public DbSet<CountryLocalised> CountryLocalised { get; set; }
+		public DbSet<Business> Business { get; set; }
+		public DbSet<Department> Department { get; set; }
 	}
 }
