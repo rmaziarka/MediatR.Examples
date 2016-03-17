@@ -14,5 +14,6 @@
         public string RegEx { get; set; }
         public short RowOrder { get; set; }
         public short ColumnOrder { get; set; }
+        public short ColumnSize { get; set; }
     }
 }

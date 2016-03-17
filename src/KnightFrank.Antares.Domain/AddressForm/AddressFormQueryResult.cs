@@ -4,6 +4,7 @@
     using System.Collections.Generic;
 
     using KnightFrank.Antares.Domain.AddressFieldDefinition;
+    using KnightFrank.Antares.Domain.AddressFieldDefinition.QueryResults;
 
     public class AddressFormQueryResult
     {

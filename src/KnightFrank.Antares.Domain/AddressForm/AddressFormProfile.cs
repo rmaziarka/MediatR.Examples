@@ -4,6 +4,7 @@
 
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Domain.AddressFieldDefinition;
+    using KnightFrank.Antares.Domain.AddressFieldDefinition.QueryResults;
 
     public class AddressFormProfile : Profile
     {

@@ -90,6 +90,10 @@
     <Compile Include="Migrations\201603171111419_AddPropertyWithAddress.Designer.cs">
       <DependentUpon>201603171111419_AddPropertyWithAddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603171311029_AddColumnSizeToAddressFieldDefinition.cs" />
+    <Compile Include="Migrations\201603171311029_AddColumnSizeToAddressFieldDefinition.Designer.cs">
+      <DependentUpon>201603171311029_AddColumnSizeToAddressFieldDefinition.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressField.cs" />
     <Compile Include="Model\AddressFieldDefinition.cs" />
@@ -170,6 +174,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603171111419_AddPropertyWithAddress.resx">
       <DependentUpon>201603171111419_AddPropertyWithAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603171311029_AddColumnSizeToAddressFieldDefinition.resx">
+      <DependentUpon>201603171311029_AddColumnSizeToAddressFieldDefinition.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
