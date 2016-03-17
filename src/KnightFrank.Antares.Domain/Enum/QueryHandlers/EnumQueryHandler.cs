@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.Enum.QueryHandler
+﻿namespace KnightFrank.Antares.Domain.Enum.QueryHandlers
 {
     using System.Collections.Generic;
     using System.Linq;

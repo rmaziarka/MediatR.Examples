@@ -88,7 +88,7 @@
     <Compile Include="DomainValidationException.cs" />
     <Compile Include="Enum\Queries\EnumQuery.cs" />
     <Compile Include="Enum\Queries\EnumQueryValidator.cs" />
-    <Compile Include="Enum\QueryHandler\EnumQueryHandler.cs" />
+    <Compile Include="Enum\QueryHandlers\EnumQueryHandler.cs" />
     <Compile Include="Enum\QueryResults\EnumQueryItemResult.cs" />
     <Compile Include="Enum\QueryResults\EnumQueryResult.cs" />
     <Compile Include="Enum\QueryResults\EnumQueryResultProfile.cs" />
@@ -98,7 +98,7 @@
     <Compile Include="Requirement\Commands\CreateRequirementCommand.cs" />
     <Compile Include="Requirement\Queries\RequirementQuery.cs" />
     <Compile Include="Requirement\Queries\RequirementQueryValidator.cs" />
-    <Compile Include="Requirement\QueryHandler\RequirementQueryHandler.cs" />
+    <Compile Include="Requirement\QueryHandlers\RequirementQueryHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj">

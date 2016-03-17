@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.Requirement.QueryHandler
+﻿namespace KnightFrank.Antares.Domain.Requirement.QueryHandlers
 {
     using System.Linq;
 
