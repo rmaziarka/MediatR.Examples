@@ -12,7 +12,20 @@
     [CollectionDefinition("Common unit test collection")]
     public class BaseTestClassFixture : IDisposable
     {
-        public BaseTestClassFixture()
+        private static readonly object sync = new object();
+        private static readonly bool isInitialized;
+
+        static BaseTestClassFixture()
+        {
+            lock (sync)
+            {
+                if (isInitialized) return;
+                SetupAutoMapper();
+                isInitialized = true;
+            }
+        }
+
+        private static void SetupAutoMapper()
         {
             Mapper.Initialize(cfg =>
             {
