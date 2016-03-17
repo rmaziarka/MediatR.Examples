@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.Requirement
+﻿namespace KnightFrank.Antares.Domain.Requirement.Queries
 {
     using System;
 

@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.Enum.QueryHandler
+﻿namespace KnightFrank.Antares.Domain.Enum.QueryHandlers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -8,6 +8,7 @@
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Enum.Queries;
+    using KnightFrank.Antares.Domain.Enum.QueryResults;
 
     using MediatR;
 

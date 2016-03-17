@@ -53,7 +53,7 @@
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.minPrice.$dirty) && addRequirementForm.minPrice.$invalid}">
                                         <label for="price-min" translate="COMMON.MIN">Min</label>
                                         <div class="input-group">
-                                            <input type="number" min="0" max="{{vm.requirement.maxPrice}}" class="form-control" name="minPrice" id="price-min" ng-model="vm.requirement.minPrice">
+                                            <input type="number" min="0" max="{{vm.requirement.maxPrice}}" pattern="\d+([\.,]\d+)?" class="form-control" name="minPrice" id="price-min" ng-model="vm.requirement.minPrice">
                                             <div class="input-group-addon">GBP</div>
                                         </div>
                                         <div ng-messages="addRequirementForm.minPrice.$error" ng-show="addRequirementForm.$submitted || addRequirementForm.minPrice.$dirty">
@@ -65,7 +65,7 @@
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.maxPrice.$dirty) && addRequirementForm.maxPrice.$invalid}">
                                         <label for="price-max" translate="COMMON.MAX">Max</label>
                                         <div class="input-group">
-                                            <input type="number" min="0" class="form-control" name="maxPrice" id="price-max" ng-model="vm.requirement.maxPrice">
+                                            <input type="number" min="0" pattern="\d+([\.,]\d+)?" class="form-control" name="maxPrice" id="price-max" ng-model="vm.requirement.maxPrice">
                                             <div class="input-group-addon">GBP</div>
                                         </div>
                                         <div ng-messages="addRequirementForm.maxPrice.$error" ng-show="addRequirementForm.$submitted || addRequirementForm.maxPrice.$dirty">
@@ -174,7 +174,7 @@
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.minArea.$dirty) && addRequirementForm.minArea.$invalid}">
                                         <label for="area-min" translate="COMMON.MIN">Min</label>
                                         <div class="input-group">
-                                            <input type="number" min="0" max="{{vm.requirement.maxArea}}" class="form-control" name="minArea" id="area-min" ng-model="vm.requirement.minArea">
+                                            <input type="number" min="0" max="{{vm.requirement.maxArea}}" pattern="\d+([\.,]\d+)?" class="form-control" name="minArea" id="area-min" ng-model="vm.requirement.minArea">
                                             <div class="input-group-addon">sq. ft</div>
                                         </div>
                                         <div ng-messages="addRequirementForm.minArea.$error" ng-show="addRequirementForm.$submitted || addRequirementForm.minArea.$dirty">
@@ -186,7 +186,7 @@
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.maxArea.$dirty) && addRequirementForm.maxArea.$invalid}">
                                         <label for="area-max" translate="COMMON.MAX">Max</label>
                                         <div class="input-group">
-                                            <input type="number" min="0" class="form-control" id="area-max" name="maxArea" ng-model="vm.requirement.maxArea">
+                                            <input type="number" min="0" pattern="\d+([\.,]\d+)?" class="form-control" id="area-max" name="maxArea" ng-model="vm.requirement.maxArea">
                                             <div class="input-group-addon">sq. ft</div>
                                         </div>
                                         <div ng-messages="addRequirementForm.maxArea.$error" ng-show="addRequirementForm.$submitted || addRequirementForm.maxArea.$dirty">
@@ -203,7 +203,7 @@
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.minLandArea.$dirty) && addRequirementForm.minLandArea.$invalid}">
                                         <label for="land-min" translate="COMMON.MIN">Min</label>
                                         <div class="input-group">
-                                            <input type="number" min="0" max="{{vm.requirement.maxLandArea}}" class="form-control" id="land-min" name="minLandArea" ng-model="vm.requirement.minLandArea">
+                                            <input type="number" min="0" max="{{vm.requirement.maxLandArea}}" pattern="\d+([\.,]\d+)?" class="form-control" id="land-min" name="minLandArea" ng-model="vm.requirement.minLandArea">
                                             <div class="input-group-addon">sq. ft</div>
                                         </div>
                                         <div ng-messages="addRequirementForm.minLandArea.$error" ng-show="addRequirementForm.$submitted || addRequirementForm.minLandArea.$dirty">
@@ -215,7 +215,7 @@
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.maxLandArea.$dirty) && addRequirementForm.maxLandArea.$invalid}">
                                         <label for="land-max" translate="COMMON.MAX">Max</label>
                                         <div class="input-group">
-                                            <input type="number" min="0" class="form-control" id="land-max" name="maxLandArea" ng-model="vm.requirement.maxLandArea">
+                                            <input type="number" min="0" pattern="\d+([\.,]\d+)?" class="form-control" id="land-max" name="maxLandArea" ng-model="vm.requirement.maxLandArea">
                                             <div class="input-group-addon">sq. ft</div>
                                         </div>
                                         <div ng-messages="addRequirementForm.maxLandArea.$error" ng-show="addRequirementForm.$submitted || addRequirementForm.maxLandArea.$dirty">

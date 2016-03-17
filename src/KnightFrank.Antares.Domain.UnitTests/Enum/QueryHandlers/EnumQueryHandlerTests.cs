@@ -9,7 +9,8 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Enum;
     using KnightFrank.Antares.Domain.Enum.Queries;
-    using KnightFrank.Antares.Domain.Enum.QueryHandler;
+    using KnightFrank.Antares.Domain.Enum.QueryHandlers;
+    using KnightFrank.Antares.Domain.Enum.QueryResults;
 
     using Moq;
 
@@ -25,7 +26,7 @@
         [Theory]
         [InlineAutoMoqData("en")]
         public void Given_EnumQueryHandler_When_Handling_Then_CorrectResultShouldBeReturned(
-            string isoCode,
+            string isoCode,     
             [Frozen] Mock<IReadGenericRepository<EnumLocalised>> enumLocalisedRepository,
             EnumQuery query,
             EnumQueryHandler handler,
@@ -58,7 +59,7 @@
             // Act
             EnumQueryResult queryResult = handler.Handle(query);
 
-            // Asserts 
+            // Asserts
             queryResult.Items.Should().HaveCount(2);
             queryResult.Items.Should().Equal(expectedResult, (x1, x2) => x1.Value == x2.Value);
         }
