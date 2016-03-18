@@ -127,6 +127,7 @@
     <Compile Include="Steps\CommonSteps.cs" />
     <Compile Include="Steps\AddressForm\AddressFormSteps.cs" />
     <Compile Include="Steps\ContactsSteps\ContactsSteps.cs" />
+    <Compile Include="Steps\EnumsSteps\EnumsSteps.cs" />
     <Compile Include="Steps\ResidentialSalesRequierementSteps\ResidentialSalesRequierementSteps.cs" />
     <Compile Include="Tests\AddressForm\AddressForm.feature.cs">
       <AutoGen>True</AutoGen>
@@ -137,6 +138,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ContactsControllerTests.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Enums\Enums.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Enums.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\ResidentialSalesRequirement\NoteOnResidentialSalesRequirement.feature.cs">
       <DependentUpon>NoteOnResidentialSalesRequirement.feature</DependentUpon>
@@ -186,6 +192,10 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ContactsControllerTests.feature.cs</LastGenOutput>
     </None>
+    <None Include="Tests\Enums\Enums.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Enums.feature.cs</LastGenOutput>
+    </None>
     <None Include="Tests\ResidentialSalesRequirement\NoteOnResidentialSalesRequirement.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>NoteOnResidentialSalesRequirement.feature.cs</LastGenOutput>
@@ -203,9 +213,7 @@
       <LastGenOutput>PropertyOwnership.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Steps\EnumsSteps\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
