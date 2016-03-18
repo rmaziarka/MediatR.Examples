@@ -30,13 +30,14 @@
                 '!' + clientApp + '**/*.spec.js',
                 '!' + clientApp + '**/*.mock.js',
                 '!' + clientApp + '**/*.route.js',
-                '!' + clientApp + '**/*.config.js',
+                '!' + clientApp + '**/*.config.js'
             ],
             specsAndMocks: [
                 clientApp + '**/*.spec.js',
                 clientApp + '**/*.mock.js'
             ],
             order: [
+                '**/app.bootstrap.js',
                 '**/app.module.js',
                 '**/*.module.js',
                 '**/*.js'

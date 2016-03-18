@@ -4,7 +4,6 @@ module Antares {
     var app: ng.IModule = angular.module('app');
 
     app.config(['$translateProvider', initTranslations]);
-    app.run(configureRootUrl);    
 
     function initTranslations($translateProvider) {
         $translateProvider
@@ -17,12 +16,5 @@ module Antares {
             })
             .preferredLanguage('en')
             .useSanitizeValueStrategy('escape');
-    }
-
-    function configureRootUrl(configService: Antares.Services.ConfigService, dataAccessService: Antares.Services.DataAccessService)
-    {
-        configService.promise.then(function (data) {
-            dataAccessService.setRootUrl(data);
-        });
     }
 }

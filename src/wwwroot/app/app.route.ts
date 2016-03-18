@@ -11,9 +11,11 @@ module Antares {
                 url: '/app',
                 abstract: true,
                 templateUrl: 'app/app.html',
+                controller: 'appController',
+                controllerAs:'appVm',
                 resolve: {
-                    'rootUrl': (configService: Antares.Services.ConfigService) => {
-                        return configService.promise;
+                    'userData': (userService: Antares.Services.UserService) =>{
+                        return userService.getUserData();
                     }
                 }
             });
