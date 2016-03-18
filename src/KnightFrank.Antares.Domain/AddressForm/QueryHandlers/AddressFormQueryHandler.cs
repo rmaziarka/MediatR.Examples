@@ -1,24 +1,25 @@
-﻿namespace KnightFrank.Antares.Domain.AddressForm
+﻿namespace KnightFrank.Antares.Domain.AddressForm.QueryHandlers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
-    using System.IO;
     using System.Linq;
-    using System.Runtime.CompilerServices;
+
+    using AutoMapper;
 
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.AddressForm.Queries;
+    using KnightFrank.Antares.Domain.AddressForm.QueryResults;
 
     using MediatR;
 
-    using Ninject.Extensions.Conventions.Syntax;
-
     public class AddressFormQueryHandler : IRequestHandler<AddressFormQuery, AddressFormQueryResult>
     {
-        private readonly IReadGenericRepository<AddressForm> addressFormRepository;
         private readonly IReadGenericRepository<AddressFormEntityType> addressFormEntityTypeRepository;
+
+        private readonly IReadGenericRepository<AddressForm> addressFormRepository;
+
         private readonly IReadGenericRepository<Country> countryRepository;
+
         private readonly IReadGenericRepository<EnumTypeItem> enumTypeItemRepository;
 
         public AddressFormQueryHandler(
@@ -43,29 +44,31 @@
                 throw new DomainValidationException("message.CountryCode");
             }
 
-            EnumTypeItem enumTypeItem = this.enumTypeItemRepository.Get().SingleOrDefault(i => i.Code == message.EntityType && i.EnumType.Code == "EntityType");
+            EnumTypeItem enumTypeItem =
+                this.enumTypeItemRepository.Get()
+                    .SingleOrDefault(i => i.Code == message.EntityType && i.EnumType.Code == "EntityType");
 
             if (enumTypeItem == null)
             {
                 throw new DomainValidationException("message.EntityType");
             }
 
-            AddressForm addressForm = this.addressFormRepository.Get()
+            AddressForm addressForm =
+                this.addressFormRepository.Get()
                     .Include(af => af.AddressFieldDefinitions)
-                    .SingleOrDefault(af =>
-                        af.CountryId == country.Id &&
-                        af.AddressFormEntityTypes.Any(afet => afet.EnumTypeItemId == enumTypeItem.Id));
+                    .SingleOrDefault(
+                        af =>
+                        af.CountryId == country.Id && af.AddressFormEntityTypes.Any(afet => afet.EnumTypeItemId == enumTypeItem.Id));
 
             if (addressForm == null)
             {
-                addressForm = this.addressFormRepository.Get()
-                    .Include(af => af.AddressFieldDefinitions)
-                    .SingleOrDefault(af =>
-                        af.CountryId == country.Id &&
-                        !af.AddressFormEntityTypes.Any());
+                addressForm =
+                    this.addressFormRepository.Get()
+                        .Include(af => af.AddressFieldDefinitions)
+                        .SingleOrDefault(af => af.CountryId == country.Id && !af.AddressFormEntityTypes.Any());
             }
 
-            return AutoMapper.Mapper.Map<AddressFormQueryResult>(addressForm);
+            return Mapper.Map<AddressFormQueryResult>(addressForm);
         }
     }
 }

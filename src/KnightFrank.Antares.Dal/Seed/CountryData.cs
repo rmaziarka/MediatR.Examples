@@ -5,6 +5,7 @@
 	using System.Linq;
 
 	using KnightFrank.Antares.Dal.Model;
+	using KnightFrank.Antares.Dal.Seed.Common;
 
     internal class CountryData
     {
@@ -24,13 +25,13 @@
 
 	    private static void SetLocaleIds(KnightFrankContext context)
 	    {
-			CsLocaleId = context.Locale.Where(x => x.IsoCode == "cs").Select(x => x.Id).Single();
-			DeLocaleId = context.Locale.Where(x => x.IsoCode == "de").Select(x => x.Id).Single();
-			EnLocaleId = context.Locale.Where(x => x.IsoCode == "en").Select(x => x.Id).Single();
-			EsLocaleId = context.Locale.Where(x => x.IsoCode == "es").Select(x => x.Id).Single();
-			FrLocaleId = context.Locale.Where(x => x.IsoCode == "fr").Select(x => x.Id).Single();
-			PlLocaleId = context.Locale.Where(x => x.IsoCode == "pl").Select(x => x.Id).Single();
-			SvLocaleId = context.Locale.Where(x => x.IsoCode == "sv").Select(x => x.Id).Single();
+			CsLocaleId = context.Locale.Where(x => x.IsoCode == LocaleIsoCode.cs.ToString()).Select(x => x.Id).Single();
+			DeLocaleId = context.Locale.Where(x => x.IsoCode == LocaleIsoCode.de.ToString()).Select(x => x.Id).Single();
+			EnLocaleId = context.Locale.Where(x => x.IsoCode == LocaleIsoCode.en.ToString()).Select(x => x.Id).Single();
+			EsLocaleId = context.Locale.Where(x => x.IsoCode == LocaleIsoCode.es.ToString()).Select(x => x.Id).Single();
+			FrLocaleId = context.Locale.Where(x => x.IsoCode == LocaleIsoCode.fr.ToString()).Select(x => x.Id).Single();
+			PlLocaleId = context.Locale.Where(x => x.IsoCode == LocaleIsoCode.pl.ToString()).Select(x => x.Id).Single();
+			SvLocaleId = context.Locale.Where(x => x.IsoCode == LocaleIsoCode.sv.ToString()).Select(x => x.Id).Single();
 		}
 
 		private static void SeedCountry(KnightFrankContext context)

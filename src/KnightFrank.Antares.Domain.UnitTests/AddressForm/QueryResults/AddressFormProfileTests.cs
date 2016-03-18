@@ -1,9 +1,9 @@
-﻿namespace KnightFrank.Antares.Domain.UnitTests.AddressForm
+﻿namespace KnightFrank.Antares.Domain.UnitTests.AddressForm.QueryResults
 {
     using AutoMapper;
 
     using KnightFrank.Antares.Dal.Model;
-    using KnightFrank.Antares.Domain.AddressForm;
+    using KnightFrank.Antares.Domain.AddressForm.QueryResults;
 
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit2;

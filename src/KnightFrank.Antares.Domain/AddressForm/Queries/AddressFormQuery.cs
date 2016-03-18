@@ -1,5 +1,7 @@
-﻿namespace KnightFrank.Antares.Domain.AddressForm
+﻿namespace KnightFrank.Antares.Domain.AddressForm.Queries
 {
+    using KnightFrank.Antares.Domain.AddressForm.QueryResults;
+
     using MediatR;
 
     public class AddressFormQuery : IRequest<AddressFormQueryResult>

@@ -1,8 +1,8 @@
-﻿namespace KnightFrank.Antares.Domain.UnitTests.AddressForm
+﻿namespace KnightFrank.Antares.Domain.UnitTests.AddressForm.QueryResults
 {
     using FluentAssertions;
 
-    using KnightFrank.Antares.Domain.AddressForm;
+    using KnightFrank.Antares.Domain.AddressForm.QueryResults;
 
     using Xunit;
 
@@ -18,6 +18,6 @@
             // Act
             addressFormQueryResult.AddressFieldDefinitions.Should().NotBeNull();
             addressFormQueryResult.AddressFieldDefinitions.Should().BeEmpty();
-        } 
+        }
     }
 }

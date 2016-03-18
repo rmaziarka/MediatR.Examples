@@ -3,6 +3,8 @@
     using System.Web.Http;
 
     using KnightFrank.Antares.Domain.AddressForm;
+    using KnightFrank.Antares.Domain.AddressForm.Queries;
+    using KnightFrank.Antares.Domain.AddressForm.QueryResults;
 
     using MediatR;
 

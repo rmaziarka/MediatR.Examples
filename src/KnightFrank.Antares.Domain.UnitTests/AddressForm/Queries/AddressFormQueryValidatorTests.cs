@@ -1,9 +1,11 @@
-﻿namespace KnightFrank.Antares.Domain.UnitTests.AddressForm
+﻿namespace KnightFrank.Antares.Domain.UnitTests.AddressForm.Queries
 {
     using FluentAssertions;
 
     using FluentValidation.Results;
-    using KnightFrank.Antares.Domain.AddressForm;
+
+    using KnightFrank.Antares.Domain.AddressForm.Queries;
+
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
@@ -14,7 +16,9 @@
     {
         [Theory]
         [AutoData]
-        public void Given_CorrectAddressFormQuery_When_Validating_Then_NoValidationErrors(AddressFormQueryValidator validator, AddressFormQuery query)
+        public void Given_CorrectAddressFormQuery_When_Validating_Then_NoValidationErrors(
+            AddressFormQueryValidator validator,
+            AddressFormQuery query)
         {
             // Act
             ValidationResult validationResult = validator.Validate(query);
@@ -26,7 +30,10 @@
         [Theory]
         [InlineAutoData("")]
         [InlineAutoData((string)null)]
-        public void Given_IncorrectAddressFormQueryWithEmptyEntityType_When_Validating_Then_ValidationError(string value, AddressFormQueryValidator validator, AddressFormQuery query)
+        public void Given_IncorrectAddressFormQueryWithEmptyEntityType_When_Validating_Then_ValidationError(
+            string value,
+            AddressFormQueryValidator validator,
+            AddressFormQuery query)
         {
             // Arrange
             query.EntityType = value;
@@ -37,7 +44,10 @@
         [Theory]
         [InlineAutoData("")]
         [InlineAutoData((string)null)]
-        public void Given_IncorrectAddressFormQueryWithEmptyCountryCode_When_Validating_Then_ValidationError(string value, AddressFormQueryValidator validator, AddressFormQuery query)
+        public void Given_IncorrectAddressFormQueryWithEmptyCountryCode_When_Validating_Then_ValidationError(
+            string value,
+            AddressFormQueryValidator validator,
+            AddressFormQuery query)
         {
             // Arrange
             query.CountryCode = value;
@@ -45,7 +55,10 @@
             TestIncorrectCommand(validator, query, nameof(query.CountryCode));
         }
 
-        private static void TestIncorrectCommand(AddressFormQueryValidator validator, AddressFormQuery query, string testedPropertyName)
+        private static void TestIncorrectCommand(
+            AddressFormQueryValidator validator,
+            AddressFormQuery query,
+            string testedPropertyName)
         {
             // Act
             ValidationResult validationResult = validator.Validate(query);
