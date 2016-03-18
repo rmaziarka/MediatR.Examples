@@ -7,22 +7,18 @@ module Antares.Services {
 
         private rootUrl: string = "";
 
-        constructor(private $resource: ng.resource.IResourceService) {
+        constructor(private $resource: ng.resource.IResourceService, private appConfig: Antares.Common.Models.IAppConfig) {
 
-        }
-
-        setRootUrl(url: string): void {
-            this.rootUrl = url;
         }
 
         getContactResource(): Resources.IBaseResourceClass<Resources.IContactResource> {
             return <Resources.IBaseResourceClass<Resources.IContactResource>>
-                this.$resource(this.rootUrl + '/api/contact/:id');
+                this.$resource(this.appConfig.rootUrl + '/api/contact/:id');
         }
 
         getRequirementResource(): Resources.IBaseResourceClass<Resources.IRequirementResource> {
             return <Resources.IBaseResourceClass<Resources.IRequirementResource>>
-                this.$resource(this.rootUrl + '/api/requirement/:id');
+                this.$resource(this.appConfig.rootUrl + '/api/requirement/:id');
         }
     }
 

@@ -6,7 +6,7 @@ module Antares {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
             $http: ng.IHttpBackendService,
-            $dateFilter: ng.IFilterDate;
+            filter: ng.IFilterService;
 
         var controller: RequirementViewController;
 
@@ -73,9 +73,9 @@ module Antares {
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
                 $httpBackend: ng.IHttpBackendService,
-                $filterDate: ng.IFilterDate) =>{
+                $filter: ng.IFilterService) =>{
 
-                $dateFilter = $filterDate;
+                filter = $filter;
                 $http = $httpBackend;
                 $http.whenGET(/\/api\/requirement/).respond(() => {
                     return [200, requirementMock];
@@ -110,7 +110,7 @@ module Antares {
             it('header information is displayed', () => {
                 var header = element.find('.requirement-details-header');
                 var createDate = header.find('[translate="REQUIREMENT.VIEW.CREATEDDATE"]').next();
-                var formattedDate = $dateFilter(requirementMock.createDate, 'longDate');
+                var formattedDate = filter('date')(requirementMock.createDate, 'longDate');
 
                 expect(createDate.length).toBe(1);
                 expect(createDate.text()).toBe(formattedDate);
