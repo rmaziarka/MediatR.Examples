@@ -34,6 +34,10 @@
       <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Domain.Seedwork.Specification, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Domain.Seedwork.Specification.1.0.0\lib\Domain.Seedwork.Specification.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -72,9 +76,20 @@
     <Compile Include="AddressFieldDefinition\QueryResults\AddressFieldDefinitionResult.cs" />
     <Compile Include="AddressForm\Queries\AddressFormQuery.cs" />
     <Compile Include="AddressForm\Queries\AddressFormQueryValidator.cs" />
+    <Compile Include="AddressForm\Queries\GetCountriesForAddressFormsQueryValidator.cs" />
     <Compile Include="AddressForm\QueryHandlers\AddressFormQueryHandler.cs" />
     <Compile Include="AddressForm\QueryResults\AddressFormProfile.cs" />
     <Compile Include="AddressForm\QueryResults\AddressFormQueryResult.cs" />
+    <Compile Include="AddressForm\Queries\GetCountriesForAddressFormsQuery.cs" />
+    <Compile Include="AddressForm\QueryHandlers\GetCountriesForAddressFormQueryHandler.cs" />
+    <Compile Include="AddressForm\QueryResults\CountryLocalisedProfile.cs" />
+    <Compile Include="AddressForm\QueryResults\CountryLocalisedResult.cs" />
+    <Compile Include="AddressForm\QueryResults\CountryResult.cs" />
+    <Compile Include="AddressForm\QueryResults\LocaleResult.cs" />
+    <Compile Include="AddressForm\Specifications\IsAddressFormAssignedToEntityType.cs" />
+    <Compile Include="AddressForm\Specifications\IsAddressFormAssignedToCountry.cs" />
+    <Compile Include="AddressForm\Specifications\IsAddressFormGloballyDefined.cs" />
+    <Compile Include="Common\Specifications\IsLocaled.cs" />
     <Compile Include="Common\ValidatorCommandHandler.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandProfile.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidator.cs" />

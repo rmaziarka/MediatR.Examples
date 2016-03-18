@@ -2,8 +2,10 @@
 {
 	using System;
 
-	public class CountryLocalised : BaseEntity
-	{
+	using KnightFrank.Antares.Dal.Model.Common;
+
+    public class CountryLocalised : BaseEntity, ILocaled
+    {
 		public Guid CountryId { get; set; }
 
 		public virtual Country Country { get; set; }
