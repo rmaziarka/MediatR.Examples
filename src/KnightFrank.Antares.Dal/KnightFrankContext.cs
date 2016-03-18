@@ -36,6 +36,8 @@
             modelBuilder.Configurations.Add(new OwnershipConfiguration());
 			modelBuilder.Configurations.Add(new BusinessConfiguration());
 			modelBuilder.Configurations.Add(new DepartmentConfiguration());
+			modelBuilder.Configurations.Add(new UserConfiguration());
+			modelBuilder.Configurations.Add(new RoleConfiguration());
 		}
 
 		public DbSet<Contact> Contact { get; set; }
@@ -56,5 +58,7 @@
         public DbSet<Ownership> Ownerships { get; set; }
 		public DbSet<Business> Business { get; set; }
 		public DbSet<Department> Department { get; set; }
+		public DbSet<User> User { get; set; }
+		public DbSet<Role> Role { get; set; }
 	}
 }

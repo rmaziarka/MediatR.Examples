@@ -171,6 +171,7 @@
     <Compile Include="Seed\CountryData.cs" />
     <Compile Include="Seed\LocaleData.cs" />
     <Compile Include="Seed\AddressFormData.cs" />
+    <Compile Include="Seed\RoleData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
