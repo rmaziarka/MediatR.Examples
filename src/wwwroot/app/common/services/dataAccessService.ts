@@ -1,8 +1,7 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
-///<reference path="../../../typings/main.d.ts"/>
 
 module Antares.Services {
-    import Resources = Antares.Common.Models.Resources;
+    import Resources = Common.Models.Resources;
 
     export class DataAccessService {
 

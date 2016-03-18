@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using System.Linq.Expressions;
 
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Repository;
@@ -20,8 +21,8 @@
         [Fact]
         public void HandleWhenCalledShouldReturnValidId()
         {
-            var requirementRepositoryMock = new Mock<IGenericRepository<Dal.Model.Requirement>>();
-            var contactRepositoryMock = new Mock<IReadGenericRepository<Contact>>();
+            var requirementRepositoryMock = new Mock<IGenericRepository<Requirement>>();
+            var contactRepositoryMock = new Mock<IGenericRepository<Contact>>();
             var commandHandler = new CreateRequirementCommandHandler(requirementRepositoryMock.Object, contactRepositoryMock.Object);
 
             var command = new CreateRequirementCommand
@@ -34,8 +35,8 @@
                 }
             };
             
-            contactRepositoryMock.Setup(x => x.Get()).Returns(new List<Contact>().AsQueryable());
-            requirementRepositoryMock.Setup(x => x.Add(It.IsAny<Dal.Model.Requirement>()));
+            contactRepositoryMock.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(new List<Contact>().AsQueryable());
+            requirementRepositoryMock.Setup(x => x.Add(It.IsAny<Requirement>()));
             requirementRepositoryMock.Setup(x => x.Save());
 
             commandHandler.Handle(command);

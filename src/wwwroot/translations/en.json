@@ -32,6 +32,24 @@
       "AREA": "Area",
       "LANDAREA": "Land area",
       "DESCRIPTION": "Description"
+    },
+    "VIEW": {
+      "REQUIREMENT_DETAILS": "Requirement details",
+      "EDIT": "Edit",
+      "NOTES": "Notes",
+      "TEMPORARY_RESIDENTIAL_SALES": "Residential sales",
+      "LOCATION": "Location requirements",
+      "BASIC_REQUIREMENTS": "Basic property requirements",
+      "PRICE": "Price",
+      "BEDROOMS": "Bedrooms",
+      "RECEPTIONROOMS": "Reception rooms",
+      "BATHROOMS": "Bathrooms",
+      "PARKINGSPACES": "Parking spaces",
+      "AREA": "Area",
+      "LANDAREA": "Land area",
+      "DESCRIPTION": "Requirement description",
+      "APPLICANT": "Applicant",
+      "CREATEDDATE": "Created"
     }
   }
 }

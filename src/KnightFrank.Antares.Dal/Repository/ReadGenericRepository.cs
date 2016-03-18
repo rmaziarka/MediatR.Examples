@@ -19,7 +19,7 @@
 
         public IQueryable<T> Get()
         {
-            return this.DbContext.Set<T>();
+            return this.DbContext.Set<T>().AsNoTracking();
         }
 
         public IQueryable<T> GetWithInclude(params Expression<Func<T, object>>[] paths)

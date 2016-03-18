@@ -1,4 +1,5 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
+/// <reference path="dto/requirement.d.ts" />
 
 declare module Antares.Common.Models {
     export module Resources {

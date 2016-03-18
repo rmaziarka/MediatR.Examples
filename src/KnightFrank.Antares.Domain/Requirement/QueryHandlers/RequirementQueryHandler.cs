@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.Requirement.QueryHandlers
 {
+    using System.Data.Entity;
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model;
@@ -22,6 +23,7 @@
             Requirement requirement =
                 this.requirementRepository
                     .Get()
+                    .Include(req => req.Contacts)
                     .FirstOrDefault(req => req.Id == message.Id);
 
             return requirement;

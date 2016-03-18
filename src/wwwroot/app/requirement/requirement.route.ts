@@ -9,9 +9,11 @@ module Antares.Requirement {
         $stateProvider
             .state('app.requirement-add', {
                 url: '/requirement/add',
-                templateUrl: 'app/requirement/add/requirementAdd.html',
-                controllerAs: 'vm',
-                controller: 'requirementAddController'
+                template: '<requirement-add></requirement-add>'
+            })
+            .state('app.requirement-view', {
+                url: '/requirement/:requirementId',
+                template: '<requirement-view></requirement-view>'
             });
     }
 }

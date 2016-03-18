@@ -1,0 +1,93 @@
+﻿<div class="row" ng-show="vm.isLoading">
+    <div class="col-md-12">
+        <div class="alert alert-info">Loading data...</div>
+    </div>
+</div>
+<div class="row" ng-show="vm.hasError">
+    <div class="col-md-12" ng-show="vm.errorStatus == 404">
+        <div class="alert alert-danger"><strong>Error!</strong> Requested requirement has not been found.
+        </div>
+    </div>
+    <div class="col-md-12" ng-show="vm.errorStatus != 400">
+        <div class="alert alert-danger"><strong>Internal server error!</strong></div>
+    </div>
+</div>
+<div class="row" ng-hide="vm.isLoading || vm.hasError">
+    <div class="col-md-12">
+
+        <!-- Property details -->
+        <h2 class="page-header" translate="REQUIREMENT.VIEW.REQUIREMENT_DETAILS"></h2>
+        <div class="well requirement-details-header">
+            <span translate="REQUIREMENT.VIEW.TEMPORARY_RESIDENTIAL_SALES"></span>
+            <!--<h3>Flat, 2-4 bedrooms, London, max 200,000 £</h3>-->
+            <p>
+                <span translate="REQUIREMENT.VIEW.CREATEDDATE"></span>
+                <span>{{ vm.requirement.createDate | date: 'longDate' }}</span>
+            </p>
+            <!--<button class="btn btn-default" type="button" translate="REQUIREMENT.VIEW.EDIT"></button>-->
+            <!--<button class="btn btn-default" type="button">{{ 'REQUIREMENT.VIEW.NOTES' | translate }} <span>(0)</span></button>-->
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <section>
+                    <h4 tanslate="REQUIREMENT.VIEW.LOCATION"></h4>
+                    <!-- TODO: address view component -->
+                    <div class="row">
+                        <div class="col-xs-6">Country</div>
+                        <div class="col-xs-6">United Kingdom</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">Postcode</div>
+                        <div class="col-xs-6"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">Country</div>
+                        <div class="col-xs-6"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">Town</div>
+                        <div class="col-xs-6">London</div>
+                    </div>
+                </section>
+
+                <section>
+                    <h4 translate="REQUIREMENT.VIEW.BASIC_REQUIREMENTS"></h4>
+                    <!--<div class="row">
+                        <div class="col-xs-6">Type</div>
+                        <div class="col-xs-6">Flat</div>
+                    </div>-->
+                    <range-view label="{{ 'REQUIREMENT.VIEW.PRICE' | translate }}" min="vm.requirement.minPrice" max="vm.requirement.maxPrice" suffix="'GBP'"></range-view>
+                    <range-view label="{{ 'REQUIREMENT.VIEW.BEDROOMS' | translate }}" min="vm.requirement.minBedrooms" max="vm.requirement.maxBedrooms"></range-view>
+                    <range-view label="{{ 'REQUIREMENT.VIEW.RECEPTIONROOMS' | translate }}" min="vm.requirement.minReceptionRooms" max="vm.requirement.maxReceptionRooms"></range-view>
+                    <range-view label="{{ 'REQUIREMENT.VIEW.BATHROOMS' | translate }}" min="vm.requirement.minBathrooms" max="vm.requirement.maxBathrooms"></range-view>
+                    <range-view label="{{ 'REQUIREMENT.VIEW.PARKINGSPACES' | translate }}" min="vm.requirement.minParkingSpaces" max="vm.requirement.maxParkingSpaces"></range-view>
+                    <range-view label="{{ 'REQUIREMENT.VIEW.AREA' | translate }}" min="vm.requirement.minArea" max="vm.requirement.maxArea" suffix="'sq ft'"></range-view>
+                    <range-view label="{{ 'REQUIREMENT.VIEW.LANDAREA' | translate }}" min="vm.requirement.minLandArea" max="vm.requirement.maxLandArea" suffix="'sq ft'"></range-view>
+                    <div class="row">
+                        <div class="col-md-12" translate="REQUIREMENT.VIEW.DESCRIPTION"></div>
+                        <div class="col-md-12">
+                            <p>{{ vm.requirement.description}}</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="col-md-6" id="applicant-list">
+                <form>
+                    <fieldset>
+                        <legend translate="REQUIREMENT.VIEW.APPLICANT">Applicant</legend>
+                        <div class="form-group">
+                            <!--<button id="add-contact" type="button" class="btn btn-default">Add</button>-->
+                        </div>
+                    </fieldset>
+                </form>
+
+                <div class="panel panel-default applicant" ng-repeat="contact in vm.requirement.contacts">
+                    <div class="panel-body">
+                        {{ contact.firstName }} {{ contact.surname }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
