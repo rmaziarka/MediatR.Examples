@@ -16,6 +16,10 @@ namespace KnightFrank.Antares.Dal.Migrations
 			this.HasMany(p => p.EnumLocaliseds)
 				.WithRequired(p => p.Locale)
 				.WillCascadeOnDelete(false);
+
+			this.HasMany(p => p.Users)
+				.WithRequired(p => p.Locale)
+				.WillCascadeOnDelete(false);
 		}
 	}
 }

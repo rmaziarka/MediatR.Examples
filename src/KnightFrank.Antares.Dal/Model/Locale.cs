@@ -9,5 +9,7 @@
 		public virtual ICollection<CountryLocalised> CountryLocaliseds { get; set; }
 
 		public virtual ICollection<EnumLocalised> EnumLocaliseds { get; set; } 
+
+		public virtual ICollection<User> Users { get; set; } 
 	}
 }

@@ -7,6 +7,10 @@
 		public DepartmentConfiguration()
 		{
 			this.Property(p => p.Name).HasMaxLength(255);
+
+			this.HasMany(p => p.Users)
+				.WithRequired(p => p.Department)
+				.WillCascadeOnDelete(false);
 		}
 	}
 }

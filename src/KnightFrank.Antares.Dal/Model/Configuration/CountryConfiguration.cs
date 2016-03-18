@@ -24,6 +24,10 @@ namespace KnightFrank.Antares.Dal.Model.Configuration
 			this.HasMany(p => p.Departments)
 				.WithRequired(p => p.Country)
 				.WillCascadeOnDelete(false);
+
+			this.HasMany(p => p.Users)
+				.WithRequired(p => p.Country)
+				.WillCascadeOnDelete(false);
 		}
 	}
 }
