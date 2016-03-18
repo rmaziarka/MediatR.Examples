@@ -151,8 +151,9 @@
     <Compile Include="Repository\IReadGenericRepository.cs" />
     <Compile Include="Repository\IGenericRepository.cs" />
     <Compile Include="Model\Requirement.cs" />
+    <Compile Include="Seed\Common\LocaleIsoCode.cs" />
     <Compile Include="Seed\DatabaseSeeder.cs" />
-    <Compile Include="Seed\EntityTypeEnumData.cs" />
+    <Compile Include="Seed\EnumData.cs" />
     <Compile Include="Seed\CountryData.cs" />
     <Compile Include="Seed\LocaleData.cs" />
     <Compile Include="Seed\AddressFormData.cs" />
