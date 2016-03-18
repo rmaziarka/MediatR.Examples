@@ -110,6 +110,10 @@
     <Compile Include="Migrations\201603171401001_Merge2.Designer.cs">
       <DependentUpon>201603171401001_Merge2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603180947043_BusinessesAndDepartments.cs" />
+    <Compile Include="Migrations\201603180947043_BusinessesAndDepartments.Designer.cs">
+      <DependentUpon>201603180947043_BusinessesAndDepartments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressField.cs" />
     <Compile Include="Model\AddressFieldDefinition.cs" />
@@ -214,6 +218,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603171401001_Merge2.resx">
       <DependentUpon>201603171401001_Merge2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603180947043_BusinessesAndDepartments.resx">
+      <DependentUpon>201603180947043_BusinessesAndDepartments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
