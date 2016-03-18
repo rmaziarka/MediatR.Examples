@@ -10,7 +10,6 @@
 			BusinessData.Seed(context);
             EnumData.Seed(context);
             AddressFormData.Seed(context);
-
             context.SaveChanges();
         }
     }
