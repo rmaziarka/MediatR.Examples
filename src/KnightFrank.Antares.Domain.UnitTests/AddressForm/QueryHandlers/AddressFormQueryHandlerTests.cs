@@ -1,6 +1,5 @@
-﻿namespace KnightFrank.Antares.Domain.UnitTests.AddressForm
+﻿namespace KnightFrank.Antares.Domain.UnitTests.AddressForm.QueryHandlers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -8,7 +7,9 @@
 
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Repository;
-    using KnightFrank.Antares.Domain.AddressForm;
+    using KnightFrank.Antares.Domain.AddressForm.Queries;
+    using KnightFrank.Antares.Domain.AddressForm.QueryHandlers;
+    using KnightFrank.Antares.Domain.AddressForm.QueryResults;
 
     using Moq;
 
@@ -21,17 +22,23 @@
     [Trait("FeatureTitle", "AddressForm")]
     public class AddressFormQueryHandlerTests : IClassFixture<BaseTestClassFixture>
     {
-        private readonly Mock<IReadGenericRepository<Country>> countryRepository;
-        private readonly Mock<IReadGenericRepository<EnumTypeItem>> enumTypeItemRepository;
         private readonly Mock<IReadGenericRepository<AddressForm>> addressFormRepository;
-        private readonly ICollection<Country> mockedCountryData;
-        private readonly ICollection<EnumTypeItem> mockedEnumTypeItemData;
-        private readonly List<AddressForm> mockedAddressFormData;
+
+        private readonly Mock<IReadGenericRepository<Country>> countryRepository;
+
+        private readonly Mock<IReadGenericRepository<EnumTypeItem>> enumTypeItemRepository;
+
         private readonly AddressFormQueryHandler handler;
+
+        private readonly List<AddressForm> mockedAddressFormData;
+
+        private readonly ICollection<Country> mockedCountryData;
+
+        private readonly ICollection<EnumTypeItem> mockedEnumTypeItemData;
 
         public AddressFormQueryHandlerTests()
         {
-            var fixture = new Fixture().Customize(new AutoMoqCustomization());
+            IFixture fixture = new Fixture().Customize(new AutoMoqCustomization());
             fixture.Behaviors.Clear();
             fixture.Behaviors.Add(new OmitOnRecursionBehavior());
 
@@ -60,7 +67,7 @@
             this.countryRepository.Setup(x => x.Get()).Returns(this.mockedCountryData.AsQueryable());
             this.enumTypeItemRepository.Setup(x => x.Get()).Returns(this.mockedEnumTypeItemData.AsQueryable());
 
-            // Act / Assert
+            // Act + Assert
             Assert.Throws<DomainValidationException>(() => this.handler.Handle(query)).Message.Should().Be("message.CountryCode");
         }
 
@@ -79,7 +86,7 @@
             this.countryRepository.Setup(x => x.Get()).Returns(this.mockedCountryData.AsQueryable());
             this.enumTypeItemRepository.Setup(x => x.Get()).Returns(this.mockedEnumTypeItemData.AsQueryable());
 
-            // Act / Assert
+            // Act + Assert
             Assert.Throws<DomainValidationException>(() => this.handler.Handle(query)).Message.Should().Be("message.EntityType");
         }
 
@@ -101,7 +108,7 @@
             this.countryRepository.Setup(x => x.Get()).Returns(this.mockedCountryData.AsQueryable());
             this.enumTypeItemRepository.Setup(x => x.Get()).Returns(this.mockedEnumTypeItemData.AsQueryable());
 
-            // Act / Assert
+            // Act + Assert
             Assert.Throws<DomainValidationException>(() => this.handler.Handle(query)).Message.Should().Be("message.EntityType");
         }
 
@@ -129,8 +136,8 @@
             AddressForm addressFormForOtherEntityType = fixture.BuildAddressForm(otherEnumTypeItem, country);
             AddressForm addressFormForEntityType = fixture.BuildAddressForm(enumTypeItem, country);
 
-            this.mockedAddressFormData.AddRange(new[]
-            { addressFormForEntityType, addressFormForOtherCountry, addressFormForOtherEntityType });
+            this.mockedAddressFormData.AddRange(
+                new[] { addressFormForEntityType, addressFormForOtherCountry, addressFormForOtherEntityType });
             this.addressFormRepository.Setup(x => x.Get()).Returns(this.mockedAddressFormData.AsQueryable());
 
             // Act
@@ -166,8 +173,8 @@
             AddressForm addressFormForOtherEntityType = fixture.BuildAddressForm(otherEnumTypeItem, country);
             AddressForm defaultAddressForm = fixture.BuildAddressForm(null, country);
 
-            this.mockedAddressFormData.AddRange(new[]
-            { defaultAddressForm, addressFormForOtherCountry, addressFormForOtherEntityType });
+            this.mockedAddressFormData.AddRange(
+                new[] { defaultAddressForm, addressFormForOtherCountry, addressFormForOtherEntityType });
             this.addressFormRepository.Setup(x => x.Get()).Returns(this.mockedAddressFormData.AsQueryable());
 
             // Act

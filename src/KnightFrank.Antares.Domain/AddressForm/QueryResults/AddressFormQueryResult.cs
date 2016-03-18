@@ -1,9 +1,8 @@
-﻿namespace KnightFrank.Antares.Domain.AddressForm
+﻿namespace KnightFrank.Antares.Domain.AddressForm.QueryResults
 {
     using System;
     using System.Collections.Generic;
 
-    using KnightFrank.Antares.Domain.AddressFieldDefinition;
     using KnightFrank.Antares.Domain.AddressFieldDefinition.QueryResults;
 
     public class AddressFormQueryResult

@@ -70,11 +70,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddressFieldDefinition\QueryResults\AddressFieldDefinitionResult.cs" />
-    <Compile Include="AddressForm\AddressFormProfile.cs" />
-    <Compile Include="AddressForm\AddressFormQueryHandler.cs" />
-    <Compile Include="AddressForm\AddressFormQueryResult.cs" />
-    <Compile Include="AddressForm\AddressFormQuery.cs" />
-    <Compile Include="AddressForm\AddressFormQueryValidator.cs" />
+    <Compile Include="AddressForm\Queries\AddressFormQuery.cs" />
+    <Compile Include="AddressForm\Queries\AddressFormQueryValidator.cs" />
+    <Compile Include="AddressForm\QueryHandlers\AddressFormQueryHandler.cs" />
+    <Compile Include="AddressForm\QueryResults\AddressFormProfile.cs" />
+    <Compile Include="AddressForm\QueryResults\AddressFormQueryResult.cs" />
     <Compile Include="Common\ValidatorCommandHandler.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandProfile.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidator.cs" />

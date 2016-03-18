@@ -101,11 +101,11 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="AddressForm\AddressFormProfileTests.cs" />
-    <Compile Include="AddressForm\AddressFormQueryHandlerTests.cs" />
-    <Compile Include="AddressForm\AddressFormQueryHandlerFixtureExtensions.cs" />
-    <Compile Include="AddressForm\AddressFormQueryResultTests.cs" />
-    <Compile Include="AddressForm\AddressFormQueryValidatorTests.cs" />
+    <Compile Include="AddressForm\Queries\AddressFormQueryValidatorTests.cs" />
+    <Compile Include="AddressForm\QueryHandlers\AddressFormQueryHandlerFixtureExtensions.cs" />
+    <Compile Include="AddressForm\QueryHandlers\AddressFormQueryHandlerTests.cs" />
+    <Compile Include="AddressForm\QueryResults\AddressFormProfileTests.cs" />
+    <Compile Include="AddressForm\QueryResults\AddressFormQueryResultTests.cs" />
     <Compile Include="AutoMoqDataAttribute.cs" />
     <Compile Include="BaseTestClassFixture.cs" />
     <Compile Include="Contact\CommandHandlers\CreateContactCommandHandlerTests.cs" />
