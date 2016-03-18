@@ -1,5 +1,37 @@
 <div class="row">
-  <div class="col-md-12">
-    <h2 class="page-header">Property View</h2>
-  </div>
+    <div class="col-md-12">
+        <h2 class="page-header">Property View</h2>
+        <div class="well">
+            <button type="button" class="btn btn-default pull-right">Edit</button>
+            <div>55 Baker St.</div>
+            <div>London W1U 8AN,</div>
+            <div>United Kingdom</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <form>
+                    <fieldset>
+                        <legend>Ownership</legend>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-default" ng-click="vm.showContactList()">Add</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+
+<side-panel component-id="vm.componentIds.contactSidePanelId">
+    <side-panel-header>
+        <h3 translate="REQUIREMENT.ADD.FINDCONTACT"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <contact-list component-id="vm.componentIds.contactListId">
+        </contact-list>
+    </side-panel-content>
+    <side-panel-footer>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()">Cancel</button>
+        <button class="btn btn-primary" type="button" ng-click="vm.updateContacts()" ng-disabled="vm.loadingContacts">Save</button>
+    </side-panel-footer>
+</side-panel>

@@ -9,6 +9,7 @@ namespace KnightFrank.Antares.Api.Controllers
     using System.Web.Http;
 
     using KnightFrank.Antares.Domain.User;
+    using KnightFrank.Antares.Domain.User.QueryResults;
 
     [RoutePrefix("api/user")]
     public class UserController : ApiController

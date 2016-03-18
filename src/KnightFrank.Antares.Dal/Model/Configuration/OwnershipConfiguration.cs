@@ -1,0 +1,27 @@
+﻿namespace KnightFrank.Antares.Dal.Model.Configuration
+{
+    using KnightFrank.Antares.Dal.Migrations;
+
+    internal sealed class OwnershipConfiguration : BaseEntityConfiguration<Ownership>
+    {
+        public OwnershipConfiguration()
+        {
+            this.HasRequired(o => o.Property);
+
+            this.HasMany(o => o.Contacts)
+                .WithMany(c => c.Ownerships)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("OwnershipId");
+                    cs.MapRightKey("ContactId");
+                });
+
+            this.Property(o => o.BuyPrice)
+                .HasPrecision(19, 4);
+
+            this.Property(o => o.SellPrice)
+                .HasPrecision(19, 4);
+        }
+
+    }
+}

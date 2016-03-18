@@ -6,7 +6,7 @@
         {
             LocaleData.Seed(context);
             CountryData.Seed(context);
-            EntityTypeEnumData.Seed(context);
+            EnumData.Seed(context);
             AddressFormData.Seed(context);
 
             context.SaveChanges();

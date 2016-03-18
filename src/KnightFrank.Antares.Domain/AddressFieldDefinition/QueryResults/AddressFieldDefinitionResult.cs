@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.AddressFieldDefinition
+﻿namespace KnightFrank.Antares.Domain.AddressFieldDefinition.QueryResults
 {
     public class AddressFieldDefinitionResult
     {
@@ -13,5 +13,7 @@
         public short RowOrder { get; set; }
 
         public short ColumnOrder { get; set; }
+
+        public short ColumnSize { get; set; }
     }
 }
