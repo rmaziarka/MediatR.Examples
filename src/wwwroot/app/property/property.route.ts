@@ -5,13 +5,14 @@ module Antares.Property {
 
     app.config(initRoute);
 
-    function initRoute($stateProvider) {
+    function initRoute($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('app.property-view', {
                 url: '/property/view',
-                templateUrl: 'app/property/view/propertyView.html',
-                controllerAs: 'vm',
-                controller: 'propertyViewController'
+                params: {},
+                template: '<property-view></property-view>'
             });
+
+        $urlRouterProvider.otherwise('/app/property/view');
     }
 }
