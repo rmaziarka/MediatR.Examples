@@ -15,6 +15,7 @@
         public ReadGenericRepository(KnightFrankContext context)
         {
             this.DbContext = context;
+            this.DbContext.Configuration.ProxyCreationEnabled = false;
         }
 
         public IQueryable<T> Get()
