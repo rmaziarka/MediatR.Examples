@@ -110,10 +110,6 @@
     <Compile Include="Migrations\201603171401001_Merge2.Designer.cs">
       <DependentUpon>201603171401001_Merge2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201603171843321_BusinessesAndDepartments.cs" />
-    <Compile Include="Migrations\201603171843321_BusinessesAndDepartments.Designer.cs">
-      <DependentUpon>201603171843321_BusinessesAndDepartments.cs</DependentUpon>
-    </Compile>
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressField.cs" />
     <Compile Include="Model\AddressFieldDefinition.cs" />
@@ -159,10 +155,11 @@
     <Compile Include="Repository\IReadGenericRepository.cs" />
     <Compile Include="Repository\IGenericRepository.cs" />
     <Compile Include="Model\Requirement.cs" />
+    <Compile Include="Seed\Common\LocaleIsoCode.cs" />
     <Compile Include="Seed\DepartmentData.cs" />
     <Compile Include="Seed\BusinessData.cs" />
     <Compile Include="Seed\DatabaseSeeder.cs" />
-    <Compile Include="Seed\EntityTypeEnumData.cs" />
+    <Compile Include="Seed\EnumData.cs" />
     <Compile Include="Seed\CountryData.cs" />
     <Compile Include="Seed\LocaleData.cs" />
     <Compile Include="Seed\AddressFormData.cs" />
@@ -217,9 +214,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603171401001_Merge2.resx">
       <DependentUpon>201603171401001_Merge2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603171843321_BusinessesAndDepartments.resx">
-      <DependentUpon>201603171843321_BusinessesAndDepartments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

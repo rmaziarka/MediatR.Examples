@@ -8,7 +8,7 @@
             CountryData.Seed(context);
 			DepartmentData.Seed(context);
 			BusinessData.Seed(context);
-            EntityTypeEnumData.Seed(context);
+            EnumData.Seed(context);
             AddressFormData.Seed(context);
 
             context.SaveChanges();

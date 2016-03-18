@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.AddressForm
+﻿namespace KnightFrank.Antares.Domain.AddressForm.Queries
 {
     using FluentValidation;
 

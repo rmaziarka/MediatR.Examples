@@ -1,24 +1,18 @@
 namespace KnightFrank.Antares.Dal.Seed
 {
+    using System;
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
+    using System.Linq;
 
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Seed.Common;
 
     internal class LocaleData
     {
         public static void Seed(KnightFrankContext context)
         {
-            var locales = new List<Locale>
-                              {
-                                  new Locale { IsoCode = "cs" },
-								  new Locale { IsoCode = "de" },
-								  new Locale { IsoCode = "en" },
-								  new Locale { IsoCode = "es" },
-								  new Locale { IsoCode = "fr" },
-								  new Locale { IsoCode = "pl" },
-								  new Locale { IsoCode = "sv" }
-							  };
+            List<Locale> locales = Enum.GetNames(typeof(LocaleIsoCode)).Select(x => new Locale { IsoCode = x }).ToList();
 
             SeedData(locales, context);
         }
