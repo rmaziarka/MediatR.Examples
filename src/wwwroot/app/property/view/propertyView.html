@@ -35,3 +35,17 @@
         <button class="btn btn-primary" type="button" ng-click="vm.updateContacts()" ng-disabled="vm.loadingContacts">Configure</button>
     </side-panel-footer>
 </side-panel>
+
+<side-panel component-id="vm.componentIds.ownershipSidePanelId">
+    <side-panel-header>
+        <h3 translate="REQUIREMENT.ADD.FINDCONTACT"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <ownership-add component-id="vm.componentIds.ownershipAddId">
+        </ownership-add>
+    </side-panel-content>
+    <side-panel-footer>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelAddOwnership()">Cancel</button>
+        <button class="btn btn-primary" type="button" ng-click="" ng-disabled="vm.loadingContacts">Save</button>
+    </side-panel-footer>
+</side-panel>

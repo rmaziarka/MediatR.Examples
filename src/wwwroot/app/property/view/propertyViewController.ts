@@ -7,11 +7,15 @@ module Antares.Property.View {
         componentIds: any = {
             contactListId: 'viewProperty:contactListComponent',
             contactSidePanelId: 'viewProperty:contactSidePanelComponent',
+            ownershipSidePanelId: 'viewProperty:ownershipSidePanelComponent',
+            ownershipAddId: 'viewProperty:ownershipAddComponent'
         }
 
         components: any = {
             contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
-            contactSidePanel: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); }
+            contactSidePanel: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
+            ownershipSidePanel: () => { return this.componentRegistry.get(this.componentIds.ownershipSidePanelId); },
+            ownershipAdd: () => { return this.componentRegistry.get(this.componentIds.ownershipAddId); }
         }
 
         loadingContacts: boolean = false;
@@ -24,7 +28,14 @@ module Antares.Property.View {
             $scope.$on('$destroy', () => {
                 this.componentRegistry.deregister(this.componentIds.contactListId);
                 this.componentRegistry.deregister(this.componentIds.contactSidePanelId);
+                this.componentRegistry.deregister(this.componentIds.ownershipSidePanelId);
+                this.componentRegistry.deregister(this.componentIds.ownershipAddId);
             });
+        }
+
+        showOwnershipAdd = () =>{
+            this.components.ownershipAdd().loadOwnerships();
+            this.components.ownershipSidePanel().show();
         }
 
         showContactList = () => {
@@ -50,6 +61,10 @@ module Antares.Property.View {
 
         cancelUpdateContacts() {
             this.components.contactSidePanel().hide();
+        }
+
+        cancelAddOwnership() {
+            this.components.ownershipSidePanel().hide();
         }
 
 
