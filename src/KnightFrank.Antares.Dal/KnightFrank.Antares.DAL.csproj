@@ -125,6 +125,7 @@
     <Compile Include="Model\AddressForm.cs" />
     <Compile Include="Model\AddressFormEntityType.cs" />
     <Compile Include="Model\Business.cs" />
+    <Compile Include="Model\Common\ILocaled.cs" />
     <Compile Include="Model\Configuration\AddressConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressFieldConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressFieldDefinitionConfiguration.cs" />

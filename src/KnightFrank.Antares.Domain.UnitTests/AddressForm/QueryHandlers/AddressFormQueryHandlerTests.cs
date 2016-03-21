@@ -10,6 +10,7 @@
     using KnightFrank.Antares.Domain.AddressForm.Queries;
     using KnightFrank.Antares.Domain.AddressForm.QueryHandlers;
     using KnightFrank.Antares.Domain.AddressForm.QueryResults;
+    using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
 
     using Moq;
 
@@ -36,19 +37,22 @@
 
         private readonly ICollection<EnumTypeItem> mockedEnumTypeItemData;
 
+        private readonly IFixture fixture;
+
         public AddressFormQueryHandlerTests()
         {
-            IFixture fixture = new Fixture().Customize(new AutoMoqCustomization());
-            fixture.Behaviors.Clear();
-            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+            this.fixture = new Fixture().Customize(new AutoMoqCustomization());
+            this.fixture.Behaviors.Clear();
+            this.fixture.RepeatCount = 1;
+            this.fixture.Behaviors.Add(new OmitOnRecursionBehavior());
 
-            this.countryRepository = fixture.Freeze<Mock<IReadGenericRepository<Country>>>();
-            this.enumTypeItemRepository = fixture.Freeze<Mock<IReadGenericRepository<EnumTypeItem>>>();
-            this.addressFormRepository = fixture.Freeze<Mock<IReadGenericRepository<AddressForm>>>();
-            this.mockedCountryData = fixture.CreateMany<Country>().ToList();
-            this.mockedEnumTypeItemData = fixture.CreateMany<EnumTypeItem>().ToList();
-            this.mockedAddressFormData = fixture.CreateMany<AddressForm>().ToList();
-            this.handler = fixture.Create<AddressFormQueryHandler>();
+            this.countryRepository = this.fixture.Freeze<Mock<IReadGenericRepository<Country>>>();
+            this.enumTypeItemRepository = this.fixture.Freeze<Mock<IReadGenericRepository<EnumTypeItem>>>();
+            this.addressFormRepository = this.fixture.Freeze<Mock<IReadGenericRepository<AddressForm>>>();
+            this.mockedCountryData = this.fixture.CreateMany<Country>().ToList();
+            this.mockedEnumTypeItemData = this.fixture.CreateMany<EnumTypeItem>().ToList();
+            this.mockedAddressFormData = this.fixture.CreateMany<AddressForm>().ToList();
+            this.handler = this.fixture.Create<AddressFormQueryHandler>();
         }
 
         [Theory]
@@ -56,12 +60,11 @@
         public void Given_InvalidCountryInQuery_When_HandlingQuery_Then_ShouldThrowException(
             string enumTypeCode,
             string entityTypeCode,
-            Country country,
-            IFixture fixture)
+            Country country)
         {
             // Arrange
-            AddressFormQuery query = fixture.BuildAddressFormQuery(entityTypeCode, country.IsoCode);
-            EnumTypeItem enumTypeItem = fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
+            AddressFormQuery query = this.fixture.BuildAddressFormQuery(entityTypeCode, country.IsoCode);
+            EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
 
             this.mockedEnumTypeItemData.Add(enumTypeItem);
             this.countryRepository.Setup(x => x.Get()).Returns(this.mockedCountryData.AsQueryable());
@@ -76,11 +79,10 @@
         public void Given_InvalidEnumTypeItemInQuery_When_HandlingQuery_Then_ShouldThrowException(
             string enumTypeCode,
             string entityTypeCode,
-            Country country,
-            IFixture fixture)
+            Country country)
         {
             // Arrange
-            AddressFormQuery query = fixture.BuildAddressFormQuery(entityTypeCode, country.IsoCode);
+            AddressFormQuery query = this.fixture.BuildAddressFormQuery(entityTypeCode, country.IsoCode);
 
             this.mockedCountryData.Add(country);
             this.countryRepository.Setup(x => x.Get()).Returns(this.mockedCountryData.AsQueryable());
@@ -96,12 +98,11 @@
             string enumTypeCode,
             string entityTypeCode,
             string otherEnumTypeCode,
-            Country country,
-            IFixture fixture)
+            Country country)
         {
             // Arrange
-            AddressFormQuery query = fixture.BuildAddressFormQuery(entityTypeCode, country.IsoCode);
-            EnumTypeItem enumTypeItem = fixture.BuildEnumTypeItem(otherEnumTypeCode, entityTypeCode);
+            AddressFormQuery query = this.fixture.BuildAddressFormQuery(entityTypeCode, country.IsoCode);
+            EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(otherEnumTypeCode, entityTypeCode);
 
             this.mockedCountryData.Add(country);
             this.mockedEnumTypeItemData.Add(enumTypeItem);
@@ -120,21 +121,20 @@
             string entityTypeCode,
             Country country,
             Country otherCountry,
-            EnumTypeItem otherEnumTypeItem,
-            IFixture fixture)
+            EnumTypeItem otherEnumTypeItem)
         {
             // Arrange
-            AddressFormQuery query = fixture.BuildAddressFormQuery(entityTypeCode, country.IsoCode);
-            EnumTypeItem enumTypeItem = fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
+            AddressFormQuery query = this.fixture.BuildAddressFormQuery(entityTypeCode, country.IsoCode);
+            EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
 
             this.mockedCountryData.Add(country);
             this.mockedEnumTypeItemData.Add(enumTypeItem);
             this.countryRepository.Setup(x => x.Get()).Returns(this.mockedCountryData.AsQueryable());
             this.enumTypeItemRepository.Setup(x => x.Get()).Returns(this.mockedEnumTypeItemData.AsQueryable());
 
-            AddressForm addressFormForOtherCountry = fixture.BuildAddressForm(enumTypeItem, otherCountry);
-            AddressForm addressFormForOtherEntityType = fixture.BuildAddressForm(otherEnumTypeItem, country);
-            AddressForm addressFormForEntityType = fixture.BuildAddressForm(enumTypeItem, country);
+            AddressForm addressFormForOtherCountry = this.fixture.BuildAddressForm(enumTypeItem, otherCountry);
+            AddressForm addressFormForOtherEntityType = this.fixture.BuildAddressForm(otherEnumTypeItem, country);
+            AddressForm addressFormForEntityType = this.fixture.BuildAddressForm(enumTypeItem, country);
 
             this.mockedAddressFormData.AddRange(
                 new[] { addressFormForEntityType, addressFormForOtherCountry, addressFormForOtherEntityType });
@@ -157,21 +157,20 @@
             string entityTypeCode,
             Country country,
             Country otherCountry,
-            EnumTypeItem otherEnumTypeItem,
-            IFixture fixture)
+            EnumTypeItem otherEnumTypeItem)
         {
             // Arrange
-            AddressFormQuery query = fixture.BuildAddressFormQuery(entityTypeCode, country.IsoCode);
-            EnumTypeItem enumTypeItem = fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
+            AddressFormQuery query = this.fixture.BuildAddressFormQuery(entityTypeCode, country.IsoCode);
+            EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
 
             this.mockedCountryData.Add(country);
             this.mockedEnumTypeItemData.Add(enumTypeItem);
             this.countryRepository.Setup(x => x.Get()).Returns(this.mockedCountryData.AsQueryable());
             this.enumTypeItemRepository.Setup(x => x.Get()).Returns(this.mockedEnumTypeItemData.AsQueryable());
 
-            AddressForm addressFormForOtherCountry = fixture.BuildAddressForm(enumTypeItem, otherCountry);
-            AddressForm addressFormForOtherEntityType = fixture.BuildAddressForm(otherEnumTypeItem, country);
-            AddressForm defaultAddressForm = fixture.BuildAddressForm(null, country);
+            AddressForm addressFormForOtherCountry = this.fixture.BuildAddressForm(enumTypeItem, otherCountry);
+            AddressForm addressFormForOtherEntityType = this.fixture.BuildAddressForm(otherEnumTypeItem, country);
+            AddressForm defaultAddressForm = this.fixture.BuildAddressForm(null, country);
 
             this.mockedAddressFormData.AddRange(
                 new[] { defaultAddressForm, addressFormForOtherCountry, addressFormForOtherEntityType });
@@ -194,20 +193,19 @@
             string entityTypeCode,
             Country country,
             Country otherCountry,
-            EnumTypeItem otherEnumTypeItem,
-            IFixture fixture)
+            EnumTypeItem otherEnumTypeItem)
         {
             // Arrange
-            AddressFormQuery query = fixture.BuildAddressFormQuery(entityTypeCode, country.IsoCode);
-            EnumTypeItem enumTypeItem = fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
+            AddressFormQuery query = this.fixture.BuildAddressFormQuery(entityTypeCode, country.IsoCode);
+            EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
 
             this.mockedCountryData.Add(country);
             this.mockedEnumTypeItemData.Add(enumTypeItem);
             this.countryRepository.Setup(x => x.Get()).Returns(this.mockedCountryData.AsQueryable());
             this.enumTypeItemRepository.Setup(x => x.Get()).Returns(this.mockedEnumTypeItemData.AsQueryable());
 
-            AddressForm addressFormForOtherCountry = fixture.BuildAddressForm(enumTypeItem, otherCountry);
-            AddressForm addressFormForOtherEntityType = fixture.BuildAddressForm(otherEnumTypeItem, country);
+            AddressForm addressFormForOtherCountry = this.fixture.BuildAddressForm(enumTypeItem, otherCountry);
+            AddressForm addressFormForOtherEntityType = this.fixture.BuildAddressForm(otherEnumTypeItem, country);
 
             this.mockedAddressFormData.AddRange(new[] { addressFormForOtherCountry, addressFormForOtherEntityType });
             this.addressFormRepository.Setup(x => x.Get()).Returns(this.mockedAddressFormData.AsQueryable());
