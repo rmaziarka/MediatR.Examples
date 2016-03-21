@@ -97,9 +97,10 @@
 
             foreach (Contact contact in contacts)
             {
-                newResidentialSalesRequirementPage.ContactsList.SelectContact(contact.FirstName, contact.Surname);
+                newResidentialSalesRequirementPage.ContactsList.WaitForContactsListToLoad()
+                                                  .SelectContact(contact.FirstName, contact.Surname);
             }
-            newResidentialSalesRequirementPage.ContactsList.SaveContact();
+            newResidentialSalesRequirementPage.ContactsList.SaveContact().WaitForContactListToHide();
         }
 
         [When(@"User clicks save button on create residential sales requirement page")]

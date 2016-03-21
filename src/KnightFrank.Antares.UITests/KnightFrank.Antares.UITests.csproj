@@ -114,12 +114,12 @@
     <Compile Include="Steps\CreatePropertySteps.cs" />
     <Compile Include="Steps\NewContactSteps.cs" />
     <Compile Include="Steps\NewResidentialSalesRequirementSteps.cs" />
-    <Compile Include="Tests\CreateProperty.feature.cs">
+    <Compile Include="Tests\Property\CreateProperty.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateProperty.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\ResidentialSalesRequirement.feature.cs">
+    <Compile Include="Tests\ResidentialSalesRequirement\ResidentialSalesRequirement.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ResidentialSalesRequirement.feature</DependentUpon>
@@ -133,11 +133,11 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <None Include="Tests\CreateProperty.feature">
+    <None Include="Tests\Property\CreateProperty.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>CreateProperty.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\ResidentialSalesRequirement.feature">
+    <None Include="Tests\ResidentialSalesRequirement\ResidentialSalesRequirement.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ResidentialSalesRequirement.feature.cs</LastGenOutput>
     </None>
