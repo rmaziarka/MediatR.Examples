@@ -18,12 +18,14 @@
     "angular-translate-loader-static-files": "~2.10.0",
     "bootstrap-sass": "^3.3.6",
     "font-awesome": "^4.5.0",
-    "angular-messages": "~1.5.0"
+    "angular-messages": "~1.5.0",
+    "angular-deferred-bootstrap": "~0.1.9"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.0"
   },
   "resolutions": {
-    "angular-translate": "~2.10.0"
+    "angular-translate": "~2.10.0",
+    "angular": ">=1.4.0"
   }
 }

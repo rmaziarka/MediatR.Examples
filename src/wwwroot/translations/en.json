@@ -16,7 +16,15 @@
     "FIELD_SHOULD_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
     "MIN_SHOULD_BE_LESS_THAN_MAX": "Min value must not be greater than max value",
     "FIELD_SHOULD_BE_NUMBER": "Value should be number",
-    "LIST_SHOULD_NOT_BE_EMPTY":  "List should contain at least one entry"
+    "LIST_SHOULD_NOT_BE_EMPTY": "List should contain at least one entry"
+  },
+  "PROPERTY": {
+    "ADD": {
+      "ADD_PROPERTY": "Add property"
+    },
+    "VIEW": {
+      "VIEW_PROPERTY": "View property"
+    }
   },
   "REQUIREMENT": {
     "ADD": {
@@ -32,6 +40,24 @@
       "AREA": "Area",
       "LANDAREA": "Land area",
       "DESCRIPTION": "Description"
+    },
+    "VIEW": {
+      "REQUIREMENT_DETAILS": "Requirement details",
+      "EDIT": "Edit",
+      "NOTES": "Notes",
+      "TEMPORARY_RESIDENTIAL_SALES": "Residential sales",
+      "LOCATION": "Location requirements",
+      "BASIC_REQUIREMENTS": "Basic property requirements",
+      "PRICE": "Price",
+      "BEDROOMS": "Bedrooms",
+      "RECEPTIONROOMS": "Reception rooms",
+      "BATHROOMS": "Bathrooms",
+      "PARKINGSPACES": "Parking spaces",
+      "AREA": "Area",
+      "LANDAREA": "Land area",
+      "DESCRIPTION": "Requirement description",
+      "APPLICANT": "Applicant",
+      "CREATEDDATE": "Created"
     }
   }
 }

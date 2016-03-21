@@ -256,4 +256,5 @@ src/wwwroot/.test/templates.js
 
 # specflow feature.cs files
 src/KnightFrank.Antares.UITests/Tests/**/*.feature.cs
+src/KnightFrank.Antares.Api.IntegrationTests/Tests/**/*.feature.cs
 

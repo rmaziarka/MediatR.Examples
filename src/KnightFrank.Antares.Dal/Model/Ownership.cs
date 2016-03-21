@@ -13,7 +13,7 @@
         public DateTime? PurchaseDate { get; set; }
         public DateTime? SellDate { get; set; }
 
-        public List<Contact> Contacts { get; set; }
+        public ICollection<Contact> Contacts { get; set; }
 
         public virtual Property Property { get; set; }
         public Guid PropertyId { get; set; }

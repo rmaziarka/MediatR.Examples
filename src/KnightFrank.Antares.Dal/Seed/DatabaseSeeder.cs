@@ -6,8 +6,11 @@
         {
             LocaleData.Seed(context);
             CountryData.Seed(context);
+			DepartmentData.Seed(context);
+			BusinessData.Seed(context);
             EnumData.Seed(context);
             AddressFormData.Seed(context);
+			RoleData.Seed(context);
 
             context.SaveChanges();
         }

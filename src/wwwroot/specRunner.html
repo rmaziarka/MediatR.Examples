@@ -26,18 +26,21 @@
     <script src="libs/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
     <script src="libs/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
     <script src="libs/angular-messages/angular-messages.js"></script>
+    <script src="libs/angular-deferred-bootstrap/angular-deferred-bootstrap.js"></script>
     <script src="libs/angular-mocks/angular-mocks.js"></script>
     <!-- endbower -->
     <!-- inject:js -->
+    <script src="app/app.bootstrap.js"></script>
     <script src="app/app.module.js"></script>
     <script src="app/requirement/requirement.module.js"></script>
+    <script src="app/appController.js"></script>
     <script src="app/common/components/sidePanel/sidepanelComponent.js"></script>
     <script src="app/common/components/sidePanel/sidepanelController.js"></script>
     <script src="app/common/core/services/registry/componentRegistryService.js"></script>
     <script src="app/common/directives/listNotEmptyDirective.js"></script>
     <script src="app/common/models/dto/contact.js"></script>
-    <script src="app/common/services/configService.js"></script>
     <script src="app/common/services/dataAccessService.js"></script>
+    <script src="app/common/services/userService.js"></script>
     <script src="app/common/testHelpers/assertValidators.js"></script>
     <script src="app/contact/add/contactAddComponent.js"></script>
     <script src="app/contact/add/contactAddController.js"></script>
@@ -47,6 +50,10 @@
     <script src="app/property/view/propertyViewController.js"></script>
     <script src="app/requirement/add/requirementAddComponent.js"></script>
     <script src="app/requirement/add/requirementAddController.js"></script>
+    <script src="app/requirement/view/rangeView/rangeViewComponent.js"></script>
+    <script src="app/requirement/view/rangeView/rangeViewController.js"></script>
+    <script src="app/requirement/view/requirementViewComponent.js"></script>
+    <script src="app/requirement/view/requirementViewController.js"></script>
     <!-- endinject -->
     <!-- inject:specs:js -->
     <script src="app/common/components/sidePanel/tests/sidePanelComponent.spec.js"></script>
@@ -55,9 +62,12 @@
     <script src="app/contact/add/tests/contactAddController.spec.js"></script>
     <script src="app/contact/list/tests/contactListComponent.spec.js"></script>
     <script src="app/requirement/add/test/requirementAddComponent.spec.js"></script>
+    <script src="app/requirement/view/rangeView/test/rangeViewComponent.spec.js"></script>
+    <script src="app/requirement/view/test/requirementViewComponent.spec.js"></script>
     <!-- endinject -->
     <!-- inject:templates:js -->
     <script src=".test/templates.js"></script>
     <!-- endinject -->
+    <script src=".test/bootstrap.js"></script>
 </body>
 </html>

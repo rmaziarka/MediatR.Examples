@@ -110,22 +110,33 @@
     <Compile Include="Migrations\201603171401001_Merge2.Designer.cs">
       <DependentUpon>201603171401001_Merge2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603180947043_BusinessesAndDepartments.cs" />
+    <Compile Include="Migrations\201603180947043_BusinessesAndDepartments.Designer.cs">
+      <DependentUpon>201603180947043_BusinessesAndDepartments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603181604276_UsersAndRoles.cs" />
+    <Compile Include="Migrations\201603181604276_UsersAndRoles.Designer.cs">
+      <DependentUpon>201603181604276_UsersAndRoles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressField.cs" />
     <Compile Include="Model\AddressFieldDefinition.cs" />
     <Compile Include="Model\AddressFieldLabel.cs" />
     <Compile Include="Model\AddressForm.cs" />
     <Compile Include="Model\AddressFormEntityType.cs" />
+    <Compile Include="Model\Business.cs" />
     <Compile Include="Model\Configuration\AddressConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressFieldConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressFieldDefinitionConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressFieldLableConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressFormConfigutration.cs" />
     <Compile Include="Model\Configuration\AddressFormEntityTypeConfiguration.cs" />
+    <Compile Include="Model\Configuration\BusinessConfiguration.cs" />
     <Compile Include="Model\Configuration\ContactConfiguration.cs" />
     <Compile Include="Model\Configuration\BaseEntityConfiguration.cs" />
     <Compile Include="Model\Configuration\CountryConfiguration.cs" />
     <Compile Include="Model\Configuration\CountryLocalisedConfiguration.cs" />
+    <Compile Include="Model\Configuration\DepartmentConfiguration.cs" />
     <Compile Include="Model\Configuration\LocaleConfiguration.cs" />
     <Compile Include="Model\Configuration\EnumLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\EnumTypeItemConfiguration.cs" />
@@ -133,18 +144,23 @@
     <Compile Include="Model\Configuration\OwnershipConfiguration.cs" />
     <Compile Include="Model\Configuration\PropertyConfiguration.cs" />
     <Compile Include="Model\Configuration\RequirementConfiguration.cs" />
+    <Compile Include="Model\Configuration\RoleConfiguration.cs" />
+    <Compile Include="Model\Configuration\UserConfiguration.cs" />
     <Compile Include="Model\Contact.cs" />
     <Compile Include="KnightFrankContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\BaseEntity.cs" />
     <Compile Include="Model\Country.cs" />
     <Compile Include="Model\CountryLocalised.cs" />
+    <Compile Include="Model\Department.cs" />
     <Compile Include="Model\EnumLocalised.cs" />
     <Compile Include="Model\Locale.cs" />
     <Compile Include="Model\EnumTypeItem.cs" />
     <Compile Include="Model\EnumType.cs" />
     <Compile Include="Model\Property.cs" />
     <Compile Include="Model\Ownership.cs" />
+    <Compile Include="Model\Role.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ReadGenericRepository.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
@@ -152,11 +168,14 @@
     <Compile Include="Repository\IGenericRepository.cs" />
     <Compile Include="Model\Requirement.cs" />
     <Compile Include="Seed\Common\LocaleIsoCode.cs" />
+    <Compile Include="Seed\DepartmentData.cs" />
+    <Compile Include="Seed\BusinessData.cs" />
     <Compile Include="Seed\DatabaseSeeder.cs" />
     <Compile Include="Seed\EnumData.cs" />
     <Compile Include="Seed\CountryData.cs" />
     <Compile Include="Seed\LocaleData.cs" />
     <Compile Include="Seed\AddressFormData.cs" />
+    <Compile Include="Seed\RoleData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -208,6 +227,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603171401001_Merge2.resx">
       <DependentUpon>201603171401001_Merge2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603180947043_BusinessesAndDepartments.resx">
+      <DependentUpon>201603180947043_BusinessesAndDepartments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603181604276_UsersAndRoles.resx">
+      <DependentUpon>201603181604276_UsersAndRoles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

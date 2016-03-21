@@ -15,11 +15,12 @@
         public ReadGenericRepository(KnightFrankContext context)
         {
             this.DbContext = context;
+            this.DbContext.Configuration.ProxyCreationEnabled = false;
         }
 
         public IQueryable<T> Get()
         {
-            return this.DbContext.Set<T>();
+            return this.DbContext.Set<T>().AsNoTracking();
         }
 
         public IQueryable<T> GetWithInclude(params Expression<Func<T, object>>[] paths)

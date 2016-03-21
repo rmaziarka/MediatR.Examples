@@ -114,6 +114,16 @@
     <Compile Include="Steps\CreatePropertySteps.cs" />
     <Compile Include="Steps\NewContactSteps.cs" />
     <Compile Include="Steps\NewResidentialSalesRequirementSteps.cs" />
+    <Compile Include="Tests\CreateProperty.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateProperty.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\ResidentialSalesRequirement.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResidentialSalesRequirement.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
