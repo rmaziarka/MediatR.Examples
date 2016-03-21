@@ -16,7 +16,7 @@ Scenario Outline: Retrieve error messages for improper EntityType and CountryCod
 	| bla         | bla         | BadRequest |
 
 @AddressForm
-Scenario: Get proper address template for GB
-	When User retrieves address template for Property entity type and UK contry code
-	Then User should get OK http status code
-		
+Scenario: Get proper address template for Great Britain
+	Given There is AddressForm for GB country code		  	  
+	 When User retrieves address template for Property entity type and GB contry code
+	 Then User should get OK http status code
