@@ -55,7 +55,8 @@
 
             AddressForm addressForm =
                 this.addressFormRepository.Get()
-                    .Include(af => af.AddressFieldDefinitions)
+                    .Include(af => af.AddressFieldDefinitions.Select(afd => afd.AddressField))
+                    .Include(af => af.AddressFieldDefinitions.Select(afd => afd.AddressFieldLabel))
                     .SingleOrDefault(
                         af =>
                         af.CountryId == country.Id && af.AddressFormEntityTypes.Any(afet => afet.EnumTypeItemId == enumTypeItem.Id));
@@ -64,7 +65,8 @@
             {
                 addressForm =
                     this.addressFormRepository.Get()
-                        .Include(af => af.AddressFieldDefinitions)
+                        .Include(af => af.AddressFieldDefinitions.Select(afd => afd.AddressField))
+                        .Include(af => af.AddressFieldDefinitions.Select(afd => afd.AddressFieldLabel))
                         .SingleOrDefault(af => af.CountryId == country.Id && !af.AddressFormEntityTypes.Any());
             }
 
