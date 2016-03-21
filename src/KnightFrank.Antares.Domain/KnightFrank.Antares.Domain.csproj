@@ -92,6 +92,9 @@
     <Compile Include="Enum\QueryResults\EnumQueryItemResult.cs" />
     <Compile Include="Enum\QueryResults\EnumQueryResult.cs" />
     <Compile Include="Enum\QueryResults\EnumQueryResultProfile.cs" />
+    <Compile Include="Ownership\CommandHandlers\CreateOwnershipCommandHandler.cs" />
+    <Compile Include="Ownership\Commands\CreateOwnershipCommand.cs" />
+    <Compile Include="Ownership\Commands\CreateOwnershipCommandProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property\Queries\PropertyQuery.cs" />
     <Compile Include="Property\Queries\PropertyQueryValidator.cs" />
