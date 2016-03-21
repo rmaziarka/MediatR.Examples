@@ -15,8 +15,35 @@ declare module Antares.Common.Models {
         interface IContactResource extends ng.resource.IResource<Dto.IContact> {
         }
 
-        interface IContactResource extends ng.resource.IResource<Antares.Common.Models.Dto.IContact> { }
+        interface IRequirementResource extends ng.resource.IResource<Dto.IRequirement> {
 
-        interface IRequirementResource extends ng.resource.IResource<Antares.Common.Models.Dto.IRequirement> { }
+        }
+
+
+        interface ICountryResource extends ng.resource.IResource<Dto.CountryLocalised> {
+        }
+
+        interface ICountryResourceParameters {
+            entityTypeCode: string;
+        }
+
+        interface ICountryResourceClass extends ng.resource.IResourceClass<ICountryResource> {
+            query(): ng.resource.IResourceArray<ICountryResource>; // without this line interface doesn't compile !!!????????????????
+            query(params: ICountryResourceParameters): ng.resource.IResourceArray<ICountryResource>;
+        }
+
+
+        interface IAddressFormResource extends ng.resource.IResource<Dto.AddressForm> {
+        }
+
+        interface IAddressFormResourceParameters {
+            entityTypeCode: string;
+            countryCode: string;
+        }
+
+        interface IAddressFormResourceClass extends ng.resource.IResourceClass<IAddressFormResource> {
+            get(): IAddressFormResource; // without this line interface doesn't compile !!!????????????????
+            get(params: IAddressFormResourceParameters): IAddressFormResource;
+        }
     }
 }
