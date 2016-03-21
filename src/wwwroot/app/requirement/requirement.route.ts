@@ -12,7 +12,7 @@ module Antares.Requirement {
                 template: '<requirement-add></requirement-add>'
             })
             .state('app.requirement-view', {
-                url: '/requirement/:requirementId',
+                url: '/requirement/:id',
                 template: '<requirement-view></requirement-view>'
             });
     }

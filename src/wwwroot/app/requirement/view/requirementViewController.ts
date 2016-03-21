@@ -16,7 +16,7 @@ module Antares {
                     private dataAccessService: Antares.Services.DataAccessService,
                     $state: angular.ui.IState){
 
-                    var requirementId = $state.params.requirementId;
+                    var requirementId = $state.params.id;
                     this.requirement = dataAccessService.getRequirementResource().get({ id: requirementId });
                     this.requirement.$promise
                         .catch((response) =>{

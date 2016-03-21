@@ -1,11 +1,13 @@
 /// <reference path="../../typings/_all.d.ts" />
+/// <reference path="../../common/services/dataaccessservice.ts" />
+/// <reference path="../../common/core/services/registry/componentregistryservice.ts" />
 
 module Antares.Requirement.Add {
     export class RequirementAddController {
-        static $inject = ['dataAccessService', 'componentRegistry', '$scope'];
+        static $inject = ['dataAccessService', 'componentRegistry', '$scope', '$state'];
         componentIds: any = {
             contactListId: 'addRequirement:contactListComponent',
-            contactSidePanelId: 'addRequirement:contactSidePanelComponent',
+            contactSidePanelId: 'addRequirement:contactSidePanelComponent'
         }
         components: any = {
             contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
@@ -16,9 +18,11 @@ module Antares.Requirement.Add {
         loadingContacts: boolean = false;
 
         constructor(
-            private dataAccessService: Antares.Services.DataAccessService,
-            private componentRegistry: Antares.Core.Service.ComponentRegistry,
-            private $scope: ng.IScope) {
+            private dataAccessService: Services.DataAccessService,
+            private componentRegistry: Core.Service.ComponentRegistry,
+            private $scope: ng.IScope,
+            private $stateService: ng.ui.IStateService) {
+
             this.requirementResource = dataAccessService.getRequirementResource();
 
             $scope.$on('$destroy', () => {
@@ -36,24 +40,29 @@ module Antares.Requirement.Add {
             this.components.contactSidePanel().hide();
         }
 
-        showContactList = () =>{
+        showContactList = () => {
             this.loadingContacts = true;
             this.components.contactList()
                 .loadContacts()
-                .then(() =>{
+                .then(() => {
                     var selectedIds: string[] = [];
                     if (this.requirement.contacts !== undefined && this.requirement.contacts !== null) {
                         selectedIds = <string[]>this.requirement.contacts.map(c => c.id);
                     }
                     this.components.contactList().setSelected(selectedIds);
                 })
-                .finally(() =>{ this.loadingContacts = false; });
-            
+                .finally(() => { this.loadingContacts = false; });
+
             this.components.contactSidePanel().show();
         }
 
-        public save() {
-            this.requirementResource.save(this.requirement);
+        save() {
+            this.requirementResource
+                .save(this.requirement)
+                .$promise
+                .then((requirement) => {
+                    this.$stateService.go('app.requirement-view', requirement);
+                });
         }
     }
     angular.module('app').controller('requirementAddController', RequirementAddController);
