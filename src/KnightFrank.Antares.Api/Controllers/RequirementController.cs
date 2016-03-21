@@ -35,7 +35,7 @@
         /// </summary>
         /// <returns>Requirement identifier.</returns>
         [HttpPost]
-        public Guid CreateRequirement(CreateRequirementCommand command)
+        public Requirement CreateRequirement(CreateRequirementCommand command)
         {
             return this.mediator.Send(command);
         }

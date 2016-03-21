@@ -12,6 +12,11 @@
             return scenarioContext.GetHttpResponseMessage().Content.ReadAsStringAsync().Result;
         }
 
+        public static T GetResponse<T>(this ScenarioContext scenarioContext)
+        {
+            return scenarioContext.GetHttpResponseMessage().Content.ReadAsAsync<T>().Result;
+        }
+
         public static HttpStatusCode GetResponseHttpStatusCode(this ScenarioContext scenarioContext)
         {
             return scenarioContext.GetHttpResponseMessage().StatusCode;

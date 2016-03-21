@@ -10,7 +10,7 @@
 
     using MediatR;
 
-    public class CreateRequirementCommandHandler : IRequestHandler<CreateRequirementCommand, Guid>
+    public class CreateRequirementCommandHandler : IRequestHandler<CreateRequirementCommand, Requirement>
     {
         private readonly IGenericRepository<Requirement> requirementRepository;
 
@@ -22,7 +22,7 @@
             this.contactRepository = contactRepository;
         }
 
-        public Guid Handle(CreateRequirementCommand message)
+        public Requirement Handle(CreateRequirementCommand message)
         {
             var requirement = AutoMapper.Mapper.Map<Requirement>(message);
 
@@ -34,7 +34,7 @@
             this.requirementRepository.Add(requirement);
             this.requirementRepository.Save();
 
-            return requirement.Id;
+            return requirement;
         }
     }
 }
