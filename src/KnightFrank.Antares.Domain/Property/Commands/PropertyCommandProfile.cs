@@ -4,13 +4,14 @@
 
     using KnightFrank.Antares.Dal.Model;
 
-    public class CreatePropertyCommandProfile : Profile
+    public class PropertyCommandProfile : Profile
     {
         protected override void Configure()
         {
-            this.CreateMap<CreatePropertyAddress, Address>();
-
+            this.CreateMap<UpdatePropertyCommand, Property>();
             this.CreateMap<CreatePropertyCommand, Property>();
+
+            this.CreateMap<CreateOrUpdatePropertyAddress, Address>();
         }
     }
 }

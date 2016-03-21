@@ -13,6 +13,7 @@
     using KnightFrank.Antares.Domain.AddressForm.Queries;
     using KnightFrank.Antares.Domain.AddressForm.QueryResults;
     using KnightFrank.Antares.Domain.AddressForm.Specifications;
+    using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Antares.Domain.Common.Specifications;
 
     using MediatR;

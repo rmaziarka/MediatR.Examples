@@ -9,6 +9,7 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.AddressForm.QueryHandlers;
     using KnightFrank.Antares.Domain.AddressForm.QueryResults;
+    using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
 
     using Moq;

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
+    using System.Linq.Expressions;
 
     using KnightFrank.Antares.Dal.Model;
 
@@ -28,19 +29,14 @@
             return this.dbSet.Remove(entity);
         }
 
-        public virtual void Edit(T entity)
-        {
-            this.dbContext.Entry(entity).State = EntityState.Modified;
-        }
-
-        public IEnumerable<T> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+        public IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate)
         {
             return this.dbSet.Where(predicate).AsEnumerable();
         }
 
         public T GetById(Guid id)
         {
-            return this.FindBy(entity => entity.Id.Equals(id)).First();
+            return this.dbSet.SingleOrDefault(entity => entity.Id.Equals(id));
         }
 
         public virtual void Save()

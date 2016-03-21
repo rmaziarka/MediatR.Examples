@@ -116,9 +116,12 @@
     <Compile Include="Property\CommandHandlers\UpdatePropertyCommandHandler.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyAddress.cs" />
     <Compile Include="Property\Commands\CreatePropertyCommand.cs" />
+<<<<<<< fc370438a1f51eb37be5bc52ecb4e75885e42957
+    <Compile Include="Property\Commands\CreatePropertyCommandProfile.cs" />
+=======
     <Compile Include="Property\Commands\UpdatePropertyCommand.cs" />
     <Compile Include="Property\Commands\PropertyCommandProfile.cs" />
-    <Compile Include="Property\Commands\UpdatePropertyCommandValidator.cs" />
+>>>>>>> #20139 #21013 Create and update Property for a UK address. Create logic for adding property. Added controller action and command with empty handler.
     <Compile Include="Property\Queries\PropertyQuery.cs" />
     <Compile Include="Property\Queries\PropertyQueryValidator.cs" />
     <Compile Include="Property\QueryHandlers\PropertyQueryHandler.cs" />

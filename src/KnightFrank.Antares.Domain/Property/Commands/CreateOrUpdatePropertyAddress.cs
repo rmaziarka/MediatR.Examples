@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class CreatePropertyAddress
+    public class CreateOrUpdatePropertyAddress
     {
         public Guid CountryId { get; set; }
 
