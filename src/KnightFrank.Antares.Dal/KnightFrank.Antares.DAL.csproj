@@ -118,6 +118,10 @@
     <Compile Include="Migrations\201603181604276_UsersAndRoles.Designer.cs">
       <DependentUpon>201603181604276_UsersAndRoles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603211118377_PropertyAddressRelationChange.cs" />
+    <Compile Include="Migrations\201603211118377_PropertyAddressRelationChange.Designer.cs">
+      <DependentUpon>201603211118377_PropertyAddressRelationChange.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressField.cs" />
     <Compile Include="Model\AddressFieldDefinition.cs" />
@@ -125,6 +129,7 @@
     <Compile Include="Model\AddressForm.cs" />
     <Compile Include="Model\AddressFormEntityType.cs" />
     <Compile Include="Model\Business.cs" />
+    <Compile Include="Model\Common\ILocaled.cs" />
     <Compile Include="Model\Configuration\AddressConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressFieldConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressFieldDefinitionConfiguration.cs" />
@@ -233,6 +238,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603181604276_UsersAndRoles.resx">
       <DependentUpon>201603181604276_UsersAndRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603211118377_PropertyAddressRelationChange.resx">
+      <DependentUpon>201603211118377_PropertyAddressRelationChange.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

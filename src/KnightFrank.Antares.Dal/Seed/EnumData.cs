@@ -45,6 +45,28 @@ namespace KnightFrank.Antares.Dal.Seed
                                 [LocaleIsoCode.en.ToString()] = "Leaseholder"
                             }
                 });
+
+            SeedEnum(
+                context,
+                "ActivityStatus",
+                new Dictionary<string, Dictionary<string, string>>
+                {
+                    ["PreAppraisal"] =
+                            new Dictionary<string, string>
+                            {
+                                [LocaleIsoCode.en.ToString()] = "Pre-appraisal"
+                            },
+                    ["MarketAppraisal"] =
+                            new Dictionary<string, string>
+                            {
+                                [LocaleIsoCode.en.ToString()] = "Market appraisal"
+                            },
+                    ["NotSelling"] =
+                            new Dictionary<string, string>
+                            {
+                                [LocaleIsoCode.en.ToString()] = "Not selling"
+                            }
+                });
         }
 
         private static void SeedEnum(KnightFrankContext context, string enumType, Dictionary<string, Dictionary<string, string>> enumTypeItems)

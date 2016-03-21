@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using System.Runtime.CompilerServices;
 
     using KnightFrank.Antares.Dal.Model;
 
@@ -47,90 +48,99 @@
                     AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     RegEx = "[XYZ]",
                     AddressFieldId = GetAddressFieldIdByName(context, "PropertyName"),
-                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "{PropertyName}"),
+                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.PROPERTYNAME"),
                     Required = true,
                     RowOrder = 1,
-                    ColumnOrder = 2
+                    ColumnOrder = 2,
+                    ColumnSize = 3
                 },
                 new AddressFieldDefinition
                 {
                     AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     AddressFieldId = GetAddressFieldIdByName(context, "PropertyNumber"),
-                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "{PropertyNumber}"),
+                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.PROPERTYNUMBER"),
                     RegEx = "[ABC]",
                     Required = true,
                     RowOrder = 1,
-                    ColumnOrder = 1
+                    ColumnOrder = 1,
+                    ColumnSize = 3
                 },
                 new AddressFieldDefinition
                 {
                     AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     AddressFieldId = GetAddressFieldIdByName(context, "AddressLine1"),
-                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "{AddressLine1}"),
+                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.ADDRESSLINE1"),
                     RegEx = "[ABC]",
                     Required = true,
                     RowOrder = 2,
-                    ColumnOrder = 1
+                    ColumnOrder = 1,
+                    ColumnSize = 6
                 },
                 new AddressFieldDefinition
                 {
                     AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     AddressFieldId = GetAddressFieldIdByName(context, "AddressLine2"),
-                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "{AddressLine2}"),
+                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.ADDRESSLINE2"),
                     RegEx = "[ABC]",
                     Required = true,
                     RowOrder = 3,
-                    ColumnOrder = 1
+                    ColumnOrder = 1,
+                    ColumnSize = 6
                 },
                 new AddressFieldDefinition
                 {
                     AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     AddressFieldId = GetAddressFieldIdByName(context, "AddressLine3"),
-                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "{AddressLine3}"),
+                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.ADDRESSLINE3"),
                     RegEx = "[ABC]",
                     Required = true,
                     RowOrder = 4,
-                    ColumnOrder = 1
+                    ColumnOrder = 1,
+                    ColumnSize = 6
                 },
                 new AddressFieldDefinition
                 {
                     AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     AddressFieldId = GetAddressFieldIdByName(context, "Postcode"),
-                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "{Postcode}"),
+                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.POSTCODE"),
                     RegEx = "[ABC]",
                     Required = true,
                     RowOrder = 5,
-                    ColumnOrder = 1
+                    ColumnOrder = 1,
+                    ColumnSize = 6
                 },
                 new AddressFieldDefinition
                 {
                     AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     AddressFieldId = GetAddressFieldIdByName(context, "City"),
-                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "{City}"),
+                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.CITY"),
                     RegEx = "[ABC]",
                     Required = true,
                     RowOrder = 6,
-                    ColumnOrder = 1
+                    ColumnOrder = 1,
+                    ColumnSize = 6
                 },
                 new AddressFieldDefinition
                 {
                     AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     AddressFieldId = GetAddressFieldIdByName(context, "County"),
-                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "{County}"),
+                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.COUNTY"),
                     RegEx = "[ABC]",
                     Required = true,
                     RowOrder = 7,
-                    ColumnOrder = 1
+                    ColumnOrder = 1,
+                    ColumnSize = 6
                 },
                 new AddressFieldDefinition
                 {
                     AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
                     AddressFieldId = GetAddressFieldIdByName(context, "Country"),
-                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "{Country}"),
+                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.COUNTRY"),
                     RegEx = "[ABC]",
                     Required = true,
                     RowOrder = 8,
-                    ColumnOrder = 1
+                    ColumnOrder = 1,
+                    ColumnSize = 6
                 },
             };
 
@@ -142,11 +152,19 @@
         {
             var addressForm = new AddressForm
             {
+                Id = GetAddressFormIdByCountryIsoCode(context, "GB"),
                 CountryId = GetCountryIdByCode(context, "GB")
             };
 
             context.AddressForm.AddOrUpdate(addressForm);
             context.SaveChanges();
+        }
+
+        private static Guid GetAddressFormIdByCountryIsoCode(KnightFrankContext context, string countryIsoCode)
+        {
+            AddressForm addressForm = context.AddressForm.FirstOrDefault(af => af.Country.IsoCode == countryIsoCode);
+
+            return addressForm?.Id ?? default(Guid);
         }
 
         private static void SeedAddressField(KnightFrankContext context)
@@ -201,106 +219,106 @@
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "Postcode"),
-                    LabelKey = "{Postcode}"
+                    LabelKey = "ADDRESSFORM.POSTCODE"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "Postcode"),
-                    LabelKey = "{Postalcode}"
+                    LabelKey = "ADDRESSFORM.POSTALCODE"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "Postcode"),
-                    LabelKey = "{Pincode}"
+                    LabelKey = "ADDRESSFORM.PINCODE"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "Country"),
-                    LabelKey = "{Country}"
+                    LabelKey = "ADDRESSFORM.COUNTRY"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "County"),
-                    LabelKey = "{County}"
+                    LabelKey = "ADDRESSFORM.COUNTY"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "County"),
-                    LabelKey = "{State}"
+                    LabelKey = "ADDRESSFORM.STATE"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "County"),
-                    LabelKey = "{Province}"
+                    LabelKey = "ADDRESSFORM.PROVINCE"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "City"),
-                    LabelKey = "{City}"
+                    LabelKey = "ADDRESSFORM.CITY"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "AddressLine1"),
-                    LabelKey = "{AddressLine1}"
+                    LabelKey = "ADDRESSFORM.ADDRESSLINE1"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "AddressLine1"),
-                    LabelKey = "{Street}"
+                    LabelKey = "ADDRESSFORM.STREET"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "AddressLine1"),
-                    LabelKey = "{Address}"
+                    LabelKey = "ADDRESSFORM.ADDRESS"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "AddressLine1"),
-                    LabelKey = "{StreetNumber}"
+                    LabelKey = "ADDRESSFORM.STREETNUMBER"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "AddressLine2"),
-                    LabelKey = "{AddressLine2}"
+                    LabelKey = "ADDRESSFORM.ADDRESSLINE2"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "AddressLine2"),
-                    LabelKey = "{StreetName}"
+                    LabelKey = "ADDRESSFORM.STREETNAME"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "AddressLine3"),
-                    LabelKey = "{AddressLine3}"
+                    LabelKey = "ADDRESSFORM.ADDRESSLINE3"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "PropertyName"),
-                    LabelKey = "{PropertyName}"
+                    LabelKey = "ADDRESSFORM.PROPERTYNAME"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "PropertyName"),
-                    LabelKey = "{BuildingName}"
+                    LabelKey = "ADDRESSFORM.BUILDINGNAME"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "PropertyNumber"),
-                    LabelKey = "{PropertyNumber}"
+                    LabelKey = "ADDRESSFORM.PROPERTYNUMBER"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "PropertyNumber"),
-                    LabelKey = "{FlatNumber}"
+                    LabelKey = "ADDRESSFORM.FLATNUMBER"
                 },
                 new AddressFieldLabel
                 {
                     AddressFieldId = GetAddressFieldIdByName(context, "PropertyNumber"),
-                    LabelKey = "{Unit}"
+                    LabelKey = "ADDRESSFORM.UNIT"
                 },
             };
 
-            context.AddressFieldLabel.AddOrUpdate(x => new { x.LabelKey, x.AddressFieldId }, input.ToArray());
+            context.AddressFieldLabel.AddOrUpdate(x => new { x.AddressFieldId }, input.ToArray());
             context.SaveChanges();
         }
 

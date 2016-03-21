@@ -39,7 +39,7 @@
         public void UserCreatesFollowingRequirementWithGivenContact(Table table)
         {
             string requestUrl = $"{ApiUrl}";
-            
+
             var contacts = this.scenarioContext.Get<List<Contact>>("Contact List");
 
             var requirement = table.CreateInstance<Requirement>();
@@ -63,12 +63,12 @@
         [When(@"User retrieves requirement that he saved")]
         public void WhenUserRetrievesContactsDetailsWith()
         {
-             string id = this.scenarioContext.GetResponseContent().Replace("\"", "");
+            var requirement = this.scenarioContext.GetResponse<Requirement>();
 
-             string requestUrl = $"{ApiUrl}/" + id + "";
+            string requestUrl = $"{ApiUrl}/" + requirement.Id;
 
-             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
-             this.scenarioContext.SetHttpResponseMessage(response);
+            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+            this.scenarioContext.SetHttpResponseMessage(response);
         }
 
         [Then(@"Requirement should be the same as added")]

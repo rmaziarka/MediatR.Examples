@@ -5,10 +5,13 @@
 
     using AutoMapper;
 
+    using global::Domain.Seedwork.Specification;
+
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.AddressForm.Queries;
     using KnightFrank.Antares.Domain.AddressForm.QueryResults;
+    using KnightFrank.Antares.Domain.AddressForm.Specifications;
 
     using MediatR;
 
@@ -53,19 +56,25 @@
                 throw new DomainValidationException("message.EntityType");
             }
 
+            Specification<AddressForm> isDefinedForEntityTypeSpecification =
+                new IsAddressFormAssignedToCountry(country.Id) & new IsAddressFormAssignedToEntityType(enumTypeItem.Id);
+
             AddressForm addressForm =
                 this.addressFormRepository.Get()
-                    .Include(af => af.AddressFieldDefinitions)
-                    .SingleOrDefault(
-                        af =>
-                        af.CountryId == country.Id && af.AddressFormEntityTypes.Any(afet => afet.EnumTypeItemId == enumTypeItem.Id));
+                    .Include(af => af.AddressFieldDefinitions.Select(afd => afd.AddressField))
+                    .Include(af => af.AddressFieldDefinitions.Select(afd => afd.AddressFieldLabel))
+                    .SingleOrDefault(isDefinedForEntityTypeSpecification.SatisfiedBy());
 
             if (addressForm == null)
             {
+                Specification<AddressForm> isGloballyDefinedSpecification =
+                    new IsAddressFormAssignedToCountry(country.Id) & new IsAddressFormGloballyDefined();
+
                 addressForm =
                     this.addressFormRepository.Get()
-                        .Include(af => af.AddressFieldDefinitions)
-                        .SingleOrDefault(af => af.CountryId == country.Id && !af.AddressFormEntityTypes.Any());
+                        .Include(af => af.AddressFieldDefinitions.Select(afd => afd.AddressField))
+                        .Include(af => af.AddressFieldDefinitions.Select(afd => afd.AddressFieldLabel))
+                        .SingleOrDefault(isGloballyDefinedSpecification.SatisfiedBy());
             }
 
             return Mapper.Map<AddressFormQueryResult>(addressForm);

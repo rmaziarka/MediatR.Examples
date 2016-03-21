@@ -22,55 +22,54 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System;
-using Objectivity.Test.Automation.Common;
-using Objectivity.Test.Automation.Common.Logger;
-using TechTalk.SpecFlow;
-using Xunit;
-
 namespace KnightFrank.Antares.UITests
 {
+    using System;
+
+    using Objectivity.Test.Automation.Common;
+    using Objectivity.Test.Automation.Common.Logger;
+
+    using TechTalk.SpecFlow;
+
+    using Xunit;
+
     /// <summary>
-    /// The base class for all tests
+    ///     The base class for all tests
     /// </summary>
     [Binding]
     public class ProjectTestBase : TestBase
     {
         private readonly ScenarioContext scenarioContext;
-        private readonly DriverContext driverContext = new DriverContext();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProjectTestBase"/> class.
+        ///     Initializes a new instance of the <see cref="ProjectTestBase" /> class.
         /// </summary>
         public ProjectTestBase(ScenarioContext scenarioContext)
         {
-            if (scenarioContext == null) throw new ArgumentNullException(nameof(scenarioContext));
+            if (scenarioContext == null)
+            {
+                throw new ArgumentNullException(nameof(scenarioContext));
+            }
             this.scenarioContext = scenarioContext;
         }
 
         /// <summary>
-        /// Logger instance for driver
+        ///     Logger instance for driver
         /// </summary>
         public TestLogger LogTest
         {
-            get
-            {
-                return DriverContext.LogTest;
-            }
+            get { return this.DriverContext.LogTest; }
 
-            set
-            {
-                DriverContext.LogTest = value;
-            }
+            set { this.DriverContext.LogTest = value; }
         }
 
         /// <summary>
-        /// The browser manager
+        ///     The browser manager
         /// </summary>
-        protected DriverContext DriverContext => driverContext;
+        protected DriverContext DriverContext { get; } = new DriverContext();
 
         /// <summary>
-        /// Before the class.
+        ///     Before the class.
         /// </summary>
         [BeforeFeature]
         public static void BeforeClass()
@@ -79,7 +78,7 @@ namespace KnightFrank.Antares.UITests
         }
 
         /// <summary>
-        /// After the class.
+        ///     After the class.
         /// </summary>
         [AfterFeature]
         public static void AfterClass()
@@ -88,29 +87,29 @@ namespace KnightFrank.Antares.UITests
         }
 
         /// <summary>
-        /// Before the test.
+        ///     Before the test.
         /// </summary>
         [Before]
         public void BeforeTest()
         {
-            DriverContext.CurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            DriverContext.TestTitle = scenarioContext.ScenarioInfo.Title;
-            LogTest.LogTestStarting(driverContext);
-            DriverContext.Start();
-            scenarioContext["DriverContext"] = DriverContext;
+            this.DriverContext.CurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            this.DriverContext.TestTitle = this.scenarioContext.ScenarioInfo.Title;
+            this.LogTest.LogTestStarting(this.DriverContext);
+            this.DriverContext.Start();
+            this.scenarioContext["DriverContext"] = this.DriverContext;
         }
 
         /// <summary>
-        /// After the test.
+        ///     After the test.
         /// </summary>
         [After]
         public void AfterTest()
         {
-            DriverContext.IsTestFailed = scenarioContext.TestError != null;
-            SaveTestDetailsIfTestFailed(driverContext);
-            DriverContext.Stop();
-            LogTest.LogTestEnding(driverContext);
-            if (IsVerifyFailedAndClearMessages(driverContext))
+            this.DriverContext.IsTestFailed = this.scenarioContext.TestError != null;
+            this.SaveTestDetailsIfTestFailed(this.DriverContext);
+            this.DriverContext.Stop();
+            this.LogTest.LogTestEnding(this.DriverContext);
+            if (this.IsVerifyFailedAndClearMessages(this.DriverContext))
             {
                 Assert.True(false);
             }

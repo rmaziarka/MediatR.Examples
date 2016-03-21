@@ -184,6 +184,7 @@
     <Compile Include="Controllers\AddressFormController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\EnumsController.cs" />
+    <Compile Include="Controllers\OwnershipController.cs" />
     <Compile Include="Controllers\RequirementController.cs" />
     <Compile Include="Controllers\PropertyController.cs" />
     <Compile Include="Controllers\UserController.cs" />

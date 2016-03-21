@@ -22,17 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using Objectivity.Test.Automation.Common;
-using OpenQA.Selenium;
-
 namespace KnightFrank.Antares.UITests
 {
+    using Objectivity.Test.Automation.Common;
+
+    using OpenQA.Selenium;
+
     public class ProjectPageBase
     {
         public ProjectPageBase(DriverContext driverContext)
         {
-            DriverContext = driverContext;
-            Driver = driverContext.Driver;
+            this.DriverContext = driverContext;
+            this.Driver = driverContext.Driver;
         }
 
         protected IWebDriver Driver { get; set; }
