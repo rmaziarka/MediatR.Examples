@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using System.Runtime.CompilerServices;
 
     using KnightFrank.Antares.Dal.Model;
 
@@ -142,11 +143,19 @@
         {
             var addressForm = new AddressForm
             {
+                Id = GetAddressFormIdByCountryIsoCode(context, "GB"),
                 CountryId = GetCountryIdByCode(context, "GB")
             };
 
             context.AddressForm.AddOrUpdate(addressForm);
             context.SaveChanges();
+        }
+
+        private static Guid GetAddressFormIdByCountryIsoCode(KnightFrankContext context, string countryIsoCode)
+        {
+            AddressForm addressForm = context.AddressForm.FirstOrDefault(af => af.Country.IsoCode == countryIsoCode);
+
+            return addressForm?.Id ?? default(Guid);
         }
 
         private static void SeedAddressField(KnightFrankContext context)
