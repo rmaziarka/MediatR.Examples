@@ -318,7 +318,7 @@
                 },
             };
 
-            context.AddressFieldLabel.AddOrUpdate(x => new { x.AddressFieldId }, input.ToArray());
+            context.AddressFieldLabel.AddOrUpdate(x => new { x.LabelKey, x.AddressFieldId }, input.ToArray());
             context.SaveChanges();
         }
 
