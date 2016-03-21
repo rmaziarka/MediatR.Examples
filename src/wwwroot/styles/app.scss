@@ -1,10 +1,10 @@
-﻿// Bootstrap
-
-@import 'bootstrap';
-
-// Utils
+﻿// Utils
 
 @import 'utils/variables';
+
+// Bootstrap
+
+@import 'bootstrap';
 
 // Base Styles
 
@@ -14,3 +14,7 @@
 
 @import 'components/well';
 @import 'components/side-panel';
+
+// Vendors
+
+@import 'font-awesome';
