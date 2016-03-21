@@ -2,7 +2,6 @@
 
 @AddressForm
 Scenario Outline: Retrieve error messages for improper EntityType and CountryCode
-	Given Country code PL is present in DB 
 	When User retrieves address template for <entityType> entity type and <countryCode> contry code
 	Then User should get <statusCode> http status code
 
