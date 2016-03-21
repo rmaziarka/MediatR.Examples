@@ -17,7 +17,7 @@
                 <label for="{{field.name}}" ng-class="{required: field.required}" translate={{field.labelKey}}></label>
                 <input type="text" class="form-control" id="{{field.name}}" name="{{field.name}}" ng-model="atvm.address[field.name]"
                        ng-pattern="field.regEx" ng-required="field.required" />
-                <div ng-messages="'formAddress.{{field.name}}.$error'" ng-show="formAddress.$submitted || formAddress.{{field.name}}.$dirty">
+                <div ng-messages="formAddress[field.name].$error" ng-show="formAddress.$submitted || formAddress.{{field.name}}.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
