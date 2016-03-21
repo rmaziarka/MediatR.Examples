@@ -114,6 +114,7 @@
     <Compile Include="Property\CommandHandlers\CreatePropertyCommandHandler.cs" />
     <Compile Include="Property\Commands\CreatePropertyAddress.cs" />
     <Compile Include="Property\Commands\CreatePropertyCommand.cs" />
+    <Compile Include="Property\Commands\CreatePropertyCommandProfile.cs" />
     <Compile Include="Property\Queries\PropertyQuery.cs" />
     <Compile Include="Property\Queries\PropertyQueryValidator.cs" />
     <Compile Include="Property\QueryHandlers\PropertyQueryHandler.cs" />

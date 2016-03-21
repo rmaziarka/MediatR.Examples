@@ -52,7 +52,7 @@
         /// <param name="command">Command payload.</param>
         /// <returns>New </returns>
         [HttpPost]
-        public Guid CreateProperty(CreatePropertyCommand command)
+        public Property CreateProperty(CreatePropertyCommand command)
         {
             return this.mediator.Send(command);
         }
