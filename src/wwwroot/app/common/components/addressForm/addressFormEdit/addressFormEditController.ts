@@ -38,6 +38,14 @@ module Antares.Common.Component {
             this.getAddressFormTemplete(this.entityTypeCode, countryId);
         }
 
+        public isSubmitted = (form) => {
+            while (!!form) {
+                if (form.$submitted) return true;
+                form = form.$$parentForm;
+            }
+            return false;
+        };
+
         private getAddressFormTemplete = (entityTypeCode: string, countryId: string): void =>{
             var countryLocalised: CountryLocalised = _.find(this.countries, (c) =>{
                  return c.country.id === countryId;
