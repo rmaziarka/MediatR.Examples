@@ -89,6 +89,7 @@
     <Compile Include="AddressForm\Specifications\IsAddressFormAssignedToEntityType.cs" />
     <Compile Include="AddressForm\Specifications\IsAddressFormAssignedToCountry.cs" />
     <Compile Include="AddressForm\Specifications\IsAddressFormGloballyDefined.cs" />
+    <Compile Include="Common\Exceptions\ResourceNotFoundException.cs" />
     <Compile Include="Common\Specifications\IsLocaled.cs" />
     <Compile Include="Common\ValidatorCommandHandler.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandProfile.cs" />
@@ -100,7 +101,7 @@
     <Compile Include="Contact\Commands\UpdateContactCommandValidator.cs" />
     <Compile Include="Contact\ContactDto.cs" />
     <Compile Include="DomainModule.cs" />
-    <Compile Include="DomainValidationException.cs" />
+    <Compile Include="Common\Exceptions\DomainValidationException.cs" />
     <Compile Include="Enum\Queries\EnumQuery.cs" />
     <Compile Include="Enum\Queries\EnumQueryValidator.cs" />
     <Compile Include="Enum\QueryHandlers\EnumQueryHandler.cs" />
@@ -111,6 +112,13 @@
     <Compile Include="Ownership\Commands\CreateOwnershipCommand.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Property\CommandHandlers\CreatePropertyCommandHandler.cs" />
+    <Compile Include="Property\CommandHandlers\UpdatePropertyCommandHandler.cs" />
+    <Compile Include="Property\Commands\CreateOrUpdatePropertyAddress.cs" />
+    <Compile Include="Property\Commands\CreatePropertyCommand.cs" />
+    <Compile Include="Property\Commands\UpdatePropertyCommand.cs" />
+    <Compile Include="Property\Commands\PropertyCommandProfile.cs" />
+    <Compile Include="Property\Commands\UpdatePropertyCommandValidator.cs" />
     <Compile Include="Property\Queries\PropertyQuery.cs" />
     <Compile Include="Property\Queries\PropertyQueryValidator.cs" />
     <Compile Include="Property\QueryHandlers\PropertyQueryHandler.cs" />
@@ -132,9 +140,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Ownership\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

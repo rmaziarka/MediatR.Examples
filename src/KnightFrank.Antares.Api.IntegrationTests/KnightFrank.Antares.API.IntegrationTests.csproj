@@ -129,40 +129,40 @@
     <Compile Include="Steps\ContactsSteps\ContactsSteps.cs" />
     <Compile Include="Steps\EnumsSteps\EnumsSteps.cs" />
     <Compile Include="Steps\ResidentialSalesRequierementSteps\ResidentialSalesRequierementSteps.cs" />
-    <Compile Include="Tests\AddressForm\AddressForm.feature.cs">
+    <Compile Include="Tests\AddressForm\AddressFormController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AddressForm.feature</DependentUpon>
+      <DependentUpon>AddressFormController.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Contacts\ContactsControllerTests.feature.cs">
+    <Compile Include="Tests\Contacts\ContactController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ContactsControllerTests.feature</DependentUpon>
+      <DependentUpon>ContactController.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Enums\Enums.feature.cs">
+    <Compile Include="Tests\Enums\EnumsController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Enums.feature</DependentUpon>
+      <DependentUpon>EnumsController.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\ResidentialSalesRequirement\NoteOnResidentialSalesRequirement.feature.cs">
-      <DependentUpon>NoteOnResidentialSalesRequirement.feature</DependentUpon>
+    <Compile Include="Tests\ResidentialSalesRequirement\NoteOnRequirement.feature.cs">
+      <DependentUpon>NoteOnRequirement.feature</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Tests\Property.feature.cs">
+    <Compile Include="Tests\Property\PropertyController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Property.feature</DependentUpon>
+      <DependentUpon>PropertyController.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\ResidentialSalesRequirement\ResidentialSalesRequirement.feature.cs">
+    <Compile Include="Tests\ResidentialSalesRequirement\RequirementController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ResidentialSalesRequirement.feature</DependentUpon>
+      <DependentUpon>RequirementController.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\PropertyOwnership.feature.cs">
+    <Compile Include="Tests\Property\OwnershipController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PropertyOwnership.feature</DependentUpon>
+      <DependentUpon>OwnershipController.feature</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -184,33 +184,33 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <None Include="Tests\AddressForm\AddressForm.feature">
+    <None Include="Tests\AddressForm\AddressFormController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>AddressForm.feature.cs</LastGenOutput>
+      <LastGenOutput>AddressFormController.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\Contacts\ContactsControllerTests.feature">
+    <None Include="Tests\Contacts\ContactController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ContactsControllerTests.feature.cs</LastGenOutput>
+      <LastGenOutput>ContactController.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\Enums\Enums.feature">
+    <None Include="Tests\Enums\EnumsController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>Enums.feature.cs</LastGenOutput>
+      <LastGenOutput>EnumsController.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\ResidentialSalesRequirement\NoteOnResidentialSalesRequirement.feature">
+    <None Include="Tests\ResidentialSalesRequirement\NoteOnRequirement.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>NoteOnResidentialSalesRequirement.feature.cs</LastGenOutput>
+      <LastGenOutput>NoteOnRequirement.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\Property.feature">
+    <None Include="Tests\Property\PropertyController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>Property.feature.cs</LastGenOutput>
+      <LastGenOutput>PropertyController.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\ResidentialSalesRequirement\ResidentialSalesRequirement.feature">
+    <None Include="Tests\ResidentialSalesRequirement\RequirementController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ResidentialSalesRequirement.feature.cs</LastGenOutput>
+      <LastGenOutput>RequirementController.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\PropertyOwnership.feature">
+    <None Include="Tests\Property\OwnershipController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>PropertyOwnership.feature.cs</LastGenOutput>
+      <LastGenOutput>OwnershipController.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup />

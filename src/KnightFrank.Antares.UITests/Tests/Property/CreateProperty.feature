@@ -14,4 +14,6 @@ Scenario: Create new property for UK Address
 			| PropertyNumber | PropertyName | AddressLine2 | AddressLine3 | Postcode | City   | County |
 			| 55             | Knight Frank | Baker Street |              | W1U 8AN  | London | London |
 		And User clicks save button on create property page
-	Then New property should be created
+	Then New property should be created with address details 
+		| Country        | PropertyNumber | PropertyName | AddressLine2 | Postcode | City   | County |
+		| United Kingdom | 55             | Knight Frank | Baker Street | W1U 8AN  | London | London |

@@ -8,7 +8,7 @@
 
     using FluentValidation;
 
-    using KnightFrank.Antares.Domain;
+    using KnightFrank.Antares.Domain.Common.Exceptions;
 
     using Newtonsoft.Json;
 

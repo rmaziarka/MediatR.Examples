@@ -2,7 +2,9 @@
     <div class="col-md-12">
         <h2 class="page-header" translate="PROPERTY.ADD.ADD_PROPERTY"></h2>
         <form ng-submit="addPropertyForm.$valid && vm.save()" name="addPropertyForm" id="addPropertyForm" method="post" novalidate>
-            <button type="submit" class="btn btn-primary" id="saveBtn" translate="COMMON.SAVE">Save</button>
+            <address-form-edit entity-type-code="vm.entityTypeCode" address="vm.address"></address-form-edit>
+
+            <button type="submit" class="btn btn-primary" id="saveBtn" translate="COMMON.SAVE"></button>
         </form>
     </div>
 </div>

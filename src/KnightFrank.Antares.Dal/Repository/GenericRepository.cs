@@ -4,8 +4,10 @@
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
+    using System.Linq.Expressions;
 
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Common;
 
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
@@ -28,23 +30,41 @@
             return this.dbSet.Remove(entity);
         }
 
-        public virtual void Edit(T entity)
-        {
-            this.dbContext.Entry(entity).State = EntityState.Modified;
-        }
-
-        public IEnumerable<T> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+        public IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate)
         {
             return this.dbSet.Where(predicate).AsEnumerable();
         }
 
         public T GetById(Guid id)
         {
-            return this.FindBy(entity => entity.Id.Equals(id)).First();
+            return this.dbSet.SingleOrDefault(entity => entity.Id.Equals(id));
         }
 
         public virtual void Save()
         {
+            DateTime utcNow = DateTime.UtcNow;
+
+            this.dbContext.ChangeTracker
+                        .Entries<IAuditableEntity>()
+                        .Where(e => e.State == EntityState.Added)
+                        .Select(e => e.Entity)
+                        .ToList()
+                        .ForEach(e => 
+                        {
+                            e.CreatedAt = utcNow;
+                            e.LastModifiedAt = utcNow;
+                        });
+
+            this.dbContext.ChangeTracker
+                        .Entries<IAuditableEntity>()
+                        .Where(e => e.State == EntityState.Modified)
+                        .Select(e => e.Entity)
+                        .ToList()
+                        .ForEach(e =>
+                        {
+                            e.LastModifiedAt = utcNow;
+                        });
+
             this.dbContext.SaveChanges();
         }
     }

@@ -350,7 +350,6 @@
 			SeedDepartmentData(context, countries, "Edinburgh Residential Development Consultancy", "GB");
 			SeedDepartmentData(context, countries, "EMEA Tenant Representation", "GB");
 			SeedDepartmentData(context, countries, "Energy", "GB");
-			SeedDepartmentData(context, countries, "Energy", "GB");
 			SeedDepartmentData(context, countries, "Enterprise Services, Information Technology - (AUSTRALIA)", "AU");
 			SeedDepartmentData(context, countries, "Esher", "GB");
 			SeedDepartmentData(context, countries, "Esher Lettings", "GB");
@@ -527,7 +526,6 @@
 			SeedDepartmentData(context, countries, "Investment - (SPAIN)", "ES");
 			SeedDepartmentData(context, countries, "Investment and Lettings Management", "GB");
 			SeedDepartmentData(context, countries, "Investment Department - (BELGIUM)", "BE");
-			SeedDepartmentData(context, countries, "Investment Lettings and Management", "GB");
 			SeedDepartmentData(context, countries, "Investment Lettings and Management", "GB");
 			SeedDepartmentData(context, countries, "Investment, Valuation, Residential - (HONG KONG)", "HK");
 			SeedDepartmentData(context, countries, "Investment, Valuation, Residential - (INDONESIA)", "ID");
@@ -972,8 +970,7 @@
 			SeedDepartmentData(context, countries, "Telephone Room", "GB");
 			SeedDepartmentData(context, countries, "Tenancy Management", "GB");
 			SeedDepartmentData(context, countries, "Tenant Representation, Commercial Services - (CHINA)", "CN");
-			SeedDepartmentData(context, countries, "Test Department", "GB");
-			SeedDepartmentData(context, countries, "Thames Gateway", "GB");
+			SeedDepartmentData(context, countries, "Test Department", "GB");  
 			SeedDepartmentData(context, countries, "Thames Gateway", "GB");
 			SeedDepartmentData(context, countries, "The Buying Solution - Country", "GB");
 			SeedDepartmentData(context, countries, "The Buying Solution - London", "GB");

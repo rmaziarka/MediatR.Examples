@@ -1,4 +1,4 @@
-﻿Feature: Note on residential sales requirement
+﻿Feature: Note on requirement
 
 @ignore	
 @ResidentialSalesRequirements 

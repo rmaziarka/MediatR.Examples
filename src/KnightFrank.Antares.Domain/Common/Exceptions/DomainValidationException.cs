@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain
+﻿namespace KnightFrank.Antares.Domain.Common.Exceptions
 {
     using System;
     using System.Runtime.Serialization;

@@ -1,6 +1,7 @@
-﻿Feature: Add, update and view Property
+﻿Feature: Add, update and view property
 
 @ignore
+@Property
 Scenario: Create property in DB
 	Given User is adding a new property
 		| Id | Type | Country        | PropertyNumber | PropertyName    | AddressLine1       | AddressLine2 | Postcode | Town   | County         |
@@ -10,7 +11,8 @@ Scenario: Create property in DB
 		| Id | Type | Country        | PropertyNumber | PropertyName    | AddressLine1       | AddressLine2 | Postcode | Town   | County         |
 		| 3  | Flat | United Kingdom | 1              | Beautifull Flat | Lewis Cubit Square | King Cross   | N1C      | London | Greater London |
 
-@ignore	
+@ignore
+@Property
 Scenario: Update property in DB
 	Given Details of property are provided
 		| Id | Type | Country        | PropertyNumber | PropertyName    | AddressLine1       | AddressLine2 | Postcode | Town   | County         |
@@ -23,7 +25,8 @@ Scenario: Update property in DB
 			| Id | Type | Country        | PropertyNumber | PropertyName         | AddressLine1       | AddressLine2 | Postcode | Town   | County         |
 			| 3  | Flat | United Kingdom | 100            | Gasstation Apartment | Lewis Cubit Square | King Cross   | N1C      | London | Greater London |
 
-@ignore	
+@ignore
+@Property
 Scenario: Update non exisitng property
 	Given Property existing in DB
 		| Id | Type | Country        | PropertyNumber | PropertyName    | AddressLine1       | AddressLine2 | Postcode | Town   | County         |

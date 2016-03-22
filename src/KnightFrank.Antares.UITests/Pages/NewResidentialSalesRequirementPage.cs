@@ -149,6 +149,7 @@
         public void SaveNewResidentialSalesRequirement()
         {
             this.Driver.GetElement(this.saveResidentialSalesRequirement).Click();
+            this.Driver.WaitForAngularToFinish(BaseConfiguration.MediumTimeout);
         }
 
         public void AddNewApllicantForResidentialSalesRequirement()

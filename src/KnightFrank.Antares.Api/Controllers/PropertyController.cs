@@ -7,6 +7,7 @@
 
     using Dal.Model;
 
+    using KnightFrank.Antares.Domain.Property.Commands;
     using KnightFrank.Antares.Domain.Property.Queries;
 
     using MediatR;
@@ -28,7 +29,7 @@
         }
 
         /// <summary>
-        ///     Get property
+        ///     Gets the property
         /// </summary>
         /// <param name="id">Property id</param>
         /// <returns>Property entity</returns>
@@ -43,6 +44,28 @@
             }
 
             return property;
+        }
+
+        /// <summary>
+        ///     Creates the property.
+        /// </summary>
+        /// <param name="command">Command payload.</param>
+        /// <returns>New </returns>
+        [HttpPost]
+        public Property CreateProperty(CreatePropertyCommand command)
+        {
+            return this.mediator.Send(command);
+        }
+
+        /// <summary>
+        ///     Updates the property.
+        /// </summary>
+        /// <param name="command">Command payload.</param>
+        /// <returns>Newly updated property id</returns>
+        [HttpPut]
+        public Guid UpdateProperty(UpdatePropertyCommand command)
+        {
+            return this.mediator.Send(command);
         }
     }
 }

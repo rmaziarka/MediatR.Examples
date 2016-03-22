@@ -1,4 +1,4 @@
-namespace KnightFrank.Antares.Dal.Migrations
+namespace KnightFrank.Antares.Dal.Model.Configuration
 {
     using KnightFrank.Antares.Dal.Model;
 

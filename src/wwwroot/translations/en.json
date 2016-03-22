@@ -4,6 +4,28 @@
     "MIN": "Min",
     "MAX": "Max"
   },
+  "ADDRESSFORM": {
+    "POSTCODE": "Postcode",
+    "POSTALCODE": "Postalcode",
+    "PINCODE": "PIN code",
+    "COUNTRY": "Country",
+    "COUNTY": "County",
+    "STATE": "State",
+    "PROVINCE": "Province",
+    "CITY": "City",
+    "ADDRESSLINE1": "Address line 1",
+    "STREET": "Street",
+    "ADDRESS": "Address",
+    "STREETNUMBER": "Street number",
+    "ADDRESSLINE2": "Address line 2",
+    "STREETNAME": "Street name",
+    "ADDRESSLINE3": "Address line 3",
+    "PROPERTYNAME":  "Property name",
+    "BUILDINGNAME": "Building name",
+    "PROPERTYNUMBER": "Property number",
+    "FLATNUMBER": "Flat number",
+    "UNIT": "Unit"
+  },
   "CONTACT": {
     "TITLE": "Title",
     "FIRSTNAME": "First name",
@@ -15,7 +37,7 @@
     "FIELD_SHOULD_BE_NUMBER": "Value should be a number",
     "FIELD_SHOULD_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
     "MIN_SHOULD_BE_LESS_THAN_MAX": "Min value must not be greater than max value",
-    "FIELD_SHOULD_BE_NUMBER": "Value should be number",
+    "FIELD_HAS_INVALID_FORMAT": "Value has invalid format",
     "LIST_SHOULD_NOT_BE_EMPTY": "List should contain at least one entry"
   },
   "PROPERTY": {

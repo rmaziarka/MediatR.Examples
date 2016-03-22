@@ -11,6 +11,8 @@
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
 
+    using Xunit;
+
     [Binding]
     public class CreatePropertySteps
     {
@@ -31,43 +33,43 @@
         [Given(@"User navigates to create property page")]
         public void OpenCreatePropertyPage()
         {
-            var createPropertyPage = new CreatePropertyPage(this.driverContext);
-            this.scenarioContext["CreatePropertyPage"] = createPropertyPage;
+            var page = new CreatePropertyPage(this.driverContext);
+            this.scenarioContext["CreatePropertyPage"] = page;
         }
 
         [When(@"User selects country on create property page")]
         public void SelectCountryFromDropDownList(Table table)
         {
-            var tableCountry = table.CreateInstance<Address>();
+            var address = table.CreateInstance<Address>();
             this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage")
-                .AddressTemplate.SelectPropertyCountry(tableCountry.Country.IsoCode);
+                .AddressTemplate.SelectPropertyCountry(address.Country.IsoCode);
         }
 
         [When(@"User fills in address details on create property page")]
         public void FillInAddressDetails(Table table)
         {
-            var addressDetails = table.CreateInstance<Address>();
-            var createPropertyPage = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
+            var address= table.CreateInstance<Address>();
+            var page = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
 
-            createPropertyPage.AddressTemplate
-                              .SetPropertyNumber(addressDetails.PropertyNumber)
-                              .SetPropertyName(addressDetails.PropertyName)
-                              .SetPropertyAddressLine2(addressDetails.Line2)
-                              .SetPropertyAddressLine3(addressDetails.Line3)
-                              .SetPropertyPostCode(addressDetails.Postcode)
-                              .SetPropertyCity(addressDetails.City)
-                              .SetPropertyCounty(addressDetails.County);
+            page.AddressTemplate
+                .SetPropertyNumber(address.PropertyNumber)
+                .SetPropertyName(address.PropertyName)
+                .SetPropertyAddressLine2(address.Line2)
+                .SetPropertyAddressLine3(address.Line3)
+                .SetPropertyPostCode(address.Postcode)
+                .SetPropertyCity(address.City)
+                .SetPropertyCounty(address.County);
         }
 
         [When(@"User selects property types on create property page")]
         public void SelectPropertyTypes(Table table)
         {
             var types = table.CreateInstance<List<PropertyType>>();
-            var createPropertyPage = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
+            var page = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
 
             foreach (PropertyType type in types)
             {
-                createPropertyPage.SelectPropertyType(type.Type);
+                page.SelectPropertyType(type.Type);
             }
         }
 
@@ -77,10 +79,19 @@
             this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").SaveProperty();
         }
 
-        [Then(@"New property should be created")]
-        public void CheckIfPropertyCreated()
+        [Then(@"New property should be created with address details")]
+        public void CheckIfPropertyCreated(Table table)
         {
-            //TODO implement check if property was created
+            var address = table.CreateInstance<Address>();
+            var page = new ViewPropertyPage(this.driverContext);
+           
+            Assert.Equal(address.Country.IsoCode, page.GetCountry());
+            Assert.Equal(address.County, page.GetCounty());
+            Assert.Equal(address.PropertyNumber, page.GetPropertyNumber());
+            Assert.Equal(address.PropertyName, page.GetPropertyName());
+            Assert.Equal(address.Line2, page.GetAddressLine2());
+            Assert.Equal(address.Postcode, page.GetPostCode());
+            Assert.Equal(address.City, page.GetCity());
         }
     }
 

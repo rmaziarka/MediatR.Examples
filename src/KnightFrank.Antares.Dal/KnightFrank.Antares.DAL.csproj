@@ -122,6 +122,11 @@
     <Compile Include="Migrations\201603211118377_PropertyAddressRelationChange.Designer.cs">
       <DependentUpon>201603211118377_PropertyAddressRelationChange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603212349532_AddActivity.cs" />
+    <Compile Include="Migrations\201603212349532_AddActivity.Designer.cs">
+      <DependentUpon>201603212349532_AddActivity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Activity\Activity.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressField.cs" />
     <Compile Include="Model\AddressFieldDefinition.cs" />
@@ -129,6 +134,7 @@
     <Compile Include="Model\AddressForm.cs" />
     <Compile Include="Model\AddressFormEntityType.cs" />
     <Compile Include="Model\Business.cs" />
+    <Compile Include="Model\Common\IAuditableEntity.cs" />
     <Compile Include="Model\Common\ILocaled.cs" />
     <Compile Include="Model\Configuration\AddressConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressFieldConfiguration.cs" />
@@ -241,6 +247,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603211118377_PropertyAddressRelationChange.resx">
       <DependentUpon>201603211118377_PropertyAddressRelationChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603212349532_AddActivity.resx">
+      <DependentUpon>201603212349532_AddActivity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

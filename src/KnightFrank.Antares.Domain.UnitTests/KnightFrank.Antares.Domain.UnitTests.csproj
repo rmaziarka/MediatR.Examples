@@ -114,6 +114,8 @@
     <Compile Include="Contact\CommandHandlers\CreateContactCommandHandlerTests.cs" />
     <Compile Include="Enum\Queries\EnumQueryValidatorTests.cs" />
     <Compile Include="Enum\QueryHandlers\EnumQueryHandlerTests.cs" />
+    <Compile Include="Ownership\Commands\CreateOwnershipCommandHandlerTests.cs" />
+    <Compile Include="Property\CommandHandlers\UpdatePropertyCommandHandlerTests.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandHandlerTests.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidatorTests.cs" />
     <Compile Include="InlineAutoMoqDataAttribute.cs" />

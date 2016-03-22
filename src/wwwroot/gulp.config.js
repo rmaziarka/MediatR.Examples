@@ -40,6 +40,7 @@
                 '**/app.bootstrap.js',
                 '**/app.module.js',
                 '**/*.module.js',
+                '**/common/models/dto/*.js',
                 '**/*.js'
             ]
         },
@@ -72,7 +73,7 @@
             htmlTemplatesSrc: clientApp + '**/*.html',
             translationsDest: build + translations,
             staticTranslationsFiles: [
-                translations + '*.json', // translation              
+                translations + '*.json', // translation
             ],
             staticAppFiles: [
                 root + 'wwwroot.nuspec',

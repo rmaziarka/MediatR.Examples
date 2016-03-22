@@ -1,4 +1,4 @@
-﻿Feature: Residential sales requirements 
+﻿Feature: Requirements 
 
 @ResidentialSalesRequirements 
 Scenario: Save requirement to DB with contact and all detailed fields fulfilled
@@ -21,10 +21,10 @@ Scenario: Negative - Save requirement to DB without contact, all detailed fields
 
 @Requirements
 Scenario Outline: Retrieve error messages for improper requirement id		
-		When User retrieves requirement for <id> id
-		Then User should get <statusCode> http status code
+	When User retrieves requirement for <id> id
+	Then User should get <statusCode> http status code
 
-		Examples: 
-		| id                                   | statusCode |
-		| 00000000-0000-0000-0000-000000000000 | NotFound   |
-		| A                                    | BadRequest |
+	Examples: 
+	| id                                   | statusCode |
+	| 00000000-0000-0000-0000-000000000000 | NotFound   |
+	| A                                    | BadRequest |

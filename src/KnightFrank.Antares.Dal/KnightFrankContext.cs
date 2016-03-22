@@ -6,8 +6,9 @@
     using System.Data.Entity.ModelConfiguration.Conventions;
     using System.Linq;
 
-    using KnightFrank.Antares.Dal.Migrations;
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Activity;
+    using KnightFrank.Antares.Dal.Model.Configuration;
 
     public class KnightFrankContext : DbContext
     {
@@ -43,6 +44,7 @@
         public DbSet<Department> Department { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Role> Role { get; set; }
+        public DbSet<Activity> Activity { get; set; }
 
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {
