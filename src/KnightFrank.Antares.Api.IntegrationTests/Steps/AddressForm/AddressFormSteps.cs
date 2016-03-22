@@ -50,7 +50,15 @@
         [Given(@"There is AddressForm for (.*) country code")]
         public void GivenThereIsAddressFormForUk(string countryIsoCode)
         {
+
+            if (this.fixture.DataContext.Country.FirstOrDefault(c => c.IsoCode == countryIsoCode) == null)
+            {
+                this.fixture.DataContext.Country.Add(new Country(){ IsoCode = countryIsoCode });
+                this.fixture.DataContext.SaveChanges();
+            }
+
             Country country = this.fixture.DataContext.Country.FirstOrDefault(c => c.IsoCode == countryIsoCode);
+
             this.AddressForm = new AddressForm { Country = country };
 
             this.fixture.DataContext.AddressForm.Add(this.AddressForm);

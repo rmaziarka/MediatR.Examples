@@ -46,18 +46,10 @@
         [When(@"User creates a contact with following data")]
         public void WhenUserCreatesAContactWithFollowingData(Table table)
         {
-            string requestUrl = $"{ApiUrl}";
-            IEnumerable<Contact> contact = table.CreateSet<Contact>();
-            var list = new List<Contact>();
-
-            foreach (Contact contactRow in contact)
-            {
-                HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, contactRow);
-                this.scenarioContext.SetHttpResponseMessage(response);
-                contactRow.Id = new Guid(this.scenarioContext.GetResponseContent().Replace("\"", ""));
-                list.Add(contactRow);
-            }
-            this.scenarioContext.Set(list, "Contact List");
+            IEnumerable<Contact> contact = table.CreateSet<Contact>().ToList();
+            this.fixture.DataContext.Contact.AddRange(contact);
+            this.fixture.DataContext.SaveChanges();
+            this.scenarioContext.Set(contact, "Contact List");
         }
 
         [When(@"Try to creates a contact with following data")]
@@ -82,7 +74,8 @@
         {
             if (id.Equals("latest"))
             {
-                id = this.scenarioContext.GetResponseContent().Replace("\"", "");
+                var contactList = this.scenarioContext.Get<List<Contact>>("Contact List");
+                id = contactList.Last().Id.ToString();
             }
 
             string requestUrl = $"{ApiUrl}/" + id + "";

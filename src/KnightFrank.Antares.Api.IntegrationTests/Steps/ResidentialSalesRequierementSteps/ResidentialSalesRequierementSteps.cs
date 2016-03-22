@@ -38,14 +38,12 @@
         [When(@"User creates following requirement with given contact")]
         public void UserCreatesFollowingRequirementWithGivenContact(Table table)
         {
-            string requestUrl = $"{ApiUrl}";
-
             var contacts = this.scenarioContext.Get<List<Contact>>("Contact List");
-
             var requirement = table.CreateInstance<Requirement>();
-            requirement.Contacts.Add(contacts[0]);
-            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
-            this.scenarioContext.SetHttpResponseMessage(response);
+            requirement.CreateDate = DateTime.Now;
+            requirement.Contacts.AddRange(contacts);
+            this.fixture.DataContext.Requirement.Add(requirement);
+            this.fixture.DataContext.SaveChanges();
             this.scenarioContext.Set(requirement, "Requirement");
         }
 
@@ -63,7 +61,7 @@
         [When(@"User retrieves requirement that he saved")]
         public void WhenUserRetrievesContactsDetailsWith()
         {
-            var requirement = this.scenarioContext.GetResponse<Requirement>();
+            var requirement = this.scenarioContext.Get<Requirement>("Requirement");
 
             string requestUrl = $"{ApiUrl}/" + requirement.Id;
 
