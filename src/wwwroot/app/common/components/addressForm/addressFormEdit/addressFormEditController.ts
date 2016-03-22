@@ -26,7 +26,7 @@ module Antares.Common.Component {
                 .then((data: any) =>{
                     this.countries = data;
 
-                    if (this.address.countryId) {
+                    if (this.address && this.address.countryId) {
                         this.getAddressFormTemplete(this.entityTypeCode, this.address.countryId);
                     }
                 });
@@ -34,6 +34,7 @@ module Antares.Common.Component {
 
         public changeCountry = (countryId: string): void =>{
             this.address.clear();
+            this.address.countryId = countryId;
 
             this.getAddressFormTemplete(this.entityTypeCode, countryId);
         }
