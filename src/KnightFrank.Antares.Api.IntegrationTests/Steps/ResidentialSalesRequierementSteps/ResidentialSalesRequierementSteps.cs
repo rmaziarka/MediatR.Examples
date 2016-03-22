@@ -74,8 +74,7 @@
         {
             var tableRequirement = this.scenarioContext.Get<Requirement>("Requirement");
             var databaseRequirement = JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent());
-            databaseRequirement.ShouldBeEquivalentTo(tableRequirement,
-                opt => opt.Excluding(req => req.Id).Excluding(req => req.CreateDate));
+            databaseRequirement.ShouldBeEquivalentTo(tableRequirement);
         }
 
         [When(@"User retrieves requirement for (.*) id")]
