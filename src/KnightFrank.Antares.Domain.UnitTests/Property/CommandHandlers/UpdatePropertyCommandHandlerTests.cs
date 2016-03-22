@@ -47,18 +47,7 @@
             handler.Handle(command);
 
             // Assert
-            property.Address.City.Should().Be(command.Address.City);
-            property.Address.Line1.Should().Be(command.Address.Line1);
-            property.Address.Line2.Should().Be(command.Address.Line2);
-            property.Address.Line3.Should().Be(command.Address.Line3);
-            property.Address.CountryId.Should().Be(command.Address.CountryId);
-            property.Address.County.Should().Be(command.Address.County);
-            property.Address.AddressFormId.Should().Be(command.Address.AddressFormId);
-            property.Address.Postcode.Should().Be(command.Address.Postcode);
-            property.Address.PropertyName.Should().Be(command.Address.PropertyName);
-            property.Address.City.Should().Be(command.Address.City);
-            property.Address.PropertyNumber.Should().Be(command.Address.PropertyNumber);
-
+            property.Address.ShouldBeEquivalentTo(command.Address, options => options.IncludingProperties().ExcludingMissingMembers());
             propertyRepository.Verify(p => p.Save(), Times.Once);
         }
     }
