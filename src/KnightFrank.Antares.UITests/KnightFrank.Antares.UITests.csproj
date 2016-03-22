@@ -108,6 +108,7 @@
     <Compile Include="Pages\NotesPage.cs" />
     <Compile Include="Pages\OwnershipDetailsPage.cs" />
     <Compile Include="Pages\ResidentialSalesRequirementDetailsPage.cs" />
+    <Compile Include="Pages\ViewPropertyPage.cs" />
     <Compile Include="ProjectPageBase.cs" />
     <Compile Include="ProjectTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
