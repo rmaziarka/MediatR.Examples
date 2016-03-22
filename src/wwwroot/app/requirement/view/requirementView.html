@@ -64,8 +64,11 @@
                     <range-view label="{{ 'REQUIREMENT.VIEW.PARKINGSPACES' | translate }}" min="vm.requirement.minParkingSpaces" max="vm.requirement.maxParkingSpaces"></range-view>
                     <range-view label="{{ 'REQUIREMENT.VIEW.AREA' | translate }}" min="vm.requirement.minArea" max="vm.requirement.maxArea" suffix="'sq ft'"></range-view>
                     <range-view label="{{ 'REQUIREMENT.VIEW.LANDAREA' | translate }}" min="vm.requirement.minLandArea" max="vm.requirement.maxLandArea" suffix="'sq ft'"></range-view>
+                </section>
+
+                <section>
                     <div class="row">
-                        <div class="col-md-12" translate="REQUIREMENT.VIEW.DESCRIPTION"></div>
+                        <h4 translate="REQUIREMENT.VIEW.DESCRIPTION"></h4>
                         <div class="col-md-12">
                             <p>{{ vm.requirement.description}}</p>
                         </div>
