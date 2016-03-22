@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
     using System.Linq;
-    using System.Runtime.CompilerServices;
 
     using KnightFrank.Antares.Dal.Model;
 
@@ -14,23 +13,25 @@
         {
             SeedAddressField(context);
             SeedAddressFieldLabel(context);
-            SeedAddressForm(context);
-            SeedAddressFieldDefinition(context);
-            SeedAddressFormEntityTypeItem(context);
+            Guid propertyFormId = SeedAddressForm(context, "GB", "Property");
+            SeedPropertyAddressFieldDefinition(context, propertyFormId);
+            SeedAddressFormEntityTypeItem(context, "Property", propertyFormId);
+
+            Guid requirementFormId = SeedAddressForm(context, "GB", "Requirement");
+            SeedRequirementAddressFieldDefinition(context, requirementFormId);
+            SeedAddressFormEntityTypeItem(context, "Requirement", requirementFormId);
         }
 
-        private static void SeedAddressFormEntityTypeItem(KnightFrankContext context)
+        private static void SeedAddressFormEntityTypeItem(KnightFrankContext context, string entityTypeCode, Guid formId)
         {
-            var addressFormEntityTypes = new List<AddressFormEntityType>
-            {
+            var addressFormEntityType =
                 new AddressFormEntityType
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
-                    EnumTypeItemId = GetEntityTypeItemIdByCode(context, "Property")
-                }
-            };
+                    AddressFormId = formId,
+                    EnumTypeItemId = GetEntityTypeItemIdByCode(context, entityTypeCode)
+                };
 
-            context.AddressFormEntityType.AddOrUpdate(x => x.AddressFormId, addressFormEntityTypes.ToArray());
+            context.AddressFormEntityType.AddOrUpdate(afet => new { afet.AddressFormId, afet.EnumTypeItemId }, addressFormEntityType);
             context.SaveChanges();
         }
 
@@ -39,13 +40,56 @@
             return context.EnumTypeItem.FirstOrDefault(eti => eti.Code == propertyCode)?.Id ?? default(Guid);
         }
 
-        private static void SeedAddressFieldDefinition(KnightFrankContext context)
+        private static void SeedRequirementAddressFieldDefinition(KnightFrankContext context, Guid formId)
         {
             var addressFieldDefinitions = new List<AddressFieldDefinition>
             {
                 new AddressFieldDefinition
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
+                    AddressFormId = formId,
+                    RegEx = @"\w+",
+                    AddressFieldId = GetAddressFieldIdByName(context, "City"),
+                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.CITY"),
+                    Required = false,
+                    RowOrder = 1,
+                    ColumnOrder = 1,
+                    ColumnSize = 6
+                },
+                new AddressFieldDefinition
+                {
+                    AddressFormId = formId,
+                    RegEx = @"\w+",
+                    AddressFieldId = GetAddressFieldIdByName(context, "Street"),
+                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.STREET"),
+                    Required = false,
+                    RowOrder = 2,
+                    ColumnOrder = 1,
+                    ColumnSize = 6
+                },
+                new AddressFieldDefinition
+                {
+                    AddressFormId = formId,
+                    RegEx = @"\w+",
+                    AddressFieldId = GetAddressFieldIdByName(context, "Postcode"),
+                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.POSTCODE"),
+                    Required = false,
+                    RowOrder = 3,
+                    ColumnOrder = 1,
+                    ColumnSize = 6
+                }
+            };
+
+            context.AddressFieldDefinition.AddOrUpdate(af => new { af.AddressFieldId, af.AddressFormId, af.AddressFieldLabelId }, addressFieldDefinitions.ToArray());
+            context.SaveChanges();
+        }
+
+        private static void SeedPropertyAddressFieldDefinition(KnightFrankContext context, Guid formId)
+        {
+            var addressFieldDefinitions = new List<AddressFieldDefinition>
+            {
+                new AddressFieldDefinition
+                {
+                    AddressFormId = formId,
                     RegEx = "[XYZ]",
                     AddressFieldId = GetAddressFieldIdByName(context, "PropertyName"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.PROPERTYNAME"),
@@ -56,7 +100,7 @@
                 },
                 new AddressFieldDefinition
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
+                    AddressFormId = formId,
                     AddressFieldId = GetAddressFieldIdByName(context, "PropertyNumber"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.PROPERTYNUMBER"),
                     RegEx = "[ABC]",
@@ -67,7 +111,7 @@
                 },
                 new AddressFieldDefinition
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
+                    AddressFormId = formId,
                     AddressFieldId = GetAddressFieldIdByName(context, "AddressLine1"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.ADDRESSLINE1"),
                     RegEx = "[ABC]",
@@ -78,7 +122,7 @@
                 },
                 new AddressFieldDefinition
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
+                    AddressFormId = formId,
                     AddressFieldId = GetAddressFieldIdByName(context, "AddressLine2"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.ADDRESSLINE2"),
                     RegEx = "[ABC]",
@@ -89,7 +133,7 @@
                 },
                 new AddressFieldDefinition
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
+                    AddressFormId = formId,
                     AddressFieldId = GetAddressFieldIdByName(context, "AddressLine3"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.ADDRESSLINE3"),
                     RegEx = "[ABC]",
@@ -100,7 +144,7 @@
                 },
                 new AddressFieldDefinition
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
+                    AddressFormId = formId,
                     AddressFieldId = GetAddressFieldIdByName(context, "Postcode"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.POSTCODE"),
                     RegEx = "[ABC]",
@@ -111,7 +155,7 @@
                 },
                 new AddressFieldDefinition
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
+                    AddressFormId = formId,
                     AddressFieldId = GetAddressFieldIdByName(context, "City"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.CITY"),
                     RegEx = "[ABC]",
@@ -122,7 +166,7 @@
                 },
                 new AddressFieldDefinition
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
+                    AddressFormId = formId,
                     AddressFieldId = GetAddressFieldIdByName(context, "County"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.COUNTY"),
                     RegEx = "[ABC]",
@@ -133,7 +177,7 @@
                 },
                 new AddressFieldDefinition
                 {
-                    AddressFormId = GetAddressFormIdByCountryCode(context, "GB"),
+                    AddressFormId = formId,
                     AddressFieldId = GetAddressFieldIdByName(context, "Country"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.COUNTRY"),
                     RegEx = "[ABC]",
@@ -141,30 +185,29 @@
                     RowOrder = 8,
                     ColumnOrder = 1,
                     ColumnSize = 6
-                },
+                }
             };
 
             context.AddressFieldDefinition.AddOrUpdate(af => new { af.AddressFieldId, af.AddressFormId, af.AddressFieldLabelId }, addressFieldDefinitions.ToArray());
             context.SaveChanges();
         }
 
-        private static void SeedAddressForm(KnightFrankContext context)
+        private static Guid SeedAddressForm(KnightFrankContext context, string countryCode, string entityEnumCode)
         {
-            var addressForm = new AddressForm
+            AddressForm addressForm =
+                context.AddressForm.FirstOrDefault(af => af.Country.IsoCode == countryCode &&
+                                                         af.AddressFormEntityTypes.Any(
+                                                             afet => afet.EnumTypeItem.Code == entityEnumCode));
+
+            addressForm = addressForm ?? new AddressForm
             {
-                Id = GetAddressFormIdByCountryIsoCode(context, "GB"),
-                CountryId = GetCountryIdByCode(context, "GB")
+                CountryId = GetCountryIdByCode(context, countryCode)
             };
 
             context.AddressForm.AddOrUpdate(addressForm);
             context.SaveChanges();
-        }
 
-        private static Guid GetAddressFormIdByCountryIsoCode(KnightFrankContext context, string countryIsoCode)
-        {
-            AddressForm addressForm = context.AddressForm.FirstOrDefault(af => af.Country.IsoCode == countryIsoCode);
-
-            return addressForm?.Id ?? default(Guid);
+            return addressForm.Id;
         }
 
         private static void SeedAddressField(KnightFrankContext context)
@@ -206,6 +249,10 @@
                 new AddressField
                 {
                     Name = "Country"
+                },
+                new AddressField
+                {
+                    Name = "Street"
                 }
             };
             context.AddressField.AddOrUpdate(x => x.Name, input.ToArray());
@@ -327,13 +374,6 @@
             Country country = context.Country.FirstOrDefault(c => c.IsoCode == countryCode);
 
             return country?.Id ?? default(Guid);
-        }
-
-        private static Guid GetAddressFormIdByCountryCode(KnightFrankContext context, string countryCode)
-        {
-            AddressForm addressForm = context.AddressForm.FirstOrDefault(af => af.Country.IsoCode == countryCode);
-
-            return addressForm?.Id ?? default(Guid);
         }
 
         private static Guid GetAddressFieldIdByName(KnightFrankContext context, string addressFieldName)
