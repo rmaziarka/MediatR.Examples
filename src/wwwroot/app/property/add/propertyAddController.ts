@@ -1,16 +1,14 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Property {
-    import Address = Common.Models.Dto.Address;
-    import IAddress = Antares.Common.Models.Dto.IAddress;
+    import Dto = Antares.Common.Models.Dto;
 
     export class PropertyAddController {
         public entityTypeCode: string = 'Property';
-
-        public address: IAddress = new Address();
+        public property: Dto.Property = new Dto.Property();
 
         public save() {
-            alert("Saved: " + JSON.stringify(this.address));
+            alert("Saved: " + JSON.stringify(this.property.address));
         }
     }
 

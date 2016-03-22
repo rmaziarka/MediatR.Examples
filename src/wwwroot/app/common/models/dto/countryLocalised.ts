@@ -1,12 +1,18 @@
 ﻿module Antares.Common.Models.Dto {
     export class Country {
-        id: string;
-        isoCode: string;
+        public id: string;
+        public isoCode: string;
     }
 
-    export class CountryLocalised {
+    export interface ICountryLocalised {
         country: Country;
         locale: Dto.Locale;
         value: string;
+    }
+
+    export class CountryLocalised implements ICountryLocalised{
+        public country: Country;
+        public locale: Dto.Locale;
+        public value: string;
     }
 }

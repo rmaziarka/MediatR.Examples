@@ -3,49 +3,54 @@
 
 declare module Antares.Common.Models {
     export module Resources {
-        interface IResourceParameters {
-            id: string;
-        }
 
-        interface IBaseResourceClass<T> extends ng.resource.IResourceClass<T> {
-            get(): T;
-            get(params: IResourceParameters): T;
-        }
-
+        // *** IResource extensions***
         interface IContactResource extends ng.resource.IResource<Dto.IContact> {
         }
 
         interface IRequirementResource extends ng.resource.IResource<Dto.IRequirement> {
-
         }
 
-
-        interface ICountryResource extends ng.resource.IResource<Dto.CountryLocalised> {
+        interface IPropertyResource extends ng.resource.IResource<Dto.IProperty> {
         }
 
-        interface ICountryResourceParameters {
+        interface ICountryLocalisedResource extends ng.resource.IResource<Dto.ICountryLocalised> {
+        }
+
+        interface IAddressFormResource extends ng.resource.IResource<Dto.IAddressForm> {
+        }
+
+        interface IOwnershipResource extends ng.resource.IResource<Antares.Common.Models.Dto.IOwnership> {
+        }
+
+        // *** IResourceClass extensions ***
+
+        // - common -
+        interface IBaseResourceParameters {
+            id: string;
+        }
+        interface IBaseResourceClass<T> extends ng.resource.IResourceClass<T> {
+            get(): T;
+            get(params: IBaseResourceParameters): T;
+        }
+
+        // - country -
+        interface ICountryLocalisedResourceParameters {
             entityTypeCode: string;
         }
-
-        interface ICountryResourceClass extends ng.resource.IResourceClass<ICountryResource> {
-            query(): ng.resource.IResourceArray<ICountryResource>; // without this line interface doesn't compile !!!????????????????
-            query(params: ICountryResourceParameters): ng.resource.IResourceArray<ICountryResource>;
+        interface ICountryResourceClass extends ng.resource.IResourceClass<ICountryLocalisedResource> {
+            query(): ng.resource.IResourceArray<ICountryLocalisedResource>;
+            query(params: ICountryLocalisedResourceParameters): ng.resource.IResourceArray<ICountryLocalisedResource>;
         }
 
-
-        interface IAddressFormResource extends ng.resource.IResource<Dto.AddressForm> {
-        }
-
+        // - address form -
         interface IAddressFormResourceParameters {
             entityTypeCode: string;
             countryCode: string;
         }
-
         interface IAddressFormResourceClass extends ng.resource.IResourceClass<IAddressFormResource> {
-            get(): IAddressFormResource; // without this line interface doesn't compile !!!????????????????
+            get(): IAddressFormResource;
             get(params: IAddressFormResourceParameters): IAddressFormResource;
         }
-
-        interface IOwnershipResource extends ng.resource.IResource<Antares.Common.Models.Dto.IOwnership> { }
     }
 }

@@ -11,7 +11,13 @@
         ){}
     }
 
-    export class AddressForm {
+    export interface IAddressForm {
+        id: string;
+        countryId: string;
+        addressFieldDefinitions: AddressFormFieldDefinition[];
+    }
+
+    export class AddressForm implements IAddressForm{
         public addressFieldRows: AddressFormFieldDefinition[][];
 
         constructor(

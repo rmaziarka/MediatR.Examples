@@ -8,9 +8,14 @@ module Antares.Property {
     function initRoute($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('app.property-view', {
-                url: '/property/view',
+                url: '/property/view/:id',
                 params: {},
                 template: '<property-view></property-view>'
+            })
+            .state('app.property-edit', {
+                url: '/property/edit/:id',
+                params: {},
+                template: '<property-edit></property-edit>'
             })
             .state('app.property-add', {
                 url: '/property/add',

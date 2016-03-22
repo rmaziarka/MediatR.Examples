@@ -44,6 +44,9 @@
     "ADD": {
       "ADD_PROPERTY": "Add property"
     },
+    "EDIT": {
+      "EDIT_PROPERTY": "Edit property"
+    },
     "VIEW": {
       "VIEW_PROPERTY": "View property"
     }
