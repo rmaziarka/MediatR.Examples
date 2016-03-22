@@ -1,7 +1,7 @@
-﻿<div class="panel panel-default">
+﻿<div class="panel panel-default" ng-repeat="owner in vm.owners">
     <div class="panel-body">
-        <div>Jon Smith</div>
-        <small>CEO of Lorem ipsum, London</small>
+        <div>{{ owner.firstName }} {{ owner.surname }}</div>
+        <small>{{ owner.title }}</small>
     </div>
 </div>
 <form>
@@ -19,7 +19,7 @@
     </div>
     <div class="form-group checkbox">
         <label>
-            <input type="checkbox"> current ownership
+            <input type="checkbox" ng-model="vm.ownership.isCurrentOwner"> current ownership
         </label>
     </div>
     <div class="form-group">
@@ -27,7 +27,7 @@
             <div class="col-md-8">
                 <label for="purchasing-date">Purchasing date</label>
                 <div class="input-group">
-                    <input type="text" id="purchasing-date" class="form-control">
+                    <input type="date" id="purchasing-date" class="form-control" ng-model="vm.ownership.purchaseDate">
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                     </span>
@@ -35,12 +35,12 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-show="!vm.ownership.isCurrentOwner" >
         <div class="row">
             <div class="col-md-8">
                 <label for="selling-date">Selling date</label>
                 <div class="input-group">
-                    <input type="text" id="selling-date" class="form-control">
+                    <input type="date" id="selling-date" class="form-control"ng-model="vm.ownership.sellingDate">
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                     </span>
@@ -53,7 +53,7 @@
             <div class="col-md-8">
                 <label for="buying-price">Buying price</label>
                 <div class="input-group">
-                    <input type="text" id="buying-price" class="form-control">
+                    <input type="text" id="buying-price" class="form-control" ng-model="vm.ownership.buyingPrice">
                     <div class="input-group-addon">GBP</div>
                 </div>
             </div>
@@ -64,7 +64,7 @@
             <div class="col-md-8">
                 <label for="selling-price">Selling price</label>
                 <div class="input-group">
-                    <input type="text" id="selling-price" class="form-control">
+                    <input type="text" id="selling-price" class="form-control" ng-model="vm.ownership.sellingPrice">
                     <div class="input-group-addon">GBP</div>
                 </div>
             </div>

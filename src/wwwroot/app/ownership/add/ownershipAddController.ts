@@ -1,11 +1,14 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Property {
+    import IOwnership = Antares.Common.Models.Dto.IOwnership;
+    import IContact = Antares.Common.Models.Dto.IContact;
+
     export class OwnershipAddController {
         static $inject = ['componentRegistry', 'dataAccessService'];
-
-        owners: any = [];
+        
         componentId: string;
+        ownership: IOwnership = <IOwnership>{};
 
         constructor(
             componentRegistry: Antares.Core.Service.ComponentRegistry,
@@ -14,13 +17,13 @@ module Antares.Property {
             componentRegistry.register(this, this.componentId);
         }
 
-        loadOwnerships = (owners: any) =>{
-            this.owners.push(owners);
+        loadOwnership = (contacts: IContact[]) =>{
+            this.ownership.contacts = contacts;
         }
 
-        public save() {
-            alert("Saved");
-        }      
+        getOwnership = () =>{
+            return this.ownership;
+        }
     }
 
     angular.module('app').controller('OwnershipAddController', OwnershipAddController);

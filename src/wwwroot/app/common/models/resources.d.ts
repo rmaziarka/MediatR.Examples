@@ -18,5 +18,7 @@ declare module Antares.Common.Models {
         interface IContactResource extends ng.resource.IResource<Antares.Common.Models.Dto.IContact> { }
 
         interface IRequirementResource extends ng.resource.IResource<Antares.Common.Models.Dto.IRequirement> { }
+
+        interface IOwnershipResource extends ng.resource.IResource<Antares.Common.Models.Dto.IOwnership> { }
     }
 }

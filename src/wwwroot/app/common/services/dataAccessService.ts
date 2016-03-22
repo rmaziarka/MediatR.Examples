@@ -20,6 +20,11 @@ module Antares.Services {
             return <Resources.IBaseResourceClass<Resources.IRequirementResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/requirement/:id');
         }
+
+        getOwnershipResource(): Resources.IBaseResourceClass<Resources.IOwnershipResource> {
+            return <Resources.IBaseResourceClass<Resources.IOwnershipResource>>
+                this.$resource(this.appConfig.rootUrl + '/api/ownership/:id');
+        }
     }
 
     angular.module('app').service('dataAccessService', DataAccessService);
