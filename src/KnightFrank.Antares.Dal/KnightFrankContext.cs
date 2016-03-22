@@ -6,7 +6,6 @@
     using System.Data.Entity.ModelConfiguration.Conventions;
     using System.Linq;
 
-    using KnightFrank.Antares.Dal.Migrations;
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Model.Activity;
     using KnightFrank.Antares.Dal.Model.Configuration;
