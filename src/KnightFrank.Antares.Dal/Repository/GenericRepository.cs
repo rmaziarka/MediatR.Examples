@@ -7,6 +7,7 @@
     using System.Linq.Expressions;
 
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Common;
 
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
@@ -41,6 +42,29 @@
 
         public virtual void Save()
         {
+            DateTime utcNow = DateTime.UtcNow;
+
+            this.dbContext.ChangeTracker
+                        .Entries<IAuditableEntity>()
+                        .Where(e => e.State == EntityState.Added)
+                        .Select(e => e.Entity)
+                        .ToList()
+                        .ForEach(e => 
+                        {
+                            e.CreatedAt = utcNow;
+                            e.LastModifiedAt = utcNow;
+                        });
+
+            this.dbContext.ChangeTracker
+                        .Entries<IAuditableEntity>()
+                        .Where(e => e.State == EntityState.Modified)
+                        .Select(e => e.Entity)
+                        .ToList()
+                        .ForEach(e =>
+                        {
+                            e.LastModifiedAt = utcNow;
+                        });
+
             this.dbContext.SaveChanges();
         }
     }

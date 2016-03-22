@@ -1,9 +1,9 @@
-﻿namespace KnightFrank.Antares.Dal.Migrations
+﻿namespace KnightFrank.Antares.Dal.Model.Configuration
 {
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.ModelConfiguration;
-    using KnightFrank.Antares.Dal.Model;
 
+    using KnightFrank.Antares.Dal.Model;
 
     internal class BaseEntityConfiguration<T> : EntityTypeConfiguration<T> where T : BaseEntity
     {
