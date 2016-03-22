@@ -1,7 +1,5 @@
 ﻿namespace KnightFrank.Antares.Domain.Property.CommandHandlers
 {
-    using System;
-
     using AutoMapper;
 
     using KnightFrank.Antares.Dal.Model;
