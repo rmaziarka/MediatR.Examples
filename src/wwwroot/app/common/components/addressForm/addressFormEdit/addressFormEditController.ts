@@ -34,6 +34,7 @@ module Antares.Common.Component {
 
         public changeCountry = (countryId: string): void =>{
             this.address.clear();
+            this.address.countryId = countryId;
 
             this.getAddressFormTemplete(this.entityTypeCode, countryId);
         }

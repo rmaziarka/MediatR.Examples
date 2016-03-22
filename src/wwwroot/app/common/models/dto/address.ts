@@ -1,16 +1,16 @@
 ﻿module Antares.Common.Models.Dto {
     export interface IAddress {
-        id: string;
-        countryId: string;
-        addressFormId: string;
-        propertyName: string;
-        propertyNumber: string;
-        line1: string;
-        line2: string;
-        line3: string;
-        postcode: string;
-        city: string;
-        county: string;
+        id?: string;
+        countryId?: string;
+        addressFormId?: string;
+        propertyName?: string;
+        propertyNumber?: string;
+        line1?: string;
+        line2?: string;
+        line3?: string;
+        postcode?: string;
+        city?: string;
+        county?: string;
     }
 
     export class Address implements IAddress {
