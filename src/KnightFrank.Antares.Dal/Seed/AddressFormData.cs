@@ -90,44 +90,33 @@
                 new AddressFieldDefinition
                 {
                     AddressFormId = formId,
-                    RegEx = "[XYZ]",
-                    AddressFieldId = GetAddressFieldIdByName(context, "PropertyName"),
-                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.PROPERTYNAME"),
-                    Required = true,
-                    RowOrder = 1,
-                    ColumnOrder = 2,
-                    ColumnSize = 3
-                },
-                new AddressFieldDefinition
-                {
-                    AddressFormId = formId,
                     AddressFieldId = GetAddressFieldIdByName(context, "PropertyNumber"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.PROPERTYNUMBER"),
-                    RegEx = "[ABC]",
+                    RegEx = "^.{1,8}$",
                     Required = true,
                     RowOrder = 1,
                     ColumnOrder = 1,
-                    ColumnSize = 3
+                    ColumnSize = 2
                 },
                 new AddressFieldDefinition
                 {
                     AddressFormId = formId,
-                    AddressFieldId = GetAddressFieldIdByName(context, "AddressLine1"),
-                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.ADDRESSLINE1"),
-                    RegEx = "[ABC]",
-                    Required = true,
-                    RowOrder = 2,
-                    ColumnOrder = 1,
-                    ColumnSize = 6
+                    RegEx = "^.{0,128}$",
+                    AddressFieldId = GetAddressFieldIdByName(context, "PropertyName"),
+                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.PROPERTYNAME"),
+                    Required = false,
+                    RowOrder = 1,
+                    ColumnOrder = 2,
+                    ColumnSize = 4
                 },
                 new AddressFieldDefinition
                 {
                     AddressFormId = formId,
                     AddressFieldId = GetAddressFieldIdByName(context, "AddressLine2"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.ADDRESSLINE2"),
-                    RegEx = "[ABC]",
-                    Required = true,
-                    RowOrder = 3,
+                    RegEx = "^.{0,128}$",
+                    Required = false,
+                    RowOrder = 2,
                     ColumnOrder = 1,
                     ColumnSize = 6
                 },
@@ -136,9 +125,9 @@
                     AddressFormId = formId,
                     AddressFieldId = GetAddressFieldIdByName(context, "AddressLine3"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.ADDRESSLINE3"),
-                    RegEx = "[ABC]",
-                    Required = true,
-                    RowOrder = 4,
+                    RegEx = "^.{0,128}$",
+                    Required = false,
+                    RowOrder = 3,
                     ColumnOrder = 1,
                     ColumnSize = 6
                 },
@@ -147,20 +136,20 @@
                     AddressFormId = formId,
                     AddressFieldId = GetAddressFieldIdByName(context, "Postcode"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.POSTCODE"),
-                    RegEx = "[ABC]",
+                    RegEx = "^.{1,10}$",
                     Required = true,
-                    RowOrder = 5,
+                    RowOrder = 4,
                     ColumnOrder = 1,
-                    ColumnSize = 6
+                    ColumnSize = 2
                 },
                 new AddressFieldDefinition
                 {
                     AddressFormId = formId,
                     AddressFieldId = GetAddressFieldIdByName(context, "City"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.CITY"),
-                    RegEx = "[ABC]",
-                    Required = true,
-                    RowOrder = 6,
+                    RegEx = "^.{0,128}$",
+                    Required = false,
+                    RowOrder = 5,
                     ColumnOrder = 1,
                     ColumnSize = 6
                 },
@@ -169,9 +158,9 @@
                     AddressFormId = formId,
                     AddressFieldId = GetAddressFieldIdByName(context, "County"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.COUNTY"),
-                    RegEx = "[ABC]",
-                    Required = true,
-                    RowOrder = 7,
+                    RegEx = "^.{0,128}$",
+                    Required = false,
+                    RowOrder = 6,
                     ColumnOrder = 1,
                     ColumnSize = 6
                 },
@@ -180,9 +169,9 @@
                     AddressFormId = formId,
                     AddressFieldId = GetAddressFieldIdByName(context, "Country"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.COUNTRY"),
-                    RegEx = "[ABC]",
-                    Required = true,
-                    RowOrder = 8,
+                    RegEx = "^.{0,128}$",
+                    Required = false,
+                    RowOrder = 7,
                     ColumnOrder = 1,
                     ColumnSize = 6
                 }
