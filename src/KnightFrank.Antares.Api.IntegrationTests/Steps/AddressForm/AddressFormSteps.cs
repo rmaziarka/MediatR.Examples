@@ -4,14 +4,11 @@
     using System.Linq;
     using System.Net.Http;
 
-    using FluentAssertions;
-
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal.Model;
 
     using TechTalk.SpecFlow;
-    using TechTalk.SpecFlow.Assist;
 
     using Xunit;
 
@@ -22,10 +19,7 @@
         private readonly BaseTestClassFixture fixture;
 
         private readonly ScenarioContext scenarioContext;
-        private AddressField AddressField { get; set; }
-        private AddressFieldLabel AddressFieldLabel { get; set; }
         private AddressForm AddressForm { get; set; }
-        private AddressFieldDefinition AddressFieldDefinition { get; set; }
 
         public AddressFormSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {

@@ -1,6 +1,7 @@
 ﻿Feature: Property ownership
 
-@ignore	
+@ignore
+@Property
 Scenario: Save ownership where dates are not overlapping
 	Given Property exist in DB
 		And property has already ownership
@@ -11,7 +12,9 @@ Scenario: Save ownership where dates are not overlapping
 		| 2  | Freehold | 01-05-2012      | 01-07-2015   | Sarah Conor |
 	Then HTTP 200 OK should be received
 		And Entry should be added to DB
-@ignore	
+
+@ignore
+@Property
 Scenario: Save ownership where dates are overlapping
 	Given Property exist in DB
 		And has ownership
@@ -22,14 +25,16 @@ Scenario: Save ownership where dates are overlapping
 		| 2  | Freehold | 01-01-2012      | 01-07-2015   | Sarah Conor |
 	Then HTTP 403 Frobidden should be received
 
-@ignore	
+@ignore
+@Property
 Scenario: Get property ownership list for existing property and ownership with no entry
 	Given Property exist in DB
 		But property has not any ownership
 	When User send GET request to view property details
 	Then ownership from DB should be visible as empty list on property details page
 
-@ignore	
+@ignore
+@Property
 Scenario: Get property ownership list for existing property and ownership with one entry
 	Given Property exist in DB
 		And property has already ownership
@@ -38,7 +43,8 @@ Scenario: Get property ownership list for existing property and ownership with o
 	When User send GET request to view property details
 	Then ownership from DB should be visible as list on property details page
 
-@ignore	
+@ignore
+@Property
 Scenario: Get property ownership list for existing property and ownership with more than 2 entry
 	Given Property exist in DB
 		And property has already ownership
@@ -50,13 +56,15 @@ Scenario: Get property ownership list for existing property and ownership with m
 	When User send GET request to view property details
 	Then ownership from DB should be visible as list on property details page
 
-@ignore	
+@ignore
+@Property
 Scenario: Get property ownership list for non existing property
 	Given Property with id=10 not exist in DB
 	When User send GET request for ownership list for property with id=10
 	Then HTTP 404 Not found should be received by user
 
-@ignore	
+@ignore
+@Property	
 Scenario: Get property ownership details for non existing ownership
 	Given contect with id=10 not exist in DB
 	When Users send GET request for ownership with id=10

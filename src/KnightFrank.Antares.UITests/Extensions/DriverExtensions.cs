@@ -23,18 +23,18 @@
             {
                 new WebDriverWait(webDriver, TimeSpan.FromSeconds(timeout)).Until(
                     driver =>
-                        {
-                            var javaScriptExecutor = driver as IJavaScriptExecutor;
-                            return javaScriptExecutor != null
-                                   && javaScriptExecutor.ExecuteAsyncScript(
-                                       "var callback = arguments[arguments.length - 1];"
-                                       + "var el = document.querySelector('body');" + "if (!window.angular) "
-                                       + "{callback('false')}" + "if (angular.getTestability) "
-                                       + "{angular.getTestability(el).whenStable(function(){callback('true')});} " + "else "
-                                       + "{if (!angular.element(el).injector())" + "{callback('false')}"
-                                       + "var browser = angular.element(el).injector().get('$browser');"
-                                       + "browser.notifyWhenNoOutstandingRequests(function(){callback('true')});}").Equals("true");
-                        });
+                    {
+                        var javaScriptExecutor = driver as IJavaScriptExecutor;
+                        return javaScriptExecutor != null
+                               && javaScriptExecutor.ExecuteAsyncScript(
+                                   "var callback = arguments[arguments.length - 1];"
+                                   + "var el = document.querySelector('body');" + "if (!window.angular) "
+                                   + "{callback('false')}" + "if (angular.getTestability) "
+                                   + "{angular.getTestability(el).whenStable(function(){callback('true')});} " + "else "
+                                   + "{if (!angular.element(el).injector())" + "{callback('false')}"
+                                   + "var browser = angular.element(el).injector().get('$browser');"
+                                   + "browser.notifyWhenNoOutstandingRequests(function(){callback('true')});}").Equals("true");
+                    });
             }
             catch (InvalidOperationException)
             {

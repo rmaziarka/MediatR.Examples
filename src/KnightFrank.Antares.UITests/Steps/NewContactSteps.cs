@@ -30,19 +30,19 @@
         [When(@"User navigates to create contact page")]
         public void OpenNewContactPage()
         {
-            NewContactPage newContactPage = new NewContactPage(this.driverContext).OpenNewContactPage();
-            this.scenarioContext["NewContactPage"] = newContactPage;
+            NewContactPage page = new NewContactPage(this.driverContext).OpenNewContactPage();
+            this.scenarioContext["NewContactPage"] = page;
         }
 
         [When(@"User fills in contact details on create contact page")]
         public void SetNewContactDetails(Table table)
         {
-            var newContactPage = this.scenarioContext.Get<NewContactPage>("NewContactPage");
+            var page = this.scenarioContext.Get<NewContactPage>("NewContactPage");
             var contactDetails = table.CreateInstance<Contact>();
 
-            newContactPage.SetTitle(contactDetails.Title);
-            newContactPage.SetFirstName(contactDetails.FirstName);
-            newContactPage.SetSurname(contactDetails.Surname);
+            page.SetTitle(contactDetails.Title)
+                .SetFirstName(contactDetails.FirstName)
+                .SetSurname(contactDetails.Surname);
         }
 
         [When(@"User clicks save button on create contact page")]
