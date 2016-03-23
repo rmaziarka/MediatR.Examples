@@ -9,7 +9,6 @@
     using Domain.Requirement.Commands;
 
     using KnightFrank.Antares.Dal.Model;
-    using KnightFrank.Antares.Domain.Requirement;
     using KnightFrank.Antares.Domain.Requirement.Queries;
 
     /// <summary>

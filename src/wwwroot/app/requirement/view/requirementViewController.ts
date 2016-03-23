@@ -5,8 +5,6 @@ module Antares {
     export module Requirement {
         export module View {
             export class RequirementViewController {
-                static $inject = ['dataAccessService', '$state'];
-
                 isLoading: boolean = true;
                 hasError: boolean = false;
                 errorStatus: number;
@@ -14,9 +12,9 @@ module Antares {
 
                 constructor(
                     private dataAccessService: Antares.Services.DataAccessService,
-                    $state: angular.ui.IState){
+                    $state: ng.ui.IStateService){
 
-                    var requirementId = $state.params.id;
+                    var requirementId: string = $state.params['id'];
                     this.requirement = dataAccessService.getRequirementResource().get({ id: requirementId });
                     this.requirement.$promise
                         .catch((response) =>{

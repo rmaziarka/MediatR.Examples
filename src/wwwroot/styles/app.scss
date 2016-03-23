@@ -4,7 +4,8 @@
 
 // Bootstrap
 
-@import 'bootstrap';
+@import 'bootstrap/bootstrap-variables';
+@import 'bootstrap/bootstrap';
 
 // Base Styles
 
@@ -15,6 +16,7 @@
 @import 'components/well';
 @import 'components/side-panel';
 @import 'components/panel';
+@import 'components/section';
 
 // Vendors
 

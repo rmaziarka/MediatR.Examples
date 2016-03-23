@@ -1,0 +1,18 @@
+<div class="row" ng-show="vm.isLoading">
+    <div class="col-md-12">
+        <div class="alert alert-info">Loading data...</div>
+    </div>
+</div>
+<div class="row" ng-hide="vm.isLoading">
+    <div class="col-md-6">
+        <h2 class="page-header" translate="PROPERTY.EDIT.EDIT_PROPERTY"></h2>
+        <form ng-submit="addPropertyForm.$valid && vm.save()" name="addPropertyForm" id="addPropertyForm" method="post" novalidate>
+            <fieldset>
+                <address-form-edit entity-type-code="vm.entityTypeCode" address="vm.property.address"></address-form-edit>
+            </fieldset>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="saveBtn" translate="COMMON.SAVE"></button>
+            </div>
+        </form>
+    </div>
+</div>

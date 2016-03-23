@@ -1,11 +1,13 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
+/// <reference path="../../../common/testhelpers/assertvalidators.ts" />
 
 module Antares {
     import RequirementAddController = Antares.Requirement.Add.RequirementAddController;
-    describe('Given requirement is being added', () => {
+    describe('Given requirement is being added', () =>{
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
-            assertValidator: Antares.TestHelpers.AssertValidators;
+            assertValidator: TestHelpers.AssertValidators,
+            $http: ng.IHttpBackendService;
 
         var pageObjectSelectors = {
             descriptionSelector: 'textarea#description',
@@ -42,7 +44,13 @@ module Antares {
 
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
-            $compile: ng.ICompileService) => {
+            $compile: ng.ICompileService,
+            $httpBackend: ng.IHttpBackendService) =>{
+
+            $http = $httpBackend;
+            $http.whenGET(/\/api\/addressform\/countries/).respond(() => {
+                return [200, []];
+            });
 
             scope = $rootScope.$new();
             element = $compile('<requirement-add></requirement-add>')(scope);
@@ -52,8 +60,13 @@ module Antares {
             controller.requirement = requirementMock;
             scope.$apply();
 
-            assertValidator = new Antares.TestHelpers.AssertValidators(element, scope);
+            assertValidator = new TestHelpers.AssertValidators(element, scope);
         }));
+
+        it('includes address form component', () => {
+            var addressFormComponent = element.find('address-form-edit');
+            expect(addressFormComponent.length).toBe(1);
+        });
 
         // Description Validations
         it('when description value is too long then validation message should be displayed', () => {

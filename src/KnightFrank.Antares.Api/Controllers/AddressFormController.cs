@@ -3,12 +3,13 @@
     using System.Collections.Generic;
     using System.Web.Http;
 
-    using KnightFrank.Antares.Dal.Model;
-    using KnightFrank.Antares.Domain.AddressForm;
     using KnightFrank.Antares.Domain.AddressForm.Queries;
     using KnightFrank.Antares.Domain.AddressForm.QueryResults;
 
     using MediatR;
+    using System;
+    using System.Net;
+    using System.Net.Http;
 
     /// <summary>
     ///     Controller class for address form
@@ -48,6 +49,24 @@
         public IList<CountryLocalisedResult> GetCountries([FromUri(Name = "")] GetCountriesForAddressFormsQuery query)
         {
             return this.mediator.Send(query);
+        }
+
+        /// <summary>
+        /// Gets the address form query result.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Address form query result </returns>
+        [HttpGet]
+        [Route("{id}")]
+        public AddressFormQueryResult GetAddressFormQueryResult(Guid id)
+        {
+            var result = this.mediator.Send(new AddressFormByIdQuery(id));
+            if (result == null)
+            {
+                throw new HttpResponseException(this.Request.CreateErrorResponse(HttpStatusCode.NotFound, "Address form not found."));
+            }
+
+            return result;
         }
     }
 }

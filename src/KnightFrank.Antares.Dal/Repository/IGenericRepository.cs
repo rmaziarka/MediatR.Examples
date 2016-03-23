@@ -17,5 +17,7 @@
         T GetById(Guid id);
 
         void Save();
+
+        IEnumerable<T> GetWithInclude(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] paths);
     }
 }

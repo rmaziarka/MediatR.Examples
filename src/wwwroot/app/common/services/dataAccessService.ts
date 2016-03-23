@@ -12,6 +12,11 @@ module Antares.Services {
         constructor(private $resource: ng.resource.IResourceService, private appConfig: Antares.Common.Models.IAppConfig) {
         }
 
+        private updateAction: ng.resource.IActionDescriptor = {
+            method: 'PUT',
+            isArray: false
+        };
+
         getContactResource(): Resources.IBaseResourceClass<Resources.IContactResource> {
             return <Resources.IBaseResourceClass<Resources.IContactResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/contact/:id');
@@ -29,12 +34,17 @@ module Antares.Services {
 
         getAddressFormResource(): AddressFormResourceClass {
             return <AddressFormResourceClass>
-                this.$resource(this.appConfig.rootUrl + '/api/addressForm?entityType=:entityTypeCode&countryCode=:countryCode');
+                this.$resource(this.appConfig.rootUrl + '/api/addressForm/:id?entityType=:entityTypeCode&countryCode=:countryCode');
         }
 
 		getOwnershipResource(): Resources.IBaseResourceClass<Resources.IOwnershipResource> {
             return <Resources.IBaseResourceClass<Resources.IOwnershipResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/ownership/:id');
+        }
+
+        getPropertyResource(): Resources.IBaseResourceClass<Resources.IPropertyResource> {
+            return <Resources.IBaseResourceClass<Resources.IPropertyResource>>
+                this.$resource(this.appConfig.rootUrl + '/api/property/:id', null, { update: this.updateAction });
         }
 
         getEnumResource(): Resources.IBaseResourceClass<Resources.IEnumResource> {

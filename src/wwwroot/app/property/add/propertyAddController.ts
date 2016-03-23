@@ -1,16 +1,29 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Property {
-    import Address = Common.Models.Dto.Address;
-    import IAddress = Antares.Common.Models.Dto.IAddress;
+    import Dto = Antares.Common.Models.Dto;
 
     export class PropertyAddController {
         public entityTypeCode: string = 'Property';
+        public property: Dto.Property = new Dto.Property();
 
-        public address: IAddress = new Address();
+        private propertyResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IPropertyResource>;
+
+        constructor(
+            private dataAccessService: Services.DataAccessService,
+            private $state: ng.ui.IStateService) {
+
+            this.propertyResource = dataAccessService.getPropertyResource();
+        }
 
         public save() {
-            alert("Saved: " + JSON.stringify(this.address));
+            this.propertyResource
+                .save(this.property)
+                .$promise
+                .then((property: Dto.IProperty) => {
+                    //TODO: change to property-view when ready
+                    this.$state.go('app.property-edit', property);
+                });
         }
     }
 

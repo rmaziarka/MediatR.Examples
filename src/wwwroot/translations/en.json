@@ -18,13 +18,13 @@
     "STATE": "State",
     "PROVINCE": "Province",
     "CITY": "City",
-    "ADDRESSLINE1": "Address line 1",
+    "LINE1": "Address line 1",
     "STREET": "Street",
     "ADDRESS": "Address",
     "STREETNUMBER": "Street number",
-    "ADDRESSLINE2": "Address line 2",
+    "LINE2": "Address line 2",
     "STREETNAME": "Street name",
-    "ADDRESSLINE3": "Address line 3",
+    "LINE3": "Address line 3",
     "PROPERTYNAME":  "Property name",
     "BUILDINGNAME": "Building name",
     "PROPERTYNUMBER": "Property number",
@@ -47,7 +47,12 @@
   },
   "PROPERTY": {
     "ADD": {
-      "ADD_PROPERTY": "Add property"
+      "ADD_PROPERTY": "Add property",
+      "ADDRESS": "Address"
+    },
+    "EDIT": {
+      "EDIT_PROPERTY": "Edit property",
+      "ADDRESS": "Address"
     },
     "VIEW": {
       "VIEW_PROPERTY": "View property"

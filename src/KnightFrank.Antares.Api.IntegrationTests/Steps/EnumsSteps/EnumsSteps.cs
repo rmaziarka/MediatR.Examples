@@ -46,6 +46,7 @@
         {
             string requestUrl = $"{ApiUrl}/" + code + "/items";
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+
             this.scenarioContext.SetHttpResponseMessage(response);
         }
         
@@ -54,7 +55,6 @@
         {
             this.EnumType = table.CreateInstance<EnumType>();
             this.fixture.DataContext.EnumType.Add(this.EnumType);
-
             this.fixture.DataContext.SaveChanges();
         }
 

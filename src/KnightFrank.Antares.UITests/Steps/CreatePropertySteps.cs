@@ -11,8 +11,6 @@
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
 
-    using Xunit;
-
     [Binding]
     public class CreatePropertySteps
     {
@@ -48,7 +46,7 @@
         [When(@"User fills in address details on create property page")]
         public void FillInAddressDetails(Table table)
         {
-            var address= table.CreateInstance<Address>();
+            var address = table.CreateInstance<Address>();
             var page = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
 
             page.AddressTemplate
@@ -77,21 +75,6 @@
         public void ClickSaveButton()
         {
             this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").SaveProperty();
-        }
-
-        [Then(@"New property should be created with address details")]
-        public void CheckIfPropertyCreated(Table table)
-        {
-            var address = table.CreateInstance<Address>();
-            var page = new ViewPropertyPage(this.driverContext);
-           
-            Assert.Equal(address.Country.IsoCode, page.GetCountry());
-            Assert.Equal(address.County, page.GetCounty());
-            Assert.Equal(address.PropertyNumber, page.GetPropertyNumber());
-            Assert.Equal(address.PropertyName, page.GetPropertyName());
-            Assert.Equal(address.Line2, page.GetAddressLine2());
-            Assert.Equal(address.Postcode, page.GetPostCode());
-            Assert.Equal(address.City, page.GetCity());
         }
     }
 

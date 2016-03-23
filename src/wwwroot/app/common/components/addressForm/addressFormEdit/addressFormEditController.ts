@@ -1,15 +1,21 @@
 ﻿/// <reference path="../../../../typings/_all.d.ts" />
+/// <reference path="../../../../common/models/dto/countryLocalised.ts" />
+/// <reference path="../../../../common/models/dto/address.ts" />
+/// <reference path="../../../../common/models/dto/addressForm.ts" />
+/// <reference path="../../../../common/models/resources.d.ts" />
+/// <reference path="../../../../common/services/dataaccessservice.ts" />
 
 module Antares.Common.Component {
-    import CountryLocalised = Common.Models.Dto.CountryLocalised;
     import Address = Common.Models.Dto.Address;
+    import CountryLocalised = Common.Models.Dto.CountryLocalised;
     import AddressForm = Common.Models.Dto.AddressForm;
-    import AddressFormFieldDefinition = Antares.Common.Models.Dto.AddressFormFieldDefinition;
+    import IAddressForm = Common.Models.Dto.IAddressForm;
 
     export class AddressFormEditController {
         public entityTypeCode: string;
         public address: Address;
 
+        public isLoading: boolean = true;
         private countries: CountryLocalised[] = [];
         private addressForm: AddressForm;
 
@@ -29,6 +35,9 @@ module Antares.Common.Component {
                     if (this.address && this.address.countryId) {
                         this.getAddressFormTemplete(this.entityTypeCode, this.address.countryId);
                     }
+                })
+                .finally(() => {
+                    this.isLoading = false;
                 });
         }
 
@@ -55,12 +64,8 @@ module Antares.Common.Component {
             this.addressFormResource
                 .get({ entityTypeCode: entityTypeCode, countryCode: countryLocalised.country.isoCode })
                 .$promise
-                .then((data: any) =>{
-                    var id: string = data.id,
-                        countryId: string = data.countryId,
-                        addressFieldDefinitions: AddressFormFieldDefinition[] = data.addressFieldDefinitions;
-
-                    this.addressForm = new AddressForm(id, countryId, addressFieldDefinitions);
+                .then((data: IAddressForm) =>{
+                    this.addressForm = new AddressForm(data.id, data.countryId, data.addressFieldDefinitions);
                     this.address.addressFormId = this.addressForm.id;
                 });
         };

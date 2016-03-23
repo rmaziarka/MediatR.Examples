@@ -40,6 +40,17 @@
             return this.dbSet.SingleOrDefault(entity => entity.Id.Equals(id));
         }
 
+        public IEnumerable<T> GetWithInclude(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] paths)
+        {
+            IQueryable<T> queryable = this.dbSet.Where(predicate);
+            if (paths != null)
+            {
+                queryable = paths.Aggregate(queryable, (current, path) => current.Include(path));
+            }
+
+            return queryable.AsEnumerable();
+        }
+
         public virtual void Save()
         {
             DateTime utcNow = DateTime.UtcNow;

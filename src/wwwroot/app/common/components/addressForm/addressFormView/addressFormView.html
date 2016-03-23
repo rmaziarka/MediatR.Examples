@@ -1,1 +1,5 @@
-<div>Hello address form</div>
+<div>
+    <div ng-repeat="row in vm.addressForm.addressFieldRows | orderBy: 'rowOrder'">
+        <div>{{ vm.getAddressRowText(row.rowOrder) }}</div>
+    </div>
+</div>

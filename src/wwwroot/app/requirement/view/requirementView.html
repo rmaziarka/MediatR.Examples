@@ -20,40 +20,40 @@
         <div class="well requirement-details-header">
             <span translate="REQUIREMENT.VIEW.TEMPORARY_RESIDENTIAL_SALES"></span>
             <!--<h3>Flat, 2-4 bedrooms, London, max 200,000 £</h3>-->
-            <p>
+            <span>
                 <span translate="REQUIREMENT.VIEW.CREATEDDATE"></span>
                 <span>{{ vm.requirement.createDate | date: 'longDate' }}</span>
-            </p>
+            </span>
             <!--<button class="btn btn-default" type="button" translate="REQUIREMENT.VIEW.EDIT"></button>-->
             <!--<button class="btn btn-default" type="button">{{ 'REQUIREMENT.VIEW.NOTES' | translate }} <span>(0)</span></button>-->
         </div>
 
         <div class="row">
             <div class="col-md-6">
-                <section>
+                <section class="section-item">
                     <h4 translate="REQUIREMENT.VIEW.LOCATION"></h4>
                     <!-- TODO: address view component -->
-                    <div class="row">
+                    <div class="section-row row">
                         <div class="col-xs-6">Country</div>
                         <div class="col-xs-6">United Kingdom</div>
                     </div>
-                    <div class="row">
+                    <div class="section-row row">
                         <div class="col-xs-6">Postcode</div>
                         <div class="col-xs-6"></div>
                     </div>
-                    <div class="row">
+                    <div class="section-row row">
                         <div class="col-xs-6">Country</div>
                         <div class="col-xs-6"></div>
                     </div>
-                    <div class="row">
+                    <div class="section-row row">
                         <div class="col-xs-6">Town</div>
                         <div class="col-xs-6">London</div>
                     </div>
                 </section>
 
-                <section>
+                <section class="section-item">
                     <h4 translate="REQUIREMENT.VIEW.BASIC_REQUIREMENTS"></h4>
-                    <!--<div class="row">
+                    <!--<div class="section-row row">
                         <div class="col-xs-6">Type</div>
                         <div class="col-xs-6">Flat</div>
                     </div>-->
@@ -66,18 +66,18 @@
                     <range-view label="{{ 'REQUIREMENT.VIEW.LANDAREA' | translate }}" min="vm.requirement.minLandArea" max="vm.requirement.maxLandArea" suffix="'sq ft'"></range-view>
                 </section>
 
-                <section>
+                <section class="section-item">
                     <h4 translate="REQUIREMENT.VIEW.DESCRIPTION"></h4>
                     <p>{{ vm.requirement.description}}</p>
                 </section>
             </div>
-            <div class="col-md-6" id="applicant-list">
+            <div class="col-md-4" id="applicant-list">
                 <form>
                     <fieldset>
                         <legend translate="REQUIREMENT.VIEW.APPLICANT">Applicant</legend>
-                        <div class="form-group">
-                            <!--<button id="add-contact" type="button" class="btn btn-default">Add</button>-->
-                        </div>
+                        <!--<div class="form-group">
+                            <button id="add-contact" type="button" class="btn btn-default"><i class="fa fa-plus-circle"></i></button>
+                        </div>-->
                     </fieldset>
                 </form>
 
