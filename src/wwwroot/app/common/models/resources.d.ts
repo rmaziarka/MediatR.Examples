@@ -46,8 +46,9 @@ declare module Antares.Common.Models {
 
         // - address form -
         interface IAddressFormResourceParameters {
-            entityTypeCode: string;
-            countryCode: string;
+            entityTypeCode?: string;
+            countryCode?: string;
+            id?:string;
         }
         interface IAddressFormResourceClass extends ng.resource.IResourceClass<IAddressFormResource> {
             get(): IAddressFormResource;

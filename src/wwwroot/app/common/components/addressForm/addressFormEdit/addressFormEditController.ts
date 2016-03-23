@@ -1,4 +1,9 @@
 ﻿/// <reference path="../../../../typings/_all.d.ts" />
+/// <reference path="../../../../common/models/dto/countryLocalised.ts" />
+/// <reference path="../../../../common/models/dto/address.ts" />
+/// <reference path="../../../../common/models/dto/addressForm.ts" />
+/// <reference path="../../../../common/models/resources.d.ts" />
+/// <reference path="../../../../common/services/dataaccessservice.ts" />
 
 module Antares.Common.Component {
     import Address = Common.Models.Dto.Address;

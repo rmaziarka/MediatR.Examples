@@ -34,7 +34,7 @@ module Antares.Services {
 
         getAddressFormResource(): AddressFormResourceClass {
             return <AddressFormResourceClass>
-                this.$resource(this.appConfig.rootUrl + '/api/addressForm?entityType=:entityTypeCode&countryCode=:countryCode');
+                this.$resource(this.appConfig.rootUrl + '/api/addressForm/:id?entityType=:entityTypeCode&countryCode=:countryCode');
         }
 
 		getOwnershipResource(): Resources.IBaseResourceClass<Resources.IOwnershipResource> {

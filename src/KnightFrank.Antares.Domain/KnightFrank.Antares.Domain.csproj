@@ -74,8 +74,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddressFieldDefinition\QueryResults\AddressFieldDefinitionResult.cs" />
+    <Compile Include="AddressForm\Queries\AddressFormByIdQuery.cs" />
+    <Compile Include="AddressForm\Queries\AddressFormByIdQueryValidator.cs" />
     <Compile Include="AddressForm\Queries\AddressFormQuery.cs" />
     <Compile Include="AddressForm\Queries\AddressFormQueryValidator.cs" />
+    <Compile Include="AddressForm\QueryHandlers\AddressFormIdQueryHandler.cs" />
     <Compile Include="AddressForm\Queries\GetCountriesForAddressFormsQueryValidator.cs" />
     <Compile Include="AddressForm\QueryHandlers\AddressFormQueryHandler.cs" />
     <Compile Include="AddressForm\QueryResults\AddressFormProfile.cs" />
