@@ -7,9 +7,14 @@ declare module Antares.Common.Models {
             id: string;
         }
 
+        interface IEnumResourceParameters {
+            code: string;
+        }
+
         interface IBaseResourceClass<T> extends ng.resource.IResourceClass<T> {
             get(): T;
             get(params: IResourceParameters): T;
+            get(params: IEnumResourceParameters): T;
         }
 
         interface IContactResource extends ng.resource.IResource<Dto.IContact> {
@@ -19,7 +24,10 @@ declare module Antares.Common.Models {
 
         }
 
+        interface IEnumResource extends ng.resource.IResource<Dto.IEnum> {
 
+        }
+        
         interface ICountryResource extends ng.resource.IResource<Dto.CountryLocalised> {
         }
 

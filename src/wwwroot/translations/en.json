@@ -4,6 +4,11 @@
     "MIN": "Min",
     "MAX": "Max"
   },
+  "OWNERSHIP": {
+    "ADD": {
+      "OWNERSHIPDETAILS":  "Ownership Details"
+    }
+  },
   "ADDRESSFORM": {
     "POSTCODE": "Postcode",
     "POSTALCODE": "Postalcode",

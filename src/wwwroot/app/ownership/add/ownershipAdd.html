@@ -4,16 +4,13 @@
         <small>{{ owner.title }}</small>
     </div>
 </div>
+
 <form>
     <div class="form-group">
         <div class="row">
             <div class="col-md-9">
                 <label for="type">Ownership type</label>
-                <select class="form-control" id="type">
-                    <option>- select -</option>
-                    <option>Freehold</option>
-                    <option>Leasehold</option>
-                </select>
+                <select class="form-control" id="type" ng-options="item as item.value for item in vm.ownershipTypes.items track by item.id" ng-model="vm.ownership.ownershipType"></select>
             </div>
         </div>
     </div>
@@ -28,22 +25,16 @@
                 <label for="purchasing-date">Purchasing date</label>
                 <div class="input-group">
                     <input type="date" id="purchasing-date" class="form-control" ng-model="vm.ownership.purchaseDate">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                    </span>
                 </div>
             </div>
         </div>
     </div>
-    <div class="form-group" ng-show="!vm.ownership.isCurrentOwner" >
+    <div class="form-group" ng-show="!vm.ownership.isCurrentOwner">
         <div class="row">
             <div class="col-md-8">
                 <label for="selling-date">Selling date</label>
                 <div class="input-group">
                     <input type="date" id="selling-date" class="form-control"ng-model="vm.ownership.sellingDate">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                    </span>
                 </div>
             </div>
         </div>
@@ -59,7 +50,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-show="!vm.ownership.isCurrentOwner">
         <div class="row">
             <div class="col-md-8">
                 <label for="selling-price">Selling price</label>

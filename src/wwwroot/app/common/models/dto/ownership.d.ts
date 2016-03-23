@@ -7,6 +7,7 @@
         buyingPrice?: number;
         sellingPrice?: number;
         isCurrentOwner: boolean;
+        ownershipType: number;
         contacts: IContact[];
     }
 }

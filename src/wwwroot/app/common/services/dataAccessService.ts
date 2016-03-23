@@ -36,6 +36,11 @@ module Antares.Services {
             return <Resources.IBaseResourceClass<Resources.IOwnershipResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/ownership/:id');
         }
+
+        getEnumResource(): Resources.IBaseResourceClass<Resources.IEnumResource> {
+            return <Resources.IBaseResourceClass<Resources.IEnumResource>>
+                this.$resource(this.appConfig.rootUrl + '/api/enums/{code}/items');
+        }
     }
 
     angular.module('app').service('dataAccessService', DataAccessService);

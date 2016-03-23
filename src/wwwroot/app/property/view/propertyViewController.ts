@@ -70,15 +70,26 @@ module Antares.Property.View {
         }
 
         saveOwnership() {
-            var ownership: Ownership = this.components.ownershipAdd().getOwnership();
+            var ownershipToSend = this.getOwnershipToSave();
 
             this.ownershipResource
-                .save(ownership)
+                .save(ownershipToSend)
                 .$promise
                 .then((ownership) => {
                     //TODO fill ownership list
                     this.components.ownershipSidePanel().hide();
                 });
+        }
+
+        getOwnershipToSave(){
+            var ownership = angular.copy(this.components.ownershipAdd().getOwnership());
+            ownership.ContactIds = ownership.contacts.map((item) => { return item.id; });
+            ownership.PropertyId = null;
+            ownership.OwnershipTypeId = ownership.ownershipType.id;
+            delete ownership.contacts;
+            delete ownership.ownershipType;
+
+            return ownership;
         }
     }
     angular.module('app').controller('propertyViewController', PropertyViewController);

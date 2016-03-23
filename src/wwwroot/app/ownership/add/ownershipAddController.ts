@@ -9,11 +9,14 @@ module Antares.Property {
         
         componentId: string;
         ownership: IOwnership = <IOwnership>{};
+        ownershipTypes: any;
+
 
         constructor(
             componentRegistry: Antares.Core.Service.ComponentRegistry,
             private dataAccessService: Antares.Services.DataAccessService) {
 
+            this.ownershipTypes = dataAccessService.getEnumResource().get({ code: 'OwnershipType' });
             componentRegistry.register(this, this.componentId);
         }
 
