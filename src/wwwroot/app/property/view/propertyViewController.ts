@@ -4,7 +4,7 @@ module Antares.Property.View {
     import Ownership = Antares.Common.Models.Dto.IOwnership;
 
     export class PropertyViewController {
-        static $inject = ['dataAccessService', 'componentRegistry', '$scope'];
+        static $inject = ['dataAccessService', 'componentRegistry', '$scope', '$state'];
 
         componentIds: any = {
             contactListId: 'viewProperty:contactListComponent',
@@ -22,13 +22,17 @@ module Antares.Property.View {
 
         loadingContacts: boolean = false;
         ownershipResource: any;
+        property: Antares.Common.Models.Resources.IPropertyResource;
 
         constructor(
             private dataAccessService: Antares.Services.DataAccessService,
             private componentRegistry: Antares.Core.Service.ComponentRegistry,
-            private $scope: ng.IScope) {
+            private $scope: ng.IScope,
+            private $state: ng.ui.IState) {
 
             this.ownershipResource = dataAccessService.getOwnershipResource();
+
+            this.loadPropertyData();
 
             $scope.$on('$destroy', () => {
                 this.componentRegistry.deregister(this.componentIds.contactListId);
@@ -45,6 +49,12 @@ module Antares.Property.View {
                 this.components.ownershipAdd().loadOwnership(this.components.contactList().getSelected());
                 this.components.ownershipSidePanel().show();
             }
+        }
+
+        loadPropertyData = () =>{
+            var propertyId: string = this.$state.params.id;
+
+            this.property = this.dataAccessService.getPropertyResource().get({ id: propertyId });
         }
 
         showContactList = () => {

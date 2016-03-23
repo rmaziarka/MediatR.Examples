@@ -15,12 +15,19 @@
                         <div class="form-group">
                             <button type="button" class="btn btn-default" ng-click="vm.showContactList()"><i class="fa fa-plus-circle"></i></button>
                         </div>
-                        <p class="help-block">Ownership information not configured yet</p>
+                        <p ng-hide="vm.property.ownerships.length" class="help-block">Ownership information not configured yet</p>
                     </fieldset>
-                    <div class="panel panel-default">
+                    <div class="panel panel-default" ng-repeat="ownership in vm.property.ownerships">
                         <div class="panel-body">
-                            <div class="panel-item">Robert Redford, Alan Alda, Robert Redford, Alan Alda</div>
-                            <small><span class="text-uppercase">Freehold</span> 12-03-1997 - 20-05-2010</small>
+                            <div class="panel-item">
+                                <span ng-repeat="contact in ownership.contacts">
+                                    {{contact.firstName}} {{contact.surname}}{{$last ? '' : ', '}}
+                                </span>
+                            </div>
+                            <small>
+                                <span class="text-uppercase">{{ownership.ownershipType.code}}</span> 
+                                {{ownership.purchaseDate | date : 'dd-MM-yyyy'}} - {{ownership.sellDate | date : 'dd-MM-yyyy'}}
+                             </small>
                             <div class="row">
                                 <div class="col-md-12 text-right"><a href="#">details</a></div>
                             </div>
