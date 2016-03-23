@@ -9,7 +9,7 @@
             this.HasRequired(o => o.Property);
 
             this.HasMany(o => o.Contacts)
-                .WithMany(c => c.Ownerships)
+                .WithMany()
                 .Map(cs =>
                 {
                     cs.MapLeftKey("OwnershipId");

@@ -130,6 +130,10 @@
     <Compile Include="Migrations\201603231009214_AddRequirementAddress.Designer.cs">
       <DependentUpon>201603231009214_AddRequirementAddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603231119310_AddActivityContacts.cs" />
+    <Compile Include="Migrations\201603231119310_AddActivityContacts.Designer.cs">
+      <DependentUpon>201603231119310_AddActivityContacts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Activity\Activity.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressField.cs" />
@@ -137,9 +141,11 @@
     <Compile Include="Model\AddressFieldLabel.cs" />
     <Compile Include="Model\AddressForm.cs" />
     <Compile Include="Model\AddressFormEntityType.cs" />
+    <Compile Include="Model\BaseAuditableEntity.cs" />
     <Compile Include="Model\Business.cs" />
     <Compile Include="Model\Common\IAuditableEntity.cs" />
     <Compile Include="Model\Common\ILocaled.cs" />
+    <Compile Include="Model\Configuration\Activity\ActivityConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressFieldConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressFieldDefinitionConfiguration.cs" />
@@ -257,6 +263,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603231009214_AddRequirementAddress.resx">
       <DependentUpon>201603231009214_AddRequirementAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603231119310_AddActivityContacts.resx">
+      <DependentUpon>201603231119310_AddActivityContacts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

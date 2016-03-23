@@ -62,8 +62,8 @@
                         .ToList()
                         .ForEach(e => 
                         {
-                            e.CreatedAt = utcNow;
-                            e.LastModifiedAt = utcNow;
+                            e.CreatedDate = utcNow;
+                            e.LastModifiedDate = utcNow;
                         });
 
             this.dbContext.ChangeTracker
@@ -73,7 +73,7 @@
                         .ToList()
                         .ForEach(e =>
                         {
-                            e.LastModifiedAt = utcNow;
+                            e.LastModifiedDate = utcNow;
                         });
 
             this.dbContext.SaveChanges();

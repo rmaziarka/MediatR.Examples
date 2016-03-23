@@ -77,11 +77,6 @@
         public void ThenRequierementShouldBeTheSameAsAdded()
         {
             var tableRequirement = this.scenarioContext.Get<Requirement>("Requirement");
-            //TODO currently requirement collection from contacts inside requirement is cleared
-            foreach (Contact contact in tableRequirement.Contacts)
-            {
-                contact.Requirements = new List<Requirement>();
-            }
 
             AssertionOptions.AssertEquivalencyUsing(options =>
                 options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>()

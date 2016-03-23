@@ -4,8 +4,8 @@
 
     public interface IAuditableEntity
     {
-         DateTime CreatedAt { get; set; }
+         DateTime CreatedDate { get; set; }
 
-         DateTime LastModifiedAt { get; set; }
+         DateTime LastModifiedDate { get; set; }
     }
 }
