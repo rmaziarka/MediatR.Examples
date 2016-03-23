@@ -9,6 +9,8 @@
 
         public virtual Address Address { get; set; }
 
-        public virtual ICollection<Ownership> Ownerships { get; set; } 
+        public virtual ICollection<Ownership> Ownerships { get; set; }
+
+        public virtual ICollection<Activity.Activity> Activities { get; set; }
     }
 }

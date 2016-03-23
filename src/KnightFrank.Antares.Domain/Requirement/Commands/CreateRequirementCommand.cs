@@ -3,8 +3,6 @@
     using System;
     using System.Collections.Generic;
 
-    using AutoMapper;
-
     using Dal.Model;
     using Contact;
 
@@ -15,6 +13,8 @@
         public DateTime CreateDate { get; set; }
 
         public ICollection<ContactDto> Contacts { get; set; }
+
+        public CreateOrUpdateRequirementAddress Address { get; set; }
 
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }
@@ -38,13 +38,5 @@
         public double? MaxLandArea { get; set; }
 
         public string Description { get; set; }
-    }
-
-    public class CreateRequirementCommandProfile : Profile
-    {
-        protected override void Configure()
-        {
-            this.CreateMap<CreateRequirementCommand, Requirement>();
-        }
     }
 }

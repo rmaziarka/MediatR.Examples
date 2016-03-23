@@ -1,13 +1,22 @@
 ﻿namespace KnightFrank.Antares.Dal.Model.Activity
 {
     using System;
+    using System.Collections.Generic;
 
-    using KnightFrank.Antares.Dal.Model.Common;
-
-    public class Activity : BaseEntity, IAuditableEntity
+    public class Activity : BaseAuditableEntity
     {
-        public DateTime CreatedAt { get; set; }
+        public Guid PropertyId { get; set; }
 
-        public DateTime LastModifiedAt { get; set; }
+        public Property Property { get; set; }
+
+        public Guid ActivityTypeId { get; set; }
+
+        public virtual EnumTypeItem ActivityType { get; set; }
+
+        public Guid ActivityStatusId { get; set; }
+
+        public EnumTypeItem ActivityStatus { get; set; }
+
+        public virtual ICollection<Contact> Contacts { get; set; }
     }
 }

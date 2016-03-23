@@ -7,12 +7,14 @@ namespace KnightFrank.Antares.Dal.Model.Configuration
         public RequirementConfiguration()
         {
             this.HasMany(r => r.Contacts)
-                .WithMany(c => c.Requirements)
+                .WithMany()
                 .Map(cs =>
                 {
                     cs.MapLeftKey("RequirementId");
                     cs.MapRightKey("ContactId");
                 });
+
+            this.HasRequired(p => p.Address).WithMany().HasForeignKey(p => p.AddressId);
 
             this.Property(r => r.CreateDate)
                 .IsRequired();
