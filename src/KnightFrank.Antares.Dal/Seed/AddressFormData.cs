@@ -47,7 +47,7 @@
                 new AddressFieldDefinition
                 {
                     AddressFormId = formId,
-                    RegEx = @"\w+",
+                    RegEx = @"^.{0,128}$",
                     AddressFieldId = GetAddressFieldIdByName(context, "City"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.CITY"),
                     Required = false,
@@ -58,7 +58,7 @@
                 new AddressFieldDefinition
                 {
                     AddressFormId = formId,
-                    RegEx = @"\w+",
+                    RegEx = @"^.{0,128}$",
                     AddressFieldId = GetAddressFieldIdByName(context, "Street"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.STREET"),
                     Required = false,
@@ -69,7 +69,7 @@
                 new AddressFieldDefinition
                 {
                     AddressFormId = formId,
-                    RegEx = @"\w+",
+                    RegEx = @"^.{1,10}$",
                     AddressFieldId = GetAddressFieldIdByName(context, "Postcode"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.POSTCODE"),
                     Required = false,

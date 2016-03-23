@@ -7,42 +7,9 @@
             <div class="row">
                 <div class="col-md-6">
 
-                    <fieldset ng-hide="true">
+                    <fieldset>
                         <legend>Location requirements</legend>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="country1">Country</label>
-                                    <select class="form-control" id="country1" disabled>
-                                        <option>United Kingdom</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-10">
-                                    <label for="street">Street name</label>
-                                    <input type="text" class="form-control" id="street">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <label for="postcode">Postcode</label>
-                                    <input type="text" class="form-control" id="postcode">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="town">Town</label>
-                                    <input type="text" class="form-control" id="town">
-                                </div>
-                            </div>
-                        </div>
+                        <address-form-edit entity-type-code="vm.entityTypeCode" address="vm.requirement.address"></address-form-edit>
                     </fieldset>
                     <fieldset>
                         <legend>Property requirements</legend>
@@ -238,7 +205,7 @@
                         </div>
                     </fieldset>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary" id="saveBtn" translate="COMMON.SAVE">Save</button>
+                        <button type="submit" class="btn btn-primary" id="saveBtn" translate="COMMON.SAVE" ng-disabled="vm.isSaving"></button>
                     </div>
                 </div>
                 <div class="col-md-6">

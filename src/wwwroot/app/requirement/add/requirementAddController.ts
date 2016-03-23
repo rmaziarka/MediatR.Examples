@@ -1,6 +1,7 @@
 /// <reference path="../../typings/_all.d.ts" />
 /// <reference path="../../common/services/dataaccessservice.ts" />
 /// <reference path="../../common/core/services/registry/componentregistryservice.ts" />
+/// <reference path="../../common/models/dto/address.ts" />
 
 module Antares.Requirement.Add {
     export class RequirementAddController {
@@ -13,8 +14,12 @@ module Antares.Requirement.Add {
             contactSidePanel: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); }
         }
         requirementResource: any;
-        requirement: any = {};
+        requirement: any = {
+            address: new Common.Models.Dto.Address()
+        };
         loadingContacts: boolean = false;
+        entityTypeCode: string = 'Requirement';
+        isSaving: boolean = false;
 
         constructor(
             private dataAccessService: Services.DataAccessService,
@@ -56,11 +61,16 @@ module Antares.Requirement.Add {
         }
 
         save() {
+            this.isSaving = true;
             this.requirementResource
                 .save(this.requirement)
                 .$promise
-                .then((requirement) => {
+                .then(
+                (requirement) => {
                     this.$state.go('app.requirement-view', requirement);
+                })
+                .finally(() => {
+                    this.isSaving = false;
                 });
         }
     }
