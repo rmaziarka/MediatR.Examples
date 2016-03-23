@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.EnumsSteps
+﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.Enums
 {
     using System;
     using System.Collections.Generic;

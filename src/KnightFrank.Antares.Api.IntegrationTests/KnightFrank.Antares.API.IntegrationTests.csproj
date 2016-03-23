@@ -126,9 +126,10 @@
     <Compile Include="Extensions\ScenarioContextExtension.cs" />
     <Compile Include="Steps\CommonSteps.cs" />
     <Compile Include="Steps\AddressForm\AddressFormSteps.cs" />
-    <Compile Include="Steps\ContactsSteps\ContactsSteps.cs" />
-    <Compile Include="Steps\EnumsSteps\EnumsSteps.cs" />
-    <Compile Include="Steps\ResidentialSalesRequierementSteps\ResidentialSalesRequierementSteps.cs" />
+    <Compile Include="Steps\Contacts\ContactsSteps.cs" />
+    <Compile Include="Steps\Enums\EnumsSteps.cs" />
+    <Compile Include="Steps\Property\PropertySteps.cs" />
+    <Compile Include="Steps\Requierement\ResidentialSalesRequierementSteps.cs" />
     <Compile Include="Tests\AddressForm\AddressFormController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -138,31 +139,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ContactController.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Tests\Enums\EnumsController.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EnumsController.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Tests\ResidentialSalesRequirement\NoteOnRequirement.feature.cs">
-      <DependentUpon>NoteOnRequirement.feature</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Tests\Property\PropertyController.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PropertyController.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Tests\ResidentialSalesRequirement\RequirementController.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RequirementController.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Tests\Property\OwnershipController.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>OwnershipController.feature</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.ResidentialSalesRequierementSteps
+﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.Requierement
 {
     using System;
     using System.Collections.Generic;

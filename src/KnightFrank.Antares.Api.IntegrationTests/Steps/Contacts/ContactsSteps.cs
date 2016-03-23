@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.ContactsSteps
+﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.Contacts
 {
     using System;
     using System.Collections.Generic;
@@ -19,14 +19,14 @@
     using Xunit;
 
     [Binding]
-    public class ContactsControllerSteps : IClassFixture<BaseTestClassFixture>
+    public class ContactsSteps : IClassFixture<BaseTestClassFixture>
     {
         private const string ApiUrl = "/api/contact";
         private readonly BaseTestClassFixture fixture;
 
         private readonly ScenarioContext scenarioContext;
 
-        public ContactsControllerSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
+        public ContactsSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {
             this.fixture = fixture;
             if (scenarioContext == null)
