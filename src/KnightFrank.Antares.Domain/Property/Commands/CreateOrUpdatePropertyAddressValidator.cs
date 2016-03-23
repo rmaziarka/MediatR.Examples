@@ -55,7 +55,6 @@
                     var validator = new CustomStringValidator();
                     validator.RuleFor(el => el).NotEmpty().WithName(field.AddressFieldDefinition.AddressField.Name);
                     validationResult.Add(validator.Validate(field.Value));
-
                 }
 
                 if (!string.IsNullOrWhiteSpace(field.AddressFieldDefinition.RegEx))
