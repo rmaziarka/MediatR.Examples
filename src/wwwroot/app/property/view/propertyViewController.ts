@@ -10,14 +10,18 @@ module Antares.Property.View {
             contactListId: 'viewProperty:contactListComponent',
             contactSidePanelId: 'viewProperty:contactSidePanelComponent',
             ownershipSidePanelId: 'viewProperty:ownershipSidePanelComponent',
-            ownershipAddId: 'viewProperty:ownershipAddComponent'
+            ownershipAddId: 'viewProperty:ownershipAddComponent',
+            ownershipViewSidePanelId: 'viewProperty:ownershipViewSidePanelComponent',
+            ownershipViewId: 'viewProperty:ownershipViewComponent'
         }
 
         components: any = {
             contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
             contactSidePanel: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
             ownershipSidePanel: () => { return this.componentRegistry.get(this.componentIds.ownershipSidePanelId); },
-            ownershipAdd: () => { return this.componentRegistry.get(this.componentIds.ownershipAddId); }
+            ownershipAdd: () => { return this.componentRegistry.get(this.componentIds.ownershipAddId); },
+            ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewId); },
+            ownershipViewSidePanel: () => { return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); }
         }
 
         loadingContacts: boolean = false;
@@ -39,6 +43,8 @@ module Antares.Property.View {
                 this.componentRegistry.deregister(this.componentIds.contactSidePanelId);
                 this.componentRegistry.deregister(this.componentIds.ownershipSidePanelId);
                 this.componentRegistry.deregister(this.componentIds.ownershipAddId);
+                this.componentRegistry.deregister(this.componentIds.ownershipViewId);
+                this.componentRegistry.deregister(this.componentIds.ownershipViewSidePanelId);
             });
         }
 
@@ -57,6 +63,17 @@ module Antares.Property.View {
             this.property = this.dataAccessService.getPropertyResource().get({ id: propertyId });
         }
 
+        showOwnershipView = (ownership) => {
+            this.components.ownershipView().setOwnership(ownership);
+            if (this.components.contactSidePanel().visible) {
+                this.components.contactSidePanel().hide();
+            }
+            if (this.components.ownershipSidePanel().visible) {
+                this.components.ownershipSidePanel().hide();
+            }
+            this.components.ownershipViewSidePanel().show();
+        }
+
         showContactList = () => {
             this.loadingContacts = true;
             this.components.contactList()
@@ -66,6 +83,10 @@ module Antares.Property.View {
                     this.components.contactList().setSelected(selectedIds);
                 })
                 .finally(() => { this.loadingContacts = false; });
+
+            if (this.components.ownershipViewSidePanel().visible) {
+                this.components.ownershipViewSidePanel().hide();
+            }
 
             this.components.contactSidePanel().show();
         }

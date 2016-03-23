@@ -6,7 +6,10 @@
   },
   "OWNERSHIP": {
     "ADD": {
-      "OWNERSHIPDETAILS":  "Ownership details"
+      "OWNERSHIPDETAILS": "Ownership details"
+    },
+    "VIEW": {
+      "OWNERSHIPDETAILS": "Ownership details"
     }
   },
   "ADDRESSFORM": {

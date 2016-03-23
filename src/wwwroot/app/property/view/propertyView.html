@@ -29,7 +29,7 @@
                                 {{ownership.purchaseDate | date : 'dd-MM-yyyy'}} - {{ownership.sellDate | date : 'dd-MM-yyyy'}}
                              </small>
                             <div class="row">
-                                <div class="col-md-12 text-right"><a href="#">details</a></div>
+                                <div class="col-md-12 text-right"><a href="" ng-click="vm.showOwnershipView(ownership)">details</a></div>
                             </div>
                         </div>
                     </div>
@@ -124,4 +124,14 @@
         <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()"> <i class="fa fa-ban"></i> Cancel</button>
         <button class="btn btn-primary" type="button" ng-click="vm.showOwnershipAdd()" ng-disabled=""><i class="fa fa-floppy-o"></i> Save</button>
     </side-panel-footer>
+</side-panel>
+
+<side-panel component-id="vm.componentIds.ownershipViewSidePanelId">
+    <side-panel-header>
+        <h3 translate="OWNERSHIP.VIEW.OWNERSHIPDETAILS"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <ownership-view component-id="vm.componentIds.ownershipViewId">
+        </ownership-view>
+    </side-panel-content>
 </side-panel>
