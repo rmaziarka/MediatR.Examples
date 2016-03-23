@@ -4,7 +4,6 @@
 
 module Antares.Requirement.Add {
     export class RequirementAddController {
-        static $inject = ['dataAccessService', 'componentRegistry', '$scope', '$state'];
         componentIds: any = {
             contactListId: 'addRequirement:contactListComponent',
             contactSidePanelId: 'addRequirement:contactSidePanelComponent'
@@ -21,7 +20,7 @@ module Antares.Requirement.Add {
             private dataAccessService: Services.DataAccessService,
             private componentRegistry: Core.Service.ComponentRegistry,
             private $scope: ng.IScope,
-            private $stateService: ng.ui.IStateService) {
+            private $state: ng.ui.IStateService) {
 
             this.requirementResource = dataAccessService.getRequirementResource();
 
@@ -61,7 +60,7 @@ module Antares.Requirement.Add {
                 .save(this.requirement)
                 .$promise
                 .then((requirement) => {
-                    this.$stateService.go('app.requirement-view', requirement);
+                    this.$state.go('app.requirement-view', requirement);
                 });
         }
     }

@@ -7,8 +7,23 @@ module Antares.Property {
         public entityTypeCode: string = 'Property';
         public property: Dto.Property = new Dto.Property();
 
+        private propertyResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IPropertyResource>;
+
+        constructor(
+            private dataAccessService: Services.DataAccessService,
+            private $state: ng.ui.IStateService) {
+
+            this.propertyResource = dataAccessService.getPropertyResource();
+        }
+
         public save() {
-            alert("Saved: " + JSON.stringify(this.property.address));
+            this.propertyResource
+                .save(this.property)
+                .$promise
+                .then((property: Dto.IProperty) => {
+                    //TODO: change to property-view when ready
+                    this.$state.go('app.property-edit', property);
+                });
         }
     }
 

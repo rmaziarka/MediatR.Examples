@@ -17,3 +17,12 @@ Scenario: Create new property for UK Address
 	Then New property should be created with address details 
 		| Country        | PropertyNumber | PropertyName | AddressLine2 | Postcode | City   | County |
 		| United Kingdom | 55             | Knight Frank | Baker Street | W1U 8AN  | London | London |
+	When User cliks add activites button on property details page		
+	Then Activity details are set on activity panel
+		| Vendor | Status        |
+		|        | Pre-appraisal |
+	When User selects save button on activity panel
+	Then Activity creation date is set to current date on property details page
+		And Activity details are set on property details page
+		| Vendor | Status        |
+		|        | Pre-appraisal |
