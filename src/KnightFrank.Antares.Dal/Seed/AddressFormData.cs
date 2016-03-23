@@ -112,8 +112,8 @@
                 new AddressFieldDefinition
                 {
                     AddressFormId = formId,
-                    AddressFieldId = GetAddressFieldIdByName(context, "AddressLine2"),
-                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.ADDRESSLINE2"),
+                    AddressFieldId = GetAddressFieldIdByName(context, "Line2"),
+                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.LINE2"),
                     RegEx = "^.{0,128}$",
                     Required = false,
                     RowOrder = 2,
@@ -123,8 +123,8 @@
                 new AddressFieldDefinition
                 {
                     AddressFormId = formId,
-                    AddressFieldId = GetAddressFieldIdByName(context, "AddressLine3"),
-                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.ADDRESSLINE3"),
+                    AddressFieldId = GetAddressFieldIdByName(context, "Line3"),
+                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.LINE3"),
                     RegEx = "^.{0,128}$",
                     Required = false,
                     RowOrder = 3,
@@ -213,15 +213,15 @@
                 },
                 new AddressField
                 {
-                    Name = "AddressLine1"
+                    Name = "Line1"
                 },
                 new AddressField
                 {
-                    Name = "AddressLine2"
+                    Name = "Line2"
                 },
                 new AddressField
                 {
-                    Name = "AddressLine3"
+                    Name = "Line3"
                 },
                 new AddressField
                 {
@@ -294,38 +294,38 @@
                 },
                 new AddressFieldLabel
                 {
-                    AddressFieldId = GetAddressFieldIdByName(context, "AddressLine1"),
-                    LabelKey = "ADDRESSFORM.ADDRESSLINE1"
+                    AddressFieldId = GetAddressFieldIdByName(context, "Line1"),
+                    LabelKey = "ADDRESSFORM.LINE1"
                 },
                 new AddressFieldLabel
                 {
-                    AddressFieldId = GetAddressFieldIdByName(context, "AddressLine1"),
+                    AddressFieldId = GetAddressFieldIdByName(context, "Line1"),
                     LabelKey = "ADDRESSFORM.STREET"
                 },
                 new AddressFieldLabel
                 {
-                    AddressFieldId = GetAddressFieldIdByName(context, "AddressLine1"),
+                    AddressFieldId = GetAddressFieldIdByName(context, "Line1"),
                     LabelKey = "ADDRESSFORM.ADDRESS"
                 },
                 new AddressFieldLabel
                 {
-                    AddressFieldId = GetAddressFieldIdByName(context, "AddressLine1"),
+                    AddressFieldId = GetAddressFieldIdByName(context, "Line1"),
                     LabelKey = "ADDRESSFORM.STREETNUMBER"
                 },
                 new AddressFieldLabel
                 {
-                    AddressFieldId = GetAddressFieldIdByName(context, "AddressLine2"),
-                    LabelKey = "ADDRESSFORM.ADDRESSLINE2"
+                    AddressFieldId = GetAddressFieldIdByName(context, "Line2"),
+                    LabelKey = "ADDRESSFORM.LINE2"
                 },
                 new AddressFieldLabel
                 {
-                    AddressFieldId = GetAddressFieldIdByName(context, "AddressLine2"),
+                    AddressFieldId = GetAddressFieldIdByName(context, "Line2"),
                     LabelKey = "ADDRESSFORM.STREETNAME"
                 },
                 new AddressFieldLabel
                 {
-                    AddressFieldId = GetAddressFieldIdByName(context, "AddressLine3"),
-                    LabelKey = "ADDRESSFORM.ADDRESSLINE3"
+                    AddressFieldId = GetAddressFieldIdByName(context, "Line3"),
+                    LabelKey = "ADDRESSFORM.LINE3"
                 },
                 new AddressFieldLabel
                 {
