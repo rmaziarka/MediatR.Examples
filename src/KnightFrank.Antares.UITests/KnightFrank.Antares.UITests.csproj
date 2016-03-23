@@ -102,6 +102,7 @@
     <Compile Include="Pages\AddressTemplatePage.cs" />
     <Compile Include="Pages\CommonPage.cs" />
     <Compile Include="Pages\ContactsListPage.cs" />
+    <Compile Include="Pages\CreateActivityPage.cs" />
     <Compile Include="Pages\CreatePropertyPage.cs" />
     <Compile Include="Pages\NewContactPage.cs" />
     <Compile Include="Pages\NewResidentialSalesRequirementPage.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Steps\NewContactSteps.cs" />
     <Compile Include="Steps\NewResidentialSalesRequirementSteps.cs" />
     <Compile Include="Steps\ResidentialSalesRequirementDetailsSteps.cs" />
+    <Compile Include="Steps\ViewPropertySteps.cs" />
     <Compile Include="Tests\Property\CreateProperty.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
