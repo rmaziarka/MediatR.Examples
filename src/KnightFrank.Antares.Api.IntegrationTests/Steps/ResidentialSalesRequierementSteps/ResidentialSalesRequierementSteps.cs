@@ -83,8 +83,12 @@
                 contact.Requirements = new List<Requirement>();
             }
 
+            AssertionOptions.AssertEquivalencyUsing(options =>
+                options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>()
+                );
+
             var databaseRequirement = JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent());
-            databaseRequirement.ShouldBeEquivalentTo(tableRequirement, options => options.Excluding(req => req.CreateDate));
+            databaseRequirement.ShouldBeEquivalentTo(tableRequirement);
         }
 
         [When(@"User retrieves requirement for (.*) id")]

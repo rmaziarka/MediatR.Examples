@@ -36,7 +36,6 @@
             this.scenarioContext = scenarioContext;
         }
 
-
         [Given(@"All contacts have been deleted")]
         public void GivenDeleteAllContacts()
         {
