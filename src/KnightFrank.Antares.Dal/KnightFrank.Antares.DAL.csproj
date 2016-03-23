@@ -126,6 +126,10 @@
     <Compile Include="Migrations\201603212349532_AddActivity.Designer.cs">
       <DependentUpon>201603212349532_AddActivity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603231009214_AddRequirementAddress.cs" />
+    <Compile Include="Migrations\201603231009214_AddRequirementAddress.Designer.cs">
+      <DependentUpon>201603231009214_AddRequirementAddress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Activity\Activity.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressField.cs" />
@@ -250,6 +254,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603212349532_AddActivity.resx">
       <DependentUpon>201603212349532_AddActivity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603231009214_AddRequirementAddress.resx">
+      <DependentUpon>201603231009214_AddRequirementAddress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
