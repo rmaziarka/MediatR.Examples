@@ -93,7 +93,7 @@
                     AddressFieldId = GetAddressFieldIdByName(context, "PropertyNumber"),
                     AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.PROPERTYNUMBER"),
                     RegEx = "^.{1,8}$",
-                    Required = true,
+                    Required = false,
                     RowOrder = 1,
                     ColumnOrder = 1,
                     ColumnSize = 2
