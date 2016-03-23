@@ -70,9 +70,11 @@ module Antares {
             scope.$apply();
 
             expect(controller.visible).toBe(false);
-            expect(controller.stateChanged).toBe(true);
+            expect(controller.stateChanged).toBe(false);
 
-            assertCssClasses(false);
+            // when state does not change we don't set any of classes tested below
+            expect(panel.hasClass('slide-in')).toBe(false);
+            expect(panel.hasClass('slide-out')).toBe(false);
         });
 
         it('side panel should remain visible when it is already shown and show() is called', () => {

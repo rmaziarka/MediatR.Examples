@@ -12,14 +12,18 @@ module Antares {
                     componentRegistry.register(this, this.componentId);
                 }
 
-                show = () =>{
-                    this.visible = true;
-                    this.stateChanged = true;
+                show = () => {
+                    if (this.visible === false) {
+                        this.visible = true;
+                        this.stateChanged = true;
+                    }
                 }
 
                 hide = () => {
-                    this.visible = false;
-                    this.stateChanged = true;
+                    if (this.visible) {
+                        this.visible = false;
+                        this.stateChanged = true;
+                    }
                 }
             }
 
