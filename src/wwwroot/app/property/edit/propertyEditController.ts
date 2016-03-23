@@ -1,36 +1,48 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
+/// <reference path="../../common/models/dto/property.ts" />
+/// <reference path="../../common/models/resources.d.ts" />
 
 module Antares.Property {
     import Dto = Antares.Common.Models.Dto;
 
     export class PropertyEditController {
         public entityTypeCode: string = 'Property';
+
+        public isLoading: boolean = true;
         public property: Dto.Property = new Dto.Property();
 
         private propertyResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IPropertyResource>;
 
         constructor(
             private dataAccessService: Antares.Services.DataAccessService,
-            $state: angular.ui.IState) {
+            private $state: ng.ui.IStateService) {
 
             this.propertyResource = dataAccessService.getPropertyResource();
 
-            var propertyId = $state.params.id;
+            var propertyId: string = $state.params['id'];
             this.get(propertyId);
         }
 
-        public get(id: string) {
+        public get(id: string){
             this.propertyResource
-                .get({ id: id })
+                .get({ id : id })
                 .$promise
-                .then((data: Dto.IProperty) => {
+                .then((data: Dto.IProperty) =>{
                     this.property = data;
+                })
+                .finally(() =>{
+                    this.isLoading = false;
                 });
         }
 
         public save() {
-            alert("Saved: " + JSON.stringify(this.property.address));
-            //redirect to view
+            this.propertyResource
+                .update(this.property)
+                .$promise
+                .then((property: Dto.IProperty) => {
+                    //TODO: change to property-view when ready
+                    this.$state.go('app.property-edit', property);
+                });
         }
     }
 

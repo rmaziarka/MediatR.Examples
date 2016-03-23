@@ -32,6 +32,7 @@ declare module Antares.Common.Models {
         interface IBaseResourceClass<T> extends ng.resource.IResourceClass<T> {
             get(): T;
             get(params: IBaseResourceParameters): T;
+            update(T): T;
         }
 
         // - country -
