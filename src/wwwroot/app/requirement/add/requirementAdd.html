@@ -205,18 +205,18 @@
                         </div>
                     </fieldset>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary" id="saveBtn" translate="COMMON.SAVE" ng-disabled="vm.isSaving"></button>
+                        <button type="submit" class="btn btn-primary" id="saveBtn" ng-disabled="vm.isSaving"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE">Save</span></button>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <fieldset>
                         <legend translate="REQUIREMENT.ADD.APPLICANT"></legend>
                         <div class="form-group">
-                            <button type="button" class="btn btn-default" translate="REQUIREMENT.ADD.ADD" ng-click="vm.showContactList()"></button>
+                            <button type="button" class="btn btn-default" ng-click="vm.showContactList()"><i class="fa fa-plus-circle"></i></button>
                             <list-not-empty ng-model="vm.requirement.contacts" name="numberOfApplicants" />
-                            <div ng-messages="addRequirementForm.numberOfApplicants.$error" ng-show="addRequirementForm.$submitted || addRequirementForm.numberOfApplicants.$dirty">
-                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
-                            </div>
+                        </div>
+                        <div ng-messages="addRequirementForm.numberOfApplicants.$error" ng-show="addRequirementForm.$submitted || addRequirementForm.numberOfApplicants.$dirty">
+                            <div ng-messages-include="app/common/views/errorMessages.html"></div>
                         </div>
                     </fieldset>
                     <div class="panel panel-default" ng-repeat="c in vm.requirement.contacts">
@@ -239,7 +239,7 @@
         </contact-list>
     </side-panel-content>
     <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()">Cancel</button>
-        <button class="btn btn-primary" type="button" ng-click="vm.updateContacts()" ng-disabled="vm.loadingContacts">Save</button>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()"><i class="fa fa-ban"></i> Cancel</button>
+        <button class="btn btn-primary" type="button" ng-click="vm.updateContacts()" ng-disabled="vm.loadingContacts"><i class="fa fa-floppy-o"></i> Save</button>
     </side-panel-footer>
 </side-panel>

@@ -2,25 +2,50 @@
     <div class="col-md-12">
         <h2 class="page-header" translate="PROPERTY.VIEW.VIEW_PROPERTY"></h2>
         <div class="well">
-            <button type="button" class="btn btn-default pull-right">Edit</button>
+            <button type="button" class="btn btn-default pull-right"><i class="fa fa-pencil"></i> Edit</button>
             <div>55 Baker St.</div>
             <div>London W1U 8AN,</div>
             <div>United Kingdom</div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <form>
                     <fieldset>
                         <legend>Ownership</legend>
                         <div class="form-group">
-                            <button type="button" class="btn btn-default" ng-click="vm.showContactList()">Add</button>
+                            <button type="button" class="btn btn-default" ng-click="vm.showContactList()"><i class="fa fa-plus-circle"></i></button>
                         </div>
+                        <p class="help-block">Ownership information not configured yet</p>
                     </fieldset>
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="panel-item">Robert Redford, Alan Alda, Robert Redford, Alan Alda</div>
-                            <div><span>Freehold</span> 12-03-1997 - 20-05-2010</div>
-                            <a href="#" class="pull-right">details</a>
+                            <small><span class="text-uppercase">Freehold</span> 12-03-1997 - 20-05-2010</small>
+                            <div class="row">
+                                <div class="col-md-12 text-right"><a href="#">details</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <form>
+                    <fieldset>
+                        <legend>Activities</legend>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-default"><i class="fa fa-plus-circle"></i></button>
+                        </div>
+                        <p class="help-block">No activities yet</p>
+                    </fieldset>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="panel-item">09-03-2016 John Smith, Jack Daniels, George Washington</div>
+                            <small>Pre-appraisal</small>
+                            <div class="row">
+                                <div class="col-md-12 text-right"><a href="#">details</a></div>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -38,8 +63,8 @@
         </contact-list>
     </side-panel-content>
     <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()">Cancel</button>
-        <button class="btn btn-primary" type="button" ng-click="vm.showOwnershipAdd()" ng-disabled="">Configure</button>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()"> <i class="fa fa-ban"></i> Cancel</button>
+        <button class="btn btn-primary" type="button" ng-click="vm.showOwnershipAdd()" ng-disabled=""><i class="fa fa-cog"></i> Configure</button>
     </side-panel-footer>
 </side-panel>
 
@@ -52,7 +77,44 @@
         </ownership-add>
     </side-panel-content>
     <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelAddOwnership()">Cancel</button>
-        <button class="btn btn-primary" type="button" ng-click="vm.saveOwnership()" ng-disabled="vm.loadingContacts">Save</button>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelAddOwnership()"><i class="fa fa-ban"></i> Cancel</button>
+        <button class="btn btn-primary" type="button" ng-click="vm.saveOwnership()" ng-disabled="vm.loadingContacts"><i class="fa fa-floppy-o"></i> Save</button>
+    </side-panel-footer>
+</side-panel>
+
+<side-panel>
+    <side-panel-header>
+        <h3>Create activity</h3>
+    </side-panel-header>
+    <side-panel-content>
+        <form>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-9">
+                        <label for="status" class="">Status</label>
+                        <select id="status" class="form-control">
+                            <option>Pre-appraisal</option>
+                            <option>Market appraisal</option>
+                            <option>Not selling</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <h4 class="page-header">Vendors</h4>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                John Snow
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                John Snow
+            </div>
+        </div>
+    </side-panel-content>
+    <side-panel-footer>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()"> <i class="fa fa-ban"></i> Cancel</button>
+        <button class="btn btn-primary" type="button" ng-click="vm.showOwnershipAdd()" ng-disabled=""><i class="fa fa-floppy-o"></i> Save</button>
     </side-panel-footer>
 </side-panel>
