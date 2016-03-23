@@ -7,11 +7,7 @@ Scenario Outline: Retrieve error messages for improper EntityType and CountryCod
 
 	Examples: 
 	| entityType  | countryCode | statusCode |
-	| Property    |             | BadRequest |
 	|             |             | BadRequest |
-	|             | PL          | BadRequest |
-	| bla         | PL          | BadRequest |
-	| Residential | bla         | BadRequest |
 	| bla         | bla         | BadRequest |
 
 @AddressForm
