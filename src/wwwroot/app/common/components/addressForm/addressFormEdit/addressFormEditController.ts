@@ -15,6 +15,7 @@ module Antares.Common.Component {
         public entityTypeCode: string;
         public address: Address;
 
+        public isLoading: boolean = true;
         private countries: CountryLocalised[] = [];
         private addressForm: AddressForm;
 
@@ -34,6 +35,9 @@ module Antares.Common.Component {
                     if (this.address && this.address.countryId) {
                         this.getAddressFormTemplete(this.entityTypeCode, this.address.countryId);
                     }
+                })
+                .finally(() => {
+                    this.isLoading = false;
                 });
         }
 

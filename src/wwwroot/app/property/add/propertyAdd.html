@@ -1,10 +1,14 @@
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <h2 class="page-header" translate="PROPERTY.ADD.ADD_PROPERTY"></h2>
         <form ng-submit="addPropertyForm.$valid && vm.save()" name="addPropertyForm" id="addPropertyForm" method="post" novalidate>
-            <address-form-edit entity-type-code="vm.entityTypeCode" address="vm.property.address"></address-form-edit>
-
-            <button type="submit" class="btn btn-primary" id="saveBtn" translate="COMMON.SAVE"></button>
+            <fieldset>
+                <legend translate="PROPERTY.ADD.ADDRESS"></legend>
+                <address-form-edit entity-type-code="vm.entityTypeCode" address="vm.property.address"></address-form-edit>
+            </fieldset>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="saveBtn" translate="COMMON.SAVE" ng-disabled="!vm.property.address.countryId"></button>
+            </div>
         </form>
     </div>
 </div>

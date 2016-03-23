@@ -42,10 +42,12 @@
   },
   "PROPERTY": {
     "ADD": {
-      "ADD_PROPERTY": "Add property"
+      "ADD_PROPERTY": "Add property",
+      "ADDRESS": "Address"
     },
     "EDIT": {
-      "EDIT_PROPERTY": "Edit property"
+      "EDIT_PROPERTY": "Edit property",
+      "ADDRESS": "Address"
     },
     "VIEW": {
       "VIEW_PROPERTY": "View property"
