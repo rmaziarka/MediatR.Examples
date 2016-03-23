@@ -24,6 +24,7 @@
                 this.requirementRepository
                     .Get()
                     .Include(req => req.Contacts)
+                    .Include(req => req.Address)
                     .FirstOrDefault(req => req.Id == message.Id);
 
             return requirement;
