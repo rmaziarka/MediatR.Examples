@@ -5,12 +5,17 @@
     </div>
 </div>
 
-<form>
-    <div class="form-group">
+<form ng-submit="addOwnershipForm.$valid" name="addOwnershipForm" id="addOwnershipForm" method="post" novalidate>
+    <div class="form-group" ng-class="{'has-error': (addOwnershipForm.$submitted || addOwnershipForm.type.$dirty) && addOwnershipForm.type.$invalid}">
         <div class="row">
             <div class="col-md-9">
                 <label for="type">Ownership type</label>
-                <select class="form-control" id="type" ng-options="item as item.value for item in vm.ownershipTypes.items track by item.id" ng-model="vm.ownership.ownershipType"></select>
+                <select class="form-control" required id="type" name="type" ng-options="item as item.value for item in vm.ownershipTypes.items track by item.id" ng-model="vm.ownership.ownershipType">
+                    <option value=""></option>
+                </select>
+                <div ng-messages="addOwnershipForm.type.$error" ng-show="addOwnershipForm.type.$submitted || addOwnershipForm.type.$dirty">
+                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                </div>
             </div>
         </div>
     </div>

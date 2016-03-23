@@ -49,7 +49,7 @@ module Antares.Services {
 
         getEnumResource(): Resources.IBaseResourceClass<Resources.IEnumResource> {
             return <Resources.IBaseResourceClass<Resources.IEnumResource>>
-                this.$resource(this.appConfig.rootUrl + '/api/enums/{code}/items');
+                this.$resource(this.appConfig.rootUrl + '/api/enums/:code/items');
         }
     }
 
