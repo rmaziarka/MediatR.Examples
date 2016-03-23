@@ -14,7 +14,6 @@ namespace KnightFrank.Antares.Dal.Model.Configuration
             this.Property(p => p.Postcode).HasMaxLength(10);
             this.Property(p => p.City).HasMaxLength(128);
             this.Property(p => p.County).HasMaxLength(128);
-            this.Property(p => p.Street).HasMaxLength(128);
         }
     }
 }

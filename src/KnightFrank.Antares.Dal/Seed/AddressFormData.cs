@@ -59,8 +59,8 @@
                 {
                     AddressFormId = formId,
                     RegEx = @"^.{0,128}$",
-                    AddressFieldId = GetAddressFieldIdByName(context, "Street"),
-                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.STREET"),
+                    AddressFieldId = GetAddressFieldIdByName(context, "Line2"),
+                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.STREETNAME"),
                     Required = false,
                     RowOrder = 2,
                     ColumnOrder = 1,
@@ -227,10 +227,6 @@
                 new AddressField
                 {
                     Name = "Country"
-                },
-                new AddressField
-                {
-                    Name = "Street"
                 }
             };
             context.AddressField.AddOrUpdate(x => x.Name, input.ToArray());

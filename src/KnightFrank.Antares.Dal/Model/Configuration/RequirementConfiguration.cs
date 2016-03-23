@@ -14,7 +14,7 @@ namespace KnightFrank.Antares.Dal.Model.Configuration
                     cs.MapRightKey("ContactId");
                 });
 
-            this.HasRequired(p => p.Address).WithMany().HasForeignKey(p => p.AddressId);
+            this.HasRequired(p => p.Address).WithMany().HasForeignKey(p => p.AddressId).WillCascadeOnDelete(false);
 
             this.Property(r => r.CreateDate)
                 .IsRequired();

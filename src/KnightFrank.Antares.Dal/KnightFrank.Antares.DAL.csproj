@@ -134,6 +134,10 @@
     <Compile Include="Migrations\201603231119310_AddActivityContacts.Designer.cs">
       <DependentUpon>201603231119310_AddActivityContacts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603231202474_RemoveStreetFieldFromAddress.cs" />
+    <Compile Include="Migrations\201603231202474_RemoveStreetFieldFromAddress.Designer.cs">
+      <DependentUpon>201603231202474_RemoveStreetFieldFromAddress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Activity\Activity.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressField.cs" />
@@ -266,6 +270,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603231119310_AddActivityContacts.resx">
       <DependentUpon>201603231119310_AddActivityContacts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603231202474_RemoveStreetFieldFromAddress.resx">
+      <DependentUpon>201603231202474_RemoveStreetFieldFromAddress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
