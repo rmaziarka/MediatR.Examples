@@ -4,7 +4,7 @@
 /// <reference path="../../../../common/core/lowerCaseFirstCharacter.ts" />
 /// <reference path="../../../../common/models/dto/addressForm.ts" />
 
-namespace Antares.Common.Component {
+module Antares.Common.Component {
     'use strict';
 
     import AddressForm = Antares.Common.Models.Dto.AddressForm;
@@ -19,8 +19,8 @@ namespace Antares.Common.Component {
         constructor(private dataAccessService: Services.DataAccessService) {
             this.addressForm = this.dataAccessService.getAddressFormResource().get({id:this.addressFormId});
         }
-        public getAddresRowText(row:number):string {
-
+        public getAddressRowText(row:number):string {
+            if(row === undefined) return;
             var addressFormFields:AddressFormFieldDefinition[] = this.addressForm.addressFieldRows[row];
 
             var addressLine:string = addressFormFields.sort((a:AddressFormFieldDefinition,b:AddressFormFieldDefinition)=>{

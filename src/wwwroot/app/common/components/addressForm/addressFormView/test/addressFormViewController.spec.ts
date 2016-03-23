@@ -22,7 +22,7 @@ module Antares {
         }));
 
         xit('render one line of address', () => {
-            var addressLine = controller.getAddresRowText(0);
+            var addressLine = controller.getAddressRowText(0);
             expect(addressLine).toBe("");
         });
     });
