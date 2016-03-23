@@ -8,9 +8,11 @@
 
     public class CreatePropertyCommandValidator : AbstractValidator<CreatePropertyCommand>
     {
-        public CreatePropertyCommandValidator(IGenericRepository<AddressFieldDefinition> addressFieldDefinition)
+        public CreatePropertyCommandValidator(
+            IGenericRepository<AddressFieldDefinition> addressFieldDefinitionRepository,
+            IGenericRepository<AddressForm> addressFormRepository)
         {
-            this.RuleFor(x => x.Address).SetValidator(new CreateOrUpdatePropertyAddressValidator(addressFieldDefinition));
+            this.RuleFor(x => x.Address).SetValidator(new CreateOrUpdatePropertyAddressValidator(addressFieldDefinitionRepository, addressFormRepository));
         }
     }
 }

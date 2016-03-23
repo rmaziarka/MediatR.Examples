@@ -155,7 +155,7 @@
     <Compile Include="Model\Configuration\Address\AddressConfiguration.cs" />
     <Compile Include="Model\Configuration\Address\AddressFieldConfiguration.cs" />
     <Compile Include="Model\Configuration\Address\AddressFieldDefinitionConfiguration.cs" />
-    <Compile Include="Model\Configuration\Address\AddressFieldLableConfiguration.cs" />
+    <Compile Include="Model\Configuration\Address\AddressFieldLabelConfiguration.cs" />
     <Compile Include="Model\Configuration\Address\AddressFormConfigutration.cs" />
     <Compile Include="Model\Configuration\Address\AddressFormEntityTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\BusinessConfiguration.cs" />

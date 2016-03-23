@@ -31,7 +31,7 @@
         {
             propertyRepository.Setup(r => r.GetById(It.IsAny<Guid>())).Returns((Property)null);
 
-            Assert.Throws<ResourceNotFoundException>(() => handler.Handle(command)).Id.Should().Be(command.Id);
+            Assert.Throws<ResourceNotFoundException>(() => handler.Handle(command)).ResourceId.Should().Be(command.Id);
         }
 
         [Theory]

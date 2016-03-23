@@ -16,6 +16,7 @@
     {
         public override void OnException(HttpActionExecutedContext context)
         {
+            // TODO refactor
             if (context.Exception is ValidationException)
             {
                 var validationException = (ValidationException)context.Exception;
@@ -26,7 +27,7 @@
                     Errors = validationException.Errors.Select(x => x.ErrorMessage),
                     InvalidFields = validationException.Errors.Select(x => x.PropertyName)
                 };
-                
+
                 context.Response = new HttpResponseMessage
                 {
                     Content = CreateContent(response),
@@ -37,10 +38,27 @@
             {
                 var response =
                     new
-                        {
-                            Message = "Domain validation occured. Field is invalid.",
-                            InvalidFields = context.Exception.Message
-                        };
+                    {
+                        Message = "Domain validation occured. Field is invalid.",
+                        InvalidFields = context.Exception.Message
+                    };
+
+                context.Response = new HttpResponseMessage
+                {
+                    Content = CreateContent(response),
+                    StatusCode = HttpStatusCode.BadRequest
+                };
+            }
+            else if (context.Exception is ResourceNotFoundException)
+            {
+                var resourceNotFoundException = (ResourceNotFoundException)context.Exception;
+
+                var response =
+                    new
+                    {
+                        Message = resourceNotFoundException.Message,
+                        ResourceId = resourceNotFoundException.ResourceId,
+                    };
 
                 context.Response = new HttpResponseMessage
                 {

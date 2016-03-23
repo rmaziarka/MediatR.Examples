@@ -111,6 +111,7 @@
     <Compile Include="Enum\QueryResults\EnumQueryItemResult.cs" />
     <Compile Include="Enum\QueryResults\EnumQueryResult.cs" />
     <Compile Include="Enum\QueryResults\EnumQueryResultProfile.cs" />
+    <Compile Include="Helpers\Extentions\FluentValidation.cs" />
     <Compile Include="Ownership\CommandHandlers\CreateOwnershipCommandHandler.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommand.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandProfile.cs" />
@@ -125,7 +126,7 @@
     <Compile Include="Property\Commands\CreateOrUpdatePropertyAddressValidator.cs" />
     <Compile Include="Property\Commands\CreatePropertyCommand.cs" />
     <Compile Include="Property\Commands\CreatePropertyCommandValidator.cs" />
-    <Compile Include="Common\Validator\CustomStringValidator.cs" />
+    <Compile Include="Common\Validator\CustomDynamicValidator.cs" />
     <Compile Include="Property\Commands\UpdatePropertyCommand.cs" />
     <Compile Include="Property\Commands\PropertyCommandProfile.cs" />
     <Compile Include="Property\Commands\UpdatePropertyCommandValidator.cs" />

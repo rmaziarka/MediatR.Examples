@@ -5,15 +5,15 @@
     [Serializable]
     public class ResourceNotFoundException : Exception
     {
-        public Guid Id { get; set; }
+        public Guid ResourceId { get; set; }
 
         public ResourceNotFoundException()
         {
         }
 
-        public ResourceNotFoundException(string message, Guid id) : base(message)
+        public ResourceNotFoundException(string message, Guid resourceId) : base(message)
         {
-            this.Id = id;
+            this.ResourceId = resourceId;
         }
     }
 }

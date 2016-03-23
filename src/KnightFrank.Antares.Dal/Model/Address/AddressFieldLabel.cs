@@ -1,7 +1,6 @@
 ﻿namespace KnightFrank.Antares.Dal.Model.Address
 {
     using System;
-    using System.Collections.Generic;
 
     public class AddressFieldLabel : BaseEntity
     {
@@ -11,6 +10,5 @@
 
         public string LabelKey { get; set; }
 
-        public virtual ICollection<AddressFieldDefinition> AddressFieldFormDefinitions { get; set; }
     }
 }

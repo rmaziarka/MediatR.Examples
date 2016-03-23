@@ -2,7 +2,7 @@
 {
     using FluentValidation;
 
-    public class CustomStringValidator : AbstractValidator<string>
+    public class CustomDynamicValidator<T> : AbstractValidator<T>
     {
     }
 }

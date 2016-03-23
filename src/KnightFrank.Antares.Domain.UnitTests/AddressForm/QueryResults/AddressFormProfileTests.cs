@@ -22,13 +22,11 @@
             // Arrange
             AddressField addressField =
                 fixture.Build<AddressField>()
-                       .Without(af => af.AddressFieldFormDefinitions)
                        .Without(af => af.AddressFieldLabels)
                        .Create();
 
             AddressFieldLabel addressFieldLabel =
                 fixture.Build<AddressFieldLabel>()
-                       .Without(afl => afl.AddressFieldFormDefinitions)
                        .Without(afl => afl.AddressField)
                        .Create();
 

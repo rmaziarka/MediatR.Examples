@@ -91,5 +91,33 @@
                           .With(a => a.AddressFormEntityTypes, addressFormEntityTypes)
                           .Create();
         }
+
+        public static AddressFieldDefinition BuildAddressFieldDefinition(this IFixture fixture, AddressForm addressForm, string addressFieldName, string fieldRegularExpression = null, bool? isFieldRequired = null)
+        {
+            if (!isFieldRequired.HasValue)
+            {
+                isFieldRequired = fixture.Create<bool>();
+            }
+
+            if (string.IsNullOrWhiteSpace(fieldRegularExpression))
+            {
+                fieldRegularExpression = fixture.Create<string>();
+            }
+
+            AddressField addressField = fixture.Build<AddressField>()
+                                .With(x => x.Name, addressFieldName)
+                                .Create();
+
+            AddressFieldDefinition addressFieldDefinition = fixture.Build<AddressFieldDefinition>()
+                                .With(x => x.AddressField, addressField)
+                                .With(x => x.AddressFieldId, addressField.Id)
+                                .With(x => x.AddressForm, addressForm)
+                                .With(x => x.AddressFormId, addressForm.Id)
+                                .With(x => x.RegEx, fieldRegularExpression)
+                                .With(x => x.Required, isFieldRequired)
+                                .Create();
+
+            return addressFieldDefinition;
+        }
     }
 }
