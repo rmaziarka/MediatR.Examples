@@ -96,7 +96,7 @@
                     Required = false,
                     RowOrder = 1,
                     ColumnOrder = 1,
-                    ColumnSize = 2
+                    ColumnSize = 3
                 },
                 new AddressFieldDefinition
                 {
@@ -107,7 +107,7 @@
                     Required = false,
                     RowOrder = 1,
                     ColumnOrder = 2,
-                    ColumnSize = 4
+                    ColumnSize = 7
                 },
                 new AddressFieldDefinition
                 {
@@ -118,7 +118,7 @@
                     Required = false,
                     RowOrder = 2,
                     ColumnOrder = 1,
-                    ColumnSize = 6
+                    ColumnSize = 10
                 },
                 new AddressFieldDefinition
                 {
@@ -129,7 +129,7 @@
                     Required = false,
                     RowOrder = 3,
                     ColumnOrder = 1,
-                    ColumnSize = 6
+                    ColumnSize = 10
                 },
                 new AddressFieldDefinition
                 {
@@ -140,7 +140,7 @@
                     Required = true,
                     RowOrder = 4,
                     ColumnOrder = 1,
-                    ColumnSize = 2
+                    ColumnSize = 3
                 },
                 new AddressFieldDefinition
                 {
@@ -151,7 +151,7 @@
                     Required = false,
                     RowOrder = 5,
                     ColumnOrder = 1,
-                    ColumnSize = 6
+                    ColumnSize = 7
                 },
                 new AddressFieldDefinition
                 {
@@ -162,18 +162,7 @@
                     Required = false,
                     RowOrder = 6,
                     ColumnOrder = 1,
-                    ColumnSize = 6
-                },
-                new AddressFieldDefinition
-                {
-                    AddressFormId = formId,
-                    AddressFieldId = GetAddressFieldIdByName(context, "Country"),
-                    AddressFieldLabelId = GetAddressFieldLabelIdByLabelKey(context, "ADDRESSFORM.COUNTRY"),
-                    RegEx = "^.{0,128}$",
-                    Required = false,
-                    RowOrder = 7,
-                    ColumnOrder = 1,
-                    ColumnSize = 6
+                    ColumnSize = 7
                 }
             };
 
