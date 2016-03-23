@@ -1,15 +1,12 @@
 ﻿Feature: Add, update and view property
 
-@ignore
 @Property
-Scenario: Create property in DB
-	Given User is adding a new property
-		| Id | Type | Country        | PropertyNumber | PropertyName    | AddressLine1       | AddressLine2 | Postcode | Town   | County         |
-		| 3  | Flat | United Kingdom | 1              | Beautifull Flat | Lewis Cubit Square | King Cross   | N1C      | London | Greater London |
-	When User retrevies data from DB
-	Then the result should be same as
-		| Id | Type | Country        | PropertyNumber | PropertyName    | AddressLine1       | AddressLine2 | Postcode | Town   | County         |
-		| 3  | Flat | United Kingdom | 1              | Beautifull Flat | Lewis Cubit Square | King Cross   | N1C      | London | Greater London |
+@ignore
+Scenario: Create property
+	When User gets GB address form for Property and country details
+	When User creates property with following data 
+		| PropertyName    | PropertyNumber | Line1              | Line2      | Line3 | Postcode | City   | County         | Street | Country |
+		| Beautifull Flat | 1              | Lewis Cubit Square | King Cross |       | N1C      | London | Greater London |        |         |
 	Then User should get <statusCode> http status code
 
 @ignore
