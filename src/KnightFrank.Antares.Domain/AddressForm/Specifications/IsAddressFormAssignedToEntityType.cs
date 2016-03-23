@@ -19,7 +19,7 @@
 
         public override Expression<Func<AddressForm, bool>> SatisfiedBy()
         {
-            return af => af.AddressFormEntityTypes.Any(afet => afet.EnumTypeItemId == enumTypeItemId);
+            return af => af.AddressFormEntityTypes.Any(afet => afet.EnumTypeItemId == this.enumTypeItemId);
         }
     }
 }
