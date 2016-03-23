@@ -40,10 +40,13 @@
         {
             var contacts = this.scenarioContext.Get<List<Contact>>("Contact List");
             var requirement = table.CreateInstance<Requirement>();
+
             requirement.CreateDate = DateTime.Now;
             requirement.Contacts.AddRange(contacts);
+
             this.fixture.DataContext.Requirement.Add(requirement);
             this.fixture.DataContext.SaveChanges();
+
             this.scenarioContext.Set(requirement, "Requirement");
         }
 
@@ -51,9 +54,10 @@
         public void UserCreatesFollowingRequirementWithoutContact(Table table)
         {
             string requestUrl = $"{ApiUrl}";
-
             var requirement = table.CreateInstance<Requirement>();
+
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
+
             this.scenarioContext.SetHttpResponseMessage(response);
             this.scenarioContext.Set(requirement, "Requirement");
         }
@@ -73,8 +77,14 @@
         public void ThenRequierementShouldBeTheSameAsAdded()
         {
             var tableRequirement = this.scenarioContext.Get<Requirement>("Requirement");
+            //TODO currently requirement collection from contacts inside requirement is cleared
+            foreach (Contact contact in tableRequirement.Contacts)
+            {
+                contact.Requirements = new List<Requirement>();
+            }
+
             var databaseRequirement = JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent());
-            databaseRequirement.ShouldBeEquivalentTo(tableRequirement);
+            databaseRequirement.ShouldBeEquivalentTo(tableRequirement, options => options.Excluding(req => req.CreateDate));
         }
 
         [When(@"User retrieves requirement for (.*) id")]
@@ -85,6 +95,5 @@
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
-
     }
 }
