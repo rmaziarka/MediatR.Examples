@@ -48,7 +48,7 @@ module Antares {
             });
         });
 
-        describe('when proper property is loaded', () =>{
+        describe('when proper property is loaded', () => {
             var countryMockId = countriesMock[0].country.id,
                 addressFormMock: Dto.AddressForm = new Dto.AddressForm('adrfrmId1', countryMockId, []),
                 propertyMock: Dto.Property = new Dto.Property('propMockId1',
@@ -59,7 +59,7 @@ module Antares {
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
                 $state: ng.ui.IStateService,
-                $httpBackend: ng.IHttpBackendService) =>{
+                $httpBackend: ng.IHttpBackendService) => {
 
                 // init
                 scope = $rootScope.$new();
@@ -67,7 +67,7 @@ module Antares {
                 state = $state;
                 $http = $httpBackend;
 
-                 // http backend
+                // http backend
                 $http.whenGET(/\/api\/addressform\/countries\?entityType=Property/).respond(() => {
                     return [200, countriesMock];
                 });
@@ -96,7 +96,7 @@ module Antares {
             });
 
             it('then page displays address form component', () => {
-                var addressFormComponent = element.find('address-form-edit');
+                var addressFormComponent :ng.IAugmentedJQuery= element.find('address-form-edit');
                 expect(addressFormComponent.length).toBe(1);
             });
 
