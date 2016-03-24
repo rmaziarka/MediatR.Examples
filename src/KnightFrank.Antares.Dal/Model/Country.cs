@@ -3,6 +3,7 @@
     using System.Collections.Generic;
 
     using KnightFrank.Antares.Dal.Model.Address;
+    using KnightFrank.Antares.Dal.Model.User;
 
     public class Country : BaseEntity
     {

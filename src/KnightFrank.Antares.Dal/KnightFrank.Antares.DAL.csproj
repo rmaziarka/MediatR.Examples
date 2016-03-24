@@ -149,7 +149,6 @@
     <Compile Include="Model\Address\AddressForm.cs" />
     <Compile Include="Model\Address\AddressFormEntityType.cs" />
     <Compile Include="Model\BaseAuditableEntity.cs" />
-    <Compile Include="Model\Business.cs" />
     <Compile Include="Model\Common\IAuditableEntity.cs" />
     <Compile Include="Model\Common\ILocaled.cs" />
     <Compile Include="Model\Configuration\Address\AddressConfiguration.cs" />
@@ -158,12 +157,10 @@
     <Compile Include="Model\Configuration\Address\AddressFieldLabelConfiguration.cs" />
     <Compile Include="Model\Configuration\Address\AddressFormConfigutration.cs" />
     <Compile Include="Model\Configuration\Address\AddressFormEntityTypeConfiguration.cs" />
-    <Compile Include="Model\Configuration\BusinessConfiguration.cs" />
     <Compile Include="Model\Configuration\ContactConfiguration.cs" />
     <Compile Include="Model\Configuration\BaseEntityConfiguration.cs" />
     <Compile Include="Model\Configuration\CountryConfiguration.cs" />
     <Compile Include="Model\Configuration\CountryLocalisedConfiguration.cs" />
-    <Compile Include="Model\Configuration\DepartmentConfiguration.cs" />
     <Compile Include="Model\Configuration\Enum\EnumLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\Enum\EnumTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\Enum\EnumTypeItemConfiguration.cs" />
@@ -175,6 +172,8 @@
     <Compile Include="Model\Configuration\Property\OwnershipConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\PropertyConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\RequirementConfiguration.cs" />
+    <Compile Include="Model\Configuration\User\BusinessConfiguration.cs" />
+    <Compile Include="Model\Configuration\User\DepartmentConfiguration.cs" />
     <Compile Include="Model\Configuration\User\RoleConfiguration.cs" />
     <Compile Include="Model\Configuration\User\UserConfiguration.cs" />
     <Compile Include="Model\Contact.cs" />
@@ -183,7 +182,6 @@
     <Compile Include="Model\BaseEntity.cs" />
     <Compile Include="Model\Country.cs" />
     <Compile Include="Model\CountryLocalised.cs" />
-    <Compile Include="Model\Department.cs" />
     <Compile Include="Model\Enum\EnumLocalised.cs" />
     <Compile Include="Model\Enum\EnumType.cs" />
     <Compile Include="Model\Enum\EnumTypeItem.cs" />
@@ -195,6 +193,8 @@
     <Compile Include="Model\Property\Ownership.cs" />
     <Compile Include="Model\Property\Property.cs" />
     <Compile Include="Model\Property\Requirement.cs" />
+    <Compile Include="Model\User\Business.cs" />
+    <Compile Include="Model\User\Department.cs" />
     <Compile Include="Model\User\Role.cs" />
     <Compile Include="Model\User\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -289,7 +289,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\Configuration\Ressource\" />
+    <Folder Include="Model\Configuration\Contact\" />
+    <Folder Include="Model\Configuration\Resource\" />
     <Folder Include="Model\Ressource\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

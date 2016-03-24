@@ -1,8 +1,8 @@
-﻿namespace KnightFrank.Antares.Dal.Model.Configuration
+﻿namespace KnightFrank.Antares.Dal.Model.Configuration.User
 {
-	using KnightFrank.Antares.Dal.Migrations;
+    using KnightFrank.Antares.Dal.Model.User;
 
-	internal sealed class DepartmentConfiguration : BaseEntityConfiguration<Department>
+    internal sealed class DepartmentConfiguration : BaseEntityConfiguration<Department>
 	{
 		public DepartmentConfiguration()
 		{
