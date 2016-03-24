@@ -4,6 +4,7 @@ module Antares {
     var app: ng.IModule = angular.module('app');
 
     app.config(['$translateProvider', initTranslations]);
+    app.config(['$provide', extendOrderByWithEmptyFields]);
 
     function initTranslations($translateProvider) {
         $translateProvider
@@ -16,5 +17,9 @@ module Antares {
             })
             .preferredLanguage('en')
             .useSanitizeValueStrategy('escape');
+    }
+
+    function extendOrderByWithEmptyFields($provider: angular.auto.IProvideService){
+        $provider.decorator('orderByFilter', Antares.Common.Decorators.OrderByFilterDecorator.decoratorFunction);
     }
 }

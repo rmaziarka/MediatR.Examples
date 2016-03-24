@@ -17,7 +17,8 @@
                         </div>
                         <p ng-hide="vm.property.ownerships.length" class="help-block">Ownership information not configured yet</p>
                     </fieldset>
-                    <div class="panel panel-default" ng-repeat="ownership in vm.property.ownerships">
+                    <div class="panel panel-default" 
+                         ng-repeat="ownership in vm.property.ownerships | orderBy:'purchaseDate' : vm.orderDescending : vm.nullOnEnd">
                         <div class="panel-body">
                             <div class="panel-item">
                                 <span ng-repeat="contact in ownership.contacts">

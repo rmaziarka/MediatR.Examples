@@ -21,6 +21,9 @@ module Antares.Property.View {
         }
 
         loadingContacts: boolean = false;
+        orderDescending: boolean = true;
+        nullOnEnd: boolean = true;
+
         ownershipResource: any;
         property: Antares.Common.Models.Resources.IPropertyResource;
 
