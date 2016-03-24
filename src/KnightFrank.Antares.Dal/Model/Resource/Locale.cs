@@ -1,8 +1,8 @@
-﻿namespace KnightFrank.Antares.Dal.Model
+﻿namespace KnightFrank.Antares.Dal.Model.Resource
 {
-	using System.Collections.Generic;
+    using System.Collections.Generic;
 
-	using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.Enum;
 
     public class Locale : BaseEntity
     {

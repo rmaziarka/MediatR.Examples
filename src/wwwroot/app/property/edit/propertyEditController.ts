@@ -40,8 +40,7 @@ module Antares.Property {
                 .update(this.property)
                 .$promise
                 .then((property: Dto.IProperty) => {
-                    //TODO: change to property-view when ready
-                    this.$state.go('app.property-edit', property);
+                    this.$state.go('app.property-view', property);
                 });
         }
     }

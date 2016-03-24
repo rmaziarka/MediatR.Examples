@@ -8,6 +8,7 @@
         <h2 class="page-header" translate="PROPERTY.EDIT.EDIT_PROPERTY"></h2>
         <form ng-submit="addPropertyForm.$valid && vm.save()" name="addPropertyForm" id="addPropertyForm" method="post" novalidate>
             <fieldset>
+                <legend translate="PROPERTY.EDIT.ADDRESS"></legend>
                 <address-form-edit entity-type-code="vm.entityTypeCode" address="vm.property.address"></address-form-edit>
             </fieldset>
             <div class="form-group">

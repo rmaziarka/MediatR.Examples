@@ -4,10 +4,10 @@
     using System.Linq;
 
     using FluentAssertions;
-
-    using KnightFrank.Antares.Dal.Model;
+    
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.Resource;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.AddressForm.QueryHandlers;
     using KnightFrank.Antares.Domain.AddressForm.QueryResults;
@@ -76,8 +76,8 @@
             var query = this.fixture.BuildGetCountriesForAddressFormQuery(entityTypeCode, localeIsoCode);
             EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
 
-            country.CountryLocaliseds.Add(fixture.BuildCountryLocalised(localeIsoCode));
-            otherCountry.CountryLocaliseds.Add(fixture.BuildCountryLocalised(localeIsoCode));
+            country.CountryLocaliseds.Add(this.fixture.BuildCountryLocalised(localeIsoCode));
+            otherCountry.CountryLocaliseds.Add(this.fixture.BuildCountryLocalised(localeIsoCode));
 
             this.mockedCountryData.Add(country);
             this.mockedEnumTypeItemData.Add(enumTypeItem);
@@ -110,7 +110,7 @@
             var query = this.fixture.BuildGetCountriesForAddressFormQuery(entityTypeCode, localeIsoCode);
             EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
 
-            country.CountryLocaliseds.Add(fixture.BuildCountryLocalised(localeIsoCode, localeValue));
+            country.CountryLocaliseds.Add(this.fixture.BuildCountryLocalised(localeIsoCode, localeValue));
 
             this.mockedCountryData.Add(country);
             this.mockedEnumTypeItemData.Add(enumTypeItem);
@@ -147,8 +147,8 @@
             EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(enumType, entityTypeCode);
             EnumTypeItem otherEnumTypeItem = this.fixture.BuildEnumTypeItem(enumType, otherEntityTypeCode);
 
-            country.CountryLocaliseds.Add(fixture.BuildCountryLocalised(localeIsoCode, localeValue));
-            otherCountry.CountryLocaliseds.Add(fixture.BuildCountryLocalised(localeIsoCode));
+            country.CountryLocaliseds.Add(this.fixture.BuildCountryLocalised(localeIsoCode, localeValue));
+            otherCountry.CountryLocaliseds.Add(this.fixture.BuildCountryLocalised(localeIsoCode));
 
             this.mockedCountryData.Add(country);
             this.mockedEnumTypeItemData.Add(enumTypeItem);
@@ -185,8 +185,8 @@
             var query = this.fixture.BuildGetCountriesForAddressFormQuery(entityTypeCode, localeIsoCode);
             EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
 
-            country.CountryLocaliseds.Add(fixture.BuildCountryLocalised(localeIsoCode, localeValue));
-            country.CountryLocaliseds.Add(fixture.BuildCountryLocalised(otherLocaleIsoCode));
+            country.CountryLocaliseds.Add(this.fixture.BuildCountryLocalised(localeIsoCode, localeValue));
+            country.CountryLocaliseds.Add(this.fixture.BuildCountryLocalised(otherLocaleIsoCode));
 
             this.mockedCountryData.Add(country);
             this.mockedEnumTypeItemData.Add(enumTypeItem);

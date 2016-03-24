@@ -9,7 +9,6 @@
 
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
-    using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Domain.Enum.QueryResults;
 
@@ -64,7 +63,6 @@
         {
             this.EnumTypeItem = table.CreateInstance<EnumTypeItem>();
             this.EnumTypeItem.EnumTypeId = this.EnumType.Id;
-
             this.fixture.DataContext.EnumTypeItem.Add(this.EnumTypeItem);
             this.fixture.DataContext.SaveChanges();
         }
@@ -78,6 +76,13 @@
 
             this.fixture.DataContext.EnumLocalised.Add(this.EnumLocalised);
             this.fixture.DataContext.SaveChanges();
+        }
+
+        [Given(@"User gets EnumTypeItemId for (.*) EnumType code and (.*) EnumTypeItem code")]
+        public void GetEnumTypeItemId(string enumTypeCode, string enumTypeItemCode)
+        {
+            var enumTypeItem = this.fixture.DataContext.EnumTypeItem.Single(i => i.EnumType.Code.Equals(enumTypeCode) && i.Code.Equals(enumTypeItemCode));
+            this.scenarioContext.Set(enumTypeItem.Id, "EnumTypeItemId");
         }
 
         [Then(@"Result should contain single element")]

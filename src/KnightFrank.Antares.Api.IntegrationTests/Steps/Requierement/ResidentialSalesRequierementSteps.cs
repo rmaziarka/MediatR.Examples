@@ -60,7 +60,6 @@
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
 
             this.scenarioContext.SetHttpResponseMessage(response);
-            this.scenarioContext.Set(requirement, "Requirement");
         }
 
         [When(@"User retrieves requirement that he saved")]

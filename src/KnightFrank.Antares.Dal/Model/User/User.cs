@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using KnightFrank.Antares.Dal.Model.Resource;
+
     public class User : BaseEntity
     {
         public string ActiveDirectoryDomain { get; set; }

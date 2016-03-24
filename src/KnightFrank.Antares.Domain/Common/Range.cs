@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace KnightFrank.Antares.Domain.Ownership
+﻿namespace KnightFrank.Antares.Domain.Common
 {
+    using System;
+
     public class Range<T> where T : IComparable
     {
         public Range(T min, T max)

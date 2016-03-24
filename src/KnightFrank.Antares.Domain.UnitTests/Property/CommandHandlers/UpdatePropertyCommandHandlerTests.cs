@@ -3,8 +3,7 @@
     using System;
 
     using FluentAssertions;
-
-    using KnightFrank.Antares.Dal.Model;
+    
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.Exceptions;
     using Domain.Property.CommandHandlers;
@@ -31,7 +30,7 @@
         {
             propertyRepository.Setup(r => r.GetById(It.IsAny<Guid>())).Returns((Property)null);
 
-            Assert.Throws<ResourceNotFoundException>(() => handler.Handle(command)).Id.Should().Be(command.Id);
+            Assert.Throws<ResourceNotFoundException>(() => handler.Handle(command)).ResourceId.Should().Be(command.Id);
         }
 
         [Theory]

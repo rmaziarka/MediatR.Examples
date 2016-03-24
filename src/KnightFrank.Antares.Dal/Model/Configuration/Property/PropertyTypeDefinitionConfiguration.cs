@@ -1,6 +1,7 @@
-﻿namespace KnightFrank.Antares.Dal.Model.Configuration.PropertyType
+namespace KnightFrank.Antares.Dal.Model.Configuration.Property
 {
-    using KnightFrank.Antares.Dal.Model.PropertyType;
+    using KnightFrank.Antares.Dal.Model.Property;
+
     internal sealed class PropertyTypeDefinitionConfiguration : BaseEntityConfiguration<PropertyTypeDefinition>
     {
         public PropertyTypeDefinitionConfiguration()
@@ -19,6 +20,8 @@
                 .WithMany()
                 .HasForeignKey(x => x.DivisionId)
                 .WillCascadeOnDelete(false);
+
+            this.Property(x => x.Order).IsRequired();
         }
     }
 }

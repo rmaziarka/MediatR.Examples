@@ -4,8 +4,5 @@
 
     internal class ContactConfiguration : BaseEntityConfiguration<Contact>
     {
-        public ContactConfiguration()
-        {
-        }
     }
 }

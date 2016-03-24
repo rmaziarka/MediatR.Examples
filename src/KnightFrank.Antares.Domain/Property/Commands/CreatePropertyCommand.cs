@@ -1,11 +1,10 @@
 ﻿namespace KnightFrank.Antares.Domain.Property.Commands
 {
-    using KnightFrank.Antares.Dal.Model;
-    using KnightFrank.Antares.Dal.Model.Property;
+    using System;
 
     using MediatR;
 
-    public class CreatePropertyCommand : IRequest<Property>
+    public class CreatePropertyCommand : IRequest<Guid>
     {
         public CreateOrUpdatePropertyAddress Address { get; set; }
     }

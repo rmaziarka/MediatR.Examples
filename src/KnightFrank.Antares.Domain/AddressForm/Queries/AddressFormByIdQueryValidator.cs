@@ -8,8 +8,8 @@
     {
         public AddressFormByIdQueryValidator()
         {
-            RuleFor(q => q).NotNull();
-            RuleFor(q => q.Id).NotEqual(q => Guid.Empty);
+            this.RuleFor(q => q).NotNull();
+            this.RuleFor(q => q.Id).NotEqual(q => Guid.Empty);
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Contact.Commands
 {
-    using System;
-
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Domain.Contact.Commands;

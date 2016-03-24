@@ -12,7 +12,7 @@ module Antares.Common.Component {
         addressForm: any;
         address: Address;
 
-        constructor(private dataAccessService: Services.DataAccessService) {
+        constructor(private dataAccessService: Services.DataAccessService, $scope: ng.IScope) {
             this.dataAccessService.getAddressFormResource().get({ id: this.address.addressFormId }).$promise.then((result)=>{
                 var addressForm = new AddressForm();
                 angular.extend(addressForm, result);

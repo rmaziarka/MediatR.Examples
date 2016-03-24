@@ -2,6 +2,8 @@
 {
     using System;
 
+    using KnightFrank.Antares.Dal.Model.Resource;
+
     public interface ILocaled
     {
         Guid LocaleId { get; set; }

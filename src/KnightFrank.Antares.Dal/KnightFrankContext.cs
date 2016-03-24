@@ -11,6 +11,7 @@
     using KnightFrank.Antares.Dal.Model.Configuration;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.Resource;
     using KnightFrank.Antares.Dal.Model.User;
 
     public class KnightFrankContext : DbContext

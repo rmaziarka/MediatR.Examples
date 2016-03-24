@@ -1,8 +1,7 @@
 ﻿namespace KnightFrank.Antares.Dal.Seed
 {
 	using System.Data.Entity.Migrations;
-
-	using KnightFrank.Antares.Dal.Model;
+    
 	using KnightFrank.Antares.Dal.Model.User;
 
     internal class RoleData

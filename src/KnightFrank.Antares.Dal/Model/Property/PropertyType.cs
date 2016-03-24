@@ -1,11 +1,11 @@
-﻿using System;
-
-namespace KnightFrank.Antares.Dal.Model.PropertyType
+namespace KnightFrank.Antares.Dal.Model.Property
 {
+    using System;
+
     public class PropertyType : BaseEntity { 
         public Guid? ParentId { get; set; }
 
-        public PropertyType Parent { get; set; }
+        public virtual PropertyType Parent { get; set; }
 
         public string Code { get; set; }
     }

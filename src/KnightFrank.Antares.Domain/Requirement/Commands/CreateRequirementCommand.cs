@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
 
-    using Dal.Model;
     using Contact;
 
     using KnightFrank.Antares.Dal.Model.Property;

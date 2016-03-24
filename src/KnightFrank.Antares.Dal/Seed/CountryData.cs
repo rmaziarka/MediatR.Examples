@@ -3,8 +3,8 @@
 	using System;
 	using System.Data.Entity.Migrations;
 	using System.Linq;
-
-	using KnightFrank.Antares.Dal.Model;
+    
+	using KnightFrank.Antares.Dal.Model.Resource;
 	using KnightFrank.Antares.Dal.Seed.Common;
 
     internal class CountryData

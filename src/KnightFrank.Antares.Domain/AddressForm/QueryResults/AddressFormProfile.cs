@@ -2,7 +2,6 @@
 {
     using AutoMapper;
 
-    using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Domain.AddressFieldDefinition.QueryResults;
 

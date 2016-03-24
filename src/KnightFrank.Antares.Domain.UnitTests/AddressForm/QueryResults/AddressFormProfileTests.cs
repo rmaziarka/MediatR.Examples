@@ -1,8 +1,7 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.AddressForm.QueryResults
 {
     using AutoMapper;
-
-    using KnightFrank.Antares.Dal.Model;
+    
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Domain.AddressForm.QueryResults;
 
@@ -22,13 +21,11 @@
             // Arrange
             AddressField addressField =
                 fixture.Build<AddressField>()
-                       .Without(af => af.AddressFieldFormDefinitions)
                        .Without(af => af.AddressFieldLabels)
                        .Create();
 
             AddressFieldLabel addressFieldLabel =
                 fixture.Build<AddressFieldLabel>()
-                       .Without(afl => afl.AddressFieldFormDefinitions)
                        .Without(afl => afl.AddressField)
                        .Create();
 

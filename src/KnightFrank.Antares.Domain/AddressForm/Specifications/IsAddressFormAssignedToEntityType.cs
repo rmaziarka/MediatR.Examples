@@ -6,8 +6,6 @@
 
     using global::Domain.Seedwork.Specification;
 
-    using Dal.Model;
-
     using KnightFrank.Antares.Dal.Model.Address;
 
     public class IsAddressFormAssignedToEntityType : Specification<AddressForm>

@@ -1,6 +1,7 @@
-﻿namespace KnightFrank.Antares.Dal.Model.Configuration.PropertyType
+namespace KnightFrank.Antares.Dal.Model.Configuration.Property
 {
-    using KnightFrank.Antares.Dal.Model.PropertyType;
+    using KnightFrank.Antares.Dal.Model.Property;
+
     internal sealed class PropertyTypeLocalisedConfiguration : BaseEntityConfiguration<PropertyTypeLocalised>
     {
         public PropertyTypeLocalisedConfiguration()

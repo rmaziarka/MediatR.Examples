@@ -1,6 +1,9 @@
 /// <reference path="../../typings/_all.d.ts" />
+/// <reference path="../../common/models/dto/property.ts" />
+/// <reference path="../../common/models/resources.d.ts" />
 
 module Antares.Property.View {
+    import Dto = Antares.Common.Models.Dto;
 
     export class PropertyViewController {
         static $inject = ['dataAccessService', 'componentRegistry', '$scope', '$state'];
@@ -31,19 +34,18 @@ module Antares.Property.View {
         nullOnEnd: boolean = true;
 
         ownershipResource: any;
-        property: Antares.Common.Models.Resources.IPropertyResource;
+        property: any;
+        // propertyData:Dto.IProperty = new Dto.Property();
         currentPanel: any;
 
         constructor(
             private dataAccessService: Antares.Services.DataAccessService,
             private componentRegistry: Antares.Core.Service.ComponentRegistry,
             private $scope: ng.IScope,
-            private $state: ng.ui.IState) {
+            private $state: ng.ui.IStateService) {
 
             this.propertyId = $state.params['id'];
             this.ownershipResource = dataAccessService.getOwnershipResource();
-
-            this.loadPropertyData();
 
             $scope.$on('$destroy', () => {
                 this.componentRegistry.deregister(this.componentIds.contactListId);
@@ -61,11 +63,6 @@ module Antares.Property.View {
                 this.components.ownershipAdd().loadOwnership(this.components.contactList().getSelected());
                 this.ownershipAddPanelVisible = true;
             }
-        }
-
-        loadPropertyData = () => {
-            var propertyId: string = this.$state.params.id;
-            this.property = this.dataAccessService.getPropertyResource().get({ id: propertyId });
         }
 
         showOwnershipView = (ownership: Antares.Common.Models.Dto.IOwnership) => {
@@ -87,11 +84,15 @@ module Antares.Property.View {
             this.showPanel(this.components.panels.contact);
         }
 
+        goToEdit() {
+            this.$state.go('app.property-edit', { id: this.$state.params['id'] });
+        }
+
         cancelUpdateContacts() {
             this.components.panels.contact().hide();
         }
 
-        cancelAddOwnership(){
+        cancelAddOwnership() {
             this.ownershipAddPanelVisible = false;
         }
 
@@ -101,8 +102,7 @@ module Antares.Property.View {
             this.ownershipResource
                 .save(ownershipToSend)
                 .$promise
-                .then((ownership: Antares.Common.Models.Dto.IOwnership) =>{
-                    this.loadPropertyData();
+                .then((ownership: Antares.Common.Models.Dto.IOwnership) => {
                     this.components.panels.contact().hide();
                 });
         }

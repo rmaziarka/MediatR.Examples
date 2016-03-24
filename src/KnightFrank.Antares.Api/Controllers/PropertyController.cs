@@ -5,8 +5,6 @@
     using System.Net.Http;
     using System.Web.Http;
 
-    using Dal.Model;
-
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.Property.Commands;
     using KnightFrank.Antares.Domain.Property.Queries;
@@ -50,23 +48,25 @@
         /// <summary>
         ///     Creates the property.
         /// </summary>
-        /// <param name="command">Command payload.</param>
-        /// <returns>New </returns>
+        /// <param name="command">Property data</param>
+        /// <returns>Newly created property </returns>
         [HttpPost]
         public Property CreateProperty(CreatePropertyCommand command)
         {
-            return this.mediator.Send(command);
+            Guid propertyId = this.mediator.Send(command);
+            return this.GetProperty(propertyId);
         }
 
         /// <summary>
         ///     Updates the property.
         /// </summary>
-        /// <param name="command">Command payload.</param>
-        /// <returns>Newly updated property id</returns>
+        /// <param name="command">Property data</param>
+        /// <returns>Newly updated property</returns>
         [HttpPut]
-        public Guid UpdateProperty(UpdatePropertyCommand command)
+        public Property UpdateProperty(UpdatePropertyCommand command)
         {
-            return this.mediator.Send(command);
-        }
+            Guid propertyId = this.mediator.Send(command);
+            return this.GetProperty(propertyId);
+        } 
     }
 }

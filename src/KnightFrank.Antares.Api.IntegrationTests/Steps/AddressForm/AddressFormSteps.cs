@@ -9,10 +9,10 @@
 
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
-    using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Domain.AddressForm.QueryResults;
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.Resource;
 
     using Newtonsoft.Json;
 
@@ -27,7 +27,6 @@
         private readonly BaseTestClassFixture fixture;
 
         private readonly ScenarioContext scenarioContext;
-        private AddressForm AddressForm { get; set; }
 
         public AddressFormSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {
@@ -38,6 +37,8 @@
             }
             this.scenarioContext = scenarioContext;
         }
+
+        private AddressForm AddressForm { get; set; }
 
         [Given(@"Country code (.*) is present in DB")]
         public void GivenCountryCodeIsPresentInDb(string countryCode)
@@ -60,7 +61,7 @@
         {
             if (this.fixture.DataContext.Country.FirstOrDefault(c => c.IsoCode == countryIsoCode) == null)
             {
-                this.fixture.DataContext.Country.Add(new Country(){ IsoCode = countryIsoCode });
+                this.fixture.DataContext.Country.Add(new Country { IsoCode = countryIsoCode });
                 this.fixture.DataContext.SaveChanges();
             }
 

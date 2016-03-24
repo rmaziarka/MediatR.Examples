@@ -54,6 +54,11 @@
       <HintPath>..\packages\FluentAssertions.4.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MediatR, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MediatR.2.0.2\lib\net45\MediatR.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
@@ -128,12 +133,18 @@
     <Compile Include="Steps\AddressForm\AddressFormSteps.cs" />
     <Compile Include="Steps\Contacts\ContactsSteps.cs" />
     <Compile Include="Steps\Enums\EnumsSteps.cs" />
+    <Compile Include="Steps\Ownership\OwnershipSteps.cs" />
     <Compile Include="Steps\Property\PropertySteps.cs" />
     <Compile Include="Steps\Requierement\ResidentialSalesRequierementSteps.cs" />
     <Compile Include="Tests\AddressForm\AddressFormController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AddressFormController.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\ConfigurePropertyTypesForDivisionAndCountry.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConfigurePropertyTypesForDivisionAndCountry.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Contacts\ContactController.feature.cs">
       <AutoGen>True</AutoGen>
@@ -188,6 +199,10 @@
     <None Include="Tests\AddressForm\AddressFormController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>AddressFormController.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\ConfigurePropertyTypesForDivisionAndCountry.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ConfigurePropertyTypesForDivisionAndCountry.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Contacts\ContactController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
