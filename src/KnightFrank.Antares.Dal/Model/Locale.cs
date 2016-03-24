@@ -2,7 +2,9 @@
 {
 	using System.Collections.Generic;
 
-	public class Locale : BaseEntity
+	using KnightFrank.Antares.Dal.Model.Enum;
+
+    public class Locale : BaseEntity
     {
         public string IsoCode { get; set; }
 

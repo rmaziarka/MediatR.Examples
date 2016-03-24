@@ -160,10 +160,10 @@
     <Compile Include="Model\Configuration\CountryConfiguration.cs" />
     <Compile Include="Model\Configuration\CountryLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\DepartmentConfiguration.cs" />
+    <Compile Include="Model\Configuration\Enum\EnumLocalisedConfiguration.cs" />
+    <Compile Include="Model\Configuration\Enum\EnumTypeConfiguration.cs" />
+    <Compile Include="Model\Configuration\Enum\EnumTypeItemConfiguration.cs" />
     <Compile Include="Model\Configuration\LocaleConfiguration.cs" />
-    <Compile Include="Model\Configuration\EnumLocalisedConfiguration.cs" />
-    <Compile Include="Model\Configuration\EnumTypeItemConfiguration.cs" />
-    <Compile Include="Model\Configuration\EnumTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\ActivityConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\OwnershipConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\PropertyConfiguration.cs" />
@@ -177,10 +177,10 @@
     <Compile Include="Model\Country.cs" />
     <Compile Include="Model\CountryLocalised.cs" />
     <Compile Include="Model\Department.cs" />
-    <Compile Include="Model\EnumLocalised.cs" />
+    <Compile Include="Model\Enum\EnumLocalised.cs" />
+    <Compile Include="Model\Enum\EnumType.cs" />
+    <Compile Include="Model\Enum\EnumTypeItem.cs" />
     <Compile Include="Model\Locale.cs" />
-    <Compile Include="Model\EnumTypeItem.cs" />
-    <Compile Include="Model\EnumType.cs" />
     <Compile Include="Model\Property\Activity.cs" />
     <Compile Include="Model\Property\Ownership.cs" />
     <Compile Include="Model\Property\Property.cs" />
@@ -276,7 +276,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\Enum\" />
+    <Folder Include="Model\Configuration\Ressource\" />
+    <Folder Include="Model\Ressource\" />
     <Folder Include="Model\User\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

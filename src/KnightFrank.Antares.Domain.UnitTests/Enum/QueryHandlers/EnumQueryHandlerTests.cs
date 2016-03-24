@@ -6,6 +6,7 @@
     using FluentAssertions;
 
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Enum;
     using KnightFrank.Antares.Domain.Enum.Queries;

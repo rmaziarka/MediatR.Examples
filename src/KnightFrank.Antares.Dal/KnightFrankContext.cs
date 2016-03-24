@@ -9,6 +9,7 @@
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Configuration;
+    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
 
     public class KnightFrankContext : DbContext

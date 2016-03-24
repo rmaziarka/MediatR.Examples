@@ -2,6 +2,8 @@
 {
     using System;
 
+    using KnightFrank.Antares.Dal.Model.Enum;
+
     public class AddressFormEntityType : BaseEntity
     {
         public Guid AddressFormId { get; set; }

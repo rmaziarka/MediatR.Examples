@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Dal.Model
+﻿namespace KnightFrank.Antares.Dal.Model.Enum
 {
     using System;
 

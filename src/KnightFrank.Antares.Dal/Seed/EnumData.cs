@@ -6,6 +6,7 @@ namespace KnightFrank.Antares.Dal.Seed
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Seed.Common;
 
     internal static class EnumData

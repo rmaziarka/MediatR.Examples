@@ -1,8 +1,8 @@
-﻿namespace KnightFrank.Antares.Dal.Model
+﻿namespace KnightFrank.Antares.Dal.Model.Enum
 {
     using System.Collections.Generic;
 
-    public class EnumType: BaseEntity
+    public class EnumType : BaseEntity
     {
         public string Code { get; set; }
 

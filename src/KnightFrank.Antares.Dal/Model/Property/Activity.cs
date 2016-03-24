@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using KnightFrank.Antares.Dal.Model.Enum;
+
     public class Activity : BaseAuditableEntity
     {
         public Guid PropertyId { get; set; }

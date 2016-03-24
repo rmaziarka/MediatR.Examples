@@ -10,6 +10,7 @@
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Domain.Enum.QueryResults;
 
     using Newtonsoft.Json;
