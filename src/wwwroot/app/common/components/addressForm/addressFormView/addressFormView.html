@@ -1,7 +1,6 @@
-<div>
-    <div ng-repeat="row in vm.addressForm.addressFieldRows | orderBy: 'rowOrder'" class="row">
-        <div ng-repeat=" field in row | orderBy: 'columnOrder'" class="col-md-{{field.columnSize}}">
-            {{vm.address[field.name.charAt(0).toLowerCase() + field.name.slice(1)]}}
-        </div>
-    </div>
+
+<div ng-repeat="row in vm.addressForm.addressFieldRows | orderBy: 'rowOrder'" class="row">
+    <span ng-repeat="field in row | orderBy: 'columnOrder'">
+        <span>{{vm.address[field.name.charAt(0).toLowerCase() + field.name.slice(1)]}}</span>
+    </span>
 </div>
