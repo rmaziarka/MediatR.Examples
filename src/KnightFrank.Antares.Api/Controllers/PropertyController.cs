@@ -7,6 +7,7 @@
 
     using Dal.Model;
 
+    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.Property.Commands;
     using KnightFrank.Antares.Domain.Property.Queries;
 

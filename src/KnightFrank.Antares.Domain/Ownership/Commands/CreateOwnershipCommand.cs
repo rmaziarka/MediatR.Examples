@@ -3,8 +3,6 @@
     using System;
     using System.Collections.Generic;
 
-    using KnightFrank.Antares.Domain.Contact;
-
     using MediatR;
 
     public class CreateOwnershipCommand : IRequest<Guid>

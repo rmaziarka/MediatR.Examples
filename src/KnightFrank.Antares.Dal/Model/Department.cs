@@ -11,6 +11,6 @@
 
 		public virtual Country Country { get; set; }
 
-		public virtual ICollection<User> Users { get; set; }
+		public virtual ICollection<User.User> Users { get; set; }
 	}
 }

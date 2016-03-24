@@ -1,5 +1,7 @@
 ﻿namespace KnightFrank.Antares.Domain
 {
+    using System;
+    using System.Linq;
     using System.Reflection;
 
     using FluentValidation;
@@ -12,7 +14,7 @@
     using Ninject.Modules;
     using Ninject.Extensions.Conventions;
 
-    public class DomainModule: NinjectModule
+    public class DomainModule : NinjectModule
     {
         public override void Load()
         {
@@ -29,8 +31,17 @@
             this.Bind(typeof(IGenericRepository<>)).To(typeof(GenericRepository<>));
 
             this.Bind(typeof(IReadGenericRepository<>)).To(typeof(ReadGenericRepository<>));
+
             AssemblyScanner.FindValidatorsInAssembly(Assembly.GetExecutingAssembly())
-                           .ForEach(x => this.Kernel.Bind(x.InterfaceType).To(x.ValidatorType));
+                           .ForEach(x =>
+                           {
+                               Type domainValidatorType = x.ValidatorType.GetInterfaces()
+                                                      .Where(y => y.IsGenericType)
+                                                      .Select(y => y.GetGenericTypeDefinition())
+                                                      .FirstOrDefault(y => y == typeof(IDomainValidator<>));
+
+                               this.Kernel.Bind(domainValidatorType ?? x.InterfaceType).To(x.ValidatorType);
+                           });
         }
     }
 }

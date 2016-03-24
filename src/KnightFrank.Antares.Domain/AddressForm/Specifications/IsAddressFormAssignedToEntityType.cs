@@ -8,6 +8,8 @@
 
     using Dal.Model;
 
+    using KnightFrank.Antares.Dal.Model.Address;
+
     public class IsAddressFormAssignedToEntityType : Specification<AddressForm>
     {
         private readonly Guid enumTypeItemId;
@@ -19,7 +21,7 @@
 
         public override Expression<Func<AddressForm, bool>> SatisfiedBy()
         {
-            return af => af.AddressFormEntityTypes.Any(afet => afet.EnumTypeItemId == enumTypeItemId);
+            return af => af.AddressFormEntityTypes.Any(afet => afet.EnumTypeItemId == this.enumTypeItemId);
         }
     }
 }

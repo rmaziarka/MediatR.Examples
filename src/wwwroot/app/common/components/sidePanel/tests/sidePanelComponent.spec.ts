@@ -1,4 +1,4 @@
-///<reference path="../../../../../typings/main.d.ts"/>
+///<reference path="../../../../typings/_all.d.ts"/>
 
 module Antares {
     import SidePanelController = Antares.Common.Component.SidePanelController;
@@ -28,7 +28,6 @@ module Antares {
             scope = $rootScope.$new();
             element = $compile('<side-panel><side-panel-content>' + sidePanelContent + '</side-panel-content><side-panel-footer>' + sidePanelFooter + '</side-panel-footer></side-panel>')(scope);
             scope.$apply();
-
             controller = element.controller('sidePanel');
             panel = element.find('.side-panel');
         }));
@@ -70,9 +69,11 @@ module Antares {
             scope.$apply();
 
             expect(controller.visible).toBe(false);
-            expect(controller.stateChanged).toBe(true);
+            expect(controller.stateChanged).toBe(false);
 
-            assertCssClasses(false);
+            // when state does not change we don't set any of classes tested below
+            expect(panel.hasClass('slide-in')).toBe(false);
+            expect(panel.hasClass('slide-out')).toBe(false);
         });
 
         it('side panel should remain visible when it is already shown and show() is called', () => {

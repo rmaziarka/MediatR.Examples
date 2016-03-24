@@ -4,6 +4,7 @@
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Requirement.Queries;
 
@@ -24,6 +25,7 @@
                 this.requirementRepository
                     .Get()
                     .Include(req => req.Contacts)
+                    .Include(req => req.Address)
                     .FirstOrDefault(req => req.Id == message.Id);
 
             return requirement;

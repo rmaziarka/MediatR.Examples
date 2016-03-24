@@ -1,10 +1,19 @@
 ﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.Property
 {
     using System;
+    using System.Linq;
+    using System.Net.Http;
 
+    using FluentAssertions;
+
+    using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
+    using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Address;
+    using KnightFrank.Antares.Dal.Model.Property;
 
     using TechTalk.SpecFlow;
+    using TechTalk.SpecFlow.Assist;
 
     [Binding]
     public class PropertySteps
@@ -22,6 +31,86 @@
                 throw new ArgumentNullException(nameof(scenarioContext));
             }
             this.scenarioContext = scenarioContext;
+        }
+
+        [Given(@"User gets (.*) address form for (.*) and country details")]
+        [When(@"User gets (.*) address form for (.*) and country details")]
+        public void GetCountryAddressData(string countryCode, string enumType)
+        {
+            Guid countryId = this.fixture.DataContext.Country.Single(country => country.IsoCode == countryCode).Id;
+            Guid enumTypeId = this.fixture.DataContext.EnumTypeItem.Single(e => e.Code == enumType).Id;
+
+            Guid addressFormId =
+                this.fixture.DataContext.AddressFormEntityType.Single(
+                    afe => afe.AddressForm.CountryId == countryId && afe.EnumTypeItemId == enumTypeId).AddressFormId;
+
+            this.scenarioContext["CountryId"] = countryId;
+            this.scenarioContext["AddressFormId"] = addressFormId;
+        }
+
+        [Given(@"Property with Address is in data base")]
+        public void GivenFollowingPropertyExistsInDataBase(Table table)
+        {
+            var address = table.CreateInstance<Address>();
+            address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
+            address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
+            var property = new Property { Address = address };
+            this.fixture.DataContext.Property.Add(property);
+            this.fixture.DataContext.SaveChanges();
+            this.scenarioContext.Set<Guid>(property.Id, "AddedPropertyId");
+
+        }
+
+        [When(@"Users updates property")]
+        public void WhenUsersUpdatesProperty(Table table)
+        {
+            var address = table.CreateInstance<Address>();
+            address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
+            address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
+
+            var updatedProperty = new Property
+            {
+                Address = address,
+                Id = this.scenarioContext.Get<Guid>("AddedPropertyId")
+            };
+            this.scenarioContext.Set(updatedProperty, "Property");
+            this.UpdateProperty(updatedProperty);
+        }
+
+        [When(@"Users tries to updates property")]
+        public void WhenUsersTriesToUpdateProperty(Table table)
+        {
+            var updatedProperty = table.CreateInstance<Property>();
+            this.UpdateProperty(updatedProperty);
+        }
+
+        [Then(@"The updated Property is saved in data base")]
+        public void ThenTheResultsShouldBeSameAsAdded()
+        {
+            var updatedProperty = this.scenarioContext.Get<Property>("Property");
+            Property expectedProperty = this.fixture.DataContext.Property.Single(x => x.Address.Id.Equals(updatedProperty.Id));
+            updatedProperty.ShouldBeEquivalentTo(expectedProperty);
+        }
+
+        private void UpdateProperty(Property property)
+        {
+            HttpResponseMessage response = this.fixture.SendPutRequest(ApiUrl, property);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        [When(@"User creates property with following data")]
+        public void CreateProperty(Table table)
+        {
+            string requestUrl = $"{ApiUrl}";
+
+            var propertyDetails = table.CreateInstance<Address>();
+            propertyDetails.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
+            propertyDetails.CountryId = this.scenarioContext.Get<Guid>("CountryId");
+
+            var property = new Property { Address = propertyDetails };
+
+            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, property);
+            this.scenarioContext.SetHttpResponseMessage(response);
         }
     }
 }

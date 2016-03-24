@@ -3,6 +3,7 @@
     using FluentValidation;
 
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Repository;
 
     public class CreatePropertyCommandValidator : AbstractValidator<CreatePropertyCommand>

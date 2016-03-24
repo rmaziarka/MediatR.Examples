@@ -30,7 +30,7 @@
                                 {{ownership.purchaseDate | date : 'dd-MM-yyyy'}} - {{ownership.sellDate | date : 'dd-MM-yyyy'}}
                              </small>
                             <div class="row">
-                                <div class="col-md-12 text-right"><a href="#">details</a></div>
+                                <div class="col-md-12 text-right"><a href="" ng-click="vm.showOwnershipView(ownership)">details</a></div>
                             </div>
                         </div>
                     </div>
@@ -64,29 +64,23 @@
 
 <side-panel component-id="vm.componentIds.contactSidePanelId">
     <side-panel-header>
-        <h3 translate="REQUIREMENT.ADD.FINDCONTACT"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <contact-list component-id="vm.componentIds.contactListId">
-        </contact-list>
-    </side-panel-content>
-    <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()"> <i class="fa fa-ban"></i> Cancel</button>
-        <button class="btn btn-primary" type="button" ng-click="vm.showOwnershipAdd()" ng-disabled=""><i class="fa fa-cog"></i> Configure</button>
-    </side-panel-footer>
-</side-panel>
+        <h3 translate="REQUIREMENT.ADD.FINDCONTACT" ng-show="!vm.ownershipAddPanelVisible"></h3>
 
-<side-panel component-id="vm.componentIds.ownershipSidePanelId">
-    <side-panel-header>
-        <h3 translate="OWNERSHIP.ADD.OWNERSHIPDETAILS"></h3>
+        <h3 translate="OWNERSHIP.ADD.OWNERSHIPDETAILS" ng-show="vm.ownershipAddPanelVisible"></h3>
     </side-panel-header>
     <side-panel-content>
-        <ownership-add component-id="vm.componentIds.ownershipAddId">
+        <contact-list component-id="vm.componentIds.contactListId" ng-show="!vm.ownershipAddPanelVisible">
+        </contact-list>
+
+        <ownership-add component-id="vm.componentIds.ownershipAddId" ng-show="vm.ownershipAddPanelVisible">
         </ownership-add>
     </side-panel-content>
     <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelAddOwnership()"><i class="fa fa-ban"></i> Cancel</button>
-        <button class="btn btn-primary" type="button" ng-click="vm.saveOwnership()" ng-disabled="vm.loadingContacts"><i class="fa fa-floppy-o"></i> Save</button>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()" ng-show="!vm.ownershipAddPanelVisible"> <i class="fa fa-ban"></i> Cancel</button>
+        <button class="btn btn-primary" type="button" ng-click="vm.showOwnershipAdd()" ng-show="!vm.ownershipAddPanelVisible">Configure <i class="fa fa-angle-double-right"></i></button>
+
+        <button class="btn btn-default" type="button" ng-click="vm.cancelAddOwnership()" ng-show="vm.ownershipAddPanelVisible"><i class="fa fa-ban"></i> Back</button>
+        <button class="btn btn-primary" type="button" ng-click="vm.saveOwnership()" ng-disabled="vm.loadingContacts" ng-show="vm.ownershipAddPanelVisible"><i class="fa fa-floppy-o"></i> Save</button>
     </side-panel-footer>
 </side-panel>
 
@@ -125,4 +119,14 @@
         <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()"> <i class="fa fa-ban"></i> Cancel</button>
         <button class="btn btn-primary" type="button" ng-click="vm.showOwnershipAdd()" ng-disabled=""><i class="fa fa-floppy-o"></i> Save</button>
     </side-panel-footer>
+</side-panel>
+
+<side-panel component-id="vm.componentIds.ownershipViewSidePanelId">
+    <side-panel-header>
+        <h3 translate="OWNERSHIP.VIEW.OWNERSHIPDETAILS"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <ownership-view component-id="vm.componentIds.ownershipViewId">
+        </ownership-view>
+    </side-panel-content>
 </side-panel>

@@ -13,6 +13,7 @@
     using FluentValidation.Validators;
 
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.Validator;
 
@@ -55,7 +56,6 @@
                     var validator = new CustomStringValidator();
                     validator.RuleFor(el => el).NotEmpty().WithName(field.AddressFieldDefinition.AddressField.Name);
                     validationResult.Add(validator.Validate(field.Value));
-
                 }
 
                 if (!string.IsNullOrWhiteSpace(field.AddressFieldDefinition.RegEx))

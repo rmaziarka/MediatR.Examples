@@ -6,7 +6,16 @@
   },
   "OWNERSHIP": {
     "ADD": {
-      "OWNERSHIPDETAILS":  "Ownership Details"
+      "OWNERSHIPDETAILS": "Ownership details"
+    },
+    "VIEW": {
+      "OWNERSHIPDETAILS": "Ownership details",
+      "OWNER": "Owner",
+      "OWNERSHIPTYPE": "Ownership type",
+      "PURCHASEDATE": "Purchasing date",
+      "SELLDATE": "Selling date",
+      "BUYPRICE": "Buying price",
+      "SELLPRICE": "Selling price"
     }
   },
   "ADDRESSFORM": {

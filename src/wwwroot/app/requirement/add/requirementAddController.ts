@@ -51,7 +51,7 @@ module Antares.Requirement.Add {
                 .then(() => {
                     var selectedIds: string[] = [];
                     if (this.requirement.contacts !== undefined && this.requirement.contacts !== null) {
-                        selectedIds = <string[]>this.requirement.contacts.map(c => c.id);
+                        selectedIds = <string[]>this.requirement.contacts.map((c: any) => c.id);
                     }
                     this.components.contactList().setSelected(selectedIds);
                 })
@@ -66,7 +66,7 @@ module Antares.Requirement.Add {
                 .save(this.requirement)
                 .$promise
                 .then(
-                (requirement) => {
+                (requirement: any) => {
                     this.$state.go('app.requirement-view', requirement);
                 })
                 .finally(() => {

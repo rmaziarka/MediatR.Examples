@@ -8,6 +8,8 @@
     using Dal.Repository;
     using Commands;
 
+    using KnightFrank.Antares.Dal.Model.Property;
+
     using MediatR;
 
     public class CreateRequirementCommandHandler : IRequestHandler<CreateRequirementCommand, Requirement>

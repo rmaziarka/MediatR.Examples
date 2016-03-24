@@ -5,7 +5,7 @@ namespace KnightFrank.Antares.Dal.Seed
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Seed.Common;
 
     internal static class EnumData
@@ -66,6 +66,20 @@ namespace KnightFrank.Antares.Dal.Seed
                             {
                                 [LocaleIsoCode.en.ToString()] = "Not selling"
                             }
+                });
+
+            SeedEnum(context,
+                "Division",
+                new Dictionary<string, Dictionary<string, string>>
+                {
+                    ["Residential"] = new Dictionary<string, string>
+                    {
+                        [LocaleIsoCode.en.ToString()] = "Residential"
+                    },
+                    ["Commercial"] = new Dictionary<string, string>
+                    {
+                        [LocaleIsoCode.en.ToString()] = "Commercial"
+                    }
                 });
         }
 

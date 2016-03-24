@@ -3,9 +3,9 @@
         id: string;
         createDate: Date;
         purchaseDate: Date;
-        sellingDate: Date;
-        buyingPrice?: number;
-        sellingPrice?: number;
+        sellDate: Date;
+        buyPrice?: number;
+        sellPrice?: number;
         isCurrentOwner: boolean;
         ownershipType: number;
         contacts: IContact[];

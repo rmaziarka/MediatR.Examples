@@ -86,7 +86,7 @@ module Antares.TestHelpers {
         }
 
         private writeValue(value: string) {
-            this.input.val(value).trigger('input').trigger('blur');
+            this.input.val(value).trigger('input').trigger('change').trigger('blur');
             this.scope.$apply();
         }
     }

@@ -8,6 +8,8 @@
     using global::Domain.Seedwork.Specification;
 
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Address;
+    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.AddressForm.Queries;
     using KnightFrank.Antares.Domain.AddressForm.QueryResults;
@@ -18,8 +20,6 @@
 
     public class AddressFormQueryHandler : IRequestHandler<AddressFormQuery, AddressFormQueryResult>
     {
-        private readonly IReadGenericRepository<AddressFormEntityType> addressFormEntityTypeRepository;
-
         private readonly IReadGenericRepository<AddressForm> addressFormRepository;
 
         private readonly IReadGenericRepository<Country> countryRepository;
@@ -28,12 +28,10 @@
 
         public AddressFormQueryHandler(
             IReadGenericRepository<AddressForm> addressFormRepository,
-            IReadGenericRepository<AddressFormEntityType> addressFormEntityTypeRepository,
             IReadGenericRepository<Country> countryRepository,
             IReadGenericRepository<EnumTypeItem> enumTypeItemRepository)
         {
             this.addressFormRepository = addressFormRepository;
-            this.addressFormEntityTypeRepository = addressFormEntityTypeRepository;
             this.countryRepository = countryRepository;
             this.enumTypeItemRepository = enumTypeItemRepository;
         }

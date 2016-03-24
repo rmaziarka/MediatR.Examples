@@ -114,6 +114,10 @@
     <Compile Include="Ownership\CommandHandlers\CreateOwnershipCommandHandler.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommand.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandProfile.cs" />
+    <Compile Include="Ownership\Commands\CreateOwnershipCommandDomainValidator.cs" />
+    <Compile Include="Ownership\Commands\CreateOwnershipCommandValidator.cs" />
+    <Compile Include="Common\IDomainValidator.cs" />
+    <Compile Include="Ownership\Range.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property\CommandHandlers\CreatePropertyCommandHandler.cs" />
     <Compile Include="Property\CommandHandlers\UpdatePropertyCommandHandler.cs" />

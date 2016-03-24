@@ -7,6 +7,7 @@
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Repository;
 
     public class EnumQueryValidator : AbstractValidator<EnumQuery>

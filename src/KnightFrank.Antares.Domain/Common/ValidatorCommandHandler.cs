@@ -26,7 +26,9 @@ namespace KnightFrank.Antares.Domain.Common
             var context = new ValidationContext(request);
 
             List<ValidationFailure> failures =
-                this.validators.Select(v => v.Validate(context))
+                this.validators
+                    .Where(v => !(v is IDomainValidator<TRequest>))
+                    .Select(v => v.Validate(context))
                     .SelectMany(result => result.Errors)
                     .Where(f => f != null)
                     .ToList();

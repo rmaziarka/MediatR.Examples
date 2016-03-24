@@ -1,5 +1,4 @@
-﻿///<reference path="../../../typings/main.d.ts"/>
-/// <reference path="../../common/core/services/registry/componentRegistryService.ts" />
+﻿///<reference path="../../typings/_all.d.ts"/>
 
 module Antares {
     export module Component {
@@ -17,12 +16,12 @@ module Antares {
             }
 
             setSelected = (itemsToSelect: Array<string>) => {
-                this.contacts.forEach(c => { c.selected = false; });
+                this.contacts.forEach((c: any) => { c.selected = false; });
                 if (itemsToSelect === undefined || itemsToSelect === null || itemsToSelect.length === 0) {
                     return;
                 }
 
-                this.contacts.forEach(c => {
+                this.contacts.forEach((c: any) => {
                     if (itemsToSelect.indexOf(c.id) > -1) {
                         c.selected = true;
                     }
@@ -30,13 +29,13 @@ module Antares {
             }
 
             getSelected = () => {
-                return this.contacts.filter(c => { return c.selected });
+                return this.contacts.filter((c: any) => { return c.selected });
             }
 
-            loadContacts = () =>{
+            loadContacts = () => {
                 this.isLoading = true;
                 this.contacts = this.dataAccessService.getContactResource().query();
-                return this.contacts.$promise.finally(() =>{ this.isLoading = false; });
+                return this.contacts.$promise.finally(() => { this.isLoading = false; });
             }
         }
 

@@ -10,14 +10,21 @@ module Antares.Property.View {
             contactListId: 'viewProperty:contactListComponent',
             contactSidePanelId: 'viewProperty:contactSidePanelComponent',
             ownershipSidePanelId: 'viewProperty:ownershipSidePanelComponent',
-            ownershipAddId: 'viewProperty:ownershipAddComponent'
+            ownershipAddId: 'viewProperty:ownershipAddComponent',
+            ownershipViewId: 'viewProperty:ownershipViewComponent'
         }
+
+        ownershipAddPanelVisible: boolean = false;
+        propertyId: string;
 
         components: any = {
             contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
-            contactSidePanel: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
-            ownershipSidePanel: () => { return this.componentRegistry.get(this.componentIds.ownershipSidePanelId); },
-            ownershipAdd: () => { return this.componentRegistry.get(this.componentIds.ownershipAddId); }
+            ownershipAdd: () => { return this.componentRegistry.get(this.componentIds.ownershipAddId); },
+            ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewId); },
+            panels: {
+                contact : () =>{ return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
+                ownershipView : () =>{ return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); },
+            }
         }
 
         loadingContacts: boolean = false;
@@ -26,6 +33,7 @@ module Antares.Property.View {
 
         ownershipResource: any;
         property: Antares.Common.Models.Resources.IPropertyResource;
+        currentPanel: any;
 
         constructor(
             private dataAccessService: Antares.Services.DataAccessService,
@@ -33,6 +41,7 @@ module Antares.Property.View {
             private $scope: ng.IScope,
             private $state: ng.ui.IState) {
 
+            this.propertyId = $state.params['id'];
             this.ownershipResource = dataAccessService.getOwnershipResource();
 
             this.loadPropertyData();
@@ -42,25 +51,31 @@ module Antares.Property.View {
                 this.componentRegistry.deregister(this.componentIds.contactSidePanelId);
                 this.componentRegistry.deregister(this.componentIds.ownershipSidePanelId);
                 this.componentRegistry.deregister(this.componentIds.ownershipAddId);
+                this.componentRegistry.deregister(this.componentIds.ownershipViewId);
+                this.componentRegistry.deregister(this.componentIds.ownershipViewSidePanelId);
             });
         }
 
         showOwnershipAdd = () => {
             //TODO: Temporarily solution. Change with dynamic changing of configure button based on selection of contacts
             if (this.components.contactList().getSelected().length > 0) {
-                this.components.contactSidePanel().hide();
                 this.components.ownershipAdd().loadOwnership(this.components.contactList().getSelected());
-                this.components.ownershipSidePanel().show();
+                this.ownershipAddPanelVisible = true;
             }
         }
 
-        loadPropertyData = () =>{
+        loadPropertyData = () => {
             var propertyId: string = this.$state.params.id;
-
             this.property = this.dataAccessService.getPropertyResource().get({ id: propertyId });
         }
 
+        showOwnershipView = (ownership) => {
+            this.components.ownershipView().setOwnership(ownership);
+            this.showPanel(this.components.panels.ownershipView);
+        }
+
         showContactList = () => {
+            this.ownershipAddPanelVisible = false;
             this.loadingContacts = true;
             this.components.contactList()
                 .loadContacts()
@@ -70,16 +85,15 @@ module Antares.Property.View {
                 })
                 .finally(() => { this.loadingContacts = false; });
 
-            this.components.contactSidePanel().show();
+            this.showPanel(this.components.panels.contact);
         }
 
         cancelUpdateContacts() {
-            this.components.contactSidePanel().hide();
+            this.components.panels.contact().hide();
         }
 
-        cancelAddOwnership() {
-            this.components.ownershipSidePanel().hide();
-            this.components.contactSidePanel().show();
+        cancelAddOwnership(){
+            this.ownershipAddPanelVisible = false;
         }
 
         saveOwnership() {
@@ -88,21 +102,38 @@ module Antares.Property.View {
             this.ownershipResource
                 .save(ownershipToSend)
                 .$promise
-                .then((ownership) => {
-                    //TODO fill ownership list
-                    this.components.ownershipSidePanel().hide();
+                .then((ownership) =>{
+                    this.loadPropertyData();
+                    this.components.panels.contact().hide();
                 });
         }
 
-        getOwnershipToSave(){
+        getOwnershipToSave() {
             var ownership = angular.copy(this.components.ownershipAdd().getOwnership());
-            ownership.ContactIds = ownership.contacts.map((item) => { return item.id; });
-            ownership.PropertyId = null;
+            ownership.ContactIds = ownership.contacts.map((item: any) => { return item.id; });
+            ownership.PropertyId = this.propertyId;
             ownership.OwnershipTypeId = ownership.ownershipType.id;
             delete ownership.contacts;
             delete ownership.ownershipType;
 
             return ownership;
+        }
+
+        private hidePanels(hideCurrent: boolean = true) {
+            for (var panel in this.components.panels) {
+                if (this.components.panels.hasOwnProperty(panel)) {
+                    if (hideCurrent === false && this.currentPanel === this.components.panels[panel]()) {
+                        continue;
+                    }
+                    this.components.panels[panel]().hide();
+                }
+            }
+        }
+
+        private showPanel(panel) {
+            this.hidePanels();
+            panel().show();
+            this.currentPanel = panel;
         }
     }
     angular.module('app').controller('propertyViewController', PropertyViewController);
