@@ -2,6 +2,8 @@
 {
     using System;
 
+    using KnightFrank.Antares.Dal.Model.Resource;
+
     public class EnumLocalised : BaseEntity
     {
         public Guid EnumTypeItemId { get; set; }

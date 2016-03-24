@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using KnightFrank.Antares.Dal.Model.Resource;
+
     public class Department : BaseEntity
 	{
 		public string Name { get; set; }

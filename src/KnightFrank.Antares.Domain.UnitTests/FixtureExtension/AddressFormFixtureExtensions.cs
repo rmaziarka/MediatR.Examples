@@ -5,6 +5,7 @@
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.Resource;
     using KnightFrank.Antares.Domain.AddressForm.Queries;
 
     using Ploeh.AutoFixture;

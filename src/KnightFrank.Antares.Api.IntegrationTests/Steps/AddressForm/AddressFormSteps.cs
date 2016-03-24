@@ -13,6 +13,7 @@
     using KnightFrank.Antares.Domain.AddressForm.QueryResults;
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.Resource;
 
     using Newtonsoft.Json;
 

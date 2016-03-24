@@ -2,6 +2,8 @@
 {
     using System;
 
+    using KnightFrank.Antares.Dal.Model.Resource;
+
     public class Address : BaseEntity
     {
         public Guid CountryId { get; set; }

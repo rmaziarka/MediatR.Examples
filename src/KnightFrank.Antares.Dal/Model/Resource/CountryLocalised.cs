@@ -1,8 +1,8 @@
-﻿namespace KnightFrank.Antares.Dal.Model
+﻿namespace KnightFrank.Antares.Dal.Model.Resource
 {
-	using System;
+    using System;
 
-	using KnightFrank.Antares.Dal.Model.Common;
+    using KnightFrank.Antares.Dal.Model.Common;
 
     public class CountryLocalised : BaseEntity, ILocaled
     {

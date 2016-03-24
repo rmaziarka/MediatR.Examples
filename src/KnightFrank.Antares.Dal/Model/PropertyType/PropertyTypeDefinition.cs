@@ -3,6 +3,7 @@
 namespace KnightFrank.Antares.Dal.Model.PropertyType
 {
     using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.Resource;
 
     public class PropertyTypeDefinition : BaseEntity
     {

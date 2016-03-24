@@ -2,6 +2,8 @@
 
 namespace KnightFrank.Antares.Dal.Model.PropertyType
 {
+    using KnightFrank.Antares.Dal.Model.Resource;
+
     public class PropertyTypeLocalised : BaseEntity
     {
         public Guid PropertyTypeId { get; set; }

@@ -159,12 +159,9 @@
     <Compile Include="Model\Configuration\Address\AddressFormEntityTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\ContactConfiguration.cs" />
     <Compile Include="Model\Configuration\BaseEntityConfiguration.cs" />
-    <Compile Include="Model\Configuration\CountryConfiguration.cs" />
-    <Compile Include="Model\Configuration\CountryLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\Enum\EnumLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\Enum\EnumTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\Enum\EnumTypeItemConfiguration.cs" />
-    <Compile Include="Model\Configuration\LocaleConfiguration.cs" />
     <Compile Include="Model\Configuration\PropertyType\PropertyTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\PropertyType\PropertyTypeDefinitionConfiguration.cs" />
     <Compile Include="Model\Configuration\PropertyType\PropertyTypeLocalisedConfiguration.cs" />
@@ -172,6 +169,9 @@
     <Compile Include="Model\Configuration\Property\OwnershipConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\PropertyConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\RequirementConfiguration.cs" />
+    <Compile Include="Model\Configuration\Resource\CountryConfiguration.cs" />
+    <Compile Include="Model\Configuration\Resource\CountryLocalisedConfiguration.cs" />
+    <Compile Include="Model\Configuration\Resource\LocaleConfiguration.cs" />
     <Compile Include="Model\Configuration\User\BusinessConfiguration.cs" />
     <Compile Include="Model\Configuration\User\DepartmentConfiguration.cs" />
     <Compile Include="Model\Configuration\User\RoleConfiguration.cs" />
@@ -180,12 +180,9 @@
     <Compile Include="KnightFrankContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\BaseEntity.cs" />
-    <Compile Include="Model\Country.cs" />
-    <Compile Include="Model\CountryLocalised.cs" />
     <Compile Include="Model\Enum\EnumLocalised.cs" />
     <Compile Include="Model\Enum\EnumType.cs" />
     <Compile Include="Model\Enum\EnumTypeItem.cs" />
-    <Compile Include="Model\Locale.cs" />
     <Compile Include="Model\PropertyType\PropertyType.cs" />
     <Compile Include="Model\PropertyType\PropertyTypeDefinition.cs" />
     <Compile Include="Model\PropertyType\PropertyTypeLocalised.cs" />
@@ -193,6 +190,9 @@
     <Compile Include="Model\Property\Ownership.cs" />
     <Compile Include="Model\Property\Property.cs" />
     <Compile Include="Model\Property\Requirement.cs" />
+    <Compile Include="Model\Resource\Country.cs" />
+    <Compile Include="Model\Resource\CountryLocalised.cs" />
+    <Compile Include="Model\Resource\Locale.cs" />
     <Compile Include="Model\User\Business.cs" />
     <Compile Include="Model\User\Department.cs" />
     <Compile Include="Model\User\Role.cs" />
@@ -290,8 +290,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\Configuration\Contact\" />
-    <Folder Include="Model\Configuration\Resource\" />
-    <Folder Include="Model\Ressource\" />
+    <Folder Include="Model\Contact\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\OctoPack.3.0.53\tools\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.0.53\tools\OctoPack.targets')" />

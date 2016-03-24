@@ -1,6 +1,6 @@
-namespace KnightFrank.Antares.Dal.Model.Configuration
+namespace KnightFrank.Antares.Dal.Model.Configuration.Resource
 {
-    using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Resource;
 
     internal sealed class CountryLocalisedConfiguration : BaseEntityConfiguration<CountryLocalised>
     {

@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using KnightFrank.Antares.Dal.Model.Resource;
+
     public class AddressForm : BaseEntity
     {
         public Guid CountryId { get; set; }

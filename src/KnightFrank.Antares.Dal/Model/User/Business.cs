@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using KnightFrank.Antares.Dal.Model.Resource;
+
     public class Business : BaseEntity
 	{
 		public string Name { get; set; }
