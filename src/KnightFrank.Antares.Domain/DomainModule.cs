@@ -33,15 +33,21 @@
             this.Bind(typeof(IReadGenericRepository<>)).To(typeof(ReadGenericRepository<>));
 
             AssemblyScanner.FindValidatorsInAssembly(Assembly.GetExecutingAssembly())
-                           .ForEach(x =>
+                           .ForEach(assemblyScanResult =>
                            {
-                               Type domainValidatorType = x.ValidatorType.GetInterfaces()
-                                                      .Where(y => y.IsGenericType)
-                                                      .Select(y => y.GetGenericTypeDefinition())
-                                                      .FirstOrDefault(y => y == typeof(IDomainValidator<>));
+                               Type domainValidatorType = GetDomainValidatorType(assemblyScanResult);
 
-                               this.Kernel.Bind(domainValidatorType ?? x.InterfaceType).To(x.ValidatorType);
+                               this.Kernel.Bind(domainValidatorType ?? assemblyScanResult.InterfaceType).To(assemblyScanResult.ValidatorType);
                            });
+        }
+
+        private static Type GetDomainValidatorType(AssemblyScanner.AssemblyScanResult assemblyScanResult)
+        {
+            return assemblyScanResult.ValidatorType.GetInterfaces()
+                    .Where(y => y.IsGenericType)
+                    .FirstOrDefault(y => y.GetGenericTypeDefinition() == typeof(IDomainValidator<>)
+                                        && ((TypeInfo)assemblyScanResult.ValidatorType).ImplementedInterfaces.Contains(assemblyScanResult.InterfaceType)
+                );
         }
     }
 }
