@@ -97,7 +97,7 @@
                     Required = false,
                     RowOrder = 1,
                     ColumnOrder = 1,
-                    ColumnSize = 3
+                    ColumnSize = 4
                 },
                 new AddressFieldDefinition
                 {
@@ -108,7 +108,7 @@
                     Required = false,
                     RowOrder = 1,
                     ColumnOrder = 2,
-                    ColumnSize = 7
+                    ColumnSize = 6
                 },
                 new AddressFieldDefinition
                 {
