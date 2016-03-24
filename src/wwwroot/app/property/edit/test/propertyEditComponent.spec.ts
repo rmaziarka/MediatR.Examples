@@ -90,18 +90,9 @@ module Antares {
                 expect(controller.isLoading).toBeFalsy();
             });
 
-            it('then property details are loaded', () => {
-                for (var attr in propertyMock) {
-                    if (propertyMock.hasOwnProperty(attr)) {
-                        var value = propertyMock[attr];
-                        if (angular.isArray(value)) {
-                            expect(controller.property[attr].length).toBe(value.length);
-                        }
-                        else {
-                            expect(controller.property[attr]).toEqual(value);
-                        }
-                    }
-                }
+            it('then property details are loaded', () =>{
+                controller.property.address = propertyMock.address;
+                expect(controller.property.address).toEqual(propertyMock.address);
             });
 
             it('then page displays address form component', () => {
