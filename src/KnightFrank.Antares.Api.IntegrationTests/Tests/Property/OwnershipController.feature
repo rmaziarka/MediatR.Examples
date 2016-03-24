@@ -1,29 +1,37 @@
 ﻿Feature: Property ownership
 
-@ignore
 @Property
-Scenario: Save ownership where dates are not overlapping
-	Given Property exist in DB
-		And property has already ownership
-			| Id | Type     | Purchasing date | Selling date | Name     |
-			| 1  | Freehold | 01-05-2010      | 01-04-2012   | Jon Snow |
-	When User update the property
-		| Id | Type     | Purchasing date | Selling date | Name        |
-		| 2  | Freehold | 01-05-2012      | 01-07-2015   | Sarah Conor |
-	Then HTTP 200 OK should be received
-		And Entry should be added to DB
+Scenario: Save ownership
+    Given User gets GB address form for Property and country details
+        And User gets EnumTypeItemId for OwnershipType EnumType code and Freeholder EnumTypeItem code
+        And Property with Address is in data base
+        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
+        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+        And User creates contacts in database with following data
+		    | FirstName | Surname | Title |
+		    | Michael   | Angel   | cheef |
+	When User creates an ownership for existing property
+			| PurchaseDate | SellDate   | BuyPrice | SellPrice |
+			| 01-05-2010   | 01-04-2012 | 1000000  | 1200000   |
+	Then User should get OK http status code
 
-@ignore
 @Property
 Scenario: Save ownership where dates are overlapping
-	Given Property exist in DB
-		And has ownership
-			| Id | Type     | Purchasing date | Selling date | Name     |
-			| 1  | Freehold | 01-05-2010      | 01-04-2012   | Jon Snow |
-	When User update the property
-		| Id | Type     | Purchasing date | Selling date | Name        |
-		| 2  | Freehold | 01-01-2012      | 01-07-2015   | Sarah Conor |
-	Then HTTP 403 Frobidden should be received
+    Given User gets GB address form for Property and country details
+        And User gets EnumTypeItemId for OwnershipType EnumType code and Freeholder EnumTypeItem code
+        And Property with Address is in data base
+        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
+        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+        And User creates contacts in database with following data
+		    | FirstName | Surname | Title |
+		    | Michael   | Angel   | cheef |
+	When User creates an ownership for existing property
+			| PurchaseDate | SellDate   | BuyPrice | SellPrice |
+			| 01-05-2010   | 01-04-2012 | 1000000  | 1200000   |
+        And User creates an ownership for existing property
+			| PurchaseDate | SellDate   | BuyPrice | SellPrice |
+			| 01-05-2011   | 01-04-2013 | 1000000  | 1200000   |
+	Then User should get BadRequest http status code
 
 @ignore
 @Property

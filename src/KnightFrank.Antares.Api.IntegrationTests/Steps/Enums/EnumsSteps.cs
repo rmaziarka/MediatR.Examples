@@ -79,6 +79,13 @@
             this.fixture.DataContext.SaveChanges();
         }
 
+        [Given(@"User gets EnumTypeItemId for (.*) EnumType code and (.*) EnumTypeItem code")]
+        public void GetEnumTypeItemId(string enumTypeCode, string enumTypeItemCode)
+        {
+            var enumTypeItem = this.fixture.DataContext.EnumTypeItem.Single(i => i.EnumType.Code.Equals(enumTypeCode) && i.Code.Equals(enumTypeItemCode));
+            this.scenarioContext.Set(enumTypeItem.Id, "EnumTypeItemId");
+        }
+
         [Then(@"Result should contain single element")]
         public void ThenResultShouldContainSingleElement()
         {
