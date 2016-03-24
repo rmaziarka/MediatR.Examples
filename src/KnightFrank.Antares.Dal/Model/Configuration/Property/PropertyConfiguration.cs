@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Dal.Model.Configuration
+﻿namespace KnightFrank.Antares.Dal.Model.Configuration.Property
 {
     internal class PropertyConfiguration : BaseEntityConfiguration<Model.Property.Property>
     {

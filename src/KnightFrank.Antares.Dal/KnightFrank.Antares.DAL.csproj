@@ -164,10 +164,10 @@
     <Compile Include="Model\Configuration\EnumLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\EnumTypeItemConfiguration.cs" />
     <Compile Include="Model\Configuration\EnumTypeConfiguration.cs" />
-    <Compile Include="Model\Configuration\OwnershipConfiguration.cs" />
-    <Compile Include="Model\Configuration\PropertyConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\ActivityConfiguration.cs" />
-    <Compile Include="Model\Configuration\RequirementConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\OwnershipConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\PropertyConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\RequirementConfiguration.cs" />
     <Compile Include="Model\Configuration\RoleConfiguration.cs" />
     <Compile Include="Model\Configuration\UserConfiguration.cs" />
     <Compile Include="Model\Contact.cs" />
@@ -181,9 +181,10 @@
     <Compile Include="Model\Locale.cs" />
     <Compile Include="Model\EnumTypeItem.cs" />
     <Compile Include="Model\EnumType.cs" />
-    <Compile Include="Model\Ownership.cs" />
     <Compile Include="Model\Property\Activity.cs" />
+    <Compile Include="Model\Property\Ownership.cs" />
     <Compile Include="Model\Property\Property.cs" />
+    <Compile Include="Model\Property\Requirement.cs" />
     <Compile Include="Model\Role.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -191,7 +192,6 @@
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\IReadGenericRepository.cs" />
     <Compile Include="Repository\IGenericRepository.cs" />
-    <Compile Include="Model\Requirement.cs" />
     <Compile Include="Seed\Common\LocaleIsoCode.cs" />
     <Compile Include="Seed\DepartmentData.cs" />
     <Compile Include="Seed\BusinessData.cs" />

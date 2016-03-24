@@ -1,6 +1,7 @@
-namespace KnightFrank.Antares.Dal.Model.Configuration
+namespace KnightFrank.Antares.Dal.Model.Configuration.Property
 {
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Property;
 
     internal sealed class RequirementConfiguration : BaseEntityConfiguration<Requirement>
     {

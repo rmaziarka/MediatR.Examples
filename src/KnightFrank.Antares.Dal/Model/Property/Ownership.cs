@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Dal.Model
+﻿namespace KnightFrank.Antares.Dal.Model.Property
 {
     using System;
     using System.Collections.Generic;
@@ -16,7 +16,7 @@
 
         public ICollection<Contact> Contacts { get; set; }
 
-        public virtual Property.Property Property { get; set; }
+        public virtual Property Property { get; set; }
 
         public Guid PropertyId { get; set; }
 

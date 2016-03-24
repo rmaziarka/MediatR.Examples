@@ -1,6 +1,6 @@
-﻿namespace KnightFrank.Antares.Dal.Model.Configuration
+﻿namespace KnightFrank.Antares.Dal.Model.Configuration.Property
 {
-    using KnightFrank.Antares.Dal.Migrations;
+    using KnightFrank.Antares.Dal.Model.Property;
 
     internal sealed class OwnershipConfiguration : BaseEntityConfiguration<Ownership>
     {
