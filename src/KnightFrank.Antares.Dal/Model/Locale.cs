@@ -12,6 +12,6 @@
 
 		public virtual ICollection<EnumLocalised> EnumLocaliseds { get; set; } 
 
-		public virtual ICollection<User> Users { get; set; } 
+		public virtual ICollection<User.User> Users { get; set; } 
 	}
 }
