@@ -102,8 +102,7 @@ module Antares.Property.View {
             this.ownershipResource
                 .save(ownershipToSend)
                 .$promise
-                .then((ownership: Antares.Common.Models.Dto.IOwnership) =>{
-                    this.loadPropertyData();
+                .then((ownership: Antares.Common.Models.Dto.IOwnership) => {
                     this.components.panels.contact().hide();
                 });
         }
