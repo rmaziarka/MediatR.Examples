@@ -9,7 +9,12 @@
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal.Model.Address;
+    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.Resource;
+    using KnightFrank.Antares.Domain.Property.Commands;
+
+    using Newtonsoft.Json;
 
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
@@ -32,10 +37,10 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"Address is defined")]
+        [Given(@"Address for add/update property is defined")]
         public void GivenAddressIsDefined(Table table)
         {
-            var address = table.CreateInstance<Address>();
+            var address = table.CreateInstance<CreateOrUpdatePropertyAddress>();
             address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
             address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
             this.scenarioContext.Set(address, "Address");
@@ -45,12 +50,15 @@
         [When(@"User gets (.*) address form for (.*) and country details")]
         public void GetCountryAddressData(string countryCode, string enumType)
         {
-            Guid countryId = this.fixture.DataContext.Country.Single(country => country.IsoCode == countryCode).Id;
-            Guid enumTypeId = this.fixture.DataContext.EnumTypeItem.Single(e => e.Code == enumType).Id;
+            Country country = this.fixture.DataContext.Country.SingleOrDefault(x => x.IsoCode == countryCode);
+            EnumTypeItem enumTypeItem = this.fixture.DataContext.EnumTypeItem.SingleOrDefault(e => e.Code == enumType);
+            Guid countryId = country?.Id ?? new Guid();
+            Guid enumTypeId = enumTypeItem?.Id ?? new Guid();
 
-            Guid addressFormId =
-                this.fixture.DataContext.AddressFormEntityType.Single(
-                    afe => afe.AddressForm.CountryId == countryId && afe.EnumTypeItemId == enumTypeId).AddressFormId;
+            AddressFormEntityType addressForm = this.fixture.DataContext.AddressFormEntityType.SingleOrDefault(
+                afe => afe.AddressForm.CountryId == countryId && afe.EnumTypeItemId == enumTypeId);
+
+            Guid addressFormId = addressForm?.AddressFormId ?? new Guid();
 
             this.scenarioContext["CountryId"] = countryId;
             this.scenarioContext["AddressFormId"] = addressFormId;
@@ -70,32 +78,31 @@
             this.scenarioContext.Set(property.Id, "AddedPropertyId");
         }
 
-        [When(@"Users updates property with defined address for (.*) id")]
+        [When(@"Users updates property with defined address for (.*) id by Api")]
         public void WhenUsersUpdatesProperty(string id)
         {
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
 
-            var address = this.scenarioContext.Get<Address>("Address");
+            var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
 
-            var updatedProperty = new Property
-            {
-                Address = address,
-                Id = propertyId
-            };
+            var updatedProperty = new UpdatePropertyCommand { Address = address, Id = propertyId };
+
+            HttpResponseMessage response = this.fixture.SendPutRequest(ApiUrl, updatedProperty);
+            this.scenarioContext.SetHttpResponseMessage(response);
             this.scenarioContext.Set(updatedProperty, "Property");
-            this.UpdateProperty(updatedProperty);
         }
 
-        [When(@"User creates property with following data")]
-        public void CreateProperty(Table table)
+        [When(@"User creates property with defined address by Api")]
+        public void CreateProperty()
         {
             string requestUrl = $"{ApiUrl}";
 
-            var propertyDetails = table.CreateInstance<Address>();
-            propertyDetails.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
-            propertyDetails.CountryId = this.scenarioContext.Get<Guid>("CountryId");
+            var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
 
-            var property = new Property { Address = propertyDetails };
+            address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
+            address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
+
+            var property = new CreatePropertyCommand { Address = address };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, property);
             this.scenarioContext.SetHttpResponseMessage(response);
@@ -104,15 +111,23 @@
         [Then(@"The updated Property is saved in data base")]
         public void ThenTheResultsShouldBeSameAsAdded()
         {
-            var updatedProperty = this.scenarioContext.Get<Property>("Property");
-            Property expectedProperty = this.fixture.DataContext.Property.Single(x => x.Address.Id.Equals(updatedProperty.Id));
+            var updatedProperty = this.scenarioContext.Get<UpdatePropertyCommand>("Property");
+            Property expectedProperty = this.fixture.DataContext.Property.SingleOrDefault(x => x.Id.Equals(updatedProperty.Id));
             updatedProperty.ShouldBeEquivalentTo(expectedProperty);
         }
 
-        private void UpdateProperty(Property property)
+        [Then(@"The created Property is saved in data base")]
+        public void ThenTheResultsShouldBeSameAsCreated()
         {
-            HttpResponseMessage response = this.fixture.SendPutRequest(ApiUrl, property);
-            this.scenarioContext.SetHttpResponseMessage(response);
+            var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
+            var expectedProperty = JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent());
+            Property actualProperty = this.fixture.DataContext.Property.Single(x => x.Id.Equals(expectedProperty.Id));
+
+            actualProperty.ShouldBeEquivalentTo(expectedProperty, options => options
+                .Excluding(x => x.Ownerships)
+                .Excluding(x => x.Address.AddressForm)
+                .Excluding(x => x.Address.Country)
+                .Excluding(x => x.Address.Line1));
         }
     }
 }

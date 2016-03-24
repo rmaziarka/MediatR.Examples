@@ -22,12 +22,9 @@
     [Binding]
     public class EnumsSteps : IClassFixture<BaseTestClassFixture>
     {
-        private readonly BaseTestClassFixture fixture;
         private const string ApiUrl = "api/enums";
+        private readonly BaseTestClassFixture fixture;
         private readonly ScenarioContext scenarioContext;
-        private EnumType EnumType { get; set; }
-        private EnumTypeItem EnumTypeItem { get; set; }
-        private EnumLocalised EnumLocalised { get; set; }
 
         public EnumsSteps(BaseTestClassFixture fixture, ScenarioContext context)
         {
@@ -36,10 +33,14 @@
             if (context == null)
             {
                 throw new ArgumentNullException(nameof(context));
-            }                      
+            }
 
             this.scenarioContext = context;
         }
+
+        private EnumType EnumType { get; set; }
+        private EnumTypeItem EnumTypeItem { get; set; }
+        private EnumLocalised EnumLocalised { get; set; }
 
         [When(@"User retrieves EnumTypes by (.*) code")]
         public void WhenUserRetrievesEnumTypesByEntityTypeCode(string code)
@@ -49,7 +50,7 @@
 
             this.scenarioContext.SetHttpResponseMessage(response);
         }
-        
+
         [Given(@"There is EnumType")]
         public void GivenThereIsEnumType(Table table)
         {
@@ -81,7 +82,9 @@
         [Given(@"User gets EnumTypeItemId for (.*) EnumType code and (.*) EnumTypeItem code")]
         public void GetEnumTypeItemId(string enumTypeCode, string enumTypeItemCode)
         {
-            var enumTypeItem = this.fixture.DataContext.EnumTypeItem.Single(i => i.EnumType.Code.Equals(enumTypeCode) && i.Code.Equals(enumTypeItemCode));
+            EnumTypeItem enumTypeItem =
+                this.fixture.DataContext.EnumTypeItem.Single(
+                    i => i.EnumType.Code.Equals(enumTypeCode) && i.Code.Equals(enumTypeItemCode));
             this.scenarioContext.Set(enumTypeItem.Id, "EnumTypeItemId");
         }
 

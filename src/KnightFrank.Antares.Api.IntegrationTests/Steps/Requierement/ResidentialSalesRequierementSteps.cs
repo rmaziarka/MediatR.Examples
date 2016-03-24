@@ -9,6 +9,7 @@
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Property;
 
     using Newtonsoft.Json;
@@ -39,11 +40,15 @@
         [When(@"User creates following requirement with given contact")]
         public void UserCreatesFollowingRequirementWithGivenContact(Table table)
         {
-            var contacts = this.scenarioContext.Get<List<Contact>>("Contact List");
             var requirement = table.CreateInstance<Requirement>();
 
             requirement.CreateDate = DateTime.Now;
-            requirement.Contacts.AddRange(contacts);
+            requirement.Contacts.AddRange(this.scenarioContext.Get<List<Contact>>("Contact List"));
+            requirement.Address = new Address
+            {
+                CountryId = this.scenarioContext.Get<Guid>("CountryId"),
+                AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId")
+            };
 
             this.fixture.DataContext.Requirement.Add(requirement);
             this.fixture.DataContext.SaveChanges();
@@ -83,7 +88,7 @@
                 );
 
             var databaseRequirement = JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent());
-            databaseRequirement.ShouldBeEquivalentTo(tableRequirement);
+            databaseRequirement.ShouldBeEquivalentTo(tableRequirement, options => options.Excluding(x => x.Address));
         }
 
         [When(@"User retrieves requirement for (.*) id")]

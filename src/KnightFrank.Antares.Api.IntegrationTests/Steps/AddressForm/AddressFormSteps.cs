@@ -9,10 +9,10 @@
 
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
-    using KnightFrank.Antares.Domain.AddressForm.QueryResults;
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Resource;
+    using KnightFrank.Antares.Domain.AddressForm.QueryResults;
 
     using Newtonsoft.Json;
 
@@ -82,7 +82,7 @@
 
             this.fixture.DataContext.AddressFormEntityType.Add(addressFormEntityType);
             this.fixture.DataContext.SaveChanges();
-    }
+        }
 
         [When(@"User retrieves countries for (.*) EnumTypeItem")]
         public void WhenUserRetrievesCountriesForPropertyEnumTypeItem(string enumTypeItemCode)
@@ -90,8 +90,8 @@
             string requestUrl = $"{ApiUrl}/countries?entityType=" + enumTypeItemCode;
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
             this.scenarioContext.SetHttpResponseMessage(response);
-}
-        
+        }
+
         [Then(@"Result contains single item with (.*) isoCode")]
         public void ThenListContainsItemWithIsoCode(string countryIsoCode)
         {

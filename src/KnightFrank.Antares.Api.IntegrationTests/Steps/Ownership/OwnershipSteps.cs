@@ -35,7 +35,7 @@
             }
             this.scenarioContext = scenarioContext;
         }
-        
+
         [When(@"User creates an ownership for existing property")]
         public void WhenUserCreatesAnOwnershipForExistingProperty(Table table)
         {

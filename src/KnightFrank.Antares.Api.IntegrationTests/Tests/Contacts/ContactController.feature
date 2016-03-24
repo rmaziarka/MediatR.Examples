@@ -18,7 +18,7 @@ Scenario Outline: Retrieve error messages for improper contact id
 
 	Examples: 
 	| id                                   | statusCode |
-	| 00000000-0000-0000-0000-000000000000 | NotFound   |
+	| 00000000-0000-0000-0000-000000000000 | BadRequest |
 	| A                                    | BadRequest |
 
 @Contacts
