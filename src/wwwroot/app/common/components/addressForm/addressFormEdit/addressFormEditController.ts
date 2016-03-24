@@ -11,8 +11,8 @@ module Antares.Common.Component {
         public address: Address;
 
         public isLoading: boolean = true;
-        private countries: CountryLocalised[] = [];
-        private addressForm: AddressForm;
+        public countries: CountryLocalised[] = [];
+        public addressForm: AddressForm;
 
         private countryResource: Common.Models.Resources.ICountryResourceClass;
         private addressFormResource: Common.Models.Resources.IAddressFormResourceClass;

@@ -10,7 +10,7 @@
     </div>
 </div>
 
-<ng-form name="formAddress" ng-hide="atvm.isLoading">
+<ng-form id="form-address" name="formAddress" ng-hide="atvm.isLoading || !atvm.address.countryId">
     <div class="row" ng-repeat="row in atvm.addressForm.addressFieldRows | orderBy: 'rowOrder'">
         <div ng-repeat="field in row | orderBy: 'columnOrder'"
              class="col-md-{{field.columnSize}}" ng-class="{'has-error': (atvm.isSubmitted(formAddress) || formAddress.{{field.name}}.$dirty) && formAddress.{{field.name}}.$invalid}">
