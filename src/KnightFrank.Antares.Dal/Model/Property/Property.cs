@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Dal.Model
+﻿namespace KnightFrank.Antares.Dal.Model.Property
 {
     using System;
     using System.Collections.Generic;
@@ -11,6 +11,6 @@
 
         public virtual ICollection<Ownership> Ownerships { get; set; }
 
-        public virtual ICollection<Activity.Activity> Activities { get; set; }
+        public virtual ICollection<Activity> Activities { get; set; }
     }
 }

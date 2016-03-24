@@ -9,6 +9,7 @@
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Property;
 
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;

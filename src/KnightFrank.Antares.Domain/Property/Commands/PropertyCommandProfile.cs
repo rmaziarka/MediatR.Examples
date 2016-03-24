@@ -3,6 +3,7 @@
     using AutoMapper;
 
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Property;
 
     public class PropertyCommandProfile : Profile
     {

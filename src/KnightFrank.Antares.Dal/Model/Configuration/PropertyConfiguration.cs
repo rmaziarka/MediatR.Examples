@@ -1,8 +1,6 @@
 ﻿namespace KnightFrank.Antares.Dal.Model.Configuration
 {
-    using KnightFrank.Antares.Dal.Migrations;
-
-    internal class PropertyConfiguration : BaseEntityConfiguration<Property>
+    internal class PropertyConfiguration : BaseEntityConfiguration<Model.Property.Property>
     {
         public PropertyConfiguration()
         {

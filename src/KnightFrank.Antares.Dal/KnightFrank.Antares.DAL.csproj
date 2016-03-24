@@ -138,7 +138,6 @@
     <Compile Include="Migrations\201603231202474_RemoveStreetFieldFromAddress.Designer.cs">
       <DependentUpon>201603231202474_RemoveStreetFieldFromAddress.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\Activity\Activity.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\AddressField.cs" />
     <Compile Include="Model\AddressFieldDefinition.cs" />
@@ -149,7 +148,6 @@
     <Compile Include="Model\Business.cs" />
     <Compile Include="Model\Common\IAuditableEntity.cs" />
     <Compile Include="Model\Common\ILocaled.cs" />
-    <Compile Include="Model\Configuration\Activity\ActivityConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressFieldConfiguration.cs" />
     <Compile Include="Model\Configuration\AddressFieldDefinitionConfiguration.cs" />
@@ -168,6 +166,7 @@
     <Compile Include="Model\Configuration\EnumTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\OwnershipConfiguration.cs" />
     <Compile Include="Model\Configuration\PropertyConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\ActivityConfiguration.cs" />
     <Compile Include="Model\Configuration\RequirementConfiguration.cs" />
     <Compile Include="Model\Configuration\RoleConfiguration.cs" />
     <Compile Include="Model\Configuration\UserConfiguration.cs" />
@@ -182,8 +181,9 @@
     <Compile Include="Model\Locale.cs" />
     <Compile Include="Model\EnumTypeItem.cs" />
     <Compile Include="Model\EnumType.cs" />
-    <Compile Include="Model\Property.cs" />
     <Compile Include="Model\Ownership.cs" />
+    <Compile Include="Model\Property\Activity.cs" />
+    <Compile Include="Model\Property\Property.cs" />
     <Compile Include="Model\Role.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -275,7 +275,13 @@
       <DependentUpon>201603231202474_RemoveStreetFieldFromAddress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Model\Activity\" />
+    <Folder Include="Model\Address\" />
+    <Folder Include="Model\Configuration\Activity\" />
+    <Folder Include="Model\Enum\" />
+    <Folder Include="Model\User\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\OctoPack.3.0.53\tools\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.0.53\tools\OctoPack.targets')" />
   <Target Name="EnsureOctoPackImported" BeforeTargets="BeforeBuild" Condition="'$(OctoPackImported)' == ''">

@@ -8,6 +8,8 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.Exceptions;
     using Domain.Property.CommandHandlers;
+
+    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.Property.Commands;
 
     using Moq;

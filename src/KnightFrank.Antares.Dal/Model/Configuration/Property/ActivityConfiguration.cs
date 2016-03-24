@@ -1,6 +1,6 @@
-namespace KnightFrank.Antares.Dal.Model.Configuration.Activity
+namespace KnightFrank.Antares.Dal.Model.Configuration.Property
 {
-    using KnightFrank.Antares.Dal.Model.Activity;
+    using KnightFrank.Antares.Dal.Model.Property;
 
     internal sealed class ActivityConfiguration : BaseEntityConfiguration<Activity>
     {

@@ -7,8 +7,8 @@
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model;
-    using KnightFrank.Antares.Dal.Model.Activity;
     using KnightFrank.Antares.Dal.Model.Configuration;
+    using KnightFrank.Antares.Dal.Model.Property;
 
     public class KnightFrankContext : DbContext
     {
