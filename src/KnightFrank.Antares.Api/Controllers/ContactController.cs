@@ -13,6 +13,8 @@
 
     using Dal.Repository;
 
+    using KnightFrank.Antares.Domain.Contact.Queries;
+
     using MediatR;
 
     /// <summary>
@@ -52,7 +54,9 @@
         [HttpGet]
         public Contact GetContact(Guid id)
         {
-            Contact contact = this.contactsRepository.Get().FirstOrDefault(c => c.Id == id);
+            var query =  new ContactQuery() { Id = id};
+
+            Contact contact = this.mediator.Send(query);
 
             if (contact == null)
             {

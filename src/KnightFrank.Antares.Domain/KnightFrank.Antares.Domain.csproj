@@ -103,6 +103,9 @@
     <Compile Include="Contact\CommandHandlers\CreateContactCommandHandler.cs" />
     <Compile Include="Contact\Commands\UpdateContactCommandValidator.cs" />
     <Compile Include="Contact\ContactDto.cs" />
+    <Compile Include="Contact\Queries\ContactQuery.cs" />
+    <Compile Include="Contact\Queries\ContactQueryValidator.cs" />
+    <Compile Include="Contact\QueryHandlers\ContactQueryHandler.cs" />
     <Compile Include="DomainModule.cs" />
     <Compile Include="Common\Exceptions\DomainValidationException.cs" />
     <Compile Include="Enum\Queries\EnumQuery.cs" />
