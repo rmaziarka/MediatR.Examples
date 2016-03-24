@@ -10,9 +10,9 @@
 
     public class ResidentialSalesRequirementDetailsPage : ProjectPageBase
     {
-        private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "div[ng-show = 'vm.isLoading']");
+        private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "[ng-show *= 'isLoading']");
         private readonly ElementLocator requirementDate = new ElementLocator(Locator.CssSelector, "span[translate *= 'CREATEDDATE'] ~ span");
-        private readonly ElementLocator locationRequirementsDetails = new ElementLocator(Locator.XPath, "//h4[contains(@translate, 'LOCATION')]/..//div/div");
+        private readonly ElementLocator locationRequirementsDetails = new ElementLocator(Locator.XPath, "//h4[contains(@translate, 'LOCATION')]/..//span");
         private readonly ElementLocator propertyRequirementsDetails = new ElementLocator(Locator.XPath, "//h4[contains(@translate, 'BASIC_REQUIREMENTS')]/..//div[contains(@class, 'ng-binding')]");
         private readonly ElementLocator propertyRequirementsDetailsDescription = new ElementLocator(Locator.XPath, "//h4[contains(@translate, 'DESCRIPTION')]/../p");
         private readonly ElementLocator requirementApplicants = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'contacts'] div");

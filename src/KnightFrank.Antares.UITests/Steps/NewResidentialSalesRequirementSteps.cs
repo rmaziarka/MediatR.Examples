@@ -51,10 +51,12 @@
 
             var details = table.CreateInstance<Address>();
 
-            //TODO select country - SelectPropertyCountry(details.Country)
-            page.AddressTemplate.SetPropertyName(details.PropertyName)
+            page.AddressTemplate.SelectPropertyCountry(table.Rows[0]["Country"])
+                .SetPropertyName(details.PropertyName)
                 .SetPropertyNumber(details.PropertyNumber)
-                .SetPropertyAddressLine1(details.Line1).SetPropertyAddressLine2(details.Line2)
+                .SetPropertyAddressLine1(details.Line1)
+                .SetPropertyAddressLine2(details.Line2)
+                .SetPropertyAddressLine3(details.Line3)
                 .SetPropertyPostCode(details.Postcode)
                 .SetPropertyCity(details.City)
                 .SetPropertyCounty(details.County);

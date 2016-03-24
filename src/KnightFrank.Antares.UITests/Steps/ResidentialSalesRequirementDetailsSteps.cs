@@ -42,10 +42,9 @@
             var expectedDetails = table.CreateInstance<Address>();
 
             Verify.That(this.driverContext,
-                () => Assert.Equal(expectedDetails.Country.IsoCode, details["Country"]),
                 () => Assert.Equal(expectedDetails.Line2, details["Street name"]),
                 () => Assert.Equal(expectedDetails.Postcode, details["Postcode"]),
-                () => Assert.Equal(expectedDetails.City, details["Town"]));
+                () => Assert.Equal(expectedDetails.City, details["City"]));
         }
 
         [Then(@"residential sales requirement property details are same as the following")]
@@ -57,13 +56,13 @@
             var expectedDetails = table.CreateInstance<Requirement>();
 
             Verify.That(this.driverContext,
-                () => Assert.True(details["Price"].Contains(expectedDetails.MinPrice + " - " + expectedDetails.MaxPrice), "Prices are different"),
+                () => Assert.True(details["Price"].Contains(expectedDetails.MinPrice + " - " + expectedDetails.MaxPrice + " GBP"), "Prices are different"),
                 () => Assert.True(details["Bedrooms"].Contains(expectedDetails.MinBedrooms + " - " + expectedDetails.MaxBedrooms), "Number of bedrooms is different"),
                 () => Assert.True(details["Reception rooms"].Contains(expectedDetails.MinReceptionRooms + " - " + expectedDetails.MaxReceptionRooms), "Number of reception rooms is different"),
                 () => Assert.True(details["Bathrooms"].Contains(expectedDetails.MinBathrooms + " - " + expectedDetails.MaxBathrooms), "Number of bathrooms is different"),
                 () => Assert.True(details["Parking spaces"].Contains(expectedDetails.MinParkingSpaces + " - " + expectedDetails.MaxParkingSpaces), "Number of parking spaces is different"),
-                () => Assert.True(details["Area"].Contains(expectedDetails.MinArea + " - " + expectedDetails.MaxArea), "Areas are different"),
-                () => Assert.True(details["Land area"].Contains(expectedDetails.MinLandArea + " - " + expectedDetails.MaxLandArea), "Land areas are different"),
+                () => Assert.True(details["Area"].Contains(expectedDetails.MinArea + " - " + expectedDetails.MaxArea + " sq ft"), "Areas are different"),
+                () => Assert.True(details["Land area"].Contains(expectedDetails.MinLandArea + " - " + expectedDetails.MaxLandArea + " sq ft"), "Land areas are different"),
                 () => Assert.Equal(expectedDetails.Description, details["Requirement description"]));
         }
 

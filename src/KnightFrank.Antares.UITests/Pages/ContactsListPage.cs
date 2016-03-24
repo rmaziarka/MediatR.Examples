@@ -9,7 +9,7 @@
     public class ContactsListPage : ProjectPageBase
     {
         private readonly ElementLocator contact = new ElementLocator(Locator.XPath, "//label[normalize-space(text()) = '{0}']//input");
-        private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "div[ng-show = 'vm.isLoading']");
+        private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "[ng-show *= 'isLoading']");
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, "div.side-panel");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.CssSelector, "button[ng-click = 'vm.updateContacts()']");
 

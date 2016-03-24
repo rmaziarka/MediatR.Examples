@@ -12,12 +12,12 @@
         private readonly ElementLocator propertyNumber = new ElementLocator(Locator.Id, string.Empty);
         private readonly ElementLocator propertyName = new ElementLocator(Locator.Id, string.Empty);
         private readonly ElementLocator propertyAddressLine1 = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator propertyAddressLine2 = new ElementLocator(Locator.Id, "street");
+        private readonly ElementLocator propertyAddressLine2 = new ElementLocator(Locator.Id, "Line2");
         private readonly ElementLocator propertyAddressLine3 = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator propertyCity = new ElementLocator(Locator.Id, "town");
+        private readonly ElementLocator propertyCity = new ElementLocator(Locator.Id, "City");
         private readonly ElementLocator propertyCounty = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator propertyPostcode = new ElementLocator(Locator.Id, "postcode");
-        private readonly ElementLocator propertyCountry = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator propertyPostcode = new ElementLocator(Locator.Id, "Postcode");
+        private readonly ElementLocator propertyCountry = new ElementLocator(Locator.Id, "country");
 
         public AddressTemplatePage(DriverContext driverContext) : base(driverContext)
         {
@@ -82,7 +82,8 @@
         // Country
         public AddressTemplatePage SelectPropertyCountry(string country)
         {
-            this.Driver.GetElement<Select>(this.propertyCountry).SelectByValue(country);
+            this.Driver.GetElement<Select>(this.propertyCountry).SelectByText(country);
+            this.Driver.WaitForAngularToFinish();
             return this;
         }
     }
