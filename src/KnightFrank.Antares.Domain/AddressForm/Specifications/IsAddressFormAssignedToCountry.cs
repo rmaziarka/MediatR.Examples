@@ -6,6 +6,7 @@
     using global::Domain.Seedwork.Specification;
 
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Address;
 
     public class IsAddressFormAssignedToCountry : Specification<AddressForm>
     {

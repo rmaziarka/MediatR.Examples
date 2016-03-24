@@ -5,7 +5,7 @@ module Antares.Property {
 
     app.config(initRoute);
 
-    function initRoute($stateProvider, $urlRouterProvider) {
+    function initRoute($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
         $stateProvider
             .state('app.property-view', {
                 url: '/property/view/:id',

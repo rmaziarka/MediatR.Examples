@@ -3,8 +3,9 @@
 	using System.Data.Entity.Migrations;
 
 	using KnightFrank.Antares.Dal.Model;
+	using KnightFrank.Antares.Dal.Model.User;
 
-	internal class RoleData
+    internal class RoleData
 	{
 		public static void Seed(KnightFrankContext context)
 		{

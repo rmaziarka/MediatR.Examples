@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.Domain.Property.Commands
 {
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Property;
 
     using MediatR;
 

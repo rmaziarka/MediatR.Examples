@@ -6,7 +6,7 @@ module Antares.Common.Component{
         controllerAs:'vm',
         templateUrl:'app/common/components/addressForm/addressFormView/addressFormView.html',
         bindings:{
-            addressFormId:'<'
+            address:'<'
         }
-    });    
+    });
 }

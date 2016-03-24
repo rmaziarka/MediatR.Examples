@@ -1,4 +1,4 @@
-///<reference path="../../../../../typings/main.d.ts"/>
+///<reference path="../../../../typings/_all.d.ts"/>
 
 module Antares {
     export module Core {
@@ -18,14 +18,14 @@ module Antares {
                     delete this.instances[componentId];
                 }
 
-                register = (instance, componentId) => {
+                register = (instance: any, componentId: string) => {
                     this.instances[componentId] = instance;
                     return () => {
                         this.deregister(componentId);
                     }
                 }
 
-                get = (componentId) => {
+                get = (componentId: string) => {
                     return this.instances[componentId];
                 }
             }

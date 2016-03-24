@@ -61,26 +61,9 @@ module Antares.Property.View {
             }
         }
 
-        loadPropertyData = () =>{
+        loadPropertyData = () => {
             var propertyId: string = this.$state.params.id;
             this.property = this.dataAccessService.getPropertyResource().get({ id: propertyId });
-        }
-
-        private hidePanels(hideCurrent: boolean = true) {
-            for (var panel in this.components.panels) {
-                if (this.components.panels.hasOwnProperty(panel)) {
-                    if (hideCurrent === false && this.currentPanel === this.components.panels[panel]()) {
-                        continue;
-                    }
-                    this.components.panels[panel]().hide();
-                }
-            }
-        }
-
-        private showPanel(panel){
-            this.hidePanels();
-            panel().show();
-            this.currentPanel = panel;
         }
 
         showOwnershipView = (ownership) => {
@@ -121,15 +104,32 @@ module Antares.Property.View {
                 });
         }
 
-        getOwnershipToSave(){
+        getOwnershipToSave() {
             var ownership = angular.copy(this.components.ownershipAdd().getOwnership());
-            ownership.ContactIds = ownership.contacts.map((item) => { return item.id; });
+            ownership.ContactIds = ownership.contacts.map((item: any) => { return item.id; });
             ownership.PropertyId = this.propertyId;
             ownership.OwnershipTypeId = ownership.ownershipType.id;
             delete ownership.contacts;
             delete ownership.ownershipType;
 
             return ownership;
+        }
+
+        private hidePanels(hideCurrent: boolean = true) {
+            for (var panel in this.components.panels) {
+                if (this.components.panels.hasOwnProperty(panel)) {
+                    if (hideCurrent === false && this.currentPanel === this.components.panels[panel]()) {
+                        continue;
+                    }
+                    this.components.panels[panel]().hide();
+                }
+            }
+        }
+
+        private showPanel(panel) {
+            this.hidePanels();
+            panel().show();
+            this.currentPanel = panel;
         }
     }
     angular.module('app').controller('propertyViewController', PropertyViewController);

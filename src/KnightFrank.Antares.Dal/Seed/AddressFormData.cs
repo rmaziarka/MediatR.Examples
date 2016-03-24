@@ -6,6 +6,7 @@
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Address;
 
     internal static class AddressFormData
     {

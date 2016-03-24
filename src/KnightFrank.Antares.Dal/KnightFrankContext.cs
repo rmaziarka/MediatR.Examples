@@ -7,8 +7,11 @@
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model;
-    using KnightFrank.Antares.Dal.Model.Activity;
+    using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Configuration;
+    using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.User;
 
     public class KnightFrankContext : DbContext
     {
