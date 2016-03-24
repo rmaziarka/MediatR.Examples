@@ -138,6 +138,10 @@
     <Compile Include="Migrations\201603231202474_RemoveStreetFieldFromAddress.Designer.cs">
       <DependentUpon>201603231202474_RemoveStreetFieldFromAddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603240917097_AddPropertyTypes.cs" />
+    <Compile Include="Migrations\201603240917097_AddPropertyTypes.Designer.cs">
+      <DependentUpon>201603240917097_AddPropertyTypes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Address\Address.cs" />
     <Compile Include="Model\Address\AddressField.cs" />
     <Compile Include="Model\Address\AddressFieldDefinition.cs" />
@@ -164,6 +168,9 @@
     <Compile Include="Model\Configuration\Enum\EnumTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\Enum\EnumTypeItemConfiguration.cs" />
     <Compile Include="Model\Configuration\LocaleConfiguration.cs" />
+    <Compile Include="Model\Configuration\PropertyType\PropertyTypeConfiguration.cs" />
+    <Compile Include="Model\Configuration\PropertyType\PropertyTypeDefinitionConfiguration.cs" />
+    <Compile Include="Model\Configuration\PropertyType\PropertyTypeLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\ActivityConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\OwnershipConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\PropertyConfiguration.cs" />
@@ -181,6 +188,9 @@
     <Compile Include="Model\Enum\EnumType.cs" />
     <Compile Include="Model\Enum\EnumTypeItem.cs" />
     <Compile Include="Model\Locale.cs" />
+    <Compile Include="Model\PropertyType\PropertyType.cs" />
+    <Compile Include="Model\PropertyType\PropertyTypeDefinition.cs" />
+    <Compile Include="Model\PropertyType\PropertyTypeLocalised.cs" />
     <Compile Include="Model\Property\Activity.cs" />
     <Compile Include="Model\Property\Ownership.cs" />
     <Compile Include="Model\Property\Property.cs" />
@@ -273,6 +283,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603231202474_RemoveStreetFieldFromAddress.resx">
       <DependentUpon>201603231202474_RemoveStreetFieldFromAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603240917097_AddPropertyTypes.resx">
+      <DependentUpon>201603240917097_AddPropertyTypes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
