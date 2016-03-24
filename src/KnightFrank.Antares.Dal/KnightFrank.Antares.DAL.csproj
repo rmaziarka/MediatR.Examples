@@ -138,22 +138,22 @@
     <Compile Include="Migrations\201603231202474_RemoveStreetFieldFromAddress.Designer.cs">
       <DependentUpon>201603231202474_RemoveStreetFieldFromAddress.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\Address.cs" />
-    <Compile Include="Model\AddressField.cs" />
-    <Compile Include="Model\AddressFieldDefinition.cs" />
-    <Compile Include="Model\AddressFieldLabel.cs" />
-    <Compile Include="Model\AddressForm.cs" />
-    <Compile Include="Model\AddressFormEntityType.cs" />
+    <Compile Include="Model\Address\Address.cs" />
+    <Compile Include="Model\Address\AddressField.cs" />
+    <Compile Include="Model\Address\AddressFieldDefinition.cs" />
+    <Compile Include="Model\Address\AddressFieldLabel.cs" />
+    <Compile Include="Model\Address\AddressForm.cs" />
+    <Compile Include="Model\Address\AddressFormEntityType.cs" />
     <Compile Include="Model\BaseAuditableEntity.cs" />
     <Compile Include="Model\Business.cs" />
     <Compile Include="Model\Common\IAuditableEntity.cs" />
     <Compile Include="Model\Common\ILocaled.cs" />
-    <Compile Include="Model\Configuration\AddressConfiguration.cs" />
-    <Compile Include="Model\Configuration\AddressFieldConfiguration.cs" />
-    <Compile Include="Model\Configuration\AddressFieldDefinitionConfiguration.cs" />
-    <Compile Include="Model\Configuration\AddressFieldLableConfiguration.cs" />
-    <Compile Include="Model\Configuration\AddressFormConfigutration.cs" />
-    <Compile Include="Model\Configuration\AddressFormEntityTypeConfiguration.cs" />
+    <Compile Include="Model\Configuration\Address\AddressConfiguration.cs" />
+    <Compile Include="Model\Configuration\Address\AddressFieldConfiguration.cs" />
+    <Compile Include="Model\Configuration\Address\AddressFieldDefinitionConfiguration.cs" />
+    <Compile Include="Model\Configuration\Address\AddressFieldLableConfiguration.cs" />
+    <Compile Include="Model\Configuration\Address\AddressFormConfigutration.cs" />
+    <Compile Include="Model\Configuration\Address\AddressFormEntityTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\BusinessConfiguration.cs" />
     <Compile Include="Model\Configuration\ContactConfiguration.cs" />
     <Compile Include="Model\Configuration\BaseEntityConfiguration.cs" />
@@ -276,9 +276,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\Activity\" />
-    <Folder Include="Model\Address\" />
-    <Folder Include="Model\Configuration\Activity\" />
     <Folder Include="Model\Enum\" />
     <Folder Include="Model\User\" />
   </ItemGroup>

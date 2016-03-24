@@ -8,6 +8,8 @@
 
     using Dal.Model;
 
+    using KnightFrank.Antares.Dal.Model.Address;
+
     public class IsAddressFormAssignedToEntityType : Specification<AddressForm>
     {
         private readonly Guid enumTypeItemId;

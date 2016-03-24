@@ -9,6 +9,9 @@
     using MediatR;
     using QueryResults;
     using AutoMapper;
+
+    using KnightFrank.Antares.Dal.Model.Address;
+
     public class AddressFormByIdQueryHandler : IRequestHandler<AddressFormByIdQuery, AddressFormQueryResult>
     {
         private readonly IReadGenericRepository<AddressForm> addressFormRepository;

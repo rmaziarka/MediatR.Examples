@@ -6,6 +6,7 @@
     using FluentAssertions;
 
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.AddressForm.QueryHandlers;
     using KnightFrank.Antares.Domain.AddressForm.QueryResults;

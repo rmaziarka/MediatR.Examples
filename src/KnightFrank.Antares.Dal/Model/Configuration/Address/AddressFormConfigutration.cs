@@ -1,6 +1,6 @@
-namespace KnightFrank.Antares.Dal.Model.Configuration
+namespace KnightFrank.Antares.Dal.Model.Configuration.Address
 {
-    using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Address;
 
     internal sealed class AddressFormConfigutration : BaseEntityConfiguration<AddressForm>
     {

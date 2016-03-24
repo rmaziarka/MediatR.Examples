@@ -16,7 +16,7 @@
 
         public Guid AddressId { get; set; }
 
-        public virtual Address Address { get; set; }
+        public virtual Address.Address Address { get; set; }
 
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }

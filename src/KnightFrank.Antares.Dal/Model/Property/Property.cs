@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using KnightFrank.Antares.Dal.Model.Address;
+
     public class Property : BaseEntity
     {
         public Guid AddressId { get; set; }
