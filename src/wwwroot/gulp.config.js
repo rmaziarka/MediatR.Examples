@@ -74,6 +74,7 @@
                 }
             },
             htmlTemplatesSrc: clientApp + '**/*.html',
+            fonts: bower.directory + 'font-awesome/fonts/**/*.*',
             translationsDest: build + translations,
             staticTranslationsFiles: [
                 translations + '*.json', // translation

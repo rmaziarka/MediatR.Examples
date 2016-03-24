@@ -166,6 +166,10 @@ gulp.task('build', ['_optimize'], function() {
     gulp.src(config.build.staticTranslationsFiles)
         .pipe(gulp.dest(config.build.translationsDest));
 
+    log('Copying fonts');
+    gulp.src(config.build.fonts)
+        .pipe(gulp.dest(config.build.output + config.bower.directory + 'font-awesome/fonts/'));
+
     log('Copying web.config file');
     gulp.src(config.build.webConfigFile)
         .pipe(rename(function(path) {
