@@ -72,6 +72,7 @@ module Antares.Property.View {
         }
 
         showContactList = () => {
+            this.ownershipAddPanelVisible = false;
             this.loadingContacts = true;
             this.components.contactList()
                 .loadContacts()

@@ -29,7 +29,10 @@
             <div class="col-md-8">
                 <label for="purchasing-date">Purchasing date</label>
                 <div class="input-group">
-                    <input type="date" id="purchasing-date" class="form-control" ng-model="vm.ownership.purchaseDate">
+                    <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.ownership.purchaseDate" is-open="vm.datepickers.purchaseOpened" ng-required="true" close-text="Close" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openPurchaseDate()"><i class="fa fa-calendar"></i></button>
+                    </span>
                 </div>
             </div>
         </div>
@@ -37,9 +40,12 @@
     <div class="form-group" ng-show="!vm.ownership.isCurrentOwner">
         <div class="row">
             <div class="col-md-8">
-                <label for="selling-date">Selling date</label>
+                <label for="purchasing-date">Purchasing date</label>
                 <div class="input-group">
-                    <input type="date" id="selling-date" class="form-control"ng-model="vm.ownership.sellDate">
+                    <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.ownership.sellDate" is-open="vm.datepickers.sellOpened" ng-required="true" close-text="Close" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openSellDate()"><i class="fa fa-calendar"></i></button>
+                    </span>
                 </div>
             </div>
         </div>

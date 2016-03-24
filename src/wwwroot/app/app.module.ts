@@ -6,6 +6,7 @@ module Antares {
         'ngMessages',
         'ui.router',
         'pascalprecht.translate',
-        'app.requirement'
+        'app.requirement',
+        'ui.bootstrap'
     ]);
 }

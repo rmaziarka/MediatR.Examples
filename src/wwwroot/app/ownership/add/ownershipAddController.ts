@@ -6,11 +6,14 @@ module Antares.Property {
 
     export class OwnershipAddController {
         static $inject = ['componentRegistry', 'dataAccessService'];
-        
+
         componentId: string;
         ownership: IOwnership = <IOwnership>{};
         ownershipTypes: any;
-
+        datepickers: any = {
+            purchaseOpened: false,
+            sellOpened: false
+        }
 
         constructor(
             componentRegistry: Antares.Core.Service.ComponentRegistry,
@@ -20,12 +23,20 @@ module Antares.Property {
             componentRegistry.register(this, this.componentId);
         }
 
-        loadOwnership = (contacts: IContact[]) =>{
+        loadOwnership = (contacts: IContact[]) => {
             this.ownership.contacts = contacts;
         }
 
-        getOwnership = () =>{
+        getOwnership = () => {
             return this.ownership;
+        }
+
+        openPurchaseDate = () => {
+            this.datepickers.purchaseOpened = true;
+        }
+
+        openSellDate = () => {
+            this.datepickers.sellOpened = true;
         }
     }
 
