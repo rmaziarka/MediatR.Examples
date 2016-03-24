@@ -2,8 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-
-    using KnightFrank.Antares.Dal.Model;
+    
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.UITests.Pages;
 

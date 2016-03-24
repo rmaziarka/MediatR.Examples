@@ -5,7 +5,6 @@
 
     using AutoMapper;
 
-    using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Model.Enum;
 
     public class EnumQueryResultProfile : Profile

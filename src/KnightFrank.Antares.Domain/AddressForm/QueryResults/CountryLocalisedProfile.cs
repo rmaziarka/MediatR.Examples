@@ -1,8 +1,7 @@
 ﻿namespace KnightFrank.Antares.Domain.AddressForm.QueryResults
 {
     using AutoMapper;
-
-    using KnightFrank.Antares.Dal.Model;
+    
     using KnightFrank.Antares.Dal.Model.Resource;
 
     public class CountryLocalisedProfile : Profile

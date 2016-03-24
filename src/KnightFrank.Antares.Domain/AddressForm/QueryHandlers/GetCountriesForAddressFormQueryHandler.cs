@@ -7,8 +7,7 @@
     using AutoMapper;
 
     using global::Domain.Seedwork.Specification;
-
-    using KnightFrank.Antares.Dal.Model;
+    
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Resource;

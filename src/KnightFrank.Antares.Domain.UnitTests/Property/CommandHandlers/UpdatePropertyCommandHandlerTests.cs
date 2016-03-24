@@ -3,8 +3,7 @@
     using System;
 
     using FluentAssertions;
-
-    using KnightFrank.Antares.Dal.Model;
+    
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.Exceptions;
     using Domain.Property.CommandHandlers;

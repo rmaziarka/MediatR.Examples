@@ -3,7 +3,6 @@
     using System.Data.Entity;
     using System.Linq;
 
-    using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.AddressForm.Queries;
     using MediatR;

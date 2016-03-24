@@ -7,7 +7,6 @@
     using FluentValidation;
     using FluentValidation.Results;
 
-    using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;

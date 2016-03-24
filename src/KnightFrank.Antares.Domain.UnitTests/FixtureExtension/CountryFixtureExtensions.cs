@@ -1,6 +1,5 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.FixtureExtension
 {
-    using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Model.Resource;
 
     using Ploeh.AutoFixture;
