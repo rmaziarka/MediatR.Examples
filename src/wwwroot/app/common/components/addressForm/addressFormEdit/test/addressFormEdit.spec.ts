@@ -1,0 +1,243 @@
+﻿/// <reference path="../../../../../typings/_all.d.ts" />
+
+module Antares {
+    import Dto = Antares.Common.Models.Dto;
+    import AddressFormEditController = Antares.Common.Component.AddressFormEditController;
+
+    describe('Given address component', () => {
+        var scope: ng.IScope,
+            element: ng.IAugmentedJQuery,
+            $http: ng.IHttpBackendService,
+            compile: ng.ICompileService,
+            state: ng.ui.IStateService,
+            controller: AddressFormEditController;
+
+        var countriesMock = [{ country : { id : "countryId1", isoCode : "GB" }, locale : {}, value : "United Kingdom" }],
+            countryMockId = countriesMock[0].country.id,
+            addressMock: Dto.Address = new Dto.Address('adrId1', countryMockId, 'adrfrmId1', 'test prop name', '123456');
+
+        describe('when component is being loaded', () =>{
+            var addressFormMock = new Dto.AddressForm('adrfrmId1', countryMockId, []);
+
+            beforeEach(angular.mock.module('app'));
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService,
+                $state: ng.ui.IStateService,
+                $httpBackend: ng.IHttpBackendService) =>{
+
+                // init
+                scope = $rootScope.$new();
+                compile = $compile;
+                state = $state;
+                $http = $httpBackend;
+
+                // http backend
+                $http.expectGET(/\/api\/addressform\/countries\?entityType=Property/).respond(() =>{
+                    return [200, countriesMock];
+                });
+            }));
+
+            it('and address is not empty then request GET for address form is called and proper addressForm returned from request is set', () => {
+                $http.expectGET(/\/api\/addressForm\/\?entityType=Property&countryCode=GB/).respond(() => {
+                    return [200, addressFormMock];
+                });
+
+                scope['address'] = addressMock;
+                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address"></address-form-edit>')(scope);
+                scope.$apply();
+                controller = element.controller('addressFormEdit');
+
+                $http.flush();
+
+                expect(controller.addressForm).toEqual(addressFormMock);
+            });
+
+            it('and address is not empty then address form is visible', () => {
+                $http.expectGET(/\/api\/addressForm\/\?entityType=Property&countryCode=GB/).respond(() => {
+                    return [200, addressFormMock];
+                });
+
+                scope['address'] = addressMock;
+                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address"></address-form-edit>')(scope);
+                scope.$apply();
+
+                $http.flush();
+
+                var addressFormElement = element.find('ng-form#form-address');
+                expect(addressFormElement.hasClass('ng-hide')).toBeFalsy();
+            });
+
+            it('and address is empty then no request GET for address form is called and addressForm is not set', () => {
+                scope['address'] = new Dto.Address();
+                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address"></address-form-edit>')(scope);
+                scope.$apply();
+                controller = element.controller('addressFormEdit');
+
+                $http.flush();
+
+                expect(controller.addressForm).toBeUndefined();
+            });
+
+            it('and address is empty then address form is not visible', () => {
+                scope['address'] = new Dto.Address();
+                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address"></address-form-edit>')(scope);
+                scope.$apply();
+
+                $http.flush();
+
+                var addressFormElement = element.find('ng-form#form-address');
+                expect(addressFormElement.hasClass('ng-hide')).toBeTruthy();
+            });
+        });
+
+        describe('when component has been loaded', () =>{
+            var assertValidator: TestHelpers.AssertValidators,
+                addressFormMock: Dto.AddressForm = new Dto.AddressForm('adrfrmId1', countryMockId, [
+                    new Dto.AddressFormFieldDefinition('OrderedFieldA', 'Label A', false, '', 1, 1, 3),
+                    new Dto.AddressFormFieldDefinition('OrderedFieldB', 'Label B', true, '^.{1,3}$', 1, 3, 3),
+                    new Dto.AddressFormFieldDefinition('OrderedFieldC', 'Label C', true, '^[a-z]$', 1, 2, 6),
+                    new Dto.AddressFormFieldDefinition('OrderedFieldD', 'Label D', false, '', 3, 1, 2),
+                    new Dto.AddressFormFieldDefinition('OrderedFieldE', 'Label E', true, '', 2, 1, 4)
+                ]);
+
+            beforeEach(angular.mock.module('app'));
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService,
+                $state: ng.ui.IStateService,
+                $httpBackend: ng.IHttpBackendService) => {
+
+                // init
+                scope = $rootScope.$new();
+                compile = $compile;
+                state = $state;
+                $http = $httpBackend;
+
+                // http backend
+                $http.whenGET(/\/api\/addressform\/countries\?entityType=Property/).respond(() => {
+                    return [200, countriesMock];
+                });
+                $http.whenGET(/\/api\/addressForm\/\?entityType=Property&countryCode=GB/).respond(() => {
+                    return [200, addressFormMock];
+                });
+
+                // compile
+                scope['address'] = addressMock;
+                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address"></address-form-edit>')(scope);
+                scope.$apply();
+                controller = element.controller('addressFormEdit');
+                assertValidator = new TestHelpers.AssertValidators(element, scope);
+
+                $http.flush();
+            }));
+
+            it('then address form has proper elements order grouped in rows', () => {
+                // 1:       1.1: OrderedFieldA,     1.2: OrderedFieldC,     1.3: OrderedFieldB
+                // 2:       1.1: OrderedFieldE
+                // 3:       1.1: OrderedFieldD
+                var addressFormElement = element.find('ng-form#form-address');
+                var fieldAElement = addressFormElement.find('input#OrderedFieldA')[0];
+                var fieldBElement = addressFormElement.find('input#OrderedFieldB')[0];
+                var fieldCElement = addressFormElement.find('input#OrderedFieldC')[0];
+                var fieldDElement = addressFormElement.find('input#OrderedFieldD')[0];
+                var fieldEElement = addressFormElement.find('input#OrderedFieldE')[0];
+
+                var allRowElements = addressFormElement.find('div.row');
+                var firstRow = allRowElements.first();
+                var secondRow = firstRow.next();
+                var thirdRow = secondRow.next();
+
+                var firstRowInputElements = firstRow.find('input[id*="OrderedField"]');
+                var secondRowInputElements = secondRow.find('input[id*="OrderedField"]');
+                var thirdRowInputElements = thirdRow.find('input[id*="OrderedField"]');
+
+                expect(firstRowInputElements.length).toBe(3);
+                expect(firstRowInputElements[0]).toBe(fieldAElement);
+                expect(firstRowInputElements[1]).toBe(fieldCElement);
+                expect(firstRowInputElements[2]).toBe(fieldBElement);
+
+                expect(secondRowInputElements.length).toBe(1);
+                expect(secondRowInputElements[0]).toBe(fieldEElement);
+
+                expect(thirdRowInputElements.length).toBe(1);
+                expect(thirdRowInputElements[0]).toBe(fieldDElement);
+            });
+        });
+
+        describe('and form is being filled', () => {
+            var pageObjectSelectors = {
+                fieldASelector: 'input#FieldA',
+                fieldBSelector: 'input#FieldB',
+                fieldCSelector: 'input#FieldC',
+                fieldDSelector: 'input#FieldD',
+                fieldESelector: 'input#FieldE'
+            };
+
+            var assertValidator: TestHelpers.AssertValidators,
+                addressFormMock: Dto.AddressForm = new Dto.AddressForm('adrfrmId1', countryMockId, [
+                    new Dto.AddressFormFieldDefinition('FieldA', 'Label A', false, '', 1, 1, 3),
+                    new Dto.AddressFormFieldDefinition('FieldB', 'Label B', true, '^.{1,3}$', 1, 3, 3),
+                    new Dto.AddressFormFieldDefinition('FieldC', 'Label C', true, '^[a-z]+$', 1, 2, 6),
+                    new Dto.AddressFormFieldDefinition('FieldD', 'Label D', false, '', 3, 1, 2),
+                    new Dto.AddressFormFieldDefinition('FieldE', 'Label E', true, '', 2, 1, 4)
+                ]);
+
+            beforeEach(angular.mock.module('app'));
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService,
+                $state: ng.ui.IStateService,
+                $httpBackend: ng.IHttpBackendService) => {
+
+                // init
+                scope = $rootScope.$new();
+                compile = $compile;
+                state = $state;
+                $http = $httpBackend;
+
+                // http backend
+                $http.whenGET(/\/api\/addressform\/countries\?entityType=Property/).respond(() => {
+                    return [200, countriesMock];
+                });
+                $http.whenGET(/\/api\/addressForm\/\?entityType=Property&countryCode=GB/).respond(() => {
+                    return [200, addressFormMock];
+                });
+
+                // compile
+                scope['address'] = addressMock;
+                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address"></address-form-edit>')(scope);
+                scope.$apply();
+                controller = element.controller('addressFormEdit');
+                assertValidator = new TestHelpers.AssertValidators(element, scope);
+
+                $http.flush();
+            }));
+
+            it('when not required value is missing then required message should not be displayed', () => {
+                assertValidator.assertRequiredValidator(null, true, pageObjectSelectors.fieldASelector);
+            });
+
+            it('when required value is filled then required message should not be displayed', () => {
+                assertValidator.assertRequiredValidator('abc', true, pageObjectSelectors.fieldESelector);
+            });
+
+            it('when required value is missing then required message should be displayed', () => {
+                assertValidator.assertRequiredValidator(null, false, pageObjectSelectors.fieldESelector);
+            });
+
+            it('when required value is missing and value does not this match pattern then required message should be displayed', () => {
+                assertValidator.assertRequiredValidator(null, false, pageObjectSelectors.fieldBSelector);
+                assertValidator.assertPatternValidator(null, false, pageObjectSelectors.fieldBSelector);
+            });
+
+            it('when value does not match pattern then invalid format message should be displayed', () => {
+                assertValidator.assertPatternValidator('123', false, pageObjectSelectors.fieldCSelector);
+            });
+
+            it('when value matches pattern then invalid format message should not be displayed', () => {
+                assertValidator.assertPatternValidator('xyz', true, pageObjectSelectors.fieldCSelector);
+            });
+        });
+    });
+}
