@@ -4,12 +4,10 @@
     $ = require('gulp-load-plugins')({ lazy: true }),
     config = require('./gulp.config')(),
     tsProject = $.typescript.createProject({
-        "compilerOptions": {
-            "target": "es5",
-            "noImplicitAny": true,
-            "sourceMap": false,
-            "noExternalResolve": true
-        }
+        "target": "ES5",
+        "noImplicitAny": true,
+        "sourceMap": false,
+        "noExternalResolve": true
     }),
     runSequence = require('run-sequence');
 
@@ -17,7 +15,7 @@
  * Wire-up the bower dependencies and custom js files
  * @return {Stream}
  */
-gulp.task('_js-inject', function () {
+gulp.task('_js-inject', function() {
     log('Wiring the bower dependencies into the html');
 
     var wiredep = require('wiredep').stream;
@@ -30,7 +28,7 @@ gulp.task('_js-inject', function () {
         .pipe(gulp.dest(config.root));
 });
 
-gulp.task('_styles-inject', ['sass'], function () {
+gulp.task('_styles-inject', ['sass'], function() {
     log('Wire up css into the html, after files are ready');
 
     return gulp
@@ -42,7 +40,7 @@ gulp.task('_styles-inject', ['sass'], function () {
 /**
  * Creates and injects js files into index.html
  */
-gulp.task('bundle', function (callback) {
+gulp.task('bundle', function(callback) {
     runSequence('_js-clean', 'ts', '_js-inject', 'sass', '_styles-inject', callback);
 });
 
@@ -50,7 +48,7 @@ gulp.task('bundle', function (callback) {
 * Removes all *.js and *.js.map files from ./app
 * @return {Stream}
 */
-gulp.task('_js-clean', function () {
+gulp.task('_js-clean', function() {
     return gulp
         .src([config.js.all, config.js.maps])
         .pipe($.clean());
@@ -61,17 +59,17 @@ gulp.task('_js-clean', function () {
 /* is found or for angular standard injections, ex controllers
 *  @return {Stream}
 */
-gulp.task('_js-annotate', function () {
+gulp.task('_js-annotate', function() {
     return gulp.src(config.js.appFiles)
-		.pipe($.ngAnnotate())
-		.pipe(gulp.dest(config.app));
+        .pipe($.ngAnnotate())
+        .pipe(gulp.dest(config.app));
 });
 
 /**
  * Lint all typescript files
  * @return {Stream}
  */
-gulp.task('_ts-lint', function () {
+gulp.task('_ts-lint', function() {
     return gulp
         .src(config.ts.allTs)
         .pipe($.tslint())
@@ -82,39 +80,56 @@ gulp.task('_ts-lint', function () {
  * Compiling Typescript --> Javascript
  * @return {Stream}
  */
-gulp.task('_ts-compile', function () {
+gulp.task('_ts-compile', function() {
     var tsResult = gulp
-        .src([config.ts.allTs, config.ts.libTypingsAllTs])
+        .src([config.ts.allTs, config.ts.libTypingsAllTs, './typings/main.d.ts'])
         .pipe($.sourcemaps.init())
         .pipe($.typescript(tsProject));
 
     tsResult.dts.pipe(gulp.dest('.'));
 
     return tsResult.js.pipe($.sourcemaps.write('.'))
-                      .pipe(gulp.dest(config.app));
+        .pipe(gulp.dest(config.app));
+});
+
+/*
+ * Inject all ts project files in to _all.d.ts file.
+ * @return {Stream}
+ */
+gulp.task('_ts-ref', function() {
+    var tsFiles = [config.ts.allTs, '!' + config.ts.allDtsFilePath,'!'+config.ts.specTs];
+    return gulp.src(config.ts.allDtsFilePath)
+        .pipe($.inject(gulp.src(tsFiles, { read: false }), {
+            starttag: '//<--inject:ts-->',
+            endtag: '//<--inject:end:ts-->',
+            transform: function(filepath, file, i, length) {
+                return '/// <reference path="../..' + filepath + '" />';
+            }
+        }))
+        .pipe(gulp.dest('app/typings/'));
 });
 
 /**
 *  Lints and compiles typescript files
 *  @return {Stream}
 */
-gulp.task('ts', function (callback) {
+gulp.task('ts', function(callback) {
     log('Compiling typescript to javascript');
-    runSequence('_ts-lint', '_ts-compile', '_js-annotate', callback);
+    runSequence('_ts-lint', '_ts-compile', '_js-annotate', '_ts-ref', callback);
 });
 
 /**
  * Watching changes in typescript files
  */
-gulp.task('ts-watch', function () {
-    gulp.watch([config.ts.allTs], ['ts']);
+gulp.task('ts-watch', function() {
+    gulp.watch([config.ts.allTs,'!'+config.ts.allDtsFilePath], ['ts']);
 });
 
 /**
  * Inject all the spec files into the specRunner.html
  * @return {Stream}
  */
-gulp.task('build-specs', ['_build-specs-templatecache'], function () {
+gulp.task('build-specs', ['_build-specs-templatecache'], function() {
     log('Building the spec runner');
 
     var wiredep = require('wiredep').stream;
@@ -135,7 +150,7 @@ gulp.task('build-specs', ['_build-specs-templatecache'], function () {
 /**
  * Building everything
  */
-gulp.task('build', ['_optimize'], function () {
+gulp.task('build', ['_optimize'], function() {
     log('Building everything');
 
     log('Cleaning output folder');
@@ -153,7 +168,7 @@ gulp.task('build', ['_optimize'], function () {
 
     log('Copying web.config file');
     gulp.src(config.build.webConfigFile)
-        .pipe(rename(function (path) {
+        .pipe(rename(function(path) {
             path.basename = path.basename.replace('_', '');
         }))
         .pipe(gulp.dest(config.build.output));
@@ -165,7 +180,7 @@ gulp.task('build', ['_optimize'], function () {
  * Building everything in local env
  * @return {Stream}
  */
-gulp.task('build-local', function (callback) {
+gulp.task('build-local', function(callback) {
     runSequence('bundle', 'build-specs', callback);
 });
 
@@ -173,7 +188,7 @@ gulp.task('build-local', function (callback) {
  * Remove all js and html from the build and temp folders
  * @param  {Function} done - callback when complete
  */
-gulp.task('_clean-code', function () {
+gulp.task('_clean-code', function() {
     var files = [].concat(
         config.temp + '**/*.js',
         config.build + 'js/**/*.js',
@@ -185,14 +200,14 @@ gulp.task('_clean-code', function () {
         .pipe($.clean());
 });
 
-gulp.task('_build-templatecache', ['_clean-code'], function () {
+gulp.task('_build-templatecache', ['_clean-code'], function() {
     log('Creating templates caches in build folder');
 
     return buildTemplateCache()
         .pipe(gulp.dest(config.build.temp));
 });
 
-gulp.task('_build-specs-templatecache', function () {
+gulp.task('_build-specs-templatecache', function() {
     log('Creating templates caches in build folder');
 
     return buildTemplateCache()
@@ -203,7 +218,7 @@ gulp.task('_build-specs-templatecache', function () {
  * Optimizing javascript, css and html files and saving these in build folder
  * @return {Stream}
  */
-gulp.task('_optimize', ['bundle', '_build-templatecache'], function () {
+gulp.task('_optimize', ['bundle', '_build-templatecache'], function() {
     log('Optimizing javascript, css and html files and saving these in build folder');
 
     // TODO add angular and configure template cache for html files
@@ -220,7 +235,7 @@ gulp.task('_optimize', ['bundle', '_build-templatecache'], function () {
  * Compiling Sass --> CSS
  * @return {Stream}
  */
-gulp.task('sass', ['sass-lint'],function () {
+gulp.task('sass', ['sass-lint'], function() {
     return gulp
         .src(config.styles.sass)
         .pipe($.sass({
@@ -244,7 +259,7 @@ gulp.task('sass', ['sass-lint'],function () {
  * Lint all sass files
  * @return {Stream}
  */
-gulp.task('sass-lint', function () {
+gulp.task('sass-lint', function() {
     return gulp
         .src(config.styles.sass)
         .pipe($.cached('sass'))

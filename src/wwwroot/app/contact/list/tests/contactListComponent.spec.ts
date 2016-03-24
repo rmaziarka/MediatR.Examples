@@ -1,4 +1,4 @@
-///<reference path="../../../../typings/main.d.ts"/>
+///<reference path="../../../typings/_all.d.ts"/>
 
 module Antares {
     import Contact = Antares.Common.Models.Dto.Contact;
@@ -8,7 +8,7 @@ module Antares {
 
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
-            $http;
+            $http:ng.IHttpBackendService;
 
         var contacts = [
             { id : '1', firstName : 'Test1', surname : 'Test1_S', title : 'Mr' },
@@ -19,7 +19,7 @@ module Antares {
 
         beforeEach(angular.mock.module('app'));
 
-        beforeEach(inject((_$httpBackend_) =>{
+        beforeEach(inject((_$httpBackend_:ng.IHttpBackendService) =>{
             $http = _$httpBackend_;
             $http.whenGET(/\/api\/contact/).respond(() =>{
                 return [200, contacts];

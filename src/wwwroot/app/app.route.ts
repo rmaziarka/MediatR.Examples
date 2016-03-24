@@ -5,16 +5,16 @@ module Antares {
 
     app.config(initRoute);
 
-    function initRoute($stateProvider, $urlRouterProvider) {
+    function initRoute($stateProvider: any, $urlRouterProvider: any) {
         $stateProvider
             .state('app', {
                 url: '/app',
                 abstract: true,
                 templateUrl: 'app/app.html',
                 controller: 'appController',
-                controllerAs:'appVm',
+                controllerAs: 'appVm',
                 resolve: {
-                    'userData': (userService: Antares.Services.UserService) =>{
+                    'userData': (userService: Antares.Services.UserService) => {
                         return userService.getUserData();
                     }
                 }

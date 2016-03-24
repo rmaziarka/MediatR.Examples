@@ -1,4 +1,4 @@
-﻿module.exports = function () {
+﻿module.exports = function() {
     var root = './';
     var clientApp = root + 'app/';
     var build = './build/';
@@ -55,6 +55,9 @@
         ],
         fonts: bower.directory + 'font-awesome/fonts/**/*.*',
         ts: {
+            specTs: clientApp + '**/*.spec.ts',
+            mockTs: clientApp + '**/*.mock.ts',
+            allDtsFilePath: clientApp + 'typings/_all.d.ts',
             allTs: clientApp + '**/*.ts',
             libTypingsAllTs: root + 'typings/main/**/*.ts'
         },
@@ -89,7 +92,7 @@
     /**
      * wiredep and bower settings
      */
-    config.getWiredepDefaultOptions = function () {
+    config.getWiredepDefaultOptions = function() {
         var options = {
             bowerJson: config.bower.json,
             directory: config.bower.directory,

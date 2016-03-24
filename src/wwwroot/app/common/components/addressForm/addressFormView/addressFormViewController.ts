@@ -1,8 +1,4 @@
 /// <reference path="../../../../typings/_all.d.ts" />
-/// <reference path="../../../../common/services/dataaccessservice.ts" />
-/// <reference path="../../../../common/models/dto/address.ts" />
-/// <reference path="../../../../common/core/lowerCaseFirstCharacter.ts" />
-/// <reference path="../../../../common/models/dto/addressForm.ts" />
 
 module Antares.Common.Component {
     'use strict';
@@ -13,24 +9,16 @@ module Antares.Common.Component {
     import AddressFormResource = Antares.Common.Models.Resources.IAddressFormResource;
 
     export class AddressFormViewController {
-        addressFormId:string;
         addressForm: any;
-        address:Address;
+        address: Address;
+
         constructor(private dataAccessService: Services.DataAccessService) {
-            this.addressForm = this.dataAccessService.getAddressFormResource().get({id:this.addressFormId});
-        }
-        public getAddressRowText(row:number):string {
-            if(row === undefined) return;
-            var addressFormFields:AddressFormFieldDefinition[] = this.addressForm.addressFieldRows[row];
-
-            var addressLine:string = addressFormFields.sort((a:AddressFormFieldDefinition,b:AddressFormFieldDefinition)=>{
-                return a.columnOrder - b.columnOrder;
-            }).map((item:AddressFormFieldDefinition,index:number)=>{
-                var name = Antares.Core.lowerCaseFirstCharacter(item.name);
-                return this.address[name];
-            }).join(' ');
-
-            return addressLine;
+            this.dataAccessService.getAddressFormResource().get({ id: this.address.addressFormId }).$promise.then((result)=>{
+                var addressForm = new AddressForm();
+                angular.extend(addressForm, result);
+                addressForm.updateAddressFieldRows();
+                this.addressForm = addressForm;
+            });
         }
     }
 

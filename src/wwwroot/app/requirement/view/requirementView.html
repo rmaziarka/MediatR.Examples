@@ -1,18 +1,4 @@
-﻿<div class="row" ng-show="vm.isLoading">
-    <div class="col-md-12">
-        <div class="alert alert-info">Loading data...</div>
-    </div>
-</div>
-<div class="row" ng-show="vm.hasError">
-    <div class="col-md-12" ng-show="vm.errorStatus == 404">
-        <div class="alert alert-danger"><strong>Error!</strong> Requested requirement has not been found.
-        </div>
-    </div>
-    <div class="col-md-12" ng-show="vm.errorStatus != 400">
-        <div class="alert alert-danger"><strong>Internal server error!</strong></div>
-    </div>
-</div>
-<div class="row" ng-hide="vm.isLoading || vm.hasError">
+﻿<div class="row">
     <div class="col-md-12">
 
         <!-- Property details -->
@@ -32,23 +18,8 @@
             <div class="col-md-6">
                 <section class="section-item">
                     <h4 translate="REQUIREMENT.VIEW.LOCATION"></h4>
-                    <!-- TODO: address view component -->
-                    <div class="section-row row">
-                        <div class="col-xs-6">Country</div>
-                        <div class="col-xs-6">United Kingdom</div>
-                    </div>
-                    <div class="section-row row">
-                        <div class="col-xs-6">Postcode</div>
-                        <div class="col-xs-6"></div>
-                    </div>
-                    <div class="section-row row">
-                        <div class="col-xs-6">Country</div>
-                        <div class="col-xs-6"></div>
-                    </div>
-                    <div class="section-row row">
-                        <div class="col-xs-6">Town</div>
-                        <div class="col-xs-6">London</div>
-                    </div>
+                    <address-form-view address="vm.requirement.address">
+                    </address-form-view>
                 </section>
 
                 <section class="section-item">

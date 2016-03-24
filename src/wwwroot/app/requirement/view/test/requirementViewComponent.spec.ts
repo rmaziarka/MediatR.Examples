@@ -10,46 +10,6 @@ module Antares {
 
         var controller: RequirementViewController;
 
-        var testError = (code, title) => {
-            describe(title, () => {
-                beforeEach(angular.mock.module('app'));
-                beforeEach(inject((
-                    $rootScope: ng.IRootScopeService,
-                    $compile: ng.ICompileService,
-                    $httpBackend: ng.IHttpBackendService) => {
-
-                    $http = $httpBackend;
-                    $http.whenGET(/\/api\/requirement/).respond(() => {
-                        return [code, 'error'];
-                    });
-
-                    scope = $rootScope.$new();
-                    element = $compile('<requirement-view></requirement-view>')(scope);
-                    scope.$apply();
-
-                    controller = element.controller('requirementView');
-
-                    scope.$apply();
-                }));
-
-                it('the loading message appears', () => {
-                    expect(controller.isLoading).toBeTruthy();
-                });
-
-                it('the "not found" error messsage appears', () => {
-                    $http.flush();
-                    scope.$apply();
-
-                    expect(controller.hasError).toBeTruthy();
-                    expect(controller.errorStatus).toBe(code);
-                    expect(controller.isLoading).toBeFalsy();
-                });
-            });
-        }
-
-        testError(404, 'and id of not existing requirement is provided');
-        testError(500, 'and server returns unexpected error');
-
         describe('and proper requirement id is provided', () => {
             var requirementMock: any = {
                 createDate: '2016-03-17T12:35:29.82',
@@ -65,7 +25,8 @@ module Antares {
                 contacts: [
                     { id: '1', firstName: 'John', surname: 'Doe', title: 'Mr.' },
                     { id: '2', firstName: 'Jane', surname: 'Doe', title: 'Mrs.' }
-                ]
+                ],
+                address : Antares.Mock.AddressForm.FullAddress
             };
 
             beforeEach(angular.mock.module('app'));
@@ -77,21 +38,18 @@ module Antares {
 
                 filter = $filter;
                 $http = $httpBackend;
-                $http.whenGET(/\/api\/requirement/).respond(() => {
-                    return [200, requirementMock];
-                });
+                
+                Antares.Mock.AddressForm.mockHttpResponce($http,'a1',[200,Antares.Mock.AddressForm.AddressFormWithOneLine]);
 
                 scope = $rootScope.$new();
-                element = $compile('<requirement-view></requirement-view>')(scope);
-                $http.flush();
+                scope['requirement'] = requirementMock;
+                element = $compile('<requirement-view requirement="requirement"></requirement-view>')(scope);
+                
                 scope.$apply();
+                $http.flush();
 
                 controller = element.controller('requirementView');
             }));
-
-            it('loading message disappears', () => {
-                expect(controller.isLoading).toBeFalsy();
-            });
 
             it('requirement details are loaded', () => {
                 for (var property in requirementMock) {
