@@ -52,10 +52,10 @@
 /// <reference path="../../app/requirement/view/addressView/requirementAddressFormViewComponent.ts" />
 /// <reference path="../../app/requirement/view/rangeView/rangeViewComponent.ts" />
 /// <reference path="../../app/requirement/view/rangeView/rangeViewController.ts" />
-/// <reference path="../../app/common/components/addressForm/addressFormEdit/addressFormEditComponent.ts" />
-/// <reference path="../../app/common/components/addressForm/addressFormEdit/addressFormEditController.ts" />
 /// <reference path="../../app/common/components/addressForm/addressFormView/addressFormViewComponent.ts" />
 /// <reference path="../../app/common/components/addressForm/addressFormView/addressFormViewController.ts" />
+/// <reference path="../../app/common/components/addressForm/addressFormEdit/addressFormEditComponent.ts" />
+/// <reference path="../../app/common/components/addressForm/addressFormEdit/addressFormEditController.ts" />
 /// <reference path="../../app/common/core/services/registry/componentRegistryService.ts" />
 /// <reference path="../../app/common/components/addressForm/addressFormView/test/addressFormViewServices.mock.ts" />
 //<--inject:end:ts-->
