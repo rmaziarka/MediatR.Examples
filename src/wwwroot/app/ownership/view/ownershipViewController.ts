@@ -5,7 +5,7 @@ module Antares.Property {
 
     export class OwnershipViewController {
         static $inject = ['componentRegistry'];
-        
+
         componentId: string;
         ownership: IOwnership = <IOwnership>{};
 

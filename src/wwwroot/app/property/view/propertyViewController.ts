@@ -91,7 +91,7 @@ module Antares.Property.View {
             this.components.panels.contact().hide();
         }
 
-        cancelAddOwnership(){
+        cancelAddOwnership() {
             this.ownershipAddPanelVisible = false;
         }
 
