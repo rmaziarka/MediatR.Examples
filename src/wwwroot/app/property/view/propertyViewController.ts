@@ -1,7 +1,6 @@
 /// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Property.View {
-    import Ownership = Antares.Common.Models.Dto.IOwnership;
 
     export class PropertyViewController {
         static $inject = ['dataAccessService', 'componentRegistry', '$scope', '$state'];
@@ -69,7 +68,7 @@ module Antares.Property.View {
             this.property = this.dataAccessService.getPropertyResource().get({ id: propertyId });
         }
 
-        showOwnershipView = (ownership) => {
+        showOwnershipView = (ownership: Antares.Common.Models.Dto.IOwnership) => {
             this.components.ownershipView().setOwnership(ownership);
             this.showPanel(this.components.panels.ownershipView);
         }
@@ -102,7 +101,7 @@ module Antares.Property.View {
             this.ownershipResource
                 .save(ownershipToSend)
                 .$promise
-                .then((ownership) =>{
+                .then((ownership: Antares.Common.Models.Dto.IOwnership) =>{
                     this.loadPropertyData();
                     this.components.panels.contact().hide();
                 });
@@ -130,7 +129,7 @@ module Antares.Property.View {
             }
         }
 
-        private showPanel(panel) {
+        private showPanel(panel: any) {
             this.hidePanels();
             panel().show();
             this.currentPanel = panel;

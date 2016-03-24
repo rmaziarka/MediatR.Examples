@@ -5,7 +5,7 @@ module Antares.Activity {
 
     app.config(initRoute);
 
-    function initRoute($stateProvider) {
+    function initRoute($stateProvider: ng.ui.IStateProvider) {
         $stateProvider
             .state('app.activity-view', {
                 url: '/activity/view',

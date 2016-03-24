@@ -16,7 +16,7 @@ module Antares.Common.Decorators {
                                 trimmed = trimmed.slice(1);
                             }
                             var keyFn: any = $parse(trimmed);
-                            newPredicates.push(item =>{
+                            newPredicates.push((item: any) =>{
                                 var value: any = keyFn(item);
                                 return (angular.isDefined(value) && value != null) === invertEmpties;
                             });

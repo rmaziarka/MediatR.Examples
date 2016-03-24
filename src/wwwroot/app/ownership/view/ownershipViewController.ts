@@ -14,7 +14,7 @@ module Antares.Property {
             componentRegistry.register(this, this.componentId);
         }
 
-        setOwnership = (ownership) => {
+        setOwnership = (ownership: IOwnership) => {
             this.ownership = ownership;
         }
     }
