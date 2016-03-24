@@ -11,9 +11,11 @@ module Antares.Property.View {
             contactSidePanelId: 'viewProperty:contactSidePanelComponent',
             ownershipSidePanelId: 'viewProperty:ownershipSidePanelComponent',
             ownershipAddId: 'viewProperty:ownershipAddComponent',
-            ownershipViewSidePanelId: 'viewProperty:ownershipViewSidePanelComponent',
             ownershipViewId: 'viewProperty:ownershipViewComponent'
         }
+
+        ownershipAddPanelVisible: boolean = false;
+        propertyId: string;
 
         components: any = {
             contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
@@ -21,7 +23,6 @@ module Antares.Property.View {
             ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewId); },
             panels: {
                 contact : () =>{ return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
-                ownership : () =>{ return this.componentRegistry.get(this.componentIds.ownershipSidePanelId); },
                 ownershipView : () =>{ return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); },
             }
         }
@@ -37,6 +38,7 @@ module Antares.Property.View {
             private $scope: ng.IScope,
             private $state: ng.ui.IState) {
 
+            this.propertyId = $state.params['id'];
             this.ownershipResource = dataAccessService.getOwnershipResource();
 
             this.loadPropertyData();
@@ -55,7 +57,7 @@ module Antares.Property.View {
             //TODO: Temporarily solution. Change with dynamic changing of configure button based on selection of contacts
             if (this.components.contactList().getSelected().length > 0) {
                 this.components.ownershipAdd().loadOwnership(this.components.contactList().getSelected());
-                this.showPanel(this.components.panels.ownership);
+                this.ownershipAddPanelVisible = true;
             }
         }
 
@@ -104,7 +106,7 @@ module Antares.Property.View {
         }
 
         cancelAddOwnership(){
-            this.showPanel(this.components.panels.contact);
+            this.ownershipAddPanelVisible = false;
         }
 
         saveOwnership() {
@@ -113,16 +115,16 @@ module Antares.Property.View {
             this.ownershipResource
                 .save(ownershipToSend)
                 .$promise
-                .then((ownership) => {
-                    //TODO fill ownership list
-                    this.components.panels.ownership().hide();
+                .then((ownership) =>{
+                    this.loadPropertyData();
+                    this.components.panels.contact().hide();
                 });
         }
 
         getOwnershipToSave(){
             var ownership = angular.copy(this.components.ownershipAdd().getOwnership());
             ownership.ContactIds = ownership.contacts.map((item) => { return item.id; });
-            ownership.PropertyId = null;
+            ownership.PropertyId = this.propertyId;
             ownership.OwnershipTypeId = ownership.ownershipType.id;
             delete ownership.contacts;
             delete ownership.ownershipType;
