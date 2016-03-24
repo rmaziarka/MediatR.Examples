@@ -4,6 +4,9 @@ module Antares.Property {
     angular.module('app').component('propertyView', {
         templateUrl: 'app/property/view/propertyView.html',
         controllerAs: 'vm',
-        controller: 'propertyViewController'
+        controller: 'propertyViewController',
+        bindings: {
+            property: '<'
+        }
     });
 }

@@ -10,7 +10,16 @@ module Antares.Property {
             .state('app.property-view', {
                 url: '/property/view/:id',
                 params: {},
-                template: '<property-view></property-view>'
+                template: "<property-view property='property'></property-view>",
+                controller: ($scope: ng.IScope, property: any) => {
+                    $scope['property'] = property;
+                },
+                resolve: {
+                    property: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Antares.Services.DataAccessService) => {
+                        var propertyId: string = $stateParams['id'];
+                        return dataAccessService.getPropertyResource().get({ id: propertyId }).$promise;
+                    }
+                }                                                
             })
             .state('app.property-edit', {
                 url: '/property/edit/:id',
