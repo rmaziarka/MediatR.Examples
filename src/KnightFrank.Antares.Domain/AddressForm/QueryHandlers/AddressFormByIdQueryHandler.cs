@@ -15,12 +15,10 @@
     public class AddressFormByIdQueryHandler : IRequestHandler<AddressFormByIdQuery, AddressFormQueryResult>
     {
         private readonly IReadGenericRepository<AddressForm> addressFormRepository;
-        private readonly IReadGenericRepository<AddressFieldDefinition> addressFieldDefinitionRepository;
 
-        public AddressFormByIdQueryHandler(IReadGenericRepository<AddressForm> addressFormRepository,IReadGenericRepository<AddressFieldDefinition> addressFieldDefinitionRepository )
+        public AddressFormByIdQueryHandler(IReadGenericRepository<AddressForm> addressFormRepository)
         {
             this.addressFormRepository = addressFormRepository;
-            this.addressFieldDefinitionRepository = addressFieldDefinitionRepository;
         }
 
         public AddressFormQueryResult Handle(AddressFormByIdQuery message)

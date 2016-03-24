@@ -10,7 +10,8 @@
     [Trait("FeatureTitle", "Models")]
     public class AddressFormQueryResultTests
     {
-        public void When_CreateAddressFormQueryResult_Then_AddressFieldDefinitionsShouldBeEmpty()
+        [Fact]
+        public void Given_AddressFormQueryResult_When_Create_Then_AddressFieldDefinitionsShouldBeEmpty()
         {
             // Act
             var addressFormQueryResult = new AddressFormQueryResult();

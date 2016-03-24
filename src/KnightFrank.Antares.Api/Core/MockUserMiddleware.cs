@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace KnightFrank.Antares.Api.Core
+﻿namespace KnightFrank.Antares.Api.Core
 {
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -27,7 +22,7 @@ namespace KnightFrank.Antares.Api.Core
 
             context.Request.User = userPrincipal;
 
-            await Next.Invoke(context);
+            await this.Next.Invoke(context);
         }
     }
 }

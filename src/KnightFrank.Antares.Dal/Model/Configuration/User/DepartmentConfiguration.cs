@@ -1,7 +1,6 @@
 ﻿namespace KnightFrank.Antares.Dal.Model.Configuration.User
 {
     using KnightFrank.Antares.Dal.Model.User;
-
     internal sealed class DepartmentConfiguration : BaseEntityConfiguration<Department>
 	{
 		public DepartmentConfiguration()

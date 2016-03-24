@@ -265,7 +265,8 @@
 
             TestIncorrectCommand(validator, this.command, nameof(this.command.Contacts));
         }
-
+        
+        // ReSharper disable once UnusedParameter.Local
         private static void TestIncorrectCommand(CreateRequirementCommandValidator validator, CreateRequirementCommand command, string testedPropertyName, int expectedErrorCount = 1)
         {
             ValidationResult validationResult = validator.Validate(command);

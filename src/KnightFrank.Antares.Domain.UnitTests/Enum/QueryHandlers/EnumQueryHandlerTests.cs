@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.UnitTests.Enum
+﻿namespace KnightFrank.Antares.Domain.UnitTests.Enum.QueryHandlers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -9,7 +9,6 @@
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Resource;
     using KnightFrank.Antares.Dal.Repository;
-    using KnightFrank.Antares.Domain.Enum;
     using KnightFrank.Antares.Domain.Enum.Queries;
     using KnightFrank.Antares.Domain.Enum.QueryHandlers;
     using KnightFrank.Antares.Domain.Enum.QueryResults;

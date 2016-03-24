@@ -20,7 +20,7 @@
     public class CreateRequirementCommandHandlerTests : IClassFixture<BaseTestClassFixture>
     {
         [Fact]
-        public void HandleWhenCalledShouldReturnValidId()
+        public void Given_CorrectCommand_When_Handle_Then_ShouldReturnValidId()
         {
             var requirementRepositoryMock = new Mock<IGenericRepository<Requirement>>();
             var contactRepositoryMock = new Mock<IGenericRepository<Contact>>();
