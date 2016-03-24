@@ -2,7 +2,7 @@
 
 @Enums
 Scenario: Get enums by code
-	Given There is EnumTypeItem
+	Given There is EnumType
 		| Code           |
 		| EntityTypeTest |
 		And There is EnumTypeItem

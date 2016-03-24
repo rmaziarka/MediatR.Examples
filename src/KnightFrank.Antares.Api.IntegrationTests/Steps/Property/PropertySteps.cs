@@ -33,6 +33,15 @@
             this.scenarioContext = scenarioContext;
         }
 
+        [Given(@"Address is defined")]
+        public void GivenAddressIsDefined(Table table)
+        {
+            var address = table.CreateInstance<Address>();
+            address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
+            address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
+            this.scenarioContext.Set(address, "Address");
+        }
+
         [Given(@"User gets (.*) address form for (.*) and country details")]
         [When(@"User gets (.*) address form for (.*) and country details")]
         public void GetCountryAddressData(string countryCode, string enumType)
@@ -55,47 +64,27 @@
             address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
             address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
             var property = new Property { Address = address };
+
             this.fixture.DataContext.Property.Add(property);
             this.fixture.DataContext.SaveChanges();
-            this.scenarioContext.Set<Guid>(property.Id, "AddedPropertyId");
 
+            this.scenarioContext.Set(property.Id, "AddedPropertyId");
         }
 
-        [When(@"Users updates property")]
-        public void WhenUsersUpdatesProperty(Table table)
+        [When(@"Users updates property with defined address for (.*) id")]
+        public void WhenUsersUpdatesProperty(string id)
         {
-            var address = table.CreateInstance<Address>();
-            address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
-            address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
+            Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
+
+            var address = this.scenarioContext.Get<Address>("Address");
 
             var updatedProperty = new Property
             {
                 Address = address,
-                Id = this.scenarioContext.Get<Guid>("AddedPropertyId")
+                Id = propertyId
             };
             this.scenarioContext.Set(updatedProperty, "Property");
             this.UpdateProperty(updatedProperty);
-        }
-
-        [When(@"Users tries to updates property")]
-        public void WhenUsersTriesToUpdateProperty(Table table)
-        {
-            var updatedProperty = table.CreateInstance<Property>();
-            this.UpdateProperty(updatedProperty);
-        }
-
-        [Then(@"The updated Property is saved in data base")]
-        public void ThenTheResultsShouldBeSameAsAdded()
-        {
-            var updatedProperty = this.scenarioContext.Get<Property>("Property");
-            Property expectedProperty = this.fixture.DataContext.Property.Single(x => x.Address.Id.Equals(updatedProperty.Id));
-            updatedProperty.ShouldBeEquivalentTo(expectedProperty);
-        }
-
-        private void UpdateProperty(Property property)
-        {
-            HttpResponseMessage response = this.fixture.SendPutRequest(ApiUrl, property);
-            this.scenarioContext.SetHttpResponseMessage(response);
         }
 
         [When(@"User creates property with following data")]
@@ -110,6 +99,20 @@
             var property = new Property { Address = propertyDetails };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, property);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        [Then(@"The updated Property is saved in data base")]
+        public void ThenTheResultsShouldBeSameAsAdded()
+        {
+            var updatedProperty = this.scenarioContext.Get<Property>("Property");
+            Property expectedProperty = this.fixture.DataContext.Property.Single(x => x.Address.Id.Equals(updatedProperty.Id));
+            updatedProperty.ShouldBeEquivalentTo(expectedProperty);
+        }
+
+        private void UpdateProperty(Property property)
+        {
+            HttpResponseMessage response = this.fixture.SendPutRequest(ApiUrl, property);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
     }

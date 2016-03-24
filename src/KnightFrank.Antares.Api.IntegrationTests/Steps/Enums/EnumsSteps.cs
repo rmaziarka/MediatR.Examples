@@ -64,7 +64,6 @@
         {
             this.EnumTypeItem = table.CreateInstance<EnumTypeItem>();
             this.EnumTypeItem.EnumTypeId = this.EnumType.Id;
-
             this.fixture.DataContext.EnumTypeItem.Add(this.EnumTypeItem);
             this.fixture.DataContext.SaveChanges();
         }
