@@ -137,20 +137,20 @@ module Antares {
                 // 2:       1.1: OrderedFieldE
                 // 3:       1.1: OrderedFieldD
                 var addressFormElement = element.find('ng-form#form-address');
-                var fieldAElement = addressFormElement.find('input#OrderedFieldA')[0];
-                var fieldBElement = addressFormElement.find('input#OrderedFieldB')[0];
-                var fieldCElement = addressFormElement.find('input#OrderedFieldC')[0];
-                var fieldDElement = addressFormElement.find('input#OrderedFieldD')[0];
-                var fieldEElement = addressFormElement.find('input#OrderedFieldE')[0];
+                var fieldAElement = addressFormElement.find('input#orderedFieldA')[0];
+                var fieldBElement = addressFormElement.find('input#orderedFieldB')[0];
+                var fieldCElement = addressFormElement.find('input#orderedFieldC')[0];
+                var fieldDElement = addressFormElement.find('input#orderedFieldD')[0];
+                var fieldEElement = addressFormElement.find('input#orderedFieldE')[0];
 
                 var allRowElements = addressFormElement.find('div.row');
                 var firstRow = allRowElements.first();
                 var secondRow = firstRow.next();
                 var thirdRow = secondRow.next();
 
-                var firstRowInputElements = firstRow.find('input[id*="OrderedField"]');
-                var secondRowInputElements = secondRow.find('input[id*="OrderedField"]');
-                var thirdRowInputElements = thirdRow.find('input[id*="OrderedField"]');
+                var firstRowInputElements = firstRow.find('input[id*="orderedField"]');
+                var secondRowInputElements = secondRow.find('input[id*="orderedField"]');
+                var thirdRowInputElements = thirdRow.find('input[id*="orderedField"]');
 
                 expect(firstRowInputElements.length).toBe(3);
                 expect(firstRowInputElements[0]).toBe(fieldAElement);
@@ -167,11 +167,11 @@ module Antares {
 
         describe('and form is being filled', () => {
             var pageObjectSelectors = {
-                fieldASelector: 'input#FieldA',
-                fieldBSelector: 'input#FieldB',
-                fieldCSelector: 'input#FieldC',
-                fieldDSelector: 'input#FieldD',
-                fieldESelector: 'input#FieldE'
+                fieldASelector: 'input#fieldA',
+                fieldBSelector: 'input#fieldB',
+                fieldCSelector: 'input#fieldC',
+                fieldDSelector: 'input#fieldD',
+                fieldESelector: 'input#fieldE'
             };
 
             var assertValidator: TestHelpers.AssertValidators,

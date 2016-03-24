@@ -17,7 +17,7 @@
         addressFieldDefinitions: AddressFormFieldDefinition[];
     }
 
-    export class AddressForm implements IAddressForm{
+    export class AddressForm implements IAddressForm {
         public addressFieldRows: AddressFormFieldDefinition[][];
 
         constructor(
@@ -28,8 +28,12 @@
             this.updateAddressFieldRows();
         }
         
-        updateAddressFieldRows(){
-            this.addressFieldRows = _.toArray<AddressFormFieldDefinition[]>(_.groupBy<AddressFormFieldDefinition>(this.addressFieldDefinitions, 'rowOrder'));
+        updateAddressFieldRows() {
+            _.forEach(this.addressFieldDefinitions, (row: AddressFormFieldDefinition) => {
+                row.name = row.name.charAt(0).toLowerCase() + row.name.slice(1);
+            });            
+
+            this.addressFieldRows = _.toArray<AddressFormFieldDefinition[]>(_.groupBy<AddressFormFieldDefinition>(this.addressFieldDefinitions, 'rowOrder'));  
         }
     }
 }
