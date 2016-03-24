@@ -37,54 +37,72 @@
         }
 
         [Given(@"All contacts have been deleted")]
-        public void GivenDeleteAllContacts()
+        public void DeleteContacts()
         {
             this.fixture.DataContext.Contact.RemoveRange(this.fixture.DataContext.Contact.ToList());
         }
 
-        [When(@"User creates a contact with following data")]
-        public void WhenUserCreatesAContactWithFollowingData(Table table)
+        [Given(@"User creates contact using api with following data")]
+        public void CreateUsers(Table table)
+        {
+            string requestUrl = $"{ApiUrl}";
+
+            IEnumerable<Contact> contacts = table.CreateSet<Contact>().ToList();
+            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, contacts.First());
+
+            this.scenarioContext.SetHttpResponseMessage(response);
+            this.scenarioContext.Set(contacts, "Contact List");
+        }
+
+        [Given(@"User creates contacts in database with following data")]
+        public void CreateUsersInDb(Table table)
         {
             IEnumerable<Contact> contact = table.CreateSet<Contact>().ToList();
             this.fixture.DataContext.Contact.AddRange(contact);
             this.fixture.DataContext.SaveChanges();
+
             this.scenarioContext.Set(contact, "Contact List");
         }
 
         [When(@"Try to creates a contact with following data")]
-        public void WhenTryToCreatesAContactWithFollowingData(Table table)
+        public void TryToCreateContact(Table table)
         {
             string requestUrl = $"{ApiUrl}";
             var contact = table.CreateInstance<Contact>();
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, contact);
+
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
         [When(@"User retrieves all contact details")]
-        public void WhenUserRetrivesAllContactsDetails()
+        public void GetAllContactsDetails()
         {
             string requestUrl = $"{ApiUrl}";
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [When(@"User retrieves contacts details for (.*) id")]
-        public void WhenUserRetrievesContactsDetailsWith(string id)
+        [When(@"User retrieves contact details for (.*) id")]
+        public void GetContactDetailsUsingId(string contactId)
         {
-            if (id.Equals("latest"))
+            if (contactId.Equals("latest"))
             {
-                var contactList = this.scenarioContext.Get<List<Contact>>("Contact List");
-                id = contactList.Last().Id.ToString();
+                contactId = this.scenarioContext.GetResponseContent().Replace("\"", string.Empty);
+
+                var contacts = this.scenarioContext.Get<List<Contact>>("Contact List");
+                contacts.First().Id = new Guid(contactId);
+                this.scenarioContext["Contact List"] = contacts;
             }
 
-            string requestUrl = $"{ApiUrl}/" + id + "";
-
+            string requestUrl = $"{ApiUrl}/" + contactId;
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
         [Then(@"contact details should be the same as already added")]
-        public void ThenContactDetailsShouldBeTheSameAsAlreadyAdded()
+        public void CheckContactDetails()
         {
             var contactList = this.scenarioContext.Get<List<Contact>>("Contact List");
             if (contactList.Count > 1)

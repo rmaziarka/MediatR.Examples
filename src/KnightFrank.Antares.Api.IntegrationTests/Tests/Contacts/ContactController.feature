@@ -1,19 +1,19 @@
 ﻿Feature: Contacts
 	
 @Contacts
-Scenario: Retrieve all contacts details
+Scenario: Retrieve all contacts
 	Given All contacts have been deleted
-	When User creates a contact with following data 
-		| FirstName | Surname | Title  |
-		| Tomasz    | Bien    | Mister |
-		| David     | Dummy   | Mister |
+		And User creates contacts in database with following data
+			| FirstName | Surname | Title  |
+			| Tomasz    | Bien    | Mister |
+			| David     | Dummy   | Mister |
 	When User retrieves all contact details
 	Then User should get OK http status code
 		And contact details should be the same as already added
 
 @Contacts
 Scenario Outline: Retrieve error messages for improper contact id
-	When User retrieves contacts details for <id> id
+	When User retrieves contact details for <id> id
 	Then User should get <statusCode> http status code
 
 	Examples: 
@@ -23,10 +23,11 @@ Scenario Outline: Retrieve error messages for improper contact id
 
 @Contacts
 Scenario: Create new contact
-	When User creates a contact with following data
-		| FirstName | Surname | Title |
-		| Michael   | Angel   | cheef |
-	When User retrieves contacts details for latest id
+	Given All contacts have been deleted
+		And User creates contact using api with following data
+			| FirstName | Surname | Title |
+			| Michael   | Angel   | cheef |
+	When User retrieves contact details for latest id
 	Then User should get OK http status code
 		And contact details should be the same as already added
 
