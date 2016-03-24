@@ -5,7 +5,7 @@ module Antares.Requirement {
 
     app.config(initRoute);
 
-    function initRoute($stateProvider) {
+    function initRoute($stateProvider: ng.ui.IStateProvider) {
         $stateProvider
             .state('app.requirement-add', {
                 url: '/requirement/add',
@@ -13,7 +13,16 @@ module Antares.Requirement {
             })
             .state('app.requirement-view', {
                 url: '/requirement/:id',
-                template: '<requirement-view></requirement-view>'
+                template: "<requirement-view requirement='requirement'></requirement-view>",
+                controller: ($scope: ng.IScope, requirement: any) => {
+                    $scope['requirement'] = requirement;
+                },
+                resolve: {
+                    requirement: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Antares.Services.DataAccessService) => {
+                        var requirementId: string = $stateParams['id'];
+                        return dataAccessService.getRequirementResource().get({ id: requirementId }).$promise;
+                    }
+                }
             });
     }
 }

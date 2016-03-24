@@ -21,10 +21,14 @@
         public addressFieldRows: AddressFormFieldDefinition[][];
 
         constructor(
-            public id: string,
-            public countryId: string,
-            public addressFieldDefinitions: AddressFormFieldDefinition[]
+            public id: string = "",
+            public countryId: string = "",
+            public addressFieldDefinitions: AddressFormFieldDefinition[] = []
         ){
+            this.updateAddressFieldRows();
+        }
+        
+        updateAddressFieldRows(){
             this.addressFieldRows = _.toArray<AddressFormFieldDefinition[]>(_.groupBy<AddressFormFieldDefinition>(this.addressFieldDefinitions, 'rowOrder'));
         }
     }

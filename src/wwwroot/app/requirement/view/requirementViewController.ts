@@ -1,33 +1,10 @@
 /// <reference path="../../typings/_all.d.ts" />
-/// <reference path="../../common/services/dataaccessservice.ts" />
 
-module Antares {
-    export module Requirement {
-        export module View {
-            export class RequirementViewController {
-                isLoading: boolean = true;
-                hasError: boolean = false;
-                errorStatus: number;
-                requirement: any;
+module Antares.Requirement.View {
 
-                constructor(
-                    private dataAccessService: Antares.Services.DataAccessService,
-                    $state: ng.ui.IStateService){
-
-                    var requirementId: string = $state.params['id'];
-                    this.requirement = dataAccessService.getRequirementResource().get({ id: requirementId });
-                    this.requirement.$promise
-                        .catch((response) =>{
-                            this.errorStatus = response.status;
-                            this.hasError = true;
-                        })
-                        .finally(() =>{
-                            this.isLoading = false;
-                        });
-                }
-            }
-
-            angular.module('app').controller('requirementViewController', RequirementViewController);
-        }
+    export class RequirementViewController {
+        requirement: any;
     }
+
+    angular.module('app').controller('requirementViewController', RequirementViewController);
 }

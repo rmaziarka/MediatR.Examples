@@ -1,5 +1,7 @@
 <div>
     <div ng-repeat="row in vm.addressForm.addressFieldRows | orderBy: 'rowOrder'">
-        <div>{{ vm.getAddressRowText(row.rowOrder) }}</div>
+        <div ng-repeat=" field in row | orderBy: 'columnOrder'">
+            <span>{{vm.address[field.name.charAt(0).toLowerCase() + field.name.slice(1)]}}</span>
+        </div>
     </div>
 </div>

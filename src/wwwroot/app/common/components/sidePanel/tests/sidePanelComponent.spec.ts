@@ -1,4 +1,4 @@
-///<reference path="../../../../../typings/main.d.ts"/>
+///<reference path="../../../../typings/_all.d.ts"/>
 
 module Antares {
     import SidePanelController = Antares.Common.Component.SidePanelController;
@@ -28,7 +28,6 @@ module Antares {
             scope = $rootScope.$new();
             element = $compile('<side-panel><side-panel-content>' + sidePanelContent + '</side-panel-content><side-panel-footer>' + sidePanelFooter + '</side-panel-footer></side-panel>')(scope);
             scope.$apply();
-
             controller = element.controller('sidePanel');
             panel = element.find('.side-panel');
         }));

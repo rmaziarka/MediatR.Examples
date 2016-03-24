@@ -5,7 +5,7 @@ module Antares {
 
     app.config(['$translateProvider', initTranslations]);
 
-    function initTranslations($translateProvider) {
+    function initTranslations($translateProvider: any) {
         $translateProvider
             .useStaticFilesLoader({
                 prefix: 'translations/',

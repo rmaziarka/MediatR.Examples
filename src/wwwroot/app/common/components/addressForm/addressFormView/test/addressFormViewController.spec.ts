@@ -20,10 +20,5 @@ module Antares {
             controller = $controller("addressFormViewController", {}, { addressFormId: "a1", address: address });
             $httpBackend.flush();
         }));
-
-        xit('render one line of address', () => {
-            var addressLine = controller.getAddressRowText(0);
-            expect(addressLine).toBe("");
-        });
     });
 }
