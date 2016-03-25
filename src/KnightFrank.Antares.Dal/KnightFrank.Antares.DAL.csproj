@@ -187,6 +187,16 @@
     <Compile Include="Model\Enum\EnumLocalised.cs" />
     <Compile Include="Model\Enum\EnumType.cs" />
     <Compile Include="Model\Enum\EnumTypeItem.cs" />
+    <Compile Include="Model\Field\Field\ComboboxField.cs" />
+    <Compile Include="Model\Field\Attribute\AttributeLocalized.cs" />
+    <Compile Include="Model\Field\Field\FieldLocalized.cs" />
+    <Compile Include="Model\Field\Field\Field.cs" />
+    <Compile Include="Model\Field\Field\TextField.cs" />
+    <Compile Include="Model\Field\Attribute\TextWithComboboxAttribute.cs" />
+    <Compile Include="Model\Field\Attribute\RangeAttribute.cs" />
+    <Compile Include="Model\Field\Attribute\Attribute.cs" />
+    <Compile Include="Model\Field\FormDefinition\FormDefinition.cs" />
+    <Compile Include="Model\Field\FormDefinition\PropertyFormDefinition.cs" />
     <Compile Include="Model\Property\Activity.cs" />
     <Compile Include="Model\Property\Ownership.cs" />
     <Compile Include="Model\Property\Property.cs" />
