@@ -258,3 +258,5 @@ src/wwwroot/.test/templates.js
 src/KnightFrank.Antares.UITests/Tests/**/*.feature.cs
 src/KnightFrank.Antares.Api.IntegrationTests/Tests/**/*.feature.cs
 
+/src/wwwroot/app/typings/_all.d.ts
+/src/wwwroot/specRunner.html

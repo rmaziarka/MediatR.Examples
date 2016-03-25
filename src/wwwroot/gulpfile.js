@@ -97,8 +97,9 @@ gulp.task('_ts-compile', function() {
  * @return {Stream}
  */
 gulp.task('_ts-ref', function() {
+    log("Updating _all.d.ts file.")
     var tsFiles = [config.ts.allTs, '!' + config.ts.allDtsFilePath,'!'+config.ts.specTs];
-    return gulp.src(config.ts.allDtsFilePath)
+    return gulp.src('buildTemplates/_all.d.ts')
         .pipe($.inject(gulp.src(tsFiles, { read: false }), {
             starttag: '//<--inject:ts-->',
             endtag: '//<--inject:end:ts-->',
@@ -108,14 +109,14 @@ gulp.task('_ts-ref', function() {
         }))
         .pipe(gulp.dest('app/typings/'));
 });
-
+//
 /**
 *  Lints and compiles typescript files
 *  @return {Stream}
 */
 gulp.task('ts', function(callback) {
     log('Compiling typescript to javascript');
-    runSequence('_ts-lint', '_ts-compile', '_js-annotate', '_ts-ref', callback);
+    runSequence('_ts-ref', '_ts-lint', '_ts-compile', '_js-annotate', callback);
 });
 
 /**
@@ -139,7 +140,7 @@ gulp.task('build-specs', ['_build-specs-templatecache'], function() {
     options.devDependencies = true;
 
     return gulp
-        .src(config.specRunner)
+        .src('buildTemplates/specRunner.html')
         .pipe(wiredep(options))
         .pipe(inject(config.js.appFilesToTest, '', config.js.order))
         .pipe(inject(config.js.specsAndMocks, 'specs', ['**/*']))
@@ -194,10 +195,10 @@ gulp.task('build-local', function(callback) {
  */
 gulp.task('_clean-code', function() {
     var files = [].concat(
-        config.temp + '**/*.js',
-        config.build + 'js/**/*.js',
-        config.build + 'js/**/*.js.map',
-        config.build + '**/*.html'
+        config.build.temp + '**/*.js',
+        config.build.output + 'js/**/*.js',
+        config.build.output + 'js/**/*.js.map',
+        config.build.output + '**/*.html'
     );
 
     gulp.src(files)
