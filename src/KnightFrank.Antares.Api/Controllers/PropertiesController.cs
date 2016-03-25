@@ -6,6 +6,7 @@
     using System.Web.Http;
 
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Domain.Ownership.Commands;
     using KnightFrank.Antares.Domain.Property.Commands;
     using KnightFrank.Antares.Domain.Property.Queries;
 
@@ -14,7 +15,8 @@
     /// <summary>
     ///     Controller class for properties
     /// </summary>
-    public class PropertyController : ApiController
+    [RoutePrefix("api/properties")]
+    public class PropertiesController : ApiController
     {
         private readonly IMediator mediator;
 
@@ -22,7 +24,7 @@
         ///     Properties controller constructor
         /// </summary>
         /// <param name="mediator">Mediator instance.</param>
-        public PropertyController(IMediator mediator)
+        public PropertiesController(IMediator mediator)
         {
             this.mediator = mediator;
         }
@@ -33,6 +35,7 @@
         /// <param name="id">Property id</param>
         /// <returns>Property entity</returns>
         [HttpGet]
+        [Route("{id}")]
         public Property GetProperty(Guid id)
         {
             Property property = this.mediator.Send(new PropertyQuery { Id = id });
@@ -51,6 +54,7 @@
         /// <param name="command">Property data</param>
         /// <returns>Newly created property </returns>
         [HttpPost]
+        [Route("")]
         public Property CreateProperty(CreatePropertyCommand command)
         {
             Guid propertyId = this.mediator.Send(command);
@@ -63,10 +67,22 @@
         /// <param name="command">Property data</param>
         /// <returns>Newly updated property</returns>
         [HttpPut]
+        [Route("")]
         public Property UpdateProperty(UpdatePropertyCommand command)
         {
             Guid propertyId = this.mediator.Send(command);
             return this.GetProperty(propertyId);
-        } 
+        }
+
+        /// <summary>
+        /// Create requirement
+        /// </summary>
+        /// <returns>Requirement identifier.</returns>
+        [HttpPost]
+        [Route("{id}/ownerships")]
+        public Guid CreateOwnership(CreateOwnershipCommand command)
+        {
+            return this.mediator.Send(command);
+        }
     }
 }

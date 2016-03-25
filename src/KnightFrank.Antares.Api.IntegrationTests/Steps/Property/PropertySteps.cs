@@ -22,7 +22,7 @@
     [Binding]
     public class PropertySteps
     {
-        private const string ApiUrl = "/api/property";
+        private const string ApiUrl = "/api/properties";
         private readonly BaseTestClassFixture fixture;
 
         private readonly ScenarioContext scenarioContext;

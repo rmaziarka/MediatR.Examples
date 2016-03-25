@@ -80,7 +80,7 @@ module Antares {
                     });
 
                     var propertyFromServerMock: Dto.Property = new Dto.Property('propFromServerId1', new Dto.Address());
-                    $http.expectPUT(/\/api\/property/, propertyMock).respond(() => {
+                    $http.expectPUT(/\/api\/properties/, propertyMock).respond(() => {
                         return [200, propertyFromServerMock];
                     });
 

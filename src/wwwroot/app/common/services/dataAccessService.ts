@@ -17,6 +17,15 @@ module Antares.Services {
             isArray: false
         };
 
+        private createOwnershipAction: ng.resource.IActionDescriptor = {
+            url: this.appConfig.rootUrl + '/api/properties/:propertyId/ownerships',
+            method: 'POST',
+            isArray: false,
+            params: {
+                propertyId: '@propertyId'
+            }
+        };
+
         getContactResource(): Resources.IBaseResourceClass<Resources.IContactResource> {
             return <Resources.IBaseResourceClass<Resources.IContactResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/contacts/:id');
@@ -37,14 +46,12 @@ module Antares.Services {
                 this.$resource(this.appConfig.rootUrl + '/api/addressForms/:id?entityType=:entityTypeCode&countryCode=:countryCode');
         }
 
-		getOwnershipResource(): Resources.IBaseResourceClass<Resources.IOwnershipResource> {
-            return <Resources.IBaseResourceClass<Resources.IOwnershipResource>>
-                this.$resource(this.appConfig.rootUrl + '/api/ownership/:id');
-        }
-
-        getPropertyResource(): Resources.IBaseResourceClass<Resources.IPropertyResource> {
-            return <Resources.IBaseResourceClass<Resources.IPropertyResource>>
-                this.$resource(this.appConfig.rootUrl + '/api/property/:id', null, { update: this.updateAction });
+        getPropertyResource(): Resources.IPropertyResourceClass {
+            return <Resources.IPropertyResourceClass>
+                this.$resource(this.appConfig.rootUrl + '/api/properties/:id', null, {
+                    update: this.updateAction,
+                    createOwnership: this.createOwnershipAction
+                });
         }
 
         getEnumResource(): Resources.IBaseResourceClass<Resources.IEnumResource> {

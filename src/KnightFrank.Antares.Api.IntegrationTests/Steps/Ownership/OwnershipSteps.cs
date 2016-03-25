@@ -21,7 +21,7 @@
     [Binding]
     public class OwnershipSteps
     {
-        private const string ApiUrl = "/api/ownership";
+        private const string ApiUrl = "/api/properties/{0}/ownerships";
         private readonly BaseTestClassFixture fixture;
 
         private readonly ScenarioContext scenarioContext;
@@ -39,8 +39,9 @@
         [When(@"User creates an ownership for existing property")]
         public void WhenUserCreatesAnOwnershipForExistingProperty(Table table)
         {
-            string requestUrl = $"{ApiUrl}";
             var ownership = table.CreateInstance<CreateOwnershipCommand>();
+
+            string requestUrl = string.Format($"{ApiUrl}", ownership.PropertyId);
 
             ownership.PropertyId = this.scenarioContext.Get<Guid>("AddedPropertyId");
             ownership.OwnershipTypeId = this.scenarioContext.Get<Guid>("EnumTypeItemId");

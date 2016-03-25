@@ -24,8 +24,8 @@ module Antares.Property.View {
             ownershipAdd: () => { return this.componentRegistry.get(this.componentIds.ownershipAddId); },
             ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewId); },
             panels: {
-                contact : () =>{ return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
-                ownershipView : () =>{ return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); },
+                contact: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
+                ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); },
             }
         }
 
@@ -33,7 +33,7 @@ module Antares.Property.View {
         orderDescending: boolean = true;
         nullOnEnd: boolean = true;
 
-        ownershipResource: Resources.IBaseResourceClass<Resources.IOwnershipResource>;
+        propertyResource: Resources.IPropertyResourceClass;
         property: Dto.Property;
 
         currentPanel: any;
@@ -45,7 +45,7 @@ module Antares.Property.View {
             private $state: ng.ui.IStateService) {
 
             this.propertyId = $state.params['id'];
-            this.ownershipResource = dataAccessService.getOwnershipResource();
+            this.propertyResource = dataAccessService.getPropertyResource();
 
             $scope.$on('$destroy', () => {
                 this.componentRegistry.deregister(this.componentIds.contactListId);
@@ -99,8 +99,8 @@ module Antares.Property.View {
         saveOwnership() {
             var ownershipToSend = this.getOwnershipToSave();
 
-            this.ownershipResource
-                .save(ownershipToSend)
+            this.propertyResource
+                .createOwnership({ propertyId: this.propertyId }, ownershipToSend)
                 .$promise
                 .then((ownership: Antares.Common.Models.Dto.IOwnership) => {
                     this.components.panels.contact().hide();
