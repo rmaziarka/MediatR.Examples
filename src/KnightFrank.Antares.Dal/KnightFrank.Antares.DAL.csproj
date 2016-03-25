@@ -146,6 +146,10 @@
     <Compile Include="Migrations\201603241227230_AddPropertyTypeDefinitionOrder.Designer.cs">
       <DependentUpon>201603241227230_AddPropertyTypeDefinitionOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603250657264_AddressForm PropertyName Change.cs" />
+    <Compile Include="Migrations\201603250657264_AddressForm PropertyName Change.Designer.cs">
+      <DependentUpon>201603250657264_AddressForm PropertyName Change.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Address\Address.cs" />
     <Compile Include="Model\Address\AddressField.cs" />
     <Compile Include="Model\Address\AddressFieldDefinition.cs" />
@@ -294,6 +298,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603241227230_AddPropertyTypeDefinitionOrder.resx">
       <DependentUpon>201603241227230_AddPropertyTypeDefinitionOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603250657264_AddressForm PropertyName Change.resx">
+      <DependentUpon>201603250657264_AddressForm PropertyName Change.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
