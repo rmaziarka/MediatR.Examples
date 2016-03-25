@@ -6,7 +6,7 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Address
     {
         public AddressConfiguration()
         {
-            this.Property(p => p.PropertyName).HasMaxLength(28);
+            this.Property(p => p.PropertyName).HasMaxLength(128);
             this.Property(p => p.PropertyNumber).HasMaxLength(8);
             this.Property(p => p.Line1).HasMaxLength(128);
             this.Property(p => p.Line2).HasMaxLength(128);
