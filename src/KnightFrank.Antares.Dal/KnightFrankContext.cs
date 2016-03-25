@@ -49,6 +49,9 @@
         public DbSet<User> User { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<Activity> Activity { get; set; }
+        public DbSet<PropertyType> PropertyType { get; set; }
+        public DbSet<PropertyTypeLocalised> PropertyTypeLocalised { get; set; }
+        public DbSet<PropertyTypeDefinition> PropertyTypeDefinition { get; set; }
 
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {
