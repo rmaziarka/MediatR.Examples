@@ -1,7 +1,8 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
-    
+    using System.Linq;
+
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.UITests.Pages;
 
@@ -32,18 +33,14 @@
         [Then(@"New property should be created with address details")]
         public void CheckIfPropertyCreated(Table table)
         {
-            var address = table.CreateInstance<Address>();
-            var page = new ViewPropertyPage(this.driverContext);
+            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
 
-            Assert.Equal(address.Country.IsoCode, page.GetCountry());
-            Assert.Equal(address.County, page.GetCounty());
-            Assert.Equal(address.PropertyNumber, page.GetPropertyNumber());
-            Assert.Equal(address.PropertyName, page.GetPropertyName());
-            Assert.Equal(address.Line2, page.GetAddressLine2());
-            Assert.Equal(address.Postcode, page.GetPostCode());
-            Assert.Equal(address.City, page.GetCity());
-
-            this.scenarioContext["ViewPropertyPage"] = page;
+            foreach (string field in table.Rows.SelectMany(row => row.Values))
+            {
+                Assert.True(field.Equals(string.Empty)
+                    ? page.IsAddressDetailsNotVisible(field)
+                    : page.IsAddressDetailsVisible(field));
+            }
         }
 
         [When(@"User cliks add activites button on property details page")]
@@ -65,6 +62,13 @@
         public void ClickSaveButtonOnActivityPanel()
         {
             this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").Activity.SaveActivity();
+        }
+
+        [When(@"User clicks edit button on property details page")]
+        public void WhenUserClicksEditButtonOnCreatePropertyPage()
+        {
+            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+            this.scenarioContext.Set<CreatePropertyPage>(page.EditProperty(), "CreatePropertyPage");
         }
 
         [Then(@"Activity creation date is set to current date on property details page")]

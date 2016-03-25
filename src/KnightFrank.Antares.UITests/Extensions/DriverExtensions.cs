@@ -41,11 +41,6 @@
             }
         }
 
-        public static void WaitForElementToBeDisplayed(this IWebDriver driver, By by, double timeoutInSeconds)
-        {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
-            wait.Until(drv => drv.FindElement(by).Displayed && drv.FindElement(by).Enabled);
-        }
 
         public static void WaitForElementToBeDisplayed(this IWebDriver driver, ElementLocator locator, double timeoutInSeconds)
         {
@@ -57,10 +52,13 @@
         {
             if (text.Equals(string.Empty))
             {
-                return;
+                driver.GetElement(locator).Clear();
             }
-            driver.GetElement(locator).Clear();
-            driver.GetElement(locator).SendKeys(text);
+            else
+            {
+                driver.GetElement(locator).Clear();
+                driver.GetElement(locator).SendKeys(text);
+            }
         }
     }
 }

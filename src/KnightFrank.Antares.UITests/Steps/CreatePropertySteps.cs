@@ -31,16 +31,14 @@
         [Given(@"User navigates to create property page")]
         public void OpenCreatePropertyPage()
         {
-            var page = new CreatePropertyPage(this.driverContext);
+            var page = new CreatePropertyPage(this.driverContext).OpenAddPropertyPage();
             this.scenarioContext["CreatePropertyPage"] = page;
         }
 
-        [When(@"User selects country on create property page")]
-        public void SelectCountryFromDropDownList(Table table)
+        [When(@"User selects '(.*)' country on create property page")]
+        public void SelectCountryFromDropDownList(string country)
         {
-            var address = table.CreateInstance<Address>();
-            this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage")
-                .AddressTemplate.SelectPropertyCountry(address.Country.IsoCode);
+            this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").AddressTemplate.SelectPropertyCountry(country);
         }
 
         [When(@"User fills in address details on create property page")]
@@ -74,7 +72,8 @@
         [When(@"User clicks save button on create property page")]
         public void ClickSaveButton()
         {
-            this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").SaveProperty();
+            var page = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
+            this.scenarioContext.Set<ViewPropertyPage>(page.SaveProperty(), "ViewPropertyPage");
         }
     }
 

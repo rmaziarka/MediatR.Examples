@@ -9,14 +9,14 @@
 
     public class AddressTemplatePage : ProjectPageBase
     {
-        private readonly ElementLocator propertyNumber = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator propertyName = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator propertyAddressLine1 = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator propertyAddressLine2 = new ElementLocator(Locator.Id, "Line2");
-        private readonly ElementLocator propertyAddressLine3 = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator propertyCity = new ElementLocator(Locator.Id, "City");
-        private readonly ElementLocator propertyCounty = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator propertyPostcode = new ElementLocator(Locator.Id, "Postcode");
+        private readonly ElementLocator propertyNumber = new ElementLocator(Locator.Id, "propertyNumber");
+        private readonly ElementLocator propertyName = new ElementLocator(Locator.Id, "propertyName");
+        private readonly ElementLocator propertyAddressLine1 = new ElementLocator(Locator.Id, "line1");
+        private readonly ElementLocator propertyAddressLine2 = new ElementLocator(Locator.Id, "line2");
+        private readonly ElementLocator propertyAddressLine3 = new ElementLocator(Locator.Id, "line3");
+        private readonly ElementLocator propertyCity = new ElementLocator(Locator.Id, "city");
+        private readonly ElementLocator propertyCounty = new ElementLocator(Locator.Id, "county");
+        private readonly ElementLocator propertyPostcode = new ElementLocator(Locator.Id, "postcode");
         private readonly ElementLocator propertyCountry = new ElementLocator(Locator.Id, "country");
 
         public AddressTemplatePage(DriverContext driverContext) : base(driverContext)
