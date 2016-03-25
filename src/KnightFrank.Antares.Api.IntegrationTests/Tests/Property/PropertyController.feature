@@ -64,3 +64,9 @@ Scenario Outline: Update non exisitng property
 	| latest                               | GB      | Property |             | BadRequest |
 	| latest                               | GB      | Property | 12345678901 | BadRequest |
 	| 00000000-0000-0000-0000-000000000000 | GB      | Property | 123456      | BadRequest |
+
+@Property
+Scenario: Get non existing property
+	Given Property does not exist in DB
+	When User retrieves property details
+	Then User should get NotFound http status code

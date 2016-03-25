@@ -115,6 +115,17 @@
             Property expectedProperty = this.fixture.DataContext.Property.SingleOrDefault(x => x.Id.Equals(updatedProperty.Id));
             updatedProperty.ShouldBeEquivalentTo(expectedProperty);
         }
+        
+        [When(@"User retrieves property details")]
+        public void GetProperty()
+        {
+            var propertyId = this.scenarioContext.Get<Guid>("AddedPropertyId");
+
+            string requestUrl = $"{ApiUrl}/{propertyId}";
+
+            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
 
         [Then(@"The created Property is saved in data base")]
         public void ThenTheResultsShouldBeSameAsCreated()
@@ -128,6 +139,12 @@
                 .Excluding(x => x.Address.AddressForm)
                 .Excluding(x => x.Address.Country)
                 .Excluding(x => x.Address.Line1));
+        }
+        
+        [Given(@"Property does not exist in DB")]
+        public void GivenPropertyDoesNotExistsInDataBase()
+        {
+            this.scenarioContext.Set(new Guid(), "AddedPropertyId");
         }
     }
 }
