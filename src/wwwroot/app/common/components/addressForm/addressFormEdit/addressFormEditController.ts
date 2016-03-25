@@ -7,6 +7,7 @@ module Antares.Common.Component {
     import IAddressForm = Common.Models.Dto.IAddressForm;
 
     export class AddressFormEditController {
+        public userCountryCode: string;
         public entityTypeCode: string;
         public address: Address;
 
@@ -22,28 +23,31 @@ module Antares.Common.Component {
             this.addressFormResource = dataAccessService.getAddressFormResource();
 
             this.countryResource
-                .query({ entityTypeCode : this.entityTypeCode })
+                .query({ entityTypeCode: this.entityTypeCode })
                 .$promise
-                .then((data: any) =>{
+                .then((data: any) => {
                     this.countries = data;
 
-                    if (this.address && this.address.countryId) {
-                        this.getAddressFormTemplete(this.entityTypeCode, this.address.countryId);
+                    var isNewAddressMode = !this.address.countryId;
+                    if (isNewAddressMode) {
+                        this.setDefaultCountry();
                     }
+
+                    this.getAddressFormTemplete(this.entityTypeCode, this.address.countryId);
                 })
                 .finally(() => {
                     this.isLoading = false;
                 });
         }
 
-        public changeCountry = (countryId: string): void =>{
+        public changeCountry = (countryId: string): void => {
             this.address.clear();
             this.address.countryId = countryId;
 
             this.getAddressFormTemplete(this.entityTypeCode, countryId);
         }
 
-        public isSubmitted = (form:any) => {
+        public isSubmitted = (form: any) => {
             while (!!form) {
                 if (form.$submitted) return true;
                 form = form.$$parentForm;
@@ -51,15 +55,23 @@ module Antares.Common.Component {
             return false;
         };
 
-        private getAddressFormTemplete = (entityTypeCode: string, countryId: string): void =>{
-            var countryLocalised: CountryLocalised = _.find(this.countries, (c) =>{
-                 return c.country.id === countryId;
+        private setDefaultCountry = (): void => {
+            var userCountry: CountryLocalised = _.find(this.countries, (c: CountryLocalised) => {
+                return c.country.isoCode === this.userCountryCode;
+            });
+
+            this.address.countryId = userCountry && userCountry.country ? userCountry.country.id : null;
+        }
+
+        private getAddressFormTemplete = (entityTypeCode: string, countryId: string): void => {
+            var countryLocalised: CountryLocalised = _.find(this.countries, (c) => {
+                return c.country.id === countryId;
             });
 
             this.addressFormResource
                 .get({ entityTypeCode: entityTypeCode, countryCode: countryLocalised.country.isoCode })
                 .$promise
-                .then((data: IAddressForm) =>{
+                .then((data: IAddressForm) => {
                     this.addressForm = new AddressForm(data.id, data.countryId, data.addressFieldDefinitions);
                     this.address.addressFormId = this.addressForm.id;
                 });

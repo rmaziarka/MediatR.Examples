@@ -40,7 +40,7 @@ module Antares.Property {
             .state('app.property-add', {
                 url: '/property/add',
                 params: {},
-                template: '<property-add></property-add>'
+                template: '<property-add user-data="appVm.userData"></property-add>'
             });
 
     }

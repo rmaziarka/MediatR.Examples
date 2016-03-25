@@ -4,7 +4,7 @@
         <form ng-submit="addPropertyForm.$valid && vm.save()" name="addPropertyForm" id="addPropertyForm" method="post" novalidate>
             <fieldset>
                 <legend translate="PROPERTY.ADD.ADDRESS"></legend>
-                <address-form-edit entity-type-code="vm.entityTypeCode" address="vm.property.address"></address-form-edit>
+                <address-form-edit entity-type-code="vm.entityTypeCode" address="vm.property.address" user-country-code="vm.userData.country"></address-form-edit>
             </fieldset>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" id="saveBtn" ng-disabled="!vm.property.address.countryId"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>

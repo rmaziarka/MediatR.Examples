@@ -17,6 +17,7 @@
             userIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "F2CA558D-E5CD-41ED-A093-C334C6395C2A"));
             userIdentity.AddClaim(new Claim(ClaimTypes.Role, "admin"));
             userIdentity.AddClaim(new Claim(ClaimTypes.Role, "superuser"));
+            userIdentity.AddClaim(new Claim(ClaimTypes.Country, "GB"));
 
             var userPrincipal = new ClaimsPrincipal(userIdentity);
 

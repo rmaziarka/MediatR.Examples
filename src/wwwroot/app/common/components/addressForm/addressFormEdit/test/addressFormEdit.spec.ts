@@ -12,7 +12,10 @@ module Antares {
             state: ng.ui.IStateService,
             controller: AddressFormEditController;
 
-        var countriesMock = [{ country : { id : "countryId1", isoCode : "GB" }, locale : {}, value : "United Kingdom" }],
+        var countriesMock = [
+                { country : { id : "countryId1", isoCode : "GB" }, locale : {}, value : "United Kingdom" },
+                { country: { id: "countryId2", isoCode: "TESTCOUNTRY" }, locale : {}, value : "Test Country" }
+            ],
             countryMockId = countriesMock[0].country.id,
             addressMock: Dto.Address = new Dto.Address('adrId1', countryMockId, 'adrfrmId1', 'test prop name', '123456');
 
@@ -37,6 +40,22 @@ module Antares {
                     return [200, countriesMock];
                 });
             }));
+
+            it('and address is empty then user country is set for address and proper request GET for address form is called', () => {
+                $http.expectGET(/\/api\/addressForm\/\?entityType=Property&countryCode=TESTCOUNTRY/).respond(() =>{
+                    return [200, addressFormMock];
+                });
+
+                scope['userCountryCode'] = 'TESTCOUNTRY';
+                scope['address'] = new Dto.Address();
+                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address" user-country-code="userCountryCode"></address-form-edit>')(scope);
+                scope.$apply();
+                controller = element.controller('addressFormEdit');
+
+                $http.flush();
+
+                expect(controller.address.countryId).toEqual('countryId2');
+            });
 
             it('and address is not empty then request GET for address form is called and proper addressForm returned from request is set', () => {
                 $http.expectGET(/\/api\/addressForm\/\?entityType=Property&countryCode=GB/).respond(() => {
@@ -66,28 +85,6 @@ module Antares {
 
                 var addressFormElement = element.find('ng-form#form-address');
                 expect(addressFormElement.hasClass('ng-hide')).toBeFalsy();
-            });
-
-            it('and address is empty then no request GET for address form is called and addressForm is not set', () => {
-                scope['address'] = new Dto.Address();
-                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address"></address-form-edit>')(scope);
-                scope.$apply();
-                controller = element.controller('addressFormEdit');
-
-                $http.flush();
-
-                expect(controller.addressForm).toBeUndefined();
-            });
-
-            it('and address is empty then address form is not visible', () => {
-                scope['address'] = new Dto.Address();
-                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address"></address-form-edit>')(scope);
-                scope.$apply();
-
-                $http.flush();
-
-                var addressFormElement = element.find('ng-form#form-address');
-                expect(addressFormElement.hasClass('ng-hide')).toBeTruthy();
             });
         });
 

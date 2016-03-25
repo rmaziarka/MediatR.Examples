@@ -2,6 +2,7 @@
     interface IUserData {
         name: string;
         email: string;
+        country: string;
         roles: string[];
     }
 }
