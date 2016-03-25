@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net.Http;
 
     using FluentAssertions;
@@ -11,6 +12,8 @@
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Contact;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Domain.Contact;
+    using KnightFrank.Antares.Domain.Requirement.Commands;
 
     using Newtonsoft.Json;
 
@@ -37,17 +40,31 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [When(@"User creates following requirement with given contact")]
-        public void UserCreatesFollowingRequirementWithGivenContact(Table table)
+        [When(@"User sets locations details for the requirement")]
+        public void SetRequirementLocationDetails(Table table)
+        {
+            var details = table.CreateInstance<CreateOrUpdateRequirementAddress>();
+            details.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
+            details.CountryId = this.scenarioContext.Get<Guid>("CountryId");
+            this.scenarioContext.Set(details, "Location");
+        }
+
+        [When(@"User creates following requirement in database")]
+        public void CreateRequirementWithInDb(Table table)
         {
             var requirement = table.CreateInstance<Requirement>();
 
             requirement.CreateDate = DateTime.Now;
             requirement.Contacts.AddRange(this.scenarioContext.Get<List<Contact>>("Contact List"));
+
+            var location = this.scenarioContext.Get<CreateOrUpdateRequirementAddress>("Location");
             requirement.Address = new Address
             {
-                CountryId = this.scenarioContext.Get<Guid>("CountryId"),
-                AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId")
+                Line2 = location.Line2,
+                Postcode = location.Postcode,
+                City = location.City,
+                CountryId = location.CountryId,
+                AddressFormId = location.AddressFormId
             };
 
             this.fixture.DataContext.Requirement.Add(requirement);
@@ -56,48 +73,113 @@
             this.scenarioContext.Set(requirement, "Requirement");
         }
 
-        [When(@"User creates following requirement without contact")]
-        public void UserCreatesFollowingRequirementWithoutContact(Table table)
+        [When(@"User creates following requirement using api")]
+        public void CreateRequirementWithApi(Table table)
         {
             string requestUrl = $"{ApiUrl}";
-            var requirement = table.CreateInstance<Requirement>();
+
+            var contacts = this.scenarioContext.Get<List<Contact>>("Contact List");
+            var requirement = table.CreateInstance<CreateRequirementCommand>();
+
+            requirement.CreateDate = DateTime.Now;
+            requirement.Contacts = contacts.Select(contact => new ContactDto
+            {
+                Id = contact.Id,
+                FirstName = contact.FirstName,
+                Surname = contact.Surname,
+                Title = contact.Title
+            }).ToList();
+
+            requirement.Address = this.scenarioContext.Get<CreateOrUpdateRequirementAddress>("Location");
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
 
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [When(@"User retrieves requirement that he saved")]
-        public void WhenUserRetrievesContactsDetailsWith()
+        [When(@"User creates following requirement without contact using api")]
+        public void UserCreatesFollowingRequirementWithoutContact(Table table)
         {
-            var requirement = this.scenarioContext.Get<Requirement>("Requirement");
+            string requestUrl = $"{ApiUrl}";
 
-            string requestUrl = $"{ApiUrl}/" + requirement.Id;
+            var requirement = table.CreateInstance<CreateRequirementCommand>();
+
+            requirement.CreateDate = DateTime.Now;
+            requirement.Address = this.scenarioContext.Get<CreateOrUpdateRequirementAddress>("Location");
+
+            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
+
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        [When(@"User creates following requirement without country using api")]
+        public void UserCreatesFollowingRequirementWithoutCountry(Table table)
+        {
+            string requestUrl = $"{ApiUrl}";
+
+            var contacts = this.scenarioContext.Get<List<Contact>>("Contact List");
+            var requirement = table.CreateInstance<CreateRequirementCommand>();
+
+            requirement.CreateDate = DateTime.Now;
+            requirement.Contacts = contacts.Select(contact => new ContactDto
+            {
+                Id = contact.Id,
+                FirstName = contact.FirstName,
+                Surname = contact.Surname,
+                Title = contact.Title
+            }).ToList();
+
+            requirement.Address = new CreateOrUpdateRequirementAddress { CountryId = Guid.Empty };
+
+            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
+
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        [When(@"User creates following requirement with invalid contact using api")]
+        public void CreateRequirementWithInvalidContact(Table table)
+        {
+            string requestUrl = $"{ApiUrl}";
+
+            var requirement = table.CreateInstance<CreateRequirementCommand>();
+
+            requirement.CreateDate = DateTime.Now;
+            requirement.Contacts = new List<ContactDto>
+            {
+                new ContactDto { Id = Guid.Empty }
+            };
+
+            requirement.Address = this.scenarioContext.Get<CreateOrUpdateRequirementAddress>("Location");
+
+            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
+
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        [When(@"User retrieves requirement for (.*) id")]
+        public void WhenUserRetrievesRequirementForId(string id)
+        {
+            if (id.Equals("latest"))
+            {
+                id = this.scenarioContext.Get<Requirement>("Requirement").Id.ToString();
+            }
+            string requestUrl = $"{ApiUrl}/" + id + "";
 
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
         [Then(@"Requirement should be the same as added")]
-        public void ThenRequierementShouldBeTheSameAsAdded()
+        public void CompareRequirements()
         {
-            var tableRequirement = this.scenarioContext.Get<Requirement>("Requirement");
+            var expectedRequirement = JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent());
+            Requirement requirement = this.fixture.DataContext.Requirement.Single(req => req.Id.Equals(expectedRequirement.Id));
 
             AssertionOptions.AssertEquivalencyUsing(options =>
                 options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>()
                 );
 
-            var databaseRequirement = JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent());
-            databaseRequirement.ShouldBeEquivalentTo(tableRequirement, options => options.Excluding(x => x.Address));
-        }
-
-        [When(@"User retrieves requirement for (.*) id")]
-        public void WhenUserRetrievesRequirementForId(string id)
-        {
-            string requestUrl = $"{ApiUrl}/" + id + "";
-
-            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
-            this.scenarioContext.SetHttpResponseMessage(response);
+            requirement.ShouldBeEquivalentTo(expectedRequirement, opt => opt.Excluding(req => req.Address.Country));
         }
     }
 }

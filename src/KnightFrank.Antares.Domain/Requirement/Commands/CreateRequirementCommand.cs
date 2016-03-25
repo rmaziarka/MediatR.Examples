@@ -9,7 +9,7 @@
 
     using MediatR;
 
-    public class CreateRequirementCommand : IRequest<Requirement>
+    public class CreateRequirementCommand : IRequest<Guid>
     {
         public DateTime CreateDate { get; set; }
 

@@ -16,7 +16,7 @@
 
     using MediatR;
 
-    public class CreateRequirementCommandHandler : IRequestHandler<CreateRequirementCommand, Requirement>
+    public class CreateRequirementCommandHandler : IRequestHandler<CreateRequirementCommand, Guid>
     {
         private readonly IGenericRepository<Requirement> requirementRepository;
 
@@ -31,7 +31,7 @@
             this.createRequirementCommandDomainValidator = createRequirementCommandDomainValidator;
         }
 
-        public Requirement Handle(CreateRequirementCommand message)
+        public Guid Handle(CreateRequirementCommand message)
         {
             ValidationResult validationResult = this.createRequirementCommandDomainValidator.Validate(message);
             if (!validationResult.IsValid)
@@ -49,7 +49,7 @@
             this.requirementRepository.Add(requirement);
             this.requirementRepository.Save();
 
-            return requirement;
+            return requirement.Id;
         }
     }
 }

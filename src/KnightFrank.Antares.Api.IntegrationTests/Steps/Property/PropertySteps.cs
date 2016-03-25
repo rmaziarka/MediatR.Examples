@@ -119,7 +119,6 @@
         [Then(@"The created Property is saved in data base")]
         public void ThenTheResultsShouldBeSameAsCreated()
         {
-            var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
             var expectedProperty = JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent());
             Property actualProperty = this.fixture.DataContext.Property.Single(x => x.Id.Equals(expectedProperty.Id));
 

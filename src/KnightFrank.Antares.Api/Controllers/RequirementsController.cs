@@ -37,7 +37,9 @@
         [Route("")]
         public Requirement CreateRequirement(CreateRequirementCommand command)
         {
-            return this.mediator.Send(command);
+            Guid requirementId =  this.mediator.Send(command);
+
+            return this.GetRequirementById(requirementId);
         }
 
         /// <summary>
