@@ -74,6 +74,12 @@ module Antares {
                 expect(createDate.text()).toBe(formattedDate);
             });
 
+            it('description is displayed', () => {
+                var descrptionParagraph = element.find('[translate="REQUIREMENT.VIEW.DESCRIPTION"]+p');
+
+                expect(descrptionParagraph.text()).toBe(requirementMock.description);
+            });
+
             xit('location requirements are displayed', () => {
                 // TODO: after address view component is implemented
             });
