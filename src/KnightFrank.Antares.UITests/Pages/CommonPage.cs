@@ -2,6 +2,7 @@
 {
     using System;
     using System.Configuration;
+    using System.Runtime.CompilerServices;
 
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
@@ -37,6 +38,9 @@
                     break;
                 case "new residential sales requirement":
                     this.Driver.NavigateTo(GetUrl("NewResidentialSalesRequirementPage"));
+                    break;
+                case "add property":
+                    this.Driver.NavigateTo(GetUrl("AddPropertyPage"));
                     break;
                 default:
                     Assert.True(false, "Page does not exist");

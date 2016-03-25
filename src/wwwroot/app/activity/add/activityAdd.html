@@ -1,0 +1,23 @@
+﻿<form>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-9">
+                <label for="status" class="">Status</label>
+                <select class="form-control" required id="status" name="type" ng-options="item as item.value for item in vm.activityStatuses track by item.id" ng-model="vm.selectedActivityStatusId">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+    </div>
+</form>
+<h4 class="page-header">Vendors</h4>
+<!--<div class="panel panel-default">
+    <div class="panel-body">
+        John Snow
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-body">
+        John Snow
+    </div>
+</div>-->

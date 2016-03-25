@@ -41,7 +41,7 @@
                     <fieldset>
                         <legend>Activities</legend>
                         <div class="form-group">
-                            <button type="button" class="btn btn-default"><i class="fa fa-plus-circle"></i></button>
+                            <button type="button" class="btn btn-default" ng-click="vm.showActivityAdd()"><i class="fa fa-plus-circle"></i></button>
                         </div>
                         <p class="help-block">No activities yet</p>
                     </fieldset>
@@ -82,40 +82,16 @@
     </side-panel-footer>
 </side-panel>
 
-<side-panel>
+<side-panel component-id="vm.componentIds.activitySidePanelId">
     <side-panel-header>
         <h3>Create activity</h3>
     </side-panel-header>
     <side-panel-content>
-        <form>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-9">
-                        <label for="status" class="">Status</label>
-                        <select id="status" class="form-control">
-                            <option>Pre-appraisal</option>
-                            <option>Market appraisal</option>
-                            <option>Not selling</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <h4 class="page-header">Vendors</h4>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                John Snow
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                John Snow
-            </div>
-        </div>
+        <activity-add component-id="vm.componentIds.activityAddId"></activity-add> 
     </side-panel-content>
     <side-panel-footer>
         <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()"> <i class="fa fa-ban"></i> Cancel</button>
-        <button class="btn btn-primary" type="button" ng-click="vm.showOwnershipAdd()" ng-disabled=""><i class="fa fa-floppy-o"></i> Save</button>
+        <button class="btn btn-primary" type="button" ng-click="vm.saveActivity()" ng-disabled=""><i class="fa fa-floppy-o"></i> Save</button>
     </side-panel-footer>
 </side-panel>
 

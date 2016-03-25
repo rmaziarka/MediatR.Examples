@@ -7,13 +7,9 @@
     public class ViewPropertyPage : ProjectPageBase
     {
         //locators for property address area
-        private readonly ElementLocator country = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator propertyNumber = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator propertyName = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator addressLine2 = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator postCode = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator city = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator county = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator expectedAddressField = new ElementLocator(Locator.XPath, "//address-form-view//span[text()='{0}']");
+        private readonly ElementLocator editButton = new ElementLocator(Locator.CssSelector, "button[ng-click*='goToEdit']");
+
         //locators for property details area
         //
         //locators for property ownership area
@@ -23,6 +19,7 @@
         private readonly ElementLocator activityDate = new ElementLocator(Locator.Id, string.Empty);
         private readonly ElementLocator activityVendor = new ElementLocator(Locator.Id, string.Empty);
         private readonly ElementLocator activityStatus = new ElementLocator(Locator.Id, string.Empty);
+        
 
         public CreateActivityPage Activity => new CreateActivityPage(this.DriverContext);
 
@@ -30,39 +27,16 @@
         {
         }
 
-        public string GetCountry()
+        public bool IsAddressDetailsVisible(string propertyNumber)
         {
-            return this.Driver.GetElement(this.country).Text;
+            ElementLocator expectedField = this.expectedAddressField.Format(propertyNumber);
+            return this.Driver.IsElementPresent(expectedField, BaseConfiguration.MediumTimeout);
         }
 
-        public string GetPropertyNumber()
+        public bool IsAddressDetailsNotVisible(string propertyNumber)
         {
-            return this.Driver.GetElement(this.propertyNumber).Text;
-        }
-
-        public string GetPropertyName()
-        {
-            return this.Driver.GetElement(this.propertyName).Text;
-        }
-
-        public string GetAddressLine2()
-        {
-            return this.Driver.GetElement(this.addressLine2).Text;
-        }
-
-        public string GetPostCode()
-        {
-            return this.Driver.GetElement(this.postCode).Text;
-        }
-
-        public string GetCity()
-        {
-            return this.Driver.GetElement(this.city).Text;
-        }
-
-        public string GetCounty()
-        {
-            return this.Driver.GetElement(this.county).Text;
+            ElementLocator expectedField = this.expectedAddressField.Format(propertyNumber);
+            return !this.Driver.IsElementPresent(expectedField, BaseConfiguration.ShortTimeout);
         }
 
         public ViewPropertyPage AddActivity()
@@ -84,6 +58,12 @@
         public string GetActivityDate()
         {
             return this.Driver.GetElement(this.activityDate).Text;
+        }
+
+        public CreatePropertyPage EditProperty()
+        {
+            this.Driver.GetElement(this.editButton).Click();
+            return new CreatePropertyPage(this.DriverContext);
         }
     }
 }

@@ -183,6 +183,7 @@
     <Compile Include="ContravariantBindingResolver.cs" />
     <Compile Include="Controllers\AddressFormsController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
+    <Compile Include="Controllers\ActivitiesController.cs" />
     <Compile Include="Controllers\EnumsController.cs" />
     <Compile Include="Controllers\PropertiesController.cs" />
     <Compile Include="Controllers\RequirementsController.cs" />

@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.Domain.Enum.QueryHandlers
 {
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Linq;
 
     using AutoMapper;
@@ -23,9 +24,10 @@
 
         public EnumQueryResult Handle(EnumQuery message)
         {
-            IEnumerable<EnumLocalised> enumItems =
-                this.enumLocalisedRepository.Get()
-                    .Where(x => x.EnumTypeItem.EnumType.Code == message.Code && x.Locale.IsoCode == "en");
+            List<EnumLocalised> enumItems = this.enumLocalisedRepository.Get()
+                                      .Include(x => x.EnumTypeItem)
+                                      .Where(x => x.EnumTypeItem.EnumType.Code == message.Code && x.Locale.IsoCode == "en")
+                                      .ToList();
 
             return Mapper.Map<EnumQueryResult>(enumItems);
         }
