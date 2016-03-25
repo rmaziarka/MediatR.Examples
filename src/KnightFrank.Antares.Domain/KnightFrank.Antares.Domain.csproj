@@ -146,6 +146,7 @@
     <Compile Include="Property\QueryResults\PropertyTypeQuerySingleResult.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementCommandHandler.cs" />
     <Compile Include="Requirement\Commands\CreateOrUpdateRequirementAddress.cs" />
+    <Compile Include="Requirement\Commands\CreateRequirementCommandDomainValidator.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandValidator.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommand.cs" />
     <Compile Include="Requirement\Commands\RequirementCommandProfile.cs" />

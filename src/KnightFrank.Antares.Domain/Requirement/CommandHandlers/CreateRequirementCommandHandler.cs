@@ -7,8 +7,12 @@
     using Dal.Repository;
     using Commands;
 
+    using FluentValidation.Results;
+
     using KnightFrank.Antares.Dal.Model.Contact;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Domain.Common;
+    using KnightFrank.Antares.Domain.Common.Exceptions;
 
     using MediatR;
 
@@ -18,14 +22,23 @@
 
         private readonly IGenericRepository<Contact> contactRepository;
 
-        public CreateRequirementCommandHandler(IGenericRepository<Requirement> requirementRepository, IGenericRepository<Contact> contactRepository)
+        private readonly IDomainValidator<CreateRequirementCommand> createRequirementCommandDomainValidator;
+
+        public CreateRequirementCommandHandler(IGenericRepository<Requirement> requirementRepository, IGenericRepository<Contact> contactRepository, IDomainValidator<CreateRequirementCommand>  createRequirementCommandDomainValidator)
         {
             this.requirementRepository = requirementRepository;
             this.contactRepository = contactRepository;
+            this.createRequirementCommandDomainValidator = createRequirementCommandDomainValidator;
         }
 
         public Requirement Handle(CreateRequirementCommand message)
         {
+            ValidationResult validationResult = this.createRequirementCommandDomainValidator.Validate(message);
+            if (!validationResult.IsValid)
+            {
+                throw new DomainValidationException(validationResult.Errors.First().ErrorMessage);
+            }
+
             var requirement = AutoMapper.Mapper.Map<Requirement>(message);
 
             List<Guid> ids = message.Contacts.Select(x => x.Id).ToList();

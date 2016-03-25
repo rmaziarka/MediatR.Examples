@@ -2,48 +2,61 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Linq.Expressions;
+
+    using FluentValidation.Results;
 
     using KnightFrank.Antares.Dal.Model.Contact;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
-    using KnightFrank.Antares.Domain.Contact;
+    using KnightFrank.Antares.Domain.Common;
+    using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Antares.Domain.Requirement.CommandHandlers;
     using KnightFrank.Antares.Domain.Requirement.Commands;
 
     using Moq;
 
+    using Ploeh.AutoFixture.Xunit2;
+
     using Xunit;
 
     public class CreateRequirementCommandHandlerTests : IClassFixture<BaseTestClassFixture>
     {
-        [Fact]
-        public void Given_CorrectCommand_When_Handle_Then_ShouldReturnValidId()
+        [Theory]
+        [AutoMoqData]
+        public void Given_CorrectCommand_When_Handle_Then_ShouldReturnValidId(
+            [Frozen] Mock<IGenericRepository<Requirement>> requirementRepository,
+            [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
+            [Frozen] Mock<IDomainValidator<CreateRequirementCommand>> requirementDomainValidator,
+            CreateRequirementCommand command,
+            CreateRequirementCommandHandler commandHandler)
         {
-            var requirementRepositoryMock = new Mock<IGenericRepository<Requirement>>();
-            var contactRepositoryMock = new Mock<IGenericRepository<Contact>>();
-            var commandHandler = new CreateRequirementCommandHandler(requirementRepositoryMock.Object, contactRepositoryMock.Object);
-
-            var command = new CreateRequirementCommand
-            {
-                CreateDate = DateTime.UtcNow,
-                Contacts = new Collection<ContactDto>
-                {
-                    new ContactDto { Id = Guid.NewGuid() },
-                    new ContactDto { Id = Guid.NewGuid() }
-                }
-            };
-            
-            contactRepositoryMock.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(new List<Contact>().AsQueryable());
-            requirementRepositoryMock.Setup(x => x.Add(It.IsAny<Requirement>()));
-            requirementRepositoryMock.Setup(x => x.Save());
+            contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(new List<Contact>().AsQueryable());
+            requirementRepository.Setup(x => x.Add(It.IsAny<Requirement>()));
+            requirementRepository.Setup(x => x.Save());
 
             commandHandler.Handle(command);
 
-            requirementRepositoryMock.VerifyAll();
-            contactRepositoryMock.VerifyAll();
+            requirementRepository.VerifyAll();
+            contactRepository.VerifyAll();
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_InvalidValidationResult_When_Handle_Then_ShouldReturnDomainException(
+            [Frozen] Mock<IGenericRepository<Requirement>> requirementRepository,
+            [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
+            [Frozen] Mock<IDomainValidator<CreateRequirementCommand>> requirementDomainValidator,
+            CreateRequirementCommand command,
+            CreateRequirementCommandHandler commandHandler)
+        {
+            var result = new ValidationResult();
+            result.Errors.Add(new ValidationFailure(It.IsAny<string>(), It.IsAny<string>()));
+            requirementDomainValidator.Setup(x => x.Validate(It.IsAny<CreateRequirementCommand>())).Returns(result);
+
+            // Act + Assert
+            Assert.Throws<DomainValidationException>(() => commandHandler.Handle(command));
         }
     }
 }
