@@ -21,7 +21,7 @@
     [Binding]
     public class ContactsSteps : IClassFixture<BaseTestClassFixture>
     {
-        private const string ApiUrl = "/api/contact";
+        private const string ApiUrl = "/api/contacts";
         private readonly BaseTestClassFixture fixture;
 
         private readonly ScenarioContext scenarioContext;

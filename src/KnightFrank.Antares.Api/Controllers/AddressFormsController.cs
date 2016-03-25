@@ -14,8 +14,8 @@
     /// <summary>
     ///     Controller class for address form
     /// </summary>
-    [RoutePrefix("api/addressform")]
-    public class AddressFormController : ApiController
+    [RoutePrefix("api/addressforms")]
+    public class AddressFormsController : ApiController
     {
         private readonly IMediator mediator;
 
@@ -23,7 +23,7 @@
         ///     AddressForm controller constructor
         /// </summary>
         /// <param name="mediator">Command /query mediator</param>
-        public AddressFormController(IMediator mediator)
+        public AddressFormsController(IMediator mediator)
         {
             this.mediator = mediator;
         }
@@ -34,6 +34,7 @@
         /// <param name="addressFormQuery">Query by entity type and country code</param>
         /// <returns></returns>
         [HttpGet]
+        [Route("")]
         public AddressFormQueryResult GetAddressFormQueryResult([FromUri(Name = "")] AddressFormQuery addressFormQuery)
         {
             return this.mediator.Send(addressFormQuery);
@@ -45,7 +46,7 @@
         /// <param name="query"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("countries/")]
+        [Route("countries")]
         public IList<CountryLocalisedResult> GetCountries([FromUri(Name = "")] GetCountriesForAddressFormsQuery query)
         {
             return this.mediator.Send(query);

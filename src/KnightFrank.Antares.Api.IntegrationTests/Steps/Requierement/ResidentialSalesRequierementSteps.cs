@@ -22,7 +22,7 @@
     [Binding]
     public class ResidentialSalesRequierementSteps : IClassFixture<BaseTestClassFixture>
     {
-        private const string ApiUrl = "/api/requirement";
+        private const string ApiUrl = "/api/requirements";
         private readonly BaseTestClassFixture fixture;
 
         private readonly ScenarioContext scenarioContext;

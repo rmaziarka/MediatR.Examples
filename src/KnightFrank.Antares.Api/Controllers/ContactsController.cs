@@ -20,7 +20,8 @@
     /// <summary>
     ///     Controller class for contacts
     /// </summary>
-    public class ContactController : ApiController
+    [RoutePrefix("api/contacts")]
+    public class ContactsController : ApiController
     {
         private readonly IMediator mediator;
         private readonly IReadGenericRepository<Contact> contactsRepository;
@@ -30,7 +31,7 @@
         /// </summary>
         /// <param name="mediator">Mediator instance.</param>
         /// <param name="contactsRepository">Generic read repository.</param>
-        public ContactController(IMediator mediator, IReadGenericRepository<Contact> contactsRepository)
+        public ContactsController(IMediator mediator, IReadGenericRepository<Contact> contactsRepository)
         {
             this.mediator = mediator;
             this.contactsRepository = contactsRepository;
@@ -41,7 +42,8 @@
         /// </summary>
         /// <returns>Contact entity collection</returns>
         [HttpGet]
-        public IEnumerable<Object> GetContacts()
+        [Route("")]
+        public IEnumerable<Contact> GetContacts()
         {
             return this.contactsRepository.Get().ToList();
         }
@@ -52,6 +54,7 @@
         /// <param name="id">Contact id</param>
         /// <returns>Contact entity</returns>
         [HttpGet]
+        [Route("{id}")]
         public Contact GetContact(Guid id)
         {
             var query =  new ContactQuery() { Id = id};
@@ -71,6 +74,7 @@
         /// </summary>
         /// <param name="command">Contact entity</param>
         [HttpPost]
+        [Route("")]
         public Guid CreateContact([FromBody] CreateContactCommand command)
         {
             return this.mediator.Send(command);

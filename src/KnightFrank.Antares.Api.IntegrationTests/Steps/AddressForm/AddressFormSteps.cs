@@ -23,7 +23,7 @@
     [Binding]
     public class AddressFormSteps : IClassFixture<BaseTestClassFixture>
     {
-        private const string ApiUrl = "/api/AddressForm";
+        private const string ApiUrl = "/api/AddressForms";
         private readonly BaseTestClassFixture fixture;
 
         private readonly ScenarioContext scenarioContext;

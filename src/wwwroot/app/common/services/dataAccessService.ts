@@ -19,22 +19,22 @@ module Antares.Services {
 
         getContactResource(): Resources.IBaseResourceClass<Resources.IContactResource> {
             return <Resources.IBaseResourceClass<Resources.IContactResource>>
-                this.$resource(this.appConfig.rootUrl + '/api/contact/:id');
+                this.$resource(this.appConfig.rootUrl + '/api/contacts/:id');
         }
 
         getRequirementResource(): Resources.IBaseResourceClass<Resources.IRequirementResource> {
             return <Resources.IBaseResourceClass<Resources.IRequirementResource>>
-                this.$resource(this.appConfig.rootUrl + '/api/requirement/:id');
+                this.$resource(this.appConfig.rootUrl + '/api/requirements/:id');
         }
 
         getCountryResource(): CountryResourceClass {
             return <CountryResourceClass>
-                this.$resource(this.appConfig.rootUrl + '/api/addressform/countries?entityType=:entityTypeCode');
+                this.$resource(this.appConfig.rootUrl + '/api/addressforms/countries?entityType=:entityTypeCode');
         }
 
         getAddressFormResource(): AddressFormResourceClass {
             return <AddressFormResourceClass>
-                this.$resource(this.appConfig.rootUrl + '/api/addressForm/:id?entityType=:entityTypeCode&countryCode=:countryCode');
+                this.$resource(this.appConfig.rootUrl + '/api/addressForms/:id?entityType=:entityTypeCode&countryCode=:countryCode');
         }
 
 		getOwnershipResource(): Resources.IBaseResourceClass<Resources.IOwnershipResource> {

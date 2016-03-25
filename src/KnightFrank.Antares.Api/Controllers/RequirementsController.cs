@@ -15,16 +15,16 @@
     /// Requirement controller.
     /// </summary>
     /// <seealso cref="System.Web.Http.ApiController" />
-    [RoutePrefix("api/requirement")]
-    public class RequirementController : ApiController
+    [RoutePrefix("api/requirements")]
+    public class RequirementsController : ApiController
     {
         private IMediator mediator;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RequirementController"/> class.
+        /// Initializes a new instance of the <see cref="RequirementsController"/> class.
         /// </summary>
         /// <param name="mediator">The mediator.</param>
-        public RequirementController(IMediator mediator)
+        public RequirementsController(IMediator mediator)
         {
             this.mediator = mediator;
         }
@@ -34,6 +34,7 @@
         /// </summary>
         /// <returns>Requirement identifier.</returns>
         [HttpPost]
+        [Route("")]
         public Requirement CreateRequirement(CreateRequirementCommand command)
         {
             return this.mediator.Send(command);
@@ -45,7 +46,7 @@
         /// <param name="id">Requirement Id.</param>
         /// <returns>Requirement.</returns>
         [HttpGet]
-        [Route("{Id}")]
+        [Route("{id}")]
         public Requirement GetRequirementById(Guid id)
         {
             Requirement requirement = this.mediator.Send(new RequirementQuery { Id = id });

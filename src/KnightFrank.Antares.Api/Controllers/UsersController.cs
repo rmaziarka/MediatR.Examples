@@ -7,8 +7,8 @@ namespace KnightFrank.Antares.Api.Controllers
 
     using KnightFrank.Antares.Domain.User.QueryResults;
 
-    [RoutePrefix("api/user")]
-    public class UserController : ApiController
+    [RoutePrefix("api/users")]
+    public class UsersController : ApiController
     {
         [Route("data")]
         public UserDataResult GetUserData()
