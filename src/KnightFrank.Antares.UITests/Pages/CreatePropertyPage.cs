@@ -17,7 +17,7 @@
         public CreatePropertyPage OpenAddPropertyPage()
         {
             new CommonPage(this.DriverContext).NavigateToPage("add property");
-            return this; ;
+            return this;
         }
 
         public AddressTemplatePage AddressTemplate => new AddressTemplatePage(this.DriverContext);

@@ -2,7 +2,6 @@
 {
     using System;
     using System.Configuration;
-    using System.Runtime.CompilerServices;
 
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;

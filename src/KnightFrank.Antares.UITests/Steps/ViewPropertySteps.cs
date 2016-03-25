@@ -3,20 +3,16 @@
     using System;
     using System.Linq;
 
-    using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.UITests.Pages;
 
-    using Objectivity.Test.Automation.Common;
-
     using TechTalk.SpecFlow;
-    using TechTalk.SpecFlow.Assist;
 
     using Xunit;
 
     [Binding]
     public class ViewPropertySteps
     {
-        private readonly DriverContext driverContext;
+        //private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
 
         public ViewPropertySteps(ScenarioContext scenarioContext)
@@ -27,7 +23,7 @@
             }
 
             this.scenarioContext = scenarioContext;
-            this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
+            //this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
         }
 
         [Then(@"New property should be created with address details")]
@@ -68,7 +64,7 @@
         public void WhenUserClicksEditButtonOnCreatePropertyPage()
         {
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-            this.scenarioContext.Set<CreatePropertyPage>(page.EditProperty(), "CreatePropertyPage");
+            this.scenarioContext.Set(page.EditProperty(), "CreatePropertyPage");
         }
 
         [Then(@"Activity creation date is set to current date on property details page")]

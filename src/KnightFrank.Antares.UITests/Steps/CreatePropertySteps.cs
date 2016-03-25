@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    
+
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.UITests.Pages;
 
@@ -31,7 +31,7 @@
         [Given(@"User navigates to create property page")]
         public void OpenCreatePropertyPage()
         {
-            var page = new CreatePropertyPage(this.driverContext).OpenAddPropertyPage();
+            CreatePropertyPage page = new CreatePropertyPage(this.driverContext).OpenAddPropertyPage();
             this.scenarioContext["CreatePropertyPage"] = page;
         }
 
@@ -73,7 +73,7 @@
         public void ClickSaveButton()
         {
             var page = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
-            this.scenarioContext.Set<ViewPropertyPage>(page.SaveProperty(), "ViewPropertyPage");
+            this.scenarioContext.Set(page.SaveProperty(), "ViewPropertyPage");
         }
     }
 

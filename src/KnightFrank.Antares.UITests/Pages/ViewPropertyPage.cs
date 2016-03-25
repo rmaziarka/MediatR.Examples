@@ -29,14 +29,12 @@
 
         public bool IsAddressDetailsVisible(string propertyNumber)
         {
-            ElementLocator expectedField = this.expectedAddressField.Format(propertyNumber);
-            return this.Driver.IsElementPresent(expectedField, BaseConfiguration.MediumTimeout);
+            return this.Driver.IsElementPresent(this.expectedAddressField.Format(propertyNumber), BaseConfiguration.MediumTimeout);
         }
 
         public bool IsAddressDetailsNotVisible(string propertyNumber)
         {
-            ElementLocator expectedField = this.expectedAddressField.Format(propertyNumber);
-            return !this.Driver.IsElementPresent(expectedField, BaseConfiguration.ShortTimeout);
+            return !this.Driver.IsElementPresent(this.expectedAddressField.Format(propertyNumber), BaseConfiguration.ShortTimeout);
         }
 
         public ViewPropertyPage AddActivity()
