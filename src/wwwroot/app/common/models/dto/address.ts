@@ -14,6 +14,8 @@
     }
 
     export class Address implements IAddress {
+        [key: string]: any;
+
         constructor(
             public id: string = '',
             public countryId: string = '',

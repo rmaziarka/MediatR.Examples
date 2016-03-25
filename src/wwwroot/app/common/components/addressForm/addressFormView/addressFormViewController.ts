@@ -20,6 +20,12 @@ module Antares.Common.Component {
                 this.addressForm = addressForm;
             });
         }
+
+        isRowEmpty(row: Array<Antares.Common.Models.Dto.AddressFormFieldDefinition>): boolean {
+            return !_.any(row, (field: Antares.Common.Models.Dto.AddressFormFieldDefinition) => {
+                return !!this.address[field.name];
+            });
+        }
     }
 
     angular
