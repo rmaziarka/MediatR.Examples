@@ -27,8 +27,6 @@
 
         public decimal? SellPrice { get; set; }
 
-        public bool CurrentOwner { get; set; }
-
         public Guid OwnershipTypeId { get; set; }
 
         public EnumTypeItem OwnershipType { get; set; }
