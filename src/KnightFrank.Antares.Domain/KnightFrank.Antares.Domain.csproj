@@ -138,7 +138,12 @@
     <Compile Include="Property\Commands\UpdatePropertyCommandValidator.cs" />
     <Compile Include="Property\Queries\PropertyQuery.cs" />
     <Compile Include="Property\Queries\PropertyQueryValidator.cs" />
+    <Compile Include="Property\Queries\PropertyTypeQueryValidator.cs" />
+    <Compile Include="Property\Queries\PropertyTypeQuery.cs" />
+    <Compile Include="Property\QueryHandlers\PropertyTypeQueryHandler.cs" />
     <Compile Include="Property\QueryHandlers\PropertyQueryHandler.cs" />
+    <Compile Include="Property\QueryResults\PropertyTypeQueryResult.cs" />
+    <Compile Include="Property\QueryResults\PropertyTypeQuerySingleResult.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementCommandHandler.cs" />
     <Compile Include="Requirement\Commands\CreateOrUpdateRequirementAddress.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandValidator.cs" />

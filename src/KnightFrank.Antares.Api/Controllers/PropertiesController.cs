@@ -9,6 +9,7 @@
     using KnightFrank.Antares.Domain.Ownership.Commands;
     using KnightFrank.Antares.Domain.Property.Commands;
     using KnightFrank.Antares.Domain.Property.Queries;
+    using KnightFrank.Antares.Domain.Property.QueryResults;
 
     using MediatR;
 
@@ -19,6 +20,7 @@
     public class PropertiesController : ApiController
     {
         private readonly IMediator mediator;
+        private const string LocaleCode = "en";
 
         /// <summary>
         ///     Properties controller constructor
@@ -83,6 +85,21 @@
         public Guid CreateOwnership(CreateOwnershipCommand command)
         {
             return this.mediator.Send(command);
+        }
+
+        /// <summary>
+        /// Gets the property types.
+        /// </summary>
+        /// <param name="propertyTypesQuery">The property types query.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("types")]
+        public PropertyTypeQueryResult GetPropertyTypes([FromUri(Name = "")]PropertyTypeQuery propertyTypesQuery)
+        {
+            propertyTypesQuery = propertyTypesQuery ?? new PropertyTypeQuery();
+            propertyTypesQuery.LocaleCode = LocaleCode;
+
+            return this.mediator.Send(propertyTypesQuery);
         }
     }
 }
