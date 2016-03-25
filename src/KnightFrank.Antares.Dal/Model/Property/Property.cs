@@ -11,8 +11,8 @@
 
         public virtual Address Address { get; set; }
 
-        public virtual ICollection<Ownership> Ownerships { get; set; }
+        public virtual ICollection<Ownership> Ownerships { get; set; } = new List<Ownership>();
 
-        public virtual ICollection<Activity> Activities { get; set; }
+        public virtual ICollection<Activity> Activities { get; set; } = new List<Activity>();
     }
 }

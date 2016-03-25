@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    using KnightFrank.Antares.Dal.Model.Contact;
+    using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
 
     public class Ownership : BaseEntity
@@ -26,8 +26,6 @@
         public decimal? BuyPrice { get; set; }
 
         public decimal? SellPrice { get; set; }
-
-        public bool CurrentOwner { get; set; }
 
         public Guid OwnershipTypeId { get; set; }
 

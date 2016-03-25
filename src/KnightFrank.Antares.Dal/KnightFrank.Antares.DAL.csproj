@@ -150,6 +150,10 @@
     <Compile Include="Migrations\201603250657264_AddressForm PropertyName Change.Designer.cs">
       <DependentUpon>201603250657264_AddressForm PropertyName Change.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603251322039_RemoveCurentOwnerFromOwnership.cs" />
+    <Compile Include="Migrations\201603251322039_RemoveCurentOwnerFromOwnership.Designer.cs">
+      <DependentUpon>201603251322039_RemoveCurentOwnerFromOwnership.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Address\Address.cs" />
     <Compile Include="Model\Address\AddressField.cs" />
     <Compile Include="Model\Address\AddressFieldDefinition.cs" />
@@ -187,7 +191,7 @@
     <Compile Include="KnightFrankContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\BaseEntity.cs" />
-    <Compile Include="Model\Contact\Contact.cs" />
+    <Compile Include="Model\Contacts\Contact.cs" />
     <Compile Include="Model\Enum\EnumLocalised.cs" />
     <Compile Include="Model\Enum\EnumType.cs" />
     <Compile Include="Model\Enum\EnumTypeItem.cs" />
@@ -301,6 +305,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603250657264_AddressForm PropertyName Change.resx">
       <DependentUpon>201603250657264_AddressForm PropertyName Change.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603251322039_RemoveCurentOwnerFromOwnership.resx">
+      <DependentUpon>201603251322039_RemoveCurentOwnerFromOwnership.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Dal.Model.Contact
+﻿namespace KnightFrank.Antares.Dal.Model.Contacts
 {
     public class Contact : BaseEntity
     {

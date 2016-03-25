@@ -4,6 +4,9 @@ module Antares.Requirement {
     angular.module('app').component('requirementAdd', {
         templateUrl: 'app/requirement/add/requirementAdd.html',
         controllerAs: 'vm',
-        controller: 'requirementAddController'
+        controller: 'requirementAddController',
+        bindings: {
+            userData: '<'
+        }
     });
 }
