@@ -13,6 +13,7 @@
 
     using Dal.Repository;
 
+    using KnightFrank.Antares.Dal.Model.Contact;
     using KnightFrank.Antares.Domain.Contact.Queries;
 
     using MediatR;

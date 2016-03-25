@@ -2,7 +2,7 @@
 {
     using System;
 
-    using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Contact;
 
     using MediatR;
 

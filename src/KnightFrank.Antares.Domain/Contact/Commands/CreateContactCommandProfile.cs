@@ -2,7 +2,7 @@
 {
     using AutoMapper;
 
-    using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Contact;
 
     public class CreateContactCommandProfile : Profile
     {

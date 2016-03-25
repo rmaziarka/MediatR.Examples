@@ -6,9 +6,9 @@
     using System.Data.Entity.ModelConfiguration.Conventions;
     using System.Linq;
 
-    using KnightFrank.Antares.Dal.Model;
-    using KnightFrank.Antares.Dal.Model.Address;
+   using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Configuration;
+    using KnightFrank.Antares.Dal.Model.Contact;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Resource;
