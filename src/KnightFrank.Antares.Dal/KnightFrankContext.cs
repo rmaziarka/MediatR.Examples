@@ -6,9 +6,9 @@
     using System.Data.Entity.ModelConfiguration.Conventions;
     using System.Linq;
 
-    using KnightFrank.Antares.Dal.Model;
-    using KnightFrank.Antares.Dal.Model.Address;
+   using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Configuration;
+    using KnightFrank.Antares.Dal.Model.Contact;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Resource;
@@ -49,6 +49,9 @@
         public DbSet<User> User { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<Activity> Activity { get; set; }
+        public DbSet<PropertyType> PropertyType { get; set; }
+        public DbSet<PropertyTypeLocalised> PropertyTypeLocalised { get; set; }
+        public DbSet<PropertyTypeDefinition> PropertyTypeDefinition { get; set; }
 
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {

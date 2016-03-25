@@ -1,8 +1,8 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
-
-    using KnightFrank.Antares.Dal.Model;
+    
+    using KnightFrank.Antares.Dal.Model.Contact;
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;

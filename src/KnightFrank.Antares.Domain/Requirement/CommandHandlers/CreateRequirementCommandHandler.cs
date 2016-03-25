@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Dal.Model;
     using Dal.Repository;
     using Commands;
 
+    using KnightFrank.Antares.Dal.Model.Contact;
     using KnightFrank.Antares.Dal.Model.Property;
 
     using MediatR;

@@ -1,6 +1,8 @@
 /// <reference path="../typings/_all.d.ts" />
 
 module Antares.Property {
+    import Dto = Common.Models.Dto;
+
     var app: ng.IModule = angular.module('app');
 
     app.config(initRoute);
@@ -11,7 +13,7 @@ module Antares.Property {
                 url: '/property/view/:id',
                 params: {},
                 template: "<property-view property='property'></property-view>",
-                controller: ($scope: ng.IScope, property: any) => {
+                controller: ($scope: ng.IScope, property: Dto.Property) => {
                     $scope['property'] = property;
                 },
                 resolve: {
@@ -19,12 +21,21 @@ module Antares.Property {
                         var propertyId: string = $stateParams['id'];
                         return dataAccessService.getPropertyResource().get({ id: propertyId }).$promise;
                     }
-                }                                                
+                }
             })
             .state('app.property-edit', {
                 url: '/property/edit/:id',
                 params: {},
-                template: '<property-edit></property-edit>'
+                template: '<property-edit property="property"></property-edit>',
+                controller: ($scope: ng.IScope, property: Dto.Property) => {
+                    $scope['property'] = property;
+                },
+                resolve: {
+                    property: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Antares.Services.DataAccessService) => {
+                        var propertyId: string = $stateParams['id'];
+                        return dataAccessService.getPropertyResource().get({ id: propertyId }).$promise;
+                    }
+                }
             })
             .state('app.property-add', {
                 url: '/property/add',

@@ -17,38 +17,7 @@ module Antares {
 
         var countriesMock = [{ country: { id: "1111", isoCode: "GB" }, locale: {}, value: "United Kingdom" }];
 
-        describe('when property is beeing loaded', () => {
-            beforeEach(angular.mock.module('app'));
-            beforeEach(inject((
-                $rootScope: ng.IRootScopeService,
-                $compile: ng.ICompileService,
-                $httpBackend: ng.IHttpBackendService) => {
-
-                // init
-                scope = $rootScope.$new();
-                compile = $compile;
-                $http = $httpBackend;
-
-                // http backend
-                $http.whenGET(/\/api\/addressform\/countries\?entityType=Property/).respond(() => {
-                    return [200, countriesMock];
-                });
-                $http.whenGET(/\/api\/property/).respond(() => {
-                    return [200, {}];
-                });
-
-                // compile
-                element = compile('<property-edit></property-edit>')(scope);
-                scope.$apply();
-                controller = element.controller('propertyEdit');
-            }));
-
-            it('then loading message appears', () => {
-                expect(controller.isLoading).toBeTruthy();
-            });
-        });
-
-        describe('when proper property is loaded', () => {
+       describe('when proper property is loaded', () => {
             var countryMockId = countriesMock[0].country.id,
                 addressFormMock: Dto.AddressForm = new Dto.AddressForm('adrfrmId1', countryMockId, []),
                 propertyMock: Dto.Property = new Dto.Property('propMockId1',
@@ -71,24 +40,18 @@ module Antares {
                 $http.whenGET(/\/api\/addressform\/countries\?entityType=Property/).respond(() => {
                     return [200, countriesMock];
                 });
-                $http.whenGET(/\/api\/property/).respond(() => {
-                    return [200, propertyMock];
-                });
                 $http.whenGET(/\/api\/addressForm\/\?entityType=Property&countryCode=GB/).respond(() => {
                     return [200, addressFormMock];
                 });
 
                 // compile
-                element = compile('<property-edit></property-edit>')(scope);
+                scope['property'] = propertyMock;
+                element = compile('<property-edit property="property"></property-edit>')(scope);
                 scope.$apply();
                 controller = element.controller('propertyEdit');
 
                 $http.flush();
             }));
-
-            it('then loading message disappears', () => {
-                expect(controller.isLoading).toBeFalsy();
-            });
 
             it('then property details are loaded', () =>{
                 controller.property.address = propertyMock.address;

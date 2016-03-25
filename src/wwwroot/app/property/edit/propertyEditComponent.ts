@@ -4,6 +4,9 @@ module Antares.Property {
     angular.module('app').component('propertyEdit', {
         templateUrl: 'app/property/edit/propertyEdit.html',
         controllerAs: 'vm',
-        controller: 'PropertyEditController'
+        controller: 'PropertyEditController',
+        bindings: {
+            property: '='
+        }
     });
 }

@@ -9,7 +9,7 @@
 
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
-    using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Contact;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.Ownership.Commands;
 

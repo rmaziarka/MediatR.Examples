@@ -27,13 +27,13 @@
         ){
             this.updateAddressFieldRows();
         }
-        
-        updateAddressFieldRows() {
-            _.forEach(this.addressFieldDefinitions, (row: AddressFormFieldDefinition) => {
-                row.name = row.name.charAt(0).toLowerCase() + row.name.slice(1);
-            });            
 
-            this.addressFieldRows = _.toArray<AddressFormFieldDefinition[]>(_.groupBy<AddressFormFieldDefinition>(this.addressFieldDefinitions, 'rowOrder'));  
+        updateAddressFieldRows() {
+            _.forEach(this.addressFieldDefinitions, (field: AddressFormFieldDefinition) => {
+                field.name = field.name.charAt(0).toLowerCase() + field.name.slice(1);
+            });
+
+            this.addressFieldRows = _.toArray<AddressFormFieldDefinition[]>(_.groupBy<AddressFormFieldDefinition>(this.addressFieldDefinitions, 'rowOrder'));
         }
     }
 }

@@ -11,6 +11,7 @@
             EnumData.Seed(context);
             AddressFormData.Seed(context);
 			RoleData.Seed(context);
+            PropertyTypeData.Seed(context);
 
             context.SaveChanges();
         }
