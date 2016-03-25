@@ -97,7 +97,16 @@
         var options = {
             bowerJson: config.bower.json,
             directory: config.bower.directory,
-            ignorePath: config.bower.ignorePath
+            ignorePath: config.bower.ignorePath,
+            fileTypes: {
+                html: {
+                    replace: {
+                        js: function(filePath) {
+                            return '<script src="' + filePath.replace('../libs','libs') + '"></script>';
+                        }
+                    }
+                }
+            }
         };
 
         return options;

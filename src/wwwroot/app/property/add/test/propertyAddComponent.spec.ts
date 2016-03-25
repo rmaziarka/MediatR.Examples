@@ -35,7 +35,7 @@ module Antares {
                 $http = $httpBackend;
 
                 // http backend
-                $http.whenGET(/\/api\/addressform\/countries\?entityType=Property/).respond(() => {
+                $http.whenGET(/\/api\/addressforms\/countries\?entityType=Property/).respond(() => {
                     return [200, countriesMock];
                 });
 
@@ -82,7 +82,7 @@ module Antares {
 
                it('then put request is is called and redirect to view page', () => {
                    var addressFormMock: Dto.AddressForm = new Dto.AddressForm('adrfrmId1', countryMockId, []);
-                   $http.whenGET(/\/api\/addressForm\/\?entityType=Property&countryCode=GB/).respond(() =>{
+                   $http.whenGET(/\/api\/addressForms\/\?entityType=Property&countryCode=GB/).respond(() =>{
                        return [200, addressFormMock];
                    });
                    var propertyFromServerMock: Dto.Property = new Dto.Property('propFromServerId1', new Dto.Address());

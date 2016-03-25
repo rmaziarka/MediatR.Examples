@@ -36,13 +36,13 @@ module Antares {
                 $http = $httpBackend;
 
                 // http backend
-                $http.expectGET(/\/api\/addressform\/countries\?entityType=Property/).respond(() =>{
+                $http.expectGET(/\/api\/addressforms\/countries\?entityType=Property/).respond(() =>{
                     return [200, countriesMock];
                 });
             }));
 
             it('and address is empty then user country is set for address and proper request GET for address form is called', () => {
-                $http.expectGET(/\/api\/addressForm\/\?entityType=Property&countryCode=TESTCOUNTRY/).respond(() =>{
+                $http.expectGET(/\/api\/addressForms\/\?entityType=Property&countryCode=TESTCOUNTRY/).respond(() =>{
                     return [200, addressFormMock];
                 });
 
@@ -58,7 +58,7 @@ module Antares {
             });
 
             it('and address is not empty then request GET for address form is called and proper addressForm returned from request is set', () => {
-                $http.expectGET(/\/api\/addressForm\/\?entityType=Property&countryCode=GB/).respond(() => {
+                $http.expectGET(/\/api\/addressForms\/\?entityType=Property&countryCode=GB/).respond(() => {
                     return [200, addressFormMock];
                 });
 
@@ -112,10 +112,10 @@ module Antares {
                 $http = $httpBackend;
 
                 // http backend
-                $http.whenGET(/\/api\/addressform\/countries\?entityType=Property/).respond(() => {
+                $http.whenGET(/\/api\/addressforms\/countries\?entityType=Property/).respond(() => {
                     return [200, countriesMock];
                 });
-                $http.whenGET(/\/api\/addressForm\/\?entityType=Property&countryCode=GB/).respond(() => {
+                $http.whenGET(/\/api\/addressForms\/\?entityType=Property&countryCode=GB/).respond(() => {
                     return [200, addressFormMock];
                 });
 
@@ -194,10 +194,10 @@ module Antares {
                 $http = $httpBackend;
 
                 // http backend
-                $http.whenGET(/\/api\/addressform\/countries\?entityType=Property/).respond(() => {
+                $http.whenGET(/\/api\/addressforms\/countries\?entityType=Property/).respond(() => {
                     return [200, countriesMock];
                 });
-                $http.whenGET(/\/api\/addressForm\/\?entityType=Property&countryCode=GB/).respond(() => {
+                $http.whenGET(/\/api\/addressForms\/\?entityType=Property&countryCode=GB/).respond(() => {
                     return [200, addressFormMock];
                 });
 

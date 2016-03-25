@@ -1,5 +1,4 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
-/// <reference path="../../../common/testhelpers/assertvalidators.ts" />
 
 module Antares {
     import RequirementAddController = Antares.Requirement.Add.RequirementAddController;
@@ -48,7 +47,7 @@ module Antares {
             $httpBackend: ng.IHttpBackendService) =>{
 
             $http = $httpBackend;
-            $http.whenGET(/\/api\/addressform\/countries/).respond(() => {
+            $http.whenGET(/\/api\/addressforms\/countries/).respond(() => {
                 return [200, []];
             });
 

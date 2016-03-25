@@ -1,8 +1,4 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
-/// <reference path="../../../common/models/dto/property.ts" />
-/// <reference path="../../../common/models/dto/address.ts" />
-/// <reference path="../../../common/models/dto/addressform.ts" />
-
 module Antares {
     import Dto = Antares.Common.Models.Dto;
     import PropertyEditController = Antares.Property.PropertyEditController;
@@ -37,10 +33,10 @@ module Antares {
                 $http = $httpBackend;
 
                 // http backend
-                $http.whenGET(/\/api\/addressform\/countries\?entityType=Property/).respond(() => {
+                $http.whenGET(/\/api\/addressforms\/countries\?entityType=Property/).respond(() => {
                     return [200, countriesMock];
                 });
-                $http.whenGET(/\/api\/addressForm\/\?entityType=Property&countryCode=GB/).respond(() => {
+                $http.whenGET(/\/api\/addressForms\/\?entityType=Property&countryCode=GB/).respond(() => {
                     return [200, addressFormMock];
                 });
 
