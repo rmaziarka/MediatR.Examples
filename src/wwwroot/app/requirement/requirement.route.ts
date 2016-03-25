@@ -9,7 +9,7 @@ module Antares.Requirement {
         $stateProvider
             .state('app.requirement-add', {
                 url: '/requirement/add',
-                template: '<requirement-add></requirement-add>'
+                template: '<requirement-add user-data="appVm.userData"></requirement-add>'
             })
             .state('app.requirement-view', {
                 url: '/requirement/:id',
