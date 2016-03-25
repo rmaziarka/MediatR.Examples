@@ -13,7 +13,9 @@ module Antares.Property.View {
             contactSidePanelId: 'viewProperty:contactSidePanelComponent',
             ownershipSidePanelId: 'viewProperty:ownershipSidePanelComponent',
             ownershipAddId: 'viewProperty:ownershipAddComponent',
-            ownershipViewId: 'viewProperty:ownershipViewComponent'
+            ownershipViewId: 'viewProperty:ownershipViewComponent',
+            activityAddId: 'viewProperty:activityAddComponent',
+            activitySidePanelId: 'viewProperty:activitySidePanelComponent'
         }
 
         ownershipAddPanelVisible: boolean = false;
@@ -21,11 +23,13 @@ module Antares.Property.View {
 
         components: any = {
             contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
+            activityAdd: () => { return this.componentRegistry.get(this.componentIds.activityAddId); },
             ownershipAdd: () => { return this.componentRegistry.get(this.componentIds.ownershipAddId); },
             ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewId); },
             panels: {
-                contact : () =>{ return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
-                ownershipView : () =>{ return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); },
+                contact : () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
+                ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); },
+                activity: () => { return this.componentRegistry.get(this.componentIds.activitySidePanelId); },
             }
         }
 
@@ -35,6 +39,7 @@ module Antares.Property.View {
 
         ownershipResource: Resources.IBaseResourceClass<Resources.IOwnershipResource>;
         property: Dto.Property;
+        activityResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityResource>;
 
         currentPanel: any;
 
@@ -46,6 +51,7 @@ module Antares.Property.View {
 
             this.propertyId = $state.params['id'];
             this.ownershipResource = dataAccessService.getOwnershipResource();
+            this.activityResource = dataAccessService.getActivityResource();
 
             $scope.$on('$destroy', () => {
                 this.componentRegistry.deregister(this.componentIds.contactListId);
@@ -54,6 +60,7 @@ module Antares.Property.View {
                 this.componentRegistry.deregister(this.componentIds.ownershipAddId);
                 this.componentRegistry.deregister(this.componentIds.ownershipViewId);
                 this.componentRegistry.deregister(this.componentIds.ownershipViewSidePanelId);
+                this.componentRegistry.deregister(this.componentIds.activityAddId);
             });
         }
 
@@ -68,6 +75,10 @@ module Antares.Property.View {
         showOwnershipView = (ownership: Antares.Common.Models.Dto.IOwnership) => {
             this.components.ownershipView().setOwnership(ownership);
             this.showPanel(this.components.panels.ownershipView);
+        }
+
+        showActivityAdd = () => {
+            this.showPanel(this.components.panels.activity);
         }
 
         showContactList = () => {
@@ -105,6 +116,20 @@ module Antares.Property.View {
                 .then((ownership: Antares.Common.Models.Dto.IOwnership) => {
                     this.components.panels.contact().hide();
                 });
+        }
+
+        saveActivity() {
+            // TODO implement functionality, this is just POC
+            var activityStatus = this.components.activityAdd().selectedActivityStatusId;
+            var activity: Antares.Common.Models.Dto.IActivity;
+
+            activity = {
+                propertyId: this.propertyId,
+                activityStatusId: activityStatus.id,
+                activityTypeId: activityStatus.id // todo set correct value
+            };
+
+            this.activityResource.save(activity).$promise.then((result:any) => { alert(result) });;
         }
 
         getOwnershipToSave() {

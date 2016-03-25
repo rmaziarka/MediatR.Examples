@@ -51,6 +51,11 @@ module Antares.Services {
             return <Resources.IBaseResourceClass<Resources.IEnumResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/enums/:code/items');
         }
+
+        getActivityResource(): Resources.IBaseResourceClass<Resources.IActivityResource> {
+            return <Resources.IBaseResourceClass<Resources.IActivityResource>>
+                this.$resource(this.appConfig.rootUrl + '/api/activities/:id');
+        }
     }
 
     angular.module('app').service('dataAccessService', DataAccessService);
