@@ -134,6 +134,7 @@
             Property actualProperty = this.fixture.DataContext.Property.Single(x => x.Id.Equals(expectedProperty.Id));
 
             actualProperty.ShouldBeEquivalentTo(expectedProperty, options => options
+                .Excluding(x => x.Activities)
                 .Excluding(x => x.Ownerships)
                 .Excluding(x => x.Address.AddressForm)
                 .Excluding(x => x.Address.Country)
