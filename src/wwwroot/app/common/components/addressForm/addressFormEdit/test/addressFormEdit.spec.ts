@@ -73,7 +73,7 @@ module Antares {
             });
 
             it('and address is not empty then address form is visible', () => {
-                $http.expectGET(/\/api\/addressForm\/\?entityType=Property&countryCode=GB/).respond(() => {
+                $http.expectGET(/\/api\/addressForms\/\?entityType=Property&countryCode=GB/).respond(() => {
                     return [200, addressFormMock];
                 });
 
