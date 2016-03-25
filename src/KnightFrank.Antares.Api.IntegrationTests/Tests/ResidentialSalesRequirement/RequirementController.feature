@@ -43,6 +43,7 @@ Scenario: Save residential sales requirement without contact
 	Then User should get BadRequest http status code
 
 @ResidentialSalesRequirements
+@Ignore
 Scenario: Save residential sales requirement without country
 	Given User gets GB address form for Property and country details
 		And User creates contacts in database with following data 

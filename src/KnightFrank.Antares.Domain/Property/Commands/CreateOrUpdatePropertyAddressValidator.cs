@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.Property.Commands
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -22,8 +23,8 @@
             IGenericRepository<AddressFieldDefinition> addressFieldDefinitionRepository,
             IGenericRepository<AddressForm> addressFormRepository)
         {
-            this.RuleFor(x => x.CountryId).NotNull();
-            this.RuleFor(x => x.AddressFormId).NotNull();
+            this.RuleFor(x => x.CountryId).NotEqual(Guid.Empty);
+            this.RuleFor(x => x.AddressFormId).NotEqual(Guid.Empty).NotNull();
 
             this.addressFieldDefinitionRepository = addressFieldDefinitionRepository;
             this.addressFormRepository = addressFormRepository;

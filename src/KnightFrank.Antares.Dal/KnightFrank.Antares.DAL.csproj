@@ -187,7 +187,7 @@
     <Compile Include="KnightFrankContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\BaseEntity.cs" />
-    <Compile Include="Model\Contact\Contact.cs" />
+    <Compile Include="Model\Contacts\Contact.cs" />
     <Compile Include="Model\Enum\EnumLocalised.cs" />
     <Compile Include="Model\Enum\EnumType.cs" />
     <Compile Include="Model\Enum\EnumTypeItem.cs" />

@@ -4,7 +4,7 @@
 
     using AutoMapper;
 
-    using KnightFrank.Antares.Dal.Model.Contact;
+    using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Contact.Commands;
 

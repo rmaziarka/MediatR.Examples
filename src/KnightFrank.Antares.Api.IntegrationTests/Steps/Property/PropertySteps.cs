@@ -138,7 +138,8 @@
                 .Excluding(x => x.Ownerships)
                 .Excluding(x => x.Address.AddressForm)
                 .Excluding(x => x.Address.Country)
-                .Excluding(x => x.Address.Line1));
+                .Excluding(x => x.Address.Line1)
+                .Excluding(x => x.Activities));
         }
         
         [Given(@"Property does not exist in DB")]

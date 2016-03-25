@@ -4,7 +4,7 @@
     using System.Collections.Generic;
 
     using KnightFrank.Antares.Dal.Model.Address;
-    using KnightFrank.Antares.Dal.Model.Contact;
+    using KnightFrank.Antares.Dal.Model.Contacts;
 
     public class Requirement : BaseEntity
     {
