@@ -51,17 +51,31 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [Then(@"Ownership added should be the same as sent in request")]
-        public void ThenOwnershipShouldBeTheSameAsSentInRequest()
+        [Given(@"Ownership exists in database")]
+        public void GivenFollowingOwnershipExistsInDataBase(Table table)
         {
-            var tableRequirement = this.scenarioContext.Get<CreateOwnershipCommand>("Ownership");
+            List<Ownership> ownerships = table.CreateSet<Ownership>().ToList();
+            foreach (var ownership in ownerships)
+            {
+                ownership.PropertyId = this.scenarioContext.Get<Guid>("AddedPropertyId");
+                ownership.OwnershipTypeId = this.scenarioContext.Get<Guid>("EnumTypeItemId");
+                ownership.Contacts = this.scenarioContext.Get<ICollection<Contact>>("Contact List");
+            }
+           
+            this.fixture.DataContext.Ownerships.AddRange(ownerships);
+            this.fixture.DataContext.SaveChanges();
+            
+            this.scenarioContext.Set(ownerships, "Added Ownership List");
+        }
 
-            AssertionOptions.AssertEquivalencyUsing(options =>
-                options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>()
-                );
+        [Then(@"Ownership list should be the same as in DB")]
+        public void ThenOwnershipReturnedShouldBeTheSameAsInDatabase()
+        {
+            var propertyFromResponse = JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent());
 
-            var databaseRequirement = JsonConvert.DeserializeObject<Ownership>(this.scenarioContext.GetResponseContent());
-            databaseRequirement.ShouldBeEquivalentTo(tableRequirement);
+            var ownershipFromDatabase = this.scenarioContext.Get<ICollection<Ownership>>("Added Ownership List");
+
+            propertyFromResponse.Ownerships.Count.Should().Be(ownershipFromDatabase.Count);
         }
     }
 }

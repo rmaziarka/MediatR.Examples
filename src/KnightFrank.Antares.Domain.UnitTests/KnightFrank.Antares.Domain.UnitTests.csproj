@@ -114,6 +114,7 @@
     <Compile Include="Contact\CommandHandlers\CreateContactCommandHandlerTests.cs" />
     <Compile Include="Enum\Queries\EnumQueryValidatorTests.cs" />
     <Compile Include="Enum\QueryHandlers\EnumQueryHandlerTests.cs" />
+    <Compile Include="FixtureExtension\OwnershipExtensions.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandHandlerTests.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandDomainValidatorTests.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandValidatorTests.cs" />

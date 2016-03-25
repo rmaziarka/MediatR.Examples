@@ -55,11 +55,12 @@
             CreateOwnershipCommandHandler commandHandler)
         {
             var result = new ValidationResult();
-            result.Errors.Add(new ValidationFailure(It.IsAny<string>(), It.IsAny<string>()));
+            var message = "test";
+            result.Errors.Add(new ValidationFailure("propertyName", message));
             ownershipDomainValidator.Setup(x => x.Validate(It.IsAny<CreateOwnershipCommand>())).Returns(result);
             
             // Act + Assert
-            Assert.Throws<DomainValidationException>(() => commandHandler.Handle(command)).Message.Should().Be("Ownership dates overlap.");
+            Assert.Throws<DomainValidationException>(() => commandHandler.Handle(command)).Message.Should().Be(message);
         }
     }
 }
