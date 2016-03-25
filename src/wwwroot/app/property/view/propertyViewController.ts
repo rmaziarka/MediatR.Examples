@@ -1,9 +1,9 @@
 /// <reference path="../../typings/_all.d.ts" />
-/// <reference path="../../common/models/dto/property.ts" />
 /// <reference path="../../common/models/resources.d.ts" />
 
 module Antares.Property.View {
-    import Dto = Antares.Common.Models.Dto;
+    import Dto = Common.Models.Dto;
+    import Resources = Common.Models.Resources;
 
     export class PropertyViewController {
         static $inject = ['dataAccessService', 'componentRegistry', '$scope', '$state'];
@@ -33,9 +33,9 @@ module Antares.Property.View {
         orderDescending: boolean = true;
         nullOnEnd: boolean = true;
 
-        ownershipResource: any;
-        property: any;
-        // propertyData:Dto.IProperty = new Dto.Property();
+        ownershipResource: Resources.IBaseResourceClass<Resources.IOwnershipResource>;
+        property: Dto.Property;
+
         currentPanel: any;
 
         constructor(
@@ -109,7 +109,7 @@ module Antares.Property.View {
 
         getOwnershipToSave() {
             var ownership = angular.copy(this.components.ownershipAdd().getOwnership());
-            ownership.ContactIds = ownership.contacts.map((item: any) => { return item.id; });
+            ownership.ContactIds = ownership.contacts.map((item: Dto.IContact) => { return item.id; });
             ownership.PropertyId = this.propertyId;
             ownership.OwnershipTypeId = ownership.ownershipType.id;
             delete ownership.contacts;
