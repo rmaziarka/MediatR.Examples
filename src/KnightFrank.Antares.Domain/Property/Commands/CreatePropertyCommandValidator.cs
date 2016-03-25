@@ -11,6 +11,7 @@
             IGenericRepository<AddressFieldDefinition> addressFieldDefinitionRepository,
             IGenericRepository<AddressForm> addressFormRepository)
         {
+            this.RuleFor(x => x.Address).NotNull();
             this.RuleFor(x => x.Address).SetValidator(new CreateOrUpdatePropertyAddressValidator(addressFieldDefinitionRepository, addressFormRepository));
         }
     }

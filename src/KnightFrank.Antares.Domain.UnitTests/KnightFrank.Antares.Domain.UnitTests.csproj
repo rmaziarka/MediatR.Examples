@@ -120,7 +120,9 @@
     <Compile Include="Ownership\Commands\CreateOwnershipCommandValidatorTests.cs" />
     <Compile Include="Property\CommandHandlers\UpdatePropertyCommandHandlerTests.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyAddressValidatorTests.cs" />
+    <Compile Include="Property\Commands\UpdatePropertyCommandValidatorTests.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandDomainValidatorTests.cs" />
+    <Compile Include="Property\Commands\CreatePropertyCommandValidatorTests.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandHandlerTests.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidatorTests.cs" />
     <Compile Include="InlineAutoMoqDataAttribute.cs" />
