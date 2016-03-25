@@ -37,7 +37,7 @@
             ValidationResult validationResult = this.ownershipDomainValidator.Validate(message);
             if (!validationResult.IsValid)
             {
-                throw new DomainValidationException("Ownership dates overlap.");
+                throw new DomainValidationException(validationResult.Errors.First().ErrorMessage);
             }
 
             var ownership = Mapper.Map<Ownership>(message);
