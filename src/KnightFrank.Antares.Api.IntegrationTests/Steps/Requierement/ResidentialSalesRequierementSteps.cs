@@ -112,6 +112,30 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
+        [When(@"User creates following requirement without address form using api")]
+        public void UserCreatesFollowingRequirementWithoutAddressForm(Table table)
+        {
+            string requestUrl = $"{ApiUrl}";
+
+            var contacts = this.scenarioContext.Get<List<Contact>>("Contact List");
+            var requirement = table.CreateInstance<CreateRequirementCommand>();
+
+            requirement.CreateDate = DateTime.Now;
+            requirement.Contacts = contacts.Select(contact => new ContactDto
+            {
+                Id = contact.Id,
+                FirstName = contact.FirstName,
+                Surname = contact.Surname,
+                Title = contact.Title
+            }).ToList();
+
+            requirement.Address = new CreateOrUpdateRequirementAddress { AddressFormId = Guid.Empty };
+
+            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
+
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
         [When(@"User creates following requirement without country using api")]
         public void UserCreatesFollowingRequirementWithoutCountry(Table table)
         {
@@ -179,7 +203,7 @@
                 options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>()
                 );
 
-            requirement.ShouldBeEquivalentTo(expectedRequirement, opt => opt.Excluding(req => req.Address.Country));
+            requirement.ShouldBeEquivalentTo(expectedRequirement, opt => opt.Excluding(req => req.Address.Country).Excluding(req => req.Address.AddressForm));
         }
     }
 }

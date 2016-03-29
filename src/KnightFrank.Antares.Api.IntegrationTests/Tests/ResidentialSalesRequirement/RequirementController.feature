@@ -43,13 +43,23 @@ Scenario: Save residential sales requirement without contact
 	Then User should get BadRequest http status code
 
 @ResidentialSalesRequirements
-@Ignore
 Scenario: Save residential sales requirement without country
 	Given User gets GB address form for Property and country details
 		And User creates contacts in database with following data 
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
 	When User creates following requirement without country using api			
+		| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description            |
+		| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | RequirementDescription |
+	Then User should get BadRequest http status code
+
+@ResidentialSalesRequirements
+Scenario: Save residential sales requirement without address form
+	Given User gets GB address form for Property and country details
+		And User creates contacts in database with following data 
+			| FirstName | Surname | Title  |
+			| Tomasz    | Bien    | Mister |
+	When User creates following requirement without address form using api			
 		| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description            |
 		| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | RequirementDescription |
 	Then User should get BadRequest http status code
