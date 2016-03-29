@@ -125,6 +125,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Steps\Property\ConfigurePropertyTypesForADivisionAndACountrySteps.cs" />
     <Compile Include="Extensions\FixtureExtension.cs" />
     <Compile Include="Fixtures\BaseTestClassFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -141,7 +142,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AddressFormController.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\ConfigurePropertyTypesForDivisionAndCountry.feature.cs">
+    <Compile Include="Tests\Property\ConfigurePropertyTypesForDivisionAndCountry.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ConfigurePropertyTypesForDivisionAndCountry.feature</DependentUpon>
@@ -200,7 +201,7 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>AddressFormController.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\ConfigurePropertyTypesForDivisionAndCountry.feature">
+    <None Include="Tests\Property\ConfigurePropertyTypesForDivisionAndCountry.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ConfigurePropertyTypesForDivisionAndCountry.feature.cs</LastGenOutput>
     </None>
