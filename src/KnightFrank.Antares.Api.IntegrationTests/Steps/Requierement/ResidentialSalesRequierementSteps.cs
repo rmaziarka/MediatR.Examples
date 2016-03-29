@@ -97,63 +97,51 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [When(@"User creates following requirement without contact using api")]
-        public void UserCreatesFollowingRequirementWithoutContact(Table table)
-        {
-            string requestUrl = $"{ApiUrl}";
-
-            var requirement = table.CreateInstance<CreateRequirementCommand>();
-
-            requirement.CreateDate = DateTime.Now;
-            requirement.Address = this.scenarioContext.Get<CreateOrUpdateRequirementAddress>("Location");
-
-            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
-
-            this.scenarioContext.SetHttpResponseMessage(response);
-        }
-
-        [When(@"User creates following requirement without address form using api")]
-        public void UserCreatesFollowingRequirementWithoutAddressForm(Table table)
+        [When(@"User creates following requirement without (contact|address form|country) using api")]
+        public void UserCreatesFollowingRequirementWithoutAddressForm(string missingData, Table table)
         {
             string requestUrl = $"{ApiUrl}";
 
             var contacts = this.scenarioContext.Get<List<Contact>>("Contact List");
             var requirement = table.CreateInstance<CreateRequirementCommand>();
+            var location = this.scenarioContext.Get<CreateOrUpdateRequirementAddress>("Location");
 
             requirement.CreateDate = DateTime.Now;
-            requirement.Contacts = contacts.Select(contact => new ContactDto
+
+            if (!missingData.Equals("contact"))
             {
-                Id = contact.Id,
-                FirstName = contact.FirstName,
-                Surname = contact.Surname,
-                Title = contact.Title
-            }).ToList();
-
-            requirement.Address = new CreateOrUpdateRequirementAddress { AddressFormId = Guid.Empty };
-
-            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
-
-            this.scenarioContext.SetHttpResponseMessage(response);
-        }
-
-        [When(@"User creates following requirement without country using api")]
-        public void UserCreatesFollowingRequirementWithoutCountry(Table table)
-        {
-            string requestUrl = $"{ApiUrl}";
-
-            var contacts = this.scenarioContext.Get<List<Contact>>("Contact List");
-            var requirement = table.CreateInstance<CreateRequirementCommand>();
-
-            requirement.CreateDate = DateTime.Now;
-            requirement.Contacts = contacts.Select(contact => new ContactDto
+                requirement.Contacts = contacts.Select(contact => new ContactDto
+                {
+                    Id = contact.Id,
+                    FirstName = contact.FirstName,
+                    Surname = contact.Surname,
+                    Title = contact.Title
+                }).ToList();
+            }
+            if (missingData.Equals("country"))
             {
-                Id = contact.Id,
-                FirstName = contact.FirstName,
-                Surname = contact.Surname,
-                Title = contact.Title
-            }).ToList();
-
-            requirement.Address = new CreateOrUpdateRequirementAddress { CountryId = Guid.Empty };
+                requirement.Address = new CreateOrUpdateRequirementAddress
+                {
+                    AddressFormId = location.AddressFormId,
+                    CountryId = Guid.Empty,
+                    Line2 = location.Line2,
+                    Postcode = location.Postcode,
+                    City = location.City
+                };
+            }
+            else if (missingData.Equals("address form"))
+            {
+                requirement.Address = new CreateOrUpdateRequirementAddress
+                {
+                    AddressFormId = Guid.Empty,
+                    CountryId = location.CountryId,
+                    Line2 = location.Line2,
+                    Postcode = location.Postcode,
+                    City = location.City
+                };
+            }
+            else
+                requirement.Address = location;
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
 
