@@ -1,271 +1,277 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Requirement.Commands
 {
+    using System;
     using System.Collections.Generic;
-
     using FluentValidation.Results;
-
+    using KnightFrank.Antares.Dal.Model.Address;
+    using KnightFrank.Antares.Dal.Model.Resource;
+    using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Contact;
     using KnightFrank.Antares.Domain.Requirement.Commands;
-
+    using Moq;
     using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.Xunit2;
-
+    using Ploeh.AutoFixture.AutoMoq;
     using Xunit;
 
     [Collection("CreateRequirementCommandValidator")]
     [Trait("FeatureTitle", "Requirements")]
     public class CreateRequirementCommandValidatorTests : IClassFixture<BaseTestClassFixture>
     {
-        private CreateRequirementCommand command;
+        private readonly CreateRequirementCommand command;
+        private readonly CreateRequirementCommandValidator validator;
+        private readonly Mock<IGenericRepository<AddressForm>> addressFormRepository;
+        private readonly Mock<IGenericRepository<Country>> countryRepository;
 
         public CreateRequirementCommandValidatorTests()
         {
-            this.command = new CreateRequirementCommand
-            {
-                MinPrice = 1,
-                MaxPrice = 2,
-                MinArea = 1000,
-                MaxArea = 2000,
-                MinBathrooms = 1,
-                MaxBathrooms = 2,
-                MinBedrooms = 1,
-                MaxBedrooms = 2,
-                MinLandArea = 10000,
-                MaxLandArea = 20000,
-                MinParkingSpaces = 1,
-                MaxParkingSpaces = 2,
-                MinReceptionRooms = 1,
-                MaxReceptionRooms = 2,
-                Contacts = new List<ContactDto> { new ContactDto { FirstName = "Michal", Surname = "Lenartowicz", Title = "Mr" } }
-            };
+            IFixture fixture = new Fixture()
+                .Customize(new AutoMoqCustomization());
+            fixture.Behaviors.Clear();
+            fixture.RepeatCount = 1;
+            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+
+            this.command = fixture.Build<CreateRequirementCommand>()
+                               .With(x => x.MinPrice, 1)
+                               .With(x => x.MaxPrice, 2)
+                               .With(x => x.MinArea, 1)
+                               .With(x => x.MaxArea, 2)
+                               .With(x => x.MinBathrooms, 1)
+                               .With(x => x.MaxBathrooms, 2)
+                               .With(x => x.MinBedrooms, 1)
+                               .With(x => x.MaxBedrooms, 2)
+                               .With(x => x.MinLandArea, 1)
+                               .With(x => x.MaxLandArea, 2)
+                               .With(x => x.MinParkingSpaces, 1)
+                               .With(x => x.MaxParkingSpaces, 2)
+                               .With(x => x.MinReceptionRooms, 1)
+                               .With(x => x.MaxReceptionRooms, 2)
+                               .With(x => x.Contacts, new List<ContactDto> { fixture.Create<ContactDto>() })
+                               .With(x => x.Address, new CreateOrUpdateRequirementAddress())
+                               .Create();
+
+            this.addressFormRepository = fixture.Freeze<Mock<IGenericRepository<AddressForm>>>();
+            this.addressFormRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new AddressForm());
+            this.countryRepository = fixture.Freeze<Mock<IGenericRepository<Country>>>();
+            this.countryRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new Country());
+
+            this.validator = fixture.Create<CreateRequirementCommandValidator>();
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_CorrectCreateRequirementCommand_When_Validating_Then_NoValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_CorrectCreateRequirementCommand_When_Validating_Then_NoValidationErrors()
         {
-            ValidationResult validationResult = validator.Validate(this.command);
+            ValidationResult validationResult = this.validator.Validate(this.command);
 
             Assert.True(validationResult.IsValid);
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithTooLongDescription_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithTooLongDescription_When_Validating_Then_ValidationErrors()
         {
             this.command.Description = string.Join(string.Empty, new Fixture().CreateMany<char>(4001));
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.Description));
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.Description));
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinPriceLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMinPriceLessThanZero_When_Validating_Then_ValidationErrors()
         {
             this.command.MinPrice = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MinPrice));
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MinPrice));
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMaxPriceLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMaxPriceLessThanZero_When_Validating_Then_ValidationErrors()
         {
             this.command.MaxPrice = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxPrice), 2);
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MaxPrice), 2);
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWitMinBedroomsLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWitMinBedroomsLessThanZero_When_Validating_Then_ValidationErrors()
         {
             this.command.MinBedrooms = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MinBedrooms));
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MinBedrooms));
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMaxBedroomsLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMaxBedroomsLessThanZero_When_Validating_Then_ValidationErrors()
         {
             this.command.MaxBedrooms = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxBedrooms), 2);
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MaxBedrooms), 2);
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWitMinReceptionRoomsLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWitMinReceptionRoomsLessThanZero_When_Validating_Then_ValidationErrors()
         {
             this.command.MinReceptionRooms = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MinReceptionRooms));
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MinReceptionRooms));
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMaxReceptionRoomsLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMaxReceptionRoomsLessThanZero_When_Validating_Then_ValidationErrors()
         {
             this.command.MaxReceptionRooms = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxReceptionRooms), 2);
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MaxReceptionRooms), 2);
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinBathroomsLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMinBathroomsLessThanZero_When_Validating_Then_ValidationErrors()
         {
             this.command.MinBathrooms = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MinBathrooms));
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MinBathrooms));
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMaxBathroomsLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMaxBathroomsLessThanZero_When_Validating_Then_ValidationErrors()
         {
             this.command.MaxBathrooms = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxBathrooms), 2);
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MaxBathrooms), 2);
         }
 
-
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinParkingSpacesLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMinParkingSpacesLessThanZero_When_Validating_Then_ValidationErrors()
         {
             this.command.MinParkingSpaces = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MinParkingSpaces));
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MinParkingSpaces));
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMaxParkingSpacesLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMaxParkingSpacesLessThanZero_When_Validating_Then_ValidationErrors()
         {
             this.command.MaxParkingSpaces = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxParkingSpaces), 2);
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MaxParkingSpaces), 2);
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinAreaLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMinAreaLessThanZero_When_Validating_Then_ValidationErrors()
         {
             this.command.MinArea = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MinArea));
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MinArea));
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMaxAreaLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMaxAreaLessThanZero_When_Validating_Then_ValidationErrors()
         {
             this.command.MaxArea = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxArea), 2);
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MaxArea), 2);
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinLandAreaLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMinLandAreaLessThanZero_When_Validating_Then_ValidationErrors()
         {
             this.command.MinLandArea = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MinLandArea));
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MinLandArea));
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMaxLandAreaLessThanZero_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMaxLandAreaLessThanZero_When_Validating_Then_ValidationErrors()
         {
             this.command.MaxLandArea = -1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxLandArea), 2);
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MaxLandArea), 2);
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinPriceGreaterThanMaxPrice_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMinPriceGreaterThanMaxPrice_When_Validating_Then_ValidationErrors()
         {
             this.command.MinPrice = 2;
             this.command.MaxPrice = 1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxPrice));
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MaxPrice));
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinBedroomsGreaterThanMaxBedrooms_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMinBedroomsGreaterThanMaxBedrooms_When_Validating_Then_ValidationErrors()
         {
             this.command.MinBedrooms = 2;
             this.command.MaxBedrooms = 1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxBedrooms));
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MaxBedrooms));
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinReceptionRoomsGreaterThanMaxReceptionRooms_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMinReceptionRoomsGreaterThanMaxReceptionRooms_When_Validating_Then_ValidationErrors()
         {
             this.command.MinReceptionRooms = 2;
             this.command.MaxReceptionRooms = 1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxReceptionRooms));
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MaxReceptionRooms));
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinBathroomsGreaterThanMaxBathrooms_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMinBathroomsGreaterThanMaxBathrooms_When_Validating_Then_ValidationErrors()
         {
             this.command.MinBathrooms = 2;
             this.command.MaxBathrooms = 1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxBathrooms));
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MaxBathrooms));
         }
 
-
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinParkingSpacesGreaterThanMaxParkingSpaces_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMinParkingSpacesGreaterThanMaxParkingSpaces_When_Validating_Then_ValidationErrors()
         {
             this.command.MinParkingSpaces = 2;
             this.command.MaxParkingSpaces = 1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxParkingSpaces));
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MaxParkingSpaces));
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinAreaGreaterThanMaxArea_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMinAreaGreaterThanMaxArea_When_Validating_Then_ValidationErrors()
         {
             this.command.MinArea = 2;
             this.command.MaxArea = 1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxArea));
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MaxArea));
         }
 
-
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithMinLandAreaGreaterThanMaxLandArea_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithMinLandAreaGreaterThanMaxLandArea_When_Validating_Then_ValidationErrors()
         {
             this.command.MinLandArea = 2;
             this.command.MaxLandArea = 1;
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.MaxLandArea));
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.MaxLandArea));
         }
 
-        [Theory]
-        [AutoData]
-        public void Given_IncorrectCreateRequirementCommandWithNoContacts_When_Validating_Then_ValidationErrors(CreateRequirementCommandValidator validator, Fixture fixture)
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithNoContacts_When_Validating_Then_ValidationErrors()
         {
             this.command.Contacts.Clear();
 
-            TestIncorrectCommand(validator, this.command, nameof(this.command.Contacts));
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.Contacts));
         }
-        
+
+        [Fact] 
+        public void Given_IncorrectCreateRequirementCommandWithNoAddress_When_Validating_Then_ValidationErrors()
+        {
+            this.addressFormRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns((AddressForm)null);
+
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.Address.AddressFormId));
+        }
+
+        [Fact]
+        public void Given_IncorrectCreateRequirementCommandWithNoCountry_When_Validating_Then_ValidationErrors()
+        {
+            this.countryRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns((Country)null);
+
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.Address.CountryId));
+        }
+
         // ReSharper disable once UnusedParameter.Local
         private static void TestIncorrectCommand(CreateRequirementCommandValidator validator, CreateRequirementCommand command, string testedPropertyName, int expectedErrorCount = 1)
         {
