@@ -52,9 +52,9 @@
             var details = table.CreateInstance<Address>();
 
             page.AddressTemplate.SelectPropertyCountry(table.Rows[0]["Country"])
+                .SetPropertyCity(details.City)
                 .SetPropertyAddressLine2(details.Line2)
-                .SetPropertyPostCode(details.Postcode)
-                .SetPropertyCity(details.City);
+                .SetPropertyPostCode(details.Postcode);
         }
 
         [When(@"User fills in property details on create residential sales requirement page")]
