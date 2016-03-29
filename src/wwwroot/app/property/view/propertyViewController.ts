@@ -107,15 +107,17 @@ module Antares.Property.View {
             this.ownershipAddPanelVisible = false;
         }
 
-        saveOwnership() {
-            var ownershipToSend = this.getOwnershipToSave();
+        saveOwnership(){
+            if (this.components.ownershipAdd().isDataValid()) {
+                var ownershipToSend = this.getOwnershipToSave();
 
-            this.propertyResource
-                .createOwnership({ propertyId: this.propertyId }, ownershipToSend)
-                .$promise
-                .then((ownership: Antares.Common.Models.Dto.IOwnership) => {
-                    this.components.panels.contact().hide();
-                });
+                this.propertyResource
+                    .createOwnership({ propertyId : this.propertyId }, ownershipToSend)
+                    .$promise
+                    .then((ownership: Antares.Common.Models.Dto.IOwnership) =>{
+                        this.components.panels.contact().hide();
+                    });
+            }
         }
 
         saveActivity() {

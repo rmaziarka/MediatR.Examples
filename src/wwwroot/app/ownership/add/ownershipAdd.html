@@ -13,7 +13,7 @@
                 <select class="form-control" required id="type" name="type" ng-options="item as item.value for item in vm.ownershipTypes.items track by item.id" ng-model="vm.ownership.ownershipType">
                     <option value=""></option>
                 </select>
-                <div ng-messages="addOwnershipForm.type.$error" ng-show="addOwnershipForm.type.$submitted || addOwnershipForm.type.$dirty">
+                <div ng-messages="addOwnershipForm.type.$error" ng-show="addOwnershipForm.$submitted || addOwnershipForm.type.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
@@ -24,50 +24,62 @@
             <input type="checkbox" ng-model="vm.ownership.isCurrentOwner"> current ownership
         </label>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{'has-error': (addOwnershipForm.$submitted || addOwnershipForm.purchaseDate.$dirty) && addOwnershipForm.purchaseDate.$invalid}">
         <div class="row">
             <div class="col-md-8">
                 <label for="purchasing-date">Purchasing date</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.ownership.purchaseDate" is-open="vm.datepickers.purchaseOpened" ng-required="true" close-text="Close" />
+                    <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="vm.ownership.purchaseDate" is-open="vm.datepickers.purchaseOpened" ng-required="true" close-text="Close" name="purchaseDate"/>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openPurchaseDate()"><i class="fa fa-calendar"></i></button>
                     </span>
                 </div>
+                <div ng-messages="addOwnershipForm.purchaseDate.$error" ng-show="addOwnershipForm.$submitted || addOwnershipForm.purchaseDate.$dirty">
+                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="form-group" ng-show="!vm.ownership.isCurrentOwner">
+    <div class="form-group" ng-show="!vm.ownership.isCurrentOwner" ng-class="{'has-error': (addOwnershipForm.$submitted || addOwnershipForm.sellDate.$dirty) && addOwnershipForm.sellDate.$invalid}">
         <div class="row">
             <div class="col-md-8">
                 <label for="purchasing-date">Selling date</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.ownership.sellDate" is-open="vm.datepickers.sellOpened" ng-required="true" close-text="Close" />
+                    <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="vm.ownership.sellDate" is-open="vm.datepickers.sellOpened" ng-required="true" close-text="Close" name="sellDate"/>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openSellDate()"><i class="fa fa-calendar"></i></button>
                     </span>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="row">
-            <div class="col-md-8">
-                <label for="buying-price">Buying price</label>
-                <div class="input-group">
-                    <input type="text" id="buying-price" class="form-control" ng-model="vm.ownership.buyPrice">
-                    <div class="input-group-addon">GBP</div>
+                <div ng-messages="addOwnershipForm.sellDate.$error" ng-show="addOwnershipForm.$submitted || addOwnershipForm.sellDate.$dirty">
+                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="form-group" ng-show="!vm.ownership.isCurrentOwner">
+    <div class="form-group"ng-class="{'has-error': (addOwnershipForm.$submitted || addOwnershipForm.buyPrice.$dirty) && addOwnershipForm.buyPrice.$invalid}">
+        <div class="row">
+            <div class="col-md-8">
+                <label for="buying-price">Buying price</label>
+                <div class="input-group">
+                    <input type="number" id="buying-price" max="{{vm.ownership.sellPrice}}" pattern="\d+([\.,]\d+)?" min="0" class="form-control" ng-model="vm.ownership.buyPrice" name="buyPrice">
+                    <div class="input-group-addon">GBP</div>
+                </div>
+                <div ng-messages="addOwnershipForm.buyPrice.$error" ng-show="addOwnershipForm.$submitted || addOwnershipForm.buyPrice.$dirty">
+                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group" ng-show="!vm.ownership.isCurrentOwner"ng-class="{'has-error': (addOwnershipForm.$submitted || addOwnershipForm.sellPrice.$dirty) && addOwnershipForm.sellPrice.$invalid}">
         <div class="row">
             <div class="col-md-8">
                 <label for="selling-price">Selling price</label>
                 <div class="input-group">
-                    <input type="text" id="selling-price" class="form-control" ng-model="vm.ownership.sellPrice">
+                    <input type="number" id="selling-price" pattern="\d+([\.,]\d+)?" min="0" class="form-control" ng-model="vm.ownership.sellPrice" name="sellPrice">
                     <div class="input-group-addon">GBP</div>
+                </div>
+                <div ng-messages="addOwnershipForm.sellPrice.$error" ng-show="addOwnershipForm.$submitted || addOwnershipForm.sellPrice.$dirty">
+                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
         </div>

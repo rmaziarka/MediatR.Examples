@@ -1,11 +1,11 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Property {
-    import IOwnership = Antares.Common.Models.Dto.IOwnership;
-    import IContact = Antares.Common.Models.Dto.IContact;
+    import IOwnership = Common.Models.Dto.IOwnership;
+    import IContact = Common.Models.Dto.IContact;
 
     export class OwnershipAddController {
-        static $inject = ['componentRegistry', 'dataAccessService'];
+        static $inject = ['componentRegistry', 'dataAccessService', '$scope'];
 
         componentId: string;
         ownership: IOwnership = <IOwnership>{};
@@ -13,11 +13,12 @@ module Antares.Property {
         datepickers: any = {
             purchaseOpened: false,
             sellOpened: false
-        }
+        };
 
         constructor(
-            componentRegistry: Antares.Core.Service.ComponentRegistry,
-            private dataAccessService: Antares.Services.DataAccessService) {
+            componentRegistry: Core.Service.ComponentRegistry,
+            private dataAccessService: Services.DataAccessService,
+            private $scope: ng.IScope) {
 
             this.ownershipTypes = dataAccessService.getEnumResource().get({ code: 'OwnershipType' });
             componentRegistry.register(this, this.componentId);
@@ -37,6 +38,12 @@ module Antares.Property {
 
         openSellDate = () => {
             this.datepickers.sellOpened = true;
+        }
+
+        isDataValid = (): boolean =>{
+            var form = this.$scope["addOwnershipForm"];
+            form.$setSubmitted();
+            return form.$valid;
         }
     }
 
