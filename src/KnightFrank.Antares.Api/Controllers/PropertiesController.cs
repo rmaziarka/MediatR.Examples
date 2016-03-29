@@ -1,12 +1,14 @@
 ﻿namespace KnightFrank.Antares.API.Controllers
 {
     using System;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
 
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.Ownership.Commands;
+    using KnightFrank.Antares.Domain.Ownership.Queries;
     using KnightFrank.Antares.Domain.Property.Commands;
     using KnightFrank.Antares.Domain.Property.Queries;
     using KnightFrank.Antares.Domain.Property.QueryResults;
@@ -77,14 +79,26 @@
         }
 
         /// <summary>
-        /// Create requirement
+        ///     Creates the ownership.
         /// </summary>
-        /// <returns>Requirement identifier.</returns>
+        /// <param name="id">Property Id</param>
+        /// <param name="command">Ownership data</param>
+        /// <returns>Updated property</returns>
         [HttpPost]
         [Route("{id}/ownerships")]
-        public Guid CreateOwnership(CreateOwnershipCommand command)
+        public Property CreateOwnership(Guid id, CreateOwnershipCommand command)
         {
-            return this.mediator.Send(command);
+            command.PropertyId = id;
+            this.mediator.Send(command);
+
+            var ownerships =
+                this.mediator.Send(new OwnershipByPropertyIdQuery() { PropertyId = command.PropertyId }).ToList();
+
+            return new Property()
+            {
+                Id = command.PropertyId,
+                Ownerships = ownerships
+            };
         }
 
         /// <summary>

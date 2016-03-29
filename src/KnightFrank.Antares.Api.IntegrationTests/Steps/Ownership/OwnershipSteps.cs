@@ -40,15 +40,17 @@
         public void WhenUserCreatesAnOwnershipForExistingProperty(Table table)
         {
             var ownership = table.CreateInstance<CreateOwnershipCommand>();
+            var propertyId = this.scenarioContext.Get<Guid>("AddedPropertyId");
 
-            string requestUrl = string.Format($"{ApiUrl}", ownership.PropertyId);
+            string requestUrl = string.Format($"{ApiUrl}", propertyId);
 
-            ownership.PropertyId = this.scenarioContext.Get<Guid>("AddedPropertyId");
             ownership.OwnershipTypeId = this.scenarioContext.Get<Guid>("EnumTypeItemId");
             ownership.ContactIds = this.scenarioContext.Get<ICollection<Contact>>("Contact List").Select(x => x.Id).ToList();
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, ownership);
             this.scenarioContext.SetHttpResponseMessage(response);
+
+            this.scenarioContext.Set(ownership, "Added Ownership");
         }
 
         [Given(@"Ownership exists in database")]
@@ -61,10 +63,10 @@
                 ownership.OwnershipTypeId = this.scenarioContext.Get<Guid>("EnumTypeItemId");
                 ownership.Contacts = this.scenarioContext.Get<ICollection<Contact>>("Contact List");
             }
-           
+
             this.fixture.DataContext.Ownerships.AddRange(ownerships);
             this.fixture.DataContext.SaveChanges();
-            
+
             this.scenarioContext.Set(ownerships, "Added Ownership List");
         }
 
@@ -74,8 +76,46 @@
             var propertyFromResponse = JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent());
 
             var ownershipFromDatabase = this.scenarioContext.Get<ICollection<Ownership>>("Added Ownership List");
+            
+            propertyFromResponse.Ownerships.ShouldAllBeEquivalentTo(ownershipFromDatabase, options => options
+                .Excluding(x => x.Property)
+                .Excluding(x => x.OwnershipType));
+        }
 
-            propertyFromResponse.Ownerships.Count.Should().Be(ownershipFromDatabase.Count);
+        [Then(@"Created Ownership is saved in database")]
+        public void ThenTheResultsShouldBeSameAsCreated()
+        {
+            var propertyId = this.scenarioContext.Get<Guid>("AddedPropertyId");
+
+            var actualOwnership = this.scenarioContext.Get<CreateOwnershipCommand>("Added Ownership");
+
+            Ownership expectedOwnership =
+                this.fixture.DataContext.Ownerships.Single(x => x.PropertyId.Equals(propertyId));
+
+            actualOwnership.ShouldBeEquivalentTo(expectedOwnership, options => options
+                .Excluding(x => x.ContactIds)
+                .Excluding(x => x.PropertyId));
+
+            propertyId.ShouldBeEquivalentTo(expectedOwnership.PropertyId);
+
+            actualOwnership.ContactIds.ShouldAllBeEquivalentTo(expectedOwnership.Contacts.Select(x => x.Id));
+        }
+
+        [Then(@"Response contains property with ownership")]
+        public void ThenResponseContainsPropertyWithOwnership()
+        {
+            var propertyId = this.scenarioContext.Get<Guid>("AddedPropertyId");
+
+            var propertyFromResponse = JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent());
+
+            Ownership actualOwnership = propertyFromResponse.Ownerships.Single();
+
+            Ownership expectedOwnership =
+                this.fixture.DataContext.Ownerships.Single(x => x.PropertyId.Equals(propertyId));
+
+            actualOwnership.ShouldBeEquivalentTo(expectedOwnership, options => options
+                .Excluding(x => x.Property)
+                .Excluding(x => x.OwnershipType));
         }
     }
 }

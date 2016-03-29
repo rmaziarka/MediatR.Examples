@@ -14,6 +14,8 @@ Scenario: Save ownership
 			| PurchaseDate | SellDate   | BuyPrice | SellPrice |
 			| 01-05-2010   | 01-04-2012 | 1000000  | 1200000   |
 	Then User should get OK http status code
+        And Created Ownership is saved in database
+        And Response contains property with ownership
 
 @Property
 Scenario: Save ownership where dates are overlapping

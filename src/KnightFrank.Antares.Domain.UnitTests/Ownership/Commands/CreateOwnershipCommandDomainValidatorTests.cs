@@ -71,8 +71,8 @@
             this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>()))
                 .Returns(new List<Ownership>()
                 {
-                    this.fixture.BuildOwnership(new DateTime(1990, 1, 1), new DateTime(1980, 1, 1)),
-                    this.fixture.BuildOwnership(new DateTime(2015, 1, 1), new DateTime(2010, 1, 1))
+                    this.fixture.BuildOwnership(new DateTime(1980, 1, 1), new DateTime(1990, 1, 1)),
+                    this.fixture.BuildOwnership(new DateTime(2010, 1, 1), new DateTime(2015, 1, 1))
                 });
 
             ValidationResult validationResult = this.validator.Validate(this.command);
@@ -163,13 +163,35 @@
         }
 
         [Fact]
+        public void Given_ClosedInternalPeriodOverlap_When_Validating_Then_ValidationErrors()
+        {
+            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>())).Returns(new List<Ownership>()
+            {
+                this.fixture.BuildOwnership(new DateTime(2006, 1, 1), new DateTime(2007, 1, 1))
+            }.AsQueryable());
+
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.PurchaseDate));
+        }
+
+        [Fact]
+        public void Given_ClosedExternalPeriodOverlap_When_Validating_Then_ValidationErrors()
+        {
+            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>())).Returns(new List<Ownership>()
+            {
+                this.fixture.BuildOwnership(new DateTime(1999, 1, 1), new DateTime(2011, 1, 1))
+            }.AsQueryable());
+
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.PurchaseDate));
+        }
+
+        [Fact]
         public void Given_IncorrectOwnershipType_When_Validating_Then_ValidationErrors()
         {
             this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>()))
                 .Returns(new List<Ownership>()
                 {
-                    this.fixture.BuildOwnership(new DateTime(1990, 1, 1), new DateTime(1980, 1, 1)),
-                    this.fixture.BuildOwnership(new DateTime(2015, 1, 1), new DateTime(2010, 1, 1))
+                    this.fixture.BuildOwnership(new DateTime(1980, 1, 1), new DateTime(1990, 1, 1)),
+                    this.fixture.BuildOwnership(new DateTime(2010, 1, 1), new DateTime(2015, 1, 1))
                 });
 
             this.enumTypeItemRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new EnumTypeItem()
