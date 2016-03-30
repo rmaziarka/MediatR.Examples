@@ -2,11 +2,9 @@
 
 Scenario: Create new residential sales requirement
 	Given User navigates to create contact page
-	When User fills in contact details on create contact page
-		| Title | FirstName | Surname |
-		| Miss  | Alana     | Jones   |
-		And User clicks save button on create contact page
-	Then New contact should be created
+		And User creates contacts on create contact page
+			| Title | FirstName | Surname |
+			| Miss  | Alana     | Jones   |
 	When User navigates to create residential sales requirement page
 		And User selects contacts on create residential sales requirement page
 			| FirstName | Surname |

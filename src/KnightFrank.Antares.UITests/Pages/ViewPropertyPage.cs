@@ -1,5 +1,8 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
@@ -9,11 +12,13 @@
         //locators for property address area
         private readonly ElementLocator expectedAddressField = new ElementLocator(Locator.XPath, "//address-form-view//span[text()='{0}']");
         private readonly ElementLocator editButton = new ElementLocator(Locator.CssSelector, "button[ng-click*='goToEdit']");
-
         //locators for property details area
         //
         //locators for property ownership area
-        //
+        private readonly ElementLocator addOwernship = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
+        private readonly ElementLocator ownershipContacts = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'property.ownerships']:nth-of-type({0}) span[ng-repeat *= 'contact']");
+        private readonly ElementLocator ownershipDetails = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'property.ownerships']:nth-of-type({0}) small");
+        private readonly ElementLocator viewOwnershipDetails = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'property.ownerships']:nth-of-type({0}) a[ng-click *= 'showOwnershipView']");
         //locators for property activities area
         private readonly ElementLocator addActivityButton = new ElementLocator(Locator.Id, string.Empty);
         private readonly ElementLocator activityDate = new ElementLocator(Locator.Id, string.Empty);
@@ -22,6 +27,10 @@
         
 
         public CreateActivityPage Activity => new CreateActivityPage(this.DriverContext);
+
+        public OwnershipDetailsPage Ownership => new OwnershipDetailsPage(this.DriverContext);
+
+        public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
 
         public ViewPropertyPage(DriverContext driverContext) : base(driverContext)
         {
@@ -62,6 +71,28 @@
         {
             this.Driver.GetElement(this.editButton).Click();
             return new CreatePropertyPage(this.DriverContext);
+        }
+
+        public ViewPropertyPage SetOwnership()
+        {
+            this.Driver.GetElement(this.addOwernship).Click();
+            return this;
+        }
+
+        public List<string> GetOwnershipContacts(int position)
+        {
+            List<string> contacts = this.Driver.GetElements(this.ownershipContacts.Format(position)).Select(c => c.Text.Replace(",", "")).ToList();
+            return contacts;
+        }
+
+        public string GetOwnershipDetails(int position)
+        {
+            return this.Driver.GetElement(this.ownershipDetails.Format(position)).Text;
+        }
+
+        public void OpenOwnershipDetails(int position)
+        {
+            this.Driver.GetElement(this.viewOwnershipDetails.Format(position)).Click();
         }
     }
 }

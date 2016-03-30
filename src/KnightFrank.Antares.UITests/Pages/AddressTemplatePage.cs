@@ -87,6 +87,7 @@
         // Country
         public AddressTemplatePage SelectPropertyCountry(string country)
         {
+            this.Driver.WaitForAngularToFinish();
             var select = this.Driver.GetElement<Select>(this.propertyCountry);
             if (!select.SelectElement().SelectedOption.Text.Equals(country))
             {

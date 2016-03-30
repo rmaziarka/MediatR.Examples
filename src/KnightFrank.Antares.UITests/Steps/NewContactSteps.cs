@@ -1,7 +1,8 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
-    
+    using System.Collections.Generic;
+
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.UITests.Pages;
 
@@ -32,6 +33,20 @@
         {
             NewContactPage page = new NewContactPage(this.driverContext).OpenNewContactPage();
             this.scenarioContext["NewContactPage"] = page;
+        }
+
+        [Given(@"User creates contacts on create contact page")]
+        public void CreateContacts(Table table)
+        {
+            var page = this.scenarioContext.Get<NewContactPage>("NewContactPage");
+            IEnumerable<Contact> contacts = table.CreateSet<Contact>();
+            foreach (Contact contact in contacts)
+            {
+                page.SetTitle(contact.Title)
+                    .SetFirstName(contact.FirstName)
+                    .SetSurname(contact.Surname)
+                    .SaveNewContact();
+            }
         }
 
         [When(@"User fills in contact details on create contact page")]

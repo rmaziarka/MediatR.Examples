@@ -29,6 +29,7 @@
         }
 
         [Given(@"User navigates to create property page")]
+        [When(@"User navigates to create property page")]
         public void OpenCreatePropertyPage()
         {
             CreatePropertyPage page = new CreatePropertyPage(this.driverContext).OpenAddPropertyPage();

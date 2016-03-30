@@ -11,7 +11,8 @@
         private readonly ElementLocator contact = new ElementLocator(Locator.XPath, "//label[normalize-space(text()) = '{0}']//input");
         private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "[ng-show *= 'isLoading']");
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, "div.side-panel");
-        private readonly ElementLocator saveButton = new ElementLocator(Locator.CssSelector, "button[ng-click = 'vm.updateContacts()']");
+        private readonly ElementLocator saveButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'updateContacts']");
+        private readonly ElementLocator configureButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showOwnershipAdd']");
 
         public ContactsListPage(DriverContext driverContext) : base(driverContext)
         {
@@ -44,6 +45,11 @@
         {
             this.Driver.GetElement(this.saveButton).Click();
             return this;
+        }
+
+        public void ConfigureOwnership()
+        {
+            this.Driver.GetElement(this.configureButton).Click();
         }
     }
 }
