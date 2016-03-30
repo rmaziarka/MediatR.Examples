@@ -38,7 +38,7 @@ module Antares.Services {
 
         getCountryResource(): CountryResourceClass {
             return <CountryResourceClass>
-                this.$resource(this.appConfig.rootUrl + '/api/addressforms/countries?entityType=:entityTypeCode');
+                this.$resource(this.appConfig.rootUrl + '/api/resources/countries/addressform?entityTypeItemCode=:entityTypeCode');
         }
 
         getAddressFormResource(): AddressFormResourceClass {

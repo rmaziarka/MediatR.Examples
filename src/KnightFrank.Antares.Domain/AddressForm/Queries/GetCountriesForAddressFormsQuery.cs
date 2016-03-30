@@ -10,6 +10,6 @@
     {
         public string LocaleIsoCode { get; set; }
 
-        public string EntityType { get; set; }
+        public string EntityTypeItemCode { get; set; }
     }
 }

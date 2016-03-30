@@ -47,7 +47,7 @@ module Antares {
             $httpBackend: ng.IHttpBackendService) =>{
 
             $http = $httpBackend;
-            $http.whenGET(/\/api\/addressforms\/countries/).respond(() => {
+            $http.whenGET(/\/api\/resources\/countries\/addressform/).respond(() => {
                 return [200, []];
             });
 

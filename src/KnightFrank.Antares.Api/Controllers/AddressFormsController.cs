@@ -41,18 +41,6 @@
         }
 
         /// <summary>
-        ///    Get all countries that have defined address form for given entity type
-        /// </summary>
-        /// <param name="query"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("countries")]
-        public IList<CountryLocalisedResult> GetCountries([FromUri(Name = "")] GetCountriesForAddressFormsQuery query)
-        {
-            return this.mediator.Send(query);
-        }
-
-        /// <summary>
         /// Gets the address form query result.
         /// </summary>
         /// <param name="id">The identifier.</param>

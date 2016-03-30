@@ -36,7 +36,7 @@ module Antares {
                 $http = $httpBackend;
 
                 // http backend
-                $http.expectGET(/\/api\/addressforms\/countries\?entityType=Property/).respond(() =>{
+                $http.expectGET(/\/api\/resources\/countries\/addressform\?entityTypeItemCode=Property/).respond(() =>{
                     return [200, countriesMock];
                 });
             }));
@@ -112,7 +112,7 @@ module Antares {
                 $http = $httpBackend;
 
                 // http backend
-                $http.whenGET(/\/api\/addressforms\/countries\?entityType=Property/).respond(() => {
+                $http.whenGET(/\/api\/resources\/countries\/addressform\?entityTypeItemCode=Property/).respond(() => {
                     return [200, countriesMock];
                 });
                 $http.whenGET(/\/api\/addressForms\/\?entityType=Property&countryCode=GB/).respond(() => {
@@ -194,7 +194,7 @@ module Antares {
                 $http = $httpBackend;
 
                 // http backend
-                $http.whenGET(/\/api\/addressforms\/countries\?entityType=Property/).respond(() => {
+                $http.whenGET(/\/api\/resources\/countries\/addressform\?entityTypeItemCode=Property/).respond(() => {
                     return [200, countriesMock];
                 });
                 $http.whenGET(/\/api\/addressForms\/\?entityType=Property&countryCode=GB/).respond(() => {

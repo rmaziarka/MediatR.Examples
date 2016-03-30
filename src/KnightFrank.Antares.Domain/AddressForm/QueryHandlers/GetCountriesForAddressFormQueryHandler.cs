@@ -35,7 +35,7 @@
 
         public List<CountryLocalisedResult> Handle(GetCountriesForAddressFormsQuery message)
         {
-            EnumTypeItem enumTypeItem = this.enumTypeItemRepository.Get().SingleOrDefault(i => i.Code == message.EntityType && i.EnumType.Code == "EntityType");
+            EnumTypeItem enumTypeItem = this.enumTypeItemRepository.Get().SingleOrDefault(i => i.Code == message.EntityTypeItemCode && i.EnumType.Code == "EntityType");
 
             if (enumTypeItem == null)
             {

@@ -7,7 +7,7 @@
         public GetCountriesForAddressFormsQueryValidator()
         {
             this.RuleFor(x => x).NotNull();
-            this.RuleFor(x => x.EntityType).NotEmpty();
+            this.RuleFor(x => x.EntityTypeItemCode).NotEmpty();
         }
     }
 }

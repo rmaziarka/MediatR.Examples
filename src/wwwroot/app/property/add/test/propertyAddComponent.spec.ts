@@ -35,7 +35,7 @@ module Antares {
                 $http = $httpBackend;
 
                 // http backend
-                $http.whenGET(/\/api\/addressforms\/countries\?entityType=Property/).respond(() => {
+                $http.whenGET(/\/api\/resources\/countries\/addressform\?entityTypeItemCode=Property/).respond(() => {
                     return [200, countriesMock];
                 });
 

@@ -56,7 +56,7 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [Given(@"There is a AddressForm for (.*) country code")]
+        [Given(@"There is an AddressForm for (.*) country code")]
         public void GivenThereIsAddressFormForUk(string countryIsoCode)
         {
             if (this.fixture.DataContext.Country.FirstOrDefault(c => c.IsoCode == countryIsoCode) == null)
@@ -82,22 +82,6 @@
 
             this.fixture.DataContext.AddressFormEntityType.Add(addressFormEntityType);
             this.fixture.DataContext.SaveChanges();
-        }
-
-        [When(@"User retrieves countries for (.*) EnumTypeItem")]
-        public void WhenUserRetrievesCountriesForPropertyEnumTypeItem(string enumTypeItemCode)
-        {
-            string requestUrl = $"{ApiUrl}/countries?entityType=" + enumTypeItemCode;
-            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
-            this.scenarioContext.SetHttpResponseMessage(response);
-        }
-
-        [Then(@"Result contains single item with (.*) isoCode")]
-        public void ThenListContainsItemWithIsoCode(string countryIsoCode)
-        {
-            var result = JsonConvert.DeserializeObject<List<CountryLocalisedResult>>(this.scenarioContext.GetResponseContent());
-
-            result.Should().ContainSingle(x => x.Country.IsoCode == countryIsoCode);
-        }
+        }    
     }
 }

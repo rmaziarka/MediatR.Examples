@@ -137,6 +137,7 @@
     <Compile Include="Steps\Ownership\OwnershipSteps.cs" />
     <Compile Include="Steps\Property\PropertySteps.cs" />
     <Compile Include="Steps\Requierement\ResidentialSalesRequierementSteps.cs" />
+    <Compile Include="Steps\Resources\ResourcesSteps.cs" />
     <Compile Include="Tests\AddressForm\AddressFormController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -176,6 +177,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RequirementController.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\ResourcesController.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourcesController.feature</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +234,10 @@
     <None Include="Tests\Property\OwnershipController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>OwnershipController.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\ResourcesController.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ResourcesController.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup />

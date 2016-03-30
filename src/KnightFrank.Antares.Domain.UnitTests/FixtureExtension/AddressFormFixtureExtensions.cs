@@ -28,7 +28,7 @@
             string isoCode)
         {
             return fixture.Build<GetCountriesForAddressFormsQuery>()
-                .With(q => q.EntityType, entityTypeCode)
+                .With(q => q.EntityTypeItemCode, entityTypeCode)
                 .With(q => q.LocaleIsoCode, isoCode)
                 .Create();
         }

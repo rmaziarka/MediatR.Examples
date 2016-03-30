@@ -36,9 +36,9 @@
             GetCountriesForAddressFormsQuery query)
         {
             // Arrange
-            query.EntityType = value;
+            query.EntityTypeItemCode = value;
 
-            TestIncorrectCommand(validator, query, nameof(query.EntityType));
+            TestIncorrectCommand(validator, query, nameof(query.EntityTypeItemCode));
         }
 
         private static void TestIncorrectCommand(
