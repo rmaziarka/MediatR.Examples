@@ -27,6 +27,12 @@ module Antares.Property {
             this.ownership.contacts = contacts;
         }
 
+        clearOwnership = () => {
+            this.ownership = new Dto.Ownership();
+            var form = this.$scope["addOwnershipForm"];
+            form.$setPristine();
+        }
+
         getOwnership = () => {
             return this.ownership;
         }

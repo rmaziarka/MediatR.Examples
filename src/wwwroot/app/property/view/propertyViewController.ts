@@ -100,6 +100,7 @@ module Antares.Property.View {
         }
 
         cancelUpdateContacts() {
+            this.components.ownershipAdd().clearOwnership();
             this.components.panels.contact().hide();
         }
 
@@ -117,6 +118,7 @@ module Antares.Property.View {
                     .then((property: Antares.Common.Models.Dto.IProperty) => {
                         this.components.panels.contact().hide();
                         this.property.ownerships = property.ownerships;
+                        this.components.ownershipAdd().clearOwnership();
                     });
             }
         }
