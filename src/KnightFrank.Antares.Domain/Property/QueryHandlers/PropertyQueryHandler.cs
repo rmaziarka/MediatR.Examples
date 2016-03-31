@@ -20,16 +20,16 @@
 
         public Property Handle(PropertyQuery message)
         {
-            Property property =
-                this.propertyRepository
-                    .Get()
+            Property result =
+                this.propertyRepository.Get()
                     .Include(p => p.Ownerships.Select(o => o.Contacts))
                     .Include(p => p.Ownerships.Select(o => o.OwnershipType))
                     .Include(p => p.Address)
-                    .Include(p => p.Activities.Select(a => a.ActivityStatus))
+                    .Include(p => p.Activities.Select(a => a.ActivityStatus).Select(s => s.EnumLocaliseds))
+                    .Include(p => p.Activities.Select(a => a.ActivityType).Select(t => t.EnumLocaliseds))
                     .FirstOrDefault(p => p.Id == message.Id);
 
-            return property;
+            return result;
         }
     }
 }
