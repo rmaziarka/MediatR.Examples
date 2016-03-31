@@ -1,13 +1,10 @@
 ﻿namespace KnightFrank.Antares.Domain.Contact.QueryHandlers
 {
-    using System.Data.Entity;
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
-    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Contact.Queries;
-    using KnightFrank.Antares.Domain.Requirement.Queries;
 
     using MediatR;
 

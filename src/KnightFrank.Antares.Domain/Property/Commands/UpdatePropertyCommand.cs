@@ -9,5 +9,7 @@
         public Guid Id { get; set; }
 
         public CreateOrUpdatePropertyAddress Address { get; set; }
+
+        public Guid PropertyTypeId { get; set; }
     }
 }

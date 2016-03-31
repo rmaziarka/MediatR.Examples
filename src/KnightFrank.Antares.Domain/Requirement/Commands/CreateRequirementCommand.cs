@@ -4,9 +4,7 @@
     using System.Collections.Generic;
 
     using Contact;
-
-    using KnightFrank.Antares.Dal.Model.Property;
-
+    
     using MediatR;
 
     public class CreateRequirementCommand : IRequest<Guid>
