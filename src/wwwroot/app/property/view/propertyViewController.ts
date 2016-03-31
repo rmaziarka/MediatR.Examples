@@ -29,7 +29,7 @@ module Antares.Property.View {
             panels: {
                 contact : () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
                 ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); },
-                activity: () => { return this.componentRegistry.get(this.componentIds.activitySidePanelId); },
+                activity: () => { return this.componentRegistry.get(this.componentIds.activitySidePanelId); }
             }
         }
 
@@ -44,14 +44,16 @@ module Antares.Property.View {
         currentPanel: any;
 
         constructor(
-            private dataAccessService: Antares.Services.DataAccessService,
-            private componentRegistry: Antares.Core.Service.ComponentRegistry,
+            private dataAccessService: Services.DataAccessService,
+            private componentRegistry: Core.Service.ComponentRegistry,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService) {
 
             this.propertyId = $state.params['id'];
             this.propertyResource = dataAccessService.getPropertyResource();
             this.activityResource = dataAccessService.getActivityResource();
+
+            this.fixOwnershipDates();
 
             $scope.$on('$destroy', () => {
                 this.componentRegistry.deregister(this.componentIds.contactListId);
@@ -64,6 +66,13 @@ module Antares.Property.View {
             });
         }
 
+        fixOwnershipDates = () => {
+            this.property.ownerships.forEach((ownership: Common.Models.Dto.IOwnership) =>{
+                ownership.purchaseDate = Core.DateTimeUtils.convertDateToUtc(ownership.purchaseDate);
+                ownership.sellDate = Core.DateTimeUtils.convertDateToUtc(ownership.sellDate);
+            });
+        }
+
         showOwnershipAdd = () => {
             //TODO: Temporarily solution. Change with dynamic changing of configure button based on selection of contacts
             if (this.components.contactList().getSelected().length > 0) {
@@ -72,7 +81,7 @@ module Antares.Property.View {
             }
         }
 
-        showOwnershipView = (ownership: Antares.Common.Models.Dto.IOwnership) => {
+        showOwnershipView = (ownership: Common.Models.Dto.IOwnership) => {
             this.components.ownershipView().setOwnership(ownership);
             this.showPanel(this.components.panels.ownershipView);
         }
@@ -120,7 +129,7 @@ module Antares.Property.View {
         saveActivity() {
             // TODO implement functionality, this is just POC
             var activityStatus = this.components.activityAdd().selectedActivityStatusId;
-            var activity: Antares.Common.Models.Dto.IActivity;
+            var activity: Common.Models.Dto.IActivity;
 
             activity = {
                 propertyId: this.propertyId,

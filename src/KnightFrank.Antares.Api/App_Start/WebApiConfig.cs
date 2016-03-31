@@ -19,7 +19,8 @@
                 SerializerSettings = new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    DateTimeZoneHandling = DateTimeZoneHandling.Utc
                 }
             });
 

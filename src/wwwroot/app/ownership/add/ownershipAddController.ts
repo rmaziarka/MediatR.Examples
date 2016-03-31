@@ -38,7 +38,10 @@ module Antares.Property {
             return propertyResource
                 .createOwnership({ propertyId: propertyId }, createOwnershipCommand)
                 .$promise
-                .then((ownership: Antares.Common.Models.Dto.IOwnership) =>{
+                .then((ownership: Common.Models.Dto.IOwnership) => {
+                    ownership.purchaseDate = Core.DateTimeUtils.convertDateToUtc(ownership.purchaseDate);
+                    ownership.sellDate = Core.DateTimeUtils.convertDateToUtc(ownership.sellDate);
+
                     this.ownerships.push(ownership);
                 });
         }
@@ -47,6 +50,9 @@ module Antares.Property {
             var ownership: any = angular.copy(this.ownership);
             ownership.contactIds = ownership.contacts.map((item: Dto.IContact) => { return item.id; });
             ownership.ownershipTypeId = ownership.ownershipType.id;
+            ownership.purchaseDate = Core.DateTimeUtils.createDateAsUtc(ownership.purchaseDate);
+            ownership.sellDate = Core.DateTimeUtils.createDateAsUtc(ownership.sellDate);
+
             delete ownership.contacts;
             delete ownership.ownershipType;
 
