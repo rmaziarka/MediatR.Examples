@@ -10,7 +10,7 @@ namespace KnightFrank.Antares.Dal.Migrations
                 "dbo.Activity",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         CreatedAt = c.DateTime(nullable: false),
                         LastModifiedAt = c.DateTime(nullable: false),
                     })
