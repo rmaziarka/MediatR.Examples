@@ -14,5 +14,9 @@
         public virtual ICollection<Ownership> Ownerships { get; set; } = new List<Ownership>();
 
         public virtual ICollection<Activity> Activities { get; set; } = new List<Activity>();
+
+        public Guid PropertyTypeId { get; set; }
+        
+        public virtual PropertyType PropertyType { get; set; }
     }
 }

@@ -70,7 +70,9 @@
             var address = table.CreateInstance<Address>();
             address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
             address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
-            var property = new Property { Address = address };
+
+            Guid propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
+            var property = new Property { Address = address, PropertyTypeId = propertyTypeId };
 
             this.fixture.DataContext.Property.Add(property);
             this.fixture.DataContext.SaveChanges();
@@ -78,14 +80,24 @@
             this.scenarioContext.Set(property.Id, "AddedPropertyId");
         }
 
+        [Given(@"User gets (.*) for PropertyType")]
+        public void GetPropertyTypeId(string propertyTypeCode)
+        {
+            PropertyType propertyType =
+                this.fixture.DataContext.PropertyType.Single(
+                    i => i.Code.Equals(propertyTypeCode));
+            this.scenarioContext.Set(propertyType.Id, "PropertyTypeId");
+        }
+        
         [When(@"Users updates property with defined address for (.*) id by Api")]
         public void WhenUsersUpdatesProperty(string id)
         {
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
+            Guid propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
 
             var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
 
-            var updatedProperty = new UpdatePropertyCommand { Address = address, Id = propertyId };
+            var updatedProperty = new UpdatePropertyCommand { Address = address, Id = propertyId, PropertyTypeId = propertyTypeId };
 
             HttpResponseMessage response = this.fixture.SendPutRequest(ApiUrl, updatedProperty);
             this.scenarioContext.SetHttpResponseMessage(response);
@@ -98,11 +110,12 @@
             string requestUrl = $"{ApiUrl}";
 
             var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
-
+            var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
+            
             address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
             address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
 
-            var property = new CreatePropertyCommand { Address = address };
+            var property = new CreatePropertyCommand { Address = address, PropertyTypeId = propertyTypeId };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, property);
             this.scenarioContext.SetHttpResponseMessage(response);
@@ -139,7 +152,8 @@
                 .Excluding(x => x.Address.AddressForm)
                 .Excluding(x => x.Address.Country)
                 .Excluding(x => x.Address.Line1)
-                .Excluding(x => x.Activities));
+                .Excluding(x => x.Activities)
+                .Excluding(x => x.PropertyType));
         }
         
         [Given(@"Property does not exist in DB")]

@@ -125,6 +125,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="DropCreateSeedDatabaseAlwaysInitializer.cs" />
     <Compile Include="Steps\Property\ConfigurePropertyTypesForADivisionAndACountrySteps.cs" />
     <Compile Include="Extensions\FixtureExtension.cs" />
     <Compile Include="Fixtures\BaseTestClassFixture.cs" />

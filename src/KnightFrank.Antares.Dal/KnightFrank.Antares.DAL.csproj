@@ -49,7 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DropCreateSeedDatabaseAlwaysInitializer.cs" />
     <Compile Include="Migrations\201603081357064_InitialDataBase.cs" />
     <Compile Include="Migrations\201603081357064_InitialDataBase.Designer.cs">
       <DependentUpon>201603081357064_InitialDataBase.cs</DependentUpon>
@@ -153,6 +152,10 @@
     <Compile Include="Migrations\201603251322039_RemoveCurentOwnerFromOwnership.cs" />
     <Compile Include="Migrations\201603251322039_RemoveCurentOwnerFromOwnership.Designer.cs">
       <DependentUpon>201603251322039_RemoveCurentOwnerFromOwnership.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603310727026_AddPropertyTypeIdToProperty.cs" />
+    <Compile Include="Migrations\201603310727026_AddPropertyTypeIdToProperty.Designer.cs">
+      <DependentUpon>201603310727026_AddPropertyTypeIdToProperty.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Address\Address.cs" />
     <Compile Include="Model\Address\AddressField.cs" />
@@ -308,6 +311,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603251322039_RemoveCurentOwnerFromOwnership.resx">
       <DependentUpon>201603251322039_RemoveCurentOwnerFromOwnership.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603310727026_AddPropertyTypeIdToProperty.resx">
+      <DependentUpon>201603310727026_AddPropertyTypeIdToProperty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -4,6 +4,7 @@
 Scenario: Save ownership
     Given User gets GB address form for Property and country details
         And User gets EnumTypeItemId for OwnershipType EnumType code and Freeholder EnumTypeItem code
+        And User gets House for PropertyType
         And Property with Address is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
@@ -21,6 +22,7 @@ Scenario: Save ownership
 Scenario: Save ownership where dates are overlapping
     Given User gets GB address form for Property and country details
         And User gets EnumTypeItemId for OwnershipType EnumType code and Freeholder EnumTypeItem code
+        And User gets House for PropertyType
         And Property with Address is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
@@ -38,6 +40,7 @@ Scenario: Save ownership where dates are overlapping
 @Property
 Scenario: Get property with ownership list
 	Given User gets GB address form for Property and country details
+        And User gets House for PropertyType
         And User gets EnumTypeItemId for OwnershipType EnumType code and Freeholder EnumTypeItem code
         And Property with Address is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |

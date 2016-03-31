@@ -6,6 +6,7 @@ Scenario: Create property
 		And Address for add/update property is defined
 				| PropertyName | PropertyNumber | Line2           | Line3 | Postcode | City | County |
 				| updated abc  | 2              | 55 Baker Street |       | N1C      |      |        |
+        And User gets House for PropertyType
 	When User creates property with defined address by Api
 	Then User should get OK http status code
 		And The created Property is saved in data base
@@ -16,6 +17,7 @@ Scenario Outline: Try to create property with invalid data
 		And Address for add/update property is defined
 				| PropertyName | PropertyNumber | Line2           | Line3 | Postcode   | City | County |
 				| updated abc  | 2              | 55 Baker Street |       | <postCode> |      |        |
+        And User gets House for PropertyType
 	When User creates property with defined address by Api
 	Then User should get <statusCode> http status code
 
@@ -32,6 +34,7 @@ Scenario Outline: Try to create property with invalid data
 @Property
 Scenario: Update property in DB
 	Given User gets GB address form for Property and country details
+        And User gets House for PropertyType
 		And Property with Address is in data base
 			| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
 			| abc          | 1              | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
@@ -44,8 +47,9 @@ Scenario: Update property in DB
 
 
 @Property
-Scenario Outline: Update non exisitng property
+Scenario Outline: Update non existing property
 	Given User gets GB address form for Property and country details
+        And User gets House for PropertyType
 		And Property with Address is in data base
 				| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
 				| abc          | 1              | Lewis Cubit Square | King Cross | N1C      | London | Greater London |

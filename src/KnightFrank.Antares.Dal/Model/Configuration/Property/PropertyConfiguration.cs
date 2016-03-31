@@ -5,6 +5,8 @@
         public PropertyConfiguration()
         {
             this.HasRequired(p => p.Address).WithMany().HasForeignKey(p => p.AddressId);
+
+            this.HasRequired(p => p.PropertyType);
         }
     }
 }
