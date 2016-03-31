@@ -92,6 +92,7 @@ module Antares.Property.View {
                 })
                 .finally(() => { this.loadingContacts = false; });
 
+            this.components.ownershipAdd().clearOwnership();
             this.showPanel(this.components.panels.contact);
         }
 
@@ -112,6 +113,7 @@ module Antares.Property.View {
             promise
             .then(() => {
                     this.components.panels.contact().hide();
+                    this.components.ownershipAdd().clearOwnership();
                 });   
         }
 

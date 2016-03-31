@@ -57,6 +57,13 @@ module Antares.Property {
             this.ownership.contacts = contacts;
         }
 
+        clearOwnership = () => {
+            this.ownership = new Dto.Ownership();
+            this.ownership.purchaseDate = null;
+            this.ownership.sellDate = null;
+            var form = this.$scope["addOwnershipForm"];
+            form.$setPristine();
+        }
         openPurchaseDate = () => {
             this.datepickers.purchaseOpened = true;
         }
