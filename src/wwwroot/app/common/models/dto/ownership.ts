@@ -9,5 +9,16 @@
         isCurrentOwner: boolean;
         ownershipType: number;
         contacts: IContact[];
+
+        constructor(){
+            this.createDate = null;
+            this.purchaseDate = null;
+            this.sellDate = null;
+            this.buyPrice = null;
+            this.sellPrice = null;
+            this.isCurrentOwner = null;
+            this.ownershipType = null;
+            this.contacts = [];
+        }
     }
 }
