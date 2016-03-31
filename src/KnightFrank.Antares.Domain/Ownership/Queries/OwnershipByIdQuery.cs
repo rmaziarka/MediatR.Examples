@@ -7,8 +7,8 @@
 
     using MediatR;
 
-    public class OwnershipByPropertyIdQuery : IRequest<IEnumerable<Ownership>>
+    public class OwnershipByIdQuery : IRequest<Ownership>
     {
-        public Guid PropertyId { get; set; }
+        public Guid OwnershipId { get; set; }
     }
 }

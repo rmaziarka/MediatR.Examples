@@ -70,7 +70,7 @@
         <contact-list component-id="vm.componentIds.contactListId" ng-show="!vm.ownershipAddPanelVisible">
         </contact-list>
 
-        <ownership-add component-id="vm.componentIds.ownershipAddId" ng-show="vm.ownershipAddPanelVisible">
+        <ownership-add component-id="vm.componentIds.ownershipAddId" ownerships="vm.property.ownerships"  ng-show="vm.ownershipAddPanelVisible">
         </ownership-add>
     </side-panel-content>
     <side-panel-footer>

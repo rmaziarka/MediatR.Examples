@@ -7,7 +7,8 @@ module Antares.Property {
         controller: 'OwnershipAddController',
         transclude : true,
         bindings: {
-            componentId: '<'
+            componentId: '<',
+            ownerships: '='
         }
     });
 }

@@ -9,23 +9,23 @@
 
     using MediatR;
 
-    public class OwnershipByPropertyIdQueryHandler : IRequestHandler<OwnershipByPropertyIdQuery, IEnumerable<Ownership>>
+    public class OwnershipByIdQueryHandler : IRequestHandler<OwnershipByIdQuery, Ownership>
     {
         private readonly IReadGenericRepository<Ownership> ownershipRepository;
 
-        public OwnershipByPropertyIdQueryHandler(IReadGenericRepository<Ownership> ownershipRepository)
+        public OwnershipByIdQueryHandler(IReadGenericRepository<Ownership> ownershipRepository)
         {
             this.ownershipRepository = ownershipRepository;
         }
 
-        public IEnumerable<Ownership> Handle(OwnershipByPropertyIdQuery message)
+        public Ownership Handle(OwnershipByIdQuery message)
         {
-            var ownerships =
+            var ownership =
                 this.ownershipRepository
-                    .GetWithInclude(o=>o.Contacts)
-                    .Where(o=>o.PropertyId.Equals(message.PropertyId));
+                    .GetWithInclude(o=>o.Contacts, o => o.OwnershipType)
+                    .First(o=>o.Id.Equals(message.OwnershipId));
 
-            return ownerships;
+            return ownership;
         }
     }
 }

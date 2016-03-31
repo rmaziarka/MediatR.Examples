@@ -108,17 +108,11 @@ module Antares.Property.View {
         }
 
         saveOwnership(){
-            if (this.components.ownershipAdd().isDataValid()) {
-                var ownershipToSend = this.getOwnershipToSave();
-
-                this.propertyResource
-                    .createOwnership({ propertyId : this.propertyId }, ownershipToSend)
-                    .$promise
-                    .then((property: Antares.Common.Models.Dto.IProperty) => {
-                        this.components.panels.contact().hide();
-                        this.property.ownerships = property.ownerships;
-                    });
-            }
+            var promise = this.components.ownershipAdd().saveOwnership(this.property.id);
+            promise
+            .then(() => {
+                    this.components.panels.contact().hide();
+                });   
         }
 
         saveActivity() {
@@ -133,17 +127,6 @@ module Antares.Property.View {
             };
 
             this.activityResource.save(activity).$promise.then((result:any) => { alert(result) });;
-        }
-
-        getOwnershipToSave() {
-            var ownership = angular.copy(this.components.ownershipAdd().getOwnership());
-            ownership.ContactIds = ownership.contacts.map((item: Dto.IContact) => { return item.id; });
-            ownership.PropertyId = this.propertyId;
-            ownership.OwnershipTypeId = ownership.ownershipType.id;
-            delete ownership.contacts;
-            delete ownership.ownershipType;
-
-            return ownership;
         }
 
         private hidePanels(hideCurrent: boolean = true) {

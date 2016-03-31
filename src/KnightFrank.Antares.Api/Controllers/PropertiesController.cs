@@ -86,19 +86,15 @@
         /// <returns>Updated property</returns>
         [HttpPost]
         [Route("{id}/ownerships")]
-        public Property CreateOwnership(Guid id, CreateOwnershipCommand command)
+        public Ownership CreateOwnership(Guid id, CreateOwnershipCommand command)
         {
             command.PropertyId = id;
-            this.mediator.Send(command);
+            Guid ownershipId = this.mediator.Send(command);
 
-            var ownerships =
-                this.mediator.Send(new OwnershipByPropertyIdQuery() { PropertyId = command.PropertyId }).ToList();
+            var ownership =
+                this.mediator.Send(new OwnershipByIdQuery() { OwnershipId = ownershipId });
 
-            return new Property()
-            {
-                Id = command.PropertyId,
-                Ownerships = ownerships
-            };
+            return ownership;
         }
 
         /// <summary>
