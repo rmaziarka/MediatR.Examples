@@ -1,14 +1,13 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Property {
-    import IOwnership = Common.Models.Dto.IOwnership;
-    import IContact = Common.Models.Dto.IContact;
+    import Dto = Common.Models.Dto;
 
     export class OwnershipAddController {
         static $inject = ['componentRegistry', 'dataAccessService', '$scope'];
 
         componentId: string;
-        ownership: IOwnership = <IOwnership>{};
+        ownership: Dto.IOwnership = new Dto.Ownership();
         ownershipTypes: any;
         datepickers: any = {
             purchaseOpened: false,
@@ -24,8 +23,14 @@ module Antares.Property {
             componentRegistry.register(this, this.componentId);
         }
 
-        loadOwnership = (contacts: IContact[]) => {
+        loadOwnership = (contacts: Dto.IContact[]) => {
             this.ownership.contacts = contacts;
+        }
+
+        clearOwnership = () => {
+            this.ownership = new Dto.Ownership();
+            var form = this.$scope["addOwnershipForm"];
+            form.$setPristine();
         }
 
         getOwnership = () => {

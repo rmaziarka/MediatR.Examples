@@ -100,6 +100,7 @@ module Antares.Property.View {
         }
 
         cancelUpdateContacts() {
+            this.components.ownershipAdd().clearOwnership();
             this.components.panels.contact().hide();
         }
 
@@ -114,8 +115,10 @@ module Antares.Property.View {
                 this.propertyResource
                     .createOwnership({ propertyId : this.propertyId }, ownershipToSend)
                     .$promise
-                    .then((ownership: Antares.Common.Models.Dto.IOwnership) =>{
+                    .then((property: Antares.Common.Models.Dto.IProperty) => {
                         this.components.panels.contact().hide();
+                        this.property.ownerships = property.ownerships;
+                        this.components.ownershipAdd().clearOwnership();
                     });
             }
         }
