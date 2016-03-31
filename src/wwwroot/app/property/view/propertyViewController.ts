@@ -122,7 +122,6 @@ module Antares.Property.View {
             promise
             .then(() => {
                     this.components.panels.contact().hide();
-                    this.components.ownershipAdd().clearOwnership();
                 });   
         }
 

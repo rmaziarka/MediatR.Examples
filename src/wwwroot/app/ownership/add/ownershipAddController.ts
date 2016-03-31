@@ -65,8 +65,6 @@ module Antares.Property {
 
         clearOwnership = () => {
             this.ownership = new Dto.Ownership();
-            this.ownership.purchaseDate = null;
-            this.ownership.sellDate = null;
             var form = this.$scope["addOwnershipForm"];
             form.$setPristine();
         }
