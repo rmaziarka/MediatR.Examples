@@ -1,0 +1,10 @@
+<div ng-transclude="header"></div>
+<div class="form-group">
+    <button type="button" id="addItemBtn" class="btn btn-default" ng-click="clvm.showItemAdd()"><i class="fa fa-plus-circle"></i></button>
+</div>
+<div id="no-items-element" ng-show="clvm.items.length === 0" ng-transclude="noItems"></div>
+
+<div class="panel panel-default" ng-repeat="item in clvm.items | orderBy: clvm.itemsOrder">
+    <card card-template-url="clvm.cardTemplateUrl" item="item" show-item-details="clvm.showItemDetails"></card>
+</div>
+

@@ -1,8 +1,10 @@
 ﻿{
   "COMMON": {
     "SAVE": "Save",
+    "CANCEL": "Cancel",
     "MIN": "Min",
-    "MAX": "Max"
+    "MAX": "Max",
+    "DETAILS": "details"
   },
   "OWNERSHIP": {
     "ADD": {
