@@ -30,7 +30,7 @@ module Antares {
                     return [200, staticTranslationMock];
                 });
 
-                httpBackend.whenGET(/\/api\/enums\/translations\/.*/).respond(() => {                    
+                httpBackend.whenGET(/\/api\/translations\/enums\/.*/).respond(() => {                    
                     return [200, enumsTranslationMock];
                 });
                 

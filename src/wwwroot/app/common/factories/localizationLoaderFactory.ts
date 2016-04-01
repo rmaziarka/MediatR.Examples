@@ -13,7 +13,7 @@ module Antares.Factories {
             var deferred = this.$q.defer();
             
             var staticTranslationsPromise = this.dataAccessService.getStaticTranslationResource().get({ isoCode: options.key }).$promise;
-            var enumTranslationsPromise = this.dataAccessService.getEnumItemTranslationResource().get({ isoCode: options.key }).$promise;
+            var enumTranslationsPromise = this.dataAccessService.getEnumTranslationResource().get({ isoCode: options.key }).$promise;
 
             this.$q.all([staticTranslationsPromise, enumTranslationsPromise]).then(
                 (promisesResults : any) => {                    

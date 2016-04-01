@@ -8,7 +8,7 @@ declare module Antares.Common.Models {
             code: string;
         }
 
-        interface IEnumItemTranslationResourceParameters {
+        interface ITranslationResourceParameters {
             isoCode: string;
         }
 
@@ -18,11 +18,9 @@ declare module Antares.Common.Models {
             get(params: IEnumResourceParameters): T;            
         }
 
-        interface IEnumResourceClass<T> extends IBaseResourceClass<T> {            
+        interface ITranslationResourceClass<T> extends IBaseResourceClass<T> {            
             get(): T;
-            get(params: IBaseResourceParameters): T;
-            get(params: IEnumResourceParameters): T;
-            get(params: IEnumItemTranslationResourceParameters): T;
+            get(params: ITranslationResourceParameters): T;
         }
 
         // *** IResource extensions***

@@ -54,18 +54,18 @@ module Antares.Services {
                 });
         }
 
-        getEnumResource(): Resources.IEnumResourceClass<Resources.IEnumResource> {
-            return <Resources.IEnumResourceClass<Resources.IEnumResource>>
+        getEnumResource(): Resources.IBaseResourceClass<Resources.IEnumResource> {
+            return <Resources.IBaseResourceClass<Resources.IEnumResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/enums/:code/items');
         }
 
-        getEnumItemTranslationResource(): Resources.IEnumResourceClass<any> {
-            return <Resources.IEnumResourceClass<any>>
-                this.$resource(this.appConfig.rootUrl + '/api/enums/translations/:isoCode');
+        getEnumTranslationResource(): Resources.ITranslationResourceClass<any> {
+            return <Resources.ITranslationResourceClass<any>>
+                this.$resource(this.appConfig.rootUrl + '/api/translations/enums/:isoCode');
         }
 
-        getStaticTranslationResource(): Resources.IEnumResourceClass<any> {
-            return <Resources.IEnumResourceClass<any>>
+        getStaticTranslationResource(): Resources.ITranslationResourceClass<any> {
+            return <Resources.ITranslationResourceClass<any>>
                 this.$resource('/translations/:isoCode.json');
         }
 
