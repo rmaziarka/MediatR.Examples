@@ -51,6 +51,11 @@
             return queryable.AsEnumerable();
         }
 
+        public bool Any(Expression<Func<T, bool>> predicate)
+        {
+            return this.dbSet.Any(predicate);
+        }
+
         public virtual void Save()
         {
             DateTime utcNow = DateTime.UtcNow;

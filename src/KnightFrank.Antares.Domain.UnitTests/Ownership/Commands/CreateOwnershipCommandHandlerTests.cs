@@ -4,9 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-
-    using FluentAssertions;
-
+    
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
@@ -16,9 +14,11 @@
     using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Antares.Domain.Ownership.CommandHandlers;
     using KnightFrank.Antares.Domain.Ownership.Commands;
+    using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
 
     using Moq;
 
+    using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
@@ -47,20 +47,18 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_OverlappingDates_When_Handle_Then_ShouldReturnDomainException(
+        public void Given_IncorrectCommand_When_Handle_Then_ShouldReturnDomainException(
             [Frozen] Mock<IGenericRepository<Ownership>> ownershipRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             [Frozen] Mock<IDomainValidator<CreateOwnershipCommand>> ownershipDomainValidator,
             CreateOwnershipCommand command,
-            CreateOwnershipCommandHandler commandHandler)
+            CreateOwnershipCommandHandler commandHandler,
+            Fixture fixture)
         {
-            var result = new ValidationResult();
-            var message = "test";
-            result.Errors.Add(new ValidationFailure("propertyName", message));
-            ownershipDomainValidator.Setup(x => x.Validate(It.IsAny<CreateOwnershipCommand>())).Returns(result);
+            ownershipDomainValidator.Setup(x => x.Validate(It.IsAny<CreateOwnershipCommand>())).Returns(fixture.BuildValidationResult());
             
-            // Act + Assert
-            Assert.Throws<DomainValidationException>(() => commandHandler.Handle(command)).Message.Should().Be(message);
+            Assert.Throws<DomainValidationException>(() => commandHandler.Handle(command));
+            ownershipRepository.Verify(p => p.Save(), Times.Never);
         }
     }
 }

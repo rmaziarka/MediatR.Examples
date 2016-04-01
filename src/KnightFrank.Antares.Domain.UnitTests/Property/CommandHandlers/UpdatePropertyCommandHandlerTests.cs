@@ -9,10 +9,13 @@
     using Domain.Property.CommandHandlers;
 
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Property.Commands;
+    using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
 
     using Moq;
 
+    using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
@@ -50,6 +53,23 @@
             // Assert
             property.Address.ShouldBeEquivalentTo(command.Address, options => options.IncludingProperties().ExcludingMissingMembers());
             propertyRepository.Verify(p => p.Save(), Times.Once);
+        }
+
+        [Theory]
+        [InlineAutoMoqData]
+        public void Given_UpdatePropertyCommand_When_HandleInvalidProperty_Then_ShouldThrowException(
+           UpdatePropertyCommand command,
+           Property property,
+           [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
+           [Frozen] Mock<IGenericRepository<PropertyTypeDefinition>> propertyTypeDefinitionRepository,
+           [Frozen] Mock<IDomainValidator<Property>> validator,
+           UpdatePropertyCommandHandler handler,
+           Fixture fixture)
+        {
+            validator.Setup(r => r.Validate(It.IsAny<Property>())).Returns(fixture.BuildValidationResult());
+            
+            Assert.Throws<DomainValidationException>(() => handler.Handle(command));
+            propertyRepository.Verify(p => p.Save(), Times.Never);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace KnightFrank.Antares.Api.Controllers
 {
-    using System.Collections.Generic;
     using System.Web.Http;
 
     using KnightFrank.Antares.Domain.AddressForm.Queries;
