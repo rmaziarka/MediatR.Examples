@@ -106,9 +106,7 @@
         {
             var propertyId = this.scenarioContext.Get<Guid>("AddedPropertyId");
 
-            var propertyFromResponse = JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent());
-
-            Ownership actualOwnership = propertyFromResponse.Ownerships.Single();
+            var actualOwnership = JsonConvert.DeserializeObject<Ownership>(this.scenarioContext.GetResponseContent());
 
             Ownership expectedOwnership =
                 this.fixture.DataContext.Ownerships.Single(x => x.PropertyId.Equals(propertyId));
