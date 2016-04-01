@@ -8,10 +8,21 @@ declare module Antares.Common.Models {
             code: string;
         }
 
+        interface IEnumItemTranslationResourceParameters {
+            isoCode: string;
+        }
+
         interface IBaseResourceClass<T> extends ng.resource.IResourceClass<T> {
             get(): T;
             get(params: IBaseResourceParameters): T;
+            get(params: IEnumResourceParameters): T;            
+        }
+
+        interface IEnumResourceClass<T> extends IBaseResourceClass<T> {            
+            get(): T;
+            get(params: IBaseResourceParameters): T;
             get(params: IEnumResourceParameters): T;
+            get(params: IEnumItemTranslationResourceParameters): T;
         }
 
         // *** IResource extensions***

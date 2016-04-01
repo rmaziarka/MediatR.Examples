@@ -141,7 +141,9 @@
                 };
             }
             else
+            {
                 requirement.Address = location;
+            }
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
 
@@ -191,7 +193,8 @@
                 options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>()
                 );
 
-            requirement.ShouldBeEquivalentTo(expectedRequirement, opt => opt.Excluding(req => req.Address.Country).Excluding(req => req.Address.AddressForm));
+            requirement.ShouldBeEquivalentTo(expectedRequirement,
+                opt => opt.Excluding(req => req.Address.Country).Excluding(req => req.Address.AddressForm));
         }
     }
 }

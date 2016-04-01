@@ -6,11 +6,13 @@ module Antares.Activity {
 
         componentId: string;
         activityStatuses: any;
-        selectedActivityStatusId: number;
+        selectedActivityStatus: any;
+        defaultActivityStatusCode: string = 'PreAppraisal';
 
         constructor(
             componentRegistry: Antares.Core.Service.ComponentRegistry,
-            private dataAccessService: Antares.Services.DataAccessService) {
+            private dataAccessService: Antares.Services.DataAccessService,
+            private $scope: ng.IScope) {
 
             componentRegistry.register(this, this.componentId);
 
@@ -18,7 +20,19 @@ module Antares.Activity {
         }
 
         onActivityStatusLoaded = (result: any) => {
+            var defaultActivityStatus: any = _.find(result.items, { 'code' : this.defaultActivityStatusCode });
+
+            if (defaultActivityStatus) {
+                this.selectedActivityStatus = defaultActivityStatus;
+            }
+
             this.activityStatuses = result.items;
+        }
+
+        isDataValid = (): boolean => {
+            var form = this.$scope["addActivityForm"];
+            form.$setSubmitted();
+            return form.$valid;
         }
     }
 

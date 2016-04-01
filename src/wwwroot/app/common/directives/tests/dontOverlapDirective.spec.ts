@@ -125,11 +125,10 @@ module Antares {
 
                 describe('there are no validation errors', () => {
                     it('when both values form a range above defined ranges', () =>{
-                        debugger;
                         scope.maxValue = new Date(2005, 1, 1);
                         scope.form.minValue.$setViewValue(new Date(2004, 1, 1));
                         scope.$apply();
-                        debugger;
+
                         expect(scope.form.minValue.$valid).toBeTruthy();
                     });
 

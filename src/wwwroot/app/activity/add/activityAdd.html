@@ -1,11 +1,14 @@
-﻿<form>
-    <div class="form-group">
+﻿<form ng-submit="addActivityForm.$valid" name="addActivityForm" id="addActivityForm" method="post">
+    <div class="form-group" ng-class="{'has-error': (addActivityForm.$submitted || addActivityForm.status.$dirty) && addActivityForm.status.$invalid}">
         <div class="row">
             <div class="col-md-9">
                 <label for="status" class="">Status</label>
-                <select class="form-control" required id="status" name="type" ng-options="item as item.value for item in vm.activityStatuses track by item.id" ng-model="vm.selectedActivityStatusId">
+                <select class="form-control" required id="status" name="status" ng-options="item as item.value for item in vm.activityStatuses track by item.id" ng-model="vm.selectedActivityStatus">
                     <option value=""></option>
                 </select>
+                <div ng-messages="addActivityForm.status.$error" ng-show="addActivityForm.$submitted || addActivityForm.status.$dirty">
+                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                </div>
             </div>
         </div>
     </div>

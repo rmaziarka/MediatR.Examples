@@ -43,8 +43,7 @@
             var propertyId = this.scenarioContext.Get<Guid>("AddedPropertyId");
 
             string requestUrl = string.Format($"{ApiUrl}", propertyId);
-
-            ownership.OwnershipTypeId = this.scenarioContext.Get<Guid>("EnumTypeItemId");
+            ownership.OwnershipTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Freeholder"];
             ownership.ContactIds = this.scenarioContext.Get<ICollection<Contact>>("Contact List").Select(x => x.Id).ToList();
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, ownership);
@@ -57,10 +56,10 @@
         public void GivenFollowingOwnershipExistsInDataBase(Table table)
         {
             List<Ownership> ownerships = table.CreateSet<Ownership>().ToList();
-            foreach (var ownership in ownerships)
+            foreach (Ownership ownership in ownerships)
             {
                 ownership.PropertyId = this.scenarioContext.Get<Guid>("AddedPropertyId");
-                ownership.OwnershipTypeId = this.scenarioContext.Get<Guid>("EnumTypeItemId");
+                ownership.OwnershipTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Freeholder"];
                 ownership.Contacts = this.scenarioContext.Get<ICollection<Contact>>("Contact List");
             }
 
@@ -76,7 +75,7 @@
             var propertyFromResponse = JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent());
 
             var ownershipFromDatabase = this.scenarioContext.Get<ICollection<Ownership>>("Added Ownership List");
-            
+
             propertyFromResponse.Ownerships.ShouldAllBeEquivalentTo(ownershipFromDatabase, options => options
                 .Excluding(x => x.Property)
                 .Excluding(x => x.OwnershipType));

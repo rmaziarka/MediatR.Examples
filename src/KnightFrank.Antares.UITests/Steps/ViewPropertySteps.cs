@@ -146,12 +146,5 @@
             Assert.Equal(preview.GetActivityStatus(), preview.PreviewDetails.GetStatus());
             //Assert.Equal(preview.GetActivityVendor(),preview.PreviewDetails.GetVendor());
         }
-
-        [Then(@"Type is set on activity preview")]
-        public void CheckPreviewType(Table table)
-        {
-            var type = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-            Assert.Equal(table.Rows[0]["Type"], type.PreviewDetails.GetActivityType());
-        }
     }
 }

@@ -72,7 +72,4 @@ Scenario: Property ownership and activity
 	#	|        | Pre-appraisal |
 	#When User clicks activity's details link on property details page
     #Then Activity preview panel is displayed with details the same like details on activity tile
-    #And Type is set on activity preview 
-    #| Type              |
-    #| Residential Sales |
 

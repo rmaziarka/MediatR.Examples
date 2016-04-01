@@ -11,7 +11,6 @@
     {
         private readonly ElementLocator creationDate = new ElementLocator(Locator.Id, string.Empty);
         private readonly ElementLocator status = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator type = new ElementLocator(Locator.Id, string.Empty);
         private readonly ElementLocator vendor = new ElementLocator(Locator.Id, string.Empty);
         private readonly ElementLocator viewActivityLink = new ElementLocator(Locator.Id, string.Empty);
 
@@ -32,11 +31,6 @@
         public List<string> GetVendor()
         {
             return this.Driver.GetElements(this.vendor).Select(element => element.Text).ToList();
-        }
-
-        public string GetActivityType()
-        {
-            return this.Driver.GetElement(this.type).Text;
         }
 
         public ViewActivityPreviewPage ClickViewActivity()

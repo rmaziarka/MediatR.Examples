@@ -71,7 +71,7 @@
             address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
             address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
 
-            Guid propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
+            var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
             var property = new Property { Address = address, PropertyTypeId = propertyTypeId };
 
             this.fixture.DataContext.Property.Add(property);
@@ -88,7 +88,7 @@
                     i => i.Code.Equals(propertyTypeCode));
             this.scenarioContext.Set(propertyType.Id, "PropertyTypeId");
         }
-        
+
         [When(@"Users updates property with defined address for (.*) id by Api")]
         public void WhenUsersUpdatesProperty(string id)
         {
@@ -111,7 +111,7 @@
 
             var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
-            
+
             address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
             address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
 
@@ -128,7 +128,7 @@
             Property expectedProperty = this.fixture.DataContext.Property.SingleOrDefault(x => x.Id.Equals(updatedProperty.Id));
             updatedProperty.ShouldBeEquivalentTo(expectedProperty);
         }
-        
+
         [When(@"User retrieves property details")]
         public void GetProperty()
         {
@@ -155,7 +155,7 @@
                 .Excluding(x => x.Activities)
                 .Excluding(x => x.PropertyType));
         }
-        
+
         [Given(@"Property does not exist in DB")]
         public void GivenPropertyDoesNotExistsInDataBase()
         {
