@@ -157,17 +157,15 @@
     <Compile Include="Migrations\201603310727026_AddPropertyTypeIdToProperty.Designer.cs">
       <DependentUpon>201603310727026_AddPropertyTypeIdToProperty.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201604010959422_Activity_RemoveActivityType.cs" />
-    <Compile Include="Migrations\201604010959422_Activity_RemoveActivityType.Designer.cs">
-      <DependentUpon>201604010959422_Activity_RemoveActivityType.cs</DependentUpon>
-    </Compile>
+<<<<<<< 9b990db6ea583be4bbbd6c5e146035d7f8715a4f
     <Compile Include="Migrations\201604011359097_Merge3.cs" />
     <Compile Include="Migrations\201604011359097_Merge3.Designer.cs">
       <DependentUpon>201604011359097_Merge3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604040921547_Merge Activity.cs" />
-    <Compile Include="Migrations\201604040921547_Merge Activity.Designer.cs">
-      <DependentUpon>201604040921547_Merge Activity.cs</DependentUpon>
+=======
+    <Compile Include="Migrations\201604010959422_Activity_RemoveActivityType.cs" />
+    <Compile Include="Migrations\201604010959422_Activity_RemoveActivityType.Designer.cs">
+      <DependentUpon>201604010959422_Activity_RemoveActivityType.cs</DependentUpon>
+>>>>>>> #21794 #20142 Added migration which alters Activity Table and drops ActivityTypeId FK from the table.
     </Compile>
     <Compile Include="Model\Address\Address.cs" />
     <Compile Include="Model\Address\AddressField.cs" />
@@ -327,14 +325,13 @@
     <EmbeddedResource Include="Migrations\201603310727026_AddPropertyTypeIdToProperty.resx">
       <DependentUpon>201603310727026_AddPropertyTypeIdToProperty.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604010959422_Activity_RemoveActivityType.resx">
-      <DependentUpon>201604010959422_Activity_RemoveActivityType.cs</DependentUpon>
-    </EmbeddedResource>
+<<<<<<< 9b990db6ea583be4bbbd6c5e146035d7f8715a4f
     <EmbeddedResource Include="Migrations\201604011359097_Merge3.resx">
       <DependentUpon>201604011359097_Merge3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604040921547_Merge Activity.resx">
-      <DependentUpon>201604040921547_Merge Activity.cs</DependentUpon>
+=======
+    <EmbeddedResource Include="Migrations\201604010959422_Activity_RemoveActivityType.resx">
+      <DependentUpon>201604010959422_Activity_RemoveActivityType.cs</DependentUpon>
+>>>>>>> #21794 #20142 Added migration which alters Activity Table and drops ActivityTypeId FK from the table.
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -6,10 +6,7 @@
     public class CreateActivityCommand : IRequest<Guid>
     {
         public Guid PropertyId { get; set; }
-
-        public Guid ActivityTypeId { get; set; }
-
+        
         public Guid ActivityStatusId { get; set; }
-
     }
 }

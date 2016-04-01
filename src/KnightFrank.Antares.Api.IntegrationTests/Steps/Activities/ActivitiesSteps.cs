@@ -54,7 +54,6 @@
                 ActivityStatusId = activityStatusId,
                 CreatedDate = DateTime.Now,
                 LastModifiedDate = DateTime.Now,
-                ActivityTypeId = activityStatusId,
                 Contacts = new List<Contact>()
                
                // Property = this.fixture.DataContext.Property.SingleOrDefault(x => x.Id == propertyId)
@@ -91,8 +90,7 @@
 
             propertyFromResponse.Activities.ToList()[0].ShouldBeEquivalentTo(activitiesFromDatabase, options => options
                 .Excluding(x => x.Property)
-                .Excluding(x => x.ActivityStatus)
-                .Excluding(x => x.ActivityType));
+                .Excluding(x => x.ActivityStatus));  
         }
     }
 }

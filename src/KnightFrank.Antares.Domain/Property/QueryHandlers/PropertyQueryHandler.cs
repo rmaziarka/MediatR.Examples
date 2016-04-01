@@ -27,7 +27,6 @@
                     .Include(p => p.Address)
                     .Include(p => p.Activities.Select(o => o.Contacts))
                     .Include(p => p.Activities.Select(a => a.ActivityStatus))
-                    .Include(p => p.Activities.Select(a => a.ActivityType))
                     .FirstOrDefault(p => p.Id == message.Id);
 
             return result;

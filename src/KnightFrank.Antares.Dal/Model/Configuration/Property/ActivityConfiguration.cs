@@ -11,8 +11,6 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property
                 .HasForeignKey(a => a.PropertyId)
                 .WillCascadeOnDelete(false);
 
-            this.HasRequired(a => a.ActivityType).WithMany().HasForeignKey(s => s.ActivityTypeId).WillCascadeOnDelete(false);
-
             this.HasRequired(a => a.ActivityStatus).WithMany().HasForeignKey(s => s.ActivityStatusId).WillCascadeOnDelete(false);
             
             this.HasMany(a => a.Contacts).WithMany().Map(
