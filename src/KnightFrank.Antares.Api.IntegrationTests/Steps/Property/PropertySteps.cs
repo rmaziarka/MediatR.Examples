@@ -41,6 +41,34 @@
         public void GivenAddressIsDefined(Table table)
         {
             var address = table.CreateInstance<CreateOrUpdatePropertyAddress>();
+            if (address.PropertyName.ToLower().Equals("max"))
+            {
+                address.PropertyName = StringExtension.GenerateMaxAlphanumericString(128);
+            }
+            if (address.PropertyNumber.ToLower().Equals("max"))
+            {
+                address.PropertyNumber = StringExtension.GenerateMaxAlphanumericString(8);
+            }
+            if (address.Line2.ToLower().Equals("max"))
+            {
+                address.Line2 = StringExtension.GenerateMaxAlphanumericString(128);
+            }
+            if (address.Line3.ToLower().Equals("max"))
+            {
+                address.Line3 = StringExtension.GenerateMaxAlphanumericString(128);
+            }
+            if (address.Postcode.ToLower().Equals("max"))
+            {
+                address.Postcode = StringExtension.GenerateMaxAlphanumericString(10);
+            }
+            if (address.City.ToLower().Equals("max"))
+            {
+                address.City = StringExtension.GenerateMaxAlphanumericString(128);
+            }
+            if (address.County.ToLower().Equals("max"))
+            {
+                address.County = StringExtension.GenerateMaxAlphanumericString(128);
+            }
             address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
             address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
             this.scenarioContext.Set(address, "Address");
@@ -93,7 +121,7 @@
         public void WhenUsersUpdatesProperty(string id)
         {
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
-            Guid propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
+            var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
 
             var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
 

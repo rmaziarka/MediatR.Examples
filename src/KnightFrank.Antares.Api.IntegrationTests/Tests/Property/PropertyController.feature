@@ -4,8 +4,8 @@
 Scenario: Create property
 	Given User gets GB address form for Property and country details
 		And Address for add/update property is defined
-				| PropertyName | PropertyNumber | Line2           | Line3 | Postcode | City | County |
-				| updated abc  | 2              | 55 Baker Street |       | N1C      |      |        |
+			| PropertyName | PropertyNumber | Line2 | Line3 | Postcode | City | County |
+			| max          | max            | max   | max   | max      | max  | max    |
         And User gets House for PropertyType
 	When User creates property with defined address by Api
 	Then User should get OK http status code
@@ -15,8 +15,8 @@ Scenario: Create property
 Scenario Outline: Try to create property with invalid data
 	Given User gets <country> address form for <itemType> and country details
 		And Address for add/update property is defined
-				| PropertyName | PropertyNumber | Line2           | Line3 | Postcode   | City | County |
-				| updated abc  | 2              | 55 Baker Street |       | <postCode> |      |        |
+			| PropertyName | PropertyNumber | Line2           | Line3 | Postcode   | City | County |
+			| updated abc  | 2              | 55 Baker Street |       | <postCode> |      |        |
         And User gets House for PropertyType
 	When User creates property with defined address by Api
 	Then User should get <statusCode> http status code
@@ -39,8 +39,8 @@ Scenario: Update property in DB
 			| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
 			| abc          | 1              | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Address for add/update property is defined
-			| PropertyName | PropertyNumber | Line2           | Line3 | Postcode | City | County |
-			| updated abc  | 2              | 55 Baker Street |       | N1C      |      |        |
+			| PropertyName | PropertyNumber | Line2 | Line3 | Postcode | City | County |
+			| max          | max            | max   | max   | max      | max  | max    |
 	When Users updates property with defined address for latest id by Api
 	Then User should get OK http status code
 		And The updated Property is saved in data base
@@ -51,8 +51,8 @@ Scenario Outline: Update non existing property
 	Given User gets GB address form for Property and country details
         And User gets House for PropertyType
 		And Property with Address is in data base
-				| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
-				| abc          | 1              | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+			| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
+			| abc          | 1              | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And User gets <country> address form for <itemType> and country details
 		And Address for add/update property is defined
 			| PropertyName | PropertyNumber | Line2 | Line3 | Postcode   | City | County |

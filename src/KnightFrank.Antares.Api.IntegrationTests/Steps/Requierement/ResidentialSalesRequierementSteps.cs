@@ -44,6 +44,20 @@
         public void SetRequirementLocationDetails(Table table)
         {
             var details = table.CreateInstance<CreateOrUpdateRequirementAddress>();
+
+            if (details.City.ToLower().Equals("max"))
+            {
+                details.City = StringExtension.GenerateMaxAlphanumericString(128);
+            }
+            if (details.Line2.ToLower().Equals("max"))
+            {
+                details.Line2 = StringExtension.GenerateMaxAlphanumericString(128);
+            }
+            if (details.Postcode.ToLower().Equals("max"))
+            {
+                details.Postcode = StringExtension.GenerateMaxAlphanumericString(10);
+            }
+
             details.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
             details.CountryId = this.scenarioContext.Get<Guid>("CountryId");
             this.scenarioContext.Set(details, "Location");
@@ -91,6 +105,10 @@
             }).ToList();
 
             requirement.Address = this.scenarioContext.Get<CreateOrUpdateRequirementAddress>("Location");
+            if (requirement.Description.ToLower().Equals("max"))
+            {
+                requirement.Description = StringExtension.GenerateMaxAlphanumericString(4000);
+            }
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
 

@@ -46,8 +46,26 @@
         public void CreateUsers(Table table)
         {
             string requestUrl = $"{ApiUrl}";
+            const int max = 128;
 
             IEnumerable<Contact> contacts = table.CreateSet<Contact>().ToList();
+
+            foreach (Contact contact in contacts)
+            {
+                if (contact.FirstName.ToLower().Equals("max"))
+                {
+                    contact.FirstName = StringExtension.GenerateMaxAlphanumericString(max);
+                }
+                if (contact.Surname.ToLower().Equals("max"))
+                {
+                    contact.Surname = StringExtension.GenerateMaxAlphanumericString(max);
+                }
+                if (contact.Title.ToLower().Equals("max"))
+                {
+                    contact.Title = StringExtension.GenerateMaxAlphanumericString(max);
+                }
+            }
+
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, contacts.First());
 
             this.scenarioContext.SetHttpResponseMessage(response);

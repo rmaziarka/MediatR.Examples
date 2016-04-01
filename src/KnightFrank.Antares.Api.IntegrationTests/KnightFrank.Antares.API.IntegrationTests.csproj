@@ -126,6 +126,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DropCreateSeedDatabaseAlwaysInitializer.cs" />
+    <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Steps\Activities\ActivitiesSteps.cs" />
     <Compile Include="Steps\Property\ConfigurePropertyTypesForADivisionAndACountrySteps.cs" />
     <Compile Include="Extensions\FixtureExtension.cs" />
