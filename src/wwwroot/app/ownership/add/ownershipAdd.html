@@ -24,33 +24,56 @@
             <input type="checkbox" ng-model="vm.ownership.isCurrentOwner"> current ownership
         </label>
     </div>
-    <div class="form-group" ng-class="{'has-error': (addOwnershipForm.$submitted || addOwnershipForm.purchaseDate.$dirty) && addOwnershipForm.purchaseDate.$invalid}">
+    <div class="form-group" ng-class="{'has-error': (addOwnershipForm.$submitted || addOwnershipForm.purchaseDate.$dirty || addOwnershipForm.sellDate.$dirty) && addOwnershipForm.purchaseDate.$invalid}">
         <div class="row">
             <div class="col-md-8">
                 <label for="purchasing-date">Purchasing date</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="vm.ownership.purchaseDate" is-open="vm.datepickers.purchaseOpened" ng-required="true" close-text="Close" name="purchaseDate"/>
+                    <input type="text"
+                           class="form-control"
+                           name="purchaseDate"
+                           ng-model="vm.ownership.purchaseDate"
+                           max="{{vm.ownership.sellDate}}"
+                           dont-overlap="{{vm.ownerships | filter : {ownershipTypeId: vm.ownership.ownershipType.id} }}"
+                           from-field="purchaseDate"
+                           to-field="sellDate"
+                           dont-overlap-max="{{vm.ownership.sellDate}}"
+                           uib-datepicker-popup="dd-MM-yyyy"
+                           is-open="vm.datepickers.purchaseOpened"
+                           close-text="Close"/>
+
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openPurchaseDate()"><i class="fa fa-calendar"></i></button>
                     </span>
                 </div>
-                <div ng-messages="addOwnershipForm.purchaseDate.$error" ng-show="addOwnershipForm.$submitted || addOwnershipForm.purchaseDate.$dirty">
+                <div ng-messages="addOwnershipForm.purchaseDate.$error" ng-show="addOwnershipForm.$submitted || addOwnershipForm.purchaseDate.$dirty || addOwnershipForm.sellDate.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="form-group" ng-show="!vm.ownership.isCurrentOwner" ng-class="{'has-error': (addOwnershipForm.$submitted || addOwnershipForm.sellDate.$dirty) && addOwnershipForm.sellDate.$invalid}">
+    <div class="form-group" ng-show="!vm.ownership.isCurrentOwner" ng-class="{'has-error': (addOwnershipForm.$submitted || addOwnershipForm.sellDate.$dirty || addOwnershipForm.purchaseDate.$dirty) && addOwnershipForm.sellDate.$invalid}">
         <div class="row">
             <div class="col-md-8">
                 <label for="purchasing-date">Selling date</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="vm.ownership.sellDate" is-open="vm.datepickers.sellOpened" ng-required="true" close-text="Close" name="sellDate"/>
+                    <input type="text"
+                           class="form-control"
+                           name="sellDate"
+                           ng-model="vm.ownership.sellDate"
+                           dont-overlap="{{vm.ownerships | filter : {ownershipTypeId: vm.ownership.ownershipType.id} }}"
+                           from-field="purchaseDate"
+                           to-field="sellDate"
+                           dont-overlap-min="{{vm.ownership.purchaseDate}}"
+                           uib-datepicker-popup="dd-MM-yyyy"
+                           is-open="vm.datepickers.sellOpened"
+                           close-text="Close" />
+
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openSellDate()"><i class="fa fa-calendar"></i></button>
                     </span>
                 </div>
-                <div ng-messages="addOwnershipForm.sellDate.$error" ng-show="addOwnershipForm.$submitted || addOwnershipForm.sellDate.$dirty">
+                <div ng-messages="addOwnershipForm.sellDate.$error" ng-show="addOwnershipForm.$submitted || addOwnershipForm.sellDate.$dirty || addOwnershipForm.purchaseDate.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
@@ -61,7 +84,7 @@
             <div class="col-md-8">
                 <label for="buying-price">Buying price</label>
                 <div class="input-group">
-                    <input type="number" id="buying-price" max="{{vm.ownership.sellPrice}}" pattern="\d+([\.,]\d+)?" min="0" class="form-control" ng-model="vm.ownership.buyPrice" name="buyPrice">
+                    <input type="number" id="buying-price" pattern="\d+([\.,]\d+)?" min="0" class="form-control" ng-model="vm.ownership.buyPrice" name="buyPrice">
                     <div class="input-group-addon">GBP</div>
                 </div>
                 <div ng-messages="addOwnershipForm.buyPrice.$error" ng-show="addOwnershipForm.$submitted || addOwnershipForm.buyPrice.$dirty">

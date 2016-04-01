@@ -27,7 +27,8 @@ module Antares {
             });
 
             scope = $rootScope.$new();
-            element = $compile('<ownership-add></ownership-add>')(scope);
+            scope["ownerships"] = [];
+            element = $compile('<ownership-add ownerships="ownerships"></ownership-add>')(scope);
             $httpBackend.flush();
             scope.$apply();
 
@@ -47,10 +48,6 @@ module Antares {
                 });
             });
             describe('ownership purchasing date is ', () => {
-                it('missing then required message should be displayed', () => {
-                    assertValidator.assertRequiredValidator(null, false, '[name=purchaseDate]');
-                });
-
                 it('invalid then required message should be displayed', () => {
                     assertValidator.assertRequiredValidator('invalid date', false, '[name=purchaseDate]');
                 });
@@ -60,10 +57,6 @@ module Antares {
                 });
             });
             describe('ownership selling date is ', () => {
-
-                it('missing then required message should be displayed', () => {
-                    assertValidator.assertRequiredValidator(null, false, '[name=sellDate]');
-                });
 
                 it('ownership selling date is invalid then required message should be displayed', () => {
                     assertValidator.assertRequiredValidator('invalid date', false, '[name=sellDate]');
