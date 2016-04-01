@@ -24,8 +24,8 @@ namespace KnightFrank.Antares.Dal.Migrations
             AddColumn("dbo.Activity", "PropertyId", c => c.Guid(nullable: false));
             AddColumn("dbo.Activity", "ActivityTypeId", c => c.Guid(nullable: false));
             AddColumn("dbo.Activity", "ActivityStatusId", c => c.Guid(nullable: false));
-            AddColumn("dbo.Activity", "CreatedDate", c => c.DateTime(nullable: false));
-            AddColumn("dbo.Activity", "LastModifiedDate", c => c.DateTime(nullable: false));
+            AddColumn("dbo.Activity", "CreatedDate", c => c.DateTime(nullable: false, precision: 7, storeType: "datetime2"));
+            AddColumn("dbo.Activity", "LastModifiedDate", c => c.DateTime(nullable: false, precision: 7, storeType: "datetime2"));
             AlterColumn("dbo.Activity", "Id", c => c.Guid(nullable: false, identity: true));
             AddPrimaryKey("dbo.Activity", "Id");
             CreateIndex("dbo.Activity", "PropertyId");
@@ -40,8 +40,8 @@ namespace KnightFrank.Antares.Dal.Migrations
         
         public override void Down()
         {
-            AddColumn("dbo.Activity", "LastModifiedAt", c => c.DateTime(nullable: false));
-            AddColumn("dbo.Activity", "CreatedAt", c => c.DateTime(nullable: false));
+            AddColumn("dbo.Activity", "LastModifiedAt", c => c.DateTime(nullable: false, precision: 7, storeType: "datetime2"));
+            AddColumn("dbo.Activity", "CreatedAt", c => c.DateTime(nullable: false, precision: 7, storeType: "datetime2"));
             DropForeignKey("dbo.Activity", "PropertyId", "dbo.Property");
             DropForeignKey("dbo.ActivityContact", "ContactId", "dbo.Contact");
             DropForeignKey("dbo.ActivityContact", "ActivityId", "dbo.Activity");

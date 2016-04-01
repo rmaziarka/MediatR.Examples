@@ -157,6 +157,10 @@
     <Compile Include="Migrations\201603310727026_AddPropertyTypeIdToProperty.Designer.cs">
       <DependentUpon>201603310727026_AddPropertyTypeIdToProperty.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604011359097_Merge3.cs" />
+    <Compile Include="Migrations\201604011359097_Merge3.Designer.cs">
+      <DependentUpon>201604011359097_Merge3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Address\Address.cs" />
     <Compile Include="Model\Address\AddressField.cs" />
     <Compile Include="Model\Address\AddressFieldDefinition.cs" />
@@ -314,6 +318,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603310727026_AddPropertyTypeIdToProperty.resx">
       <DependentUpon>201603310727026_AddPropertyTypeIdToProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604011359097_Merge3.resx">
+      <DependentUpon>201604011359097_Merge3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

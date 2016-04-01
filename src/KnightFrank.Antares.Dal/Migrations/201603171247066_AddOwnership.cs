@@ -12,8 +12,8 @@ namespace KnightFrank.Antares.Dal.Migrations
                 c => new
                     {
                         Id = c.Guid(nullable: false, identity: true),
-                        PurchasingDate = c.DateTime(),
-                        SellingDate = c.DateTime(),
+                        PurchasingDate = c.DateTime(precision: 7, storeType: "datetime2"),
+                        SellingDate = c.DateTime(precision: 7, storeType: "datetime2"),
                         BuyingPrice = c.Decimal(precision: 19, scale: 4),
                         SellingPrice = c.Decimal(precision: 19, scale: 4),
                         IsCurrent = c.Boolean(nullable: false),

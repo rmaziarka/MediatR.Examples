@@ -24,6 +24,8 @@
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Properties<DateTime>()
+                        .Configure(c => c.HasColumnType("datetime2"));
 
             this.LoadConfigurations(modelBuilder);
         }
