@@ -208,8 +208,7 @@
             Requirement requirement = this.fixture.DataContext.Requirement.Single(req => req.Id.Equals(expectedRequirement.Id));
 
             AssertionOptions.AssertEquivalencyUsing(options =>
-                options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>()
-                );
+                options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>());
 
             requirement.ShouldBeEquivalentTo(expectedRequirement,
                 opt => opt.Excluding(req => req.Address.Country).Excluding(req => req.Address.AddressForm));

@@ -76,6 +76,6 @@
 
             this.fixture.DataContext.AddressFormEntityType.Add(addressFormEntityType);
             this.fixture.DataContext.SaveChanges();
-        }    
+        }
     }
 }

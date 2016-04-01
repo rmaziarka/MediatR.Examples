@@ -74,3 +74,27 @@ Scenario: Get non existing property
 	Given Property does not exist in DB
 	When User retrieves property details
 	Then User should get NotFound http status code
+
+@Property
+Scenario: Get property with ownership list
+	Given User gets GB address form for Property and country details
+        And User gets House for PropertyType
+        And User gets EnumTypeItemId and EnumTypeItem code
+			| enumTypeCode   | enumTypeItemCode |
+			| OwnershipType  | Freeholder       |
+			| ActivityStatus | PreAppraisal     |
+        And Property with Address is in data base
+        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
+        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |  
+        And User creates contacts in database with following data
+		    | FirstName | Surname | Title |
+		    | Michael   | Angel   | cheef | 
+		And Ownership exists in database
+			| PurchaseDate | SellDate   | BuyPrice | SellPrice |
+			| 01-05-2011   | 01-04-2013 | 1000000  | 1200000   |
+			| 01-05-2014   | 01-04-2015 | 1000000  | 1200000   |
+		And Activity for 'latest' property exists in data base 
+	When User retrieves property details
+	Then User should get OK http status code
+        And Ownership list should be the same as in DB
+		And Activities list should be the same as in DB

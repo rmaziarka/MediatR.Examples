@@ -89,10 +89,10 @@
                 string enumTypeCode = row["enumTypeCode"];
                 string enumTypeItemCode = row["enumTypeItemCode"];
                 EnumTypeItem enumTypeItem =
-                    this.fixture.DataContext.EnumTypeItem.Single(
+                    this.fixture.DataContext.EnumTypeItem.SingleOrDefault(
                         i => i.EnumType.Code.Equals(enumTypeCode) && i.Code.Equals(enumTypeItemCode));
 
-                enums.Add(enumTypeItemCode, enumTypeItem.Id);
+                enums.Add(enumTypeItemCode, enumTypeItem?.Id ?? new Guid());
             }
 
             this.scenarioContext.Set(enums, "EnumDictionary");
