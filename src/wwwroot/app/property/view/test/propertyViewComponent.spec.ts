@@ -43,7 +43,7 @@ module Antares {
             }));
 
             it('card-list component for activities is set up', () => {
-                var cardListElement = element.find('card-list');
+                var cardListElement = element.find('card-list[items="vm.property.activities"]');
 
                 var cardListHeaderElement = cardListElement.find('card-list-header');
                 var cardListHeaderElementContent = cardListHeaderElement.find('[translate="ACTIVITY.LIST.ACTIVITIES"]');
@@ -53,8 +53,7 @@ module Antares {
 
                 expect(cardListElement.length).toBe(1);
                 expect(cardListElement[0].getAttribute('card-template-url')).toBe("'app/activity/templates/activityCard.html'");
-                expect(cardListElement[0].getAttribute('items')).toBe("vm.property.activities");
-                expect(cardListElement[0].getAttribute('items-order')).toBe("'createdDate'");
+                expect(cardListElement[0].getAttribute('items-order')).toBe("vm.activitiesCartListOrder");
                 expect(cardListElement[0].getAttribute('show-item-add')).toBe("vm.showActivityAdd");
                 expect(cardListElement[0].getAttribute('show-item-details')).toBe("vm.showActivityDetails");
 
