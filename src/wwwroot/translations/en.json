@@ -83,6 +83,17 @@
       "NO_ITEMS": "Ownership information not configured yet"
     }
   },
+  "ACTIVITY": {
+    "LIST": {
+      "ACTIVITIES": "Activities",
+      "NO_ITEMS": "No activities yet"
+    },
+    "ADD": {
+      "CREATE_ACTIVITY": "Create activity",
+      "STATUS": "Status",
+      "VENDORS": "Vendors"
+    }
+  },
   "REQUIREMENT": {
     "ADD": {
       "ADD_REQUIREMENT": "Add requirement",
