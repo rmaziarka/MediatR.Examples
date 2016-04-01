@@ -117,6 +117,10 @@ module Antares.Property.View {
             this.ownershipAddPanelVisible = false;
         }
 
+        cancelAddActivity(){
+            this.components.panels.activity().hide();
+        }
+
         saveOwnership(){
             var promise = this.components.ownershipAdd().saveOwnership(this.property.id);
             promise
@@ -127,7 +131,9 @@ module Antares.Property.View {
 
         saveActivity() {
             // TODO implement functionality, this is just POC
-            var activityStatus = this.components.activityAdd().selectedActivityStatusId;
+
+            if (this.components.activityAdd().isDataValid()) {
+                var activityStatus = this.components.activityAdd().selectedActivityStatus;
             var activity: Common.Models.Dto.IActivity;
 
             activity = {
@@ -137,6 +143,7 @@ module Antares.Property.View {
             };
 
             this.activityResource.save(activity).$promise.then((result:any) => { alert(result) });;
+        }
         }
 
         private hidePanels(hideCurrent: boolean = true) {
