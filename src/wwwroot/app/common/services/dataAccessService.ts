@@ -54,9 +54,14 @@ module Antares.Services {
                 });
         }
 
-        getEnumResource(): Resources.IBaseResourceClass<Resources.IEnumResource> {
+        getEnumResource(): Resources.IEnumResourceClass<Resources.IEnumResource> {
             return <Resources.IBaseResourceClass<Resources.IEnumResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/enums/:code/items');
+        }
+
+        getEnumItemTranslationResource(): Resources.IEnumResourceClass<any> {
+            return <Resources.IBaseResourceClass<any>>
+                this.$resource(this.appConfig.rootUrl + '/api/enums/translations/:isoCode');
         }
 
         getActivityResource(): Resources.IBaseResourceClass<Resources.IActivityResource> {

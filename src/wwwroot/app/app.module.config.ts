@@ -7,11 +7,7 @@ module Antares {
     app.config(['$provide', extendOrderByWithEmptyFields]);
 
     function initTranslations($translateProvider: any) {
-        $translateProvider
-            .useStaticFilesLoader({
-                prefix: 'translations/',
-                suffix: '.json'
-            })
+        $translateProvider.useLoader('LocalizationLoaderFactory')
             .registerAvailableLanguageKeys(['en'], {
                 'en_*': 'en'
             })

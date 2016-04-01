@@ -111,8 +111,10 @@
     <Compile Include="Contact\QueryHandlers\ContactQueryHandler.cs" />
     <Compile Include="DomainModule.cs" />
     <Compile Include="Common\Exceptions\DomainValidationException.cs" />
+    <Compile Include="Enum\Queries\EnumLocalisedQuery.cs" />
     <Compile Include="Enum\Queries\EnumQuery.cs" />
     <Compile Include="Enum\Queries\EnumQueryValidator.cs" />
+    <Compile Include="Enum\QueryHandlers\EnumLocalisedQueryHandler.cs" />
     <Compile Include="Enum\QueryHandlers\EnumQueryHandler.cs" />
     <Compile Include="Enum\QueryResults\EnumQueryItemResult.cs" />
     <Compile Include="Enum\QueryResults\EnumQueryResult.cs" />
