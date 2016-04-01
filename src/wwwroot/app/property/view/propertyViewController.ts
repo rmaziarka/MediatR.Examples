@@ -4,6 +4,7 @@
 module Antares.Property.View {
     import Dto = Common.Models.Dto;
     import Resources = Common.Models.Resources;
+    import CartListOrder = Common.Component.CartListOrder;
 
     export class PropertyViewController {
         static $inject = ['dataAccessService', 'componentRegistry', '$scope', '$state'];
@@ -34,8 +35,9 @@ module Antares.Property.View {
         }
 
         loadingContacts: boolean = false;
-        orderDescending: boolean = true;
-        nullOnEnd: boolean = true;
+
+        ownershipsCartListOrder: CartListOrder = new CartListOrder('purchaseDate', true, true);
+        activitiesCartListOrder: CartListOrder = new CartListOrder('createdDate');
 
         propertyResource: Resources.IPropertyResourceClass;
         property: Dto.Property;

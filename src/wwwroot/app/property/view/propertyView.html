@@ -10,7 +10,7 @@
                 <form>
                     <fieldset>
                         <card-list card-template-url="'app/property/view/propertyOwnershipCard.html'"
-                                   items="vm.property.ownerships" items-order="'purchaseDate'"
+                                   items="vm.property.ownerships" items-order="vm.ownershipsCartListOrder"
                                    show-item-add="vm.showContactList" show-item-details="vm.showOwnershipView">
                             <card-list-header>
                                 <legend translate="PROPERTY.LIST.OWNERSHIPS"></legend>
@@ -29,7 +29,7 @@
                 <form>
                     <fieldset>
                         <card-list card-template-url="'app/activity/templates/activityCard.html'"
-                                   items="vm.property.activities" items-order="'createdDate'"
+                                   items="vm.property.activities" items-order="vm.activitiesCartListOrder"
                                    show-item-add="vm.showActivityAdd" show-item-details="vm.showActivityDetails">
                             <card-list-header>
                                 <legend translate="ACTIVITY.LIST.ACTIVITIES">Activities</legend>
