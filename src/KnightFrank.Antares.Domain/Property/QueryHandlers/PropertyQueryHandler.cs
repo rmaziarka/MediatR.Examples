@@ -25,6 +25,7 @@
                     .Include(p => p.Ownerships.Select(o => o.Contacts))
                     .Include(p => p.Ownerships.Select(o => o.OwnershipType))
                     .Include(p => p.Address)
+                    .Include(p => p.Activities.Select(o => o.Contacts))
                     .Include(p => p.Activities.Select(a => a.ActivityStatus))
                     .Include(p => p.Activities.Select(a => a.ActivityType))
                     .FirstOrDefault(p => p.Id == message.Id);

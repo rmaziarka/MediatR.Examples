@@ -90,6 +90,11 @@ module Antares.Property.View {
             this.showPanel(this.components.panels.activity);
         }
 
+        showActivityDetails = (activity: any) =>{
+            alert('activity with status: ' + activity.activityStatus);
+            //this.showPanel(this.components.panels.activity);
+        }
+
         showContactList = () => {
             this.ownershipAddPanelVisible = false;
             this.loadingContacts = true;
@@ -126,7 +131,7 @@ module Antares.Property.View {
             promise
             .then(() => {
                     this.components.panels.contact().hide();
-                });   
+                });
         }
 
         saveActivity() {
@@ -136,12 +141,11 @@ module Antares.Property.View {
                 var activityStatus = this.components.activityAdd().selectedActivityStatus;
             var activity: Common.Models.Dto.IActivity;
 
-            activity = {
-                propertyId: this.propertyId,
-                activityStatusId: activityStatus.id,
-                activityTypeId: activityStatus.id // todo set correct value
-            };
-
+            activity = new Common.Models.Dto.Activity(
+                this.propertyId,
+                activityStatus.id
+                //todo set vendor as activity contacts list
+            );
             this.activityResource.save(activity).$promise.then((result:any) => { alert(result) });;
         }
         }

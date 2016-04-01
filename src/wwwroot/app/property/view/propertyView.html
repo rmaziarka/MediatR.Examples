@@ -15,7 +15,7 @@
                         </div>
                         <p ng-hide="vm.property.ownerships.length" class="help-block">Ownership information not configured yet</p>
                     </fieldset>
-                    <div class="panel panel-default" 
+                    <div class="panel panel-default"
                          ng-repeat="ownership in vm.property.ownerships | orderBy:'purchaseDate' : vm.orderDescending : vm.nullOnEnd">
                         <div class="panel-body">
                             <div class="panel-item">
@@ -24,39 +24,38 @@
                                 </span>
                             </div>
                             <small>
-                                <span class="text-uppercase">{{ownership.ownershipType.code}}</span> 
+                                <span class="text-uppercase">{{ownership.ownershipType.code}}</span>
                                 {{ownership.purchaseDate | date : 'dd-MM-yyyy'}} - {{ownership.sellDate | date : 'dd-MM-yyyy'}}
-                             </small>
+                            </small>
                             <div class="row">
-                                <div class="col-md-12 text-right"><a href="" ng-click="vm.showOwnershipView(ownership)">details</a></div>
+                                <div class="col-md-12 text-right">
+                                    <a href="" ng-click="vm.showOwnershipView(ownership)">details</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-        <!--<div class="row">
+
+        <div class="row">
             <div class="col-md-4">
                 <form>
                     <fieldset>
-                        <legend>Activities</legend>
-                        <div class="form-group">
-                            <button type="button" class="btn btn-default" ng-click="vm.showActivityAdd()"><i class="fa fa-plus-circle"></i></button>
-                        </div>
-                        <p class="help-block">No activities yet</p>
+                        <card-list card-template-url="'app/activity/templates/activityCard.html'"
+                                   items="vm.property.activities" items-order="'createdDate'"
+                                   show-item-add="vm.showActivityAdd" show-item-details="vm.showActivityDetails">
+                            <card-list-header>
+                                <legend translate="ACTIVITY.LIST.ACTIVITIES">Activities</legend>
+                            </card-list-header>
+                            <card-list-no-items>
+                                <p class="help-block" translate="ACTIVITY.LIST.NO_ITEMS"></p>
+                            </card-list-no-items>
+                        </card-list>
                     </fieldset>
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="panel-item">09-03-2016 John Smith, Jack Daniels, George Washington</div>
-                            <small>Pre-appraisal</small>
-                            <div class="row">
-                                <div class="col-md-12 text-right"><a href="#">details</a></div>
-                            </div>
-                        </div>
-                    </div>
                 </form>
             </div>
-        </div>-->
+        </div>
     </div>
 </div>
 
@@ -87,7 +86,7 @@
         <h3>Create activity</h3>
     </side-panel-header>
     <side-panel-content>
-        <activity-add component-id="vm.componentIds.activityAddId"></activity-add> 
+        <activity-add component-id="vm.componentIds.activityAddId"></activity-add>
     </side-panel-content>
     <side-panel-footer>
         <button class="btn btn-default" type="button" ng-click="vm.cancelAddActivity()"> <i class="fa fa-ban"></i> Cancel</button>

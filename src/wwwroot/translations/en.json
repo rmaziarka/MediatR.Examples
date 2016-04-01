@@ -44,7 +44,7 @@
     "LINE2": "Address line 2",
     "STREETNAME": "Street name",
     "LINE3": "Address line 3",
-    "PROPERTYNAME":  "Property name",
+    "PROPERTYNAME": "Property name",
     "BUILDINGNAME": "Building name",
     "PROPERTYNUMBER": "Property number",
     "FLATNUMBER": "Flat number",
@@ -77,6 +77,17 @@
     },
     "VIEW": {
       "VIEW_PROPERTY": "View property"
+    }
+  },
+  "ACTIVITY": {
+    "LIST": {
+      "ACTIVITIES": "Activities",
+      "NO_ITEMS": "No activities yet"
+    },
+    "ADD": {
+      "CREATE_ACTIVITY": "Create activity",
+      "STATUS": "Status",
+      "VENDORS": "Vendors"
     }
   },
   "REQUIREMENT": {
