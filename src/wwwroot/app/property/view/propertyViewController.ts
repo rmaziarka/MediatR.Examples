@@ -93,6 +93,15 @@ module Antares.Property.View {
         }
 
         showActivityAdd = () => {
+            // todo first when no element
+            var vendor: Dto.Ownership = _.find(this.property.ownerships, (ownership: Dto.Ownership) => {
+                return ownership.isVendor();
+            });
+                
+            if (vendor) {
+                this.components.activityAdd().setVendors(vendor.contacts);
+            }
+
             this.showPanel(this.components.panels.activityAdd);
         }
 
@@ -141,20 +150,20 @@ module Antares.Property.View {
         }
 
         saveActivity() {
-            // TODO implement functionality, this is just POC
-
+            // Tell don't ask principle!
             if (this.components.activityAdd().isDataValid()) {
                 var activityStatus = this.components.activityAdd().selectedActivityStatus;
-            var activity: Common.Models.Dto.IActivity;
+                var vendors: Array<Dto.IContact> = this.components.activityAdd().getVendors();
+                var activity: Common.Models.Dto.IActivity;
 
-            activity = new Common.Models.Dto.Activity(
-                this.propertyId,
-                activityStatus.id
-                //todo set vendor as activity contacts list
-            );
+                activity = new Common.Models.Dto.Activity(
+                    this.propertyId,
+                    activityStatus.id,
+                    vendors
+                );
 
-            this.activityResource.save(activity).$promise.then((result:any) => { alert(result) });
-        }
+                this.activityResource.save(activity).$promise.then((result:any) => { alert(result) });
+            }
         }
 
         private hidePanels(hideCurrent: boolean = true) {
@@ -174,5 +183,6 @@ module Antares.Property.View {
             this.currentPanel = panel;
         }
     }
+
     angular.module('app').controller('propertyViewController', PropertyViewController);
 }

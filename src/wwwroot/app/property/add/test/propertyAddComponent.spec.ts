@@ -19,7 +19,10 @@ module Antares {
 
         describe('when page is loaded', () =>{
             var countryMockId = countriesMock[0].country.id,
-                newPropertyMock: Dto.Property = new Dto.Property('propId1', new Dto.Address());
+                newPropertyMock: Dto.Property = new Dto.Property();
+
+            newPropertyMock.id = 'propId1';
+            newPropertyMock.address = new Dto.Address();
 
             beforeEach(angular.mock.module('app'));
             beforeEach(inject((
@@ -85,7 +88,11 @@ module Antares {
                    $http.whenGET(/\/api\/addressForms\/\?entityType=Property&countryCode=GB/).respond(() =>{
                        return [200, addressFormMock];
                    });
-                   var propertyFromServerMock: Dto.Property = new Dto.Property('propFromServerId1', new Dto.Address());
+
+                   var propertyFromServerMock: Dto.Property = new Dto.Property();
+                   propertyFromServerMock.id = 'propFromServerId1';
+                   propertyFromServerMock.address = new Dto.Address();
+
                    $http.expectPOST(/\/api\/properties/, newPropertyMock).respond(() => {
                        return [200, propertyFromServerMock];
                    });
@@ -95,7 +102,14 @@ module Antares {
                        propertyId = property.id;
                    });
 
-                   newPropertyMock.address = new Dto.Address('adrId1', countryMockId, 'adrfrmId1', 'test', '123456', '', '', '', '', '', '');
+                   newPropertyMock.address = new Dto.Address();
+
+                   newPropertyMock.address.id = 'adrId1';
+                   newPropertyMock.address.countryId = countryMockId;
+                   newPropertyMock.address.addressFormId = 'adrfrmId1';
+                   newPropertyMock.address.propertyName = 'test prop name';
+                   newPropertyMock.address.propertyNumber = '123456';
+
                    scope.$apply();
 
                    var button = element.find('button#saveBtn');

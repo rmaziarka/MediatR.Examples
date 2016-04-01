@@ -17,7 +17,13 @@ module Antares {
                 { country: { id: "countryId2", isoCode: "TESTCOUNTRY" }, locale : {}, value : "Test Country" }
             ],
             countryMockId = countriesMock[0].country.id,
-            addressMock: Dto.Address = new Dto.Address('adrId1', countryMockId, 'adrfrmId1', 'test prop name', '123456');
+            addressMock: Dto.Address = new Dto.Address();
+
+        addressMock.id = 'adrId1';
+        addressMock.countryId = countryMockId;
+        addressMock.addressFormId = 'adrfrmId1';
+        addressMock.propertyName = 'test prop name';
+        addressMock.propertyNumber = '123456';
 
         describe('when component is being loaded', () =>{
             var addressFormMock = new Dto.AddressForm('adrfrmId1', countryMockId, []);

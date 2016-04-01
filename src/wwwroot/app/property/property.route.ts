@@ -13,8 +13,10 @@ module Antares.Property {
                 url: '/property/view/:id',
                 params: {},
                 template: "<property-view property='property'></property-view>",
-                controller: ($scope: ng.IScope, property: Dto.Property) => {
-                    $scope['property'] = property;
+                controller: ($scope: ng.IScope, property: Dto.IProperty) => {
+                    var propertyViewModel = new Dto.Property(property);
+
+                    $scope['property'] = propertyViewModel;
                 },
                 resolve: {
                     property: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Antares.Services.DataAccessService) => {

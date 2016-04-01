@@ -16,11 +16,11 @@ module Antares.Property {
             this.propertyResource = dataAccessService.getPropertyResource();
         }
 
-        public save(){
+        public save() {
             this.propertyResource
                 .save(this.property)
                 .$promise
-                .then((property: Dto.IProperty) =>{
+                .then((property: Dto.IProperty) => {
                     this.$state.go('app.property-view', property);
                 });
         }
