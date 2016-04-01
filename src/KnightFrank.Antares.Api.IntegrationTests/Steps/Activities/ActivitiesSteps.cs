@@ -56,7 +56,9 @@
                 ActivityStatusId = activityStatusId,
                 CreatedDate = DateTime.Now,
                 LastModifiedDate = DateTime.Now,
-                ActivityTypeId = activityStatusId
+                ActivityTypeId = activityStatusId,
+                Contacts = new List<Contact>()
+               
                // Property = this.fixture.DataContext.Property.SingleOrDefault(x => x.Id == propertyId)
             };
             this.fixture.DataContext.Activity.Add(activity);
