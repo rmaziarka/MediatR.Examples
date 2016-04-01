@@ -17,6 +17,8 @@
 
     using Xunit;
 
+    [Collection("PropertyDomainValidator")]
+    [Trait("FeatureTitle", "Property")]
     public class PropertyDomainValidatorTests : IClassFixture<BaseTestClassFixture>
     {
         public PropertyDomainValidatorTests()
@@ -33,8 +35,7 @@
         public void Given_PropertyTypeIsCorrect_When_Validating_Then_NoValidationErrors(
             [Frozen] Mock<IGenericRepository<PropertyTypeDefinition>> propertyTypeDefinitionRepository,
             PropertyDomainValidator validator,
-            Property property,
-            Fixture fixture)
+            Property property)
         {
             propertyTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyTypeDefinition, bool>>>()))
                                             .Returns(true);
@@ -49,8 +50,7 @@
         public void Given_PropertyTypeIsNotValidForGivenCountry_When_Validating_Then_ValidationErrors(
            [Frozen] Mock<IGenericRepository<PropertyTypeDefinition>> propertyTypeDefinitionRepository,
            PropertyDomainValidator validator,
-           Property property,
-           Fixture fixture)
+           Property property)
         {
             propertyTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyTypeDefinition, bool>>>()))
                                             .Returns(false);

@@ -115,7 +115,6 @@
     <Compile Include="Enum\Queries\EnumQueryValidatorTests.cs" />
     <Compile Include="Enum\QueryHandlers\EnumQueryHandlerTests.cs" />
     <Compile Include="FixtureExtension\OwnershipExtensions.cs" />
-    <Compile Include="FixtureExtension\ValidationFailureExtension.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandHandlerTests.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandDomainValidatorTests.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandValidatorTests.cs" />
@@ -132,6 +131,7 @@
     <Compile Include="InlineAutoMoqDataAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandValidatorTests.cs" />
+    <Compile Include="ValidationResultBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj">

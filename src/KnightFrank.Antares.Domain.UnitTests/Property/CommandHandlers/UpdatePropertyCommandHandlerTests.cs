@@ -11,11 +11,9 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Property.Commands;
-    using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
 
     using Moq;
 
-    using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
@@ -63,10 +61,9 @@
            [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
            [Frozen] Mock<IGenericRepository<PropertyTypeDefinition>> propertyTypeDefinitionRepository,
            [Frozen] Mock<IDomainValidator<Property>> validator,
-           UpdatePropertyCommandHandler handler,
-           Fixture fixture)
+           UpdatePropertyCommandHandler handler)
         {
-            validator.Setup(r => r.Validate(It.IsAny<Property>())).Returns(fixture.BuildValidationResult());
+            validator.Setup(r => r.Validate(It.IsAny<Property>())).Returns(ValidationResultBuilder.BuildValidationResult());
             
             Assert.Throws<DomainValidationException>(() => handler.Handle(command));
             propertyRepository.Verify(p => p.Save(), Times.Never);

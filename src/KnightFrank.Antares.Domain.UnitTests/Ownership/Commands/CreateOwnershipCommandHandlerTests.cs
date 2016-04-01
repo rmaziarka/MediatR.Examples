@@ -14,15 +14,15 @@
     using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Antares.Domain.Ownership.CommandHandlers;
     using KnightFrank.Antares.Domain.Ownership.Commands;
-    using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
 
     using Moq;
 
-    using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
 
+    [Collection("CreateOwnershipCommandHandler")]
+    [Trait("FeatureTitle", "Ownership")]
     public class CreateOwnershipCommandHandlerTests : IClassFixture<BaseTestClassFixture>
     {
         [Theory]
@@ -35,7 +35,7 @@
             CreateOwnershipCommandHandler commandHandler)
         {
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(new List<Contact>().AsQueryable());
-            ownershipDomainValidator.Setup(x=>x.Validate(It.IsAny<CreateOwnershipCommand>())).Returns(new ValidationResult());
+            ownershipDomainValidator.Setup(x => x.Validate(It.IsAny<CreateOwnershipCommand>())).Returns(new ValidationResult());
 
             // Act
             commandHandler.Handle(command);
@@ -52,11 +52,10 @@
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             [Frozen] Mock<IDomainValidator<CreateOwnershipCommand>> ownershipDomainValidator,
             CreateOwnershipCommand command,
-            CreateOwnershipCommandHandler commandHandler,
-            Fixture fixture)
+            CreateOwnershipCommandHandler commandHandler)
         {
-            ownershipDomainValidator.Setup(x => x.Validate(It.IsAny<CreateOwnershipCommand>())).Returns(fixture.BuildValidationResult());
-            
+            ownershipDomainValidator.Setup(x => x.Validate(It.IsAny<CreateOwnershipCommand>())).Returns(ValidationResultBuilder.BuildValidationResult());
+
             Assert.Throws<DomainValidationException>(() => commandHandler.Handle(command));
             ownershipRepository.Verify(p => p.Save(), Times.Never);
         }

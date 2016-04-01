@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Property
 {
     using System;
+    using System.Linq.Expressions;
 
     using FluentValidation.Results;
 
@@ -16,6 +17,8 @@
 
     using Xunit;
 
+    [Collection("PropertyTypeValidator")]
+    [Trait("FeatureTitle", "Property")]
     public class PropertyTypeValidatorTests : IClassFixture<BaseTestClassFixture>
     {
         public PropertyTypeValidatorTests()
@@ -36,11 +39,13 @@
         {
             var id = Guid.NewGuid();
 
-            propertyTypeRepository.Setup(x => x.GetById(id))
+            Expression<Func<IGenericRepository<PropertyType>, PropertyType>> expression = x => x.GetById(id);
+            propertyTypeRepository.Setup(expression)
                 .Returns(fixture.Create<PropertyType>());
 
             ValidationResult validationResult = validator.Validate(id);
-
+            
+            propertyTypeRepository.Verify(expression, Times.Once);
             Assert.True(validationResult.IsValid);
         }
 
@@ -48,8 +53,7 @@
         [InlineAutoMoqData]
         public void Given_PropertyTypeNotExist_When_Validating_Then_ValidationErrors(
            [Frozen] Mock<IGenericRepository<PropertyType>> propertyTypeRepository,
-           PropertyTypeValidator validator,
-           Fixture fixture)
+           PropertyTypeValidator validator)
         {
             var id = Guid.NewGuid();
 
