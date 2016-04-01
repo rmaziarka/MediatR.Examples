@@ -5,10 +5,18 @@
     "MIN": "Min",
     "MAX": "Max",
     "DETAILS": "details"
+    "CONFIGURE": "Configure",
+    "BACK":  "Back"
   },
   "OWNERSHIP": {
     "ADD": {
-      "OWNERSHIPDETAILS": "Ownership details"
+      "OWNERSHIPDETAILS": "Ownership details",
+      "OWNERSHIPTYPE": "Ownership type",
+      "CURRENTOWNERSHIP": "current ownership",
+      "PURCHASEDATE": "Purchasing date",
+      "SELLDATE": "Selling date",
+      "PURCHASEPRICE": "Purchasing price",
+      "SELLPRICE": "Selling price"
     },
     "VIEW": {
       "OWNERSHIPDETAILS": "Ownership details",
@@ -16,7 +24,7 @@
       "OWNERSHIPTYPE": "Ownership type",
       "PURCHASEDATE": "Purchasing date",
       "SELLDATE": "Selling date",
-      "BUYPRICE": "Buying price",
+      "PURCHASEPRICE": "Purchasing price",
       "SELLPRICE": "Selling price"
     }
   },
