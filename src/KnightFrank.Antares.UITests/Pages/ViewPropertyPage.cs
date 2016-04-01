@@ -24,6 +24,7 @@
         private readonly ElementLocator activityDate = new ElementLocator(Locator.Id, string.Empty);
         private readonly ElementLocator activityVendor = new ElementLocator(Locator.Id, string.Empty);
         private readonly ElementLocator activityStatus = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator detailsLink = new ElementLocator(Locator.Id, string.Empty);      
         
 
         public CreateActivityPage Activity => new CreateActivityPage(this.DriverContext);
@@ -31,6 +32,8 @@
         public OwnershipDetailsPage Ownership => new OwnershipDetailsPage(this.DriverContext);
 
         public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
+
+        public ViewActivityPreviewPage PreviewDetails => new ViewActivityPreviewPage(this.DriverContext);
 
         public ViewPropertyPage(DriverContext driverContext) : base(driverContext)
         {
@@ -93,6 +96,12 @@
         public void OpenOwnershipDetails(int position)
         {
             this.Driver.GetElement(this.viewOwnershipDetails.Format(position)).Click();
+        }
+
+        public ViewPropertyPage ClickDetailsLink()
+        {
+            this.Driver.GetElement(this.detailsLink).Click();
+            return this;
         }
     }
 }

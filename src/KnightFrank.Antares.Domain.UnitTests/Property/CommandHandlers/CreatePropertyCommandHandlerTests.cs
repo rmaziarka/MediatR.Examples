@@ -1,8 +1,8 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Property.CommandHandlers
-{
+{   
     using FluentAssertions;
 
-    using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Property.CommandHandlers;
     using KnightFrank.Antares.Domain.Property.Commands;
@@ -29,11 +29,11 @@
             propertyRepository.Setup(x => x.Add(It.IsAny<Property>())).Callback<Property>(x => propertyToBeSaved = x);
 
             // Act
-            Property result = handler.Handle(command);
+            handler.Handle(command);
 
             // Assert
-            result.Address.ShouldBeEquivalentTo(command.Address, options => options.IncludingProperties().ExcludingMissingMembers());
             propertyToBeSaved.Should().NotBeNull();
+            propertyToBeSaved.Address.ShouldBeEquivalentTo(command.Address, options => options.IncludingProperties().ExcludingMissingMembers());
             propertyRepository.Verify(x => x.Add(It.IsAny<Property>()), Times.Once);
             propertyRepository.Verify(x => x.Save(), Times.Once);
         }

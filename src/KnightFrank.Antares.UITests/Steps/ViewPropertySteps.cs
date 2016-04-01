@@ -68,6 +68,13 @@
             this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").OpenOwnershipDetails(position);
         }
 
+        [When(@"User clicks activity's details link on property details page")]
+        public void OpenActivitiesPreview()
+        {
+            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").ClickDetailsLink();
+        }
+
+
         [Then(@"Activity creation date is set to current date on property details page")]
         public void CheckifActivityDateCorrect()
         {
@@ -129,6 +136,22 @@
 //            string expectedDetails = type + " " + fromDate + " - " + toDate;
 //            //TODO remove comment when dates are fixed
 //            Assert.Equal(expectedDetails, details);
+        }
+
+        [Then(@"Activity preview panel is displayed with details the same like details on activity tile")]
+        public void CheckActivityPreview()
+        {
+            var preview = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+            Assert.Equal(preview.GetActivityDate(), preview.PreviewDetails.GetCreationDate());
+            Assert.Equal(preview.GetActivityStatus(), preview.PreviewDetails.GetStatus());
+            //Assert.Equal(preview.GetActivityVendor(),preview.PreviewDetails.GetVendor());
+        }
+
+        [Then(@"Type is set on activity preview")]
+        public void CheckPreviewType(Table table)
+        {
+            var type = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+            Assert.Equal(table.Rows[0]["Type"], type.PreviewDetails.GetActivityType());
         }
     }
 }
