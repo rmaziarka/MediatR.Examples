@@ -19,5 +19,7 @@
         void Save();
 
         IEnumerable<T> GetWithInclude(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] paths);
+
+        bool Any(Expression<Func<T, bool>> predicate);
     }
 }

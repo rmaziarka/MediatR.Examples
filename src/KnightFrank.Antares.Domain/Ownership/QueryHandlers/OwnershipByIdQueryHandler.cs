@@ -1,6 +1,5 @@
 ﻿namespace KnightFrank.Antares.Domain.Ownership.QueryHandlers
 {
-    using System.Collections.Generic;
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Property;

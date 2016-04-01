@@ -1,20 +1,14 @@
 ﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.AddressForm
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
-
-    using FluentAssertions;
 
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Resource;
-    using KnightFrank.Antares.Domain.AddressForm.QueryResults;
-
-    using Newtonsoft.Json;
 
     using TechTalk.SpecFlow;
 

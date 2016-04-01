@@ -43,7 +43,8 @@
                 EnumType = fixture.BuildEnumType("OwnershipType")
             });
             
-            this.validator = fixture.Create<CreateOwnershipCommandValidator>();}
+            this.validator = fixture.Create<CreateOwnershipCommandValidator>();
+        }
 
         [Fact]
         public void Given_CorrectCreateOwnershipCommand_When_Validating_Then_NoValidationErrors()
