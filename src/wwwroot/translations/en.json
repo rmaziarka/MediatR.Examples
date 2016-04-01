@@ -36,7 +36,7 @@
     "LINE2": "Address line 2",
     "STREETNAME": "Street name",
     "LINE3": "Address line 3",
-    "PROPERTYNAME":  "Property name",
+    "PROPERTYNAME": "Property name",
     "BUILDINGNAME": "Building name",
     "PROPERTYNUMBER": "Property number",
     "FLATNUMBER": "Flat number",
@@ -69,6 +69,10 @@
     },
     "VIEW": {
       "VIEW_PROPERTY": "View property"
+    },
+    "LIST": {
+      "OWNERSHIPS": "Ownerships",
+      "NO_ITEMS": "Ownership information not configured yet"
     }
   },
   "REQUIREMENT": {
