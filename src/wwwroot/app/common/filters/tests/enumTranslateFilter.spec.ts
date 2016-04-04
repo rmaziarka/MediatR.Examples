@@ -11,8 +11,6 @@ module Antares {
 
         describe('when using', () => {
 
-            beforeEach(angular.mock.module('app'));
-
             beforeEach(inject((
                 $translate: ng.translate.ITranslateService) => {
 

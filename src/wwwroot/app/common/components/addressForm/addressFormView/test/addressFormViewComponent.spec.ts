@@ -11,7 +11,6 @@ module Antares {
             controller: Antares.Common.Component.AddressFormViewController,
             addressFormId = 'a1';
 
-        beforeEach(angular.mock.module('app'));
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService,

@@ -17,8 +17,6 @@ module Antares {
             var staticTranslationMock = { STATIC: {}};
             var enumsTranslationMock = { VAL: {}};
 
-            beforeEach(angular.mock.module('app'));
-
             beforeEach(inject((                
                 $httpBackend: ng.IHttpBackendService,
                 $q: ng.IQService,                

@@ -14,8 +14,6 @@ module Antares {
             element: ng.IAugmentedJQuery,
             compile: ng.ICompileService;
 
-        beforeEach(angular.mock.module('app'));
-
         describe('and no dont-overlap-max or dont-overlap-min attributes are specified', () => {
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,

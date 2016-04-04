@@ -59,11 +59,19 @@
         </ownership-add>
     </side-panel-content>
     <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()" ng-show="!vm.ownershipAddPanelVisible"> <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
-        <button class="btn btn-primary" type="button" ng-click="vm.showOwnershipAdd()" ng-show="!vm.ownershipAddPanelVisible"><span translate="COMMON.CONFIGURE"></span> <i class="fa fa-angle-double-right"></i></button>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()" ng-show="!vm.ownershipAddPanelVisible">
+             <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+        </button>
+        <button class="btn btn-primary" type="button" ng-click="vm.showOwnershipAdd()" ng-show="!vm.ownershipAddPanelVisible" id="ownership-add-button">
+            <span translate="COMMON.CONFIGURE"></span> <i class="fa fa-angle-double-right"></i>
+        </button>
 
-        <button class="btn btn-default" type="button" ng-click="vm.cancelAddOwnership()" ng-show="vm.ownershipAddPanelVisible"><i class="fa fa-angle-double-left"></i> <span translate="COMMON.BACK"></span></button>
-        <button class="btn btn-primary" type="button" ng-click="vm.saveOwnership()" ng-disabled="vm.loadingContacts" ng-show="vm.ownershipAddPanelVisible"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelAddOwnership()" ng-show="vm.ownershipAddPanelVisible">
+            <i class="fa fa-angle-double-left"></i> <span translate="COMMON.BACK"></span>
+        </button>
+        <button class="btn btn-primary" type="button" ng-click="vm.saveOwnership()" ng-disabled="vm.loadingContacts" ng-show="vm.ownershipAddPanelVisible">
+            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+        </button>
     </side-panel-footer>
 </side-panel>
 

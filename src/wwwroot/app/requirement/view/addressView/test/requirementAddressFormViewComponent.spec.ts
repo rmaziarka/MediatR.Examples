@@ -6,9 +6,6 @@ module Antares {
             mockData = Antares.Mock.AddressForm.AddressFormWithOneLine,
             address = Antares.Mock.AddressForm.FullAddress;
 
-
-        beforeEach(angular.mock.module('app'));
-
         describe('and address form multiple field definition ', () => {
             beforeEach(inject(($rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService, $httpBackend: ng.IHttpBackendService) => {

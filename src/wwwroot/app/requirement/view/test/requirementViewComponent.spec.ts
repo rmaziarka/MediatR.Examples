@@ -29,7 +29,6 @@ module Antares {
                 address : Antares.Mock.AddressForm.FullAddress
             };
 
-            beforeEach(angular.mock.module('app'));
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,

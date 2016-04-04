@@ -17,8 +17,6 @@ module Antares {
 
         var controller: ContactListController;
 
-        beforeEach(angular.mock.module('app'));
-
         beforeEach(inject((_$httpBackend_:ng.IHttpBackendService) =>{
             $http = _$httpBackend_;
             $http.whenGET(/\/api\/contact/).respond(() =>{

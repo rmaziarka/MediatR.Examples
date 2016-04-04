@@ -18,8 +18,6 @@ module Antares {
 
         var controller: OwnershipAddController;
 
-        beforeEach(angular.mock.module('app'));
-
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService,

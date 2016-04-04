@@ -24,7 +24,6 @@ module Antares {
             ]
         };
 
-        beforeEach(angular.mock.module('app'));
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService,

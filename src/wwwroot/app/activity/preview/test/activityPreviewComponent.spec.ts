@@ -25,8 +25,6 @@ module Antares {
                     <Contact>{ id: '22', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }],
                 createdDate: new Date()
             };
-
-            beforeEach(angular.mock.module('app'));
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,

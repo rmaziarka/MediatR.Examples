@@ -9,8 +9,6 @@ module Antares {
         
         var controller: RangeViewController;
 
-        beforeEach(angular.mock.module('app'));
-
         it('when min value is provided the component is visible', inject((
             $rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService) =>{

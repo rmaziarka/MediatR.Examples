@@ -26,7 +26,6 @@ module Antares {
             propertyMock.address.propertyName = 'test prop name';
             propertyMock.address.propertyNumber = '123456';
 
-            beforeEach(angular.mock.module('app'));
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,

@@ -19,8 +19,6 @@ module Antares {
             expect(panel.hasClass('slide-out')).toBe(!isVisible);
         }
 
-        beforeEach(angular.mock.module('app'));
-
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService) =>{

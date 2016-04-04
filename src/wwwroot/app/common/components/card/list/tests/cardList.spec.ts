@@ -18,7 +18,6 @@ module Antares {
         var itemsMock = [{ itemName: 'It1', test: 123 }, { itemName: 'It2', test: 456 }],
             showItemAddSpy = jasmine.createSpy('showItemAdd');
 
-        beforeEach(angular.mock.module('app'));
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService) => {
