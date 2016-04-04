@@ -1,6 +1,7 @@
 ﻿Feature: Property ownership
 
 @Property
+@Ownership
 Scenario: Save ownership
     Given User gets GB address form for Property and country details
         And User gets EnumTypeItemId and EnumTypeItem code
@@ -21,6 +22,7 @@ Scenario: Save ownership
         And Response contains property with ownership
 
 @Property
+@Ownership
 Scenario: Save ownership where dates are overlapping
     Given User gets GB address form for Property and country details
         And User gets EnumTypeItemId and EnumTypeItem code
