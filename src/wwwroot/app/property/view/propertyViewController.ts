@@ -3,6 +3,7 @@
 
 module Antares.Property.View {
     import Dto = Common.Models.Dto;
+    import Business = Common.Models.Business;
     import Resources = Common.Models.Resources;
     import CartListOrder = Common.Component.CartListOrder;
 
@@ -93,8 +94,7 @@ module Antares.Property.View {
         }
 
         showActivityAdd = () => {
-            // todo first when no element
-            var vendor: Dto.Ownership = _.find(this.property.ownerships, (ownership: Dto.Ownership) => {
+            var vendor: Business.Ownership = _.find(this.property.ownerships, (ownership: Business.Ownership) => {
                 return ownership.isVendor();
             });
 

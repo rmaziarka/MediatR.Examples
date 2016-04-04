@@ -2,12 +2,13 @@
 
 module Antares.Property {
     import Dto = Common.Models.Dto;
+    import Business = Common.Models.Business;
 
     export class OwnershipAddController {
         static $inject = ['componentRegistry', 'dataAccessService', '$scope', '$q'];
 
         componentId: string;
-        ownership: Dto.IOwnership = new Dto.Ownership();
+        ownership: Dto.IOwnership = new Business.Ownership();
         ownerships: Dto.IOwnership[];
         ownershipTypes: any;
         datepickers: any = {
@@ -64,7 +65,7 @@ module Antares.Property {
         }
 
         clearOwnership = () => {
-            this.ownership = new Dto.Ownership();
+            this.ownership = new Business.Ownership();
             var form = this.$scope["addOwnershipForm"];
             form.$setPristine();
         }
