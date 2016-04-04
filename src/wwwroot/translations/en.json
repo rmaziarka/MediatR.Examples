@@ -92,6 +92,12 @@
       "CREATE_ACTIVITY": "Create activity",
       "STATUS": "Status",
       "VENDORS": "Vendors"
+    },
+    "PREVIEW": {
+      "ACTIVITYPREVIEW": "Activity preview",
+      "STATUS": "Satus",
+      "CREATION_DATE": "Creation date",
+      "VENDORS": "Vendor(s)"
     }
   },
   "REQUIREMENT": {

@@ -6,8 +6,7 @@ module Antares {
     describe('Given view property page is loaded', () => {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
-            $http: ng.IHttpBackendService,
-            filter: ng.IFilterService;
+            $http: ng.IHttpBackendService;
 
         var controller: PropertyViewController;
 
@@ -55,7 +54,7 @@ module Antares {
                 expect(cardListElement[0].getAttribute('card-template-url')).toBe("'app/activity/templates/activityCard.html'");
                 expect(cardListElement[0].getAttribute('items-order')).toBe("vm.activitiesCartListOrder");
                 expect(cardListElement[0].getAttribute('show-item-add')).toBe("vm.showActivityAdd");
-                expect(cardListElement[0].getAttribute('show-item-details')).toBe("vm.showActivityDetails");
+                expect(cardListElement[0].getAttribute('show-item-details')).toBe("vm.showActivityPreview");
 
                 expect(cardListHeaderElement.length).toBe(1);
                 expect(cardListHeaderElementContent.length).toBe(1);

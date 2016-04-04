@@ -16,7 +16,9 @@ module Antares.Property.View {
             ownershipAddId: 'viewProperty:ownershipAddComponent',
             ownershipViewId: 'viewProperty:ownershipViewComponent',
             activityAddId: 'viewProperty:activityAddComponent',
-            activitySidePanelId: 'viewProperty:activitySidePanelComponent'
+            activityAddSidePanelId: 'viewProperty:activityAddSidePanelComponent',
+            activityPreviewId: 'viewProperty:activityPreviewComponent',
+            activityPreviewSidePanelId: 'viewProperty:activityPreviewSidePanelComponent'
         }
 
         ownershipAddPanelVisible: boolean = false;
@@ -25,12 +27,14 @@ module Antares.Property.View {
         components: any = {
             contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
             activityAdd: () => { return this.componentRegistry.get(this.componentIds.activityAddId); },
+            activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewId); },
             ownershipAdd: () => { return this.componentRegistry.get(this.componentIds.ownershipAddId); },
             ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewId); },
             panels: {
                 contact : () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
                 ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); },
-                activity: () => { return this.componentRegistry.get(this.componentIds.activitySidePanelId); }
+                activityAdd: () => { return this.componentRegistry.get(this.componentIds.activityAddSidePanelId); },
+                activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId); }
             }
         }
 
@@ -89,12 +93,12 @@ module Antares.Property.View {
         }
 
         showActivityAdd = () => {
-            this.showPanel(this.components.panels.activity);
+            this.showPanel(this.components.panels.activityAdd);
         }
 
-        showActivityDetails = (activity: any) =>{
-            alert('activity with status: ' + activity.activityStatus);
-            //this.showPanel(this.components.panels.activity);
+        showActivityPreview = (activity: Common.Models.Dto.Activity) => {
+            this.components.activityPreview().setActivity(activity);
+            this.showPanel(this.components.panels.activityPreview);
         }
 
         showContactList = () => {
@@ -148,7 +152,8 @@ module Antares.Property.View {
                 activityStatus.id
                 //todo set vendor as activity contacts list
             );
-            this.activityResource.save(activity).$promise.then((result:any) => { alert(result) });;
+
+            this.activityResource.save(activity).$promise.then((result:any) => { alert(result) });
         }
         }
 

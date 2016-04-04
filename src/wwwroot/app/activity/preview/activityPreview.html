@@ -1,0 +1,18 @@
+<div class="row section-row">
+    <div class="col-xs-5" translate="ACTIVITY.PREVIEW.STATUS"></div>
+    <div class="col-xs-7 activity-status">{{vm.activity.activityStatusId}} </div>
+</div>
+<div class="row section-row">
+    <div class="col-xs-5" translate="ACTIVITY.PREVIEW.CREATION_DATE"></div>
+    <div class="col-xs-7 activity-created-date">{{vm.activity.createdDate | date : 'dd-MM-yyyy'}}</div>
+</div>
+<div class="row section-row">
+    <div class="col-xs-5" translate="ACTIVITY.PREVIEW.VENDORS"></div>
+    <div class="col-xs-7">
+        <div class="row">
+            <div class="col-md-12 activity-vendor-item" ng-repeat="contact in vm.activity.contacts track by $id(contact)">
+                {{contact.firstName}} {{contact.surname}}
+            </div>
+        </div>
+    </div>
+</div>

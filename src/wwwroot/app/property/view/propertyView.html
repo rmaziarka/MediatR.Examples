@@ -30,9 +30,9 @@
                     <fieldset>
                         <card-list card-template-url="'app/activity/templates/activityCard.html'"
                                    items="vm.property.activities" items-order="vm.activitiesCartListOrder"
-                                   show-item-add="vm.showActivityAdd" show-item-details="vm.showActivityDetails">
+                                   show-item-add="vm.showActivityAdd" show-item-details="vm.showActivityPreview">
                             <card-list-header>
-                                <legend translate="ACTIVITY.LIST.ACTIVITIES">Activities</legend>
+                                <legend translate="ACTIVITY.LIST.ACTIVITIES"></legend>
                             </card-list-header>
                             <card-list-no-items>
                                 <p class="help-block" translate="ACTIVITY.LIST.NO_ITEMS"></p>
@@ -67,7 +67,7 @@
     </side-panel-footer>
 </side-panel>
 
-<side-panel component-id="vm.componentIds.activitySidePanelId">
+<side-panel component-id="vm.componentIds.activityAddSidePanelId">
     <side-panel-header>
         <h3>Create activity</h3>
     </side-panel-header>
@@ -87,5 +87,15 @@
     <side-panel-content>
         <ownership-view component-id="vm.componentIds.ownershipViewId">
         </ownership-view>
+    </side-panel-content>
+</side-panel>
+
+<side-panel component-id="vm.componentIds.activityPreviewSidePanelId">
+    <side-panel-header>
+        <h3 translate="ACTIVITY.PREVIEW.ACTIVITYPREVIEW"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <activity-preview component-id="vm.componentIds.activityPreviewId">
+        </activity-preview>
     </side-panel-content>
 </side-panel>

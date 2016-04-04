@@ -3,7 +3,8 @@ module Antares.Common.Models.Dto {
         constructor(
             public propertyId: string,
             public activityStatusId: string,
-            public contacts?: Contact[]
+            public contacts?: Contact[],
+            public createdDate?: Date
         ) { }
     }
 }
