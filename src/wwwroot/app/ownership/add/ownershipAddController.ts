@@ -6,7 +6,7 @@ module Antares.Property {
 
     export class OwnershipAddController {
         static $inject = ['componentRegistry', 'dataAccessService', '$scope', '$q'];
-
+        maxAllowedDate:string = (new Date()).toDateString();
         componentId: string;
         ownership: Dto.IOwnership = new Business.Ownership();
         ownerships: Dto.IOwnership[];

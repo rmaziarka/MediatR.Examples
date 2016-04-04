@@ -64,7 +64,8 @@
     "FIELD_HAS_INVALID_FORMAT": "Value has invalid format",
     "LIST_SHOULD_NOT_BE_EMPTY": "List should contain at least one entry",
     "DATE_HAS_INVALID_FORMAT": "Date has invalid format",
-    "FIELD_OVERLAPS_RANGE": "Given date range overlaps previously saved date ranges"
+    "FIELD_OVERLAPS_RANGE": "Given date range overlaps previously saved date ranges",
+    "DATE_CAN_NOT_BE_FROM_FUTURE":"Can not specify date from future"
   },
   "PROPERTY": {
     "ADD": {
