@@ -62,18 +62,11 @@
             page.ContactsList.ConfigureOwnership();
         }
 
-        [When(@"User clicks ownership details on position (.*) on view property page")]
-        public void OpenOwnershipDetails(int position)
-        {
-            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").OpenOwnershipDetails(position);
-        }
-
         [When(@"User clicks activity's details link on property details page")]
         public void OpenActivitiesPreview()
         {
             this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").ClickDetailsLink();
         }
-
 
         [Then(@"Activity creation date is set to current date on property details page")]
         public void CheckifActivityDateCorrect()
@@ -113,20 +106,19 @@
             Assert.Equal(table.Rows[0]["Status"], page.Activity.GetActivityStatus());
         }
 
-        [Then(@"Ownership contacts on position (.*) should contain following contacts on view property page")]
+        [Then(@"Ownership details on position (.*) should contain following data on view property page")]
         public void CheckOwnershipContacts(int position, Table table)
         {
-            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-            List<string> contacts = page.GetOwnershipContacts(position);
-            List<string> expectedContacts = table.CreateSet<Contact>().Select(c => c.FirstName + " " + c.Surname).ToList();
-
-            Assert.Equal(expectedContacts, contacts);
-        }
-
-        [Then(@"Ownership details on position (.*) should contain following data on view property page")]
-        public void CheckOwnershipDetails(int position, Table table)
-        {
+            //TODO when story is implemented
 //            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+//
+//            IEnumerable<Ownership> details = table.CreateSet<Ownership>();
+//
+//            List<string> contacts = page.GetOwnershipContacts(position);
+//            List<string> expectedContacts = table.CreateSet<Contact>().Select(c => c.FirstName + " " + c.Surname).ToList();
+//
+//            Assert.Equal(expectedContacts, contacts);
+//
 //            string details = page.GetOwnershipDetails(position);
 //
 //            string type = table.Rows[0]["Type"].ToUpper();
@@ -134,7 +126,6 @@
 //            string toDate = table.Rows[0]["SellDate"];
 //
 //            string expectedDetails = type + " " + fromDate + " - " + toDate;
-//            //TODO remove comment when dates are fixed
 //            Assert.Equal(expectedDetails, details);
         }
 
