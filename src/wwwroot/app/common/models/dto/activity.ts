@@ -10,6 +10,7 @@ module Antares.Common.Models.Dto {
             if (activity) {
                 angular.extend(this, activity);
 
+                this.createdDate = Core.DateTimeUtils.convertDateToUtc(activity.createdDate);
                 this.contacts = activity.contacts.map((contact: IContact) => { return new Dto.Contact(contact) });
             }
         }

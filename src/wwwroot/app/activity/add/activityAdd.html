@@ -2,7 +2,7 @@
     <div class="form-group" ng-class="{'has-error': (addActivityForm.$submitted || addActivityForm.status.$dirty) && addActivityForm.status.$invalid}">
         <div class="row">
             <div class="col-md-9">
-                <label for="status" class="">Status</label>
+                <label for="status" class="" translate="ACTIVITY.ADD.STATUS"></label>
                 <select class="form-control" required id="status" name="status" ng-options="item as item.value for item in vm.activityStatuses track by item.id" ng-model="vm.selectedActivityStatus">
                     <option value=""></option>
                 </select>
@@ -13,7 +13,7 @@
         </div>
     </div>
 </form>
-<h4 class="page-header">Vendors</h4>
+<h4 class="page-header" translate="ACTIVITY.ADD.VENDORS"></h4>
 
 <div class="panel panel-default" ng-repeat="vendor in vm.vendors">
     <div class="panel-body">

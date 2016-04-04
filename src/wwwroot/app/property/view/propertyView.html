@@ -77,14 +77,14 @@
 
 <side-panel component-id="vm.componentIds.activityAddSidePanelId">
     <side-panel-header>
-        <h3>Create activity</h3>
+        <h3 translate="ACTIVITY.ADD.CREATE_ACTIVITY"></h3>
     </side-panel-header>
     <side-panel-content>
-        <activity-add component-id="vm.componentIds.activityAddId"></activity-add>
+        <activity-add component-id="vm.componentIds.activityAddId" activities="vm.property.activities"></activity-add>
     </side-panel-content>
     <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelAddActivity()"> <i class="fa fa-ban"></i> Cancel</button>
-        <button class="btn btn-primary" type="button" ng-click="vm.saveActivity()" ng-disabled=""><i class="fa fa-floppy-o"></i> Save</button>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelAddActivity()"> <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
+        <button class="btn btn-primary" type="button" ng-click="vm.saveActivity()" ng-disabled=""><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
     </side-panel-footer>
 </side-panel>
 

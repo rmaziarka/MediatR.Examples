@@ -46,7 +46,6 @@ module Antares.Property.View {
 
         propertyResource: Resources.IPropertyResourceClass;
         property: Dto.Property;
-        activityResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityResource>;
 
         currentPanel: any;
 
@@ -58,7 +57,6 @@ module Antares.Property.View {
 
             this.propertyId = $state.params['id'];
             this.propertyResource = dataAccessService.getPropertyResource();
-            this.activityResource = dataAccessService.getActivityResource();
 
             this.fixOwnershipDates();
 
@@ -138,30 +136,19 @@ module Antares.Property.View {
         }
 
         cancelAddActivity(){
-            this.components.panels.activity().hide();
+            this.components.panels.activityAdd().hide();
         }
 
         saveOwnership(){
-            var promise = this.components.ownershipAdd().saveOwnership(this.property.id);
-            promise
-            .then(() => {
-                    this.components.panels.contact().hide();
-                });
+            this.components.ownershipAdd().saveOwnership(this.property.id).then(() =>{
+                this.cancelUpdateContacts();
+            });
         }
 
-        saveActivity() {
-            // Tell don't ask principle!
-            if (this.components.activityAdd().isDataValid()) {
-                var activityStatus = this.components.activityAdd().selectedActivityStatus;
-                var vendors: Array<Dto.Contact> = this.components.activityAdd().getVendors();
-
-                var activity = new Common.Models.Dto.Activity();
-                activity.propertyId = this.propertyId;
-                activity.activityStatusId = activityStatus.id;
-                activity.contacts = vendors;
-
-                this.activityResource.save(activity).$promise.then((result:any) => { alert(result) });
-            }
+        saveActivity(){
+            this.components.activityAdd().saveActivity(this.property.id).then(() =>{
+                this.cancelAddActivity();
+            });
         }
 
         private hidePanels(hideCurrent: boolean = true) {

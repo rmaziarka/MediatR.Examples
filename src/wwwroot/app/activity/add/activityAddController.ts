@@ -6,24 +6,28 @@ module Antares.Activity {
     export class ActivityAddController {
 
         componentId: string;
+        activities: Common.Models.Dto.IActivity[];
         activityStatuses: any;
         selectedActivityStatus: any;
         defaultActivityStatusCode: string = 'PreAppraisal';
+        activityResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityResource>;
 
         private vendors: Array<Dto.Contact>;
 
         constructor(
-            componentRegistry: Antares.Core.Service.ComponentRegistry,
-            private dataAccessService: Antares.Services.DataAccessService,
-            private $scope: ng.IScope) {
+            componentRegistry: Core.Service.ComponentRegistry,
+            private dataAccessService: Services.DataAccessService,
+            private $scope: ng.IScope,
+            private $q: ng.IQService) {
 
             componentRegistry.register(this, this.componentId);
 
+            this.activityResource = dataAccessService.getActivityResource();
             this.dataAccessService.getEnumResource().get({ code: 'ActivityStatus' }).$promise.then(this.onActivityStatusLoaded);
         }
 
         onActivityStatusLoaded = (result: any) => {
-            var defaultActivityStatus: any = _.find(result.items, { 'code' : this.defaultActivityStatusCode });
+            var defaultActivityStatus: any = _.find(result.items, { 'code': this.defaultActivityStatusCode });
 
             if (defaultActivityStatus) {
                 this.selectedActivityStatus = defaultActivityStatus;
@@ -32,12 +36,25 @@ module Antares.Activity {
             this.activityStatuses = result.items;
         }
 
-        setVendors(vendors: Array<Dto.Contact>) {
+        setVendors(vendors: Array<Dto.Contact>){
             this.vendors = vendors;
         }
 
-        getVendors(): Array<Dto.Contact> {
-            return this.vendors;
+        saveActivity = (propertyId: string): ng.IPromise<void> => {
+            if (!this.isDataValid()) {
+                return this.$q.reject();
+            }
+
+            var activity = new Dto.Activity();
+            activity.propertyId = propertyId;
+            activity.activityStatusId = this.selectedActivityStatus.id;
+            activity.contacts = this.vendors;
+
+            return this.activityResource.save(activity).$promise.then((result: Dto.IActivity) => {
+                var addedActivity = new Dto.Activity(result);
+
+                this.activities.push(addedActivity);
+            });
         }
 
         isDataValid = (): boolean => {
