@@ -3,6 +3,8 @@
 module Antares {
     import PropertyViewController = Property.View.PropertyViewController;
     import IProperty = Antares.Common.Models.Dto.IProperty;
+    import ContactListController = Antares.Component.ContactListController;
+    import Dto = Antares.Common.Models.Dto;
     describe('Given view property page is loaded', () => {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
@@ -18,7 +20,6 @@ module Antares {
                 activities: []
             };
 
-            beforeEach(angular.mock.module('app'));
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
@@ -61,6 +62,58 @@ module Antares {
 
                 expect(cardListNoItemsElement.length).toBe(1);
                 expect(cardListNoItemsElementContent.length).toBe(1);
+            });
+        });
+
+
+        describe('and contact list is opened', () => {
+            var propertyMock: IProperty = {
+                id: '1',
+                address: Antares.Mock.AddressForm.FullAddress,
+                ownerships: [],
+                activities: []
+            };
+
+            beforeEach(inject(($rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService,
+                $httpBackend: ng.IHttpBackendService) => {
+
+                // init
+                $httpBackend.whenGET("").respond(() => { return {}; });
+
+                scope = $rootScope.$new();
+                scope['property'] = propertyMock;
+                element = $compile('<property-view property="property"></property-view>')(scope);
+
+                scope.$apply();
+                $httpBackend.flush();
+            }));
+
+            it('when contacts are selected and Configure button is clicked then contacts are visible on ownership add panel', () => {
+                // arrange
+                var contactListController: ContactListController = element.find('contact-list').controller('contactList');
+                contactListController.isLoading = false;
+                contactListController.contacts = [
+                    new Dto.Contact(<Dto.IContact>{firstName: 'Vernon', surname:'Vaughn',title: 'Mr'}),
+                    new Dto.Contact(<Dto.IContact>{firstName: 'Julie', surname:'Lerman',title: 'Mrs'}),
+                    new Dto.Contact(<Dto.IContact>{firstName: 'Mark', surname:'Rendle',title: 'Mr'})
+                ];
+
+                scope.$apply();
+
+                // act
+                var checkboxes = element.find('contact-list').find('input');
+                checkboxes[0].click();
+                checkboxes[2].click();
+
+                element.find('#ownership-add-button').click();
+
+                // assert
+                var addOwnershipPanel = element.find('ownership-add');
+                var names = addOwnershipPanel.find('.full-name');
+                expect(names.length).toBe(2);
+                expect(names[0].innerHTML).toBe('Vernon Vaughn');
+                expect(names[1].innerHTML).toBe('Mark Rendle');
             });
         });
 
