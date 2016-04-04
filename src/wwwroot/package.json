@@ -29,6 +29,7 @@
     "jasmine-core": "^2.4.1",
     "run-sequence": "^1.1.5",
     "tslint": "^3.4.0",
+    "typings": "^0.7.12",
     "wiredep": "^2.2.2"
   },
   "dependencies": {
