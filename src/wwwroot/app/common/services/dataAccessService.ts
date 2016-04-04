@@ -26,6 +26,17 @@ module Antares.Services {
             }
         };
 
+        private getPropertyTypesAction: ng.resource.IActionDescriptor = {
+            url: this.appConfig.rootUrl + '/api/properties/types?countryCode=:countryCode&divisionCode=:divisionCode&localeCode=:localeCode',
+            method: 'GET',
+            isArray: false,
+            params: {
+                countryCode: '@countryCode',
+                divisionCode: '@divisionCode',
+                localeCode: '@localeCode'
+            }
+        };
+
         getContactResource(): Resources.IBaseResourceClass<Resources.IContactResource> {
             return <Resources.IBaseResourceClass<Resources.IContactResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/contacts/:id');
@@ -50,7 +61,8 @@ module Antares.Services {
             return <Resources.IPropertyResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/properties/:id', null, {
                     update: this.updateAction,
-                    createOwnership: this.createOwnershipAction
+                    createOwnership: this.createOwnershipAction,
+                    getPropertyTypes: this.getPropertyTypesAction
                 });
         }
 
