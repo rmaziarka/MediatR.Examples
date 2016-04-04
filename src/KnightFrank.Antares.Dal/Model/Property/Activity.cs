@@ -10,7 +10,7 @@
     {
         public Guid PropertyId { get; set; }
 
-        public Property Property { get; set; }
+        public virtual Property Property { get; set; }
         
         public Guid ActivityStatusId { get; set; }
 

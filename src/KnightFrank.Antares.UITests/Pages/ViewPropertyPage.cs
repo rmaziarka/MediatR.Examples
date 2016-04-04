@@ -15,7 +15,7 @@
         //locators for property details area
         //
         //locators for property ownership area
-        private readonly ElementLocator addOwernship = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
+        private readonly ElementLocator addOwernship = new ElementLocator(Locator.CssSelector, "card-list[items *= 'ownerships'] button");
         private readonly ElementLocator ownershipContacts = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'property.ownerships']:nth-of-type({0}) span[ng-repeat *= 'contact']");
         private readonly ElementLocator ownershipDetails = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'property.ownerships']:nth-of-type({0}) small");
         private readonly ElementLocator viewOwnershipDetails = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'property.ownerships']:nth-of-type({0}) a[ng-click *= 'showOwnershipView']");

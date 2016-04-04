@@ -29,7 +29,6 @@ Scenario: Property ownership and activity
 		And User creates contacts on create contact page
 			| Title | FirstName | Surname   |
 			| King  | Arthur    | Pendragon |
-			| Sir   | Lancelot  | du Lac    |
 	When User navigates to create property page
 		And User selects 'United Kingdom' country on create property page
 		And User fills in address details on create property page
@@ -42,25 +41,12 @@ Scenario: Property ownership and activity
 	When User selects contacts for ownership on view property page
 		| FirstName | Surname   |
 		| Arthur    | Pendragon |
-		| Lancelot  | du Lac    |
-	Then Following contacts should be visible on ownership details page
-		| FirstName | Surname   |
-		| Arthur    | Pendragon |
-		| Lancelot  | du Lac    |
-	When User fills in ownership details on ownership details page
-		| Type       | Current | PurchaseDate | SellDate   | BuyPrice | SellPrice |
-		| Freeholder | false   | 2015-03-01   | 2016-02-01 | 1000000  | 1200000   |
-	Then Ownership contacts on position 1 should contain following contacts on view property page
-		| FirstName | Surname   |
-		| Arthur    | Pendragon |
-		| Lancelot  | du Lac    |
-		And Ownership details on position 1 should contain following data on view property page
-			| Type       | PurchaseDate | SellDate   |
-			| Freeholder | 01-03-2015   | 01-02-2016 |
-	When User clicks ownership details on position 1 on view property page
-	Then Ownership details should contain following data on ownership details page
-		| Contacts                         | Type       | PurchaseDate | SellDate   | BuyPrice | SellPrice |
-		| Arthur Pendragon;Lancelot du Lac | Freeholder | 01-03-2015   | 01-02-2016 | 1000000  | 1200000   |
+		And User fills in ownership details on ownership details page
+			| Type       | Current | PurchaseDate | SellDate   | BuyPrice | SellPrice |
+			| Freeholder | false   | 01-03-2015   | 01-02-2016 | 1000000  | 1200000   |
+	#Then Ownership details on position 1 should contain following data on view property page
+	#	| Contact          | Type       | PurchaseDate | SellDate   |
+	#	| Arthur Pendragon | Freeholder | 01-03-2015   | 01-02-2016 |
 	#When User clicks add activites button on property details page		
 	#Then Activity details are set on activity panel
 	#	| Vendor | Status        |
@@ -71,5 +57,4 @@ Scenario: Property ownership and activity
 	#	| Vendor | Status        |
 	#	|        | Pre-appraisal |
 	#When User clicks activity's details link on property details page
-    #Then Activity preview panel is displayed with details the same like details on activity tile
-
+	#Then Activity preview panel is displayed with details the same like details on activity tile

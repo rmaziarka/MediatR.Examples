@@ -1,5 +1,5 @@
 ﻿declare module Antares.Common.Models.Dto {
     interface IOwnershipType {
-        code: OwnershipTypeEnum;
+        code: Models.Enums.OwnershipTypeEnum;
     }
 }
