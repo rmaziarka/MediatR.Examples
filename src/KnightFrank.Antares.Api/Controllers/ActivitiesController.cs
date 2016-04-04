@@ -3,8 +3,6 @@
     using System;
     using System.Web.Http;
 
-    using Dal.Repository;
-
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.Activity.Commands;
 
@@ -16,17 +14,14 @@
     public class ActivitiesController : ApiController
     {
         private readonly IMediator mediator;
-        private readonly IReadGenericRepository<Activity> activityRepository;
 
         /// <summary>
         ///     Contacts controller constructor
         /// </summary>
         /// <param name="mediator">Mediator instance.</param>
-        /// <param name="activityRepository"></param>
-        public ActivitiesController(IMediator mediator, IReadGenericRepository<Activity> activityRepository)
+        public ActivitiesController(IMediator mediator)
         {
             this.mediator = mediator;
-            this.activityRepository = activityRepository;
         }
 
         /// <summary>
@@ -37,7 +32,6 @@
         public Activity CreateActivity([FromBody] CreateActivityCommand command)
         {
             Guid activityId = this.mediator.Send(command);
-            // TODO return correct activity
             return new Activity { Id = activityId };
         }
     }
