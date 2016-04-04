@@ -20,7 +20,6 @@ Scenario Outline: Retrieve error messages for improper data
 	| 00000000-0000-0000-0000-000000000000 | ActivityStatus                       | BadRequest |
 	| latest                               | 00000000-0000-0000-0000-000000000000 | BadRequest |
 
-
 @ignore
 @Activities
 Scenario: Create Activity for an existing property

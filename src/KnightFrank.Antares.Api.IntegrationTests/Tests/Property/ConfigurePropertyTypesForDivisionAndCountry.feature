@@ -7,8 +7,10 @@ Scenario Outline: Get property types from web api
 	Examples:
 	| CountryCode | DivisionCode | StatusCode |
 	| GB          | Residential  | Ok         |
+	| GB          | Commercial   | Ok         |
 	| GB          |              | BadRequest |
 	|             | Residential  | BadRequest |
+	|             | Commercial   | BadRequest |
 	| ZZZZZ       | Residential  | BadRequest |
 	| GB          | Circus       | BadRequest |
 	|             |              | BadRequest |

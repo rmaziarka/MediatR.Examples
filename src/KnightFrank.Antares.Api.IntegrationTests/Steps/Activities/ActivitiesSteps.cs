@@ -6,7 +6,6 @@
     using System.Net.Http;
 
     using FluentAssertions;
-    using FluentAssertions.Common;
 
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
@@ -17,7 +16,6 @@
     using Newtonsoft.Json;
 
     using TechTalk.SpecFlow;
-    using TechTalk.SpecFlow.Assist;
 
     [Binding]
     public class ActivitiesSteps
@@ -64,7 +62,7 @@
             this.fixture.DataContext.Activity.Add(activity);
             this.fixture.DataContext.SaveChanges();
 
-            this.scenarioContext.Set<Activity>(activity, "Added Activity");
+            this.scenarioContext.Set(activity, "Added Activity");
         }
 
         [When(@"User creates activity for given (.*) property id")]

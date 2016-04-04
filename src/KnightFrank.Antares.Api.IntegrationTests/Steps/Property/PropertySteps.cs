@@ -37,6 +37,12 @@
             this.scenarioContext = scenarioContext;
         }
 
+        [Given(@"Property does not exist in DB")]
+        public void GivenPropertyDoesNotExistsInDataBase()
+        {
+            this.scenarioContext.Set(Guid.Empty, "AddedPropertyId");
+        }
+
         [Given(@"Address for add/update property is defined")]
         public void GivenAddressIsDefined(Table table)
         {
@@ -111,10 +117,15 @@
         [Given(@"User gets (.*) for PropertyType")]
         public void GetPropertyTypeId(string propertyTypeCode)
         {
-            PropertyType propertyType =
-                this.fixture.DataContext.PropertyType.Single(
-                    i => i.Code.Equals(propertyTypeCode));
-            this.scenarioContext.Set(propertyType.Id, "PropertyTypeId");
+            if (propertyTypeCode.Equals("invalid"))
+            {
+                this.scenarioContext.Set(Guid.Empty, "PropertyTypeId");
+            }
+            else
+            {
+                PropertyType propertyType = this.fixture.DataContext.PropertyType.Single(i => i.Code.Equals(propertyTypeCode));
+                this.scenarioContext.Set(propertyType.Id, "PropertyTypeId");
+            }
         }
 
         [When(@"Users updates property with defined address for (.*) id by Api")]
@@ -149,14 +160,6 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [Then(@"The updated Property is saved in data base")]
-        public void ThenTheResultsShouldBeSameAsAdded()
-        {
-            var updatedProperty = this.scenarioContext.Get<UpdatePropertyCommand>("Property");
-            Property expectedProperty = this.fixture.DataContext.Property.SingleOrDefault(x => x.Id.Equals(updatedProperty.Id));
-            updatedProperty.ShouldBeEquivalentTo(expectedProperty);
-        }
-
         [When(@"User retrieves property details")]
         public void GetProperty()
         {
@@ -166,6 +169,15 @@
 
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
             this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        [Then(@"The updated Property is saved in data base")]
+        public void ThenTheResultsShouldBeSameAsAdded()
+        {
+            var updatedProperty = this.scenarioContext.Get<UpdatePropertyCommand>("Property");
+            Property expectedProperty = this.fixture.DataContext.Property.SingleOrDefault(x => x.Id.Equals(updatedProperty.Id));
+
+            updatedProperty.ShouldBeEquivalentTo(expectedProperty);
         }
 
         [Then(@"The created Property is saved in data base")]
@@ -179,15 +191,7 @@
                 .Excluding(x => x.Ownerships)
                 .Excluding(x => x.Address.AddressForm)
                 .Excluding(x => x.Address.Country)
-                .Excluding(x => x.Address.Line1)
-                .Excluding(x => x.Activities)
                 .Excluding(x => x.PropertyType));
-        }
-
-        [Given(@"Property does not exist in DB")]
-        public void GivenPropertyDoesNotExistsInDataBase()
-        {
-            this.scenarioContext.Set(new Guid(), "AddedPropertyId");
         }
     }
 }
