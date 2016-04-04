@@ -34,14 +34,6 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"There is activity type id and activity status id defined")]
-        public void GivenThereIsActivityTypeIdAndActivityStatusIdDefined(Guid id)
-        {
-            IQueryable<Contact> abc =
-                this.fixture.DataContext.Ownerships.Where(x => x.PropertyId == id && x.SellDate == null)
-                    .SelectMany(x => x.Contacts);
-        }
-
         [Given(@"Activity for '(.*)' property exists in data base")]
         public void GivenActivityForPropertyExistsInDataBase(string id)
         {
@@ -69,8 +61,12 @@
 
             Guid activityStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["PreAppraisal"];
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
+            List<CreateActivityContact> vendors = this.fixture.DataContext.Ownerships
+                .Where(x => x.PropertyId.Equals(propertyId) && x.SellDate == null)
+                .SelectMany(x => x.Contacts)
+                .Select(contact => new CreateActivityContact { Id = contact.Id }).ToList();
 
-            var activityCommand = new CreateActivityCommand { PropertyId = propertyId, ActivityStatusId = activityStatusId };
+            var activityCommand = new CreateActivityCommand { PropertyId = propertyId, ActivityStatusId = activityStatusId, Vendors = vendors };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, activityCommand);
             this.scenarioContext.SetHttpResponseMessage(response);
