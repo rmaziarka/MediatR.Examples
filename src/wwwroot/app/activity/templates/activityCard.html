@@ -1,4 +1,4 @@
 <div class="panel-item">
-    {{cvm.item.createdDate | date : 'dd-MM-yyyy'}} <span ng-repeat="contact in cvm.item.contacts"> {{contact.firstName}} {{contact.surname}}</span>
+    {{cvm.item.createdDate | date : 'dd-MM-yyyy'}} <span ng-repeat="contact in cvm.item.contacts"> {{contact.firstName}} {{contact.surname}}{{$last ? '' : ', '}}</span>
 </div>
-<small>{{cvm.item.activityStatus.code}}</small>
+<small>{{cvm.item.activityStatusId | enumTranslate}}</small>
