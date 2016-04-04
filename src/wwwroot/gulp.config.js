@@ -23,18 +23,21 @@
             appFiles: [
                 clientApp + '**/*.js',
                 '!' + clientApp + '**/*.spec.js',
-                '!' + clientApp + '**/*.mock.js'
+                '!' + clientApp + '**/*.mock.js',
+                '!' + clientApp + '**/*.test.js'
             ],
             appFilesToTest: [
                 clientApp + '**/*.js',
                 '!' + clientApp + '**/*.spec.js',
                 '!' + clientApp + '**/*.mock.js',
+                '!' + clientApp + '**/*.test.js',
                 '!' + clientApp + '**/*.route.js',
                 '!' + clientApp + '**/*.config.js'
             ],
             specsAndMocks: [
                 clientApp + '**/*.spec.js',
-                clientApp + '**/*.mock.js'
+                clientApp + '**/*.mock.js',
+                clientApp + '**/*.test.js'
             ],
             order: [
                 '**/app.bootstrap.js',

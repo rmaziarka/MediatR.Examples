@@ -2,6 +2,7 @@
 
 module Antares {
     import ActivityAddController = Activity.ActivityAddController;
+    import Dto = Antares.Common.Models.Dto;
 
     describe('Given activity is being added', () => {
         var scope: ng.IScope,
@@ -12,7 +13,8 @@ module Antares {
             controller: ActivityAddController;
 
         var pageObjectSelectors = {
-            activityStatusSelector: 'select#status'
+            activityStatusSelector: 'select#status',
+            vendors: '#vendors'
         };
 
         var activityStatuses: any = {
@@ -51,6 +53,38 @@ module Antares {
             it('then default Pre-appraisal status is selected', () => {
                 var expectedPreAppraisalStatus = _.find(activityStatuses.items, { 'code': 'PreAppraisal' });
                 expect(controller.selectedActivityStatus).toEqual(expectedPreAppraisalStatus);
+            });
+        });
+
+        describe('when vendors are set in component', () => {
+            var setVendors = (vendorsCount: number): Dto.Contact[] => {
+                var vendors = _.map(Antares.TestHelpers.ContactGenerator.GenerateMany(vendorsCount), (dtoContact: Dto.IContact) => {
+                    return new Dto.Contact(dtoContact);
+                });
+
+                controller.setVendors(vendors);
+                scope.$apply();
+
+                return vendors;
+            }
+
+            it('then all should be displayed', () => {
+                var vendorsCount: number = 3;
+                setVendors(vendorsCount);
+
+                var elements: ng.IAugmentedJQuery = element.find(pageObjectSelectors.vendors);
+                expect(elements.length).toBe(vendorsCount);
+            });
+
+            it('then his name should be displayed correctly', () => {
+                var vendorsCount: number = 1;
+                var vendor: Dto.Contact = setVendors(vendorsCount)[0];
+
+                var elements: ng.IAugmentedJQuery = element.find(pageObjectSelectors.vendors);
+                expect(elements.length).toBe(1);
+
+                var vendorElement: HTMLElement = elements[0];
+                expect(vendorElement.innerText).toBe(vendor.getName());
             });
         });
 
