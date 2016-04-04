@@ -64,7 +64,7 @@ module Antares.Common.Component {
         }
 
         private getAddressFormTemplete = (entityTypeCode: string, countryId: string): void => {
-            var countryLocalised: CountryLocalised = _.find(this.countries, (c) => {
+            var countryLocalised: CountryLocalised = _.find(this.countries, (c: CountryLocalised) => {
                 return c.country.id === countryId;
             });
 
