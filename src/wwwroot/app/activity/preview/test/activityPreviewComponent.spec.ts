@@ -37,14 +37,12 @@ module Antares {
                 controller = element.controller('activityPreview');
             }));
 
-            xit('when activity is set then activity status value should be displayed', () => {
+            it('when activity is set then activity status value should be displayed', () => {
                 controller.setActivity(activityMock);
                 scope.$apply();
 
                 var statusElement = element.find('.activity-status');
-
-                //TODO: change when new mechanizm for enums translations is added
-                expect(statusElement.text()).toBe(activityMock.activityStatusId);
+                expect(statusElement.text()).toBe('ENUMS.' + activityMock.activityStatusId);
             });
 
             it('when activity is set then activity creation date value should be displayed in proper format', () => {
