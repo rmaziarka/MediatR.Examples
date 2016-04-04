@@ -77,6 +77,9 @@
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandProfile.cs" />
     <Compile Include="Activity\Commands\CreateActivityValidator.cs" />
+    <Compile Include="Activity\Queries\ActivityQuery.cs" />
+    <Compile Include="Activity\Queries\ActivityQueryValidator.cs" />
+    <Compile Include="Activity\QueryHandlers\ActivityQueryHandler.cs" />
     <Compile Include="AddressFieldDefinition\QueryResults\AddressFieldDefinitionResult.cs" />
     <Compile Include="AddressForm\Queries\AddressFormByIdQuery.cs" />
     <Compile Include="AddressForm\Queries\AddressFormByIdQueryValidator.cs" />
