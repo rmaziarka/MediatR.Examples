@@ -23,7 +23,7 @@ namespace KnightFrank.Antares.Dal.Migrations
                 c => new
                     {
                         Id = c.Guid(nullable: false, identity: true),
-                        CreateDate = c.DateTime(nullable: false),
+                        CreateDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
                 .PrimaryKey(t => t.Id);
             

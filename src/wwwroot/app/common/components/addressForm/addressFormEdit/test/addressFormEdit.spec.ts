@@ -17,12 +17,17 @@ module Antares {
                 { country: { id: "countryId2", isoCode: "TESTCOUNTRY" }, locale : {}, value : "Test Country" }
             ],
             countryMockId = countriesMock[0].country.id,
-            addressMock: Dto.Address = new Dto.Address('adrId1', countryMockId, 'adrfrmId1', 'test prop name', '123456');
+            addressMock: Dto.Address = new Dto.Address();
+
+        addressMock.id = 'adrId1';
+        addressMock.countryId = countryMockId;
+        addressMock.addressFormId = 'adrfrmId1';
+        addressMock.propertyName = 'test prop name';
+        addressMock.propertyNumber = '123456';
 
         describe('when component is being loaded', () =>{
             var addressFormMock = new Dto.AddressForm('adrfrmId1', countryMockId, []);
 
-            beforeEach(angular.mock.module('app'));
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
@@ -97,8 +102,7 @@ module Antares {
                     new Dto.AddressFormFieldDefinition('OrderedFieldD', 'Label D', false, '', 3, 1, 2),
                     new Dto.AddressFormFieldDefinition('OrderedFieldE', 'Label E', true, '', 2, 1, 4)
                 ]);
-
-            beforeEach(angular.mock.module('app'));
+            
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
@@ -179,8 +183,7 @@ module Antares {
                     new Dto.AddressFormFieldDefinition('FieldD', 'Label D', false, '', 3, 1, 2),
                     new Dto.AddressFormFieldDefinition('FieldE', 'Label E', true, '', 2, 1, 4)
                 ]);
-
-            beforeEach(angular.mock.module('app'));
+            
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,

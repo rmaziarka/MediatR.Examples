@@ -79,13 +79,23 @@
             this.fixture.DataContext.SaveChanges();
         }
 
-        [Given(@"User gets EnumTypeItemId for (.*) EnumType code and (.*) EnumTypeItem code")]
-        public void GetEnumTypeItemId(string enumTypeCode, string enumTypeItemCode)
+        [Given(@"User gets EnumTypeItemId and EnumTypeItem code")]
+        public void GetEnumTypeItemId(Table table)
         {
-            EnumTypeItem enumTypeItem =
-                this.fixture.DataContext.EnumTypeItem.Single(
-                    i => i.EnumType.Code.Equals(enumTypeCode) && i.Code.Equals(enumTypeItemCode));
-            this.scenarioContext.Set(enumTypeItem.Id, "EnumTypeItemId");
+            var enums = new Dictionary<string, Guid>();
+
+            foreach (TableRow row in table.Rows)
+            {
+                string enumTypeCode = row["enumTypeCode"];
+                string enumTypeItemCode = row["enumTypeItemCode"];
+                EnumTypeItem enumTypeItem =
+                    this.fixture.DataContext.EnumTypeItem.SingleOrDefault(
+                        i => i.EnumType.Code.Equals(enumTypeCode) && i.Code.Equals(enumTypeItemCode));
+
+                enums.Add(enumTypeItemCode, enumTypeItem?.Id ?? new Guid());
+            }
+
+            this.scenarioContext.Set(enums, "EnumDictionary");
         }
 
         [Then(@"Result should contain single element")]

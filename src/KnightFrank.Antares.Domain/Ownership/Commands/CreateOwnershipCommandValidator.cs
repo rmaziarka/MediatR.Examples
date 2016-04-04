@@ -1,5 +1,7 @@
 ﻿namespace KnightFrank.Antares.Domain.Ownership.Commands
 {
+    using System;
+
     using FluentValidation;
     using FluentValidation.Results;
     
@@ -19,6 +21,16 @@
                 .When(v => v.PurchaseDate.HasValue)
                 .When(v => v.SellDate.HasValue)
                 .OverridePropertyName("PurchaseDate");
+            
+            this.RuleFor(v => v.PurchaseDate.Value.Date)
+                .LessThanOrEqualTo(v => DateTime.UtcNow.Date)
+                .When(v => v.PurchaseDate.HasValue)
+                .OverridePropertyName("PurchaseDate");
+
+            this.RuleFor(v => v.SellDate.Value.Date)
+                .LessThanOrEqualTo(v => DateTime.UtcNow.Date)
+                .When(v => v.SellDate.HasValue)
+                .OverridePropertyName("SellDate");
 
             this.RuleFor(v => v.BuyPrice).GreaterThan(0);
             this.RuleFor(v => v.SellPrice).GreaterThan(0);

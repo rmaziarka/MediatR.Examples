@@ -11,8 +11,8 @@ namespace KnightFrank.Antares.Dal.Migrations
                 c => new
                     {
                         Id = c.Guid(nullable: false, identity: true),
-                        CreatedAt = c.DateTime(nullable: false),
-                        LastModifiedAt = c.DateTime(nullable: false),
+                        CreatedAt = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
+                        LastModifiedAt = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
                 .PrimaryKey(t => t.Id);
             

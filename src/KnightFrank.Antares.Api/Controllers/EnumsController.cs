@@ -8,7 +8,7 @@
     using MediatR;
 
     /// <summary>
-    /// Enums controller.
+    ///     Enums controller.
     /// </summary>
     [RoutePrefix("api/enums")]
     public class EnumsController : ApiController
@@ -21,7 +21,7 @@
         }
 
         /// <summary>
-        /// Gets the enum items by code.
+        ///     Gets the enum items by code.
         /// </summary>
         /// <param name="code">Enum item code</param>
         /// <returns>Enum Query Result.</returns>

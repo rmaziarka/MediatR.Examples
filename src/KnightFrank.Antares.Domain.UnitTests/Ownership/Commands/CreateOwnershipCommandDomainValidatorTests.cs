@@ -221,6 +221,19 @@
             TestIncorrectCommand(this.validator, this.command, nameof(this.command.PropertyId));
         }
 
+        [Fact]
+        public void Given_CorrectPropertyId_When_Validating_Then_NoValidationErrors()
+        {
+            Expression<Func<IGenericRepository<Property>, Property>> expression = x => x.GetById(this.command.PropertyId);
+            this.propertyRepository.Setup(expression)
+                .Returns(new Property() { Id = this.command.PropertyId });
+
+            ValidationResult validationResult = this.validator.Validate(this.command);
+
+            this.propertyRepository.Verify(expression, Times.Once);
+            Assert.True(validationResult.IsValid);
+        }
+
         private static void TestIncorrectCommand(CreateOwnershipCommandDomainValidator validator, CreateOwnershipCommand command,
             string testedPropertyName)
         {

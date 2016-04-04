@@ -8,10 +8,19 @@ declare module Antares.Common.Models {
             code: string;
         }
 
+        interface ITranslationResourceParameters {
+            isoCode: string;
+        }
+
         interface IBaseResourceClass<T> extends ng.resource.IResourceClass<T> {
             get(): T;
             get(params: IBaseResourceParameters): T;
-            get(params: IEnumResourceParameters): T;
+            get(params: IEnumResourceParameters): T;            
+        }
+
+        interface ITranslationResourceClass<T> extends IBaseResourceClass<T> {            
+            get(): T;
+            get(params: ITranslationResourceParameters): T;
         }
 
         // *** IResource extensions***
@@ -40,6 +49,7 @@ declare module Antares.Common.Models {
         }
 
         interface IOwnershipResource extends ng.resource.IResource<Antares.Common.Models.Dto.IOwnership> {
+
         }
 
         // *** IResourceClass extensions ***

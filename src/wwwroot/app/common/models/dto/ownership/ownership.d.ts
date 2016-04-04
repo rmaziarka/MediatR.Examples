@@ -6,8 +6,7 @@
         sellDate: Date;
         buyPrice?: number;
         sellPrice?: number;
-        isCurrentOwner: boolean;
-        ownershipType: number;
+        ownershipType: IOwnershipType;
         contacts: IContact[];
     }
 }

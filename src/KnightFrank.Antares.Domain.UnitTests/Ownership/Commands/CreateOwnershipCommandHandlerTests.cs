@@ -4,9 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-
-    using FluentAssertions;
-
+    
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
@@ -23,6 +21,8 @@
 
     using Xunit;
 
+    [Collection("CreateOwnershipCommandHandler")]
+    [Trait("FeatureTitle", "Ownership")]
     public class CreateOwnershipCommandHandlerTests : IClassFixture<BaseTestClassFixture>
     {
         [Theory]
@@ -35,7 +35,7 @@
             CreateOwnershipCommandHandler commandHandler)
         {
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(new List<Contact>().AsQueryable());
-            ownershipDomainValidator.Setup(x=>x.Validate(It.IsAny<CreateOwnershipCommand>())).Returns(new ValidationResult());
+            ownershipDomainValidator.Setup(x => x.Validate(It.IsAny<CreateOwnershipCommand>())).Returns(new ValidationResult());
 
             // Act
             commandHandler.Handle(command);
@@ -47,20 +47,17 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_OverlappingDates_When_Handle_Then_ShouldReturnDomainException(
+        public void Given_IncorrectCommand_When_Handle_Then_ShouldReturnDomainException(
             [Frozen] Mock<IGenericRepository<Ownership>> ownershipRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             [Frozen] Mock<IDomainValidator<CreateOwnershipCommand>> ownershipDomainValidator,
             CreateOwnershipCommand command,
             CreateOwnershipCommandHandler commandHandler)
         {
-            var result = new ValidationResult();
-            var message = "test";
-            result.Errors.Add(new ValidationFailure("propertyName", message));
-            ownershipDomainValidator.Setup(x => x.Validate(It.IsAny<CreateOwnershipCommand>())).Returns(result);
-            
-            // Act + Assert
-            Assert.Throws<DomainValidationException>(() => commandHandler.Handle(command)).Message.Should().Be(message);
+            ownershipDomainValidator.Setup(x => x.Validate(It.IsAny<CreateOwnershipCommand>())).Returns(ValidationResultBuilder.BuildValidationResult());
+
+            Assert.Throws<DomainValidationException>(() => commandHandler.Handle(command));
+            ownershipRepository.Verify(p => p.Save(), Times.Never);
         }
     }
 }

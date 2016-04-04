@@ -83,7 +83,7 @@
         {
             var date = this.scenarioContext.Get<DateTime>("RequirementDate");
 
-            Assert.Equal(date.ToString("MMMM dd, yyyy"),
+            Assert.Equal(date.ToString("MMMM d, yyyy"),
                 this.scenarioContext.Get<ResidentialSalesRequirementDetailsPage>("ResidentialSalesRequirementDetailsPage")
                     .GetRequirementCreateDate());
         }

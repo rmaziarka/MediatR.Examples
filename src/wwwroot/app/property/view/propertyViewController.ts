@@ -3,7 +3,9 @@
 
 module Antares.Property.View {
     import Dto = Common.Models.Dto;
+    import Business = Common.Models.Business;
     import Resources = Common.Models.Resources;
+    import CartListOrder = Common.Component.CartListOrder;
 
     export class PropertyViewController {
         static $inject = ['dataAccessService', 'componentRegistry', '$scope', '$state'];
@@ -15,7 +17,9 @@ module Antares.Property.View {
             ownershipAddId: 'viewProperty:ownershipAddComponent',
             ownershipViewId: 'viewProperty:ownershipViewComponent',
             activityAddId: 'viewProperty:activityAddComponent',
-            activitySidePanelId: 'viewProperty:activitySidePanelComponent'
+            activityAddSidePanelId: 'viewProperty:activityAddSidePanelComponent',
+            activityPreviewId: 'viewProperty:activityPreviewComponent',
+            activityPreviewSidePanelId: 'viewProperty:activityPreviewSidePanelComponent'
         }
 
         ownershipAddPanelVisible: boolean = false;
@@ -24,18 +28,21 @@ module Antares.Property.View {
         components: any = {
             contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
             activityAdd: () => { return this.componentRegistry.get(this.componentIds.activityAddId); },
+            activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewId); },
             ownershipAdd: () => { return this.componentRegistry.get(this.componentIds.ownershipAddId); },
             ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewId); },
             panels: {
                 contact : () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
                 ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); },
-                activity: () => { return this.componentRegistry.get(this.componentIds.activitySidePanelId); }
+                activityAdd: () => { return this.componentRegistry.get(this.componentIds.activityAddSidePanelId); },
+                activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId); }
             }
         }
 
         loadingContacts: boolean = false;
-        orderDescending: boolean = true;
-        nullOnEnd: boolean = true;
+
+        ownershipsCartListOrder: CartListOrder = new CartListOrder('purchaseDate', true, true);
+        activitiesCartListOrder: CartListOrder = new CartListOrder('createdDate');
 
         propertyResource: Resources.IPropertyResourceClass;
         property: Dto.Property;
@@ -87,7 +94,20 @@ module Antares.Property.View {
         }
 
         showActivityAdd = () => {
-            this.showPanel(this.components.panels.activity);
+            var vendor: Business.Ownership = _.find(this.property.ownerships, (ownership: Business.Ownership) => {
+                return ownership.isVendor();
+            });
+
+            if (vendor) {
+                this.components.activityAdd().setVendors(vendor.contacts);
+            }
+
+            this.showPanel(this.components.panels.activityAdd);
+        }
+
+        showActivityPreview = (activity: Common.Models.Dto.Activity) => {
+            this.components.activityPreview().setActivity(activity);
+            this.showPanel(this.components.panels.activityPreview);
         }
 
         showContactList = () => {
@@ -126,24 +146,22 @@ module Antares.Property.View {
             promise
             .then(() => {
                     this.components.panels.contact().hide();
-                });   
+                });
         }
 
         saveActivity() {
-            // TODO implement functionality, this is just POC
-
+            // Tell don't ask principle!
             if (this.components.activityAdd().isDataValid()) {
                 var activityStatus = this.components.activityAdd().selectedActivityStatus;
-            var activity: Common.Models.Dto.IActivity;
+                var vendors: Array<Dto.Contact> = this.components.activityAdd().getVendors();
 
-            activity = {
-                propertyId: this.propertyId,
-                activityStatusId: activityStatus.id,
-                activityTypeId: activityStatus.id // todo set correct value
-            };
+                var activity = new Common.Models.Dto.Activity();
+                activity.propertyId = this.propertyId;
+                activity.activityStatusId = activityStatus.id;
+                activity.contacts = vendors;
 
-            this.activityResource.save(activity).$promise.then((result:any) => { alert(result) });;
-        }
+                this.activityResource.save(activity).$promise.then((result:any) => { alert(result) });
+            }
         }
 
         private hidePanels(hideCurrent: boolean = true) {
@@ -163,5 +181,6 @@ module Antares.Property.View {
             this.currentPanel = panel;
         }
     }
+
     angular.module('app').controller('propertyViewController', PropertyViewController);
 }

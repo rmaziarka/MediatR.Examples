@@ -188,6 +188,7 @@
     <Compile Include="Controllers\PropertiesController.cs" />
     <Compile Include="Controllers\RequirementsController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
+    <Compile Include="Controllers\TranslationsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Core\MockUserMiddleware.cs" />
     <Compile Include="Core\NinjectExtentions.cs" />

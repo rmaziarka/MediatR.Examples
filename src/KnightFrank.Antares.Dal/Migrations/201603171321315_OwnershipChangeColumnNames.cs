@@ -7,8 +7,8 @@ namespace KnightFrank.Antares.Dal.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.Ownership", "PurchaseDate", c => c.DateTime());
-            AddColumn("dbo.Ownership", "SellDate", c => c.DateTime());
+            AddColumn("dbo.Ownership", "PurchaseDate", c => c.DateTime(precision: 7, storeType: "datetime2"));
+            AddColumn("dbo.Ownership", "SellDate", c => c.DateTime(precision: 7, storeType: "datetime2"));
             AddColumn("dbo.Ownership", "BuyPrice", c => c.Decimal(precision: 19, scale: 4));
             AddColumn("dbo.Ownership", "SellPrice", c => c.Decimal(precision: 19, scale: 4));
             AddColumn("dbo.Ownership", "CurrentOwner", c => c.Boolean(nullable: false));
@@ -24,8 +24,8 @@ namespace KnightFrank.Antares.Dal.Migrations
             AddColumn("dbo.Ownership", "IsCurrent", c => c.Boolean(nullable: false));
             AddColumn("dbo.Ownership", "SellingPrice", c => c.Decimal(precision: 19, scale: 4));
             AddColumn("dbo.Ownership", "BuyingPrice", c => c.Decimal(precision: 19, scale: 4));
-            AddColumn("dbo.Ownership", "SellingDate", c => c.DateTime());
-            AddColumn("dbo.Ownership", "PurchasingDate", c => c.DateTime());
+            AddColumn("dbo.Ownership", "SellingDate", c => c.DateTime(precision: 7, storeType: "datetime2"));
+            AddColumn("dbo.Ownership", "PurchasingDate", c => c.DateTime(precision: 7, storeType: "datetime2"));
             DropColumn("dbo.Ownership", "CurrentOwner");
             DropColumn("dbo.Ownership", "SellPrice");
             DropColumn("dbo.Ownership", "BuyPrice");

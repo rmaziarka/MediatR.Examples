@@ -1,1 +1,1 @@
-node node_modules/typings/dist/bin/typings.js install
+node node_modules/typings/dist/bin.js install

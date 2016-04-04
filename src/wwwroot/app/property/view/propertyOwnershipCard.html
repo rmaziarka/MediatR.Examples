@@ -1,0 +1,10 @@
+<small>{{cvm.item.activityStatus}}</small>
+<div class="panel-item">
+    <span ng-repeat="contact in cvm.item.contacts">
+        {{contact.firstName}} {{contact.surname}}{{$last ? '' : ', '}}
+    </span>
+</div>
+<small>
+    <span class="text-uppercase">{{cvm.item.ownershipType.code}}</span>
+    {{cvm.item.purchaseDate | date : 'dd-MM-yyyy'}} - {{cvm.item.sellDate | date : 'dd-MM-yyyy'}}
+</small>

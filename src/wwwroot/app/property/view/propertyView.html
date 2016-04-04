@@ -9,54 +9,39 @@
             <div class="col-md-4">
                 <form>
                     <fieldset>
-                        <legend>Ownership</legend>
-                        <div class="form-group">
-                            <button type="button" class="btn btn-default" ng-click="vm.showContactList()"><i class="fa fa-plus-circle"></i></button>
-                        </div>
-                        <p ng-hide="vm.property.ownerships.length" class="help-block">Ownership information not configured yet</p>
+                        <card-list card-template-url="'app/property/view/propertyOwnershipCard.html'"
+                                   items="vm.property.ownerships" items-order="vm.ownershipsCartListOrder"
+                                   show-item-add="vm.showContactList" show-item-details="vm.showOwnershipView">
+                            <card-list-header>
+                                <legend translate="PROPERTY.LIST.OWNERSHIPS"></legend>
+                            </card-list-header>
+                            <card-list-no-items>
+                                <p class="help-block" translate="PROPERTY.LIST.NO_ITEMS"></p>
+                            </card-list-no-items>
+                        </card-list>
                     </fieldset>
-                    <div class="panel panel-default" 
-                         ng-repeat="ownership in vm.property.ownerships | orderBy:'purchaseDate' : vm.orderDescending : vm.nullOnEnd">
-                        <div class="panel-body">
-                            <div class="panel-item">
-                                <span ng-repeat="contact in ownership.contacts">
-                                    {{contact.firstName}} {{contact.surname}}{{$last ? '' : ', '}}
-                                </span>
-                            </div>
-                            <small>
-                                <span class="text-uppercase">{{ownership.ownershipType.code}}</span> 
-                                {{ownership.purchaseDate | date : 'dd-MM-yyyy'}} - {{ownership.sellDate | date : 'dd-MM-yyyy'}}
-                             </small>
-                            <div class="row">
-                                <div class="col-md-12 text-right"><a href="" ng-click="vm.showOwnershipView(ownership)">details</a></div>
-                            </div>
-                        </div>
-                    </div>
                 </form>
             </div>
         </div>
-        <!--<div class="row">
+
+        <div class="row">
             <div class="col-md-4">
                 <form>
                     <fieldset>
-                        <legend>Activities</legend>
-                        <div class="form-group">
-                            <button type="button" class="btn btn-default" ng-click="vm.showActivityAdd()"><i class="fa fa-plus-circle"></i></button>
-                        </div>
-                        <p class="help-block">No activities yet</p>
+                        <card-list card-template-url="'app/activity/templates/activityCard.html'"
+                                   items="vm.property.activities" items-order="vm.activitiesCartListOrder"
+                                   show-item-add="vm.showActivityAdd" show-item-details="vm.showActivityPreview">
+                            <card-list-header>
+                                <legend translate="ACTIVITY.LIST.ACTIVITIES"></legend>
+                            </card-list-header>
+                            <card-list-no-items>
+                                <p class="help-block" translate="ACTIVITY.LIST.NO_ITEMS"></p>
+                            </card-list-no-items>
+                        </card-list>
                     </fieldset>
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="panel-item">09-03-2016 John Smith, Jack Daniels, George Washington</div>
-                            <small>Pre-appraisal</small>
-                            <div class="row">
-                                <div class="col-md-12 text-right"><a href="#">details</a></div>
-                            </div>
-                        </div>
-                    </div>
                 </form>
             </div>
-        </div>-->
+        </div>
     </div>
 </div>
 
@@ -74,20 +59,28 @@
         </ownership-add>
     </side-panel-content>
     <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()" ng-show="!vm.ownershipAddPanelVisible"> <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
-        <button class="btn btn-primary" type="button" ng-click="vm.showOwnershipAdd()" ng-show="!vm.ownershipAddPanelVisible"><span translate="COMMON.CONFIGURE"></span> <i class="fa fa-angle-double-right"></i></button>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()" ng-show="!vm.ownershipAddPanelVisible">
+             <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+        </button>
+        <button class="btn btn-primary" type="button" ng-click="vm.showOwnershipAdd()" ng-show="!vm.ownershipAddPanelVisible" id="ownership-add-button">
+            <span translate="COMMON.CONFIGURE"></span> <i class="fa fa-angle-double-right"></i>
+        </button>
 
-        <button class="btn btn-default" type="button" ng-click="vm.cancelAddOwnership()" ng-show="vm.ownershipAddPanelVisible"><i class="fa fa-angle-double-left"></i> <span translate="COMMON.BACK"></span></button>
-        <button class="btn btn-primary" type="button" ng-click="vm.saveOwnership()" ng-disabled="vm.loadingContacts" ng-show="vm.ownershipAddPanelVisible"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelAddOwnership()" ng-show="vm.ownershipAddPanelVisible">
+            <i class="fa fa-angle-double-left"></i> <span translate="COMMON.BACK"></span>
+        </button>
+        <button class="btn btn-primary" type="button" ng-click="vm.saveOwnership()" ng-disabled="vm.loadingContacts" ng-show="vm.ownershipAddPanelVisible">
+            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+        </button>
     </side-panel-footer>
 </side-panel>
 
-<side-panel component-id="vm.componentIds.activitySidePanelId">
+<side-panel component-id="vm.componentIds.activityAddSidePanelId">
     <side-panel-header>
         <h3>Create activity</h3>
     </side-panel-header>
     <side-panel-content>
-        <activity-add component-id="vm.componentIds.activityAddId"></activity-add> 
+        <activity-add component-id="vm.componentIds.activityAddId"></activity-add>
     </side-panel-content>
     <side-panel-footer>
         <button class="btn btn-default" type="button" ng-click="vm.cancelAddActivity()"> <i class="fa fa-ban"></i> Cancel</button>
@@ -102,5 +95,15 @@
     <side-panel-content>
         <ownership-view component-id="vm.componentIds.ownershipViewId">
         </ownership-view>
+    </side-panel-content>
+</side-panel>
+
+<side-panel component-id="vm.componentIds.activityPreviewSidePanelId">
+    <side-panel-header>
+        <h3 translate="ACTIVITY.PREVIEW.ACTIVITYPREVIEW"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <activity-preview component-id="vm.componentIds.activityPreviewId">
+        </activity-preview>
     </side-panel-content>
 </side-panel>

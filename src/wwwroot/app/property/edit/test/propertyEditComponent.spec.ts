@@ -16,10 +16,16 @@ module Antares {
        describe('when proper property is loaded', () => {
             var countryMockId = countriesMock[0].country.id,
                 addressFormMock: Dto.AddressForm = new Dto.AddressForm('adrfrmId1', countryMockId, []),
-                propertyMock: Dto.Property = new Dto.Property('propMockId1',
-                    new Dto.Address('adrId1', countryMockId, 'adrfrmId1', 'test prop name', '123456'));
+                propertyMock: Dto.Property = new Dto.Property();
 
-            beforeEach(angular.mock.module('app'));
+            propertyMock.id = 'propMockId1';
+            propertyMock.address = new Dto.Address();
+            propertyMock.address.id = 'adrId1';
+            propertyMock.address.countryId = countryMockId;
+            propertyMock.address.addressFormId = 'adrfrmId1';
+            propertyMock.address.propertyName = 'test prop name';
+            propertyMock.address.propertyNumber = '123456';
+
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
@@ -75,7 +81,11 @@ module Antares {
                         propertyId = property.id;
                     });
 
-                    var propertyFromServerMock: Dto.Property = new Dto.Property('propFromServerId1', new Dto.Address());
+                    var propertyFromServerMock: Dto.Property = new Dto.Property();
+                    propertyFromServerMock.id = 'propFromServerId1';
+                    propertyFromServerMock.address = new Dto.Address();
+
+                    var propertyFromServerMock: Dto.Property = <Dto.Property>{};
                     $http.expectPUT(/\/api\/properties/, propertyMock).respond(() => {
                         return [200, propertyFromServerMock];
                     });

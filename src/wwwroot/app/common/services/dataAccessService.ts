@@ -71,6 +71,16 @@ module Antares.Services {
                 this.$resource(this.appConfig.rootUrl + '/api/enums/:code/items');
         }
 
+        getEnumTranslationResource(): Resources.ITranslationResourceClass<any> {
+            return <Resources.ITranslationResourceClass<any>>
+                this.$resource(this.appConfig.rootUrl + '/api/translations/enums/:isoCode');
+        }
+
+        getStaticTranslationResource(): Resources.ITranslationResourceClass<any> {
+            return <Resources.ITranslationResourceClass<any>>
+                this.$resource('/translations/:isoCode.json');
+        }
+
         getActivityResource(): Resources.IBaseResourceClass<Resources.IActivityResource> {
             return <Resources.IBaseResourceClass<Resources.IActivityResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/activities/:id');

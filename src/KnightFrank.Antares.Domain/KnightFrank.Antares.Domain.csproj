@@ -76,6 +76,10 @@
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandler.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandProfile.cs" />
+    <Compile Include="Activity\Commands\CreateActivityValidator.cs" />
+    <Compile Include="Activity\Queries\ActivityQuery.cs" />
+    <Compile Include="Activity\Queries\ActivityQueryValidator.cs" />
+    <Compile Include="Activity\QueryHandlers\ActivityQueryHandler.cs" />
     <Compile Include="AddressFieldDefinition\QueryResults\AddressFieldDefinitionResult.cs" />
     <Compile Include="AddressForm\Queries\AddressFormByIdQuery.cs" />
     <Compile Include="AddressForm\Queries\AddressFormByIdQueryValidator.cs" />
@@ -111,8 +115,10 @@
     <Compile Include="Contact\QueryHandlers\ContactQueryHandler.cs" />
     <Compile Include="DomainModule.cs" />
     <Compile Include="Common\Exceptions\DomainValidationException.cs" />
+    <Compile Include="Enum\Queries\EnumLocalisedQuery.cs" />
     <Compile Include="Enum\Queries\EnumQuery.cs" />
     <Compile Include="Enum\Queries\EnumQueryValidator.cs" />
+    <Compile Include="Enum\QueryHandlers\EnumLocalisedQueryHandler.cs" />
     <Compile Include="Enum\QueryHandlers\EnumQueryHandler.cs" />
     <Compile Include="Enum\QueryResults\EnumQueryItemResult.cs" />
     <Compile Include="Enum\QueryResults\EnumQueryResult.cs" />
@@ -132,8 +138,10 @@
     <Compile Include="Property\Commands\CreateOrUpdatePropertyAddress.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyAddressValidator.cs" />
     <Compile Include="Property\Commands\CreatePropertyCommand.cs" />
+    <Compile Include="Property\Commands\PropertyDomainValidator.cs" />
     <Compile Include="Property\Commands\CreatePropertyCommandValidator.cs" />
     <Compile Include="Common\Validator\CustomDynamicValidator.cs" />
+    <Compile Include="Property\Commands\PropertyTypeValidator.cs" />
     <Compile Include="Property\Commands\UpdatePropertyCommand.cs" />
     <Compile Include="Property\Commands\PropertyCommandProfile.cs" />
     <Compile Include="Property\Commands\UpdatePropertyCommandValidator.cs" />

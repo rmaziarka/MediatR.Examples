@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Ownership.Commands
 {
     using System;
+    using System.Linq.Expressions;
 
     using FluentValidation.Results;
 
@@ -16,6 +17,8 @@
 
     using Xunit;
 
+    [Collection("CreateOwnershipCommandValidator")]
+    [Trait("FeatureTitle", "Ownership")]
     public class CreateOwnershipCommandValidatorTests : IClassFixture<BaseTestClassFixture>
     {
         private readonly CreateOwnershipCommand command;
@@ -43,7 +46,8 @@
                 EnumType = fixture.BuildEnumType("OwnershipType")
             });
             
-            this.validator = fixture.Create<CreateOwnershipCommandValidator>();}
+            this.validator = fixture.Create<CreateOwnershipCommandValidator>();
+        }
 
         [Fact]
         public void Given_CorrectCreateOwnershipCommand_When_Validating_Then_NoValidationErrors()
@@ -147,13 +151,62 @@
 
             TestIncorrectCommand(this.validator, this.command, nameof(this.command.ContactIds));
         }
-        
+
+        [Fact]
+        public void Given_CorrectOwnershipTypeId_When_Validating_Then_NoValidationErrors()
+        {
+            Expression<Func<IGenericRepository<EnumTypeItem>, EnumTypeItem>> expression = x => x.GetById(this.command.OwnershipTypeId);
+            this.enumTypeItemRepository.Setup(expression)
+                .Returns(new EnumTypeItem() { Id = this.command.OwnershipTypeId });
+
+            ValidationResult validationResult = this.validator.Validate(this.command);
+
+            this.enumTypeItemRepository.Verify(expression, Times.Once);
+            Assert.True(validationResult.IsValid);
+        }
+
         [Fact]
         public void Given_IncorrectOwnershipTypeId_When_Validating_Then_ValidationErrors()
         {
             this.enumTypeItemRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns((EnumTypeItem)null);
 
             TestIncorrectCommand(this.validator, this.command, nameof(this.command.OwnershipTypeId));
+        }
+
+        [Fact]
+        public void Given_PurchaseDateInFuture_When_Validating_Then_ValidationErrors()
+        {
+            this.command.PurchaseDate = DateTime.UtcNow.AddDays(1);
+            this.command.SellDate = null;
+
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.PurchaseDate));
+        }
+
+        [Fact]
+        public void Given_PurchaseDateToday_When_Validating_Then_NoValidationErrors()
+        {
+            this.command.PurchaseDate = DateTime.UtcNow;
+            this.command.SellDate = null;
+
+            ValidationResult validationResult = this.validator.Validate(this.command);
+            Assert.True(validationResult.IsValid);
+        }
+
+        [Fact]
+        public void Given_SellDateInFuture_When_Validating_Then_ValidationErrors()
+        {
+            this.command.SellDate = DateTime.UtcNow.AddDays(1);
+
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.SellDate));
+        }
+
+        [Fact]
+        public void Given_SellDateToday_When_Validating_Then_NoValidationErrors()
+        {
+            this.command.SellDate = DateTime.UtcNow;
+
+            ValidationResult validationResult = this.validator.Validate(this.command);
+            Assert.True(validationResult.IsValid);
         }
 
         private static void TestIncorrectCommand(CreateOwnershipCommandValidator validator, CreateOwnershipCommand command,

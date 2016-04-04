@@ -1,7 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.Ownership.Queries
 {
     using System;
-    using System.Collections.Generic;
 
     using KnightFrank.Antares.Dal.Model.Property;
 

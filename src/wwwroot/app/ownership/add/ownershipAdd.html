@@ -1,7 +1,7 @@
-﻿<div class="panel panel-default" ng-repeat="owner in vm.ownership.contacts">
+﻿<div class="panel panel-default" ng-repeat="contact in vm.ownership.contacts">
     <div class="panel-body">
-        <div>{{ owner.firstName }} {{ owner.surname }}</div>
-        <small>{{ owner.title }}</small>
+        <div class="full-name">{{ contact.firstName }} {{ contact.surname }}</div>
+        <small>{{ contact.title }}</small>
     </div>
 </div>
 
