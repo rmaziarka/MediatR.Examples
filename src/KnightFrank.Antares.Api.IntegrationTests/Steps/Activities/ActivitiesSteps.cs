@@ -55,8 +55,6 @@
                 CreatedDate = DateTime.Now,
                 LastModifiedDate = DateTime.Now,
                 Contacts = new List<Contact>()
-               
-               // Property = this.fixture.DataContext.Property.SingleOrDefault(x => x.Id == propertyId)
             };
             this.fixture.DataContext.Activity.Add(activity);
             this.fixture.DataContext.SaveChanges();
@@ -91,6 +89,19 @@
             propertyFromResponse.Activities.ToList()[0].ShouldBeEquivalentTo(activitiesFromDatabase, options => options
                 .Excluding(x => x.Property)
                 .Excluding(x => x.ActivityStatus));  
+        }
+
+        [Then(@"The created Activity is saved in data base")]
+        public void ThenTheCreatedActivityIsSavedInDataBase()
+        {
+            var activity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
+            Activity actualActivity = this.fixture.DataContext.Activity.Single(x => x.Id.Equals(activity.Id));
+
+            actualActivity.ShouldBeEquivalentTo(activity, options => options
+                .Excluding(x => x.Property)
+                .Excluding(x => x.ActivityStatus));
+
+            actualActivity.ActivityStatus.Code.ShouldBeEquivalentTo("PreAppraisal");
         }
     }
 }
