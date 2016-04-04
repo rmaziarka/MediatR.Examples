@@ -4,7 +4,7 @@
         address: Dto.Address = new Dto.Address();
         ownerships: Dto.Ownership[] = [];
         activities: Dto.Activity[] = [];
-        
+
         constructor (property?: IProperty)
         {
             if (property) {
@@ -13,6 +13,7 @@
                 angular.extend(this.address, property.address);
 
                 this.ownerships = property.ownerships.map((ownership: IOwnership) => { return new Dto.Ownership(ownership) });
+                this.activities = property.activities.map((activity: IActivity) => { return new Dto.Activity(activity) });
             }
         }
     }

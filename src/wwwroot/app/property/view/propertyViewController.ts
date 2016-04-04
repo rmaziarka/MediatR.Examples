@@ -97,7 +97,7 @@ module Antares.Property.View {
             var vendor: Dto.Ownership = _.find(this.property.ownerships, (ownership: Dto.Ownership) => {
                 return ownership.isVendor();
             });
-                
+
             if (vendor) {
                 this.components.activityAdd().setVendors(vendor.contacts);
             }
@@ -153,14 +153,12 @@ module Antares.Property.View {
             // Tell don't ask principle!
             if (this.components.activityAdd().isDataValid()) {
                 var activityStatus = this.components.activityAdd().selectedActivityStatus;
-                var vendors: Array<Dto.IContact> = this.components.activityAdd().getVendors();
-                var activity: Common.Models.Dto.IActivity;
+                var vendors: Array<Dto.Contact> = this.components.activityAdd().getVendors();
 
-                activity = new Common.Models.Dto.Activity(
-                    this.propertyId,
-                    activityStatus.id,
-                    vendors
-                );
+                var activity = new Common.Models.Dto.Activity();
+                activity.propertyId = this.propertyId;
+                activity.activityStatusId = activityStatus.id;
+                activity.contacts = vendors;
 
                 this.activityResource.save(activity).$promise.then((result:any) => { alert(result) });
             }

@@ -13,11 +13,16 @@ module Antares {
 
         var controller: ActivityPreviewController;
 
+
         describe('and proper property id is provided', () => {
             var activityMock: Activity = {
+                id: '999',
                 propertyId: '111',
                 activityStatusId: 'testSatusId',
-                contacts: [new Contact('John', 'Test1', 'Mr'), new Contact('Amy', 'Test2', 'Mrs')],
+                //TODO: test data generator should be implemented to simplifi mockig data
+                contacts: [
+                    <Contact>{ id: '11', firstName: 'John', surname: 'Test1', title: 'Mr' },
+                    <Contact>{ id: '22', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }],
                 createdDate: new Date()
             };
 

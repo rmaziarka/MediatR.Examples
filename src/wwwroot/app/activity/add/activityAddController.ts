@@ -10,7 +10,7 @@ module Antares.Activity {
         selectedActivityStatus: any;
         defaultActivityStatusCode: string = 'PreAppraisal';
 
-        private vendors: Array<Dto.IContact>;
+        private vendors: Array<Dto.Contact>;
 
         constructor(
             componentRegistry: Antares.Core.Service.ComponentRegistry,
@@ -32,14 +32,14 @@ module Antares.Activity {
             this.activityStatuses = result.items;
         }
 
-        setVendors(vendors: Array<Dto.IContact>) {
+        setVendors(vendors: Array<Dto.Contact>) {
             this.vendors = vendors;
         }
 
-        getVendors(): Array<Dto.IContact> {
+        getVendors(): Array<Dto.Contact> {
             return this.vendors;
         }
-        
+
         isDataValid = (): boolean => {
             var form = this.$scope["addActivityForm"];
             form.$setSubmitted();
