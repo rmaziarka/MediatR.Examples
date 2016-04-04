@@ -40,23 +40,24 @@ Scenario Outline: Create property with invalid data
 @Property
 Scenario Outline: Update property
 	Given User gets GB address form for Property and country details
-        And User gets House for PropertyType
+        And User gets <propertyType1> for PropertyType
 		And Property with Address is in data base
 			| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
 			| abc          | 1              | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Address for add/update property is defined
 			| PropertyName | PropertyNumber | Line2 | Line3 | Postcode | City | County |
 			| max          | max            | max   | max   | max      | max  | max    |
-		And User gets <propertyType> for PropertyType
+		And User gets <propertyType2> for PropertyType
 	When Users updates property with defined address for latest id by Api
 	Then User should get OK http status code
 		And The updated Property is saved in data base
 
 	Examples:
-	| propertyType      |
-	| Farm/Estate       |
-	| Office            |
-	| Department Stores |
+	| propertyType1     | propertyType2     |
+	| Farm/Estate       | Farm/Estate       |
+	| Office            | Office            |
+	| Department Stores | Department Stores |
+	| Department Stores | Office            |
 
 @Property
 Scenario Outline: Update property with invalid data
