@@ -61,10 +61,10 @@
 
             Guid activityStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["PreAppraisal"];
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
-            List<CreateActivityContact> vendors = this.fixture.DataContext.Ownerships
+            List<Guid> vendors = this.fixture.DataContext.Ownerships
                 .Where(x => x.PropertyId.Equals(propertyId) && x.SellDate == null)
                 .SelectMany(x => x.Contacts)
-                .Select(contact => new CreateActivityContact { Id = contact.Id }).ToList();
+                .Select(contact => contact.Id ).ToList();
 
             var activityCommand = new CreateActivityCommand { PropertyId = propertyId, ActivityStatusId = activityStatusId, Vendors = vendors };
 

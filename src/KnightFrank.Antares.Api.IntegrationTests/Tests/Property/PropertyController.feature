@@ -19,6 +19,7 @@ Scenario Outline: Create property
 	| Department Stores |
 
 @Property
+@Ignore
 Scenario Outline: Create property with invalid data
 	Given User gets <country> address form for <itemType> and country details
 		And Address for add/update property is defined
@@ -38,6 +39,7 @@ Scenario Outline: Create property with invalid data
 	| GB      | Property | 777         | invalid      | BadRequest |
 
 @Property
+@Ignore
 Scenario Outline: Update property
 	Given User gets GB address form for Property and country details
         And User gets <propertyType1> for PropertyType
