@@ -7,6 +7,7 @@
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Address;
+    using KnightFrank.Antares.Dal.Model.Attributes.FormDefinition;
     using KnightFrank.Antares.Dal.Model.Configuration;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
@@ -27,6 +28,12 @@
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Properties<DateTime>()
                         .Configure(c => c.HasColumnType("datetime2"));
+
+            modelBuilder.Entity<PropertyFormDefinition>().Map(m =>
+            {
+                m.MapInheritedProperties();
+                m.ToTable("PropertyFormDefinition");
+            });
 
             this.LoadConfigurations(modelBuilder);
         }
@@ -55,6 +62,7 @@
         public DbSet<PropertyType> PropertyType { get; set; }
         public DbSet<PropertyTypeLocalised> PropertyTypeLocalised { get; set; }
         public DbSet<PropertyTypeDefinition> PropertyTypeDefinition { get; set; }
+        public DbSet<FormDefinition> PropertyFormDefinition { get; set; }
 
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {
