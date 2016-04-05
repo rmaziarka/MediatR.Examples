@@ -2,6 +2,7 @@
 
 module Antares.Activity {
     import Dto = Common.Models.Dto;
+    import Bussiness = Common.Models.Business;
 
     export class ActivityAddController {
 
@@ -45,13 +46,13 @@ module Antares.Activity {
                 return this.$q.reject();
             }
 
-            var activity = new Dto.Activity();
+            var activity = new Bussiness.Activity();
             activity.propertyId = propertyId;
             activity.activityStatusId = this.selectedActivityStatus.id;
             activity.contacts = this.vendors;
 
             return this.activityResource.save(activity).$promise.then((result: Dto.IActivity) => {
-                var addedActivity = new Dto.Activity(result);
+                var addedActivity = new Bussiness.Activity(result);
 
                 this.activities.push(addedActivity);
             });

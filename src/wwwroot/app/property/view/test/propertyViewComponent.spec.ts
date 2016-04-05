@@ -5,6 +5,8 @@ module Antares {
     import IProperty = Antares.Common.Models.Dto.IProperty;
     import ContactListController = Antares.Component.ContactListController;
     import Dto = Antares.Common.Models.Dto;
+    import Business = Antares.Common.Models.Business;
+
     describe('Given view property page is loaded', () => {
         var scope: ng.IScope,
             compile: ng.ICompileService,
@@ -19,8 +21,8 @@ module Antares {
                 address : Antares.Mock.AddressForm.FullAddress,
                 ownerships : [],
                 activities : [
-                    new Dto.Activity(<Dto.IActivity>{ id: 'It1', propertyId: '1', activityStatusId: '123', contacts:[] }),
-                    new Dto.Activity(<Dto.IActivity>{ id: 'It2', propertyId: '1', activityStatusId: '1234', contacts: [] })
+                    new Business.Activity(<Dto.IActivity>{ id: 'It1', propertyId: '1', activityStatusId: '123', contacts:[] }),
+                    new Business.Activity(<Dto.IActivity>{ id: 'It2', propertyId: '1', activityStatusId: '1234', contacts: [] })
                 ]
             };
 
@@ -113,8 +115,8 @@ module Antares {
 
             it('when existing activities then card components should be visible', () => {
                 propertyMock.activities = [
-                    new Dto.Activity(<Dto.IActivity>{ id: 'It1', propertyId: '1', activityStatusId: '123', contacts: [] }),
-                    new Dto.Activity(<Dto.IActivity>{ id: 'It2', propertyId: '1', activityStatusId: '1234', contacts: [] })];
+                    new Business.Activity(<Dto.IActivity>{ id: 'It1', propertyId: '1', activityStatusId: '123', contacts: [] }),
+                    new Business.Activity(<Dto.IActivity>{ id: 'It2', propertyId: '1', activityStatusId: '1234', contacts: [] })];
                 scope['property'] = propertyMock;
                 element = compile('<property-view property="property"></property-view>')(scope);
 

@@ -2,7 +2,7 @@
 
 module Antares {
     import ActivityPreviewController = Antares.Activity.Preview.ActivityPreviewController;
-    import Activity = Common.Models.Dto.Activity;
+    import Activity = Common.Models.Business.Activity;
     import Contact = Common.Models.Dto.Contact;
 
     describe('Given activity preview component is loaded', () => {
@@ -18,6 +18,7 @@ module Antares {
             var activityMock: Activity = {
                 id: '999',
                 propertyId: '111',
+                property: null,
                 activityStatusId: 'testSatusId',
                 //TODO: test data generator should be implemented to simplifi mockig data
                 contacts: [

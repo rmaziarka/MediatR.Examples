@@ -99,7 +99,7 @@ module Antares.Property.View {
             this.showPanel(this.components.panels.activityAdd);
         }
 
-        showActivityPreview = (activity: Common.Models.Dto.Activity) => {
+        showActivityPreview = (activity: Common.Models.Business.Activity) => {
             this.components.activityPreview().setActivity(activity);
             this.showPanel(this.components.panels.activityPreview);
         }
