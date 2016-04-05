@@ -1,6 +1,8 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Activity.CommandHandlers
 {
     using System;
+    using System.Linq;
+    using System.Linq.Expressions;
 
     using FluentAssertions;
     using FluentAssertions.Common;
@@ -25,10 +27,10 @@
         public void Given_ValidCommand_When_Handling_Then_ShouldSaveActivity(
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
-            CreateActivityCommandHandler handler, 
+            CreateActivityCommandHandler handler,
             CreateActivityCommand cmd,
             Guid expectedActivityId)
-        {   
+        {
             // Arrange 
             Activity activity = null;
             activityRepository.Setup(r => r.Add(It.IsAny<Activity>()))
@@ -38,14 +40,16 @@
                                   return activity;
                               });
             activityRepository.Setup(r => r.Save()).Callback(() => { activity.Id = expectedActivityId; });
-            
+
+            contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
+                             .Returns(cmd.Contacts.Select(x => new Contact { Id = x.Id }));
+
             // Act
             handler.Handle(cmd);
 
             // Assert
             activity.Should().NotBeNull();
-            activity.ShouldBeEquivalentTo(cmd,
-                opt => opt.IncludingProperties().ExcludingMissingMembers());
+            activity.ShouldBeEquivalentTo(cmd, opt => opt.IncludingProperties().ExcludingMissingMembers());
             activity.Id.ShouldBeEquivalentTo(expectedActivityId);
             activityRepository.Verify(r => r.Add(It.IsAny<Activity>()), Times.Once());
             activityRepository.Verify(r => r.Save(), Times.Once());

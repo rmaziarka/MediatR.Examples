@@ -61,12 +61,12 @@
 
             Guid activityStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["PreAppraisal"];
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
-            List<Guid> vendors = this.fixture.DataContext.Ownerships
+            var vendors = this.fixture.DataContext.Ownerships
                 .Where(x => x.PropertyId.Equals(propertyId) && x.SellDate == null)
                 .SelectMany(x => x.Contacts)
-                .Select(contact => contact.Id ).ToList();
+                .Select(contact => new CreateActivityContact {Id = contact.Id }).ToList();
 
-            var activityCommand = new CreateActivityCommand { PropertyId = propertyId, ActivityStatusId = activityStatusId, Vendors = vendors };
+            var activityCommand = new CreateActivityCommand { PropertyId = propertyId, ActivityStatusId = activityStatusId, Contacts = vendors };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, activityCommand);
             this.scenarioContext.SetHttpResponseMessage(response);

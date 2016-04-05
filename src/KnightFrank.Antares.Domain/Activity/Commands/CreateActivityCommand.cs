@@ -10,6 +10,6 @@
         
         public Guid ActivityStatusId { get; set; }
 
-        public List<Guid> Vendors { get; set; }
+        public List<CreateActivityContact> Contacts { get; set; }
     }
 }

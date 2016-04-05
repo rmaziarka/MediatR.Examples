@@ -36,13 +36,14 @@
             {
                 var isValid = true;
                 
-                if (cmd.Vendors != null && cmd.Vendors.Any())
+                if (cmd.Contacts != null && cmd.Contacts.Any())
                 {
-                    IEnumerable<Guid> result = contactRepository.FindBy(c => cmd.Vendors.Contains(c.Id)).Select(x => x.Id);
-                    isValid = !cmd.Vendors.Except(result).Any();
+                    IEnumerable<Guid> contactsId = cmd.Contacts.Select(x => x.Id);
+                    IEnumerable<Guid> result = contactRepository.FindBy(c => contactsId.Contains(c.Id)).Select(x => x.Id);
+                    isValid = !contactsId.Except(result).Any();
                 }
 
-                return isValid ? null : new ValidationFailure("Vendors", "Vendors are invalid.");
+                return isValid ? null : new ValidationFailure(nameof(cmd.Contacts), "Vendors are invalid.");
             };
 
             this.RuleFor(x => x.PropertyId).NotEmpty();
