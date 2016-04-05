@@ -9,6 +9,7 @@ module Antares.Property {
 
         private propertyResource: Common.Models.Resources.IPropertyResourceClass;
         private propertyTypes: any[];
+        private userData: Antares.Common.Models.Dto.IUserData;
 
         constructor(
             private dataAccessService: Services.DataAccessService,
@@ -16,7 +17,8 @@ module Antares.Property {
 
             this.propertyResource = dataAccessService.getPropertyResource();
             this.propertyResource
-                .getPropertyTypes({ countryCode: 'GB', divisionCode: 'Commercial', localeCode: 'en' }, null)
+                .getPropertyTypes({
+                    countryCode: this.userData.country, divisionCode: this.userData.division.code, localeCode: 'en' }, null)
                 .$promise
                 .then((propertyTypes: any) =>{
                     this.propertyTypes = propertyTypes.propertyTypes;
