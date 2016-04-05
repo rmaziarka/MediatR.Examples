@@ -40,7 +40,7 @@ module Antares.Property.View {
         loadingContacts: boolean = false;
 
         ownershipsCartListOrder: CartListOrder = new CartListOrder('purchaseDate', true, true);
-        activitiesCartListOrder: CartListOrder = new CartListOrder('createdDate');
+        activitiesCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
 
         property: Dto.Property;
 
