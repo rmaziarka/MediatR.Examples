@@ -13,7 +13,7 @@ module Antares {
             $compile: ng.ICompileService) => {
             scope = <IKfMaxDateScope>$rootScope.$new();
             scope.date = '';
-            element = $compile('<div><input type="text" kf-max-date="01-01-2000" ng-model="date"/></div>')(scope);
+            element = $compile('<div><input type="text" kf-max-date="Jun 01 2000" ng-model="date"/></div>')(scope);
             scope.$apply();
         }));
 
@@ -21,14 +21,14 @@ module Antares {
 
             it('should mark field invalid ', () => {
                 var input = element.find('input');
-                input.val('10-01-2000').trigger('input').trigger('change').trigger('blur');
+                input.val('Oct 01 2000').trigger('input').trigger('change').trigger('blur');
                 scope.$apply();
                 expect(input.hasClass('ng-invalid')).toBe(true);
             });
 
             it('should mark field as valid', () => {
                 var input = element.find('input');
-                input.val('01-01-2000').trigger('input').trigger('change').trigger('blur');
+                input.val('Jun 01 2000').trigger('input').trigger('change').trigger('blur');
                 scope.$apply();
                 expect(input.hasClass('ng-valid')).toBe(true);
             });
@@ -54,7 +54,7 @@ module Antares {
             
             it('should mark field as valid for any date', () => {
                 var input = element.find('input');
-                input.val('10-10-1010').trigger('input').trigger('change').trigger('blur');
+                input.val('Oct 10 1010').trigger('input').trigger('change').trigger('blur');
                 scope.$apply();
 
                 expect(input.hasClass('ng-valid')).toBe(true);
