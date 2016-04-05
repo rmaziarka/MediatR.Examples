@@ -106,27 +106,38 @@
             Assert.Equal(table.Rows[0]["Status"], page.Activity.GetActivityStatus());
         }
 
-        [Then(@"Ownership details on position (.*) should contain following data on view property page")]
-        public void CheckOwnershipContacts(int position, Table table)
+        [Then(@"Ownership details should contain following data on view property page")]
+        public void CheckOwnershipContacts(Table table)
         {
-            //TODO when story is implemented
-//            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-//
-//            IEnumerable<Ownership> details = table.CreateSet<Ownership>();
-//
-//            List<string> contacts = page.GetOwnershipContacts(position);
-//            List<string> expectedContacts = table.CreateSet<Contact>().Select(c => c.FirstName + " " + c.Surname).ToList();
-//
-//            Assert.Equal(expectedContacts, contacts);
-//
-//            string details = page.GetOwnershipDetails(position);
-//
-//            string type = table.Rows[0]["Type"].ToUpper();
-//            string fromDate = table.Rows[0]["PurchaseDate"];
-//            string toDate = table.Rows[0]["SellDate"];
-//
-//            string expectedDetails = type + " " + fromDate + " - " + toDate;
-//            Assert.Equal(expectedDetails, details);
+            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+            IEnumerable<OwnershipDetails> details = table.CreateSet<OwnershipDetails>();
+
+            foreach (OwnershipDetails ownershipDetails in details)
+            {
+                string contact = page.GetOwnershipContact(ownershipDetails.Position);
+                string currentOwnershipDetails = page.GetOwnershipDetails(ownershipDetails.Position);
+                string expectdOwnershipDetails = ownershipDetails.Type.ToUpper();
+
+                if (!string.IsNullOrEmpty(ownershipDetails.PurchaseDate) && string.IsNullOrEmpty(ownershipDetails.SellDate))
+                {
+                    expectdOwnershipDetails += " " + ownershipDetails.PurchaseDate + " -";
+                }
+                else if (string.IsNullOrEmpty(ownershipDetails.PurchaseDate) && !string.IsNullOrEmpty(ownershipDetails.SellDate))
+                {
+                    expectdOwnershipDetails += " - " + ownershipDetails.SellDate;
+                }
+                else if (string.IsNullOrEmpty(ownershipDetails.PurchaseDate) && string.IsNullOrEmpty(ownershipDetails.SellDate))
+                {
+                    expectdOwnershipDetails += " -";
+                }
+                else if (!string.IsNullOrEmpty(ownershipDetails.PurchaseDate) && !string.IsNullOrEmpty(ownershipDetails.SellDate))
+                {
+                    expectdOwnershipDetails += " " + ownershipDetails.PurchaseDate + " - " + ownershipDetails.SellDate;
+                }
+
+                Assert.Equal(ownershipDetails.ContactName + " " + ownershipDetails.ContactSurname, contact);
+                Assert.Equal(expectdOwnershipDetails, currentOwnershipDetails);
+            }
         }
 
         [Then(@"Activity preview panel is displayed with details the same like details on activity tile")]
@@ -135,6 +146,7 @@
             var preview = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
             Assert.Equal(preview.GetActivityDate(), preview.PreviewDetails.GetCreationDate());
             Assert.Equal(preview.GetActivityStatus(), preview.PreviewDetails.GetStatus());
+
             //Assert.Equal(preview.GetActivityVendor(),preview.PreviewDetails.GetVendor());
         }
     }

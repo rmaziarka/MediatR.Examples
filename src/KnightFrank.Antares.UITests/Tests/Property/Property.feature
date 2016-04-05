@@ -23,7 +23,6 @@ Scenario: Create and update property with UK address
 @Property
 @Ownership
 @Activity
-@ignore
 Scenario: Property ownership and activity
 	Given User navigates to create contact page
 		And User creates contacts on create contact page
@@ -42,11 +41,11 @@ Scenario: Property ownership and activity
 		| FirstName | Surname   |
 		| Arthur    | Pendragon |
 		And User fills in ownership details on ownership details page
-			| Type       | Current | PurchaseDate | SellDate   | BuyPrice | SellPrice |
-			| Freeholder | false   | 01-03-2015   | 01-02-2016 | 1000000  | 1200000   |
-	#Then Ownership details on position 1 should contain following data on view property page
-	#	| Contact          | Type       | PurchaseDate | SellDate   |
-	#	| Arthur Pendragon | Freeholder | 01-03-2015   | 01-02-2016 |
+			| Type     | Current | PurchasePrice | PurchaseDate |
+			| Freehold | true    | 1000000       | 15-01-2014   |
+	Then Ownership details should contain following data on view property page
+		| Position | ContactName | ContactSurname | Type     | PurchaseDate |
+		| 1        | Arthur      | Pendragon      | Freehold | 15-01-2014   |
 	#When User clicks add activites button on property details page		
 	#Then Activity details are set on activity panel
 	#	| Vendor | Status        |
