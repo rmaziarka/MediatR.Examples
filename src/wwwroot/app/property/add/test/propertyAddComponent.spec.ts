@@ -24,6 +24,7 @@ module Antares {
 
             newPropertyMock.id = 'propId1';
             newPropertyMock.address = new Dto.Address();
+            var usermock = { name : "user", email : "user@gmail.com", country : "GB", division : { id : "0acc9d28-51fa-e511-828b-8cdcd42baca7", value : "Commercial", code : "Commercial" }, divisionCode : null, roles : ["admin", "superuser"] };
 
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
@@ -47,7 +48,8 @@ module Antares {
                 });
 
                 // compile
-                element = compile('<property-add></property-add>')(scope);
+                scope['userData'] = usermock;
+                element = compile('<property-add user-data="userData"></property-add>')(scope);
                 scope.$apply();
                 controller = element.controller('propertyAdd');
 
