@@ -70,6 +70,8 @@
   "PROPERTY": {
     "ADD": {
       "ADD_PROPERTY": "Add property",
+      "BASIC_INFORMATION": "Basic information",
+      "TYPE": "Type",
       "ADDRESS": "Address"
     },
     "EDIT": {

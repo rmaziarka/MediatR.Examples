@@ -1,6 +1,7 @@
 ﻿module Antares.Common.Models.Dto {
     export class Property implements IProperty {
         id: string = null;
+        propertyTypeId: string = null;
         address: Dto.Address = new Dto.Address();
         ownerships: Business.Ownership[] = [];
         activities: Business.Activity[] = [];
