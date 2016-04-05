@@ -6,7 +6,7 @@
     using System.Data.Entity.ModelConfiguration.Conventions;
     using System.Linq;
 
-   using KnightFrank.Antares.Dal.Model.Address;
+    using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Configuration;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
@@ -18,6 +18,7 @@
     {
         public KnightFrankContext() : base("Api.Settings.SqlConnectionString")
         {
+            this.Database.Initialize(false);
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
