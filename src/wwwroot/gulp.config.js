@@ -43,7 +43,9 @@
                 '**/app.bootstrap.js',
                 '**/app.module.js',
                 '**/*.module.js',
-                '**/common/models/dto/*.js',
+                '**/common/models/business/**/*.js',
+                '**/common/models/dto/**/*.js',
+                '**/common/**/*.js',
                 '**/*.js'
             ]
         },
