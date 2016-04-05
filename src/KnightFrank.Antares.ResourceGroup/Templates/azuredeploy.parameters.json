@@ -1,12 +1,18 @@
 ﻿{
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "VmAdminUserName": {
-            "value": "kf-antares"
-        },
-        "VmAdminPassword": {
-            "value": "$Kf@admin"
-        }
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "VmSqlAdminUserName": {
+      "value": "kf-antares"
+    },
+    "VmSqlAdminPassword": {
+      "value": "$Kf@admin"
+    },
+    "VmIISAdminUserName": {
+      "value": "kf-antares"
+    },
+    "VmIISAdminPassword": {
+      "value": "$Kf@admin"
     }
+  }
 }

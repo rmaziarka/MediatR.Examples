@@ -37,6 +37,7 @@
     <Content Include="Templates\azuredeploy.parameters.json" />
     <Content Include="DSC\SqlServerConfiguration.ps1" />
     <None Include="DSC\dscmetadata.json" />
+    <Content Include="DSC\KnightFrank-Antares-Vm-IIS-DSCConfiguration.ps1" />
     <None Include="DSC\xNetworking\appveyor.yml" />
     <None Include="DSC\xNetworking\DSCResources\MSFT_xDNSServerAddress\MSFT_xDNSServerAddress.psm1" />
     <None Include="DSC\xNetworking\DSCResources\MSFT_xDNSServerAddress\MSFT_xDNSServerAddress.schema.mof" />
@@ -84,6 +85,36 @@
     <None Include="DSC\xSQLServer\xPDT.xml" />
     <None Include="DSC\xSQLServer\xSQLServer.psd1" />
     <None Include="DSC\xSQLServer\xSQLServerHelper.psm1" />
+    <None Include="DSC\xWebAdministration\appveyor.yml" />
+    <None Include="DSC\xWebAdministration\DSCResources\Helper.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xIisFeatureDelegation\MSFT_xIisFeatureDelegation.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xIisFeatureDelegation\MSFT_xIisFeatureDelegation.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xIIsHandler\MSFT_xIisHandler.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xIIsHandler\MSFT_xIisHandler.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xIisMimeTypeMapping\MSFT_xIisMimeTypeMapping.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xIisMimeTypeMapping\MSFT_xIisMimeTypeMapping.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xIisModule\MSFT_xIisModule.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xIisModule\MSFT_xIisModule.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xIisModule\xIisModuleDesigner.ps1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xSSLSettings\MSFT_xSSLSettings.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xSSLSettings\MSFT_xSSLSettings.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebApplication\MSFT_xWebApplication.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebApplication\MSFT_xWebApplication.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebAppPoolDefaults\MSFT_xWebAppPoolDefaults.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebAppPoolDefaults\MSFT_xWebAppPoolDefaults.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebAppPool\MSFT_xWebAppPool.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebAppPool\MSFT_xWebAppPool.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebConfigKeyValue\MSFT_xWebConfigKeyValue.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebConfigKeyValue\MSFT_xWebConfigKeyValue.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebSiteDefaults\MSFT_xWebSiteDefaults.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebSiteDefaults\MSFT_xWebSiteDefaults.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebsite\MSFT_xWebsite.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebsite\MSFT_xWebsite.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebVirtualDirectory\MSFT_xWebVirtualDirectory.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebVirtualDirectory\MSFT_xWebVirtualDirectory.schema.mof" />
+    <None Include="DSC\xWebAdministration\LICENSE" />
+    <None Include="DSC\xWebAdministration\README.md" />
+    <None Include="DSC\xWebAdministration\xWebAdministration.psd1" />
     <None Include="resourcegroup.nuspec" />
     <None Include="Scripts\configure-sql.ps1" />
   </ItemGroup>
@@ -104,6 +135,9 @@
     <Content Include="Tools\Microsoft.WindowsAzure.Storage.DataMovement.dll">
       <Visible>False</Visible>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>

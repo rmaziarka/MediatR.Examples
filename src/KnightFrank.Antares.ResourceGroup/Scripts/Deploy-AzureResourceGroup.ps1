@@ -7,32 +7,29 @@ Param(
     [string] $ResourceGroupName = 'KnightFrank.Antares',
     [switch] $UploadArtifacts,
     [string] $StorageAccountName,
-    [string] $StorageAccountResourceGroupName, 
     [string] $StorageContainerName = $ResourceGroupName.ToLowerInvariant() + '-stageartifacts',
     [string] $TemplateFile = '..\Templates\azuredeploy.json',
     [string] $TemplateParametersFile = '..\Templates\azuredeploy.parameters.json',
     [string] $ArtifactStagingDirectory = '..\bin\Debug\staging',
-    [string] $AzCopyPath = '..\Tools\AzCopy.exe',
     [string] $DSCSourceFolder = '..\DSC'
 )
 
 Import-Module Azure -ErrorAction SilentlyContinue
 
 try {
-    [Microsoft.Azure.Common.Authentication.AzureSession]::ClientFactory.AddUserAgent("VSAzureTools-$UI$($host.name)".replace(" ","_"), "2.8")
+    [Microsoft.Azure.Common.Authentication.AzureSession]::ClientFactory.AddUserAgent("VSAzureTools-$UI$($host.name)".replace(" ","_"), "2.9")
 } catch { }
 
 Set-StrictMode -Version 3
 
 $OptionalParameters = New-Object -TypeName Hashtable
-$TemplateFile = [System.IO.Path]::Combine($PSScriptRoot, $TemplateFile)
-$TemplateParametersFile = [System.IO.Path]::Combine($PSScriptRoot, $TemplateParametersFile)
+$TemplateFile = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $TemplateFile))
+$TemplateParametersFile = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $TemplateParametersFile))
 
 if ($UploadArtifacts) {
     # Convert relative paths to absolute paths if needed
-    $AzCopyPath = [System.IO.Path]::Combine($PSScriptRoot, $AzCopyPath)
-    $ArtifactStagingDirectory = [System.IO.Path]::Combine($PSScriptRoot, $ArtifactStagingDirectory)
-    $DSCSourceFolder = [System.IO.Path]::Combine($PSScriptRoot, $DSCSourceFolder)
+    $ArtifactStagingDirectory = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $ArtifactStagingDirectory))
+    $DSCSourceFolder = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $DSCSourceFolder))
 
     Set-Variable ArtifactsLocationName '_artifactsLocation' -Option ReadOnly -Force
     Set-Variable ArtifactsLocationSasTokenName '_artifactsLocationSasToken' -Option ReadOnly -Force
@@ -59,10 +56,6 @@ if ($UploadArtifacts) {
         }
     }
 
-    $StorageAccountKey = (Get-AzureRmStorageAccountKey -ResourceGroupName $StorageAccountResourceGroupName -Name $StorageAccountName).Key1
-
-    $StorageAccountContext = (Get-AzureRmStorageAccount -ResourceGroupName $StorageAccountResourceGroupName -Name $StorageAccountName).Context
-
     # Create DSC configuration archive
     if (Test-Path $DSCSourceFolder) {
         Add-Type -Assembly System.IO.Compression.FileSystem
@@ -71,6 +64,8 @@ if ($UploadArtifacts) {
         [System.IO.Compression.ZipFile]::CreateFromDirectory($DSCSourceFolder, $ArchiveFile)
     }
 
+    $StorageAccountContext = (Get-AzureRmStorageAccount | Where-Object{$_.StorageAccountName -eq $StorageAccountName}).Context
+
     # Generate the value for artifacts location if it is not provided in the parameter file
     $ArtifactsLocation = $OptionalParameters[$ArtifactsLocationName]
     if ($ArtifactsLocation -eq $null) {
@@ -78,9 +73,14 @@ if ($UploadArtifacts) {
         $OptionalParameters[$ArtifactsLocationName] = $ArtifactsLocation
     }
 
-    # Use AzCopy to copy files from the local storage drop path to the storage account container
-    & $AzCopyPath """$ArtifactStagingDirectory""", $ArtifactsLocation, "/DestKey:$StorageAccountKey", "/S", "/Y", "/Z:$env:LocalAppData\Microsoft\Azure\AzCopy\$ResourceGroupName"
-    if ($LASTEXITCODE -ne 0) { return }
+    # Copy files from the local storage staging location to the storage account container
+    New-AzureStorageContainer -Name $StorageContainerName -Context $StorageAccountContext -Permission Container -ErrorAction SilentlyContinue *>&1
+
+    $ArtifactFilePaths = Get-ChildItem $ArtifactStagingDirectory -Recurse -File | ForEach-Object -Process {$_.FullName}
+    foreach ($SourcePath in $ArtifactFilePaths) {
+        $BlobName = $SourcePath.Substring($ArtifactStagingDirectory.length + 1)
+        Set-AzureStorageBlobContent -File $SourcePath -Blob $BlobName -Container $StorageContainerName -Context $StorageAccountContext -Force
+    }
 
     # Generate the value for artifacts location SAS token if it is not provided in the parameter file
     $ArtifactsLocationSasToken = $OptionalParameters[$ArtifactsLocationSasTokenName]

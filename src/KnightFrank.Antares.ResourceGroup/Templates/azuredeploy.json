@@ -1,367 +1,536 @@
 ﻿{
-	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-	"contentVersion": "1.0.0.0",
-	"parameters": {
-		"ServicePlan-SKU": {
-			"type": "string",
-			"allowedValues": [
-				"Free",
-				"Shared",
-				"Basic",
-				"Standard"
-			],
-			"defaultValue": "Free"
-		},
-		"ServicePlan-Size": {
-			"type": "string",
-			"allowedValues": [
-				"0",
-				"1",
-				"2"
-			],
-			"defaultValue": "0"
-		},
-		"StorageAccountType": {
-			"type": "string",
-			"defaultValue": "Standard_LRS",
-			"allowedValues": [
-				"Standard_LRS",
-				"Standard_ZRS",
-				"Standard_GRS",
-				"Standard_RAGRS",
-				"Premium_LRS"
-			],
-			"metadata": {
-				"description": "The type of the Storage Account created"
-			}
-		},
-		"sqlVMSize": {
-			"type": "string",
-			"allowedValues": [
-				"Standard_DS1",
-				"Standard_DS2",
-				"Standard_DS3",
-				"Standard_DS4",
-				"Standard_DS11",
-				"Standard_DS12",
-				"Standard_DS13",
-				"Standard_DS14"
-			],
-			"metadata": {
-				"description": "The size of the SQL VM Created"
-			},
-			"defaultValue": "Standard_DS2"
-		},
-		"VmAdminUserName": {
-			"type": "string",
-			"minLength": 1
-		},
-		"VmAdminPassword": {
-			"type": "securestring"
-		},
-		"VmWindowsOSVersion": {
-			"type": "string",
-			"defaultValue": "2012-R2-Datacenter",
-			"allowedValues": [
-				"2008-R2-SP1",
-				"2012-Datacenter",
-				"2012-R2-Datacenter",
-				"Windows-Server-Technical-Preview"
-			]
-		}
-	},
-	"variables": {
-		"ResourceGroupNameTokens": "[split(resourceGroup().name, '-')]",
-		"ResourceNameSuffix": "[variables('ResourceGroupNameTokens')[sub(length(variables('ResourceGroupNameTokens')), 1)]]",
-		"ResourceNamePrefix": "[substring(resourceGroup().name, 3, sub(length(resourceGroup().name), add(3, length(variables('ResourceNameSuffix')))))]",
-		"AppServicePlanName": "[concat(variables('ResourceNamePrefix'), 'Sp-', variables('ResourceNameSuffix'))]",
-		"WebApiName": "[concat(variables('ResourceNamePrefix'), 'Wa-Api-', variables('ResourceNameSuffix'))]",
-		"WebAppName": "[concat(variables('ResourceNamePrefix'), 'Wa-App-', variables('ResourceNameSuffix'))]",
-		"StorageAccountName": "[tolower(replace(replace(concat(variables('ResourceNamePrefix'), 'St', variables('ResourceNameSuffix')), 'KnightFrank-Antares-', 'kfa'), '-', ''))]",
-		"VmName": "[concat(variables('ResourceNamePrefix'), 'Vm-Sql-', variables('ResourceNameSuffix'))]",
-		"VirtualNetworkName": "[concat(variables('ResourceNamePrefix'), 'Vn-', variables('ResourceNameSuffix'))]",
-		"VirtualNetworkPrefix": "10.0.0.0/16",
-		"VirtualNetworkSubnet1Name": "Subnet-1",
-		"VirtualNetworkSubnet1Prefix": "10.0.0.0/24",
-		"VirtualNetworkSubnet2Name": "Subnet-2",
-		"VirtualNetworkSubnet2Prefix": "10.0.1.0/24",
-		"sqlImagePublisher": "MicrosoftSQLServer",
-		"sqlImageOffer": "SQL2014-WS2012R2",
-		"sqlImageSku": "Standard",
-		"sqlPublicIP": "[concat(variables('ResourceNamePrefix'), 'Vm-Sql-Public-IP-', variables('ResourceNameSuffix'))]",
-		"sqlPublicIPRef": "[resourceId('Microsoft.Network/publicIPAddresses', variables('sqlPublicIP'))]",
-		"VmOSDiskName": "KnightFrank-Antares-VmOSDisk",
-		"VmVmSize": "Standard_D1",
-		"VmVnetID": "[resourceId('Microsoft.Network/virtualNetworks', variables('VirtualNetworkName'))]",
-		"VmSubnetRef": "[concat(variables('VmVnetID'), '/subnets/', variables('VirtualNetworkSubnet1Name'))]",
-		"VmStorageAccountContainerName": "vhds",
-		"VmNicName": "[concat(variables('ResourceNamePrefix'), 'Vm-Nic-', variables('ResourceNameSuffix'))]",
-		"SecurityGroup-Admins-Name": "[concat(variables('VmName'), '-Admins')]",
-		"SecurityGroup-PowerUsers-Name": "[concat(variables('VmName'), '-PowerUsers')]",
-		"SecurityGroup-Contributors-Name": "[concat(variables('VmName'), '-Contributors')]",
-		"VmHostName": "[concat(variables('ResourceGroupNameTokens')[5], 'VmSql', variables('ResourceNameSuffix'))]",
-		"DnsName": "[toLower(variables('VmName'))]"
-	},
-	"resources": [
-		{
-			"name": "[variables('AppServicePlanName')]",
-			"type": "Microsoft.Web/serverfarms",
-			"location": "[resourceGroup().location]",
-			"apiVersion": "2014-06-01",
-			"dependsOn": [ ],
-			"tags": {
-				"displayName": "KnightFrank-Antares-ServicePlan"
-			},
-			"properties": {
-				"name": "[variables('AppServicePlanName')]",
-				"sku": "[parameters('ServicePlan-SKU')]",
-				"workerSize": "[parameters('ServicePlan-Size')]",
-				"numberOfWorkers": 1
-			}
-		},
-		{
-			"name": "[variables('WebApiName')]",
-			"type": "Microsoft.Web/sites",
-			"location": "[resourceGroup().location]",
-			"apiVersion": "2015-08-01",
-			"dependsOn": [
-				"[concat('Microsoft.Web/serverfarms/', variables('AppServicePlanName'))]"
-			],
-			"tags": {
-				"[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', variables('AppServicePlanName'))]": "Resource",
-				"displayName": "KnightFrank-Antares-WebApi"
-			},
-			"properties": {
-				"name": "[variables('WebApiName')]",
-				"serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', variables('AppServicePlanName'))]"
-			}
-		},
-		{
-			"name": "[variables('WebAppName')]",
-			"type": "Microsoft.Web/sites",
-			"location": "[resourceGroup().location]",
-			"apiVersion": "2015-08-01",
-			"dependsOn": [
-				"[concat('Microsoft.Web/serverfarms/', variables('AppServicePlanName'))]"
-			],
-			"tags": {
-				"[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', variables('AppServicePlanName'))]": "Resource",
-				"displayName": "KnightFrank-Antares-WebApp"
-			},
-			"properties": {
-				"name": "[variables('WebAppName')]",
-				"serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', variables('AppServicePlanName'))]"
-			}
-		},
-		{
-			"name": "[variables('StorageAccountName')]",
-			"type": "Microsoft.Storage/storageAccounts",
-			"location": "[resourceGroup().location]",
-			"apiVersion": "2015-06-15",
-			"dependsOn": [ ],
-			"tags": {
-				"displayName": "KnightFrank-Antares-StorageAccount"
-			},
-			"properties": {
-				"accountType": "[parameters('StorageAccountType')]"
-			}
-		},
-		{
-			"name": "[variables('VirtualNetworkName')]",
-			"type": "Microsoft.Network/virtualNetworks",
-			"location": "[resourceGroup().location]",
-			"apiVersion": "2015-06-15",
-			"dependsOn": [
-				"[concat('Microsoft.Network/networkSecurityGroups/', variables('SecurityGroup-Admins-Name'))]",
-				"[concat('Microsoft.Network/networkSecurityGroups/', variables('SecurityGroup-PowerUsers-Name'))]",
-				"[concat('Microsoft.Network/networkSecurityGroups/', variables('SecurityGroup-Contributors-Name'))]"
-			],
-			"tags": {
-				"displayName": "KnightFrank-Antares-VirtualNetwork"
-			},
-			"properties": {
-				"addressSpace": {
-					"addressPrefixes": [
-						"[variables('VirtualNetworkPrefix')]"
-					]
-				},
-				"subnets": [
-					{
-						"name": "[variables('VirtualNetworkSubnet1Name')]",
-						"properties": {
-							"addressPrefix": "[variables('VirtualNetworkSubnet1Prefix')]"
-						}
-					},
-					{
-						"name": "[variables('VirtualNetworkSubnet2Name')]",
-						"properties": {
-							"addressPrefix": "[variables('VirtualNetworkSubnet2Prefix')]"
-						}
-					}
-				]
-			}
-		},
-		{
-			"name": "[variables('sqlPublicIP')]",
-			"type": "Microsoft.Network/publicIPAddresses",
-			"location": "[resourceGroup().location]",
-			"apiVersion": "2015-06-15",
-			"tags": {
-				"displayName": "KnightFrank-Antares-Vm-Sql-Public-IP"
-			},
-			"properties": {
-				"publicIPAllocationMethod": "Dynamic",
-				"idleTimeoutInMinutes": 4,
-				"dnsSettings": {
-					"domainNameLabel": "[variables('DnsName')]"
-				}
-			}
-		},
-		{
-			"name": "[variables('VmNicName')]",
-			"type": "Microsoft.Network/networkInterfaces",
-			"location": "[resourceGroup().location]",
-			"apiVersion": "2015-06-15",
-			"dependsOn": [
-				"[concat('Microsoft.Network/virtualNetworks/', variables('VirtualNetworkName'))]",
-				"[concat('Microsoft.Network/publicIPAddresses/', variables('sqlPublicIP'))]"
-			],
-			"tags": {
-				"displayName": "KnightFrank-Antares-VmNic"
-			},
-			"properties": {
-				"ipConfigurations": [
-					{
-						"name": "ipconfig1",
-						"properties": {
-							"privateIPAllocationMethod": "Dynamic",
-							"subnet": {
-								"id": "[variables('VmSubnetRef')]"
-							},
-							"publicIPAddress": {
-								"id": "[variables('sqlPublicIPRef')]"
-							}
-						}
-					}
-				]
-			}
-		},
-		{
-			"name": "[variables('VmName')]",
-			"type": "Microsoft.Compute/virtualMachines",
-			"location": "[resourceGroup().location]",
-			"apiVersion": "2015-06-15",
-			"dependsOn": [
-				"[concat('Microsoft.Storage/storageAccounts/', variables('StorageAccountName'))]",
-				"[concat('Microsoft.Network/networkInterfaces/', variables('VmNicName'))]",
-				"[concat('Microsoft.Network/publicIPAddresses/', variables('sqlPublicIP'))]"
-			],
-			"tags": {
-				"displayName": "KnightFrank-Antares-Vm"
-			},
-			"properties": {
-				"hardwareProfile": {
-					"vmSize": "[variables('VmVmSize')]"
-				},
-				"osProfile": {
-					"computerName": "[variables('VmHostName')]",
-					"adminUsername": "[parameters('VmAdminUserName')]",
-					"adminPassword": "[parameters('VmAdminPassword')]"
-				},
-				"storageProfile": {
-					"imageReference": {
-						"publisher": "[variables('sqlImagePublisher')]",
-						"offer": "[variables('sqlImageOffer')]",
-						"sku": "[variables('sqlImageSku')]",
-						"version": "latest"
-					},
-					"osDisk": {
-						"name": "KnightFrank-Antares-VmOSDisk",
-						"vhd": {
-							"uri": "[concat('http://', variables('StorageAccountName'), '.blob.core.windows.net/', variables('VmStorageAccountContainerName'), '/', variables('VmOSDiskName'), '.vhd')]"
-						},
-						"caching": "ReadWrite",
-						"createOption": "FromImage"
-					}
-				},
-				"networkProfile": {
-					"networkInterfaces": [
-						{
-							"id": "[resourceId('Microsoft.Network/networkInterfaces', variables('VmNicName'))]"
-						}
-					]
-				}
-			},
-			"resources": [
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "ServicePlan-SKU": {
+      "type": "string",
+      "allowedValues": [
+        "Free",
+        "Shared",
+        "Basic",
+        "Standard"
+      ],
+      "defaultValue": "Free"
+    },
+    "ServicePlan-Size": {
+      "type": "string",
+      "allowedValues": [
+        "0",
+        "1",
+        "2"
+      ],
+      "defaultValue": "0"
+    },
+    "StorageAccountType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_ZRS",
+        "Standard_GRS",
+        "Standard_RAGRS",
+        "Premium_LRS"
+      ],
+      "metadata": {
+        "description": "The type of the Storage Account created"
+      }
+    },
+    "VmSqlAdminUserName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "VmSqlAdminPassword": {
+      "type": "securestring"
+    },
+    "VmIISAdminUserName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "VmIISAdminPassword": {
+      "type": "securestring"
+    },
+    "VmIISWindowsOSVersion": {
+      "type": "string",
+      "defaultValue": "2012-R2-Datacenter",
+      "allowedValues": [
+        "2008-R2-SP1",
+        "2012-Datacenter",
+        "2012-R2-Datacenter",
+        "Windows-Server-Technical-Preview"
+      ]
+    },
+    "VmSqlWindowsOSVersion": {
+      "type": "string",
+      "defaultValue": "2012-R2-Datacenter",
+      "allowedValues": [
+        "2008-R2-SP1",
+        "2012-Datacenter",
+        "2012-R2-Datacenter",
+        "Windows-Server-Technical-Preview"
+      ]
+    },
+    "_artifactsLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "Auto-generated container in staging storage account to receive post-build staging folder upload"
+      }
+    },
+    "_artifactsLocationSasToken": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Auto-generated token to access _artifactsLocation"
+      }
+    }
+  },
+  "variables": {
+    "ResourceGroupNameTokens": "[split(resourceGroup().name, '-')]",
+    "ResourceNameSuffix": "[variables('ResourceGroupNameTokens')[sub(length(variables('ResourceGroupNameTokens')), 1)]]",
+    "ResourceNamePrefix": "[substring(resourceGroup().name, 3, sub(length(resourceGroup().name), add(3, length(variables('ResourceNameSuffix')))))]",
+    "StorageAccountName": "[tolower(replace(replace(concat(variables('ResourceNamePrefix'), 'St', variables('ResourceNameSuffix')), 'KnightFrank-Antares-', 'kfa'), '-', ''))]",
+    "VmSqlName": "[concat(variables('ResourceNamePrefix'), 'Vm-Sql-', variables('ResourceNameSuffix'))]",
+    "VirtualNetworkName": "[concat(variables('ResourceNamePrefix'), 'Vn-', variables('ResourceNameSuffix'))]",
+    "VirtualNetworkPrefix": "10.0.0.0/16",
+    "VirtualNetworkSubnetSqlName": "[concat(variables('ResourceNamePrefix'), 'Vn-Sql-', variables('ResourceNameSuffix'))]",
+    "VirtualNetworkSubnetSqlPrefix": "10.0.1.0/24",
+    "VirtualNetworkSubnetIISName": "[concat(variables('ResourceNamePrefix'), 'Vn-IIS', variables('ResourceNameSuffix'))]",
+    "VirtualNetworkSubnetIISPrefix": "10.0.2.0/24",
+    "VmSqlImagePulisher": "MicrosoftWindowsServer",
+    "VmSqlImageOffer": "WindowsServer",
+    "VmSqlPublicIP": "[concat(variables('ResourceNamePrefix'), 'Vm-Sql-Public-IP-', variables('ResourceNameSuffix'))]",
+    "VmIISPublicIP": "[concat(variables('ResourceNamePrefix'), 'Vm-IIS-Public-IP-', variables('ResourceNameSuffix'))]",
+    "VmSqlOSDiskName": "KnightFrank-Antares-VmSqlOSDisk",
+    "VmSqlVmSize": "Standard_D1",
+    "VmSqlVnetID": "[resourceId('Microsoft.Network/virtualNetworks', variables('VirtualNetworkName'))]",
+    "VmSqlSubnetRef": "[concat(variables('VmSqlVnetID'), '/subnets/', variables('VirtualNetworkSubnetSqlName'))]",
+    "VmSqlStorageAccountContainerName": "vhds",
+    "VmSqlNicName": "[concat(variables('ResourceNamePrefix'), 'Vm-Sql-Nic-', variables('ResourceNameSuffix'))]",
+    "SecurityGroup-Sql-Admins-Name": "[concat(variables('VmSqlName'), '-Admins')]",
+    "SecurityGroup-Sql-PowerUsers-Name": "[concat(variables('VmSqlName'), '-PowerUsers')]",
+    "SecurityGroup-Sql-Contributors-Name": "[concat(variables('VmSqlName'), '-Contributors')]",
+    "SecurityGroup-IIS-Admins-Name": "[concat(variables('VmIISName'), '-Admins')]",
+    "SecurityGroup-IIS-PowerUsers-Name": "[concat(variables('VmIISName'), '-PowerUsers')]",
+    "SecurityGroup-IIS-Contributors-Name": "[concat(variables('VmIISName'), '-Contributors')]",
+    "VmSqlHostName": "[concat(variables('ResourceGroupNameTokens')[5], 'VmSql', variables('ResourceNameSuffix'))]",
+    "VmSqlDnsName": "[toLower(variables('VmSqlName'))]",
+    "VmIISHostName": "[concat(variables('ResourceGroupNameTokens')[5], 'VmIIS', variables('ResourceNameSuffix'))]",
+    "VmIISDnsName": "[toLower(variables('VmIISName'))]",
+    "VmIISImagePublisher": "MicrosoftWindowsServer",
+    "VmIISImageOffer": "WindowsServer",
+    "VmIISOSDiskName": "KnightFrank-Antares-VmIISOSDisk",
+    "VmIISVmSize": "Standard_D1",
+    "VmIISVnetID": "[resourceId('Microsoft.Network/virtualNetworks', variables('VirtualNetworkName'))]",
+    "VmIISSubnetRef": "[concat(variables('VmIISVnetID'), '/subnets/', variables('VirtualNetworkSubnetIISName'))]",
+    "VmIISStorageAccountContainerName": "vhds",
+    "VmIISNicName": "[concat(variables('ResourceNamePrefix'), 'Vm-IIS-Nic-', variables('ResourceNameSuffix'))]",
+    "VmIISName": "[concat(variables('ResourceNamePrefix'), 'Vm-IIS-', variables('ResourceNameSuffix'))]",
+    "KnightFrank-Antares-Vm-IIS-DSCConfigurationFunction": "KnightFrank-Antares-Vm-IIS-DSCConfiguration.ps1\\Main"
+  },
+  "resources": [
+    {
+      "name": "[variables('StorageAccountName')]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [ ],
+      "tags": {
+        "displayName": "KnightFrank-Antares-StorageAccount"
+      },
+      "properties": {
+        "accountType": "[parameters('StorageAccountType')]"
+      }
+    },
+    {
+      "name": "[variables('VirtualNetworkName')]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkSecurityGroups/', variables('SecurityGroup-Sql-Admins-Name'))]",
+        "[concat('Microsoft.Network/networkSecurityGroups/', variables('SecurityGroup-Sql-PowerUsers-Name'))]",
+        "[concat('Microsoft.Network/networkSecurityGroups/', variables('SecurityGroup-Sql-Contributors-Name'))]",
+        "[concat('Microsoft.Network/networkSecurityGroups/', variables('SecurityGroup-IIS-Admins-Name'))]",
+        "[concat('Microsoft.Network/networkSecurityGroups/', variables('SecurityGroup-IIS-PowerUsers-Name'))]",
+        "[concat('Microsoft.Network/networkSecurityGroups/', variables('SecurityGroup-IIS-Contributors-Name'))]"
+      ],
+      "tags": {
+        "displayName": "KnightFrank-Antares-VirtualNetwork"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('VirtualNetworkPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('VirtualNetworkSubnetSqlName')]",
+            "properties": {
+              "addressPrefix": "[variables('VirtualNetworkSubnetSqlPrefix')]",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('SecurityGroup-Sql-Admins-Name'))]"
+              }
+            }
+          },
+          {
+            "name": "[variables('VirtualNetworkSubnetIISName')]",
+            "properties": {
+              "addressPrefix": "[variables('VirtualNetworkSubnetIISPrefix')]",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('SecurityGroup-IIS-Admins-Name'))]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "[variables('VmSqlPublicIP')]",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "tags": {
+        "displayName": "KnightFrank-Antares-Vm-Sql-Public-IP"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic",
+        "idleTimeoutInMinutes": 4,
+        "dnsSettings": {
+          "domainNameLabel": "[variables('VmSqlDnsName')]"
+        }
+      }
+    },
+    {
+      "name": "[variables('VmIISPublicIP')]",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "tags": {
+        "displayName": "KnightFrank-Antares-Vm-IIS-Public-IP"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic",
+        "idleTimeoutInMinutes": 4,
+        "dnsSettings": {
+          "domainNameLabel": "[variables('VmIISDnsName')]"
+        }
+      }
+    },
+    {
+      "name": "[variables('VmSqlNicName')]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', variables('VirtualNetworkName'))]",
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('VmSqlPublicIP'))]"
+      ],
+      "tags": {
+        "displayName": "KnightFrank-Antares-Vm-Sql-Nic"
+      },
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "[variables('VmSqlSubnetRef')]"
+              },
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('VmSqlPublicIP'))]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "[variables('VmSqlName')]",
+      "type": "Microsoft.Compute/virtualMachines",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "[concat('Microsoft.Storage/storageAccounts/', variables('StorageAccountName'))]",
+        "[concat('Microsoft.Network/networkInterfaces/', variables('VmSqlNicName'))]",
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('VmSqlPublicIP'))]"
+      ],
+      "tags": {
+        "displayName": "KnightFrank-Antares-Vm-Sql"
+      },
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[variables('VmSqlVmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[variables('VmSqlHostName')]",
+          "adminUsername": "[parameters('VmSqlAdminUserName')]",
+          "adminPassword": "[parameters('VmSqlAdminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[variables('VmSqlImagePulisher')]",
+            "offer": "[variables('VmSqlImageOffer')]",
+            "sku": "[parameters('VmSqlWindowsOSVersion')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "KnightFrank-Antares-VmOSDisk",
+            "vhd": {
+              "uri": "[concat('http://', variables('StorageAccountName'), '.blob.core.windows.net/', variables('VmSqlStorageAccountContainerName'), '/', variables('VmSqlOSDiskName'), '.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('VmSqlNicName'))]"
+            }
+          ]
+        }
+      },
+      "resources": [
 
-			]
-		},
-		{
-			"apiVersion": "2015-06-15",
-			"type": "Microsoft.Network/networkSecurityGroups",
-			"name": "[variables('SecurityGroup-Admins-Name')]",
-			"location": "[resourceGroup().location]",
-			"tags": {
-				"displayName": "KnightFrank-Antares-SecurityGroup-Admins"
-			},
-			"properties": {
-				"securityRules": [
-					{
-						"name": "rdp-rule",
-						"properties": {
-							"description": "Allow RDP",
-							"protocol": "Tcp",
-							"sourcePortRange": "*",
-							"destinationPortRange": "3389",
-							"sourceAddressPrefix": "Internet",
-							"destinationAddressPrefix": "*",
-							"access": "Allow",
-							"priority": 100,
-							"direction": "Inbound"
-						}
-					},
-					{
-						"name": "sql-rule",
-						"properties": {
-							"description": "Allow sql connection",
-							"protocol": "Tcp",
-							"sourcePortRange": "*",
-							"destinationPortRange": "1433",
-							"sourceAddressPrefix": "Internet",
-							"destinationAddressPrefix": "*",
-							"access": "Allow",
-							"priority": 110,
-							"direction": "Inbound"
-						}
-					}
-				]
-			}
-		},
-		{
-			"apiVersion": "2015-06-15",
-			"type": "Microsoft.Network/networkSecurityGroups",
-			"name": "[variables('SecurityGroup-PowerUsers-Name')]",
-			"location": "[resourceGroup().location]",
-			"tags": {
-				"displayName": "KnightFrank-Antares-SecurityGroup-PowerUsers"
-			},
-			"properties": {
-				"securityRules": [ ]
-			}
-		},
-		{
-			"apiVersion": "2015-06-15",
-			"type": "Microsoft.Network/networkSecurityGroups",
-			"name": "[variables('SecurityGroup-Contributors-Name')]",
-			"location": "[resourceGroup().location]",
-			"tags": {
-				"displayName": "KnightFrank-Antares-SecurityGroup-Contributors"
-			},
-			"properties": {
-				"securityRules": [ ]
-			}
-		}
-	],
-	"outputs": {
-	}
+      ]
+    },
+    {
+      "name": "[variables('VmIISNicName')]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', variables('VirtualNetworkName'))]",
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('VmIISPublicIP'))]"
+      ],
+      "tags": {
+        "displayName": "KnightFrank-Antares-Vm-IIS-Nic"
+      },
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "[variables('VmIISSubnetRef')]"
+              },
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('VmIISPublicIP'))]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "[variables('VmIISName')]",
+      "type": "Microsoft.Compute/virtualMachines",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "[concat('Microsoft.Storage/storageAccounts/', variables('StorageAccountName'))]",
+        "[concat('Microsoft.Network/networkInterfaces/', variables('VmIISNicName'))]"
+      ],
+      "tags": {
+        "displayName": "KnightFrank-Antares-Vm-IIS"
+      },
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[variables('VmIISVmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[variables('VmIISHostName')]",
+          "adminUsername": "[parameters('VmIISAdminUsername')]",
+          "adminPassword": "[parameters('VmIISAdminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[variables('VmIISImagePublisher')]",
+            "offer": "[variables('VmIISImageOffer')]",
+            "sku": "[parameters('VmIISWindowsOSVersion')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "VmIISOSDisk",
+            "vhd": {
+              "uri": "[concat('http://', variables('StorageAccountName'), '.blob.core.windows.net/', variables('VmIISStorageAccountContainerName'), '/', variables('VmIISOSDiskName'), '.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('VmIISNicName'))]"
+            }
+          ]
+        }
+      },
+      "resources": [
+        {
+          "name": "KnightFrank-Antares-Vm-IIS-DSC",
+          "type": "extensions",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2015-06-15",
+          "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('VmIISName'))]"
+          ],
+          "tags": {
+            "displayName": "KnightFrank-Antares-Vm-IIS-DSC"
+          },
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.15",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+              "modulesUrl": "[concat(parameters('_artifactsLocation'), '/', 'dsc.zip')]",
+              "sasToken": "[parameters('_artifactsLocationSasToken')]",
+              "configurationFunction": "[variables('KnightFrank-Antares-Vm-IIS-DSCConfigurationFunction')]",
+              "properties": {
+                "nodeName": "[variables('VmIISHostName')]"
+              }
+            },
+            "protectedSettings": {
+            }
+          }
+        }
+      ]
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[variables('SecurityGroup-Sql-Admins-Name')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "KnightFrank-Antares-Sql-SecurityGroup-Admins"
+      },
+      "properties": {
+        "securityRules": [
+          {
+            "name": "rdp-rule",
+            "properties": {
+              "description": "Allow RDP",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "3389",
+              "sourceAddressPrefix": "Internet",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 100,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "sql-rule",
+            "properties": {
+              "description": "Allow sql connection",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "1433",
+              "sourceAddressPrefix": "Internet",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 110,
+              "direction": "Inbound"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[variables('SecurityGroup-Sql-PowerUsers-Name')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "KnightFrank-Antares-Sql-SecurityGroup-PowerUsers"
+      },
+      "properties": {
+        "securityRules": [ ]
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[variables('SecurityGroup-Sql-Contributors-Name')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "KnightFrank-Antares-Sql-SecurityGroup-Contributors"
+      },
+      "properties": {
+        "securityRules": [ ]
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[variables('SecurityGroup-IIS-Admins-Name')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "KnightFrank-Antares-IIS-SecurityGroup-Admins"
+      },
+      "properties": {
+        "securityRules": [
+          {
+            "name": "rdp-rule",
+            "properties": {
+              "description": "Allow RDP",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "3389",
+              "sourceAddressPrefix": "Internet",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 100,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "web-rule",
+            "properties": {
+              "description": "Allow WEB",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "80",
+              "sourceAddressPrefix": "Internet",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 101,
+              "direction": "Inbound"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[variables('SecurityGroup-IIS-PowerUsers-Name')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "KnightFrank-Antares-IIS-SecurityGroup-PowerUsers"
+      },
+      "properties": {
+        "securityRules": [ ]
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[variables('SecurityGroup-IIS-Contributors-Name')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "KnightFrank-Antares-IIS-SecurityGroup-Contributors"
+      },
+      "properties": {
+        "securityRules": [ ]
+      }
+    }
+
+  ],
+  "outputs": {
+  }
 }
