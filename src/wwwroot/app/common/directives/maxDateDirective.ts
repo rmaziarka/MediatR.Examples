@@ -4,6 +4,7 @@ module Antares {
     export module Common {
         export module Directive {
             export class KfMaxDateDirective implements ng.IDirective {
+                static InvalidDateErrorMessage ="kf-max-date: Max date ${maxDate} provided by user is invalid" 
                 restrict = 'A';
                 link(scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) {
                     var ngModel: ng.INgModelController = element.controller('ngModel'),
@@ -26,7 +27,7 @@ module Antares {
 
                     ngModel.$validators['kfMaxDate'] = (modelValue) => {
 
-                        if (modelValue === null) {
+                        if (modelValue === null || modelValue === '') {
                             return setValidation(true);
                         }
 
