@@ -4,6 +4,7 @@ module Antares {
     import ActivityAddController = Activity.ActivityAddController;
     import IProperty = Antares.Common.Models.Dto.IProperty;
     import Dto = Antares.Common.Models.Dto;
+    import Business = Antares.Common.Models.Business;
 
     describe('Given activity is being added', () => {
         var scope: ng.IScope,
@@ -138,7 +139,7 @@ module Antares {
                 activityAddController.selectedActivityStatus = _.find(activityStatuses.items, { 'code': 'PreAppraisal' });
                 activityAddController.setVendors(vendors);
 
-                var expectedRequest = new Dto.Activity();
+                var expectedRequest = new Business.Activity();
                 expectedRequest.propertyId = propertyMock.id;
                 expectedRequest.activityStatusId = activityAddController.selectedActivityStatus.id;
                 expectedRequest.contacts = vendors;
@@ -153,7 +154,7 @@ module Antares {
                     expect(angular.equals(requestData.contacts, expectedRequest.contacts)).toBe(true);
 
                     return true;
-                }).respond(201, new Dto.Activity());
+                }).respond(201, new Business.Activity());
 
                 element.find('#activity-add-button').click();
                 $http.flush();
@@ -167,7 +168,7 @@ module Antares {
                 activityAddController.selectedActivityStatus = _.find(activityStatuses.items, { 'code': 'PreAppraisal' });
                 activityAddController.setVendors(vendors);
 
-                var expectedResponse = new Dto.Activity();
+                var expectedResponse = new Business.Activity();
                 expectedResponse.propertyId = propertyMock.id;
                 expectedResponse.activityStatusId = activityAddController.selectedActivityStatus.id;
                 expectedResponse.contacts = vendors;
