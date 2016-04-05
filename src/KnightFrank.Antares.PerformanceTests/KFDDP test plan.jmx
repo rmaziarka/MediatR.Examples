@@ -172,17 +172,17 @@
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
+        <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Open page" enabled="true">
+          <collectionProp name="ModuleController.node_path">
+            <stringProp name="-1227702913">WorkBench</stringProp>
+            <stringProp name="1119890476">KFDDP test plan</stringProp>
+            <stringProp name="170071582">Test Fragment</stringProp>
+            <stringProp name="-802968955">Open page</stringProp>
+          </collectionProp>
+        </ModuleController>
+        <hashTree/>
         <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Contacts" enabled="true"/>
         <hashTree>
-          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Open page" enabled="true">
-            <collectionProp name="ModuleController.node_path">
-              <stringProp name="-1227702913">WorkBench</stringProp>
-              <stringProp name="1119890476">KFDDP test plan</stringProp>
-              <stringProp name="170071582">Test Fragment</stringProp>
-              <stringProp name="-802968955">Open page</stringProp>
-            </collectionProp>
-          </ModuleController>
-          <hashTree/>
           <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Create contacts" enabled="true">
             <collectionProp name="ModuleController.node_path">
               <stringProp name="-1227702913">WorkBench</stringProp>
@@ -215,6 +215,15 @@
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
+        <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Open page" enabled="true">
+          <collectionProp name="ModuleController.node_path">
+            <stringProp name="-1227702913">WorkBench</stringProp>
+            <stringProp name="1119890476">KFDDP test plan</stringProp>
+            <stringProp name="170071582">Test Fragment</stringProp>
+            <stringProp name="-802968955">Open page</stringProp>
+          </collectionProp>
+        </ModuleController>
+        <hashTree/>
         <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Property" enabled="true"/>
         <hashTree>
           <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="EnumType and country" enabled="true">
@@ -231,15 +240,6 @@
               </elementProp>
             </collectionProp>
           </Arguments>
-          <hashTree/>
-          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Open page" enabled="true">
-            <collectionProp name="ModuleController.node_path">
-              <stringProp name="-1227702913">WorkBench</stringProp>
-              <stringProp name="1119890476">KFDDP test plan</stringProp>
-              <stringProp name="170071582">Test Fragment</stringProp>
-              <stringProp name="-802968955">Open page</stringProp>
-            </collectionProp>
-          </ModuleController>
           <hashTree/>
           <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Get address/country Id" enabled="true">
             <collectionProp name="ModuleController.node_path">
@@ -282,6 +282,15 @@
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
+        <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Open page" enabled="true">
+          <collectionProp name="ModuleController.node_path">
+            <stringProp name="-1227702913">WorkBench</stringProp>
+            <stringProp name="1119890476">KFDDP test plan</stringProp>
+            <stringProp name="170071582">Test Fragment</stringProp>
+            <stringProp name="-802968955">Open page</stringProp>
+          </collectionProp>
+        </ModuleController>
+        <hashTree/>
         <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Requirement" enabled="true"/>
         <hashTree>
           <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="EnumType and country" enabled="true">
@@ -298,15 +307,6 @@
               </elementProp>
             </collectionProp>
           </Arguments>
-          <hashTree/>
-          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Open page" enabled="true">
-            <collectionProp name="ModuleController.node_path">
-              <stringProp name="-1227702913">WorkBench</stringProp>
-              <stringProp name="1119890476">KFDDP test plan</stringProp>
-              <stringProp name="170071582">Test Fragment</stringProp>
-              <stringProp name="-802968955">Open page</stringProp>
-            </collectionProp>
-          </ModuleController>
           <hashTree/>
           <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Create contacts" enabled="true">
             <collectionProp name="ModuleController.node_path">
