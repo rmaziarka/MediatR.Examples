@@ -29,9 +29,9 @@
         }
 
         /// <summary>
-        ///     Create contact
+        ///     Create activity
         /// </summary>
-        /// <param name="command">Contact entity</param>
+        /// <param name="command">Activity data to create</param>
         [HttpPost]
         [Route("")]
         public Activity CreateActivity([FromBody] CreateActivityCommand command)
