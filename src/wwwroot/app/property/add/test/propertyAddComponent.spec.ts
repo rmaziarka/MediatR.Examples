@@ -24,7 +24,7 @@ module Antares {
 
             newPropertyMock.id = 'propId1';
             newPropertyMock.address = new Dto.Address();
-            var usermock = { name : "user", email : "user@gmail.com", country : "GB", division : { id : "0acc9d28-51fa-e511-828b-8cdcd42baca7", value : "Commercial", code : "Commercial" }, divisionCode : null, roles : ["admin", "superuser"] };
+            var usermock = { name : "user", email : "user@gmail.com", country : "GB", division : { id : "0acc9d28-51fa-e511-828b-8cdcd42baca7", value : "Commercial", code : "Commercial" }, divisionCode : <any>null, roles : ["admin", "superuser"] };
 
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
