@@ -14,32 +14,32 @@
 
     public class CreateActivityValidator : AbstractValidator<CreateActivityCommand>
     {   
-        public CreateActivityValidator(IGenericRepository<Property> propertyRepository, IGenericRepository<EnumTypeItem> enumTypeItemRepository, IReadGenericRepository<Contact> contactRepository)
+        public CreateActivityValidator(IGenericRepository<Property> propertyRepository, IReadGenericRepository<EnumTypeItem> enumTypeItemRepository, IGenericRepository<Contact> contactRepository)
         {
             Func<CreateActivityCommand, ValidationFailure> propertyExists = cmd =>
-            {
-                string propertyid = nameof(cmd.PropertyId);
+            {   
                 Property property = propertyRepository.GetById(cmd.PropertyId);
 
-                return property == null ? new ValidationFailure(propertyid, "Property does not exist.") : null;
+                return property == null ? new ValidationFailure(nameof(cmd.PropertyId), "Property does not exist.") : null;
             };
 
             Func<CreateActivityCommand, ValidationFailure> activityStatusExists = cmd =>
             {
-                string activityStatusId = nameof(cmd.ActivityStatusId);
-                EnumTypeItem activityStatus = enumTypeItemRepository.GetById(cmd.ActivityStatusId);
+                bool isActivityStatus =
+                    enumTypeItemRepository.Get()
+                                          .Any(et => et.Id == cmd.ActivityStatusId && et.EnumType.Code == "ActivityStatus");
 
-                return activityStatus == null ? new ValidationFailure(activityStatusId, "Activity Status does not exist.") : null;
+                return isActivityStatus ? null : new ValidationFailure(nameof(cmd.ActivityStatusId), "Activity Status does not exist.");
             };
 
             Func<CreateActivityCommand, ValidationFailure> isValidvendorsExist = cmd =>
             {
                 var isValid = true;
                 
-                IList<Guid> vendorsId = cmd.Vendors?.Select(v => v.Id).ToList();
-                if (vendorsId != null && vendorsId.Any())
+                if (cmd.Vendors != null && cmd.Vendors.Any())
                 {
-                    isValid = contactRepository.Get().All(c => vendorsId.Contains(c.Id));
+                    IEnumerable<Guid> result = contactRepository.FindBy(c => cmd.Vendors.Contains(c.Id)).Select(x => x.Id);
+                    isValid = !cmd.Vendors.Except(result).Any();
                 }
 
                 return isValid ? null : new ValidationFailure("Vendors", "Vendors are invalid.");

@@ -3,87 +3,129 @@
 module Antares {
     import SidePanelController = Antares.Common.Component.SidePanelController;
 
-    describe('Given side panel is rendered', () =>{
 
+    describe('Given side panel is rendered', () => {
         var scope: ng.IScope,
-            element: ng.IAugmentedJQuery;
+            element: ng.IAugmentedJQuery,
+            controller: SidePanelController;
 
-        var sidePanelContent = 'main content';
-        var sidePanelFooter = 'footer content';
+        var pageObjectSelector = {
+            footer: '.side-panel-footer',
+            header: '#header'
+        };
 
-        var controller: SidePanelController;
-        var panel: ng.IAugmentedJQuery;
+        describe('with empty header and footer', () => {
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService) => {
 
-        var assertCssClasses = (isVisible: boolean) => {
-            expect(panel.hasClass('slide-in')).toBe(isVisible);
-            expect(panel.hasClass('slide-out')).toBe(!isVisible);
-        }
+                scope = $rootScope.$new();
+                element = $compile('<side-panel><side-panel-content></side-panel-content></side-panel>')(scope);
+                scope.$apply();
+                controller = element.controller('sidePanel');
+            }));
 
-        beforeEach(inject((
-            $rootScope: ng.IRootScopeService,
-            $compile: ng.ICompileService) =>{
+            it('then no footer should be rendered', () => {
+                expect(element.find(pageObjectSelector.footer).length).toBe(0);
+            });
 
-            scope = $rootScope.$new();
-            element = $compile('<side-panel><side-panel-content>' + sidePanelContent + '</side-panel-content><side-panel-footer>' + sidePanelFooter + '</side-panel-footer></side-panel>')(scope);
-            scope.$apply();
-            controller = element.controller('sidePanel');
-            panel = element.find('.side-panel');
-        }));
-
-        it('side panel should be hidden on init', () => {
-            expect(panel.length).toBe(1);
-            expect(controller.visible).toBe(false);
-            expect(controller.stateChanged).toBe(false);
-
-            // on init we don't set any of classes tested below
-            expect(panel.hasClass('slide-in')).toBe(false);
-            expect(panel.hasClass('slide-out')).toBe(false);
+            it('then no header should be rendered', () => {
+                expect(element.find(pageObjectSelector.header).length).toBe(0);
+            });
         });
 
-        it('side panel should be visible when show() is called', () =>{
-            controller.show();
-            scope.$apply();
+        describe('with not empty header and footer', () => {
+            var sidePanelContent = 'main content';
+            var sidePanelHeader = 'header content';
+            var sidePanelFooter = 'footer content';
 
-            expect(controller.visible).toBe(true);
-            expect(controller.stateChanged).toBe(true);
+            var panel: ng.IAugmentedJQuery;
 
-            assertCssClasses(true);
-        });
+            var assertCssClasses = (isVisible: boolean) => {
+                expect(panel.hasClass('slide-in')).toBe(isVisible);
+                expect(panel.hasClass('slide-out')).toBe(!isVisible);
+            };
 
-        it('side panel should be hidden when hide() is called', () =>{
-            controller.show();
-            scope.$apply();
-            controller.hide();
-            scope.$apply();
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService) => {
 
-            expect(controller.visible).toBe(false);
-            expect(controller.stateChanged).toBe(true);
+                scope = $rootScope.$new();
+                element = $compile('<side-panel><side-panel-header>' + sidePanelHeader + '</side-panel-header><side-panel-content>' + sidePanelContent + '</side-panel-content><side-panel-footer>' + sidePanelFooter + '</side-panel-footer></side-panel>')(scope);
+                scope.$apply();
+                controller = element.controller('sidePanel');
+                panel = element.find('.side-panel');
+            }));
 
-            assertCssClasses(false);
-        });
+            it('then side panel should be hidden on init', () => {
+                expect(panel.length).toBe(1);
+                expect(controller.visible).toBe(false);
+                expect(controller.stateChanged).toBe(false);
 
-        it('side panel should remain hidden when it is already hidden and hide() is called', () =>{
-            controller.hide();
-            scope.$apply();
+                // on init we don't set any of classes tested below
+                expect(panel.hasClass('slide-in')).toBe(false);
+                expect(panel.hasClass('slide-out')).toBe(false);
+            });
 
-            expect(controller.visible).toBe(false);
-            expect(controller.stateChanged).toBe(false);
+            it('then side panel should be visible when show() is called', () => {
+                controller.show();
+                scope.$apply();
 
-            // when state does not change we don't set any of classes tested below
-            expect(panel.hasClass('slide-in')).toBe(false);
-            expect(panel.hasClass('slide-out')).toBe(false);
-        });
+                expect(controller.visible).toBe(true);
+                expect(controller.stateChanged).toBe(true);
 
-        it('side panel should remain visible when it is already shown and show() is called', () => {
-            controller.show();
-            scope.$apply();
-            controller.show();
-            scope.$apply();
+                assertCssClasses(true);
+            });
 
-            expect(controller.visible).toBe(true);
-            expect(controller.stateChanged).toBe(true);
+            it('then side panel should be hidden when hide() is called', () => {
+                controller.show();
+                scope.$apply();
+                controller.hide();
+                scope.$apply();
 
-            assertCssClasses(true);
+                expect(controller.visible).toBe(false);
+                expect(controller.stateChanged).toBe(true);
+
+                assertCssClasses(false);
+            });
+
+            it('then side panel should remain hidden when it is already hidden and hide() is called', () => {
+                controller.hide();
+                scope.$apply();
+
+                expect(controller.visible).toBe(false);
+                expect(controller.stateChanged).toBe(false);
+
+                // when state does not change we don't set any of classes tested below
+                expect(panel.hasClass('slide-in')).toBe(false);
+                expect(panel.hasClass('slide-out')).toBe(false);
+            });
+
+            it('then side panel should remain visible when it is already shown and show() is called', () => {
+                controller.show();
+                scope.$apply();
+                controller.show();
+                scope.$apply();
+
+                expect(controller.visible).toBe(true);
+                expect(controller.stateChanged).toBe(true);
+
+                assertCssClasses(true);
+            });
+
+            it('then footer should be rendered', () => {
+                expect(element.find(pageObjectSelector.footer).length).toBe(1);
+                var footerElement: HTMLElement = element.find(pageObjectSelector.footer)[0];
+
+                expect(footerElement.innerText).toBe(sidePanelFooter);
+            });
+
+            it('then header should be rendered', () => {
+                expect(element.find(pageObjectSelector.header).length).toBe(1);
+                var headerElement: HTMLElement = element.find(pageObjectSelector.header)[0];
+
+                expect(headerElement.innerText).toBe(sidePanelHeader);
+            });
         });
     });
 }

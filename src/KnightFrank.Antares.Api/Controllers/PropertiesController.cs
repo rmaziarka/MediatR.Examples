@@ -30,6 +30,7 @@
         ///     Properties controller constructor
         /// </summary>
         /// <param name="mediator">Mediator instance.</param>
+        /// <param name="propertyTypeDefinitionRepository"></param>
         public PropertiesController(IMediator mediator, IReadGenericRepository<PropertyTypeDefinition> propertyTypeDefinitionRepository)
         {
             this.mediator = mediator;
@@ -100,7 +101,7 @@
             command.PropertyId = id;
             Guid ownershipId = this.mediator.Send(command);
 
-            var ownership =
+            Ownership ownership =
                 this.mediator.Send(new OwnershipByIdQuery() { OwnershipId = ownershipId });
 
             return ownership;
