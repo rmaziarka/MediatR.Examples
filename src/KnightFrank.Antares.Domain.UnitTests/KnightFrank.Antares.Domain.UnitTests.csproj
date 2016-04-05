@@ -103,6 +103,8 @@
   <ItemGroup>
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandlerTests.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandValidatorTests.cs" />
+    <Compile Include="Activity\Queries\ActivityQueryValidatorTests.cs" />
+    <Compile Include="Activity\QueryHandlers\ActivityQueryHandlerTests.cs" />
     <Compile Include="AddressForm\Queries\AddressFormQueryValidatorTests.cs" />
     <Compile Include="AddressForm\Queries\GetCountriesForAddressFormQueryValidatorTests.cs" />
     <Compile Include="FixtureExtension\AddressFormFixtureExtensions.cs" />

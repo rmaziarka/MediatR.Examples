@@ -6,7 +6,7 @@
     {
         public ActivityQueryValidator()
         {
-            this.RuleFor(q => q.Id).NotNull();
+            this.RuleFor(q => q.Id).NotEmpty();
         }
     }
 }

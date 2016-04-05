@@ -18,14 +18,14 @@
             this.activityRepository = activityRepository;
         }
 
-        public Activity Handle(ActivityQuery message)
+        public Activity Handle(ActivityQuery query)
         {
             Activity result =
                 this.activityRepository.Get()
                     .Include(a => a.Property)
                     .Include(a => a.Property.Address)
                     .Include(a => a.Contacts)
-                    .FirstOrDefault(a => a.Id == message.Id);
+                    .FirstOrDefault(a => a.Id == query.Id);
 
             return result;
         }
