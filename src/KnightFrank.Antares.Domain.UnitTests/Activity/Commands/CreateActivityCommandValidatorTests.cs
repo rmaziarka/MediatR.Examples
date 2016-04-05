@@ -45,7 +45,7 @@
             CreateActivityCommand cmd)
         {
             // Arrange 
-            IEnumerable<Contact> fakeContactResult = cmd.Vendors.Select(id => new Contact { Id = id });
+            IEnumerable<Contact> fakeContactResult = cmd.Contacts.Select(activityContact => new Contact { Id = activityContact.Id });
             var fakeActivityStatus = new EnumTypeItem
             {
                 Id = cmd.ActivityStatusId,
@@ -159,7 +159,7 @@
 
             // Assert
             validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.Vendors));
+            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.Contacts));
             contactRepository.Verify(m => m.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()), Times.Once);
         }
 
@@ -171,7 +171,7 @@
             CreateActivityValidator validator, CreateActivityCommand cmd)
         {
             // Arrange 
-            IEnumerable<Contact> fakeContacts = cmd.Vendors.Select(v => new Contact {Id = v});
+            IEnumerable<Contact> fakeContacts = cmd.Contacts.Select(activityContact => new Contact {Id = activityContact.Id});
             var fakeActivityStatus = new EnumTypeItem
             {
                 Id = cmd.ActivityStatusId,
