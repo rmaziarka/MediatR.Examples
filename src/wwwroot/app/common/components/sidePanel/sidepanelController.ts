@@ -4,12 +4,19 @@ module Antares {
     export module Common {
         export module Component {
             export class SidePanelController {
-                static $inject = ['componentRegistry'];
                 private componentId: string;
+
+                isFooterVisible: boolean = false;
+                isHeaderVisible: boolean = false;
+
                 visible: boolean = false;
                 stateChanged: boolean = false;
-                constructor(componentRegistry: Antares.Core.Service.ComponentRegistry) {
+
+                constructor(componentRegistry: Antares.Core.Service.ComponentRegistry, $transclude: any /* There is missing isSlotFilled definition in ng.ITranscludeFunction. */) {
                     componentRegistry.register(this, this.componentId);
+
+                    this.isFooterVisible = $transclude.isSlotFilled('footer');
+                    this.isHeaderVisible = $transclude.isSlotFilled('header');
                 }
 
                 show = () => {
