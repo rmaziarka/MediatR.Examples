@@ -10,13 +10,13 @@ module Antares {
             element: ng.IAugmentedJQuery,
             controller: CardListController;
 
-        var mockedComponentHtml = '<card-list items="items" show-item-add="showItemAdd">'
+        var mockedComponentHtml = '<card-list show-item-add="showItemAdd">'
                 + '<card-list-header><p id="test-header">Header test</p></card-list-header>'
                 + '<card-list-no-items><p id="test-no-items">Test</p></card-list-no-items>'
+                + '<card-list-item><p id="test-item">Test</p></card-list-item>'
                 + '</card-list>';
 
-        var itemsMock = [{ itemName: 'It1', test: 123 }, { itemName: 'It2', test: 456 }],
-            showItemAddSpy = jasmine.createSpy('showItemAdd');
+        var showItemAddSpy = jasmine.createSpy('showItemAdd');
 
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
@@ -27,57 +27,22 @@ module Antares {
             compile = $compile;
 
             scope['showItemAdd'] = showItemAddSpy;
+            element = compile(mockedComponentHtml)(scope);
+            scope.$apply();
+            controller = element.controller('cardList');
         }));
 
         it('when loaded then all component transcluded elements should be visible', () => {
-            scope['items'] = [];
-
-            element = compile(mockedComponentHtml)(scope);
-            scope.$apply();
-            controller = element.controller('cardList');
-
             var headerElement = element.find('p#test-header');
             var noItemsElement = element.find('p#test-no-items');
+            var itemElement = element.find('p#test-item');
 
             expect(headerElement.length).toBe(1);
             expect(noItemsElement.length).toBe(1);
-        });
-
-        it('when loaded and no items then "no items" element should be visible', () => {
-            scope['items'] = [];
-
-            element = compile(mockedComponentHtml)(scope);
-            scope.$apply();
-            controller = element.controller('cardList');
-
-            var noItemsElement = element.find('div#no-items-element');
-            var cardElements = element.find('card');
-
-            expect(noItemsElement.hasClass('ng-hide')).toBeFalsy();
-            expect(cardElements.length).toBe(0);
-        });
-
-        it('when loaded and existing items then card components should be visible', () => {
-            scope['items'] = itemsMock;
-
-            element = compile(mockedComponentHtml)(scope);
-            scope.$apply();
-            controller = element.controller('cardList');
-
-            var noItemsElement = element.find('div#no-items-element');
-            var cardElements = element.find('card');
-
-            expect(noItemsElement.hasClass('ng-hide')).toBeTruthy();
-            expect(cardElements.length).toBe(2);
+            expect(itemElement.length).toBe(1);
         });
 
         it('when add button clicked then showItemAdd method should be called', () => {
-            scope['items'] = itemsMock;
-
-            element = compile(mockedComponentHtml)(scope);
-            scope.$apply();
-            controller = element.controller('cardList');
-
             var button = element.find('button#addItemBtn');
             button.click();
 

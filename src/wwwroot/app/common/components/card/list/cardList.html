@@ -2,9 +2,7 @@
 <div class="form-group">
     <button type="button" id="addItemBtn" class="btn btn-default" ng-click="clvm.showItemAdd()"><i class="fa fa-plus-circle"></i></button>
 </div>
-<div id="no-items-element" ng-show="clvm.items.length === 0" ng-transclude="noItems"></div>
+<div id="no-items-element" ng-transclude="noItems"></div>
 
-<div class="panel panel-default" ng-repeat="item in clvm.items | orderBy: clvm.itemsOrder.name : clvm.itemsOrder.descending : clvm.itemsOrder.nullOnEnd">
-    <card card-template-url="clvm.cardTemplateUrl" item="item" show-item-details="clvm.showItemDetails"></card>
-</div>
+<div ng-transclude="item"></div>
 

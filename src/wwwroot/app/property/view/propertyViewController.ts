@@ -8,8 +8,6 @@ module Antares.Property.View {
     import CartListOrder = Common.Component.CartListOrder;
 
     export class PropertyViewController {
-        static $inject = ['dataAccessService', 'componentRegistry', '$scope', '$state'];
-
         componentIds: any = {
             contactListId: 'viewProperty:contactListComponent',
             contactSidePanelId: 'viewProperty:contactSidePanelComponent',
@@ -44,7 +42,6 @@ module Antares.Property.View {
         ownershipsCartListOrder: CartListOrder = new CartListOrder('purchaseDate', true, true);
         activitiesCartListOrder: CartListOrder = new CartListOrder('createdDate');
 
-        propertyResource: Resources.IPropertyResourceClass;
         property: Dto.Property;
 
         currentPanel: any;
@@ -56,7 +53,6 @@ module Antares.Property.View {
             private $state: ng.ui.IStateService) {
 
             this.propertyId = $state.params['id'];
-            this.propertyResource = dataAccessService.getPropertyResource();
 
             this.fixOwnershipDates();
 

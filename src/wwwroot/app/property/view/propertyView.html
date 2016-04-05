@@ -9,15 +9,17 @@
             <div class="col-md-4">
                 <form>
                     <fieldset>
-                        <card-list card-template-url="'app/property/view/propertyOwnershipCard.html'"
-                                   items="vm.property.ownerships" items-order="vm.ownershipsCartListOrder"
-                                   show-item-add="vm.showContactList" show-item-details="vm.showOwnershipView">
+                        <card-list show-item-add="vm.showContactList">
                             <card-list-header>
                                 <legend translate="PROPERTY.LIST.OWNERSHIPS"></legend>
                             </card-list-header>
-                            <card-list-no-items>
+                            <card-list-no-items ng-show="vm.property.ownerships.length === 0">
                                 <p class="help-block" translate="PROPERTY.LIST.NO_ITEMS"></p>
                             </card-list-no-items>
+                            <card-list-item ng-repeat="ownership in vm.property.ownerships track by ownership.id | orderBy: vm.ownershipsCartListOrder.name : vm.ownershipsCartListOrder.descending : vm.ownershipsCartListOrder.nullOnEnd">
+                                <card card-template-url="'app/property/view/propertyOwnershipCard.html'" item="ownership" show-item-details="vm.showOwnershipView">
+                                </card>
+                            </card-list-item>
                         </card-list>
                     </fieldset>
                 </form>
@@ -28,15 +30,18 @@
             <div class="col-md-4">
                 <form>
                     <fieldset>
-                        <card-list card-template-url="'app/activity/templates/activityCard.html'"
-                                   items="vm.property.activities" items-order="vm.activitiesCartListOrder"
-                                   show-item-add="vm.showActivityAdd" show-item-details="vm.showActivityPreview">
+                        <card-list id="card-list-activities" show-item-add="vm.showActivityAdd">
                             <card-list-header>
                                 <legend translate="ACTIVITY.LIST.ACTIVITIES"></legend>
                             </card-list-header>
-                            <card-list-no-items>
+                            <card-list-no-items ng-show="vm.property.activities.length === 0">
                                 <p class="help-block" translate="ACTIVITY.LIST.NO_ITEMS"></p>
                             </card-list-no-items>
+
+                            <card-list-item ng-repeat="activity in vm.property.activities track by activity.id | orderBy: vm.activitiesCartListOrder.name">
+                                <card card-template-url="'app/activity/templates/activityCard.html'" item="activity" show-item-details="vm.showActivityPreview">
+                                </card>
+                            </card-list-item>
                         </card-list>
                     </fieldset>
                 </form>
