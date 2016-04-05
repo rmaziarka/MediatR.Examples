@@ -20,7 +20,7 @@ function Invoke-SqlQuery {
         $ServerInstance = "localhost"		
     )
 
-    if($DatabaseName)
+    if([string]::IsNullOrEmpty($DatabaseName))
     {
         Write-Host "Invoking sql '$InputFile' on '$ServerInstance'"
 	    [void](Invoke-Sqlcmd -ServerInstance $ServerInstance -InputFile $InputFile -Variable $SqlVariables)

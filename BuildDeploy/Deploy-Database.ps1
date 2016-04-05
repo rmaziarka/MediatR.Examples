@@ -29,9 +29,11 @@ function Deploy-Database {
         Invoke-SqlQuery -InputFile 'sql/Update-SqlLoginRole.sql'`
 			    -SqlVariable "Username = $Username","Role = $Role"
         
-        Build-SSDTDacpac -ProjectPath $projectDatabaseSqlProjPath -BuildConfiguration $buildConfiguration
+        #commented out since we dont use this for seeding at the moment, it needs to be redesign to seed data
+
+        #Build-SSDTDacpac -ProjectPath $projectDatabaseSqlProjPath -BuildConfiguration $buildConfiguration
         
-        Deploy-SSDTDacpac -ProjectDatabaseDocpacPath $projectDatabaseDocpacPath -ProfileName $ssdtProfileNamePath -SqlServerVersion $sqlServerVersion -ConnectionString $ConnectionString
+        #Deploy-SSDTDacpac -ProjectDatabaseDocpacPath $projectDatabaseDocpacPath -ProfileName $ssdtProfileNamePath -SqlServerVersion $sqlServerVersion -ConnectionString $ConnectionString
     } finally {
         
     }
