@@ -101,6 +101,12 @@
       "STATUS": "Status",
       "CREATION_DATE": "Creation date",
       "VENDORS": "Vendor(s)"
+    },
+    "VIEW": {
+      "VIEW_ACTIVITY": "View activity",
+      "PROPERTY": "Property",
+      "VENDORS": "Vendors",
+      "NO_VENDORS": "No vendors defined"
     }
   },
   "REQUIREMENT": {
