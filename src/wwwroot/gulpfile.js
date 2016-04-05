@@ -143,7 +143,7 @@ gulp.task('build-specs', ['_build-specs-templatecache'], function() {
         .src('buildTemplates/specRunner.html')
         .pipe(wiredep(options))
         .pipe(inject(config.js.appFilesToTest, '', config.js.order))
-        .pipe(inject(config.js.specsAndMocks, 'specs', ['**/*']))
+        .pipe(inject(config.js.specsAndMocks, 'specs', ['**/common/**/*', '**/*.js']))
         .pipe(inject(templateCache, 'templates'))
         .pipe(gulp.dest(config.root));
 });
