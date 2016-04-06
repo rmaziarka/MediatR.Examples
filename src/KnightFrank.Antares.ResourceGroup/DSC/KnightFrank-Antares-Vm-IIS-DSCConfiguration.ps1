@@ -8,6 +8,12 @@ Import-DscResource -ModuleName xWebAdministration
 
 Node $nodeName
   {
+	LocalConfigurationManager
+    {
+        RebootNodeIfNeeded = $true
+		ActionAfterReboot = "ContinueConfiguration"
+    }
+
     WindowsFeature WebServerRole
     {
       Name = "Web-Server"
@@ -97,72 +103,100 @@ Node $nodeName
         State = "Running"
         DependsOn = "[Package]InstallWebDeploy"
     }
-
-	$DirectoriesToCreate = @(
-		"C:\inetpub\wwwroot\test\app",
-		"C:\inetpub\wwwroot\test\api",
-		"C:\inetpub\wwwroot\dev\app",
-		"C:\inetpub\wwwroot\dev\api"
-	)
-	foreach ($DirectoryToCreate in $DirectoriesToCreate){
-		File WebAppTestDir{
-			Type = "Directory"
-			DestinationPath = $DirectoryToCreate
-			Ensure = "Present"
-		}
-	}
-
-	xWebAppPool TestWebApiPool 
-    { 
-        Name            = "dev.api.antares.knightfrank.com"
-        Ensure          = "Present"
-        State           = "Started"
-    }  
-	xWebAppPool TestWebAppPool 
-    { 
-        Name            = "dev.app.antares.knightfrank.com"
-        Ensure          = "Present"
-        State           = "Started"
-    }  
-	xWebsite TestWebApi
-	{
-		Name = "dev.api.antares.knightfrank.com"
-		DependsOn = "[xWebAppPool]WebApiPool"
-		ApplicationPool = "dev.api.antares.knightfrank.com"
-		PhysicalPath = "C:\inetpub\wwwroot\test\api"
-		State = "Started"
-		Ensure = "Present"
-	}
-	xWebsite TestWebApp
-	{
-		Name = "dev.app.antares.knightfrank.com"
-		DependsOn = "[xWebAppPool]WebAppPool"
-		ApplicationPool = "dev.app.antares.knightfrank.com"
-		PhysicalPath = "C:\inetpub\wwwroot\test\app"
-		State = "Started"
-		Ensure = "Present"
-	}
-
-	<#
-	File WebAppTestDir{
-		Type = "Directory"
-		DestinationPath = "C:\inetpub\wwwroot\test\app"
-		Ensure = "Present"
-	}
-	File WebApiTestDir{
-		Type = "Directory"
-		DestinationPath = "C:\inetpub\wwwroot\test\api"
-		Ensure = "Present"
-	}
-	File WebAppDevDir{
+	
+	File WebAppDir{
 		Type = "Directory"
 		DestinationPath = "C:\inetpub\wwwroot\dev\app"
 		Ensure = "Present"
 	}
-	File WebApiDevDir{
+	File WebApiDir{
 		Type = "Directory"
 		DestinationPath = "C:\inetpub\wwwroot\dev\api"
 		Ensure = "Present"
-	}#>
+	}
+	
+	xWebAppPool WebApiPool 
+    { 
+        Name = "dev.api.antares.knightfrank.com"
+        Ensure = "Present"
+        State = "Started"
+		DependsOn = @('[WindowsFeature]WebServerRole', '[File]WebApiDir')
+    }  
+	xWebAppPool WebAppPool 
+    { 
+        Name = "dev.app.antares.knightfrank.com"
+        Ensure = "Present"
+        State = "Started"
+		DependsOn = @('[WindowsFeature]WebServerRole', '[File]WebAppDir')
+    }   
+	xWebsite WebApi
+	{
+		Name = "dev.api.antares.knightfrank.com"
+		DependsOn = "[xWebAppPool]WebApiPool"
+		ApplicationPool = "dev.api.antares.knightfrank.com"
+		PhysicalPath = "C:\inetpub\wwwroot\dev\api"
+		State = "Started"
+		Ensure = "Present"
+		BindingInfo = MSFT_xWebBindingInformation 
+        { 
+			Protocol = "http" 
+			Port = 80  
+			HostName = "dev.api.antares.knightfrank.com"
+        }
+		EnabledProtocols = "http"
+	}
+	xWebsite WebApp
+	{
+		Name = "dev.app.antares.knightfrank.com"
+		DependsOn = "[xWebAppPool]WebAppPool"
+		ApplicationPool = "dev.app.antares.knightfrank.com"
+		PhysicalPath = "C:\inetpub\wwwroot\dev\app"
+		State = "Started"
+		Ensure = "Present"
+		BindingInfo = MSFT_xWebBindingInformation 
+        { 
+			Protocol = "http" 
+			Port = 80  
+			HostName = "dev.app.antares.knightfrank.com"
+        }
+		EnabledProtocols = "http"
+	}
+	Script DownloadOctopusTentacle
+    {
+        TestScript = {
+            Test-Path "C:\WindowsAzure\Octopus.Tentacle.3.3.6-x64.msi"
+        }
+        SetScript ={
+            $source = "https://download.octopusdeploy.com/octopus/Octopus.Tentacle.3.3.6-x64.msi"
+            $dest = "C:\WindowsAzure\Octopus.Tentacle.3.3.6-x64.msi"
+            Invoke-WebRequest $source -OutFile $dest
+        }
+        GetScript = {@{Result = "DownloadOctopusTentacle"}}
+    }
+    Package InstallOctopusTentacle
+    {
+        Ensure = "Present"  
+        Path  = "C:\WindowsAzure\Octopus.Tentacle.3.3.6-x64.msi"
+        Name = "Octopus Deploy Tentacle"
+        ProductId = "{D2622F6E-1377-47A6-9F6D-ED9AF593205D}"
+        DependsOn = "[Script]DownloadOctopusTentacle"
+    }
+	Script ConfigureOctopusTentacle
+	{
+		DependsOn = "[Package]InstallOctopusTentacle"
+		TestScript = {
+			Test-Path "C:\Octopus\Tentacle.config"
+		}
+		SetScript = {
+			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" create-instance --instance "Tentacle" --config "C:\Octopus\Tentacle.config"
+			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" new-certificate --instance "Tentacle" --if-blank
+			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --reset-trust
+			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --home "C:\Octopus" --app "C:\Octopus\Applications" --port "10933" --noListen "False"
+			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --trust "C478B5952045B390F15F0C444D4917E911713EF0"
+			& "netsh" advfirewall firewall add rule "name=Octopus Deploy Tentacle" dir=in action=allow protocol=TCP localport=10933
+			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" service --instance "Tentacle" --install --start
+		}
+		GetScript = {@{Result = "ConfigureOctopusTentacle"}}
+	}
   }
 }
