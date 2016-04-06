@@ -2,7 +2,9 @@
 
 module Antares {
     import ActivityAddController = Activity.ActivityAddController;
+    import IProperty = Antares.Common.Models.Dto.IProperty;
     import Dto = Antares.Common.Models.Dto;
+    import Business = Antares.Common.Models.Business;
 
     describe('Given activity is being added', () => {
         var scope: ng.IScope,
@@ -26,6 +28,12 @@ module Antares {
             ]
         };
 
+        var createVendors = (count: number) => {
+            return _.map(TestHelpers.ContactGenerator.GenerateMany(count), (dtoContact: Dto.IContact) => {
+                return new Dto.Contact(dtoContact);
+            });
+        }
+
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService,
@@ -42,7 +50,7 @@ module Antares {
             element = compile('<activity-add></activity-add>')(scope);
             scope.$apply();
             $http.flush();
-            
+
             controller = element.controller('activityAdd');
 
             assertValidator = new TestHelpers.AssertValidators(element, scope);
@@ -57,10 +65,8 @@ module Antares {
         });
 
         describe('when vendors are set in component', () => {
-            var setVendors = (vendorsCount: number): Dto.Contact[] => {
-                var vendors = _.map(Antares.TestHelpers.ContactGenerator.GenerateMany(vendorsCount), (dtoContact: Dto.IContact) => {
-                    return new Dto.Contact(dtoContact);
-                });
+            var setVendors = (vendorsCount: number): Dto.Contact[] =>{
+                var vendors = createVendors(vendorsCount);
 
                 controller.setVendors(vendors);
                 scope.$apply();
@@ -95,6 +101,93 @@ module Antares {
 
             it('not missing then required message should not be displayed', () => {
                 assertValidator.assertRequiredValidator('2', true, pageObjectSelectors.activityStatusSelector);
+            });
+        });
+
+        describe('when "Save button" is clicked ', () =>{
+            var propertyMock: IProperty;
+
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService,
+                $httpBackend: ng.IHttpBackendService) => {
+
+                $http = $httpBackend;
+
+                $httpBackend.whenGET("").respond(() => { return {}; });
+
+                scope = $rootScope.$new();
+                propertyMock = {
+                    id: '1',
+                    propertyTypeId: '',
+                    address: Antares.Mock.AddressForm.FullAddress,
+                    ownerships: [],
+                    activities: []
+                };
+                scope['property'] = propertyMock;
+                element = $compile('<property-view property="property"></property-view>')(scope);
+
+                scope.$apply();
+                $http.flush();
+            }
+            ));
+
+            it('then proper data should be send to API', () =>{
+                var vendors = createVendors(4);
+
+                var activityAddController: Activity.ActivityAddController = element.find('activity-add').controller('activityAdd');
+                activityAddController.activityStatuses = activityStatuses.items;
+                activityAddController.selectedActivityStatus = _.find(activityStatuses.items, { 'code': 'PreAppraisal' });
+                activityAddController.setVendors(vendors);
+
+                var expectedRequest = new Business.Activity();
+                expectedRequest.propertyId = propertyMock.id;
+                expectedRequest.activityStatusId = activityAddController.selectedActivityStatus.id;
+                expectedRequest.contacts = vendors;
+
+                scope.$apply();
+
+                $http.expectPOST(/\/api\/activities/, (data: string) => {
+                    var requestData = JSON.parse(data);
+                    expect(requestData.activityStatusId).toEqual(expectedRequest.activityStatusId);
+                    expect(requestData.propertyId).toEqual(expectedRequest.propertyId);
+                    expect(requestData.contacts.length).toEqual(expectedRequest.contacts.length);
+                    expect(angular.equals(requestData.contacts, expectedRequest.contacts)).toBe(true);
+
+                    return true;
+                }).respond(201, new Business.Activity());
+
+                element.find('#activity-add-button').click();
+                $http.flush();
+            });
+
+            it('then new activity should be added to property activity list', () => {
+                var vendors = createVendors(2);
+
+                var activityAddController: Activity.ActivityAddController = element.find('activity-add').controller('activityAdd');
+                activityAddController.activityStatuses = activityStatuses.items;
+                activityAddController.selectedActivityStatus = _.find(activityStatuses.items, { 'code': 'PreAppraisal' });
+                activityAddController.setVendors(vendors);
+
+                var expectedResponse = new Business.Activity();
+                expectedResponse.propertyId = propertyMock.id;
+                expectedResponse.activityStatusId = activityAddController.selectedActivityStatus.id;
+                expectedResponse.contacts = vendors;
+                expectedResponse.createdDate = new Date('2016-02-03');
+                expectedResponse.id = '123';
+
+                scope.$apply();
+
+                $http.whenPOST(/\/api\/activities/).respond(201, expectedResponse);
+
+                element.find('#activity-add-button').click();
+                $http.flush();
+
+                var activitiesList = element.find('#card-list-activities');
+                var activityListItems = activitiesList.find('card');
+
+                expect(propertyMock.activities.filter((item) => { return item.id === '123' }).length).toBe(1);
+                expect(activityListItems.length).toBe(1);
             });
         });
     });

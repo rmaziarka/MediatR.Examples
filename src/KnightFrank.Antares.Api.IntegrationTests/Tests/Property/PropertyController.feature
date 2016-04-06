@@ -17,6 +17,7 @@ Scenario Outline: Create property
 	| Farm/Estate       |
 	| Office            |
 	| Department Stores |
+	| Retail            |
 
 @Property
 Scenario Outline: Create property with invalid data
@@ -38,6 +39,7 @@ Scenario Outline: Create property with invalid data
 	| GB      | Property | 777         | invalid      | BadRequest |
 
 @Property
+@ignore
 Scenario Outline: Update property
 	Given User gets GB address form for Property and country details
         And User gets <propertyType1> for PropertyType
@@ -53,11 +55,13 @@ Scenario Outline: Update property
 		And The updated Property is saved in data base
 
 	Examples:
-	| propertyType1     | propertyType2     |
-	| Farm/Estate       | Farm/Estate       |
-	| Office            | Office            |
-	| Department Stores | Department Stores |
-	| Department Stores | Office            |
+	| propertyType1           | propertyType2  |
+	| Farm/Estate             | Farm/Estate    |
+	| Office                  | Office         |
+	| Retail                  | Car Showroom   |
+	| Retail Unit A1          | Retail Unit A3 |
+	| Industrial/Distribution | Industrial     |
+	| Office                  | Other          |
 
 @Property
 Scenario Outline: Update property with invalid data

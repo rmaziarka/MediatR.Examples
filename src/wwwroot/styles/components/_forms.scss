@@ -2,5 +2,17 @@
 
 label,
 .help-block {
-  font-size: 13px;
+  font-size: 12px;
+}
+
+.required {
+  label::after {
+    color: $color-red;
+    content: '*';
+    margin-left: 3px;
+  }
+}
+
+.hierarchy1 {
+  font-weight: bold;
 }

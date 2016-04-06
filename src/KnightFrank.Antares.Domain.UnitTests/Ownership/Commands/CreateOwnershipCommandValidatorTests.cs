@@ -209,6 +209,18 @@
             Assert.True(validationResult.IsValid);
         }
 
+        [Fact]
+        public void Given_PurchaseDateEqualSellDate_When_Validating_Then_NoValidationErrors()
+        {
+            DateTime date = DateTime.Now.Date;
+
+            this.command.PurchaseDate = date;
+            this.command.SellDate = date;
+
+            ValidationResult validationResult = this.validator.Validate(this.command);
+            Assert.True(validationResult.IsValid);
+        }
+
         private static void TestIncorrectCommand(CreateOwnershipCommandValidator validator, CreateOwnershipCommand command,
             string testedPropertyName)
         {

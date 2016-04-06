@@ -3,11 +3,11 @@
         <button id="close-side-panel" type="button" class="close close-side-panel" aria-label="Close" ng-click="vm.hide()">
             <span aria-hidden="true" >&times;</span>
         </button>
-        <div ng-transclude="header"></div>
+        <div id="header" ng-transclude="header" ng-if="vm.isHeaderVisible"></div>
     </header>
 
     <div class="side-panel-content" ng-transclude="content">
     </div>
-    <footer class="side-panel-footer" ng-transclude="footer">
+    <footer class="side-panel-footer" ng-transclude="footer" ng-if="vm.isFooterVisible">
     </footer>
 </div>

@@ -6,7 +6,7 @@ module Antares.Common.Models.Dto {
         surname: string;
         title: string;
 
-        constructor(contact: IContact) {
+        constructor(contact?: IContact) {
             angular.extend(this, contact);
         }
 

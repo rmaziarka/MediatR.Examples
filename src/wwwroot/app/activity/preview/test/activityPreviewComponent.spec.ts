@@ -2,7 +2,7 @@
 
 module Antares {
     import ActivityPreviewController = Antares.Activity.Preview.ActivityPreviewController;
-    import Activity = Common.Models.Dto.Activity;
+    import Activity = Common.Models.Business.Activity;
     import Contact = Common.Models.Dto.Contact;
 
     describe('Given activity preview component is loaded', () => {
@@ -18,6 +18,7 @@ module Antares {
             var activityMock: Activity = {
                 id: '999',
                 propertyId: '111',
+                property: null,
                 activityStatusId: 'testSatusId',
                 //TODO: test data generator should be implemented to simplifi mockig data
                 contacts: [
@@ -41,30 +42,37 @@ module Antares {
             }));
 
             it('when activity is set then activity status value should be displayed', () => {
+                // arrange + act
                 controller.setActivity(activityMock);
                 scope.$apply();
 
-                var statusElement = element.find('.activity-status');
+                // assert
+                var statusElement = element.find('#activity-status');
                 expect(statusElement.text()).toBe('ENUMS.' + activityMock.activityStatusId);
             });
 
             it('when activity is set then activity creation date value should be displayed in proper format', () => {
+                // arrange + act
                 controller.setActivity(activityMock);
                 scope.$apply();
 
+                // assert
                 var formattedDate = filter('date')(activityMock.createdDate, 'dd-MM-yyyy');
-                var dateElement = element.find('.activity-created-date');
+                var dateElement = element.find('#activity-created-date');
                 expect(dateElement.text()).toBe(formattedDate);
             });
 
             it('when activity is set then activity vendors should be displayed', () => {
+                // arrange + act
                 controller.setActivity(activityMock);
                 scope.$apply();
 
-                var vendorsItemsElements = element.find('.activity-vendor-item');
+                // assert
+                var vendorsItemsElement1 = element.find('#activity-vendor-item-11');
+                var vendorsItemsElement2 = element.find('#activity-vendor-item-22');
 
-                expect(vendorsItemsElements[0].innerText).toBe('John Test1');
-                expect(vendorsItemsElements[1].innerText).toBe('Amy Test2');
+                expect(vendorsItemsElement1[0].innerText).toBe('John Test1');
+                expect(vendorsItemsElement2[0].innerText).toBe('Amy Test2');
             });
         });
 

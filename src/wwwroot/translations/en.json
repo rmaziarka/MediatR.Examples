@@ -68,8 +68,12 @@
     "DATE_CAN_NOT_BE_FROM_FUTURE":"Can not specify date from future"
   },
   "PROPERTY": {
+    "COMMERCIAL_PROPERTY": "Commercial property",
+    "RESIDENTIAL_PROPERTY": "Residential property",
     "ADD": {
-      "ADD_PROPERTY": "Add property",
+      "ADD_PROPERTY": "Create property",
+      "BASIC_INFORMATION": "Basic information",
+      "TYPE": "Type",
       "ADDRESS": "Address"
     },
     "EDIT": {
@@ -99,11 +103,17 @@
       "STATUS": "Status",
       "CREATION_DATE": "Creation date",
       "VENDORS": "Vendor(s)"
+    },
+    "VIEW": {
+      "VIEW_ACTIVITY": "View activity",
+      "PROPERTY": "Property",
+      "VENDORS": "Vendors",
+      "NO_VENDORS": "No vendors defined"
     }
   },
   "REQUIREMENT": {
     "ADD": {
-      "ADD_REQUIREMENT": "Add requirement",
+      "ADD_REQUIREMENT": "Create requirement",
       "APPLICANT": "Applicant",
       "ADD": "Add",
       "FINDCONTACT": "Find contact",

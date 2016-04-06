@@ -38,7 +38,7 @@ module Antares.Property.View {
         loadingContacts: boolean = false;
 
         ownershipsCartListOrder: CartListOrder = new CartListOrder('purchaseDate', true, true);
-        activitiesCartListOrder: CartListOrder = new CartListOrder('createdDate');
+        activitiesCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
 
         property: Business.Property;
 
@@ -86,18 +86,20 @@ module Antares.Property.View {
         }
 
         showActivityAdd = () => {
+            this.components.activityAdd().clearActivity();
+            
             var vendor: Business.Ownership = _.find(this.property.ownerships, (ownership: Business.Ownership) => {
                 return ownership.isVendor();
-            });
+            });            
 
             if (vendor) {
                 this.components.activityAdd().setVendors(vendor.contacts);
-            }
-
+            }           
+            
             this.showPanel(this.components.panels.activityAdd);
         }
 
-        showActivityPreview = (activity: Common.Models.Dto.Activity) => {
+        showActivityPreview = (activity: Common.Models.Business.Activity) => {
             this.components.activityPreview().setActivity(activity);
             this.showPanel(this.components.panels.activityPreview);
         }

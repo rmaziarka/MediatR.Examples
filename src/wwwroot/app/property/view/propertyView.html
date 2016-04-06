@@ -16,7 +16,7 @@
                             <card-list-no-items ng-show="vm.property.ownerships.length === 0">
                                 <p class="help-block" translate="PROPERTY.LIST.NO_ITEMS"></p>
                             </card-list-no-items>
-                            <card-list-item ng-repeat="ownership in vm.property.ownerships track by ownership.id | orderBy: vm.ownershipsCartListOrder.name : vm.ownershipsCartListOrder.descending : vm.ownershipsCartListOrder.nullOnEnd">
+                            <card-list-item ng-repeat="ownership in vm.property.ownerships | orderBy: vm.ownershipsCartListOrder.name : vm.ownershipsCartListOrder.descending : vm.ownershipsCartListOrder.nullOnEnd track by ownership.id">
                                 <card card-template-url="'app/property/view/propertyOwnershipCard.html'" item="ownership" show-item-details="vm.showOwnershipView">
                                 </card>
                             </card-list-item>
@@ -38,8 +38,8 @@
                                 <p class="help-block" translate="ACTIVITY.LIST.NO_ITEMS"></p>
                             </card-list-no-items>
 
-                            <card-list-item ng-repeat="activity in vm.property.activities track by activity.id | orderBy: vm.activitiesCartListOrder.name">
-                                <card card-template-url="'app/activity/templates/activityCard.html'" item="activity" show-item-details="vm.showActivityPreview">
+                            <card-list-item ng-repeat="activity in vm.property.activities | orderBy: vm.activitiesCartListOrder.name : vm.activitiesCartListOrder.descending track by activity.id ">
+                                <card id="activity-card-{{activity.id}}" card-template-url="'app/activity/templates/activityCard.html'" item="activity" show-item-details="vm.showActivityPreview">
                                 </card>
                             </card-list-item>
                         </card-list>
@@ -88,8 +88,12 @@
         <activity-add component-id="vm.componentIds.activityAddId" activities="vm.property.activities"></activity-add>
     </side-panel-content>
     <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelAddActivity()"> <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
-        <button class="btn btn-primary" type="button" ng-click="vm.saveActivity()" ng-disabled=""><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelAddActivity()">
+            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+        </button>
+        <button class="btn btn-primary" type="button" ng-click="vm.saveActivity()" ng-disabled="" id="activity-add-button">
+            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+        </button>
     </side-panel-footer>
 </side-panel>
 

@@ -15,10 +15,9 @@
         //locators for property details area
         //
         //locators for property ownership area
-        private readonly ElementLocator addOwernship = new ElementLocator(Locator.CssSelector, "card-list[items *= 'ownerships'] button");
-        private readonly ElementLocator ownershipContacts = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'property.ownerships']:nth-of-type({0}) span[ng-repeat *= 'contact']");
-        private readonly ElementLocator ownershipDetails = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'property.ownerships']:nth-of-type({0}) small");
-        private readonly ElementLocator viewOwnershipDetails = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'property.ownerships']:nth-of-type({0}) a[ng-click *= 'showOwnershipView']");
+        private readonly ElementLocator addOwernship = new ElementLocator(Locator.CssSelector, "card-list[show-item-add *= 'showContactList'] button");
+        private readonly ElementLocator ownershipContacts = new ElementLocator(Locator.XPath, "//card-list-item[{0}]//span[contains(@ng-repeat, 'contacts')]");
+        private readonly ElementLocator ownershipDetails = new ElementLocator(Locator.XPath, "//card-list-item[1]//small/span/..");
         //locators for property activities area
         private readonly ElementLocator addActivityButton = new ElementLocator(Locator.Id, string.Empty);
         private readonly ElementLocator activityDate = new ElementLocator(Locator.Id, string.Empty);
@@ -82,20 +81,14 @@
             return this;
         }
 
-        public List<string> GetOwnershipContacts(int position)
+        public string GetOwnershipContact(int position)
         {
-            List<string> contacts = this.Driver.GetElements(this.ownershipContacts.Format(position)).Select(c => c.Text.Replace(",", "")).ToList();
-            return contacts;
+            return this.Driver.GetElement(this.ownershipContacts.Format(position)).Text;
         }
 
         public string GetOwnershipDetails(int position)
         {
             return this.Driver.GetElement(this.ownershipDetails.Format(position)).Text;
-        }
-
-        public void OpenOwnershipDetails(int position)
-        {
-            this.Driver.GetElement(this.viewOwnershipDetails.Format(position)).Click();
         }
 
         public ViewPropertyPage ClickDetailsLink()

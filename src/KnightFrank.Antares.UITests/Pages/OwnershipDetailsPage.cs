@@ -64,7 +64,7 @@
             return this;
         }
 
-        public OwnershipDetailsPage SetBuyPrice(string price)
+        public OwnershipDetailsPage SetPurchasePrice(string price)
         {
             this.Driver.SendKeys(this.purchasePrice, price);
             return this;

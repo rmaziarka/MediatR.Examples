@@ -2,7 +2,6 @@
 {
     using System;
 
-    using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.UITests.Pages;
 
     using TechTalk.SpecFlow;
@@ -27,14 +26,17 @@
         public void FillInOwnershipDetails(Table table)
         {
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-            var details = table.CreateInstance<Ownership>();
-     
+            var details = table.CreateInstance<OwnershipDetails>();
+
             if (Convert.ToBoolean(details.Current))
             {
                 page.Ownership.SetCurrentOwnership()
-                    .SelectOwnershipType(details.Type)
-                    .SetBuyPrice(details.BuyPrice);
-                if (!details.PurchaseDate.Equals(string.Empty))
+                    .SelectOwnershipType(details.Type);
+                if (!string.IsNullOrEmpty(details.PurchasePrice))
+                {
+                    page.Ownership.SetPurchasePrice(details.PurchasePrice);
+                }
+                if (!string.IsNullOrEmpty(details.PurchaseDate))
                 {
                     page.Ownership.SetPurchaseDate(details.PurchaseDate);
                 }
@@ -42,14 +44,20 @@
             else
             {
                 page.Ownership.SetOwnership()
-                    .SelectOwnershipType(details.Type)
-                    .SetBuyPrice(details.BuyPrice)
-                    .SetSellPrice(details.SellPrice);
-                if (!details.PurchaseDate.Equals(string.Empty))
+                    .SelectOwnershipType(details.Type);
+                if (!string.IsNullOrEmpty(details.PurchasePrice))
+                {
+                    page.Ownership.SetPurchasePrice(details.PurchasePrice);
+                }
+                if (!string.IsNullOrEmpty(details.SellPrice))
+                {
+                    page.Ownership.SetSellPrice(details.SellPrice);
+                }
+                if (!string.IsNullOrEmpty(details.PurchaseDate))
                 {
                     page.Ownership.SetPurchaseDate(details.PurchaseDate);
                 }
-                if (!details.SellDate.Equals(string.Empty))
+                if (!string.IsNullOrEmpty(details.SellDate))
                 {
                     page.Ownership.SetSellDate(details.SellDate);
                 }
@@ -58,9 +66,13 @@
         }
     }
 
-    internal class Ownership
+    internal class OwnershipDetails
     {
-        public Contact Contact { get; set; } 
+        public int Position { get; set; }
+
+        public string ContactName { get; set; }
+
+        public string ContactSurname { get; set; }
 
         public string Type { get; set; }
 
@@ -70,7 +82,7 @@
 
         public string SellDate { get; set; }
 
-        public string BuyPrice { get; set; }
+        public string PurchasePrice { get; set; }
 
         public string SellPrice { get; set; }
     }

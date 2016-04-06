@@ -20,8 +20,9 @@
     [Binding]
     public class ActivitiesSteps
     {
-        private const string ApiUrl = "/api/Activities";
+        private const string ApiUrl = "/api/activities";
         private readonly BaseTestClassFixture fixture;
+
         private readonly ScenarioContext scenarioContext;
 
         public ActivitiesSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
@@ -54,6 +55,7 @@
             this.scenarioContext.Set(activity, "Added Activity");
         }
 
+        [Given(@"User creates activity for given (.*) property id")]
         [When(@"User creates activity for given (.*) property id")]
         public void WhenUserCreatesActivityWithActivityIdActivityStatusIdForPropertyId(string id)
         {
@@ -61,15 +63,34 @@
 
             Guid activityStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["PreAppraisal"];
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
-            List<CreateActivityContact> vendors = this.fixture.DataContext.Ownerships
-                .Where(x => x.PropertyId.Equals(propertyId) && x.SellDate == null)
-                .SelectMany(x => x.Contacts)
-                .Select(contact => new CreateActivityContact { Id = contact.Id }).ToList();
+            List<CreateActivityContact> vendors =
+                this.fixture.DataContext.Ownerships.Where(x => x.PropertyId.Equals(propertyId) && x.SellDate == null)
+                    .SelectMany(x => x.Contacts)
+                    .Select(contact => new CreateActivityContact { Id = contact.Id })
+                    .ToList();
 
-            var activityCommand = new CreateActivityCommand { PropertyId = propertyId, ActivityStatusId = activityStatusId, Vendors = vendors };
+            var activityCommand = new CreateActivityCommand
+            {
+                PropertyId = propertyId,
+                ActivityStatusId = activityStatusId,
+                Contacts = vendors
+            };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, activityCommand);
             this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        [When(@"User retrieves activity details for given (.*)")]
+        public void WhenUserRetrievesActivityDetailsForGiven(string activityId)
+        {
+            this.GetActivityResponse(activityId);
+        }
+
+        [When(@"User retrieves activity")]
+        public void WhenUserRetrievesActivity()
+        {
+            var createdActivity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
+            this.GetActivityResponse(createdActivity.Id.ToString());
         }
 
         [Then(@"Activities list should be the same as in DB")]
@@ -79,12 +100,12 @@
 
             var activitiesFromDatabase = this.scenarioContext.Get<Activity>("Added Activity");
 
-            AssertionOptions.AssertEquivalencyUsing(options =>
-                options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>());
+            AssertionOptions.AssertEquivalencyUsing(
+                options => options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>());
 
-            propertyFromResponse.Activities.ToList()[0].ShouldBeEquivalentTo(activitiesFromDatabase, options => options
-                .Excluding(x => x.Property)
-                .Excluding(x => x.ActivityStatus));  
+            propertyFromResponse.Activities.ToList()[0].ShouldBeEquivalentTo(
+                activitiesFromDatabase,
+                options => options.Excluding(x => x.Property).Excluding(x => x.ActivityStatus));
         }
 
         [Then(@"The created Activity is saved in data base")]
@@ -93,11 +114,30 @@
             var activity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
             Activity actualActivity = this.fixture.DataContext.Activity.Single(x => x.Id.Equals(activity.Id));
 
-            actualActivity.ShouldBeEquivalentTo(activity, options => options
-                .Excluding(x => x.Property)
-                .Excluding(x => x.ActivityStatus));
+            actualActivity.ShouldBeEquivalentTo(
+                activity,
+                options => options.Excluding(x => x.Property).Excluding(x => x.ActivityStatus));
 
             actualActivity.ActivityStatus.Code.ShouldBeEquivalentTo("PreAppraisal");
+        }
+
+        [Then(@"The received Activities should be the same as in DB")]
+        public void ThenTheReceivedActivitiesShouldBeTheSameAsInDataBase()
+        {
+            var expectedActivity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
+            Activity actualActivity = this.fixture.DataContext.Activity.Single(x => x.Id.Equals(expectedActivity.Id));
+
+            actualActivity.ShouldBeEquivalentTo(
+                expectedActivity,
+                options => options.Excluding(a => a.ActivityStatus).Excluding(a => a.Contacts).Excluding(a => a.Property));
+        }
+
+        private void GetActivityResponse(string activityId)
+        {
+            string requestUrl = $"{ApiUrl}/{activityId}";
+
+            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+            this.scenarioContext.SetHttpResponseMessage(response);
         }
     }
 }

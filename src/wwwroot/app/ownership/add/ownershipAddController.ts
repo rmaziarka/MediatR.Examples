@@ -44,6 +44,8 @@ module Antares.Property {
                     ownership.sellDate = Core.DateTimeUtils.convertDateToUtc(ownership.sellDate);
 
                     this.ownerships.push(ownership);
+                    var form = this.$scope["addOwnershipForm"];
+                    form.$setPristine();
                 });
         }
 

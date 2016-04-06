@@ -37,12 +37,12 @@ namespace KnightFrank.Antares.Dal.Seed
                     ["Freeholder"] =
                             new Dictionary<string, string>
                             {
-                                [LocaleIsoCode.en.ToString()] = "Freeholder"
+                                [LocaleIsoCode.en.ToString()] = "Freehold"
                             },
                     ["Leaseholder"] =
                             new Dictionary<string, string>
                             {
-                                [LocaleIsoCode.en.ToString()] = "Leaseholder"
+                                [LocaleIsoCode.en.ToString()] = "Leasehold"
                             }
                 });
 
