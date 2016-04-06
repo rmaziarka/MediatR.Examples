@@ -5,6 +5,7 @@ module Antares.Common.Component {
         templateUrl: 'app/common/components/list/list.html',
         transclude: {
             'header': '?listHeader',
+            'actions': '?listActions',
             'noItems': '?listNoItems'
         }
     });
