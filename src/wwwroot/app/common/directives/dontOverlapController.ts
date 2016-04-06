@@ -25,7 +25,12 @@ module Antares.Common.Directive {
                 var rangeMax = this.rangeList[i][toField] ? new Date(this.rangeList[i][toField]) : this.highestDate;
                 var min = this.getMin(value);
                 var max = this.getMax(value);
-                var overlaps = (min || rangeMin) <= rangeMax && rangeMin <= (max || rangeMax);
+                var overlaps = ((min || rangeMin) < rangeMax && rangeMin < (max || rangeMax))
+                    || (rangeMin.getTime() === rangeMax.getTime()
+                        && min
+                        && max
+                        && min.getTime() === max.getTime()
+                        && min.getTime() === rangeMin.getTime());
                 if (overlaps) return true;
             }
             return false;
