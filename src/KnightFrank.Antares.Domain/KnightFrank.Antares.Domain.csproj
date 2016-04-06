@@ -103,6 +103,8 @@
     <Compile Include="Common\Exceptions\ResourceNotFoundException.cs" />
     <Compile Include="Common\Specifications\IsLocaled.cs" />
     <Compile Include="Common\ValidatorCommandHandler.cs" />
+    <Compile Include="Company\Command\CreateCompanyCommand.cs" />
+    <Compile Include="Company\Command\CreateCompanyValidator.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandProfile.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidator.cs" />
     <Compile Include="Contact\Commands\UpdateContactCommand.cs" />
