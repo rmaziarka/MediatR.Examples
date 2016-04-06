@@ -1,5 +1,9 @@
 // Panel Styles
 
+.panel-body {
+  word-break: break-all;
+}
+
 .panel-item {
   margin-bottom: 5px;
   overflow: hidden;

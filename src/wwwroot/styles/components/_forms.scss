@@ -6,9 +6,9 @@ label,
 }
 
 .required {
-  label:after {
+  label::after {
     color: $color-red;
     content: '*';
     margin-left: 3px;
-  };
+  }
 }

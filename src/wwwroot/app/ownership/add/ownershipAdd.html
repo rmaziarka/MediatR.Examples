@@ -6,7 +6,7 @@
 </div>
 
 <form ng-submit="addOwnershipForm.$valid" name="addOwnershipForm" id="addOwnershipForm" method="post" novalidate>
-    <div class="form-group" ng-class="{'has-error': (addOwnershipForm.$submitted || addOwnershipForm.type.$dirty) && addOwnershipForm.type.$invalid}">
+    <div class="form-group required" ng-class="{'has-error': (addOwnershipForm.$submitted || addOwnershipForm.type.$dirty) && addOwnershipForm.type.$invalid}">
         <div class="row">
             <div class="col-md-9">
                 <label for="type" translate="OWNERSHIP.ADD.OWNERSHIPTYPE"></label>
