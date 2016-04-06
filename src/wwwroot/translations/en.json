@@ -69,7 +69,7 @@
   },
   "PROPERTY": {
     "ADD": {
-      "ADD_PROPERTY": "Add property",
+      "ADD_PROPERTY": "Create property",
       "BASIC_INFORMATION": "Basic information",
       "TYPE": "Type",
       "ADDRESS": "Address"
@@ -111,7 +111,7 @@
   },
   "REQUIREMENT": {
     "ADD": {
-      "ADD_REQUIREMENT": "Add requirement",
+      "ADD_REQUIREMENT": "Create requirement",
       "APPLICANT": "Applicant",
       "ADD": "Add",
       "FINDCONTACT": "Find contact",
