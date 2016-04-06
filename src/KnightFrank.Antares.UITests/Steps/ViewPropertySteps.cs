@@ -79,8 +79,10 @@
         public void CheckActivityDetails(Table table)
         {
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-            Assert.Equal(table.Rows[0]["Vendor"], page.GetActivityVendor());
-            Assert.Equal(table.Rows[0]["Status"], page.GetActivityStatus());
+            var details = table.CreateInstance<ActivityDetails>();
+
+            Assert.Equal(details.Vendor, page.GetActivityVendor());
+            Assert.Equal(details.Status, page.GetActivityStatus());
         }
 
         [Then(@"Property should be updated with address details")]
@@ -101,9 +103,10 @@
         public void CheckActivityDetailsonActivityPanel(Table table)
         {
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+            var details = table.CreateInstance<ActivityDetails>();
 
-            //Assert.Equal(table.Rows[0]["Vendor"], page.Activity.GetActivityVendor());
-            Assert.Equal(table.Rows[0]["Status"], page.Activity.GetActivityStatus());
+            Assert.Equal(details.Vendor, page.Activity.GetActivityVendor());
+            Assert.Equal(details.Status, page.Activity.GetActivityStatus());
         }
 
         [Then(@"Ownership details should contain following data on view property page")]
@@ -140,14 +143,10 @@
             }
         }
 
-        [Then(@"Activity preview panel is displayed with details the same like details on activity tile")]
-        public void CheckActivityPreview()
-        {
-            var preview = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-            Assert.Equal(preview.GetActivityDate(), preview.PreviewDetails.GetCreationDate());
-            Assert.Equal(preview.GetActivityStatus(), preview.PreviewDetails.GetStatus());
-
-            //Assert.Equal(preview.GetActivityVendor(),preview.PreviewDetails.GetVendor());
-        }
+//        [Then(@"Then Activity preview panel is displayed with link to View Residential Sale Activity page")]
+//        public void CheckActivityPreview()
+//        {
+//            var preview = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+//        }
     }
 }

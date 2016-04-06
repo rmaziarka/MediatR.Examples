@@ -1,8 +1,5 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
@@ -17,14 +14,13 @@
         //locators for property ownership area
         private readonly ElementLocator addOwernship = new ElementLocator(Locator.CssSelector, "card-list[show-item-add *= 'showContactList'] button");
         private readonly ElementLocator ownershipContacts = new ElementLocator(Locator.XPath, "//card-list-item[{0}]//span[contains(@ng-repeat, 'contacts')]");
-        private readonly ElementLocator ownershipDetails = new ElementLocator(Locator.XPath, "//card-list-item[1]//small/span/..");
+        private readonly ElementLocator ownershipDetails = new ElementLocator(Locator.XPath, "//card-list-item[{0}]//small/span/..");
         //locators for property activities area
-        private readonly ElementLocator addActivityButton = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator activityDate = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator activityVendor = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator activityStatus = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator detailsLink = new ElementLocator(Locator.Id, string.Empty);      
-        
+        private readonly ElementLocator addActivityButton = new ElementLocator(Locator.CssSelector, "card-list[show-item-add *= 'showActivityAdd'] button");
+        private readonly ElementLocator activityDate = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] div.panel-item");
+        private readonly ElementLocator activityVendor = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] span");
+        private readonly ElementLocator activityStatus = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] small");
+        private readonly ElementLocator detailsLink = new ElementLocator(Locator.CssSelector, "#card-list-activities #detailsLink");
 
         public CreateActivityPage Activity => new CreateActivityPage(this.DriverContext);
 
@@ -66,7 +62,7 @@
 
         public string GetActivityDate()
         {
-            return this.Driver.GetElement(this.activityDate).Text;
+            return this.Driver.GetElement(this.activityDate).Text.Split(' ')[0].Trim();
         }
 
         public CreatePropertyPage EditProperty()

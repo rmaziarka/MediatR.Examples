@@ -23,6 +23,7 @@ Scenario: Create and update property with UK address
 @Property
 @Ownership
 @Activity
+@ignore
 Scenario: Property ownership and activity
 	Given User navigates to create contact page
 		And User creates contacts on create contact page
@@ -44,16 +45,16 @@ Scenario: Property ownership and activity
 			| Type     | Current | PurchasePrice | PurchaseDate |
 			| Freehold | true    | 1000000       | 15-01-2014   |
 	Then Ownership details should contain following data on view property page
-		| Position | ContactName | ContactSurname | Type     | PurchaseDate |
-		| 1        | Arthur      | Pendragon      | Freehold | 15-01-2014   |
-	#When User clicks add activites button on property details page		
-	#Then Activity details are set on activity panel
-	#	| Vendor | Status        |
-	#	|        | Pre-appraisal |
-	#When User clicks save button on activity panel
-	#Then Activity creation date is set to current date on property details page
-	#	And Activity details are set on property details page
-	#	| Vendor | Status        |
-	#	|        | Pre-appraisal |
-	#When User clicks activity's details link on property details page
-	#Then Activity preview panel is displayed with details the same like details on activity tile
+		| Position | ContactName      | ContactSurname | Type     | PurchaseDate |
+		| 1        | Arthur           | Pendragon      | Freehold | 15-01-2014   |
+	When User clicks add activites button on property details page		
+	Then Activity details are set on activity panel
+	    | Vendor           | Status         |
+	    | Arthur Pendragon | Pre-appraisal  |
+	When User clicks save button on activity panel
+	Then Activity creation date is set to current date on property details page
+	And Activity details are set on property details page
+	    | Vendor           | Status        |
+	    | Arthur Pendragon | Pre-appraisal |
+	When User clicks activity's details link on property details page
+#   Then Activity preview panel is displayed with link to View Residential Sale Activity page
