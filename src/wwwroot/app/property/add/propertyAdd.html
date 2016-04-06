@@ -6,17 +6,21 @@
         <div class="col-md-4">
             <fieldset>
                 <legend translate="PROPERTY.ADD.BASIC_INFORMATION"></legend>
-                <div class="form-group required">
-                    <label for="type" translate="PROPERTY.ADD.TYPE"></label>
+                <div class="form-group required" ng-class="{'has-error': (addPropertyForm.$submitted || addPropertyForm.type.$dirty) && addPropertyForm.type.$invalid}">
                     <div class="row">
                         <div class="col-md-8">
-                            <select id="type" ng-model="vm.property.propertyTypeId" class="form-control">
-                                <option ng-repeat-start="propertyType in vm.propertyTypes" label="{{propertyType.name}}" value="{{propertyType.id}}"></option>
+                            <label for="type" translate="PROPERTY.ADD.TYPE"></label>
+                            <select id="type" name="type" ng-model="vm.property.propertyTypeId" class="form-control" required>
+                                <option value=""></option>
+                                <option ng-repeat-start="propertyType in vm.propertyTypes" label="{{propertyType.name}}" value="{{propertyType.id}}" class="hierarchy1">{{propertyType.name}}</option>
 
-                                <option ng-repeat="propertySubtype in propertyType.children" label="{{propertySubtype.name}}" value="{{propertyType.id}}"></option>
-
-                                <option ng-show="false" ng-repeat-end></option>
+                                <option ng-repeat="propertySubtype in propertyType.children" label="{{propertySubtype.name}}" value="{{propertyType.id}}" class="hierarchy2"{{propertySubtype.name}}></option>
+                                <option hidden style="display: none;" ng-repeat-end></option>
                             </select>
+                            <span ng-repeat-end></span>
+                            <div ng-messages="addPropertyForm.type.$error" ng-show="addPropertyForm.$submitted || addPropertyForm.type.$dirty">
+                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
