@@ -9,7 +9,6 @@
 
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
-    using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.Activity.Commands;
@@ -17,19 +16,11 @@
     using Newtonsoft.Json;
 
     using TechTalk.SpecFlow;
-    using TechTalk.SpecFlow.Assist;
 
     [Binding]
     public class ActivitiesSteps
     {
         private const string ApiUrl = "/api/activities";
-
-        private const string CountryIsoCodeGb = "GB";
-
-        private const string PropertyTypeCodeHouse = "House";
-
-        private const string EnumTypeItemCodePreAppraisal = "PreAppraisal";
-
         private readonly BaseTestClassFixture fixture;
 
         private readonly ScenarioContext scenarioContext;
@@ -51,13 +42,13 @@
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
 
             var activity = new Activity
-                               {
-                                   PropertyId = propertyId,
-                                   ActivityStatusId = activityStatusId,
-                                   CreatedDate = DateTime.Now,
-                                   LastModifiedDate = DateTime.Now,
-                                   Contacts = new List<Contact>()
-                               };
+            {
+                PropertyId = propertyId,
+                ActivityStatusId = activityStatusId,
+                CreatedDate = DateTime.Now,
+                LastModifiedDate = DateTime.Now,
+                Contacts = new List<Contact>()
+            };
             this.fixture.DataContext.Activity.Add(activity);
             this.fixture.DataContext.SaveChanges();
 
@@ -79,14 +70,27 @@
                     .ToList();
 
             var activityCommand = new CreateActivityCommand
-                                      {
-                                          PropertyId = propertyId,
-                                          ActivityStatusId = activityStatusId,
-                                          Contacts = vendors
-                                      };
+            {
+                PropertyId = propertyId,
+                ActivityStatusId = activityStatusId,
+                Contacts = vendors
+            };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, activityCommand);
             this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        [When(@"User retrieves activity details for given (.*)")]
+        public void WhenUserRetrievesActivityDetailsForGiven(string activityId)
+        {
+            this.GetActivityResponse(activityId);
+        }
+
+        [When(@"User retrieves activity")]
+        public void WhenUserRetrievesActivity()
+        {
+            var createdActivity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
+            this.GetActivityResponse(createdActivity.Id.ToString());
         }
 
         [Then(@"Activities list should be the same as in DB")]
@@ -117,19 +121,6 @@
             actualActivity.ActivityStatus.Code.ShouldBeEquivalentTo("PreAppraisal");
         }
 
-        [When(@"User retrieves activity details for given (.*)")]
-        public void WhenUserRetrievesActivityDetailsForGiven(string activityId)
-        {
-            this.GetActivityResponse(activityId);
-        }
-        
-        [When(@"User retrieves activity")]
-        public void WhenUserRetrievesActivity()
-        {
-            var createdActivity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
-            this.GetActivityResponse(createdActivity.Id.ToString());
-        }
-
         [Then(@"The received Activities should be the same as in DB")]
         public void ThenTheReceivedActivitiesShouldBeTheSameAsInDataBase()
         {
@@ -149,5 +140,4 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
     }
-
 }
