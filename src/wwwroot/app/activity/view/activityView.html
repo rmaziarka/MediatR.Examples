@@ -14,7 +14,7 @@
                 <form>
                     <fieldset>
                         <legend translate="ACTIVITY.VIEW.PROPERTY"></legend>
-                        <card card-template-url="'app/property/templates/propertyCard.html'" item="avvm.activity.property" show-item-details="avvm.showPropertyPreview">
+                        <card id="card-property" card-template-url="'app/property/templates/propertyCard.html'" item="avvm.activity.property" show-item-details="avvm.showPropertyPreview">
                         </card>
                     </fieldset>
                 </form>
@@ -24,15 +24,15 @@
             <div class="col-md-4">
                 <form>
                     <fieldset>
-                        <list>
+                        <list id="list-vendors">
                             <list-header>
                                 <legend translate="ACTIVITY.VIEW.VENDORS"></legend>
                             </list-header>
                             <list-no-items ng-show="avvm.activity.contacts.length === 0">
                                 <p class="help-block" translate="ACTIVITY.VIEW.NO_VENDORS"></p>
                             </list-no-items>
-                            <list-item ng-repeat="contacts in avvm.activity.contacts">
-                                {{contacts.getName()}}
+                            <list-item id="list-item-vendor-{{contact.id}}" ng-repeat="contact in avvm.activity.contacts">
+                                {{contact.getName()}}
                             </list-item>
                         </list>
                     </fieldset>

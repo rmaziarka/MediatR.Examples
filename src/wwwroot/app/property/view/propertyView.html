@@ -39,7 +39,7 @@
                             </card-list-no-items>
 
                             <card-list-item ng-repeat="activity in vm.property.activities | orderBy: vm.activitiesCartListOrder.name : vm.activitiesCartListOrder.descending track by activity.id ">
-                                <card card-template-url="'app/activity/templates/activityCard.html'" item="activity" show-item-details="vm.showActivityPreview">
+                                <card id="activity-card-{{activity.id}}" card-template-url="'app/activity/templates/activityCard.html'" item="activity" show-item-details="vm.showActivityPreview">
                                 </card>
                             </card-list-item>
                         </card-list>

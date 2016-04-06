@@ -30,7 +30,7 @@ module Antares {
                 scope.$apply();
 
                 expect(scope.form.model.$valid).toBeTruthy();
-            });
+            });            
 
             describe('when range list has well formed ranges', () => {
                 beforeEach(() => {
@@ -57,6 +57,12 @@ module Antares {
                     });
                     it('when model value is between defined ranges', () => {
                         scope.form.model.$setViewValue(new Date(2001, 10, 1));
+                        scope.$apply();
+
+                        expect(scope.form.model.$valid).toBeTruthy();
+                    });
+                    it('when model value is between defined ranges without gap making interval continous', () => {
+                        scope.form.model.$setViewValue(new Date(2001, 1 , 1));
                         scope.$apply();
 
                         expect(scope.form.model.$valid).toBeTruthy();
@@ -112,6 +118,26 @@ module Antares {
                 element = compile('<form name="form"><input type="text" dont-overlap="{{rangeList}}" dont-overlap-max="{{maxValue}}" ng-model="minValue" name="minValue" /></form>')(scope);
             }));
 
+            describe('when range list has 1-day ranges', () =>{
+                beforeEach(() =>{
+                    scope.rangeList = [
+                        { from : new Date(2000, 1, 1), to : new Date(2000, 1, 1) },
+                        { from : new Date(2002, 1, 1), to : new Date(2002, 1, 1) }
+                    ];
+                    scope.$apply();
+                });
+
+                describe('there are validation errors', () =>{
+                    it('when both values form a range inside defined ranges', () =>{
+                        scope.maxValue = new Date(2000, 1, 1);
+                        scope.form.minValue.$setViewValue(new Date(2000, 1, 1));
+                        scope.$apply();
+
+                        expect(scope.form.minValue.$valid).toBeFalsy();
+                    });
+                });
+            });
+
             describe('when range list has well formed ranges', () => {
                 beforeEach(() => {
                     scope.rangeList = [
@@ -145,6 +171,14 @@ module Antares {
 
                         expect(scope.form.minValue.$valid).toBeTruthy();
                     });
+
+                    it('when min nad max form a range between defined ranges without gap making interval continous', () => {
+                        scope.maxValue = new Date(2002, 1, 1);
+                        scope.form.minValue.$setViewValue(new Date(2001, 1, 1));
+                        scope.$apply();
+
+                        expect(scope.form.minValue.$valid).toBeTruthy();
+                    });
                 });
 
                 describe('there are validation errors', () => {
@@ -162,7 +196,7 @@ module Antares {
                         scope.$apply();
 
                         expect(scope.form.minValue.$valid).toBeFalsy();
-                    });
+                    });                    
                 });
             });
 
@@ -244,6 +278,26 @@ module Antares {
                 element = compile('<form name="form"><input type="text" dont-overlap="{{rangeList}}" dont-overlap-min="{{minValue}}" ng-model="maxValue" name="maxValue" /></form>')(scope);
             }));
 
+            describe('when range list has 1-day ranges', () => {
+                beforeEach(() => {
+                    scope.rangeList = [
+                        { from: new Date(2000, 1, 1), to: new Date(2000, 1, 1) },
+                        { from: new Date(2002, 1, 1), to: new Date(2002, 1, 1) }
+                    ];
+                    scope.$apply();
+                });
+
+                describe('there are validation errors', () => {
+                    it('when both values form a range inside defined ranges', () => {
+                        scope.minValue = new Date(2000, 1, 1);
+                        scope.form.maxValue.$setViewValue(new Date(2000, 1, 1));
+                        scope.$apply();
+
+                        expect(scope.form.maxValue.$valid).toBeFalsy();
+                    });
+                });
+            });
+
             describe('when range list has well formed ranges', () => {
                 beforeEach(() => {
                     scope.rangeList = [
@@ -273,6 +327,14 @@ module Antares {
                     it('when both values form a range between defined ranges and not overlapping them', () => {
                         scope.minValue = new Date(2001, 2, 1);
                         scope.form.maxValue.$setViewValue(new Date(2001, 10, 1));
+                        scope.$apply();
+
+                        expect(scope.form.maxValue.$valid).toBeTruthy();
+                    });
+
+                    it('when min nad max form a range between defined ranges without gap making interval continous', () => {
+                        scope.minValue = new Date(2001, 1, 1);
+                        scope.form.maxValue.$setViewValue(new Date(2002, 1, 1));
                         scope.$apply();
 
                         expect(scope.form.maxValue.$valid).toBeTruthy();
