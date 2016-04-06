@@ -62,6 +62,9 @@ module Antares.Property.View {
                 this.componentRegistry.deregister(this.componentIds.ownershipViewId);
                 this.componentRegistry.deregister(this.componentIds.ownershipViewSidePanelId);
                 this.componentRegistry.deregister(this.componentIds.activityAddId);
+                this.componentRegistry.deregister(this.componentIds.activityAddSidePanelId);
+                this.componentRegistry.deregister(this.componentIds.activityPreviewId);
+                this.componentRegistry.deregister(this.componentIds.activityPreviewSidePanelId);
             });
         }
 
@@ -87,15 +90,15 @@ module Antares.Property.View {
 
         showActivityAdd = () => {
             this.components.activityAdd().clearActivity();
-            
+
             var vendor: Business.Ownership = _.find(this.property.ownerships, (ownership: Business.Ownership) => {
                 return ownership.isVendor();
-            });            
+            });
 
             if (vendor) {
                 this.components.activityAdd().setVendors(vendor.contacts);
-            }           
-            
+            }
+
             this.showPanel(this.components.panels.activityAdd);
         }
 

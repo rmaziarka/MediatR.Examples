@@ -86,6 +86,13 @@
     "LIST": {
       "OWNERSHIPS": "Ownerships",
       "NO_ITEMS": "Ownership information not configured yet"
+    },
+    "PREVIEW": {
+      "PROPERTY_PREVIEW": "Property preview",
+      "BASIC_INFORMATION": "Basic information",
+      "TYPE": "Type",
+      "ADDRESS": "Address",
+      "PROPERTY_VIEW_LINK":  "View property"
     }
   },
   "ACTIVITY": {
@@ -102,7 +109,8 @@
       "ACTIVITYPREVIEW": "Activity preview",
       "STATUS": "Status",
       "CREATION_DATE": "Creation date",
-      "VENDORS": "Vendor(s)"
+      "VENDORS": "Vendor(s)",
+      "ACTIVITY_VIEW_LINK": "View activity"
     },
     "VIEW": {
       "VIEW_ACTIVITY": "View activity",
