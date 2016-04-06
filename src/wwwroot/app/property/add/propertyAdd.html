@@ -133,8 +133,8 @@
             </fieldset>
         </div>
         <div class="col-md-4">
-            <a ng-click="vm.changeDivision('Commercial')">Commercial property</a>
-            <a ng-click="vm.changeDivision('Residential')">Residential property</a>
+            <a ng-click="vm.changeDivision('Commercial')" href="" ng-show="vm.divisionCode != 'Commercial'" translate="PROPERTY.COMMERCIAL_PROPERTY"></a>
+            <a ng-click="vm.changeDivision('Residential')" href="" ng-show="vm.divisionCode != 'Residential'" translate="PROPERTY.RESIDENTIAL_PROPERTY"></a>
         </div>
         <div class="col-md-12">
             <div class="form-group">

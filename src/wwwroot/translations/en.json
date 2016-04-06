@@ -68,6 +68,8 @@
     "DATE_CAN_NOT_BE_FROM_FUTURE":"Can not specify date from future"
   },
   "PROPERTY": {
+    "COMMERCIAL_PROPERTY": "Commercial property",
+    "RESIDENTIAL_PROPERTY": "Residential property",
     "ADD": {
       "ADD_PROPERTY": "Add property",
       "BASIC_INFORMATION": "Basic information",
