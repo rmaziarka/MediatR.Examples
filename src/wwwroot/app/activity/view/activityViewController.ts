@@ -2,7 +2,6 @@
 
 module Antares.Activity.View {
     import Business = Antares.Common.Models.Business;
-    import Dto = Antares.Common.Models.Dto;
 
     export class ActivityViewController {
         componentIds: any = {
@@ -32,7 +31,7 @@ module Antares.Activity.View {
             });
         }
 
-        showPropertyPreview = (property: Dto.Property) => {
+        showPropertyPreview = (property: Business.Property) => {
             this.components.propertyPreview().setProperty(property);
             this.showPanel(this.components.panels.propertyPreview);
         }

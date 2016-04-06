@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Activity.Preview {
-    import Property = Common.Models.Dto.Property;
+    import Property = Common.Models.Business.Property;
 
     export class PropertyPreviewController {
         componentId: string;
