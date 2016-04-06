@@ -1,10 +1,13 @@
 Configuration Main
 {
 
-Param ( [string] $nodeName )
+Param ( [string] $nodeName, [string] $environmentPrefix )
 
 Import-DscResource -ModuleName PSDesiredStateConfiguration
 Import-DscResource -ModuleName xWebAdministration
+
+$webApiHostName = "$environmentPrefix.api.antares.knightfrank.com"
+$webAppHostName = "$environmentPrefix.app.antares.knightfrank.com"
 
 Node $nodeName
   {
@@ -104,60 +107,62 @@ Node $nodeName
         DependsOn = "[Package]InstallWebDeploy"
     }
 	
-	File WebAppDir{
+	File WebAppDir
+	{
 		Type = "Directory"
-		DestinationPath = "C:\inetpub\wwwroot\dev\app"
+		DestinationPath = "C:\inetpub\wwwroot\app"
 		Ensure = "Present"
 	}
-	File WebApiDir{
+	File WebApiDir
+	{
 		Type = "Directory"
-		DestinationPath = "C:\inetpub\wwwroot\dev\api"
+		DestinationPath = "C:\inetpub\wwwroot\api"
 		Ensure = "Present"
 	}
 	
 	xWebAppPool WebApiPool 
     { 
-        Name = "dev.api.antares.knightfrank.com"
+        Name = $webApiHostName
         Ensure = "Present"
         State = "Started"
 		DependsOn = @('[WindowsFeature]WebServerRole', '[File]WebApiDir')
     }  
 	xWebAppPool WebAppPool 
     { 
-        Name = "dev.app.antares.knightfrank.com"
+        Name = $webAppHostName
         Ensure = "Present"
         State = "Started"
 		DependsOn = @('[WindowsFeature]WebServerRole', '[File]WebAppDir')
     }   
 	xWebsite WebApi
 	{
-		Name = "dev.api.antares.knightfrank.com"
+		Name = $webApiHostName
 		DependsOn = "[xWebAppPool]WebApiPool"
-		ApplicationPool = "dev.api.antares.knightfrank.com"
-		PhysicalPath = "C:\inetpub\wwwroot\dev\api"
+		ApplicationPool = $webApiHostName
+		PhysicalPath = "C:\inetpub\wwwroot\api"
 		State = "Started"
 		Ensure = "Present"
 		BindingInfo = MSFT_xWebBindingInformation 
         { 
 			Protocol = "http" 
 			Port = 80  
-			HostName = "dev.api.antares.knightfrank.com"
+			HostName = $webApiHostName
         }
 		EnabledProtocols = "http"
 	}
 	xWebsite WebApp
 	{
-		Name = "dev.app.antares.knightfrank.com"
+		Name = $webAppHostName
 		DependsOn = "[xWebAppPool]WebAppPool"
-		ApplicationPool = "dev.app.antares.knightfrank.com"
-		PhysicalPath = "C:\inetpub\wwwroot\dev\app"
+		ApplicationPool = $webAppHostName
+		PhysicalPath = "C:\inetpub\wwwroot\app"
 		State = "Started"
 		Ensure = "Present"
 		BindingInfo = MSFT_xWebBindingInformation 
         { 
 			Protocol = "http" 
 			Port = 80  
-			HostName = "dev.app.antares.knightfrank.com"
+			HostName = $webAppHostName
         }
 		EnabledProtocols = "http"
 	}
