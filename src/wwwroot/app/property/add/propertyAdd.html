@@ -18,7 +18,7 @@
                                 <option value=""></option>
                                 <option ng-repeat-start="propertyType in vm.propertyTypes" label="{{propertyType.name}}" value="{{propertyType.id}}" class="hierarchy1">{{propertyType.name}}</option>
 
-                                <option ng-repeat="propertySubtype in propertyType.children" label="{{propertySubtype.name}}" value="{{propertyType.id}}" class="hierarchy2"{{propertySubtype.name}}></option>
+                                <option ng-repeat="propertySubtype in propertyType.children" label="{{propertySubtype.name}}" value="{{propertySubtype.id}}" class="hierarchy2"{{propertySubtype.name}}></option>
                                 <option hidden style="display: none;" ng-repeat-end></option>
                             </select>
                             <span ng-repeat-end></span>
