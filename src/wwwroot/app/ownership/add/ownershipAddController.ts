@@ -9,7 +9,7 @@ module Antares.Property {
         maxAllowedDate:string = (new Date()).toDateString();
         componentId: string;
         ownership: Dto.IOwnership = new Business.Ownership();
-        ownerships: Dto.IOwnership[];
+        ownerships: Business.Ownership[];
         ownershipTypes: any;
         datepickers: any = {
             purchaseOpened: false,
