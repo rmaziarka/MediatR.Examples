@@ -119,6 +119,7 @@ module Antares {
                 scope = $rootScope.$new();
                 propertyMock = {
                     id: '1',
+                    propertyTypeId: '',
                     address: Antares.Mock.AddressForm.FullAddress,
                     ownerships: [],
                     activities: []
