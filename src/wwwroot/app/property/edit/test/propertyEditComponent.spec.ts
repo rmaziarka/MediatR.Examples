@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 module Antares {
     import Dto = Antares.Common.Models.Dto;
+    import Business = Antares.Common.Models.Business;
     import PropertyEditController = Antares.Property.PropertyEditController;
 
     describe('Given edit property page is loaded', () => {
@@ -16,7 +17,7 @@ module Antares {
        describe('when proper property is loaded', () => {
             var countryMockId = countriesMock[0].country.id,
                 addressFormMock: Dto.AddressForm = new Dto.AddressForm('adrfrmId1', countryMockId, []),
-                propertyMock: Dto.Property = new Dto.Property();
+                propertyMock: Business.Property = new Business.Property();
 
             propertyMock.id = 'propMockId1';
             propertyMock.address = new Dto.Address();
@@ -77,15 +78,15 @@ module Antares {
 
                 it('then put request is is called and redirect to view page', () => {
                     var propertyId: string;
-                    spyOn(state, 'go').and.callFake((routeName: string, property: Dto.Property) => {
+                    spyOn(state, 'go').and.callFake((routeName: string, property: Business.Property) => {
                         propertyId = property.id;
                     });
 
-                    var propertyFromServerMock: Dto.Property = new Dto.Property();
+                    var propertyFromServerMock: Business.Property = new Business.Property();
                     propertyFromServerMock.id = 'propFromServerId1';
                     propertyFromServerMock.address = new Dto.Address();
 
-                    var propertyFromServerMock: Dto.Property = <Dto.Property>{};
+                    var propertyFromServerMock: Business.Property = <Business.Property>{};
                     $http.expectPUT(/\/api\/properties/, propertyMock).respond(() => {
                         return [200, propertyFromServerMock];
                     });

@@ -9,7 +9,7 @@
             <div class="col-md-4">
                 <form>
                     <fieldset>
-                        <card-list show-item-add="vm.showContactList">
+                        <card-list id="ownership-list" show-item-add="vm.showContactList">
                             <card-list-header>
                                 <legend translate="PROPERTY.LIST.OWNERSHIPS"></legend>
                             </card-list-header>
@@ -93,7 +93,7 @@
     </side-panel-footer>
 </side-panel>
 
-<side-panel component-id="vm.componentIds.ownershipViewSidePanelId">
+<side-panel component-id="vm.componentIds.ownershipViewSidePanelId" id="ownership-panel">
     <side-panel-header>
         <h3 translate="OWNERSHIP.VIEW.OWNERSHIPDETAILS"></h3>
     </side-panel-header>

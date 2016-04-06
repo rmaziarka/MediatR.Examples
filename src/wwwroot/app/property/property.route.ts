@@ -2,6 +2,7 @@
 
 module Antares.Property {
     import Dto = Common.Models.Dto;
+    import Business = Common.Models.Business;
 
     var app: ng.IModule = angular.module('app');
 
@@ -14,7 +15,7 @@ module Antares.Property {
                 params: {},
                 template: "<property-view property='property'></property-view>",
                 controller: ($scope: ng.IScope, property: Dto.IProperty) => {
-                    var propertyViewModel = new Dto.Property(property);
+                    var propertyViewModel = new Business.Property(property);
 
                     $scope['property'] = propertyViewModel;
                 },
@@ -29,7 +30,7 @@ module Antares.Property {
                 url: '/property/edit/:id',
                 params: {},
                 template: '<property-edit property="property"></property-edit>',
-                controller: ($scope: ng.IScope, property: Dto.Property) => {
+                controller: ($scope: ng.IScope, property: Business.Property) => {
                     $scope['property'] = property;
                 },
                 resolve: {

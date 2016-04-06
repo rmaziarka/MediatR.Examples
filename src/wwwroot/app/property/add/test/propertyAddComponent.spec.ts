@@ -1,10 +1,7 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
-/// <reference path="../../../common/models/dto/property.ts" />
-/// <reference path="../../../common/models/dto/address.ts" />
-/// <reference path="../../../common/models/dto/addressform.ts" />
-
 module Antares {
     import Dto = Antares.Common.Models.Dto;
+    import Business = Antares.Common.Models.Business;
     import PropertyAddController = Antares.Property.PropertyAddController;
 
     describe('Given add property page is loaded', () => {
@@ -20,7 +17,7 @@ module Antares {
 
         describe('when page is loaded', () =>{
             var countryMockId = countriesMock[0].country.id,
-                newPropertyMock: Dto.Property = new Dto.Property();
+                newPropertyMock: Business.Property = new Business.Property();
 
             newPropertyMock.id = 'propId1';
             newPropertyMock.address = new Dto.Address();
@@ -95,7 +92,7 @@ module Antares {
                        return [200, addressFormMock];
                    });
 
-                   var propertyFromServerMock: Dto.Property = new Dto.Property();
+                   var propertyFromServerMock: Business.Property = new Business.Property();
                    propertyFromServerMock.id = 'propFromServerId1';
                    propertyFromServerMock.address = new Dto.Address();
 
@@ -104,7 +101,7 @@ module Antares {
                    });
 
                    var propertyId: string;
-                   spyOn(state, 'go').and.callFake((routeName: string, property: Dto.Property) => {
+                   spyOn(state, 'go').and.callFake((routeName: string, property: Business.Property) => {
                        propertyId = property.id;
                    });
 

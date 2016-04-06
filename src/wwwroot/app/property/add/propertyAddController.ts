@@ -2,10 +2,11 @@
 
 module Antares.Property {
     import Dto = Antares.Common.Models.Dto;
+    import Business = Antares.Common.Models.Business;
 
     export class PropertyAddController {
         public entityTypeCode: string = 'Property';
-        public property: Dto.Property = new Dto.Property();
+        public property: Business.Property = new Business.Property();
 
         private propertyResource: Common.Models.Resources.IPropertyResourceClass;
         private propertyTypes: any[];

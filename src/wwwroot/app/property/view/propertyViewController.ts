@@ -2,9 +2,7 @@
 /// <reference path="../../common/models/resources.d.ts" />
 
 module Antares.Property.View {
-    import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
-    import Resources = Common.Models.Resources;
     import CartListOrder = Common.Component.CartListOrder;
 
     export class PropertyViewController {
@@ -42,7 +40,7 @@ module Antares.Property.View {
         ownershipsCartListOrder: CartListOrder = new CartListOrder('purchaseDate', true, true);
         activitiesCartListOrder: CartListOrder = new CartListOrder('createdDate');
 
-        property: Dto.Property;
+        property: Business.Property;
 
         currentPanel: any;
 
