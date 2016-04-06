@@ -127,7 +127,8 @@
     "VmIISStorageAccountContainerName": "vhds",
     "VmIISNicName": "[concat(variables('ResourceNamePrefix'), 'Vm-IIS-Nic-', variables('ResourceNameSuffix'))]",
     "VmIISName": "[concat(variables('ResourceNamePrefix'), 'Vm-IIS-', variables('ResourceNameSuffix'))]",
-    "KnightFrank-Antares-Vm-IIS-DSCConfigurationFunction": "KnightFrank-Antares-Vm-IIS-DSCConfiguration.ps1\\Main"
+    "KnightFrank-Antares-Vm-IIS-DSCConfigurationFunction": "KnightFrank-Antares-Vm-IIS-DSCConfiguration.ps1\\SetupIISVm",
+    "KnightFrank-Antares-Vm-Sql-DSCConfigurationFunction": "KnightFrank-Antares-Vm-Sql-DSCConfiguration.ps1\\SetupSQLVm"
   },
   "resources": [
     {
@@ -295,6 +296,33 @@
         }
       },
       "resources": [
+        {
+          "name": "KnightFrank-Antares-Vm-Sql-DSC",
+          "type": "extensions",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2015-06-15",
+          "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('VmSqlName'))]"
+          ],
+          "tags": {
+            "displayName": "KnightFrank-Antares-Vm-Sql-DSC"
+          },
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.15",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+              "modulesUrl": "[concat(parameters('_artifactsLocation'), '/', 'dsc.zip')]",
+              "sasToken": "[parameters('_artifactsLocationSasToken')]",
+              "configurationFunction": "[variables('KnightFrank-Antares-Vm-Sql-DSCConfigurationFunction')]",
+              "properties": {
+                "nodeName": "[variables('VmSqlName')]"
+              }
+            },
+            "protectedSettings": { }
+          }
+        }
 
       ]
     },
@@ -395,7 +423,7 @@
               "configurationFunction": "[variables('KnightFrank-Antares-Vm-IIS-DSCConfigurationFunction')]",
               "properties": {
                 "nodeName": "[variables('VmIISHostName')]",
-                "environmentPrefix":  "[parameters('EnvironmentPrefix')]"
+                "environmentPrefix": "[parameters('EnvironmentPrefix')]"
               }
             },
             "protectedSettings": {

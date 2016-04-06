@@ -1,4 +1,4 @@
-Configuration Main
+Configuration SetupIISVm
 {
 
 Param ( [string] $nodeName, [string] $environmentPrefix )

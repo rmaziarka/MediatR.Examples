@@ -13,6 +13,9 @@
     },
     "VmIISAdminPassword": {
       "value": "$Kf@admin"
-    }
+    },
+      "EnvironmentPrefix": {
+          "value": "test"
+      }
   }
 }
