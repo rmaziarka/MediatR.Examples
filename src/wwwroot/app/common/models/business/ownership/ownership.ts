@@ -9,6 +9,7 @@ module Antares.Common.Models.Business {
         buyPrice: number = null;
         sellPrice: number;
         isCurrentOwner: boolean;
+        ownershipTypeId: string;
         ownershipType: Dto.IOwnershipType;
         contacts: Dto.Contact[];
 

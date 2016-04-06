@@ -3,14 +3,14 @@
     <div class="col-xs-7">
         <div class="row">
             <div class="col-md-12" ng-repeat="contact in vm.ownership.contacts" data-type="ownership-list-contact">
-                {{contact.firstName}} {{contact.surname}}{{$last ? '' : ', '}}
+                {{contact.getName()}}{{$last ? '' : ', '}}
             </div>
         </div>
     </div>
 </div>
 <div class="row section-row">
     <div class="col-xs-5" translate="OWNERSHIP.VIEW.OWNERSHIPTYPE"></div>
-    <div class="col-xs-7">{{vm.ownership.ownershipTypeId | enumTranslate}} </div>
+    <div class="col-xs-7" id="ownership-list-ownership-type">{{vm.ownership.ownershipTypeId | enumTranslate}} </div>
 </div>
 <div class="row section-row">
     <div class="col-xs-5" translate="OWNERSHIP.VIEW.PURCHASEDATE"></div>

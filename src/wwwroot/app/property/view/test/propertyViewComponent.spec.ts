@@ -16,7 +16,7 @@ module Antares {
         var controller: PropertyViewController;
 
         describe('and property is loaded', () =>{
-            var propertyMock: IProperty = {
+            var propertyMock: Dto.IProperty = {
                 id: '1',
                 propertyTypeId: '1',
                 address : Antares.Mock.AddressForm.FullAddress,
@@ -179,7 +179,7 @@ module Antares {
         describe('and activity details is clicked', () => {
             var date1Mock = new Date('2011-01-01');
             var date2Mock = new Date('2011-01-05');
-            var propertyMock: IProperty = {
+            var propertyMock: Dto.IProperty = {
                 id : '1',
                 propertyTypeId : '1',
                 address : Antares.Mock.AddressForm.FullAddress,
@@ -308,13 +308,13 @@ module Antares {
 
             var ownerships: Dto.IOwnership[] = [
                 {
-                    id: 'ba0390a3-4ce3-4a66-962b-197d10e5df7a', createDate: new Date(),
-                    ownershipType: { code: Models.Enums.OwnershipTypeEnum.Freeholder }, contacts: contacts1, buyPrice: 1000, sellPrice: 2000,
+                    id: 'ba0390a3-4ce3-4a66-962b-197d10e5df7a', createDate: new Date(), ownershipTypeId: 'leaseholderId',
+                    ownershipType: { code: Common.Models.Enums.OwnershipTypeEnum.Leaseholder }, contacts: contacts1, buyPrice: 1000, sellPrice: 2000,
                     sellDate: createDateAsUtc(new Date('2016-02-01')), purchaseDate: createDateAsUtc(new Date('2016-01-01'))
                 },
                 {
-                    id: 'ed9107c2-83b9-4723-9547-9b399d5907b2', createDate: new Date(),
-                    ownershipType: { code: Models.Enums.OwnershipTypeEnum.Leaseholder }, contacts: contacts2, buyPrice: 4000, sellPrice: 8000,
+                    id: 'ed9107c2-83b9-4723-9547-9b399d5907b2', createDate: new Date(), ownershipTypeId: 'freeholderId',
+                    ownershipType: { code: Common.Models.Enums.OwnershipTypeEnum.Freeholder }, contacts: contacts2, buyPrice: 4000, sellPrice: 8000,
                     sellDate: createDateAsUtc(new Date('2016-04-01')), purchaseDate: createDateAsUtc(new Date('2016-03-01'))
                 }
             ];
@@ -323,7 +323,8 @@ module Antares {
                 id: '1',
                 address: Antares.Mock.AddressForm.FullAddress,
                 ownerships: ownerships,
-                activities: []
+                activities: [],
+                propertyTypeId: 'typeId'
             };
 
             beforeEach(inject(($rootScope: ng.IRootScopeService,
@@ -334,7 +335,7 @@ module Antares {
                 $httpBackend.whenGET("").respond(() => { return {}; });
 
                 scope = $rootScope.$new();
-                scope['property'] = new Models.Business.Property(propertyMock);
+                scope['property'] = new Business.Property(propertyMock);
                 element = $compile('<property-view property="property"></property-view>')(scope);
 
                 scope.$apply();
@@ -353,22 +354,22 @@ module Antares {
 
                 var contacts = ownershipPanel.find('[data-type="ownership-list-contact"]');
                 var contactNames = contacts.toArray().map((el: HTMLElement) => el.innerHTML);
-                expect(contactNames).toEqual(["Julie Lerman", "Ian Cooper"]);
+                expect(contactNames).toEqual(["John Papa, ", "Mark Rendle"]);
 
-                var ownershipTypeCode = getValueFromElement(ownershipPanel, 'ownership-list-ownership-type-code');
-                expect(ownershipTypeCode).toBe(Models.Enums.OwnershipTypeEnum.Leaseholder);
+                var ownershipTypeCode = getValueFromElement(ownershipPanel, 'ownership-list-ownership-type');
+                expect(ownershipTypeCode).toBe('ENUMS.leaseholderId');
 
                 var purchaseDate = getValueFromElement(ownershipPanel, 'ownership-list-purchase-date');
-                expect(purchaseDate).toBe('01-03-2016');
+                expect(purchaseDate).toBe('01-01-2016');
 
                 var sellDate = getValueFromElement(ownershipPanel, 'ownership-list-sell-date');
-                expect(sellDate).toBe('01-04-2016');
+                expect(sellDate).toBe('01-02-2016');
 
                 var purchasePrice = getValueFromElement(ownershipPanel, 'ownership-list-purchase-price');
-                expect(purchasePrice).toBe('4000');
+                expect(purchasePrice).toBe('1000');
 
                 var sellPrice = getValueFromElement(ownershipPanel, 'ownership-list-sell-price');
-                expect(sellPrice).toBe('8000');
+                expect(sellPrice).toBe('2000');
             });
 
             function getValueFromElement(ownershipPanel: ng.IAugmentedJQuery, fieldId: string): string{

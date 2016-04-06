@@ -39,11 +39,13 @@ module Antares.Property {
             return propertyResource
                 .createOwnership({ propertyId: propertyId }, createOwnershipCommand)
                 .$promise
-                .then((ownership: Common.Models.Dto.IOwnership) => {
-                    ownership.purchaseDate = Core.DateTimeUtils.convertDateToUtc(ownership.purchaseDate);
-                    ownership.sellDate = Core.DateTimeUtils.convertDateToUtc(ownership.sellDate);
+                .then((ownership: Common.Models.Dto.IOwnership) =>{
+                    var ownershipModel = new Business.Ownership(ownership);
 
-                    this.ownerships.push(ownership);
+                    ownershipModel.purchaseDate = Core.DateTimeUtils.convertDateToUtc(ownershipModel.purchaseDate);
+                    ownershipModel.sellDate = Core.DateTimeUtils.convertDateToUtc(ownershipModel.sellDate);
+
+                    this.ownerships.push(ownershipModel);
                     var form = this.$scope["addOwnershipForm"];
                     form.$setPristine();
                 });

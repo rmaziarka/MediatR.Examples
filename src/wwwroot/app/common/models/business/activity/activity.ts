@@ -6,7 +6,7 @@ module Antares.Common.Models.Business {
         propertyId: string = '';
         activityStatusId: string = '';
         contacts: Dto.Contact[] = [];
-        property: Dto.Property = null;
+        property: Property = null;
         createdDate: Date = null;
 
         constructor(activity?: Dto.IActivity) {

@@ -107,7 +107,7 @@ module Antares {
                         return [200, addressFormMock];
                     });
 
-                    var propertyFromServerMock: Dto.Property = new Dto.Property();
+                    var propertyFromServerMock: Business.Property = new Business.Property();
                     propertyFromServerMock.id = 'propFromServerId1';
                     propertyFromServerMock.address = new Dto.Address();
 

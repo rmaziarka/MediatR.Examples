@@ -58,6 +58,7 @@ module Antares {
             ownershipType: {
                 code: Enums.OwnershipTypeEnum.Leaseholder
             },
+            ownershipTypeId: 'typeId',
             purchaseDate: new Date(),
             sellDate: new Date(),
             sellPrice: 12
