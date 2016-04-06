@@ -204,9 +204,6 @@
                             </div>
                         </div>
                     </fieldset>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary" id="saveBtn" ng-disabled="vm.isSaving"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE">Save</span></button>
-                    </div>
                 </div>
                 <div class="col-md-4">
                     <fieldset>
@@ -223,6 +220,11 @@
                         <div class="panel-body">
                             {{c.firstName }} {{ c.surname }}
                         </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="saveBtn" ng-disabled="vm.isSaving"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE">Save</span></button>
                     </div>
                 </div>
             </div>

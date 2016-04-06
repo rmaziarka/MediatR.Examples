@@ -4,7 +4,7 @@
         <form ng-submit="addContactForm.$valid && vm.save()" name="addContactForm" id="addContactForm" method="post" novalidate>
             <fieldset>
                 <legend>Basic information</legend>
-                <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.title.$dirty) && addContactForm.title.$invalid}">
+                <div class="form-group required" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.title.$dirty) && addContactForm.title.$invalid}">
                     <div class="row">
                         <div class="col-md-3">
                             <label for="title" translate="CONTACT.TITLE"></label>
@@ -15,7 +15,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.firstName.$dirty) && addContactForm.firstName.$invalid}">
+                <div class="form-group required" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.firstName.$dirty) && addContactForm.firstName.$invalid}">
                     <div class="row">
                         <div class="col-md-6">
                             <label for="first-name" translate="CONTACT.FIRSTNAME"></label>
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.surname.$dirty) && addContactForm.surname.$invalid}">
+                <div class="form-group required" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.surname.$dirty) && addContactForm.surname.$invalid}">
                     <div class="row">
                         <div class="col-md-6">
                             <label for="surname" translate="CONTACT.SURNAME"></label>
