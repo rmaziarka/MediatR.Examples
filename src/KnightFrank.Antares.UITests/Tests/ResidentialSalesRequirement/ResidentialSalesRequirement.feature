@@ -1,5 +1,6 @@
-﻿Feature: Residential Sales Requirement UI tests
+﻿Feature: Requirement UI tests
 
+@Requirement
 Scenario: Create new residential sales requirement
 	Given User navigates to create contact page
 		And User creates contacts on create contact page

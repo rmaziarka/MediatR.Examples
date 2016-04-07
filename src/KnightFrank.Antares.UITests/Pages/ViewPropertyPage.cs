@@ -20,7 +20,7 @@
         private readonly ElementLocator activityDate = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] div.panel-item");
         private readonly ElementLocator activityVendor = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] span");
         private readonly ElementLocator activityStatus = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] small");
-        private readonly ElementLocator detailsLink = new ElementLocator(Locator.CssSelector, "#card-list-activities #detailsLink");
+        private readonly ElementLocator activityDetailsLink = new ElementLocator(Locator.CssSelector, "#card-list-activities #detailsLink");
 
         public CreateActivityPage Activity => new CreateActivityPage(this.DriverContext);
 
@@ -87,9 +87,9 @@
             return this.Driver.GetElement(this.ownershipDetails.Format(position)).Text;
         }
 
-        public ViewPropertyPage ClickDetailsLink()
+        public ViewPropertyPage OpenActivityDetails()
         {
-            this.Driver.GetElement(this.detailsLink).Click();
+            this.Driver.GetElement(this.activityDetailsLink).Click();
             return this;
         }
     }

@@ -1,7 +1,6 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
-    using System.Collections.Generic;
 
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.UITests.Pages;
@@ -36,7 +35,7 @@
             this.scenarioContext["CreatePropertyPage"] = page;
         }
 
-        [When(@"User selects '(.*)' country on create property page")]
+        [When(@"User selects (.*) country on create property page")]
         public void SelectCountryFromDropDownList(string country)
         {
             this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").AddressTemplate.SelectPropertyCountry(country);
@@ -58,16 +57,10 @@
                 .SetPropertyCounty(address.County);
         }
 
-        [When(@"User selects property types on create property page")]
-        public void SelectPropertyTypes(Table table)
+        [When(@"User selects (.*) property and (.*) type on create property page")]
+        public void SelectPropertyTypes(string type, string propertyType)
         {
-            var types = table.CreateInstance<List<PropertyType>>();
-            var page = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
-
-            foreach (PropertyType type in types)
-            {
-                page.SelectPropertyType(type.Type);
-            }
+            this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").SelectType(type).SelectPropertyType(propertyType);
         }
 
         [When(@"User clicks save button on create property page")]
@@ -76,10 +69,5 @@
             var page = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
             this.scenarioContext.Set(page.SaveProperty(), "ViewPropertyPage");
         }
-    }
-
-    internal class PropertyType
-    {
-        public string Type { get; set; }
     }
 }

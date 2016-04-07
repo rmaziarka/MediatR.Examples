@@ -1,16 +1,11 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
-    using System.Collections.Generic;
-
     using KnightFrank.Antares.UITests.Extensions;
 
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
     using Objectivity.Test.Automation.Common.WebElements;
-
-    using OpenQA.Selenium;
-    using OpenQA.Selenium.Support.UI;
 
     public class AddressTemplatePage : ProjectPageBase
     {

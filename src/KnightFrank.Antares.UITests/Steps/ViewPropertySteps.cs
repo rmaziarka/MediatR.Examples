@@ -45,8 +45,8 @@
         [When(@"User clicks edit button on property details page")]
         public void WhenUserClicksEditButtonOnCreatePropertyPage()
         {
-            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-            this.scenarioContext.Set(page.EditProperty(), "CreatePropertyPage");
+            this.scenarioContext.Set(this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").EditProperty(),
+                "CreatePropertyPage");
         }
 
         [When(@"User selects contacts for ownership on view property page")]
@@ -65,14 +65,14 @@
         [When(@"User clicks activity's details link on property details page")]
         public void OpenActivitiesPreview()
         {
-            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").ClickDetailsLink();
+            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").OpenActivityDetails();
         }
 
         [Then(@"Activity creation date is set to current date on property details page")]
         public void CheckifActivityDateCorrect()
         {
-            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-            Assert.Equal(DateTime.Now.ToString("dd-MM-yyyy"), page.GetActivityDate());
+            Assert.Equal(DateTime.Now.ToString("dd-MM-yyyy"),
+                this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").GetActivityDate());
         }
 
         [Then(@"Activity details are set on property details page")]
@@ -143,10 +143,11 @@
             }
         }
 
-//        [Then(@"Then Activity preview panel is displayed with link to View Residential Sale Activity page")]
-//        public void CheckActivityPreview()
-//        {
-//            var preview = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-//        }
+        //        }
+        //            var preview = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+        //        {
+        //        public void CheckActivityPreview()
+
+        //        [Then(@"Then Activity preview panel is displayed with link to View Residential Sale Activity page")]
     }
 }

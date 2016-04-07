@@ -1,9 +1,10 @@
 ﻿Feature: Property UI tests
 
 @Property
-Scenario: Create and update property with UK address
+Scenario: Create and update property
 	Given User navigates to create property page
-	When User selects 'United Kingdom' country on create property page
+	When User selects United Kingdom country on create property page
+		And User selects Residential property and Flat type on create property page
 		And User fills in address details on create property page
 			| PropertyNumber | PropertyName | Line2        | Line3 | Postcode | City   | County |
 			| 55             | Knight Frank | Baker Street |       | W1U 8AN  | London | London |
@@ -23,14 +24,14 @@ Scenario: Create and update property with UK address
 @Property
 @Ownership
 @Activity
-@ignore
-Scenario: Property ownership and activity
+Scenario: Create property with ownership and activity
 	Given User navigates to create contact page
 		And User creates contacts on create contact page
 			| Title | FirstName | Surname   |
 			| King  | Arthur    | Pendragon |
 	When User navigates to create property page
-		And User selects 'United Kingdom' country on create property page
+		And User selects United Kingdom country on create property page
+		And User selects Residential property and Maisonette type on create property page
 		And User fills in address details on create property page
 			| PropertyNumber | PropertyName      | Line2    | Line3 | Postcode | City   | County      |
 			| 20             | Westminster Abbey | Deans Yd |       | SW1P 3PA | London | Westminster |
@@ -53,8 +54,8 @@ Scenario: Property ownership and activity
 	    | Arthur Pendragon | Pre-appraisal  |
 	When User clicks save button on activity panel
 	Then Activity creation date is set to current date on property details page
-	And Activity details are set on property details page
-	    | Vendor           | Status        |
-	    | Arthur Pendragon | Pre-appraisal |
+		And Activity details are set on property details page
+			| Vendor           | Status        |
+			| Arthur Pendragon | Pre-appraisal |
 	When User clicks activity's details link on property details page
 #   Then Activity preview panel is displayed with link to View Residential Sale Activity page
