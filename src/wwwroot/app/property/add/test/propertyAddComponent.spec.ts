@@ -1,8 +1,7 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 module Antares {
-    import Dto = Antares.Common.Models.Dto;
-    import Business = Antares.Common.Models.Business;
-    import PropertyAddController = Antares.Property.PropertyAddController;
+    import Business = Common.Models.Business;
+    import PropertyAddController = Property.PropertyAddController;
 
     describe('Given add property page is loaded', () => {
         var scope: ng.IScope,
@@ -27,7 +26,7 @@ module Antares {
                 newPropertyMock: Business.Property = new Business.Property();
 
             newPropertyMock.id = 'propId1';
-            newPropertyMock.address = new Dto.Address();
+            newPropertyMock.address = new Business.Address();
             var usermock = { name: "user", email: "user@gmail.com", country: "GB", division: { id: "0acc9d28-51fa-e511-828b-8cdcd42baca7", value: "Commercial", code: "Commercial" }, divisionCode: <any>null, roles: ["admin", "superuser"] };
 
             beforeEach(inject((
@@ -102,14 +101,14 @@ module Antares {
                 });
 
                 it('then put request is is called and redirect to view page', () => {
-                    var addressFormMock: Dto.AddressForm = new Dto.AddressForm('adrfrmId1', countryMockId, []);
+                    var addressFormMock: Business.AddressForm = new Business.AddressForm('adrfrmId1', countryMockId, []);
                     $http.whenGET(/\/api\/addressForms\/\?entityType=Property&countryCode=GB/).respond(() => {
                         return [200, addressFormMock];
                     });
 
                     var propertyFromServerMock: Business.Property = new Business.Property();
                     propertyFromServerMock.id = 'propFromServerId1';
-                    propertyFromServerMock.address = new Dto.Address();
+                    propertyFromServerMock.address = new Business.Address();
 
                     $http.expectPOST(/\/api\/properties/, newPropertyMock).respond(() => {
                         return [200, propertyFromServerMock];
@@ -120,7 +119,7 @@ module Antares {
                        propertyId = property.id;
                    });
 
-                    newPropertyMock.address = new Dto.Address();
+                   newPropertyMock.address = new Business.Address();
 
                     newPropertyMock.address.id = 'adrId1';
                     newPropertyMock.address.countryId = countryMockId;

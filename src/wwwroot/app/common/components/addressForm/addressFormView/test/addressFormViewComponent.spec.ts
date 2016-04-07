@@ -1,10 +1,6 @@
 /// <reference path="../../../../../typings/_all.d.ts" />
-/// <reference path="../addressFormViewController.ts" />
-/// <reference path="../../../../../common/models/dto/addressForm.ts" />
-/// <reference path="addressFormViewServices.mock.ts" />
 
 module Antares {
-    import AddressFormFieldDefinition = Antares.Common.Models.Dto.AddressFormFieldDefinition;
     describe('Given address form view is rendered', () => {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
@@ -15,9 +11,9 @@ module Antares {
             $rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService,
             $httpBackend: ng.IHttpBackendService) => {
-            
+
             //Antares.Mock.AddressForm.mockHttpResponce($httpBackend,addressFormId,[200,Antares.Mock.AddressForm.AddressFormWithOneLine]);
-            
+
             scope = $rootScope.$new();
             element = $compile(`<address-form-view address-form-id="'${addressFormId}'"></address-form-view>`)(scope);
 

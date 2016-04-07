@@ -1,19 +1,5 @@
-﻿module Antares.Common.Models.Dto {
-    export interface IAddress {
-        id?: string;
-        countryId?: string;
-        addressFormId?: string;
-        propertyName?: string;
-        propertyNumber?: string;
-        line1?: string;
-        line2?: string;
-        line3?: string;
-        postcode?: string;
-        city?: string;
-        county?: string;
-    }
-
-    export class Address implements IAddress {
+﻿module Antares.Common.Models.Business {
+    export class Address implements Dto.IAddress {
         [key: string]: any;
 
         id: string = '';
@@ -28,7 +14,7 @@
         city: string = '';
         county: string = '';
 
-        constructor(address?: IAddress) {
+        constructor(address?: Dto.IAddress) {
             if (address) {
                 angular.extend(this, address);
             }

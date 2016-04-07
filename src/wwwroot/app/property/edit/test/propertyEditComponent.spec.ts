@@ -1,8 +1,7 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 module Antares {
-    import Dto = Antares.Common.Models.Dto;
-    import Business = Antares.Common.Models.Business;
-    import PropertyEditController = Antares.Property.PropertyEditController;
+    import Business = Common.Models.Business;
+    import PropertyEditController = Property.PropertyEditController;
 
     describe('Given edit property page is loaded', () => {
         var scope: ng.IScope,
@@ -16,11 +15,11 @@ module Antares {
 
        describe('when proper property is loaded', () => {
             var countryMockId = countriesMock[0].country.id,
-                addressFormMock: Dto.AddressForm = new Dto.AddressForm('adrfrmId1', countryMockId, []),
+                addressFormMock: Business.AddressForm = new Business.AddressForm('adrfrmId1', countryMockId, []),
                 propertyMock: Business.Property = new Business.Property();
 
             propertyMock.id = 'propMockId1';
-            propertyMock.address = new Dto.Address();
+            propertyMock.address = new Business.Address();
             propertyMock.address.id = 'adrId1';
             propertyMock.address.countryId = countryMockId;
             propertyMock.address.addressFormId = 'adrfrmId1';
@@ -84,7 +83,7 @@ module Antares {
 
                     var propertyFromServerMock: Business.Property = new Business.Property();
                     propertyFromServerMock.id = 'propFromServerId1';
-                    propertyFromServerMock.address = new Dto.Address();
+                    propertyFromServerMock.address = new Business.Address();
 
                     var propertyFromServerMock: Business.Property = <Business.Property>{};
                     $http.expectPUT(/\/api\/properties/, propertyMock).respond(() => {

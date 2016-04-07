@@ -1,30 +1,14 @@
-﻿module Antares.Common.Models.Dto {
-    export class AddressFormFieldDefinition {
-        constructor(
-            public name: string,
-            public labelKey: string,
-            public required: boolean,
-            public regEx: string,
-            public rowOrder: number,
-            public columnOrder: number,
-            public columnSize: number
-        ){}
-    }
+﻿/// <reference path="../../../../typings/_all.d.ts" />
 
-    export interface IAddressForm {
-        id: string;
-        countryId: string;
-        addressFieldDefinitions: AddressFormFieldDefinition[];
-    }
-
-    export class AddressForm implements IAddressForm {
+module Antares.Common.Models.Business {
+    export class AddressForm implements Dto.IAddressForm {
         public addressFieldRows: AddressFormFieldDefinition[][];
 
         constructor(
             public id: string = "",
             public countryId: string = "",
             public addressFieldDefinitions: AddressFormFieldDefinition[] = []
-        ){
+        ) {
             this.updateAddressFieldRows();
         }
 

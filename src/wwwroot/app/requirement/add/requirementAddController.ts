@@ -1,9 +1,8 @@
 /// <reference path="../../typings/_all.d.ts" />
-/// <reference path="../../common/services/dataaccessservice.ts" />
-/// <reference path="../../common/core/services/registry/componentregistryservice.ts" />
-/// <reference path="../../common/models/dto/address.ts" />
 
 module Antares.Requirement.Add {
+    import Business = Common.Models.Business;
+
     export class RequirementAddController {
         componentIds: any = {
             contactListId: 'addRequirement:contactListComponent',
@@ -15,7 +14,7 @@ module Antares.Requirement.Add {
         }
         requirementResource: any;
         requirement: any = {
-            address: new Common.Models.Dto.Address()
+            address: new Business.Address()
         };
         loadingContacts: boolean = false;
         entityTypeCode: string = 'Requirement';
