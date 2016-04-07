@@ -6,6 +6,7 @@
 
     public class ViewPropertyPage : ProjectPageBase
     {
+        private readonly ElementLocator viewPropertyForm = new ElementLocator(Locator.CssSelector, "property-view");
         //locators for property address area
         private readonly ElementLocator expectedAddressField = new ElementLocator(Locator.XPath, "//address-form-view//span[text()='{0}']");
         private readonly ElementLocator editButton = new ElementLocator(Locator.CssSelector, "button[ng-click*='goToEdit']");
@@ -32,16 +33,16 @@
 
         public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
 
-        public ViewActivityPreviewPage PreviewDetails => new ViewActivityPreviewPage(this.DriverContext);
+        public ActivityPreviewPage PreviewDetails => new ActivityPreviewPage(this.DriverContext);
 
-        public bool IsAddressDetailsVisible(string propertyNumber)
+        public bool IsAddressDetailsVisible(string propertyDetail)
         {
-            return this.Driver.IsElementPresent(this.expectedAddressField.Format(propertyNumber), BaseConfiguration.MediumTimeout);
+            return this.Driver.IsElementPresent(this.expectedAddressField.Format(propertyDetail), BaseConfiguration.MediumTimeout);
         }
 
-        public bool IsAddressDetailsNotVisible(string propertyNumber)
+        public bool IsAddressDetailsNotVisible(string propertyDetail)
         {
-            return !this.Driver.IsElementPresent(this.expectedAddressField.Format(propertyNumber), BaseConfiguration.ShortTimeout);
+            return !this.Driver.IsElementPresent(this.expectedAddressField.Format(propertyDetail), BaseConfiguration.ShortTimeout);
         }
 
         public ViewPropertyPage AddActivity()
@@ -91,6 +92,12 @@
         {
             this.Driver.GetElement(this.activityDetailsLink).Click();
             return this;
+        }
+
+        public bool CheckIfViewPropertyPresent()
+        {
+            this.Driver.WaitForAngular();
+            return this.Driver.IsElementPresent(this.viewPropertyForm, BaseConfiguration.ShortTimeout);
         }
     }
 }

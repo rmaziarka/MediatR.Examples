@@ -59,6 +59,13 @@
             this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").OpenActivityDetails();
         }
 
+        [When(@"User clicks view activity link on activity preview page")]
+        public void OpenViewActivityPage()
+        {
+            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+            this.scenarioContext.Set(page.PreviewDetails.ClickViewActivity(), "ViewActivityPage");
+        }
+
         [Then(@"Activity creation date is set to current date on property details page")]
         public void CheckifActivityDateCorrect()
         {
@@ -124,10 +131,10 @@
             }
         }
 
-        //        [Then(@"Then Activity preview panel is displayed with link to View Residential Sale Activity page")]
-        //        public void CheckActivityPreview()
-        //        }
-        //            var preview = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-        //        {
+        [Then(@"View property page is displayed")]
+        public void CheckIfViewPropertyPresent()
+        {
+            Assert.True(this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").CheckIfViewPropertyPresent());
+        }
     }
 }

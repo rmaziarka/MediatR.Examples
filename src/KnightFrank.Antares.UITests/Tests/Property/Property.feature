@@ -58,4 +58,10 @@ Scenario: Create property with ownership and activity
 			| Vendor           | Status        |
 			| Arthur Pendragon | Pre-appraisal |
 	When User clicks activity's details link on property details page
-#   Then Activity preview panel is displayed with link to View Residential Sale Activity page
+		And User clicks view activity link on activity preview page
+	Then Address details on view activity page are following
+		| PropertyNumber | PropertyName      | Line2    | Postcode | City   | County      |
+		| 20             | Westminster Abbey | Deans Yd | SW1P 3PA | London | Westminster |
+	When User clicks details link on view activity page
+		And User clicks view property link on property preview page
+	Then View property page is displayed

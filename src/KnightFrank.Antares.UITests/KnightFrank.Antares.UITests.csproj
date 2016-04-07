@@ -109,8 +109,10 @@
     <Compile Include="Pages\CreateRequirementPage.cs" />
     <Compile Include="Pages\NotesPage.cs" />
     <Compile Include="Pages\OwnershipDetailsPage.cs" />
+    <Compile Include="Pages\PropertyPreviewPage.cs" />
+    <Compile Include="Pages\ViewActivityPage.cs" />
     <Compile Include="Pages\ViewRequirementPage.cs" />
-    <Compile Include="Pages\ViewActivityPreviewPage.cs" />
+    <Compile Include="Pages\ActivityPreviewPage.cs" />
     <Compile Include="Pages\ViewPropertyPage.cs" />
     <Compile Include="ProjectPageBase.cs" />
     <Compile Include="ProjectTestBase.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="Steps\CreateContactSteps.cs" />
     <Compile Include="Steps\CreateRequirementSteps.cs" />
     <Compile Include="Steps\CreateOwnershipSteps.cs" />
+    <Compile Include="Steps\ViewActivitySteps.cs" />
     <Compile Include="Steps\ViewRequirementSteps.cs" />
     <Compile Include="Steps\ViewPropertySteps.cs" />
     <Compile Include="Tests\Company\Company.feature.cs">
