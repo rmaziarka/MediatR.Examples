@@ -80,6 +80,7 @@
             },
             htmlTemplatesSrc: clientApp + '**/*.html',
             fonts: bower.directory + 'font-awesome/fonts/**/*.*',
+            bootstrapFonts: bower.directory + 'bootstrap-sass/assets/fonts/bootstrap/**/*.*',
             translationsDest: build + translations,
             staticTranslationsFiles: [
                 translations + '*.json', // translation
