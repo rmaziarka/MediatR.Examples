@@ -3,32 +3,15 @@
 module Antares.Activity.View {
     import Business = Antares.Common.Models.Business;
 
-    export class ActivityViewController  {
-        componentIds: any = {
-            propertyPreviewId: 'viewActivity:propertyPreviewComponent',
-            propertyPreviewSidePanelId: 'viewActivity:propertyPreviewSidePanelComponent'
-        }
-
-        components: any = {
-            propertyPreview: () => { return this.componentRegistry.get(this.componentIds.propertyPreviewId); },
-            panels : {
-                propertyPreview: () => { return this.componentRegistry.get(this.componentIds.propertyPreviewSidePanelId); }
-            }
-        }
-
-        currentPanel: any;
-
+    export class ActivityViewController extends Core.WithPanelsBaseController {
         activity: Business.Activity;
 
         constructor(
-            private componentRegistry: Core.Service.ComponentRegistry,
+            componentRegistry: Core.Service.ComponentRegistry,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService) {
 
-            $scope.$on('$destroy', () => {
-                this.componentRegistry.deregister(this.componentIds.propertyPreviewId);
-                this.componentRegistry.deregister(this.componentIds.propertyPreviewSidePanelId);
-            });
+            super(componentRegistry, $scope);
         }
 
         showPropertyPreview = (property: Business.Property) => {
@@ -40,21 +23,20 @@ module Antares.Activity.View {
             this.$state.go('app.activity-edit', { id: this.$state.params['id'] });
         }
 
-        private hidePanels(hideCurrent: boolean = true) {
-            for (var panel in this.components.panels) {
-                if (this.components.panels.hasOwnProperty(panel)) {
-                    if (hideCurrent === false && this.currentPanel === this.components.panels[panel]()) {
-                        continue;
-                    }
-                    this.components.panels[panel]().hide();
-                }
-            }
+        defineComponentIds(){
+            this.componentIds = {
+                propertyPreviewId: 'viewActivity:propertyPreviewComponent',
+                propertyPreviewSidePanelId: 'viewActivity:propertyPreviewSidePanelComponent'
+            };
         }
 
-        private showPanel(panel: any) {
-            this.hidePanels();
-            panel().show();
-            this.currentPanel = panel;
+        defineComponents(){
+            this.components = {
+                propertyPreview: () => { return this.componentRegistry.get(this.componentIds.propertyPreviewId); },
+                panels : {
+                    propertyPreview: () => { return this.componentRegistry.get(this.componentIds.propertyPreviewSidePanelId); }
+                }                
+            };
         }
     }
 
