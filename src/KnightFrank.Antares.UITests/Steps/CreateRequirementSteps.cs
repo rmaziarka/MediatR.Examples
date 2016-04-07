@@ -19,12 +19,12 @@
     using Xunit;
 
     [Binding]
-    public class NewResidentialSalesRequirementSteps
+    public class CreateRequirementSteps
     {
         private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
 
-        public NewResidentialSalesRequirementSteps(ScenarioContext scenarioContext)
+        public CreateRequirementSteps(ScenarioContext scenarioContext)
         {
             if (scenarioContext == null)
             {
@@ -39,15 +39,15 @@
         [When(@"User navigates to create residential sales requirement page")]
         public void OpenNewResidentialSalesRequirementPage()
         {
-            NewResidentialSalesRequirementPage page =
-                new NewResidentialSalesRequirementPage(this.driverContext).OpenNewResidentialSalesRequirementPage();
+            CreateRequirementPage page =
+                new CreateRequirementPage(this.driverContext).OpenNewResidentialSalesRequirementPage();
             this.scenarioContext["NewResidentialSalesRequirementPage"] = page;
         }
 
         [When(@"User fills in location details on create residential sales requirement page")]
         public void SetLocationRequirementDetails(Table table)
         {
-            var page = this.scenarioContext.Get<NewResidentialSalesRequirementPage>("NewResidentialSalesRequirementPage");
+            var page = this.scenarioContext.Get<CreateRequirementPage>("NewResidentialSalesRequirementPage");
 
             var details = table.CreateInstance<Address>();
 
@@ -60,7 +60,7 @@
         [When(@"User fills in property details on create residential sales requirement page")]
         public void SetPropertyRequirementDetails(Table table)
         {
-            var page = this.scenarioContext.Get<NewResidentialSalesRequirementPage>("NewResidentialSalesRequirementPage");
+            var page = this.scenarioContext.Get<CreateRequirementPage>("NewResidentialSalesRequirementPage");
 
             var details = table.CreateInstance<Requirement>();
 
@@ -85,7 +85,7 @@
         [When(@"User selects contacts on create residential sales requirement page")]
         public void SelectContactsForRequirement(Table table)
         {
-            var page = this.scenarioContext.Get<NewResidentialSalesRequirementPage>("NewResidentialSalesRequirementPage");
+            var page = this.scenarioContext.Get<CreateRequirementPage>("NewResidentialSalesRequirementPage");
 
             page.AddNewApllicantForResidentialSalesRequirement();
 
@@ -101,7 +101,7 @@
         [When(@"User clicks save button on create residential sales requirement page")]
         public void SaveNewResidentialSalesRequirement()
         {
-            this.scenarioContext.Get<NewResidentialSalesRequirementPage>("NewResidentialSalesRequirementPage")
+            this.scenarioContext.Get<CreateRequirementPage>("NewResidentialSalesRequirementPage")
                 .SaveNewResidentialSalesRequirement();
             this.scenarioContext["RequirementDate"] = DateTime.UtcNow;
         }
@@ -109,7 +109,7 @@
         [Then(@"New residential sales requirement should be created")]
         public void CheckIfNewResidentialSalesRequirementCreated()
         {
-            var page = new ResidentialSalesRequirementDetailsPage(this.driverContext);
+            var page = new ViewRequirementPage(this.driverContext);
             page.WaitForDetailsToLoad();
             this.scenarioContext["ResidentialSalesRequirementDetailsPage"] = page;
         }
@@ -117,7 +117,7 @@
         [Then(@"list of applicants should contain following contacts")]
         public void CheckApplicantsList(Table table)
         {
-            var page = this.scenarioContext.Get<NewResidentialSalesRequirementPage>("NewResidentialSalesRequirementPage");
+            var page = this.scenarioContext.Get<CreateRequirementPage>("NewResidentialSalesRequirementPage");
 
             List<string> applicants =
                 table.CreateSet<Contact>().Select(contact => contact.FirstName + " " + contact.Surname).ToList();

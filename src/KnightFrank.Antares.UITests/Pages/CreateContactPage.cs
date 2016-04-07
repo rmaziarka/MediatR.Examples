@@ -6,43 +6,43 @@
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
 
-    public class NewContactPage : ProjectPageBase
+    public class CreateContactPage : ProjectPageBase
     {
         private readonly ElementLocator contactFirstName = new ElementLocator(Locator.Id, "first-name");
         private readonly ElementLocator contactSurname = new ElementLocator(Locator.Id, "surname");
         private readonly ElementLocator contactTitle = new ElementLocator(Locator.Id, "title");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "saveBtn");
 
-        public NewContactPage(DriverContext driverContext)
+        public CreateContactPage(DriverContext driverContext)
             : base(driverContext)
         {
         }
 
-        public NewContactPage OpenNewContactPage()
+        public CreateContactPage OpenNewContactPage()
         {
-            new CommonPage(this.DriverContext).NavigateToPage("New Contact");
+            new CommonPage(this.DriverContext).NavigateToPage("create contact");
             return this;
         }
 
-        public NewContactPage SetTitle(string title)
+        public CreateContactPage SetTitle(string title)
         {
             this.Driver.SendKeys(this.contactTitle, title);
             return this;
         }
 
-        public NewContactPage SetFirstName(string firstName)
+        public CreateContactPage SetFirstName(string firstName)
         {
             this.Driver.SendKeys(this.contactFirstName, firstName);
             return this;
         }
 
-        public NewContactPage SetSurname(string surname)
+        public CreateContactPage SetSurname(string surname)
         {
             this.Driver.SendKeys(this.contactSurname, surname);
             return this;
         }
 
-        public NewContactPage SaveNewContact()
+        public CreateContactPage SaveNewContact()
         {
             this.Driver.GetElement(this.saveButton).Click();
             return this;

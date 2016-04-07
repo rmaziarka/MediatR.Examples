@@ -17,12 +17,12 @@
     using Xunit;
 
     [Binding]
-    public class ResidentialSalesRequirementDetailsSteps
+    public class ViewRequirementSteps
     {
         private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
 
-        public ResidentialSalesRequirementDetailsSteps(ScenarioContext scenarioContext)
+        public ViewRequirementSteps(ScenarioContext scenarioContext)
         {
             if (scenarioContext == null)
             {
@@ -37,7 +37,7 @@
         public void CheckResidentialSalesRequirementLocationDetails(Table table)
         {
             Dictionary<string, string> details =
-                this.scenarioContext.Get<ResidentialSalesRequirementDetailsPage>("ResidentialSalesRequirementDetailsPage")
+                this.scenarioContext.Get<ViewRequirementPage>("ResidentialSalesRequirementDetailsPage")
                     .GetLocationRequirements();
             var expectedDetails = table.CreateInstance<Address>();
 
@@ -51,7 +51,7 @@
         public void CheckResidentialSalesRequirementPropertyDetails(Table table)
         {
             Dictionary<string, string> details =
-                this.scenarioContext.Get<ResidentialSalesRequirementDetailsPage>("ResidentialSalesRequirementDetailsPage")
+                this.scenarioContext.Get<ViewRequirementPage>("ResidentialSalesRequirementDetailsPage")
                     .GetPropertyRequirements();
             var expectedDetails = table.CreateInstance<Requirement>();
 
@@ -70,7 +70,7 @@
         public void CheckResidentialSalesRequirementApplicants(Table table)
         {
             List<string> applicants =
-                this.scenarioContext.Get<ResidentialSalesRequirementDetailsPage>("ResidentialSalesRequirementDetailsPage")
+                this.scenarioContext.Get<ViewRequirementPage>("ResidentialSalesRequirementDetailsPage")
                     .GetApplicants();
             List<string> expectedApplicants =
                 table.CreateSet<Contact>().Select(contact => contact.FirstName + " " + contact.Surname).ToList();
@@ -84,7 +84,7 @@
             var date = this.scenarioContext.Get<DateTime>("RequirementDate");
 
             Assert.Equal(date.ToString("MMMM d, yyyy"),
-                this.scenarioContext.Get<ResidentialSalesRequirementDetailsPage>("ResidentialSalesRequirementDetailsPage")
+                this.scenarioContext.Get<ViewRequirementPage>("ResidentialSalesRequirementDetailsPage")
                     .GetRequirementCreateDate());
         }
     }

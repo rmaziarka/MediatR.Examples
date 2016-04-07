@@ -10,7 +10,7 @@
     using Objectivity.Test.Automation.Common.Types;
     using Objectivity.Test.Automation.Common.WebElements;
 
-    public class NewResidentialSalesRequirementPage : ProjectPageBase
+    public class CreateRequirementPage : ProjectPageBase
     {
         // Applicant locators
         private readonly ElementLocator newApplicantButton = new ElementLocator(Locator.CssSelector, "button[ng-click = 'vm.showContactList()']");
@@ -39,108 +39,108 @@
 
         public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
 
-        public NewResidentialSalesRequirementPage(DriverContext driverContext) : base(driverContext)
+        public CreateRequirementPage(DriverContext driverContext) : base(driverContext)
         {
         }
 
-        public NewResidentialSalesRequirementPage OpenNewResidentialSalesRequirementPage()
+        public CreateRequirementPage OpenNewResidentialSalesRequirementPage()
         {
-            new CommonPage(this.DriverContext).NavigateToPage("New Residential Sales Requirement");
+            new CommonPage(this.DriverContext).NavigateToPage("create requirement");
             this.Driver.WaitForAngularToFinish();
             return this;
         }
 
-        public NewResidentialSalesRequirementPage SelectPropertyType(string type)
+        public CreateRequirementPage SelectPropertyType(string type)
         {
             this.Driver.GetElement<Select>(this.propertyType).SelectByValue(type);
             return this;
         }
 
-        public NewResidentialSalesRequirementPage SetPropertyMinPrice(string minPrice)
+        public CreateRequirementPage SetPropertyMinPrice(string minPrice)
         {
             this.Driver.SendKeys(this.propertyPriceMin, minPrice);
             return this;
         }
 
-        public NewResidentialSalesRequirementPage SetPropertyMaxPrice(string maxPrice)
+        public CreateRequirementPage SetPropertyMaxPrice(string maxPrice)
         {
             this.Driver.SendKeys(this.propertyPriceMax, maxPrice);
             return this;
         }
 
-        public NewResidentialSalesRequirementPage SetPropertyBedroomsMin(string bedroomsMin)
+        public CreateRequirementPage SetPropertyBedroomsMin(string bedroomsMin)
         {
             this.Driver.SendKeys(this.propertyBedroomsMin, bedroomsMin);
             return this;
         }
 
-        public NewResidentialSalesRequirementPage SetPropertyBedroomMax(string bedroomsMax)
+        public CreateRequirementPage SetPropertyBedroomMax(string bedroomsMax)
         {
             this.Driver.SendKeys(this.propertyBedroomsMax, bedroomsMax);
             return this;
         }
 
-        public NewResidentialSalesRequirementPage SetPropertyReceptionRoomsMin(string receptionRoomsMin)
+        public CreateRequirementPage SetPropertyReceptionRoomsMin(string receptionRoomsMin)
         {
             this.Driver.SendKeys(this.propertyReceptionRoomsMin, receptionRoomsMin);
             return this;
         }
 
-        public NewResidentialSalesRequirementPage SetPropertyReceptionRoomsMax(string receptionRoomsMax)
+        public CreateRequirementPage SetPropertyReceptionRoomsMax(string receptionRoomsMax)
         {
             this.Driver.SendKeys(this.propertyReceptionRoomsMax, receptionRoomsMax);
             return this;
         }
 
-        public NewResidentialSalesRequirementPage SetPropertyBathroomsMin(string bathroomsMin)
+        public CreateRequirementPage SetPropertyBathroomsMin(string bathroomsMin)
         {
             this.Driver.SendKeys(this.propertyBathroomsMin, bathroomsMin);
             return this;
         }
 
-        public NewResidentialSalesRequirementPage SetPropertyBathroomsMax(string bathroomsMax)
+        public CreateRequirementPage SetPropertyBathroomsMax(string bathroomsMax)
         {
             this.Driver.SendKeys(this.propertyBathroomsMax, bathroomsMax);
             return this;
         }
 
-        public NewResidentialSalesRequirementPage SetPropertyParkingSpacesMin(string parkingSpacesMin)
+        public CreateRequirementPage SetPropertyParkingSpacesMin(string parkingSpacesMin)
         {
             this.Driver.SendKeys(this.propertyParkingSpacesMin, parkingSpacesMin);
             return this;
         }
 
-        public NewResidentialSalesRequirementPage SetPropertyParkingSpacesMax(string parkingSpacesMax)
+        public CreateRequirementPage SetPropertyParkingSpacesMax(string parkingSpacesMax)
         {
             this.Driver.SendKeys(this.propertyParkingSpacesMax, parkingSpacesMax);
             return this;
         }
 
-        public NewResidentialSalesRequirementPage SetPropertyAreaMin(string areaMin)
+        public CreateRequirementPage SetPropertyAreaMin(string areaMin)
         {
             this.Driver.SendKeys(this.propertyAreaMin, areaMin);
             return this;
         }
 
-        public NewResidentialSalesRequirementPage SetPropertyAreaMax(string areaMax)
+        public CreateRequirementPage SetPropertyAreaMax(string areaMax)
         {
             this.Driver.SendKeys(this.propertyAreaMax, areaMax);
             return this;
         }
 
-        public NewResidentialSalesRequirementPage SetPropertyLandAreaMin(string landAreaMin)
+        public CreateRequirementPage SetPropertyLandAreaMin(string landAreaMin)
         {
             this.Driver.SendKeys(this.propertyLandAreaMin, landAreaMin);
             return this;
         }
 
-        public NewResidentialSalesRequirementPage SetPropertyLandAreaMax(string landAreaMax)
+        public CreateRequirementPage SetPropertyLandAreaMax(string landAreaMax)
         {
             this.Driver.SendKeys(this.propertyLandAreaMax, landAreaMax);
             return this;
         }
 
-        public NewResidentialSalesRequirementPage SetPropertyRequirementsNote(string note)
+        public CreateRequirementPage SetPropertyRequirementsNote(string note)
         {
             this.Driver.SendKeys(this.propertyRequirementsNote, note);
             return this;

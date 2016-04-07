@@ -36,12 +36,6 @@
             this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").AddActivity();
         }
 
-        [When(@"User clicks save button on activity panel")]
-        public void ClickSaveButtonOnActivityPanel()
-        {
-            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").Activity.SaveActivity();
-        }
-
         [When(@"User clicks edit button on property details page")]
         public void WhenUserClicksEditButtonOnCreatePropertyPage()
         {
@@ -97,16 +91,6 @@
                     ? page.IsAddressDetailsNotVisible(field)
                     : page.IsAddressDetailsVisible(field));
             }
-        }
-
-        [Then(@"Activity details are set on activity panel")]
-        public void CheckActivityDetailsonActivityPanel(Table table)
-        {
-            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-            var details = table.CreateInstance<ActivityDetails>();
-
-            Assert.Equal(details.Vendor, page.Activity.GetActivityVendor());
-            Assert.Equal(details.Status, page.Activity.GetActivityStatus());
         }
 
         [Then(@"Ownership details should contain following data on view property page")]

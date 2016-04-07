@@ -8,11 +8,11 @@
     using TechTalk.SpecFlow.Assist;
 
     [Binding]
-    public class OwnershipDetailsSteps
+    public class CreateOwnershipSteps
     {
         private readonly ScenarioContext scenarioContext;
 
-        public OwnershipDetailsSteps(ScenarioContext scenarioContext)
+        public CreateOwnershipSteps(ScenarioContext scenarioContext)
         {
             if (scenarioContext == null)
             {

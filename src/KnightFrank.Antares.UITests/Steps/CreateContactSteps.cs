@@ -12,12 +12,12 @@
     using TechTalk.SpecFlow.Assist;
 
     [Binding]
-    public class NewContactSteps
+    public class CreateContactSteps
     {
         private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
 
-        public NewContactSteps(ScenarioContext scenarioContext)
+        public CreateContactSteps(ScenarioContext scenarioContext)
         {
             if (scenarioContext == null)
             {
@@ -31,14 +31,14 @@
         [When(@"User navigates to create contact page")]
         public void OpenNewContactPage()
         {
-            NewContactPage page = new NewContactPage(this.driverContext).OpenNewContactPage();
+            CreateContactPage page = new CreateContactPage(this.driverContext).OpenNewContactPage();
             this.scenarioContext["NewContactPage"] = page;
         }
 
         [Given(@"User creates contacts on create contact page")]
         public void CreateContacts(Table table)
         {
-            var page = this.scenarioContext.Get<NewContactPage>("NewContactPage");
+            var page = this.scenarioContext.Get<CreateContactPage>("NewContactPage");
             IEnumerable<Contact> contacts = table.CreateSet<Contact>();
             foreach (Contact contact in contacts)
             {
@@ -52,7 +52,7 @@
         [When(@"User fills in contact details on create contact page")]
         public void SetNewContactDetails(Table table)
         {
-            var page = this.scenarioContext.Get<NewContactPage>("NewContactPage");
+            var page = this.scenarioContext.Get<CreateContactPage>("NewContactPage");
             var contactDetails = table.CreateInstance<Contact>();
 
             page.SetTitle(contactDetails.Title)
@@ -63,7 +63,7 @@
         [When(@"User clicks save button on create contact page")]
         public void SaveNewContact()
         {
-            this.scenarioContext.Get<NewContactPage>("NewContactPage").SaveNewContact();
+            this.scenarioContext.Get<CreateContactPage>("NewContactPage").SaveNewContact();
         }
 
         [Then(@"New contact should be created")]

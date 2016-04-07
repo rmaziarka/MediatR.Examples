@@ -104,22 +104,28 @@
     <Compile Include="Pages\ContactsListPage.cs" />
     <Compile Include="Pages\CreateActivityPage.cs" />
     <Compile Include="Pages\CreatePropertyPage.cs" />
-    <Compile Include="Pages\NewContactPage.cs" />
-    <Compile Include="Pages\NewResidentialSalesRequirementPage.cs" />
+    <Compile Include="Pages\CreateContactPage.cs" />
+    <Compile Include="Pages\CreateRequirementPage.cs" />
     <Compile Include="Pages\NotesPage.cs" />
     <Compile Include="Pages\OwnershipDetailsPage.cs" />
-    <Compile Include="Pages\ResidentialSalesRequirementDetailsPage.cs" />
+    <Compile Include="Pages\ViewRequirementPage.cs" />
     <Compile Include="Pages\ViewActivityPreviewPage.cs" />
     <Compile Include="Pages\ViewPropertyPage.cs" />
     <Compile Include="ProjectPageBase.cs" />
     <Compile Include="ProjectTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Steps\CreateActivitySteps.cs" />
     <Compile Include="Steps\CreatePropertySteps.cs" />
-    <Compile Include="Steps\NewContactSteps.cs" />
-    <Compile Include="Steps\NewResidentialSalesRequirementSteps.cs" />
-    <Compile Include="Steps\OwnershipDetailsSteps.cs" />
-    <Compile Include="Steps\ResidentialSalesRequirementDetailsSteps.cs" />
+    <Compile Include="Steps\CreateContactSteps.cs" />
+    <Compile Include="Steps\CreateRequirementSteps.cs" />
+    <Compile Include="Steps\CreateOwnershipSteps.cs" />
+    <Compile Include="Steps\ViewRequirementSteps.cs" />
     <Compile Include="Steps\ViewPropertySteps.cs" />
+    <Compile Include="Tests\Company\Company.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Company.feature</DependentUpon>
+    </Compile>
     <Compile Include="Tests\Property\Property.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -139,6 +145,10 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Tests\Company\Company.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Company.feature.cs</LastGenOutput>
+    </None>
     <None Include="Tests\Property\Property.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Property.feature.cs</LastGenOutput>

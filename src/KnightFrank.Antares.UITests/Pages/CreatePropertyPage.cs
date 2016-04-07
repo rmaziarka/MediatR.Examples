@@ -19,7 +19,7 @@
 
         public CreatePropertyPage OpenAddPropertyPage()
         {
-            new CommonPage(this.DriverContext).NavigateToPage("add property");
+            new CommonPage(this.DriverContext).NavigateToPage("create property");
             return this;
         }
 
