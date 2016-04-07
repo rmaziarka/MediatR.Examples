@@ -1,9 +1,8 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares {
-    import ActivityPreviewController = Antares.Activity.Preview.ActivityPreviewController;
-    import Activity = Common.Models.Business.Activity;
-    import Contact = Common.Models.Dto.Contact;
+    import ActivityPreviewController = Activity.Preview.ActivityPreviewController;
+    import Business = Common.Models.Business;
 
     describe('Given activity preview component is loaded', () => {
         var scope: ng.IScope,
@@ -15,15 +14,15 @@ module Antares {
 
 
         describe('and proper property id is provided', () => {
-            var activityMock: Activity = {
+            var activityMock: Business.Activity = {
                 id: '999',
                 propertyId: '111',
                 property: null,
                 activityStatusId: 'testSatusId',
                 //TODO: test data generator should be implemented to simplifi mockig data
                 contacts: [
-                    <Contact>{ id: '11', firstName: 'John', surname: 'Test1', title: 'Mr' },
-                    <Contact>{ id: '22', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }],
+                    <Business.Contact>{ id: '11', firstName: 'John', surname: 'Test1', title: 'Mr' },
+                    <Business.Contact>{ id: '22', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }],
                 createdDate: new Date()
             };
             beforeEach(inject((

@@ -2,9 +2,8 @@
 
 module Antares {
     import ActivityAddController = Activity.ActivityAddController;
-    import IProperty = Antares.Common.Models.Dto.IProperty;
-    import Dto = Antares.Common.Models.Dto;
-    import Business = Antares.Common.Models.Business;
+    import Dto = Common.Models.Dto;
+    import Business = Common.Models.Business;
 
     describe('Given activity is being added', () => {
         var scope: ng.IScope,
@@ -30,7 +29,7 @@ module Antares {
 
         var createVendors = (count: number) => {
             return _.map(TestHelpers.ContactGenerator.GenerateMany(count), (dtoContact: Dto.IContact) => {
-                return new Dto.Contact(dtoContact);
+                return new Business.Contact(dtoContact);
             });
         }
 
@@ -65,7 +64,7 @@ module Antares {
         });
 
         describe('when vendors are set in component', () => {
-            var setVendors = (vendorsCount: number): Dto.Contact[] =>{
+            var setVendors = (vendorsCount: number): Business.Contact[] =>{
                 var vendors = createVendors(vendorsCount);
 
                 controller.setVendors(vendors);
@@ -84,7 +83,7 @@ module Antares {
 
             it('then his name should be displayed correctly', () => {
                 var vendorsCount: number = 1;
-                var vendor: Dto.Contact = setVendors(vendorsCount)[0];
+                var vendor: Business.Contact = setVendors(vendorsCount)[0];
 
                 var elements: ng.IAugmentedJQuery = element.find(pageObjectSelectors.vendors);
                 expect(elements.length).toBe(1);
@@ -105,7 +104,7 @@ module Antares {
         });
 
         describe('when "Save button" is clicked ', () =>{
-            var propertyMock: IProperty;
+            var propertyMock: Dto.IProperty;
 
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,

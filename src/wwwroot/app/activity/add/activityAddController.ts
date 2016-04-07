@@ -13,7 +13,7 @@ module Antares.Activity {
         defaultActivityStatusCode: string = 'PreAppraisal';
         activityResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityResource>;
 
-        private vendors: Array<Dto.Contact>;
+        private vendors: Array<Business.Contact>;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -33,7 +33,7 @@ module Antares.Activity {
             this.activityStatuses = result.items;
         }
 
-        setVendors(vendors: Array<Dto.Contact>){
+        setVendors(vendors: Array<Business.Contact>){
             this.vendors = vendors;
         }
 
@@ -46,11 +46,11 @@ module Antares.Activity {
             activity.propertyId = propertyId;
             activity.activityStatusId = this.selectedActivityStatus.id;
             activity.contacts = this.vendors;
-            
+
             return this.activityResource.save(activity).$promise.then((result: Dto.IActivity) => {
-                var addedActivity = new Business.Activity(result);              
-                               
-                this.activities.push(addedActivity);                
+                var addedActivity = new Business.Activity(result);
+
+                this.activities.push(addedActivity);
             });
         }
 
@@ -59,7 +59,7 @@ module Antares.Activity {
             form.$setSubmitted();
             return form.$valid;
         }
-        
+
         setDefaultActivityStatus = (result: any) => {
             var defaultActivityStatus: any = _.find(result, { 'code': this.defaultActivityStatusCode });
 
@@ -67,7 +67,7 @@ module Antares.Activity {
                 this.selectedActivityStatus = defaultActivityStatus;
             }
         }
-        
+
         clearActivity = () => {
             this.setDefaultActivityStatus(this.activityStatuses);
             var form = this.$scope["addActivityForm"];

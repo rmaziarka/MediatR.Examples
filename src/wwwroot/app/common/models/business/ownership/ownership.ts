@@ -11,12 +11,12 @@ module Antares.Common.Models.Business {
         isCurrentOwner: boolean;
         ownershipTypeId: string;
         ownershipType: Dto.IOwnershipType;
-        contacts: Dto.Contact[];
+        contacts: Contact[];
 
         constructor(ownership?: Dto.IOwnership) {
             if (ownership) {
                 angular.extend(this, ownership);
-                this.contacts = ownership.contacts.map((value: Dto.IContact) => { return new Dto.Contact(value); });
+                this.contacts = ownership.contacts.map((value: Dto.IContact) => { return new Contact(value); });
                 this.isCurrentOwner = !this.sellDate;
             }
         }

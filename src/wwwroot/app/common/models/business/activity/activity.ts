@@ -5,7 +5,7 @@ module Antares.Common.Models.Business {
         id: string = '';
         propertyId: string = '';
         activityStatusId: string = '';
-        contacts: Dto.Contact[] = [];
+        contacts: Contact[] = [];
         property: Property = null;
         createdDate: Date = null;
 
@@ -14,7 +14,7 @@ module Antares.Common.Models.Business {
                 angular.extend(this, activity);
 
                 this.createdDate = Core.DateTimeUtils.convertDateToUtc(activity.createdDate);
-                this.contacts = activity.contacts.map((contact: Dto.IContact) => { return new Dto.Contact(contact) });
+                this.contacts = activity.contacts.map((contact: Dto.IContact) => { return new Contact(contact) });
             }
         }
     }

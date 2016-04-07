@@ -2,9 +2,9 @@
 
 module Antares {
     import PropertyViewController = Property.View.PropertyViewController;
-    import ContactListController = Antares.Component.ContactListController;
-    import Dto = Antares.Common.Models.Dto;
-    import Business = Antares.Common.Models.Business;
+    import ContactListController = Component.ContactListController;
+    import Dto = Common.Models.Dto;
+    import Business = Common.Models.Business;
 
     describe('Given view property page is loaded', () => {
         var scope: ng.IScope,
@@ -151,8 +151,8 @@ module Antares {
                         activityStatusId : '123',
                         createdDate : date1Mock,
                         contacts : [
-                            <Dto.Contact>{ id : 'Contact1', firstName : 'John', surname : 'Test1', title : 'Mr' },
-                            <Dto.Contact>{ id : 'Contact2', firstName : 'Amy', surname : 'Test2', title : 'Mrs' }
+                            <Business.Contact>{ id : 'Contact1', firstName : 'John', surname : 'Test1', title : 'Mr' },
+                            <Business.Contact>{ id : 'Contact2', firstName : 'Amy', surname : 'Test2', title : 'Mrs' }
                         ]
                     })
                 ];
@@ -192,8 +192,8 @@ module Antares {
                         activityStatusId: '456',
                         createdDate: date2Mock,
                         contacts : [
-                            <Dto.Contact>{ id : 'Contact1', firstName : 'John', surname : 'Test1', title : 'Mr' },
-                            <Dto.Contact>{ id : 'Contact2', firstName : 'Amy', surname : 'Test2', title : 'Mrs' }
+                            <Business.Contact>{ id : 'Contact1', firstName : 'John', surname : 'Test1', title : 'Mr' },
+                            <Business.Contact>{ id : 'Contact2', firstName : 'Amy', surname : 'Test2', title : 'Mrs' }
                         ]
                     })
                 ]
@@ -270,9 +270,9 @@ module Antares {
                 var contactListController: ContactListController = element.find('contact-list').controller('contactList');
                 contactListController.isLoading = false;
                 contactListController.contacts = [
-                    new Dto.Contact(<Dto.IContact>{ firstName: 'Vernon', surname: 'Vaughn', title: 'Mr' }),
-                    new Dto.Contact(<Dto.IContact>{ firstName: 'Julie', surname: 'Lerman', title: 'Mrs' }),
-                    new Dto.Contact(<Dto.IContact>{ firstName: 'Mark', surname: 'Rendle', title: 'Mr' })
+                    new Business.Contact(<Dto.IContact>{ firstName: 'Vernon', surname: 'Vaughn', title: 'Mr' }),
+                    new Business.Contact(<Dto.IContact>{ firstName: 'Julie', surname: 'Lerman', title: 'Mrs' }),
+                    new Business.Contact(<Dto.IContact>{ firstName: 'Mark', surname: 'Rendle', title: 'Mr' })
                 ];
 
                 scope.$apply();
@@ -376,8 +376,5 @@ module Antares {
                 return ownershipPanel.find('#' + fieldId).html();
             }
         });
-
-
-
     });
 }

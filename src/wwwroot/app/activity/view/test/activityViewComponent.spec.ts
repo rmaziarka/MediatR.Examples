@@ -48,8 +48,8 @@ module Antares {
                 activityStatusId : '123',
                 createdDate : createdDateMock,
                 contacts : [
-                    <Dto.Contact>{ id : 'Contact1', firstName : 'John', surname : 'Test1', title : 'Mr' },
-                    <Dto.Contact>{ id : 'Contact2', firstName : 'Amy', surname : 'Test2', title : 'Mrs' }
+                    <Business.Contact>{ id : 'Contact1', firstName : 'John', surname : 'Test1', title : 'Mr' },
+                    <Business.Contact>{ id : 'Contact2', firstName : 'Amy', surname : 'Test2', title : 'Mrs' }
                 ]
             });
 
@@ -184,8 +184,8 @@ module Antares {
                     activityStatusId: '123',
                     createdDate: createdDateMock,
                     contacts: [
-                        <Dto.Contact>{ id: 'Contact1', firstName: 'John', surname: 'Test1', title: 'Mr' },
-                        <Dto.Contact>{ id: 'Contact2', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }
+                        <Business.Contact>{ id: 'Contact1', firstName: 'John', surname: 'Test1', title: 'Mr' },
+                        <Business.Contact>{ id: 'Contact2', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }
                     ]
                 });
 
@@ -221,8 +221,8 @@ module Antares {
                     activityStatusId: '123',
                     createdDate: createdDateMock,
                     contacts: [
-                        <Dto.Contact>{ id: 'Contact1', firstName: 'John', surname: 'Test1', title: 'Mr' },
-                        <Dto.Contact>{ id: 'Contact2', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }
+                        <Business.Contact>{ id: 'Contact1', firstName: 'John', surname: 'Test1', title: 'Mr' },
+                        <Business.Contact>{ id: 'Contact2', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }
                     ]
                 });
 
@@ -259,8 +259,8 @@ module Antares {
                 activityStatusId : '123',
                 createdDate : createdDateMock,
                 contacts : [
-                    <Dto.Contact>{ id : 'Contact1', firstName : 'John', surname : 'Test1', title : 'Mr' },
-                    <Dto.Contact>{ id : 'Contact2', firstName : 'Amy', surname : 'Test2', title : 'Mrs' }
+                    <Business.Contact>{ id : 'Contact1', firstName : 'John', surname : 'Test1', title : 'Mr' },
+                    <Business.Contact>{ id : 'Contact2', firstName : 'Amy', surname : 'Test2', title : 'Mrs' }
                 ]
             });
 
@@ -311,8 +311,8 @@ module Antares {
                 activityStatusId: '123',
                 createdDate: createdDateMock,
                 contacts: [
-                    <Dto.Contact>{ id: 'Contact1', firstName: 'John', surname: 'Test1', title: 'Mr' },
-                    <Dto.Contact>{ id: 'Contact2', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }
+                    <Business.Contact>{ id: 'Contact1', firstName: 'John', surname: 'Test1', title: 'Mr' },
+                    <Business.Contact>{ id: 'Contact2', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }
                 ]
             });
 

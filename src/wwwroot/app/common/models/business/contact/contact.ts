@@ -1,4 +1,6 @@
-module Antares.Common.Models.Dto {
+/// <reference path="../../../../typings/_all.d.ts" />
+
+module Antares.Common.Models.Business {
     export class Contact {
 
         id: string;
@@ -6,7 +8,7 @@ module Antares.Common.Models.Dto {
         surname: string;
         title: string;
 
-        constructor(contact?: IContact) {
+        constructor(contact?: Dto.IContact) {
             angular.extend(this, contact);
         }
 
