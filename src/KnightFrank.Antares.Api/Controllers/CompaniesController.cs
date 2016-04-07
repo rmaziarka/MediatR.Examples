@@ -12,7 +12,7 @@ namespace KnightFrank.Antares.Api.Controllers
     /// <summary>
     ///     Companies controller
     /// </summary>
-    [Route("api/companies")]
+    [RoutePrefix("api/companies")]
     public class CompaniesController : ApiController
     {
         private readonly IMediator mediator;
