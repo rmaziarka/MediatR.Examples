@@ -6,6 +6,11 @@
     using MediatR;
     public class CreateActivityCommand : IRequest<Guid>
     {
+        public CreateActivityCommand()
+        {
+            this.Contacts = new List<CreateActivityContact>();
+        }
+
         public Guid PropertyId { get; set; }
         
         public Guid ActivityStatusId { get; set; }
