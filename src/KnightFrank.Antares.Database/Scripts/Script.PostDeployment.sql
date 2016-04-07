@@ -9,4 +9,13 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-:r .\Data\PreloadContact.sql
+
+--:r .\Locale.sql
+--:r .\Country.sql
+--:r .\Department.sql
+--:r .\Business.sql
+:r .\Role.sql
+--:r .\EnumType.sql
+--:r .\EnumTypeItem.sql
+--:r .\PropertyType.sql
+--:r .\PropertyTypeDefinition.sql

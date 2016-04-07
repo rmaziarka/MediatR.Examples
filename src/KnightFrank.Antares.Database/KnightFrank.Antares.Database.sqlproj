@@ -26,6 +26,7 @@
     <IncludeSchemaNameInFileName>True</IncludeSchemaNameInFileName>
     <TargetFrameworkProfile />
     <DefaultCollation>Latin1_General_CI_AS</DefaultCollation>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -65,10 +66,27 @@
     <Folder Include="Scripts" />
     <Folder Include="Publish" />
     <Folder Include="Scripts\Data" />
+    <Folder Include="Scripts\Data\Test" />
+    <Folder Include="Scripts\Data\Configuration" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Data\PreloadContact.sql" />
     <None Include="KnightFrank.Antares.Database.nuspec" />
+    <None Include="Scripts\Data\Configuration\businesses.csv" />
+    <None Include="Scripts\Data\Configuration\countries.csv" />
+    <None Include="Scripts\Data\Configuration\departments.csv" />
+    <None Include="Scripts\Data\Configuration\enumlocalised.csv" />
+    <None Include="Scripts\Data\Configuration\enumtypes.csv" />
+    <None Include="Scripts\Data\Configuration\locale.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\propertytypedefinitions.csv" />
+    <None Include="Scripts\Data\Configuration\propertytypelocalised.csv" />
+    <None Include="Scripts\Data\Configuration\propertytypes.csv" />
+    <None Include="Scripts\Data\Configuration\roles.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Role.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
@@ -83,9 +101,46 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-    <Import Project="..\packages\OctoPack.3.0.53\tools\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.0.53\tools\OctoPack.targets')" />
-    <Target Name="EnsureOctoPackImported" BeforeTargets="BeforeBuild" Condition="'$(OctoPackImported)' == ''">
-        <Error Condition="!Exists('..\packages\OctoPack.3.0.53\tools\OctoPack.targets') And ('$(RunOctoPack)' != '' And $(RunOctoPack))" Text="You are trying to build with OctoPack, but the NuGet targets file that OctoPack depends on is not available on this computer. This is probably because the OctoPack package has not been committed to source control, or NuGet Package Restore is not enabled. Please enable NuGet Package Restore to download them. For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
-        <Error Condition="Exists('..\packages\OctoPack.3.0.53\tools\OctoPack.targets') And ('$(RunOctoPack)' != '' And $(RunOctoPack))" Text="OctoPack cannot be run because NuGet packages were restored prior to the build running, and the targets file was unavailable when the build started. Please build the project again to include these packages in the build. You may also need to make sure that your build server does not delete packages prior to each build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
-    </Target>
+  <ItemGroup>
+    <SqlCommandVariableOverride Include="OutputPath=$(MSBuildProjectDirectory)" />
+  </ItemGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="OutputPath">
+      <DefaultValue>$(MSBuildProjectDirectory)</DefaultValue>
+      <Value>$(SqlCmdVar__1)</Value>
+    </SqlCmdVariable>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\Locale.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\Country.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\Business.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\Department.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\EnumType.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\EnumTypeItem.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\PropertyTypeDefinition.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\PropertyType.sql" />
+  </ItemGroup>
+  <Import Project="..\packages\OctoPack.3.0.53\tools\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.0.53\tools\OctoPack.targets')" />
+  <Target Name="EnsureOctoPackImported" BeforeTargets="BeforeBuild" Condition="'$(OctoPackImported)' == ''">
+    <Error Condition="!Exists('..\packages\OctoPack.3.0.53\tools\OctoPack.targets') And ('$(RunOctoPack)' != '' And $(RunOctoPack))" Text="You are trying to build with OctoPack, but the NuGet targets file that OctoPack depends on is not available on this computer. This is probably because the OctoPack package has not been committed to source control, or NuGet Package Restore is not enabled. Please enable NuGet Package Restore to download them. For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\OctoPack.3.0.53\tools\OctoPack.targets') And ('$(RunOctoPack)' != '' And $(RunOctoPack))" Text="OctoPack cannot be run because NuGet packages were restored prior to the build running, and the targets file was unavailable when the build started. Please build the project again to include these packages in the build. You may also need to make sure that your build server does not delete packages prior to each build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
 </Project>
