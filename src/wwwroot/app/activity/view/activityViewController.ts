@@ -3,7 +3,7 @@
 module Antares.Activity.View {
     import Business = Antares.Common.Models.Business;
 
-    export class ActivityViewController {
+    export class ActivityViewController  {
         componentIds: any = {
             propertyPreviewId: 'viewActivity:propertyPreviewComponent',
             propertyPreviewSidePanelId: 'viewActivity:propertyPreviewSidePanelComponent'
@@ -34,6 +34,10 @@ module Antares.Activity.View {
         showPropertyPreview = (property: Business.Property) => {
             this.components.propertyPreview().setProperty(property);
             this.showPanel(this.components.panels.propertyPreview);
+        }
+
+        goToEdit() {
+            this.$state.go('app.activity-edit', { id: this.$state.params['id'] });
         }
 
         private hidePanels(hideCurrent: boolean = true) {

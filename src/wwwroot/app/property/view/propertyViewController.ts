@@ -5,35 +5,10 @@ module Antares.Property.View {
     import Business = Common.Models.Business;
     import CartListOrder = Common.Component.CartListOrder;
 
-    export class PropertyViewController {
-        componentIds: any = {
-            contactListId: 'viewProperty:contactListComponent',
-            contactSidePanelId: 'viewProperty:contactSidePanelComponent',
-            ownershipSidePanelId: 'viewProperty:ownershipSidePanelComponent',
-            ownershipAddId: 'viewProperty:ownershipAddComponent',
-            ownershipViewId: 'viewProperty:ownershipViewComponent',
-            activityAddId: 'viewProperty:activityAddComponent',
-            activityAddSidePanelId: 'viewProperty:activityAddSidePanelComponent',
-            activityPreviewId: 'viewProperty:activityPreviewComponent',
-            activityPreviewSidePanelId: 'viewProperty:activityPreviewSidePanelComponent'
-        }
 
+    export class PropertyViewController extends Core.WithPanelsBaseController {
         ownershipAddPanelVisible: boolean = false;
         propertyId: string;
-
-        components: any = {
-            contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
-            activityAdd: () => { return this.componentRegistry.get(this.componentIds.activityAddId); },
-            activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewId); },
-            ownershipAdd: () => { return this.componentRegistry.get(this.componentIds.ownershipAddId); },
-            ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewId); },
-            panels: {
-                contact : () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
-                ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); },
-                activityAdd: () => { return this.componentRegistry.get(this.componentIds.activityAddSidePanelId); },
-                activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId); }
-            }
-        }
 
         loadingContacts: boolean = false;
 
@@ -42,30 +17,16 @@ module Antares.Property.View {
 
         property: Business.Property;
 
-        currentPanel: any;
-
         constructor(
+            componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
-            private componentRegistry: Core.Service.ComponentRegistry,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService) {
 
+            super(componentRegistry, $scope);
+
             this.propertyId = $state.params['id'];
-
             this.fixOwnershipDates();
-
-            $scope.$on('$destroy', () => {
-                this.componentRegistry.deregister(this.componentIds.contactListId);
-                this.componentRegistry.deregister(this.componentIds.contactSidePanelId);
-                this.componentRegistry.deregister(this.componentIds.ownershipSidePanelId);
-                this.componentRegistry.deregister(this.componentIds.ownershipAddId);
-                this.componentRegistry.deregister(this.componentIds.ownershipViewId);
-                this.componentRegistry.deregister(this.componentIds.ownershipViewSidePanelId);
-                this.componentRegistry.deregister(this.componentIds.activityAddId);
-                this.componentRegistry.deregister(this.componentIds.activityAddSidePanelId);
-                this.componentRegistry.deregister(this.componentIds.activityPreviewId);
-                this.componentRegistry.deregister(this.componentIds.activityPreviewSidePanelId);
-            });
         }
 
         fixOwnershipDates = () => {
@@ -150,21 +111,34 @@ module Antares.Property.View {
             });
         }
 
-        private hidePanels(hideCurrent: boolean = true) {
-            for (var panel in this.components.panels) {
-                if (this.components.panels.hasOwnProperty(panel)) {
-                    if (hideCurrent === false && this.currentPanel === this.components.panels[panel]()) {
-                        continue;
-                    }
-                    this.components.panels[panel]().hide();
-                }
-            }
+        defineComponentIds() {
+            this.componentIds = {
+                contactListId: 'viewProperty:contactListComponent',
+                contactSidePanelId: 'viewProperty:contactSidePanelComponent',
+                ownershipSidePanelId: 'viewProperty:ownershipSidePanelComponent',
+                ownershipAddId: 'viewProperty:ownershipAddComponent',
+                ownershipViewId: 'viewProperty:ownershipViewComponent',
+                activityAddId: 'viewProperty:activityAddComponent',
+                activityAddSidePanelId: 'viewProperty:activityAddSidePanelComponent',
+                activityPreviewId: 'viewProperty:activityPreviewComponent',
+                activityPreviewSidePanelId: 'viewProperty:activityPreviewSidePanelComponent'
+            };
         }
 
-        private showPanel(panel: any) {
-            this.hidePanels();
-            panel().show();
-            this.currentPanel = panel;
+        defineComponents() {
+            this.components = {
+                contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
+                activityAdd: () => { return this.componentRegistry.get(this.componentIds.activityAddId); },
+                activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewId); },
+                ownershipAdd: () => { return this.componentRegistry.get(this.componentIds.ownershipAddId); },
+                ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewId); },
+                panels: {
+                    contact: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
+                    ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); },
+                    activityAdd: () => { return this.componentRegistry.get(this.componentIds.activityAddSidePanelId); },
+                    activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId); }
+                }
+            };
         }
     }
 

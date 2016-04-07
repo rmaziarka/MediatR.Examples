@@ -1,6 +1,7 @@
 ﻿{
   "COMMON": {
     "SAVE": "Save",
+    "EDIT": "Edit",
     "CANCEL": "Cancel",
     "MIN": "Min",
     "MAX": "Max",
