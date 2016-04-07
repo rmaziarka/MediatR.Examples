@@ -15,14 +15,14 @@ module Antares.Property {
 
         constructor(
             private dataAccessService: Services.DataAccessService,
-            private $state: ng.ui.IStateService){
+            private $state: ng.ui.IStateService) {
 
             this.divisionCode = this.userData.division.code;
             this.propertyResource = dataAccessService.getPropertyResource();
             this.loadPropertyTypes();
         }
 
-        changeDivision = (divisionCode: string) =>{
+        changeDivision = (divisionCode: string) => {
             this.divisionCode = divisionCode;
             this.property.propertyTypeId = null;
             this.loadPropertyTypes();

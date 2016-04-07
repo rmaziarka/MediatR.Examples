@@ -12,6 +12,7 @@ module Antares {
             controller: PropertyEditController;
 
         var countriesMock = [{ country: { id: "1111", isoCode: "GB" }, locale: {}, value: "United Kingdom" }];
+        var propertyTypesMock = { propertyTypes: [{ "id": "45cc9d28-51fa-e511-828b-8cdcd42baca7", "parentId": '45cc9d28-51fa-e511-828b-8cdcd42baca7', "name": "Office" }] };
 
        describe('when proper property is loaded', () => {
             var countryMockId = countriesMock[0].country.id,
@@ -42,17 +43,21 @@ module Antares {
                 $http.whenGET(/\/api\/resources\/countries\/addressform\?entityTypeItemCode=Property/).respond(() => {
                     return [200, countriesMock];
                 });
+
                 $http.whenGET(/\/api\/addressForms\/\?entityType=Property&countryCode=GB/).respond(() => {
                     return [200, addressFormMock];
+                });
+
+                $http.whenGET(/\/api\/properties\/types/).respond(() => {
+                    return [200, propertyTypesMock];
                 });
 
                 // compile
                 scope['property'] = propertyMock;
                 element = compile('<property-edit property="property"></property-edit>')(scope);
+                $httpBackend.flush();
                 scope.$apply();
                 controller = element.controller('propertyEdit');
-
-                $http.flush();
             }));
 
             it('then property details are loaded', () =>{

@@ -29,7 +29,7 @@ module Antares.Property {
             .state('app.property-edit', {
                 url: '/property/edit/:id',
                 params: {},
-                template: '<property-edit property="property"></property-edit>',
+                template: '<property-edit user-data="appVm.userData" property="property"></property-edit>',
                 controller: ($scope: ng.IScope, property: Business.Property) => {
                     $scope['property'] = property;
                 },

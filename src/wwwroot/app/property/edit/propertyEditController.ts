@@ -8,20 +8,42 @@ module Antares.Property {
         public entityTypeCode: string = 'Property';
         public property: Business.Property;
 
-        private propertyResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IPropertyResource>;
+        private propertyResource: Common.Models.Resources.IPropertyResourceClass;
+        private propertyTypes: any[];
+        private userData: Antares.Common.Models.Dto.IUserData;
+        private divisionCode: string;
 
         constructor(
             private dataAccessService: Services.DataAccessService,
-            private $state: ng.ui.IStateService){
+            private $state: ng.ui.IStateService) {
 
+            this.divisionCode = this.userData.division.code;
             this.propertyResource = dataAccessService.getPropertyResource();
+            this.loadPropertyTypes();
         }
 
-        public save(){
+        changeDivision = (divisionCode: string) => {
+            this.divisionCode = divisionCode;
+            this.property.propertyTypeId = null;
+            this.loadPropertyTypes();
+        }
+
+        loadPropertyTypes = () => {
+            this.propertyResource
+                .getPropertyTypes({
+                    countryCode: this.userData.country, divisionCode: this.divisionCode, localeCode: 'en'
+                }, null)
+                .$promise
+                .then((propertyTypes: any) => {
+                    this.propertyTypes = propertyTypes.propertyTypes;
+                });
+        }
+
+        public save() {
             this.propertyResource
                 .update(this.property)
                 .$promise
-                .then((property: Dto.IProperty) =>{
+                .then((property: Dto.IProperty) => {
                     this.$state.go('app.property-view', property);
                 });
         }

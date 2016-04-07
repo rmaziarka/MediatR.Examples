@@ -36,6 +36,8 @@
                 throw new ResourceNotFoundException("Property does not exist", message.Id);
             }
 
+            property.PropertyTypeId = message.PropertyTypeId;
+
             Mapper.Map(message.Address, property.Address);
 
             ValidationResult validationResult = this.propertyValidator.Validate(property);
