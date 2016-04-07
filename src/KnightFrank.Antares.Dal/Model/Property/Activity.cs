@@ -17,5 +17,11 @@
         public EnumTypeItem ActivityStatus { get; set; }
 
         public virtual ICollection<Contact> Contacts { get; set; }
+
+        public decimal? MarketAppraisalPrice { get; set; }
+
+        public decimal? RecommendedPrice { get; set; }
+
+        public decimal? VendorEstimatedPrice { get; set; }
     }
 }

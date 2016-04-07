@@ -173,6 +173,10 @@
     <Compile Include="Migrations\201604060934425_Company.Designer.cs">
       <DependentUpon>201604060934425_Company.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604070825300_AddValuationPricesToActivity.cs" />
+    <Compile Include="Migrations\201604070825300_AddValuationPricesToActivity.Designer.cs">
+      <DependentUpon>201604070825300_AddValuationPricesToActivity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Address\Address.cs" />
     <Compile Include="Model\Address\AddressField.cs" />
     <Compile Include="Model\Address\AddressFieldDefinition.cs" />
@@ -344,6 +348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604060934425_Company.resx">
       <DependentUpon>201604060934425_Company.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604070825300_AddValuationPricesToActivity.resx">
+      <DependentUpon>201604070825300_AddValuationPricesToActivity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

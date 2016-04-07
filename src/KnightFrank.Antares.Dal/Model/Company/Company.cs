@@ -1,6 +1,5 @@
 ﻿namespace KnightFrank.Antares.Dal.Model.Company
 {
-    using System.Collections;
     using System.Collections.Generic;
 
     using KnightFrank.Antares.Dal.Model.Contacts;

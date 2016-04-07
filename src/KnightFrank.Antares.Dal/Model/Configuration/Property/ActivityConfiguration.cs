@@ -19,6 +19,16 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property
                         cs.MapLeftKey("ActivityId");
                         cs.MapRightKey("ContactId");
                     });
+
+
+            this.Property(o => o.MarketAppraisalPrice)
+                .HasPrecision(19, 4);
+
+            this.Property(o => o.RecommendedPrice)
+                .HasPrecision(19, 4);
+
+            this.Property(o => o.VendorEstimatedPrice)
+                .HasPrecision(19, 4);
         }
     }
 }
