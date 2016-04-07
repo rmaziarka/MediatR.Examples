@@ -11,7 +11,7 @@ module Antares.Company {
                 url: '/company/add',
                 templateUrl: 'app/company/add/companyAdd.html',
                 controllerAs: 'vm',
-                controller: 'companyAddController'
+                controller: 'CompanyAddController'
             });
     }
 }
