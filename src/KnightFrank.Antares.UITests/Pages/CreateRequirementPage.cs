@@ -35,15 +35,15 @@
         // New residential sales requiremen actions
         private readonly ElementLocator saveResidentialSalesRequirement = new ElementLocator(Locator.Id, "saveBtn");
 
-        public AddressTemplatePage AddressTemplate => new AddressTemplatePage(this.DriverContext);
-
-        public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
-
         public CreateRequirementPage(DriverContext driverContext) : base(driverContext)
         {
         }
 
-        public CreateRequirementPage OpenNewResidentialSalesRequirementPage()
+        public AddressTemplatePage AddressTemplate => new AddressTemplatePage(this.DriverContext);
+
+        public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
+
+        public CreateRequirementPage OpenCreateRequirementPage()
         {
             new CommonPage(this.DriverContext).NavigateToPage("create requirement");
             this.Driver.WaitForAngularToFinish();
@@ -146,7 +146,7 @@
             return this;
         }
 
-        public void SaveNewResidentialSalesRequirement()
+        public void SaveRequirement()
         {
             this.Driver.GetElement(this.saveResidentialSalesRequirement).Click();
             this.Driver.WaitForAngularToFinish(BaseConfiguration.MediumTimeout);
@@ -160,6 +160,6 @@
         public List<string> GetApplicants()
         {
             return this.Driver.GetElements(this.applicantsList).Select(el => el.Text).ToList();
-        } 
+        }
     }
 }

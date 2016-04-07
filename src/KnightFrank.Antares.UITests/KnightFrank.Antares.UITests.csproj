@@ -103,6 +103,7 @@
     <Compile Include="Pages\CommonPage.cs" />
     <Compile Include="Pages\ContactsListPage.cs" />
     <Compile Include="Pages\CreateActivityPage.cs" />
+    <Compile Include="Pages\CreateCompanyPage.cs" />
     <Compile Include="Pages\CreatePropertyPage.cs" />
     <Compile Include="Pages\CreateContactPage.cs" />
     <Compile Include="Pages\CreateRequirementPage.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="ProjectTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steps\CreateActivitySteps.cs" />
+    <Compile Include="Steps\CreateCompanySteps.cs" />
     <Compile Include="Steps\CreatePropertySteps.cs" />
     <Compile Include="Steps\CreateContactSteps.cs" />
     <Compile Include="Steps\CreateRequirementSteps.cs" />

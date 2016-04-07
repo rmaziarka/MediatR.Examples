@@ -31,7 +31,7 @@
         [When(@"User navigates to create property page")]
         public void OpenCreatePropertyPage()
         {
-            CreatePropertyPage page = new CreatePropertyPage(this.driverContext).OpenAddPropertyPage();
+            CreatePropertyPage page = new CreatePropertyPage(this.driverContext).OpenCreatePropertyPage();
             this.scenarioContext["CreatePropertyPage"] = page;
         }
 

@@ -12,7 +12,6 @@
     [Binding]
     public class CreateActivitySteps
     {
-//        private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
 
         public CreateActivitySteps(ScenarioContext scenarioContext)
@@ -22,7 +21,6 @@
                 throw new ArgumentNullException(nameof(scenarioContext));
             }
             this.scenarioContext = scenarioContext;
-//            this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
         }
 
         [When(@"User clicks save button on activity panel")]

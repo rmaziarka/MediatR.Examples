@@ -22,6 +22,10 @@
         private readonly ElementLocator activityStatus = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] small");
         private readonly ElementLocator activityDetailsLink = new ElementLocator(Locator.CssSelector, "#card-list-activities #detailsLink");
 
+        public ViewPropertyPage(DriverContext driverContext) : base(driverContext)
+        {
+        }
+
         public CreateActivityPage Activity => new CreateActivityPage(this.DriverContext);
 
         public OwnershipDetailsPage Ownership => new OwnershipDetailsPage(this.DriverContext);
@@ -29,10 +33,6 @@
         public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
 
         public ViewActivityPreviewPage PreviewDetails => new ViewActivityPreviewPage(this.DriverContext);
-
-        public ViewPropertyPage(DriverContext driverContext) : base(driverContext)
-        {
-        }
 
         public bool IsAddressDetailsVisible(string propertyNumber)
         {

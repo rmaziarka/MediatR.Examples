@@ -37,7 +37,7 @@
         public void CheckResidentialSalesRequirementLocationDetails(Table table)
         {
             Dictionary<string, string> details =
-                this.scenarioContext.Get<ViewRequirementPage>("ResidentialSalesRequirementDetailsPage")
+                this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage")
                     .GetLocationRequirements();
             var expectedDetails = table.CreateInstance<Address>();
 
@@ -51,7 +51,7 @@
         public void CheckResidentialSalesRequirementPropertyDetails(Table table)
         {
             Dictionary<string, string> details =
-                this.scenarioContext.Get<ViewRequirementPage>("ResidentialSalesRequirementDetailsPage")
+                this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage")
                     .GetPropertyRequirements();
             var expectedDetails = table.CreateInstance<Requirement>();
 
@@ -70,7 +70,7 @@
         public void CheckResidentialSalesRequirementApplicants(Table table)
         {
             List<string> applicants =
-                this.scenarioContext.Get<ViewRequirementPage>("ResidentialSalesRequirementDetailsPage")
+                this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage")
                     .GetApplicants();
             List<string> expectedApplicants =
                 table.CreateSet<Contact>().Select(contact => contact.FirstName + " " + contact.Surname).ToList();
@@ -84,7 +84,7 @@
             var date = this.scenarioContext.Get<DateTime>("RequirementDate");
 
             Assert.Equal(date.ToString("MMMM d, yyyy"),
-                this.scenarioContext.Get<ViewRequirementPage>("ResidentialSalesRequirementDetailsPage")
+                this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage")
                     .GetRequirementCreateDate());
         }
     }

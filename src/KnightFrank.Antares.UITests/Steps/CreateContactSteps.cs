@@ -29,30 +29,30 @@
 
         [Given(@"User navigates to create contact page")]
         [When(@"User navigates to create contact page")]
-        public void OpenNewContactPage()
+        public void OpenCreateContactPage()
         {
-            CreateContactPage page = new CreateContactPage(this.driverContext).OpenNewContactPage();
-            this.scenarioContext["NewContactPage"] = page;
+            CreateContactPage page = new CreateContactPage(this.driverContext).OpenCreateContactPage();
+            this.scenarioContext["CreateContactPage"] = page;
         }
 
         [Given(@"User creates contacts on create contact page")]
         public void CreateContacts(Table table)
         {
-            var page = this.scenarioContext.Get<CreateContactPage>("NewContactPage");
+            var page = this.scenarioContext.Get<CreateContactPage>("CreateContactPage");
             IEnumerable<Contact> contacts = table.CreateSet<Contact>();
             foreach (Contact contact in contacts)
             {
                 page.SetTitle(contact.Title)
                     .SetFirstName(contact.FirstName)
                     .SetSurname(contact.Surname)
-                    .SaveNewContact();
+                    .SaveContact();
             }
         }
 
         [When(@"User fills in contact details on create contact page")]
         public void SetNewContactDetails(Table table)
         {
-            var page = this.scenarioContext.Get<CreateContactPage>("NewContactPage");
+            var page = this.scenarioContext.Get<CreateContactPage>("CreateContactPage");
             var contactDetails = table.CreateInstance<Contact>();
 
             page.SetTitle(contactDetails.Title)
@@ -63,7 +63,7 @@
         [When(@"User clicks save button on create contact page")]
         public void SaveNewContact()
         {
-            this.scenarioContext.Get<CreateContactPage>("NewContactPage").SaveNewContact();
+            this.scenarioContext.Get<CreateContactPage>("CreateContactPage").SaveContact();
         }
 
         [Then(@"New contact should be created")]

@@ -15,7 +15,6 @@
     [Binding]
     public class ViewPropertySteps
     {
-        //private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
 
         public ViewPropertySteps(ScenarioContext scenarioContext)
@@ -26,8 +25,6 @@
             }
 
             this.scenarioContext = scenarioContext;
-
-            //this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
         }
 
         [When(@"User clicks add activites button on property details page")]
@@ -127,11 +124,10 @@
             }
         }
 
+        //        [Then(@"Then Activity preview panel is displayed with link to View Residential Sale Activity page")]
+        //        public void CheckActivityPreview()
         //        }
         //            var preview = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
         //        {
-        //        public void CheckActivityPreview()
-
-        //        [Then(@"Then Activity preview panel is displayed with link to View Residential Sale Activity page")]
     }
 }

@@ -18,7 +18,7 @@
         {
         }
 
-        public CreateContactPage OpenNewContactPage()
+        public CreateContactPage OpenCreateContactPage()
         {
             new CommonPage(this.DriverContext).NavigateToPage("create contact");
             return this;
@@ -42,7 +42,7 @@
             return this;
         }
 
-        public CreateContactPage SaveNewContact()
+        public CreateContactPage SaveContact()
         {
             this.Driver.GetElement(this.saveButton).Click();
             return this;
