@@ -6,7 +6,8 @@
     "MAX": "Max",
     "DETAILS": "details",
     "CONFIGURE": "Configure",
-    "BACK":  "Back"
+    "BACK": "Back",
+    "SELECTEMPTYVALUE": "- select -"
   },
   "OWNERSHIP": {
     "ADD": {

@@ -4,7 +4,7 @@
             <div class="col-md-9">
                 <label for="status" class="" translate="ACTIVITY.ADD.STATUS"></label>
                 <select class="form-control" required id="status" name="status" ng-options="item as item.value for item in vm.activityStatuses track by item.id" ng-model="vm.selectedActivityStatus">
-                    <option value=""></option>
+                    <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
                 </select>
                 <div ng-messages="addActivityForm.status.$error" ng-show="addActivityForm.$submitted || addActivityForm.status.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
