@@ -54,7 +54,7 @@
                     Required = false,
                     RowOrder = 1,
                     ColumnOrder = 1,
-                    ColumnSize = 6
+                    ColumnSize = 8
                 },
                 new AddressFieldDefinition
                 {
@@ -65,7 +65,7 @@
                     Required = false,
                     RowOrder = 2,
                     ColumnOrder = 1,
-                    ColumnSize = 6
+                    ColumnSize = 8
                 },
                 new AddressFieldDefinition
                 {
@@ -76,7 +76,7 @@
                     Required = false,
                     RowOrder = 3,
                     ColumnOrder = 1,
-                    ColumnSize = 6
+                    ColumnSize = 4
                 }
             };
 

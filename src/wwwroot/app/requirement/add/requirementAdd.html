@@ -5,7 +5,7 @@
         <form ng-submit="addRequirementForm.$valid && vm.save()" name="addRequirementForm" id="addRequirementForm" method="post"
               novalidate>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
 
                     <fieldset>
                         <legend>Location requirements</legend>
@@ -16,7 +16,7 @@
                         <fieldset>
                             <legend translate="REQUIREMENT.ADD.PRICE">Price</legend>
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.minPrice.$dirty) && addRequirementForm.minPrice.$invalid}">
                                         <label for="price-min" translate="COMMON.MIN">Min</label>
                                         <div class="input-group">
@@ -28,7 +28,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.maxPrice.$dirty) && addRequirementForm.maxPrice.$invalid}">
                                         <label for="price-max" translate="COMMON.MAX">Max</label>
                                         <div class="input-group">
@@ -45,7 +45,7 @@
                         <fieldset>
                             <legend translate="REQUIREMENT.ADD.BEDROOMS">Bedrooms</legend>
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.minBedrooms.$dirty) && addRequirementForm.minBedrooms.$invalid}">
                                         <label for="bedrooms-min" translate="COMMON.MIN">Min</label>
                                         <input type="number" min="0" max="{{vm.requirement.maxBedrooms}}" pattern="[0-9]+" class="form-control" id="bedrooms-min" name="minBedrooms" ng-model="vm.requirement.minBedrooms">
@@ -54,7 +54,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.maxBedrooms.$dirty) && addRequirementForm.maxBedrooms.$invalid}">
                                         <label for="bedrooms-max" translate="COMMON.MAX">Max</label>
                                         <input type="number" min="0" class="form-control" id="bedrooms-max" pattern="[0-9]+" name="maxBedrooms" ng-model="vm.requirement.maxBedrooms">
@@ -68,7 +68,7 @@
                         <fieldset>
                             <legend translate="REQUIREMENT.ADD.RECEPTIONROOMS">Reception rooms</legend>
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.minReceptionRooms.$dirty) && addRequirementForm.minReceptionRooms.$invalid}">
                                         <label for="reception-min" translate="COMMON.MIN">Min</label>
                                         <input type="number" min="0" max="{{vm.requirement.maxReceptionRooms}}" pattern="[0-9]+" name="minReceptionRooms" class="form-control" id="reception-min" ng-model="vm.requirement.minReceptionRooms">
@@ -77,7 +77,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.maxReceptionRooms.$dirty) && addRequirementForm.maxReceptionRooms.$invalid}">
                                         <label for="reception-max" translate="COMMON.MAX">Max</label>
                                         <input type="number" min="0" pattern="[0-9]+" class="form-control" id="reception-max" name="maxReceptionRooms" ng-model="vm.requirement.maxReceptionRooms">
@@ -91,7 +91,7 @@
                         <fieldset>
                             <legend translate="REQUIREMENT.ADD.BATHROOMS">Bathrooms</legend>
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.minBathrooms.$dirty) && addRequirementForm.minBathrooms.$invalid}">
                                         <label for="bathrooms-min" translate="COMMON.MIN">Min</label>
                                         <input type="number" min="0" max="{{vm.requirement.maxBathrooms}}" pattern="[0-9]+" name="minBathrooms" class="form-control" id="bathrooms-min" ng-model="vm.requirement.minBathrooms">
@@ -100,7 +100,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.maxBathrooms.$dirty) && addRequirementForm.maxBathrooms.$invalid}">
                                         <label for="bathrooms-max" translate="COMMON.MAX">Max</label>
                                         <input type="number" min="0" pattern="[0-9]+" class="form-control" id="bathrooms-max" name="maxBathrooms" ng-model="vm.requirement.maxBathrooms">
@@ -114,7 +114,7 @@
                         <fieldset>
                             <legend translate="REQUIREMENT.ADD.PARKINGSPACES">Parking spaces</legend>
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.minParkingSpaces.$dirty) && addRequirementForm.minParkingSpaces.$invalid}">
                                         <label for="parking-min" translate="COMMON.MIN">Min</label>
                                         <input type="number" min="0" max="{{vm.requirement.maxParkingSpaces}}" pattern="[0-9]+" name="minParkingSpaces" class="form-control" id="parking-min" ng-model="vm.requirement.minParkingSpaces">
@@ -123,7 +123,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.maxParkingSpaces.$dirty) && addRequirementForm.maxParkingSpaces.$invalid}">
                                         <label for="parking-max" translate="COMMON.MAX">Max</label>
                                         <input type="number" min="0" pattern="[0-9]+" class="form-control" id="parking-max" name="maxParkingSpaces" ng-model="vm.requirement.maxParkingSpaces">
@@ -137,7 +137,7 @@
                         <fieldset>
                             <legend translate="REQUIREMENT.ADD.AREA">Area</legend>
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.minArea.$dirty) && addRequirementForm.minArea.$invalid}">
                                         <label for="area-min" translate="COMMON.MIN">Min</label>
                                         <div class="input-group">
@@ -149,7 +149,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.maxArea.$dirty) && addRequirementForm.maxArea.$invalid}">
                                         <label for="area-max" translate="COMMON.MAX">Max</label>
                                         <div class="input-group">
@@ -166,7 +166,7 @@
                         <fieldset>
                             <legend translate="REQUIREMENT.ADD.LANDAREA">Land area</legend>
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.minLandArea.$dirty) && addRequirementForm.minLandArea.$invalid}">
                                         <label for="land-min" translate="COMMON.MIN">Min</label>
                                         <div class="input-group">
@@ -178,7 +178,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.maxLandArea.$dirty) && addRequirementForm.maxLandArea.$invalid}">
                                         <label for="land-max" translate="COMMON.MAX">Max</label>
                                         <div class="input-group">
@@ -194,7 +194,7 @@
                         </fieldset>
                         <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.description.$dirty) && addRequirementForm.description.$invalid}">
                             <div class="row">
-                                <div class="col-md-10">
+                                <div class="col-md-12">
                                     <label for="description" translate="REQUIREMENT.ADD.DESCRIPTION">Description</label>
                                     <textarea id="description" ng-maxlength="4000" rows="8" class="form-control" name="description" ng-model="vm.requirement.description"></textarea>
                                     <div ng-messages="addRequirementForm.description.$error" ng-show="addRequirementForm.$submitted || addRequirementForm.description.$dirty">
@@ -212,7 +212,7 @@
                             <button type="button" class="btn btn-default" ng-click="vm.showContactList()"><i class="fa fa-plus-circle"></i></button>
                             <list-not-empty ng-model="vm.requirement.contacts" name="numberOfApplicants" />
                         </div>
-                        <div ng-messages="addRequirementForm.numberOfApplicants.$error" ng-show="addRequirementForm.$submitted || addRequirementForm.numberOfApplicants.$dirty">
+                        <div ng-class="{'has-error': addRequirementForm.$submitted || addRequirementForm.numberOfApplicants.$dirty}" ng-messages="addRequirementForm.numberOfApplicants.$error" ng-show="addRequirementForm.$submitted || addRequirementForm.numberOfApplicants.$dirty">
                             <div ng-messages-include="app/common/views/errorMessages.html"></div>
                         </div>
                     </fieldset>
