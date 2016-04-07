@@ -111,7 +111,8 @@
       "STATUS": "Status",
       "CREATION_DATE": "Creation date",
       "VENDORS": "Vendor(s)",
-      "ACTIVITY_VIEW_LINK": "View activity"
+      "ACTIVITY_VIEW_LINK": "View activity",
+      "ACTIVITY_DETAILS": "Activity details"
     },
     "VIEW": {
       "VIEW_ACTIVITY": "View activity",

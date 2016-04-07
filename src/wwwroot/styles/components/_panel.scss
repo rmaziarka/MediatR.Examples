@@ -9,9 +9,4 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
-  //|TODO: for Wojtek: prepare better solution for addresss panel
-  &.property-address span {
-    margin-right: 5px;
-  }
 }
