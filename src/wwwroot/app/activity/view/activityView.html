@@ -11,32 +11,24 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <form>
-                    <fieldset>
-                        <legend translate="ACTIVITY.VIEW.PROPERTY"></legend>
-                        <card id="activity-view-card-property" card-template-url="'app/property/templates/propertyCard.html'" item="avvm.activity.property" show-item-details="avvm.showPropertyPreview">
-                        </card>
-                    </fieldset>
-                </form>
+                <h3 class="page-header" translate="ACTIVITY.VIEW.PROPERTY"></h3>
+                <card id="activity-view-card-property" card-template-url="'app/property/templates/propertyCard.html'" item="avvm.activity.property" show-item-details="avvm.showPropertyPreview">
+                </card>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
-                <form>
-                    <fieldset>
-                        <list id="list-vendors">
-                            <list-header>
-                                <legend translate="ACTIVITY.VIEW.VENDORS"></legend>
-                            </list-header>
-                            <list-no-items ng-show="avvm.activity.contacts.length === 0">
-                                <p class="help-block" translate="ACTIVITY.VIEW.NO_VENDORS"></p>
-                            </list-no-items>
-                            <list-item id="list-item-vendor-{{contact.id}}" ng-repeat="contact in avvm.activity.contacts">
-                                {{contact.getName()}}
-                            </list-item>
-                        </list>
-                    </fieldset>
-                </form>
+                <list id="list-vendors">
+                    <list-header>
+                        <h3 class="page-header" translate="ACTIVITY.VIEW.VENDORS"></h3>
+                    </list-header>
+                    <list-no-items ng-show="avvm.activity.contacts.length === 0">
+                        <p class="help-block" translate="ACTIVITY.VIEW.NO_VENDORS"></p>
+                    </list-no-items>
+                    <list-item id="list-item-vendor-{{contact.id}}" ng-repeat="contact in avvm.activity.contacts">
+                        {{contact.getName()}}
+                    </list-item>
+                </list>
             </div>
         </div>
     </div>
