@@ -6,7 +6,6 @@
 
     using AutoMapper;
 
-    using FluentValidation;
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Dal.Model.Company;

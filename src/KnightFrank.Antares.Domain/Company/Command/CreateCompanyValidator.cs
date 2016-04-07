@@ -5,16 +5,15 @@
 
     using FluentValidation;
     using FluentValidation.Results;
-           
+
     public class CreateCompanyValidator : AbstractValidator<CreateCompanyCommand>
     {
         public CreateCompanyValidator()
-        {   
+        {
             Func<CreateCompanyCommand, ValidationFailure> areContactsProvided = cmd =>
             {
                 if (cmd.ContactIds != null)
                 {
-
                     return cmd.ContactIds.Any(c => c.Equals(Guid.Empty))
                         ? new ValidationFailure(nameof(cmd.ContactIds), "Contacts are invalid.")
                         {
