@@ -1,5 +1,8 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     using KnightFrank.Antares.UITests.Extensions;
 
     using Objectivity.Test.Automation.Common;
@@ -8,15 +11,18 @@
 
     public class CreateCompanyPage : ProjectPageBase
     {
-        private readonly ElementLocator addContact = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator companyName = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator addContact = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
+        private readonly ElementLocator companyName = new ElementLocator(Locator.Name, "name");
+        private readonly ElementLocator contactsList = new ElementLocator(Locator.CssSelector, "#list-contacts .ng-binding");
+        private readonly ElementLocator saveButton = new ElementLocator(Locator.CssSelector, "button[type = 'submit']");
 
         public CreateCompanyPage(DriverContext driverContext) : base(driverContext)
         {
         }
 
         public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
+
+        public List<string> Contacts => this.Driver.GetElements(this.contactsList).Select(el => el.Text).ToList();
 
         public CreateCompanyPage OpenCreateCompanyPage()
         {

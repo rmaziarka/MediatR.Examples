@@ -1,7 +1,6 @@
 ﻿Feature: Company UI tests
 
 @Company
-@ignore
 Scenario: Create company
 	Given User navigates to create contact page
 		And User creates contacts on create contact page
@@ -16,4 +15,9 @@ Scenario: Create company
 			| FirstName | Surname |
 			| Sean      | Connery |
 			| Sarah     | Johns   |
-		And User clicks save button on create company page
+	Then list of company contacts should contain following contacts
+		| FirstName | Surname |
+		| Sean      | Connery |
+		| Sarah     | Johns   |
+	When User clicks save button on create company page
+	Then New company should be created

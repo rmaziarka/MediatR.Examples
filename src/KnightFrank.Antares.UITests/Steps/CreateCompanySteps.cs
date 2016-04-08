@@ -2,6 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+
+    using FluentAssertions;
 
     using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Contacts;
@@ -11,6 +14,8 @@
 
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
+
+    using Xunit;
 
     [Binding]
     public class CreateCompanySteps
@@ -64,11 +69,24 @@
             page.ContactsList.SaveContact().WaitForContactListToHide();
         }
 
+        [Then(@"list of company contacts should contain following contacts")]
+        public void CheckContactsList(Table table)
+        {
+            var page = this.scenarioContext.Get<CreateCompanyPage>("CreateCompanyPage");
+
+            List<string> contacts =
+                table.CreateSet<Contact>().Select(contact => contact.FirstName + " " + contact.Surname).ToList();
+
+            List<string> selectedContacts = page.Contacts;
+
+            Assert.Equal(contacts.Count, selectedContacts.Count);
+            contacts.Should().BeEquivalentTo(selectedContacts);
+        }
+
         [Then(@"New company should be created")]
         public void CheckIfCompanyCreated()
         {
             //TODO implement check if contact was created
         }
-
     }
 }
