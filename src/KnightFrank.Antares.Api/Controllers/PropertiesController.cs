@@ -110,5 +110,17 @@
 
             return this.mediator.Send(propertyTypesQuery);
         }
+
+        /// <summary>
+        /// Gets the attributes.
+        /// </summary>
+        /// <param name="propertyAttributesQuery">The property attributes query.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("attributes")]
+        public PropertyAttributesQueryResult GetPropertyAttributes([FromUri(Name = "")]PropertyAttributesQuery propertyAttributesQuery)
+        {
+            return this.mediator.Send(propertyAttributesQuery);
+        }
     }
 }
