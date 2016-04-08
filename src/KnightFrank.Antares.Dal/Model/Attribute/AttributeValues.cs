@@ -8,10 +8,10 @@
         public int? MaxReceptions { get; set; }
         public int? MinBathrooms { get; set; }
         public int? MaxBathrooms { get; set; }
-        public int? MinArea { get; set; }
-        public int? MaxArea { get; set; }
-        public int? MinLandArea { get; set; }
-        public int? MaxLandArea { get; set; }
+        public double? MinArea { get; set; }
+        public double? MaxArea { get; set; }
+        public double? MinLandArea { get; set; }
+        public double? MaxLandArea { get; set; }
         public int? MinGuestRooms { get; set; }
         public int? MaxGuestRooms { get; set; }
         public int? MinFunctionRooms { get; set; }
