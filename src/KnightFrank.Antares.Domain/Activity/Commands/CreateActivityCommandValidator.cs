@@ -12,9 +12,9 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
 
-    public class CreateActivityValidator : AbstractValidator<CreateActivityCommand>
+    public class CreateActivityCommandValidator : AbstractValidator<CreateActivityCommand>
     {   
-        public CreateActivityValidator(IGenericRepository<Property> propertyRepository, IReadGenericRepository<EnumTypeItem> enumTypeItemRepository, IGenericRepository<Contact> contactRepository)
+        public CreateActivityCommandValidator(IGenericRepository<Property> propertyRepository, IReadGenericRepository<EnumTypeItem> enumTypeItemRepository, IGenericRepository<Contact> contactRepository)
         {
             Func<CreateActivityCommand, ValidationFailure> propertyExists = cmd =>
             {   

@@ -41,7 +41,7 @@
             [Frozen] Mock<IGenericRepository<Property>> propertyRepository, 
             [Frozen] Mock<IReadGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
-            CreateActivityValidator validator,
+            CreateActivityCommandValidator validator,
             CreateActivityCommand cmd)
         {
             // Arrange 
@@ -67,7 +67,7 @@
         [AutoMoqData]
         public void Given_PropertyDoesNotExist_When_Validating_Then_IsInvalid(
             [Frozen] Mock<IGenericRepository<Property>> propertyRepository
-            , CreateActivityValidator validator, CreateActivityCommand cmd)
+            , CreateActivityCommandValidator validator, CreateActivityCommand cmd)
         {
             // Arrange 
             propertyRepository.Setup(p => p.GetById(It.IsAny<Guid>())).Returns(default(Property));
@@ -85,7 +85,7 @@
         [AutoMoqData]
         public void Given_CommandPropertyIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
             [Frozen] Mock<IGenericRepository<Property>> propertyRepository
-            , CreateActivityValidator validator)
+            , CreateActivityCommandValidator validator)
         {
             // Arrange 
             CreateActivityCommand cmd = this.fixture.Build<CreateActivityCommand>().With(c => c.PropertyId, default(Guid)).Create();
@@ -103,7 +103,7 @@
         [AutoMoqData]
         public void Given_ActivityStatusDoesNotExist_When_Validating_Then_IsInvalid(
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository
-            , CreateActivityValidator validator, CreateActivityCommand cmd)
+            , CreateActivityCommandValidator validator, CreateActivityCommand cmd)
         {
             // Arrange 
             enumTypeItemRepository.Setup(p => p.GetById(It.IsAny<Guid>())).Returns(default(EnumTypeItem));
@@ -120,7 +120,7 @@
         [AutoMoqData]
         public void Given_CommandActivityStatusIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
             [Frozen] Mock<IReadGenericRepository<EnumTypeItem>> enumTypeItemRepository
-            , CreateActivityValidator validator)
+            , CreateActivityCommandValidator validator)
         {
             // Arrange 
             CreateActivityCommand cmd =
@@ -146,7 +146,7 @@
         public void Given_CommandAtLeastOneContactIdDoesNotExist_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
-            CreateActivityValidator validator, CreateActivityCommand cmd)
+            CreateActivityCommandValidator validator, CreateActivityCommand cmd)
         {
             // Arrange   
             IEnumerable<Contact> fakeContacts = this.fixture.CreateMany<Contact>(10);
@@ -168,7 +168,7 @@
         public void Given_CommandContactsIdsExist_When_Validating_Then_IsValid(
             [Frozen] Mock<IReadGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
-            CreateActivityValidator validator, CreateActivityCommand cmd)
+            CreateActivityCommandValidator validator, CreateActivityCommand cmd)
         {
             // Arrange 
             IEnumerable<Contact> fakeContacts = cmd.Contacts.Select(activityContact => new Contact {Id = activityContact.Id});

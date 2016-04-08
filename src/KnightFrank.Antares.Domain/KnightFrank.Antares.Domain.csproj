@@ -77,7 +77,10 @@
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandProfile.cs" />
     <Compile Include="Activity\Commands\CreateActivityContact.cs" />
-    <Compile Include="Activity\Commands\CreateActivityValidator.cs" />
+    <Compile Include="Activity\Commands\CreateActivityCommandValidator.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityCommand.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityCommandProfile.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityCommandValidator.cs" />
     <Compile Include="Activity\Queries\ActivityQuery.cs" />
     <Compile Include="Activity\Queries\ActivityQueryValidator.cs" />
     <Compile Include="Activity\QueryHandlers\ActivityQueryHandler.cs" />
