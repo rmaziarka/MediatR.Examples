@@ -2,29 +2,29 @@
     <div class="col-md-12">
         <h2 class="page-header" translate="ACTIVITY.VIEW.VIEW_ACTIVITY"></h2>
         <div id="activity-view-well" class="well">
-            <button type="button" class="btn btn-default pull-right" ng-click="vm.goToEdit()"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span></button>
+            <button type="button" class="btn btn-default pull-right" ng-click="avvm.goToEdit()"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span></button>
             <div>
                 <span id="activity-view-well-createdDate">{{avvm.activity.createdDate | date : 'dd-MM-yyyy'}}</span>
             </div>
             <div>
-                <span id="activity-view-well-activityStatus">{{avvm.activity.activityStatusId | enumTranslate}}</spanid="activity-view-well-createdDate">
+                <span id="activity-view-well-activityStatus">{{avvm.activity.activityStatusId | enumTranslate}}</span>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
-                <section>
-                    <h3 class="page-header">Valuation prices</h3>
+                <section id="activity-view-prices">
+                    <h3 class="page-header" translate="ACTIVITY.VIEW.PRICES.PRICES"></h3>
                     <div class="section-row row">
-                        <div class="col-xs-6">Market appraisal price</div>
-                        <div class="col-xs-6">100,000,000,00 GBP</div>
+                        <div class="col-xs-6" translate="ACTIVITY.VIEW.PRICES.MARKET_APPRAISAL_PRICE"></div>
+                        <div id="activity-view-prices-marketAppraisalPrice" class="col-xs-6" ng-if="avvm.activity.marketAppraisalPrice">{{avvm.activity.marketAppraisalPrice | number : 2 }} GBP</div>
                     </div>
                     <div class="section-row row">
-                        <div class="col-xs-6">Recommended price</div>
-                        <div class="col-xs-6">100,000,000,00 GBP</div>
+                        <div class="col-xs-6" translate="ACTIVITY.VIEW.PRICES.RECOMMENDED_PRICE"></div>
+                        <div id="activity-view-prices-recommendedPrice" class="col-xs-6" ng-if="avvm.activity.recommendedPrice">{{avvm.activity.recommendedPrice | number : 2 }} GBP</div>
                     </div>
                     <div class="section-row row">
-                        <div class="col-xs-6">Vendor estimated price</div>
-                        <div class="col-xs-6">100,000,000,00 GBP</div>
+                        <div class="col-xs-6" translate="ACTIVITY.VIEW.PRICES.VENDOR_ESIMATED_PRICE"></div>
+                        <div id="activity-view-prices-vendorEstimatedPrice" class="col-xs-6" ng-if="avvm.activity.vendorEstimatedPrice">{{avvm.activity.vendorEstimatedPrice | number : 2 }} GBP</div>
                     </div>
                 </section>
             </div>
