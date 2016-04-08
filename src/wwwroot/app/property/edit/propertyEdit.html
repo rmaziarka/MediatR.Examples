@@ -18,7 +18,7 @@
                                 <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
                                 <option ng-repeat-start="propertyType in vm.propertyTypes" label="{{propertyType.name}}" value="{{propertyType.id}}" class="hierarchy1">{{propertyType.name}}</option>
 
-                                <option ng-repeat="propertySubtype in propertyType.children" label="{{propertySubtype.name}}" value="{{propertySubtype.id}}" class="hierarchy2" ng-repeat-end>{{propertySubtype.name}}</option>
+                                <option ng-repeat="propertySubtype in propertyType.children" label="{{'&nbsp;&nbsp;' + propertySubtype.name}}" value="{{propertySubtype.id}}" class="hierarchy2" ng-repeat-end>&nbsp;&nbsp;{{propertySubtype.name}}</option>
                             </select>
                             <div ng-messages="addPropertyForm.type.$error" ng-show="addPropertyForm.$submitted || addPropertyForm.type.$dirty">
                                 <div ng-messages-include="app/common/views/errorMessages.html"></div>
