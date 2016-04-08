@@ -21,7 +21,8 @@
 	    {
 			SetLocaleIds(context);
 			SeedCountry(context);
-		}
+            context.SaveChanges();
+        }
 
 	    private static void SetLocaleIds(KnightFrankContext context)
 	    {
@@ -324,7 +325,6 @@
 				}
 			};
 			context.CountryLocalised.AddOrUpdate(x => new { x.LocaleId, x.CountryId }, countryLocaliseds.ToArray());
-			context.SaveChanges();
 		}
 	}
 }
