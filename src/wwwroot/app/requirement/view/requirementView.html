@@ -16,13 +16,13 @@
 
         <div class="row">
             <div class="col-md-4">
-                <section class="section-item">
+                <section>
                     <h3 class="page-header" translate="REQUIREMENT.VIEW.LOCATION"></h3>
                     <requirement-address-form-view address="vm.requirement.address">
                     </requirement-address-form-view>
                 </section>
 
-                <section class="section-item">
+                <section>
                     <h3 class="page-header" translate="REQUIREMENT.VIEW.BASIC_REQUIREMENTS"></h3>
                     <range-view label="{{ 'REQUIREMENT.VIEW.PRICE' | translate }}" min="vm.requirement.minPrice" max="vm.requirement.maxPrice" suffix="'GBP'"></range-view>
                     <range-view label="{{ 'REQUIREMENT.VIEW.BEDROOMS' | translate }}" min="vm.requirement.minBedrooms" max="vm.requirement.maxBedrooms"></range-view>
@@ -33,19 +33,21 @@
                     <range-view label="{{ 'REQUIREMENT.VIEW.LANDAREA' | translate }}" min="vm.requirement.minLandArea" max="vm.requirement.maxLandArea" suffix="'sq ft'"></range-view>
                 </section>
 
-                <section class="section-item">
+                <section>
                     <h3 class="page-header" translate="REQUIREMENT.VIEW.DESCRIPTION"></h3>
                     <p>{{ vm.requirement.description}}</p>
                 </section>
             </div>
             <div class="col-md-4" id="applicant-list">
-                <h3 class="page-header" translate="REQUIREMENT.VIEW.APPLICANT">Applicant</h3>
+                <section>
+                    <h3 class="page-header" translate="REQUIREMENT.VIEW.APPLICANT">Applicant</h3>
 
-                <div class="panel panel-default applicant" ng-repeat="contact in vm.requirement.contacts">
-                    <div class="panel-body">
-                        {{ contact.firstName }} {{ contact.surname }}
+                    <div class="panel panel-default applicant" ng-repeat="contact in vm.requirement.contacts">
+                        <div class="panel-body">
+                            {{ contact.firstName }} {{ contact.surname }}
+                        </div>
                     </div>
-                </div>
+                </section>
             </div>
         </div>
     </div>

@@ -1,1 +1,81 @@
-﻿<div>Test</div>
+﻿<div class="row">
+    <div class="col-md-12">
+        <h2 class="page-header">Edit activity</h2>
+    </div>
+    <form>
+        <div class="col-md-4">
+            <fieldset>
+                <h3 class="page-header">Basic information</h3>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <label for="status">Status</label>
+                            <select id="status" class="form-control">
+                                <option>Pre-appraisal</option>
+                                <option>Market appraisal</option>
+                                <option>Not selling</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <h3 class="page-header">Valuation prices</h3>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <label for="market-appraisal-price">Market appraisal price</label>
+                            <div class="input-group">
+                                <input id="market-appraisal-price" type="text" class="form-control">
+                                <div class="input-group-addon">GBP</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <label for="recommended-price">Recommended price</label>
+                            <div class="input-group">
+                                <input id="recommended-price" type="text" class="form-control">
+                                <div class="input-group-addon">GBP</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <label for="vendor-estimated-price">Vendor estimated price</label>
+                            <div class="input-group">
+                                <input id="vendor-estimated-price" type="text" class="form-control">
+                                <div class="input-group-addon">GBP</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-md-4">
+            <section>
+                <h3 class="page-header">Property</h3>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        Address component
+                    </div>
+                </div>
+            </section>
+            <section>
+                <h3 class="page-header">Vendors</h3>
+                <div class="panel panel-default">
+                    <div class="panel-body">Jon Smith</div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE">Save</span></button>
+            </div>
+        </div>
+    </form>
+</div>

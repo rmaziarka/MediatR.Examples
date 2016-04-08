@@ -6,7 +6,7 @@
     <form ng-submit="addCompanyForm.$valid && vm.hasCompanyContacts() && vm.createCompany()" name="addCompanyForm" id="addCompanyForm" method="post" novalidate>
         <div class="col-md-4">
             <fieldset>
-                <legend translate="COMPANY.ADD.BASIC_INFORMATION"></legend>
+                <h3 class="page-header" translate="COMPANY.ADD.BASIC_INFORMATION"></h3>
 
                 <div class="form-group required" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.name.$dirty) && addCompanyForm.name.$invalid}">
                     <label for="title" translate="COMPANY.ADD.NAME"></label>
@@ -19,11 +19,11 @@
             </fieldset>
         </div>
         <div class="col-md-4">
-            
-                <fieldset>
+
+                <section>
                     <list id="list-contacts">
                         <list-header>
-                            <legend translate="COMPANY.ADD.CONTACTS"></legend>
+                            <h3 class="page-header" translate="COMPANY.ADD.CONTACTS"></h3>
                         </list-header>
                         <list-actions>
                             <div class="form-group">
@@ -40,8 +40,8 @@
                             {{contact.getName()}}
                         </list-item>
                     </list>
-                </fieldset>
-            
+                </section>
+
         </div>
 
         <div class="col-md-12">

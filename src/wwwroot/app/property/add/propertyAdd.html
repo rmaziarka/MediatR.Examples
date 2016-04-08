@@ -9,7 +9,7 @@
     <form ng-submit="addPropertyForm.$valid && vm.save()" name="addPropertyForm" id="addPropertyForm" method="post" novalidate>
         <div class="col-md-4">
             <fieldset>
-                <legend translate="PROPERTY.ADD.BASIC_INFORMATION"></legend>
+                <h3 class="page-header" translate="PROPERTY.ADD.BASIC_INFORMATION"></h3>
                 <div class="form-group required" ng-class="{'has-error': (addPropertyForm.$submitted || addPropertyForm.type.$dirty) && addPropertyForm.type.$invalid}">
                     <div class="row">
                         <div class="col-md-8">
@@ -28,13 +28,13 @@
                 </div>
             </fieldset>
             <fieldset>
-                <legend translate="PROPERTY.ADD.ADDRESS"></legend>
+                <h3 class="page-header" translate="PROPERTY.ADD.ADDRESS"></h3>
                 <address-form-edit entity-type-code="vm.entityTypeCode" address="vm.property.address" user-country-code="vm.userData.country"></address-form-edit>
             </fieldset>
         </div>
         <div class="col-md-4">
             <fieldset>
-                <legend>Property details</legend>
+                <h3 class="page-header">Property details</h3>
                 <div class="form-group has-error">
                     <p class="help-block">Select property type to enter property details</p>
                 </div>
