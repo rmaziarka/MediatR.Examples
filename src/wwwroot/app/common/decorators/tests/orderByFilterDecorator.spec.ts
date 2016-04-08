@@ -9,8 +9,6 @@ module Antares {
         var scope: IScope,
             $compileService: ng.ICompileService;
 
-        beforeEach(angular.mock.module('app'));
-
         beforeEach(angular.mock.module(($provide: angular.auto.IProvideService) =>{
             $provide.decorator('orderByFilter', Antares.Common.Decorators.OrderByFilterDecorator.decoratorFunction);
         }));

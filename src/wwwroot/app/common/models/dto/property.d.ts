@@ -1,8 +1,9 @@
 declare module Antares.Common.Models.Dto {
     interface IProperty {
         id: string;
-        address: Dto.Address;
-        ownerships: Dto.Ownership[];
-        activities: Dto.Activity[];
+        propertyTypeId: string,
+        address: Dto.IAddress;
+        ownerships: Dto.IOwnership[];
+        activities: Dto.IActivity[];
     }
 }

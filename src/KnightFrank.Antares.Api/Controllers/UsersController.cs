@@ -38,7 +38,7 @@ namespace KnightFrank.Antares.Api.Controllers
                 Email = identity.Claims.First(c => c.Type == ClaimTypes.Email).Value,
                 Country = identity.Claims.First(c => c.Type == ClaimTypes.Country).Value,
                 Roles = identity.FindAll(ClaimTypes.Role).Select(claim => claim.Value),
-                Division = divisions.Items.Single(i => i.Code == config["CurrentUser.Division"]).Id
+                Division = divisions.Items.Single(i => i.Code == config["CurrentUser.Division"])
             };
 
             return user;

@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.Property.QueryHandlers
 {
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
 
@@ -26,30 +27,36 @@
         {
             IQueryable<PropertyType> propertyTypes =
                 this.propertyTypeDefinitionRepository
-                    .Get()
+                    .GetWithInclude(x => x.PropertyType)
                     .Where(x => x.Division.Code == message.DivisionCode)
                     .Where(x => x.Country.IsoCode == message.CountryCode)
                     .Include(x => x.PropertyType.Parent)
                     .Distinct()
                     .Select(x => x.PropertyType);
 
-            IQueryable<PropertyTypeLocalised> propertyTypesLocalised =
+            List<PropertyTypeLocalised> propertyTypesLocalised =
                 this.propertyTypeLocalisedRepository
-                    .Get()
+                    .GetWithInclude(x => x.PropertyType)
                     .Where(x => x.Locale.IsoCode == message.LocaleCode)
-                    .Where(x => propertyTypes.Contains(x.PropertyType));
+                    .Where(x => propertyTypes.Contains(x.PropertyType)).ToList();
 
             var result = new PropertyTypeQueryResult
             {
-                PropertyTypes = propertyTypesLocalised
-                    .Select(x =>
-                        new PropertyTypeQuerySingleResult
+                PropertyTypes = propertyTypesLocalised.Where(x => x.PropertyType.ParentId == null).Select(
+                x => new PropertyTypeQuerySingleResult
+                {
+                    Id = x.PropertyType.Id,
+                    ParentId = x.PropertyType.ParentId,
+                    Name = x.Value,
+                    Children = propertyTypesLocalised.Where(y => y.PropertyType.ParentId == x.PropertyType.Id).Select(
+                        y => new PropertyTypeQuerySingleResult
                         {
-                            Id = x.PropertyType.Id,
-                            ParentId = x.PropertyType.ParentId,
-                            Name = x.Value
+                            Id = y.PropertyType.Id,
+                            ParentId = y.PropertyType.ParentId,
+                            Name = y.Value
                         })
-                    .ToList()
+                }
+                ).ToList()
             };
 
             if (!result.PropertyTypes.Any())

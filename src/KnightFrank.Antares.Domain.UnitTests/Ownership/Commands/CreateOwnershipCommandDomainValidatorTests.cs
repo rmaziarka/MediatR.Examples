@@ -6,11 +6,13 @@
     using System.Linq.Expressions;
 
     using FluentValidation.Results;
+    using FluentValidation.TestHelper;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.Common.Validator;
     using KnightFrank.Antares.Domain.Ownership.Commands;
     using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
 
@@ -48,10 +50,11 @@
             this.enumTypeItemRepository = this.fixture.Freeze<Mock<IGenericRepository<EnumTypeItem>>>();
             this.ownershipRepository = this.fixture.Freeze<Mock<IGenericRepository<Ownership>>>();
 
-            this.enumTypeItemRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new EnumTypeItem()
+            this.enumTypeItemRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<EnumTypeItem, bool>>>(), It.IsAny<Expression<Func<EnumTypeItem, object>>>())).Returns(new List<EnumTypeItem> {
+                new EnumTypeItem
             {
                 EnumType = this.fixture.BuildEnumType("OwnershipType")
-            });
+            }});
 
             this.propertyRepository = this.fixture.Freeze<Mock<IGenericRepository<Property>>>();
             this.propertyRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new Property());
@@ -194,25 +197,32 @@
                     this.fixture.BuildOwnership(new DateTime(2010, 1, 1), new DateTime(2015, 1, 1))
                 });
 
-            this.enumTypeItemRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new EnumTypeItem()
+            this.enumTypeItemRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<EnumTypeItem, bool>>>(), It.IsAny<Expression<Func<EnumTypeItem, object>>>())).Returns(new List<EnumTypeItem> { new EnumTypeItem()
             {
                 EnumType = new EnumType() { Code = this.fixture.Create<string>() }
-            });
+            }});
 
             TestIncorrectCommand(this.validator, this.command, nameof(this.command.OwnershipTypeId));
         }
 
         [Fact]
-        public void Given_IncorrectContactIds_When_Validating_Then_ValidationErrors()
+        public void Given_NullOwnershipType_When_Validating_Then_ValidationErrors()
         {
-            var results = this.command.ContactIds.Select(x => new Contact()).ToList();
-            results.Add(new Contact());
+            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>()))
+                .Returns(new List<Ownership>()
+                {
+                    this.fixture.BuildOwnership(new DateTime(1980, 1, 1), new DateTime(1990, 1, 1)),
+                    this.fixture.BuildOwnership(new DateTime(2010, 1, 1), new DateTime(2015, 1, 1))
+                });
 
-            this.contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(results);
+            this.enumTypeItemRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<EnumTypeItem, bool>>>(), It.IsAny<Expression<Func<EnumTypeItem, object>>>())).Returns(new List<EnumTypeItem> { new EnumTypeItem()
+            {
+                EnumType = null
+            }});
 
-            TestIncorrectCommand(this.validator, this.command, nameof(this.command.ContactIds));
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.OwnershipTypeId));
         }
-
+           
         [Fact]
         public void Given_IncorrectPropertyId_When_Validating_Then_ValidationErrors()
         {
@@ -232,6 +242,12 @@
 
             this.propertyRepository.Verify(expression, Times.Once);
             Assert.True(validationResult.IsValid);
+        }
+
+        [Fact]
+        public void Given_ValidationRules_When_Configuring_Then_ContactIdsHaveValidatorSetup()
+        {
+            this.validator.ShouldHaveChildValidator(v => v.ContactIds, typeof(ContactValidator));
         }
 
         private static void TestIncorrectCommand(CreateOwnershipCommandDomainValidator validator, CreateOwnershipCommand command,

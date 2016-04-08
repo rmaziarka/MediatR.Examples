@@ -1,14 +1,41 @@
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <h2 class="page-header" translate="PROPERTY.EDIT.EDIT_PROPERTY"></h2>
-        <form ng-submit="addPropertyForm.$valid && vm.save()" name="addPropertyForm" id="addPropertyForm" method="post" novalidate>
+    </div>
+    <div class="col-md-12 text-right">
+        <a ng-click="vm.changeDivision('Commercial')" href="" ng-show="vm.divisionCode != 'Commercial'" translate="PROPERTY.COMMERCIAL_PROPERTY"></a>
+        <a ng-click="vm.changeDivision('Residential')" href="" ng-show="vm.divisionCode != 'Residential'" translate="PROPERTY.RESIDENTIAL_PROPERTY"></a>
+    </div>
+    <form ng-submit="addPropertyForm.$valid && vm.save()" name="addPropertyForm" id="addPropertyForm" method="post" novalidate>
+        <div class="col-md-4">
             <fieldset>
-                <legend translate="PROPERTY.EDIT.ADDRESS"></legend>
-                <address-form-edit entity-type-code="vm.entityTypeCode" address="vm.property.address"></address-form-edit>
+                <h3 class="page-header" translate="PROPERTY.ADD.BASIC_INFORMATION"></h3>
+                <div class="form-group required" ng-class="{'has-error': (addPropertyForm.$submitted || addPropertyForm.type.$dirty) && addPropertyForm.type.$invalid}">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <label for="type" translate="PROPERTY.ADD.TYPE"></label>
+                            <select id="type" name="type" ng-model="vm.property.propertyTypeId" class="form-control" required>
+                                <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
+                                <option ng-repeat-start="propertyType in vm.propertyTypes" label="{{propertyType.name}}" value="{{propertyType.id}}" class="hierarchy1">{{propertyType.name}}</option>
+
+                                <option ng-repeat="propertySubtype in propertyType.children" label="{{'&nbsp;&nbsp;' + propertySubtype.name}}" value="{{propertySubtype.id}}" class="hierarchy2" ng-repeat-end>&nbsp;&nbsp;{{propertySubtype.name}}</option>
+                            </select>
+                            <div ng-messages="addPropertyForm.type.$error" ng-show="addPropertyForm.$submitted || addPropertyForm.type.$dirty">
+                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </fieldset>
+            <fieldset>
+                <h3 class="page-header" translate="PROPERTY.EDIT.ADDRESS"></h3>
+                <address-form-edit entity-type-code="vm.entityTypeCode" address="vm.property.address" user-country-code="vm.userData.country"></address-form-edit>
+            </fieldset>
+        </div>
+        <div class="col-md-12">
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" id="saveBtn"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>

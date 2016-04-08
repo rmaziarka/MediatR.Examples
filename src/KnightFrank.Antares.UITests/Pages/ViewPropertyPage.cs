@@ -1,31 +1,31 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
 
     public class ViewPropertyPage : ProjectPageBase
     {
+        private readonly ElementLocator viewPropertyForm = new ElementLocator(Locator.CssSelector, "property-view");
         //locators for property address area
         private readonly ElementLocator expectedAddressField = new ElementLocator(Locator.XPath, "//address-form-view//span[text()='{0}']");
         private readonly ElementLocator editButton = new ElementLocator(Locator.CssSelector, "button[ng-click*='goToEdit']");
         //locators for property details area
         //
         //locators for property ownership area
-        private readonly ElementLocator addOwernship = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
-        private readonly ElementLocator ownershipContacts = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'property.ownerships']:nth-of-type({0}) span[ng-repeat *= 'contact']");
-        private readonly ElementLocator ownershipDetails = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'property.ownerships']:nth-of-type({0}) small");
-        private readonly ElementLocator viewOwnershipDetails = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'property.ownerships']:nth-of-type({0}) a[ng-click *= 'showOwnershipView']");
+        private readonly ElementLocator addOwernship = new ElementLocator(Locator.CssSelector, "card-list[show-item-add *= 'showContactList'] button");
+        private readonly ElementLocator ownershipContacts = new ElementLocator(Locator.XPath, "//card-list-item[{0}]//span[contains(@ng-repeat, 'contacts')]");
+        private readonly ElementLocator ownershipDetails = new ElementLocator(Locator.XPath, "//card-list-item[{0}]//small/span/..");
         //locators for property activities area
-        private readonly ElementLocator addActivityButton = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator activityDate = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator activityVendor = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator activityStatus = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator detailsLink = new ElementLocator(Locator.Id, string.Empty);      
-        
+        private readonly ElementLocator addActivityButton = new ElementLocator(Locator.CssSelector, "card-list[show-item-add *= 'showActivityAdd'] button");
+        private readonly ElementLocator activityDate = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] div.panel-item");
+        private readonly ElementLocator activityVendor = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] span");
+        private readonly ElementLocator activityStatus = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] small");
+        private readonly ElementLocator activityDetailsLink = new ElementLocator(Locator.CssSelector, "#card-list-activities #detailsLink");
+
+        public ViewPropertyPage(DriverContext driverContext) : base(driverContext)
+        {
+        }
 
         public CreateActivityPage Activity => new CreateActivityPage(this.DriverContext);
 
@@ -33,20 +33,16 @@
 
         public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
 
-        public ViewActivityPreviewPage PreviewDetails => new ViewActivityPreviewPage(this.DriverContext);
+        public ActivityPreviewPage PreviewDetails => new ActivityPreviewPage(this.DriverContext);
 
-        public ViewPropertyPage(DriverContext driverContext) : base(driverContext)
+        public bool IsAddressDetailsVisible(string propertyDetail)
         {
+            return this.Driver.IsElementPresent(this.expectedAddressField.Format(propertyDetail), BaseConfiguration.MediumTimeout);
         }
 
-        public bool IsAddressDetailsVisible(string propertyNumber)
+        public bool IsAddressDetailsNotVisible(string propertyDetail)
         {
-            return this.Driver.IsElementPresent(this.expectedAddressField.Format(propertyNumber), BaseConfiguration.MediumTimeout);
-        }
-
-        public bool IsAddressDetailsNotVisible(string propertyNumber)
-        {
-            return !this.Driver.IsElementPresent(this.expectedAddressField.Format(propertyNumber), BaseConfiguration.ShortTimeout);
+            return !this.Driver.IsElementPresent(this.expectedAddressField.Format(propertyDetail), BaseConfiguration.ShortTimeout);
         }
 
         public ViewPropertyPage AddActivity()
@@ -67,7 +63,7 @@
 
         public string GetActivityDate()
         {
-            return this.Driver.GetElement(this.activityDate).Text;
+            return this.Driver.GetElement(this.activityDate).Text.Split(' ')[0].Trim();
         }
 
         public CreatePropertyPage EditProperty()
@@ -82,10 +78,9 @@
             return this;
         }
 
-        public List<string> GetOwnershipContacts(int position)
+        public string GetOwnershipContact(int position)
         {
-            List<string> contacts = this.Driver.GetElements(this.ownershipContacts.Format(position)).Select(c => c.Text.Replace(",", "")).ToList();
-            return contacts;
+            return this.Driver.GetElement(this.ownershipContacts.Format(position)).Text;
         }
 
         public string GetOwnershipDetails(int position)
@@ -93,15 +88,16 @@
             return this.Driver.GetElement(this.ownershipDetails.Format(position)).Text;
         }
 
-        public void OpenOwnershipDetails(int position)
+        public ViewPropertyPage OpenActivityDetails()
         {
-            this.Driver.GetElement(this.viewOwnershipDetails.Format(position)).Click();
+            this.Driver.GetElement(this.activityDetailsLink).Click();
+            return this;
         }
 
-        public ViewPropertyPage ClickDetailsLink()
+        public bool CheckIfViewPropertyPresent()
         {
-            this.Driver.GetElement(this.detailsLink).Click();
-            return this;
+            this.Driver.WaitForAngular();
+            return this.Driver.IsElementPresent(this.viewPropertyForm, BaseConfiguration.ShortTimeout);
         }
     }
 }

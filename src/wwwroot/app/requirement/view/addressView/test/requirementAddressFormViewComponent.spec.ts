@@ -1,13 +1,12 @@
 /// <reference path="../../../../typings/_all.d.ts" />
 module Antares {
+    import Business = Antares.Common.Models.Business;
+
     describe('Givent requirement address view form', () => {
         var element: ng.IAugmentedJQuery,
             scope: ng.IScope,
             mockData = Antares.Mock.AddressForm.AddressFormWithOneLine,
             address = Antares.Mock.AddressForm.FullAddress;
-
-
-        beforeEach(angular.mock.module('app'));
 
         describe('and address form multiple field definition ', () => {
             beforeEach(inject(($rootScope: ng.IRootScopeService,
@@ -26,12 +25,12 @@ module Antares {
                 var row: number = element.find('div.row').length;
                 expect(mockData.addressFieldRows.length).toBe(row);
             });
-            
+
             it('should display address items in proper order',()=>{
                var firstItemLabel:string = element.find('div.row').first().find('div.addr-label span').text();
                var firstItemValue:string = element.find('div.row').first().find('div.addr-value span').text();
-               
-               var secondLine:Common.Models.Dto.AddressFormFieldDefinition = mockData.addressFieldDefinitions[1];
+
+               var secondLine: Business.AddressFormFieldDefinition = mockData.addressFieldDefinitions[1];
                expect(firstItemLabel).toBe(secondLine.labelKey);
                expect(firstItemValue).toBe(address.line3);
             });

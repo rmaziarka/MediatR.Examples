@@ -1,12 +1,14 @@
 ﻿{
   "COMMON": {
     "SAVE": "Save",
+    "EDIT": "Edit",
     "CANCEL": "Cancel",
     "MIN": "Min",
     "MAX": "Max",
     "DETAILS": "details",
     "CONFIGURE": "Configure",
-    "BACK":  "Back"
+    "BACK": "Back",
+    "SELECTEMPTYVALUE": "- select -"
   },
   "OWNERSHIP": {
     "ADD": {
@@ -50,6 +52,17 @@
     "FLATNUMBER": "Flat number",
     "UNIT": "Unit"
   },
+  "COMPANY": {
+    "ADD": {
+      "CREATE_COMPANY": "Create company",
+      "BASIC_INFORMATION": "Basic information",
+      "NAME": "Name",
+      "CONTACTS": "Contacts",
+      "NO_CONTACTS": "No contacts yet",
+      "CONTACTS_ARE_REQUIRED": "Please select at least one contact to create a company",
+      "FINDCONTACT": "Find contact"
+    }
+  },
   "CONTACT": {
     "TITLE": "Title",
     "FIRSTNAME": "First name",
@@ -62,13 +75,18 @@
     "FIELD_SHOULD_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
     "MIN_SHOULD_BE_LESS_THAN_MAX": "Min value must not be greater than max value",
     "FIELD_HAS_INVALID_FORMAT": "Value has invalid format",
-    "LIST_SHOULD_NOT_BE_EMPTY": "List should contain at least one entry",
+    "LIST_SHOULD_NOT_BE_EMPTY": "Please specify at least one applicant",
     "DATE_HAS_INVALID_FORMAT": "Date has invalid format",
-    "FIELD_OVERLAPS_RANGE": "Given date range overlaps previously saved date ranges"
+    "FIELD_OVERLAPS_RANGE": "Given date range overlaps previously saved date ranges",
+    "DATE_CAN_NOT_BE_FROM_FUTURE":"Can not specify date from future"
   },
   "PROPERTY": {
+    "COMMERCIAL_PROPERTY": "Commercial property",
+    "RESIDENTIAL_PROPERTY": "Residential property",
     "ADD": {
-      "ADD_PROPERTY": "Add property",
+      "ADD_PROPERTY": "Create property",
+      "BASIC_INFORMATION": "Basic information",
+      "TYPE": "Type",
       "ADDRESS": "Address"
     },
     "EDIT": {
@@ -81,6 +99,13 @@
     "LIST": {
       "OWNERSHIPS": "Ownerships",
       "NO_ITEMS": "Ownership information not configured yet"
+    },
+    "PREVIEW": {
+      "PROPERTY_PREVIEW": "Property preview",
+      "BASIC_INFORMATION": "Basic information",
+      "TYPE": "Type",
+      "ADDRESS": "Address",
+      "PROPERTY_VIEW_LINK":  "View property"
     }
   },
   "ACTIVITY": {
@@ -95,14 +120,22 @@
     },
     "PREVIEW": {
       "ACTIVITYPREVIEW": "Activity preview",
-      "STATUS": "Satus",
+      "STATUS": "Status",
       "CREATION_DATE": "Creation date",
-      "VENDORS": "Vendor(s)"
+      "VENDORS": "Vendor(s)",
+      "ACTIVITY_VIEW_LINK": "View activity",
+      "ACTIVITY_DETAILS": "Activity details"
+    },
+    "VIEW": {
+      "VIEW_ACTIVITY": "View activity",
+      "PROPERTY": "Property",
+      "VENDORS": "Vendors",
+      "NO_VENDORS": "No vendors defined"
     }
   },
   "REQUIREMENT": {
     "ADD": {
-      "ADD_REQUIREMENT": "Add requirement",
+      "ADD_REQUIREMENT": "Create requirement",
       "APPLICANT": "Applicant",
       "ADD": "Add",
       "FINDCONTACT": "Find contact",

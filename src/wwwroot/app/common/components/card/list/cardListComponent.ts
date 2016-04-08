@@ -7,13 +7,10 @@ module Antares.Common.Component {
         controller: 'CardListController',
         transclude: {
             'header': '?cardListHeader',
-            'noItems': '?cardListNoItems'
+            'noItems': '?cardListNoItems',
+            'item': '?cardListItem'
         },
         bindings: {
-            cardTemplateUrl: '<',
-            itemsOrder: '<',
-            items: '<',
-            showItemDetails: '<',
             showItemAdd: '<'
         }
     });

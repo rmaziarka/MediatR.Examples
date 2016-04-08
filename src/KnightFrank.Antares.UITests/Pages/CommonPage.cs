@@ -32,14 +32,17 @@
                 case "home":
                     this.Driver.NavigateTo(GetUrl());
                     break;
-                case "new contact":
-                    this.Driver.NavigateTo(GetUrl("NewContactPage"));
+                case "create contact":
+                    this.Driver.NavigateTo(GetUrl("CreateContactPage"));
                     break;
-                case "new residential sales requirement":
-                    this.Driver.NavigateTo(GetUrl("NewResidentialSalesRequirementPage"));
+                case "create requirement":
+                    this.Driver.NavigateTo(GetUrl("CreateRequirementPage"));
                     break;
-                case "add property":
-                    this.Driver.NavigateTo(GetUrl("AddPropertyPage"));
+                case "create property":
+                    this.Driver.NavigateTo(GetUrl("CreatePropertyPage"));
+                    break;
+                case "create company":
+                    this.Driver.NavigateTo(GetUrl("CreateCompanyPage"));
                     break;
                 default:
                     Assert.True(false, "Page does not exist");

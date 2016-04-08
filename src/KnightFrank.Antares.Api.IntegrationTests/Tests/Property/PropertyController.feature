@@ -3,9 +3,7 @@
 @Property
 Scenario Outline: Create property
 	Given User gets GB address form for Property and country details
-		And Address for add/update property is defined
-			| PropertyName | PropertyNumber | Line2 | Line3 | Postcode | City | County |
-			| max          | max            | max   | max   | max      | max  | max    |
+		And Address for add/update property is defined with max length fields
         And User gets <propertyType> for PropertyType
 	When User creates property with defined address by Api
 	Then User should get OK http status code
@@ -17,6 +15,7 @@ Scenario Outline: Create property
 	| Farm/Estate       |
 	| Office            |
 	| Department Stores |
+	| Retail            |
 
 @Property
 Scenario Outline: Create property with invalid data
@@ -38,25 +37,27 @@ Scenario Outline: Create property with invalid data
 	| GB      | Property | 777         | invalid      | BadRequest |
 
 @Property
+@ignore
 Scenario Outline: Update property
 	Given User gets GB address form for Property and country details
-        And User gets House for PropertyType
+        And User gets <propertyType1> for PropertyType
 		And Property with Address is in data base
 			| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
 			| abc          | 1              | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
-		And Address for add/update property is defined
-			| PropertyName | PropertyNumber | Line2 | Line3 | Postcode | City | County |
-			| max          | max            | max   | max   | max      | max  | max    |
-		And User gets <propertyType> for PropertyType
+		And Address for add/update property is defined with max length fields
+		And User gets <propertyType2> for PropertyType
 	When Users updates property with defined address for latest id by Api
 	Then User should get OK http status code
 		And The updated Property is saved in data base
 
 	Examples:
-	| propertyType      |
-	| Farm/Estate       |
-	| Office            |
-	| Department Stores |
+	| propertyType1           | propertyType2  |
+	| Farm/Estate             | Farm/Estate    |
+	| Office                  | Office         |
+	| Retail                  | Car Showroom   |
+	| Retail Unit A1          | Retail Unit A3 |
+	| Industrial/Distribution | Industrial     |
+	| Office                  | Other          |
 
 @Property
 Scenario Outline: Update property with invalid data

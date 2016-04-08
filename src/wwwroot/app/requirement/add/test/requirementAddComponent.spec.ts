@@ -39,8 +39,6 @@ module Antares {
 
         var controller: RequirementAddController;
 
-        beforeEach(angular.mock.module('app'));
-
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService,

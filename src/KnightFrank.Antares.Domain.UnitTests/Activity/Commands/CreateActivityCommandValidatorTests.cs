@@ -1,11 +1,15 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Activity.Commands
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
 
     using FluentAssertions;
 
     using FluentValidation.Results;
 
+    using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
@@ -33,9 +37,25 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_ValidCreateActivityCommand_When_Validating_Then_IsValid(CreateActivityValidator validator,
+        public void Given_ValidCreateActivityCommand_When_Validating_Then_IsValid(
+            [Frozen] Mock<IGenericRepository<Property>> propertyRepository, 
+            [Frozen] Mock<IReadGenericRepository<EnumTypeItem>> enumTypeItemRepository,
+            [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
+            CreateActivityCommandValidator validator,
             CreateActivityCommand cmd)
         {
+            // Arrange 
+            IEnumerable<Contact> fakeContactResult = cmd.ContactIds.Select(activityContact => new Contact { Id = activityContact });
+            var fakeActivityStatus = new EnumTypeItem
+            {
+                Id = cmd.ActivityStatusId,
+                EnumType = new EnumType { Code = "ActivityStatus" }
+            };
+               
+
+            enumTypeItemRepository.Setup(r => r.Get()).Returns(new List<EnumTypeItem> { fakeActivityStatus }.AsQueryable());
+            contactRepository.Setup(r => r.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(fakeContactResult);
+            
             // Act
             ValidationResult validationResult = validator.Validate(cmd);
 
@@ -47,7 +67,7 @@
         [AutoMoqData]
         public void Given_PropertyDoesNotExist_When_Validating_Then_IsInvalid(
             [Frozen] Mock<IGenericRepository<Property>> propertyRepository
-            , CreateActivityValidator validator, CreateActivityCommand cmd)
+            , CreateActivityCommandValidator validator, CreateActivityCommand cmd)
         {
             // Arrange 
             propertyRepository.Setup(p => p.GetById(It.IsAny<Guid>())).Returns(default(Property));
@@ -65,7 +85,7 @@
         [AutoMoqData]
         public void Given_CommandPropertyIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
             [Frozen] Mock<IGenericRepository<Property>> propertyRepository
-            , CreateActivityValidator validator)
+            , CreateActivityCommandValidator validator)
         {
             // Arrange 
             CreateActivityCommand cmd = this.fixture.Build<CreateActivityCommand>().With(c => c.PropertyId, default(Guid)).Create();
@@ -83,7 +103,7 @@
         [AutoMoqData]
         public void Given_ActivityStatusDoesNotExist_When_Validating_Then_IsInvalid(
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository
-            , CreateActivityValidator validator, CreateActivityCommand cmd)
+            , CreateActivityCommandValidator validator, CreateActivityCommand cmd)
         {
             // Arrange 
             enumTypeItemRepository.Setup(p => p.GetById(It.IsAny<Guid>())).Returns(default(EnumTypeItem));
@@ -99,12 +119,18 @@
         [Theory]
         [AutoMoqData]
         public void Given_CommandActivityStatusIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository
-            , CreateActivityValidator validator)
+            [Frozen] Mock<IReadGenericRepository<EnumTypeItem>> enumTypeItemRepository
+            , CreateActivityCommandValidator validator)
         {
             // Arrange 
             CreateActivityCommand cmd =
                 this.fixture.Build<CreateActivityCommand>().With(c => c.ActivityStatusId, default(Guid)).Create();
+            var fakeActivityStatus = new EnumTypeItem
+            {
+                Id = cmd.ActivityStatusId,
+                EnumType = new EnumType { Code = "ActivityStatus" }
+            };
+            enumTypeItemRepository.Setup(r => r.Get()).Returns(new List<EnumTypeItem> { fakeActivityStatus }.AsQueryable());
 
             // Act
             ValidationResult validationResult = validator.Validate(cmd);
@@ -114,5 +140,5 @@
             validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.ActivityStatusId));
             validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == NotEmptyError);
         }
-    }
+    }       
 }

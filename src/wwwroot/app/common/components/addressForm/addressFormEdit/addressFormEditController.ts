@@ -1,19 +1,18 @@
 ﻿/// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Component {
-    import Address = Common.Models.Dto.Address;
     import CountryLocalised = Common.Models.Dto.CountryLocalised;
-    import AddressForm = Common.Models.Dto.AddressForm;
-    import IAddressForm = Common.Models.Dto.IAddressForm;
+    import Dto = Common.Models.Dto;
+    import Business = Common.Models.Business;
 
     export class AddressFormEditController {
         public userCountryCode: string;
         public entityTypeCode: string;
-        public address: Address;
+        public address: Business.Address;
 
         public isLoading: boolean = true;
         public countries: CountryLocalised[] = [];
-        public addressForm: AddressForm;
+        public addressForm: Business.AddressForm;
 
         private countryResource: Common.Models.Resources.ICountryResourceClass;
         private addressFormResource: Common.Models.Resources.IAddressFormResourceClass;
@@ -64,15 +63,15 @@ module Antares.Common.Component {
         }
 
         private getAddressFormTemplete = (entityTypeCode: string, countryId: string): void => {
-            var countryLocalised: CountryLocalised = _.find(this.countries, (c) => {
+            var countryLocalised: CountryLocalised = _.find(this.countries, (c: CountryLocalised) => {
                 return c.country.id === countryId;
             });
 
             this.addressFormResource
                 .get({ entityTypeCode: entityTypeCode, countryCode: countryLocalised.country.isoCode })
                 .$promise
-                .then((data: IAddressForm) => {
-                    this.addressForm = new AddressForm(data.id, data.countryId, data.addressFieldDefinitions);
+                .then((data: Dto.IAddressForm) => {
+                    this.addressForm = new Business.AddressForm(data.id, data.countryId, data.addressFieldDefinitions);
                     this.address.addressFormId = this.addressForm.id;
                 });
         };

@@ -98,7 +98,7 @@ gulp.task('_ts-compile', function() {
  */
 gulp.task('_ts-ref', function() {
     log("Updating _all.d.ts file.")
-    var tsFiles = [config.ts.allTs, '!' + config.ts.allDtsFilePath,'!'+config.ts.specTs];
+    var tsFiles = [config.ts.allTs, '!' + config.ts.allDtsFilePath, '!' + config.ts.specTs];
     return gulp.src('buildTemplates/_all.d.ts')
         .pipe($.inject(gulp.src(tsFiles, { read: false }), {
             starttag: '//<--inject:ts-->',
@@ -123,7 +123,7 @@ gulp.task('ts', function(callback) {
  * Watching changes in typescript files
  */
 gulp.task('ts-watch', function() {
-    gulp.watch([config.ts.allTs,'!'+config.ts.allDtsFilePath], ['ts']);
+    gulp.watch([config.ts.allTs, '!' + config.ts.allDtsFilePath], ['ts']);
 });
 
 /**
@@ -143,7 +143,7 @@ gulp.task('build-specs', ['_build-specs-templatecache'], function() {
         .src('buildTemplates/specRunner.html')
         .pipe(wiredep(options))
         .pipe(inject(config.js.appFilesToTest, '', config.js.order))
-        .pipe(inject(config.js.specsAndMocks, 'specs', ['**/*']))
+        .pipe(inject(config.js.specsAndMocks, 'specs', ['**/common/**/*', '**/*.js']))
         .pipe(inject(templateCache, 'templates'))
         .pipe(gulp.dest(config.root));
 });
@@ -170,6 +170,8 @@ gulp.task('build', ['_optimize'], function() {
     log('Copying fonts');
     gulp.src(config.build.fonts)
         .pipe(gulp.dest(config.build.output + config.bower.directory + 'font-awesome/fonts/'));
+    gulp.src(config.build.bootstrapFonts)
+        .pipe(gulp.dest(config.build.output + config.bower.directory + 'bootstrap-sass/assets/fonts/bootstrap/'));
 
     log('Copying web.config file');
     gulp.src(config.build.webConfigFile)

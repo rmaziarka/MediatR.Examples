@@ -44,22 +44,24 @@
         public void SetRequirementLocationDetails(Table table)
         {
             var details = table.CreateInstance<CreateOrUpdateRequirementAddress>();
-
-            if (details.City.ToLower().Equals("max"))
-            {
-                details.City = StringExtension.GenerateMaxAlphanumericString(128);
-            }
-            if (details.Line2.ToLower().Equals("max"))
-            {
-                details.Line2 = StringExtension.GenerateMaxAlphanumericString(128);
-            }
-            if (details.Postcode.ToLower().Equals("max"))
-            {
-                details.Postcode = StringExtension.GenerateMaxAlphanumericString(10);
-            }
-
             details.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
             details.CountryId = this.scenarioContext.Get<Guid>("CountryId");
+
+            this.scenarioContext.Set(details, "Location");
+        }
+
+        [When(@"User sets locations details for the requirement with max length fields")]
+        public void SetRequirementLocationDetailsWithMaxFields()
+        {
+            var details = new CreateOrUpdateRequirementAddress
+            {
+                City = StringExtension.GenerateMaxAlphanumericString(128),
+                Line2 = StringExtension.GenerateMaxAlphanumericString(128),
+                Postcode = StringExtension.GenerateMaxAlphanumericString(10),
+                AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId"),
+                CountryId = this.scenarioContext.Get<Guid>("CountryId")
+            };
+
             this.scenarioContext.Set(details, "Location");
         }
 
