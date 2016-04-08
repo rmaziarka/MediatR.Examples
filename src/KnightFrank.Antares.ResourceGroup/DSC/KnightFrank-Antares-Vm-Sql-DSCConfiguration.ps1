@@ -1,7 +1,7 @@
 Configuration SetupSQLVm
 {
 
-Param ( [string] $nodeName )
+Param ( [string] $nodeName, [PSCredential] $setupCredential, [PSCredential] $sqlUserCredential )
 
 Import-DscResource -ModuleName PSDesiredStateConfiguration
 Import-DscResource -ModuleName xSQLServer
@@ -10,14 +10,9 @@ Import-DscResource -ModuleName xStorage
 $isoFileName = "en_sql_server_2014_developer_edition_with_service_pack_1_x86_dvd_6668541.iso"
 $sqlInstanceName = "MSSQLSERVER"
 $sqlFeatures = "SQLENGINE,IS,SSMS,ADV_SSMS"    
-<#
-$sqlUserName = "KnightFrank.Antares.Db.User"
-$sqlUserPassword = ConvertTo-SecureString -AsPlainText '$Kf@admin' -Force
-$sqlUserCredential = new-object -typename System.Management.Automation.PSCredential -argumentlist $sqlUserName, $sqlUserPassword
-#>
+
 Node $nodeName
 {
-	PSDscAllowPlainTextPassword = $true
 	LocalConfigurationManager
     {
         RebootNodeIfNeeded = $true
@@ -67,11 +62,15 @@ Node $nodeName
 		DriveLetter = "s:"
 		Ensure = "Present"
 	}
+	
 	<#
 	xSqlServerSetup InstallSql
 	{
 		DependsOn = "[xMountImage]MountSqlIso"
+		SetupCredential = $setupCredential
+		SQLSvcAccount = $setupCredential
 		SourcePath = "s:\"
+		SourceFolder = "\"
 		InstallSharedDir = "C:\Program Files\Microsoft SQL Server"
         InstallSharedWOWDir = "C:\Program Files (x86)\Microsoft SQL Server"
         InstanceDir = "C:\Program Files\Microsoft SQL Server"
@@ -109,13 +108,15 @@ Node $nodeName
         Name = $sqlUserName
         Role = "dbcreator"
     }
-	
+	#>
+	<#
 	xMountImage UnMountSqlIso
 	{
-		DependsOn = "[xSqlServerSetup]InstallSql"
-		ImagePath = 'c:\temp\$isoFileName'
-        DriveLetter = 's:'
-        Ensure = 'Absent'
+		DependsOn = "[xMountImage]MountSqlIso" # TODO: change dependency to InstallSql
+		Name = "SQL Disc"
+		ImagePath = "c:\temp\$isoFileName"
+		DriveLetter = "s:"
+		Ensure = "Absent"
 	}
 	#>
 }

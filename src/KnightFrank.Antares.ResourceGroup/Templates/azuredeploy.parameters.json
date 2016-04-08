@@ -28,6 +28,9 @@
     },
     "ouPath": {
       "value": "a"
+    },
+    "SqlUserPassword": {
+      "value": "$Kf@admin2016"
     }
   }
 }
