@@ -1,11 +1,11 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.TestHelpers {
-    import Business = Antares.Common.Models.Business;
-    import Dto = Antares.Common.Models.Dto;
+    import Business = Common.Models.Business;
+    import Dto = Common.Models.Dto;
 
     export class ContactGenerator {
-        public static GenerateDto(): Dto.IContact {
+        public static generateDto(): Dto.IContact {
 
             var contact: Dto.IContact = {
                 firstName: ContactGenerator.makeRandom('firstName'),
@@ -17,16 +17,16 @@ module Antares.TestHelpers {
             return contact;
         }
 
-        public static GenerateManyDtos(n: number): Dto.IContact[] {
-            return _.times(n, ContactGenerator.GenerateDto);
+        public static generateManyDtos(n: number): Dto.IContact[] {
+            return _.times(n, ContactGenerator.generateDto);
         }
 
-        public static GenerateMany(n: number): Business.Contact[] {
-            return _.map(ContactGenerator.GenerateManyDtos(n), (activity: Dto.IContact) => { return new Business.Contact(activity); });
+        public static generateMany(n: number): Business.Contact[] {
+            return _.map(ContactGenerator.generateManyDtos(n), (activity: Dto.IContact) => { return new Business.Contact(activity); });
         }
 
-        public static Generate(): Business.Contact {
-            return new Business.Contact(ContactGenerator.GenerateDto());
+        public static generate(): Business.Contact {
+            return new Business.Contact(ContactGenerator.generateDto());
         }
 
         private static makeRandom(text: string): string {

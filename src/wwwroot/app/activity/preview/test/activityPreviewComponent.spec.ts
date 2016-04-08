@@ -8,23 +8,12 @@ module Antares {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
             $http: ng.IHttpBackendService,
-            filter: ng.IFilterService;
-
-        var controller: ActivityPreviewController;
-
+            filter: ng.IFilterService,
+            controller: ActivityPreviewController;
 
         describe('and proper property id is provided', () => {
-            var activityMock: Business.Activity = {
-                id: '999',
-                propertyId: '111',
-                property: null,
-                activityStatusId: 'testSatusId',
-                //TODO: test data generator should be implemented to simplifi mockig data
-                contacts: [
-                    <Business.Contact>{ id: '11', firstName: 'John', surname: 'Test1', title: 'Mr' },
-                    <Business.Contact>{ id: '22', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }],
-                createdDate: new Date()
-            };
+            var activityMock = TestHelpers.ActivityGenerator.generate();
+
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
@@ -62,18 +51,23 @@ module Antares {
             });
 
             it('when activity is set then activity vendors should be displayed', () => {
-                // arrange + act
+                // arrange
+                var contact1Mock = new Business.Contact({ id : '11', firstName : 'John', surname : 'Test1', title : 'Mr' });//TestHelpers.ContactGenerator.generate();
+                var contact2Mock = new Business.Contact({ id : '22', firstName : 'Amy', surname : 'Test2', title : 'Mrs' });//TestHelpers.ContactGenerator.generate();
+
+                activityMock.contacts = [contact1Mock, contact2Mock];
+
+                // act
                 controller.setActivity(activityMock);
                 scope.$apply();
 
                 // assert
-                var vendorsItemsElement1 = element.find('#activity-vendor-item-11');
-                var vendorsItemsElement2 = element.find('#activity-vendor-item-22');
+                var vendorsItemsElement1 = element.find('#activity-vendor-item-' + contact1Mock.id);
+                var vendorsItemsElement2 = element.find('#activity-vendor-item-' + contact2Mock.id);
 
-                expect(vendorsItemsElement1[0].innerText).toBe('John Test1');
-                expect(vendorsItemsElement2[0].innerText).toBe('Amy Test2');
+                expect(vendorsItemsElement1[0].innerText).toBe(contact1Mock.getName());
+                expect(vendorsItemsElement2[0].innerText).toBe(contact2Mock.getName());
             });
         });
-
     });
 }

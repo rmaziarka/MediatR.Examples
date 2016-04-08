@@ -13,7 +13,7 @@ module Antares.Activity {
         defaultActivityStatusCode: string = 'PreAppraisal';
         activityResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityResource>;
 
-        private vendors: Array<Business.Contact>;
+        public vendors: Array<Business.Contact> = [];
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,

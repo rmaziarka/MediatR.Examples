@@ -28,7 +28,7 @@ module Antares {
         };
 
         var createVendors = (count: number) => {
-            return _.map(TestHelpers.ContactGenerator.GenerateMany(count), (dtoContact: Dto.IContact) => {
+            return _.map(TestHelpers.ContactGenerator.generateMany(count), (dtoContact: Dto.IContact) => {
                 return new Business.Contact(dtoContact);
             });
         }
@@ -60,6 +60,21 @@ module Antares {
             it('then default Pre-appraisal status is selected', () => {
                 var expectedPreAppraisalStatus = _.find(activityStatuses.items, { 'code': 'PreAppraisal' });
                 expect(controller.selectedActivityStatus).toEqual(expectedPreAppraisalStatus);
+            });
+        });
+
+        describe('when vendors are passed to component setVendors method', () => {
+            it('and are null then empty vendors array should be set ', () =>{
+                controller.setVendors(null);
+
+                expect(controller.vendors.length).toBe(0);
+            });
+
+            it('and are array then vendors array should be set ', () => {
+                var vendorsArray = createVendors(3);
+                controller.setVendors(vendorsArray);
+
+                expect(controller.vendors).toBe(vendorsArray);
             });
         });
 
