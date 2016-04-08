@@ -9,9 +9,8 @@ module Antares.Company {
         $stateProvider
             .state('app.company-add', {
                 url: '/company/add',
-                templateUrl: 'app/company/add/companyAdd.html',
-                controllerAs: 'vm',
-                controller: 'CompanyAddController'
+                params: {},
+                template: '<company-add></company-add>'
             });
     }
 }
