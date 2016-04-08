@@ -76,8 +76,8 @@ module Antares.Company {
                     form.$setPristine()
                     //this.$state.go('app.company-view', company);
                 });
-        }        
-   
+        }
+
     }
 
     angular.module('app').controller('CompanyAddController', CompanyAddController);
