@@ -26,6 +26,9 @@ declare module Antares.Common.Models {
         // *** IResource extensions***
         interface IActivityResource extends ng.resource.IResource<Dto.IActivity> {
         }
+        
+        interface ICompanyResource extends ng.resource.IResource<Dto.ICompany> {
+        }
 
         interface IContactResource extends ng.resource.IResource<Dto.IContact> {
         }

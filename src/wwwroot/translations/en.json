@@ -52,6 +52,17 @@
     "FLATNUMBER": "Flat number",
     "UNIT": "Unit"
   },
+  "COMPANY": {
+    "ADD": {
+      "CREATE_COMPANY": "Create company",
+      "BASIC_INFORMATION": "Basic information",
+      "NAME": "Name",
+      "CONTACTS": "Contacts",
+      "NO_CONTACTS": "No contacts yet",
+      "CONTACTS_ARE_REQUIRED": "Please select at least one contact to create a company",
+      "FINDCONTACT": "Find contact"
+    }
+  },
   "CONTACT": {
     "TITLE": "Title",
     "FIRSTNAME": "First name",

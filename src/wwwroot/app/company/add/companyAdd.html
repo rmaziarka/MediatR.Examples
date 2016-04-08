@@ -1,35 +1,49 @@
 <div class="row">
     <div class="col-md-12">
-        <h2 class="page-header">Create company</h2>
+        <h2 class="page-header" translate="COMPANY.ADD.CREATE_COMPANY"></h2>
     </div>
-    <form>
+
+    <form ng-submit="addCompanyForm.$valid && vm.hasCompanyContacts() && vm.createCompany()" name="addCompanyForm" id="addCompanyForm" method="post" novalidate>
         <div class="col-md-4">
             <fieldset>
-                <legend>Basic information</legend>
-                <div class="form-group required has-error">
-                    <label for="name">Name</label>
-                    <input id="name" class="form-control" type="text">
-                    <p class="help-block">Field is required</p>
+                <legend translate="COMPANY.ADD.BASIC_INFORMATION"></legend>
+
+                <div class="form-group required" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.name.$dirty) && addCompanyForm.name.$invalid}">
+                    <label for="title" translate="COMPANY.ADD.NAME"></label>
+                    <input type="text" class="form-control" id="title" name="name" required ng-maxlength="128" ng-model="vm.company.name" autocomplete="off">
+                    <div ng-messages="addCompanyForm.name.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.name.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
                 </div>
+
             </fieldset>
         </div>
         <div class="col-md-4">
-            <fieldset>
-                <legend>Contacts</legend>
-                <div class="form-group">
-                    <button type="button" class="btn btn-default"><i class="fa fa-plus-circle"></i></button>
-                </div>
-                <p class="help-block">No contacts added yet.</p>
-            </fieldset>
-
-            <div class="panel panel-default">
-                <div class="panel-body">Robert Redford</div>
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-body">Robert Redford</div>
-            </div>
+            
+                <fieldset>
+                    <list id="list-contacts">
+                        <list-header>
+                            <legend translate="COMPANY.ADD.CONTACTS"></legend>
+                        </list-header>
+                        <list-actions>
+                            <div class="form-group">
+                                <button class="btn btn-default" type="button" ng-click="vm.showContactList()">
+                                    <i class="fa fa-plus-circle"></i>
+                                </button>
+                            </div>
+                        </list-actions>
+                        <list-no-items ng-show="vm.hasCompanyContacts() === false" ng-class="{'has-error': addCompanyForm.$submitted}">
+                            <p class="help-block" ng-show="addCompanyForm.$submitted === false" translate="COMPANY.ADD.NO_CONTACTS"></p>
+                            <p class="help-block" ng-show="addCompanyForm.$submitted" translate="COMPANY.ADD.CONTACTS_ARE_REQUIRED"></p>
+                        </list-no-items>
+                        <list-item id="list-item-contact-{{contact.id}}" ng-repeat="contact in vm.company.contacts">
+                            {{contact.getName()}}
+                        </list-item>
+                    </list>
+                </fieldset>
+            
         </div>
+
         <div class="col-md-12">
             <div class="form-group">
                 <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save</button>
@@ -37,3 +51,21 @@
         </div>
     </form>
 </div>
+
+
+<side-panel component-id="vm.componentIds.contactSidePanelId">
+    <side-panel-header>
+        <h3 translate="COMPANY.ADD.FINDCONTACT"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <contact-list component-id="vm.componentIds.contactListId"></contact-list>
+    </side-panel-content>
+    <side-panel-footer>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()">
+            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+        </button>
+        <button class="btn btn-primary" type="button" ng-click="vm.updateContacts()">
+            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+        </button>
+    </side-panel-footer>
+</side-panel>
