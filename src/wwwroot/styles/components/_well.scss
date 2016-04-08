@@ -5,7 +5,7 @@
     display: block;
   }
 
-  div:first-child:not(.address-view-item) {
+  div:first-of-type:not(.address-view-item) {
     font-size: 24px;
     margin-bottom: 10px;
     word-wrap: break-word;
