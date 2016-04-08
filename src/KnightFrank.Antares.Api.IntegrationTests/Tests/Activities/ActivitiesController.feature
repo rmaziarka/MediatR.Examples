@@ -1,6 +1,5 @@
 ﻿Feature: ActivitiesController
 
-
 @Activities
 Scenario Outline: Retrieve error messages for improper data
 	Given User gets GB address form for Property and country details
@@ -10,8 +9,8 @@ Scenario Outline: Retrieve error messages for improper data
 			| OwnershipType      | Freeholder       |
 			| <activityStatusId> | PreAppraisal     |
 		And Property with Address is in data base
-        		| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
-        		| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London | 
+        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
+        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London | 
 	When User creates activity for given <propertyId> property id
 	Then User should get <statusCode> http status code
 
@@ -19,7 +18,6 @@ Scenario Outline: Retrieve error messages for improper data
 	| propertyId                           | activityStatusId                     | statusCode |
 	| 00000000-0000-0000-0000-000000000000 | ActivityStatus                       | BadRequest |
 	| latest                               | 00000000-0000-0000-0000-000000000000 | BadRequest |
-
 
 @Activities
 Scenario: Create Activity for an existing property
