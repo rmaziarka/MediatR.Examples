@@ -16,6 +16,7 @@
     using Newtonsoft.Json;
 
     using TechTalk.SpecFlow;
+    using TechTalk.SpecFlow.Assist;
 
     [Binding]
     public class ActivitiesSteps
@@ -90,6 +91,32 @@
         {
             var createdActivity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
             this.GetActivityResponse(createdActivity.Id.ToString());
+        }
+
+        [When(@"User updates activity '(.*)' id and '(.*)' status with following sale valuation")]
+        public void WhenUserUpdatesActivityWithFollowingSaleValuation(string id, string status, Table table)
+        {
+            string requestUrl = $"{ApiUrl}";
+
+            var updateActivityCommand = table.CreateInstance<UpdateActivityCommand>();
+            var activityFromDatabase = this.scenarioContext.Get<Activity>("Added Activity");
+            updateActivityCommand.ActivityId = id.Equals("added") ? activityFromDatabase.Id : new Guid(id);
+            updateActivityCommand.ActivityStatusId = status.Equals("added") ? activityFromDatabase.ActivityStatusId 
+                : new Guid(status);
+
+            activityFromDatabase = new Activity
+            {
+                Id = updateActivityCommand.ActivityId,
+                ActivityStatusId = updateActivityCommand.ActivityStatusId,
+                MarketAppraisalPrice = updateActivityCommand.MarketAppraisalPrice,
+                RecommendedPrice = updateActivityCommand.RecommendedPrice,
+                VendorEstimatedPrice = updateActivityCommand.VendorEstimatedPrice
+            };
+
+            this.scenarioContext["Added Activity"] = activityFromDatabase;
+
+            HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, updateActivityCommand);
+            this.scenarioContext.SetHttpResponseMessage(response);
         }
 
         [Then(@"Activities list should be the same as in DB")]
