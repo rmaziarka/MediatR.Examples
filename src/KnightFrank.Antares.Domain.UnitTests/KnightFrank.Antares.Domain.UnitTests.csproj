@@ -108,6 +108,7 @@
     <Compile Include="Activity\QueryHandlers\ActivityQueryHandlerTests.cs" />
     <Compile Include="AddressForm\Queries\AddressFormQueryValidatorTests.cs" />
     <Compile Include="AddressForm\Queries\GetCountriesForAddressFormQueryValidatorTests.cs" />
+    <Compile Include="Common\Validator\ActivityStatusValidatorTests.cs" />
     <Compile Include="Company\CommandHandlers\CreateCompanyComandHandlerTests.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommandDomainValidatorTests.cs" />
     <Compile Include="Common\Validator\ContactValidatorTests.cs" />

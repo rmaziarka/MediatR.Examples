@@ -8,12 +8,14 @@
     using FluentAssertions;
 
     using FluentValidation.Results;
+    using FluentValidation.TestHelper;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
+    using KnightFrank.Antares.Domain.Common.Validator;
 
     using Moq;
 
@@ -66,7 +68,9 @@
         [Theory]
         [AutoMoqData]
         public void Given_PropertyDoesNotExist_When_Validating_Then_IsInvalid(
-            [Frozen] Mock<IGenericRepository<Property>> propertyRepository, CreateActivityCommandValidator validator, CreateActivityCommand cmd)
+            [Frozen] Mock<IGenericRepository<Property>> propertyRepository, 
+            CreateActivityCommandValidator validator,
+            CreateActivityCommand cmd)
         {
             // Arrange 
             propertyRepository.Setup(p => p.GetById(It.IsAny<Guid>())).Returns(default(Property));
@@ -83,8 +87,8 @@
         [Theory]
         [AutoMoqData]
         public void Given_CommandPropertyIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
-            [Frozen] Mock<IGenericRepository<Property>> propertyRepository
-            , CreateActivityCommandValidator validator)
+            [Frozen] Mock<IGenericRepository<Property>> propertyRepository, 
+            CreateActivityCommandValidator validator)
         {
             // Arrange 
             CreateActivityCommand cmd = this.fixture.Build<CreateActivityCommand>().With(c => c.PropertyId, default(Guid)).Create();
@@ -97,29 +101,11 @@
             validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.PropertyId));
             validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == NotEmptyError);
         }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_ActivityStatusDoesNotExist_When_Validating_Then_IsInvalid(
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository
-            , CreateActivityCommandValidator validator, CreateActivityCommand cmd)
-        {
-            // Arrange 
-            enumTypeItemRepository.Setup(p => p.GetById(It.IsAny<Guid>())).Returns(default(EnumTypeItem));
-
-            // Act
-            ValidationResult validationResult = validator.Validate(cmd);
-
-            // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.ActivityStatusId));
-        }
-
         [Theory]
         [AutoMoqData]
         public void Given_CommandActivityStatusIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
-            [Frozen] Mock<IReadGenericRepository<EnumTypeItem>> enumTypeItemRepository
-            , CreateActivityCommandValidator validator)
+            [Frozen] Mock<IReadGenericRepository<EnumTypeItem>> enumTypeItemRepository, 
+            CreateActivityCommandValidator validator)
         {
             // Arrange 
             CreateActivityCommand cmd =
@@ -139,5 +125,12 @@
             validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.ActivityStatusId));
             validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == NotEmptyError);
         }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_ValidationRules_When_Configuring_Then_ActivityStatusIdHaveValidatorSetup(CreateActivityCommandValidator validator)
+        {
+            validator.ShouldHaveChildValidator(x => x.ActivityStatusId, typeof(ActivityStatusValidator));
     }       
+}
 }

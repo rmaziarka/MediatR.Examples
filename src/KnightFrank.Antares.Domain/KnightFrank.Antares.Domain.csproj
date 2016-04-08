@@ -74,9 +74,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandler.cs" />
+    <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandler.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandProfile.cs" />
-    <Compile Include="Activity\Commands\CreateActivityContact.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandValidator.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandDomainValidator.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommand.cs" />
@@ -107,6 +107,7 @@
     <Compile Include="Common\Exceptions\ResourceNotFoundException.cs" />
     <Compile Include="Common\Specifications\IsLocaled.cs" />
     <Compile Include="Common\ValidatorCommandHandler.cs" />
+    <Compile Include="Common\Validator\ActivityStatusValidator.cs" />
     <Compile Include="Common\Validator\ContactValidator.cs" />
     <Compile Include="Company\CommandHandlers\CreateCompanyCommandHandler.cs" />
     <Compile Include="Company\Command\CreateCompanyCommand.cs" />
