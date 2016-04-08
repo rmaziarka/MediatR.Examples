@@ -14,8 +14,20 @@
     "VmIISAdminPassword": {
       "value": "$Kf@admin"
     },
-      "EnvironmentPrefix": {
-          "value": "test"
-      }
+    "EnvironmentPrefix": {
+      "value": "test"
+    },
+    "domainToJoin": {
+      "value": "a"
+    },
+    "domainUsername": {
+      "value": "a"
+    },
+    "domainPassword": {
+      "value": "a"
+    },
+    "ouPath": {
+      "value": "a"
+    }
   }
 }

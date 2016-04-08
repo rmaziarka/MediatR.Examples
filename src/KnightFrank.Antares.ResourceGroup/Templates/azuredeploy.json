@@ -334,7 +334,8 @@
           "location": "[resourceGroup().location]",
           "apiVersion": "2015-06-15",
           "dependsOn": [
-            "[concat('Microsoft.Compute/virtualMachines/', variables('VmSqlName'))]"
+            "[concat('Microsoft.Compute/virtualMachines/', variables('VmSqlName'))]",
+            "[concat('Microsoft.Compute/virtualMachines/', variables('VmIISName'), '/extensions/KnightFrank-Antares-Vm-IIS-DSC')]"
           ],
           "tags": {
             "displayName": "KnightFrank-Antares-Vm-Sql-DSC"
@@ -349,7 +350,7 @@
               "sasToken": "[parameters('_artifactsLocationSasToken')]",
               "configurationFunction": "[variables('KnightFrank-Antares-Vm-Sql-DSCConfigurationFunction')]",
               "properties": {
-                "nodeName": "[variables('VmSqlName')]"
+                "nodeName": "[variables('VmSqlHostName')]"
               }
             },
             "protectedSettings": { }
@@ -394,7 +395,8 @@
       "apiVersion": "2015-06-15",
       "dependsOn": [
         "[concat('Microsoft.Storage/storageAccounts/', variables('RgStorageAccountName'))]",
-        "[concat('Microsoft.Network/networkInterfaces/', variables('VmIISNicName'))]"
+        "[concat('Microsoft.Network/networkInterfaces/', variables('VmIISNicName'))]",
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('VmIISPublicIP'))]"
       ],
       "tags": {
         "displayName": "KnightFrank-Antares-Vm-IIS"
@@ -458,8 +460,7 @@
                 "environmentPrefix": "[parameters('EnvironmentPrefix')]"
               }
             },
-            "protectedSettings": {
-            }
+            "protectedSettings": { }
           }
         }
       ]
