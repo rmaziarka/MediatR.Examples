@@ -14,6 +14,8 @@
     using KnightFrank.Antares.Dal.Model.Resource;
     using KnightFrank.Antares.Dal.Model.User;
 
+    using Attribute = KnightFrank.Antares.Dal.Model.Attribute.Attribute;
+
     public class KnightFrankContext : DbContext
     {
         public KnightFrankContext() : base("Api.Settings.SqlConnectionString")
@@ -55,6 +57,11 @@
         public DbSet<PropertyType> PropertyType { get; set; }
         public DbSet<PropertyTypeLocalised> PropertyTypeLocalised { get; set; }
         public DbSet<PropertyTypeDefinition> PropertyTypeDefinition { get; set; }
+        public DbSet<Attribute> Attribute { get; set; }
+        public DbSet<PropertyAttributeForm> PropertyAttributeForm { get; set; }
+        public DbSet<PropertyAttributeFormDefinition> PropertyAttributeFormDefinition { get; set; }
+
+
 
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {

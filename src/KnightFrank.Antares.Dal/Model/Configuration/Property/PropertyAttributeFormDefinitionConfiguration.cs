@@ -1,6 +1,6 @@
 ﻿namespace KnightFrank.Antares.Dal.Model.Configuration.Property
 {
-    using KnightFrank.Antares.Dal.Model.Attribute;
+    using KnightFrank.Antares.Dal.Model.Property;
 
     internal class PropertyAttributeFormDefinitionConfiguration: BaseEntityConfiguration<PropertyAttributeFormDefinition>
     {

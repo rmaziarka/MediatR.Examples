@@ -20,7 +20,8 @@
 
         public virtual PropertyType PropertyType { get; set; }
 
-        public Guid AttributeValuesId { get; set; }
+        //TODO: column should be required - to do in US 20406
+        public Guid? AttributeValuesId { get; set; }
 
         public virtual AttributeValues AttributeValues { get; set; }
     }

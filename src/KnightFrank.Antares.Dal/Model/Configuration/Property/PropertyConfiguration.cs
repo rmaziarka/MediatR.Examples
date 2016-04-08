@@ -8,9 +8,7 @@
 
             this.HasRequired(p => p.PropertyType);
 
-            this.HasRequired(p => p.AttributeValues)
-                .WithMany()
-                .HasForeignKey(p => p.AttributeValuesId);
+            this.HasOptional(p => p.AttributeValues).WithMany().HasForeignKey(p => p.AttributeValuesId);
         }
     }
 }

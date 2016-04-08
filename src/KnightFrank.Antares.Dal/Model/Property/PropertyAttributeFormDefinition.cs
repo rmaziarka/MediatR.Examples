@@ -12,7 +12,7 @@
 
         public Guid PropertyAttributeFormId { get; set; }
 
-        public Model.Attribute.PropertyAttributeForm PropertyAttributeForm { get; set; }
+        public PropertyAttributeForm PropertyAttributeForm { get; set; }
 
         public int Order { get; set; }
     }
