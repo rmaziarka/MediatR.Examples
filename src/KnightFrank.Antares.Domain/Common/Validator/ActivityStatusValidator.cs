@@ -11,9 +11,9 @@
 
     public class ActivityStatusValidator : AbstractValidator<Guid>
     {
-        private readonly IReadGenericRepository<EnumTypeItem> enumTypeItemRepository;
+        private readonly IGenericRepository<EnumTypeItem> enumTypeItemRepository;
 
-        public ActivityStatusValidator(IReadGenericRepository<EnumTypeItem> enumTypeItemRepository)
+        public ActivityStatusValidator(IGenericRepository<EnumTypeItem> enumTypeItemRepository)
         {
             this.enumTypeItemRepository = enumTypeItemRepository;
             this.Custom(this.ActivityStatusExists);
@@ -22,7 +22,7 @@
         private ValidationFailure ActivityStatusExists(Guid activityStatusId)
         {
             bool activityStatusExists =
-                this.enumTypeItemRepository.Get().Any(et => et.Id == activityStatusId && et.EnumType.Code == "ActivityStatus");
+                this.enumTypeItemRepository.Any(et => et.Id == activityStatusId && et.EnumType.Code == "ActivityStatus");
 
             return activityStatusExists ? null : new ValidationFailure(nameof(activityStatusId), "Activity Status does not exist.");
         }

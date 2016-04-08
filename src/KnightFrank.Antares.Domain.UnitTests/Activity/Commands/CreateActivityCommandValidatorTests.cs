@@ -40,24 +40,17 @@
         [Theory]
         [AutoMoqData]
         public void Given_ValidCreateActivityCommand_When_Validating_Then_IsValid(
-            [Frozen] Mock<IGenericRepository<Property>> propertyRepository, 
-            [Frozen] Mock<IReadGenericRepository<EnumTypeItem>> enumTypeItemRepository,
+            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             CreateActivityCommandValidator validator,
             CreateActivityCommand cmd)
         {
             // Arrange 
             IEnumerable<Contact> fakeContactResult = cmd.ContactIds.Select(activityContact => new Contact { Id = activityContact });
-            var fakeActivityStatus = new EnumTypeItem
-            {
-                Id = cmd.ActivityStatusId,
-                EnumType = new EnumType { Code = "ActivityStatus" }
-            };
-               
 
-            enumTypeItemRepository.Setup(r => r.Get()).Returns(new List<EnumTypeItem> { fakeActivityStatus }.AsQueryable());
+            enumTypeItemRepository.Setup(r => r.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
             contactRepository.Setup(r => r.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(fakeContactResult);
-            
+
             // Act
             ValidationResult validationResult = validator.Validate(cmd);
 
@@ -68,7 +61,7 @@
         [Theory]
         [AutoMoqData]
         public void Given_PropertyDoesNotExist_When_Validating_Then_IsInvalid(
-            [Frozen] Mock<IGenericRepository<Property>> propertyRepository, 
+            [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
             CreateActivityCommandValidator validator,
             CreateActivityCommand cmd)
         {
@@ -87,7 +80,7 @@
         [Theory]
         [AutoMoqData]
         public void Given_CommandPropertyIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
-            [Frozen] Mock<IGenericRepository<Property>> propertyRepository, 
+            [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
             CreateActivityCommandValidator validator)
         {
             // Arrange 
@@ -101,10 +94,11 @@
             validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.PropertyId));
             validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == NotEmptyError);
         }
+
         [Theory]
         [AutoMoqData]
         public void Given_CommandActivityStatusIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
-            [Frozen] Mock<IReadGenericRepository<EnumTypeItem>> enumTypeItemRepository, 
+            [Frozen] Mock<IReadGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             CreateActivityCommandValidator validator)
         {
             // Arrange 
@@ -131,6 +125,6 @@
         public void Given_ValidationRules_When_Configuring_Then_ActivityStatusIdHaveValidatorSetup(CreateActivityCommandValidator validator)
         {
             validator.ShouldHaveChildValidator(x => x.ActivityStatusId, typeof(ActivityStatusValidator));
-    }       
-}
+        }
+    }
 }

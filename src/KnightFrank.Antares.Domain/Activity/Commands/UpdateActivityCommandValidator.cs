@@ -12,7 +12,7 @@
     {
         private readonly IGenericRepository<Activity> activityRepository;
 
-        public UpdateActivityCommandValidator(IReadGenericRepository<EnumTypeItem> enumTypeItemRepository, IGenericRepository<Activity> activityRepository)
+        public UpdateActivityCommandValidator(IGenericRepository<EnumTypeItem> enumTypeItemRepository, IGenericRepository<Activity> activityRepository)
         {
             this.activityRepository = activityRepository;
 
