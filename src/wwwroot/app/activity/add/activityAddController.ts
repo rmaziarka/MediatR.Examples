@@ -47,7 +47,7 @@ module Antares.Activity {
             activity.activityStatusId = this.selectedActivityStatus.id;
             activity.contacts = this.vendors;
 
-            return this.activityResource.save(activity).$promise.then((result: Dto.IActivity) => {
+            return this.activityResource.save(new Business.CreateActivityCommand(activity)).$promise.then((result: Dto.IActivity) => {
                 var addedActivity = new Business.Activity(result);
 
                 this.activities.push(addedActivity);

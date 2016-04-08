@@ -64,7 +64,7 @@ module Antares {
         });
 
         describe('when vendors are set in component', () => {
-            var setVendors = (vendorsCount: number): Business.Contact[] =>{
+            var setVendors = (vendorsCount: number): Business.Contact[] => {
                 var vendors = createVendors(vendorsCount);
 
                 controller.setVendors(vendors);
@@ -103,7 +103,7 @@ module Antares {
             });
         });
 
-        describe('when "Save button" is clicked ', () =>{
+        describe('when "Save button" is clicked ', () => {
             var propertyMock: Dto.IProperty;
 
             beforeEach(inject((
@@ -131,7 +131,7 @@ module Antares {
             }
             ));
 
-            it('then proper data should be send to API', () =>{
+            it('then proper data should be send to API', () => {
                 var vendors = createVendors(4);
 
                 var activityAddController: Activity.ActivityAddController = element.find('activity-add').controller('activityAdd');
@@ -139,10 +139,10 @@ module Antares {
                 activityAddController.selectedActivityStatus = _.find(activityStatuses.items, { 'code': 'PreAppraisal' });
                 activityAddController.setVendors(vendors);
 
-                var expectedRequest = new Business.Activity();
+                var expectedRequest = new Business.CreateActivityCommand();
                 expectedRequest.propertyId = propertyMock.id;
                 expectedRequest.activityStatusId = activityAddController.selectedActivityStatus.id;
-                expectedRequest.contacts = vendors;
+                expectedRequest.contactIds = vendors.map((vendor: Dto.IContact) => { return vendor.id });
 
                 scope.$apply();
 
@@ -150,8 +150,8 @@ module Antares {
                     var requestData = JSON.parse(data);
                     expect(requestData.activityStatusId).toEqual(expectedRequest.activityStatusId);
                     expect(requestData.propertyId).toEqual(expectedRequest.propertyId);
-                    expect(requestData.contacts.length).toEqual(expectedRequest.contacts.length);
-                    expect(angular.equals(requestData.contacts, expectedRequest.contacts)).toBe(true);
+                    expect(requestData.contactIds.length).toEqual(expectedRequest.contactIds.length);
+                    expect(angular.equals(requestData.contactIds, expectedRequest.contactIds)).toBe(true);
 
                     return true;
                 }).respond(201, new Business.Activity());

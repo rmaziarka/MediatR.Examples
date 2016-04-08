@@ -10,7 +10,6 @@
         protected override void Configure()
         {
             this.CreateMap<CreateActivityCommand, Activity>();
-            this.CreateMap<CreateActivityContact, Contact>();
         }
     }
 }

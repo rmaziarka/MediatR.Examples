@@ -45,7 +45,7 @@
             CreateActivityCommand cmd)
         {
             // Arrange 
-            IEnumerable<Contact> fakeContactResult = cmd.Contacts.Select(activityContact => new Contact { Id = activityContact.Id });
+            IEnumerable<Contact> fakeContactResult = cmd.ContactIds.Select(activityContact => new Contact { Id = activityContact });
             var fakeActivityStatus = new EnumTypeItem
             {
                 Id = cmd.ActivityStatusId,
@@ -140,53 +140,5 @@
             validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.ActivityStatusId));
             validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == NotEmptyError);
         }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_CommandAtLeastOneContactIdDoesNotExist_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
-            CreateActivityCommandValidator validator, CreateActivityCommand cmd)
-        {
-            // Arrange   
-            IEnumerable<Contact> fakeContacts = this.fixture.CreateMany<Contact>(10);
-            contactRepository
-                .Setup(r => r.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
-                .Returns((Expression<Func<Contact, bool>> expr) => fakeContacts.Where(expr.Compile()));
-
-            // Act
-            ValidationResult validationResult = validator.Validate(cmd);
-
-            // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.Contacts));
-            contactRepository.Verify(m => m.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()), Times.Once);
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_CommandContactsIdsExist_When_Validating_Then_IsValid(
-            [Frozen] Mock<IReadGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
-            CreateActivityCommandValidator validator, CreateActivityCommand cmd)
-        {
-            // Arrange 
-            IEnumerable<Contact> fakeContacts = cmd.Contacts.Select(activityContact => new Contact {Id = activityContact.Id});
-            var fakeActivityStatus = new EnumTypeItem
-            {
-                Id = cmd.ActivityStatusId,
-                EnumType = new EnumType { Code = "ActivityStatus" }
-            };
-            enumTypeItemRepository.Setup(r => r.Get()).Returns(new List<EnumTypeItem> { fakeActivityStatus }.AsQueryable());
-            contactRepository.Setup(r => r.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
-                .Returns((Expression<Func<Contact, bool>> expr) => fakeContacts.Where(expr.Compile()));
-
-            // Act
-            ValidationResult validationResult = validator.Validate(cmd);
-
-            // Assert
-            validationResult.IsValid.Should().BeTrue();
-            contactRepository.Verify(m => m.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()), Times.Once);
-        }
-    }
+    }       
 }

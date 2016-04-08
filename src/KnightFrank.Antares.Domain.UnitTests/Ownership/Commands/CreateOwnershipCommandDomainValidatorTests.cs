@@ -6,11 +6,13 @@
     using System.Linq.Expressions;
 
     using FluentValidation.Results;
+    using FluentValidation.TestHelper;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.Common.Validator;
     using KnightFrank.Antares.Domain.Ownership.Commands;
     using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
 
@@ -220,18 +222,7 @@
 
             TestIncorrectCommand(this.validator, this.command, nameof(this.command.OwnershipTypeId));
         }
-
-        [Fact]
-        public void Given_IncorrectContactIds_When_Validating_Then_ValidationErrors()
-        {
-            var results = this.command.ContactIds.Select(x => new Contact()).ToList();
-            results.Add(new Contact());
-
-            this.contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(results);
-
-            TestIncorrectCommand(this.validator, this.command, nameof(this.command.ContactIds));
-        }
-
+           
         [Fact]
         public void Given_IncorrectPropertyId_When_Validating_Then_ValidationErrors()
         {
@@ -251,6 +242,12 @@
 
             this.propertyRepository.Verify(expression, Times.Once);
             Assert.True(validationResult.IsValid);
+        }
+
+        [Fact]
+        public void Given_ValidationRules_When_Configuring_Then_ContactIdsHaveValidatorSetup()
+        {
+            this.validator.ShouldHaveChildValidator(v => v.ContactIds, typeof(ContactValidator));
         }
 
         private static void TestIncorrectCommand(CreateOwnershipCommandDomainValidator validator, CreateOwnershipCommand command,

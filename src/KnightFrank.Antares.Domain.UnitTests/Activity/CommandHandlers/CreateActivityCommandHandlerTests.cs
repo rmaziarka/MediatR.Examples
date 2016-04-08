@@ -7,11 +7,15 @@
     using FluentAssertions;
     using FluentAssertions.Common;
 
+    using FluentValidation.Results;
+
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.CommandHandlers;
     using KnightFrank.Antares.Domain.Activity.Commands;
+    using KnightFrank.Antares.Domain.Common;
+    using KnightFrank.Antares.Domain.Common.Exceptions;
 
     using Moq;
 
@@ -42,7 +46,7 @@
             activityRepository.Setup(r => r.Save()).Callback(() => { activity.Id = expectedActivityId; });
 
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
-                             .Returns(cmd.Contacts.Select(x => new Contact { Id = x.Id }));
+                             .Returns(cmd.ContactIds.Select(id => new Contact { Id = id }));
 
             // Act
             handler.Handle(cmd);
@@ -53,6 +57,21 @@
             activity.Id.ShouldBeEquivalentTo(expectedActivityId);
             activityRepository.Verify(r => r.Add(It.IsAny<Activity>()), Times.Once());
             activityRepository.Verify(r => r.Save(), Times.Once());
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_CommandHasInvalidContacts_When_Handling_Then_ShouldThrowDomainValidatorException(
+            [Frozen] Mock<IDomainValidator<CreateActivityCommand>> domainValidator,
+            CreateActivityCommandHandler handler,
+            CreateActivityCommand cmd)
+        {
+            // Arrange 
+            domainValidator.Setup(v => v.Validate(It.IsAny<CreateActivityCommand>()))
+                           .Returns(new ValidationResult(new [] { new ValidationFailure(nameof(cmd.ContactIds), "Error") }));
+                    
+            // Act & Assert
+            Assert.Throws<DomainValidationException>(() => { handler.Handle(cmd); });
         }
     }
 }
