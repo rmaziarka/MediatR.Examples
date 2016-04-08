@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares {
+    import ActivityViewController = Activity.View.ActivityViewController;
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
 
@@ -9,7 +10,8 @@ module Antares {
             compile: ng.ICompileService,
             element: ng.IAugmentedJQuery,
             filter: ng.IFilterService,
-            $http: ng.IHttpBackendService;
+            $http: ng.IHttpBackendService,
+            controller: ActivityViewController;
 
         var pageObjectSelectors = {
             common: {
@@ -24,7 +26,7 @@ module Antares {
             prices: {
                 main: '#activity-view-prices',
                 marketAppraisalPrice: '#activity-view-prices-marketAppraisalPrice',
-                recomendedPrice: '#activity-view-prices-recomendedPrice',
+                recommendedPrice: '#activity-view-prices-recommendedPrice',
                 vendorEstimatedPrice: '#activity-view-prices-vendorEstimatedPrice'
             },
             propertyCard: {
@@ -81,6 +83,8 @@ module Antares {
 
                 scope.$apply();
                 $http.flush();
+
+                controller = element.controller('activityView');
             }));
 
             it('then card component for property is set up', () => {
@@ -122,20 +126,39 @@ module Antares {
                 expect(activityStatusElement.text()).toBe('ENUMS.123');
             });
 
-            xit('then valuation prices for activity are displayed and should have proper data', () => {
+            it('and valuation prices are null then valuation prices for activity are not displayed', () => {
                 // assert
                 var pricesElement = element.find(pageObjectSelectors.prices.main);
                 var marketAppraisalPriceElement = pricesElement.find(pageObjectSelectors.prices.marketAppraisalPrice);
-                var recomendedPriceElement = pricesElement.find(pageObjectSelectors.prices.recomendedPrice);
+                var recomendedPriceElement = pricesElement.find(pageObjectSelectors.prices.recommendedPrice);
+                var vendorEstimatedPriceElement = pricesElement.find(pageObjectSelectors.prices.vendorEstimatedPrice);
+
+                expect(pricesElement.length).toBe(1);
+                expect(marketAppraisalPriceElement.length).toBe(0);
+                expect(recomendedPriceElement.length).toBe(0);
+                expect(vendorEstimatedPriceElement.length).toBe(0);
+            });
+
+            it('and valuation prices are not null then valuation prices for activity are displayed and should have proper data', () => {
+                // arrange / act
+                controller.activity.marketAppraisalPrice = 11;
+                controller.activity.recommendedPrice = 13;
+                controller.activity.vendorEstimatedPrice = 12;
+                scope.$apply();
+
+                // assert
+                var pricesElement = element.find(pageObjectSelectors.prices.main);
+                var marketAppraisalPriceElement = pricesElement.find(pageObjectSelectors.prices.marketAppraisalPrice);
+                var recomendedPriceElement = pricesElement.find(pageObjectSelectors.prices.recommendedPrice);
                 var vendorEstimatedPriceElement = pricesElement.find(pageObjectSelectors.prices.vendorEstimatedPrice);
 
                 expect(pricesElement.length).toBe(1);
                 expect(marketAppraisalPriceElement.length).toBe(1);
-                expect(marketAppraisalPriceElement.val()).toBe(filter('number')(activityMock.marketAppraisalPrice, '2'));
+                expect(marketAppraisalPriceElement.text()).toBe('11.00 GBP');
                 expect(recomendedPriceElement.length).toBe(1);
-                expect(recomendedPriceElement.val()).toBe(filter('number')(activityMock.recomendedPrice, '2'));
+                expect(recomendedPriceElement.text()).toBe('13.00 GBP');
                 expect(vendorEstimatedPriceElement.length).toBe(1);
-                expect(vendorEstimatedPriceElement.val()).toBe(filter('number')(activityMock.vendorEstimatedPrice, '2'));
+                expect(vendorEstimatedPriceElement.text()).toBe('12.00 GBP');
             });
         });
 

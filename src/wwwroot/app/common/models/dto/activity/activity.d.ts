@@ -6,5 +6,8 @@ declare module Antares.Common.Models.Dto {
         contacts: IContact[];
         property?: IProperty;
         createdDate?: Date;
+        marketAppraisalPrice?: number;
+        recommendedPrice?: number;
+        vendorEstimatedPrice?: number;
     }
 }

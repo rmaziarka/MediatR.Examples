@@ -130,7 +130,13 @@
       "VIEW_ACTIVITY": "View activity",
       "PROPERTY": "Property",
       "VENDORS": "Vendors",
-      "NO_VENDORS": "No vendors defined"
+      "NO_VENDORS": "No vendors defined",
+      "PRICES": {
+        "PRICES": "Valuation prices",
+        "MARKET_APPRAISAL_PRICE": "Market appraisal price",
+        "RECOMMENDED_PRICE": "Recommended price",
+        "VENDOR_ESIMATED_PRICE": "Vendor estimated price"
+      }
     }
   },
   "REQUIREMENT": {
