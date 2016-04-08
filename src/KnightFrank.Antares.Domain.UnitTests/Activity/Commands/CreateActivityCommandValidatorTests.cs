@@ -66,7 +66,7 @@
         [Theory]
         [AutoMoqData]
         public void Given_PropertyDoesNotExist_When_Validating_Then_IsInvalid(
-            [Frozen] Mock<IGenericRepository<Property>> propertyRepository, CreateActivityValidator validator, CreateActivityCommand cmd)
+            [Frozen] Mock<IGenericRepository<Property>> propertyRepository, CreateActivityCommandValidator validator, CreateActivityCommand cmd)
         {
             // Arrange 
             propertyRepository.Setup(p => p.GetById(It.IsAny<Guid>())).Returns(default(Property));
