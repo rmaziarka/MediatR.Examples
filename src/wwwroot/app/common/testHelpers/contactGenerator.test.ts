@@ -22,7 +22,7 @@ module Antares.TestHelpers {
         }
 
         public static generateMany(n: number): Business.Contact[] {
-            return _.map(ContactGenerator.generateManyDtos(n), (activity: Dto.IContact) => { return new Business.Contact(activity); });
+            return _.map(ContactGenerator.generateManyDtos(n), (contact: Dto.IContact) => { return new Business.Contact(contact); });
         }
 
         public static generate(): Business.Contact {

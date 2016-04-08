@@ -58,8 +58,8 @@
       "BASIC_INFORMATION": "Basic information",
       "NAME": "Name",
       "CONTACTS": "Contacts",
-      "NO_CONTACTS": "No contacts yet",
-      "CONTACTS_ARE_REQUIRED": "Please select at least one contact to create a company",
+      "NO_CONTACTS": "No contacts added yet.",
+      "CONTACTS_ARE_REQUIRED": "Please select at least one contact to create a company.",
       "FINDCONTACT": "Find contact"
     }
   },

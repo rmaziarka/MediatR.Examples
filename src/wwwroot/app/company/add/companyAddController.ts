@@ -50,8 +50,7 @@ module Antares.Company {
                 .then(() => {                    
                     this.components.contactList().setSelected(selectedContactIds);
                     this.components.sidePanels.contact().show();
-                })
-                .finally(() => {  });
+                });
         }
 
         cancelUpdateContacts = () => {
@@ -70,7 +69,6 @@ module Antares.Company {
                 .$promise
                 .then((company: Dto.ICompany) => {                
                     // TODO: replaced with go to view company state
-                    alert("Company was saved");
                     this.company = new Business.Company();
                     var form = this.$scope["addCompanyForm"];
                     form.$setPristine()
