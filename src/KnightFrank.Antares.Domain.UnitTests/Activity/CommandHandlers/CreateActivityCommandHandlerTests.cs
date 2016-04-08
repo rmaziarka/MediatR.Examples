@@ -22,7 +22,7 @@
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
-    [Trait("FeatureTitle", "Property Activity")]
+    [Trait("FeatureTitle", "Activity")]
     [Collection("CreateActivityCommandHandler")]
     public class CreateActivityCommandHandlerTests : IClassFixture<BaseTestClassFixture>
     {

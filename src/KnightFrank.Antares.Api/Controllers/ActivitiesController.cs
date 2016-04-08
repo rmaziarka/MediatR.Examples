@@ -67,7 +67,7 @@
         /// <returns>Activity entity</returns>
         [HttpPut]
         [Route("")]
-        public Activity UpdateActivity([FromBody] UpdateActivityCommand command)
+        public Activity UpdateActivity(UpdateActivityCommand command)
         {
             Guid activityId = this.mediator.Send(command);
 
