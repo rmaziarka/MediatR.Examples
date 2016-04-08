@@ -102,7 +102,7 @@ module Antares {
                 expect(listNoItemsElementContent.length).toBe(1);
             });
 
-            it('then well component for activity is displayed and should have proper data', () => {
+            it('then activity summary component for activity is displayed and should have proper data', () => {
                 // assert
                 var wellElement = element.find(pageObjectSelectors.well.main);
                 var createdDateElement = wellElement.find(pageObjectSelectors.well.createdDate);
@@ -286,7 +286,7 @@ module Antares {
                 $http.flush();
             }));
 
-            it('when existing property then card component should have proper data', () => {
+            it('when existing property then property card should have address element visible', () => {
                 // assert
                 var cardElement = element.find(pageObjectSelectors.propertyCard);
                 var addressElement = cardElement.find(pageObjectSelectors.address);

@@ -128,6 +128,7 @@
     <Compile Include="DropCreateSeedDatabaseAlwaysInitializer.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Steps\Activities\ActivitiesSteps.cs" />
+    <Compile Include="Steps\Companies\CompaniesSteps.cs" />
     <Compile Include="Steps\Property\ConfigurePropertyTypesForADivisionAndACountrySteps.cs" />
     <Compile Include="Extensions\FixtureExtension.cs" />
     <Compile Include="Fixtures\BaseTestClassFixture.cs" />
@@ -150,6 +151,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AddressFormController.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Companies\CompaniesController.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CompaniesController.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Property\ConfigurePropertyTypesForDivisionAndCountry.feature.cs">
       <AutoGen>True</AutoGen>
@@ -218,6 +224,10 @@
     <None Include="Tests\AddressForm\AddressFormController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>AddressFormController.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Companies\CompaniesController.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>CompaniesController.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Property\ConfigurePropertyTypesForDivisionAndCountry.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
