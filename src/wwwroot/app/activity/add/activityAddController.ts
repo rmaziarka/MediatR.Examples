@@ -34,7 +34,7 @@ module Antares.Activity {
         }
 
         setVendors(vendors: Array<Business.Contact>){
-            this.vendors = vendors;
+            this.vendors = vendors || [];
         }
 
         saveActivity = (propertyId: string): ng.IPromise<void> => {
