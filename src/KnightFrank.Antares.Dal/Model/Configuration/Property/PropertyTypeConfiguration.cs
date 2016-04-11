@@ -7,7 +7,7 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property
         public PropertyTypeConfiguration()
         {
             this.HasOptional(x => x.Parent)
-                .WithMany()
+                .WithMany(x => x.Children)
                 .HasForeignKey(x => x.ParentId)
                 .WillCascadeOnDelete(false);
 

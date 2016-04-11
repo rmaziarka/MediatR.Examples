@@ -13,7 +13,6 @@
         public static void Seed(KnightFrankContext context)
         {
             SeedPropertyTypes(context);
-            SeedPropertySubTypes(context);
             SeedPropertyTypeLocalised(context);
             SeedPropertyTypeDefinitions(context);
         }
@@ -24,24 +23,21 @@
             Guid residentialDivisionId = context.EnumTypeItem.Where(x => x.EnumType.Code == "Division" && x.Code == "Residential").Select(x => x.Id).Single();
             Guid commercialDivisionId = context.EnumTypeItem.Where(x => x.EnumType.Code == "Division" && x.Code == "Commercial").Select(x => x.Id).Single();
 
-            var commercialTypeCodes = new[] { "Office", "Retail", "Industrial", "Other" };
             short order = 1;
-            List<PropertyType> commercialPropertyTypes = context.PropertyType.Where(x => commercialTypeCodes.Contains(x.Code) || x.Parent != null).ToList();
-            List<PropertyType> residentialPropertyTypes = context.PropertyType.Where(x => !commercialTypeCodes.Contains(x.Code) && x.Parent == null).ToList();
 
-            List<PropertyTypeDefinition> definitions = commercialPropertyTypes.Select(a => new PropertyTypeDefinition
+            List<PropertyTypeDefinition> definitions = commercialTypes.SelectMany(GetPropertyTypeHierarchy, (p, c) => new PropertyTypeDefinition
             {
                 CountryId = countryId,
                 DivisionId = commercialDivisionId,
-                PropertyTypeId = a.Id,
+                PropertyTypeId = c.Id,
                 Order = order++
             }).ToList();
 
-            definitions.AddRange(residentialPropertyTypes.Select(a => new PropertyTypeDefinition
+            definitions.AddRange(residentialTypes.SelectMany(GetPropertyTypeHierarchy, (p, c) => new PropertyTypeDefinition
             {
                 CountryId = countryId,
                 DivisionId = residentialDivisionId,
-                PropertyTypeId = a.Id,
+                PropertyTypeId = c.Id,
                 Order = order++
             }));
 
@@ -63,59 +59,95 @@
 
         private static void SeedPropertyTypes(KnightFrankContext context)
         {
-            var propertyTypes = new[]
+            foreach (var type in commercialTypes)
             {
-                new PropertyType{ Code = "House" },
-                new PropertyType{ Code = "Flat" },
-                new PropertyType{ Code = "Bungalow" },
-                new PropertyType{ Code = "Maisonette" },
-                new PropertyType{ Code = "Studio Flat" },
-                new PropertyType{ Code = "Development Plot" },
-                new PropertyType{ Code = "Farm/Estate" },
-                new PropertyType{ Code = "Garage Only" },
-                new PropertyType{ Code = "Parking Space" },
-                new PropertyType{ Code = "Land" },
-                new PropertyType { Code = "Houseboat" },
+                context.PropertyType.Add(type);
+            }
 
-                new PropertyType { Code = "Office" },
-                new PropertyType { Code = "Retail" },
-                new PropertyType { Code = "Industrial" },
-                new PropertyType { Code = "Other" }
-            };
+            foreach (var type in residentialTypes)
+            {
+                context.PropertyType.Add(type);
+            }
 
-            context.PropertyType.AddOrUpdate(x => x.Code, propertyTypes);
             context.SaveChanges();
         }
 
-        private static void SeedPropertySubTypes(KnightFrankContext context)
+        private static IEnumerable<PropertyType> GetPropertyTypeHierarchy(PropertyType parent)
         {
-            Guid officeId = context.PropertyType.Where(x => x.Code == "Office").Select(x => x.Id).Single();
-            Guid retailId = context.PropertyType.Where(x => x.Code == "Retail").Select(x => x.Id).Single();
-            Guid industrialId = context.PropertyType.Where(x => x.Code == "Industrial").Select(x => x.Id).Single();
-            Guid otherId = context.PropertyType.Where(x => x.Code == "Other").Select(x => x.Id).Single();
-
-            var commercialPropertySubTypes = new[]
+            yield return parent;
+            if (parent.Children != null)
             {
-                new PropertyType { Code = "Hotel", ParentId  = officeId },
-                new PropertyType { Code = "Leisure", ParentId  = officeId },
-                new PropertyType { Code = "Car Showroom", ParentId  = retailId },
-                new PropertyType { Code = "Department Stores", ParentId  = retailId },
-                new PropertyType { Code = "Shopping Centre", ParentId  = retailId },
-                new PropertyType { Code = "Retails Unit A1", ParentId  = retailId },
-                new PropertyType { Code = "Retails Unit A2", ParentId  = retailId },
-                new PropertyType { Code = "Retails Unit A3", ParentId  = retailId },
-                new PropertyType { Code = "Retails Unit A4", ParentId  = retailId },
-                new PropertyType { Code = "Retails Unit A5", ParentId  = retailId },
-                new PropertyType { Code = "Industrial Estate", ParentId  = industrialId },
-                new PropertyType { Code = "Industrial/Distribution", ParentId  = industrialId },
-                new PropertyType { Code = "Agricultural", ParentId  = otherId },
-                new PropertyType { Code = "Car Park", ParentId  = otherId },
-                new PropertyType { Code = "Institutional", ParentId  = otherId },
-                new PropertyType { Code = "Mixed Use", ParentId  = otherId },
-            };
-
-            context.PropertyType.AddOrUpdate(x => x.Code, commercialPropertySubTypes);
-            context.SaveChanges();
+                foreach (PropertyType child in parent.Children)
+                    foreach (PropertyType relative in GetPropertyTypeHierarchy(child))
+                        yield return relative;
+            }
         }
+
+        private static readonly List<PropertyType> commercialTypes = new List<PropertyType>
+        {
+            new PropertyType
+            {
+                Code = "Office"
+            },
+            new PropertyType
+            {
+                Code = "Leisure",
+                Children = new List<PropertyType>
+                {
+                    new PropertyType { Code = "Hotel" },
+                    new PropertyType { Code = "Leisure" }
+                }
+            },
+            new PropertyType
+            {
+                Code = "Retail",
+                Children = new List<PropertyType>
+                {
+                    new PropertyType { Code = "Car Showroom" },
+                    new PropertyType { Code = "Department Stores" },
+                    new PropertyType { Code = "Shopping Centre" },
+                    new PropertyType { Code = "Retails Unit A1" },
+                    new PropertyType { Code = "Retails Unit A2" },
+                    new PropertyType { Code = "Retails Unit A3" },
+                    new PropertyType { Code = "Retails Unit A4" },
+                    new PropertyType { Code = "Retails Unit A5" }
+                }
+            },
+            new PropertyType
+            {
+                Code = "Industrial",
+                Children = new List<PropertyType>
+                {
+                    new PropertyType { Code = "Industrial Estate" },
+                    new PropertyType { Code = "Industrial/Distribution" }
+                }
+            },
+            new PropertyType
+            {
+                Code = "Other",
+                Children = new List<PropertyType>
+                {
+                    new PropertyType { Code = "Agricultural" },
+                    new PropertyType { Code = "Car Park" },
+                    new PropertyType { Code = "Institutional" },
+                    new PropertyType { Code = "Mixed Use" }
+                }
+            }
+        };
+
+        private static readonly List<PropertyType> residentialTypes = new List<PropertyType>
+        {
+            new PropertyType { Code = "House" },
+            new PropertyType { Code = "Flat" },
+            new PropertyType { Code = "Bungalow" },
+            new PropertyType { Code = "Maisonette" },
+            new PropertyType { Code = "Studio Flat" },
+            new PropertyType { Code = "Development Plot" },
+            new PropertyType { Code = "Farm/Estate" },
+            new PropertyType { Code = "Garage Only" },
+            new PropertyType { Code = "Parking Space" },
+            new PropertyType { Code = "Land" },
+            new PropertyType { Code = "Houseboat" }
+        };
     }
 }
