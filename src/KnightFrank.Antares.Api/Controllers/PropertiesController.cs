@@ -91,7 +91,7 @@
             Guid ownershipId = this.mediator.Send(command);
 
             Ownership ownership =
-                this.mediator.Send(new OwnershipByIdQuery() { OwnershipId = ownershipId });
+                this.mediator.Send(new OwnershipByIdQuery { OwnershipId = ownershipId });
 
             return ownership;
         }

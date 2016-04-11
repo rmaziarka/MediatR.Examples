@@ -32,7 +32,7 @@ namespace KnightFrank.Antares.Api.Controllers
             var divisionsQuery = new EnumQuery { Code = "Division" };
             EnumQueryResult divisions = this.mediator.Send(divisionsQuery);
 
-            var user = new UserDataResult()
+            var user = new UserDataResult
             {
                 Name = identity.Name,
                 Email = identity.Claims.First(c => c.Type == ClaimTypes.Email).Value,

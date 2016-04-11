@@ -26,7 +26,7 @@
                             .Where(x => x.PropertyAttributeForm.Country.IsoCode == message.CountryCode)
                             .Where(x => x.PropertyAttributeForm.PropertyTypeId == message.PropertyTypeId)
                             .OrderBy(x => x.Order)
-                            .Select(x => new PropertyAttributesQuerySingleResult()
+                            .Select(x => new PropertyAttributesQuerySingleResult
                             {
                                 Order = x.Order,
                                 NameKey = x.Attribute.NameKey,

@@ -31,25 +31,25 @@
         PropertyTypeQuery query,
         PropertyTypeQueryHandler handler)
         {
-            PropertyType parentPropertyType  = new PropertyType() { ParentId = null }; 
+            PropertyType parentPropertyType  = new PropertyType { ParentId = null }; 
             
             propertyTypeDefinitionRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<PropertyTypeDefinition, object>>>()))
-                .Returns(new List<PropertyTypeDefinition>()
+                .Returns(new List<PropertyTypeDefinition>
                 {
-                    new PropertyTypeDefinition()
+                    new PropertyTypeDefinition
                     {
-                        Division = new EnumTypeItem() { Code = query.DivisionCode},
-                        Country = new Country() { IsoCode = query.CountryCode},
+                        Division = new EnumTypeItem { Code = query.DivisionCode},
+                        Country = new Country { IsoCode = query.CountryCode},
                         PropertyType = parentPropertyType,
                     }
                 }.AsQueryable());
 
             propertyTypeLocalisedRepository.Setup(x => x.Get())
-                .Returns(new List<PropertyTypeLocalised>()
+                .Returns(new List<PropertyTypeLocalised>
                 {
-                    new PropertyTypeLocalised()
+                    new PropertyTypeLocalised
                     {
-                        Locale = new Locale() { IsoCode = query.LocaleCode},
+                        Locale = new Locale { IsoCode = query.LocaleCode},
                         PropertyType = parentPropertyType
                     }
                 }.AsQueryable());
@@ -94,33 +94,33 @@
         PropertyTypeQuery query,
         PropertyTypeQueryHandler handler)
         {
-            PropertyType parentPropertyType = new PropertyType() { ParentId = null };
+            PropertyType parentPropertyType = new PropertyType { ParentId = null };
 
             propertyTypeDefinitionRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<PropertyTypeDefinition, object>>>()))
-                .Returns(new List<PropertyTypeDefinition>()
+                .Returns(new List<PropertyTypeDefinition>
                 {
-                    new PropertyTypeDefinition()
+                    new PropertyTypeDefinition
                     {
-                        Division = new EnumTypeItem() { Code = query.DivisionCode},
-                        Country = new Country() { IsoCode = query.CountryCode},
+                        Division = new EnumTypeItem { Code = query.DivisionCode},
+                        Country = new Country { IsoCode = query.CountryCode},
                         PropertyType = parentPropertyType,
                         Order = 2
                     },
-                    new PropertyTypeDefinition()
+                    new PropertyTypeDefinition
                     {
-                        Division = new EnumTypeItem() { Code = query.DivisionCode},
-                        Country = new Country() { IsoCode = query.CountryCode},
+                        Division = new EnumTypeItem { Code = query.DivisionCode},
+                        Country = new Country { IsoCode = query.CountryCode},
                         PropertyType = parentPropertyType,
                         Order = 1
                     }
                 }.AsQueryable());
 
             propertyTypeLocalisedRepository.Setup(x => x.Get())
-                .Returns(new List<PropertyTypeLocalised>()
+                .Returns(new List<PropertyTypeLocalised>
                 {
-                    new PropertyTypeLocalised()
+                    new PropertyTypeLocalised
                     {
-                        Locale = new Locale() { IsoCode = query.LocaleCode},
+                        Locale = new Locale { IsoCode = query.LocaleCode},
                         PropertyType = parentPropertyType
                     }
                 }.AsQueryable());

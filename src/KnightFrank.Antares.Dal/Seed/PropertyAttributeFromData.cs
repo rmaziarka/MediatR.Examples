@@ -27,7 +27,7 @@
             {
                 foreach (var data in country.Value)
                 {
-                    yield return new PropertyAttributeForm()
+                    yield return new PropertyAttributeForm
                     {
                         CountryId = context.Country.Single(c => c.IsoCode == country.Key).Id,
                         PropertyTypeId = propertyTypes.Single(p => p.Code == data.Key).Id,
@@ -44,7 +44,7 @@
             {
                 if (value.Contains(attribute.NameKey))
                 {
-                    yield return new PropertyAttributeFormDefinition()
+                    yield return new PropertyAttributeFormDefinition
                     {
                         AttributeId = attribute.Id,
                         Order = i
@@ -56,17 +56,17 @@
         }
 
         private static readonly Dictionary<string, Dictionary<string, List<string>>> propertyAttributeFormData = new Dictionary
-            <string, Dictionary<string, List<string>>>()
+            <string, Dictionary<string, List<string>>>
         {
-            ["GB"] = new Dictionary<string, List<string>>()
+            ["GB"] = new Dictionary<string, List<string>>
             {
-                ["House"] = new List<string>() { "Bedrooms", "Receptions", "Bathrooms", "Area", "LandArea", "CarParkingSpaces" },
-                ["Flat"] = new List<string>() { "Bedrooms", "Receptions", "Bathrooms", "Area", "LandArea", "CarParkingSpaces" },
-                ["Bungalow"] = new List<string>() { "Bedrooms", "Receptions", "Bathrooms", "Area", "LandArea", "CarParkingSpaces" },
-                ["Houseboat"] = new List<string>() { "Bedrooms", "Receptions", "Bathrooms", "Area", "CarParkingSpaces" },
-                ["Maisonette"] = new List<string>() { "Bedrooms", "Receptions", "Bathrooms", "Area", "CarParkingSpaces" },
-                ["Development Plot"] = new List<string>() { "LandArea" },
-                ["Hotel"] = new List<string>() { "Area", "LandArea", "GuestRooms", "FunctionRooms", "CarParkingSpaces" }
+                ["House"] = new List<string> { "Bedrooms", "Receptions", "Bathrooms", "Area", "LandArea", "CarParkingSpaces" },
+                ["Flat"] = new List<string> { "Bedrooms", "Receptions", "Bathrooms", "Area", "LandArea", "CarParkingSpaces" },
+                ["Bungalow"] = new List<string> { "Bedrooms", "Receptions", "Bathrooms", "Area", "LandArea", "CarParkingSpaces" },
+                ["Houseboat"] = new List<string> { "Bedrooms", "Receptions", "Bathrooms", "Area", "CarParkingSpaces" },
+                ["Maisonette"] = new List<string> { "Bedrooms", "Receptions", "Bathrooms", "Area", "CarParkingSpaces" },
+                ["Development Plot"] = new List<string> { "LandArea" },
+                ["Hotel"] = new List<string> { "Area", "LandArea", "GuestRooms", "FunctionRooms", "CarParkingSpaces" }
             }
         };
     }
