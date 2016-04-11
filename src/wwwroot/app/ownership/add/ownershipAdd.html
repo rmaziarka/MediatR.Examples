@@ -11,7 +11,7 @@
             <div class="col-md-9">
                 <label for="type" translate="OWNERSHIP.ADD.OWNERSHIPTYPE"></label>
                 <select class="form-control" required id="type" name="type" ng-options="item as item.value for item in vm.ownershipTypes.items track by item.id" ng-model="vm.ownership.ownershipType">
-                    <option value=""></option>
+                    <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
                 </select>
                 <div ng-messages="addOwnershipForm.type.$error" ng-show="addOwnershipForm.$submitted || addOwnershipForm.type.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
