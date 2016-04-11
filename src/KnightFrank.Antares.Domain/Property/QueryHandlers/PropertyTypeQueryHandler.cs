@@ -61,7 +61,7 @@
 
             if (!result.PropertyTypes.Any())
             {
-                throw new DomainValidationException("No configuration found.");
+                throw new DomainValidationException("query", "No configuration found.");
             }
 
             return result;

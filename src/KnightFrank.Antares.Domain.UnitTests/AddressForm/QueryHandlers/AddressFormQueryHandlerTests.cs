@@ -4,7 +4,9 @@
     using System.Linq;
 
     using FluentAssertions;
-    
+
+    using FluentValidation.Results;
+
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Resource;
@@ -74,7 +76,7 @@
             this.enumTypeItemRepository.Setup(x => x.Get()).Returns(this.mockedEnumTypeItemData.AsQueryable());
 
             // Act + Assert
-            Assert.Throws<DomainValidationException>(() => this.handler.Handle(query)).Message.Should().Be("message.CountryCode");
+            Assert.Throws<DomainValidationException>(() => this.handler.Handle(query)).Errors.Should().Contain(e => e.PropertyName == nameof(query.CountryCode));
         }
 
         [Theory]
@@ -92,7 +94,7 @@
             this.enumTypeItemRepository.Setup(x => x.Get()).Returns(this.mockedEnumTypeItemData.AsQueryable());
 
             // Act + Assert
-            Assert.Throws<DomainValidationException>(() => this.handler.Handle(query)).Message.Should().Be("message.EntityType");
+            Assert.Throws<DomainValidationException>(() => this.handler.Handle(query)).Errors.Should().Contain(e => e.PropertyName == nameof(query.EntityType));
         }
 
         [Theory]
@@ -113,7 +115,7 @@
             this.enumTypeItemRepository.Setup(x => x.Get()).Returns(this.mockedEnumTypeItemData.AsQueryable());
 
             // Act + Assert
-            Assert.Throws<DomainValidationException>(() => this.handler.Handle(query)).Message.Should().Be("message.EntityType");
+            Assert.Throws<DomainValidationException>(() => this.handler.Handle(query)).Errors.Should().Contain(e => e.PropertyName == nameof(query.EntityType));
         }
 
         [Theory]

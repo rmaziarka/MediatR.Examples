@@ -32,7 +32,7 @@
             ValidationResult validationResult = this.propertyValidator.Validate(property);
             if (!validationResult.IsValid)
             {
-                throw new DomainValidationException(validationResult.Errors.First().ErrorMessage);
+                throw new DomainValidationException(validationResult.Errors);
             }
 
             this.propertyRepository.Add(property);

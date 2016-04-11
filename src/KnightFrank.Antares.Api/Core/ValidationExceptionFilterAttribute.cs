@@ -23,25 +23,10 @@
 
                 var response = new
                 {
-                    Message = "The request is invalid.",
+                    Message = "The request is invalid. " + validationException.Message,
                     Errors = validationException.Errors.Select(x => x.ErrorMessage),
                     InvalidFields = validationException.Errors.Select(x => x.PropertyName)
                 };
-
-                context.Response = new HttpResponseMessage
-                {
-                    Content = CreateContent(response),
-                    StatusCode = HttpStatusCode.BadRequest
-                };
-            }
-            else if (context.Exception is DomainValidationException)
-            {
-                var response =
-                    new
-                    {
-                        Message = "Domain validation occured. Field is invalid.",
-                        InvalidFields = context.Exception.Message
-                    };
 
                 context.Response = new HttpResponseMessage
                 {

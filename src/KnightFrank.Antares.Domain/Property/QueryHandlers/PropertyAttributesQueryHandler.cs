@@ -35,10 +35,10 @@
 
             if (!singleResults.Any())
             {
-                throw new DomainValidationException("No configuration found.");
+                throw new DomainValidationException("query", "No configuration found.");
             }
 
-            return new PropertyAttributesQueryResult() { Attributes = singleResults };
+            return new PropertyAttributesQueryResult { Attributes = singleResults };
         }
     }
 }
