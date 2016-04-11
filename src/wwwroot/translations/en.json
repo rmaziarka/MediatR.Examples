@@ -78,7 +78,9 @@
     "LIST_SHOULD_NOT_BE_EMPTY": "Please specify at least one applicant",
     "DATE_HAS_INVALID_FORMAT": "Date has invalid format",
     "FIELD_OVERLAPS_RANGE": "Given date range overlaps previously saved date ranges",
-    "DATE_CAN_NOT_BE_FROM_FUTURE":"Can not specify date from future"
+    "DATE_CAN_NOT_BE_FROM_FUTURE":"Can not specify date from future",
+    "DATE_CAN_NOT_BE_GRATER_THEN":"Given date can not be later then selling date",
+    "DATE_CAN_NOT_BE_LOWER_THEN":"Given date can not be earlier then purchasing date"
   },
   "PROPERTY": {
     "COMMERCIAL_PROPERTY": "Commercial property",
