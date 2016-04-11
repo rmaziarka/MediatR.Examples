@@ -172,6 +172,5 @@ namespace Antares.Common.Directive {
         }
     }
 
-    angular.module('app').directive('dateLowerThan', DateLowerThan.factory())
-
+    angular.module('app').directive('dateLowerThan', DateLowerThan.factory());
 }
