@@ -105,6 +105,7 @@
     <Compile Include="AddressForm\Specifications\IsAddressFormAssignedToCountry.cs" />
     <Compile Include="AddressForm\Specifications\IsAddressFormGloballyDefined.cs" />
     <Compile Include="Common\Exceptions\ResourceNotFoundException.cs" />
+    <Compile Include="Common\Specifications\HasId.cs" />
     <Compile Include="Common\Specifications\IsLocaled.cs" />
     <Compile Include="Common\ValidatorCommandHandler.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidator.cs" />
@@ -135,6 +136,8 @@
     <Compile Include="Enum\QueryResults\EnumQueryItemResult.cs" />
     <Compile Include="Enum\QueryResults\EnumQueryResult.cs" />
     <Compile Include="Enum\QueryResults\EnumQueryResultProfile.cs" />
+    <Compile Include="Enum\Specifications\IsActivityStatus.cs" />
+    <Compile Include="Enum\Specifications\IsEntityType.cs" />
     <Compile Include="Helpers\Extentions\FluentValidation.cs" />
     <Compile Include="Ownership\CommandHandlers\CreateOwnershipCommandHandler.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommand.cs" />
