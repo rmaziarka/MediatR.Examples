@@ -6,7 +6,7 @@ module Antares.Core{
                 return date;
 
             if (typeof (date) === "string")
-                date = new Date(date);
+                date = new Date(date.replace(new RegExp("\"","g"),""));
 
             var year = date.getUTCFullYear();
             if (year >= 0 && year < 100) {

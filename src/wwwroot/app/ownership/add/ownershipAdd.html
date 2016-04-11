@@ -41,7 +41,7 @@
                            uib-datepicker-popup="dd-MM-yyyy"
                            is-open="vm.datepickers.purchaseOpened"
                            close-text="Close"
-                           kf-max-date="{{vm.maxAllowedDate}}"/>
+                           />
 
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openPurchaseDate()"><i class="fa fa-calendar"></i></button>
@@ -69,7 +69,8 @@
                            uib-datepicker-popup="dd-MM-yyyy"
                            is-open="vm.datepickers.sellOpened"
                            close-text="Close"
-                           kf-max-date="{{vm.maxAllowedDate}}"/>
+                           date-greater-than="{{vm.ownership.purchaseDate}}"
+                    />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openSellDate()"><i class="fa fa-calendar"></i></button>
                     </span>
