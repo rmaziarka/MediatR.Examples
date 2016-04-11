@@ -94,7 +94,6 @@ module Antares {
                     propertyFromServerMock.id = 'propFromServerId1';
                     propertyFromServerMock.address = new Business.Address();
 
-                    var propertyFromServerMock: Business.Property = <Business.Property>{};
                     $http.expectPUT(/\/api\/properties/, propertyMock).respond(() => {
                         return [200, propertyFromServerMock];
                     });

@@ -49,144 +49,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201603081357064_InitialDataBase.cs" />
-    <Compile Include="Migrations\201603081357064_InitialDataBase.Designer.cs">
-      <DependentUpon>201603081357064_InitialDataBase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603090706533_RenameEnumTables.cs" />
-    <Compile Include="Migrations\201603090706533_RenameEnumTables.Designer.cs">
-      <DependentUpon>201603090706533_RenameEnumTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603091204133_AddressFormTemplate.cs" />
-    <Compile Include="Migrations\201603091204133_AddressFormTemplate.Designer.cs">
-      <DependentUpon>201603091204133_AddressFormTemplate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603111023489_AddRequirementDetails.cs" />
-    <Compile Include="Migrations\201603111023489_AddRequirementDetails.Designer.cs">
-      <DependentUpon>201603111023489_AddRequirementDetails.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603141425128_AddPrecisionToRequirementPrice.cs" />
-    <Compile Include="Migrations\201603141425128_AddPrecisionToRequirementPrice.Designer.cs">
-      <DependentUpon>201603141425128_AddPrecisionToRequirementPrice.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603151235444_RenameCountryCode.cs" />
-    <Compile Include="Migrations\201603151235444_RenameCountryCode.Designer.cs">
-      <DependentUpon>201603151235444_RenameCountryCode.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603161032474_Merge.cs" />
-    <Compile Include="Migrations\201603161032474_Merge.Designer.cs">
-      <DependentUpon>201603161032474_Merge.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603161336260_CountriesAndLocales.cs" />
-    <Compile Include="Migrations\201603161336260_CountriesAndLocales.Designer.cs">
-      <DependentUpon>201603161336260_CountriesAndLocales.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603170753482_Merge1.cs" />
-    <Compile Include="Migrations\201603170753482_Merge1.Designer.cs">
-      <DependentUpon>201603170753482_Merge1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603171111419_AddPropertyWithAddress.cs" />
-    <Compile Include="Migrations\201603171111419_AddPropertyWithAddress.Designer.cs">
-      <DependentUpon>201603171111419_AddPropertyWithAddress.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603171311029_AddColumnSizeToAddressFieldDefinition.cs" />
-    <Compile Include="Migrations\201603171311029_AddColumnSizeToAddressFieldDefinition.Designer.cs">
-      <DependentUpon>201603171311029_AddColumnSizeToAddressFieldDefinition.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603171247066_AddOwnership.cs" />
-    <Compile Include="Migrations\201603171247066_AddOwnership.Designer.cs">
-      <DependentUpon>201603171247066_AddOwnership.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603171253142_OwnershipRequireProperty.cs" />
-    <Compile Include="Migrations\201603171253142_OwnershipRequireProperty.Designer.cs">
-      <DependentUpon>201603171253142_OwnershipRequireProperty.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603171321315_OwnershipChangeColumnNames.cs" />
-    <Compile Include="Migrations\201603171321315_OwnershipChangeColumnNames.Designer.cs">
-      <DependentUpon>201603171321315_OwnershipChangeColumnNames.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603171401001_Merge2.cs" />
-    <Compile Include="Migrations\201603171401001_Merge2.Designer.cs">
-      <DependentUpon>201603171401001_Merge2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603180947043_BusinessesAndDepartments.cs" />
-    <Compile Include="Migrations\201603180947043_BusinessesAndDepartments.Designer.cs">
-      <DependentUpon>201603180947043_BusinessesAndDepartments.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603181604276_UsersAndRoles.cs" />
-    <Compile Include="Migrations\201603181604276_UsersAndRoles.Designer.cs">
-      <DependentUpon>201603181604276_UsersAndRoles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603211118377_PropertyAddressRelationChange.cs" />
-    <Compile Include="Migrations\201603211118377_PropertyAddressRelationChange.Designer.cs">
-      <DependentUpon>201603211118377_PropertyAddressRelationChange.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603212349532_AddActivity.cs" />
-    <Compile Include="Migrations\201603212349532_AddActivity.Designer.cs">
-      <DependentUpon>201603212349532_AddActivity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603231009214_AddRequirementAddress.cs" />
-    <Compile Include="Migrations\201603231009214_AddRequirementAddress.Designer.cs">
-      <DependentUpon>201603231009214_AddRequirementAddress.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603231119310_AddActivityContacts.cs" />
-    <Compile Include="Migrations\201603231119310_AddActivityContacts.Designer.cs">
-      <DependentUpon>201603231119310_AddActivityContacts.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603231202474_RemoveStreetFieldFromAddress.cs" />
-    <Compile Include="Migrations\201603231202474_RemoveStreetFieldFromAddress.Designer.cs">
-      <DependentUpon>201603231202474_RemoveStreetFieldFromAddress.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603240917097_AddPropertyTypes.cs" />
-    <Compile Include="Migrations\201603240917097_AddPropertyTypes.Designer.cs">
-      <DependentUpon>201603240917097_AddPropertyTypes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603241227230_AddPropertyTypeDefinitionOrder.cs" />
-    <Compile Include="Migrations\201603241227230_AddPropertyTypeDefinitionOrder.Designer.cs">
-      <DependentUpon>201603241227230_AddPropertyTypeDefinitionOrder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603250657264_AddressForm PropertyName Change.cs" />
-    <Compile Include="Migrations\201603250657264_AddressForm PropertyName Change.Designer.cs">
-      <DependentUpon>201603250657264_AddressForm PropertyName Change.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603251322039_RemoveCurentOwnerFromOwnership.cs" />
-    <Compile Include="Migrations\201603251322039_RemoveCurentOwnerFromOwnership.Designer.cs">
-      <DependentUpon>201603251322039_RemoveCurentOwnerFromOwnership.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603310727026_AddPropertyTypeIdToProperty.cs" />
-    <Compile Include="Migrations\201603310727026_AddPropertyTypeIdToProperty.Designer.cs">
-      <DependentUpon>201603310727026_AddPropertyTypeIdToProperty.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604010959422_Activity_RemoveActivityType.cs" />
-    <Compile Include="Migrations\201604010959422_Activity_RemoveActivityType.Designer.cs">
-      <DependentUpon>201604010959422_Activity_RemoveActivityType.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604011359097_Merge3.cs" />
-    <Compile Include="Migrations\201604011359097_Merge3.Designer.cs">
-      <DependentUpon>201604011359097_Merge3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604040921547_Merge Activity.cs" />
-    <Compile Include="Migrations\201604040921547_Merge Activity.Designer.cs">
-      <DependentUpon>201604040921547_Merge Activity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604060934425_Company.cs" />
-    <Compile Include="Migrations\201604060934425_Company.Designer.cs">
-      <DependentUpon>201604060934425_Company.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604070825300_AddValuationPricesToActivity.cs" />
-    <Compile Include="Migrations\201604070825300_AddValuationPricesToActivity.Designer.cs">
-      <DependentUpon>201604070825300_AddValuationPricesToActivity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604080851036_AddDivisionToProperty.cs" />
-    <Compile Include="Migrations\201604080851036_AddDivisionToProperty.Designer.cs">
-      <DependentUpon>201604080851036_AddDivisionToProperty.cs</DependentUpon>
-    </Compile>
+    <Compile Include="DropCreateSeedDatabaseIfModelChangesInitializer.cs" />
+
     <Compile Include="Model\Address\Address.cs" />
     <Compile Include="Model\Address\AddressField.cs" />
     <Compile Include="Model\Address\AddressFieldDefinition.cs" />
     <Compile Include="Model\Address\AddressFieldLabel.cs" />
     <Compile Include="Model\Address\AddressForm.cs" />
     <Compile Include="Model\Address\AddressFormEntityType.cs" />
+    <Compile Include="Model\Attribute\Attribute.cs" />
+    <Compile Include="Model\Attribute\AttributeValues.cs" />
     <Compile Include="Model\BaseAuditableEntity.cs" />
     <Compile Include="Model\Common\IAuditableEntity.cs" />
     <Compile Include="Model\Common\ILocaled.cs" />
@@ -197,6 +69,10 @@
     <Compile Include="Model\Configuration\Address\AddressFieldLabelConfiguration.cs" />
     <Compile Include="Model\Configuration\Address\AddressFormConfigutration.cs" />
     <Compile Include="Model\Configuration\Address\AddressFormEntityTypeConfiguration.cs" />
+    <Compile Include="Model\Configuration\Attribute\AttributeValuesConfiguration.cs" />
+    <Compile Include="Model\Configuration\Attribute\AttributeConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\PropertyAttributeFormConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\PropertyAttributeFormDefinitionConfiguration.cs" />
     <Compile Include="Model\Configuration\BaseEntityConfiguration.cs" />
     <Compile Include="Model\Configuration\Company\CompanyConfiguration.cs" />
     <Compile Include="Model\Configuration\Contact\ContactConfiguration.cs" />
@@ -218,7 +94,6 @@
     <Compile Include="Model\Configuration\User\RoleConfiguration.cs" />
     <Compile Include="Model\Configuration\User\UserConfiguration.cs" />
     <Compile Include="KnightFrankContext.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\BaseEntity.cs" />
     <Compile Include="Model\Contacts\Contact.cs" />
     <Compile Include="Model\Enum\EnumLocalised.cs" />
@@ -227,6 +102,8 @@
     <Compile Include="Model\Property\Activity.cs" />
     <Compile Include="Model\Property\Ownership.cs" />
     <Compile Include="Model\Property\Property.cs" />
+    <Compile Include="Model\Property\PropertyAttributeForm.cs" />
+    <Compile Include="Model\Property\PropertyAttributeFormDefinition.cs" />
     <Compile Include="Model\Property\PropertyType.cs" />
     <Compile Include="Model\Property\PropertyTypeDefinition.cs" />
     <Compile Include="Model\Property\PropertyTypeLocalised.cs" />
@@ -243,6 +120,8 @@
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\IReadGenericRepository.cs" />
     <Compile Include="Repository\IGenericRepository.cs" />
+    <Compile Include="Seed\PropertyAttributeFromData.cs" />
+    <Compile Include="Seed\AttributeData.cs" />
     <Compile Include="Seed\Common\LocaleIsoCode.cs" />
     <Compile Include="Seed\DepartmentData.cs" />
     <Compile Include="Seed\BusinessData.cs" />
@@ -259,107 +138,7 @@
     <None Include="KnightFrank.Antares.Dal.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603081357064_InitialDataBase.resx">
-      <DependentUpon>201603081357064_InitialDataBase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603090706533_RenameEnumTables.resx">
-      <DependentUpon>201603090706533_RenameEnumTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603091204133_AddressFormTemplate.resx">
-      <DependentUpon>201603091204133_AddressFormTemplate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603111023489_AddRequirementDetails.resx">
-      <DependentUpon>201603111023489_AddRequirementDetails.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603151235444_RenameCountryCode.resx">
-      <DependentUpon>201603151235444_RenameCountryCode.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603141425128_AddPrecisionToRequirementPrice.resx">
-      <DependentUpon>201603141425128_AddPrecisionToRequirementPrice.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603161032474_Merge.resx">
-      <DependentUpon>201603161032474_Merge.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603161336260_CountriesAndLocales.resx">
-      <DependentUpon>201603161336260_CountriesAndLocales.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603170753482_Merge1.resx">
-      <DependentUpon>201603170753482_Merge1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603171111419_AddPropertyWithAddress.resx">
-      <DependentUpon>201603171111419_AddPropertyWithAddress.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603171311029_AddColumnSizeToAddressFieldDefinition.resx">
-      <DependentUpon>201603171311029_AddColumnSizeToAddressFieldDefinition.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603171247066_AddOwnership.resx">
-      <DependentUpon>201603171247066_AddOwnership.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603171253142_OwnershipRequireProperty.resx">
-      <DependentUpon>201603171253142_OwnershipRequireProperty.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603171321315_OwnershipChangeColumnNames.resx">
-      <DependentUpon>201603171321315_OwnershipChangeColumnNames.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603171401001_Merge2.resx">
-      <DependentUpon>201603171401001_Merge2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603180947043_BusinessesAndDepartments.resx">
-      <DependentUpon>201603180947043_BusinessesAndDepartments.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603181604276_UsersAndRoles.resx">
-      <DependentUpon>201603181604276_UsersAndRoles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603211118377_PropertyAddressRelationChange.resx">
-      <DependentUpon>201603211118377_PropertyAddressRelationChange.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603212349532_AddActivity.resx">
-      <DependentUpon>201603212349532_AddActivity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603231009214_AddRequirementAddress.resx">
-      <DependentUpon>201603231009214_AddRequirementAddress.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603231119310_AddActivityContacts.resx">
-      <DependentUpon>201603231119310_AddActivityContacts.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603231202474_RemoveStreetFieldFromAddress.resx">
-      <DependentUpon>201603231202474_RemoveStreetFieldFromAddress.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603240917097_AddPropertyTypes.resx">
-      <DependentUpon>201603240917097_AddPropertyTypes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603241227230_AddPropertyTypeDefinitionOrder.resx">
-      <DependentUpon>201603241227230_AddPropertyTypeDefinitionOrder.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603250657264_AddressForm PropertyName Change.resx">
-      <DependentUpon>201603250657264_AddressForm PropertyName Change.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603251322039_RemoveCurentOwnerFromOwnership.resx">
-      <DependentUpon>201603251322039_RemoveCurentOwnerFromOwnership.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603310727026_AddPropertyTypeIdToProperty.resx">
-      <DependentUpon>201603310727026_AddPropertyTypeIdToProperty.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604010959422_Activity_RemoveActivityType.resx">
-      <DependentUpon>201604010959422_Activity_RemoveActivityType.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604011359097_Merge3.resx">
-      <DependentUpon>201604011359097_Merge3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604040921547_Merge Activity.resx">
-      <DependentUpon>201604040921547_Merge Activity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604060934425_Company.resx">
-      <DependentUpon>201604060934425_Company.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604070825300_AddValuationPricesToActivity.resx">
-      <DependentUpon>201604070825300_AddValuationPricesToActivity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604080851036_AddDivisionToProperty.resx">
-      <DependentUpon>201604080851036_AddDivisionToProperty.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
+    
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\OctoPack.3.0.53\tools\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.0.53\tools\OctoPack.targets')" />

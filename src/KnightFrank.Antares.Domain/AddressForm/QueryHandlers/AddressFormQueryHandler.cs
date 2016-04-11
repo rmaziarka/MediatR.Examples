@@ -38,12 +38,11 @@
 
         public AddressFormQueryResult Handle(AddressFormQuery message)
         {
-            // TODO custom exception
             Country country = this.countryRepository.Get().SingleOrDefault(c => c.IsoCode == message.CountryCode);
 
             if (country == null)
             {
-                throw new DomainValidationException("message.CountryCode");
+                throw new DomainValidationException(nameof(message.CountryCode));
             }
 
             EnumTypeItem enumTypeItem =
@@ -52,7 +51,7 @@
 
             if (enumTypeItem == null)
             {
-                throw new DomainValidationException("message.EntityType");
+                throw new DomainValidationException(nameof(message.EntityType));
             }
 
             Specification<AddressForm> isDefinedForEntityTypeSpecification =

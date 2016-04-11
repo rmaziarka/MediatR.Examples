@@ -7,36 +7,40 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <card-list id="ownership-list" show-item-add="vm.showContactList">
-                    <card-list-header>
-                        <h3 class="page-header" translate="PROPERTY.LIST.OWNERSHIPS"></h3>
-                    </card-list-header>
-                    <card-list-no-items ng-show="vm.property.ownerships.length === 0">
-                        <p class="help-block" translate="PROPERTY.LIST.NO_ITEMS"></p>
-                    </card-list-no-items>
-                    <card-list-item ng-repeat="ownership in vm.property.ownerships | orderBy: vm.ownershipsCartListOrder.name : vm.ownershipsCartListOrder.descending : vm.ownershipsCartListOrder.nullOnEnd track by ownership.id">
-                        <card card-template-url="'app/property/view/propertyOwnershipCard.html'" item="ownership" show-item-details="vm.showOwnershipView">
-                        </card>
-                    </card-list-item>
-                </card-list>
+                <section>
+                    <card-list id="ownership-list" show-item-add="vm.showContactList">
+                        <card-list-header>
+                            <h3 class="page-header" translate="PROPERTY.LIST.OWNERSHIPS"></h3>
+                        </card-list-header>
+                        <card-list-no-items ng-show="vm.property.ownerships.length === 0">
+                            <p class="help-block" translate="PROPERTY.LIST.NO_ITEMS"></p>
+                        </card-list-no-items>
+                        <card-list-item ng-repeat="ownership in vm.property.ownerships | orderBy: vm.ownershipsCartListOrder.name : vm.ownershipsCartListOrder.descending : vm.ownershipsCartListOrder.nullOnEnd track by ownership.id">
+                            <card card-template-url="'app/property/view/propertyOwnershipCard.html'" item="ownership" show-item-details="vm.showOwnershipView">
+                            </card>
+                        </card-list-item>
+                    </card-list>
+                </section>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-4">
-                <card-list id="card-list-activities" show-item-add="vm.showActivityAdd">
-                    <card-list-header>
-                        <h3 class="page-header" translate="ACTIVITY.LIST.ACTIVITIES"></h3>
-                    </card-list-header>
-                    <card-list-no-items ng-show="vm.property.activities.length === 0">
-                        <p class="help-block" translate="ACTIVITY.LIST.NO_ITEMS"></p>
-                    </card-list-no-items>
+                <section>
+                    <card-list id="card-list-activities" show-item-add="vm.showActivityAdd">
+                        <card-list-header>
+                            <h3 class="page-header" translate="ACTIVITY.LIST.ACTIVITIES"></h3>
+                        </card-list-header>
+                        <card-list-no-items ng-show="vm.property.activities.length === 0">
+                            <p class="help-block" translate="ACTIVITY.LIST.NO_ITEMS"></p>
+                        </card-list-no-items>
 
-                    <card-list-item ng-repeat="activity in vm.property.activities | orderBy: vm.activitiesCartListOrder.name : vm.activitiesCartListOrder.descending track by activity.id ">
-                        <card id="activity-card-{{activity.id}}" card-template-url="'app/activity/templates/activityCard.html'" item="activity" show-item-details="vm.showActivityPreview">
-                        </card>
-                    </card-list-item>
-                </card-list>
+                        <card-list-item ng-repeat="activity in vm.property.activities | orderBy: vm.activitiesCartListOrder.name : vm.activitiesCartListOrder.descending track by activity.id ">
+                            <card id="activity-card-{{activity.id}}" card-template-url="'app/activity/templates/activityCard.html'" item="activity" show-item-details="vm.showActivityPreview">
+                            </card>
+                        </card-list-item>
+                    </card-list>
+                </section>
             </div>
         </div>
     </div>

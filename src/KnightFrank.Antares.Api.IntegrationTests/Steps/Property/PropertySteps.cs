@@ -167,13 +167,25 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
+        [When(@"User retrieves attributes for given property type and (.*) address")]
+        public void GetAttributesForPropertyAndCountry(string countryCode)
+        {
+            var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
+
+            string requestUrl = $"{ApiUrl}/attributes?countryCode={countryCode}&propertyTypeId={propertyTypeId}";
+
+            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
         [Then(@"The updated Property is saved in data base")]
         public void ThenTheResultsShouldBeSameAsAdded()
         {
             var updatedProperty = this.scenarioContext.Get<UpdatePropertyCommand>("Property");
             Property expectedProperty = this.fixture.DataContext.Property.SingleOrDefault(x => x.Id.Equals(updatedProperty.Id));
 
-            updatedProperty.ShouldBeEquivalentTo(expectedProperty);
+            updatedProperty.ShouldBeEquivalentTo(expectedProperty, options => options
+                .Excluding(x => x.Division));
         }
 
         [Then(@"The created Property is saved in data base")]

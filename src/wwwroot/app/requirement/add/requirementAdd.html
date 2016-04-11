@@ -8,13 +8,13 @@
                 <div class="col-md-4">
 
                     <fieldset>
-                        <legend>Location requirements</legend>
+                        <h3 class="page-header">Location requirements</h3>
                         <address-form-edit entity-type-code="vm.entityTypeCode" address="vm.requirement.address" user-country-code="vm.userData.country"></address-form-edit>
                     </fieldset>
                     <fieldset>
-                        <legend>Property requirements</legend>
+                        <h3 class="page-header">Property requirements</h3>
                         <fieldset>
-                            <legend translate="REQUIREMENT.ADD.PRICE">Price</legend>
+                            <h4 class="page-header" translate="REQUIREMENT.ADD.PRICE">Price</h4>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.minPrice.$dirty) && addRequirementForm.minPrice.$invalid}">
@@ -43,7 +43,7 @@
                             </div>
                         </fieldset>
                         <fieldset>
-                            <legend translate="REQUIREMENT.ADD.BEDROOMS">Bedrooms</legend>
+                            <h4 class="page-header" translate="REQUIREMENT.ADD.BEDROOMS">Bedrooms</h4>
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.minBedrooms.$dirty) && addRequirementForm.minBedrooms.$invalid}">
@@ -66,7 +66,7 @@
                             </div>
                         </fieldset>
                         <fieldset>
-                            <legend translate="REQUIREMENT.ADD.RECEPTIONROOMS">Reception rooms</legend>
+                            <h4 class="page-header" translate="REQUIREMENT.ADD.RECEPTIONROOMS">Reception rooms</h4>
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.minReceptionRooms.$dirty) && addRequirementForm.minReceptionRooms.$invalid}">
@@ -89,7 +89,7 @@
                             </div>
                         </fieldset>
                         <fieldset>
-                            <legend translate="REQUIREMENT.ADD.BATHROOMS">Bathrooms</legend>
+                            <h4 class="page-header" translate="REQUIREMENT.ADD.BATHROOMS">Bathrooms</h4>
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.minBathrooms.$dirty) && addRequirementForm.minBathrooms.$invalid}">
@@ -112,7 +112,7 @@
                             </div>
                         </fieldset>
                         <fieldset>
-                            <legend translate="REQUIREMENT.ADD.PARKINGSPACES">Parking spaces</legend>
+                            <h4 class="page-header" translate="REQUIREMENT.ADD.PARKINGSPACES">Parking spaces</h4>
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.minParkingSpaces.$dirty) && addRequirementForm.minParkingSpaces.$invalid}">
@@ -135,7 +135,7 @@
                             </div>
                         </fieldset>
                         <fieldset>
-                            <legend translate="REQUIREMENT.ADD.AREA">Area</legend>
+                            <h4 class="page-header" translate="REQUIREMENT.ADD.AREA">Area</h4>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.minArea.$dirty) && addRequirementForm.minArea.$invalid}">
@@ -164,7 +164,7 @@
                             </div>
                         </fieldset>
                         <fieldset>
-                            <legend translate="REQUIREMENT.ADD.LANDAREA">Land area</legend>
+                            <h4 class="page-header" translate="REQUIREMENT.ADD.LANDAREA">Land area</h4>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.minLandArea.$dirty) && addRequirementForm.minLandArea.$invalid}">
@@ -206,8 +206,8 @@
                     </fieldset>
                 </div>
                 <div class="col-md-4">
-                    <fieldset>
-                        <legend translate="REQUIREMENT.ADD.APPLICANT"></legend>
+                    <section>
+                        <h3 class="page-header" translate="REQUIREMENT.ADD.APPLICANT"></h3>
                         <div class="form-group">
                             <button type="button" class="btn btn-default" ng-click="vm.showContactList()"><i class="fa fa-plus-circle"></i></button>
                             <list-not-empty ng-model="vm.requirement.contacts" name="numberOfApplicants" />
@@ -215,12 +215,12 @@
                         <div ng-class="{'has-error': addRequirementForm.$submitted || addRequirementForm.numberOfApplicants.$dirty}" ng-messages="addRequirementForm.numberOfApplicants.$error" ng-show="addRequirementForm.$submitted || addRequirementForm.numberOfApplicants.$dirty">
                             <div ng-messages-include="app/common/views/errorMessages.html"></div>
                         </div>
-                    </fieldset>
-                    <div class="panel panel-default" ng-repeat="c in vm.requirement.contacts">
-                        <div class="panel-body">
-                            {{c.firstName }} {{ c.surname }}
+                        <div class="panel panel-default" ng-repeat="c in vm.requirement.contacts">
+                            <div class="panel-body">
+                                {{c.firstName }} {{ c.surname }}
+                            </div>
                         </div>
-                    </div>
+                    </section>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">

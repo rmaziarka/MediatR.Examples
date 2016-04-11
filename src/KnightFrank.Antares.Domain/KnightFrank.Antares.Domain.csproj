@@ -74,10 +74,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandler.cs" />
+    <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandler.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandProfile.cs" />
-    <Compile Include="Activity\Commands\CreateActivityContact.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandValidator.cs" />
+    <Compile Include="Activity\Commands\CreateActivityCommandDomainValidator.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommand.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommandProfile.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommandValidator.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Common\Exceptions\ResourceNotFoundException.cs" />
     <Compile Include="Common\Specifications\IsLocaled.cs" />
     <Compile Include="Common\ValidatorCommandHandler.cs" />
+    <Compile Include="Common\Validator\ActivityStatusValidator.cs" />
     <Compile Include="Common\Validator\ContactValidator.cs" />
     <Compile Include="Company\CommandHandlers\CreateCompanyCommandHandler.cs" />
     <Compile Include="Company\Command\CreateCompanyCommand.cs" />
@@ -157,10 +159,15 @@
     <Compile Include="Property\Commands\UpdatePropertyCommandValidator.cs" />
     <Compile Include="Property\Queries\PropertyQuery.cs" />
     <Compile Include="Property\Queries\PropertyQueryValidator.cs" />
+    <Compile Include="Property\Queries\PropertyAttributesQuery.cs" />
     <Compile Include="Property\Queries\PropertyTypeQueryValidator.cs" />
     <Compile Include="Property\Queries\PropertyTypeQuery.cs" />
+    <Compile Include="Property\QueryHandlers\PropertyAttributesQueryHandler.cs" />
+    <Compile Include="Property\QueryResults\PropertyAttributesQueryResult.cs" />
+    <Compile Include="Property\QueryResults\PropertyAttributesQuerySingleResult.cs" />
     <Compile Include="Property\QueryHandlers\PropertyTypeQueryHandler.cs" />
     <Compile Include="Property\QueryHandlers\PropertyQueryHandler.cs" />
+    <Compile Include="Property\Queries\PropertyAttributesQueryValidator.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQueryResult.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQuerySingleResult.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementCommandHandler.cs" />

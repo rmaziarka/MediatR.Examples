@@ -1,1 +1,97 @@
-﻿<div>Test</div>
+﻿<div class="row">
+    <div class="col-md-12">
+        <h2 class="page-header" translate="ACTIVITY.EDIT.EDIT_ACTIVITY"></h2>
+    </div>
+    <form ng-submit="editActivityForm.$valid && aevm.save()" name="editActivityForm" method="post" novalidate>
+        <div class="col-md-4">
+            <fieldset id="activity-edit-basic">
+                <h3 class="page-header" translate="ACTIVITY.EDIT.BASIC_INFORMATION"></h3>
+                <div class="form-group" ng-class="{'has-error': (editActivityForm.$submitted || editActivityForm.status.$dirty) && editActivityForm.status.$invalid}">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <label for="status" translate="ACTIVITY.EDIT.STATUS"></label>
+                            <select class="form-control" required id="activityStatus" name="status" ng-model="aevm.activity.activityStatusId">
+                                <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
+                                <option ng-repeat="item in aevm.activityStatuses track by item.id" value="{{item.id}}">{{item.value}}</option>
+                            </select>
+                            <div ng-messages="editActivityForm.status.$error" ng-show="editActivityForm.$submitted || editActivityForm.status.$dirty">
+                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset id="activity-edit-prices">
+                <h3 class="page-header" translate="ACTIVITY.EDIT.PRICES.PRICES"></h3>
+                <div class="form-group" ng-class="{'has-error': (editActivityForm.$submitted || editActivityForm.marketAppraisalPrice.$dirty) && editActivityForm.marketAppraisalPrice.$invalid}">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <label for="market-appraisal-price" translate="ACTIVITY.EDIT.PRICES.MARKET_APPRAISAL_PRICE"></label>
+                            <div class="input-group">
+                                <input id="market-appraisal-price" name="marketAppraisalPrice" class="form-control" type="number" min="0" pattern="\d+([\.,]\d+)?" ng-model="aevm.activity.marketAppraisalPrice"/>
+                                <div class="input-group-addon">GBP</div>
+                            </div>
+                            <div ng-messages="editActivityForm.marketAppraisalPrice.$error" ng-show="editActivityForm.$submitted || editActivityForm.marketAppraisalPrice.$dirty">
+                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': (editActivityForm.$submitted || editActivityForm.recommendedPrice.$dirty) && editActivityForm.recommendedPrice.$invalid}">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <label for="recommended-price" translate="ACTIVITY.EDIT.PRICES.RECOMMENDED_PRICE"></label>
+                            <div class="input-group">
+                                <input id="recommended-price" name="recommendedPrice" class="form-control" type="number" min="0" pattern="\d+([\.,]\d+)?" ng-model="aevm.activity.recommendedPrice"/>
+                                <div class="input-group-addon">GBP</div>
+                            </div>
+                            <div ng-messages="editActivityForm.recommendedPrice.$error" ng-show="editActivityForm.$submitted || editActivityForm.recommendedPrice.$dirty">
+                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': (editActivityForm.$submitted || editActivityForm.vendorEstimatedPrice.$dirty) && editActivityForm.vendorEstimatedPrice.$invalid}">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <label for="vendor-estimated-price" translate="ACTIVITY.EDIT.PRICES.VENDOR_ESIMATED_PRICE"></label>
+                            <div class="input-group">
+                                <input id="vendor-estimated-price" name="vendorEstimatedPrice" class="form-control" type="number" min="0" pattern="\d+([\.,]\d+)?" ng-model="aevm.activity.vendorEstimatedPrice"/>
+                                <div class="input-group-addon">GBP</div>
+                            </div>
+                            <div ng-messages="editActivityForm.vendorEstimatedPrice.$error" ng-show="editActivityForm.$submitted || editActivityForm.vendorEstimatedPrice.$dirty">
+                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="col-md-4">
+            <section id="activity-edit-property">
+                <h3 class="page-header" translate="ACTIVITY.EDIT.PROPERTY"></h3>
+                <card id="card-property" card-template-url="'app/property/templates/propertyCard.html'" item="aevm.activity.property">
+                </card>
+            </section>
+            <section id="activity-edit-vendors">
+                <list id="list-vendors">
+                    <list-header>
+                        <h3 class="page-header" translate="ACTIVITY.EDIT.VENDORS"></h3>
+                    </list-header>
+                    <list-no-items ng-show="aevm.activity.contacts.length === 0">
+                        <p class="help-block" translate="ACTIVITY.EDIT.NO_VENDORS"></p>
+                    </list-no-items>
+                    <list-item id="list-item-{{contact.id}}" ng-repeat="contact in aevm.activity.contacts">
+                        {{contact.getName()}}
+                    </list-item>
+                </list>
+            </section>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <button id="activity-edit-save" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -45,6 +45,9 @@ Scenario Outline: Create property with invalid data
 @Property
 Scenario Outline: Update property
 	Given User gets GB address form for Property and country details
+        And User gets EnumTypeItemId and EnumTypeItem code
+			| enumTypeCode  | enumTypeItemCode |
+			| Division      | Commercial       |
         And User gets <propertyType1> for PropertyType
 		And Property with Address is in data base
 			| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
@@ -99,6 +102,7 @@ Scenario: Get non existing property
 	Then User should get NotFound http status code
 
 @Property
+@Ownership
 Scenario: Get property
 	Given User gets GB address form for Property and country details
         And User gets House for PropertyType

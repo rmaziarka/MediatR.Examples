@@ -13,7 +13,7 @@ module Antares.Activity {
         defaultActivityStatusCode: string = 'PreAppraisal';
         activityResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityResource>;
 
-        private vendors: Array<Business.Contact>;
+        public vendors: Array<Business.Contact> = [];
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -34,7 +34,7 @@ module Antares.Activity {
         }
 
         setVendors(vendors: Array<Business.Contact>){
-            this.vendors = vendors;
+            this.vendors = vendors || [];
         }
 
         saveActivity = (propertyId: string): ng.IPromise<void> => {
@@ -47,7 +47,7 @@ module Antares.Activity {
             activity.activityStatusId = this.selectedActivityStatus.id;
             activity.contacts = this.vendors;
 
-            return this.activityResource.save(activity).$promise.then((result: Dto.IActivity) => {
+            return this.activityResource.save(new Business.CreateActivityCommand(activity)).$promise.then((result: Dto.IActivity) => {
                 var addedActivity = new Business.Activity(result);
 
                 this.activities.push(addedActivity);

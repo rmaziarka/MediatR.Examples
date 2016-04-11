@@ -9,7 +9,7 @@ Scenario: Retrieve all contacts
 			| David     | Dummy   | Mister |
 	When User retrieves all contact details
 	Then User should get OK http status code
-		And contact details should be the same as already added
+		And contact details should have expected values
 
 @Contacts
 Scenario Outline: Retrieve error messages for improper contact id
@@ -24,10 +24,7 @@ Scenario Outline: Retrieve error messages for improper contact id
 @Contacts
 Scenario: Create new contact
 	Given All contacts have been deleted
-		And User creates contact using api with following data
-			| FirstName | Surname | Title |
-			| max       | max     | max   |
-	When User retrieves contact details for latest id
+	When User creates contact using api with max lenght fields
 	Then User should get OK http status code
 		And contact details should be the same as already added
 

@@ -16,6 +16,7 @@
     using Newtonsoft.Json;
 
     using TechTalk.SpecFlow;
+    using TechTalk.SpecFlow.Assist;
 
     [Binding]
     public class ActivitiesSteps
@@ -63,17 +64,16 @@
 
             Guid activityStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["PreAppraisal"];
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
-            List<CreateActivityContact> vendors =
+            List<Guid> vendors =
                 this.fixture.DataContext.Ownerships.Where(x => x.PropertyId.Equals(propertyId) && x.SellDate == null)
-                    .SelectMany(x => x.Contacts)
-                    .Select(contact => new CreateActivityContact { Id = contact.Id })
+                    .SelectMany(x => x.Contacts).Select(c => c.Id)
                     .ToList();
 
             var activityCommand = new CreateActivityCommand
             {
                 PropertyId = propertyId,
                 ActivityStatusId = activityStatusId,
-                Contacts = vendors
+                ContactIds = vendors
             };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, activityCommand);
@@ -91,6 +91,32 @@
         {
             var createdActivity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
             this.GetActivityResponse(createdActivity.Id.ToString());
+        }
+
+        [When(@"User updates activity '(.*)' id and '(.*)' status with following sale valuation")]
+        public void WhenUserUpdatesActivityWithFollowingSaleValuation(string id, string status, Table table)
+        {
+            string requestUrl = $"{ApiUrl}";
+
+            var updateActivityCommand = table.CreateInstance<UpdateActivityCommand>();
+            var activityFromDatabase = this.scenarioContext.Get<Activity>("Added Activity");
+            updateActivityCommand.Id = id.Equals("added") ? activityFromDatabase.Id : new Guid(id);
+            updateActivityCommand.ActivityStatusId = status.Equals("added") ? activityFromDatabase.ActivityStatusId 
+                : new Guid(status);
+
+            activityFromDatabase = new Activity
+            {
+                Id = updateActivityCommand.Id,
+                ActivityStatusId = updateActivityCommand.ActivityStatusId,
+                MarketAppraisalPrice = updateActivityCommand.MarketAppraisalPrice,
+                RecommendedPrice = updateActivityCommand.RecommendedPrice,
+                VendorEstimatedPrice = updateActivityCommand.VendorEstimatedPrice
+            };
+
+            this.scenarioContext["Added Activity"] = activityFromDatabase;
+
+            HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, updateActivityCommand);
+            this.scenarioContext.SetHttpResponseMessage(response);
         }
 
         [Then(@"Activities list should be the same as in DB")]

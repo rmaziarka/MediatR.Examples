@@ -6,11 +6,11 @@
     <form ng-submit="addCompanyForm.$valid && vm.hasCompanyContacts() && vm.createCompany()" name="addCompanyForm" id="addCompanyForm" method="post" novalidate>
         <div class="col-md-4">
             <fieldset>
-                <legend translate="COMPANY.ADD.BASIC_INFORMATION"></legend>
+                <h3 class="page-header" translate="COMPANY.ADD.BASIC_INFORMATION"></h3>
 
                 <div class="form-group required" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.name.$dirty) && addCompanyForm.name.$invalid}">
                     <label for="title" translate="COMPANY.ADD.NAME"></label>
-                    <input type="text" class="form-control" id="title" name="name" required ng-maxlength="128" ng-model="vm.company.name" autocomplete="off">
+                    <input type="text" class="form-control" id="name" name="name" required ng-maxlength="128" ng-model="vm.company.name" autocomplete="off">
                     <div ng-messages="addCompanyForm.name.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.name.$dirty">
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
@@ -19,11 +19,11 @@
             </fieldset>
         </div>
         <div class="col-md-4">
-            
-                <fieldset>
+
+                <section>
                     <list id="list-contacts">
                         <list-header>
-                            <legend translate="COMPANY.ADD.CONTACTS"></legend>
+                            <h3 class="page-header" translate="COMPANY.ADD.CONTACTS"></h3>
                         </list-header>
                         <list-actions>
                             <div class="form-group">
@@ -33,20 +33,20 @@
                             </div>
                         </list-actions>
                         <list-no-items ng-show="vm.hasCompanyContacts() === false" ng-class="{'has-error': addCompanyForm.$submitted}">
-                            <p class="help-block" ng-show="addCompanyForm.$submitted === false" translate="COMPANY.ADD.NO_CONTACTS"></p>
-                            <p class="help-block" ng-show="addCompanyForm.$submitted" translate="COMPANY.ADD.CONTACTS_ARE_REQUIRED"></p>
+                            <p class="help-block" id="no-contacts-help-block" ng-show="addCompanyForm.$submitted === false" translate="COMPANY.ADD.NO_CONTACTS"></p>
+                            <p class="help-block" id="contacts-are-required-help-block" ng-show="addCompanyForm.$submitted" translate="COMPANY.ADD.CONTACTS_ARE_REQUIRED"></p>
                         </list-no-items>
                         <list-item id="list-item-contact-{{contact.id}}" ng-repeat="contact in vm.company.contacts">
                             {{contact.getName()}}
                         </list-item>
                     </list>
-                </fieldset>
-            
+                </section>
+
         </div>
 
         <div class="col-md-12">
             <div class="form-group">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save</button>
+                <button type="submit" id="company-save-btn" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
             </div>
         </div>
     </form>

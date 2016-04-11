@@ -6,7 +6,7 @@
     using System.Data.Entity.ModelConfiguration.Conventions;
     using System.Linq;
 
-   using KnightFrank.Antares.Dal.Model.Address;
+    using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Configuration;
     using KnightFrank.Antares.Dal.Model.Contacts;
@@ -15,10 +15,13 @@
     using KnightFrank.Antares.Dal.Model.Resource;
     using KnightFrank.Antares.Dal.Model.User;
 
+    using Attribute = KnightFrank.Antares.Dal.Model.Attribute.Attribute;
+
     public class KnightFrankContext : DbContext
     {
         public KnightFrankContext() : base("Api.Settings.SqlConnectionString")
         {
+            this.Database.Initialize(false);
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -56,6 +59,11 @@
         public DbSet<PropertyTypeLocalised> PropertyTypeLocalised { get; set; }
         public DbSet<PropertyTypeDefinition> PropertyTypeDefinition { get; set; } 
         public DbSet<Company> Company { get; set; }
+        public DbSet<Attribute> Attribute { get; set; }
+        public DbSet<PropertyAttributeForm> PropertyAttributeForm { get; set; }
+        public DbSet<PropertyAttributeFormDefinition> PropertyAttributeFormDefinition { get; set; }
+
+
         
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {

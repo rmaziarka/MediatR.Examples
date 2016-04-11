@@ -29,7 +29,7 @@
         }
 
         /// <summary>
-        ///     Create activity
+        ///     Creates the activity
         /// </summary>
         /// <param name="command">Activity data to create</param>
         [HttpPost]
@@ -58,6 +58,20 @@
             }
 
             return activity;
+        }
+
+        /// <summary>
+        ///     Updates the activity
+        /// </summary>
+        /// <param name="command">Activity data to update</param>
+        /// <returns>Activity entity</returns>
+        [HttpPut]
+        [Route("")]
+        public Activity UpdateActivity(UpdateActivityCommand command)
+        {
+            Guid activityId = this.mediator.Send(command);
+
+            return this.GetActivity(activityId);
         }
     }
 }

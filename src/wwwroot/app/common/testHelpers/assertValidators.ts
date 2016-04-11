@@ -64,6 +64,11 @@ module Antares.TestHelpers {
             expect(pageObject.isValidFor(inputValue)).toBe(expectedResult);
         }
 
+        public assertShowElement = (expectedResult: boolean, elementSelector: string) => {
+            var selectedElement = this.element.find(elementSelector);            
+            expect(selectedElement.hasClass("ng-hide")).toBe(expectedResult);
+        }
+
         private generateString = (length: number): string =>{
             return new Array(length + 1).join('x');
         }

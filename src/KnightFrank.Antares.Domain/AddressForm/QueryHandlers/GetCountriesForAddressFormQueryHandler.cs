@@ -39,7 +39,7 @@
 
             if (enumTypeItem == null)
             {
-                throw new DomainValidationException("message.EntityType");
+                throw new DomainValidationException(nameof(message.EntityTypeItemCode));
             }
 
             // TODO lang code should be set in header

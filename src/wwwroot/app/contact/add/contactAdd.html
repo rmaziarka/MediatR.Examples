@@ -3,7 +3,7 @@
         <h2 class="page-header">Create contact</h2>
         <form ng-submit="addContactForm.$valid && vm.save()" name="addContactForm" id="addContactForm" method="post" novalidate>
             <fieldset>
-                <legend>Basic information</legend>
+                <h3 class="page-header">Basic information</h3>
                 <div class="form-group required" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.title.$dirty) && addContactForm.title.$invalid}">
                     <div class="row">
                         <div class="col-md-3">

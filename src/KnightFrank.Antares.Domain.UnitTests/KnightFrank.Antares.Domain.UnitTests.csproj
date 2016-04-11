@@ -102,13 +102,18 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandlerTests.cs" />
+    <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandlerTests.cs" />
+    <Compile Include="Activity\Commands\CreateActivityCommandDomainValidatorTests.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandValidatorTests.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityCommandValidatorTests.cs" />
     <Compile Include="Activity\Queries\ActivityQueryValidatorTests.cs" />
     <Compile Include="Activity\QueryHandlers\ActivityQueryHandlerTests.cs" />
     <Compile Include="AddressForm\Queries\AddressFormQueryValidatorTests.cs" />
     <Compile Include="AddressForm\Queries\GetCountriesForAddressFormQueryValidatorTests.cs" />
+    <Compile Include="Common\Validator\ActivityStatusValidatorTests.cs" />
     <Compile Include="Company\CommandHandlers\CreateCompanyComandHandlerTests.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommandDomainValidatorTests.cs" />
+    <Compile Include="Common\Validator\ContactValidatorTests.cs" />
     <Compile Include="Company\Commands\CreateCompanyValidatorTests.cs" />
     <Compile Include="FixtureExtension\AddressFormFixtureExtensions.cs" />
     <Compile Include="AddressForm\QueryHandlers\AddressFormQueryHandlerTests.cs" />
@@ -131,6 +136,8 @@
     <Compile Include="Property\PropertyDomainValidatorTests.cs" />
     <Compile Include="Property\PropertyTypeValidatorTests.cs" />
     <Compile Include="Property\Commands\UpdatePropertyCommandValidatorTests.cs" />
+    <Compile Include="Property\Queries\PropertyAttributesQueryValidatorTests.cs" />
+    <Compile Include="Property\QueryHandlers\PropertyAttributesQueryHandlerTests.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandDomainValidatorTests.cs" />
     <Compile Include="Property\Commands\CreatePropertyCommandValidatorTests.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandHandlerTests.cs" />
@@ -154,7 +161,9 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Property\QueryHandlers\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

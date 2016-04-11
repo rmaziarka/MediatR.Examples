@@ -36,7 +36,7 @@
             ValidationResult validationResult = this.createRequirementCommandDomainValidator.Validate(message);
             if (!validationResult.IsValid)
             {
-                throw new DomainValidationException(validationResult.Errors.First().ErrorMessage);
+                throw new DomainValidationException(validationResult.Errors);
             }
 
             var requirement = AutoMapper.Mapper.Map<Requirement>(message);

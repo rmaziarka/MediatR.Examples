@@ -88,24 +88,6 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_CommandContactIdsNotProvided_When_Validating_Then_IsInvalidAndHasAppropriateErrorMsg(
-            CreateCompanyValidator validator,
-            CreateCompanyCommand cmd)
-        {
-            // Arrange
-            cmd.ContactIds = null;
-
-            // Act
-            ValidationResult result = validator.Validate(cmd);
-
-            // Assert
-            result.IsValid.Should().BeFalse();
-            result.Errors.Should().Contain(e => e.PropertyName == nameof(cmd.ContactIds));
-            result.Errors.Should().Contain(e => e.ErrorCode == "notnull_error");
-        }
-
-        [Theory]
-        [AutoMoqData]
         public void Given_ContactsIdsListIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorMsg(
             CreateCompanyValidator validator,
             CreateCompanyCommand cmd)
@@ -120,26 +102,6 @@
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(e => e.PropertyName == nameof(cmd.ContactIds));
             result.Errors.Should().Contain(e => e.ErrorCode == "notempty_error");
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_ContactsIdsContainsEmptyValues_When_Validating_Then_IsInvalidAndHasAppropriateErrorMsg(
-            Guid contactIds,
-            string expectedErrorCode,
-            CreateCompanyValidator validator,
-            CreateCompanyCommand cmd)
-        {
-            // Arrange
-            cmd.ContactIds.Add(Guid.Empty);
-
-            // Act
-            ValidationResult result = validator.Validate(cmd);
-
-            // Assert
-            result.IsValid.Should().BeFalse();
-            result.Errors.Should().Contain(e => e.PropertyName == nameof(cmd.ContactIds));
-            result.Errors.Should().Contain(e => e.ErrorCode == "contactsempty_error");
         }
     }
 }

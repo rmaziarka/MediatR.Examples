@@ -24,7 +24,12 @@ namespace KnightFrank.Antares.Domain.Common.Validator
         private ValidationFailure ContactsExistValidator(ICollection<Guid> contactIds)
         {
             IEnumerable<Contact> contacts = this.contactRepository.FindBy(x => contactIds.Any(id => id == x.Id));
-            return !contacts.Count().Equals(contactIds.Count) ? new ValidationFailure(nameof(contactIds), "Contact list is not correct.") : null;
+            return !contacts.Count().Equals(contactIds.Count)
+                ? new ValidationFailure(nameof(contactIds), "Contact list is invalid.")
+                {
+                    ErrorCode = "contactsinvalid_error"
+                }
+                : null;
         }
     }
 }

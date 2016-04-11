@@ -7,9 +7,9 @@ function Invoke-SqlQuery {
         [string] 
         $InputFile,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$false)]
         [string] 
-        $DatabaseName,
+        $DatabaseName = "",
 
 		[Parameter(Mandatory=$true)]
         [string[]] 
@@ -19,7 +19,15 @@ function Invoke-SqlQuery {
         [string] 
         $ServerInstance = "localhost"		
     )
-	
-    Write-Host "Invoking sql '$InputFile' against database '$DatabaseName' on '$ServerInstance'"
-	[void](Invoke-Sqlcmd -ServerInstance $ServerInstance -Database $DatabaseName -InputFile $InputFile -Variable $SqlVariables)
+
+    if([string]::IsNullOrEmpty($DatabaseName))
+    {
+        Write-Host "Invoking sql '$InputFile' on '$ServerInstance'"
+	    [void](Invoke-Sqlcmd -ServerInstance $ServerInstance -InputFile $InputFile -Variable $SqlVariables)
+    }
+    else
+    {
+        Write-Host "Invoking sql '$InputFile' against database '$DatabaseName' on '$ServerInstance'"
+	    [void](Invoke-Sqlcmd -ServerInstance $ServerInstance -Database $DatabaseName -InputFile $InputFile -Variable $SqlVariables)
+    }
 }

@@ -12,13 +12,13 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
+    using KnightFrank.Antares.Domain.Common.Validator;
 
     public class CreateOwnershipCommandDomainValidator : AbstractValidator<CreateOwnershipCommand>, IDomainValidator<CreateOwnershipCommand>
     {
         private readonly IGenericRepository<Ownership> ownershipRepository;
         private readonly IGenericRepository<EnumTypeItem> enumTypeItemRepository;
         private readonly IGenericRepository<Property> propertyRepository;
-        private readonly IGenericRepository<Contact> contactRepository;
 
         public CreateOwnershipCommandDomainValidator(
             IGenericRepository<Ownership> ownershipRepository, 
@@ -28,13 +28,13 @@
         {
             this.ownershipRepository = ownershipRepository;
             this.enumTypeItemRepository = enumTypeItemRepository;
-            this.contactRepository = contactRepository;
             this.propertyRepository = propertyRepository;
 
             this.Custom(this.DatesDoNotOverlapValidator);
             this.Custom(this.OwnershipTypeValidator);
             this.Custom(this.PropertyExistsValidator);
-            this.Custom(this.ContactsExistValidator);
+
+            this.RuleFor(x => x.ContactIds).SetValidator(new ContactValidator(contactRepository));
         }
 
         private ValidationFailure DatesDoNotOverlapValidator(CreateOwnershipCommand command)
@@ -66,12 +66,6 @@
         {
             var property = this.propertyRepository.GetById(command.PropertyId);
             return property == null ? new ValidationFailure(nameof(command.PropertyId), "Property does not exist.") : null;
-        }
-
-        private ValidationFailure ContactsExistValidator(CreateOwnershipCommand command)
-        {
-            var contacts = this.contactRepository.FindBy(x => command.ContactIds.Any(id => id == x.Id));
-            return !contacts.Count().Equals(command.ContactIds.Count) ? new ValidationFailure(nameof(command.ContactIds), "Contact list is not correct.") : null;
         }
     }
 }
