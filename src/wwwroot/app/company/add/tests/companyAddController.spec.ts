@@ -59,7 +59,7 @@ module Antares {
             assertValidator.assertShowElement(true, pageObjectSelectors.contactsAreRequiredHelpBlockSelector);            
         });
 
-        it('when contacts are not selected then only error message should be displayed', () => {
+        it('when contacts are not selected and save button is clicked then only error message should be displayed', () => {
             // arrange
             var button = element.find(pageObjectSelectors.companySaveBtnSelector);
 
