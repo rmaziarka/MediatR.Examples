@@ -4,10 +4,10 @@
         <div id="activity-view-well" class="well">
             <button type="button" class="btn btn-default pull-right" ng-click="avvm.goToEdit()"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span></button>
             <div>
-                <span id="activity-view-well-createdDate">{{avvm.activity.createdDate | date : 'dd-MM-yyyy'}}</span>
+                <span id="createdDate">{{avvm.activity.createdDate | date : 'dd-MM-yyyy'}}</span>
             </div>
             <div>
-                <span id="activity-view-well-activityStatus">{{avvm.activity.activityStatusId | enumTranslate}}</span>
+                <span id="activityStatus">{{avvm.activity.activityStatusId | enumTranslate}}</span>
             </div>
         </div>
         <div class="row">
@@ -16,25 +16,25 @@
                     <h3 class="page-header" translate="ACTIVITY.VIEW.PRICES.PRICES"></h3>
                     <div class="section-row row">
                         <div class="col-xs-6" translate="ACTIVITY.VIEW.PRICES.MARKET_APPRAISAL_PRICE"></div>
-                        <div id="activity-view-prices-marketAppraisalPrice" class="col-xs-6" ng-if="avvm.activity.marketAppraisalPrice">{{avvm.activity.marketAppraisalPrice | number : 2 }} GBP</div>
+                        <div id="marketAppraisalPrice" class="col-xs-6" ng-if="avvm.activity.marketAppraisalPrice">{{avvm.activity.marketAppraisalPrice | number : 2 }} GBP</div>
                     </div>
                     <div class="section-row row">
                         <div class="col-xs-6" translate="ACTIVITY.VIEW.PRICES.RECOMMENDED_PRICE"></div>
-                        <div id="activity-view-prices-recommendedPrice" class="col-xs-6" ng-if="avvm.activity.recommendedPrice">{{avvm.activity.recommendedPrice | number : 2 }} GBP</div>
+                        <div id="recommendedPrice" class="col-xs-6" ng-if="avvm.activity.recommendedPrice">{{avvm.activity.recommendedPrice | number : 2 }} GBP</div>
                     </div>
                     <div class="section-row row">
                         <div class="col-xs-6" translate="ACTIVITY.VIEW.PRICES.VENDOR_ESIMATED_PRICE"></div>
-                        <div id="activity-view-prices-vendorEstimatedPrice" class="col-xs-6" ng-if="avvm.activity.vendorEstimatedPrice">{{avvm.activity.vendorEstimatedPrice | number : 2 }} GBP</div>
+                        <div id="vendorEstimatedPrice" class="col-xs-6" ng-if="avvm.activity.vendorEstimatedPrice">{{avvm.activity.vendorEstimatedPrice | number : 2 }} GBP</div>
                     </div>
                 </section>
             </div>
             <div class="col-md-4">
-                <section>
+                <section id="activity-view-property">
                     <h3 class="page-header" translate="ACTIVITY.VIEW.PROPERTY"></h3>
-                    <card id="activity-view-card-property" card-template-url="'app/property/templates/propertyCard.html'" item="avvm.activity.property" show-item-details="avvm.showPropertyPreview">
+                    <card id="card-property" card-template-url="'app/property/templates/propertyCard.html'" item="avvm.activity.property" show-item-details="avvm.showPropertyPreview">
                     </card>
                 </section>
-                <section>
+                <section id="activity-view-vendors">
                     <list id="list-vendors">
                         <list-header>
                             <h3 class="page-header" translate="ACTIVITY.VIEW.VENDORS"></h3>
@@ -42,7 +42,7 @@
                         <list-no-items ng-show="avvm.activity.contacts.length === 0">
                             <p class="help-block" translate="ACTIVITY.VIEW.NO_VENDORS"></p>
                         </list-no-items>
-                        <list-item id="list-item-vendor-{{contact.id}}" ng-repeat="contact in avvm.activity.contacts">
+                        <list-item id="list-item-{{contact.id}}" ng-repeat="contact in avvm.activity.contacts">
                             {{contact.getName()}}
                         </list-item>
                     </list>

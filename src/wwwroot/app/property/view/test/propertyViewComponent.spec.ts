@@ -13,6 +13,14 @@ module Antares {
             filter: ng.IFilterService,
             $http: ng.IHttpBackendService;
 
+        var pageObjectSelectors = {
+            activity: {
+                createdDate : '#activity-preview-created-date',
+                status : '#activity-preview-status',
+                vendors: '#activity-preview-vendors [id^=activity-preview-vendor-item-]'
+            }
+        }
+
         var controller: PropertyViewController;
 
         describe('and property is loaded', () =>{
@@ -228,10 +236,10 @@ module Antares {
 
                 // assert
                 var activityPreviewPanel = element.find('activity-preview');
-                var statusElement = activityPreviewPanel.find('#activity-status');
+                var statusElement = activityPreviewPanel.find(pageObjectSelectors.activity.status);
                 var formattedDate = filter('date')(date2Mock, 'dd-MM-yyyy');
-                var dateElement = activityPreviewPanel.find('#activity-created-date');
-                var vendorsItemsElement = activityPreviewPanel.find('[id^=activity-vendor-item-]');
+                var dateElement = activityPreviewPanel.find(pageObjectSelectors.activity.createdDate);
+                var vendorsItemsElement = activityPreviewPanel.find(pageObjectSelectors.activity.vendors);
 
                 expect(statusElement.text()).toBe('ENUMS.456');
                 expect(dateElement.text()).toBe(formattedDate);

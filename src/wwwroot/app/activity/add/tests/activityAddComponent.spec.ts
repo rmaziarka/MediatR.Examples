@@ -15,7 +15,7 @@ module Antares {
 
         var pageObjectSelectors = {
             activityStatusSelector: 'select#status',
-            vendors: '#vendors'
+            vendors: '#activity-add-vendors [id^=list-item-]'
         };
 
         var activityStatuses: any = {
