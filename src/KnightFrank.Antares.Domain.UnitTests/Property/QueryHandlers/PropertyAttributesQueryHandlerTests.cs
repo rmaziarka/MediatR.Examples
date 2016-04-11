@@ -47,7 +47,10 @@
             var result = handler.Handle(query);
 
             // Assert
-            propertyAttributeFormDefinitionRepository.Verify(p => p.GetWithInclude(It.IsAny<Expression<Func<PropertyAttributeFormDefinition, object>>>()), Times.Once());
+            propertyAttributeFormDefinitionRepository.Verify(p => p.GetWithInclude(
+                It.IsAny<Expression<Func<PropertyAttributeFormDefinition, object>>>()), 
+                Times.Once());
+
             Assert.True(result.Attributes.Any());
         }
 
@@ -63,7 +66,6 @@
 
             // Act + Assert
             Assert.Throws<DomainValidationException>(() => handler.Handle(query));
-            propertyAttributeFormDefinitionRepository.Verify(p => p.GetWithInclude(), Times.Never);
         }
     }
 }
