@@ -38,6 +38,6 @@ module Antares.Activity {
                         return dataAccessService.getActivityResource().get({ id: activityId }).$promise;
                     }
                 }
-            })
+            });
     }
 }

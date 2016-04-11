@@ -20,7 +20,7 @@
 
         public Guid Handle(UpdateActivityCommand message)
         {
-            Activity activity = this.activityRepository.GetById(message.ActivityId);
+            Activity activity = this.activityRepository.GetById(message.Id);
 
             Mapper.Map(message, activity);
 

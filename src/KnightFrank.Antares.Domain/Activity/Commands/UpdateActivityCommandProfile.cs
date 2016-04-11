@@ -8,7 +8,7 @@
     {
         protected override void Configure()
         {
-            this.CreateMap<UpdateActivityCommand, Activity>().ForSourceMember(x => x.ActivityId, y => y.Ignore());
+            this.CreateMap<UpdateActivityCommand, Activity>().ForSourceMember(x => x.Id, y => y.Ignore());
         }
     }
 }

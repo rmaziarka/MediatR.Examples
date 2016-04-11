@@ -118,6 +118,20 @@
       "STATUS": "Status",
       "VENDORS": "Vendors"
     },
+    "EDIT": {
+      "EDIT_ACTIVITY": "Edit activity",
+      "BASIC_INFORMATION": "Basic information",
+      "STATUS": "Status",
+      "PROPERTY": "Property",
+      "VENDORS": "Vendors",
+      "NO_VENDORS": "No vendors defined",
+      "PRICES": {
+        "PRICES": "Valuation prices",
+        "MARKET_APPRAISAL_PRICE": "Market appraisal price",
+        "RECOMMENDED_PRICE": "Recommended price",
+        "VENDOR_ESIMATED_PRICE": "Vendor estimated price"
+      }
+    },
     "PREVIEW": {
       "ACTIVITYPREVIEW": "Activity preview",
       "STATUS": "Status",

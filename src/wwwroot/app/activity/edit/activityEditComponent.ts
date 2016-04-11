@@ -3,7 +3,7 @@
 module Antares.Activity {
     angular.module('app').component('activityEdit', {
         templateUrl: 'app/activity/edit/activityEdit.html',
-        controllerAs : 'vm',
+        controllerAs : 'aevm',
         controller: 'ActivityEditController',
         bindings: {
             activity: '='

@@ -52,8 +52,8 @@ module Antares {
 
             it('when activity is set then activity vendors should be displayed', () => {
                 // arrange
-                var contact1Mock = new Business.Contact({ id : '11', firstName : 'John', surname : 'Test1', title : 'Mr' });//TestHelpers.ContactGenerator.generate();
-                var contact2Mock = new Business.Contact({ id : '22', firstName : 'Amy', surname : 'Test2', title : 'Mrs' });//TestHelpers.ContactGenerator.generate();
+                var contact1Mock = TestHelpers.ContactGenerator.generate();
+                var contact2Mock = TestHelpers.ContactGenerator.generate();
 
                 activityMock.contacts = [contact1Mock, contact2Mock];
 
