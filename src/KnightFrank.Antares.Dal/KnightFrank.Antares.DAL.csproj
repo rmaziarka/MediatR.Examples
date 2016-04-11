@@ -177,6 +177,10 @@
     <Compile Include="Migrations\201604070825300_AddValuationPricesToActivity.Designer.cs">
       <DependentUpon>201604070825300_AddValuationPricesToActivity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604080851036_AddDivisionToProperty.cs" />
+    <Compile Include="Migrations\201604080851036_AddDivisionToProperty.Designer.cs">
+      <DependentUpon>201604080851036_AddDivisionToProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Address\Address.cs" />
     <Compile Include="Model\Address\AddressField.cs" />
     <Compile Include="Model\Address\AddressFieldDefinition.cs" />
@@ -351,6 +355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604070825300_AddValuationPricesToActivity.resx">
       <DependentUpon>201604070825300_AddValuationPricesToActivity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604080851036_AddDivisionToProperty.resx">
+      <DependentUpon>201604080851036_AddDivisionToProperty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

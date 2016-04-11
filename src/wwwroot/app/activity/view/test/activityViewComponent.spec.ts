@@ -41,6 +41,8 @@ module Antares {
                 property: {
                     id: '1',
                     propertyTypeId: '1',
+                    divisionId: '',
+                    division: null,
                     address: Antares.Mock.AddressForm.FullAddress,
                     ownerships: [],
                     activities: []
@@ -143,6 +145,8 @@ module Antares {
                     property: {
                         id: '1',
                         propertyTypeId: '1',
+                        divisionId: '',
+                        division: null,
                         address: Antares.Mock.AddressForm.FullAddress,
                         ownerships: [],
                         activities: []
@@ -177,6 +181,8 @@ module Antares {
                     property: {
                         id: '1',
                         propertyTypeId: '1',
+                        divisionId: '',
+                        division: null,
                         address: Antares.Mock.AddressForm.FullAddress,
                         ownerships: [],
                         activities: []
@@ -214,6 +220,8 @@ module Antares {
                     property: {
                         id: '1',
                         propertyTypeId: '1',
+                        divisionId: '',
+                        division: null,
                         address: Antares.Mock.AddressForm.FullAddress,
                         ownerships: [],
                         activities: []
@@ -251,7 +259,9 @@ module Antares {
                 propertyId : '1',
                 property : {
                     id : '1',
-                    propertyTypeId : '1',
+                    propertyTypeId: '1',
+                    divisionId: '',
+                    division: null,
                     address : Antares.Mock.AddressForm.FullAddress,
                     ownerships : [],
                     activities : []
@@ -304,6 +314,8 @@ module Antares {
                 property: {
                     id: '1',
                     propertyTypeId: '1',
+                    divisionId: '',
+                    division: null,
                     address: Antares.Mock.AddressForm.FullAddress,
                     ownerships: [],
                     activities: []

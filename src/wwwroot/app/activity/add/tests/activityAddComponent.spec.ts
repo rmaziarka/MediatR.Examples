@@ -119,6 +119,8 @@ module Antares {
                 propertyMock = {
                     id: '1',
                     propertyTypeId: '',
+                    divisionId: '',
+                    division: null,
                     address: Antares.Mock.AddressForm.FullAddress,
                     ownerships: [],
                     activities: []

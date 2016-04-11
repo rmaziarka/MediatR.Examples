@@ -7,6 +7,11 @@
             this.HasRequired(p => p.Address).WithMany().HasForeignKey(p => p.AddressId);
 
             this.HasRequired(p => p.PropertyType);
+
+            this.HasRequired(p => p.Division)
+                .WithMany()
+                .HasForeignKey(p => p.DivisionId)
+                .WillCascadeOnDelete(false);
         }
     }
 }

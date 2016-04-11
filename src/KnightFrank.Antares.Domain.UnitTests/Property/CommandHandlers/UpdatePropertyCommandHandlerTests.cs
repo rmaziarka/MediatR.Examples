@@ -1,9 +1,10 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Property.CommandHandlers
 {
     using System;
+    using System.Linq.Expressions;
 
     using FluentAssertions;
-    
+
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.Exceptions;
     using Domain.Property.CommandHandlers;
@@ -17,7 +18,7 @@
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
-
+    using Dal.Model.Enum;
     [Collection("UpdatePropertyCommandHandler")]
     [Trait("FeatureTitle", "Property")]
     public class UpdatePropertyCommandHandlerTests : IClassFixture<BaseTestClassFixture>
@@ -39,9 +40,11 @@
         public void Given_UpdatePropertyCommand_When_Handle_Then_ShouldUpdateAddress(
            UpdatePropertyCommand command,
            [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
+           [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
            Property property,
            UpdatePropertyCommandHandler handler)
         {
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(new EnumTypeItem[] { default(EnumTypeItem) });
             // Arrange
             propertyRepository.Setup(p => p.GetById(command.Id)).Returns(property);
 
@@ -61,8 +64,11 @@
            [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
            [Frozen] Mock<IGenericRepository<PropertyTypeDefinition>> propertyTypeDefinitionRepository,
            [Frozen] Mock<IDomainValidator<Property>> validator,
+           [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
            UpdatePropertyCommandHandler handler)
         {
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(new EnumTypeItem[] { default(EnumTypeItem) });
+
             validator.Setup(r => r.Validate(It.IsAny<Property>())).Returns(ValidationResultBuilder.BuildValidationResult());
             
             Assert.Throws<DomainValidationException>(() => handler.Handle(command));

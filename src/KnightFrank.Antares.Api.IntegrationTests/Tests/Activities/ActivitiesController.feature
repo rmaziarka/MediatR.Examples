@@ -8,6 +8,7 @@ Scenario Outline: Retrieve error messages for improper data
 			| enumTypeCode       | enumTypeItemCode |
 			| OwnershipType      | Freeholder       |
 			| <activityStatusId> | PreAppraisal     |
+			| Division           | Commercial       |
 		And Property with Address is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London | 
@@ -27,6 +28,7 @@ Scenario: Create Activity for an existing property
 			| enumTypeCode   | enumTypeItemCode |
 			| OwnershipType  | Freeholder       |
 			| ActivityStatus | PreAppraisal     |
+			| Division       | Commercial       |
 		And Property with Address is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |  
@@ -60,6 +62,7 @@ Scenario: Get Activity by correct activity id
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode   | enumTypeItemCode |			
 			| ActivityStatus | PreAppraisal     |
+			| Division       | Commercial       |
 		And Property with Address is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |  

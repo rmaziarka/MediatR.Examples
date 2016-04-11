@@ -19,6 +19,8 @@ module Antares {
             var propertyMock: Dto.IProperty = {
                 id: '1',
                 propertyTypeId: '1',
+                divisionId: '',
+                division: null,
                 address : Antares.Mock.AddressForm.FullAddress,
                 ownerships : [],
                 activities : [
@@ -82,6 +84,8 @@ module Antares {
             var propertyMock: Dto.IProperty = {
                 id: '1',
                 propertyTypeId: '1',
+                divisionId: '',
+                division: null,
                 address: Antares.Mock.AddressForm.FullAddress,
                 ownerships: [],
                 activities: []
@@ -182,7 +186,9 @@ module Antares {
             var propertyMock: Dto.IProperty = {
                 id : '1',
                 propertyTypeId : '1',
-                address : Antares.Mock.AddressForm.FullAddress,
+                address: Antares.Mock.AddressForm.FullAddress,
+                divisionId: '',
+                division: null,
                 ownerships : [],
                 activities : [
                     new Business.Activity(<Dto.IActivity>{ id: 'It1', propertyId: '1', activityStatusId: '123', createdDate: date1Mock, contacts: [] }),
@@ -245,6 +251,8 @@ module Antares {
             var propertyMock: Dto.IProperty = {
                 id: '1',
                 propertyTypeId: '1',
+                divisionId: '',
+                division: null,
                 address: Antares.Mock.AddressForm.FullAddress,
                 ownerships: [],
                 activities: []
@@ -322,6 +330,8 @@ module Antares {
             var propertyMock: Dto.IProperty = {
                 id: '1',
                 address: Antares.Mock.AddressForm.FullAddress,
+                divisionId: '',
+                division: null,
                 ownerships: ownerships,
                 activities: [],
                 propertyTypeId: 'typeId'

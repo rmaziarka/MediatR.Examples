@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.Property
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
 
@@ -98,7 +99,8 @@
             address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
 
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
-            var property = new Property { Address = address, PropertyTypeId = propertyTypeId };
+            Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Commercial"];
+            var property = new Property { Address = address, PropertyTypeId = propertyTypeId, DivisionId = divisionId };
 
             this.fixture.DataContext.Property.Add(property);
             this.fixture.DataContext.SaveChanges();
@@ -146,7 +148,9 @@
             address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
             address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
 
-            var property = new CreatePropertyCommand { Address = address, PropertyTypeId = propertyTypeId };
+            Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Commercial"];
+
+            var property = new CreatePropertyCommand { Address = address, PropertyTypeId = propertyTypeId, Division = new EnumTypeItem { Id = divisionId, Code = "Commercial" } };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, property);
             this.scenarioContext.SetHttpResponseMessage(response);
@@ -181,6 +185,7 @@
             actualProperty.ShouldBeEquivalentTo(expectedProperty, options => options
                 .Excluding(x => x.Activities)
                 .Excluding(x => x.Ownerships)
+                .Excluding(x => x.Division)
                 .Excluding(x => x.Address.AddressForm)
                 .Excluding(x => x.Address.Country)
                 .Excluding(x => x.PropertyType));

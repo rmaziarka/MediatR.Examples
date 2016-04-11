@@ -4,6 +4,7 @@
     using System.Collections.Generic;
 
     using KnightFrank.Antares.Dal.Model.Address;
+    using KnightFrank.Antares.Dal.Model.Enum;
 
     public class Property : BaseEntity
     {
@@ -18,5 +19,9 @@
         public Guid PropertyTypeId { get; set; }
         
         public virtual PropertyType PropertyType { get; set; }
+
+        public Guid DivisionId { get; set; }
+
+        public virtual EnumTypeItem Division { get; set; }
     }
 }

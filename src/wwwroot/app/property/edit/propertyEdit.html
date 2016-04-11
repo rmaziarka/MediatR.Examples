@@ -3,8 +3,8 @@
         <h2 class="page-header" translate="PROPERTY.EDIT.EDIT_PROPERTY"></h2>
     </div>
     <div class="col-md-12 text-right">
-        <a ng-click="vm.changeDivision('Commercial')" href="" ng-show="vm.divisionCode != 'Commercial'" translate="PROPERTY.COMMERCIAL_PROPERTY"></a>
-        <a ng-click="vm.changeDivision('Residential')" href="" ng-show="vm.divisionCode != 'Residential'" translate="PROPERTY.RESIDENTIAL_PROPERTY"></a>
+        <a ng-click="vm.changeDivision('Commercial')" href="" ng-show="vm.property.division.code != 'Commercial'" translate="PROPERTY.COMMERCIAL_PROPERTY"></a>
+        <a ng-click="vm.changeDivision('Residential')" href="" ng-show="vm.property.division.code != 'Residential'" translate="PROPERTY.RESIDENTIAL_PROPERTY"></a>
     </div>
     <form ng-submit="addPropertyForm.$valid && vm.save()" name="addPropertyForm" id="addPropertyForm" method="post" novalidate>
         <div class="col-md-4">
