@@ -106,11 +106,11 @@
                     new PropertyType { Code = "Car Showroom" },
                     new PropertyType { Code = "Department Stores" },
                     new PropertyType { Code = "Shopping Centre" },
-                    new PropertyType { Code = "Retails Unit A1" },
-                    new PropertyType { Code = "Retails Unit A2" },
-                    new PropertyType { Code = "Retails Unit A3" },
-                    new PropertyType { Code = "Retails Unit A4" },
-                    new PropertyType { Code = "Retails Unit A5" }
+                    new PropertyType { Code = "Retail Unit A1" },
+                    new PropertyType { Code = "Retail Unit A2" },
+                    new PropertyType { Code = "Retail Unit A3" },
+                    new PropertyType { Code = "Retail Unit A4" },
+                    new PropertyType { Code = "Retail Unit A5" }
                 }
             },
             new PropertyType
