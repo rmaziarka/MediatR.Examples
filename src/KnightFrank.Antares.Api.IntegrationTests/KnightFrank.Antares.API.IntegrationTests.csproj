@@ -157,10 +157,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CompaniesController.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Property\ConfigurePropertyTypesForDivisionAndCountry.feature.cs">
+    <Compile Include="Tests\Property\PropertyAttributes.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ConfigurePropertyTypesForDivisionAndCountry.feature</DependentUpon>
+      <DependentUpon>PropertyAttributes.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Property\PropertyTypes.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PropertyTypes.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Contacts\ContactController.feature.cs">
       <AutoGen>True</AutoGen>
@@ -172,10 +177,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EnumsController.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Property\OwnershipController.feature.cs">
+    <Compile Include="Tests\Property\Ownership.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>OwnershipController.feature</DependentUpon>
+      <DependentUpon>Ownership.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Property\PropertyController.feature.cs">
       <AutoGen>True</AutoGen>
@@ -229,9 +234,13 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>CompaniesController.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\Property\ConfigurePropertyTypesForDivisionAndCountry.feature">
+    <None Include="Tests\Property\PropertyAttributes.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ConfigurePropertyTypesForDivisionAndCountry.feature.cs</LastGenOutput>
+      <LastGenOutput>PropertyAttributes.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Property\PropertyTypes.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>PropertyTypes.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Contacts\ContactController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
@@ -253,9 +262,9 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RequirementController.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\Property\OwnershipController.feature">
+    <None Include="Tests\Property\Ownership.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>OwnershipController.feature.cs</LastGenOutput>
+      <LastGenOutput>Ownership.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\ResourcesController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

@@ -91,6 +91,7 @@ Scenario: Get non existing property
 	Then User should get NotFound http status code
 
 @Property
+@Ownership
 Scenario: Get property
 	Given User gets GB address form for Property and country details
         And User gets House for PropertyType

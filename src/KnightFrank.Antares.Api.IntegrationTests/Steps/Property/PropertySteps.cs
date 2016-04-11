@@ -163,6 +163,17 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
+        [When(@"User retrieves attributes for given property type and (.*) address")]
+        public void GetAttributesForPropertyAndCountry(string countryCode)
+        {
+            var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
+
+            string requestUrl = $"{ApiUrl}/attributes?countryCode={countryCode}&propertyTypeId={propertyTypeId}";
+
+            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
         [Then(@"The updated Property is saved in data base")]
         public void ThenTheResultsShouldBeSameAsAdded()
         {
