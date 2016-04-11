@@ -27,13 +27,13 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [When(@"User clicks add activites button on property details page")]
+        [When(@"User clicks add activites button on view property page")]
         public void ClickAddActivityButton()
         {
             this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").AddActivity();
         }
 
-        [When(@"User clicks edit button on property details page")]
+        [When(@"User clicks edit button on view property page")]
         public void WhenUserClicksEditButtonOnCreatePropertyPage()
         {
             this.scenarioContext.Set(this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").EditProperty(),
@@ -53,7 +53,7 @@
             page.ContactsList.ConfigureOwnership();
         }
 
-        [When(@"User clicks activity's details link on property details page")]
+        [When(@"User clicks activity's details link on view property page")]
         public void OpenActivitiesPreview()
         {
             this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").OpenActivityDetails();
@@ -66,14 +66,14 @@
             this.scenarioContext.Set(page.PreviewDetails.ClickViewActivity(), "ViewActivityPage");
         }
 
-        [Then(@"Activity creation date is set to current date on property details page")]
+        [Then(@"Activity creation date is set to current date on view property page")]
         public void CheckifActivityDateCorrect()
         {
             Assert.Equal(DateTime.Now.ToString("dd-MM-yyyy"),
                 this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").GetActivityDate());
         }
 
-        [Then(@"Activity details are set on property details page")]
+        [Then(@"Activity details are set on view property page")]
         public void CheckActivityDetails(Table table)
         {
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");

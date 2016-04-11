@@ -65,25 +65,4 @@
             page.Ownership.SaveOwnership().WaitForOwnershipPanelToHide();
         }
     }
-
-    internal class OwnershipDetails
-    {
-        public int Position { get; set; }
-
-        public string ContactName { get; set; }
-
-        public string ContactSurname { get; set; }
-
-        public string Type { get; set; }
-
-        public bool Current { get; set; }
-
-        public string PurchaseDate { get; set; }
-
-        public string SellDate { get; set; }
-
-        public string PurchasePrice { get; set; }
-
-        public string SellPrice { get; set; }
-    }
 }
