@@ -2,14 +2,18 @@
 
 module Antares {
     import CardController = Antares.Common.Component.CardController;
-
-    describe('Given card component', () =>{
-
+    describe('Given card component', () => {
         var scope: ng.IScope,
             compile: ng.ICompileService,
             element: ng.IAugmentedJQuery,
             controller: CardController,
             panel: ng.IAugmentedJQuery;
+
+        var pageObjectSelectors = {
+            panelBody: 'div.panel-body',
+            template: 'div.test-card-template-element',
+            detailsLink: 'a#detailsLink'
+        }
 
         var mockedTemplateUrl = 'app/common/components/card/item/tests/testCardTemplate.html',
             itemMock = { itemName: 'Test Name', test: 123 },
@@ -17,7 +21,7 @@ module Antares {
 
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
-            $compile: ng.ICompileService) =>{
+            $compile: ng.ICompileService) => {
 
             // init
             scope = $rootScope.$new();
@@ -30,31 +34,47 @@ module Antares {
             scope.$apply();
             controller = element.controller('card');
 
-            panel = element.find('.panel-body');
+            panel = element.find(pageObjectSelectors.panelBody);
         }));
 
-        it('when loaded then card body should be visible', () => {
-            expect(panel.length).toBe(1);
+        describe('when loaded', () =>{
+            it('then card body should be visible', () => {
+                // assert
+                expect(panel.length).toBe(1);
+            });
+
+            it('then template within card body should be visible', () => {
+                // assert
+                var templateElement = panel.find(pageObjectSelectors.template);
+                expect(templateElement.length).toBe(1);
+            });
+
+            it('then template within card body should have binded item', () => {
+                // assert
+                var templateElement = panel.find(pageObjectSelectors.template);
+                var spanElement = templateElement.find('span');
+
+                expect(spanElement.text()).toBe('Test Name');
+            });
+
+            it('and showItemDetails method is not set then details link should not be visible', () => {
+                // arrange / act
+                controller.showItemDetails = undefined;
+                scope.$apply();
+
+                // assert
+                var link = panel.find(pageObjectSelectors.detailsLink);
+                expect(link.length).toBe(0);
+            });
+
+            it('and deatails link clicked then showItemDetails method should be called', () => {
+                // act
+                var link = panel.find(pageObjectSelectors.detailsLink);
+                link.click();
+
+                // assert
+                expect(showItemDetailsSpy).toHaveBeenCalledWith(itemMock);
+            });
         });
-
-        it('when loaded then template within card body should be visible', () => {
-            var templateElement = panel.find('div.test-card-template-element');
-            expect(templateElement.length).toBe(1);
-        });
-
-        it('when loaded then template within card body should have binded item', () => {
-            var templateElement = panel.find('div.test-card-template-element');
-            var spanElement = templateElement.find('span');
-
-            expect(spanElement.text()).toBe('Test Name');
-        });
-
-        it('when deatails link clicked then showItemDetails method should be called', () =>{
-            var link = panel.find('a#detailsLink');
-            link.click();
-
-            expect(showItemDetailsSpy).toHaveBeenCalledWith(itemMock);
-        });
-
     });
 }

@@ -13,10 +13,12 @@
         </div>
     </div>
 </form>
-<h4 class="page-header" translate="ACTIVITY.ADD.VENDORS"></h4>
 
-<div id="vendors" class="panel panel-default" ng-repeat="vendor in vm.vendors">
-    <div class="panel-body">
+<list id="activity-add-vendors">
+    <list-header>
+        <h4 class="page-header" translate="ACTIVITY.ADD.VENDORS"></h4>
+    </list-header>
+    <list-item id="list-item-{{vendor.id}}" ng-repeat="vendor in vm.vendors">
         {{vendor.getName()}}
-    </div>
-</div>
+    </list-item>
+</list>

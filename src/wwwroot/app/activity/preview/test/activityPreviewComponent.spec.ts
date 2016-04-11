@@ -11,6 +11,12 @@ module Antares {
             filter: ng.IFilterService,
             controller: ActivityPreviewController;
 
+        var pageObjectSelectors = {
+            createdDate: '#activity-preview-created-date',
+            status: '#activity-preview-status',
+            vendor: '#activity-preview-vendors #activity-preview-vendor-item-'
+        }
+
         describe('and proper property id is provided', () => {
             var activityMock = TestHelpers.ActivityGenerator.generate();
 
@@ -35,7 +41,7 @@ module Antares {
                 scope.$apply();
 
                 // assert
-                var statusElement = element.find('#activity-status');
+                var statusElement = element.find(pageObjectSelectors.status);
                 expect(statusElement.text()).toBe('ENUMS.' + activityMock.activityStatusId);
             });
 
@@ -46,7 +52,7 @@ module Antares {
 
                 // assert
                 var formattedDate = filter('date')(activityMock.createdDate, 'dd-MM-yyyy');
-                var dateElement = element.find('#activity-created-date');
+                var dateElement = element.find(pageObjectSelectors.createdDate);
                 expect(dateElement.text()).toBe(formattedDate);
             });
 
@@ -62,8 +68,8 @@ module Antares {
                 scope.$apply();
 
                 // assert
-                var vendorsItemsElement1 = element.find('#activity-vendor-item-' + contact1Mock.id);
-                var vendorsItemsElement2 = element.find('#activity-vendor-item-' + contact2Mock.id);
+                var vendorsItemsElement1 = element.find(pageObjectSelectors.vendor + contact1Mock.id);
+                var vendorsItemsElement2 = element.find(pageObjectSelectors.vendor + contact2Mock.id);
 
                 expect(vendorsItemsElement1[0].innerText).toBe(contact1Mock.getName());
                 expect(vendorsItemsElement2[0].innerText).toBe(contact2Mock.getName());

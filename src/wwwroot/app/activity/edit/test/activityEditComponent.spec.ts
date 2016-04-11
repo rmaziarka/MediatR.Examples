@@ -44,14 +44,15 @@ module Antares {
         var activityStatuses: any = {
             items:
             [
-                { id: "1", value: "Pre-appraisal", code: "PreAppraisal" },
-                { id: "2", value: "Market appraisal", code: "MarketAppraisal" },
-                { id: "3", value: "Not selling", code: "NotSelling" }
+                { id: "111", value: "Pre-appraisal", code: "PreAppraisal" },
+                { id: "testStatus222", value: "Market appraisal", code: "MarketAppraisal" },
+                { id: "333", value: "Not selling", code: "NotSelling" }
             ]
         };
 
         describe('when activity is loaded', () =>{
             var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate({
+                activityStatusId: 'testStatus222',
                 marketAppraisalPrice : 99,
                 recommendedPrice : 1.1,
                 vendorEstimatedPrice : 55.05
@@ -115,7 +116,7 @@ module Antares {
                     var activityStatusSelectedElement = activityStatusElement.find("option:selected");
 
                     expect(activityStatusElement.length).toBe(1);
-                    //expect(activityStatusSelectedElement.text()).toBe('ENUMS.' + activityMock.activityStatusId);
+                    expect(activityStatusSelectedElement.text()).toBe('Market appraisal');
                 });
 
                 it('then valuation prices for activity are displayed and should have proper data', () => {
@@ -214,7 +215,6 @@ module Antares {
                 expect(vendorsItemsElement2[0].innerText).toBe(contact2Mock.getName());
             });
         });
-
 
         describe('when property is loaded', () => {
             beforeEach(inject((
