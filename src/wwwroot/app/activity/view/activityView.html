@@ -16,15 +16,15 @@
                     <h3 class="page-header" translate="ACTIVITY.VIEW.PRICES.PRICES"></h3>
                     <div class="section-row row">
                         <div class="col-xs-6" translate="ACTIVITY.VIEW.PRICES.MARKET_APPRAISAL_PRICE"></div>
-                        <div id="marketAppraisalPrice" class="col-xs-6" ng-if="avvm.activity.marketAppraisalPrice">{{avvm.activity.marketAppraisalPrice | number : 2 }} GBP</div>
+                        <div id="marketAppraisalPrice" class="col-xs-6" ng-if="avvm.activity.marketAppraisalPrice !== null">{{avvm.activity.marketAppraisalPrice | number : 2 }} GBP</div>
                     </div>
                     <div class="section-row row">
                         <div class="col-xs-6" translate="ACTIVITY.VIEW.PRICES.RECOMMENDED_PRICE"></div>
-                        <div id="recommendedPrice" class="col-xs-6" ng-if="avvm.activity.recommendedPrice">{{avvm.activity.recommendedPrice | number : 2 }} GBP</div>
+                        <div id="recommendedPrice" class="col-xs-6" ng-if="avvm.activity.recommendedPrice !== null">{{avvm.activity.recommendedPrice | number : 2 }} GBP</div>
                     </div>
                     <div class="section-row row">
                         <div class="col-xs-6" translate="ACTIVITY.VIEW.PRICES.VENDOR_ESIMATED_PRICE"></div>
-                        <div id="vendorEstimatedPrice" class="col-xs-6" ng-if="avvm.activity.vendorEstimatedPrice">{{avvm.activity.vendorEstimatedPrice | number : 2 }} GBP</div>
+                        <div id="vendorEstimatedPrice" class="col-xs-6" ng-if="avvm.activity.vendorEstimatedPrice !== null">{{avvm.activity.vendorEstimatedPrice | number : 2 }} GBP</div>
                     </div>
                 </section>
             </div>
