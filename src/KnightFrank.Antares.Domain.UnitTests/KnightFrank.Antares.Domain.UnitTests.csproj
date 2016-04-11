@@ -137,6 +137,7 @@
     <Compile Include="Property\PropertyTypeValidatorTests.cs" />
     <Compile Include="Property\Commands\UpdatePropertyCommandValidatorTests.cs" />
     <Compile Include="Property\Queries\PropertyAttributesQueryValidatorTests.cs" />
+    <Compile Include="Property\QueryHandlers\PropertyTypesQueryHandlerTests.cs" />
     <Compile Include="Property\QueryHandlers\PropertyAttributesQueryHandlerTests.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandDomainValidatorTests.cs" />
     <Compile Include="Property\Commands\CreatePropertyCommandValidatorTests.cs" />
@@ -161,9 +162,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Property\QueryHandlers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
