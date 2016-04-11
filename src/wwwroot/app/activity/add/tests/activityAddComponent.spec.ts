@@ -154,7 +154,7 @@ module Antares {
                 activityAddController.selectedActivityStatus = _.find(activityStatuses.items, { 'code': 'PreAppraisal' });
                 activityAddController.setVendors(vendors);
 
-                var expectedRequest = new Business.CreateActivityCommand();
+                var expectedRequest = new Business.CreateActivityResource();
                 expectedRequest.propertyId = propertyMock.id;
                 expectedRequest.activityStatusId = activityAddController.selectedActivityStatus.id;
                 expectedRequest.contactIds = vendors.map((vendor: Dto.IContact) => { return vendor.id });
