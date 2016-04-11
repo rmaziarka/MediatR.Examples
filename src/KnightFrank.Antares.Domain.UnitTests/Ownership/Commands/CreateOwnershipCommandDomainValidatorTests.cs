@@ -30,7 +30,6 @@
         private readonly Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository;
         private readonly Mock<IGenericRepository<Ownership>> ownershipRepository;
         private readonly Mock<IGenericRepository<Property>> propertyRepository;
-        private readonly Mock<IGenericRepository<Contact>> contactRepository;
 
         private readonly IFixture fixture;
         
@@ -59,8 +58,8 @@
             this.propertyRepository = this.fixture.Freeze<Mock<IGenericRepository<Property>>>();
             this.propertyRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new Property());
 
-            this.contactRepository = this.fixture.Freeze<Mock<IGenericRepository<Contact>>>();
-            this.contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(new List<Contact>
+            var contactRepository = this.fixture.Freeze<Mock<IGenericRepository<Contact>>>();
+            contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(new List<Contact>
             {
                 new Contact()
             }.AsQueryable());

@@ -18,7 +18,7 @@
     [RoutePrefix("api/requirements")]
     public class RequirementsController : ApiController
     {
-        private IMediator mediator;
+        private readonly IMediator mediator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequirementsController"/> class.

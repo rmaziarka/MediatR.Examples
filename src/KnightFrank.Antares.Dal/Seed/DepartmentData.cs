@@ -8,7 +8,7 @@
 	using KnightFrank.Antares.Dal.Model.Resource;
 	using KnightFrank.Antares.Dal.Model.User;
 
-    internal class DepartmentData
+    internal static class DepartmentData
     {
 		public static void Seed(KnightFrankContext context)
 		{

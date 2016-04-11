@@ -4,7 +4,7 @@
 
     using KnightFrank.Antares.Dal.Model.Attribute;
 
-    internal class AttributeData
+    internal static class AttributeData
     {
         public static void Seed(KnightFrankContext context)
         {

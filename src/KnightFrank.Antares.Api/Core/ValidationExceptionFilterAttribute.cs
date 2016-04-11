@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.Api.Core
 {
+    using System;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
@@ -16,10 +17,11 @@
     {
         public override void OnException(HttpActionExecutedContext context)
         {
-            // TODO refactor
-            if (context.Exception is ValidationException)
+            Exception exception = context.Exception;
+
+            if (exception is ValidationException)
             {
-                var validationException = (ValidationException)context.Exception;
+                var validationException = exception as ValidationException;
 
                 var response = new
                 {
@@ -34,15 +36,15 @@
                     StatusCode = HttpStatusCode.BadRequest
                 };
             }
-            else if (context.Exception is ResourceNotFoundException)
+            else if (exception is ResourceNotFoundException)
             {
-                var resourceNotFoundException = (ResourceNotFoundException)context.Exception;
+                var resourceNotFoundException = exception as ResourceNotFoundException;
 
                 var response =
                     new
                     {
-                        Message = resourceNotFoundException.Message,
-                        ResourceId = resourceNotFoundException.ResourceId,
+                        resourceNotFoundException.Message,
+                        resourceNotFoundException.ResourceId,
                     };
 
                 context.Response = new HttpResponseMessage

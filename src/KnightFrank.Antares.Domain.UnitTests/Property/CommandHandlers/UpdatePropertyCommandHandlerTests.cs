@@ -44,7 +44,7 @@
            Property property,
            UpdatePropertyCommandHandler handler)
         {
-            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(new EnumTypeItem[] { default(EnumTypeItem) });
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(new[] { default(EnumTypeItem) });
             // Arrange
             propertyRepository.Setup(p => p.GetById(command.Id)).Returns(property);
 
@@ -67,7 +67,7 @@
            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
            UpdatePropertyCommandHandler handler)
         {
-            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(new EnumTypeItem[] { default(EnumTypeItem) });
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(new[] { default(EnumTypeItem) });
 
             validator.Setup(r => r.Validate(It.IsAny<Property>())).Returns(ValidationResultBuilder.BuildValidationResult());
             

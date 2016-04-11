@@ -8,7 +8,7 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Seed.Common;
 
-    internal sealed class PropertyTypeData
+    internal static class PropertyTypeData
     {
         public static void Seed(KnightFrankContext context)
         {

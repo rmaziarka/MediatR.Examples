@@ -4,7 +4,7 @@
     
 	using KnightFrank.Antares.Dal.Model.User;
 
-    internal class RoleData
+    internal static class RoleData
 	{
 		public static void Seed(KnightFrankContext context)
 		{
