@@ -91,7 +91,7 @@ module Antares {
         it('when form filled and save then should be send data', () => {
             // arrange
             var button = element.find(pageObjectSelectors.companySaveBtnSelector);
-            var requestData: Dto.ICreateCompanyCommand;
+            var requestData: Dto.ICreateCompanyResource;
             var company = TestHelpers.CompanyGenerator.generate();            
             var expectedContactIds = company.contacts.map((contact: Dto.IContact) => { return contact.id });
 

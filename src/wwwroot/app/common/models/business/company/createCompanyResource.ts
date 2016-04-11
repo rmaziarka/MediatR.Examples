@@ -1,7 +1,7 @@
 /// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Models.Business {
-    export class CreateCompanyCommand implements Dto.ICreateCompanyCommand {        
+    export class CreateCompanyResource implements Dto.ICreateCompanyResource {        
         name: string = '';        
         contactIds: string[] = [];
 

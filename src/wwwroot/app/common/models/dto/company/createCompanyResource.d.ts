@@ -1,5 +1,5 @@
 declare module Antares.Common.Models.Dto {
-    interface ICreateCompanyCommand {        
+    interface ICreateCompanyResource {        
         name: string;        
         contactIds: string[];        
     }

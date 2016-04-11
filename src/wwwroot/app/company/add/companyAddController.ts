@@ -65,7 +65,7 @@ module Antares.Company {
 
         createCompany = () => {
             this.companyResource
-                .save(new Business.CreateCompanyCommand(this.company))
+                .save(new Business.CreateCompanyResource(this.company))
                 .$promise
                 .then((company: Dto.ICompany) => {                
                     // TODO: replaced with go to view company state
