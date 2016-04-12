@@ -2,9 +2,9 @@
     <div class="form-group" ng-class="{'has-error': (addActivityForm.$submitted || addActivityForm.status.$dirty) && addActivityForm.status.$invalid}">
         <div class="row">
             <div class="col-md-9">
-                <label for="status" class="">Status</label>
+                <label for="status" class="" translate="ACTIVITY.ADD.STATUS"></label>
                 <select class="form-control" required id="status" name="status" ng-options="item as item.value for item in vm.activityStatuses track by item.id" ng-model="vm.selectedActivityStatus">
-                    <option value=""></option>
+                    <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
                 </select>
                 <div ng-messages="addActivityForm.status.$error" ng-show="addActivityForm.$submitted || addActivityForm.status.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
@@ -13,14 +13,12 @@
         </div>
     </div>
 </form>
-<h4 class="page-header">Vendors</h4>
-<!--<div class="panel panel-default">
-    <div class="panel-body">
-        John Snow
-    </div>
-</div>
-<div class="panel panel-default">
-    <div class="panel-body">
-        John Snow
-    </div>
-</div>-->
+
+<list id="activity-add-vendors">
+    <list-header>
+        <h4 class="page-header" translate="ACTIVITY.ADD.VENDORS"></h4>
+    </list-header>
+    <list-item id="list-item-{{vendor.id}}" ng-repeat="vendor in vm.vendors">
+        {{vendor.getName()}}
+    </list-item>
+</list>

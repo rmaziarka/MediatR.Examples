@@ -42,34 +42,26 @@
             this.fixture.DataContext.Contact.RemoveRange(this.fixture.DataContext.Contact.ToList());
         }
 
-        [Given(@"User creates contact using api with following data")]
+        [When(@"User creates contact using api with following data")]
         public void CreateUsers(Table table)
         {
-            string requestUrl = $"{ApiUrl}";
+            var contact = table.CreateInstance<Contact>();
+            this.CreateContact(contact);
+        }
+
+        [When(@"User creates contact using api with max lenght fields")]
+        public void CreateUsersWithMaxFields()
+        {
             const int max = 128;
 
-            IEnumerable<Contact> contacts = table.CreateSet<Contact>().ToList();
-
-            foreach (Contact contact in contacts)
+            var contact = new Contact
             {
-                if (contact.FirstName.ToLower().Equals("max"))
-                {
-                    contact.FirstName = StringExtension.GenerateMaxAlphanumericString(max);
-                }
-                if (contact.Surname.ToLower().Equals("max"))
-                {
-                    contact.Surname = StringExtension.GenerateMaxAlphanumericString(max);
-                }
-                if (contact.Title.ToLower().Equals("max"))
-                {
-                    contact.Title = StringExtension.GenerateMaxAlphanumericString(max);
-                }
-            }
+                FirstName = StringExtension.GenerateMaxAlphanumericString(max),
+                Surname = StringExtension.GenerateMaxAlphanumericString(max),
+                Title = StringExtension.GenerateMaxAlphanumericString(max)
+            };
 
-            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, contacts.First());
-
-            this.scenarioContext.SetHttpResponseMessage(response);
-            this.scenarioContext.Set(contacts, "Contact List");
+            this.CreateContact(contact);
         }
 
         [Given(@"User creates contacts in database with following data")]
@@ -122,18 +114,30 @@
         [Then(@"contact details should be the same as already added")]
         public void CheckContactDetails()
         {
+            var expectedContact = this.scenarioContext.Get<Contact>("Contact");
+            var id = new Guid(this.scenarioContext.GetResponseContent().Replace("\"", ""));
+
+            Contact contact = this.fixture.DataContext.Contact.Single(x => x.Id.Equals(id));
+            expectedContact.Id = id;
+            contact.ShouldBeEquivalentTo(expectedContact);
+        }
+
+        [Then(@"contact details should have expected values")]
+        public void CheckContactDetailsHaveExpectedValues()
+        {
             var contactList = this.scenarioContext.Get<List<Contact>>("Contact List");
-            if (contactList.Count > 1)
-            {
-                var currentContactsDetails =
-                    JsonConvert.DeserializeObject<List<Contact>>(this.scenarioContext.GetResponseContent());
-                currentContactsDetails.ShouldBeEquivalentTo(contactList);
-            }
-            else
-            {
-                var currentContactDetails = JsonConvert.DeserializeObject<Contact>(this.scenarioContext.GetResponseContent());
-                currentContactDetails.ShouldBeEquivalentTo(contactList[0]);
-            }
+
+            var currentContactsDetails =
+                JsonConvert.DeserializeObject<List<Contact>>(this.scenarioContext.GetResponseContent());
+            currentContactsDetails.ShouldBeEquivalentTo(contactList);
+        }
+
+        private void CreateContact(Contact contact)
+        {
+            string requestUrl = $"{ApiUrl}";
+            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, contact);
+            this.scenarioContext.SetHttpResponseMessage(response);
+            this.scenarioContext.Set(contact, "Contact");
         }
     }
 }

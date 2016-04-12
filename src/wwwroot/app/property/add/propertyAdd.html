@@ -1,14 +1,143 @@
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <h2 class="page-header" translate="PROPERTY.ADD.ADD_PROPERTY"></h2>
-        <form ng-submit="addPropertyForm.$valid && vm.save()" name="addPropertyForm" id="addPropertyForm" method="post" novalidate>
+    </div>
+    <div class="col-md-12 text-right">
+        <a ng-click="vm.changeDivision('Commercial')" href="" ng-show="vm.property.division.code != 'Commercial'" translate="PROPERTY.COMMERCIAL_PROPERTY"></a>
+        <a ng-click="vm.changeDivision('Residential')" href="" ng-show="vm.property.division.code != 'Residential'" translate="PROPERTY.RESIDENTIAL_PROPERTY"></a>
+    </div>
+    <form ng-submit="addPropertyForm.$valid && vm.save()" name="addPropertyForm" id="addPropertyForm" method="post" novalidate>
+        <div class="col-md-4">
             <fieldset>
-                <legend translate="PROPERTY.ADD.ADDRESS"></legend>
+                <h3 class="page-header" translate="PROPERTY.ADD.BASIC_INFORMATION"></h3>
+                <div class="form-group required" ng-class="{'has-error': (addPropertyForm.$submitted || addPropertyForm.type.$dirty) && addPropertyForm.type.$invalid}">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <label for="type" translate="PROPERTY.ADD.TYPE"></label>
+                            <select id="type" name="type" ng-model="vm.property.propertyTypeId" class="form-control" required>
+                                <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
+                                <option ng-repeat-start="propertyType in vm.propertyTypes | orderBy:'order'" label="{{propertyType.name}}" value="{{propertyType.id}}" class="hierarchy1">{{propertyType.name}}</option>
+
+                                <option ng-repeat="propertySubtype in propertyType.children | orderBy:'order'" label="{{'&nbsp;&nbsp;' + propertySubtype.name}}" value="{{propertySubtype.id}}" class="hierarchy2" ng-repeat-end>&nbsp;&nbsp;{{propertySubtype.name}}</option>
+                            </select>
+                            <div ng-messages="addPropertyForm.type.$error" ng-show="addPropertyForm.$submitted || addPropertyForm.type.$dirty">
+                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <h3 class="page-header" translate="PROPERTY.ADD.ADDRESS"></h3>
                 <address-form-edit entity-type-code="vm.entityTypeCode" address="vm.property.address" user-country-code="vm.userData.country"></address-form-edit>
             </fieldset>
+        </div>
+        <!-- <div class="col-md-4">
+            <fieldset>
+                <h3 class="page-header">Property details</h3>
+                <div class="form-group has-error">
+                    <p class="help-block">Select property type to enter property details</p>
+                </div>
+                <fieldset>
+                    <label for="bedrooms">Bedrooms</label>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input class="form-control" type="number" placeholder="min">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input class="form-control" type="number" placeholder="max">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="reception-rooms">Reception rooms</label>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input class="form-control" type="number" placeholder="min">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input class="form-control" type="number" placeholder="max">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="reception-rooms">Bathrooms</label>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input class="form-control" type="number" placeholder="min">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input class="form-control" type="number" placeholder="max">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="reception-rooms">Parking spaces</label>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input class="form-control" type="number" placeholder="min">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input class="form-control" type="number" placeholder="max">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="reception-rooms">Property area</label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input class="form-control" type="number" placeholder="min">
+                                    <div class="input-group-addon">sq. ft</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input class="form-control" type="number" placeholder="max">
+                                    <div class="input-group-addon">sq. ft</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="reception-rooms">Land area</label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input class="form-control" type="number">
+                                    <div class="input-group-addon">sq. ft</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </fieldset>
+        </div> -->
+        <div class="col-md-12">
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" id="saveBtn" ng-disabled="!vm.property.address.countryId"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>

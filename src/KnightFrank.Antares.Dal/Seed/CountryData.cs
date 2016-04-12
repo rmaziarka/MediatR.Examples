@@ -7,7 +7,7 @@
 	using KnightFrank.Antares.Dal.Model.Resource;
 	using KnightFrank.Antares.Dal.Seed.Common;
 
-    internal class CountryData
+    internal static class CountryData
     {
 		private static Guid CsLocaleId { get; set; }
 		private static Guid DeLocaleId { get; set; }
@@ -21,7 +21,8 @@
 	    {
 			SetLocaleIds(context);
 			SeedCountry(context);
-		}
+            context.SaveChanges();
+        }
 
 	    private static void SetLocaleIds(KnightFrankContext context)
 	    {
@@ -324,7 +325,6 @@
 				}
 			};
 			context.CountryLocalised.AddOrUpdate(x => new { x.LocaleId, x.CountryId }, countryLocaliseds.ToArray());
-			context.SaveChanges();
 		}
 	}
 }

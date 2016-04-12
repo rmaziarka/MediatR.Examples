@@ -74,8 +74,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandler.cs" />
+    <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandler.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandProfile.cs" />
+    <Compile Include="Activity\Commands\CreateActivityCommandValidator.cs" />
+    <Compile Include="Activity\Commands\CreateActivityCommandDomainValidator.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityCommand.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityCommandProfile.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityCommandValidator.cs" />
+    <Compile Include="Activity\Queries\ActivityQuery.cs" />
+    <Compile Include="Activity\Queries\ActivityQueryValidator.cs" />
+    <Compile Include="Activity\QueryHandlers\ActivityQueryHandler.cs" />
     <Compile Include="AddressFieldDefinition\QueryResults\AddressFieldDefinitionResult.cs" />
     <Compile Include="AddressForm\Queries\AddressFormByIdQuery.cs" />
     <Compile Include="AddressForm\Queries\AddressFormByIdQueryValidator.cs" />
@@ -96,8 +105,16 @@
     <Compile Include="AddressForm\Specifications\IsAddressFormAssignedToCountry.cs" />
     <Compile Include="AddressForm\Specifications\IsAddressFormGloballyDefined.cs" />
     <Compile Include="Common\Exceptions\ResourceNotFoundException.cs" />
+    <Compile Include="Common\Specifications\HasId.cs" />
     <Compile Include="Common\Specifications\IsLocaled.cs" />
     <Compile Include="Common\ValidatorCommandHandler.cs" />
+    <Compile Include="Common\Validator\ActivityStatusValidator.cs" />
+    <Compile Include="Common\Validator\ContactValidator.cs" />
+    <Compile Include="Company\CommandHandlers\CreateCompanyCommandHandler.cs" />
+    <Compile Include="Company\Command\CreateCompanyCommand.cs" />
+    <Compile Include="Company\Command\CreateCompanyCommandProfile.cs" />
+    <Compile Include="Company\Command\CreateCompanyCommandDomainValidator.cs" />
+    <Compile Include="Company\Command\CreateCompanyValidator.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandProfile.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidator.cs" />
     <Compile Include="Contact\Commands\UpdateContactCommand.cs" />
@@ -119,6 +136,8 @@
     <Compile Include="Enum\QueryResults\EnumQueryItemResult.cs" />
     <Compile Include="Enum\QueryResults\EnumQueryResult.cs" />
     <Compile Include="Enum\QueryResults\EnumQueryResultProfile.cs" />
+    <Compile Include="Enum\Specifications\IsActivityStatus.cs" />
+    <Compile Include="Enum\Specifications\IsEntityType.cs" />
     <Compile Include="Helpers\Extentions\FluentValidation.cs" />
     <Compile Include="Ownership\CommandHandlers\CreateOwnershipCommandHandler.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommand.cs" />
@@ -143,10 +162,15 @@
     <Compile Include="Property\Commands\UpdatePropertyCommandValidator.cs" />
     <Compile Include="Property\Queries\PropertyQuery.cs" />
     <Compile Include="Property\Queries\PropertyQueryValidator.cs" />
+    <Compile Include="Property\Queries\PropertyAttributesQuery.cs" />
     <Compile Include="Property\Queries\PropertyTypeQueryValidator.cs" />
     <Compile Include="Property\Queries\PropertyTypeQuery.cs" />
+    <Compile Include="Property\QueryHandlers\PropertyAttributesQueryHandler.cs" />
+    <Compile Include="Property\QueryResults\PropertyAttributesQueryResult.cs" />
+    <Compile Include="Property\QueryResults\PropertyAttributesQuerySingleResult.cs" />
     <Compile Include="Property\QueryHandlers\PropertyTypeQueryHandler.cs" />
     <Compile Include="Property\QueryHandlers\PropertyQueryHandler.cs" />
+    <Compile Include="Property\Queries\PropertyAttributesQueryValidator.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQueryResult.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQuerySingleResult.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementCommandHandler.cs" />

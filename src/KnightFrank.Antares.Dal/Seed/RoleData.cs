@@ -4,12 +4,13 @@
     
 	using KnightFrank.Antares.Dal.Model.User;
 
-    internal class RoleData
+    internal static class RoleData
 	{
 		public static void Seed(KnightFrankContext context)
 		{
 			SeedRole(context);
-		}
+            context.SaveChanges();
+        }
 
 		public static void SeedRole(KnightFrankContext context)
 		{
@@ -26,7 +27,6 @@
 			};
 
 			context.Role.AddOrUpdate(x => x.Name, role);
-			context.SaveChanges();
 		}
 	}
 }

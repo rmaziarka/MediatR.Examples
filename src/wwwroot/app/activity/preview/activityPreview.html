@@ -1,0 +1,21 @@
+<div class="row section-row">
+    <div class="col-xs-5"><a href="" ng-click="vm.goToActivityView()" translate="ACTIVITY.PREVIEW.ACTIVITY_VIEW_LINK"></a></div>
+</div>
+<div class="row section-row">
+    <div class="col-xs-5" translate="ACTIVITY.PREVIEW.STATUS"></div>
+    <div class="col-xs-7" id="activity-preview-status">{{vm.activity.activityStatusId | enumTranslate}} </div>
+</div>
+<div class="row section-row">
+    <div class="col-xs-5" translate="ACTIVITY.PREVIEW.CREATION_DATE"></div>
+    <div class="col-xs-7" id="activity-preview-created-date">{{vm.activity.createdDate | date : 'dd-MM-yyyy'}}</div>
+</div>
+<div class="row section-row">
+    <div class="col-xs-5" translate="ACTIVITY.PREVIEW.VENDORS"></div>
+    <div class="col-xs-7" id="activity-preview-vendors">
+        <div class="row">
+            <div class="col-md-12" id="activity-preview-vendor-item-{{contact.id}}" ng-repeat="contact in vm.activity.contacts track by $id(contact)">
+                {{contact.firstName}} {{contact.surname}}
+            </div>
+        </div>
+    </div>
+</div>

@@ -10,16 +10,18 @@
     {
         public Guid PropertyId { get; set; }
 
-        public Property Property { get; set; }
-
-        public Guid ActivityTypeId { get; set; }
-
-        public virtual EnumTypeItem ActivityType { get; set; }
-
+        public virtual Property Property { get; set; }
+        
         public Guid ActivityStatusId { get; set; }
 
         public EnumTypeItem ActivityStatus { get; set; }
 
         public virtual ICollection<Contact> Contacts { get; set; }
+
+        public decimal? MarketAppraisalPrice { get; set; }
+
+        public decimal? RecommendedPrice { get; set; }
+
+        public decimal? VendorEstimatedPrice { get; set; }
     }
 }

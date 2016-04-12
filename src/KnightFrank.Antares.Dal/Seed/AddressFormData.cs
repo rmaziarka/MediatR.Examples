@@ -54,7 +54,7 @@
                     Required = false,
                     RowOrder = 1,
                     ColumnOrder = 1,
-                    ColumnSize = 6
+                    ColumnSize = 8
                 },
                 new AddressFieldDefinition
                 {
@@ -65,7 +65,7 @@
                     Required = false,
                     RowOrder = 2,
                     ColumnOrder = 1,
-                    ColumnSize = 6
+                    ColumnSize = 8
                 },
                 new AddressFieldDefinition
                 {
@@ -76,7 +76,7 @@
                     Required = false,
                     RowOrder = 3,
                     ColumnOrder = 1,
-                    ColumnSize = 6
+                    ColumnSize = 4
                 }
             };
 
@@ -108,7 +108,7 @@
                     Required = false,
                     RowOrder = 1,
                     ColumnOrder = 2,
-                    ColumnSize = 6
+                    ColumnSize = 8
                 },
                 new AddressFieldDefinition
                 {
@@ -119,7 +119,7 @@
                     Required = false,
                     RowOrder = 2,
                     ColumnOrder = 1,
-                    ColumnSize = 10
+                    ColumnSize = 12
                 },
                 new AddressFieldDefinition
                 {
@@ -130,7 +130,7 @@
                     Required = false,
                     RowOrder = 3,
                     ColumnOrder = 1,
-                    ColumnSize = 10
+                    ColumnSize = 12
                 },
                 new AddressFieldDefinition
                 {
@@ -141,7 +141,7 @@
                     Required = true,
                     RowOrder = 4,
                     ColumnOrder = 1,
-                    ColumnSize = 3
+                    ColumnSize = 4
                 },
                 new AddressFieldDefinition
                 {
@@ -152,7 +152,7 @@
                     Required = false,
                     RowOrder = 5,
                     ColumnOrder = 1,
-                    ColumnSize = 7
+                    ColumnSize = 8
                 },
                 new AddressFieldDefinition
                 {
@@ -163,7 +163,7 @@
                     Required = false,
                     RowOrder = 6,
                     ColumnOrder = 1,
-                    ColumnSize = 7
+                    ColumnSize = 8
                 }
             };
 

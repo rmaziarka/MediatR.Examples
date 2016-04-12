@@ -2,13 +2,14 @@
 
 module Antares.Property {
     import Dto = Common.Models.Dto;
+    import Business = Common.Models.Business;
 
     export class OwnershipAddController {
         static $inject = ['componentRegistry', 'dataAccessService', '$scope', '$q'];
-
+        maxAllowedDate:string = (new Date()).toDateString();
         componentId: string;
-        ownership: Dto.IOwnership = new Dto.Ownership();
-        ownerships: Dto.IOwnership[];
+        ownership: Dto.IOwnership = new Business.Ownership();
+        ownerships: Business.Ownership[];
         ownershipTypes: any;
         datepickers: any = {
             purchaseOpened: false,
@@ -38,11 +39,15 @@ module Antares.Property {
             return propertyResource
                 .createOwnership({ propertyId: propertyId }, createOwnershipCommand)
                 .$promise
-                .then((ownership: Common.Models.Dto.IOwnership) => {
-                    ownership.purchaseDate = Core.DateTimeUtils.convertDateToUtc(ownership.purchaseDate);
-                    ownership.sellDate = Core.DateTimeUtils.convertDateToUtc(ownership.sellDate);
+                .then((ownership: Common.Models.Dto.IOwnership) =>{
+                    var ownershipModel = new Business.Ownership(ownership);
 
-                    this.ownerships.push(ownership);
+                    ownershipModel.purchaseDate = Core.DateTimeUtils.convertDateToUtc(ownershipModel.purchaseDate);
+                    ownershipModel.sellDate = Core.DateTimeUtils.convertDateToUtc(ownershipModel.sellDate);
+
+                    this.ownerships.push(ownershipModel);
+                    var form = this.$scope["addOwnershipForm"];
+                    form.$setPristine();
                 });
         }
 
@@ -64,7 +69,7 @@ module Antares.Property {
         }
 
         clearOwnership = () => {
-            this.ownership = new Dto.Ownership();
+            this.ownership = new Business.Ownership();
             var form = this.$scope["addOwnershipForm"];
             form.$setPristine();
         }

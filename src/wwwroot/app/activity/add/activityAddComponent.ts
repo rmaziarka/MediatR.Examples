@@ -7,7 +7,8 @@ module Antares.Property {
         controller: 'ActivityAddController',
         transclude : true,
         bindings: {
-            componentId: '<'
+            componentId: '<',
+            activities: '='
         }
     });
 }

@@ -22,6 +22,8 @@
 
         private readonly ScenarioContext scenarioContext;
 
+        private AddressForm AddressForm { get; set; }
+
         public AddressFormSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {
             this.fixture = fixture;
@@ -31,8 +33,6 @@
             }
             this.scenarioContext = scenarioContext;
         }
-
-        private AddressForm AddressForm { get; set; }
 
         [Given(@"Country code (.*) is present in DB")]
         public void GivenCountryCodeIsPresentInDb(string countryCode)

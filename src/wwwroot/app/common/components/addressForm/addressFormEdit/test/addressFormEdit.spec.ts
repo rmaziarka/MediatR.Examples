@@ -1,8 +1,8 @@
 ﻿/// <reference path="../../../../../typings/_all.d.ts" />
 
 module Antares {
-    import Dto = Antares.Common.Models.Dto;
-    import AddressFormEditController = Antares.Common.Component.AddressFormEditController;
+    import AddressFormEditController = Common.Component.AddressFormEditController;
+    import Business = Common.Models.Business;
 
     describe('Given address component', () => {
         var scope: ng.IScope,
@@ -17,12 +17,17 @@ module Antares {
                 { country: { id: "countryId2", isoCode: "TESTCOUNTRY" }, locale : {}, value : "Test Country" }
             ],
             countryMockId = countriesMock[0].country.id,
-            addressMock: Dto.Address = new Dto.Address('adrId1', countryMockId, 'adrfrmId1', 'test prop name', '123456');
+            addressMock: Business.Address = new Business.Address();
+
+        addressMock.id = 'adrId1';
+        addressMock.countryId = countryMockId;
+        addressMock.addressFormId = 'adrfrmId1';
+        addressMock.propertyName = 'test prop name';
+        addressMock.propertyNumber = '123456';
 
         describe('when component is being loaded', () =>{
-            var addressFormMock = new Dto.AddressForm('adrfrmId1', countryMockId, []);
+            var addressFormMock = new Business.AddressForm('adrfrmId1', countryMockId, []);
 
-            beforeEach(angular.mock.module('app'));
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
@@ -47,7 +52,7 @@ module Antares {
                 });
 
                 scope['userCountryCode'] = 'TESTCOUNTRY';
-                scope['address'] = new Dto.Address();
+                scope['address'] = new Business.Address();
                 element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address" user-country-code="userCountryCode"></address-form-edit>')(scope);
                 scope.$apply();
                 controller = element.controller('addressFormEdit');
@@ -90,15 +95,14 @@ module Antares {
 
         describe('when component has been loaded', () =>{
             var assertValidator: TestHelpers.AssertValidators,
-                addressFormMock: Dto.AddressForm = new Dto.AddressForm('adrfrmId1', countryMockId, [
-                    new Dto.AddressFormFieldDefinition('OrderedFieldA', 'Label A', false, '', 1, 1, 3),
-                    new Dto.AddressFormFieldDefinition('OrderedFieldB', 'Label B', true, '^.{1,3}$', 1, 3, 3),
-                    new Dto.AddressFormFieldDefinition('OrderedFieldC', 'Label C', true, '^[a-z]$', 1, 2, 6),
-                    new Dto.AddressFormFieldDefinition('OrderedFieldD', 'Label D', false, '', 3, 1, 2),
-                    new Dto.AddressFormFieldDefinition('OrderedFieldE', 'Label E', true, '', 2, 1, 4)
+                addressFormMock: Business.AddressForm = new Business.AddressForm('adrfrmId1', countryMockId, [
+                    new Business.AddressFormFieldDefinition('OrderedFieldA', 'Label A', false, '', 1, 1, 3),
+                    new Business.AddressFormFieldDefinition('OrderedFieldB', 'Label B', true, '^.{1,3}$', 1, 3, 3),
+                    new Business.AddressFormFieldDefinition('OrderedFieldC', 'Label C', true, '^[a-z]$', 1, 2, 6),
+                    new Business.AddressFormFieldDefinition('OrderedFieldD', 'Label D', false, '', 3, 1, 2),
+                    new Business.AddressFormFieldDefinition('OrderedFieldE', 'Label E', true, '', 2, 1, 4)
                 ]);
 
-            beforeEach(angular.mock.module('app'));
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
@@ -172,15 +176,14 @@ module Antares {
             };
 
             var assertValidator: TestHelpers.AssertValidators,
-                addressFormMock: Dto.AddressForm = new Dto.AddressForm('adrfrmId1', countryMockId, [
-                    new Dto.AddressFormFieldDefinition('FieldA', 'Label A', false, '', 1, 1, 3),
-                    new Dto.AddressFormFieldDefinition('FieldB', 'Label B', true, '^.{1,3}$', 1, 3, 3),
-                    new Dto.AddressFormFieldDefinition('FieldC', 'Label C', true, '^[a-z]+$', 1, 2, 6),
-                    new Dto.AddressFormFieldDefinition('FieldD', 'Label D', false, '', 3, 1, 2),
-                    new Dto.AddressFormFieldDefinition('FieldE', 'Label E', true, '', 2, 1, 4)
+                addressFormMock: Business.AddressForm = new Business.AddressForm('adrfrmId1', countryMockId, [
+                    new Business.AddressFormFieldDefinition('FieldA', 'Label A', false, '', 1, 1, 3),
+                    new Business.AddressFormFieldDefinition('FieldB', 'Label B', true, '^.{1,3}$', 1, 3, 3),
+                    new Business.AddressFormFieldDefinition('FieldC', 'Label C', true, '^[a-z]+$', 1, 2, 6),
+                    new Business.AddressFormFieldDefinition('FieldD', 'Label D', false, '', 3, 1, 2),
+                    new Business.AddressFormFieldDefinition('FieldE', 'Label E', true, '', 2, 1, 4)
                 ]);
 
-            beforeEach(angular.mock.module('app'));
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,

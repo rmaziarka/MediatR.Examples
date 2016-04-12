@@ -1,17 +1,13 @@
 // Well Styles
 
 .well {
-  div:first-of-type {
+  > span {
+    display: block;
+  }
+
+  div:first-of-type:not(.address-view-item) {
     font-size: 24px;
     margin-bottom: 10px;
     word-wrap: break-word;
-  }
-
-  span {
-    margin-right: 5px;
-  }
-
-  > span {
-    display: block;
   }
 }

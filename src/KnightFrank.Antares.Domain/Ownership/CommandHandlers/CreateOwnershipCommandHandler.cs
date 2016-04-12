@@ -37,7 +37,7 @@
             ValidationResult validationResult = this.ownershipDomainValidator.Validate(message);
             if (!validationResult.IsValid)
             {
-                throw new DomainValidationException(validationResult.Errors.First().ErrorMessage);
+                throw new DomainValidationException(validationResult.Errors);
             }
 
             var ownership = Mapper.Map<Ownership>(message);

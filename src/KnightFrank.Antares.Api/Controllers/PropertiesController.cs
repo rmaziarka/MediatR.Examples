@@ -90,8 +90,8 @@
             command.PropertyId = id;
             Guid ownershipId = this.mediator.Send(command);
 
-            var ownership =
-                this.mediator.Send(new OwnershipByIdQuery() { OwnershipId = ownershipId });
+            Ownership ownership =
+                this.mediator.Send(new OwnershipByIdQuery { OwnershipId = ownershipId });
 
             return ownership;
         }
@@ -109,6 +109,18 @@
             propertyTypesQuery.LocaleCode = LocaleCode;
 
             return this.mediator.Send(propertyTypesQuery);
+        }
+
+        /// <summary>
+        /// Gets the attributes.
+        /// </summary>
+        /// <param name="propertyAttributesQuery">The property attributes query.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("attributes")]
+        public PropertyAttributesQueryResult GetPropertyAttributes([FromUri(Name = "")]PropertyAttributesQuery propertyAttributesQuery)
+        {
+            return this.mediator.Send(propertyAttributesQuery);
         }
     }
 }

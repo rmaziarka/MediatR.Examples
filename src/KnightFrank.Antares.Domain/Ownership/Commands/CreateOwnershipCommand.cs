@@ -7,6 +7,11 @@
 
     public class CreateOwnershipCommand : IRequest<Guid>
     {
+        public CreateOwnershipCommand()
+        {
+            this.ContactIds = new List<Guid>();
+        }
+
         public DateTime? PurchaseDate { get; set; }
 
         public DateTime? SellDate { get; set; }

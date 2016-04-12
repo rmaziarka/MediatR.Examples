@@ -12,13 +12,13 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
+    using KnightFrank.Antares.Domain.Common.Validator;
 
     public class CreateOwnershipCommandDomainValidator : AbstractValidator<CreateOwnershipCommand>, IDomainValidator<CreateOwnershipCommand>
     {
         private readonly IGenericRepository<Ownership> ownershipRepository;
         private readonly IGenericRepository<EnumTypeItem> enumTypeItemRepository;
         private readonly IGenericRepository<Property> propertyRepository;
-        private readonly IGenericRepository<Contact> contactRepository;
 
         public CreateOwnershipCommandDomainValidator(
             IGenericRepository<Ownership> ownershipRepository, 
@@ -28,46 +28,44 @@
         {
             this.ownershipRepository = ownershipRepository;
             this.enumTypeItemRepository = enumTypeItemRepository;
-            this.contactRepository = contactRepository;
             this.propertyRepository = propertyRepository;
 
             this.Custom(this.DatesDoNotOverlapValidator);
             this.Custom(this.OwnershipTypeValidator);
             this.Custom(this.PropertyExistsValidator);
-            this.Custom(this.ContactsExistValidator);
+
+            this.RuleFor(x => x.ContactIds).SetValidator(new ContactValidator(contactRepository));
         }
 
-        private ValidationFailure DatesDoNotOverlapValidator(CreateOwnershipCommand commmand)
+        private ValidationFailure DatesDoNotOverlapValidator(CreateOwnershipCommand command)
         {
             List<Range<DateTime>> existingDates = this.ownershipRepository
-                .FindBy(x => x.PropertyId.Equals(commmand.PropertyId) && x.OwnershipTypeId.Equals(commmand.OwnershipTypeId))
+                .FindBy(x => x.PropertyId.Equals(command.PropertyId) && x.OwnershipTypeId.Equals(command.OwnershipTypeId))
                 .Select(
                     x => new Range<DateTime>(x.PurchaseDate.GetValueOrDefault(DateTime.MinValue), x.SellDate.GetValueOrDefault(DateTime.MaxValue)))
                 .ToList();
 
-            var datesToSave = new Range<DateTime>(commmand.PurchaseDate.GetValueOrDefault(DateTime.MinValue), commmand.SellDate.GetValueOrDefault(DateTime.MaxValue));
+            var datesToSave = new Range<DateTime>(command.PurchaseDate.GetValueOrDefault(DateTime.MinValue), command.SellDate.GetValueOrDefault(DateTime.MaxValue));
 
             bool overlap = existingDates.Any(existingDate => existingDate.IsOverlapped(datesToSave));
 
-            return overlap ? new ValidationFailure(nameof(commmand.PurchaseDate), "The ownership dates overlap.") : null;
+            return overlap ? new ValidationFailure(nameof(command.PurchaseDate), "The ownership dates overlap.") : null;
         }
 
-        private ValidationFailure OwnershipTypeValidator(CreateOwnershipCommand commmand)
+        private ValidationFailure OwnershipTypeValidator(CreateOwnershipCommand command)
         {
-            var ownershipType = this.enumTypeItemRepository.GetById(commmand.OwnershipTypeId);
-            return ownershipType.EnumType.Code.Equals("OwnershipType") ? null : new ValidationFailure(nameof(commmand.OwnershipTypeId), "Ownership type does not match.");
+            EnumTypeItem ownershipType = this.enumTypeItemRepository.GetWithInclude(x => x.Id == command.OwnershipTypeId, x => x.EnumType).Single();
+            if (ownershipType.EnumType == null)
+            {
+                return new ValidationFailure(nameof(command.OwnershipTypeId), "Ownership type does not match.");
+            }
+            return ownershipType.EnumType.Code.Equals("OwnershipType") ? null : new ValidationFailure(nameof(command.OwnershipTypeId), "Ownership type does not match.");
         }
 
-        private ValidationFailure PropertyExistsValidator(CreateOwnershipCommand commmand)
+        private ValidationFailure PropertyExistsValidator(CreateOwnershipCommand command)
         {
-            var property = this.propertyRepository.GetById(commmand.PropertyId);
-            return property == null ? new ValidationFailure(nameof(commmand.PropertyId), "Property does not exist.") : null;
-        }
-
-        private ValidationFailure ContactsExistValidator(CreateOwnershipCommand commmand)
-        {
-            var contacts = this.contactRepository.FindBy(x => commmand.ContactIds.Any(id => id == x.Id));
-            return !contacts.Count().Equals(commmand.ContactIds.Count) ? new ValidationFailure(nameof(commmand.ContactIds), "Contact list is not correct.") : null;
+            var property = this.propertyRepository.GetById(command.PropertyId);
+            return property == null ? new ValidationFailure(nameof(command.PropertyId), "Property does not exist.") : null;
         }
     }
 }

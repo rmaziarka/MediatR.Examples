@@ -1,7 +1,6 @@
 // Global Styles
 
 body {
-  padding-top: 70px;
 
   &::after {
     background-color: $color-black-alpha;
@@ -39,4 +38,9 @@ input[type="number"]::-webkit-inner-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+.page-header {
+  margin: 20px 0;
+  padding-bottom: 5px;
 }

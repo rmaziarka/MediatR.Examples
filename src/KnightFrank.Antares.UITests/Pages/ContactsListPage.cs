@@ -2,6 +2,8 @@
 {
     using System.Linq;
 
+    using KnightFrank.Antares.UITests.Extensions;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
@@ -10,7 +12,7 @@
     {
         private readonly ElementLocator contact = new ElementLocator(Locator.XPath, "//label[normalize-space(text()) = '{0}']//input");
         private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "[ng-show *= 'isLoading']");
-        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, "div.side-panel");
+        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, "div.side-panel.slide-in");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'updateContacts']");
         private readonly ElementLocator configureButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showOwnershipAdd']");
 
@@ -20,7 +22,9 @@
 
         public ContactsListPage WaitForContactsListToLoad()
         {
+            this.Driver.WaitForElementToBeDisplayed(this.panel, BaseConfiguration.LongTimeout);
             this.Driver.WaitUntilElementIsNoLongerFound(this.loadingIndicator, BaseConfiguration.LongTimeout);
+            this.Driver.WaitForAngularToFinish();
             return this;
         }
 

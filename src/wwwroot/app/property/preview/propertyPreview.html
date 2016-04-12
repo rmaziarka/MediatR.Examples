@@ -1,0 +1,9 @@
+<div class="row section-row">
+    <div class="col-xs-5"><a href="" ng-click="ppvm.goToPropertyView()" translate="PROPERTY.PREVIEW.PROPERTY_VIEW_LINK"></a></div>
+</div>
+<div class="row section-row">
+    <div class="col-xs-5" translate="PROPERTY.PREVIEW.ADDRESS"></div>
+    <div class="col-xs-7" id="property-preview-address" ng-if="!!ppvm.property.address">
+        <address-form-view address="ppvm.property.address"></address-form-view>
+    </div>
+</div>
