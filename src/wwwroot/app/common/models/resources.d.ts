@@ -15,10 +15,10 @@ declare module Antares.Common.Models {
         interface IBaseResourceClass<T> extends ng.resource.IResourceClass<T> {
             get(): T;
             get(params: IBaseResourceParameters): T;
-            get(params: IEnumResourceParameters): T;            
+            get(params: IEnumResourceParameters): T;
         }
 
-        interface ITranslationResourceClass<T> extends IBaseResourceClass<T> {            
+        interface ITranslationResourceClass<T> extends IBaseResourceClass<T> {
             get(): T;
             get(params: ITranslationResourceParameters): T;
         }
@@ -26,7 +26,7 @@ declare module Antares.Common.Models {
         // *** IResource extensions***
         interface IActivityResource extends ng.resource.IResource<Dto.IActivity> {
         }
-        
+
         interface ICompanyResource extends ng.resource.IResource<Dto.ICompany> {
         }
 
@@ -45,7 +45,7 @@ declare module Antares.Common.Models {
         interface IEnumResource extends ng.resource.IResource<Dto.IEnum> {
         }
 
-        interface ICountryResource extends ng.resource.IResource<Dto.CountryLocalised> {
+        interface ICountryResource extends ng.resource.IResource<Dto.ICountryLocalised> {
         }
 
         interface IAddressFormResource extends ng.resource.IResource<Dto.IAddressForm> {

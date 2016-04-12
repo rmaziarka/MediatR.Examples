@@ -1,7 +1,6 @@
 ﻿/// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Component {
-    import CountryLocalised = Common.Models.Dto.CountryLocalised;
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
 
@@ -11,7 +10,7 @@ module Antares.Common.Component {
         public address: Business.Address;
 
         public isLoading: boolean = true;
-        public countries: CountryLocalised[] = [];
+        public countries: Business.CountryLocalised[] = [];
         public addressForm: Business.AddressForm;
 
         private countryResource: Common.Models.Resources.ICountryResourceClass;
@@ -55,7 +54,7 @@ module Antares.Common.Component {
         };
 
         private setDefaultCountry = (): void => {
-            var userCountry: CountryLocalised = _.find(this.countries, (c: CountryLocalised) => {
+            var userCountry: Business.CountryLocalised = _.find(this.countries, (c: Business.CountryLocalised) => {
                 return c.country.isoCode === this.userCountryCode;
             });
 
@@ -63,7 +62,7 @@ module Antares.Common.Component {
         }
 
         private getAddressFormTemplete = (entityTypeCode: string, countryId: string): void => {
-            var countryLocalised: CountryLocalised = _.find(this.countries, (c: CountryLocalised) => {
+            var countryLocalised: Business.CountryLocalised = _.find(this.countries, (c: Business.CountryLocalised) => {
                 return c.country.id === countryId;
             });
 
