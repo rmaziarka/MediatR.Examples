@@ -76,24 +76,24 @@
         PropertyAttributesQueryHandler handler)
         {
             propertyAttributeFormDefinitionRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<PropertyAttributeFormDefinition, object>>>()))
-                .Returns(new List<PropertyAttributeFormDefinition>()
+                .Returns(new List<PropertyAttributeFormDefinition>
                 {
-                    new PropertyAttributeFormDefinition()
+                    new PropertyAttributeFormDefinition
                     {
                         Attribute = new Dal.Model.Attribute.Attribute(),
-                        PropertyAttributeForm = new PropertyAttributeForm()
+                        PropertyAttributeForm = new PropertyAttributeForm
                         {
-                            Country = new Country() { IsoCode = query.CountryCode },
+                            Country = new Country { IsoCode = query.CountryCode },
                             PropertyTypeId = query.PropertyTypeId
                         },
                         Order = 2
                     },
-                    new PropertyAttributeFormDefinition()
+                    new PropertyAttributeFormDefinition
                     {
                        Attribute = new Dal.Model.Attribute.Attribute(),
-                        PropertyAttributeForm = new PropertyAttributeForm()
+                        PropertyAttributeForm = new PropertyAttributeForm
                         {
-                            Country = new Country() { IsoCode = query.CountryCode },
+                            Country = new Country { IsoCode = query.CountryCode },
                             PropertyTypeId = query.PropertyTypeId
                         },
                         Order = 1
