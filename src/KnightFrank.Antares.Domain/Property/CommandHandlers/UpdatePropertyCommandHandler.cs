@@ -39,10 +39,10 @@
                 throw new ResourceNotFoundException("Property does not exist", message.Id);
             }
 
+            var division = this.enumTypeItemRepository.FindBy(x => x.Code == message.Division.Code && x.EnumType.Code == "Division").Single();
+            property.Division = division;
+            property.DivisionId = division.Id;
             property.PropertyTypeId = message.PropertyTypeId;
-
-            if (message.Division != null)
-                property.Division = enumTypeItemRepository.FindBy(x => x.Code == message.Division.Code).Single();
 
             Mapper.Map(message.Address, property.Address);
 

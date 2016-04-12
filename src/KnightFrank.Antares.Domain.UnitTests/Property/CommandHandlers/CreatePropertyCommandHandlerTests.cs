@@ -31,7 +31,7 @@
             CreatePropertyCommandHandler handler)
         {
             // Arrange
-            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(new[] { default(EnumTypeItem) });
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(new[] { new EnumTypeItem() });
             Property propertyToBeSaved = null;
             propertyRepository.Setup(x => x.Add(It.IsAny<Property>())).Callback<Property>(x => propertyToBeSaved = x);
 
@@ -57,7 +57,7 @@
            UpdatePropertyCommandHandler handler)
         {
             validator.Setup(r => r.Validate(It.IsAny<Property>())).Returns(ValidationResultBuilder.BuildValidationResult());
-            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(new[] { default(EnumTypeItem) });
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(new[] { new EnumTypeItem() });
 
             Assert.Throws<DomainValidationException>(() => handler.Handle(command));
             propertyRepository.Verify(p => p.Save(), Times.Never);

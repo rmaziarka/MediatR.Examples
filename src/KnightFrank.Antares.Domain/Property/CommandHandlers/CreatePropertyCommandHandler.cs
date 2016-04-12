@@ -32,14 +32,15 @@
         {
             var property = Mapper.Map<Property>(message);
             
+            var division = this.enumTypeItemRepository.FindBy(x => x.Code == message.Division.Code && x.EnumType.Code == "Division").Single();
+            property.Division = division;
+            property.DivisionId = division.Id;
+
             ValidationResult validationResult = this.propertyValidator.Validate(property);
             if (!validationResult.IsValid)
             {
                 throw new DomainValidationException(validationResult.Errors);
             }
-
-            if (message.Division != null)
-                property.Division = enumTypeItemRepository.FindBy(x => x.Code == message.Division.Code).Single();
 
             this.propertyRepository.Add(property);
             this.propertyRepository.Save();
