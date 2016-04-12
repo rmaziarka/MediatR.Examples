@@ -186,9 +186,17 @@ Node $nodeName
         ProductId = "{D2622F6E-1377-47A6-9F6D-ED9AF593205D}"
         DependsOn = "[Script]DownloadOctopusTentacle"
     }
+
+	File OctopusDir
+	{
+		DestinationPath = "c:\Octopus"
+		Ensure = "Present"
+		Type = "Directory"
+	}
+
 	Script ConfigureOctopusTentacle
 	{
-		DependsOn = "[Package]InstallOctopusTentacle"
+		DependsOn = @("[Package]InstallOctopusTentacle", "[File]OctopusDir")
 		TestScript = {
 			Test-Path "C:\Octopus\Tentacle.config"
 		}

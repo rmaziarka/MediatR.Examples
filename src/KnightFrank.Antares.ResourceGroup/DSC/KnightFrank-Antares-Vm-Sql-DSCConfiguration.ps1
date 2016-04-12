@@ -1,7 +1,7 @@
 Configuration SetupSQLVm
 {
 
-Param ( [string] $nodeName, [PSCredential] $setupCredential, [PSCredential] $sqlUserCredential )
+Param ( [string] $nodeName, [System.Management.Automation.PSCredential] $setupCredential, [System.Management.Automation.PSCredential] $SQLSvcAccount )
 
 Import-DscResource -ModuleName PSDesiredStateConfiguration
 Import-DscResource -ModuleName xSQLServer
@@ -13,12 +13,6 @@ $sqlFeatures = "SQLENGINE,IS,SSMS,ADV_SSMS"
 
 Node $nodeName
 {
-	LocalConfigurationManager
-    {
-        RebootNodeIfNeeded = $true
-		ActionAfterReboot = "ContinueConfiguration"
-    }
-
 	Script MapIsoShare
 	{
 		TestScript = { 
@@ -63,23 +57,11 @@ Node $nodeName
 		Ensure = "Present"
 	}
 	
-	<#
 	xSqlServerSetup InstallSql
 	{
 		DependsOn = "[xMountImage]MountSqlIso"
 		SetupCredential = $setupCredential
-		SQLSvcAccount = $setupCredential
 		SourcePath = "s:\"
-		SourceFolder = "\"
-		InstallSharedDir = "C:\Program Files\Microsoft SQL Server"
-        InstallSharedWOWDir = "C:\Program Files (x86)\Microsoft SQL Server"
-        InstanceDir = "C:\Program Files\Microsoft SQL Server"
-        InstallSQLDataDir = "C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\Data"
-        SQLUserDBDir = "C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\Data"
-        SQLUserDBLogDir = "C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\Data"
-        SQLTempDBDir = "C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\Data"
-        SQLTempDBLogDir = "C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\Data"
-        SQLBackupDir = "C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\Data"
 		InstanceName = $sqlInstanceName
 		SecurityMode = "Mixed"
 	}

@@ -350,25 +350,26 @@
             "typeHandlerVersion": "2.15",
             "autoUpgradeMinorVersion": true,
             "settings": {
-              "modulesUrl": "[concat(parameters('_artifactsLocation'), '/', 'dsc.zip')]",
-              "sasToken": "[parameters('_artifactsLocationSasToken')]",
-              "configurationFunction": "[variables('KnightFrank-Antares-Vm-Sql-DSCConfigurationFunction')]",
-              "properties": {
-                "nodeName": "[variables('VmSqlHostName')]",
-                "setupCredential": {
-                  "UserName": "[parameters('VmSqlAdminUserName')]",
-                  "Password": "PrivateSettingsRef:VmSqlAdminPassword"
-                },
-                "sqlUserCredential": {
-                  "UserName": "[variables('SqlUserName')]",
-                  "Password": "PrivateSettingsRef:SqlUserPassword"
-                }
+              "configuration": {
+                "url": "[concat(parameters('_artifactsLocation'), '/', 'dsc.zip')]",
+                "script": "KnightFrank-Antares-Vm-Sql-DSCConfiguration.ps1",
+                "function": "SetupSQLVm"
+              },
+              "configurationArguments": {
+                "nodeName": "[variables('VmSqlHostName')]"
               }
             },
             "protectedSettings": {
-              "Items": {
-                "VmSqlAdminPassword": "[parameters('VmSqlAdminPassword')]",
-                "SqlUserPassword":  "[parameters('SqlUserPassword')]"
+              "configurationUrlSasToken": "[parameters('_artifactsLocationSasToken')]",
+              "configurationArguments": {
+                "setupCredential": {
+                  "UserName": "[parameters('VmSqlAdminUserName')]",
+                  "Password": "[parameters('VmSqlAdminPassword')]"
+                },
+                "SQLSvcAccount": {
+                  "UserName": "SYSTEM",
+                  "Password": "na"
+                }
               }
             }
           }
