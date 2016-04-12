@@ -34,7 +34,7 @@
         public void OpenViewPropertyPage()
         {
             var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
-            this.scenarioContext.Set(page.PropertyPreview.OpenViewPropertyPage(), "ViewPropertyPage");
+            this.scenarioContext.Set(page.PropertyPreview.WaitForPanelToBeVisible().OpenViewPropertyPage(), "ViewPropertyPage");
         }
 
         [When(@"User clicks edit button on view activity page")]
