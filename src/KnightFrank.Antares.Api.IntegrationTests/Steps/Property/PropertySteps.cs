@@ -117,7 +117,7 @@
             }
             else
             {
-                PropertyType propertyType = this.fixture.DataContext.PropertyType.Single(i => i.Code.Equals(propertyTypeCode));
+                PropertyType propertyType = this.fixture.DataContext.PropertyType.First(i => i.Code.Equals(propertyTypeCode));
                 this.scenarioContext.Set(propertyType.Id, "PropertyTypeId");
             }
         }
