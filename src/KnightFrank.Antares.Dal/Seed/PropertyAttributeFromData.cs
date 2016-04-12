@@ -52,10 +52,10 @@
         {
             ["GB"] = new Dictionary<string, List<string>>
             {
-                ["House"] = new List<string> { "Bedrooms", "Receptions", "Bathrooms", "Area", "LandArea", "CarParkingSpaces" },
-                ["Flat"] = new List<string> { "Bedrooms", "Receptions", "Bathrooms", "Area", "LandArea", "CarParkingSpaces" },
-                ["Bungalow"] = new List<string> { "Bedrooms", "Receptions", "Bathrooms", "Area", "LandArea", "CarParkingSpaces" },
-                ["Houseboat"] = new List<string> { "Bedrooms", "Receptions", "Bathrooms", "Area", "CarParkingSpaces" },
+                ["House"] = new List<string>      { "Bedrooms", "Receptions", "Bathrooms", "Area", "LandArea", "CarParkingSpaces" },
+                ["Flat"] = new List<string>       { "Bedrooms", "Receptions", "Bathrooms", "Area", "LandArea", "CarParkingSpaces" },
+                ["Bungalow"] = new List<string>   { "Bedrooms", "Receptions", "Bathrooms", "Area", "LandArea", "CarParkingSpaces" },
+                ["Houseboat"] = new List<string>  { "Bedrooms", "Receptions", "Bathrooms", "Area" },
                 ["Maisonette"] = new List<string> { "Bedrooms", "Receptions", "Bathrooms", "Area", "CarParkingSpaces" },
                 ["Development Plot"] = new List<string> { "LandArea" },
                 ["Hotel"] = new List<string> { "Area", "LandArea", "GuestRooms", "FunctionRooms", "CarParkingSpaces" }
