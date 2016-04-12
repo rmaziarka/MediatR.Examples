@@ -91,7 +91,7 @@
             this.scenarioContext["AddressFormId"] = addressFormId;
         }
 
-        [Given(@"Property with Address and (.*) is in data base")]
+        [Given(@"Property with Address and (.*) division is in data base")]
         public void GivenFollowingPropertyExistsInDataBase(string divisionCode, Table table)
         {
             var address = table.CreateInstance<Address>();
@@ -123,7 +123,7 @@
             }
         }
 
-        [When(@"Users updates property with defined address for (.*) id and (.*) by Api")]
+        [When(@"Users updates property with defined address for (.*) id and (.*) division by Api")]
         public void WhenUsersUpdatesProperty(string id, string divisionCode)
         {
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
@@ -144,7 +144,7 @@
             this.scenarioContext.Set(updatedProperty, "Property");
         }
 
-        [When(@"User creates property with defined address and (.*) by Api")]
+        [When(@"User creates property with defined address and (.*) division by Api")]
         public void CreateProperty(string divisionCode)
         {
             string requestUrl = $"{ApiUrl}";

@@ -8,7 +8,7 @@ Scenario Outline: Create property
 			| Division     | <divisionCode>   |
 		And Address for add/update property is defined with max length fields
         And User gets <propertyType> for PropertyType
-	When User creates property with defined address and <divisionCode> by Api
+	When User creates property with defined address and <divisionCode> division by Api
 	Then User should get OK http status code
 		And The created Property is saved in data base
 
@@ -31,7 +31,7 @@ Scenario Outline: Create property with invalid data
 			| PropertyName | PropertyNumber | Line2           | Line3 | Postcode   | City | County |
 			| updated abc  | 2              | 55 Baker Street |       | <postCode> |      |        |
         And User gets <propertyType> for PropertyType
-	When User creates property with defined address and <divisionCode> by Api
+	When User creates property with defined address and <divisionCode> division by Api
 	Then User should get <statusCode> http status code
 
 	Examples: 
@@ -51,12 +51,12 @@ Scenario Outline: Update property
 			| enumTypeCode | enumTypeItemCode |
 			| Division     | <divisionCode1>   |
         And User gets <propertyType1> for PropertyType
-		And Property with Address and <divisionCode1> is in data base
+		And Property with Address and <divisionCode1> division is in data base
 			| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
 			| abc          | 1              | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Address for add/update property is defined with max length fields
 		And User gets <propertyType2> for PropertyType
-	When Users updates property with defined address for latest id and <divisionCode2> by Api
+	When Users updates property with defined address for latest id and <divisionCode2> division by Api
 	Then User should get OK http status code
 		And The updated Property is saved in data base
 
@@ -75,9 +75,9 @@ Scenario Outline: Update property with invalid data
 	Given User gets GB address form for Property and country details
         And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode | enumTypeItemCode |
-			| Division     | <divisionCode1>   |
+			| Division     | <divisionCode1>  |
         And User gets House for PropertyType
-		And Property with Address and <divisionCode1> is in data base
+		And Property with Address and <divisionCode1> division is in data base
 			| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
 			| abc          | 1              | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And User gets <country> address form for <itemType> and country details
@@ -85,7 +85,7 @@ Scenario Outline: Update property with invalid data
 		And Address for add/update property is defined
 			| PropertyName | PropertyNumber | Line2 | Line3 | Postcode   | City | County |
 			|              |                |       |       | <postCode> |      |        |
-	When Users updates property with defined address for <id> id and <divisionCode2> by Api
+	When Users updates property with defined address for <id> id and <divisionCode2> division by Api
 	Then User should get <statusCode> http status code
 
 	Examples: 
@@ -117,7 +117,7 @@ Scenario: Get property
 			| OwnershipType  | Freeholder       |
 			| ActivityStatus | PreAppraisal     |
 			| Division       | Residential      |
-        And Property with Address and Residential is in data base
+        And Property with Address and Residential division is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |  
         And User creates contacts in database with following data

@@ -9,7 +9,7 @@ Scenario Outline: Retrieve error messages for improper data
 			| OwnershipType      | Freeholder       |
 			| <activityStatusId> | PreAppraisal     |
 			| Division           | Residential      |
-		And Property with Address and Residential is in data base
+		And Property with Address and Residential division is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London | 
 	When User creates activity for given <propertyId> property id
@@ -29,7 +29,7 @@ Scenario: Create Activity for an existing property
 			| OwnershipType  | Freeholder       |
 			| ActivityStatus | PreAppraisal     |
 			| Division       | Residential      |
-		And Property with Address and Residential is in data base
+		And Property with Address and Residential division is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |  
 		And User creates contacts in database with following data
@@ -64,7 +64,7 @@ Scenario: Get Activity by correct activity id
 			| enumTypeCode   | enumTypeItemCode |
 			| ActivityStatus | PreAppraisal     |
 			| Division       | Residential      |
-		And Property with Address and Residential is in data base
+		And Property with Address and Residential division is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |  
 		And User creates activity for given latest property id
@@ -81,7 +81,7 @@ Scenario: record and update residential sale valuation
 			| enumTypeCode   | enumTypeItemCode |
 			| ActivityStatus | PreAppraisal     |
 			| Division       | Residential      |
-		And Property with Address and Residential is in data base
+		And Property with Address and Residential division is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Activity for 'latest' property exists in data base
@@ -100,7 +100,7 @@ Scenario Outline: try record and update residential sale valuation for improper 
 			| enumTypeCode   | enumTypeItemCode |
 			| Division       | Residential      |
 			| ActivityStatus | PreAppraisal     |
-		And Property with Address and Residential is in data base
+		And Property with Address and Residential division is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Activity for 'latest' property exists in data base
