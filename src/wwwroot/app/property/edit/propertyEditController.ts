@@ -10,12 +10,12 @@ module Antares.Property {
 
         private propertyResource: Common.Models.Resources.IPropertyResourceClass;
         private propertyTypes: any[];
-        private userData: Antares.Common.Models.Dto.IUserData;
+        private userData: Dto.IUserData;
 
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService) {
-            
+
             this.propertyResource = dataAccessService.getPropertyResource();
             this.loadPropertyTypes();
         }

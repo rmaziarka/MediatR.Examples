@@ -1,8 +1,8 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Property {
-    import Dto = Antares.Common.Models.Dto;
-    import Business = Antares.Common.Models.Business;
+    import Dto = Common.Models.Dto;
+    import Business = Common.Models.Business;
 
     export class PropertyAddController {
         public entityTypeCode: string = 'Property';
@@ -10,7 +10,7 @@ module Antares.Property {
 
         private propertyResource: Common.Models.Resources.IPropertyResourceClass;
         private propertyTypes: any[];
-        private userData: Antares.Common.Models.Dto.IUserData;
+        private userData: Dto.IUserData;
 
         constructor(
             private dataAccessService: Services.DataAccessService,

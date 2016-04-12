@@ -1,11 +1,11 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Activity.Preview {
-    import Activity = Common.Models.Business.Activity;
+    import Business = Common.Models.Business;
 
     export class ActivityPreviewController {
         componentId: string;
-        activity: Activity = <Activity>{};
+        activity: Business.Activity = <Business.Activity>{};
 
         constructor(
             private componentRegistry: Core.Service.ComponentRegistry,
@@ -14,7 +14,7 @@ module Antares.Activity.Preview {
             componentRegistry.register(this, this.componentId);
         }
 
-        setActivity = (activity: Activity) => {
+        setActivity = (activity: Business.Activity) => {
             this.activity = activity;
         }
 

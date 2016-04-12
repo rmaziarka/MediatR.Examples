@@ -2,14 +2,11 @@
 
 module Antares.Services {
     import Resources = Common.Models.Resources;
-    import AddressFormResourceClass = Antares.Common.Models.Resources.IAddressFormResourceClass;
-    import CountryResourceClass = Antares.Common.Models.Resources.ICountryResourceClass;
 
     export class DataAccessService {
-
         private rootUrl: string = "";
 
-        constructor(private $resource: ng.resource.IResourceService, private appConfig: Antares.Common.Models.IAppConfig) {
+        constructor(private $resource: ng.resource.IResourceService, private appConfig: Common.Models.IAppConfig) {
         }
 
         private updateAction: ng.resource.IActionDescriptor = {
@@ -53,13 +50,13 @@ module Antares.Services {
                 this.$resource(this.appConfig.rootUrl + '/api/requirements/:id');
         }
 
-        getCountryResource(): CountryResourceClass {
-            return <CountryResourceClass>
+        getCountryResource(): Resources.ICountryResourceClass {
+            return <Resources.ICountryResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/resources/countries/addressform?entityTypeItemCode=:entityTypeCode');
         }
 
-        getAddressFormResource(): AddressFormResourceClass {
-            return <AddressFormResourceClass>
+        getAddressFormResource(): Resources.IAddressFormResourceClass {
+            return <Resources.IAddressFormResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/addressForms/:id?entityType=:entityTypeCode&countryCode=:countryCode');
         }
 

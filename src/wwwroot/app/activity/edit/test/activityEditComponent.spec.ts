@@ -71,7 +71,7 @@ module Antares {
                 $http = $httpBackend;
 
                 // http backend
-                Antares.Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Antares.Mock.AddressForm.AddressFormWithOneLine]);
+                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
                 $http.expectGET(/\/api\/enums\/ActivityStatus\/items/).respond(() => {
                     return [200, activityStatuses];
                 });
@@ -90,7 +90,6 @@ module Antares {
                     var propertyCardElement = element.find(pageObjectSelectors.property.card);
 
                     expect(propertyCardElement.length).toBe(1);
-                    expect(propertyCardElement[0].getAttribute('card-template-url')).toBe("'app/property/templates/propertyCard.html'");
                     expect(propertyCardElement[0].getAttribute('item')).toBe("aevm.activity.property");
                     expect(propertyCardElement[0].hasAttribute('show-item-details')).toBe(false);
                 });
@@ -151,7 +150,7 @@ module Antares {
                 $http = $httpBackend;
 
                 // http backend
-                Antares.Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Antares.Mock.AddressForm.AddressFormWithOneLine]);
+                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
                 $http.expectGET(/\/api\/enums\/ActivityStatus\/items/).respond(() => {
                     return [200, activityStatuses];
                 });
@@ -230,7 +229,7 @@ module Antares {
                 $http = $httpBackend;
 
                 // http backend
-                Antares.Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Antares.Mock.AddressForm.AddressFormWithOneLine]);
+                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
                 $http.expectGET(/\/api\/enums\/ActivityStatus\/items/).respond(() => {
                     return [200, activityStatuses];
                 });
@@ -266,7 +265,7 @@ module Antares {
                 $http = $httpBackend;
 
                 // http backend
-                Antares.Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Antares.Mock.AddressForm.AddressFormWithOneLine]);
+                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
                 $http.expectGET(/\/api\/enums\/ActivityStatus\/items/).respond(() => {
                     return [200, activityStatuses];
                 });
@@ -350,7 +349,7 @@ module Antares {
                 $http = $httpBackend;
 
                 // http backend
-                Antares.Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Antares.Mock.AddressForm.AddressFormWithOneLine]);
+                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
                 $http.expectGET(/\/api\/enums\/ActivityStatus\/items/).respond(() => {
                     return [200, activityStatuses];
                 });
