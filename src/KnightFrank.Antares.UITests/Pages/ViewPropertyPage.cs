@@ -1,5 +1,7 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using KnightFrank.Antares.UITests.Extensions;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
@@ -96,7 +98,7 @@
 
         public bool CheckIfViewPropertyPresent()
         {
-            this.Driver.WaitForAngular();
+            this.Driver.WaitForAngularToFinish();
             return this.Driver.IsElementPresent(this.viewPropertyForm, BaseConfiguration.ShortTimeout);
         }
     }

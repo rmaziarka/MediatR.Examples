@@ -33,6 +33,7 @@
         public void AddContactToCompany()
         {
             this.Driver.GetElement(this.addContact).Click();
+            this.Driver.WaitForAngularToFinish();
         }
 
         public CreateCompanyPage SetCompanyName(string name)

@@ -1,5 +1,7 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using KnightFrank.Antares.UITests.Extensions;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
@@ -44,6 +46,7 @@
         public ViewActivityPage SaveActivity()
         {
             this.Driver.GetElement(this.saveButton).Click();
+            this.Driver.WaitForAngularToFinish();
             return new ViewActivityPage(this.DriverContext);
         }
     }

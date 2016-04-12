@@ -13,6 +13,7 @@ Scenario: Create and update property
 		| PropertyNumber | PropertyName | Line2        | Postcode | City   | County |
 		| 55             | Knight Frank | Baker Street | W1U 8AN  | London | London |
 	When User clicks edit button on view property page
+		And User selects Commercial property and Shopping Centre type on create property page
 		And User fills in address details on create property page
 			| PropertyNumber | PropertyName | Line2 | Line3          | Postcode | City | County |
 			|                |              |       | Address line 3 | W1U 8AN  |      |        |

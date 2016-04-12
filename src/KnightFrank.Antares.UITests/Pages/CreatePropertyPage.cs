@@ -1,9 +1,15 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using System.Linq;
+
+    using KnightFrank.Antares.UITests.Extensions;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
     using Objectivity.Test.Automation.Common.WebElements;
+
+    using OpenQA.Selenium;
 
     public class CreatePropertyPage : ProjectPageBase
     {
@@ -25,8 +31,9 @@
 
         public CreatePropertyPage SelectPropertyType(string type)
         {
-            this.Driver.WaitForAngular();
-            this.Driver.GetElement<Select>(this.propertyType).SelectByText(type);
+            var select = this.Driver.GetElement<Select>(this.propertyType);
+            IWebElement element = select.SelectElement().Options.Single(o => o.Text.Trim().Equals(type));
+            select.SelectByIndex(select.SelectElement().Options.IndexOf(element));
             return this;
         }
 
@@ -47,14 +54,14 @@
                     }
                     break;
             }
-            this.Driver.WaitForAngular();
+            this.Driver.WaitForAngularToFinish();
             return this;
         }
 
         public ViewPropertyPage SaveProperty()
         {
             this.Driver.GetElement(this.saveButton).Click();
-            this.Driver.WaitForAngular();
+            this.Driver.WaitForAngularToFinish();
             return new ViewPropertyPage(this.DriverContext);
         }
     }

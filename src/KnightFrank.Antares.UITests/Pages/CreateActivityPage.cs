@@ -9,7 +9,7 @@
     {
         private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "activity-add-button");
         private readonly ElementLocator status = new ElementLocator(Locator.Id, "status");
-        private readonly ElementLocator vendor = new ElementLocator(Locator.CssSelector, "#vendors div.ng-binding");
+        private readonly ElementLocator vendor = new ElementLocator(Locator.CssSelector, "#activity-add-vendors span.ng-binding");
 
         public CreateActivityPage(DriverContext driverContext) : base(driverContext)
         {

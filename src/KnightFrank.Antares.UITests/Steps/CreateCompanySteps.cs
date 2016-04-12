@@ -55,7 +55,7 @@
         }
 
         [When(@"User selects contacts on create company page")]
-        public void WhenUserSelectsContactsOnCreateCompanyPage(Table table)
+        public void SelectContactsForCompany(Table table)
         {
             var page = this.scenarioContext.Get<CreateCompanyPage>("CreateCompanyPage");
             page.AddContactToCompany();
