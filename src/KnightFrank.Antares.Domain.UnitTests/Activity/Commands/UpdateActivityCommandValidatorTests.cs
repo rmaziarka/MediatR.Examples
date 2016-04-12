@@ -10,6 +10,7 @@
     using FluentValidation.TestHelper;
 
     using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Common.Validator;
@@ -22,7 +23,7 @@
 
     [Trait("FeatureTitle", "Property Activity")]
     [Collection("UpdateActivityCommandValidator")]
-    public class UpdateActivityCommandValidatorTests 
+    public class UpdateActivityCommandValidatorTests
     {
         [Theory]
         [AutoMoqData]
@@ -123,9 +124,43 @@
             validator.ShouldHaveChildValidator(x => x.ActivityStatusId, typeof(ActivityStatusValidator));
         }
 
+        [Theory]
+        [AutoMoqData]
+        public void Given_ExistingActivityIdInCommand_When_Validating_Then_ValidationPasses(
+            [Frozen]Mock<IGenericRepository<Activity>> activityRepository,
+            [Frozen]Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
+            UpdateActivityCommand command,
+            UpdateActivityCommandValidator validator)
+        {
+            enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
+            activityRepository.Setup(x => x.GetById(command.Id)).Returns(new Activity());
+
+            ValidationResult validationResult = validator.Validate(command);
+
+            validationResult.IsValid.Should().BeTrue();
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_NotExistingActivityIdInCommand_When_Validating_Then_ShouldReturnValidationError(
+            [Frozen]Mock<IGenericRepository<Activity>> activityRepository,
+            [Frozen]Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
+            UpdateActivityCommand command,
+            UpdateActivityCommandValidator validator)
+        {
+            enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
+            activityRepository.Setup(x => x.GetById(command.Id)).Returns((Activity)null);
+
+            ValidationResult validationResult = validator.Validate(command);
+
+            validationResult.IsValid.Should().BeFalse();
+            validationResult.Errors.Should().ContainSingle(x => x.ErrorMessage == "Activity does not exist.");
+            validationResult.Errors.Should().ContainSingle(x => x.PropertyName == nameof(command.Id));
+        }
+
         private void AssertIfNotNegativePriceValidation(
             Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            UpdateActivityCommand command, 
+            UpdateActivityCommand command,
             UpdateActivityCommandValidator validator,
             string propertyName)
         {
