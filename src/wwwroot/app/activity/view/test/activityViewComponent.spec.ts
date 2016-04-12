@@ -20,23 +20,24 @@ module Antares {
             },
             well: {
                 main: '#activity-view-well',
-                createdDate: '#activity-view-well-createdDate',
-                status: '#activity-view-well-activityStatus'
+                createdDate: '#activity-view-well #createdDate',
+                status: '#activity-view-well #activityStatus'
             },
             prices: {
                 main: '#activity-view-prices',
-                marketAppraisalPrice: '#activity-view-prices-marketAppraisalPrice',
-                recommendedPrice: '#activity-view-prices-recommendedPrice',
-                vendorEstimatedPrice: '#activity-view-prices-vendorEstimatedPrice'
+                marketAppraisalPrice: '#activity-view-prices #marketAppraisalPrice',
+                recommendedPrice: '#activity-view-prices #recommendedPrice',
+                vendorEstimatedPrice: '#activity-view-prices #vendorEstimatedPrice'
             },
-            propertyCard: {
-                main: 'card#activity-view-card-property'
+            property: {
+                card: '#activity-view-property card#card-property'
             },
             vendorList: {
-                main: 'list#list-vendors',
-                header: 'list-header',
-                noItems: 'list-no-items',
-                items: 'list-item'
+                list: "#activity-view-vendors list#list-vendors",
+                header: '#activity-view-vendors list#list-vendors list-header',
+                noItems: '#activity-view-vendors list#list-vendors list-no-items',
+                items: '#activity-view-vendors list#list-vendors list-item',
+                item: '#activity-view-vendors list#list-vendors list-item#list-item-'
             },
             propertyPreview: {
                 main: 'property-preview',
@@ -45,23 +46,7 @@ module Antares {
         };
 
         describe('when activity is loaded', () => {
-            var activityMock: Dto.IActivity = new Business.Activity(<Dto.IActivity>{
-                id : 'It1',
-                propertyId: '1',
-                property: {
-                    id: '1',
-                    propertyTypeId: '1',
-                    address: Antares.Mock.AddressForm.FullAddress,
-                    ownerships: [],
-                    activities: []
-                },
-                activityStatusId : '123',
-                createdDate: new Date('2011-01-01'),
-                contacts : [
-                    <Business.Contact>{ id : 'Contact1', firstName : 'John', surname : 'Test1', title : 'Mr' },
-                    <Business.Contact>{ id : 'Contact2', firstName : 'Amy', surname : 'Test2', title : 'Mrs' }
-                ]
-            });
+            var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
 
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
@@ -89,7 +74,7 @@ module Antares {
 
             it('then card component for property is set up', () => {
                 // assert
-                var cardElement = element.find(pageObjectSelectors.propertyCard.main);
+                var cardElement = element.find(pageObjectSelectors.property.card);
 
                 expect(cardElement.length).toBe(1);
                 expect(cardElement[0].getAttribute('card-template-url')).toBe("'app/property/templates/propertyCard.html'");
@@ -99,10 +84,10 @@ module Antares {
 
             it('then list component for vendors is set up', () => {
                 // assert
-                var listElement = element.find(pageObjectSelectors.vendorList.main),
-                    listHeaderElement = listElement.find(pageObjectSelectors.vendorList.header),
+                var listElement = element.find(pageObjectSelectors.vendorList.list),
+                    listHeaderElement = element.find(pageObjectSelectors.vendorList.header),
                     listHeaderElementContent = listHeaderElement.find('[translate="ACTIVITY.VIEW.VENDORS"]'),
-                    listNoItemsElement = listElement.find(pageObjectSelectors.vendorList.noItems),
+                    listNoItemsElement = element.find(pageObjectSelectors.vendorList.noItems),
                     listNoItemsElementContent = listNoItemsElement.find('[translate="ACTIVITY.VIEW.NO_VENDORS"]');
 
                 expect(listElement.length).toBe(1);
@@ -115,23 +100,28 @@ module Antares {
             it('then activity summary component for activity is displayed and should have proper data', () => {
                 // assert
                 var wellElement = element.find(pageObjectSelectors.well.main);
-                var createdDateElement = wellElement.find(pageObjectSelectors.well.createdDate);
-                var activityStatusElement = wellElement.find(pageObjectSelectors.well.status);
+                var createdDateElement = element.find(pageObjectSelectors.well.createdDate);
+                var activityStatusElement = element.find(pageObjectSelectors.well.status);
 
                 var formattedDate = filter('date')(activityMock.createdDate, 'dd-MM-yyyy');
                 expect(wellElement.length).toBe(1);
                 expect(createdDateElement.length).toBe(1);
                 expect(createdDateElement.text()).toBe(formattedDate);
                 expect(activityStatusElement.length).toBe(1);
-                expect(activityStatusElement.text()).toBe('ENUMS.123');
+                expect(activityStatusElement.text()).toBe('ENUMS.' + activityMock.activityStatusId);
             });
 
             it('and valuation prices are null then valuation prices for activity are not displayed', () => {
+                // arrange / act
+                controller.activity.marketAppraisalPrice = null;
+                controller.activity.recommendedPrice = null;
+                controller.activity.vendorEstimatedPrice = null;
+
                 // assert
                 var pricesElement = element.find(pageObjectSelectors.prices.main);
-                var marketAppraisalPriceElement = pricesElement.find(pageObjectSelectors.prices.marketAppraisalPrice);
-                var recomendedPriceElement = pricesElement.find(pageObjectSelectors.prices.recommendedPrice);
-                var vendorEstimatedPriceElement = pricesElement.find(pageObjectSelectors.prices.vendorEstimatedPrice);
+                var marketAppraisalPriceElement = element.find(pageObjectSelectors.prices.marketAppraisalPrice);
+                var recomendedPriceElement = element.find(pageObjectSelectors.prices.recommendedPrice);
+                var vendorEstimatedPriceElement = element.find(pageObjectSelectors.prices.vendorEstimatedPrice);
 
                 expect(pricesElement.length).toBe(1);
                 expect(marketAppraisalPriceElement.length).toBe(0);
@@ -141,24 +131,24 @@ module Antares {
 
             it('and valuation prices are not null then valuation prices for activity are displayed and should have proper data', () => {
                 // arrange / act
-                controller.activity.marketAppraisalPrice = 11;
-                controller.activity.recommendedPrice = 13;
-                controller.activity.vendorEstimatedPrice = 12;
+                controller.activity.marketAppraisalPrice = 99;
+                controller.activity.recommendedPrice = 1.1;
+                controller.activity.vendorEstimatedPrice = 55.05;
                 scope.$apply();
 
                 // assert
                 var pricesElement = element.find(pageObjectSelectors.prices.main);
-                var marketAppraisalPriceElement = pricesElement.find(pageObjectSelectors.prices.marketAppraisalPrice);
-                var recomendedPriceElement = pricesElement.find(pageObjectSelectors.prices.recommendedPrice);
-                var vendorEstimatedPriceElement = pricesElement.find(pageObjectSelectors.prices.vendorEstimatedPrice);
+                var marketAppraisalPriceElement = element.find(pageObjectSelectors.prices.marketAppraisalPrice);
+                var recomendedPriceElement = element.find(pageObjectSelectors.prices.recommendedPrice);
+                var vendorEstimatedPriceElement = element.find(pageObjectSelectors.prices.vendorEstimatedPrice);
 
                 expect(pricesElement.length).toBe(1);
                 expect(marketAppraisalPriceElement.length).toBe(1);
-                expect(marketAppraisalPriceElement.text()).toBe('11.00 GBP');
+                expect(marketAppraisalPriceElement.text()).toBe('99.00 GBP');
                 expect(recomendedPriceElement.length).toBe(1);
-                expect(recomendedPriceElement.text()).toBe('13.00 GBP');
+                expect(recomendedPriceElement.text()).toBe('1.10 GBP');
                 expect(vendorEstimatedPriceElement.length).toBe(1);
-                expect(vendorEstimatedPriceElement.text()).toBe('12.00 GBP');
+                expect(vendorEstimatedPriceElement.text()).toBe('55.05 GBP');
             });
         });
 
@@ -181,21 +171,7 @@ module Antares {
 
             it('when no vendors then "no items" element should be visible', () => {
                 // arrange
-                var activityMock: Dto.IActivity = new Business.Activity(<Dto.IActivity>{
-                    id: 'It1',
-                    propertyId: '1',
-                    property: {
-                        id: '1',
-                        propertyTypeId: '1',
-                        address: Antares.Mock.AddressForm.FullAddress,
-                        ownerships: [],
-                        activities: []
-                    },
-                    activityStatusId: '123',
-                    createdDate: new Date('2011-01-01'),
-                    contacts: []
-                });
-
+                var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate({ contacts: [] });
                 scope['activity'] = activityMock;
 
                 // act
@@ -204,9 +180,8 @@ module Antares {
                 $http.flush();
 
                 // assert
-                var listElement = element.find(pageObjectSelectors.vendorList.main);
-                var noItemsElement = listElement.find(pageObjectSelectors.vendorList.noItems);
-                var listItemElements = listElement.find(pageObjectSelectors.vendorList.items);
+                var noItemsElement = element.find(pageObjectSelectors.vendorList.noItems);
+                var listItemElements = element.find(pageObjectSelectors.vendorList.items);
 
                 expect(noItemsElement.hasClass('ng-hide')).toBeFalsy();
                 expect(listItemElements.length).toBe(0);
@@ -214,25 +189,9 @@ module Antares {
 
             it('when existing vendors then list item components should be visible', () => {
                 // arrange
-                var createdDateMock = new Date('2011-01-01');
-                var activityMock: Dto.IActivity = new Business.Activity(<Dto.IActivity>{
-                    id: 'It1',
-                    propertyId: '1',
-                    property: {
-                        id: '1',
-                        propertyTypeId: '1',
-                        address: Antares.Mock.AddressForm.FullAddress,
-                        ownerships: [],
-                        activities: []
-                    },
-                    activityStatusId: '123',
-                    createdDate: createdDateMock,
-                    contacts: [
-                        <Business.Contact>{ id: 'Contact1', firstName: 'John', surname: 'Test1', title: 'Mr' },
-                        <Business.Contact>{ id: 'Contact2', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }
-                    ]
-                });
-
+                var contact1Mock = TestHelpers.ContactGenerator.generate();
+                var contact2Mock = TestHelpers.ContactGenerator.generate();
+                var activityMock = TestHelpers.ActivityGenerator.generate({ contacts: [contact1Mock, contact2Mock] });
                 scope['activity'] = activityMock;
 
                 // act
@@ -241,9 +200,8 @@ module Antares {
                 $http.flush();
 
                 // assert
-                var listElement = element.find(pageObjectSelectors.vendorList.main);
-                var noItemsElement = listElement.find(pageObjectSelectors.vendorList.noItems);
-                var listItemElements = listElement.find(pageObjectSelectors.vendorList.items);
+                var noItemsElement = element.find(pageObjectSelectors.vendorList.noItems);
+                var listItemElements = element.find(pageObjectSelectors.vendorList.items);
 
                 expect(noItemsElement.hasClass('ng-hide')).toBeTruthy();
                 expect(listItemElements.length).toBe(2);
@@ -251,24 +209,9 @@ module Antares {
 
             it('when existing vendors then list item components should have proper data', () => {
                 // arrange
-                var activityMock: Dto.IActivity = new Business.Activity(<Dto.IActivity>{
-                    id: 'It1',
-                    propertyId: '1',
-                    property: {
-                        id: '1',
-                        propertyTypeId: '1',
-                        address: Antares.Mock.AddressForm.FullAddress,
-                        ownerships: [],
-                        activities: []
-                    },
-                    activityStatusId: '123',
-                    createdDate: new Date('2011-01-01'),
-                    contacts: [
-                        <Business.Contact>{ id: 'Contact1', firstName: 'John', surname: 'Test1', title: 'Mr' },
-                        <Business.Contact>{ id: 'Contact2', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }
-                    ]
-                });
-
+                var contact1Mock = TestHelpers.ContactGenerator.generate();
+                var contact2Mock = TestHelpers.ContactGenerator.generate();
+                var activityMock = TestHelpers.ActivityGenerator.generate({ contacts: [contact1Mock, contact2Mock] });
                 scope['activity'] = activityMock;
 
                 // act
@@ -277,35 +220,15 @@ module Antares {
                 $http.flush();
 
                 // assert
-                var listElement = element.find(pageObjectSelectors.vendorList.main);
-                var listItemElement1 = listElement.find(pageObjectSelectors.vendorList.items + '#list-item-vendor-Contact1');
-                var listItemElement2 = listElement.find(pageObjectSelectors.vendorList.items + '#list-item-vendor-Contact2');
+                var vendorsItemsElement1 = element.find(pageObjectSelectors.vendorList.item + contact1Mock.id);
+                var vendorsItemsElement2 = element.find(pageObjectSelectors.vendorList.item + contact2Mock.id);
 
-                expect(listItemElement1.text()).toBe('John Test1');
-                expect(listItemElement2.text()).toBe('Amy Test2');
-
+                expect(vendorsItemsElement1[0].innerText).toBe(contact1Mock.getName());
+                expect(vendorsItemsElement2[0].innerText).toBe(contact2Mock.getName());
             });
         });
 
         describe('and property is loaded', () =>{
-            var activityMock: Dto.IActivity = new Business.Activity(<Dto.IActivity>{
-                id : 'It1',
-                propertyId : '1',
-                property : {
-                    id : '1',
-                    propertyTypeId : '1',
-                    address : Antares.Mock.AddressForm.FullAddress,
-                    ownerships : [],
-                    activities : []
-                },
-                activityStatusId : '123',
-                createdDate: new Date('2011-01-01'),
-                contacts : [
-                    <Business.Contact>{ id : 'Contact1', firstName : 'John', surname : 'Test1', title : 'Mr' },
-                    <Business.Contact>{ id : 'Contact2', firstName : 'Amy', surname : 'Test2', title : 'Mrs' }
-                ]
-            });
-
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
@@ -321,7 +244,7 @@ module Antares {
                 scope = $rootScope.$new();
                 compile = $compile;
 
-                scope['activity'] = activityMock;
+                scope['activity'] = TestHelpers.ActivityGenerator.generate({ contacts: [] });
                 element = compile('<activity-view activity="activity"></activity-view>')(scope);
 
                 scope.$apply();
@@ -330,7 +253,7 @@ module Antares {
 
             it('when existing property then property card should have address element visible', () => {
                 // assert
-                var cardElement = element.find(pageObjectSelectors.propertyCard.main);
+                var cardElement = element.find(pageObjectSelectors.property.card);
                 var addressElement = cardElement.find(pageObjectSelectors.common.address);
 
                 expect(addressElement.length).toBe(1);
@@ -339,24 +262,6 @@ module Antares {
         });
 
         describe('and property details is clicked', () => {
-            var activityMock: Dto.IActivity = new Business.Activity(<Dto.IActivity>{
-                id: 'It1',
-                propertyId: '1',
-                property: {
-                    id: '1',
-                    propertyTypeId: '1',
-                    address: Antares.Mock.AddressForm.FullAddress,
-                    ownerships: [],
-                    activities: []
-                },
-                activityStatusId: '123',
-                createdDate: new Date('2011-01-05'),
-                contacts: [
-                    <Business.Contact>{ id: 'Contact1', firstName: 'John', surname: 'Test1', title: 'Mr' },
-                    <Business.Contact>{ id: 'Contact2', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }
-                ]
-            });
-
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
@@ -372,7 +277,7 @@ module Antares {
                 scope = $rootScope.$new();
                 compile = $compile;
 
-                scope['activity'] = activityMock;
+                scope['activity'] = TestHelpers.ActivityGenerator.generate({ contacts: [] });
                 element = compile('<activity-view activity="activity"></activity-view>')(scope);
 
                 scope.$apply();
@@ -381,7 +286,7 @@ module Antares {
 
             it('then property preview are visible on property preview panel', () => {
                 // act
-                var cardElement = element.find(pageObjectSelectors.propertyCard.main);
+                var cardElement = element.find(pageObjectSelectors.property.card);
                 cardElement.find(pageObjectSelectors.common.detailsLink).click();
 
                 // assert

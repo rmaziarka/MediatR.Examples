@@ -30,7 +30,6 @@
         private readonly Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository;
         private readonly Mock<IGenericRepository<Ownership>> ownershipRepository;
         private readonly Mock<IGenericRepository<Property>> propertyRepository;
-        private readonly Mock<IGenericRepository<Contact>> contactRepository;
 
         private readonly IFixture fixture;
         
@@ -59,8 +58,8 @@
             this.propertyRepository = this.fixture.Freeze<Mock<IGenericRepository<Property>>>();
             this.propertyRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new Property());
 
-            this.contactRepository = this.fixture.Freeze<Mock<IGenericRepository<Contact>>>();
-            this.contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(new List<Contact>()
+            var contactRepository = this.fixture.Freeze<Mock<IGenericRepository<Contact>>>();
+            contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(new List<Contact>
             {
                 new Contact()
             }.AsQueryable());
@@ -72,7 +71,7 @@
         public void Given_ClosedPeriodsDoNotOverlap_When_Validating_Then_NoValidationErrors()
         {
             this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>()))
-                .Returns(new List<Ownership>()
+                .Returns(new List<Ownership>
                 {
                     this.fixture.BuildOwnership(new DateTime(1980, 1, 1), new DateTime(1990, 1, 1)),
                     this.fixture.BuildOwnership(new DateTime(2010, 1, 1), new DateTime(2015, 1, 1))
@@ -87,7 +86,7 @@
         public void Given_OpenPreviousPeriodDoNotOverlap_When_Validating_Then_NoValidationErrors()
         {
             this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>()))
-                               .Returns(new List<Ownership>()
+                               .Returns(new List<Ownership>
                                {
                                    this.fixture.BuildOwnership(null, new DateTime(1990, 1, 1))
                                }.AsQueryable());
@@ -100,7 +99,7 @@
         [Fact]
         public void Given_OpenNextPeriodDoNotOverlap_When_Validating_Then_NoValidationErrors()
         {
-            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>())).Returns(new List<Ownership>()
+            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>())).Returns(new List<Ownership>
             {
                 this.fixture.BuildOwnership(new DateTime(2010, 1, 1))
             }.AsQueryable());
@@ -113,7 +112,7 @@
         [Fact]
         public void Given_OpenPreviousPeriodOverlap_When_Validating_Then_ValidationErrors()
         {
-            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>())).Returns(new List<Ownership>()
+            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>())).Returns(new List<Ownership>
             {
                 this.fixture.BuildOwnership(null, new DateTime(2005, 1, 1))
             }.AsQueryable());
@@ -124,7 +123,7 @@
         [Fact]
         public void Given_OpenNextPeriodOverlap_When_Validating_Then_ValidationErrors()
         {
-            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>())).Returns(new List<Ownership>()
+            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>())).Returns(new List<Ownership>
             {
                 this.fixture.BuildOwnership(new DateTime(2005, 1, 1))
             }.AsQueryable());
@@ -135,7 +134,7 @@
         [Fact]
         public void Given_OpenPeriodOverlap_When_Validating_Then_ValidationErrors()
         {
-            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>())).Returns(new List<Ownership>()
+            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>())).Returns(new List<Ownership>
             {
                 this.fixture.BuildOwnership()
             }.AsQueryable());
@@ -146,7 +145,7 @@
         [Fact]
         public void Given_ClosedPreviousPeriodOverlap_When_Validating_Then_ValidationErrors()
         {
-            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>())).Returns(new List<Ownership>()
+            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>())).Returns(new List<Ownership>
             {
                 this.fixture.BuildOwnership(new DateTime(1990, 1, 1), new DateTime(2005, 1, 1))
             }.AsQueryable());
@@ -157,7 +156,7 @@
         [Fact]
         public void Given_ClosedNextPeriodOverlap_When_Validating_Then_ValidationErrors()
         {
-            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>())).Returns(new List<Ownership>()
+            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>())).Returns(new List<Ownership>
             {
                 this.fixture.BuildOwnership(new DateTime(2005, 1, 1), new DateTime(2020, 1, 1))
             }.AsQueryable());
@@ -168,7 +167,7 @@
         [Fact]
         public void Given_ClosedInternalPeriodOverlap_When_Validating_Then_ValidationErrors()
         {
-            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>())).Returns(new List<Ownership>()
+            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>())).Returns(new List<Ownership>
             {
                 this.fixture.BuildOwnership(new DateTime(2006, 1, 1), new DateTime(2007, 1, 1))
             }.AsQueryable());
@@ -179,7 +178,7 @@
         [Fact]
         public void Given_ClosedExternalPeriodOverlap_When_Validating_Then_ValidationErrors()
         {
-            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>())).Returns(new List<Ownership>()
+            this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>())).Returns(new List<Ownership>
             {
                 this.fixture.BuildOwnership(new DateTime(1999, 1, 1), new DateTime(2011, 1, 1))
             }.AsQueryable());
@@ -191,15 +190,15 @@
         public void Given_IncorrectOwnershipType_When_Validating_Then_ValidationErrors()
         {
             this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>()))
-                .Returns(new List<Ownership>()
+                .Returns(new List<Ownership>
                 {
                     this.fixture.BuildOwnership(new DateTime(1980, 1, 1), new DateTime(1990, 1, 1)),
                     this.fixture.BuildOwnership(new DateTime(2010, 1, 1), new DateTime(2015, 1, 1))
                 });
 
-            this.enumTypeItemRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<EnumTypeItem, bool>>>(), It.IsAny<Expression<Func<EnumTypeItem, object>>>())).Returns(new List<EnumTypeItem> { new EnumTypeItem()
+            this.enumTypeItemRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<EnumTypeItem, bool>>>(), It.IsAny<Expression<Func<EnumTypeItem, object>>>())).Returns(new List<EnumTypeItem> { new EnumTypeItem
             {
-                EnumType = new EnumType() { Code = this.fixture.Create<string>() }
+                EnumType = new EnumType { Code = this.fixture.Create<string>() }
             }});
 
             TestIncorrectCommand(this.validator, this.command, nameof(this.command.OwnershipTypeId));
@@ -209,13 +208,13 @@
         public void Given_NullOwnershipType_When_Validating_Then_ValidationErrors()
         {
             this.ownershipRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Ownership, bool>>>()))
-                .Returns(new List<Ownership>()
+                .Returns(new List<Ownership>
                 {
                     this.fixture.BuildOwnership(new DateTime(1980, 1, 1), new DateTime(1990, 1, 1)),
                     this.fixture.BuildOwnership(new DateTime(2010, 1, 1), new DateTime(2015, 1, 1))
                 });
 
-            this.enumTypeItemRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<EnumTypeItem, bool>>>(), It.IsAny<Expression<Func<EnumTypeItem, object>>>())).Returns(new List<EnumTypeItem> { new EnumTypeItem()
+            this.enumTypeItemRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<EnumTypeItem, bool>>>(), It.IsAny<Expression<Func<EnumTypeItem, object>>>())).Returns(new List<EnumTypeItem> { new EnumTypeItem
             {
                 EnumType = null
             }});
@@ -236,7 +235,7 @@
         {
             Expression<Func<IGenericRepository<Property>, Property>> expression = x => x.GetById(this.command.PropertyId);
             this.propertyRepository.Setup(expression)
-                .Returns(new Property() { Id = this.command.PropertyId });
+                .Returns(new Property { Id = this.command.PropertyId });
 
             ValidationResult validationResult = this.validator.Validate(this.command);
 

@@ -12,7 +12,9 @@ module Antares.TestHelpers {
                 propertyTypeId: PropertyGenerator.makeRandom('propertyTypeId'),
                 address: Mock.AddressForm.FullAddress,
                 ownerships: [],
-                activities: []
+                activities: [],
+                divisionId: PropertyGenerator.makeRandom('divisionId'),
+                division: null
             };
 
             return propertyMock;

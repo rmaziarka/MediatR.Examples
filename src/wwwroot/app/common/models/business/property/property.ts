@@ -6,6 +6,8 @@
         address: Business.Address = new Business.Address();
         ownerships: Business.Ownership[] = [];
         activities: Business.Activity[] = [];
+        divisionId: string = null;
+        division: Business.EnumTypeItem = new Business.EnumTypeItem();
 
         constructor(property?: Dto.IProperty)
         {

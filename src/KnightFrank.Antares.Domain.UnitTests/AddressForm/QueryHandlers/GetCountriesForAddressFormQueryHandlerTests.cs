@@ -60,7 +60,7 @@
             var query = this.fixture.BuildGetCountriesForAddressFormQuery(entityTypeCode, null);
 
             // Act + Assert
-            Assert.Throws<DomainValidationException>(() => this.handler.Handle(query)).Message.Should().Be("message.EntityType");
+            Assert.Throws<DomainValidationException>(() => this.handler.Handle(query)).Errors.Should().Contain(e => e.PropertyName == nameof(query.EntityTypeItemCode));
         }
 
         [Theory]

@@ -15,6 +15,7 @@
     using KnightFrank.Antares.Domain.AddressForm.QueryResults;
     using KnightFrank.Antares.Domain.AddressForm.Specifications;
     using KnightFrank.Antares.Domain.Common.Exceptions;
+    using KnightFrank.Antares.Domain.Enum.Specifications;
 
     using MediatR;
 
@@ -38,21 +39,24 @@
 
         public AddressFormQueryResult Handle(AddressFormQuery message)
         {
-            // TODO custom exception
             Country country = this.countryRepository.Get().SingleOrDefault(c => c.IsoCode == message.CountryCode);
 
             if (country == null)
             {
-                throw new DomainValidationException("message.CountryCode");
+                throw new DomainValidationException(nameof(message.CountryCode));
             }
 
             EnumTypeItem enumTypeItem =
-                this.enumTypeItemRepository.Get()
-                    .SingleOrDefault(i => i.Code == message.EntityType && i.EnumType.Code == "EntityType");
+                this.enumTypeItemRepository
+                    .Get()
+                    .Where(i => i.Code == message.EntityType)
+                    .Where(new IsEntityType().SatisfiedBy())
+                    .SingleOrDefault();
+
 
             if (enumTypeItem == null)
             {
-                throw new DomainValidationException("message.EntityType");
+                throw new DomainValidationException(nameof(message.EntityType));
             }
 
             Specification<AddressForm> isDefinedForEntityTypeSpecification =

@@ -4,8 +4,5 @@
 
     internal class AttributeConfiguration : BaseEntityConfiguration<Attribute>
     {
-        public AttributeConfiguration()
-        {
-        }
     }
 }

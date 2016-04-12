@@ -11,19 +11,18 @@ module Antares.Property {
         private propertyResource: Common.Models.Resources.IPropertyResourceClass;
         private propertyTypes: any[];
         private userData: Antares.Common.Models.Dto.IUserData;
-        private divisionCode: string;
 
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService) {
 
-            this.divisionCode = this.userData.division.code;
+            this.property.division.code = this.userData.division.code;
             this.propertyResource = dataAccessService.getPropertyResource();
             this.loadPropertyTypes();
         }
 
         changeDivision = (divisionCode: string) => {
-            this.divisionCode = divisionCode;
+            this.property.division.code = divisionCode;
             this.property.propertyTypeId = null;
             this.loadPropertyTypes();
         }
@@ -31,7 +30,7 @@ module Antares.Property {
         loadPropertyTypes = () => {
             this.propertyResource
                 .getPropertyTypes({
-                    countryCode: this.userData.country, divisionCode: this.divisionCode, localeCode: 'en'
+                    countryCode: this.userData.country, divisionCode: this.property.division.code, localeCode: 'en'
                 }, null)
                 .$promise
                 .then((propertyTypes: any) => {

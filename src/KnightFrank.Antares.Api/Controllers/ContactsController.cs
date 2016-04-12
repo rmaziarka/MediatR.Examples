@@ -56,7 +56,7 @@
         [Route("{id}")]
         public Contact GetContact(Guid id)
         {
-            var query =  new ContactQuery() { Id = id};
+            var query =  new ContactQuery { Id = id};
 
             Contact contact = this.mediator.Send(query);
 

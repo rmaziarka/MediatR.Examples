@@ -87,7 +87,7 @@
         {
             var joinResult =
                 addressFieldDefinitions.Join(addressFields, p => p.AddressField.Name, pi => pi.Key,
-                    (p, pi) => new { AddressFieldDefinition = p, Value = pi.Value }).ToList();
+                    (p, pi) => new { AddressFieldDefinition = p, pi.Value }).ToList();
 
             bool isInconsistencyBetweenQueryAndDb = joinResult.Count != addressFieldDefinitions.Count;
 

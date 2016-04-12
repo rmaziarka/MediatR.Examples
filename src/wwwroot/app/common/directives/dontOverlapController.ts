@@ -13,7 +13,7 @@ module Antares.Common.Directive {
         highestDate: Date = new Date(9999, 1, 1);
         getMin = (value?: Date): Date => this.hasMinAttr || !value ? this.minValue : value;
         getMax = (value?: Date): Date => this.hasMaxAttr || !value ? this.maxValue : value;
-        isSameDay = (rangeMin, rangeMax, min, max) => {
+        isSameDay = (rangeMin:Date, rangeMax:Date, min:Date, max:Date) => {
             return (rangeMin.getTime() === rangeMax.getTime()
                 && min
                 && max

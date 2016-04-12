@@ -37,7 +37,7 @@ module Antares.Services {
             }
         };
 
-        
+
         getCompanyResource(): Resources.IBaseResourceClass<Resources.ICompanyResource> {
             return <Resources.IBaseResourceClass<Resources.ICompanyResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/companies/:id');
@@ -87,9 +87,11 @@ module Antares.Services {
                 this.$resource('/translations/:isoCode.json');
         }
 
-        getActivityResource(): Resources.IBaseResourceClass<Resources.IActivityResource> {
+        getActivityResource(): Resources.IBaseResourceClass<Resources.IActivityResource>{
             return <Resources.IBaseResourceClass<Resources.IActivityResource>>
-                this.$resource(this.appConfig.rootUrl + '/api/activities/:id');
+                this.$resource(this.appConfig.rootUrl + '/api/activities/:id', null, {
+                    update : this.updateAction
+                });
         }
     }
 

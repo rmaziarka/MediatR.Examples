@@ -27,9 +27,9 @@
 
         private ValidationFailure ActivityIdExists(UpdateActivityCommand command)
         {
-            Activity activity = this.activityRepository.GetById(command.ActivityId);
+            Activity activity = this.activityRepository.GetById(command.Id);
 
-            return activity == null ? new ValidationFailure(nameof(command.ActivityId), "Activity does not exist.") : null;
+            return activity == null ? new ValidationFailure(nameof(command.Id), "Activity does not exist.") : null;
         }
     }
 }

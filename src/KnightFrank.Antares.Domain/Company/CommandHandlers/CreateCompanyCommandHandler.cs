@@ -16,6 +16,7 @@
     using KnightFrank.Antares.Domain.Company.Command;
 
     using MediatR;
+
     public class CreateCompanyCommandHandler : IRequestHandler<CreateCompanyCommand, Guid>
     {
         private readonly IGenericRepository<Company> companyRepository;
@@ -35,7 +36,7 @@
             ValidationResult validationResult = this.domainValidator.Validate(message);
             if (!validationResult.IsValid)
             {
-                throw new DomainValidationException(string.Join(", ", validationResult.Errors.Select(x => x.ErrorMessage)));
+                throw new DomainValidationException(validationResult.Errors);
             }
 
             var company = Mapper.Map<Company>(message);

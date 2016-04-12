@@ -26,17 +26,26 @@ module Antares {
                         return isValid;
                     }
 
-                    ngModel.$validators['kfMaxDate'] = (modelValue: string) => {
+                    var validateDate = (modelValue: string) => {
 
                         if (modelValue === null || modelValue === '') {
-                            return setValidation(true);
+                            setValidation(true);
+                            return modelValue;
                         }
 
                         var modelDate = Antares.Core.DateTimeUtils.convertDateToUtc(modelValue);
                         var isValid = modelDate <= maxAllowedDate;
 
-                        return setValidation(isValid);
+                        setValidation(isValid);
+                        return modelValue;
                     }
+
+                    ngModel.$parsers.push(validateDate);
+                    ngModel.$formatters.push(validateDate);
+                    attrs.$observe('kfMaxDate', () => {
+                        validateDate(ngModel.$viewValue);
+
+                    });
                 };
 
                 static factory() {
@@ -56,10 +65,10 @@ module Antares {
 
 namespace Antares.Common.Directive {
 
-    var isValidDate = function(dateStr) {
-        if (dateStr == undefined)
+    var isValidDate = (date: Date): boolean => {
+        if (date == undefined)
             return false;
-        var dateTime = Date.parse(dateStr);
+        var dateTime: number = Date.parse(date.toString());
 
         if (isNaN(dateTime)) {
             return false;
@@ -67,18 +76,18 @@ namespace Antares.Common.Directive {
         return true;
     };
 
-    var getDateDifference = function(fromDate, toDate) {
-        return Date.parse(toDate) - Date.parse(fromDate);
+    var getDateDifference = (fromDate: Date, toDate: Date): number => {
+        return Date.parse(toDate.toDateString()) - Date.parse(fromDate.toDateString());
     };
 
-    var isValidDateRange = function(fromDate, toDate) {
-        if (fromDate == "" || toDate == "")
+    var isValidDateRange = (fromDate: Date, toDate: Date): boolean => {
+        if (!fromDate || !toDate)
             return true;
         if (isValidDate(fromDate) == false) {
             return false;
         }
         if (isValidDate(toDate) == true) {
-            var days = getDateDifference(fromDate, toDate);
+            var days: number = getDateDifference(fromDate, toDate);
             if (days < 0) {
                 return false;
             }
@@ -87,40 +96,39 @@ namespace Antares.Common.Directive {
     };
 
     export class DateGreaterThan {
-        require = 'ngModel';
+        require: string = 'ngModel';
 
-        constructor() {
+        constructor(private $filter: ng.IFilterService, private uibDateParser: any) {
 
         }
-        link = function(scope, element, attrs, ctrl) {
+        link = (scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ctrl: ng.IControllerService) => {
             var ngModel: ng.INgModelController = element.controller('ngModel');
-            var validateDateRange = function(inputValue) {
+            var validateDateRange = (inputValue: string): string => {
 
-                if (!inputValue || !attrs.dateGreaterThan) {
+                if (!inputValue || !attrs['dateGreaterThan']) {
                     ngModel.$setValidity('dateGreaterThan', true);
-                    return true;
+                    return inputValue;
                 }
 
-                var fromDate = Antares.Core.DateTimeUtils.createDateAsUtc(attrs.dateGreaterThan);
-                var toDate = Antares.Core.DateTimeUtils.createDateAsUtc(inputValue);
-                var isValid = isValidDateRange(fromDate, toDate);
+                var fromDate: Date = Antares.Core.DateTimeUtils.createDateAsUtc(attrs['dateGreaterThan']);
+                var toDate: Date = this.uibDateParser.parse(inputValue, 'dd-MM-yyyy', 0);
+                var isValid: boolean = isValidDateRange(fromDate, toDate);
                 ngModel.$setValidity('dateGreaterThan', isValid);
                 return inputValue;
             };
 
-            ngModel.$parsers.unshift(validateDateRange);
+            ngModel.$parsers.push(validateDateRange);
             ngModel.$formatters.push(validateDateRange);
-            attrs.$observe('dateGreaterThan', function() {
+            attrs.$observe('dateGreaterThan', () => {
                 validateDateRange(ngModel.$viewValue);
-
             });
         }
         static factory() {
-            var directive = () => {
-                return new DateGreaterThan();
+            var directive = ($filter: ng.IFilterService, uibDateParser: any): DateGreaterThan => {
+                return new DateGreaterThan($filter, uibDateParser);
             };
 
-            directive['$inject'] = [];
+            directive['$inject'] = ["$filter", "uibDateParser"];
             return directive;
         }
     }
@@ -128,44 +136,41 @@ namespace Antares.Common.Directive {
     angular.module('app').directive('dateGreaterThan', DateGreaterThan.factory());
 
     export class DateLowerThan {
-        constructor() {
-
+        constructor(private $filter: ng.IFilterService, private uibDateParser: any) {
         }
-        require = 'ngModel';
-        link = function(scope, element, attrs, ctrl) {
-            var ngModel: ng.INgModelController = element.controller('ngModel');
-            var validateDateRange = function(inputValue) {
-                
-                
-                if (!inputValue || !attrs.dateLowerThan) {
-                    ngModel.$setValidity('dateLowerThan', true);
-                    return true;
-                }
 
-                var fromDate = Antares.Core.DateTimeUtils.createDateAsUtc(inputValue);
-                var toDate = Antares.Core.DateTimeUtils.createDateAsUtc(attrs.dateLowerThan);
+        require = 'ngModel';
+        link = (scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ctrl: ng.IControllerService) => {
+            var ngModel: ng.INgModelController = element.controller('ngModel');
+            var validateDateRange = (inputValue: string) => {
+
+                if (!inputValue || !attrs['dateLowerThan']) {
+                    ngModel.$setValidity('dateLowerThan', true);
+                    return inputValue;
+                }
+                var fromDate = this.uibDateParser.parse(inputValue, 'dd-MM-yyyy', 0);
+                var toDate = Antares.Core.DateTimeUtils.createDateAsUtc(attrs['dateLowerThan']);
                 var isValid = isValidDateRange(fromDate, toDate);
                 ngModel.$setValidity('dateLowerThan', isValid);
                 return inputValue;
             };
 
-            ngModel.$parsers.unshift(validateDateRange);
+            ngModel.$parsers.push(validateDateRange);
             ngModel.$formatters.push(validateDateRange);
             attrs.$observe('dateLowerThan', function() {
                 validateDateRange(ngModel.$viewValue);
-
             });
         }
-          static factory() {
-            var directive = () => {
-                return new DateLowerThan();
+
+        static factory() {
+            var directive = ($filter: ng.IFilterService, uibDateParser: any) => {
+                return new DateLowerThan($filter, uibDateParser);
             };
 
-            directive['$inject'] = [];
+            directive['$inject'] = ["$filter", "uibDateParser"];
             return directive;
         }
     }
 
-    angular.module('app').directive('dateLowerThan',DateLowerThan.factory())
-
+    angular.module('app').directive('dateLowerThan', DateLowerThan.factory());
 }

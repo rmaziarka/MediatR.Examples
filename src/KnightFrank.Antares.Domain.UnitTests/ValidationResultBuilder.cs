@@ -8,7 +8,7 @@ namespace KnightFrank.Antares.Domain.UnitTests
     {
         public static ValidationResult BuildValidationResult(string propertyName = null, string error = null)
         {
-            return new ValidationResult(new List<ValidationFailure>() { new ValidationFailure(propertyName, error) });
+            return new ValidationResult(new List<ValidationFailure> { new ValidationFailure(propertyName, error) });
         }
     }
 }

@@ -3,6 +3,9 @@
 @Property
 Scenario Outline: Create property
 	Given User gets GB address form for Property and country details
+        And User gets EnumTypeItemId and EnumTypeItem code
+			| enumTypeCode  | enumTypeItemCode |
+			| Division      | Commercial       |
 		And Address for add/update property is defined with max length fields
         And User gets <propertyType> for PropertyType
 	When User creates property with defined address by Api
@@ -20,6 +23,9 @@ Scenario Outline: Create property
 @Property
 Scenario Outline: Create property with invalid data
 	Given User gets <country> address form for <itemType> and country details
+        And User gets EnumTypeItemId and EnumTypeItem code
+			| enumTypeCode  | enumTypeItemCode |
+			| Division      | Commercial       |
 		And Address for add/update property is defined
 			| PropertyName | PropertyNumber | Line2           | Line3 | Postcode   | City | County |
 			| updated abc  | 2              | 55 Baker Street |       | <postCode> |      |        |
@@ -37,9 +43,11 @@ Scenario Outline: Create property with invalid data
 	| GB      | Property | 777         | invalid      | BadRequest |
 
 @Property
-@ignore
 Scenario Outline: Update property
 	Given User gets GB address form for Property and country details
+        And User gets EnumTypeItemId and EnumTypeItem code
+			| enumTypeCode  | enumTypeItemCode |
+			| Division      | Commercial       |
         And User gets <propertyType1> for PropertyType
 		And Property with Address is in data base
 			| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
@@ -62,6 +70,9 @@ Scenario Outline: Update property
 @Property
 Scenario Outline: Update property with invalid data
 	Given User gets GB address form for Property and country details
+        And User gets EnumTypeItemId and EnumTypeItem code
+			| enumTypeCode  | enumTypeItemCode |
+			| Division      | Commercial       |
         And User gets House for PropertyType
 		And Property with Address is in data base
 			| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
@@ -99,6 +110,7 @@ Scenario: Get property
 			| enumTypeCode   | enumTypeItemCode |
 			| OwnershipType  | Freeholder       |
 			| ActivityStatus | PreAppraisal     |
+			| Division       | Commercial       |
         And Property with Address is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |  

@@ -5,7 +5,7 @@ module Antares.TestHelpers {
     import Business = Common.Models.Business;
 
     export class ActivityGenerator {
-        public static generateDto(): Dto.IActivity {
+        public static generateDto(specificData?: any): Dto.IActivity {
 
             var activity: Dto.IActivity = {
                 activityStatusId: ActivityGenerator.makeRandom('activityStatusId'),
@@ -13,10 +13,10 @@ module Antares.TestHelpers {
                 createdDate: new Date(),
                 id: ActivityGenerator.makeRandom('id'),
                 property: PropertyGenerator.generate(),
-                propertyId: ActivityGenerator.makeRandom('propertyId')
+                propertyId: ActivityGenerator.makeRandom('propertyId'),
             }
 
-            return activity;
+            return angular.extend(activity, specificData || {});
         }
 
         public static generateManyDtos(n: number): Dto.IActivity[] {
@@ -27,8 +27,8 @@ module Antares.TestHelpers {
             return _.map<Dto.IActivity, Business.Activity>(ActivityGenerator.generateManyDtos(n), (activity: Dto.IActivity) => { return new Business.Activity(activity); });
         }
 
-        public static generate(): Business.Activity {
-            return new Business.Activity(ActivityGenerator.generateDto());
+        public static generate(specificData?: any): Business.Activity {
+            return new Business.Activity(ActivityGenerator.generateDto(specificData));
         }
 
         private static makeRandom(text: string): string {

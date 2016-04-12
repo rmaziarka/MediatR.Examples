@@ -6,6 +6,7 @@
     using KnightFrank.Antares.UITests.Pages;
 
     using TechTalk.SpecFlow;
+    using TechTalk.SpecFlow.Assist;
 
     using Xunit;
 
@@ -23,7 +24,7 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [When(@"User clicks details link on view activity page")]
+        [When(@"User clicks property details link on view activity page")]
         public void OpenPreviewPropertyPage()
         {
             this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").ClickDetailsLink();
@@ -34,6 +35,13 @@
         {
             var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
             this.scenarioContext.Set(page.PropertyPreview.OpenViewPropertyPage(), "ViewPropertyPage");
+        }
+
+        [When(@"User clicks edit button on view activity page")]
+        public void EditActivity()
+        {
+            EditActivityPage page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").EditActivity();
+            this.scenarioContext.Set(page, "EditActivityPage");
         }
 
         [Then(@"Address details on view activity page are following")]
@@ -47,6 +55,18 @@
                     ? page.IsAddressDetailsNotVisible(field)
                     : page.IsAddressDetailsVisible(field));
             }
+        }
+
+        [Then(@"Activity details on view activty page are following")]
+        public void CheckActivityDetails(Table table)
+        {
+            var details = table.CreateInstance<EditActivityDetails>();
+            var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
+
+            Assert.Equal(details.ActivityStatus, page.Status);
+            Assert.Equal(details.MarketAppraisalPrice.ToString("N2") + " GBP", page.MarketAppraisalPrice);
+            Assert.Equal(details.RecommendedPrice.ToString("N2") + " GBP", page.RecommendedPrice);
+            Assert.Equal(details.VendorEstimatedPrice.ToString("N2") + " GBP", page.VendorEstimatedPrice);
         }
     }
 }

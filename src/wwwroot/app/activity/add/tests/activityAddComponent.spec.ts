@@ -15,7 +15,7 @@ module Antares {
 
         var pageObjectSelectors = {
             activityStatusSelector: 'select#status',
-            vendors: '#vendors'
+            vendors: '#activity-add-vendors [id^=list-item-]'
         };
 
         var activityStatuses: any = {
@@ -134,6 +134,8 @@ module Antares {
                 propertyMock = {
                     id: '1',
                     propertyTypeId: '',
+                    divisionId: '',
+                    division: null,
                     address: Antares.Mock.AddressForm.FullAddress,
                     ownerships: [],
                     activities: []
@@ -154,7 +156,7 @@ module Antares {
                 activityAddController.selectedActivityStatus = _.find(activityStatuses.items, { 'code': 'PreAppraisal' });
                 activityAddController.setVendors(vendors);
 
-                var expectedRequest = new Business.CreateActivityCommand();
+                var expectedRequest = new Business.CreateActivityResource();
                 expectedRequest.propertyId = propertyMock.id;
                 expectedRequest.activityStatusId = activityAddController.selectedActivityStatus.id;
                 expectedRequest.contactIds = vendors.map((vendor: Dto.IContact) => { return vendor.id });

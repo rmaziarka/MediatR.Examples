@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Models.Business {
-    export class CreateActivityCommand implements Dto.ICreateActivityCommand {
+    export class CreateActivityResource implements Dto.ICreateActivityResource {
         propertyId: string = '';
         activityStatusId: string = '';
         contactIds: string[] = [];

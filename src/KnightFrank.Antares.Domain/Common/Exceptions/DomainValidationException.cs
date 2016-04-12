@@ -1,29 +1,26 @@
 ﻿namespace KnightFrank.Antares.Domain.Common.Exceptions
 {
     using System;
-    using System.Runtime.Serialization;
+    using System.Collections.Generic;
+
+    using FluentValidation;
+    using FluentValidation.Results;
 
     [Serializable]
-    public class DomainValidationException : Exception
+    public class DomainValidationException : ValidationException
     {
-        public DomainValidationException()
+        public DomainValidationException(IEnumerable<ValidationFailure> errors)
+            : base("Domain validation exception occured", errors)
         {
         }
 
-        public DomainValidationException(string message)
-            : base(message)
+        public DomainValidationException(string propertyName, string error)
+            : base(new[] { new ValidationFailure(propertyName, error) })
         {
         }
 
-        public DomainValidationException(string message, Exception inner)
-            : base(message, inner)
-        {
-        }
-
-        protected DomainValidationException(
-            SerializationInfo info,
-            StreamingContext context)
-            : base(info, context)
+        public DomainValidationException(string propertyName) 
+            : this(propertyName, "Value is incorrect")
         {
         }
     }

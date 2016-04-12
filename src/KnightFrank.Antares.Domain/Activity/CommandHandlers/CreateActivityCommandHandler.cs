@@ -33,7 +33,7 @@
             ValidationResult validationResult = this.domainValidator.Validate(message);
             if (!validationResult.IsValid)
             {
-                throw new DomainValidationException(string.Join(",", validationResult.Errors.Select(e => e.ErrorMessage)));
+                throw new DomainValidationException(validationResult.Errors);
             }
 
             var activity = AutoMapper.Mapper.Map<Activity>(message);
