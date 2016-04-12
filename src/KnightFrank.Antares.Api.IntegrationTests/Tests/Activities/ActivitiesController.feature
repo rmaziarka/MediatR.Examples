@@ -8,8 +8,8 @@ Scenario Outline: Retrieve error messages for improper data
 			| enumTypeCode       | enumTypeItemCode |
 			| OwnershipType      | Freeholder       |
 			| <activityStatusId> | PreAppraisal     |
-			| Division           | Commercial       |
-		And Property with Address is in data base
+			| Division           | Residential      |
+		And Property with Address and Residential is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London | 
 	When User creates activity for given <propertyId> property id
@@ -28,8 +28,8 @@ Scenario: Create Activity for an existing property
 			| enumTypeCode   | enumTypeItemCode |
 			| OwnershipType  | Freeholder       |
 			| ActivityStatus | PreAppraisal     |
-			| Division       | Commercial       |
-		And Property with Address is in data base
+			| Division       | Residential      |
+		And Property with Address and Residential is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |  
 		And User creates contacts in database with following data
@@ -61,10 +61,10 @@ Scenario: Get Activity by correct activity id
 	Given User gets GB address form for Property and country details
 		And User gets House for PropertyType
 		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode   | enumTypeItemCode |			
+			| enumTypeCode   | enumTypeItemCode |
 			| ActivityStatus | PreAppraisal     |
-			| Division       | Commercial       |
-		And Property with Address is in data base
+			| Division       | Residential      |
+		And Property with Address and Residential is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |  
 		And User creates activity for given latest property id
@@ -80,8 +80,8 @@ Scenario: record and update residential sale valuation
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode   | enumTypeItemCode |
 			| ActivityStatus | PreAppraisal     |
-			| Division       | Commercial       |
-		And Property with Address is in data base
+			| Division       | Residential      |
+		And Property with Address and Residential is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Activity for 'latest' property exists in data base
@@ -98,9 +98,9 @@ Scenario Outline: try record and update residential sale valuation for improper 
 		And User gets House for PropertyType
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode   | enumTypeItemCode |
-			| Division       | Commercial       |
+			| Division       | Residential      |
 			| ActivityStatus | PreAppraisal     |
-		And Property with Address is in data base
+		And Property with Address and Residential is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Activity for 'latest' property exists in data base

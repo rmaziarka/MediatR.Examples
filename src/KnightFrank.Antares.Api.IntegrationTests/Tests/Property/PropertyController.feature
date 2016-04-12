@@ -4,77 +4,80 @@
 Scenario Outline: Create property
 	Given User gets GB address form for Property and country details
         And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode  | enumTypeItemCode |
-			| Division      | Commercial       |
+			| enumTypeCode | enumTypeItemCode |
+			| Division     | <divisionCode>   |
 		And Address for add/update property is defined with max length fields
         And User gets <propertyType> for PropertyType
-	When User creates property with defined address by Api
+	When User creates property with defined address and <divisionCode> by Api
 	Then User should get OK http status code
 		And The created Property is saved in data base
 
 	Examples:
-	| propertyType      |
-	| House             |
-	| Farm/Estate       |
-	| Office            |
-	| Department Stores |
-	| Retail            |
+	| propertyType      | divisionCode |
+	| House             | Residential  |
+	| Farm/Estate       | Residential  |
+	| Office            | Commercial   |
+	| Department Stores | Commercial   |
+	| Retail            | Commercial   |
+    
 
 @Property
 Scenario Outline: Create property with invalid data
 	Given User gets <country> address form for <itemType> and country details
         And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode  | enumTypeItemCode |
-			| Division      | Commercial       |
+			| Division      | <divisionCode>       |
 		And Address for add/update property is defined
 			| PropertyName | PropertyNumber | Line2           | Line3 | Postcode   | City | County |
 			| updated abc  | 2              | 55 Baker Street |       | <postCode> |      |        |
         And User gets <propertyType> for PropertyType
-	When User creates property with defined address by Api
+	When User creates property with defined address and <divisionCode> by Api
 	Then User should get <statusCode> http status code
 
 	Examples: 
-	| country | itemType | postCode    | propertyType | statusCode |
-	| GB      | bla      | 777         | House        | BadRequest |
-	| bla     | bla      | 777         | Car Park     | BadRequest |
-	| bla     | Property | 777         | Other        | BadRequest |
-	| GB      | Property |             | Office       | BadRequest |
-	| GB      | Property | 12345678901 | Bungalow     | BadRequest |
-	| GB      | Property | 777         | invalid      | BadRequest |
+	| country | itemType | postCode    | propertyType | statusCode | divisionCode |
+	| GB      | bla      | 777         | House        | BadRequest | Residential  |
+	| bla     | bla      | 777         | Car Park     | BadRequest | Commercial   |
+	| bla     | Property | 777         | Other        | BadRequest | Commercial   |
+	| GB      | Property |             | Office       | BadRequest | Commercial   |
+	| GB      | Property | 12345678901 | Bungalow     | BadRequest | Residential  |
+	| GB      | Property | 777         | invalid      | BadRequest | Commercial   |
+	| GB      | Property | 777         | House        | BadRequest | Commercial   |
 
 @Property
 Scenario Outline: Update property
 	Given User gets GB address form for Property and country details
         And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode  | enumTypeItemCode |
-			| Division      | Commercial       |
+			| enumTypeCode | enumTypeItemCode |
+			| Division     | <divisionCode1>   |
         And User gets <propertyType1> for PropertyType
-		And Property with Address is in data base
+		And Property with Address and <divisionCode1> is in data base
 			| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
 			| abc          | 1              | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Address for add/update property is defined with max length fields
 		And User gets <propertyType2> for PropertyType
-	When Users updates property with defined address for latest id by Api
+	When Users updates property with defined address for latest id and <divisionCode2> by Api
 	Then User should get OK http status code
 		And The updated Property is saved in data base
 
 	Examples:
-	| propertyType1           | propertyType2  |
-	| Farm/Estate             | Farm/Estate    |
-	| Office                  | Office         |
-	| Retail                  | Car Showroom   |
-	| Retail Unit A1          | Retail Unit A3 |
-	| Industrial/Distribution | Industrial     |
-	| Office                  | Other          |
+	| propertyType1           | propertyType2  | divisionCode1 | divisionCode2 |
+	| Farm/Estate             | Farm/Estate    | Residential   | Residential   |
+	| Office                  | Office         | Commercial    | Commercial    |
+	| Retail                  | Car Showroom   | Commercial    | Commercial    |
+	| Retail Unit A1          | Retail Unit A3 | Commercial    | Commercial    |
+	| Industrial/Distribution | Industrial     | Commercial    | Commercial    |
+	| Office                  | Other          | Commercial    | Commercial    |
+	| Office                  | Flat           | Commercial    | Residential   |
 
 @Property
 Scenario Outline: Update property with invalid data
 	Given User gets GB address form for Property and country details
         And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode  | enumTypeItemCode |
-			| Division      | Commercial       |
+			| enumTypeCode | enumTypeItemCode |
+			| Division     | <divisionCode1>   |
         And User gets House for PropertyType
-		And Property with Address is in data base
+		And Property with Address and <divisionCode1> is in data base
 			| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
 			| abc          | 1              | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And User gets <country> address form for <itemType> and country details
@@ -82,18 +85,21 @@ Scenario Outline: Update property with invalid data
 		And Address for add/update property is defined
 			| PropertyName | PropertyNumber | Line2 | Line3 | Postcode   | City | County |
 			|              |                |       |       | <postCode> |      |        |
-	When Users updates property with defined address for <id> id by Api
+	When Users updates property with defined address for <id> id and <divisionCode2> by Api
 	Then User should get <statusCode> http status code
 
 	Examples: 
-	| id                                   | country | itemType | postCode    | propertyType | statusCode |
-	| latest                               | GB      | bla      | 777         | House        | BadRequest |
-	| latest                               | bla     | bla      | 777         | House        | BadRequest |
-	| latest                               | bla     | Property | 777         | House        | BadRequest |
-	| latest                               | GB      | Property |             | House        | BadRequest |
-	| latest                               | GB      | Property | 12345678901 | House        | BadRequest |
-	| 00000000-0000-0000-0000-000000000000 | GB      | Property | 123456      | House        | BadRequest |
-	| latest                               | GB      | Property | 123456      | invalid      | BadRequest |
+	| id                                   | country | itemType | postCode    | propertyType | statusCode | divisionCode1 | divisionCode2 |
+	| latest                               | GB      | bla      | 777         | House        | BadRequest | Residential   | Residential   |
+	| latest                               | bla     | bla      | 777         | House        | BadRequest | Residential   | Residential   |
+	| latest                               | bla     | Property | 777         | House        | BadRequest | Residential   | Residential   |
+	| latest                               | GB      | Property |             | House        | BadRequest | Residential   | Residential   |
+	| latest                               | GB      | Property | 12345678901 | House        | BadRequest | Residential   | Residential   |
+	| 00000000-0000-0000-0000-000000000000 | GB      | Property | 123456      | House        | BadRequest | Residential   | Residential   |
+	| latest                               | GB      | Property | 123456      | invalid      | BadRequest | Residential   | Residential   |
+	| latest                               | GB      | Property | 123456      | invalid      | BadRequest | Residential   | Residential   |
+	| latest                               | GB      | Property | 123456      | House        | BadRequest | Residential   | Commercial    |
+	| latest                               | GB      | Property | 123456      | Office       | BadRequest | Residential   | Residential   |
 
 @Property
 Scenario: Get non existing property
@@ -110,8 +116,8 @@ Scenario: Get property
 			| enumTypeCode   | enumTypeItemCode |
 			| OwnershipType  | Freeholder       |
 			| ActivityStatus | PreAppraisal     |
-			| Division       | Commercial       |
-        And Property with Address is in data base
+			| Division       | Residential      |
+        And Property with Address and Residential is in data base
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |  
         And User creates contacts in database with following data

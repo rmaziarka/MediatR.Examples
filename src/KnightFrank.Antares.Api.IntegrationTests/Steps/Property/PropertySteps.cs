@@ -91,15 +91,16 @@
             this.scenarioContext["AddressFormId"] = addressFormId;
         }
 
-        [Given(@"Property with Address is in data base")]
-        public void GivenFollowingPropertyExistsInDataBase(Table table)
+        [Given(@"Property with Address and (.*) is in data base")]
+        public void GivenFollowingPropertyExistsInDataBase(string divisionCode, Table table)
         {
             var address = table.CreateInstance<Address>();
             address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
             address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
 
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
-            Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Commercial"];
+            
+            Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
             var property = new Property { Address = address, PropertyTypeId = propertyTypeId, DivisionId = divisionId };
 
             this.fixture.DataContext.Property.Add(property);
@@ -122,23 +123,29 @@
             }
         }
 
-        [When(@"Users updates property with defined address for (.*) id by Api")]
-        public void WhenUsersUpdatesProperty(string id)
+        [When(@"Users updates property with defined address for (.*) id and (.*) by Api")]
+        public void WhenUsersUpdatesProperty(string id, string divisionCode)
         {
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
 
             var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
 
-            var updatedProperty = new UpdatePropertyCommand { Address = address, Id = propertyId, PropertyTypeId = propertyTypeId };
+            var updatedProperty = new UpdatePropertyCommand
+            {
+                Address = address, Id = propertyId, PropertyTypeId = propertyTypeId, Division = new EnumTypeItem
+                {
+                    Code = divisionCode
+                }
+            };
 
             HttpResponseMessage response = this.fixture.SendPutRequest(ApiUrl, updatedProperty);
             this.scenarioContext.SetHttpResponseMessage(response);
             this.scenarioContext.Set(updatedProperty, "Property");
         }
 
-        [When(@"User creates property with defined address by Api")]
-        public void CreateProperty()
+        [When(@"User creates property with defined address and (.*) by Api")]
+        public void CreateProperty(string divisionCode)
         {
             string requestUrl = $"{ApiUrl}";
 
@@ -147,10 +154,8 @@
 
             address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
             address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
-
-            Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Commercial"];
-
-            var property = new CreatePropertyCommand { Address = address, PropertyTypeId = propertyTypeId, Division = new EnumTypeItem { Id = divisionId, Code = "Commercial" } };
+            
+            var property = new CreatePropertyCommand { Address = address, PropertyTypeId = propertyTypeId, Division = new EnumTypeItem { Code = divisionCode } };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, property);
             this.scenarioContext.SetHttpResponseMessage(response);
