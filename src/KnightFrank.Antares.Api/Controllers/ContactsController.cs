@@ -2,14 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
-    
-    using Domain.Contact.Commands;
 
-    using Dal.Repository;
+    using Domain.Contact.Commands;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Domain.Contact.Queries;
@@ -23,17 +20,14 @@
     public class ContactsController : ApiController
     {
         private readonly IMediator mediator;
-        private readonly IReadGenericRepository<Contact> contactsRepository;
 
         /// <summary>
         ///     Contacts controller constructor
         /// </summary>
         /// <param name="mediator">Mediator instance.</param>
-        /// <param name="contactsRepository">Generic read repository.</param>
-        public ContactsController(IMediator mediator, IReadGenericRepository<Contact> contactsRepository)
+        public ContactsController(IMediator mediator)
         {
             this.mediator = mediator;
-            this.contactsRepository = contactsRepository;
         }
 
         /// <summary>
@@ -44,7 +38,7 @@
         [Route("")]
         public IEnumerable<Contact> GetContacts()
         {
-            return this.contactsRepository.Get().ToList();
+            return this.mediator.Send(new ContactsQuery());
         }
 
         /// <summary>
@@ -56,7 +50,7 @@
         [Route("{id}")]
         public Contact GetContact(Guid id)
         {
-            var query =  new ContactQuery { Id = id};
+            var query = new ContactQuery { Id = id };
 
             Contact contact = this.mediator.Send(query);
 

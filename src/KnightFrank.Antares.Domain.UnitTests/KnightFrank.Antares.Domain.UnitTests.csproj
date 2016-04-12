@@ -115,6 +115,8 @@
     <Compile Include="Company\Commands\CreateCompanyCommandDomainValidatorTests.cs" />
     <Compile Include="Common\Validator\ContactValidatorTests.cs" />
     <Compile Include="Company\Commands\CreateCompanyValidatorTests.cs" />
+    <Compile Include="Contact\Queries\ContactQueryValidatorTests.cs" />
+    <Compile Include="Contact\QueryHandlers\ContactQueryHandlerTests.cs" />
     <Compile Include="FixtureExtension\AddressFormFixtureExtensions.cs" />
     <Compile Include="AddressForm\QueryHandlers\AddressFormQueryHandlerTests.cs" />
     <Compile Include="FixtureExtension\CountryFixtureExtensions.cs" />

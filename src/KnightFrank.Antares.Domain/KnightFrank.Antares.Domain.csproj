@@ -125,7 +125,9 @@
     <Compile Include="Contact\ContactDto.cs" />
     <Compile Include="Contact\Queries\ContactQuery.cs" />
     <Compile Include="Contact\Queries\ContactQueryValidator.cs" />
+    <Compile Include="Contact\Queries\ContactsQuery.cs" />
     <Compile Include="Contact\QueryHandlers\ContactQueryHandler.cs" />
+    <Compile Include="Contact\QueryHandlers\ContactsQueryHandler.cs" />
     <Compile Include="DomainModule.cs" />
     <Compile Include="Common\Exceptions\DomainValidationException.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQuery.cs" />
