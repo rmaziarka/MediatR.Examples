@@ -13,8 +13,8 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.Exceptions;
-    using KnightFrank.Antares.Domain.Company.Command;
     using KnightFrank.Antares.Domain.Company.CommandHandlers;
+    using KnightFrank.Antares.Domain.Company.Commands;
 
     using Moq;
 

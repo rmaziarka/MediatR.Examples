@@ -111,10 +111,10 @@
     <Compile Include="Common\Validator\ActivityStatusValidator.cs" />
     <Compile Include="Common\Validator\ContactValidator.cs" />
     <Compile Include="Company\CommandHandlers\CreateCompanyCommandHandler.cs" />
-    <Compile Include="Company\Command\CreateCompanyCommand.cs" />
-    <Compile Include="Company\Command\CreateCompanyCommandProfile.cs" />
-    <Compile Include="Company\Command\CreateCompanyCommandDomainValidator.cs" />
-    <Compile Include="Company\Command\CreateCompanyValidator.cs" />
+    <Compile Include="Company\Commands\CreateCompanyCommand.cs" />
+    <Compile Include="Company\Commands\CreateCompanyCommandProfile.cs" />
+    <Compile Include="Company\Commands\CreateCompanyCommandDomainValidator.cs" />
+    <Compile Include="Company\Commands\CreateCompanyValidator.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandProfile.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidator.cs" />
     <Compile Include="Contact\Commands\UpdateContactCommand.cs" />

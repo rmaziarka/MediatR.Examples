@@ -7,7 +7,7 @@
 
     using FluentValidation.Results;
 
-    using KnightFrank.Antares.Domain.Company.Command;
+    using KnightFrank.Antares.Domain.Company.Commands;
 
     using Ploeh.AutoFixture;
 

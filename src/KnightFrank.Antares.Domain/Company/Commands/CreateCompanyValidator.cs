@@ -1,10 +1,6 @@
-﻿namespace KnightFrank.Antares.Domain.Company.Command
+﻿namespace KnightFrank.Antares.Domain.Company.Commands
 {
-    using System;
-    using System.Linq;
-
     using FluentValidation;
-    using FluentValidation.Results;
 
     public class CreateCompanyValidator : AbstractValidator<CreateCompanyCommand>
     {

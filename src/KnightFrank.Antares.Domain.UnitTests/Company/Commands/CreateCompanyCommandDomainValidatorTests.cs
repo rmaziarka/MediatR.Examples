@@ -3,7 +3,7 @@
     using FluentValidation.TestHelper;
 
     using KnightFrank.Antares.Domain.Common.Validator;
-    using KnightFrank.Antares.Domain.Company.Command;
+    using KnightFrank.Antares.Domain.Company.Commands;
 
     using Xunit;
 

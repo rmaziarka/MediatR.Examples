@@ -5,7 +5,7 @@ namespace KnightFrank.Antares.Api.Controllers
     using System;
 
     using KnightFrank.Antares.Dal.Model.Company;
-    using KnightFrank.Antares.Domain.Company.Command;
+    using KnightFrank.Antares.Domain.Company.Commands;
 
     using MediatR;
 

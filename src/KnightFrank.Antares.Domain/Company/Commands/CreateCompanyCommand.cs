@@ -1,9 +1,10 @@
-namespace KnightFrank.Antares.Domain.Company.Command
+namespace KnightFrank.Antares.Domain.Company.Commands
 {
     using System;
     using System.Collections.Generic;
 
     using MediatR;
+
     public class CreateCompanyCommand : IRequest<Guid>
     {
         public CreateCompanyCommand()

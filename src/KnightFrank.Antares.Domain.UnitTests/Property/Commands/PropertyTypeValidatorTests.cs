@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.UnitTests.Property
+﻿namespace KnightFrank.Antares.Domain.UnitTests.Property.Commands
 {
     using System;
     using System.Linq.Expressions;

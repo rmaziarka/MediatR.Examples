@@ -12,7 +12,7 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Steps.Companies
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Contacts;
-    using KnightFrank.Antares.Domain.Company.Command;
+    using KnightFrank.Antares.Domain.Company.Commands;
 
     using Newtonsoft.Json;
 

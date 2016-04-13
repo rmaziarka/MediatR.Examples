@@ -1,4 +1,4 @@
-namespace KnightFrank.Antares.Domain.Company.Command
+namespace KnightFrank.Antares.Domain.Company.Commands
 {
     using AutoMapper;
 
