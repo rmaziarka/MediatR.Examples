@@ -50,7 +50,7 @@
                 LastModifiedDate = DateTime.Now,
                 Contacts = new List<Contact>()
             };
-            this.fixture.DataContext.Activity.Add(activity);
+            this.fixture.DataContext.Activities.Add(activity);
             this.fixture.DataContext.SaveChanges();
 
             this.scenarioContext.Set(activity, "Added Activity");
@@ -138,7 +138,7 @@
         public void ThenTheCreatedActivityIsSavedInDataBase()
         {
             var activity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
-            Activity actualActivity = this.fixture.DataContext.Activity.Single(x => x.Id.Equals(activity.Id));
+            Activity actualActivity = this.fixture.DataContext.Activities.Single(x => x.Id.Equals(activity.Id));
 
             actualActivity.ShouldBeEquivalentTo(
                 activity,
@@ -151,7 +151,7 @@
         public void ThenTheReceivedActivitiesShouldBeTheSameAsInDataBase()
         {
             var expectedActivity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
-            Activity actualActivity = this.fixture.DataContext.Activity.Single(x => x.Id.Equals(expectedActivity.Id));
+            Activity actualActivity = this.fixture.DataContext.Activities.Single(x => x.Id.Equals(expectedActivity.Id));
 
             actualActivity.ShouldBeEquivalentTo(
                 expectedActivity,

@@ -55,7 +55,7 @@
         public void GivenThereIsEnumType(Table table)
         {
             this.EnumType = table.CreateInstance<EnumType>();
-            this.fixture.DataContext.EnumType.Add(this.EnumType);
+            this.fixture.DataContext.EnumTypes.Add(this.EnumType);
             this.fixture.DataContext.SaveChanges();
         }
 
@@ -64,7 +64,7 @@
         {
             this.EnumTypeItem = table.CreateInstance<EnumTypeItem>();
             this.EnumTypeItem.EnumTypeId = this.EnumType.Id;
-            this.fixture.DataContext.EnumTypeItem.Add(this.EnumTypeItem);
+            this.fixture.DataContext.EnumTypeItems.Add(this.EnumTypeItem);
             this.fixture.DataContext.SaveChanges();
         }
 
@@ -72,10 +72,10 @@
         public void GivenThereIsEnumLocalizedForGivenEnumTypeAndEnLocale(string localeIsoCode, Table table)
         {
             this.EnumLocalised = table.CreateInstance<EnumLocalised>();
-            this.EnumLocalised.Locale = this.fixture.DataContext.Locale.FirstOrDefault(l => l.IsoCode == localeIsoCode.ToLower());
+            this.EnumLocalised.Locale = this.fixture.DataContext.Locales.FirstOrDefault(l => l.IsoCode == localeIsoCode.ToLower());
             this.EnumLocalised.EnumTypeItem = this.EnumTypeItem;
 
-            this.fixture.DataContext.EnumLocalised.Add(this.EnumLocalised);
+            this.fixture.DataContext.EnumLocaliseds.Add(this.EnumLocalised);
             this.fixture.DataContext.SaveChanges();
         }
 
@@ -89,7 +89,7 @@
                 string enumTypeCode = row["enumTypeCode"];
                 string enumTypeItemCode = row["enumTypeItemCode"];
                 EnumTypeItem enumTypeItem =
-                    this.fixture.DataContext.EnumTypeItem.SingleOrDefault(
+                    this.fixture.DataContext.EnumTypeItems.SingleOrDefault(
                         i => i.EnumType.Code.Equals(enumTypeCode) && i.Code.Equals(enumTypeItemCode));
 
                 enums.Add(enumTypeItemCode, enumTypeItem?.Id ?? new Guid());

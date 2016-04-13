@@ -39,7 +39,7 @@
         [Given(@"All contacts have been deleted")]
         public void DeleteContacts()
         {
-            this.fixture.DataContext.Contact.RemoveRange(this.fixture.DataContext.Contact.ToList());
+            this.fixture.DataContext.Contacts.RemoveRange(this.fixture.DataContext.Contacts.ToList());
         }
 
         [When(@"User creates contact using api with following data")]
@@ -68,7 +68,7 @@
         public void CreateUsersInDb(Table table)
         {
             IEnumerable<Contact> contact = table.CreateSet<Contact>().ToList();
-            this.fixture.DataContext.Contact.AddRange(contact);
+            this.fixture.DataContext.Contacts.AddRange(contact);
             this.fixture.DataContext.SaveChanges();
 
             this.scenarioContext.Set(contact, "Contact List");
@@ -117,7 +117,7 @@
             var expectedContact = this.scenarioContext.Get<Contact>("Contact");
             var id = new Guid(this.scenarioContext.GetResponseContent().Replace("\"", ""));
 
-            Contact contact = this.fixture.DataContext.Contact.Single(x => x.Id.Equals(id));
+            Contact contact = this.fixture.DataContext.Contacts.Single(x => x.Id.Equals(id));
             expectedContact.Id = id;
             contact.ShouldBeEquivalentTo(expectedContact);
         }

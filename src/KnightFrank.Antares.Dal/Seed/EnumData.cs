@@ -102,28 +102,28 @@ namespace KnightFrank.Antares.Dal.Seed
         {
             var enumType = new EnumType { Code = enumTypeCode };
 
-            context.EnumType.AddOrUpdate(x => x.Code, enumType);
+            context.EnumTypes.AddOrUpdate(x => x.Code, enumType);
             context.SaveChanges();
         }
 
         private static void SeedEnumTypeItem(KnightFrankContext context, string enumType, string enumTypeItemCode)
         {
-            Guid enumTypeId = context.EnumType.Where(x => x.Code == enumType).Select(x => x.Id).Single();
+            Guid enumTypeId = context.EnumTypes.Where(x => x.Code == enumType).Select(x => x.Id).Single();
 
             var enumTypeItem = new EnumTypeItem { Code = enumTypeItemCode, EnumTypeId = enumTypeId };
 
-            context.EnumTypeItem.AddOrUpdate(x => x.Code, enumTypeItem);
+            context.EnumTypeItems.AddOrUpdate(x => x.Code, enumTypeItem);
             context.SaveChanges();
         }
 
         private static void SeedEnumLocalisation(KnightFrankContext context, string locale, string enumTypeItemCode, string enumLocalisedValue)
         {
-            Guid localeId = context.Locale.Where(x => x.IsoCode == locale).Select(x => x.Id).Single();
-            Guid enumTypeItemId = context.EnumTypeItem.Where(x => x.Code == enumTypeItemCode).Select(x => x.Id).Single();
+            Guid localeId = context.Locales.Where(x => x.IsoCode == locale).Select(x => x.Id).Single();
+            Guid enumTypeItemId = context.EnumTypeItems.Where(x => x.Code == enumTypeItemCode).Select(x => x.Id).Single();
 
             var enumLocalised = new EnumLocalised { EnumTypeItemId = enumTypeItemId, LocaleId = localeId, Value = enumLocalisedValue };
 
-            context.EnumLocalised.AddOrUpdate(x => x.Value, enumLocalised);
+            context.EnumLocaliseds.AddOrUpdate(x => x.Value, enumLocalised);
             context.SaveChanges();
         }
     }

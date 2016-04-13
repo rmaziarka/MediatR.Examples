@@ -77,12 +77,12 @@
         [When(@"User gets (.*) address form for (.*) and country details")]
         public void GetCountryAddressData(string countryCode, string enumType)
         {
-            Country country = this.fixture.DataContext.Country.SingleOrDefault(x => x.IsoCode == countryCode);
-            EnumTypeItem enumTypeItem = this.fixture.DataContext.EnumTypeItem.SingleOrDefault(e => e.Code == enumType);
+            Country country = this.fixture.DataContext.Countries.SingleOrDefault(x => x.IsoCode == countryCode);
+            EnumTypeItem enumTypeItem = this.fixture.DataContext.EnumTypeItems.SingleOrDefault(e => e.Code == enumType);
             Guid countryId = country?.Id ?? new Guid();
             Guid enumTypeId = enumTypeItem?.Id ?? new Guid();
 
-            AddressFormEntityType addressForm = this.fixture.DataContext.AddressFormEntityType.SingleOrDefault(
+            AddressFormEntityType addressForm = this.fixture.DataContext.AddressFormEntityTypes.SingleOrDefault(
                 afe => afe.AddressForm.CountryId == countryId && afe.EnumTypeItemId == enumTypeId);
 
             Guid addressFormId = addressForm?.AddressFormId ?? new Guid();
@@ -103,7 +103,7 @@
             Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
             var property = new Property { Address = address, PropertyTypeId = propertyTypeId, DivisionId = divisionId };
 
-            this.fixture.DataContext.Property.Add(property);
+            this.fixture.DataContext.Properties.Add(property);
             this.fixture.DataContext.SaveChanges();
 
             this.scenarioContext.Set(property.Id, "AddedPropertyId");
@@ -118,7 +118,7 @@
             }
             else
             {
-                PropertyType propertyType = this.fixture.DataContext.PropertyType.First(i => i.Code.Equals(propertyTypeCode));
+                PropertyType propertyType = this.fixture.DataContext.PropertyTypes.First(i => i.Code.Equals(propertyTypeCode));
                 this.scenarioContext.Set(propertyType.Id, "PropertyTypeId");
             }
         }
@@ -187,7 +187,7 @@
         public void ThenTheResultsShouldBeSameAsAdded()
         {
             var updatedProperty = this.scenarioContext.Get<UpdatePropertyCommand>("Property");
-            Property expectedProperty = this.fixture.DataContext.Property.SingleOrDefault(x => x.Id.Equals(updatedProperty.Id));
+            Property expectedProperty = this.fixture.DataContext.Properties.SingleOrDefault(x => x.Id.Equals(updatedProperty.Id));
 
             updatedProperty.ShouldBeEquivalentTo(expectedProperty, options => options
                 .Excluding(x => x.Division));
@@ -197,7 +197,7 @@
         public void ThenTheResultsShouldBeSameAsCreated()
         {
             var expectedProperty = JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent());
-            Property actualProperty = this.fixture.DataContext.Property.Single(x => x.Id.Equals(expectedProperty.Id));
+            Property actualProperty = this.fixture.DataContext.Properties.Single(x => x.Id.Equals(expectedProperty.Id));
 
             actualProperty.ShouldBeEquivalentTo(expectedProperty, options => options
                 .Excluding(x => x.Activities)

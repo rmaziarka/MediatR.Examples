@@ -12,7 +12,7 @@
     {
 		public static void Seed(KnightFrankContext context)
 		{
-			List<Country> countries = context.Country.ToList();
+			List<Country> countries = context.Countries.ToList();
 
 			SeedDepartment(context, countries);
 
@@ -1064,7 +1064,7 @@
 				CountryId = GetCountryIdByCode(countries, countryCode)
 			};
 
-			context.Department.AddOrUpdate(x => x.Name, department);
+			context.Departments.AddOrUpdate(x => x.Name, department);
 		}
 
 		private static Guid GetCountryIdByCode(IEnumerable<Country> countries, string countryCode)

@@ -83,7 +83,7 @@
                 AddressFormId = location.AddressFormId
             };
 
-            this.fixture.DataContext.Requirement.Add(requirement);
+            this.fixture.DataContext.Requirements.Add(requirement);
             this.fixture.DataContext.SaveChanges();
 
             this.scenarioContext.Set(requirement, "Requirement");
@@ -207,7 +207,7 @@
         public void CompareRequirements()
         {
             var expectedRequirement = JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent());
-            Requirement requirement = this.fixture.DataContext.Requirement.Single(req => req.Id.Equals(expectedRequirement.Id));
+            Requirement requirement = this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(expectedRequirement.Id));
 
             AssertionOptions.AssertEquivalencyUsing(options =>
                 options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>());

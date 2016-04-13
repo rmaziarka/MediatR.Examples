@@ -58,7 +58,7 @@ namespace KnightFrank.Antares.Api.IntegrationTests.Steps.Companies
             var company = JsonConvert.DeserializeObject<Company>(this.scenarioContext.GetResponseContent());
             var expectedCompany = this.scenarioContext.Get<Company>("Company");
             expectedCompany.Id = company.Id;
-            Company actualCompany = this.fixture.DataContext.Company.Single(x => x.Id.Equals(company.Id));
+            Company actualCompany = this.fixture.DataContext.Companies.Single(x => x.Id.Equals(company.Id));
 
             actualCompany.ShouldBeEquivalentTo(expectedCompany);
         }

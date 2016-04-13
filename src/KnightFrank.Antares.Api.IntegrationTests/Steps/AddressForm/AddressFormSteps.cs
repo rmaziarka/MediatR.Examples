@@ -38,7 +38,7 @@
         public void GivenCountryCodeIsPresentInDb(string countryCode)
         {
             var country = new Country { IsoCode = countryCode };
-            this.fixture.DataContext.Country.Add(country);
+            this.fixture.DataContext.Countries.Add(country);
             this.fixture.DataContext.SaveChanges();
         }
 
@@ -53,28 +53,28 @@
         [Given(@"There is an AddressForm for (.*) country code")]
         public void GivenThereIsAddressFormForUk(string countryIsoCode)
         {
-            if (this.fixture.DataContext.Country.FirstOrDefault(c => c.IsoCode == countryIsoCode) == null)
+            if (this.fixture.DataContext.Countries.FirstOrDefault(c => c.IsoCode == countryIsoCode) == null)
             {
-                this.fixture.DataContext.Country.Add(new Country { IsoCode = countryIsoCode });
+                this.fixture.DataContext.Countries.Add(new Country { IsoCode = countryIsoCode });
                 this.fixture.DataContext.SaveChanges();
             }
 
-            Country country = this.fixture.DataContext.Country.FirstOrDefault(c => c.IsoCode == countryIsoCode);
+            Country country = this.fixture.DataContext.Countries.FirstOrDefault(c => c.IsoCode == countryIsoCode);
 
             this.AddressForm = new AddressForm { Country = country };
 
-            this.fixture.DataContext.AddressForm.Add(this.AddressForm);
+            this.fixture.DataContext.AddressForms.Add(this.AddressForm);
             this.fixture.DataContext.SaveChanges();
         }
 
         [Given(@"There exists AddressForm for (.*) EnumTypeItem")]
         public void GivenThereExistsAddressFormForPropertyEnumTypeItem(string enumTypeItemCode)
         {
-            EnumTypeItem enumTypeItem = this.fixture.DataContext.EnumTypeItem.FirstOrDefault(x => x.Code == enumTypeItemCode);
+            EnumTypeItem enumTypeItem = this.fixture.DataContext.EnumTypeItems.FirstOrDefault(x => x.Code == enumTypeItemCode);
 
             var addressFormEntityType = new AddressFormEntityType { EnumTypeItem = enumTypeItem, AddressForm = this.AddressForm };
 
-            this.fixture.DataContext.AddressFormEntityType.Add(addressFormEntityType);
+            this.fixture.DataContext.AddressFormEntityTypes.Add(addressFormEntityType);
             this.fixture.DataContext.SaveChanges();
         }
     }

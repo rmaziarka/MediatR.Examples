@@ -26,7 +26,7 @@
 				Name = name
 			};
 
-			context.Role.AddOrUpdate(x => x.Name, role);
+			context.Roles.AddOrUpdate(x => x.Name, role);
 		}
 	}
 }

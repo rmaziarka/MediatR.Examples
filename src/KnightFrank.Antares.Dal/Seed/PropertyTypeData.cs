@@ -19,9 +19,9 @@
 
         private static void SeedPropertyTypeDefinitions(KnightFrankContext context)
         {
-            Guid countryId = context.Country.Where(x => x.IsoCode == "GB").Select(x => x.Id).Single();
-            Guid residentialDivisionId = context.EnumTypeItem.Where(x => x.EnumType.Code == "Division" && x.Code == "Residential").Select(x => x.Id).Single();
-            Guid commercialDivisionId = context.EnumTypeItem.Where(x => x.EnumType.Code == "Division" && x.Code == "Commercial").Select(x => x.Id).Single();
+            Guid countryId = context.Countries.Where(x => x.IsoCode == "GB").Select(x => x.Id).Single();
+            Guid residentialDivisionId = context.EnumTypeItems.Where(x => x.EnumType.Code == "Division" && x.Code == "Residential").Select(x => x.Id).Single();
+            Guid commercialDivisionId = context.EnumTypeItems.Where(x => x.EnumType.Code == "Division" && x.Code == "Commercial").Select(x => x.Id).Single();
 
             short order = 1;
 
@@ -41,19 +41,19 @@
                 Order = order++
             }));
 
-            context.PropertyTypeDefinition.AddOrUpdate(x => new { x.CountryId, x.PropertyTypeId, x.DivisionId }, definitions.ToArray());
+            context.PropertyTypeDefinitions.AddOrUpdate(x => new { x.CountryId, x.PropertyTypeId, x.DivisionId }, definitions.ToArray());
             context.SaveChanges();
         }
 
         private static void SeedPropertyTypeLocalised(KnightFrankContext context)
         {
-            Guid localeId = context.Locale.Where(x => x.IsoCode == LocaleIsoCode.en.ToString()).Select(x => x.Id).Single();
+            Guid localeId = context.Locales.Where(x => x.IsoCode == LocaleIsoCode.en.ToString()).Select(x => x.Id).Single();
 
             PropertyTypeLocalised[] propertyTypeLocalised =
-                context.PropertyType.ToList().Select(
+                context.PropertyTypes.ToList().Select(
                     x => new PropertyTypeLocalised { LocaleId = localeId, PropertyTypeId = x.Id, Value = x.Code }).ToArray();
 
-            context.PropertyTypeLocalised.AddOrUpdate(x => new { x.LocaleId, x.PropertyTypeId }, propertyTypeLocalised);
+            context.PropertyTypeLocaliseds.AddOrUpdate(x => new { x.LocaleId, x.PropertyTypeId }, propertyTypeLocalised);
             context.SaveChanges();
         }
 
@@ -61,12 +61,12 @@
         {
             foreach (var type in commercialTypes)
             {
-                context.PropertyType.Add(type);
+                context.PropertyTypes.Add(type);
             }
 
             foreach (var type in residentialTypes)
             {
-                context.PropertyType.Add(type);
+                context.PropertyTypes.Add(type);
             }
 
             context.SaveChanges();
