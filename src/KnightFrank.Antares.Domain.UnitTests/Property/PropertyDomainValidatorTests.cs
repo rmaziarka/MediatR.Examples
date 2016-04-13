@@ -1,6 +1,8 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Property
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Linq.Expressions;
 
     using FluentValidation.Results;
@@ -37,11 +39,26 @@
             PropertyDomainValidator validator,
             Property property)
         {
-            propertyTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyTypeDefinition, bool>>>()))
-                                            .Returns(true);
+            // Arrange
+            var propertyTypeDefinitions = new List<PropertyTypeDefinition>
+            {
+                new PropertyTypeDefinition
+                {
+                    CountryId = property.Address.CountryId,
+                    DivisionId = property.DivisionId,
+                    PropertyTypeId = property.PropertyTypeId
+                }
+            };
 
+            propertyTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyTypeDefinition, bool>>>()))
+                                            .Returns(
+                                                new Func<Expression<Func<PropertyTypeDefinition, bool>>, bool>(
+                                                    expr => propertyTypeDefinitions.Any(expr.Compile())));
+
+            // Act
             ValidationResult validationResult = validator.Validate(property);
 
+            // Assert
             Assert.True(validationResult.IsValid);
         }
 
@@ -52,11 +69,39 @@
            PropertyDomainValidator validator,
            Property property)
         {
+            // Arrange
+            var propertyTypeDefinitions = new List<PropertyTypeDefinition>
+            {
+                new PropertyTypeDefinition
+                {
+                    CountryId = Guid.Empty,
+                    DivisionId = property.DivisionId,
+                    PropertyTypeId = property.PropertyTypeId
+                },
+                new PropertyTypeDefinition
+                {
+                    CountryId = property.Address.CountryId,
+                    DivisionId = Guid.Empty,
+                    PropertyTypeId = property.PropertyTypeId
+                },
+                new PropertyTypeDefinition
+                {
+                    CountryId = property.Address.CountryId,
+                    DivisionId = property.DivisionId,
+                    PropertyTypeId = Guid.Empty,
+                }
+            };
+
+            // Act 
             propertyTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyTypeDefinition, bool>>>()))
-                                            .Returns(false);
+                                            .Returns(
+                                                new Func<Expression<Func<PropertyTypeDefinition, bool>>, bool>(
+                                                    expr => propertyTypeDefinitions.Any(expr.Compile())));
+
 
             ValidationResult validationResult = validator.Validate(property);
 
+            // Assert
             Assert.False(validationResult.IsValid);
         }
     }

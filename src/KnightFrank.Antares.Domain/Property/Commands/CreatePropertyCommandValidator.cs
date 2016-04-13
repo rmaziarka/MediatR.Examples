@@ -34,7 +34,7 @@
 
         private ValidationFailure DivisionCodeExists(CreatePropertyCommand createPropertyCommand)
         {
-            var divisionExists = createPropertyCommand != null && this.enumTypeItemRepository.Any(x => x.Code.Equals(createPropertyCommand.Division.Code));
+            bool divisionExists = createPropertyCommand != null && this.enumTypeItemRepository.Any(x => x.Code.Equals(createPropertyCommand.Division.Code));
             return divisionExists
                 ? null
                 : new ValidationFailure(nameof(createPropertyCommand.Division), "Division does not exist.");
