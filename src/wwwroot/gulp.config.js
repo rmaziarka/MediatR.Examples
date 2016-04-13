@@ -23,24 +23,29 @@
             appFiles: [
                 clientApp + '**/*.js',
                 '!' + clientApp + '**/*.spec.js',
-                '!' + clientApp + '**/*.mock.js'
+                '!' + clientApp + '**/*.mock.js',
+                '!' + clientApp + '**/*.test.js'
             ],
             appFilesToTest: [
                 clientApp + '**/*.js',
                 '!' + clientApp + '**/*.spec.js',
                 '!' + clientApp + '**/*.mock.js',
+                '!' + clientApp + '**/*.test.js',
                 '!' + clientApp + '**/*.route.js',
                 '!' + clientApp + '**/*.config.js'
             ],
             specsAndMocks: [
                 clientApp + '**/*.spec.js',
-                clientApp + '**/*.mock.js'
+                clientApp + '**/*.mock.js',
+                clientApp + '**/*.test.js'
             ],
             order: [
                 '**/app.bootstrap.js',
                 '**/app.module.js',
                 '**/*.module.js',
-                '**/common/models/dto/*.js',
+                '**/common/models/business/**/*.js',
+                '**/common/models/dto/**/*.js',
+                '**/common/**/*.js',
                 '**/*.js'
             ]
         },
@@ -75,6 +80,7 @@
             },
             htmlTemplatesSrc: clientApp + '**/*.html',
             fonts: bower.directory + 'font-awesome/fonts/**/*.*',
+            bootstrapFonts: bower.directory + 'bootstrap-sass/assets/fonts/bootstrap/**/*.*',
             translationsDest: build + translations,
             staticTranslationsFiles: [
                 translations + '*.json', // translation

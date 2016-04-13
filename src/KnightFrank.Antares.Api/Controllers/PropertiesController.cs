@@ -1,13 +1,11 @@
 ﻿namespace KnightFrank.Antares.API.Controllers
 {
     using System;
-    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
 
     using KnightFrank.Antares.Dal.Model.Property;
-    using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Ownership.Commands;
     using KnightFrank.Antares.Domain.Ownership.Queries;
     using KnightFrank.Antares.Domain.Property.Commands;
@@ -24,16 +22,14 @@
     {
         private readonly IMediator mediator;
         private const string LocaleCode = "en";
-        private readonly IReadGenericRepository<PropertyTypeDefinition> propertyTypeDefinitionRepository;
 
         /// <summary>
         ///     Properties controller constructor
         /// </summary>
         /// <param name="mediator">Mediator instance.</param>
-        public PropertiesController(IMediator mediator, IReadGenericRepository<PropertyTypeDefinition> propertyTypeDefinitionRepository)
+        public PropertiesController(IMediator mediator)
         {
             this.mediator = mediator;
-            this.propertyTypeDefinitionRepository = propertyTypeDefinitionRepository;
         }
 
         /// <summary>
@@ -64,12 +60,6 @@
         [Route("")]
         public Property CreateProperty(CreatePropertyCommand command)
         {
-            // TODO Quick fix - to be removed after propertyTypeId is sent from GUI
-            if (command.PropertyTypeId == Guid.Empty)
-            {
-                command.PropertyTypeId = this.propertyTypeDefinitionRepository.Get().First(x => x.Country.IsoCode == "GB").PropertyTypeId;
-            }
-
             Guid propertyId = this.mediator.Send(command);
             return this.GetProperty(propertyId);
         }
@@ -100,8 +90,8 @@
             command.PropertyId = id;
             Guid ownershipId = this.mediator.Send(command);
 
-            var ownership =
-                this.mediator.Send(new OwnershipByIdQuery() { OwnershipId = ownershipId });
+            Ownership ownership =
+                this.mediator.Send(new OwnershipByIdQuery { OwnershipId = ownershipId });
 
             return ownership;
         }
@@ -119,6 +109,18 @@
             propertyTypesQuery.LocaleCode = LocaleCode;
 
             return this.mediator.Send(propertyTypesQuery);
+        }
+
+        /// <summary>
+        /// Gets the attributes.
+        /// </summary>
+        /// <param name="propertyAttributesQuery">The property attributes query.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("attributes")]
+        public PropertyAttributesQueryResult GetPropertyAttributes([FromUri(Name = "")]PropertyAttributesQuery propertyAttributesQuery)
+        {
+            return this.mediator.Send(propertyAttributesQuery);
         }
     }
 }

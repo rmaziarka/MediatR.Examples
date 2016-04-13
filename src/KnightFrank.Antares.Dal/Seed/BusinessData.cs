@@ -8,11 +8,11 @@
 	using KnightFrank.Antares.Dal.Model.Resource;
 	using KnightFrank.Antares.Dal.Model.User;
 
-    internal class BusinessData
+    internal static class BusinessData
     {
 		public static void Seed(KnightFrankContext context)
 	    {
-			List<Country> countries = context.Country.ToList();
+			List<Country> countries = context.Countries.ToList();
 
 			SeedBusiness(context, countries);
 
@@ -135,7 +135,7 @@
 				CountryId = GetCountryIdByCode(countries, countryCode)
 			};
 
-			context.Business.AddOrUpdate(x => x.Name, business);
+			context.Businesses.AddOrUpdate(x => x.Name, business);
 		}
 
 		private static Guid GetCountryIdByCode(IEnumerable<Country> countries, string countryCode)

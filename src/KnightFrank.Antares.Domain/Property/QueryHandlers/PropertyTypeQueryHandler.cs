@@ -1,6 +1,5 @@
 ﻿namespace KnightFrank.Antares.Domain.Property.QueryHandlers
 {
-    using System.Data.Entity;
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Property;
@@ -24,37 +23,38 @@
 
         public PropertyTypeQueryResult Handle(PropertyTypeQuery message)
         {
-            IQueryable<PropertyType> propertyTypes =
-                this.propertyTypeDefinitionRepository
-                    .Get()
-                    .Where(x => x.Division.Code == message.DivisionCode)
-                    .Where(x => x.Country.IsoCode == message.CountryCode)
-                    .Include(x => x.PropertyType.Parent)
-                    .Distinct()
-                    .Select(x => x.PropertyType);
-
-            IQueryable<PropertyTypeLocalised> propertyTypesLocalised =
-                this.propertyTypeLocalisedRepository
-                    .Get()
-                    .Where(x => x.Locale.IsoCode == message.LocaleCode)
-                    .Where(x => propertyTypes.Contains(x.PropertyType));
-
+            var items = (from d in this.propertyTypeDefinitionRepository.GetWithInclude(x => x.PropertyType)
+                         where d.Division.Code == message.DivisionCode
+                         where d.Country.IsoCode == message.CountryCode
+                         join l in this.propertyTypeLocalisedRepository.Get() on d.PropertyTypeId equals l.PropertyTypeId
+                         where l.Locale.IsoCode == message.LocaleCode
+                         orderby d.Order
+                         select new { d.Order, d.PropertyType, l.Value }).ToList();
+            
             var result = new PropertyTypeQueryResult
             {
-                PropertyTypes = propertyTypesLocalised
-                    .Select(x =>
-                        new PropertyTypeQuerySingleResult
+                PropertyTypes = items.Where(x => x.PropertyType.ParentId == null).Select(
+                x => new PropertyTypeQuerySingleResult
+                {
+                    Id = x.PropertyType.Id,
+                    ParentId = x.PropertyType.ParentId,
+                    Name = x.Value,
+                    Order = x.Order,
+                    Children = items.Where(y => y.PropertyType.ParentId == x.PropertyType.Id).Select(
+                        y => new PropertyTypeQuerySingleResult
                         {
-                            Id = x.PropertyType.Id,
-                            ParentId = x.PropertyType.ParentId,
-                            Name = x.Value
+                            Id = y.PropertyType.Id,
+                            ParentId = y.PropertyType.ParentId,
+                            Name = y.Value,
+                            Order = y.Order
                         })
-                    .ToList()
+                }
+                ).ToList()
             };
 
             if (!result.PropertyTypes.Any())
             {
-                throw new DomainValidationException("No configuration found.");
+                throw new DomainValidationException("query", "No configuration found.");
             }
 
             return result;

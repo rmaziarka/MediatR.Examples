@@ -11,11 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.Domain"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F11B8914-8C3F-4E4A-9A8B-A60539397EC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.API.IntegrationTests", "KnightFrank.Antares.Api.IntegrationTests\KnightFrank.Antares.API.IntegrationTests.csproj", "{0DD04333-5AE5-4422-A27A-4FF050F50DBF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.API.IntegrationTests", "Tests\KnightFrank.Antares.Api.IntegrationTests\KnightFrank.Antares.API.IntegrationTests.csproj", "{0DD04333-5AE5-4422-A27A-4FF050F50DBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.Domain.UnitTests", "KnightFrank.Antares.Domain.UnitTests\KnightFrank.Antares.Domain.UnitTests.csproj", "{6904112B-8FF0-4934-AA02-8C46037356A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.Domain.UnitTests", "Tests\KnightFrank.Antares.Domain.UnitTests\KnightFrank.Antares.Domain.UnitTests.csproj", "{6904112B-8FF0-4934-AA02-8C46037356A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.UITests", "KnightFrank.Antares.UITests\KnightFrank.Antares.UITests.csproj", "{66D03143-B339-4767-8A9F-8306164BC88A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.UITests", "Tests\KnightFrank.Antares.UITests\KnightFrank.Antares.UITests.csproj", "{66D03143-B339-4767-8A9F-8306164BC88A}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "KnightFrank.Antares.Database", "KnightFrank.Antares.Database\KnightFrank.Antares.Database.sqlproj", "{93A305E8-D11A-4821-B6A1-79787FAD0E93}"
 EndProject

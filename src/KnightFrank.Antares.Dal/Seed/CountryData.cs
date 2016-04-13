@@ -7,7 +7,7 @@
 	using KnightFrank.Antares.Dal.Model.Resource;
 	using KnightFrank.Antares.Dal.Seed.Common;
 
-    internal class CountryData
+    internal static class CountryData
     {
 		private static Guid CsLocaleId { get; set; }
 		private static Guid DeLocaleId { get; set; }
@@ -21,17 +21,18 @@
 	    {
 			SetLocaleIds(context);
 			SeedCountry(context);
-		}
+            context.SaveChanges();
+        }
 
 	    private static void SetLocaleIds(KnightFrankContext context)
 	    {
-			CsLocaleId = context.Locale.Where(x => x.IsoCode == LocaleIsoCode.cs.ToString()).Select(x => x.Id).Single();
-			DeLocaleId = context.Locale.Where(x => x.IsoCode == LocaleIsoCode.de.ToString()).Select(x => x.Id).Single();
-			EnLocaleId = context.Locale.Where(x => x.IsoCode == LocaleIsoCode.en.ToString()).Select(x => x.Id).Single();
-			EsLocaleId = context.Locale.Where(x => x.IsoCode == LocaleIsoCode.es.ToString()).Select(x => x.Id).Single();
-			FrLocaleId = context.Locale.Where(x => x.IsoCode == LocaleIsoCode.fr.ToString()).Select(x => x.Id).Single();
-			PlLocaleId = context.Locale.Where(x => x.IsoCode == LocaleIsoCode.pl.ToString()).Select(x => x.Id).Single();
-			SvLocaleId = context.Locale.Where(x => x.IsoCode == LocaleIsoCode.sv.ToString()).Select(x => x.Id).Single();
+			CsLocaleId = context.Locales.Where(x => x.IsoCode == LocaleIsoCode.cs.ToString()).Select(x => x.Id).Single();
+			DeLocaleId = context.Locales.Where(x => x.IsoCode == LocaleIsoCode.de.ToString()).Select(x => x.Id).Single();
+			EnLocaleId = context.Locales.Where(x => x.IsoCode == LocaleIsoCode.en.ToString()).Select(x => x.Id).Single();
+			EsLocaleId = context.Locales.Where(x => x.IsoCode == LocaleIsoCode.es.ToString()).Select(x => x.Id).Single();
+			FrLocaleId = context.Locales.Where(x => x.IsoCode == LocaleIsoCode.fr.ToString()).Select(x => x.Id).Single();
+			PlLocaleId = context.Locales.Where(x => x.IsoCode == LocaleIsoCode.pl.ToString()).Select(x => x.Id).Single();
+			SvLocaleId = context.Locales.Where(x => x.IsoCode == LocaleIsoCode.sv.ToString()).Select(x => x.Id).Single();
 		}
 
 		private static void SeedCountry(KnightFrankContext context)
@@ -275,7 +276,7 @@
 		{
 			var country = new Country { IsoCode = isoCode };
 
-			context.Country.AddOrUpdate(x => x.IsoCode, country);
+			context.Countries.AddOrUpdate(x => x.IsoCode, country);
 			context.SaveChanges();
 
 			var countryLocaliseds = new[]
@@ -323,8 +324,7 @@
 					Value = svValue
 				}
 			};
-			context.CountryLocalised.AddOrUpdate(x => new { x.LocaleId, x.CountryId }, countryLocaliseds.ToArray());
-			context.SaveChanges();
+			context.CountryLocaliseds.AddOrUpdate(x => new { x.LocaleId, x.CountryId }, countryLocaliseds.ToArray());
 		}
 	}
 }

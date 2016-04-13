@@ -15,16 +15,19 @@ declare module Antares.Common.Models {
         interface IBaseResourceClass<T> extends ng.resource.IResourceClass<T> {
             get(): T;
             get(params: IBaseResourceParameters): T;
-            get(params: IEnumResourceParameters): T;            
+            get(params: IEnumResourceParameters): T;
         }
 
-        interface ITranslationResourceClass<T> extends IBaseResourceClass<T> {            
+        interface ITranslationResourceClass<T> extends IBaseResourceClass<T> {
             get(): T;
             get(params: ITranslationResourceParameters): T;
         }
 
         // *** IResource extensions***
         interface IActivityResource extends ng.resource.IResource<Dto.IActivity> {
+        }
+
+        interface ICompanyResource extends ng.resource.IResource<Dto.ICompany> {
         }
 
         interface IContactResource extends ng.resource.IResource<Dto.IContact> {
@@ -42,7 +45,7 @@ declare module Antares.Common.Models {
         interface IEnumResource extends ng.resource.IResource<Dto.IEnum> {
         }
 
-        interface ICountryResource extends ng.resource.IResource<Dto.CountryLocalised> {
+        interface ICountryResource extends ng.resource.IResource<Dto.ICountryLocalised> {
         }
 
         interface IAddressFormResource extends ng.resource.IResource<Dto.IAddressForm> {
@@ -66,6 +69,7 @@ declare module Antares.Common.Models {
 
         interface IPropertyResourceClass extends Resources.IBaseResourceClass<Resources.IPropertyResource> {
             createOwnership(params: any, ownership: any): ng.resource.IResource<Dto.IOwnership>;
+            getPropertyTypes(params: any, ownership: any): ng.resource.IResource<Dto.IOwnership>;
         }
 
         // - country -

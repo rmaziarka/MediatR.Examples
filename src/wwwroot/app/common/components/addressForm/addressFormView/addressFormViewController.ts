@@ -3,26 +3,23 @@
 module Antares.Common.Component {
     'use strict';
 
-    import AddressForm = Antares.Common.Models.Dto.AddressForm;
-    import AddressFormFieldDefinition = Antares.Common.Models.Dto.AddressFormFieldDefinition;
-    import Address = Antares.Common.Models.Dto.Address;
-    import AddressFormResource = Antares.Common.Models.Resources.IAddressFormResource;
+    import Business = Common.Models.Business;
 
     export class AddressFormViewController {
         addressForm: any;
-        address: Address;
+        address: Business.Address;
 
         constructor(private dataAccessService: Services.DataAccessService, $scope: ng.IScope) {
             this.dataAccessService.getAddressFormResource().get({ id: this.address.addressFormId }).$promise.then((result)=>{
-                var addressForm = new AddressForm();
+                var addressForm = new Business.AddressForm();
                 angular.extend(addressForm, result);
                 addressForm.updateAddressFieldRows();
                 this.addressForm = addressForm;
             });
         }
 
-        isRowEmpty(row: Array<Antares.Common.Models.Dto.AddressFormFieldDefinition>): boolean {
-            return !_.any(row, (field: Antares.Common.Models.Dto.AddressFormFieldDefinition) => {
+        isRowEmpty(row: Array<Business.AddressFormFieldDefinition>): boolean {
+            return !_.any(row, (field: Business.AddressFormFieldDefinition) => {
                 return !!this.address[field.name];
             });
         }

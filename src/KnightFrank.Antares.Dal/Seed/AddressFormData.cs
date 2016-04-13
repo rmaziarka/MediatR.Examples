@@ -32,13 +32,13 @@
                     EnumTypeItemId = GetEntityTypeItemIdByCode(context, entityTypeCode)
                 };
 
-            context.AddressFormEntityType.AddOrUpdate(afet => new { afet.AddressFormId, afet.EnumTypeItemId }, addressFormEntityType);
+            context.AddressFormEntityTypes.AddOrUpdate(afet => new { afet.AddressFormId, afet.EnumTypeItemId }, addressFormEntityType);
             context.SaveChanges();
         }
 
         private static Guid GetEntityTypeItemIdByCode(KnightFrankContext context, string propertyCode)
         {
-            return context.EnumTypeItem.FirstOrDefault(eti => eti.Code == propertyCode)?.Id ?? default(Guid);
+            return context.EnumTypeItems.FirstOrDefault(eti => eti.Code == propertyCode)?.Id ?? default(Guid);
         }
 
         private static void SeedRequirementAddressFieldDefinition(KnightFrankContext context, Guid formId)
@@ -54,7 +54,7 @@
                     Required = false,
                     RowOrder = 1,
                     ColumnOrder = 1,
-                    ColumnSize = 6
+                    ColumnSize = 8
                 },
                 new AddressFieldDefinition
                 {
@@ -65,7 +65,7 @@
                     Required = false,
                     RowOrder = 2,
                     ColumnOrder = 1,
-                    ColumnSize = 6
+                    ColumnSize = 8
                 },
                 new AddressFieldDefinition
                 {
@@ -76,11 +76,11 @@
                     Required = false,
                     RowOrder = 3,
                     ColumnOrder = 1,
-                    ColumnSize = 6
+                    ColumnSize = 4
                 }
             };
 
-            context.AddressFieldDefinition.AddOrUpdate(af => new { af.AddressFieldId, af.AddressFormId, af.AddressFieldLabelId }, addressFieldDefinitions.ToArray());
+            context.AddressFieldDefinitions.AddOrUpdate(af => new { af.AddressFieldId, af.AddressFormId, af.AddressFieldLabelId }, addressFieldDefinitions.ToArray());
             context.SaveChanges();
         }
 
@@ -108,7 +108,7 @@
                     Required = false,
                     RowOrder = 1,
                     ColumnOrder = 2,
-                    ColumnSize = 6
+                    ColumnSize = 8
                 },
                 new AddressFieldDefinition
                 {
@@ -119,7 +119,7 @@
                     Required = false,
                     RowOrder = 2,
                     ColumnOrder = 1,
-                    ColumnSize = 10
+                    ColumnSize = 12
                 },
                 new AddressFieldDefinition
                 {
@@ -130,7 +130,7 @@
                     Required = false,
                     RowOrder = 3,
                     ColumnOrder = 1,
-                    ColumnSize = 10
+                    ColumnSize = 12
                 },
                 new AddressFieldDefinition
                 {
@@ -141,7 +141,7 @@
                     Required = true,
                     RowOrder = 4,
                     ColumnOrder = 1,
-                    ColumnSize = 3
+                    ColumnSize = 4
                 },
                 new AddressFieldDefinition
                 {
@@ -152,7 +152,7 @@
                     Required = false,
                     RowOrder = 5,
                     ColumnOrder = 1,
-                    ColumnSize = 7
+                    ColumnSize = 8
                 },
                 new AddressFieldDefinition
                 {
@@ -163,18 +163,18 @@
                     Required = false,
                     RowOrder = 6,
                     ColumnOrder = 1,
-                    ColumnSize = 7
+                    ColumnSize = 8
                 }
             };
 
-            context.AddressFieldDefinition.AddOrUpdate(af => new { af.AddressFieldId, af.AddressFormId, af.AddressFieldLabelId }, addressFieldDefinitions.ToArray());
+            context.AddressFieldDefinitions.AddOrUpdate(af => new { af.AddressFieldId, af.AddressFormId, af.AddressFieldLabelId }, addressFieldDefinitions.ToArray());
             context.SaveChanges();
         }
 
         private static Guid SeedAddressForm(KnightFrankContext context, string countryCode, string entityEnumCode)
         {
             AddressForm addressForm =
-                context.AddressForm.FirstOrDefault(af => af.Country.IsoCode == countryCode &&
+                context.AddressForms.FirstOrDefault(af => af.Country.IsoCode == countryCode &&
                                                          af.AddressFormEntityTypes.Any(
                                                              afet => afet.EnumTypeItem.Code == entityEnumCode));
 
@@ -183,7 +183,7 @@
                 CountryId = GetCountryIdByCode(context, countryCode)
             };
 
-            context.AddressForm.AddOrUpdate(addressForm);
+            context.AddressForms.AddOrUpdate(addressForm);
             context.SaveChanges();
 
             return addressForm.Id;
@@ -230,7 +230,7 @@
                     Name = "Country"
                 }
             };
-            context.AddressField.AddOrUpdate(x => x.Name, input.ToArray());
+            context.AddressFields.AddOrUpdate(x => x.Name, input.ToArray());
             context.SaveChanges();
         }
 
@@ -340,27 +340,27 @@
                 },
             };
 
-            context.AddressFieldLabel.AddOrUpdate(x => new { x.LabelKey, x.AddressFieldId }, input.ToArray());
+            context.AddressFieldLabels.AddOrUpdate(x => new { x.LabelKey, x.AddressFieldId }, input.ToArray());
             context.SaveChanges();
         }
 
         private static Guid GetCountryIdByCode(KnightFrankContext context, string countryCode)
         {
-            Country country = context.Country.FirstOrDefault(c => c.IsoCode == countryCode);
+            Country country = context.Countries.FirstOrDefault(c => c.IsoCode == countryCode);
 
             return country?.Id ?? default(Guid);
         }
 
         private static Guid GetAddressFieldIdByName(KnightFrankContext context, string addressFieldName)
         {
-            AddressField addressField = context.AddressField.FirstOrDefault(af => addressFieldName.Equals(af.Name));
+            AddressField addressField = context.AddressFields.FirstOrDefault(af => addressFieldName.Equals(af.Name));
 
             return addressField?.Id ?? default(Guid);
         }
 
         private static Guid GetAddressFieldLabelIdByLabelKey(KnightFrankContext context, string key)
         {
-            AddressFieldLabel result = context.AddressFieldLabel.FirstOrDefault(l => l.LabelKey == key);
+            AddressFieldLabel result = context.AddressFieldLabels.FirstOrDefault(l => l.LabelKey == key);
 
             return result?.Id ?? default(Guid);
         }

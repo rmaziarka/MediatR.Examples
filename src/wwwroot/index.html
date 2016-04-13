@@ -37,23 +37,22 @@
     <script src="app/app.bootstrap.js"></script>
     <script src="app/app.module.js"></script>
     <script src="app/requirement/requirement.module.js"></script>
-    <script src="app/common/models/dto/activity.js"></script>
-    <script src="app/common/models/dto/address.js"></script>
-    <script src="app/common/models/dto/addressForm.js"></script>
-    <script src="app/common/models/dto/contact.js"></script>
-    <script src="app/common/models/dto/countryLocalised.js"></script>
-    <script src="app/common/models/dto/locale.js"></script>
-    <script src="app/common/models/dto/ownership.js"></script>
-    <script src="app/common/models/dto/property.js"></script>
-    <script src="app/activity/activity.route.js"></script>
-    <script src="app/activity/add/activityAddComponent.js"></script>
-    <script src="app/activity/add/activityAddController.js"></script>
-    <script src="app/activity/preview/activityPreviewComponent.js"></script>
-    <script src="app/activity/preview/activityPreviewController.js"></script>
-    <script src="app/activity/view/activityViewController.js"></script>
-    <script src="app/app.module.config.js"></script>
-    <script src="app/app.route.js"></script>
-    <script src="app/appController.js"></script>
+    <script src="app/common/models/business/activity/activity.js"></script>
+    <script src="app/common/models/business/activity/createActivityResource.js"></script>
+    <script src="app/common/models/business/activity/updateActivityResource.js"></script>
+    <script src="app/common/models/business/address/address.js"></script>
+    <script src="app/common/models/business/addressForm/addressForm.js"></script>
+    <script src="app/common/models/business/addressForm/addressFormFieldDefinition.js"></script>
+    <script src="app/common/models/business/company/company.js"></script>
+    <script src="app/common/models/business/company/createCompanyResource.js"></script>
+    <script src="app/common/models/business/contact/contact.js"></script>
+    <script src="app/common/models/business/enum/EnumTypeItem.js"></script>
+    <script src="app/common/models/business/ownership/ownership.js"></script>
+    <script src="app/common/models/business/property/property.js"></script>
+    <script src="app/common/models/business/resources/country.js"></script>
+    <script src="app/common/models/business/resources/countryLocalised.js"></script>
+    <script src="app/common/models/business/resources/locale.js"></script>
+    <script src="app/common/models/dto/enumTypeItem.js"></script>
     <script src="app/common/components/addressForm/addressFormEdit/addressFormEditComponent.js"></script>
     <script src="app/common/components/addressForm/addressFormEdit/addressFormEditController.js"></script>
     <script src="app/common/components/addressForm/addressFormView/addressFormViewComponent.js"></script>
@@ -63,8 +62,11 @@
     <script src="app/common/components/card/list/cardListComponent.js"></script>
     <script src="app/common/components/card/list/cardListController.js"></script>
     <script src="app/common/components/card/list/cardListOrder.js"></script>
+    <script src="app/common/components/list/listComponent.js"></script>
+    <script src="app/common/components/listItem/listItemComponent.js"></script>
     <script src="app/common/components/sidePanel/sidepanelComponent.js"></script>
     <script src="app/common/components/sidePanel/sidepanelController.js"></script>
+    <script src="app/common/core/controllers/WithPanelsBaseController.js"></script>
     <script src="app/common/core/dateTimeUtils.js"></script>
     <script src="app/common/core/lowerCaseFirstCharacter.js"></script>
     <script src="app/common/core/services/registry/componentRegistryService.js"></script>
@@ -72,12 +74,28 @@
     <script src="app/common/directives/dontOverlapController.js"></script>
     <script src="app/common/directives/dontOverlapDirective.js"></script>
     <script src="app/common/directives/listNotEmptyDirective.js"></script>
+    <script src="app/common/directives/maxDateDirective.js"></script>
     <script src="app/common/factories/localizationLoaderFactory.js"></script>
     <script src="app/common/filters/enumTranslateFilter.js"></script>
-    <script src="app/common/models/dto/ownership/ownershipTypeEnum.js"></script>
+    <script src="app/common/models/enums/ownershipTypeEnum.js"></script>
     <script src="app/common/services/dataAccessService.js"></script>
     <script src="app/common/services/userService.js"></script>
     <script src="app/common/testHelpers/assertValidators.js"></script>
+    <script src="app/activity/activity.route.js"></script>
+    <script src="app/activity/add/activityAddComponent.js"></script>
+    <script src="app/activity/add/activityAddController.js"></script>
+    <script src="app/activity/edit/activityEditComponent.js"></script>
+    <script src="app/activity/edit/activityEditController.js"></script>
+    <script src="app/activity/preview/activityPreviewComponent.js"></script>
+    <script src="app/activity/preview/activityPreviewController.js"></script>
+    <script src="app/activity/view/activityViewComponent.js"></script>
+    <script src="app/activity/view/activityViewController.js"></script>
+    <script src="app/app.module.config.js"></script>
+    <script src="app/app.route.js"></script>
+    <script src="app/appController.js"></script>
+    <script src="app/company/add/companyAddComponent.js"></script>
+    <script src="app/company/add/companyAddController.js"></script>
+    <script src="app/company/company.route.js"></script>
     <script src="app/contact/add/contactAddComponent.js"></script>
     <script src="app/contact/add/contactAddController.js"></script>
     <script src="app/contact/list/contactListComponent.js"></script>
@@ -90,6 +108,8 @@
     <script src="app/property/add/propertyAddController.js"></script>
     <script src="app/property/edit/propertyEditComponent.js"></script>
     <script src="app/property/edit/propertyEditController.js"></script>
+    <script src="app/property/preview/propertyPreviewComponent.js"></script>
+    <script src="app/property/preview/propertyPreviewController.js"></script>
     <script src="app/property/property.route.js"></script>
     <script src="app/property/view/propertyViewComponent.js"></script>
     <script src="app/property/view/propertyViewController.js"></script>
@@ -105,9 +125,7 @@
     <!-- inject:templates:js -->
     <!-- endinject -->
     <!-- endbuild -->
-    <div class="container">
-        <div data-ui-view>
-        </div>
+    <div data-ui-view>
     </div>
 </body>
 </html>

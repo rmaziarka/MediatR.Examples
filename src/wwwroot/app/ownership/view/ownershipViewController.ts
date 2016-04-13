@@ -1,20 +1,20 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Property {
-    import IOwnership = Antares.Common.Models.Dto.IOwnership;
+    import Dto = Common.Models.Dto;
 
     export class OwnershipViewController {
         static $inject = ['componentRegistry'];
 
         componentId: string;
-        ownership: IOwnership = <IOwnership>{};
+        ownership: Dto.IOwnership = <Dto.IOwnership>{};
 
         constructor(
-            componentRegistry: Antares.Core.Service.ComponentRegistry) {
+            componentRegistry: Core.Service.ComponentRegistry) {
             componentRegistry.register(this, this.componentId);
         }
 
-        setOwnership = (ownership: IOwnership) => {
+        setOwnership = (ownership: Dto.IOwnership) => {
             this.ownership = ownership;
         }
     }

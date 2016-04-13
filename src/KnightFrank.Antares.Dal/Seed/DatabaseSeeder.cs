@@ -12,6 +12,8 @@
             AddressFormData.Seed(context);
 			RoleData.Seed(context);
             PropertyTypeData.Seed(context);
+            AttributeData.Seed(context);
+            PropertyAttributeFromData.Seed(context);
 
             context.SaveChanges();
         }

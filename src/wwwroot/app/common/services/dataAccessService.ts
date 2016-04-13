@@ -2,14 +2,11 @@
 
 module Antares.Services {
     import Resources = Common.Models.Resources;
-    import AddressFormResourceClass = Antares.Common.Models.Resources.IAddressFormResourceClass;
-    import CountryResourceClass = Antares.Common.Models.Resources.ICountryResourceClass;
 
     export class DataAccessService {
-
         private rootUrl: string = "";
 
-        constructor(private $resource: ng.resource.IResourceService, private appConfig: Antares.Common.Models.IAppConfig) {
+        constructor(private $resource: ng.resource.IResourceService, private appConfig: Common.Models.IAppConfig) {
         }
 
         private updateAction: ng.resource.IActionDescriptor = {
@@ -26,6 +23,23 @@ module Antares.Services {
             }
         };
 
+        private getPropertyTypesAction: ng.resource.IActionDescriptor = {
+            url: this.appConfig.rootUrl + '/api/properties/types?countryCode=:countryCode&divisionCode=:divisionCode&localeCode=:localeCode',
+            method: 'GET',
+            isArray: false,
+            params: {
+                countryCode: '@countryCode',
+                divisionCode: '@divisionCode',
+                localeCode: '@localeCode'
+            }
+        };
+
+
+        getCompanyResource(): Resources.IBaseResourceClass<Resources.ICompanyResource> {
+            return <Resources.IBaseResourceClass<Resources.ICompanyResource>>
+                this.$resource(this.appConfig.rootUrl + '/api/companies/:id');
+        }
+
         getContactResource(): Resources.IBaseResourceClass<Resources.IContactResource> {
             return <Resources.IBaseResourceClass<Resources.IContactResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/contacts/:id');
@@ -36,13 +50,13 @@ module Antares.Services {
                 this.$resource(this.appConfig.rootUrl + '/api/requirements/:id');
         }
 
-        getCountryResource(): CountryResourceClass {
-            return <CountryResourceClass>
+        getCountryResource(): Resources.ICountryResourceClass {
+            return <Resources.ICountryResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/resources/countries/addressform?entityTypeItemCode=:entityTypeCode');
         }
 
-        getAddressFormResource(): AddressFormResourceClass {
-            return <AddressFormResourceClass>
+        getAddressFormResource(): Resources.IAddressFormResourceClass {
+            return <Resources.IAddressFormResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/addressForms/:id?entityType=:entityTypeCode&countryCode=:countryCode');
         }
 
@@ -50,7 +64,8 @@ module Antares.Services {
             return <Resources.IPropertyResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/properties/:id', null, {
                     update: this.updateAction,
-                    createOwnership: this.createOwnershipAction
+                    createOwnership: this.createOwnershipAction,
+                    getPropertyTypes: this.getPropertyTypesAction
                 });
         }
 
@@ -69,9 +84,11 @@ module Antares.Services {
                 this.$resource('/translations/:isoCode.json');
         }
 
-        getActivityResource(): Resources.IBaseResourceClass<Resources.IActivityResource> {
+        getActivityResource(): Resources.IBaseResourceClass<Resources.IActivityResource>{
             return <Resources.IBaseResourceClass<Resources.IActivityResource>>
-                this.$resource(this.appConfig.rootUrl + '/api/activities/:id');
+                this.$resource(this.appConfig.rootUrl + '/api/activities/:id', null, {
+                    update : this.updateAction
+                });
         }
     }
 

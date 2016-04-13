@@ -7,13 +7,15 @@
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Address;
-    using KnightFrank.Antares.Dal.Model.Attributes.FormDefinition;
+    using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Configuration;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Resource;
     using KnightFrank.Antares.Dal.Model.User;
+
+    using Attribute = KnightFrank.Antares.Dal.Model.Attribute.Attribute;
 
     public class KnightFrankContext : DbContext
     {
@@ -29,46 +31,43 @@
             modelBuilder.Properties<DateTime>()
                         .Configure(c => c.HasColumnType("datetime2"));
 
-            modelBuilder.Entity<PropertyFormDefinition>().Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable("PropertyFormDefinition");
-            });
-
             this.LoadConfigurations(modelBuilder);
         }
 
-        public DbSet<Contact> Contact { get; set; }
-        public DbSet<Requirement> Requirement { get; set; }
-        public DbSet<EnumType> EnumType { get; set; }
-        public DbSet<EnumTypeItem> EnumTypeItem { get; set; }
-        public DbSet<EnumLocalised> EnumLocalised { get; set; }
-        public DbSet<Locale> Locale { get; set; }
-        public DbSet<AddressFieldDefinition> AddressFieldDefinition { get; set; }
-        public DbSet<AddressFieldLabel> AddressFieldLabel { get; set; }
-        public DbSet<AddressField> AddressField { get; set; }
-        public DbSet<Address> Address { get; set; }
-        public DbSet<AddressFormEntityType> AddressFormEntityType { get; set; }
-        public DbSet<AddressForm> AddressForm { get; set; }
-        public DbSet<Country> Country { get; set; }
-        public DbSet<CountryLocalised> CountryLocalised { get; set; }
-        public DbSet<Property> Property { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Requirement> Requirements { get; set; }
+        public DbSet<EnumType> EnumTypes { get; set; }
+        public DbSet<EnumTypeItem> EnumTypeItems { get; set; }
+        public DbSet<EnumLocalised> EnumLocaliseds { get; set; }
+        public DbSet<Locale> Locales { get; set; }
+        public DbSet<AddressFieldDefinition> AddressFieldDefinitions { get; set; }
+        public DbSet<AddressFieldLabel> AddressFieldLabels { get; set; }
+        public DbSet<AddressField> AddressFields { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<AddressFormEntityType> AddressFormEntityTypes { get; set; }
+        public DbSet<AddressForm> AddressForms { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<CountryLocalised> CountryLocaliseds { get; set; }
+        public DbSet<Property> Properties { get; set; }
         public DbSet<Ownership> Ownerships { get; set; }
-        public DbSet<Business> Business { get; set; }
-        public DbSet<Department> Department { get; set; }
-        public DbSet<User> User { get; set; }
-        public DbSet<Role> Role { get; set; }
-        public DbSet<Activity> Activity { get; set; }
-        public DbSet<PropertyType> PropertyType { get; set; }
-        public DbSet<PropertyTypeLocalised> PropertyTypeLocalised { get; set; }
-        public DbSet<PropertyTypeDefinition> PropertyTypeDefinition { get; set; }
-        public DbSet<FormDefinition> PropertyFormDefinition { get; set; }
+        public DbSet<Business> Businesses { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Activity> Activities { get; set; }
+        public DbSet<PropertyType> PropertyTypes { get; set; }
+        public DbSet<PropertyTypeLocalised> PropertyTypeLocaliseds { get; set; }
+        public DbSet<PropertyTypeDefinition> PropertyTypeDefinitions { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<Attribute> Attributes { get; set; }
+        public DbSet<PropertyAttributeForm> PropertyAttributeForms { get; set; }
+        public DbSet<PropertyAttributeFormDefinition> PropertyAttributeFormDefinitions { get; set; }
 
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {
             IEnumerable<Type> mapTypes = from t in typeof(KnightFrankContext).Assembly.GetTypes()
-                           where t.BaseType != null 
-                           && t.BaseType.IsGenericType 
+                           where t.BaseType != null
+                           && t.BaseType.IsGenericType
                            && t.BaseType.GetGenericTypeDefinition() == typeof(BaseEntityConfiguration<>)
                            select t;
 

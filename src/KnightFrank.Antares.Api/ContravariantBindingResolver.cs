@@ -16,14 +16,14 @@
         {
             if (service.IsGenericType)
             {
-                var genericType = service.GetGenericTypeDefinition();
-                var genericArguments = genericType.GetGenericArguments();
-                if (genericArguments.Count() == 1
+                Type genericType = service.GetGenericTypeDefinition();
+                Type[] genericArguments = genericType.GetGenericArguments();
+                if (genericArguments.Length == 1
                  && genericArguments.Single().GenericParameterAttributes.HasFlag(GenericParameterAttributes.Contravariant))
                 {
-                    var argument = service.GetGenericArguments().Single();
-                    var matches = bindings.Where(kvp => kvp.Key.IsGenericType
-                                                           && kvp.Key.GetGenericTypeDefinition().Equals(genericType)
+                    Type argument = service.GetGenericArguments().Single();
+                    IEnumerable<IBinding> matches = bindings.Where(kvp => kvp.Key.IsGenericType
+                                                           && kvp.Key.GetGenericTypeDefinition() == genericType
                                                            && kvp.Key.GetGenericArguments().Single() != argument
                                                            && kvp.Key.GetGenericArguments().Single().IsAssignableFrom(argument))
                         .SelectMany(kvp => kvp.Value);

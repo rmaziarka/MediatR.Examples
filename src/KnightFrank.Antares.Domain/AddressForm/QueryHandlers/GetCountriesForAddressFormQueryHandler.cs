@@ -17,6 +17,7 @@
     using KnightFrank.Antares.Domain.AddressForm.Specifications;
     using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Antares.Domain.Common.Specifications;
+    using KnightFrank.Antares.Domain.Enum.Specifications;
 
     using MediatR;
 
@@ -35,11 +36,15 @@
 
         public List<CountryLocalisedResult> Handle(GetCountriesForAddressFormsQuery message)
         {
-            EnumTypeItem enumTypeItem = this.enumTypeItemRepository.Get().SingleOrDefault(i => i.Code == message.EntityTypeItemCode && i.EnumType.Code == "EntityType");
+            EnumTypeItem enumTypeItem =
+                this.enumTypeItemRepository.Get()
+                    .Where(i => i.Code == message.EntityTypeItemCode)
+                    .Where(new IsEntityType().SatisfiedBy())
+                    .SingleOrDefault();
 
             if (enumTypeItem == null)
             {
-                throw new DomainValidationException("message.EntityType");
+                throw new DomainValidationException(nameof(message.EntityTypeItemCode));
             }
 
             // TODO lang code should be set in header

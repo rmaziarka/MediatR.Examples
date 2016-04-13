@@ -1,8 +1,6 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.TestHelpers {
-    import Resources = Antares.Common.Models.Resources;
-
     export class AssertValidators {
         private pageObjectSelectors = {
             requiredValidatorSelector : '[name="requiredValidationError"]',
@@ -62,6 +60,11 @@ module Antares.TestHelpers {
                 new InputValidationAdapter(input, this.pageObjectSelectors.formatValidationError, this.scope);
 
             expect(pageObject.isValidFor(inputValue)).toBe(expectedResult);
+        }
+
+        public assertShowElement = (expectedResult: boolean, elementSelector: string) => {
+            var selectedElement = this.element.find(elementSelector);
+            expect(selectedElement.hasClass("ng-hide")).toBe(expectedResult);
         }
 
         private generateString = (length: number): string =>{

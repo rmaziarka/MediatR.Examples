@@ -11,9 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A3B5D41B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.Api", "KnightFrank.Antares.Api\KnightFrank.Antares.Api.csproj", "{0F7A831A-FEB0-41F9-A1E0-AB8205327B48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.Domain.UnitTests", "KnightFrank.Antares.Domain.UnitTests\KnightFrank.Antares.Domain.UnitTests.csproj", "{6904112B-8FF0-4934-AA02-8C46037356A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.Domain.UnitTests", "Tests\KnightFrank.Antares.Domain.UnitTests\KnightFrank.Antares.Domain.UnitTests.csproj", "{6904112B-8FF0-4934-AA02-8C46037356A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.Api.IntegrationTests", "KnightFrank.Antares.Api.IntegrationTests\KnightFrank.Antares.Api.IntegrationTests.csproj", "{0DD04333-5AE5-4422-A27A-4FF050F50DBF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.Api.IntegrationTests", "Tests\KnightFrank.Antares.Api.IntegrationTests\KnightFrank.Antares.Api.IntegrationTests.csproj", "{0DD04333-5AE5-4422-A27A-4FF050F50DBF}"
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "wwwroot", "wwwroot\", "{8B5A8ADC-3F97-4D0D-A7D2-C32CCEDB429F}"
 	ProjectSection(WebsiteProperties) = preProject
@@ -37,7 +37,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "wwwroot", "wwwroot\", "{8B5
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.UITests", "KnightFrank.Antares.UITests\KnightFrank.Antares.UITests.csproj", "{66D03143-B339-4767-8A9F-8306164BC88A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.UITests", "Tests\KnightFrank.Antares.UITests\KnightFrank.Antares.UITests.csproj", "{66D03143-B339-4767-8A9F-8306164BC88A}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "KnightFrank.Antares.Database", "KnightFrank.Antares.Database\KnightFrank.Antares.Database.sqlproj", "{93A305E8-D11A-4821-B6A1-79787FAD0E93}"
 EndProject

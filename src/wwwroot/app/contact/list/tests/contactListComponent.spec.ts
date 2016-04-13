@@ -1,8 +1,8 @@
 ///<reference path="../../../typings/_all.d.ts"/>
 
 module Antares {
-    import Contact = Antares.Common.Models.Dto.Contact;
-    import ContactListController = Antares.Component.ContactListController;
+    import ContactListController = Component.ContactListController;
+    import Dto = Common.Models.Dto;
 
     describe('Given contacts are displayed', () =>{
 
@@ -10,14 +10,12 @@ module Antares {
             element: ng.IAugmentedJQuery,
             $http:ng.IHttpBackendService;
 
-        var contacts = [
+        var contacts: Dto.IContact[] = [
             { id : '1', firstName : 'Test1', surname : 'Test1_S', title : 'Mr' },
             { id : '2', firstName : 'Test2', surname : 'Test2_S', title : 'Mr' }
         ];
 
         var controller: ContactListController;
-
-        beforeEach(angular.mock.module('app'));
 
         beforeEach(inject((_$httpBackend_:ng.IHttpBackendService) =>{
             $http = _$httpBackend_;
