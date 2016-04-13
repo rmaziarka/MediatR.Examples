@@ -118,12 +118,10 @@
     <Compile Include="ProjectPageBase.cs" />
     <Compile Include="ProjectTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Steps\CreateActivitySteps.cs" />
     <Compile Include="Steps\CreateCompanySteps.cs" />
     <Compile Include="Steps\CreatePropertySteps.cs" />
     <Compile Include="Steps\CreateContactSteps.cs" />
     <Compile Include="Steps\CreateRequirementSteps.cs" />
-    <Compile Include="Steps\CreateOwnershipSteps.cs" />
     <Compile Include="Steps\EditActivitySteps.cs" />
     <Compile Include="Steps\ViewActivitySteps.cs" />
     <Compile Include="Steps\ViewRequirementSteps.cs" />

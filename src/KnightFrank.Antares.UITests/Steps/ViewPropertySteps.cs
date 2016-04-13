@@ -66,6 +66,55 @@
             this.scenarioContext.Set(page.PreviewDetails.ClickViewActivity(), "ViewActivityPage");
         }
 
+        [When(@"User clicks save button on activity panel")]
+        public void ClickSaveButtonOnActivityPanel()
+        {
+            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").Activity.SaveActivity();
+        }
+
+        [When(@"User fills in ownership details on ownership details page")]
+        public void FillInOwnershipDetails(Table table)
+        {
+            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+            var details = table.CreateInstance<OwnershipDetails>();
+
+            if (Convert.ToBoolean(details.Current))
+            {
+                page.Ownership.SetCurrentOwnership()
+                    .SelectOwnershipType(details.Type);
+                if (!string.IsNullOrEmpty(details.PurchasePrice))
+                {
+                    page.Ownership.SetPurchasePrice(details.PurchasePrice);
+                }
+                if (!string.IsNullOrEmpty(details.PurchaseDate))
+                {
+                    page.Ownership.SetPurchaseDate(details.PurchaseDate);
+                }
+            }
+            else
+            {
+                page.Ownership.SetOwnership()
+                    .SelectOwnershipType(details.Type);
+                if (!string.IsNullOrEmpty(details.PurchasePrice))
+                {
+                    page.Ownership.SetPurchasePrice(details.PurchasePrice);
+                }
+                if (!string.IsNullOrEmpty(details.SellPrice))
+                {
+                    page.Ownership.SetSellPrice(details.SellPrice);
+                }
+                if (!string.IsNullOrEmpty(details.PurchaseDate))
+                {
+                    page.Ownership.SetPurchaseDate(details.PurchaseDate);
+                }
+                if (!string.IsNullOrEmpty(details.SellDate))
+                {
+                    page.Ownership.SetSellDate(details.SellDate);
+                }
+            }
+            page.Ownership.SaveOwnership().WaitForOwnershipPanelToHide();
+        }
+
         [Then(@"Activity creation date is set to current date on view property page")]
         public void CheckifActivityDateCorrect()
         {
@@ -135,6 +184,16 @@
         public void CheckIfViewPropertyPresent()
         {
             Assert.True(this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").CheckIfViewPropertyPresent());
+        }
+
+        [Then(@"Activity details are set on activity panel")]
+        public void CheckActivityDetailsonActivityPanel(Table table)
+        {
+            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+            var details = table.CreateInstance<ActivityDetails>();
+
+            Assert.Equal(details.Vendor, page.Activity.GetActivityVendor());
+            Assert.Equal(details.Status, page.Activity.GetActivityStatus());
         }
     }
 }
