@@ -1,5 +1,8 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     using KnightFrank.Antares.UITests.Extensions;
 
     using Objectivity.Test.Automation.Common;
@@ -9,16 +12,17 @@
     public class ViewPropertyPage : ProjectPageBase
     {
         private readonly ElementLocator viewPropertyForm = new ElementLocator(Locator.CssSelector, "property-view");
-        //locators for property address area
+        // Locators for property address area
         private readonly ElementLocator expectedAddressField = new ElementLocator(Locator.XPath, "//address-form-view//span[text()='{0}']");
         private readonly ElementLocator editButton = new ElementLocator(Locator.CssSelector, "button[ng-click*='goToEdit']");
         //locators for property details area
-        //
-        //locators for property ownership area
+        private readonly ElementLocator propertyType = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator propertyDetails = new ElementLocator(Locator.Id, string.Empty);
+        // Locators for property ownership area
         private readonly ElementLocator addOwernship = new ElementLocator(Locator.CssSelector, "card-list[show-item-add *= 'showContactList'] button");
         private readonly ElementLocator ownershipContacts = new ElementLocator(Locator.XPath, "//card-list-item[{0}]//span[contains(@ng-repeat, 'contacts')]");
         private readonly ElementLocator ownershipDetails = new ElementLocator(Locator.XPath, "//card-list-item[{0}]//small/span/..");
-        //locators for property activities area
+        // Locators for property activities area
         private readonly ElementLocator addActivityButton = new ElementLocator(Locator.CssSelector, "card-list[show-item-add *= 'showActivityAdd'] button");
         private readonly ElementLocator activityDate = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] div.panel-item");
         private readonly ElementLocator activityVendor = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] span");
@@ -36,6 +40,10 @@
         public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
 
         public ActivityPreviewPage PreviewDetails => new ActivityPreviewPage(this.DriverContext);
+
+        public string PropertyType => this.Driver.GetElement(this.propertyType).Text;
+
+        public List<string> PropertyDetails => this.Driver.GetElements(this.propertyDetails).Select(el => el.Text).ToList();
 
         public bool IsAddressDetailsVisible(string propertyDetail)
         {
