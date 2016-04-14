@@ -9,7 +9,7 @@
     public class PropertyPreviewPage : ProjectPageBase
     {
         private readonly ElementLocator viewPropertyLink = new ElementLocator(Locator.CssSelector, "a[ng-click *= 'goToPropertyView']");
-        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, "div.side-panel.slide-in");
+        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
 
         public PropertyPreviewPage(DriverContext driverContext) : base(driverContext)
         {

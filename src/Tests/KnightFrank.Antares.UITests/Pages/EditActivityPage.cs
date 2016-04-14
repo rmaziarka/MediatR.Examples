@@ -27,19 +27,19 @@
 
         public EditActivityPage SetMarketAppraisalPrice(int price)
         {
-            this.Driver.GetElement(this.marketAppraisalPrice).SendKeys(price.ToString());
+            this.Driver.SendKeys(this.marketAppraisalPrice, price.ToString());
             return this;
         }
 
         public EditActivityPage SetRecommendedPrice(int price)
         {
-            this.Driver.GetElement(this.recommendedPrice).SendKeys(price.ToString());
+            this.Driver.SendKeys(this.recommendedPrice, price.ToString());
             return this;
         }
 
         public EditActivityPage SetVendorEstimatedPrice(int price)
         {
-            this.Driver.GetElement(this.vendorEstimatedPrice).SendKeys(price.ToString());
+            this.Driver.SendKeys(this.vendorEstimatedPrice, price.ToString());
             return this;
         }
 

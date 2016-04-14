@@ -42,6 +42,7 @@
         }
 
         [When(@"User fills in address details on create property page")]
+        [When(@"User fills in address details on edit property page")]
         public void FillInAddressDetails(Table table)
         {
             var address = table.CreateInstance<Address>();
@@ -50,6 +51,7 @@
             page.AddressTemplate
                 .SetPropertyNumber(address.PropertyNumber)
                 .SetPropertyName(address.PropertyName)
+                .SetPropertyAddressLine1(address.Line1)
                 .SetPropertyAddressLine2(address.Line2)
                 .SetPropertyAddressLine3(address.Line3)
                 .SetPropertyPostCode(address.Postcode)
@@ -57,13 +59,40 @@
                 .SetPropertyCounty(address.County);
         }
 
+        [When(@"User fills in property details on create property page")]
+        [When(@"User fills in property details on edit property page")]
+        public void FillInPropertyDetails(Table table)
+        {
+            var details = table.CreateInstance<PropertyDetails>();
+            var page = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
+
+            page.SetMinBedrooms(details.MinBedrooms)
+                .SetMaxBathrooms(details.MaxBedrooms)
+                .SetMinReceptionRooms(details.MinReceptionRooms)
+                .SetMaxReceptionRooms(details.MaxReceptionRooms)
+                .SetMinBathrooms(details.MinBathrooms)
+                .SetMaxBathrooms(details.MaxBathrooms)
+                .SetMinParkingSpaces(details.MinParkingSpaces)
+                .SetMaxParkingSpaces(details.MaxParkingSpaces)
+                .SetMinPropertyArea(details.MinPropertyArea)
+                .SetMaxPropertyArea(details.MaxPropertyArea)
+                .SetMinLandArea(details.MinLandArea)
+                .SetMaxLandArea(details.MaxLandArea)
+                .SetMinGuestRooms(details.MinGuestRooms)
+                .SetMaxGuestRooms(details.MaxGuestRooms)
+                .SetMinFunctionRooms(details.MinFunctionRooms)
+                .SetMaxFunctionRooms(details.MaxFunctionRooms);
+        }
+
         [When(@"User selects (.*) property and (.*) type on create property page")]
+        [When(@"User selects (.*) property and (.*) type on edit property page")]
         public void SelectPropertyTypes(string type, string propertyType)
         {
             this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").SelectType(type).SelectPropertyType(propertyType);
         }
 
         [When(@"User clicks save button on create property page")]
+        [When(@"User clicks save button on edit property page")]
         public void ClickSaveButton()
         {
             var page = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
