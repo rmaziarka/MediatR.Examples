@@ -2,6 +2,8 @@
 
 module Antares {
     import RequirementViewController = Requirement.View.RequirementViewController;
+    import Business = Common.Models.Business;
+
     describe('Given view requirement page is loaded', () => {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
@@ -11,7 +13,7 @@ module Antares {
         var controller: RequirementViewController;
 
         describe('and proper requirement id is provided', () => {
-            var requirementMock: any = {
+            var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate({
                 createDate: '2016-03-17T12:35:29.82',
                 maxPrice: 444,
                 minPrice: 0,
@@ -26,24 +28,24 @@ module Antares {
                     { id: '1', firstName: 'John', surname: 'Doe', title: 'Mr.' },
                     { id: '2', firstName: 'Jane', surname: 'Doe', title: 'Mrs.' }
                 ],
-                address : Antares.Mock.AddressForm.FullAddress
-            };
+                address: Mock.AddressForm.FullAddress
+            });
 
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
                 $httpBackend: ng.IHttpBackendService,
-                $filter: ng.IFilterService) =>{
+                $filter: ng.IFilterService) => {
 
                 filter = $filter;
                 $http = $httpBackend;
-                
-                Antares.Mock.AddressForm.mockHttpResponce($http,'a1',[200,Antares.Mock.AddressForm.AddressFormWithOneLine]);
+
+                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
 
                 scope = $rootScope.$new();
                 scope['requirement'] = requirementMock;
                 element = $compile('<requirement-view requirement="requirement"></requirement-view>')(scope);
-                
+
                 scope.$apply();
                 $http.flush();
 
@@ -83,15 +85,15 @@ module Antares {
                 // TODO: after address view component is implemented
             });
 
-            it('basic property requirements are displayed in proper order and with correct values', () =>{
+            it('basic property requirements are displayed in proper order and with correct values', () => {
                 var expectedBasicDetailsResults = [
-                    { label : 'REQUIREMENT.VIEW.PRICE', min : 'vm.requirement.minPrice', max : 'vm.requirement.maxPrice', suffix : "'GBP'" },
-                    { label : 'REQUIREMENT.VIEW.BEDROOMS', min : 'vm.requirement.minBedrooms', max : 'vm.requirement.maxBedrooms', suffix : null },
-                    { label : 'REQUIREMENT.VIEW.RECEPTIONROOMS', min : 'vm.requirement.minReceptionRooms', max : 'vm.requirement.maxReceptionRooms', suffix : null },
-                    { label : 'REQUIREMENT.VIEW.BATHROOMS', min : 'vm.requirement.minBathrooms', max : 'vm.requirement.maxBathrooms', suffix : null },
-                    { label : 'REQUIREMENT.VIEW.PARKINGSPACES', min : 'vm.requirement.minParkingSpaces', max : 'vm.requirement.maxParkingSpaces', suffix : null },
-                    { label : 'REQUIREMENT.VIEW.AREA', min : 'vm.requirement.minArea', max : 'vm.requirement.maxArea', suffix : "'sq ft'" },
-                    { label : 'REQUIREMENT.VIEW.LANDAREA', min : 'vm.requirement.minLandArea', max : 'vm.requirement.maxLandArea', suffix : "'sq ft'" }
+                    { label: 'REQUIREMENT.VIEW.PRICE', min: 'vm.requirement.minPrice', max: 'vm.requirement.maxPrice', suffix: "'GBP'" },
+                    { label: 'REQUIREMENT.VIEW.BEDROOMS', min: 'vm.requirement.minBedrooms', max: 'vm.requirement.maxBedrooms', suffix: null },
+                    { label: 'REQUIREMENT.VIEW.RECEPTIONROOMS', min: 'vm.requirement.minReceptionRooms', max: 'vm.requirement.maxReceptionRooms', suffix: null },
+                    { label: 'REQUIREMENT.VIEW.BATHROOMS', min: 'vm.requirement.minBathrooms', max: 'vm.requirement.maxBathrooms', suffix: null },
+                    { label: 'REQUIREMENT.VIEW.PARKINGSPACES', min: 'vm.requirement.minParkingSpaces', max: 'vm.requirement.maxParkingSpaces', suffix: null },
+                    { label: 'REQUIREMENT.VIEW.AREA', min: 'vm.requirement.minArea', max: 'vm.requirement.maxArea', suffix: "'sq ft'" },
+                    { label: 'REQUIREMENT.VIEW.LANDAREA', min: 'vm.requirement.minLandArea', max: 'vm.requirement.maxLandArea', suffix: "'sq ft'" }
                 ];
 
                 var rangeViewElements = element.find('range-view');
@@ -105,7 +107,7 @@ module Antares {
                     expect(rangeView.getAttribute('max')).toBe(expected.max);
                     expect(rangeView.getAttribute('suffix')).toBe(expected.suffix);
                 };
-                
+
             });
 
             it('applicant list is displayed', () => {

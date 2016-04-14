@@ -12,7 +12,6 @@
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
-    using KnightFrank.Antares.Domain.Contact;
     using KnightFrank.Antares.Domain.Requirement.Commands;
 
     using Newtonsoft.Json;
@@ -98,14 +97,8 @@
             var requirement = table.CreateInstance<CreateRequirementCommand>();
 
             requirement.CreateDate = DateTime.Now;
-            requirement.Contacts = contacts.Select(contact => new ContactDto
-            {
-                Id = contact.Id,
-                FirstName = contact.FirstName,
-                Surname = contact.Surname,
-                Title = contact.Title
-            }).ToList();
-
+            requirement.ContactIds = contacts.Select(contact => contact.Id).ToList();
+            
             requirement.Address = this.scenarioContext.Get<CreateOrUpdateRequirementAddress>("Location");
             if (requirement.Description.ToLower().Equals("max"))
             {
@@ -130,13 +123,7 @@
 
             if (!missingData.Equals("contact"))
             {
-                requirement.Contacts = contacts.Select(contact => new ContactDto
-                {
-                    Id = contact.Id,
-                    FirstName = contact.FirstName,
-                    Surname = contact.Surname,
-                    Title = contact.Title
-                }).ToList();
+                requirement.ContactIds = contacts.Select(contact => contact.Id).ToList();
             }
             if (missingData.Equals("country"))
             {
@@ -178,10 +165,7 @@
             var requirement = table.CreateInstance<CreateRequirementCommand>();
 
             requirement.CreateDate = DateTime.Now;
-            requirement.Contacts = new List<ContactDto>
-            {
-                new ContactDto { Id = Guid.Empty }
-            };
+            requirement.ContactIds = new List<Guid> { Guid.Empty };
 
             requirement.Address = this.scenarioContext.Get<CreateOrUpdateRequirementAddress>("Location");
 

@@ -34,7 +34,7 @@ namespace KnightFrank.Antares.Domain.Requirement.Commands
             this.RuleFor(x => x.MinLandArea).GreaterThanOrEqualTo(0);
 
             this.RuleFor(x => x.Description).Length(0, 4000);
-            this.RuleFor(x => x.Contacts).NotEmpty();
+            this.RuleFor(x => x.ContactIds).NotEmpty();
 
             this.Custom(this.AddressValid);
         }

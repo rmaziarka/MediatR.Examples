@@ -13,6 +13,6 @@ namespace KnightFrank.Antares.Domain.Company.Commands
         }
 
         public string Name { get; set; }
-        public List<Guid> ContactIds { get; set; }
+        public IList<Guid> ContactIds { get; set; }
     }
 }

@@ -41,8 +41,7 @@
 
             var requirement = AutoMapper.Mapper.Map<Requirement>(message);
 
-            List<Guid> ids = message.Contacts.Select(x => x.Id).ToList();
-            List<Contact> existingContacts = this.contactRepository.FindBy(x => ids.Any(id => id == x.Id)).ToList();
+            List<Contact> existingContacts = this.contactRepository.FindBy(x => message.ContactIds.Any(id => id == x.Id)).ToList();
             requirement.Contacts = existingContacts;
             requirement.CreateDate = DateTime.UtcNow;
 
