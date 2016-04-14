@@ -11,6 +11,7 @@
             EnumData.Seed(context);
             AddressFormData.Seed(context);
 			RoleData.Seed(context);
+            UserData.Seed(context);
             PropertyTypeData.Seed(context);
             AttributeData.Seed(context);
             PropertyAttributeFromData.Seed(context);
