@@ -1,22 +1,33 @@
 Configuration SetupSQLVm
 {
 
-Param ( [string] $nodeName, [System.Management.Automation.PSCredential] $setupCredential, [System.Management.Automation.PSCredential] $SQLSvcAccount )
+Param ( [System.Management.Automation.PSCredential] $setupCredential, [System.Management.Automation.PSCredential] $SQLSvcAccount )
 
 Import-DscResource -ModuleName PSDesiredStateConfiguration
 Import-DscResource -ModuleName xSQLServer
 Import-DscResource -ModuleName xStorage
 
-$isoFileName = "en_sql_server_2014_developer_edition_with_service_pack_1_x86_dvd_6668541.iso"
+$isoFileName = "en_sql_server_2014_developer_edition_with_service_pack_1_x64_dvd_6668542.iso"
 $sqlInstanceName = "MSSQLSERVER"
-$sqlFeatures = "SQLENGINE,IS,SSMS,ADV_SSMS"    
+$sqlFeatures = "SQLENGINE"    
 
-Node $nodeName
+<# 
+	Node has to be explicitly set to localhost (and not host name as it is by default set by visual studio templates) - otherwise PSCredentials won't work.	
+	https://blogs.msdn.microsoft.com/powershell/2014/09/10/secure-credentials-in-the-azure-powershell-desired-state-configuration-dsc-extension/ - paragraph Limitations point 1.
+#>
+
+Node localhost
 {
+	LocalConfigurationManager
+    {
+        RebootNodeIfNeeded = $true
+		ActionAfterReboot = "ContinueConfiguration"
+    }
+
 	Script MapIsoShare
 	{
 		TestScript = { 
-			$isoExists = Test-Path "c:\temp\$isoFileName"
+			$isoExists = Test-Path "c:\temp\$using:isoFileName"
 			$shareMounted = Test-Path "k:\"
 			$isoExists -or $shareMounted 
 		}
@@ -56,7 +67,7 @@ Node $nodeName
 		DriveLetter = "s:"
 		Ensure = "Present"
 	}
-	
+
 	xSqlServerSetup InstallSql
 	{
 		DependsOn = "[xMountImage]MountSqlIso"
@@ -65,7 +76,8 @@ Node $nodeName
 		InstanceName = $sqlInstanceName
 		SecurityMode = "Mixed"
 	}
-	<#
+
+	
 	xSqlServerFirewall SetFirewallRules
     {
         DependsOn = ("[xSqlServerSetup]InstallSql")
@@ -83,23 +95,13 @@ Node $nodeName
 		LoginCredential = $sqlUserCredential
     }
 
-	xSQLServerDatabaseRole SetupSqlUser
-    {
-        DependsOn = ("[xSqlServerSetup]InstallSql")
-        Ensure = "Present"
-        Name = $sqlUserName
-        Role = "dbcreator"
-    }
-	#>
-	<#
 	xMountImage UnMountSqlIso
 	{
-		DependsOn = "[xMountImage]MountSqlIso" # TODO: change dependency to InstallSql
+		DependsOn = "[xSqlServerSetup]InstallSql"
 		Name = "SQL Disc"
 		ImagePath = "c:\temp\$isoFileName"
 		DriveLetter = "s:"
 		Ensure = "Absent"
 	}
-	#>
 }
 }

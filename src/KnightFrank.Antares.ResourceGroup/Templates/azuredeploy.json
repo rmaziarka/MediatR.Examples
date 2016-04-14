@@ -164,7 +164,7 @@
     "VmIISName": "[concat(variables('ResourceNamePrefix'), 'Vm-IIS-', variables('ResourceNameSuffix'))]",
     "KnightFrank-Antares-Vm-IIS-DSCConfigurationFunction": "KnightFrank-Antares-Vm-IIS-DSCConfiguration.ps1\\SetupIISVm",
     "KnightFrank-Antares-Vm-Sql-DSCConfigurationFunction": "KnightFrank-Antares-Vm-Sql-DSCConfiguration.ps1\\SetupSQLVm",
-    "SqlUserName":  "[concat('KnightFrank.Antares.', parameters('EnvironmentPrefix'), '.User')]"
+    "SqlUserName": "[concat('KnightFrank.Antares.', parameters('EnvironmentPrefix'), '.User')]"
   },
   "resources": [
     {
@@ -350,14 +350,13 @@
             "typeHandlerVersion": "2.15",
             "autoUpgradeMinorVersion": true,
             "settings": {
+              "wmfVersion": "5.0",
               "configuration": {
                 "url": "[concat(parameters('_artifactsLocation'), '/', 'dsc.zip')]",
                 "script": "KnightFrank-Antares-Vm-Sql-DSCConfiguration.ps1",
                 "function": "SetupSQLVm"
               },
-              "configurationArguments": {
-                "nodeName": "[variables('VmSqlHostName')]"
-              }
+              "configurationArguments": { }
             },
             "protectedSettings": {
               "configurationUrlSasToken": "[parameters('_artifactsLocationSasToken')]",
