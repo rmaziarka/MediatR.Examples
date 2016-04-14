@@ -151,6 +151,8 @@ module Antares {
             it('then proper data should be send to API', () => {
                 var vendors = createVendors(4);
 
+                var requestData: Business.CreateActivityResource;
+
                 var activityAddController: Activity.ActivityAddController = element.find('activity-add').controller('activityAdd');
                 activityAddController.activityStatuses = activityStatuses.items;
                 activityAddController.selectedActivityStatus = _.find(activityStatuses.items, { 'code': 'PreAppraisal' });
@@ -164,17 +166,18 @@ module Antares {
                 scope.$apply();
 
                 $http.expectPOST(/\/api\/activities/, (data: string) => {
-                    var requestData = JSON.parse(data);
-                    expect(requestData.activityStatusId).toEqual(expectedRequest.activityStatusId);
-                    expect(requestData.propertyId).toEqual(expectedRequest.propertyId);
-                    expect(requestData.contactIds.length).toEqual(expectedRequest.contactIds.length);
-                    expect(angular.equals(requestData.contactIds, expectedRequest.contactIds)).toBe(true);
+                    requestData = JSON.parse(data);
 
                     return true;
                 }).respond(201, new Business.Activity());
 
                 element.find('#activity-add-button').click();
                 $http.flush();
+
+                expect(requestData.activityStatusId).toEqual(expectedRequest.activityStatusId);
+                expect(requestData.propertyId).toEqual(expectedRequest.propertyId);
+                expect(requestData.contactIds.length).toEqual(expectedRequest.contactIds.length);
+                expect(angular.equals(requestData.contactIds, expectedRequest.contactIds)).toBe(true);
             });
 
             it('then new activity should be added to property activity list', () => {
