@@ -188,5 +188,10 @@
       "APPLICANT": "Applicant",
       "CREATEDDATE": "Created"
     }
+  },
+  "NOTES": {
+    "NOTES": "Notes",
+    "ADDNOTE": "Add note",
+    "RECENTNOTES": "Recent notes"
   }
 }

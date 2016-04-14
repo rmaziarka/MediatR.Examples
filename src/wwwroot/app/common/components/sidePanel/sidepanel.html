@@ -1,4 +1,4 @@
-<div class="side-panel" ng-class="{'slide-in': vm.stateChanged && vm.visible, 'slide-out': vm.stateChanged && !vm.visible}">
+<aside class="side-panel" ng-class="{'slide-in': vm.stateChanged && vm.visible, 'slide-out': vm.stateChanged && !vm.visible}">
     <header class="side-panel-header">
         <button id="close-side-panel" type="button" class="close close-side-panel" aria-label="Close" ng-click="vm.hide()">
             <span aria-hidden="true" >&times;</span>
@@ -6,8 +6,8 @@
         <div id="header" ng-transclude="header" ng-if="vm.isHeaderVisible"></div>
     </header>
 
-    <div class="side-panel-content" ng-transclude="content">
+    <div class="side-panel-content" ng-transclude="content" ng-class="{'side-panel-no-footer': !vm.isFooterVisible}">
     </div>
     <footer class="side-panel-footer" ng-transclude="footer" ng-if="vm.isFooterVisible">
     </footer>
-</div>
+</aside>
