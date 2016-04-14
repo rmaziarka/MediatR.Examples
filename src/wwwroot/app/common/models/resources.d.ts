@@ -70,6 +70,7 @@ declare module Antares.Common.Models {
         interface IPropertyResourceClass extends Resources.IBaseResourceClass<Resources.IPropertyResource> {
             createOwnership(params: any, ownership: any): ng.resource.IResource<Dto.IOwnership>;
             getPropertyTypes(params: any, ownership: any): ng.resource.IResource<Dto.IOwnership>;
+            getAttributes(params: any, ownership: any): ng.resource.IResource<Dto.IAttribute>;
         }
 
         // - country -

@@ -10,6 +10,7 @@ module Antares.Property {
 
         private propertyResource: Common.Models.Resources.IPropertyResourceClass;
         private propertyTypes: any[];
+        private attributes: Dto.IAttribute[];
         private userData: Dto.IUserData;
 
         constructor(
@@ -35,6 +36,17 @@ module Antares.Property {
                 .$promise
                 .then((propertyTypes: any) => {
                     this.propertyTypes = propertyTypes.propertyTypes;
+                });
+        }
+
+        loadAttributes = () => {
+            this.propertyResource
+                .getAttributes({
+                    countryCode: this.userData.country, propertyTypeId: this.property.propertyTypeId
+                }, null)
+                .$promise
+                .then((attributes: any) => {
+                    this.attributes = attributes.attributes;
                 });
         }
 

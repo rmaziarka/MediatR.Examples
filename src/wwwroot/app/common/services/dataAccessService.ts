@@ -34,6 +34,16 @@ module Antares.Services {
             }
         };
 
+        private getAttributesAction: ng.resource.IActionDescriptor = {
+            url: this.appConfig.rootUrl + '/api/properties/attributes?countryCode=:countryCode&propertyTypeId=:propertyTypeId',
+            method: 'GET',
+            isArray: false,
+            params: {
+                countryCode: '@countryCode',
+                propertyTypeId: '@propertyTypeId'
+            }
+        };
+
 
         getCompanyResource(): Resources.IBaseResourceClass<Resources.ICompanyResource> {
             return <Resources.IBaseResourceClass<Resources.ICompanyResource>>
@@ -65,7 +75,8 @@ module Antares.Services {
                 this.$resource(this.appConfig.rootUrl + '/api/properties/:id', null, {
                     update: this.updateAction,
                     createOwnership: this.createOwnershipAction,
-                    getPropertyTypes: this.getPropertyTypesAction
+                    getPropertyTypes: this.getPropertyTypesAction,
+                    getAttributes: this.getAttributesAction
                 });
         }
 
