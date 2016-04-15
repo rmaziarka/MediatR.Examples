@@ -31,7 +31,7 @@
                     .Include(req => req.RequirementNotes.Select(rn => rn.User))
                     .SingleOrDefault(req => req.Id == message.Id);
 
-            return Mapper.Map<Requirement>(requirement);
+            return requirement;
         }
     }
 }
