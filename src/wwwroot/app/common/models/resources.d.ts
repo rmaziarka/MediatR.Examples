@@ -51,7 +51,9 @@ declare module Antares.Common.Models {
         }
 
         interface IOwnershipResource extends ng.resource.IResource<Antares.Common.Models.Dto.IOwnership> {
+        }
 
+        interface IRequirementNoteResource extends ng.resource.IResource<Antares.Common.Models.Dto.IRequirementNote> {
         }
 
         // *** IResourceClass extensions ***
