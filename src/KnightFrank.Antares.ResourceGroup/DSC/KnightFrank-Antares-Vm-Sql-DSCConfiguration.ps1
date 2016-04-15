@@ -6,7 +6,6 @@ Param ( [System.Management.Automation.PSCredential] $setupCredential, [System.Ma
 Import-DscResource -ModuleName PSDesiredStateConfiguration
 Import-DscResource -ModuleName xSQLServer
 Import-DscResource -ModuleName xStorage
-Import-DscResource -ModuleName xSqlPs
 
 $isoFileName = "en_sql_server_2014_developer_edition_with_service_pack_1_x64_dvd_6668542.iso"
 $sqlInstanceName = "MSSQLSERVER"
