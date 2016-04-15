@@ -356,7 +356,9 @@
                 "script": "KnightFrank-Antares-Vm-Sql-DSCConfiguration.ps1",
                 "function": "SetupSQLVm"
               },
-              "configurationArguments": { }
+              "configurationArguments": {
+                "sqlUserName":  "[variables('SqlUserName')]"
+              }
             },
             "protectedSettings": {
               "configurationUrlSasToken": "[parameters('_artifactsLocationSasToken')]",

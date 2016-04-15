@@ -1,11 +1,12 @@
 Configuration SetupSQLVm
 {
 
-Param ( [System.Management.Automation.PSCredential] $setupCredential, [System.Management.Automation.PSCredential] $SQLSvcAccount )
+Param ( [System.Management.Automation.PSCredential] $setupCredential, [System.Management.Automation.PSCredential] $SQLSvcAccount, [string] $sqlUserName )
 
 Import-DscResource -ModuleName PSDesiredStateConfiguration
 Import-DscResource -ModuleName xSQLServer
 Import-DscResource -ModuleName xStorage
+Import-DscResource -ModuleName xSqlPs
 
 $isoFileName = "en_sql_server_2014_developer_edition_with_service_pack_1_x64_dvd_6668542.iso"
 $sqlInstanceName = "MSSQLSERVER"
@@ -22,6 +23,18 @@ Node localhost
     {
         RebootNodeIfNeeded = $true
 		ActionAfterReboot = "ContinueConfiguration"
+    }
+
+	WindowsFeature NetFramework35Core
+    {
+        Name = "NET-Framework-Core"
+        Ensure = "Present"
+    }
+ 
+    WindowsFeature NetFramework45Core
+    {
+        Name = "NET-Framework-45-Core"
+        Ensure = "Present"
     }
 
 	Script MapIsoShare
@@ -67,17 +80,18 @@ Node localhost
 		DriveLetter = "s:"
 		Ensure = "Present"
 	}
-
+	
 	xSqlServerSetup InstallSql
 	{
 		DependsOn = "[xMountImage]MountSqlIso"
 		SetupCredential = $setupCredential
 		SourcePath = "s:\"
+		SourceFolder = ""
 		InstanceName = $sqlInstanceName
 		SecurityMode = "Mixed"
+		Features = $sqlFeatures
 	}
 
-	
 	xSqlServerFirewall SetFirewallRules
     {
         DependsOn = ("[xSqlServerSetup]InstallSql")
@@ -94,11 +108,11 @@ Node localhost
         LoginType = "SQLLogin"
 		LoginCredential = $sqlUserCredential
     }
-
+	
 	xMountImage UnMountSqlIso
 	{
 		DependsOn = "[xSqlServerSetup]InstallSql"
-		Name = "SQL Disc"
+		Name = "Unmount SQL Disc"
 		ImagePath = "c:\temp\$isoFileName"
 		DriveLetter = "s:"
 		Ensure = "Absent"
