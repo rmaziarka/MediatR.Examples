@@ -10,6 +10,8 @@
 
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.Requirement.Queries;
+    using KnightFrank.Antares.Domain.RequirementNote.Commands;
+    using KnightFrank.Antares.Domain.RequirementNote.Queries;
 
     /// <summary>
     /// Requirement controller.
@@ -58,6 +60,25 @@
             }
 
             return requirement;
+        }
+
+        /// <summary>
+        ///     Creates the requirement note.
+        /// </summary>
+        /// <param name="id">Requirement Id</param>
+        /// <param name="command">Requirement note data</param>
+        /// <returns>Requirement note</returns>
+        [HttpPost]
+        [Route("{id}/notes")]
+        public RequirementNote CreateRequirementNote(Guid id, CreateRequirementNoteCommand command)
+        {
+            command.RequirementId = id;
+            Guid requirementNoteId = this.mediator.Send(command);
+
+            RequirementNote requirementNote =
+                this.mediator.Send(new RequirementNoteQuery { Id = requirementNoteId });
+
+            return requirementNote;
         }
     }
 }

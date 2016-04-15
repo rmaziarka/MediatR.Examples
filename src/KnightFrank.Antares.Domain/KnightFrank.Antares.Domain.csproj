@@ -178,6 +178,14 @@
     <Compile Include="Property\Queries\PropertyAttributesQueryValidator.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQueryResult.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQuerySingleResult.cs" />
+    <Compile Include="RequirementNote\CommandHandlers\CreateRequirementNoteCommandHandler.cs" />
+    <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandDomainValidator.cs" />
+    <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandValidator.cs" />
+    <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandProfile.cs" />
+    <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommand.cs" />
+    <Compile Include="RequirementNote\Queries\RequirementNoteQuery.cs" />
+    <Compile Include="RequirementNote\Queries\RequirementNoteQueryValidator.cs" />
+    <Compile Include="RequirementNote\QueryHandlers\RequirementNoteQueryHandler.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementCommandHandler.cs" />
     <Compile Include="Requirement\Commands\CreateOrUpdateRequirementAddress.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandDomainValidator.cs" />
