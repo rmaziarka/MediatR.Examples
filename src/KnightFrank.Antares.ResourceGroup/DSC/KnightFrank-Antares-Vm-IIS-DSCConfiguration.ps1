@@ -1,7 +1,7 @@
 Configuration SetupIISVm
 {
 
-Param ( [string] $nodeName, [string] $environmentPrefix )
+Param ( [string] $environmentPrefix, [string] $octopusThumbprint )
 
 Import-DscResource -ModuleName PSDesiredStateConfiguration
 Import-DscResource -ModuleName xWebAdministration
@@ -9,7 +9,7 @@ Import-DscResource -ModuleName xWebAdministration
 $webApiHostName = "$environmentPrefix.api.antares.knightfrank.com"
 $webAppHostName = "$environmentPrefix.app.antares.knightfrank.com"
 
-Node $nodeName
+Node localhost
   {
 	LocalConfigurationManager
     {
@@ -205,7 +205,7 @@ Node $nodeName
 			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" new-certificate --instance "Tentacle" --if-blank --console
 			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --reset-trust --console
 			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --home "C:\Octopus" --app "C:\Octopus\Applications" --port "10933" --noListen "False" --console
-			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --trust "C478B5952045B390F15F0C444D4917E911713EF0" --console
+			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --trust "$using:octopusThumbprint" --console
 			& "netsh" advfirewall firewall add rule "name=Octopus Deploy Tentacle" dir=in action=allow protocol=TCP localport=10933
 			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" service --instance "Tentacle" --install --start --console
 		}

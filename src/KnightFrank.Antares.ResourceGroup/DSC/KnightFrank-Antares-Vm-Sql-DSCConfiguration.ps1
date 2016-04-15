@@ -1,15 +1,21 @@
 Configuration SetupSQLVm
 {
 
-Param ( [System.Management.Automation.PSCredential] $setupCredential, [System.Management.Automation.PSCredential] $SQLSvcAccount, [string] $sqlUserName )
+Param ( 
+[System.Management.Automation.PSCredential][Parameter(Mandatory = $true)] $setupCredential, 
+[System.Management.Automation.PSCredential][Parameter(Mandatory = $true)] $sqlLoginCredential, 
+[string][Parameter(Mandatory = $true)] $sqlUserName, 
+[string][Parameter(Mandatory = $true)] $commonShareUrl, 
+[System.Management.Automation.PSCredential][Parameter(Mandatory = $true)] $commonShareCredential,
+[string][Parameter(Mandatory = $true)] $isoFileName,
+[string][Parameter(Mandatory = $true)] $sqlInstanceName )
 
 Import-DscResource -ModuleName PSDesiredStateConfiguration
 Import-DscResource -ModuleName xSQLServer
 Import-DscResource -ModuleName xStorage
 
-$isoFileName = "en_sql_server_2014_developer_edition_with_service_pack_1_x64_dvd_6668542.iso"
-$sqlInstanceName = "MSSQLSERVER"
 $sqlFeatures = "SQLENGINE"    
+$downloadPath = "c:\WindowsAzure"
 
 <# 
 	Node has to be explicitly set to localhost (and not host name as it is by default set by visual studio templates) - otherwise PSCredentials won't work.	
@@ -36,46 +42,26 @@ Node localhost
         Ensure = "Present"
     }
 
-	Script MapIsoShare
+	Script CopySqlIso
 	{
 		TestScript = { 
-			$isoExists = Test-Path "c:\temp\$using:isoFileName"
-			$shareMounted = Test-Path "k:\"
-			$isoExists -or $shareMounted 
+			$isoExists = Test-Path "$using:downloadPath\\$using:isoFileName"
+			$isoExists -or $shareMounted
 		}
-		GetScript = {@{Result = "MapIsoShare"}}
+		GetScript = {@{Result = "CopySqlIso"}}
 		SetScript =
 		{
-			net use K: \\kfantarescommon.file.core.windows.net\iso /u:kfantarescommon IQURddUmGFAe1d3/+OC2Ay1gT9YfdwPi66Nzhy+3vWKgCcy6YA02i3EfLStunvNjCw4M9RW7pxe6dL5z3Y0X9w==	
+			New-PSDrive -Name P -PSProvider FileSystem -Root $using:commonShareUrl -Credential $using:commonShareCredential
+			Copy-Item p:\$using:isoFileName "$using:downloadPath\\$using:isoFileName"
+			Remove-PSDrive -Name P
 		}
 	}
-	
-	File CopySqlIso
-	{
-		DependsOn = "[Script]MapIsoShare"
-		Ensure = "Present"
-		SourcePath = "k:\$isoFileName"
-		DestinationPath = "c:\temp\$isoFileName"
-		Type = "File"
-		MatchSource = $true
-	}
-	
-	Script UnMapIsoShare 
-	{
-		DependsOn = "[File]CopySqlIso"	
-		TestScript = { -Not (Test-Path "k:\") }
-		GetScript = {@{Result = "UnMapIsoShare"}}
-		SetScript =
-		{
-			net use K: /delete
-		}
-	}
-	
+
 	xMountImage MountSqlIso
 	{
-		DependsOn = "[File]CopySqlIso"
-		Name = "SQL Disc"
-		ImagePath = "c:\temp\$isoFileName"
+		DependsOn = "[Script]CopySqlIso"
+		Name = "SQL Disk"
+		ImagePath = "$downloadPath\$isoFileName"
 		DriveLetter = "s:"
 		Ensure = "Present"
 	}
@@ -87,34 +73,43 @@ Node localhost
 		SourcePath = "s:\"
 		SourceFolder = ""
 		InstanceName = $sqlInstanceName
-		SecurityMode = "Mixed"
 		Features = $sqlFeatures
+	}
+
+	xSQLServerNetwork SetupTcp
+	{
+		DependsOn = "[xSqlServerSetup]InstallSql"
+		InstanceName = $sqlInstanceName
+		ProtocolName = "tcp"
+		IsEnabled = $true
+		RestartService = $true
 	}
 
 	xSqlServerFirewall SetFirewallRules
     {
-        DependsOn = ("[xSqlServerSetup]InstallSql")
+        DependsOn = "[xSqlServerSetup]InstallSql"
         SourcePath = "s:\"
+		SourceFolder = ""
         InstanceName = $sqlInstanceName
         Features = $sqlFeatures
     }
 
 	xSQLServerLogin SetupSqlLogin
     {
-        DependsOn = ("[xSqlServerSetup]InstallSql")
+        DependsOn = "[xSqlServerSetup]InstallSql"
         Ensure = "Present"
         Name = $sqlUserName
         LoginType = "SQLLogin"
-		LoginCredential = $sqlUserCredential
+		LoginCredential = $sqlLoginCredential
     }
-	
+	<#
 	xMountImage UnMountSqlIso
 	{
 		DependsOn = "[xSqlServerSetup]InstallSql"
-		Name = "Unmount SQL Disc"
-		ImagePath = "c:\temp\$isoFileName"
+		Name = "Unmount SQL Disk"
+		ImagePath = "$downloadPath\$isoFileName"
 		DriveLetter = "s:"
 		Ensure = "Absent"
-	}
+	}#>
 }
 }

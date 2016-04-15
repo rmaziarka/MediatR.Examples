@@ -31,6 +31,24 @@
     },
     "SqlUserPassword": {
       "value": "$Kf@admin2016"
+    },
+    "OctopusThumbprint": {
+      "value": "C478B5952045B390F15F0C444D4917E911713EF0"
+    },
+    "IsoFileName": {
+      "value": "en_sql_server_2014_developer_edition_with_service_pack_1_x64_dvd_6668542.iso"
+    },
+    "SqlInstanceName": {
+      "value": "MSSQLSERVER"
+    },
+    "CommonShareUrl": {
+      "value": "\\\\kfantarescommon.file.core.windows.net\\iso"
+    },
+    "CommonShareUserName": {
+      "value": "kfantarescommon"
+    },
+    "CommonShareKey": {
+      "value": "IQURddUmGFAe1d3/+OC2Ay1gT9YfdwPi66Nzhy+3vWKgCcy6YA02i3EfLStunvNjCw4M9RW7pxe6dL5z3Y0X9w=="
     }
   }
 }

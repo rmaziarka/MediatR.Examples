@@ -119,6 +119,24 @@
     },
     "SqlUserPassword": {
       "type": "securestring"
+    },
+    "OctopusThumbprint": {
+      "type": "securestring"
+    },
+    "CommonShareUrl": {
+      "type": "string"
+    },
+    "CommonShareUserName": {
+      "type": "string"
+    },
+    "CommonShareKey": {
+      "type": "securestring"
+    },
+    "IsoFileName": {
+      "type": "string"
+    },
+    "SqlInstanceName": {
+      "type": "string"
     }
   },
   "variables": {
@@ -162,8 +180,6 @@
     "VmIISStorageAccountContainerName": "vhds",
     "VmIISNicName": "[concat(variables('ResourceNamePrefix'), 'Vm-IIS-Nic-', variables('ResourceNameSuffix'))]",
     "VmIISName": "[concat(variables('ResourceNamePrefix'), 'Vm-IIS-', variables('ResourceNameSuffix'))]",
-    "KnightFrank-Antares-Vm-IIS-DSCConfigurationFunction": "KnightFrank-Antares-Vm-IIS-DSCConfiguration.ps1\\SetupIISVm",
-    "KnightFrank-Antares-Vm-Sql-DSCConfigurationFunction": "KnightFrank-Antares-Vm-Sql-DSCConfiguration.ps1\\SetupSQLVm",
     "SqlUserName": "[concat('KnightFrank.Antares.', parameters('EnvironmentPrefix'), '.User')]"
   },
   "resources": [
@@ -357,7 +373,10 @@
                 "function": "SetupSQLVm"
               },
               "configurationArguments": {
-                "sqlUserName":  "[variables('SqlUserName')]"
+                "sqlUserName": "[variables('SqlUserName')]",
+                "commonShareUrl": "[parameters('CommonShareUrl')]",
+                "isoFileName": "[parameters('IsoFileName')]",
+                "sqlInstanceName": "[parameters('SqlInstanceName')]"
               }
             },
             "protectedSettings": {
@@ -367,9 +386,13 @@
                   "UserName": "[parameters('VmSqlAdminUserName')]",
                   "Password": "[parameters('VmSqlAdminPassword')]"
                 },
-                "SQLSvcAccount": {
-                  "UserName": "SYSTEM",
-                  "Password": "na"
+                "sqlLoginCredential": {
+                  "UserName": "[parameters('VmSqlAdminUserName')]",
+                  "Password": "[parameters('VmSqlAdminPassword')]"
+                },
+                "commonShareCredential": {
+                  "UserName": "[parameters('CommonShareUserName')]",
+                  "Password": "[parameters('CommonShareKey')]"
                 }
               }
             }
@@ -471,15 +494,21 @@
             "typeHandlerVersion": "2.15",
             "autoUpgradeMinorVersion": true,
             "settings": {
-              "modulesUrl": "[concat(parameters('_artifactsLocation'), '/', 'dsc.zip')]",
-              "sasToken": "[parameters('_artifactsLocationSasToken')]",
-              "configurationFunction": "[variables('KnightFrank-Antares-Vm-IIS-DSCConfigurationFunction')]",
-              "properties": {
-                "nodeName": "[variables('VmIISHostName')]",
+              "configuration": {
+                "url": "[concat(parameters('_artifactsLocation'), '/', 'dsc.zip')]",
+                "script": "KnightFrank-Antares-Vm-IIS-DSCConfiguration.ps1",
+                "function": "SetupIISVm"
+              },
+              "configurationArguments": {
                 "environmentPrefix": "[parameters('EnvironmentPrefix')]"
               }
             },
-            "protectedSettings": { }
+            "protectedSettings": {
+              "configurationUrlSasToken": "[parameters('_artifactsLocationSasToken')]",
+              "configurationArguments": {
+                "octopusThumbprint": "[parameters('OctopusThumbprint')]"
+              }
+            }
           }
         }
       ]
