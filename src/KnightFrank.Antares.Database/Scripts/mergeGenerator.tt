@@ -1,0 +1,48 @@
+﻿<#@ template language="C#" debug="true" #>
+<#@ include file="mergeTemplate.tt" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#+
+public class MergeProcedureGenerator : Generator
+{
+  public string ConnectionString;
+  public MergeTemplate MergeTemplate = new MergeTemplate();  
+
+  protected override void RunCore()
+  {   
+    Dictionary<string,string> files = new Dictionary<string,string>()
+    {
+        {"AddressField", @"Configuration\AddressField.csv"},
+        {"AddressFieldDefinition", @"Configuration\AddressFieldDefinition.csv"},
+        {"AddressFieldLabel", @"Configuration\AddressFieldLabel.csv"},
+        {"AddressForm", @"Configuration\AddressForm.csv"},
+        {"AddressFormEntityType", @"Configuration\AddressFormEntityType.csv"},
+        {"Attribute", @"Configuration\Attribute.csv"},
+        {"Business", @"Configuration\Business.csv"},
+        {"Country", @"Configuration\Country.csv"},
+        {"CountryLocalised", @"Configuration\CountryLocalised.csv"},
+        {"Department", @"Configuration\Department.csv"},
+        {"EnumLocalised", @"Configuration\EnumLocalised.csv"},
+        {"EnumType", @"Configuration\EnumType.csv"},
+        {"EnumTypeItem", @"Configuration\EnumTypeItem.csv"},
+        {"Locale", @"Configuration\Locale.csv"},
+        {"PropertyAttributeForm", @"Configuration\PropertyAttributeForm.csv"},
+        {"PropertyAttributeFormDefinition", @"Configuration\PropertyAttributeFormDefinition.csv"},
+        {"PropertyType", @"Configuration\PropertyType.csv"},
+        {"PropertyTypeDefinition", @"Configuration\PropertyTypeDefinition.csv"},
+        {"PropertyTypeLocalised", @"Configuration\PropertyTypeLocalised.csv"},
+        {"Role", @"Configuration\Role.csv"},
+        {"Contact", @"Test\Contact.csv"}
+    };
+
+    foreach(var file in files)
+    {      
+      this.MergeTemplate.TableName = file.Key;
+      this.MergeTemplate.SchemaName = "dbo";
+      this.MergeTemplate.ConnectionString = ConnectionString;
+      this.MergeTemplate.FilePath = String.Format(@"'$(OutputPath)\Scripts\Data\{0}'", file.Value);
+      this.MergeTemplate.RenderToFile(String.Format(@"SQL\{0}.sql", file.Key));      
+    }
+  }
+}
+#>

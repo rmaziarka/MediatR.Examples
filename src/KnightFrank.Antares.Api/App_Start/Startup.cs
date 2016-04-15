@@ -1,12 +1,10 @@
 ﻿[assembly: Microsoft.Owin.OwinStartup(typeof(KnightFrank.Antares.Api.Startup))]
 namespace KnightFrank.Antares.Api
 {
-    using System.Data.Entity;
     using System.Web.Http;
 
     using KnightFrank.Antares.Api.Core;
     using KnightFrank.Antares.API;
-    using KnightFrank.Antares.Dal;
 
     using Ninject.Web.Common.OwinHost;
     using Ninject.Web.WebApi.OwinHost;
@@ -26,9 +24,7 @@ namespace KnightFrank.Antares.Api
             SwaggerConfig.Register(config);
 
             AutoMapperConfig.Configure();
-
-            Database.SetInitializer(new DropCreateSeedDatabaseIfModelChangesInitializer());
-
+            
             app
                 .Use<MockUserMiddleware>()
                 .UseNinjectMiddleware(() => kernel)

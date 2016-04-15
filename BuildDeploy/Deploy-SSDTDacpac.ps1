@@ -77,7 +77,7 @@ function Deploy-SSDTDacpac
     # ===========================================================
     Write-Host -Object "Start deploy ..." 
     $upgradeExisting = $true
-    $dacServices.Deploy($dacPac, $targetDatabase, $upgradeExisting, $dacProfile.DeployOptions)
+    $dacServices.Deploy($dacPac, $targetDatabase, $upgradeExisting)
     Write-Host -Object "... with successfully finished. " 
     
 }

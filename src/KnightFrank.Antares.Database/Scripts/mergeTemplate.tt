@@ -1,0 +1,120 @@
+﻿<#@ template language="C#" debug="true" #>
+<#@ output extension=".sql" #>
+<#@ assembly name="System.Data,Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"  #>
+<#@ assembly name="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"  #>
+<#@ assembly name="System.Transactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"  #>
+<#@ assembly name="System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"  #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ import namespace="System.Transactions" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#+
+public class MergeTemplate : Template
+{    
+    public string TableName; 
+    public string SchemaName; 
+    public string ConnectionString; 
+    public string FilePath; 
+
+    public override string TransformText()
+    {
+
+
+
+    var tempTable = String.Format("#Temp{0}", TableName);
+#>
+
+CREATE TABLE #Temp<#= TableName #> (
+
+<#+
+	var columns = new Dictionary<String, int>();
+
+	using (var conn = new SqlConnection(ConnectionString))
+	{
+		conn.Open();
+		var cmd = new SqlCommand(
+			String.Format(
+			@"
+				select DISTINCT c.column_name, 
+				CASE WHEN k.constraint_name IS NOT NULL THEN 1 ELSE 0 END AS IsPrimary,
+				c.DATA_TYPE,
+				c.CHARACTER_MAXIMUM_LENGTH,
+				c.IS_NULLABLE,
+				c.ORDINAL_POSITION,
+                c.COLUMN_DEFAULT
+				from information_schema.columns c
+				LEFT join INFORMATION_SCHEMA.KEY_COLUMN_USAGE k
+				on c.TABLE_NAME = k.TABLE_NAME AND c.COLUMN_NAME = k.COLUMN_NAME
+				where c.table_name = '{0}'
+				order by c.ORDINAL_POSITION
+			", TableName),
+			conn);
+
+		using (var reader = cmd.ExecuteReader())
+        {
+			while (reader.Read())
+            {
+				var name = reader.GetString(0).Trim();
+				var type = reader.GetString(2).Trim().ToUpper();
+				var length = reader.IsDBNull(3) ? "" : (reader.GetInt32(3) == -1 ? "(MAX)" : reader.GetInt32(3).ToString("(0)"));
+				var nullable = reader.GetString(4) == "YES" ? "NULL" : "NOT NULL";
+                var defaultColumn = reader.IsDBNull(6) ? "" : "DEFAULT " + reader.GetString(6);
+                columns.Add(String.Format("[{0}]", reader.GetString(0)), reader.GetInt32(1));
+#>
+	[<#= name #>] <#= type #> <#= length #> <#= nullable #> <#= defaultColumn #>,
+<#+
+			}
+        }
+	}
+#>
+);
+
+ALTER TABLE <#= TableName #> NOCHECK CONSTRAINT ALL
+
+BULK INSERT <#= tempTable #>
+    FROM <#= FilePath #>
+        WITH
+    (
+		FIRSTROW = 2,
+		FIELDTERMINATOR = ';',
+		ROWTERMINATOR = '\n',
+		TABLOCK
+    )
+    	
+MERGE <#= SchemaName #>.<#= TableName #> AS T
+	USING <#= tempTable#> AS S	
+	ON 
+	(
+        (T.Id = S.Id)
+	)
+	WHEN MATCHED THEN
+		UPDATE SET 
+<#+
+	var values = (from column in columns where column.Key != "[Id]" select column.Key.Trim()).ToList();
+	for (int index = 0; index < values.Count(); index++) {
+		var line = String.Format("T.{0} = S.{0}", values[index]);
+		if (index < values.Count() - 1)
+		{
+			line += ",";
+		}
+#>
+		<#= line #>
+<#+
+	}
+#>
+
+	WHEN NOT MATCHED BY TARGET THEN 
+		INSERT (<#= String.Join(", ", (from column in columns select column.Key.Trim()).ToArray()) #>)
+		VALUES (<#= String.Join(", ", (from column in columns select "" + column.Key.Trim()).ToArray()) #>)
+
+    WHEN NOT MATCHED BY SOURCE THEN DELETE;
+    
+ALTER TABLE <#= TableName #> WITH CHECK CHECK CONSTRAINT ALL
+DROP TABLE <#= tempTable #>
+<#+
+    return this.GenerationEnvironment.ToString();
+}
+}
+#>

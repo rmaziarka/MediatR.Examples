@@ -4,9 +4,15 @@
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseName>KnightFrank.Antares</TargetDatabaseName>
     <DeployScriptFileName>KnightFrank.Antares.Database.sql</DeployScriptFileName>
-    <TargetConnectionString>Data Source=localhost;Integrated Security=True;Pooling=False</TargetConnectionString>
+    <TargetConnectionString>Server=localhost;Database=KnightFrank.Antares;User Id=antares;Password=ant@res!1</TargetConnectionString>
     <ProfileVersionNumber>1</ProfileVersionNumber>
     <BlockWhenDriftDetected>False</BlockWhenDriftDetected>
     <RegisterDataTierApplication>True</RegisterDataTierApplication>
   </PropertyGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="OutputPath">
+      <Value>
+      </Value>
+    </SqlCmdVariable>
+  </ItemGroup>
 </Project>

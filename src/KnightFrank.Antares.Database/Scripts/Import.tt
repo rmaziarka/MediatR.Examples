@@ -1,0 +1,9 @@
+﻿<#@ template language="C#" debug="true" #>
+<#@ output extension="txt" #>
+<#@ include file="T4Toolbox.tt" #>
+<#@ include file="mergeGenerator.tt" #>
+<#
+    MergeProcedureGenerator generator = new MergeProcedureGenerator();       
+    generator.ConnectionString = "Server=localhost;Database=KnightFrank.Antares;User Id=antares;Password=ant@res!1";
+    generator.Run();
+#>

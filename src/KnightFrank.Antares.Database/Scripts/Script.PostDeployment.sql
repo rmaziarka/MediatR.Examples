@@ -1,21 +1,22 @@
-﻿/*
-Post-Deployment Script Template							
---------------------------------------------------------------------------------------
- This file contains SQL statements that will be appended to the build script.		
- Use SQLCMD syntax to include a file in the post-deployment script.			
- Example:      :r .\myfile.sql								
- Use SQLCMD syntax to reference a variable in the post-deployment script.		
- Example:      :setvar TableName MyTable							
-               SELECT * FROM [$(TableName)]					
---------------------------------------------------------------------------------------
-*/
+﻿:r .\SQL\Locale.sql
+:r .\SQL\Country.sql
+:r .\SQL\CountryLocalised.sql
+:r .\SQL\Department.sql
+:r .\SQL\Business.sql
+:r .\SQL\Role.sql
+:r .\SQL\EnumType.sql
+:r .\SQL\EnumTypeItem.sql
+:r .\SQL\EnumLocalised.sql
+:r .\SQL\PropertyType.sql
+:r .\SQL\PropertyTypeDefinition.sql
+:r .\SQL\PropertyTypeLocalised.sql
+:r .\SQL\Attribute.sql
+:r .\SQL\PropertyAttributeForm.sql
+:r .\SQL\PropertyAttributeFormDefinition.sql
+:r .\SQL\AddressField.sql
+:r .\SQL\AddressForm.sql
+:r .\SQL\AddressFieldLabel.sql
+:r .\SQL\AddressFieldDefinition.sql
+:r .\SQL\AddressFormEntityType.sql
 
---:r .\Locale.sql
---:r .\Country.sql
---:r .\Department.sql
---:r .\Business.sql
-:r .\Role.sql
---:r .\EnumType.sql
---:r .\EnumTypeItem.sql
---:r .\PropertyType.sql
---:r .\PropertyTypeDefinition.sql
+:r .\SQL\Contact.sql

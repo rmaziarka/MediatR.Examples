@@ -68,25 +68,107 @@
     <Folder Include="Scripts\Data" />
     <Folder Include="Scripts\Data\Test" />
     <Folder Include="Scripts\Data\Configuration" />
+    <Folder Include="Scripts\SQL" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Scripts\Data\PreloadContact.sql" />
     <None Include="KnightFrank.Antares.Database.nuspec" />
-    <None Include="Scripts\Data\Configuration\businesses.csv" />
-    <None Include="Scripts\Data\Configuration\countries.csv" />
-    <None Include="Scripts\Data\Configuration\departments.csv" />
-    <None Include="Scripts\Data\Configuration\enumlocalised.csv" />
-    <None Include="Scripts\Data\Configuration\enumtypes.csv" />
-    <None Include="Scripts\Data\Configuration\locale.csv">
+    <None Include="Scripts\Data\Configuration\Business.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\Data\Configuration\propertytypedefinitions.csv" />
-    <None Include="Scripts\Data\Configuration\propertytypelocalised.csv" />
-    <None Include="Scripts\Data\Configuration\propertytypes.csv" />
-    <None Include="Scripts\Data\Configuration\roles.csv">
+    <None Include="Scripts\Data\Configuration\Country.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\Role.sql" />
+    <None Include="Scripts\Data\Configuration\Department.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\EnumLocalised.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\EnumType.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\Locale.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\PropertyTypeDefinition.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\PropertyTypeLocalised.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\PropertyType.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\Role.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\PropertyAttributeFormDefinition.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\EnumTypeItem.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\CountryLocalised.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\AddressForm.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\AddressFormEntityType.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\AddressField.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Test\Contact.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\PropertyAttributeForm.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\mergeTemplate.tt" />
+    <None Include="Scripts\Import.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastOutputs>
+.\Import.txt
+.\SQL\AddressField.sql
+.\SQL\AddressFieldDefinition.sql
+.\SQL\AddressFieldLabel.sql
+.\SQL\AddressForm.sql
+.\SQL\AddressFormEntityType.sql
+.\SQL\Attribute.sql
+.\SQL\Business.sql
+.\SQL\Contact.sql
+.\SQL\Country.sql
+.\SQL\CountryLocalised.sql
+.\SQL\Department.sql
+.\SQL\EnumLocalised.sql
+.\SQL\EnumType.sql
+.\SQL\EnumTypeItem.sql
+.\SQL\Locale.sql
+.\SQL\PropertyAttributeForm.sql
+.\SQL\PropertyAttributeFormDefinition.sql
+.\SQL\PropertyType.sql
+.\SQL\PropertyTypeDefinition.sql
+.\SQL\PropertyTypeLocalised.sql
+.\SQL\Role.sql
+</LastOutputs>
+    </None>
+    <None Include="Scripts\mergeGenerator.tt" />
+    <None Include="KnightFrank.Antares.Database.publish.xml" />
+    <None Include="Scripts\Data\Configuration\AddressFieldDefinition.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\AddressFieldLabel.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Publish\local.publish.xml" />
+    <None Include="Scripts\Data\Configuration\Attribute.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Import.txt">
+      <DependentUpon>Scripts\Import.tt</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
@@ -96,7 +178,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Publish\dev.publish.xml" />
-    <None Include="Publish\local.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,34 +186,33 @@
     <SqlCommandVariableOverride Include="OutputPath=$(MSBuildProjectDirectory)" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Scripts\SQL\AddressField.sql" />
+    <None Include="Scripts\SQL\AddressFieldDefinition.sql" />
+    <None Include="Scripts\SQL\AddressFieldLabel.sql" />
+    <None Include="Scripts\SQL\AddressForm.sql" />
+    <None Include="Scripts\SQL\AddressFormEntityType.sql" />
+    <None Include="Scripts\SQL\Attribute.sql" />
+    <None Include="Scripts\SQL\Business.sql" />
+    <None Include="Scripts\SQL\Country.sql" />
+    <None Include="Scripts\SQL\CountryLocalised.sql" />
+    <None Include="Scripts\SQL\Department.sql" />
+    <None Include="Scripts\SQL\EnumLocalised.sql" />
+    <None Include="Scripts\SQL\EnumType.sql" />
+    <None Include="Scripts\SQL\EnumTypeItem.sql" />
+    <None Include="Scripts\SQL\Locale.sql" />
+    <None Include="Scripts\SQL\PropertyAttributeForm.sql" />
+    <None Include="Scripts\SQL\PropertyAttributeFormDefinition.sql" />
+    <None Include="Scripts\SQL\PropertyType.sql" />
+    <None Include="Scripts\SQL\PropertyTypeDefinition.sql" />
+    <None Include="Scripts\SQL\PropertyTypeLocalised.sql" />
+    <None Include="Scripts\SQL\Role.sql" />
+    <None Include="Scripts\SQL\Contact.sql" />
+  </ItemGroup>
+  <ItemGroup>
     <SqlCmdVariable Include="OutputPath">
       <DefaultValue>$(MSBuildProjectDirectory)</DefaultValue>
       <Value>$(SqlCmdVar__1)</Value>
     </SqlCmdVariable>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Scripts\Locale.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Scripts\Country.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Scripts\Business.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Scripts\Department.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Scripts\EnumType.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Scripts\EnumTypeItem.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Scripts\PropertyTypeDefinition.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Scripts\PropertyType.sql" />
   </ItemGroup>
   <Import Project="..\packages\OctoPack.3.0.53\tools\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.0.53\tools\OctoPack.targets')" />
   <Target Name="EnsureOctoPackImported" BeforeTargets="BeforeBuild" Condition="'$(OctoPackImported)' == ''">
