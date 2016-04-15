@@ -7,7 +7,7 @@ Scenario Outline: Create property
 			| enumTypeCode | enumTypeItemCode |
 			| Division     | <divisionCode>   |
 		And Address for add/update property is defined with max length fields
-        And User gets <propertyType> for PropertyType
+        And User gets <propertyType> for PropertyType		
 	When User creates property with defined address and <divisionCode> division by Api
 	Then User should get OK http status code
 		And The created Property is saved in data base
@@ -25,8 +25,8 @@ Scenario Outline: Create property
 Scenario Outline: Create property with invalid data
 	Given User gets <country> address form for <itemType> and country details
         And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode  | enumTypeItemCode |
-			| Division      | <divisionCode>       |
+			| enumTypeCode | enumTypeItemCode |
+			| Division     | <divisionCode>   |
 		And Address for add/update property is defined
 			| PropertyName | PropertyNumber | Line2           | Line3 | Postcode   | City | County |
 			| updated abc  | 2              | 55 Baker Street |       | <postCode> |      |        |
@@ -49,7 +49,8 @@ Scenario Outline: Update property
 	Given User gets GB address form for Property and country details
         And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode | enumTypeItemCode |
-			| Division     | <divisionCode1>   |
+			| Division     | Residential      |
+			| Division     | Commercial       |
         And User gets <propertyType1> for PropertyType
 		And Property with Address and <divisionCode1> division is in data base
 			| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
@@ -75,7 +76,8 @@ Scenario Outline: Update property with invalid data
 	Given User gets GB address form for Property and country details
         And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode | enumTypeItemCode |
-			| Division     | <divisionCode1>  |
+			| Division     | Residential      |
+			| Division     | Commercial       |
         And User gets House for PropertyType
 		And Property with Address and <divisionCode1> division is in data base
 			| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |

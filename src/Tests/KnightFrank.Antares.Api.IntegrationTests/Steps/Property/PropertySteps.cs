@@ -99,7 +99,7 @@
             address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
 
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
-            
+
             Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
             var property = new Property { Address = address, PropertyTypeId = propertyTypeId, DivisionId = divisionId };
 
@@ -128,15 +128,16 @@
         {
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
+            var divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
 
             var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
 
             var updatedProperty = new UpdatePropertyCommand
             {
-                Address = address, Id = propertyId, PropertyTypeId = propertyTypeId, Division = new EnumTypeItem
-                {
-                    Code = divisionCode
-                }
+                Address = address,
+                Id = propertyId,
+                PropertyTypeId = propertyTypeId,
+                DivisionId = divisionId
             };
 
             HttpResponseMessage response = this.fixture.SendPutRequest(ApiUrl, updatedProperty);
@@ -151,11 +152,17 @@
 
             var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
+            var divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
 
             address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
             address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
-            
-            var property = new CreatePropertyCommand { Address = address, PropertyTypeId = propertyTypeId, Division = new EnumTypeItem { Code = divisionCode } };
+
+            var property = new CreatePropertyCommand
+            {
+                Address = address,
+                PropertyTypeId = propertyTypeId,
+                DivisionId = divisionId
+            };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, property);
             this.scenarioContext.SetHttpResponseMessage(response);
@@ -189,8 +196,7 @@
             var updatedProperty = this.scenarioContext.Get<UpdatePropertyCommand>("Property");
             Property expectedProperty = this.fixture.DataContext.Properties.SingleOrDefault(x => x.Id.Equals(updatedProperty.Id));
 
-            updatedProperty.ShouldBeEquivalentTo(expectedProperty, options => options
-                .Excluding(x => x.Division));
+            updatedProperty.ShouldBeEquivalentTo(expectedProperty);
         }
 
         [Then(@"The created Property is saved in data base")]

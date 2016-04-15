@@ -28,15 +28,16 @@
             this.RuleFor(v => v.PropertyTypeId).NotEqual(Guid.Empty).NotNull();
 
             this.RuleFor(x => x.PropertyTypeId).SetValidator(new PropertyTypeValidator(propertyTypeRepository));
-            this.RuleFor(x => x.Division).NotNull();
-            this.RuleFor(x => x.Division.Code).NotEmpty().When(x => x.Division != null);
-            this.Custom(this.DivisionCodeExists);
+            this.RuleFor(x => x.DivisionId).NotEqual(Guid.Empty);
+            this.Custom(this.DivisionExists);
         }
         
-        private ValidationFailure DivisionCodeExists(UpdatePropertyCommand updatePropertyCommand)
+        private ValidationFailure DivisionExists(UpdatePropertyCommand updatePropertyCommand)
         {
-            var divisionExists = updatePropertyCommand.Division != null && this.enumTypeItemRepository.Any(x => x.Code.Equals(updatePropertyCommand.Division.Code));
-            return divisionExists ? null : new ValidationFailure(nameof(updatePropertyCommand.Division), "Division does not exist.");
+            bool divisionExists = updatePropertyCommand != null && this.enumTypeItemRepository.Any(x => x.Id.Equals(updatePropertyCommand.DivisionId));
+            return divisionExists
+                ? null
+                : new ValidationFailure(nameof(updatePropertyCommand.DivisionId), "Division does not exist.");
         }
     }
 }

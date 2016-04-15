@@ -55,6 +55,10 @@ module Antares {
                     return [200, addressFormMock];
                 });
 
+                $http.whenGET(/\/api\/enums\/Division\/items/).respond(() => {
+                    return [200, {}];
+                });
+
                 // compile
                 scope['property'] = propertyMock;
                 scope['userData'] = usermock;

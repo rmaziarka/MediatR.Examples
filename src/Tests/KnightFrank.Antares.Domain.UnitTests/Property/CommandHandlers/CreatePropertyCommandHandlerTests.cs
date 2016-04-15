@@ -1,11 +1,8 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Property.CommandHandlers
 {
-    using System;
     using FluentAssertions;
-    using System.Linq.Expressions;
 
     using KnightFrank.Antares.Dal.Model.Property;
-    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.Exceptions;
@@ -26,12 +23,10 @@
         [AutoMoqData]
         public void Given_CreatePropertyCommand_When_Handle_Then_ShouldCreateProperty(
             [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             CreatePropertyCommand command,
             CreatePropertyCommandHandler handler)
         {
             // Arrange
-            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(new[] { new EnumTypeItem() });
             Property propertyToBeSaved = null;
             propertyRepository.Setup(x => x.Add(It.IsAny<Property>())).Callback<Property>(x => propertyToBeSaved = x);
 
@@ -48,17 +43,17 @@
         [Theory]
         [InlineAutoMoqData]
         public void Given_CreatePropertyCommand_When_HandleInvalidProperty_Then_ShouldThrowException(
-           UpdatePropertyCommand command,
+           CreatePropertyCommand command,
            Property property,
            [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
            [Frozen] Mock<IGenericRepository<PropertyTypeDefinition>> propertyTypeDefinitionRepository,
-           [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
            [Frozen] Mock<IDomainValidator<Property>> validator,
-           UpdatePropertyCommandHandler handler)
+           CreatePropertyCommandHandler handler)
         {
+            // Arrange
             validator.Setup(r => r.Validate(It.IsAny<Property>())).Returns(ValidationResultBuilder.BuildValidationResult());
-            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(new[] { new EnumTypeItem() });
 
+            // Act + Assert
             Assert.Throws<DomainValidationException>(() => handler.Handle(command));
             propertyRepository.Verify(p => p.Save(), Times.Never);
             propertyRepository.Verify(p => p.Add(It.IsAny<Property>()), Times.Never);

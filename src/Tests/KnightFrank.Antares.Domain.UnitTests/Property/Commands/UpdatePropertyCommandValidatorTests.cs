@@ -37,7 +37,7 @@
             this.command = fixture.Build<UpdatePropertyCommand>()
                 .With(p => p.Address, new CreateOrUpdatePropertyAddress())
                 .With(p => p.PropertyTypeId, Guid.NewGuid())
-                .With(p => p.Division, new EnumTypeItem { Code = fixture.Create<string>() })
+                .With(p => p.DivisionId, Guid.NewGuid())
                 .Create();
 
             this.enumTypeItemRepository = fixture.Freeze<Mock<IGenericRepository<EnumTypeItem>>>();

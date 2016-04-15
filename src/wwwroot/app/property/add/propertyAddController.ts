@@ -3,6 +3,7 @@
 module Antares.Property {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
+    import EnumTypeItem = Common.Models.Business.EnumTypeItem;    
 
     export class PropertyAddController {
         public entityTypeCode: string = 'Property';
@@ -10,6 +11,7 @@ module Antares.Property {
 
         private propertyResource: Common.Models.Resources.IPropertyResourceClass;
         private propertyTypes: any[];
+        private divisions: EnumTypeItem[];
         private attributes: Dto.IAttribute[];
         private userData: Dto.IUserData;
 
@@ -17,16 +19,23 @@ module Antares.Property {
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService) {
 
-            this.property.division.code = this.userData.division.code;
+            this.property.divisionId = this.userData.division.id;
             this.propertyResource = dataAccessService.getPropertyResource();
+            this.loadDivisions();
             this.loadPropertyTypes();
         }
 
-        changeDivision = (divisionCode: string) => {
-            this.property.division.code = divisionCode;
+        changeDivision = (division: EnumTypeItem) => {
+            this.property.divisionId = division.id;
             this.property.propertyTypeId = null;
             this.loadPropertyTypes();
         }
+
+        loadDivisions = () => {
+            this.dataAccessService.getEnumResource().get({ code: 'Division' }).$promise.then((divisions: any) => {
+                this.divisions = divisions.items;
+            });
+        };
 
         loadPropertyTypes = () => {
             this.propertyResource
