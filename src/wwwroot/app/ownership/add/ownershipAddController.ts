@@ -5,8 +5,8 @@ module Antares.Property {
     import Business = Common.Models.Business;
 
     export class OwnershipAddController {
-        static $inject = ['componentRegistry', 'dataAccessService', '$scope', '$q'];
-        maxAllowedDate:string = (new Date()).toDateString();
+        static $inject = ['componentRegistry', 'dataAccessService', '$scope', '$q','$filter'];
+        maxAllowedDate:string = this.$filter('date')(new Date(),'dd-MM-yyyy')
         componentId: string;
         ownership: Dto.IOwnership = new Business.Ownership();
         ownerships: Business.Ownership[];
@@ -20,7 +20,8 @@ module Antares.Property {
             componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
             private $scope: ng.IScope,
-            private $q: ng.IQService) {
+            private $q: ng.IQService,
+            private $filter:any) {
 
             this.ownershipTypes = dataAccessService.getEnumResource().get({ code: 'OwnershipType' });
             componentRegistry.register(this, this.componentId);
