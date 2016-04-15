@@ -1,12 +1,12 @@
-﻿Feature: Configure property types for a Division and a Country
+﻿Feature: Property types
 
 @Property
-Scenario Outline: Get property types from web api
-	When user gets property types for <DivisionCode> division and <CountryCode> country
-	Then User should get <StatusCode> http status code
+Scenario Outline: Get property types
+	When User gets property types for <divisionCode> division and <countryCode> country
+	Then User should get <statusCode> http status code
 
 	Examples:
-	| CountryCode | DivisionCode | StatusCode |
+	| countryCode | divisionCode | statusCode |
 	| GB          | Residential  | Ok         |
 	| GB          | Commercial   | Ok         |
 	| GB          |              | BadRequest |

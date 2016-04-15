@@ -26,7 +26,7 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [When(@"user gets property types for (.*) division and (.*) country")]
+        [When(@"User gets property types for (.*) division and (.*) country")]
         public void GivenUserGetsPropertyTypesForDivisionAndCountry(string divisionCode, string countryCode)
         {
             string requestUrl = $"{ApiUrl}?countryCode={countryCode}&divisionCode={divisionCode}";

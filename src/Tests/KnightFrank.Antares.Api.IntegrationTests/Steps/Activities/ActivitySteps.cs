@@ -19,14 +19,14 @@
     using TechTalk.SpecFlow.Assist;
 
     [Binding]
-    public class ActivitiesSteps
+    public class ActivitySteps
     {
         private const string ApiUrl = "/api/activities";
         private readonly BaseTestClassFixture fixture;
 
         private readonly ScenarioContext scenarioContext;
 
-        public ActivitiesSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
+        public ActivitySteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {
             this.fixture = fixture;
             if (scenarioContext == null)

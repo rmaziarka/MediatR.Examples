@@ -32,11 +32,11 @@ Scenario: Create new contact
 Scenario Outline: Check if validation is invoked 
 	When Try to creates a contact with following data
 		| FirstName   | Surname   | Title   |
-		| <FirstName> | <Surname> | <Title> |
+		| <firstName> | <surname> | <title> |
 	Then User should get BadRequest http status code
 
 	Examples: 
-	| FirstName | Surname | Title |
+	| firstName | surname | title |
 	|           | Angel   | cheef |
 	| Michael   |         | cheef |
 	| Michael   | Angel   |       |
