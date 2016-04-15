@@ -43,22 +43,8 @@
 
                 DomainValidationException exception = null;
 
-                // Act 
-                try
-                {
-                    handler.Handle(query);
-                }
-                catch (DomainValidationException ex)
-                {
-                    exception = ex;
-                }
-
-                // Assert
-                exception.Should().NotBeNull();
-                exception.Errors.Should().NotBeNull();
-                exception.Errors.Should().HaveCount(validationFailures.Count);
-                exception.Errors.ShouldBeEquivalentTo(validationFailures);
-                domainValidator.Verify(r => r.Validate(It.IsAny<EnumLocalisedQuery>()), Times.Once());
+                // Act + Assert
+                Assert.Throws<DomainValidationException>(() => handler.Handle(query)).Errors.ShouldBeEquivalentTo(validationFailures);
             }
 
             [Theory]
