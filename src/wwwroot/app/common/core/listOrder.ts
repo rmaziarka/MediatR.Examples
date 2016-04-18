@@ -1,7 +1,7 @@
-﻿/// <reference path="../../../../typings/_all.d.ts" />
+﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Common.Component {
-    export class CartListOrder {
+    export class ListOrder {
         constructor(public name: string, public descending?: boolean, public nullOnEnd?: boolean) { }
     }
 }

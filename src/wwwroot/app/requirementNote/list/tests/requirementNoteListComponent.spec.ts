@@ -103,6 +103,31 @@ module Antares {
                 expect(timeElement.text()).toBe(formattedDate);
                 expect(descriptionElement.text()).toBe('descr 1');
             });
+
+            it('when existing requirement notes then notes should be in proper order', () => {
+                // arrange
+                var date1Mock = new Date('2011-01-01');
+                var date2Mock = new Date('2011-02-01');
+
+                var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate({
+                    requirementNotes: [
+                        new Business.RequirementNote({ id: 'note1', requirementId: '111', description: 'descr 1', createdDate: date1Mock, user: null }),
+                        new Business.RequirementNote({ id: 'note2', requirementId: '111', description: 'descr 2', createdDate: date2Mock, user: null })
+                    ]
+                });
+                scope['requirement'] = requirementMock;
+
+                // act
+                element = compile('<requirement-note-list requirement="requirement"></requirement-note-list>')(scope);
+                scope.$apply();
+                controller = element.controller('requirementNoteList');
+
+                // assert
+                var noteItems = element.find(pageObjectSelectors.noteItems);
+                expect(noteItems.length).toBe(2);
+                expect(noteItems[0].getAttribute('id')).toBe("note-note2");
+                expect(noteItems[1].getAttribute('id')).toBe("note-note1");
+            });
         });
     });
 }
