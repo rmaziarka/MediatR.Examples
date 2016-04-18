@@ -24,6 +24,7 @@
                 this.requirementNoteRepository
                     .Get()
                     .Include(rn => rn.Requirement)
+                    .Include(rn => rn.User)
                     .SingleOrDefault(rn => rn.Id == message.Id);
 
             return requirementNote;

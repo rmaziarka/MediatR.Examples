@@ -16,7 +16,12 @@ module Antares {
         var pageObjectSelectors = {
             noteList: '#requirement-notes',
             noteItems: '#requirement-notes [data-type="note-item"]',
-            noteItem: '#requirement-notes #note-'
+            noteItem: {
+                item: '#note-',
+                noteHeaderUser: 'div[data-type="note-header"] >span',
+                noteHeaderTime: 'div[data-type="note-header"] >time',
+                noteContent: 'div[data-type="note-content"]'
+            }
         }
 
         var controller: RequirementNoteListController;
@@ -82,8 +87,8 @@ module Antares {
                 var date1Mock = new Date('2011-01-01');
                 var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate({
                     requirementNotes: [
-                        { id: 'note1', requirementId: '111', description: 'descr 1', createdDate: date1Mock, user: null },
-                        { id: 'note2', requirementId: '111', description: 'descr 2', createdDate: new Date(), user: null }
+                        { id: 'note1', requirementId: '111', description: 'descr 1', createdDate: date1Mock, user: { id: 'us1', firstName: 'firstName1', lastName: 'lastName1' } },
+                        { id: 'note2', requirementId: '111', description: 'descr 2', createdDate: new Date(), user: { id: 'us2', firstName: 'firstName2', lastName: 'lastName2' } }
                     ]
                 });
                 scope['requirement'] = requirementMock;
@@ -94,13 +99,15 @@ module Antares {
                 controller = element.controller('requirementNoteList');
 
                 // assert
-                var noteElement = element.find(pageObjectSelectors.noteItem + "note1");
+                var noteElement = element.find(pageObjectSelectors.noteItem.item + "note1");
 
-                var timeElement = noteElement.find('time');
-                var descriptionElement = noteElement.find('[data-type="note-description"]');
+                var timeElement = noteElement.find(pageObjectSelectors.noteItem.noteHeaderTime);
+                var userElement = noteElement.find(pageObjectSelectors.noteItem.noteHeaderUser);
+                var descriptionElement = noteElement.find(pageObjectSelectors.noteItem.noteContent);
 
                 var formattedDate = filter('date')(Core.DateTimeUtils.convertDateToUtc(date1Mock), 'dd-MM-yyyy, HH:mm');
                 expect(timeElement.text()).toBe(formattedDate);
+                expect(userElement.text()).toBe('firstName1 lastName1');
                 expect(descriptionElement.text()).toBe('descr 1');
             });
 
