@@ -278,6 +278,15 @@
             </collectionProp>
           </ModuleController>
           <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Get division id" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="1083982692">Get Division id</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
           <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Get property type id" enabled="true">
             <collectionProp name="ModuleController.node_path">
               <stringProp name="-1227702913">WorkBench</stringProp>
@@ -467,6 +476,15 @@
             </collectionProp>
           </ModuleController>
           <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Get division id" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="1083982692">Get Division id</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
           <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Create property" enabled="true">
             <collectionProp name="ModuleController.node_path">
               <stringProp name="-1227702913">WorkBench</stringProp>
@@ -595,6 +613,15 @@
               <stringProp name="1119890476">KFDDP test plan</stringProp>
               <stringProp name="170071582">Test Fragment</stringProp>
               <stringProp name="-538777558">Get address/country Id</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Get division id" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="1083982692">Get Division id</stringProp>
             </collectionProp>
           </ModuleController>
           <hashTree/>
@@ -893,7 +920,40 @@ vars.put(&apos;requirementId&apos;, response.id);</stringProp>
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;id&quot;:&quot;&quot;,&quot;address&quot;:{&quot;id&quot;:&quot;&quot;,&quot;countryId&quot;:&quot;${countryId}&quot;,&quot;addressFormId&quot;:&quot;${addressFormId}&quot;,&quot;line1&quot;:&quot;${line1}&quot;,&quot;line2&quot;:&quot;${line2}&quot;,&quot;postcode&quot;:&quot;${postcode}&quot;,&quot;city&quot;:&quot;${city}&quot;},&quot;propertyTypeId&quot;:&quot;${propertyTypeId}&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&#xd;
+  &quot;address&quot;: {&#xd;
+    &quot;countryId&quot;: &quot;${countryId}&quot;,&#xd;
+    &quot;addressFormId&quot;: &quot;${addressFormId}&quot;,&#xd;
+    &quot;propertyName&quot;: &quot;${propertyName}&quot;,&#xd;
+    &quot;propertyNumber&quot;: &quot;${propertyNumber}&quot;,&#xd;
+    &quot;line1&quot;: &quot;${line1}&quot;,&#xd;
+    &quot;line2&quot;: &quot;${line2}&quot;,&#xd;
+    &quot;line3&quot;: &quot;${line3}&quot;,&#xd;
+    &quot;postcode&quot;: &quot;${postcode}&quot;,&#xd;
+    &quot;city&quot;: &quot;${city}&quot;,&#xd;
+    &quot;county&quot;: &quot;${county}&quot;&#xd;
+  },&#xd;
+  &quot;propertyTypeId&quot;: &quot;${propertyTypeId}&quot;,&#xd;
+  &quot;divisionId&quot;: &quot;${divisionResId}&quot;,&#xd;
+  &quot;attributeValues&quot;: {&#xd;
+    &quot;minBedrooms&quot;: &quot;${minBedrooms}&quot;,&#xd;
+    &quot;maxBedrooms&quot;: &quot;${maxBedrooms}&quot;,&#xd;
+    &quot;minReceptions&quot;: &quot;${minReceptionRooms}&quot;,&#xd;
+    &quot;maxReceptions&quot;: &quot;${maxReceptionRooms}&quot;,&#xd;
+    &quot;minBathrooms&quot;: &quot;${minBathrooms}&quot;,&#xd;
+    &quot;maxBathrooms&quot;: &quot;${maxBathrooms}&quot;,&#xd;
+    &quot;minArea&quot;: &quot;${minArea}&quot;,&#xd;
+    &quot;maxArea&quot;: &quot;${maxArea}&quot;,&#xd;
+    &quot;minLandArea&quot;: &quot;${minLandArea}&quot;,&#xd;
+    &quot;maxLandArea&quot;: &quot;${maxLandArea}&quot;,&#xd;
+    &quot;minGuestRooms&quot;: 0,&#xd;
+    &quot;maxGuestRooms&quot;: 0,&#xd;
+    &quot;minFunctionRooms&quot;: 0,&#xd;
+    &quot;maxFunctionRooms&quot;: 0,&#xd;
+    &quot;minCarParkingSpaces&quot;: &quot;${minParkingSpaces}&quot;,&#xd;
+    &quot;maxCarParkingSpaces&quot;: &quot;${maxParkingSpaces}&quot;&#xd;
+  }&#xd;
+}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -1159,6 +1219,66 @@ vars.put(&apos;countryId&apos;, data.countryId);
             </BSFPostProcessor>
             <hashTree/>
           </hashTree>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Get Division id" enabled="true"/>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Division id" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">${enums}/division/items</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.monitor">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="Referer" elementType="Header">
+                <stringProp name="Header.name">Referer</stringProp>
+                <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+              </elementProp>
+              <elementProp name="Accept-Language" elementType="Header">
+                <stringProp name="Header.name">Accept-Language</stringProp>
+                <stringProp name="Header.value">pl,en-US;q=0.7,en;q=0.3</stringProp>
+              </elementProp>
+              <elementProp name="Origin" elementType="Header">
+                <stringProp name="Header.name">Origin</stringProp>
+                <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+              </elementProp>
+              <elementProp name="User-Agent" elementType="Header">
+                <stringProp name="Header.name">User-Agent</stringProp>
+                <stringProp name="Header.value">Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0</stringProp>
+              </elementProp>
+              <elementProp name="Accept" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <BSFPostProcessor guiclass="TestBeanGUI" testclass="BSFPostProcessor" testname="Get division Id" enabled="true">
+            <stringProp name="scriptLanguage">javascript</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">var data = JSON.parse(prev.getResponseDataAsString());
+
+vars.put(&apos;divisionResId&apos;, data.items[0].id);
+vars.put(&apos;divisionComId&apos;, data.items[1].id);
+
+</stringProp>
+          </BSFPostProcessor>
+          <hashTree/>
         </hashTree>
         <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="View property" enabled="true"/>
         <hashTree>
