@@ -13,13 +13,14 @@ module Antares.Property {
         private propertyTypes: any[];
         private divisions: EnumTypeItem[];
         private attributes: Dto.IAttribute[];
-        private userData: Dto.IUserData;
+        public userData: Dto.IUserData;
 
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService) {
 
             this.property.divisionId = this.userData.division.id;
+            this.property.division = this.userData.division;
             this.propertyResource = dataAccessService.getPropertyResource();
             this.loadDivisions();
             this.loadPropertyTypes();
@@ -27,6 +28,7 @@ module Antares.Property {
 
         changeDivision = (division: EnumTypeItem) => {
             this.property.divisionId = division.id;
+            this.property.division = division;
             this.property.propertyTypeId = null;
             this.loadPropertyTypes();
         }

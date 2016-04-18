@@ -8,12 +8,12 @@ module Antares.Property {
     export class PropertyEditController {
         public entityTypeCode: string = 'Property';
         public property: Business.Property;
+        public userData: Dto.IUserData;
 
         private propertyResource: Common.Models.Resources.IPropertyResourceClass;
         private propertyTypes: any[];
         private divisions: EnumTypeItem[];
         private attributes: Dto.IAttribute[];
-        private userData: Dto.IUserData;
 
         constructor(
             private dataAccessService: Services.DataAccessService,
@@ -26,6 +26,7 @@ module Antares.Property {
 
         changeDivision = (division: EnumTypeItem) => {
             this.property.divisionId = division.id;
+            this.property.division = division;
             this.property.propertyTypeId = null;
             this.loadPropertyTypes();
         }
