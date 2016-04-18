@@ -59,6 +59,13 @@
     <Compile Include="Model\Attribute\Attribute.cs" />
     <Compile Include="Model\Attribute\AttributeValues.cs" />
     <Compile Include="Model\BaseAuditableEntity.cs" />
+    <Compile Include="Model\Characteristics\Characteristic.cs" />
+    <Compile Include="Model\Characteristics\CharacteristicGroup.cs" />
+    <Compile Include="Model\Characteristics\CharacteristicGroupItem.cs" />
+    <Compile Include="Model\Characteristics\CharacteristicGroupLocalised.cs" />
+    <Compile Include="Model\Characteristics\CharacteristicGroupUsage.cs" />
+    <Compile Include="Model\Characteristics\CharacteristicLocalised.cs" />
+    <Compile Include="Model\Characteristics\PropertyCharacteristic.cs" />
     <Compile Include="Model\Common\IAuditableEntity.cs" />
     <Compile Include="Model\Common\ILocaled.cs" />
     <Compile Include="Model\Company\Company.cs" />
@@ -71,6 +78,7 @@
     <Compile Include="Model\Configuration\Attribute\AttributeValuesConfiguration.cs" />
     <Compile Include="Model\Configuration\Attribute\AttributeConfiguration.cs" />
     <Compile Include="Model\Configuration\BaseAuditableEntityConfiguration.cs" />
+    <Compile Include="Model\Configuration\Characteristics\PropertyCharacteristicConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\RequirementNoteConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\PropertyAttributeFormConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\PropertyAttributeFormDefinitionConfiguration.cs" />
