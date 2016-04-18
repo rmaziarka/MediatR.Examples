@@ -14,8 +14,9 @@ module Antares {
 
             options = { key: 'key' };
 
-            var staticTranslationMock = { STATIC: {}};
-            var enumsTranslationMock = { VAL: {}};
+            var staticTranslationMock = { STATIC: { S : 'SS' }};
+            var enumsTranslationMock = { VALA: { A : 'AA' } };
+            var resourcesTranslationMock = { VALB: { B : 'BB' } };
 
             beforeEach(inject((                
                 $httpBackend: ng.IHttpBackendService,
@@ -31,6 +32,10 @@ module Antares {
                 httpBackend.whenGET(/\/api\/translations\/enums\/.*/).respond(() => {                    
                     return [200, enumsTranslationMock];
                 });
+
+                httpBackend.whenGET(/\/api\/translations\/resources\/.*/).respond(() => {
+                    return [200, resourcesTranslationMock];
+                });
                 
                 createFactory = () => {
                     return new LocalizationLoaderFactory($q, dataAccessService);
@@ -38,7 +43,7 @@ module Antares {
 
             }));
 
-            it('then should load translation static and dynamic for enums', () => {
+            it('then should load translation static and dynamic for enums and resources', () => {
                 // arrange
                 var
                     translations: any,
@@ -59,9 +64,13 @@ module Antares {
                 // assert
                 expect(translations).toBeDefined();
                 expect(translations).not.toBeNull();
-                expect(translations.STATIC).not.toBeNull();
-                expect(translations.ENUMS).not.toBeNull();
-                expect(translations.ENUMS.VAL).not.toBeNull();
+                expect(translations.STATIC).not.toBeNull();                
+                expect(translations.DYNAMICTRANSLATIONS).toBeDefined();
+                expect(translations.DYNAMICTRANSLATIONS).not.toBeNull();
+                expect(translations.DYNAMICTRANSLATIONS.VALA).toBeDefined();
+                expect(translations.DYNAMICTRANSLATIONS.VALA).not.toBeNull();                
+                expect(translations.DYNAMICTRANSLATIONS.VALB).toBeDefined();
+                expect(translations.DYNAMICTRANSLATIONS.VALB).not.toBeNull();                
                 expect(error).toBeDefined();
                 expect(error).toBeNull();
             });

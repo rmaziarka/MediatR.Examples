@@ -184,7 +184,7 @@ module Antares {
 
                 var formattedDate = filter('date')(date1Mock, 'dd-MM-yyyy');
                 expect(activityDataElement.text()).toBe(formattedDate + ' John Test1, Amy Test2');
-                expect(activityStatusElement.text()).toBe('ENUMS.123');
+                expect(activityStatusElement.text()).toBe('DYNAMICTRANSLATIONS.123');
             });
         });
 
@@ -247,7 +247,7 @@ module Antares {
                 var dateElement = activityPreviewPanel.find(pageObjectSelectors.activity.createdDate);
                 var vendorsItemsElement = activityPreviewPanel.find(pageObjectSelectors.activity.vendors);
 
-                expect(statusElement.text()).toBe('ENUMS.456');
+                expect(statusElement.text()).toBe('DYNAMICTRANSLATIONS.456');
                 expect(dateElement.text()).toBe(formattedDate);
                 expect(vendorsItemsElement.length).toBe(2);
                 expect(vendorsItemsElement[0].innerText).toBe('John Test1');
@@ -375,7 +375,7 @@ module Antares {
                 expect(contactNames).toEqual(["John Papa, ", "Mark Rendle"]);
 
                 var ownershipTypeCode = getValueFromElement(ownershipPanel, 'ownership-list-ownership-type');
-                expect(ownershipTypeCode).toBe('ENUMS.leaseholderId');
+                expect(ownershipTypeCode).toBe('DYNAMICTRANSLATIONS.leaseholderId');
 
                 var purchaseDate = getValueFromElement(ownershipPanel, 'ownership-list-purchase-date');
                 expect(purchaseDate).toBe('01-01-2016');

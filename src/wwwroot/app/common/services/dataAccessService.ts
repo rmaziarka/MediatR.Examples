@@ -90,6 +90,11 @@ module Antares.Services {
                 this.$resource(this.appConfig.rootUrl + '/api/translations/enums/:isoCode');
         }
 
+        getResourceTranslationResource(): Resources.ITranslationResourceClass<any> {
+            return <Resources.ITranslationResourceClass<any>>
+                this.$resource(this.appConfig.rootUrl + '/api/translations/resources/:isoCode');
+        }
+
         getStaticTranslationResource(): Resources.ITranslationResourceClass<any> {
             return <Resources.ITranslationResourceClass<any>>
                 this.$resource('/translations/:isoCode.json');

@@ -42,7 +42,7 @@ module Antares {
 
                 // assert
                 var statusElement = element.find(pageObjectSelectors.status);
-                expect(statusElement.text()).toBe('ENUMS.' + activityMock.activityStatusId);
+                expect(statusElement.text()).toBe('DYNAMICTRANSLATIONS.' + activityMock.activityStatusId);
             });
 
             it('when activity is set then activity creation date value should be displayed in proper format', () => {
