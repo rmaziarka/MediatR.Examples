@@ -1,4 +1,4 @@
-﻿Feature: Requirements 
+﻿Feature: Requirement 
 
 @ResidentialSalesRequirements 
 Scenario: Save residential sales requirement
@@ -25,9 +25,13 @@ Scenario: Get residential sales requirement
 		And User creates following requirement in database
  			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
  			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | Description |
+		And User creates note for requirement in database
+			| Description |
+			| Description |
 		And User retrieves requirement for latest id
 	Then User should get OK http status code
 		And Requirement should be the same as added
+		And Note should be the same as added
 
 @ResidentialSalesRequirements 
 Scenario Outline: Save residential sales requirement without data

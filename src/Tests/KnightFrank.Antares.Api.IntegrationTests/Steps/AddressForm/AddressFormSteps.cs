@@ -22,8 +22,6 @@
 
         private readonly ScenarioContext scenarioContext;
 
-        private AddressForm AddressForm { get; set; }
-
         public AddressFormSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {
             this.fixture = fixture;
@@ -34,20 +32,14 @@
             this.scenarioContext = scenarioContext;
         }
 
+        private AddressForm AddressForm { get; set; }
+
         [Given(@"Country code (.*) is present in DB")]
         public void GivenCountryCodeIsPresentInDb(string countryCode)
         {
             var country = new Country { IsoCode = countryCode };
             this.fixture.DataContext.Countries.Add(country);
             this.fixture.DataContext.SaveChanges();
-        }
-
-        [When(@"User retrieves address template for (.*) entity type and (.*) contry code")]
-        public void WhenUserTryToRetrieveContactsDetailsForFollowingData(string enumTypeItem, string countryCode)
-        {
-            string requestUrl = $"{ApiUrl}?entityType=" + enumTypeItem + "&countryCode=" + countryCode + "";
-            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
-            this.scenarioContext.SetHttpResponseMessage(response);
         }
 
         [Given(@"There is an AddressForm for (.*) country code")]
@@ -76,6 +68,14 @@
 
             this.fixture.DataContext.AddressFormEntityTypes.Add(addressFormEntityType);
             this.fixture.DataContext.SaveChanges();
+        }
+
+        [When(@"User retrieves address template for (.*) entity type and (.*) contry code")]
+        public void WhenUserTryToRetrieveContactsDetailsForFollowingData(string enumTypeItem, string countryCode)
+        {
+            string requestUrl = $"{ApiUrl}?entityType=" + enumTypeItem + "&countryCode=" + countryCode + "";
+            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+            this.scenarioContext.SetHttpResponseMessage(response);
         }
     }
 }

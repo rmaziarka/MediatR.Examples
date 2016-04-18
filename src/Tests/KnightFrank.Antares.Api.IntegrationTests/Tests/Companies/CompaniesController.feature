@@ -1,4 +1,4 @@
-﻿Feature: CompaniesController
+﻿Feature: Companies
 
 @Company
 Scenario: Create new company
@@ -15,11 +15,10 @@ Scenario Outline: Check if validation is invoked
 		    | FirstName | Surname | Title |
 		    | Michael   | Angel   | cheef | 
 	When User create company by API for contact
-		| Name    |
+		| Name   |
 		| <name> |
 	Then User should get <statusCode> http status code
 
 	Examples: 
 	| name | statusCode |
 	|      | BadRequest |
-

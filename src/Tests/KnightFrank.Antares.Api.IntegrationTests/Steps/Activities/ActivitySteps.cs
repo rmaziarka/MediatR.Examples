@@ -101,7 +101,8 @@
             var updateActivityCommand = table.CreateInstance<UpdateActivityCommand>();
             var activityFromDatabase = this.scenarioContext.Get<Activity>("Added Activity");
             updateActivityCommand.Id = id.Equals("added") ? activityFromDatabase.Id : new Guid(id);
-            updateActivityCommand.ActivityStatusId = status.Equals("added") ? activityFromDatabase.ActivityStatusId 
+            updateActivityCommand.ActivityStatusId = status.Equals("added")
+                ? activityFromDatabase.ActivityStatusId
                 : new Guid(status);
 
             activityFromDatabase = new Activity

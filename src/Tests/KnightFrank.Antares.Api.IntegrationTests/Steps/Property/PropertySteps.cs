@@ -114,7 +114,7 @@
         {
             if (propertyTypeCode.Equals("invalid"))
             {
-                this.scenarioContext.Set(Guid.Empty, "PropertyTypeId");
+                this.scenarioContext.Set(Guid.NewGuid(), "PropertyTypeId");
             }
             else
             {
@@ -128,7 +128,7 @@
         {
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
-            var divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
+            Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
 
             var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
 
@@ -152,7 +152,7 @@
 
             var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
-            var divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
+            Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
 
             address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
             address.CountryId = this.scenarioContext.Get<Guid>("CountryId");

@@ -19,7 +19,6 @@ Scenario Outline: Create property
 	| Office            | Commercial   |
 	| Department Stores | Commercial   |
 	| Retail            | Commercial   |
-    
 
 @Property
 Scenario Outline: Create property with invalid data
