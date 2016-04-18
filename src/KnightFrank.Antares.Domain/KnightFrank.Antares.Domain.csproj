@@ -110,11 +110,12 @@
     <Compile Include="Common\ValidatorCommandHandler.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidator.cs" />
     <Compile Include="Common\Validator\ContactValidator.cs" />
+    <Compile Include="Common\Validator\LocaleValidator.cs" />
     <Compile Include="Company\CommandHandlers\CreateCompanyCommandHandler.cs" />
-    <Compile Include="Company\Command\CreateCompanyCommand.cs" />
-    <Compile Include="Company\Command\CreateCompanyCommandProfile.cs" />
-    <Compile Include="Company\Command\CreateCompanyCommandDomainValidator.cs" />
-    <Compile Include="Company\Command\CreateCompanyValidator.cs" />
+    <Compile Include="Company\Commands\CreateCompanyCommand.cs" />
+    <Compile Include="Company\Commands\CreateCompanyCommandProfile.cs" />
+    <Compile Include="Company\Commands\CreateCompanyCommandDomainValidator.cs" />
+    <Compile Include="Company\Commands\CreateCompanyValidator.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandProfile.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidator.cs" />
     <Compile Include="Contact\Commands\UpdateContactCommand.cs" />
@@ -122,15 +123,18 @@
     <Compile Include="Contact\CommandHandlers\UpdateContactCommandHandler.cs" />
     <Compile Include="Contact\CommandHandlers\CreateContactCommandHandler.cs" />
     <Compile Include="Contact\Commands\UpdateContactCommandValidator.cs" />
-    <Compile Include="Contact\ContactDto.cs" />
     <Compile Include="Contact\Queries\ContactQuery.cs" />
     <Compile Include="Contact\Queries\ContactQueryValidator.cs" />
+    <Compile Include="Contact\Queries\ContactsQuery.cs" />
     <Compile Include="Contact\QueryHandlers\ContactQueryHandler.cs" />
+    <Compile Include="Contact\QueryHandlers\ContactsQueryHandler.cs" />
     <Compile Include="DomainModule.cs" />
     <Compile Include="Common\Exceptions\DomainValidationException.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQuery.cs" />
     <Compile Include="Enum\Queries\EnumQuery.cs" />
+    <Compile Include="Enum\Queries\EnumLocalisedQueryValidator.cs" />
     <Compile Include="Enum\Queries\EnumQueryValidator.cs" />
+    <Compile Include="Enum\Queries\EnumLocalisedQueryDomainValidator.cs" />
     <Compile Include="Enum\QueryHandlers\EnumLocalisedQueryHandler.cs" />
     <Compile Include="Enum\QueryHandlers\EnumQueryHandler.cs" />
     <Compile Include="Enum\QueryResults\EnumQueryItemResult.cs" />
@@ -152,6 +156,7 @@
     <Compile Include="Property\CommandHandlers\UpdatePropertyCommandHandler.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyAddress.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyAddressValidator.cs" />
+    <Compile Include="Property\Commands\CreateOrUpdatePropertyAttributeValues.cs" />
     <Compile Include="Property\Commands\CreatePropertyCommand.cs" />
     <Compile Include="Property\Commands\PropertyDomainValidator.cs" />
     <Compile Include="Property\Commands\CreatePropertyCommandValidator.cs" />
@@ -173,6 +178,14 @@
     <Compile Include="Property\Queries\PropertyAttributesQueryValidator.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQueryResult.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQuerySingleResult.cs" />
+    <Compile Include="RequirementNote\CommandHandlers\CreateRequirementNoteCommandHandler.cs" />
+    <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandDomainValidator.cs" />
+    <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandValidator.cs" />
+    <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandProfile.cs" />
+    <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommand.cs" />
+    <Compile Include="RequirementNote\Queries\RequirementNoteQuery.cs" />
+    <Compile Include="RequirementNote\Queries\RequirementNoteQueryValidator.cs" />
+    <Compile Include="RequirementNote\QueryHandlers\RequirementNoteQueryHandler.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementCommandHandler.cs" />
     <Compile Include="Requirement\Commands\CreateOrUpdateRequirementAddress.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandDomainValidator.cs" />
@@ -183,6 +196,13 @@
     <Compile Include="Requirement\Queries\RequirementQuery.cs" />
     <Compile Include="Requirement\Queries\RequirementQueryValidator.cs" />
     <Compile Include="Requirement\QueryHandlers\RequirementQueryHandler.cs" />
+    <Compile Include="Resource\Dictionaries\CountryLocalisedDictionary.cs" />
+    <Compile Include="Resource\Dictionaries\IResourceLocalisedDictionary.cs" />
+    <Compile Include="Resource\Dictionaries\PropertyTypeLocalisedDictionary.cs" />
+    <Compile Include="Resource\Queries\ResourceLocalisedQueryDomainValidator.cs" />
+    <Compile Include="Resource\Queries\ResourceLocalisedQueryValidator.cs" />
+    <Compile Include="Resource\Queries\ResourceLocalisedQuery.cs" />
+    <Compile Include="Resource\QueryHandlers\ResourceLocalisedQueryHandler.cs" />
     <Compile Include="User\QueryResults\UserDataResult.cs" />
   </ItemGroup>
   <ItemGroup>

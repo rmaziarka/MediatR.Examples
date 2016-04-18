@@ -5,13 +5,13 @@
         <h2 class="page-header" translate="REQUIREMENT.VIEW.REQUIREMENT_DETAILS"></h2>
         <div class="well requirement-details-header">
             <div translate="REQUIREMENT.VIEW.TEMPORARY_RESIDENTIAL_SALES"></div>
-            <!--<h3>Flat, 2-4 bedrooms, London, max 200,000 £</h3>-->
             <div>
                 <span translate="REQUIREMENT.VIEW.CREATEDDATE"></span>
                 <span>{{ vm.requirement.createDate | date: 'longDate' }}</span>
             </div>
-            <!--<button class="btn btn-default" type="button" translate="REQUIREMENT.VIEW.EDIT"></button>-->
-            <!--<button class="btn btn-default" type="button">{{ 'REQUIREMENT.VIEW.NOTES' | translate }} <span>(0)</span></button>-->
+            <div class="well-action-bar">
+                <button id="notes-button" class="btn btn-default" type="button" ng-click="vm.showNotesPanel()"><i class="fa fa-sticky-note" aria-hidden="true"></i> {{ 'REQUIREMENT.VIEW.NOTES' | translate }} <span>({{vm.requirement.requirementNotes.length}})</span></button>
+            </div>
         </div>
 
         <div class="row">
@@ -52,3 +52,26 @@
         </div>
     </div>
 </div>
+
+<side-panel component-id="vm.componentIds.notesSidePanelId">
+    <side-panel-header>
+        <h3 translate="NOTES.NOTES"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <section>
+            <h4 translate="NOTES.ADDNOTE"></h4>
+            <form>
+                <div class="form-group has-error">
+                    <textarea class="form-control" rows="9"></textarea>
+                    <p class="help-block">Field is required</p>
+                </div>
+                <div class="form-group text-right">
+                    <button class="btn btn-primary" type="button"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                </div>
+            </form>
+        </section>
+
+        <requirement-note-list component-id="vm.componentIds.noteListId" requirement="vm.requirement"></requirement-note-list>
+
+    </side-panel-content>
+</side-panel>

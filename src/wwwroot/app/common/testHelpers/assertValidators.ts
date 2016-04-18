@@ -1,8 +1,6 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.TestHelpers {
-    import Resources = Antares.Common.Models.Resources;
-
     export class AssertValidators {
         private pageObjectSelectors = {
             requiredValidatorSelector : '[name="requiredValidationError"]',
@@ -65,7 +63,7 @@ module Antares.TestHelpers {
         }
 
         public assertShowElement = (expectedResult: boolean, elementSelector: string) => {
-            var selectedElement = this.element.find(elementSelector);            
+            var selectedElement = this.element.find(elementSelector);
             expect(selectedElement.hasClass("ng-hide")).toBe(expectedResult);
         }
 
@@ -74,7 +72,7 @@ module Antares.TestHelpers {
         }
     }
 
-    class InputValidationAdapter {
+   export class InputValidationAdapter {
         private pageObject = {
             inputValidCss : 'ng-valid'
         }
@@ -93,7 +91,7 @@ module Antares.TestHelpers {
             return this.isInputValid() && !this.isValidationShown();
         }
 
-        private isInputValid(): boolean{
+        public isInputValid(): boolean{
             return this.input.hasClass(this.pageObject.inputValidCss);
         }
 
@@ -101,7 +99,7 @@ module Antares.TestHelpers {
             return this.input.parent().find(this.validatorSelector).length > 0;
         }
 
-        private writeValue(value: string){
+        public writeValue(value: string){
             this.input.val(value).trigger('input').trigger('change').trigger('blur');
             this.scope.$apply();
         }

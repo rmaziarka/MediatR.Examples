@@ -8,14 +8,11 @@
 
     public class Requirement : BaseEntity
     {
-        public Requirement()
-        {
-            this.Contacts = new List<Contact>();
-        }
-
         public DateTime CreateDate { get; set; }
 
-        public List<Contact> Contacts { get; set; }
+        public List<Contact> Contacts { get; set; } = new List<Contact>();
+
+        public virtual ICollection<RequirementNote> RequirementNotes { get; set; } = new List<RequirementNote>();
 
         public Guid AddressId { get; set; }
 

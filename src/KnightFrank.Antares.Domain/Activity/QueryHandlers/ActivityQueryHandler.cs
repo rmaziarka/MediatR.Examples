@@ -25,7 +25,7 @@
                     .Include(a => a.Property)
                     .Include(a => a.Property.Address)
                     .Include(a => a.Contacts)
-                    .FirstOrDefault(a => a.Id == query.Id);
+                    .SingleOrDefault(a => a.Id == query.Id);
 
             return result;
         }

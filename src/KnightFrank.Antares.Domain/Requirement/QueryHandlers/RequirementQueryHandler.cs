@@ -3,6 +3,8 @@
     using System.Data.Entity;
     using System.Linq;
 
+    using AutoMapper;
+
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Requirement.Queries;
@@ -25,7 +27,9 @@
                     .Get()
                     .Include(req => req.Contacts)
                     .Include(req => req.Address)
-                    .FirstOrDefault(req => req.Id == message.Id);
+                    .Include(req => req.RequirementNotes)
+                    .Include(req => req.RequirementNotes.Select(rn => rn.User))
+                    .SingleOrDefault(req => req.Id == message.Id);
 
             return requirement;
         }

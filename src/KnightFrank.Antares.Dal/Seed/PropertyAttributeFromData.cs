@@ -13,20 +13,20 @@
         {
             IEnumerable<PropertyAttributeForm> forms = CreatePropertyAttributeForms(context);
 
-            context.PropertyAttributeForm.AddOrUpdate(p => new { p.PropertyTypeId, p.CountryId }, forms.ToArray());
+            context.PropertyAttributeForms.AddOrUpdate(p => new { p.PropertyTypeId, p.CountryId }, forms.ToArray());
 
             context.SaveChanges();
         }
 
         private static IEnumerable<PropertyAttributeForm> CreatePropertyAttributeForms(KnightFrankContext context)
         {
-            List<PropertyType> propertyTypes = context.PropertyType.ToList();
+            List<PropertyType> propertyTypes = context.PropertyTypes.ToList();
 
-            List<Attribute> attributes = context.Attribute.ToList();
+            List<Attribute> attributes = context.Attributes.ToList();
 
             return from country in propertyAttributeFormData from data in country.Value select new PropertyAttributeForm
             {
-                CountryId = context.Country.Single(c => c.IsoCode == country.Key).Id,
+                CountryId = context.Countries.Single(c => c.IsoCode == country.Key).Id,
                 PropertyTypeId = propertyTypes.Single(p => p.Code == data.Key).Id,
                 PropertyAttributeFormDefinitions = CreatePropertyAttributeFormDefinitions(attributes, data.Value).ToList()
             };
@@ -52,10 +52,10 @@
         {
             ["GB"] = new Dictionary<string, List<string>>
             {
-                ["House"] = new List<string> { "Bedrooms", "Receptions", "Bathrooms", "Area", "LandArea", "CarParkingSpaces" },
-                ["Flat"] = new List<string> { "Bedrooms", "Receptions", "Bathrooms", "Area", "LandArea", "CarParkingSpaces" },
-                ["Bungalow"] = new List<string> { "Bedrooms", "Receptions", "Bathrooms", "Area", "LandArea", "CarParkingSpaces" },
-                ["Houseboat"] = new List<string> { "Bedrooms", "Receptions", "Bathrooms", "Area", "CarParkingSpaces" },
+                ["House"] = new List<string>      { "Bedrooms", "Receptions", "Bathrooms", "Area", "LandArea", "CarParkingSpaces" },
+                ["Flat"] = new List<string>       { "Bedrooms", "Receptions", "Bathrooms", "Area", "LandArea", "CarParkingSpaces" },
+                ["Bungalow"] = new List<string>   { "Bedrooms", "Receptions", "Bathrooms", "Area", "LandArea", "CarParkingSpaces" },
+                ["Houseboat"] = new List<string>  { "Bedrooms", "Receptions", "Bathrooms", "Area" },
                 ["Maisonette"] = new List<string> { "Bedrooms", "Receptions", "Bathrooms", "Area", "CarParkingSpaces" },
                 ["Development Plot"] = new List<string> { "LandArea" },
                 ["Hotel"] = new List<string> { "Area", "LandArea", "GuestRooms", "FunctionRooms", "CarParkingSpaces" }

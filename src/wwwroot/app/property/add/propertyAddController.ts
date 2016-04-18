@@ -1,8 +1,9 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Property {
-    import Dto = Antares.Common.Models.Dto;
-    import Business = Antares.Common.Models.Business;
+    import Dto = Common.Models.Dto;
+    import Business = Common.Models.Business;
+    import EnumTypeItem = Common.Models.Business.EnumTypeItem;    
 
     export class PropertyAddController {
         public entityTypeCode: string = 'Property';
@@ -10,22 +11,31 @@ module Antares.Property {
 
         private propertyResource: Common.Models.Resources.IPropertyResourceClass;
         private propertyTypes: any[];
-        private userData: Antares.Common.Models.Dto.IUserData;
+        private divisions: EnumTypeItem[];
+        private attributes: Dto.IAttribute[];
+        private userData: Dto.IUserData;
 
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService) {
 
-            this.property.division.code = this.userData.division.code;
+            this.property.divisionId = this.userData.division.id;
             this.propertyResource = dataAccessService.getPropertyResource();
+            this.loadDivisions();
             this.loadPropertyTypes();
         }
 
-        changeDivision = (divisionCode: string) => {
-            this.property.division.code = divisionCode;
+        changeDivision = (division: EnumTypeItem) => {
+            this.property.divisionId = division.id;
             this.property.propertyTypeId = null;
             this.loadPropertyTypes();
         }
+
+        loadDivisions = () => {
+            this.dataAccessService.getEnumResource().get({ code: 'Division' }).$promise.then((divisions: any) => {
+                this.divisions = divisions.items;
+            });
+        };
 
         loadPropertyTypes = () => {
             this.propertyResource
@@ -35,6 +45,17 @@ module Antares.Property {
                 .$promise
                 .then((propertyTypes: any) => {
                     this.propertyTypes = propertyTypes.propertyTypes;
+                });
+        }
+
+        loadAttributes = () => {
+            this.propertyResource
+                .getAttributes({
+                    countryCode: this.userData.country, propertyTypeId: this.property.propertyTypeId
+                }, null)
+                .$promise
+                .then((attributes: any) => {
+                    this.attributes = attributes.attributes;
                 });
         }
 

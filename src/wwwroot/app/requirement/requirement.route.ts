@@ -1,8 +1,10 @@
 ﻿/// <reference path="../typings/_all.d.ts" />
 
 module Antares.Requirement {
-    var app: ng.IModule = angular.module('app.requirement');
+    import Dto = Antares.Common.Models.Dto;
+    import Business = Antares.Common.Models.Business;
 
+    var app: ng.IModule = angular.module('app.requirement');
     app.config(initRoute);
 
     function initRoute($stateProvider: ng.ui.IStateProvider) {
@@ -14,8 +16,10 @@ module Antares.Requirement {
             .state('app.requirement-view', {
                 url: '/requirement/:id',
                 template: "<requirement-view requirement='requirement'></requirement-view>",
-                controller: ($scope: ng.IScope, requirement: any) => {
-                    $scope['requirement'] = requirement;
+                controller: ($scope: ng.IScope, requirement: Dto.IRequirement) => {
+                    var requirementViewModel = new Business.Requirement(<Dto.IRequirement>requirement);
+
+                    $scope['requirement'] = requirementViewModel;
                 },
                 resolve: {
                     requirement: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Antares.Services.DataAccessService) => {

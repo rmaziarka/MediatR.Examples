@@ -22,6 +22,7 @@
         {
             bool propertyTypeDefinitionExist =
                 this.propertyTypeDefinitionRepository.Any(p => p.PropertyTypeId.Equals(property.PropertyTypeId)
+                                                                  && p.DivisionId.Equals(property.DivisionId)
                                                                   && p.CountryId.Equals(property.Address.CountryId));
             if(!propertyTypeDefinitionExist)
             {

@@ -16,7 +16,7 @@
 
         public DateTime? SellDate { get; set; }
 
-        public ICollection<Guid> ContactIds { get; set; }
+        public IList<Guid> ContactIds { get; set; }
 
         public Guid PropertyId { get; set; }
 

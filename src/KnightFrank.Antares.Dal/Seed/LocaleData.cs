@@ -19,7 +19,7 @@ namespace KnightFrank.Antares.Dal.Seed
 
         private static void SeedData(List<Locale> locales, KnightFrankContext context)
         {
-            locales.ForEach(locale => context.Locale.AddOrUpdate(x => x.IsoCode, locale));
+            locales.ForEach(locale => context.Locales.AddOrUpdate(x => x.IsoCode, locale));
             context.SaveChanges();
         }
     }

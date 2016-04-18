@@ -3,15 +3,18 @@
     using System;
     using System.Collections.Generic;
 
-    using Contact;
-    
     using MediatR;
 
     public class CreateRequirementCommand : IRequest<Guid>
     {
+        public CreateRequirementCommand()
+        {
+            this.ContactIds = new List<Guid>();
+        }
+
         public DateTime CreateDate { get; set; }
 
-        public ICollection<ContactDto> Contacts { get; set; }
+        public IList<Guid> ContactIds { get; set; } 
 
         public CreateOrUpdateRequirementAddress Address { get; set; }
 

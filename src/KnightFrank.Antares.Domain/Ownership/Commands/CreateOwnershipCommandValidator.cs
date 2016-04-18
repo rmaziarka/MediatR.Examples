@@ -32,8 +32,8 @@
                 .When(v => v.SellDate.HasValue)
                 .OverridePropertyName("SellDate");
 
-            this.RuleFor(v => v.BuyPrice).GreaterThan(0);
-            this.RuleFor(v => v.SellPrice).GreaterThan(0);
+            this.RuleFor(v => v.BuyPrice).GreaterThanOrEqualTo(0);
+            this.RuleFor(v => v.SellPrice).GreaterThanOrEqualTo(0);
 
             this.RuleFor(v => v.ContactIds).NotEmpty();
 

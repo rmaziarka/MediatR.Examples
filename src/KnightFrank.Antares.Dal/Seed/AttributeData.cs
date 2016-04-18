@@ -20,7 +20,7 @@
                 new Attribute { LabelKey = "Property.CarParkingSpaces", NameKey = "CarParkingSpaces" }
             };
 
-            context.Attribute.AddOrUpdate(a => a.NameKey, attributes);
+            context.Attributes.AddOrUpdate(a => a.NameKey, attributes);
             context.SaveChanges();
         }
     }

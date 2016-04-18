@@ -2,7 +2,6 @@
 
 module Antares {
     import ActivityViewController = Activity.View.ActivityViewController;
-    import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
 
     describe('Given view activity page is loaded', () => {
@@ -57,7 +56,7 @@ module Antares {
                 $http = $httpBackend;
                 filter = $filter;
 
-                Antares.Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Antares.Mock.AddressForm.AddressFormWithOneLine]);
+                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
                 $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
                     return [];
                 });
@@ -77,7 +76,6 @@ module Antares {
                 var cardElement = element.find(pageObjectSelectors.property.card);
 
                 expect(cardElement.length).toBe(1);
-                expect(cardElement[0].getAttribute('card-template-url')).toBe("'app/property/templates/propertyCard.html'");
                 expect(cardElement[0].getAttribute('item')).toBe("avvm.activity.property");
                 expect(cardElement[0].getAttribute('show-item-details')).toBe("avvm.showPropertyPreview");
             });
@@ -160,7 +158,7 @@ module Antares {
 
                 $http = $httpBackend;
 
-                Antares.Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Antares.Mock.AddressForm.AddressFormWithOneLine]);
+                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
                 $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
                     return [];
                 });
@@ -236,7 +234,7 @@ module Antares {
 
                 $http = $httpBackend;
 
-                Antares.Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Antares.Mock.AddressForm.AddressFormWithOneLine]);
+                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
                 $http.whenGET(/\/api\/enums\/.*\/items/).respond(() =>{
                     return [];
                 });
@@ -269,7 +267,7 @@ module Antares {
 
                 $http = $httpBackend;
 
-                Antares.Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Antares.Mock.AddressForm.AddressFormWithOneLine]);
+                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
                 $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
                     return [];
                 });

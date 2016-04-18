@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6904112B-8FF0-4934-AA02-8C46037356A3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KnightFrank.Antares.Domain.UnitTests</RootNamespace>
+    <AssemblyName>KnightFrank.Antares.Domain.UnitTests</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentAssertions, Version=4.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentAssertions.4.2.2\lib\net45\FluentAssertions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentAssertions.Core, Version=4.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentAssertions.4.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentValidation, Version=6.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentValidation.6.2.1.0\lib\Net45\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MediatR, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MediatR.2.0.2\lib\net45\MediatR.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ploeh.AutoFixture, Version=3.41.1.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoFixture.3.41.1\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ploeh.AutoFixture.AutoMoq, Version=3.41.1.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoFixture.AutoMoq.3.41.1\lib\net40\Ploeh.AutoFixture.AutoMoq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ploeh.AutoFixture.Xunit2, Version=3.41.1.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoFixture.Xunit2.3.41.1\lib\net45\Ploeh.AutoFixture.Xunit2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.assert, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\xunit.assert.2.1.0\lib\dotnet\xunit.assert.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.core, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\xunit.extensibility.core.2.1.0\lib\dotnet\xunit.core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.execution.desktop, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\xunit.extensibility.execution.2.1.0\lib\net45\xunit.execution.desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise />
+  </Choose>
+  <ItemGroup>
+    <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandlerTests.cs" />
+    <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandlerTests.cs" />
+    <Compile Include="Activity\Commands\CreateActivityCommandDomainValidatorTests.cs" />
+    <Compile Include="Activity\Commands\CreateActivityCommandValidatorTests.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityCommandValidatorTests.cs" />
+    <Compile Include="Activity\Queries\ActivityQueryValidatorTests.cs" />
+    <Compile Include="Activity\QueryHandlers\ActivityQueryHandlerTests.cs" />
+    <Compile Include="AddressForm\Queries\AddressFormQueryValidatorTests.cs" />
+    <Compile Include="AddressForm\Queries\GetCountriesForAddressFormQueryValidatorTests.cs" />
+    <Compile Include="Common\Validator\ActivityStatusValidatorTests.cs" />
+    <Compile Include="Common\Validator\LocaleValidatorTests.cs" />
+    <Compile Include="Company\CommandHandlers\CreateCompanyComandHandlerTests.cs" />
+    <Compile Include="Company\Commands\CreateCompanyCommandDomainValidatorTests.cs" />
+    <Compile Include="Common\Validator\ContactValidatorTests.cs" />
+    <Compile Include="Company\Commands\CreateCompanyValidatorTests.cs" />
+    <Compile Include="Contact\Queries\ContactQueryValidatorTests.cs" />
+    <Compile Include="Contact\QueryHandlers\ContactQueryHandlerTests.cs" />
+    <Compile Include="Enum\Queries\EnumLocalisedQueryDomainValidatorTests.cs" />
+    <Compile Include="Enum\Queries\EnumLocalisedQueryValidatorTests.cs" />
+    <Compile Include="Enum\QueryHandlers\EnumLocalisedQueryHandlerTests.cs" />
+    <Compile Include="FixtureExtension\AddressFormFixtureExtensions.cs" />
+    <Compile Include="AddressForm\QueryHandlers\AddressFormQueryHandlerTests.cs" />
+    <Compile Include="FixtureExtension\CountryFixtureExtensions.cs" />
+    <Compile Include="AddressForm\QueryResults\AddressFormProfileTests.cs" />
+    <Compile Include="AddressForm\QueryResults\AddressFormQueryResultTests.cs" />
+    <Compile Include="AddressForm\QueryHandlers\GetCountriesForAddressFormQueryHandlerTests.cs" />
+    <Compile Include="AutoMoqDataAttribute.cs" />
+    <Compile Include="BaseTestClassFixture.cs" />
+    <Compile Include="Contact\CommandHandlers\CreateContactCommandHandlerTests.cs" />
+    <Compile Include="Enum\Queries\EnumQueryValidatorTests.cs" />
+    <Compile Include="Enum\QueryHandlers\EnumQueryHandlerTests.cs" />
+    <Compile Include="FixtureExtension\OwnershipExtensions.cs" />
+    <Compile Include="Ownership\Commands\CreateOwnershipCommandHandlerTests.cs" />
+    <Compile Include="Ownership\Commands\CreateOwnershipCommandDomainValidatorTests.cs" />
+    <Compile Include="Ownership\Commands\CreateOwnershipCommandValidatorTests.cs" />
+    <Compile Include="Property\CommandHandlers\CreatePropertyCommandHandlerTests.cs" />
+    <Compile Include="Property\CommandHandlers\UpdatePropertyCommandHandlerTests.cs" />
+    <Compile Include="Property\Commands\CreateOrUpdatePropertyAddressValidatorTests.cs" />
+    <Compile Include="Property\Commands\PropertyDomainValidatorTests.cs" />
+    <Compile Include="Property\Commands\PropertyTypeValidatorTests.cs" />
+    <Compile Include="Property\Commands\UpdatePropertyCommandValidatorTests.cs" />
+    <Compile Include="Property\Queries\PropertyAttributesQueryValidatorTests.cs" />
+    <Compile Include="Property\QueryHandlers\PropertyTypesQueryHandlerTests.cs" />
+    <Compile Include="Property\QueryHandlers\PropertyAttributesQueryHandlerTests.cs" />
+    <Compile Include="RequirementNote\CommandHandlers\CreateRequirementNoteCommandHandlerTests.cs" />
+    <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandDomainValidatorTests.cs" />
+    <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandValidatorTests.cs" />
+    <Compile Include="RequirementNote\Queries\RequirementNoteQueryValidatorTests.cs" />
+    <Compile Include="RequirementNote\QueryHandlers\RequirementNoteQueryHandlerTests.cs" />
+    <Compile Include="Requirement\Commands\CreateRequirementCommandDomainValidatorTests.cs" />
+    <Compile Include="Property\Commands\CreatePropertyCommandValidatorTests.cs" />
+    <Compile Include="Requirement\Commands\CreateRequirementCommandHandlerTests.cs" />
+    <Compile Include="Contact\Commands\CreateContactCommandValidatorTests.cs" />
+    <Compile Include="InlineAutoMoqDataAttribute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requirement\Commands\CreateRequirementCommandValidatorTests.cs" />
+    <Compile Include="Resource\Dictionaries\CountryLocalisedDictionaryTests.cs" />
+    <Compile Include="Resource\Dictionaries\PropertyTypeLocalisedDictionaryTests.cs" />
+    <Compile Include="Resource\Queries\ResourceLocalisedQueryDomainValidatorTests.cs" />
+    <Compile Include="Resource\Queries\ResourceLocalisedQueryValidatorTests.cs" />
+    <Compile Include="Resource\QueryHandlers\ResourceLocalisedQueryHandlerTests.cs" />
+    <Compile Include="ValidationResultBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj">
+      <Project>{2525AF42-F89C-48D8-89A7-74449702C627}</Project>
+      <Name>KnightFrank.Antares.Dal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\KnightFrank.Antares.Domain\KnightFrank.Antares.Domain.csproj">
+      <Project>{5987d78c-856d-4315-8b8b-baf00c286aff}</Project>
+      <Name>KnightFrank.Antares.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

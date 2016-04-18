@@ -83,8 +83,6 @@
     "DATE_CAN_NOT_BE_LOWER_THEN":"Given date can not be earlier then purchasing date"
   },
   "PROPERTY": {
-    "COMMERCIAL_PROPERTY": "Commercial property",
-    "RESIDENTIAL_PROPERTY": "Residential property",
     "ADD": {
       "ADD_PROPERTY": "Create property",
       "BASIC_INFORMATION": "Basic information",
@@ -188,5 +186,10 @@
       "APPLICANT": "Applicant",
       "CREATEDDATE": "Created"
     }
+  },
+  "NOTES": {
+    "NOTES": "Notes",
+    "ADDNOTE": "Add note",
+    "RECENTNOTES": "Recent notes"
   }
 }

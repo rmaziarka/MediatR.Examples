@@ -5,7 +5,7 @@ namespace KnightFrank.Antares.Api.Controllers
     using System;
 
     using KnightFrank.Antares.Dal.Model.Company;
-    using KnightFrank.Antares.Domain.Company.Command;
+    using KnightFrank.Antares.Domain.Company.Commands;
 
     using MediatR;
 
@@ -31,7 +31,6 @@ namespace KnightFrank.Antares.Api.Controllers
         /// </summary>
         /// <param name="command">The command.</param>
         [HttpPost]
-        [Route("")]
         public Company CreateCompany([FromBody] CreateCompanyCommand command)
         {
             Guid companyId = this.mediator.Send(command);
