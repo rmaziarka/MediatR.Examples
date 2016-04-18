@@ -68,8 +68,8 @@ namespace Antares {
             sellDateAdapter.writeValue('12-12-2001');
             purchaseDateAdapter.writeValue('12-12-2001');
             purchaseDateAdapter.writeValue('20-12-2001');
-            
-            expect(purchaseDateAdapter.isInputValid()).toBeFalsy()
+
+            expect(purchaseDateAdapter.isInputValid()).toBeFalsy();
         });
     });
 }

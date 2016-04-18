@@ -95,7 +95,7 @@ module Antares.TestHelpers {
             return this.input.hasClass(this.pageObject.inputValidCss);
         }
 
-        private isValidationShown(): boolean{
+        public isValidationShown(): boolean{
             return this.input.parent().find(this.validatorSelector).length > 0;
         }
 

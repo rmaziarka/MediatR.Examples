@@ -5,6 +5,7 @@ module Antares {
 
     app.config(['$translateProvider', initTranslations]);
     app.config(['$provide', extendOrderByWithEmptyFields]);
+    app.config(['$provide', decorateInputNumber]);
 
     function initTranslations($translateProvider: any) {
         $translateProvider.useLoader('LocalizationLoaderFactory')
@@ -16,6 +17,10 @@ module Antares {
     }
 
     function extendOrderByWithEmptyFields($provider: angular.auto.IProvideService){
-        $provider.decorator('orderByFilter', Antares.Common.Decorators.OrderByFilterDecorator.decoratorFunction);
+        $provider.decorator('orderByFilter', Common.Decorators.OrderByFilterDecorator.decoratorFunction);
+    }
+
+    function decorateInputNumber($provider: angular.auto.IProvideService){
+        $provider.decorator('inputDirective', Common.Decorators.InputNumberDirectiveDecorator.decoratorFunction);
     }
 }
