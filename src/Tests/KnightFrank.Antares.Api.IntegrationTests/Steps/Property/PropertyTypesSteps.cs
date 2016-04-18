@@ -9,14 +9,14 @@
     using TechTalk.SpecFlow;
 
     [Binding]
-    public class ConfigurePropertyTypesForADivisionAndACountrySteps
+    public class PropertyTypesSteps
     {
         private const string ApiUrl = "/api/properties/types";
         private readonly BaseTestClassFixture fixture;
 
         private readonly ScenarioContext scenarioContext;
 
-        public ConfigurePropertyTypesForADivisionAndACountrySteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
+        public PropertyTypesSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {
             this.fixture = fixture;
             if (scenarioContext == null)

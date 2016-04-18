@@ -3,8 +3,7 @@
 
 module Antares.Property.View {
     import Business = Common.Models.Business;
-    import CartListOrder = Common.Component.CartListOrder;
-
+    import CartListOrder = Common.Component.ListOrder;
 
     export class PropertyViewController extends Core.WithPanelsBaseController {
         ownershipAddPanelVisible: boolean = false;

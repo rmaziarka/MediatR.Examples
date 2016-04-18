@@ -1,4 +1,4 @@
-﻿Feature: Activity Controller
+﻿Feature: Activity
 
 @Activity
 Scenario Outline: Retrieve error messages for improper data

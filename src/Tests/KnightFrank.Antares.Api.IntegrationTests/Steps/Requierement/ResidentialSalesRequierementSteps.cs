@@ -39,6 +39,7 @@
             this.scenarioContext = scenarioContext;
         }
 
+        [Given(@"User sets locations details for the requirement")]
         [When(@"User sets locations details for the requirement")]
         public void SetRequirementLocationDetails(Table table)
         {
@@ -65,6 +66,7 @@
         }
 
         [When(@"User creates following requirement in database")]
+        [Given(@"User creates following requirement in database")]
         public void CreateRequirementWithInDb(Table table)
         {
             var requirement = table.CreateInstance<Requirement>();
@@ -130,7 +132,7 @@
                 requirement.Address = new CreateOrUpdateRequirementAddress
                 {
                     AddressFormId = location.AddressFormId,
-                    CountryId = Guid.Empty,
+                    CountryId = Guid.NewGuid(),
                     Line2 = location.Line2,
                     Postcode = location.Postcode,
                     City = location.City
@@ -140,7 +142,7 @@
             {
                 requirement.Address = new CreateOrUpdateRequirementAddress
                 {
-                    AddressFormId = Guid.Empty,
+                    AddressFormId = Guid.NewGuid(),
                     CountryId = location.CountryId,
                     Line2 = location.Line2,
                     Postcode = location.Postcode,
@@ -165,7 +167,7 @@
             var requirement = table.CreateInstance<CreateRequirementCommand>();
 
             requirement.CreateDate = DateTime.Now;
-            requirement.ContactIds = new List<Guid> { Guid.Empty };
+            requirement.ContactIds = new List<Guid> { Guid.NewGuid() };
 
             requirement.Address = this.scenarioContext.Get<CreateOrUpdateRequirementAddress>("Location");
 
@@ -197,7 +199,7 @@
                 options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>());
 
             requirement.ShouldBeEquivalentTo(expectedRequirement,
-                opt => opt.Excluding(req => req.Address.Country).Excluding(req => req.Address.AddressForm));
+                opt => opt.Excluding(req => req.Address.Country).Excluding(req => req.Address.AddressForm).Excluding(req => req.RequirementNotes));
         }
     }
 }

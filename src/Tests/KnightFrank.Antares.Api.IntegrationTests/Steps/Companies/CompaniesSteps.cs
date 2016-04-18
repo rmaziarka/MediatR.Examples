@@ -1,5 +1,4 @@
-﻿
-namespace KnightFrank.Antares.Api.IntegrationTests.Steps.Companies
+﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.Companies
 {
     using System;
     using System.Collections.Generic;

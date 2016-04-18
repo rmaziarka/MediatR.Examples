@@ -11,5 +11,9 @@ module Antares.Common.Models.Business {
                 angular.extend(this, user);
             }
         }
+
+        public getName() {
+            return this.firstName + ' ' + this.lastName;
+        }
     }
 }

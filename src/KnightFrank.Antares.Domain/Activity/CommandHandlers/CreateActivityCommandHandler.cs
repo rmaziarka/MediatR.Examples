@@ -37,7 +37,7 @@
             }
 
             var activity = AutoMapper.Mapper.Map<Activity>(message);
-            
+
             List<Contact> vendors = this.contactRepository.FindBy(x => message.ContactIds.Contains(x.Id)).ToList();
             activity.Contacts = vendors;
 

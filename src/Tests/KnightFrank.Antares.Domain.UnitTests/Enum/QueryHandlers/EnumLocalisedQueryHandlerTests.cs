@@ -76,11 +76,11 @@
                 [Frozen] Mock<IReadGenericRepository<EnumLocalised>> enumLocalisedRepository,
                 EnumLocalisedQuery query,
                 EnumLocalisedQueryHandler handler,
-                IFixture fixure)
+                IFixture fixture)
             {
                 // Arrange
-                EnumLocalised enumLocalised = this.CreateEnumLocalised(fixure, query.IsoCode);
-                EnumLocalised enumLocalisedWithOtherLocale = this.CreateEnumLocalised(fixure, query.IsoCode + "Other");
+                EnumLocalised enumLocalised = this.CreateEnumLocalised(fixture, query.IsoCode);
+                EnumLocalised enumLocalisedWithOtherLocale = this.CreateEnumLocalised(fixture, query.IsoCode + "Other");
                 domainValidator.Setup(v => v.Validate(query)).Returns(new ValidationResult());
                 enumLocalisedRepository.Setup(r => r.Get()).Returns(new[] { enumLocalised, enumLocalisedWithOtherLocale }.AsQueryable());
 
@@ -96,10 +96,10 @@
                 enumLocalisedRepository.Verify(r => r.Get(), Times.Once());
             }
 
-            private EnumLocalised CreateEnumLocalised(IFixture fixure, string isoCode)
+            private EnumLocalised CreateEnumLocalised(IFixture fixture, string isoCode)
             {
-                Locale lcoale = fixure.Build<Locale>().With(l => l.IsoCode, isoCode).Create();
-                return fixure.Build<EnumLocalised>().With(el => el.Locale, lcoale).Create();
+                Locale lcoale = fixture.Build<Locale>().With(l => l.IsoCode, isoCode).Create();
+                return fixture.Build<EnumLocalised>().With(el => el.Locale, lcoale).Create();
             }
         }
     }

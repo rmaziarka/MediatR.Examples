@@ -7,6 +7,7 @@
         contacts: IContact[];
         address: IAddress;
         createDate: Date;
+        requirementNotes: IRequirementNote[];
 
         minPrice?: number;
         maxPrice?: number;
