@@ -58,20 +58,7 @@
         <h3 translate="NOTES.NOTES"></h3>
     </side-panel-header>
     <side-panel-content>
-        <section>
-            <h4 translate="NOTES.ADDNOTE"></h4>
-            <form>
-                <div class="form-group has-error">
-                    <textarea class="form-control" rows="9"></textarea>
-                    <p class="help-block">Field is required</p>
-                </div>
-                <div class="form-group text-right">
-                    <button class="btn btn-primary" type="button"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
-                </div>
-            </form>
-        </section>
-
+        <requirement-note-add component-id="vm.componentIds.noteAddId" requirement="vm.requirement"></requirement-note-add>
         <requirement-note-list component-id="vm.componentIds.noteListId" requirement="vm.requirement"></requirement-note-list>
-
     </side-panel-content>
 </side-panel>

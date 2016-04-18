@@ -14,18 +14,21 @@ module Antares.Requirement.View {
         }
 
         showNotesPanel = () => {
+            this.components.noteAdd().clearNote();
             this.showPanel(this.components.panels.notes);
         }
 
         defineComponentIds(): void {
             this.componentIds = {
-                notesSidePanelId: 'requirementView:notesSidePanelComponent',
-                noteListId: 'requirementView:requirementNoteListComponent'
+                noteAddId: 'requirementView:requirementNoteAddComponent',
+                noteListId: 'requirementView:requirementNoteListComponent',
+                notesSidePanelId: 'requirementView:notesSidePanelComponent'
             }
         }
 
         defineComponents(): void {
             this.components = {
+                noteAdd: () => { return this.componentRegistry.get(this.componentIds.noteAddId); },
                 noteList: () => { return this.componentRegistry.get(this.componentIds.noteListId); },
                 panels: {
                     notes: () => { return this.componentRegistry.get(this.componentIds.notesSidePanelId); }
