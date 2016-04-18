@@ -8,6 +8,7 @@
 
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
+    using KnightFrank.Antares.Domain.Resource.Dictionaries;
 
     using MediatR;
 
@@ -25,6 +26,13 @@
                  .InheritedFrom(typeof(IRequestHandler<,>))
                  .BindAllInterfaces()
                  .Configure(y => y.WhenInjectedInto(typeof(ValidatorCommandHandler<,>))));
+
+            this.Bind(
+                x =>
+                x.FromThisAssembly()
+                 .SelectAllClasses()
+                 .InheritedFrom(typeof(IResourceLocalisedDictionary))
+                 .BindAllInterfaces());
 
             this.Bind(typeof(IRequestHandler<,>)).To(typeof(ValidatorCommandHandler<,>));
 

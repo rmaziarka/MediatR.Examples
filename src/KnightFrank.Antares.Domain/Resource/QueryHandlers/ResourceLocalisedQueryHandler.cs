@@ -2,22 +2,29 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.Exceptions;
+    using KnightFrank.Antares.Domain.Resource.Dictionaries;
     using KnightFrank.Antares.Domain.Resource.Queries;
 
     using MediatR;
 
     public class ResourceLocalisedQueryHandler : IRequestHandler<ResourceLocalisedQuery, Dictionary<Guid, string>>
     {
+        private readonly IResourceLocalisedDictionary[] dictionaries;
+
         private readonly IDomainValidator<ResourceLocalisedQuery> domainValidator;
 
-        public ResourceLocalisedQueryHandler(IDomainValidator<ResourceLocalisedQuery> domainValidator)
+        public ResourceLocalisedQueryHandler(
+            IDomainValidator<ResourceLocalisedQuery> domainValidator,
+            IResourceLocalisedDictionary[] dictionaries)
         {
             this.domainValidator = domainValidator;
+            this.dictionaries = dictionaries;
         }
 
         public Dictionary<Guid, string> Handle(ResourceLocalisedQuery query)
@@ -28,11 +35,15 @@
                 throw new DomainValidationException(validationResult.Errors);
             }
 
-            var dictionary = new Dictionary<Guid, string>();
+            var result = new Dictionary<Guid, string>();
 
-            dictionary.Add(Guid.Empty, "test");
+            foreach (IResourceLocalisedDictionary resourceLocalisedDictionary in this.dictionaries)
+            {
+                Dictionary<Guid, string> dictionary = resourceLocalisedDictionary.GetDictionary(query.IsoCode);
+                result = result.Concat(dictionary).ToDictionary(x => x.Key, x => x.Value);
+            }
 
-            return dictionary;
+            return result;
         }
     }
 }
