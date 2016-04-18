@@ -13,6 +13,7 @@ module Antares {
 
         var countriesMock = [{ country: { id: "1111", isoCode: "GB" }, locale: {}, value: "United Kingdom" }];
         var propertyTypesMock = { propertyTypes: [{ "id": "45cc9d28-51fa-e511-828b-8cdcd42baca7", "parentId": '45cc9d28-51fa-e511-828b-8cdcd42baca7', "name": "Office" }] };
+        var propertyAttributesMock = {"attributes": [{ "order": 0, "nameKey": "Area", "labelKey": "PROPERTY.AREA" }, { "order": 1, "nameKey": "LandArea", "labelKey": "PROPERTY.LANDAREA" }, { "order": 2, "nameKey": "GuestRooms", "labelKey": "PROPERTY.GUESTROOMS" }]}
 
         describe('when proper property is loaded', () => {
             var countryMockId = countriesMock[0].country.id,
@@ -53,6 +54,10 @@ module Antares {
 
                 $http.whenGET(/\/api\/addressForms\/\?entityType=Property&countryCode=GB/).respond(() => {
                     return [200, addressFormMock];
+                });
+
+                $http.whenGET(/\/api\/properties\/attributes/).respond(() => {
+                    return [200, propertyAttributesMock];
                 });
 
                 // compile

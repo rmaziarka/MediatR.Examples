@@ -32,6 +32,15 @@
                 <address-form-edit entity-type-code="vm.entityTypeCode" address="vm.property.address" user-country-code="vm.userData.country"></address-form-edit>
             </fieldset>
         </div>
+        <div class="col-md-4">
+            <fieldset>
+                <h3 class="page-header" translate="PROPERTY.DETAILS"></h3>
+                <div class="form-group has-error" ng-show="!vm.property.propertyTypeId">
+                    <p class="help-block">Select property type to enter property details</p>
+                </div>
+                <attribute-list component-id="vm.componentIds.attributeListId" user-data="vm.userData" property="vm.property"></attribute-list>
+            </fieldset>
+        </div>
         <div class="col-md-12">
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" id="saveBtn"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
