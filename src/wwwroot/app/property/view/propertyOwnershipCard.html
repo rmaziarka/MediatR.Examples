@@ -5,6 +5,6 @@
     </span>
 </div>
 <small>
-    <span class="text-uppercase">{{cvm.item.ownershipType.id | enumTranslate}}</span>
+    <span class="text-uppercase">{{cvm.item.ownershipType.id | dynamicTranslate}}</span>
     {{cvm.item.purchaseDate | date : 'dd-MM-yyyy'}} - {{cvm.item.sellDate | date : 'dd-MM-yyyy'}}
 </small>

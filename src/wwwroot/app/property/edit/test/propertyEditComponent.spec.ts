@@ -56,6 +56,9 @@ module Antares {
                     return [200, addressFormMock];
                 });
 
+                $http.whenGET(/\/api\/enums\/Division\/items/).respond(() => {
+                    return [200, {}];
+                });
                 $http.whenGET(/\/api\/properties\/attributes/).respond(() => {
                     return [200, propertyAttributesMock];
                 });

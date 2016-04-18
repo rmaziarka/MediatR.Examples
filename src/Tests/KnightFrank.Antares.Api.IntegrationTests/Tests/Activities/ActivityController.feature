@@ -1,6 +1,6 @@
-﻿Feature: ActivitiesController
+﻿Feature: Activity
 
-@Activities
+@Activity
 Scenario Outline: Retrieve error messages for improper data
 	Given User gets GB address form for Property and country details
 		And User gets House for PropertyType
@@ -20,7 +20,7 @@ Scenario Outline: Retrieve error messages for improper data
 	| 00000000-0000-0000-0000-000000000002 | ActivityStatus                       | BadRequest |
 	| latest                               | 00000000-0000-0000-0000-000000000001 | BadRequest |
 
-@Activities
+@Activity
 Scenario: Create Activity for an existing property
 	Given User gets GB address form for Property and country details
 		And User gets House for PropertyType
@@ -44,7 +44,7 @@ Scenario: Create Activity for an existing property
 	Then User should get OK http status code
 		And The created Activity is saved in data base
 		
-@Activities
+@Activity
 Scenario Outline: Get Activity by incorrect activity id
 	When User retrieves activity details for given <activityId>
 	Then User should get <expectedStatusCode> http status code
@@ -55,8 +55,7 @@ Scenario Outline: Get Activity by incorrect activity id
 	| a                                    | BadRequest         |
 	| 00000000-0000-0000-0000-000000000001 | NotFound           |
 
-
-@Activities
+@Activity
 Scenario: Get Activity by correct activity id
 	Given User gets GB address form for Property and country details
 		And User gets House for PropertyType
@@ -72,8 +71,7 @@ Scenario: Get Activity by correct activity id
 	Then User should get OK http status code
 		And The received Activities should be the same as in DB
 
-
-@Activities
+@Activity
 Scenario: record and update residential sale valuation
 	Given User gets GB address form for Property and country details
 		And User gets House for PropertyType
@@ -91,8 +89,7 @@ Scenario: record and update residential sale valuation
 	Then User should get OK http status code
 		And The received Activities should be the same as in DB
 
-
-@Activities
+@Activity
 Scenario Outline: try record and update residential sale valuation for improper data
 	Given User gets GB address form for Property and country details
 		And User gets House for PropertyType

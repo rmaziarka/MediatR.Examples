@@ -90,16 +90,26 @@ module Antares.Services {
                 this.$resource(this.appConfig.rootUrl + '/api/translations/enums/:isoCode');
         }
 
+        getResourceTranslationResource(): Resources.ITranslationResourceClass<any> {
+            return <Resources.ITranslationResourceClass<any>>
+                this.$resource(this.appConfig.rootUrl + '/api/translations/resources/:isoCode');
+        }
+
         getStaticTranslationResource(): Resources.ITranslationResourceClass<any> {
             return <Resources.ITranslationResourceClass<any>>
                 this.$resource('/translations/:isoCode.json');
         }
 
-        getActivityResource(): Resources.IBaseResourceClass<Resources.IActivityResource>{
+        getActivityResource(): Resources.IBaseResourceClass<Resources.IActivityResource> {
             return <Resources.IBaseResourceClass<Resources.IActivityResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/activities/:id', null, {
-                    update : this.updateAction
+                    update: this.updateAction
                 });
+        }
+
+        getRequirementNoteResource(): Resources.IBaseResourceClass<Resources.IRequirementNoteResource>{
+            return <Resources.IBaseResourceClass<Resources.IRequirementNoteResource>>
+                this.$resource(this.appConfig.rootUrl + '/api/requirements/:id/notes');
         }
     }
 

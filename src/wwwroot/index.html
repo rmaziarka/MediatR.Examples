@@ -52,9 +52,12 @@
     <script src="app/common/models/business/property/property.js"></script>
     <script src="app/common/models/business/requirement/createRequirementResource.js"></script>
     <script src="app/common/models/business/requirement/requirement.js"></script>
+    <script src="app/common/models/business/requirementNote/CreateRequirementNoteResource.js"></script>
+    <script src="app/common/models/business/requirementNote/requirementNote.js"></script>
     <script src="app/common/models/business/resources/country.js"></script>
     <script src="app/common/models/business/resources/countryLocalised.js"></script>
     <script src="app/common/models/business/resources/locale.js"></script>
+    <script src="app/common/models/business/user/user.js"></script>
     <script src="app/common/models/dto/enumTypeItem.js"></script>
     <script src="app/common/components/addressForm/addressFormEdit/addressFormEditComponent.js"></script>
     <script src="app/common/components/addressForm/addressFormEdit/addressFormEditController.js"></script>
@@ -68,22 +71,27 @@
     <script src="app/common/components/card/item/cardController.js"></script>
     <script src="app/common/components/card/list/cardListComponent.js"></script>
     <script src="app/common/components/card/list/cardListController.js"></script>
-    <script src="app/common/components/card/list/cardListOrder.js"></script>
     <script src="app/common/components/list/listComponent.js"></script>
     <script src="app/common/components/listItem/listItemComponent.js"></script>
     <script src="app/common/components/sidePanel/sidepanelComponent.js"></script>
     <script src="app/common/components/sidePanel/sidepanelController.js"></script>
     <script src="app/common/core/controllers/WithPanelsBaseController.js"></script>
     <script src="app/common/core/dateTimeUtils.js"></script>
+    <script src="app/common/core/listOrder.js"></script>
     <script src="app/common/core/lowerCaseFirstCharacter.js"></script>
+    <script src="app/common/core/services/dateTime/validDateRangeService.js"></script>
     <script src="app/common/core/services/registry/componentRegistryService.js"></script>
+    <script src="app/common/decorators/inputNumberDirectiveDecorator.js"></script>
     <script src="app/common/decorators/orderByFilterDecorator.js"></script>
+    <script src="app/common/directives/dateGreaterThan.js"></script>
+    <script src="app/common/directives/dateLowerThan.js"></script>
+    <script src="app/common/directives/ddpDecimal.js"></script>
     <script src="app/common/directives/dontOverlapController.js"></script>
     <script src="app/common/directives/dontOverlapDirective.js"></script>
     <script src="app/common/directives/listNotEmptyDirective.js"></script>
     <script src="app/common/directives/maxDateDirective.js"></script>
     <script src="app/common/factories/localizationLoaderFactory.js"></script>
-    <script src="app/common/filters/enumTranslateFilter.js"></script>
+    <script src="app/common/filters/dynamicTranslateFilter.js"></script>
     <script src="app/common/models/enums/ownershipTypeEnum.js"></script>
     <script src="app/common/services/dataAccessService.js"></script>
     <script src="app/common/services/userService.js"></script>
@@ -128,6 +136,10 @@
     <script src="app/requirement/view/rangeView/rangeViewController.js"></script>
     <script src="app/requirement/view/requirementViewComponent.js"></script>
     <script src="app/requirement/view/requirementViewController.js"></script>
+    <script src="app/requirementNote/add/requirementNoteAddComponent.js"></script>
+    <script src="app/requirementNote/add/requirementNoteAddController.js"></script>
+    <script src="app/requirementNote/list/requirementNoteListComponent.js"></script>
+    <script src="app/requirementNote/list/requirementNoteListController.js"></script>
     <!-- endinject -->
     <!-- inject:templates:js -->
     <!-- endinject -->

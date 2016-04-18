@@ -42,5 +42,11 @@
                 return 0;
             }
         }
+
+        public NotesPage CheckIfAddNoteIsCleared()
+        {
+            this.Driver.GetElement(this.noteTextArea).IsElementTextEqualsToExpected(string.Empty);
+            return this;
+        }
     }
 }

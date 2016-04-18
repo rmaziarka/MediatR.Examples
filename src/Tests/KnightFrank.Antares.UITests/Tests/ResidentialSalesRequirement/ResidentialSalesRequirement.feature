@@ -34,3 +34,14 @@ Scenario: Create new residential sales requirement
 			| FirstName | Surname |
 			| Alana     | Jones   |
 		And residential sales requirement create date is equal to today
+	#When User clicks notes button on residential sales requirement page
+	#	And User adds text to add note area on notes page
+	#		| Description                                                            |
+	#		| This is an example text of note. Text was created for testing purposes |
+	#	And User clicks save button on notes page
+	#Then Add note area is cleard on notes page
+	#	And Note is displayed in recent notes area on notes page
+	#		| Description                                                            |
+	#		| This is an example text of note. Text was created for testing purposes |
+	#	And Date of note creation is displayed on notes page
+	#	And Name of the user who specified the note is displayed on notes page

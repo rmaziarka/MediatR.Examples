@@ -1,0 +1,23 @@
+// Characteristics
+
+.characteristics-group {
+  margin-bottom: 30px;
+}
+
+.characteristics-button {
+  background: transparent;
+  border: 0;
+  font-size: 17px;
+  line-height: 17px;
+  padding: 0;
+
+
+  &:hover,
+  &-filled {
+    color: $brand-primary;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}

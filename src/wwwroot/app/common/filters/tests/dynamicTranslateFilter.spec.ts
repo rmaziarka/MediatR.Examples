@@ -1,13 +1,13 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 module Antares {
 
-    import EnumTranslateFilter = Antares.Common.Filters.EnumTranslateFilter;
+    import DynamicTranslateFilter = Antares.Common.Filters.DynamicTranslateFilter;
 
     describe('Given enum translation', () => {
 
         var
             translate: ng.translate.ITranslateService,
-            createFilter: (translate: ng.translate.ITranslateService) => EnumTranslateFilter;
+            createFilter: (translate: ng.translate.ITranslateService) => DynamicTranslateFilter;
 
         describe('when using', () => {
 
@@ -17,8 +17,8 @@ module Antares {
                 translate = $translate;
 
                 createFilter = (translate: ng.translate.ITranslateService) => {
-                    var enumTranslateFilter = new EnumTranslateFilter(translate);
-                    return enumTranslateFilter;
+                    var dynamicTranslateFilter = new DynamicTranslateFilter(translate);
+                    return dynamicTranslateFilter;
                 };
 
             }));
@@ -27,13 +27,13 @@ module Antares {
                 // arrange
                 var toTranslate = "toTranslate";
                 spyOn(translate, 'instant').and.callThrough();
-                var enumTranslateFilter = createFilter(translate);
+                var dynamicTranslateFilter = createFilter(translate);
                 
                 // act                
-                enumTranslateFilter.translate(toTranslate);
+                dynamicTranslateFilter.translate(toTranslate);
                                
                 // assert
-                expect(translate.instant).toHaveBeenCalledWith("ENUMS." + toTranslate);
+                expect(translate.instant).toHaveBeenCalledWith("DYNAMICTRANSLATIONS." + toTranslate);
             });
         });
 

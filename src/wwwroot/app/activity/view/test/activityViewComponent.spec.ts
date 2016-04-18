@@ -106,7 +106,7 @@ module Antares {
                 expect(createdDateElement.length).toBe(1);
                 expect(createdDateElement.text()).toBe(formattedDate);
                 expect(activityStatusElement.length).toBe(1);
-                expect(activityStatusElement.text()).toBe('ENUMS.' + activityMock.activityStatusId);
+                expect(activityStatusElement.text()).toBe('DYNAMICTRANSLATIONS.' + activityMock.activityStatusId);
             });
 
             it('and valuation prices are null then valuation prices for activity are not displayed', () => {
@@ -297,7 +297,7 @@ module Antares {
 
                 //TODO: test viewving property type when it is ready
                 //var typeElement = propertyPreviewPanel.find('pageObjectSelectors.propertyPreview.type');
-                //expect(typeElement.text()).toBe('ENUMS.456');
+                //expect(typeElement.text()).toBe('DYNAMICTRANSLATIONS.456');
             });
         });
     });

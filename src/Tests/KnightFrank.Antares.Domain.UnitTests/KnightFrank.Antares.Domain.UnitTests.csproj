@@ -111,12 +111,16 @@
     <Compile Include="AddressForm\Queries\AddressFormQueryValidatorTests.cs" />
     <Compile Include="AddressForm\Queries\GetCountriesForAddressFormQueryValidatorTests.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidatorTests.cs" />
+    <Compile Include="Common\Validator\LocaleValidatorTests.cs" />
     <Compile Include="Company\CommandHandlers\CreateCompanyComandHandlerTests.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommandDomainValidatorTests.cs" />
     <Compile Include="Common\Validator\ContactValidatorTests.cs" />
     <Compile Include="Company\Commands\CreateCompanyValidatorTests.cs" />
     <Compile Include="Contact\Queries\ContactQueryValidatorTests.cs" />
     <Compile Include="Contact\QueryHandlers\ContactQueryHandlerTests.cs" />
+    <Compile Include="Enum\Queries\EnumLocalisedQueryDomainValidatorTests.cs" />
+    <Compile Include="Enum\Queries\EnumLocalisedQueryValidatorTests.cs" />
+    <Compile Include="Enum\QueryHandlers\EnumLocalisedQueryHandlerTests.cs" />
     <Compile Include="FixtureExtension\AddressFormFixtureExtensions.cs" />
     <Compile Include="AddressForm\QueryHandlers\AddressFormQueryHandlerTests.cs" />
     <Compile Include="FixtureExtension\CountryFixtureExtensions.cs" />
@@ -135,12 +139,16 @@
     <Compile Include="Property\CommandHandlers\CreatePropertyCommandHandlerTests.cs" />
     <Compile Include="Property\CommandHandlers\UpdatePropertyCommandHandlerTests.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyAddressValidatorTests.cs" />
-    <Compile Include="Property\Commands\PropertyDomainValidatorTests.cs" />
     <Compile Include="Property\Commands\PropertyTypeValidatorTests.cs" />
     <Compile Include="Property\Commands\UpdatePropertyCommandValidatorTests.cs" />
     <Compile Include="Property\Queries\PropertyAttributesQueryValidatorTests.cs" />
     <Compile Include="Property\QueryHandlers\PropertyTypesQueryHandlerTests.cs" />
     <Compile Include="Property\QueryHandlers\PropertyAttributesQueryHandlerTests.cs" />
+    <Compile Include="RequirementNote\CommandHandlers\CreateRequirementNoteCommandHandlerTests.cs" />
+    <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandDomainValidatorTests.cs" />
+    <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandValidatorTests.cs" />
+    <Compile Include="RequirementNote\Queries\RequirementNoteQueryValidatorTests.cs" />
+    <Compile Include="RequirementNote\QueryHandlers\RequirementNoteQueryHandlerTests.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandDomainValidatorTests.cs" />
     <Compile Include="Property\Commands\CreatePropertyCommandValidatorTests.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandHandlerTests.cs" />
@@ -148,6 +156,11 @@
     <Compile Include="InlineAutoMoqDataAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandValidatorTests.cs" />
+    <Compile Include="Resource\Dictionaries\CountryLocalisedDictionaryTests.cs" />
+    <Compile Include="Resource\Dictionaries\PropertyTypeLocalisedDictionaryTests.cs" />
+    <Compile Include="Resource\Queries\ResourceLocalisedQueryDomainValidatorTests.cs" />
+    <Compile Include="Resource\Queries\ResourceLocalisedQueryValidatorTests.cs" />
+    <Compile Include="Resource\QueryHandlers\ResourceLocalisedQueryHandlerTests.cs" />
     <Compile Include="ValidationResultBuilder.cs" />
   </ItemGroup>
   <ItemGroup>

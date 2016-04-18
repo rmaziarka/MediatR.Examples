@@ -3,18 +3,20 @@
 module Antares.Property {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
+    import EnumTypeItem = Common.Models.Business.EnumTypeItem;
 
     export class PropertyEditController extends Core.WithPanelsBaseController {
         public entityTypeCode: string = 'Property';
         public property: Business.Property;
+        public userData: Dto.IUserData;
 
         components: any;
         componentIds: any;
 
         private propertyResource: Common.Models.Resources.IPropertyResourceClass;
         private propertyTypes: any[];
+        private divisions: EnumTypeItem[];
         private attributes: Dto.IAttribute[];
-        private userData: Dto.IUserData;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -25,15 +27,24 @@ module Antares.Property {
             super(componentRegistry, $scope);
 
             this.propertyResource = dataAccessService.getPropertyResource();
+            this.loadDivisions();
             this.loadPropertyTypes();
         }
 
-        changeDivision = (divisionCode: string) => {
-            this.property.division.code = divisionCode;
+        changeDivision = (division: EnumTypeItem) => {
+            this.property.divisionId = division.id;
+            this.property.division = division;
             this.property.propertyTypeId = null;
-            this.components.attributeList().clearAttributes();
+            if (this.components.attributeList())
+                this.components.attributeList().clearAttributes();
             this.loadPropertyTypes();
         }
+
+        loadDivisions = () => {
+            this.dataAccessService.getEnumResource().get({ code: 'Division' }).$promise.then((divisions: any) => {
+                this.divisions = divisions.items;
+            });
+        };
 
         loadPropertyTypes = () => {
             this.propertyResource

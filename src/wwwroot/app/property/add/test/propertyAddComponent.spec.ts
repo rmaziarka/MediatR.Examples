@@ -58,6 +58,10 @@ module Antares {
                     return [200, {}];
                 });
 
+                $http.whenGET(/\/api\/enums\/Division\/items/).respond(() => {
+                    return [200, {}];
+                });
+
                 // compile
                 scope['userData'] = usermock;
                 element = compile('<property-add user-data="userData"></property-add>')(scope);

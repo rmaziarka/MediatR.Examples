@@ -74,11 +74,11 @@ namespace KnightFrank.Antares.Dal.Seed
                 {
                     ["Residential"] = new Dictionary<string, string>
                     {
-                        [LocaleIsoCode.en.ToString()] = "Residential"
+                        [LocaleIsoCode.en.ToString()] = "Residential property"
                     },
                     ["Commercial"] = new Dictionary<string, string>
                     {
-                        [LocaleIsoCode.en.ToString()] = "Commercial"
+                        [LocaleIsoCode.en.ToString()] = "Commercial property"
                     }
                 });
         }

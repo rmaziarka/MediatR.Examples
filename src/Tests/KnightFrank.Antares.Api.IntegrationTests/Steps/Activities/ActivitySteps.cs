@@ -19,14 +19,14 @@
     using TechTalk.SpecFlow.Assist;
 
     [Binding]
-    public class ActivitiesSteps
+    public class ActivitySteps
     {
         private const string ApiUrl = "/api/activities";
         private readonly BaseTestClassFixture fixture;
 
         private readonly ScenarioContext scenarioContext;
 
-        public ActivitiesSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
+        public ActivitySteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {
             this.fixture = fixture;
             if (scenarioContext == null)
@@ -101,7 +101,8 @@
             var updateActivityCommand = table.CreateInstance<UpdateActivityCommand>();
             var activityFromDatabase = this.scenarioContext.Get<Activity>("Added Activity");
             updateActivityCommand.Id = id.Equals("added") ? activityFromDatabase.Id : new Guid(id);
-            updateActivityCommand.ActivityStatusId = status.Equals("added") ? activityFromDatabase.ActivityStatusId 
+            updateActivityCommand.ActivityStatusId = status.Equals("added")
+                ? activityFromDatabase.ActivityStatusId
                 : new Guid(status);
 
             activityFromDatabase = new Activity

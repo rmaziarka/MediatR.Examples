@@ -1,0 +1,140 @@
+///<reference path="../../../typings/_all.d.ts"/>
+
+module Antares {
+    import RequirementNoteListController = RequirementNote.RequirementNoteListController;
+    import Business = Common.Models.Business;
+    import Dto = Common.Models.Dto;
+
+    describe('Given requirement note list component is displayed', () =>{
+
+        var scope: ng.IScope,
+            compile: ng.ICompileService,
+            element: ng.IAugmentedJQuery,
+            filter: ng.IFilterService,
+            $http: ng.IHttpBackendService;
+
+        var pageObjectSelectors = {
+            noteList: '#requirement-notes',
+            noteItems: '#requirement-notes [data-type="note-item"]',
+            noteItem: {
+                item: '#note-',
+                noteHeaderUser: 'div[data-type="note-header"] >span',
+                noteHeaderTime: 'div[data-type="note-header"] >time',
+                noteContent: 'div[data-type="note-content"]'
+            }
+        }
+
+        var controller: RequirementNoteListController;
+
+        describe('and requirement is loaded', () => {
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService,
+                $filter: ng.IFilterService,
+                $httpBackend: ng.IHttpBackendService) =>{
+
+                $http = $httpBackend;
+                filter = $filter;
+
+                Antares.Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Antares.Mock.AddressForm.AddressFormWithOneLine]);
+                $http.whenGET(/\/api\/enums\/.*\/items/).respond(() =>{
+                    return [];
+                });
+
+                scope = $rootScope.$new();
+                compile = $compile;
+            }));
+
+            it('when no requirement notes then no notes should be visible', () => {
+                // arrange
+                var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate({ requirementNotes: [] });
+                scope['requirement'] = requirementMock;
+
+                // act
+                element = compile('<requirement-note-list requirement="requirement"></requirement-note-list>')(scope);
+                scope.$apply();
+                controller = element.controller('requirementNoteList');
+
+                // assert
+                var noteListElement = element.find(pageObjectSelectors.noteList);
+                var noteItems = element.find(pageObjectSelectors.noteItems);
+                expect(noteListElement.length).toBe(1);
+                expect(noteItems.length).toBe(0);
+            });
+
+            it('when existing requirement notes then notes should be visible', () => {
+                // arrange
+                var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate({
+                    requirementNotes: [
+                        new Business.RequirementNote({ id: 'note1', requirementId: '111', description: 'descr 1', createdDate: new Date(), user: null }),
+                        new Business.RequirementNote({ id: 'note2', requirementId: '111', description: 'descr 2', createdDate: new Date(), user: null })
+                    ]
+                });
+                scope['requirement'] = requirementMock;
+
+                // act
+                element = compile('<requirement-note-list requirement="requirement"></requirement-note-list>')(scope);
+                scope.$apply();
+                controller = element.controller('requirementNoteList');
+
+                // assert
+                var noteItems = element.find(pageObjectSelectors.noteItems);
+                expect(noteItems.length).toBe(2);
+            });
+
+            it('when existing requirement notes then notes should have proper data', () => {
+                // arrange
+                var date1Mock = new Date('2011-01-01');
+                var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate({
+                    requirementNotes: [
+                        { id: 'note1', requirementId: '111', description: 'descr 1', createdDate: date1Mock, user: { id: 'us1', firstName: 'firstName1', lastName: 'lastName1' } },
+                        { id: 'note2', requirementId: '111', description: 'descr 2', createdDate: new Date(), user: { id: 'us2', firstName: 'firstName2', lastName: 'lastName2' } }
+                    ]
+                });
+                scope['requirement'] = requirementMock;
+
+                // act
+                element = compile('<requirement-note-list requirement="requirement"></requirement-note-list>')(scope);
+                scope.$apply();
+                controller = element.controller('requirementNoteList');
+
+                // assert
+                var noteElement = element.find(pageObjectSelectors.noteItem.item + "note1");
+
+                var timeElement = noteElement.find(pageObjectSelectors.noteItem.noteHeaderTime);
+                var userElement = noteElement.find(pageObjectSelectors.noteItem.noteHeaderUser);
+                var descriptionElement = noteElement.find(pageObjectSelectors.noteItem.noteContent);
+
+                var formattedDate = filter('date')(Core.DateTimeUtils.convertDateToUtc(date1Mock), 'dd-MM-yyyy, HH:mm');
+                expect(timeElement.text()).toBe(formattedDate);
+                expect(userElement.text()).toBe('firstName1 lastName1');
+                expect(descriptionElement.text()).toBe('descr 1');
+            });
+
+            it('when existing requirement notes then notes should be in proper order', () => {
+                // arrange
+                var date1Mock = new Date('2011-01-01');
+                var date2Mock = new Date('2011-02-01');
+
+                var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate({
+                    requirementNotes: [
+                        new Business.RequirementNote({ id: 'note1', requirementId: '111', description: 'descr 1', createdDate: date1Mock, user: null }),
+                        new Business.RequirementNote({ id: 'note2', requirementId: '111', description: 'descr 2', createdDate: date2Mock, user: null })
+                    ]
+                });
+                scope['requirement'] = requirementMock;
+
+                // act
+                element = compile('<requirement-note-list requirement="requirement"></requirement-note-list>')(scope);
+                scope.$apply();
+                controller = element.controller('requirementNoteList');
+
+                // assert
+                var noteItems = element.find(pageObjectSelectors.noteItems);
+                expect(noteItems.length).toBe(2);
+                expect(noteItems[0].getAttribute('id')).toBe("note-note2");
+                expect(noteItems[1].getAttribute('id')).toBe("note-note1");
+            });
+        });
+    });
+}

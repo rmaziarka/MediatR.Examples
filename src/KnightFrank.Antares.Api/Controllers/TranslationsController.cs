@@ -5,6 +5,7 @@
     using System.Web.Http;
 
     using KnightFrank.Antares.Domain.Enum.Queries;
+    using KnightFrank.Antares.Domain.Resource.Queries;
 
     using MediatR;
 
@@ -31,6 +32,19 @@
         public Dictionary<Guid, string> GetEnums(string isoCode = null)
         {
             var query = new EnumLocalisedQuery { IsoCode = isoCode };
+            return this.mediator.Send(query);
+        }
+
+        /// <summary>
+        ///     Gets translations for resource by isoCode.
+        /// </summary>
+        /// <param name="isoCode">IsoCode</param>
+        /// <returns>Dictionary of translations.</returns>
+        [HttpGet]
+        [Route("resources/{isoCode?}")]
+        public Dictionary<Guid, string> GetResources(string isoCode = null)
+        {
+            var query = new ResourceLocalisedQuery { IsoCode = isoCode };
             return this.mediator.Send(query);
         }
     }
