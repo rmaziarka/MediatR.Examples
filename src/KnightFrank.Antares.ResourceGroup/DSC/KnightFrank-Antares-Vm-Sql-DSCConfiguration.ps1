@@ -4,7 +4,6 @@ Configuration SetupSQLVm
 Param ( 
 [System.Management.Automation.PSCredential][Parameter(Mandatory = $true)] $setupCredential, 
 [System.Management.Automation.PSCredential][Parameter(Mandatory = $true)] $sqlLoginCredential, 
-[string][Parameter(Mandatory = $true)] $sqlUserName, 
 [string][Parameter(Mandatory = $true)] $commonShareUrl, 
 [System.Management.Automation.PSCredential][Parameter(Mandatory = $true)] $commonShareCredential,
 [string][Parameter(Mandatory = $true)] $isoFileName,
@@ -45,8 +44,7 @@ Node localhost
 	Script CopySqlIso
 	{
 		TestScript = { 
-			$isoExists = Test-Path "$using:downloadPath\\$using:isoFileName"
-			$isoExists -or $shareMounted
+			Test-Path "$using:downloadPath\\$using:isoFileName"
 		}
 		GetScript = {@{Result = "CopySqlIso"}}
 		SetScript =
@@ -74,6 +72,8 @@ Node localhost
 		SourceFolder = ""
 		InstanceName = $sqlInstanceName
 		Features = $sqlFeatures
+		SAPwd = $setupCredential
+		SecurityMode = "SQL"
 	}
 
 	xSQLServerNetwork SetupTcp
@@ -81,6 +81,7 @@ Node localhost
 		DependsOn = "[xSqlServerSetup]InstallSql"
 		InstanceName = $sqlInstanceName
 		ProtocolName = "tcp"
+		TCPPort = 1433
 		IsEnabled = $true
 		RestartService = $true
 	}
@@ -98,11 +99,11 @@ Node localhost
     {
         DependsOn = "[xSqlServerSetup]InstallSql"
         Ensure = "Present"
-        Name = $sqlUserName
+        Name = $sqlLoginCredential.UserName
         LoginType = "SQLLogin"
 		LoginCredential = $sqlLoginCredential
     }
-	<#
+	
 	xMountImage UnMountSqlIso
 	{
 		DependsOn = "[xSqlServerSetup]InstallSql"
@@ -110,6 +111,6 @@ Node localhost
 		ImagePath = "$downloadPath\$isoFileName"
 		DriveLetter = "s:"
 		Ensure = "Absent"
-	}#>
+	}
 }
 }

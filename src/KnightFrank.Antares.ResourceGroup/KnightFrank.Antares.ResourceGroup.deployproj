@@ -128,7 +128,6 @@
     <None Include="DSC\xWebAdministration\README.md" />
     <None Include="DSC\xWebAdministration\xWebAdministration.psd1" />
     <None Include="resourcegroup.nuspec" />
-    <None Include="Scripts\configure-sql.ps1" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Tools\AzCopy.exe" />

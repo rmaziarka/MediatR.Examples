@@ -180,7 +180,7 @@
     "VmIISStorageAccountContainerName": "vhds",
     "VmIISNicName": "[concat(variables('ResourceNamePrefix'), 'Vm-IIS-Nic-', variables('ResourceNameSuffix'))]",
     "VmIISName": "[concat(variables('ResourceNamePrefix'), 'Vm-IIS-', variables('ResourceNameSuffix'))]",
-    "SqlUserName": "[concat('KnightFrank.Antares.', parameters('EnvironmentPrefix'), '.User')]"
+    "SqlUserName": "[concat('KnightFrank.Antares.', toUpper(substring(parameters('EnvironmentPrefix'), 0, 1)), toLower(substring(parameters('EnvironmentPrefix'), 1, sub(length(parameters('EnvironmentPrefix')), 1))), '.User')]"
   },
   "resources": [
     {
@@ -373,7 +373,6 @@
                 "function": "SetupSQLVm"
               },
               "configurationArguments": {
-                "sqlUserName": "[variables('SqlUserName')]",
                 "commonShareUrl": "[parameters('CommonShareUrl')]",
                 "isoFileName": "[parameters('IsoFileName')]",
                 "sqlInstanceName": "[parameters('SqlInstanceName')]"
@@ -387,7 +386,7 @@
                   "Password": "[parameters('VmSqlAdminPassword')]"
                 },
                 "sqlLoginCredential": {
-                  "UserName": "[parameters('VmSqlAdminUserName')]",
+                  "UserName": "[variables('SqlUserName')]",
                   "Password": "[parameters('VmSqlAdminPassword')]"
                 },
                 "commonShareCredential": {
