@@ -158,7 +158,6 @@
     <Compile Include="Property\Commands\CreateOrUpdatePropertyAddressValidator.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyAttributeValues.cs" />
     <Compile Include="Property\Commands\CreatePropertyCommand.cs" />
-    <Compile Include="Property\Commands\PropertyDomainValidator.cs" />
     <Compile Include="Property\Commands\CreatePropertyCommandValidator.cs" />
     <Compile Include="Common\Validator\CustomDynamicValidator.cs" />
     <Compile Include="Property\Commands\PropertyTypeValidator.cs" />

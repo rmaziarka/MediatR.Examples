@@ -9,7 +9,6 @@
     using Domain.Property.CommandHandlers;
 
     using KnightFrank.Antares.Dal.Model.Property;
-    using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Property.Commands;
 
     using Moq;
@@ -53,23 +52,6 @@
             // Assert
             property.Address.ShouldBeEquivalentTo(command.Address, options => options.IncludingProperties().ExcludingMissingMembers());
             propertyRepository.Verify(p => p.Save(), Times.Once);
-        }
-
-        [Theory]
-        [InlineAutoMoqData]
-        public void Given_UpdatePropertyCommand_When_HandleInvalidProperty_Then_ShouldThrowException(
-           UpdatePropertyCommand command,
-           Property property,
-           [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
-           [Frozen] Mock<IDomainValidator<Property>> validator,
-           UpdatePropertyCommandHandler handler)
-        {
-            // Arrange
-            validator.Setup(r => r.Validate(It.IsAny<Property>())).Returns(ValidationResultBuilder.BuildValidationResult());
-            
-            // Act + Assert
-            Assert.Throws<DomainValidationException>(() => handler.Handle(command));
-            propertyRepository.Verify(p => p.Save(), Times.Never);
         }
     }
 }
