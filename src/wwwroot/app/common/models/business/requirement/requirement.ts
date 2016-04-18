@@ -9,6 +9,7 @@ module Antares.Common.Models.Business {
         contacts: Contact[] = [];
         address: Address = new Address();
         description: string;
+        requirementNotes: RequirementNote[] = [];
 
         constructor(requirement?: Dto.IRequirement) {
             if (requirement) {
@@ -17,6 +18,7 @@ module Antares.Common.Models.Business {
                 this.createDate = Core.DateTimeUtils.convertDateToUtc(requirement.createDate);
                 this.contacts = requirement.contacts.map((contact: Dto.IContact) => { return new Contact(contact) });
                 this.address = new Address(requirement.address);
+                this.requirementNotes = requirement.requirementNotes.map((requirementNote: Dto.IRequirementNote) => { return new RequirementNote(requirementNote) });
             }
         }
     }

@@ -1,0 +1,12 @@
+﻿<section>
+    <h4 translate="NOTES.RECENTNOTES"></h4>
+    <ul id="requirement-notes" class="recent-notes">
+        <li id="note-{{note.id}}" data-type="note-item" class="recent-notes-item" ng-repeat="note in rnlvm.requirement.requirementNotes track by note.id ">
+            <div class="note-header">
+                <span>{{note.user.getName()}}</span>
+                <time class="pull-right">{{note.createdDate | date : 'dd-MM-yyyy, HH:mm'}}</time>
+            </div>
+            <div data-type="note-description" class="note-content">{{note.description}}</div>
+        </li>
+    </ul>
+</section>

@@ -12,6 +12,12 @@ module Antares {
 
         var controller: RequirementViewController;
 
+        var pageObjectSelectors = {
+            header: {
+                notesButton: '#notes-button'
+            }
+        }
+
         describe('and proper requirement id is provided', () => {
             var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate({
                 createDate: '2016-03-17T12:35:29.82',
@@ -27,6 +33,10 @@ module Antares {
                 contacts: [
                     { id: '1', firstName: 'John', surname: 'Doe', title: 'Mr.' },
                     { id: '2', firstName: 'Jane', surname: 'Doe', title: 'Mrs.' }
+                ],
+                requirementNotes: [
+                    new Business.RequirementNote({ id: 'note1', requirementId: '111', description: 'descr 1', createdDate: new Date(), user: null }),
+                    new Business.RequirementNote({ id: 'note2', requirementId: '111', description: 'descr 2', createdDate: new Date(), user: null })
                 ],
                 address: Mock.AddressForm.FullAddress
             });
@@ -73,6 +83,13 @@ module Antares {
 
                 expect(createDate.length).toBe(1);
                 expect(createDate.text()).toBe(formattedDate);
+            });
+
+            it('notes count is displayed within notes button', () => {
+                var buttonText = element.find(pageObjectSelectors.header.notesButton + ' span');
+
+                expect(buttonText.length).toBe(1);
+                expect(buttonText.text()).toBe('(' + requirementMock.requirementNotes.length + ')');
             });
 
             it('description is displayed', () => {

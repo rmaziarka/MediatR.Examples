@@ -2,7 +2,7 @@
 
 module Antares.RequirementNote
 {
-    angular.module('app').component('', {
+    angular.module('app').component('requirementNoteAdd', {
         templateUrl : '',
         controllerAs : 'vm',
         controller : ''

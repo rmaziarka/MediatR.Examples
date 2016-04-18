@@ -19,12 +19,14 @@ module Antares.Requirement.View {
 
         defineComponentIds(): void {
             this.componentIds = {
-                notesSidePanelId: 'requirementView:notesSidePanelComponent'
+                notesSidePanelId: 'requirementView:notesSidePanelComponent',
+                noteListId: 'requirementView:requirementNoteListComponent'
             }
         }
 
         defineComponents(): void {
             this.components = {
+                noteList: () => { return this.componentRegistry.get(this.componentIds.noteListId); },
                 panels: {
                     notes: () => { return this.componentRegistry.get(this.componentIds.notesSidePanelId); }
                 }

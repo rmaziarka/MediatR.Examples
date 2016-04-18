@@ -10,7 +10,8 @@ module Antares.TestHelpers {
                 id: RequirementGenerator.makeRandom('id'),
                 contacts: [],
                 address: null,
-                createDate: new Date()
+                createDate: new Date(),
+                requirementNotes: []
             }
 
             return angular.extend(requirement, specificData || {});
