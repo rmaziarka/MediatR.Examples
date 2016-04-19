@@ -26,7 +26,7 @@ module Antares {
         describe('and property is loaded', () =>{
             var propertyMock: Dto.IProperty = {
                 id: '1',
-                propertyTypeId: '1',
+                propertyTypeId: 'propType1',
                 divisionId: '',
                 division: null,
                 address : Antares.Mock.AddressForm.FullAddress,
@@ -85,6 +85,12 @@ module Antares {
                 expect(cardListItemCardElement.length).toBe(2);
                 expect(cardListItemCardElement[0].getAttribute('card-template-url')).toBe("'app/activity/templates/activityCard.html'");
                 expect(cardListItemCardElement[0].getAttribute('show-item-details')).toBe("vm.showActivityPreview");
+            });
+
+            it('property type is visible', () =>{
+                // assert
+                var propertyTypeElement = element.find('.page-header:contains("PROPERTY.VIEW.DETAILS")~.row :contains("PROPERTY.VIEW.TYPE") + div');
+                expect(propertyTypeElement.text()).toBe('DYNAMICTRANSLATIONS.propType1');
             });
         });
 
