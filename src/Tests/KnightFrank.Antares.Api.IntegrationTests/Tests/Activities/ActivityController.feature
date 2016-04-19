@@ -9,7 +9,10 @@ Scenario Outline: Retrieve error messages for improper data
 			| OwnershipType      | Freeholder       |
 			| <activityStatusId> | PreAppraisal     |
 			| Division           | Residential      |
-		And Property with Address and Residential division is in data base
+		And User sets attributes for property in database
+			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
+			| 1           | 3           | 1             | 3             | 2            | 3            | 1000    | 3000    | 500         | 4000        | 1                   | 3                   |
+		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London | 
 	When User creates activity for given <propertyId> property id
@@ -29,7 +32,10 @@ Scenario: Create Activity for an existing property
 			| OwnershipType  | Freeholder       |
 			| ActivityStatus | PreAppraisal     |
 			| Division       | Residential      |
-		And Property with Address and Residential division is in data base
+		And User sets attributes for property in database
+			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
+			| 1           | 3           | 1             | 3             | 2            | 3            | 1000    | 3000    | 500         | 4000        | 1                   | 3                   |
+		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |  
 		And User creates contacts in database with following data
@@ -42,7 +48,7 @@ Scenario: Create Activity for an existing property
 			| 01-05-2014   |            | 1000000  |           |
 	When User creates activity for given latest property id
 	Then User should get OK http status code
-		And The created Activity is saved in data base
+		And The created Activity is saved in database
 		
 @Activity
 Scenario Outline: Get Activity by incorrect activity id
@@ -63,13 +69,16 @@ Scenario: Get Activity by correct activity id
 			| enumTypeCode   | enumTypeItemCode |
 			| ActivityStatus | PreAppraisal     |
 			| Division       | Residential      |
-		And Property with Address and Residential division is in data base
+		And User sets attributes for property in database
+			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
+			| 1           | 3           | 1             | 3             | 2            | 3            | 1000    | 3000    | 500         | 4000        | 1                   | 3                   |
+		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |  
 		And User creates activity for given latest property id
 	When User retrieves activity
 	Then User should get OK http status code
-		And The received Activities should be the same as in DB
+		And The received Activities should be the same as in database
 
 @Activity
 Scenario: record and update residential sale valuation
@@ -79,15 +88,18 @@ Scenario: record and update residential sale valuation
 			| enumTypeCode   | enumTypeItemCode |
 			| ActivityStatus | PreAppraisal     |
 			| Division       | Residential      |
-		And Property with Address and Residential division is in data base
+		And User sets attributes for property in database
+			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
+			| 1           | 3           | 1             | 3             | 2            | 3            | 1000    | 3000    | 500         | 4000        | 1                   | 3                   |
+		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
-		And Activity for 'latest' property exists in data base
+		And Activity for 'latest' property exists in database
 	When User updates activity 'added' id and 'added' status with following sale valuation
 		| MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice | 
 		| 1                    | 2                | 3                    | 
 	Then User should get OK http status code
-		And The received Activities should be the same as in DB
+		And The received Activities should be the same as in database
 
 @Activity
 Scenario Outline: try record and update residential sale valuation for improper data
@@ -97,10 +109,13 @@ Scenario Outline: try record and update residential sale valuation for improper 
 			| enumTypeCode   | enumTypeItemCode |
 			| Division       | Residential      |
 			| ActivityStatus | PreAppraisal     |
-		And Property with Address and Residential division is in data base
+		And User sets attributes for property in database
+			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
+			| 1           | 3           | 1             | 3             | 2            | 3            | 1000    | 3000    | 500         | 4000        | 1                   | 3                   |
+		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
-		And Activity for 'latest' property exists in data base
+		And Activity for 'latest' property exists in database
 	When User updates activity '<activityId>' id and '<activityStatusID>' status with following sale valuation
 		| MarketAppraisalPrice   | RecommendedPrice | VendorEstimatedPrice |
 		| <marketAppraisalPrice> | 2                | 3                    | 

@@ -10,6 +10,7 @@
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal.Model.Address;
+    using KnightFrank.Antares.Dal.Model.Attribute;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Resource;
@@ -79,29 +80,37 @@
         {
             Country country = this.fixture.DataContext.Countries.SingleOrDefault(x => x.IsoCode == countryCode);
             EnumTypeItem enumTypeItem = this.fixture.DataContext.EnumTypeItems.SingleOrDefault(e => e.Code == enumType);
-            Guid countryId = country?.Id ?? new Guid();
-            Guid enumTypeId = enumTypeItem?.Id ?? new Guid();
+            Guid countryId = country?.Id ?? Guid.NewGuid();
+            Guid enumTypeId = enumTypeItem?.Id ?? Guid.NewGuid();
 
             AddressFormEntityType addressForm = this.fixture.DataContext.AddressFormEntityTypes.SingleOrDefault(
                 afe => afe.AddressForm.CountryId == countryId && afe.EnumTypeItemId == enumTypeId);
 
-            Guid addressFormId = addressForm?.AddressFormId ?? new Guid();
+            Guid addressFormId = addressForm?.AddressFormId ?? Guid.NewGuid();
 
             this.scenarioContext["CountryId"] = countryId;
             this.scenarioContext["AddressFormId"] = addressFormId;
         }
 
-        [Given(@"Property with Address and (.*) division is in data base")]
+        [Given(@"Property with Address and (.*) division is in database")]
         public void GivenFollowingPropertyExistsInDataBase(string divisionCode, Table table)
         {
             var address = table.CreateInstance<Address>();
+            var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
+            var attributeValues = this.scenarioContext.Get<AttributeValues>("AttributeValues");
+
+            Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
+
             address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
             address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
 
-            var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
-
-            Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
-            var property = new Property { Address = address, PropertyTypeId = propertyTypeId, DivisionId = divisionId };
+            var property = new Property
+            {
+                Address = address,
+                PropertyTypeId = propertyTypeId,
+                DivisionId = divisionId,
+                AttributeValues = attributeValues
+            };
 
             this.fixture.DataContext.Properties.Add(property);
             this.fixture.DataContext.SaveChanges();
@@ -123,26 +132,43 @@
             }
         }
 
+        [Given(@"User sets attributes for property in database")]
+        public void SetAttributesForPropertyForDb(Table table)
+        {
+            var attributeValues = table.CreateInstance<AttributeValues>();
+            this.scenarioContext.Set(attributeValues, "AttributeValues");
+        }
+
+        [Given(@"User sets attributes for property in Api")]
+        public void SetAttributesForPropertyForApi(Table table)
+        {
+            var attributeValues = table.CreateInstance<CreateOrUpdatePropertyAttributeValues>();
+            this.scenarioContext.Set(attributeValues, "AttributeValues");
+        }
+
         [When(@"Users updates property with defined address for (.*) id and (.*) division by Api")]
         public void WhenUsersUpdatesProperty(string id, string divisionCode)
         {
-            Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
-            var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
-            Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
+            string requestUrl = $"{ApiUrl}";
 
             var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
+            var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
+            var attributeValues = this.scenarioContext.Get<CreateOrUpdatePropertyAttributeValues>("AttributeValues");
+
+            Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
+            Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
 
             var updatedProperty = new UpdatePropertyCommand
             {
                 Address = address,
                 Id = propertyId,
                 PropertyTypeId = propertyTypeId,
-                DivisionId = divisionId
+                DivisionId = divisionId,
+                AttributeValues = attributeValues
             };
 
-            HttpResponseMessage response = this.fixture.SendPutRequest(ApiUrl, updatedProperty);
+            HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, updatedProperty);
             this.scenarioContext.SetHttpResponseMessage(response);
-            this.scenarioContext.Set(updatedProperty, "Property");
         }
 
         [When(@"User creates property with defined address and (.*) division by Api")]
@@ -152,16 +178,16 @@
 
             var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
-            Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
+            var attributeValues = this.scenarioContext.Get<CreateOrUpdatePropertyAttributeValues>("AttributeValues");
 
-            address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
-            address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
+            Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
 
             var property = new CreatePropertyCommand
             {
                 Address = address,
                 PropertyTypeId = propertyTypeId,
-                DivisionId = divisionId
+                DivisionId = divisionId,
+                AttributeValues = attributeValues
             };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, property);
@@ -172,7 +198,6 @@
         public void GetProperty()
         {
             var propertyId = this.scenarioContext.Get<Guid>("AddedPropertyId");
-
             string requestUrl = $"{ApiUrl}/{propertyId}";
 
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
@@ -183,23 +208,26 @@
         public void GetAttributesForPropertyAndCountry(string countryCode)
         {
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
-
             string requestUrl = $"{ApiUrl}/attributes?countryCode={countryCode}&propertyTypeId={propertyTypeId}";
 
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [Then(@"The updated Property is saved in data base")]
+        [Then(@"The updated Property is saved in database")]
         public void ThenTheResultsShouldBeSameAsAdded()
         {
-            var updatedProperty = this.scenarioContext.Get<UpdatePropertyCommand>("Property");
-            Property expectedProperty = this.fixture.DataContext.Properties.SingleOrDefault(x => x.Id.Equals(updatedProperty.Id));
+            var updatedProperty = JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent());
+            Property actualProperty = this.fixture.DataContext.Properties.SingleOrDefault(x => x.Id.Equals(updatedProperty.Id));
 
-            updatedProperty.ShouldBeEquivalentTo(expectedProperty);
+            updatedProperty.ShouldBeEquivalentTo(actualProperty, options => options
+                .Excluding(x => x.Division)
+                .Excluding(x => x.PropertyType)
+                .Excluding(x => x.Address.AddressForm)
+                .Excluding(x => x.Address.Country));
         }
 
-        [Then(@"The created Property is saved in data base")]
+        [Then(@"The created Property is saved in database")]
         public void ThenTheResultsShouldBeSameAsCreated()
         {
             var expectedProperty = JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent());
