@@ -1,5 +1,6 @@
 namespace KnightFrank.Antares.Dal.Model.Configuration.Resource
 {
+    using KnightFrank.Antares.Dal.Model.Configuration;
     using KnightFrank.Antares.Dal.Model.Resource;
 
     internal sealed class LocaleConfiguration : BaseEntityConfiguration<Locale>
@@ -7,7 +8,9 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Resource
         public LocaleConfiguration()
         {
             this.Property(r => r.IsoCode)
-                .HasMaxLength(2);
+                .HasMaxLength(2)
+                .IsRequired()
+                .IsUnique();
 
 			this.HasMany(p => p.CountryLocaliseds)
 				.WithRequired(p => p.Locale)

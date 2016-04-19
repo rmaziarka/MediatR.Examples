@@ -94,6 +94,7 @@
     <Compile Include="Model\Configuration\Resource\LocaleConfiguration.cs" />
     <Compile Include="Model\Configuration\User\BusinessConfiguration.cs" />
     <Compile Include="Model\Configuration\User\DepartmentConfiguration.cs" />
+    <Compile Include="Model\Configuration\MappingExtensions.cs" />
     <Compile Include="Model\Configuration\User\RoleConfiguration.cs" />
     <Compile Include="Model\Configuration\User\UserConfiguration.cs" />
     <Compile Include="KnightFrankContext.cs" />

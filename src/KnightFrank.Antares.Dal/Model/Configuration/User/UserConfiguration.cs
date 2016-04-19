@@ -8,7 +8,7 @@
         {
             this.Property(p => p.ActiveDirectoryDomain).HasMaxLength(40);
 
-            this.Property(p => p.ActiveDirectoryLogin).HasMaxLength(100);
+            this.Property(p => p.ActiveDirectoryLogin).HasMaxLength(100).IsRequired().IsUnique();
 
             this.Property(p => p.FirstName).HasMaxLength(40);
 

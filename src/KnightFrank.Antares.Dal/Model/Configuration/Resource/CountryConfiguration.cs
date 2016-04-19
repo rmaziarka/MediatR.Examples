@@ -1,12 +1,13 @@
 namespace KnightFrank.Antares.Dal.Model.Configuration.Resource
 {
+    using KnightFrank.Antares.Dal.Model.Configuration;
     using KnightFrank.Antares.Dal.Model.Resource;
 
     internal sealed class CountryConfiguration : BaseEntityConfiguration<Country>
     {
         public CountryConfiguration()
         {
-            this.Property(p => p.IsoCode).HasMaxLength(2);
+            this.Property(p => p.IsoCode).HasMaxLength(2).IsRequired().IsUnique();
 
             this.HasMany(p => p.AddressForms)
                 .WithRequired(p => p.Country)

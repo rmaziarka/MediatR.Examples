@@ -6,9 +6,15 @@
     {
         public RoleConfiguration()
         {
-            this.Property(p => p.Name).HasMaxLength(100);
+            this.Property(p => p.Name).HasMaxLength(100).IsRequired().IsUnique();
 
-            this.HasMany(p => p.Users).WithMany(p => p.Roles);
+            this.HasMany(p => p.Users).WithMany()
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("RoleId");
+                    cs.MapRightKey("UserId");
+                    cs.ToTable("RoleUser");
+                });
         }
     }
 }
