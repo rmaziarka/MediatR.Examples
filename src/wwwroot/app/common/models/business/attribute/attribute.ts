@@ -9,8 +9,8 @@
         unit: string;
 
         unitMappings = [
-            { nameKey: "Area", unit: "sq. ft" },
-            { nameKey: "LandArea", unit: "sq. ft" }];
+            { nameKey: "Area", unit: "UNITS.SQUARE_FEET" },
+            { nameKey: "LandArea", unit: "UNITS.SQUARE_FEET" }];
 
         constructor(attribute?: Dto.IAttribute) {
             if (attribute) {

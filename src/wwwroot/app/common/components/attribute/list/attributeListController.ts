@@ -7,8 +7,8 @@ module Antares.Common.Component {
     export class AttributeListController {
         private componentId: string;
         private propertyResource: Common.Models.Resources.IPropertyResourceClass;
-        public property: Business.Property;
-        public userData: Dto.IUserData;
+        private property: Business.Property;
+        private userData: Dto.IUserData;
         private attributes: Business.Attribute[];
 
         constructor(
@@ -20,7 +20,7 @@ module Antares.Common.Component {
             this.propertyResource = dataAccessService.getPropertyResource();
             this.loadAttributes();
         }
-        
+
         loadAttributes = () => {
             if (this.property.propertyTypeId) {
                 this.attributes = null;
@@ -39,6 +39,19 @@ module Antares.Common.Component {
 
         clearAttributes = () => {
             this.attributes = null;
+        }
+
+        clearHiddenAttributesFromProperty = () => {
+            for (var attributeValue in this.property.attributeValues) {
+                if (this.property.attributeValues.hasOwnProperty(attributeValue)) {
+                    if (attributeValue != 'id') {
+                        var propertyAttributeIsHidden = !this.attributes ? true : this.attributes.filter((item) => { return item.min === attributeValue || item.max === attributeValue }).length === 0;
+                        if (propertyAttributeIsHidden) {
+                            this.property.attributeValues[attributeValue] = null;
+                        }
+                    }
+                }
+            }
         }
     }
 
