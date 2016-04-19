@@ -27,6 +27,7 @@
         public NotesPage SaveNote()
         {
             this.Driver.GetElement(this.saveNoteButton).Click();
+            this.Driver.WaitForAngular();
             return this;
         }
 
