@@ -21,6 +21,8 @@ module Antares {
             }
         }
 
+        var userMock = { name: "user", email: "user@gmail.com", country: "GB", division: { id: "0acc9d28-51fa-e511-828b-8cdcd42baca7", value: "Commercial", code: "Commercial" }, divisionCode: <any>null, roles: ["admin", "superuser"] };
+
         var controller: PropertyViewController;
 
         describe('and property is loaded', () =>{
@@ -34,7 +36,8 @@ module Antares {
                 activities : [
                     new Business.Activity(<Dto.IActivity>{ id: 'It1', propertyId: '1', activityStatusId: '123', contacts:[] }),
                     new Business.Activity(<Dto.IActivity>{ id: 'It2', propertyId: '1', activityStatusId: '1234', contacts: [] })
-                ]
+                ],
+                attributeValues: {}
             };
 
             beforeEach(inject((
@@ -49,9 +52,14 @@ module Antares {
                     return [];
                 });
 
+                $http.whenGET(/\/api\/properties\/attributes/).respond(() => {
+                    return [200, { attributes: []}];
+                });
+
                 scope = $rootScope.$new();
+                scope['userData'] = userMock;
                 scope['property'] = propertyMock;
-                element = $compile('<property-view property="property"></property-view>')(scope);
+                element = $compile('<property-view property="property" user-data="userData"></property-view>')(scope);
 
                 scope.$apply();
                 $http.flush();
@@ -86,12 +94,6 @@ module Antares {
                 expect(cardListItemCardElement[0].getAttribute('card-template-url')).toBe("'app/activity/templates/activityCard.html'");
                 expect(cardListItemCardElement[0].getAttribute('show-item-details')).toBe("vm.showActivityPreview");
             });
-
-            it('property type is visible', () =>{
-                // assert
-                var propertyTypeElement = element.find('.page-header:contains("PROPERTY.VIEW.DETAILS")~.row :contains("PROPERTY.VIEW.TYPE") + div');
-                expect(propertyTypeElement.text()).toBe('DYNAMICTRANSLATIONS.propType1');
-            });
         });
 
         describe('and activities are loaded', () => {
@@ -102,7 +104,8 @@ module Antares {
                 division: null,
                 address: Antares.Mock.AddressForm.FullAddress,
                 ownerships: [],
-                activities: []
+                activities: [],
+                attributeValues: []
             };
 
             beforeEach(inject((
@@ -119,7 +122,12 @@ module Antares {
                     return [];
                 });
 
+                $http.whenGET(/\/api\/properties\/attributes/).respond(() => {
+                    return [200, { attributes: [] }];
+                });
+
                 scope = $rootScope.$new();
+                scope['userData'] = userMock;
                 compile = $compile;
             }));
 
@@ -129,7 +137,7 @@ module Antares {
                 scope['property'] = propertyMock;
 
                 // act
-                element = compile('<property-view property="property"></property-view>')(scope);
+                element = compile('<property-view property="property" user-data="userData"></property-view>')(scope);
                 scope.$apply();
                 $http.flush();
 
@@ -148,7 +156,7 @@ module Antares {
                 scope['property'] = propertyMock;
 
                 // act
-                element = compile('<property-view property="property"></property-view>')(scope);
+                element = compile('<property-view property="property" user-data="userData"></property-view>')(scope);
                 scope.$apply();
                 $http.flush();
 
@@ -178,7 +186,7 @@ module Antares {
                 scope['property'] = propertyMock;
 
                 // act
-                element = compile('<property-view property="property"></property-view>')(scope);
+                element = compile('<property-view property="property" user-data="userData"></property-view>')(scope);
                 scope.$apply();
                 $http.flush();
 
@@ -216,7 +224,8 @@ module Antares {
                             <Business.Contact>{ id : 'Contact2', firstName : 'Amy', surname : 'Test2', title : 'Mrs' }
                         ]
                     })
-                ]
+                ],
+                attributeValues: []
             };
 
             beforeEach(inject((
@@ -231,9 +240,14 @@ module Antares {
                     return [];
                 });
 
+                $http.whenGET(/\/api\/properties\/attributes/).respond(() => {
+                    return [200, { attributes: [] }];
+                });
+
                 scope = $rootScope.$new();
                 scope['property'] = propertyMock;
-                element = $compile('<property-view property="property"></property-view>')(scope);
+                scope['userData'] = userMock;
+                element = $compile('<property-view property="property" user-data="userData"></property-view>')(scope);
 
                 scope.$apply();
                 $httpBackend.flush();
@@ -269,7 +283,8 @@ module Antares {
                 division: null,
                 address: Antares.Mock.AddressForm.FullAddress,
                 ownerships: [],
-                activities: []
+                activities: [],
+                attributeValues: []
             };
 
             beforeEach(inject(($rootScope: ng.IRootScopeService,
@@ -281,7 +296,8 @@ module Antares {
 
                 scope = $rootScope.$new();
                 scope['property'] = propertyMock;
-                element = $compile('<property-view property="property"></property-view>')(scope);
+                scope['userData'] = userMock;
+                element = $compile('<property-view property="property" user-data="userData"></property-view>')(scope);
 
                 scope.$apply();
                 $httpBackend.flush();
@@ -348,7 +364,8 @@ module Antares {
                 division: null,
                 ownerships: ownerships,
                 activities: [],
-                propertyTypeId: 'typeId'
+                propertyTypeId: 'typeId',
+                attributeValues: []
             };
 
             beforeEach(inject(($rootScope: ng.IRootScopeService,
@@ -360,7 +377,8 @@ module Antares {
 
                 scope = $rootScope.$new();
                 scope['property'] = new Business.Property(propertyMock);
-                element = $compile('<property-view property="property"></property-view>')(scope);
+                scope['userData'] = userMock;
+                element = $compile('<property-view property="property" user-data="userData"></property-view>')(scope);
 
                 scope.$apply();
                 $httpBackend.flush();

@@ -4,12 +4,13 @@ module Antares.Common.Component {
     angular.module('app').component('rangeAttribute', {
         controller: 'rangeAttributeController',
         controllerAs: 'vm',
-        templateUrl: 'app/common/components/attribute/range/rangeAttribute.html',
+        template: '<div ng-include="vm.getTemplateUrl()"></div>',
         bindings: {
             minValue: '=',
             maxValue: '=',
             label: '=',
-            attribute: '='
+            attribute: '=',
+            mode: '@'
         }
     });
 }
