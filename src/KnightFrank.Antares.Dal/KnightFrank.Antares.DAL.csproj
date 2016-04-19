@@ -137,7 +137,6 @@
     <Compile Include="Seed\Common\LocaleIsoCode.cs" />
     <Compile Include="Seed\DepartmentData.cs" />
     <Compile Include="Seed\BusinessData.cs" />
-    <Compile Include="Seed\DatabaseSeeder.cs" />
     <Compile Include="Seed\EnumData.cs" />
     <Compile Include="Seed\CountryData.cs" />
     <Compile Include="Seed\LocaleData.cs" />
