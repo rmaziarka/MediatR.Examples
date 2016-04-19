@@ -18,6 +18,8 @@
 
                 this.ownerships = property.ownerships.map((ownership: Dto.IOwnership) => { return new Business.Ownership(ownership) });
                 this.activities = property.activities.map((activity: Dto.IActivity) => { return new Business.Activity(activity) });
+
+                this.propertyTypeId = property.propertyTypeId;
             }
         }
     }
