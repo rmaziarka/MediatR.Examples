@@ -1,9 +1,9 @@
 ﻿NameKey;LabelKey
-Bedrooms;Property.Bedrooms
-Receptions;Property.Receptions
-Bathrooms;Property.Bathrooms
-Area;Property.Area
-LandArea;Property.LandArea
-GuestRooms;Property.GuestRooms
-FunctionRooms;Property.FunctionRooms
-CarParkingSpaces;Property.CarParkingSpaces
+Bedrooms;PROPERTY.BEDROOMS
+Receptions;PROPERTY.RECEPTIONS
+Bathrooms;PROPERTY.BATHROOMS
+Area;PROPERTY.AREA
+LandArea;PROPERTY.LANDAREA
+GuestRooms;PROPERTY.GUESTROOMS
+FunctionRooms;PROPERTY.FUNCTIONROOMS
+CarParkingSpaces;PROPERTY.CARPARKINGSPACES

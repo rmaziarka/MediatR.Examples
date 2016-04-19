@@ -1,7 +1,7 @@
 ﻿
 CREATE TABLE #TempCountryLocalised (
-	[CountryCode] NVARCHAR (2) NULL,
-	[LocaleCode] NVARCHAR (2) NULL,
+	[CountryCode] NVARCHAR (2) NOT NULL,
+	[LocaleCode] NVARCHAR (2) NOT NULL,
 	[Value] NVARCHAR (100) NULL
 );
 

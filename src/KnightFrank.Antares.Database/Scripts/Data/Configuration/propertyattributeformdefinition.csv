@@ -1,4 +1,4 @@
-﻿CountryCode;PropertyTypeCode;AttributeLabelKey;Order
+﻿CountryCode;PropertyTypeCode;AttributeNameKey;Order
 GB;Hotel;Area;0
 GB;Hotel;LandArea;1
 GB;Hotel;GuestRooms;2

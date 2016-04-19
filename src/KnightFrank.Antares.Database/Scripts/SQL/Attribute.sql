@@ -1,6 +1,6 @@
 ﻿
 CREATE TABLE #TempAttribute (
-	[NameKey] NVARCHAR (MAX) NOT NULL,
+	[NameKey] NVARCHAR (100) NOT NULL,
 	[LabelKey] NVARCHAR (MAX) NOT NULL
 );
 

@@ -140,6 +140,8 @@
     <None Include="Scripts\Import.txt">
       <DependentUpon>Scripts\Import.tt</DependentUpon>
     </None>
+    <None Include="Scripts\Data\Configuration\user.csv" />
+    <None Include="Scripts\Data\Configuration\roleuser.csv" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
@@ -184,6 +186,12 @@
       <DefaultValue>$(MSBuildProjectDirectory)</DefaultValue>
       <Value>$(SqlCmdVar__1)</Value>
     </SqlCmdVariable>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\SQL\User.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\SQL\RoleUser.sql" />
   </ItemGroup>
   <Import Project="..\packages\OctoPack.3.0.53\tools\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.0.53\tools\OctoPack.targets')" />
   <Target Name="EnsureOctoPackImported" BeforeTargets="BeforeBuild" Condition="'$(OctoPackImported)' == ''">

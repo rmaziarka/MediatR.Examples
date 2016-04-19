@@ -6,5 +6,5 @@ OwnershipType;Leaseholder;en;Leasehold
 ActivityStatus;PreAppraisal;en;Pre-appraisal
 ActivityStatus;MarketAppraisal;en;Market appraisal
 ActivityStatus;NotSelling;en;Not selling
-Division;Residential;en;Residential
-Division;Commercial;en;Commercial
+Division;Residential;en;Residential property
+Division;Commercial;en;Commercial property
