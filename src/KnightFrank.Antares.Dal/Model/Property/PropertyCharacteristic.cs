@@ -1,6 +1,8 @@
-﻿namespace KnightFrank.Antares.Dal.Model.Characteristics
+﻿namespace KnightFrank.Antares.Dal.Model.Property
 {
     using System;
+
+    using KnightFrank.Antares.Dal.Model.Property.Characteristics;
 
     public class PropertyCharacteristic : BaseEntity
     {

@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Dal.Model.Characteristics
+﻿namespace KnightFrank.Antares.Dal.Model.Property.Characteristics
 {
     public class CharacteristicGroup : BaseEntity
     {

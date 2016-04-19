@@ -1,9 +1,8 @@
-﻿namespace KnightFrank.Antares.Dal.Model.Characteristics
+﻿namespace KnightFrank.Antares.Dal.Model.Property.Characteristics
 {
     using System;
     using System.Collections.Generic;
 
-    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Resource;
 
     public class CharacteristicGroupUsage:BaseEntity
