@@ -108,7 +108,9 @@
       "ADDRESS": "Address"
     },
     "VIEW": {
-      "VIEW_PROPERTY": "View property"
+      "VIEW_PROPERTY": "View property",
+      "DETAILS": "Details",
+      "TYPE":  "Type"
     },
     "LIST": {
       "OWNERSHIPS": "Ownerships",

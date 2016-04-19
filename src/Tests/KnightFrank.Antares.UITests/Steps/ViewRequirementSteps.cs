@@ -39,17 +39,12 @@
             this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").OpenNotes();
         }
 
-        [When(@"User adds text to add note area on notes page")]
+        [When(@"User adds note on residential sales requirement page")]
         public void InsertNotesText(Table table)
         {
             var details = table.CreateInstance<RequirementNote>();
-            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").Notes.SetNoteText(details.Description);
-        }
-
-        [When(@"User clicks save button on notes page")]
-        public void SaveNotes()
-        {
-            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").Notes.SaveNote();
+            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
+            page.Notes.SetNoteText(details.Description).SaveNote();
         }
 
         [Then(@"residential sales requirement location details are same as the following")]
@@ -127,10 +122,17 @@
                     .GetRequirementCreateDate());
         }
 
-        [Then(@"Add note area is cleard on notes page")]
-        public void CheckIfAddNoteAreaIsEmpty()
+        [Then(@"Note is displayed in recent notes area on residential sales requirement page")]
+        public void CheckIfNoteAdded()
         {
-            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").Notes.CheckIfAddNoteIsCleared();
+            Assert.Equal(1, this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").Notes.GetNumberOfNotes());
+        }
+
+        [Then(@"Notes number is increased on residential sales requirement page")]
+        public void CheckIfNotesNumberIncreased()
+        {
+            string notesNumber = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").CheckNotesNumber();
+            Assert.Equal("(1)", notesNumber);
         }
     }
 }

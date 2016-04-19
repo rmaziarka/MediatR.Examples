@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|AnyCPU">
+      <Configuration>Debug</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|AnyCPU">
+      <Configuration>Release</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>40065076-3ccc-4b36-a5b3-52b83842d705</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworkIdentifier>Deployment</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>1.0</TargetFrameworkVersion>
+    <PrepareForBuildDependsOn>
+    </PrepareForBuildDependsOn>
+  </PropertyGroup>
+  <Import Condition=" Exists('Deployment.targets') " Project="Deployment.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
+  <!-- vertag<:>start tokens<:>maj.min -->
+  <Import Condition=" Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Deployment\1.1\DeploymentProject.targets') " Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Deployment\1.1\DeploymentProject.targets" />
+  <!-- vertag<:>end -->
+  <ItemGroup>
+    <Folder Include="Scripts\" />
+    <Folder Include="Tools\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Deployment.targets">
+      <Visible>False</Visible>
+    </None>
+    <Content Include="Scripts\Deploy-AzureResourceGroup.ps1" />
+    <Content Include="Templates\azuredeploy.json" />
+    <Content Include="Templates\azuredeploy.parameters.json" />
+    <None Include="DSC\dscmetadata.json" />
+    <Content Include="DSC\KnightFrank-Antares-Vm-IIS-DSCConfiguration.ps1" />
+    <Content Include="DSC\KnightFrank-Antares-Vm-Sql-DSCConfiguration.ps1" />
+    <None Include="DSC\xNetworking\appveyor.yml" />
+    <None Include="DSC\xNetworking\DSCResources\MSFT_xDNSServerAddress\MSFT_xDNSServerAddress.psm1" />
+    <None Include="DSC\xNetworking\DSCResources\MSFT_xDNSServerAddress\MSFT_xDNSServerAddress.schema.mof" />
+    <None Include="DSC\xNetworking\DSCResources\MSFT_xFirewall\MSFT_xFirewall.psm1" />
+    <None Include="DSC\xNetworking\DSCResources\MSFT_xFirewall\MSFT_xFirewall.Schema.mof" />
+    <None Include="DSC\xNetworking\DSCResources\MSFT_xIPAddress\MSFT_xIPAddress.psm1" />
+    <None Include="DSC\xNetworking\DSCResources\MSFT_xIPAddress\MSFT_xIPAddress.schema.mof" />
+    <None Include="DSC\xNetworking\LICENSE" />
+    <None Include="DSC\xNetworking\README.md" />
+    <None Include="DSC\xNetworking\xNetworking.psd1" />
+    <None Include="DSC\xSQLServer\appveyor.yml" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLDatabaseRecoveryModel\MSFT_xSQLDatabaseRecoveryModel.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLDatabaseRecoveryModel\MSFT_xSQLDatabaseRecoveryModel.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerDatabaseOwner\MSFT_xSQLServerDatabaseOwner.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerDatabaseOwner\MSFT_xSQLServerDatabaseOwner.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerDatabasePermissions\MSFT_xSQLServerDatabasePermissions.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerDatabasePermissions\MSFT_xSQLServerDatabasePermissions.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerDatabaseRole\MSFT_xSQLServerDatabaseRole.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerDatabaseRole\MSFT_xSQLServerDatabaseRole.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerFailoverClusterSetup\MSFT_xSQLServerFailoverClusterSetup.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerFailoverClusterSetup\MSFT_xSQLServerFailoverClusterSetup.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerFirewall\MSFT_xSQLServerFirewall.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerFirewall\MSFT_xSQLServerFirewall.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerLogin\MSFT_xSQLServerLogin.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerLogin\MSFT_xSQLServerLogin.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerMaxDop\MSFT_xSQLServerMaxDop.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerMaxDop\MSFT_xSQLServerMaxDop.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerMemory\MSFT_xSQLServerMemory.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerMemory\MSFT_xSQLServerMemory.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerPowerPlan\MSFT_xSQLServerPowerPlan.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerPowerPlan\MSFT_xSQLServerPowerPlan.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerRSConfig\MSFT_xSQLServerRSConfig.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerRSConfig\MSFT_xSQLServerRSConfig.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerRSSecureConnectionLevel\MSFT_xSQLServerRSSecureConnectionLevel.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerRSSecureConnectionLevel\MSFT_xSQLServerRSSecureConnectionLevel.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerSetup\MSFT_xSQLServerSetup.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLServerSetup\MSFT_xSQLServerSetup.schema.mof" />
+    <None Include="DSC\xSQLServer\DSCResources\xSQLServerNetwork\xSQLServerNetwork.psm1" />
+    <None Include="DSC\xSQLServer\DSCResources\xSQLServerNetwork\xSQLServerNetwork.schema.mof" />
+    <None Include="DSC\xSQLServer\en-US\xPDT.strings.psd1" />
+    <None Include="DSC\xSQLServer\en-US\xSQLServer.strings.psd1" />
+    <None Include="DSC\xSQLServer\LICENSE" />
+    <None Include="DSC\xSQLServer\README.md" />
+    <None Include="DSC\xSQLServer\xPDT.psm1" />
+    <None Include="DSC\xSQLServer\xPDT.xml" />
+    <None Include="DSC\xSQLServer\xSQLServer.psd1" />
+    <None Include="DSC\xSQLServer\xSQLServerHelper.psm1" />
+    <None Include="DSC\xStorage\appveyor.yml" />
+    <None Include="DSC\xStorage\DSCResources\MSFT_xDisk\MSFT_xDisk.psm1" />
+    <None Include="DSC\xStorage\DSCResources\MSFT_xDisk\MSFT_xDisk.schema.mof" />
+    <None Include="DSC\xStorage\DSCResources\MSFT_xMountImage\MSFT_xMountImage.psm1" />
+    <None Include="DSC\xStorage\DSCResources\MSFT_xMountImage\MSFT_xMountImage.schema.mof" />
+    <None Include="DSC\xStorage\DSCResources\MSFT_xWaitForDisk\MSFT_xWaitForDisk.psm1" />
+    <None Include="DSC\xStorage\DSCResources\MSFT_xWaitForDisk\MSFT_xWaitForDisk.schema.mof" />
+    <None Include="DSC\xStorage\LICENSE" />
+    <None Include="DSC\xStorage\README.md" />
+    <None Include="DSC\xStorage\Resources\ExampleScript.ps1" />
+    <None Include="DSC\xStorage\Resources\xDscResourceDesigner_CreateScript.ps1" />
+    <None Include="DSC\xStorage\xStorage.psd1" />
+    <None Include="DSC\xWebAdministration\appveyor.yml" />
+    <None Include="DSC\xWebAdministration\DSCResources\Helper.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xIisFeatureDelegation\MSFT_xIisFeatureDelegation.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xIisFeatureDelegation\MSFT_xIisFeatureDelegation.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xIIsHandler\MSFT_xIisHandler.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xIIsHandler\MSFT_xIisHandler.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xIisMimeTypeMapping\MSFT_xIisMimeTypeMapping.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xIisMimeTypeMapping\MSFT_xIisMimeTypeMapping.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xIisModule\MSFT_xIisModule.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xIisModule\MSFT_xIisModule.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xIisModule\xIisModuleDesigner.ps1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xSSLSettings\MSFT_xSSLSettings.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xSSLSettings\MSFT_xSSLSettings.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebApplication\MSFT_xWebApplication.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebApplication\MSFT_xWebApplication.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebAppPoolDefaults\MSFT_xWebAppPoolDefaults.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebAppPoolDefaults\MSFT_xWebAppPoolDefaults.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebAppPool\MSFT_xWebAppPool.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebAppPool\MSFT_xWebAppPool.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebConfigKeyValue\MSFT_xWebConfigKeyValue.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebConfigKeyValue\MSFT_xWebConfigKeyValue.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebSiteDefaults\MSFT_xWebSiteDefaults.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebSiteDefaults\MSFT_xWebSiteDefaults.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebsite\MSFT_xWebsite.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebsite\MSFT_xWebsite.schema.mof" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebVirtualDirectory\MSFT_xWebVirtualDirectory.psm1" />
+    <None Include="DSC\xWebAdministration\DSCResources\MSFT_xWebVirtualDirectory\MSFT_xWebVirtualDirectory.schema.mof" />
+    <None Include="DSC\xWebAdministration\LICENSE" />
+    <None Include="DSC\xWebAdministration\README.md" />
+    <None Include="DSC\xWebAdministration\xWebAdministration.psd1" />
+    <None Include="resourcegroup.nuspec" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Tools\AzCopy.exe" />
+    <Content Include="Tools\Microsoft.Data.Edm.dll">
+      <Visible>False</Visible>
+    </Content>
+    <Content Include="Tools\Microsoft.Data.OData.dll">
+      <Visible>False</Visible>
+    </Content>
+    <Content Include="Tools\Microsoft.Data.Services.Client.dll">
+      <Visible>False</Visible>
+    </Content>
+    <Content Include="Tools\Microsoft.WindowsAzure.Storage.dll">
+      <Visible>False</Visible>
+    </Content>
+    <Content Include="Tools\Microsoft.WindowsAzure.Storage.DataMovement.dll">
+      <Visible>False</Visible>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  <Target Name="GetReferenceAssemblyPaths" />
+</Project>
