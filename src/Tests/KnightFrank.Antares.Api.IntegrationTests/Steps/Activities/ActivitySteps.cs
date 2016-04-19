@@ -36,7 +36,7 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"Activity for '(.*)' property exists in data base")]
+        [Given(@"Activity for '(.*)' property exists in database")]
         public void GivenActivityForPropertyExistsInDataBase(string id)
         {
             Guid activityStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["PreAppraisal"];
@@ -120,12 +120,13 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [Then(@"Activities list should be the same as in DB")]
+        [Then(@"Activities list should be the same as in database")]
         public void ThenActivitiesReturnedShouldBeTheSameAsInDatabase()
         {
             var propertyFromResponse = JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent());
 
-            var activitiesFromDatabase = this.scenarioContext.Get<Activity>("Added Activity");
+            Activity activitiesFromDatabase =
+                this.fixture.DataContext.Properties.Single(prop => prop.Id.Equals(propertyFromResponse.Id)).Activities.First();
 
             AssertionOptions.AssertEquivalencyUsing(
                 options => options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>());
@@ -135,28 +136,26 @@
                 options => options.Excluding(x => x.Property).Excluding(x => x.ActivityStatus));
         }
 
-        [Then(@"The created Activity is saved in data base")]
+        [Then(@"The created Activity is saved in database")]
         public void ThenTheCreatedActivityIsSavedInDataBase()
         {
             var activity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
             Activity actualActivity = this.fixture.DataContext.Activities.Single(x => x.Id.Equals(activity.Id));
 
-            actualActivity.ShouldBeEquivalentTo(
-                activity,
-                options => options.Excluding(x => x.Property).Excluding(x => x.ActivityStatus));
+            actualActivity.ShouldBeEquivalentTo(activity, options => options
+                .Excluding(x => x.Property).Excluding(x => x.ActivityStatus));
 
             actualActivity.ActivityStatus.Code.ShouldBeEquivalentTo("PreAppraisal");
         }
 
-        [Then(@"The received Activities should be the same as in DB")]
+        [Then(@"The received Activities should be the same as in database")]
         public void ThenTheReceivedActivitiesShouldBeTheSameAsInDataBase()
         {
-            var expectedActivity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
-            Activity actualActivity = this.fixture.DataContext.Activities.Single(x => x.Id.Equals(expectedActivity.Id));
+            var activity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
+            Activity actualActivity = this.fixture.DataContext.Activities.Single(x => x.Id.Equals(activity.Id));
 
-            actualActivity.ShouldBeEquivalentTo(
-                expectedActivity,
-                options => options.Excluding(a => a.ActivityStatus).Excluding(a => a.Contacts).Excluding(a => a.Property));
+            actualActivity.ShouldBeEquivalentTo(activity, options => options
+                .Excluding(a => a.ActivityStatus).Excluding(a => a.Contacts).Excluding(a => a.Property));
         }
 
         private void GetActivityResponse(string activityId)

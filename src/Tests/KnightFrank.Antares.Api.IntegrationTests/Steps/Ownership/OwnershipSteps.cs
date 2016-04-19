@@ -69,12 +69,13 @@
             this.scenarioContext.Set(ownership, "Added Ownership");
         }
 
-        [Then(@"Ownership list should be the same as in DB")]
+        [Then(@"Ownership list should be the same as in database")]
         public void ThenOwnershipReturnedShouldBeTheSameAsInDatabase()
         {
             var propertyFromResponse = JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent());
 
-            var ownershipFromDatabase = this.scenarioContext.Get<ICollection<Ownership>>("Added Ownership List");
+            ICollection<Ownership> ownershipFromDatabase =
+                this.fixture.DataContext.Properties.Single(prop => prop.Id.Equals(propertyFromResponse.Id)).Ownerships;
 
             propertyFromResponse.Ownerships.ShouldAllBeEquivalentTo(ownershipFromDatabase, options => options
                 .Excluding(x => x.Property)
