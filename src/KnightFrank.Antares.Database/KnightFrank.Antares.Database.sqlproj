@@ -140,8 +140,12 @@
     <None Include="Scripts\Import.txt">
       <DependentUpon>Scripts\Import.tt</DependentUpon>
     </None>
-    <None Include="Scripts\Data\Configuration\user.csv" />
-    <None Include="Scripts\Data\Configuration\roleuser.csv" />
+    <None Include="Scripts\Data\Configuration\user.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\roleuser.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
