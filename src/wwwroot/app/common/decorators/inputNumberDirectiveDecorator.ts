@@ -2,16 +2,19 @@
 
 module Antares.Common.Decorators {
     export class InputNumberDirectiveDecorator {
-        public static decoratorFunction($delegate: any) {
+        public static decoratorFunction($delegate: any, $compile: any) {
             var directive: ng.IDirective = $delegate[0];
             var link: ng.IDirectivePrePost = directive.link;
             var baseLinkPre = link.pre;
+            
 
             directive.compile = () => {
 
                 return function (scope: ng.IScope, el: ng.IAugmentedJQuery, attrs: ng.IAttributes) {
-                    if (attrs['type'] === "number") {
-                        el.attr('ddp-decimal', "");
+
+                    if (attrs['type'] === 'number') {
+                        el.attr('ddp-decimal', '');
+                        $compile(el)(scope);
                     }
 
                     baseLinkPre.apply(this, arguments);

@@ -4,6 +4,9 @@ module Antares.Common.Directive {
     export class DecimalDirective implements ng.IDirective {
         restrict = 'A';
         require = 'ngModel';
+        // terminal and priority must be set because this attribute is dynamically added
+        terminal = true;
+        priority = 1000;
         link = (scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ctrl: ng.INgModelController) => {
 
             ctrl.$parsers.unshift((viewValue: any) => {
