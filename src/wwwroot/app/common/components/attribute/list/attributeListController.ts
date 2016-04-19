@@ -12,7 +12,7 @@ module Antares.Common.Component {
         private attributes: Business.Attribute[];
 
         constructor(
-            componentRegistry: Antares.Core.Service.ComponentRegistry,
+            componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService) {
 
