@@ -43,7 +43,7 @@ Scenario: Create property with ownership and activity
 	When User selects contacts for ownership on view property page
 		| FirstName | Surname   |
 		| Arthur    | Pendragon |
-		And User fills in ownership details on ownership details page
+		And User fills in ownership details on view property page
 			| Type     | Current | PurchasePrice | PurchaseDate |
 			| Freehold | true    | 1000000       | 15-01-2014   |
 	Then Ownership details should contain following data on view property page
