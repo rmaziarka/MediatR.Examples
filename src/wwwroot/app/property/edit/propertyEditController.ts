@@ -5,10 +5,13 @@ module Antares.Property {
     import Business = Common.Models.Business;
     import EnumTypeItem = Common.Models.Business.EnumTypeItem;
 
-    export class PropertyEditController {
+    export class PropertyEditController extends Core.WithPanelsBaseController {
         public entityTypeCode: string = 'Property';
         public property: Business.Property;
         public userData: Dto.IUserData;
+
+        components: any;
+        componentIds: any;
 
         private propertyResource: Common.Models.Resources.IPropertyResourceClass;
         private propertyTypes: any[];
@@ -16,8 +19,12 @@ module Antares.Property {
         private attributes: Dto.IAttribute[];
 
         constructor(
+            componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
+            private $scope: ng.IScope,
             private $state: ng.ui.IStateService) {
+
+            super(componentRegistry, $scope);
 
             this.propertyResource = dataAccessService.getPropertyResource();
             this.loadDivisions();
@@ -28,6 +35,8 @@ module Antares.Property {
             this.property.divisionId = division.id;
             this.property.division = division;
             this.property.propertyTypeId = null;
+            if (this.components.attributeList())
+                this.components.attributeList().clearAttributes();
             this.loadPropertyTypes();
         }
 
@@ -49,14 +58,7 @@ module Antares.Property {
         }
 
         loadAttributes = () => {
-            this.propertyResource
-                .getAttributes({
-                    countryCode: this.userData.country, propertyTypeId: this.property.propertyTypeId
-                }, null)
-                .$promise
-                .then((attributes: any) => {
-                    this.attributes = attributes.attributes;
-                });
+            this.components.attributeList().loadAttributes();
         }
 
         public save() {
@@ -66,6 +68,18 @@ module Antares.Property {
                 .then((property: Dto.IProperty) => {
                     this.$state.go('app.property-view', property);
                 });
+        }
+
+        defineComponentIds() {
+            this.componentIds = {
+                attributeListId: 'editProperty:attributeListComponent'
+            };
+        }
+
+        defineComponents() {
+            this.components = {
+                attributeList: () => { return this.componentRegistry.get(this.componentIds.attributeListId); }
+            };
         }
     }
 

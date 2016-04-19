@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using KnightFrank.Antares.UITests.Extensions;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
@@ -12,7 +14,8 @@
     {
         private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "[ng-show *= 'isLoading']");
         private readonly ElementLocator locationRequirementsDetails = new ElementLocator(Locator.XPath, "//*[contains(@translate, 'LOCATION')]/..//span");
-        private readonly ElementLocator notes = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator notesButton = new ElementLocator(Locator.Id, "notes-button");
+        private readonly ElementLocator notesNumber = new ElementLocator(Locator.CssSelector, "#notes-button .ng-binding");
         private readonly ElementLocator propertyRequirementsDetails = new ElementLocator(Locator.XPath, "//*[contains(@translate, 'BASIC_REQUIREMENTS')]/..//div[contains(@class, 'ng-binding')]");
         private readonly ElementLocator propertyRequirementsDetailsDescription = new ElementLocator(Locator.XPath, "//*[contains(@translate, 'DESCRIPTION')]/../p");
         private readonly ElementLocator requirementApplicants = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'contacts'] div");
@@ -68,8 +71,14 @@
 
         public ViewRequirementPage OpenNotes()
         {
-            this.Driver.GetElement(this.notes).Click();
+            this.Driver.GetElement(this.notesButton).Click();
             return this;
+        }
+
+        public string CheckNotesNumber()
+        {
+            this.Driver.WaitForAngularToFinish();
+            return this.Driver.GetElement(this.notesNumber).Text;
         }
     }
 }

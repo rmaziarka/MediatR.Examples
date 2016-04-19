@@ -7,7 +7,7 @@ module Antares {
     describe('propertyEditController', () => {
         var controller: Property.PropertyEditController;
         
-        beforeEach(inject((dataAccessService: Services.DataAccessService) => {
+        beforeEach(inject(($rootScope: ng.IRootScopeService, dataAccessService: Services.DataAccessService, componentRegistry: Core.Service.ComponentRegistry) => {
             var controllerFunction = Property.PropertyEditController;
             controller = Object.create(controllerFunction.prototype);
             controller.userData = <Dto.IUserData>{
@@ -15,8 +15,9 @@ module Antares {
             }; 
             var property = <Dto.IProperty>{};
             controller.property = new Business.Property();
+            var scope: ng.IScope = $rootScope.$new();
             
-            controllerFunction.apply(controller, [dataAccessService]);
+            controllerFunction.apply(controller, [componentRegistry, dataAccessService, scope]);
         }));
 
         describe('when changeDivision', () =>{

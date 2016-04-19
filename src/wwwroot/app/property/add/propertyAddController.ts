@@ -3,9 +3,9 @@
 module Antares.Property {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
-    import EnumTypeItem = Common.Models.Business.EnumTypeItem;    
+    import EnumTypeItem = Common.Models.Business.EnumTypeItem;
 
-    export class PropertyAddController {
+    export class PropertyAddController extends Core.WithPanelsBaseController {
         public entityTypeCode: string = 'Property';
         public property: Business.Property = new Business.Property();
 
@@ -16,9 +16,14 @@ module Antares.Property {
         public userData: Dto.IUserData;
 
         constructor(
+            componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
+            private $scope: ng.IScope,
             private $state: ng.ui.IStateService) {
 
+            super(componentRegistry, $scope);
+
+            this.property.division.code = this.userData.division.code;
             this.property.divisionId = this.userData.division.id;
             this.property.division = this.userData.division;
             this.propertyResource = dataAccessService.getPropertyResource();
@@ -30,6 +35,8 @@ module Antares.Property {
             this.property.divisionId = division.id;
             this.property.division = division;
             this.property.propertyTypeId = null;
+            if (this.components.attributeList())
+                this.components.attributeList().clearAttributes();
             this.loadPropertyTypes();
         }
 
@@ -51,14 +58,7 @@ module Antares.Property {
         }
 
         loadAttributes = () => {
-            this.propertyResource
-                .getAttributes({
-                    countryCode: this.userData.country, propertyTypeId: this.property.propertyTypeId
-                }, null)
-                .$promise
-                .then((attributes: any) => {
-                    this.attributes = attributes.attributes;
-                });
+            this.components.attributeList().loadAttributes();
         }
 
         public save() {
@@ -68,6 +68,18 @@ module Antares.Property {
                 .then((property: Dto.IProperty) => {
                     this.$state.go('app.property-view', property);
                 });
+        }
+
+        defineComponentIds() {
+            this.componentIds = {
+                attributeListId: 'editProperty:attributeListComponent'
+            };
+        }
+
+        defineComponents() {
+            this.components = {
+                attributeList: () => { return this.componentRegistry.get(this.componentIds.attributeListId); }
+            };
         }
     }
 

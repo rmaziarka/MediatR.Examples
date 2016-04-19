@@ -1,0 +1,54 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "VmSqlAdminUserName": {
+      "value": "kf-antares"
+    },
+    "VmSqlAdminPassword": {
+      "value": "$Kf@admin"
+    },
+    "VmIISAdminUserName": {
+      "value": "kf-antares"
+    },
+    "VmIISAdminPassword": {
+      "value": "$Kf@admin"
+    },
+    "EnvironmentPrefix": {
+      "value": "test"
+    },
+    "domainToJoin": {
+      "value": "a"
+    },
+    "domainUsername": {
+      "value": "a"
+    },
+    "domainPassword": {
+      "value": "a"
+    },
+    "ouPath": {
+      "value": "a"
+    },
+    "SqlUserPassword": {
+      "value": "$Kf@admin2016"
+    },
+    "OctopusThumbprint": {
+      "value": "C478B5952045B390F15F0C444D4917E911713EF0"
+    },
+    "IsoFileName": {
+      "value": "en_sql_server_2014_developer_edition_with_service_pack_1_x64_dvd_6668542.iso"
+    },
+    "SqlInstanceName": {
+      "value": "MSSQLSERVER"
+    },
+    "CommonShareUrl": {
+      "value": "\\\\kfantarescommon.file.core.windows.net\\iso"
+    },
+    "CommonShareUserName": {
+      "value": "kfantarescommon"
+    },
+    "CommonShareKey": {
+      "value": "IQURddUmGFAe1d3/+OC2Ay1gT9YfdwPi66Nzhy+3vWKgCcy6YA02i3EfLStunvNjCw4M9RW7pxe6dL5z3Y0X9w=="
+    }
+  }
+}

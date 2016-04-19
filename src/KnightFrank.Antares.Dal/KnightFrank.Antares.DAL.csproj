@@ -59,13 +59,6 @@
     <Compile Include="Model\Attribute\Attribute.cs" />
     <Compile Include="Model\Attribute\AttributeValues.cs" />
     <Compile Include="Model\BaseAuditableEntity.cs" />
-    <Compile Include="Model\Characteristics\Characteristic.cs" />
-    <Compile Include="Model\Characteristics\CharacteristicGroup.cs" />
-    <Compile Include="Model\Characteristics\CharacteristicGroupItem.cs" />
-    <Compile Include="Model\Characteristics\CharacteristicGroupLocalised.cs" />
-    <Compile Include="Model\Characteristics\CharacteristicGroupUsage.cs" />
-    <Compile Include="Model\Characteristics\CharacteristicLocalised.cs" />
-    <Compile Include="Model\Characteristics\PropertyCharacteristic.cs" />
     <Compile Include="Model\Common\IAuditableEntity.cs" />
     <Compile Include="Model\Common\ILocaled.cs" />
     <Compile Include="Model\Company\Company.cs" />
@@ -78,7 +71,8 @@
     <Compile Include="Model\Configuration\Attribute\AttributeValuesConfiguration.cs" />
     <Compile Include="Model\Configuration\Attribute\AttributeConfiguration.cs" />
     <Compile Include="Model\Configuration\BaseAuditableEntityConfiguration.cs" />
-    <Compile Include="Model\Configuration\Characteristics\PropertyCharacteristicConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\PropertyCharacteristicConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\RequirementNoteConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\PropertyAttributeFormConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\PropertyAttributeFormDefinitionConfiguration.cs" />
@@ -108,6 +102,13 @@
     <Compile Include="Model\Enum\EnumLocalised.cs" />
     <Compile Include="Model\Enum\EnumType.cs" />
     <Compile Include="Model\Enum\EnumTypeItem.cs" />
+    <Compile Include="Model\Property\Characteristics\Characteristic.cs" />
+    <Compile Include="Model\Property\Characteristics\CharacteristicGroup.cs" />
+    <Compile Include="Model\Property\Characteristics\CharacteristicGroupItem.cs" />
+    <Compile Include="Model\Property\Characteristics\CharacteristicGroupLocalised.cs" />
+    <Compile Include="Model\Property\Characteristics\CharacteristicGroupUsage.cs" />
+    <Compile Include="Model\Property\Characteristics\CharacteristicLocalised.cs" />
+    <Compile Include="Model\Property\PropertyCharacteristic.cs" />
     <Compile Include="Model\Property\RequirementNote.cs" />
     <Compile Include="Model\Property\Activity.cs" />
     <Compile Include="Model\Property\Ownership.cs" />
@@ -149,7 +150,6 @@
     <None Include="KnightFrank.Antares.Dal.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\OctoPack.3.0.53\tools\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.0.53\tools\OctoPack.targets')" />
   <Target Name="EnsureOctoPackImported" BeforeTargets="BeforeBuild" Condition="'$(OctoPackImported)' == ''">

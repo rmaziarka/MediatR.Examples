@@ -1,0 +1,3 @@
+<div ng-repeat="attribute in vm.attributes | orderBy: 'order'">
+    <range-attribute attribute="attribute" min-value="vm.property.attributeValues[attribute.min]" max-value="vm.property.attributeValues[attribute.max]"></range-attribute>
+</div>

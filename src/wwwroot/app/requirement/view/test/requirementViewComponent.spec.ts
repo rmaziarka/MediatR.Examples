@@ -4,17 +4,24 @@ module Antares {
     import RequirementViewController = Requirement.View.RequirementViewController;
     import Business = Common.Models.Business;
 
-    describe('Given view requirement page is loaded', () => {
+    describe('Given view requirement page is loaded', () =>{
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
+            compile: ng.ICompileService,
             $http: ng.IHttpBackendService,
             filter: ng.IFilterService;
 
         var controller: RequirementViewController;
 
         var pageObjectSelectors = {
-            header: {
-                notesButton: '#notes-button'
+            header : {
+                notesButton : '#notes-button'
+            },
+            notes : {
+                noteAddDescription: '#requirement-note-add textarea#note-description',
+                noteAddButton: '#requirement-note-add button#note-add-button',
+                noteList: '#requirement-notes',
+                noteItems: '#requirement-notes [data-type="note-item"]'
             }
         }
 
@@ -136,5 +143,129 @@ module Antares {
             });
         });
 
+        describe('and notes button is clicked', () => {
+            var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate({
+                address: Mock.AddressForm.FullAddress
+            });
+            var addNoteUrlRegex = new RegExp('api/requirements/' + requirementMock.id);
+
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService,
+                $httpBackend: ng.IHttpBackendService,
+                $filter: ng.IFilterService) => {
+
+                filter = $filter;
+                $http = $httpBackend;
+                compile = $compile;
+
+                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
+
+                scope = $rootScope.$new();
+            }));
+
+            it('then note list is displayed', () => {
+                // arrange
+                requirementMock.requirementNotes = [
+                    new Business.RequirementNote({ id : 'note1', requirementId : '111', description : 'descr 1', createdDate : new Date(), user : null }),
+                    new Business.RequirementNote({ id : 'note2', requirementId : '111', description : 'descr 2', createdDate : new Date(), user : null })
+                ];
+
+                scope['requirement'] = requirementMock;
+                element = compile('<requirement-view requirement="requirement"></requirement-view>')(scope);
+                scope.$apply();
+
+                // assert
+                var noteListElement = element.find(pageObjectSelectors.notes.noteList);
+                var noteItems = element.find(pageObjectSelectors.notes.noteItems);
+
+                expect(noteListElement.length).toBe(1);
+                expect(noteItems.length).toBe(2);
+            });
+
+            it('and new note is added then note is added to list', () => {
+                // arrange
+                requirementMock.requirementNotes = [
+                    new Business.RequirementNote({ id: 'note1', requirementId: '111', description: 'descr 1', createdDate: new Date(), user: null }),
+                    new Business.RequirementNote({ id: 'note2', requirementId: '111', description: 'descr 2', createdDate: new Date(), user: null })
+                ];
+
+                scope['requirement'] = requirementMock;
+                element = compile('<requirement-view requirement="requirement"></requirement-view>')(scope);
+                scope.$apply();
+
+                var expectedResponse = new Business.RequirementNote();
+                expectedResponse.id = 'newNoteId';
+                $http.expectPOST(addNoteUrlRegex).respond(201, expectedResponse);
+
+                // act
+                element.find(pageObjectSelectors.notes.noteAddDescription)
+                    .val('abc').trigger('input').trigger('change').trigger('blur');
+                element.find(pageObjectSelectors.notes.noteAddButton).click();
+                scope.$apply();
+                $http.flush();
+
+                // assert
+                var noteItems = element.find(pageObjectSelectors.notes.noteItems);
+                var addedItem = _.find(requirementMock.requirementNotes, (item) => { return item.id === expectedResponse.id });
+
+                expect(noteItems.length).toBe(3);
+                expect(requirementMock.requirementNotes.length).toBe(3);
+                expect(addedItem).toBeDefined();
+                expect(requirementMock.requirementNotes.indexOf(addedItem)).toBe(0);
+            });
+
+            it('and new note is added then notes count within notes button is updated', () => {
+                // arrange
+                requirementMock.requirementNotes = [
+                    new Business.RequirementNote({ id: 'note1', requirementId: '111', description: 'descr 1', createdDate: new Date(), user: null }),
+                    new Business.RequirementNote({ id: 'note2', requirementId: '111', description: 'descr 2', createdDate: new Date(), user: null })
+                ];
+
+                scope['requirement'] = requirementMock;
+                element = compile('<requirement-view requirement="requirement"></requirement-view>')(scope);
+                scope.$apply();
+
+                var expectedResponse = new Business.RequirementNote();
+                expectedResponse.id = 'newNoteId';
+                $http.expectPOST(addNoteUrlRegex).respond(201, expectedResponse);
+
+                // act
+                element.find(pageObjectSelectors.notes.noteAddDescription)
+                    .val('abc').trigger('input').trigger('change').trigger('blur');
+                element.find(pageObjectSelectors.notes.noteAddButton).click();
+                scope.$apply();
+                $http.flush();
+
+                // assert
+                var buttonText = element.find(pageObjectSelectors.header.notesButton + ' span');
+
+                expect(buttonText.length).toBe(1);
+                expect(buttonText.text()).toBe('(3)');
+            });
+
+            it('and notes button is clicked then description field is empty', () => {
+                // arrange
+                requirementMock.requirementNotes = [
+                    new Business.RequirementNote({ id: 'note1', requirementId: '111', description: 'descr 1', createdDate: new Date(), user: null }),
+                    new Business.RequirementNote({ id: 'note2', requirementId: '111', description: 'descr 2', createdDate: new Date(), user: null })
+                ];
+
+                scope['requirement'] = requirementMock;
+                element = compile('<requirement-view requirement="requirement"></requirement-view>')(scope);
+                scope.$apply();
+
+                // act
+                var descriptionElement = element.find(pageObjectSelectors.notes.noteAddDescription);
+                descriptionElement.val('abc').trigger('input').trigger('change').trigger('blur');
+                scope.$apply();
+
+                element.find(pageObjectSelectors.header.notesButton).click();
+                scope.$apply();
+
+                // assert
+                expect(descriptionElement.text()).toBe('');
+            });
+        });
     });
 }
