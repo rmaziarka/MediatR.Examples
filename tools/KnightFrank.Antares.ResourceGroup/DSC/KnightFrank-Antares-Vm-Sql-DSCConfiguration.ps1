@@ -112,5 +112,29 @@ Node localhost
 		DriveLetter = "s:"
 		Ensure = "Absent"
 	}
+	
+	Script AddSqlRolesToLogin
+	{
+		DependsOn = "[xSQLServerLogin]SetupSqlLogin"
+		TestScript = { $false }
+		GetScript = {@{Result = "AddSqlRolesToLogin"}}
+		SetScript = {
+			$sqlConnection = "localhost"
+			if ($using:sqlInstanceName -ne "MSSQLSERVER"){
+				$sqlConnection = "localhost/$using:sqlInstanceName"
+			}
+			$sqlServer = new-object Microsoft.SqlServer.Management.Smo.Server $sqlConnection
+			$userName = $using:sqlLoginCredential.UserName
+			$login = $sqlServer.Logins | where { $_.Name -eq $userName }
+			if (!$login){
+				throw "SQL Login $userName does not exist." 
+			}
+			
+			$login.AddToRole('dbcreator');
+			$login.AddToRole('bulkadmin');
+
+			Write-Verbose "Added $userName to server roles dbcreator and bulkadmin"
+		}
+	}
 }
 }
