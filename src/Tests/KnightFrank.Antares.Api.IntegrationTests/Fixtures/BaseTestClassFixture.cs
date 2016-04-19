@@ -14,9 +14,7 @@
 
         public BaseTestClassFixture()
         {
-            Database.SetInitializer(new DropCreateSeedDatabaseAlwaysInitializer());
             this.DataContext = new KnightFrankContext();
-            this.DataContext.Database.Initialize(false);
 
             this.transaction = this.DataContext.Database.BeginTransaction();
 

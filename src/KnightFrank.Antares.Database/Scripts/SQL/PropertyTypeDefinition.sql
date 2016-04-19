@@ -1,11 +1,9 @@
 ﻿
-CREATE TABLE #TempPropertyTypeDefinition (
-
-	[Id] UNIQUEIDENTIFIER  NOT NULL DEFAULT (newsequentialid()),
-	[PropertyTypeId] UNIQUEIDENTIFIER  NOT NULL ,
-	[CountryId] UNIQUEIDENTIFIER  NOT NULL ,
-	[DivisionId] UNIQUEIDENTIFIER  NOT NULL ,
-	[Order] SMALLINT  NOT NULL ,
+CREATE TABLE #TempPropertyTypeDefinition (	
+	[PropertyTypeCode] NVARCHAR (50) NOT NULL,
+	[CountryCode] NVARCHAR (2) NOT NULL,
+	[Division] NVARCHAR (40) NOT NULL,
+	[Order] SMALLINT NOT NULL
 );
 
 ALTER TABLE PropertyTypeDefinition NOCHECK CONSTRAINT ALL
@@ -21,7 +19,20 @@ BULK INSERT #TempPropertyTypeDefinition
     )
     	
 MERGE dbo.PropertyTypeDefinition AS T
-	USING #TempPropertyTypeDefinition AS S	
+	USING 
+	(
+		SELECT DISTINCT
+		P.Id AS PropertyTypeId,	
+		C.Id AS CountryId,
+		I.Id AS DivisionId,
+		temp.[Order]
+		FROM #TempPropertyTypeDefinition temp
+		JOIN Country C ON C.IsoCode = temp.CountryCode
+		JOIN EnumTypeItem I ON I.Code = temp.Division
+		JOIN EnumType E ON E.Id = I.EnumTypeId
+		JOIN PropertyType P ON P.Code = temp.PropertyTypeCode
+		WHERE E.Code = 'Division'
+	) AS S	
 	ON 
 	(
         (T.Id = S.Id)
@@ -34,8 +45,8 @@ MERGE dbo.PropertyTypeDefinition AS T
 		T.[Order] = S.[Order]
 
 	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([Id], [PropertyTypeId], [CountryId], [DivisionId], [Order])
-		VALUES ([Id], [PropertyTypeId], [CountryId], [DivisionId], [Order])
+		INSERT ([PropertyTypeId], [CountryId], [DivisionId], [Order])
+		VALUES ([PropertyTypeId], [CountryId], [DivisionId], [Order])
 
     WHEN NOT MATCHED BY SOURCE THEN DELETE;
     

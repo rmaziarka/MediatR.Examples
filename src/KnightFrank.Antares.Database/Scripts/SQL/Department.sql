@@ -1,9 +1,7 @@
 ﻿
 CREATE TABLE #TempDepartment (
-
-	[Id] UNIQUEIDENTIFIER  NOT NULL DEFAULT (newsequentialid()),
-	[Name] NVARCHAR (255) NULL ,
-	[CountryId] UNIQUEIDENTIFIER  NOT NULL ,
+	[Name] NVARCHAR (255) NULL,
+	[CountryCode] NVARCHAR (2) NOT NULL
 );
 
 ALTER TABLE Department NOCHECK CONSTRAINT ALL
@@ -19,10 +17,15 @@ BULK INSERT #TempDepartment
     )
     	
 MERGE dbo.Department AS T
-	USING #TempDepartment AS S	
+	USING (
+		SELECT C.Id AS CountryId, Temp.Name
+		FROM #TempDepartment Temp
+		JOIN Country C ON Temp.CountryCode = C.IsoCode
+	)
+	AS S	
 	ON 
 	(
-        (T.Id = S.Id)
+        (T.CountryId = S.CountryId AND T.Name = S.Name)
 	)
 	WHEN MATCHED THEN
 		UPDATE SET 
@@ -30,8 +33,8 @@ MERGE dbo.Department AS T
 		T.[CountryId] = S.[CountryId]
 
 	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([Id], [Name], [CountryId])
-		VALUES ([Id], [Name], [CountryId])
+		INSERT ([Name], [CountryId])
+		VALUES ([Name], [CountryId])
 
     WHEN NOT MATCHED BY SOURCE THEN DELETE;
     

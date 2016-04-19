@@ -126,35 +126,6 @@
     <None Include="Scripts\Data\Configuration\PropertyAttributeForm.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\mergeTemplate.tt" />
-    <None Include="Scripts\Import.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastOutputs>
-.\Import.txt
-.\SQL\AddressField.sql
-.\SQL\AddressFieldDefinition.sql
-.\SQL\AddressFieldLabel.sql
-.\SQL\AddressForm.sql
-.\SQL\AddressFormEntityType.sql
-.\SQL\Attribute.sql
-.\SQL\Business.sql
-.\SQL\Contact.sql
-.\SQL\Country.sql
-.\SQL\CountryLocalised.sql
-.\SQL\Department.sql
-.\SQL\EnumLocalised.sql
-.\SQL\EnumType.sql
-.\SQL\EnumTypeItem.sql
-.\SQL\Locale.sql
-.\SQL\PropertyAttributeForm.sql
-.\SQL\PropertyAttributeFormDefinition.sql
-.\SQL\PropertyType.sql
-.\SQL\PropertyTypeDefinition.sql
-.\SQL\PropertyTypeLocalised.sql
-.\SQL\Role.sql
-</LastOutputs>
-    </None>
-    <None Include="Scripts\mergeGenerator.tt" />
     <None Include="KnightFrank.Antares.Database.publish.xml" />
     <None Include="Scripts\Data\Configuration\AddressFieldDefinition.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

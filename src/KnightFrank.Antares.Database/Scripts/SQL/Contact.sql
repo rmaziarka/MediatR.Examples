@@ -1,10 +1,9 @@
 ﻿
 CREATE TABLE #TempContact (
-
 	[Id] UNIQUEIDENTIFIER  NOT NULL DEFAULT (newsequentialid()),
-	[FirstName] NVARCHAR (MAX) NULL ,
-	[Surname] NVARCHAR (MAX) NULL ,
-	[Title] NVARCHAR (MAX) NULL ,
+	[FirstName] NVARCHAR (MAX) NULL,
+	[Surname] NVARCHAR (MAX) NULL,
+	[Title] NVARCHAR (MAX) NULL
 );
 
 ALTER TABLE Contact NOCHECK CONSTRAINT ALL

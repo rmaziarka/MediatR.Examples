@@ -1,10 +1,8 @@
 ﻿
 CREATE TABLE #TempPropertyTypeLocalised (
-
-	[Id] UNIQUEIDENTIFIER  NOT NULL DEFAULT (newsequentialid()),
-	[PropertyTypeId] UNIQUEIDENTIFIER  NOT NULL ,
-	[LocaleId] UNIQUEIDENTIFIER  NOT NULL ,
-	[Value] NVARCHAR (100) NOT NULL ,
+	[PropertyTypeCode] NVARCHAR (50) NOT NULL,
+	[LocaleCode] NVARCHAR (2) NOT NULL,
+	[Value] NVARCHAR (100) NOT NULL
 );
 
 ALTER TABLE PropertyTypeLocalised NOCHECK CONSTRAINT ALL
@@ -20,10 +18,20 @@ BULK INSERT #TempPropertyTypeLocalised
     )
     	
 MERGE dbo.PropertyTypeLocalised AS T
-	USING #TempPropertyTypeLocalised AS S	
+	USING 
+	(
+		SELECT 
+		P.Id AS PropertyTypeId,
+		L.Id AS LocaleId,
+		[Value]
+		FROM TempPropertyTypeLocalised Temp
+		JOIN Locale L ON L.IsoCode = Temp.LocaleCode
+		JOIN PropertyType P ON P.Code = Temp.PropertyTypeCode
+	)
+	AS S	
 	ON 
 	(
-        (T.Id = S.Id)
+        (T.[PropertyTypeId] = S.[PropertyTypeId] AND T.[LocaleId] = S.[LocaleId])
 	)
 	WHEN MATCHED THEN
 		UPDATE SET 
@@ -32,8 +40,8 @@ MERGE dbo.PropertyTypeLocalised AS T
 		T.[Value] = S.[Value]
 
 	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([Id], [PropertyTypeId], [LocaleId], [Value])
-		VALUES ([Id], [PropertyTypeId], [LocaleId], [Value])
+		INSERT ([PropertyTypeId], [LocaleId], [Value])
+		VALUES ([PropertyTypeId], [LocaleId], [Value])
 
     WHEN NOT MATCHED BY SOURCE THEN DELETE;
     

@@ -1,8 +1,6 @@
 ﻿
 CREATE TABLE #TempCountry (
-
-	[Id] UNIQUEIDENTIFIER  NOT NULL DEFAULT (newsequentialid()),
-	[IsoCode] NVARCHAR (2) NULL ,
+	[IsoCode] NVARCHAR (2) NULL
 );
 
 ALTER TABLE Country NOCHECK CONSTRAINT ALL
@@ -21,15 +19,15 @@ MERGE dbo.Country AS T
 	USING #TempCountry AS S	
 	ON 
 	(
-        (T.Id = S.Id)
+        (T.IsoCode = S.IsoCode)
 	)
 	WHEN MATCHED THEN
 		UPDATE SET 
 		T.[IsoCode] = S.[IsoCode]
 
 	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([Id], [IsoCode])
-		VALUES ([Id], [IsoCode])
+		INSERT ([IsoCode])
+		VALUES ([IsoCode])
 
     WHEN NOT MATCHED BY SOURCE THEN DELETE;
     

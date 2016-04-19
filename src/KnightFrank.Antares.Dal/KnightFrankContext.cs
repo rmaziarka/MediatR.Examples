@@ -21,7 +21,6 @@
     {
         public KnightFrankContext() : base("Api.Settings.SqlConnectionString")
         {
-            this.Database.Initialize(false);
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

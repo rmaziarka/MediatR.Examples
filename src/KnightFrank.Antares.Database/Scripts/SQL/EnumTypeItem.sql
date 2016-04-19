@@ -1,9 +1,7 @@
 ﻿
-CREATE TABLE #TempEnumTypeItem (
-
-	[Id] UNIQUEIDENTIFIER  NOT NULL DEFAULT (newsequentialid()),
-	[Code] NVARCHAR (40) NULL ,
-	[EnumTypeId] UNIQUEIDENTIFIER  NOT NULL ,
+CREATE TABLE #TempEnumTypeItem (	
+	[EnumTypeCode] NVARCHAR (25) NOT NULL,
+	[Code] NVARCHAR (40) NOT NULL
 );
 
 ALTER TABLE EnumTypeItem NOCHECK CONSTRAINT ALL
@@ -19,10 +17,16 @@ BULK INSERT #TempEnumTypeItem
     )
     	
 MERGE dbo.EnumTypeItem AS T
-	USING #TempEnumTypeItem AS S	
+	USING
+	(
+		SELECT E.Id AS EnumTypeId, Temp.Code
+		FROM #TempEnumTypeItem Temp
+		JOIN EnumType E ON E.Code = Temp.EnumTypeCode
+	)
+	AS S	
 	ON 
 	(
-        (T.Id = S.Id)
+        (T.EnumTypeId = S.EnumTypeId AND T.Code = S.Code)
 	)
 	WHEN MATCHED THEN
 		UPDATE SET 
@@ -30,8 +34,8 @@ MERGE dbo.EnumTypeItem AS T
 		T.[EnumTypeId] = S.[EnumTypeId]
 
 	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([Id], [Code], [EnumTypeId])
-		VALUES ([Id], [Code], [EnumTypeId])
+		INSERT ([Code], [EnumTypeId])
+		VALUES ([Code], [EnumTypeId])
 
     WHEN NOT MATCHED BY SOURCE THEN DELETE;
     

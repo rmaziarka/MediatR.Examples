@@ -1,10 +1,8 @@
-﻿
-CREATE TABLE #TempPropertyAttributeFormDefinition (
-
-	[Id] UNIQUEIDENTIFIER  NOT NULL DEFAULT (newsequentialid()),
-	[AttributeId] UNIQUEIDENTIFIER  NOT NULL ,
-	[PropertyAttributeFormId] UNIQUEIDENTIFIER  NOT NULL ,
-	[Order] INT  NOT NULL ,
+﻿CREATE TABLE #TempPropertyAttributeFormDefinition (
+	[CountryCode] NVARCHAR (2) NOT NULL,
+	[PropertyTypeCode] NVARCHAR (50) NOT NULL,
+	[AttributeNameKey] NVARCHAR (MAX) NOT NULL,
+	[Order] INT NOT NULL
 );
 
 ALTER TABLE PropertyAttributeFormDefinition NOCHECK CONSTRAINT ALL
@@ -20,10 +18,19 @@ BULK INSERT #TempPropertyAttributeFormDefinition
     )
     	
 MERGE dbo.PropertyAttributeFormDefinition AS T
-	USING #TempPropertyAttributeFormDefinition AS S	
+	USING 
+	(
+		SELECT A.Id AS AttributeId, F.Id AS PropertyAttributeFormId, Temp.[Order]
+		FROM #TempPropertyAttributeFormDefinition Temp
+		JOIN Attribute A ON A.NameKey = Temp.AttributeNameKey
+		JOIN Country C ON C.IsoCode = Temp.CountryCode
+		JOIN PropertyType P ON P.Code = Temp.PropertyTypeCode
+		JOIN PropertyAttributeForm F ON F.CountryId = C.Id AND F.PropertyTypeId = P.Id
+	) 
+	AS S	
 	ON 
 	(
-        (T.Id = S.Id)
+        (T.AttributeId = S.AttributeId AND T.PropertyAttributeFormId = S.PropertyAttributeFormId)
 	)
 	WHEN MATCHED THEN
 		UPDATE SET 
@@ -32,8 +39,8 @@ MERGE dbo.PropertyAttributeFormDefinition AS T
 		T.[Order] = S.[Order]
 
 	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([Id], [AttributeId], [PropertyAttributeFormId], [Order])
-		VALUES ([Id], [AttributeId], [PropertyAttributeFormId], [Order])
+		INSERT ([AttributeId], [PropertyAttributeFormId], [Order])
+		VALUES ([AttributeId], [PropertyAttributeFormId], [Order])
 
     WHEN NOT MATCHED BY SOURCE THEN DELETE;
     

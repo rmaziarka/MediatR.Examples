@@ -1,10 +1,8 @@
 ﻿
 CREATE TABLE #TempCountryLocalised (
-
-	[Id] UNIQUEIDENTIFIER  NOT NULL DEFAULT (newsequentialid()),
-	[CountryId] UNIQUEIDENTIFIER  NOT NULL ,
-	[LocaleId] UNIQUEIDENTIFIER  NOT NULL ,
-	[Value] NVARCHAR (100) NULL ,
+	[CountryCode] NVARCHAR (2) NULL,
+	[LocaleCode] NVARCHAR (2) NULL,
+	[Value] NVARCHAR (100) NULL
 );
 
 ALTER TABLE CountryLocalised NOCHECK CONSTRAINT ALL
@@ -18,12 +16,19 @@ BULK INSERT #TempCountryLocalised
 		ROWTERMINATOR = '\n',
 		TABLOCK
     )
-    	
+
 MERGE dbo.CountryLocalised AS T
-	USING #TempCountryLocalised AS S	
+	USING 
+	(
+		SELECT C.Id AS CountryId, L.Id AS LocaleId, CL.Value
+		FROM #TempCountryLocalised CL
+		JOIN Country C ON CL.CountryCode = C.IsoCode
+		JOIN Locale L ON CL.LocaleCode = L.IsoCode
+	)	
+	AS S	
 	ON 
 	(
-        (T.Id = S.Id)
+        (T.CountryId = S.CountryId AND T.LocaleId = S.LocaleId)
 	)
 	WHEN MATCHED THEN
 		UPDATE SET 
@@ -32,8 +37,8 @@ MERGE dbo.CountryLocalised AS T
 		T.[Value] = S.[Value]
 
 	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([Id], [CountryId], [LocaleId], [Value])
-		VALUES ([Id], [CountryId], [LocaleId], [Value])
+		INSERT ([CountryId], [LocaleId], [Value])
+		VALUES ([CountryId], [LocaleId], [Value])
 
     WHEN NOT MATCHED BY SOURCE THEN DELETE;
     

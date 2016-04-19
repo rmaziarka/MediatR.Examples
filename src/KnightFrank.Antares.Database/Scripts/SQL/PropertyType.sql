@@ -1,28 +1,54 @@
-﻿
-CREATE TABLE #TempPropertyType (
-
-	[Id] UNIQUEIDENTIFIER  NOT NULL DEFAULT (newsequentialid()),
-	[ParentId] UNIQUEIDENTIFIER  NULL ,
-	[Code] NVARCHAR (50) NOT NULL ,
+﻿CREATE TABLE #TempPropertyType (
+	[ParentCode] NVARCHAR (50) NULL,
+	[Code] NVARCHAR (50) NOT NULL
 );
-
-ALTER TABLE PropertyType NOCHECK CONSTRAINT ALL
 
 BULK INSERT #TempPropertyType
     FROM '$(OutputPath)\Scripts\Data\Configuration\PropertyType.csv'
-        WITH
+               WITH
     (
 		FIRSTROW = 2,
 		FIELDTERMINATOR = ';',
 		ROWTERMINATOR = '\n',
 		TABLOCK
     )
-    	
-MERGE dbo.PropertyType AS T
-	USING #TempPropertyType AS S	
+	    	
+MERGE PropertyType AS T
+	USING 
+	(
+		SELECT Temp.Code
+		FROM #TempPropertyType Temp
+		WHERE Temp.ParentCode IS NULL
+	)
+	AS S	
 	ON 
 	(
-        (T.Id = S.Id)
+        (T.Code = S.Code AND T.ParentId = NULL)
+	)
+	WHEN MATCHED THEN
+		UPDATE SET 
+		T.[ParentId] = NULL,
+		T.[Code] = S.[Code]
+
+	WHEN NOT MATCHED BY TARGET THEN 
+		INSERT ([ParentId], [Code])
+		VALUES (NULL, [Code])
+
+    WHEN NOT MATCHED BY SOURCE AND T.[ParentId] IS NULL THEN
+		DELETE;
+
+MERGE dbo.PropertyType AS T
+	USING 
+	(
+		SELECT P.Id as ParentId, Temp.Code as Code
+		FROM #TempPropertyType Temp
+		JOIN PropertyType P ON P.Code = Temp.ParentCode		
+		WHERE Temp.ParentCode IS NOT NULL
+	)
+	AS S	
+	ON 
+	(
+        (T.Code = S.Code AND T.ParentId = S.ParentId)
 	)
 	WHEN MATCHED THEN
 		UPDATE SET 
@@ -30,10 +56,11 @@ MERGE dbo.PropertyType AS T
 		T.[Code] = S.[Code]
 
 	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([Id], [ParentId], [Code])
-		VALUES ([Id], [ParentId], [Code])
+		INSERT ([ParentId], [Code])
+		VALUES ([ParentId], [Code])
 
-    WHEN NOT MATCHED BY SOURCE THEN DELETE;
+	WHEN NOT MATCHED BY SOURCE AND T.[ParentId] IS NOT NULL THEN
+		DELETE;
     
 ALTER TABLE PropertyType WITH CHECK CHECK CONSTRAINT ALL
 DROP TABLE #TempPropertyType

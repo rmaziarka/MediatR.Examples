@@ -19,7 +19,12 @@ function Deploy-SSDTDacpac
 
         [Parameter(Mandatory=$true)]
         [string]
-        $ConnectionString
+        $ConnectionString,
+        
+        [Parameter(Mandatory=$false)] 
+        [hashtable]
+        $SqlCmdVariables
+
     )	
     
     Write-Host -Object "Start deploy SSDT ..."
@@ -45,6 +50,7 @@ function Deploy-SSDTDacpac
     # ===========================================================
     Import-Module -Name "$PSScriptRoot\Import-SqlServerDacDll.ps1"
     Import-SqlServerDacDll -SqlServerVersion $SqlServerVersion    
+      
 
     # ===========================================================
     # Define dacService
@@ -71,13 +77,25 @@ function Deploy-SSDTDacpac
         $dacProfile = New-Object -TypeName Microsoft.SqlServer.Dac.DacProfile
         Write-Host -Object '       ... created new publish profile'
     }    
-    
+
+    if ($SqlCmdVariables) {
+        foreach ($cmdVar in $SqlCmdVariables.GetEnumerator()) {
+            $dacProfile.DeployOptions.SqlCommandVariableValues[$cmdVar.Key] = $cmdVar.Value
+        }
+    }
+
     # ===========================================================
     # Deploy SSDT
     # ===========================================================
     Write-Host -Object "Start deploy ..." 
     $upgradeExisting = $true
-    $dacServices.Deploy($dacPac, $targetDatabase, $upgradeExisting)
-    Write-Host -Object "... with successfully finished. " 
-    
+          
+    try {
+        Write-Host 'Starting DACPAC deployment...'
+        $dacServices.Deploy($dacPac, $targetDatabase, $upgradeExisting, $dacProfile.DeployOptions)
+        Write-Host 'Deployment succeeded!'
+    } 
+    catch [Microsoft.SqlServer.Dac.DacServicesException] {  
+        throw ('Deployment failed: ''{0}'' Reason: ''{1}''' -f $_.Exception.Message, $_.Exception.InnerException.Message)
+    }
 }

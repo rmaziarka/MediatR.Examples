@@ -1,9 +1,7 @@
 ﻿
 CREATE TABLE #TempAttribute (
-
-	[Id] UNIQUEIDENTIFIER  NOT NULL DEFAULT (newsequentialid()),
-	[NameKey] NVARCHAR (MAX) NULL ,
-	[LabelKey] NVARCHAR (MAX) NULL ,
+	[NameKey] NVARCHAR (MAX) NOT NULL,
+	[LabelKey] NVARCHAR (MAX) NOT NULL
 );
 
 ALTER TABLE Attribute NOCHECK CONSTRAINT ALL
@@ -22,7 +20,7 @@ MERGE dbo.Attribute AS T
 	USING #TempAttribute AS S	
 	ON 
 	(
-        (T.Id = S.Id)
+        (T.NameKey = S.NameKey)
 	)
 	WHEN MATCHED THEN
 		UPDATE SET 
@@ -30,8 +28,8 @@ MERGE dbo.Attribute AS T
 		T.[LabelKey] = S.[LabelKey]
 
 	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([Id], [NameKey], [LabelKey])
-		VALUES ([Id], [NameKey], [LabelKey])
+		INSERT ([NameKey], [LabelKey])
+		VALUES ([NameKey], [LabelKey])
 
     WHEN NOT MATCHED BY SOURCE THEN DELETE;
     

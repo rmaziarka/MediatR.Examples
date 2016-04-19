@@ -1,8 +1,6 @@
 ﻿
 CREATE TABLE #TempRole (
-
-	[Id] UNIQUEIDENTIFIER  NOT NULL DEFAULT (newsequentialid()),
-	[Name] NVARCHAR (100) NULL ,
+	[Name] NVARCHAR (100) NOT NULL
 );
 
 ALTER TABLE Role NOCHECK CONSTRAINT ALL
@@ -21,15 +19,15 @@ MERGE dbo.Role AS T
 	USING #TempRole AS S	
 	ON 
 	(
-        (T.Id = S.Id)
+        (T.[Name] = S.[Name])
 	)
 	WHEN MATCHED THEN
 		UPDATE SET 
 		T.[Name] = S.[Name]
 
 	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([Id], [Name])
-		VALUES ([Id], [Name])
+		INSERT ([Name])
+		VALUES ([Name])
 
     WHEN NOT MATCHED BY SOURCE THEN DELETE;
     

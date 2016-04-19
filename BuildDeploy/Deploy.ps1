@@ -15,6 +15,7 @@ try {
 	. ".\Invoke-SqlQuery.ps1"    
     . ".\Build-SSDTDacpac.ps1"
     . ".\Deploy-SSDTDacpac.ps1"
+    . ".\Import-SqlServerDacDll.ps1"
 
     Deploy-Database -ProjectRootPath $ProjectRootPath
     

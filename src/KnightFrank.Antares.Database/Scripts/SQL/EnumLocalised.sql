@@ -1,10 +1,9 @@
 ﻿
 CREATE TABLE #TempEnumLocalised (
-
-	[Id] UNIQUEIDENTIFIER  NOT NULL DEFAULT (newsequentialid()),
-	[EnumTypeItemId] UNIQUEIDENTIFIER  NOT NULL ,
-	[LocaleId] UNIQUEIDENTIFIER  NOT NULL ,
-	[Value] NVARCHAR (100) NULL ,
+	[EnumTypeCode] NVARCHAR (25) NOT NULL,
+	[EnumTypeItemCode] NVARCHAR (40) NOT NULL,
+	[LocaleCode] NVARCHAR (2) NOT NULL,
+	[Value] NVARCHAR (100) NULL
 );
 
 ALTER TABLE EnumLocalised NOCHECK CONSTRAINT ALL
@@ -20,10 +19,21 @@ BULK INSERT #TempEnumLocalised
     )
     	
 MERGE dbo.EnumLocalised AS T
-	USING #TempEnumLocalised AS S	
+	USING 
+	(
+		SELECT 
+			I.Id AS EnumTypeItemId,
+			L.Id AS LocaleId,
+			Temp.Value
+		FROM #TempEnumLocalised Temp
+		JOIN Locale L ON L.IsoCode = Temp.LocaleCode
+		JOIN EnumTypeItem I ON I.Code = Temp.EnumTypeItemCode
+		JOIN EnumType E ON E.Code = Temp.EnumTypeCode AND E.Id = I.EnumTypeId
+	)
+	AS S	
 	ON 
 	(
-        (T.Id = S.Id)
+        (T.[EnumTypeItemId] = S.[EnumTypeItemId] AND T.[LocaleId] = S.[LocaleId])
 	)
 	WHEN MATCHED THEN
 		UPDATE SET 
@@ -32,8 +42,8 @@ MERGE dbo.EnumLocalised AS T
 		T.[Value] = S.[Value]
 
 	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([Id], [EnumTypeItemId], [LocaleId], [Value])
-		VALUES ([Id], [EnumTypeItemId], [LocaleId], [Value])
+		INSERT ([EnumTypeItemId], [LocaleId], [Value])
+		VALUES ([EnumTypeItemId], [LocaleId], [Value])
 
     WHEN NOT MATCHED BY SOURCE THEN DELETE;
     

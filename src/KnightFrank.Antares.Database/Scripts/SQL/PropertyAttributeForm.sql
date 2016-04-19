@@ -1,9 +1,7 @@
 ﻿
 CREATE TABLE #TempPropertyAttributeForm (
-
-	[Id] UNIQUEIDENTIFIER  NOT NULL DEFAULT (newsequentialid()),
-	[CountryId] UNIQUEIDENTIFIER  NOT NULL ,
-	[PropertyTypeId] UNIQUEIDENTIFIER  NOT NULL ,
+	[CountryCode] NVARCHAR (2) NOT NULL,
+	[PropertyTypeCode] NVARCHAR (50) NOT NULL
 );
 
 ALTER TABLE PropertyAttributeForm NOCHECK CONSTRAINT ALL
@@ -19,10 +17,17 @@ BULK INSERT #TempPropertyAttributeForm
     )
     	
 MERGE dbo.PropertyAttributeForm AS T
-	USING #TempPropertyAttributeForm AS S	
+	USING
+	(
+		SELECT C.Id AS CountryId, P.Id AS PropertyTypeId
+		FROM #TempPropertyAttributeForm Temp
+		JOIN Country C ON C.IsoCode = Temp.CountryCode
+		JOIN PropertyType P ON P.Code = Temp.PropertyTypeCode
+	)
+	AS S	
 	ON 
 	(
-        (T.Id = S.Id)
+        (T.CountryId = S.CountryId AND T.PropertyTypeId = S.PropertyTypeId)
 	)
 	WHEN MATCHED THEN
 		UPDATE SET 
@@ -30,8 +35,8 @@ MERGE dbo.PropertyAttributeForm AS T
 		T.[PropertyTypeId] = S.[PropertyTypeId]
 
 	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([Id], [CountryId], [PropertyTypeId])
-		VALUES ([Id], [CountryId], [PropertyTypeId])
+		INSERT ([CountryId], [PropertyTypeId])
+		VALUES ([CountryId], [PropertyTypeId])
 
     WHEN NOT MATCHED BY SOURCE THEN DELETE;
     

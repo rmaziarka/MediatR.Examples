@@ -1,8 +1,6 @@
 ﻿
 CREATE TABLE #TempEnumType (
-
-	[Id] UNIQUEIDENTIFIER  NOT NULL DEFAULT (newsequentialid()),
-	[Code] NVARCHAR (25) NULL ,
+	[Code] NVARCHAR (25) NOT NULL
 );
 
 ALTER TABLE EnumType NOCHECK CONSTRAINT ALL
@@ -21,15 +19,15 @@ MERGE dbo.EnumType AS T
 	USING #TempEnumType AS S	
 	ON 
 	(
-        (T.Id = S.Id)
+        (T.[Code] = S.[Code])
 	)
 	WHEN MATCHED THEN
 		UPDATE SET 
 		T.[Code] = S.[Code]
 
 	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([Id], [Code])
-		VALUES ([Id], [Code])
+		INSERT ([Code])
+		VALUES ([Code])
 
     WHEN NOT MATCHED BY SOURCE THEN DELETE;
     
