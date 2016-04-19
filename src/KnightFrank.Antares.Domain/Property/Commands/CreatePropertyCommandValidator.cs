@@ -64,10 +64,15 @@
 
         private ValidationFailure AttributeValuesAreAllowedForPropertyType(CreatePropertyCommand updatePropertyCommand)
         {
-            IEnumerable<Attribute> allowedAttributes = this.propertyAttributeFormRepository
-                .GetWithInclude(p => p.PropertyTypeId == updatePropertyCommand.PropertyTypeId && p.Country.IsoCode == "GB",
+            PropertyAttributeForm propertyAttributeForm = this.propertyAttributeFormRepository
+                .GetWithInclude(p => p.PropertyTypeId == updatePropertyCommand.PropertyTypeId && p.Country.Id == updatePropertyCommand.Address.CountryId,
                     p => p.PropertyAttributeFormDefinitions.Select(s => s.Attribute))
-                .Single()
+                .SingleOrDefault();
+
+            if (propertyAttributeForm == null)
+                return null;
+
+            IEnumerable<Attribute> allowedAttributes = propertyAttributeForm
                 .PropertyAttributeFormDefinitions
                 .Select(s => s.Attribute);
 
