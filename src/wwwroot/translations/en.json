@@ -83,8 +83,17 @@
     "DATE_CAN_NOT_BE_LOWER_THEN":"Given date can not be earlier then purchasing date"
   },
   "PROPERTY": {
+    "AREA": "Property area",
+    "BEDROOMS": "Bedrooms",
+    "BATHROOMS": "Bathrooms",
+    "LANDAREA": "Land area",
+    "GUESTROOMS": "Guest rooms",
+    "FUNCTIONROOMS": "Function rooms",
+    "CARPARKINGSPACES": "Car parking spaces",
+    "RECEPTIONS": "Receptions",
     "COMMERCIAL_PROPERTY": "Commercial property",
     "RESIDENTIAL_PROPERTY": "Residential property",
+    "DETAILS": "Property details",
     "ADD": {
       "ADD_PROPERTY": "Create property",
       "BASIC_INFORMATION": "Basic information",
@@ -96,7 +105,9 @@
       "ADDRESS": "Address"
     },
     "VIEW": {
-      "VIEW_PROPERTY": "View property"
+      "VIEW_PROPERTY": "View property",
+      "DETAILS": "Details",
+      "TYPE":  "Type"
     },
     "LIST": {
       "OWNERSHIPS": "Ownerships",
@@ -107,7 +118,7 @@
       "BASIC_INFORMATION": "Basic information",
       "TYPE": "Type",
       "ADDRESS": "Address",
-      "PROPERTY_VIEW_LINK":  "View property"
+      "PROPERTY_VIEW_LINK": "View property"
     }
   },
   "ACTIVITY": {
@@ -188,5 +199,10 @@
       "APPLICANT": "Applicant",
       "CREATEDDATE": "Created"
     }
+  },
+  "NOTES": {
+    "NOTES": "Notes",
+    "ADDNOTE": "Add note",
+    "RECENTNOTES": "Recent notes"
   }
 }

@@ -2,16 +2,31 @@
 
 module Antares {
     import RequirementViewController = Requirement.View.RequirementViewController;
-    describe('Given view requirement page is loaded', () => {
+    import Business = Common.Models.Business;
+
+    describe('Given view requirement page is loaded', () =>{
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
+            compile: ng.ICompileService,
             $http: ng.IHttpBackendService,
             filter: ng.IFilterService;
 
         var controller: RequirementViewController;
 
+        var pageObjectSelectors = {
+            header : {
+                notesButton : '#notes-button'
+            },
+            notes : {
+                noteAddDescription: '#requirement-note-add textarea#note-description',
+                noteAddButton: '#requirement-note-add button#note-add-button',
+                noteList: '#requirement-notes',
+                noteItems: '#requirement-notes [data-type="note-item"]'
+            }
+        }
+
         describe('and proper requirement id is provided', () => {
-            var requirementMock: any = {
+            var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate({
                 createDate: '2016-03-17T12:35:29.82',
                 maxPrice: 444,
                 minPrice: 0,
@@ -26,24 +41,28 @@ module Antares {
                     { id: '1', firstName: 'John', surname: 'Doe', title: 'Mr.' },
                     { id: '2', firstName: 'Jane', surname: 'Doe', title: 'Mrs.' }
                 ],
-                address : Antares.Mock.AddressForm.FullAddress
-            };
+                requirementNotes: [
+                    new Business.RequirementNote({ id: 'note1', requirementId: '111', description: 'descr 1', createdDate: new Date(), user: null }),
+                    new Business.RequirementNote({ id: 'note2', requirementId: '111', description: 'descr 2', createdDate: new Date(), user: null })
+                ],
+                address: Mock.AddressForm.FullAddress
+            });
 
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
                 $httpBackend: ng.IHttpBackendService,
-                $filter: ng.IFilterService) =>{
+                $filter: ng.IFilterService) => {
 
                 filter = $filter;
                 $http = $httpBackend;
-                
-                Antares.Mock.AddressForm.mockHttpResponce($http,'a1',[200,Antares.Mock.AddressForm.AddressFormWithOneLine]);
+
+                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
 
                 scope = $rootScope.$new();
                 scope['requirement'] = requirementMock;
                 element = $compile('<requirement-view requirement="requirement"></requirement-view>')(scope);
-                
+
                 scope.$apply();
                 $http.flush();
 
@@ -73,6 +92,13 @@ module Antares {
                 expect(createDate.text()).toBe(formattedDate);
             });
 
+            it('notes count is displayed within notes button', () => {
+                var buttonText = element.find(pageObjectSelectors.header.notesButton + ' span');
+
+                expect(buttonText.length).toBe(1);
+                expect(buttonText.text()).toBe('(' + requirementMock.requirementNotes.length + ')');
+            });
+
             it('description is displayed', () => {
                 var descrptionParagraph = element.find('[translate="REQUIREMENT.VIEW.DESCRIPTION"]+p');
 
@@ -83,15 +109,15 @@ module Antares {
                 // TODO: after address view component is implemented
             });
 
-            it('basic property requirements are displayed in proper order and with correct values', () =>{
+            it('basic property requirements are displayed in proper order and with correct values', () => {
                 var expectedBasicDetailsResults = [
-                    { label : 'REQUIREMENT.VIEW.PRICE', min : 'vm.requirement.minPrice', max : 'vm.requirement.maxPrice', suffix : "'GBP'" },
-                    { label : 'REQUIREMENT.VIEW.BEDROOMS', min : 'vm.requirement.minBedrooms', max : 'vm.requirement.maxBedrooms', suffix : null },
-                    { label : 'REQUIREMENT.VIEW.RECEPTIONROOMS', min : 'vm.requirement.minReceptionRooms', max : 'vm.requirement.maxReceptionRooms', suffix : null },
-                    { label : 'REQUIREMENT.VIEW.BATHROOMS', min : 'vm.requirement.minBathrooms', max : 'vm.requirement.maxBathrooms', suffix : null },
-                    { label : 'REQUIREMENT.VIEW.PARKINGSPACES', min : 'vm.requirement.minParkingSpaces', max : 'vm.requirement.maxParkingSpaces', suffix : null },
-                    { label : 'REQUIREMENT.VIEW.AREA', min : 'vm.requirement.minArea', max : 'vm.requirement.maxArea', suffix : "'sq ft'" },
-                    { label : 'REQUIREMENT.VIEW.LANDAREA', min : 'vm.requirement.minLandArea', max : 'vm.requirement.maxLandArea', suffix : "'sq ft'" }
+                    { label: 'REQUIREMENT.VIEW.PRICE', min: 'vm.requirement.minPrice', max: 'vm.requirement.maxPrice', suffix: "'GBP'" },
+                    { label: 'REQUIREMENT.VIEW.BEDROOMS', min: 'vm.requirement.minBedrooms', max: 'vm.requirement.maxBedrooms', suffix: null },
+                    { label: 'REQUIREMENT.VIEW.RECEPTIONROOMS', min: 'vm.requirement.minReceptionRooms', max: 'vm.requirement.maxReceptionRooms', suffix: null },
+                    { label: 'REQUIREMENT.VIEW.BATHROOMS', min: 'vm.requirement.minBathrooms', max: 'vm.requirement.maxBathrooms', suffix: null },
+                    { label: 'REQUIREMENT.VIEW.PARKINGSPACES', min: 'vm.requirement.minParkingSpaces', max: 'vm.requirement.maxParkingSpaces', suffix: null },
+                    { label: 'REQUIREMENT.VIEW.AREA', min: 'vm.requirement.minArea', max: 'vm.requirement.maxArea', suffix: "'sq ft'" },
+                    { label: 'REQUIREMENT.VIEW.LANDAREA', min: 'vm.requirement.minLandArea', max: 'vm.requirement.maxLandArea', suffix: "'sq ft'" }
                 ];
 
                 var rangeViewElements = element.find('range-view');
@@ -105,7 +131,7 @@ module Antares {
                     expect(rangeView.getAttribute('max')).toBe(expected.max);
                     expect(rangeView.getAttribute('suffix')).toBe(expected.suffix);
                 };
-                
+
             });
 
             it('applicant list is displayed', () => {
@@ -117,5 +143,129 @@ module Antares {
             });
         });
 
+        describe('and notes button is clicked', () => {
+            var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate({
+                address: Mock.AddressForm.FullAddress
+            });
+            var addNoteUrlRegex = new RegExp('api/requirements/' + requirementMock.id);
+
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService,
+                $httpBackend: ng.IHttpBackendService,
+                $filter: ng.IFilterService) => {
+
+                filter = $filter;
+                $http = $httpBackend;
+                compile = $compile;
+
+                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
+
+                scope = $rootScope.$new();
+            }));
+
+            it('then note list is displayed', () => {
+                // arrange
+                requirementMock.requirementNotes = [
+                    new Business.RequirementNote({ id : 'note1', requirementId : '111', description : 'descr 1', createdDate : new Date(), user : null }),
+                    new Business.RequirementNote({ id : 'note2', requirementId : '111', description : 'descr 2', createdDate : new Date(), user : null })
+                ];
+
+                scope['requirement'] = requirementMock;
+                element = compile('<requirement-view requirement="requirement"></requirement-view>')(scope);
+                scope.$apply();
+
+                // assert
+                var noteListElement = element.find(pageObjectSelectors.notes.noteList);
+                var noteItems = element.find(pageObjectSelectors.notes.noteItems);
+
+                expect(noteListElement.length).toBe(1);
+                expect(noteItems.length).toBe(2);
+            });
+
+            it('and new note is added then note is added to list', () => {
+                // arrange
+                requirementMock.requirementNotes = [
+                    new Business.RequirementNote({ id: 'note1', requirementId: '111', description: 'descr 1', createdDate: new Date(), user: null }),
+                    new Business.RequirementNote({ id: 'note2', requirementId: '111', description: 'descr 2', createdDate: new Date(), user: null })
+                ];
+
+                scope['requirement'] = requirementMock;
+                element = compile('<requirement-view requirement="requirement"></requirement-view>')(scope);
+                scope.$apply();
+
+                var expectedResponse = new Business.RequirementNote();
+                expectedResponse.id = 'newNoteId';
+                $http.expectPOST(addNoteUrlRegex).respond(201, expectedResponse);
+
+                // act
+                element.find(pageObjectSelectors.notes.noteAddDescription)
+                    .val('abc').trigger('input').trigger('change').trigger('blur');
+                element.find(pageObjectSelectors.notes.noteAddButton).click();
+                scope.$apply();
+                $http.flush();
+
+                // assert
+                var noteItems = element.find(pageObjectSelectors.notes.noteItems);
+                var addedItem = _.find(requirementMock.requirementNotes, (item) => { return item.id === expectedResponse.id });
+
+                expect(noteItems.length).toBe(3);
+                expect(requirementMock.requirementNotes.length).toBe(3);
+                expect(addedItem).toBeDefined();
+                expect(requirementMock.requirementNotes.indexOf(addedItem)).toBe(0);
+            });
+
+            it('and new note is added then notes count within notes button is updated', () => {
+                // arrange
+                requirementMock.requirementNotes = [
+                    new Business.RequirementNote({ id: 'note1', requirementId: '111', description: 'descr 1', createdDate: new Date(), user: null }),
+                    new Business.RequirementNote({ id: 'note2', requirementId: '111', description: 'descr 2', createdDate: new Date(), user: null })
+                ];
+
+                scope['requirement'] = requirementMock;
+                element = compile('<requirement-view requirement="requirement"></requirement-view>')(scope);
+                scope.$apply();
+
+                var expectedResponse = new Business.RequirementNote();
+                expectedResponse.id = 'newNoteId';
+                $http.expectPOST(addNoteUrlRegex).respond(201, expectedResponse);
+
+                // act
+                element.find(pageObjectSelectors.notes.noteAddDescription)
+                    .val('abc').trigger('input').trigger('change').trigger('blur');
+                element.find(pageObjectSelectors.notes.noteAddButton).click();
+                scope.$apply();
+                $http.flush();
+
+                // assert
+                var buttonText = element.find(pageObjectSelectors.header.notesButton + ' span');
+
+                expect(buttonText.length).toBe(1);
+                expect(buttonText.text()).toBe('(3)');
+            });
+
+            it('and notes button is clicked then description field is empty', () => {
+                // arrange
+                requirementMock.requirementNotes = [
+                    new Business.RequirementNote({ id: 'note1', requirementId: '111', description: 'descr 1', createdDate: new Date(), user: null }),
+                    new Business.RequirementNote({ id: 'note2', requirementId: '111', description: 'descr 2', createdDate: new Date(), user: null })
+                ];
+
+                scope['requirement'] = requirementMock;
+                element = compile('<requirement-view requirement="requirement"></requirement-view>')(scope);
+                scope.$apply();
+
+                // act
+                var descriptionElement = element.find(pageObjectSelectors.notes.noteAddDescription);
+                descriptionElement.val('abc').trigger('input').trigger('change').trigger('blur');
+                scope.$apply();
+
+                element.find(pageObjectSelectors.header.notesButton).click();
+                scope.$apply();
+
+                // assert
+                expect(descriptionElement.text()).toBe('');
+            });
+        });
     });
 }

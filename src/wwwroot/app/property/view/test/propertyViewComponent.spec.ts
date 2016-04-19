@@ -26,7 +26,7 @@ module Antares {
         describe('and property is loaded', () =>{
             var propertyMock: Dto.IProperty = {
                 id: '1',
-                propertyTypeId: '1',
+                propertyTypeId: 'propType1',
                 divisionId: '',
                 division: null,
                 address : Antares.Mock.AddressForm.FullAddress,
@@ -85,6 +85,12 @@ module Antares {
                 expect(cardListItemCardElement.length).toBe(2);
                 expect(cardListItemCardElement[0].getAttribute('card-template-url')).toBe("'app/activity/templates/activityCard.html'");
                 expect(cardListItemCardElement[0].getAttribute('show-item-details')).toBe("vm.showActivityPreview");
+            });
+
+            it('property type is visible', () =>{
+                // assert
+                var propertyTypeElement = element.find('.page-header:contains("PROPERTY.VIEW.DETAILS")~.row :contains("PROPERTY.VIEW.TYPE") + div');
+                expect(propertyTypeElement.text()).toBe('DYNAMICTRANSLATIONS.propType1');
             });
         });
 
@@ -184,7 +190,7 @@ module Antares {
 
                 var formattedDate = filter('date')(date1Mock, 'dd-MM-yyyy');
                 expect(activityDataElement.text()).toBe(formattedDate + ' John Test1, Amy Test2');
-                expect(activityStatusElement.text()).toBe('ENUMS.123');
+                expect(activityStatusElement.text()).toBe('DYNAMICTRANSLATIONS.123');
             });
         });
 
@@ -247,7 +253,7 @@ module Antares {
                 var dateElement = activityPreviewPanel.find(pageObjectSelectors.activity.createdDate);
                 var vendorsItemsElement = activityPreviewPanel.find(pageObjectSelectors.activity.vendors);
 
-                expect(statusElement.text()).toBe('ENUMS.456');
+                expect(statusElement.text()).toBe('DYNAMICTRANSLATIONS.456');
                 expect(dateElement.text()).toBe(formattedDate);
                 expect(vendorsItemsElement.length).toBe(2);
                 expect(vendorsItemsElement[0].innerText).toBe('John Test1');
@@ -375,7 +381,7 @@ module Antares {
                 expect(contactNames).toEqual(["John Papa, ", "Mark Rendle"]);
 
                 var ownershipTypeCode = getValueFromElement(ownershipPanel, 'ownership-list-ownership-type');
-                expect(ownershipTypeCode).toBe('ENUMS.leaseholderId');
+                expect(ownershipTypeCode).toBe('DYNAMICTRANSLATIONS.leaseholderId');
 
                 var purchaseDate = getValueFromElement(ownershipPanel, 'ownership-list-purchase-date');
                 expect(purchaseDate).toBe('01-01-2016');

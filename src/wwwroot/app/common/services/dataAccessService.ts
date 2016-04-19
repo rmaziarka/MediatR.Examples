@@ -34,6 +34,16 @@ module Antares.Services {
             }
         };
 
+        private getAttributesAction: ng.resource.IActionDescriptor = {
+            url: this.appConfig.rootUrl + '/api/properties/attributes?countryCode=:countryCode&propertyTypeId=:propertyTypeId',
+            method: 'GET',
+            isArray: false,
+            params: {
+                countryCode: '@countryCode',
+                propertyTypeId: '@propertyTypeId'
+            }
+        };
+
 
         getCompanyResource(): Resources.IBaseResourceClass<Resources.ICompanyResource> {
             return <Resources.IBaseResourceClass<Resources.ICompanyResource>>
@@ -65,7 +75,8 @@ module Antares.Services {
                 this.$resource(this.appConfig.rootUrl + '/api/properties/:id', null, {
                     update: this.updateAction,
                     createOwnership: this.createOwnershipAction,
-                    getPropertyTypes: this.getPropertyTypesAction
+                    getPropertyTypes: this.getPropertyTypesAction,
+                    getAttributes: this.getAttributesAction
                 });
         }
 
@@ -79,16 +90,26 @@ module Antares.Services {
                 this.$resource(this.appConfig.rootUrl + '/api/translations/enums/:isoCode');
         }
 
+        getResourceTranslationResource(): Resources.ITranslationResourceClass<any> {
+            return <Resources.ITranslationResourceClass<any>>
+                this.$resource(this.appConfig.rootUrl + '/api/translations/resources/:isoCode');
+        }
+
         getStaticTranslationResource(): Resources.ITranslationResourceClass<any> {
             return <Resources.ITranslationResourceClass<any>>
                 this.$resource('/translations/:isoCode.json');
         }
 
-        getActivityResource(): Resources.IBaseResourceClass<Resources.IActivityResource>{
+        getActivityResource(): Resources.IBaseResourceClass<Resources.IActivityResource> {
             return <Resources.IBaseResourceClass<Resources.IActivityResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/activities/:id', null, {
-                    update : this.updateAction
+                    update: this.updateAction
                 });
+        }
+
+        getRequirementNoteResource(): Resources.IBaseResourceClass<Resources.IRequirementNoteResource>{
+            return <Resources.IBaseResourceClass<Resources.IRequirementNoteResource>>
+                this.$resource(this.appConfig.rootUrl + '/api/requirements/:id/notes');
         }
     }
 

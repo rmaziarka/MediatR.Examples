@@ -5,7 +5,6 @@ module Antares.Property {
         templateUrl: 'app/activity/add/activityAdd.html',
         controllerAs: 'vm',
         controller: 'ActivityAddController',
-        transclude : true,
         bindings: {
             componentId: '<',
             activities: '='

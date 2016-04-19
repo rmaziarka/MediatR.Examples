@@ -1,0 +1,14 @@
+﻿<section>
+    <h4 translate="NOTES.ADDNOTE"></h4>
+    <form ng-submit="requirementNoteAddForm.$valid && vm.saveNote()" name="requirementNoteAddForm" id="requirement-note-add" method="post" novalidate>
+        <div class="form-group" ng-class="{'has-error': (requirementNoteAddForm.$submitted || requirementNoteAddForm.description.$dirty) && requirementNoteAddForm.description.$invalid}">
+            <textarea class="form-control" ng-maxlength="4000" required rows="9" id="note-description" name="description" ng-model="vm.requirementNote.description"></textarea>
+            <div ng-messages="requirementNoteAddForm.description.$error" ng-show="requirementNoteAddForm.$submitted || requirementNoteAddForm.description.$dirty">
+                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group text-right">
+            <button id="note-add-button" class="btn btn-primary" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+        </div>
+    </form>
+</section>

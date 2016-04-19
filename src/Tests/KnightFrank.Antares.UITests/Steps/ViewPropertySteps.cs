@@ -72,7 +72,7 @@
             this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").Activity.SaveActivity();
         }
 
-        [When(@"User fills in ownership details on ownership details page")]
+        [When(@"User fills in ownership details on view property page")]
         public void FillInOwnershipDetails(Table table)
         {
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");

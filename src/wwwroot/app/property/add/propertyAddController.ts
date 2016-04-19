@@ -3,29 +3,48 @@
 module Antares.Property {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
+    import EnumTypeItem = Common.Models.Business.EnumTypeItem;
 
-    export class PropertyAddController {
+    export class PropertyAddController extends Core.WithPanelsBaseController {
         public entityTypeCode: string = 'Property';
         public property: Business.Property = new Business.Property();
 
         private propertyResource: Common.Models.Resources.IPropertyResourceClass;
         private propertyTypes: any[];
-        private userData: Dto.IUserData;
+        private divisions: EnumTypeItem[];
+        private attributes: Dto.IAttribute[];
+        public userData: Dto.IUserData;
 
         constructor(
+            componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
+            private $scope: ng.IScope,
             private $state: ng.ui.IStateService) {
 
+            super(componentRegistry, $scope);
+
             this.property.division.code = this.userData.division.code;
+            this.property.divisionId = this.userData.division.id;
+            this.property.division = this.userData.division;
             this.propertyResource = dataAccessService.getPropertyResource();
+            this.loadDivisions();
             this.loadPropertyTypes();
         }
 
-        changeDivision = (divisionCode: string) => {
-            this.property.division.code = divisionCode;
+        changeDivision = (division: EnumTypeItem) => {
+            this.property.divisionId = division.id;
+            this.property.division = division;
             this.property.propertyTypeId = null;
+            if (this.components.attributeList())
+                this.components.attributeList().clearAttributes();
             this.loadPropertyTypes();
         }
+
+        loadDivisions = () => {
+            this.dataAccessService.getEnumResource().get({ code: 'Division' }).$promise.then((divisions: any) => {
+                this.divisions = divisions.items;
+            });
+        };
 
         loadPropertyTypes = () => {
             this.propertyResource
@@ -38,6 +57,10 @@ module Antares.Property {
                 });
         }
 
+        loadAttributes = () => {
+            this.components.attributeList().loadAttributes();
+        }
+
         public save() {
             this.propertyResource
                 .save(this.property)
@@ -45,6 +68,18 @@ module Antares.Property {
                 .then((property: Dto.IProperty) => {
                     this.$state.go('app.property-view', property);
                 });
+        }
+
+        defineComponentIds() {
+            this.componentIds = {
+                attributeListId: 'editProperty:attributeListComponent'
+            };
+        }
+
+        defineComponents() {
+            this.components = {
+                attributeList: () => { return this.componentRegistry.get(this.componentIds.attributeListId); }
+            };
         }
     }
 

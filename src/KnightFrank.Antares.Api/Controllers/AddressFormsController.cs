@@ -33,7 +33,6 @@
         /// <param name="addressFormQuery">Query by entity type and country code</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("")]
         public AddressFormQueryResult GetAddressFormQueryResult([FromUri(Name = "")] AddressFormQuery addressFormQuery)
         {
             return this.mediator.Send(addressFormQuery);

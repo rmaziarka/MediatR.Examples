@@ -1,0 +1,17 @@
+<fieldset>
+    <label for="bedrooms">{{vm.attribute.labelKey | translate}} </label>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <input class="form-control" type="number" placeholder="min" ng-model="vm.minValue">
+            </div>
+        </div>
+        <div class="col-md-1">-</div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <input class="form-control" type="number" placeholder="max" ng-model="vm.maxValue">
+            </div>
+        </div>
+        <div class="col-md-1">{{vm.attribute.unit}}</div>
+    </div>
+</fieldset>

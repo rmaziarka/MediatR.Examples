@@ -45,7 +45,7 @@
                                .With(x => x.MaxParkingSpaces, 2)
                                .With(x => x.MinReceptionRooms, 1)
                                .With(x => x.MaxReceptionRooms, 2)
-                               .With(x => x.Contacts, new List<ContactDto> { fixture.Create<ContactDto>() })
+                               .With(x => x.ContactIds, new List<Guid> { fixture.Create<Guid>() })
                                .With(x => x.Address, new CreateOrUpdateRequirementAddress())
                                .Create();
 
@@ -249,11 +249,11 @@
         }
 
         [Fact]
-        public void Given_IncorrectCreateRequirementCommandWithNoContacts_When_Validating_Then_ValidationErrors()
+        public void Given_IncorrectCreateRequirementCommandWithNoContactIds_When_Validating_Then_ValidationErrors()
         {
-            this.command.Contacts.Clear();
+            this.command.ContactIds.Clear();
 
-            TestIncorrectCommand(this.validator, this.command, nameof(this.command.Contacts));
+            TestIncorrectCommand(this.validator, this.command, nameof(this.command.ContactIds));
         }
 
         [Fact] 

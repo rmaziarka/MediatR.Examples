@@ -72,7 +72,7 @@ module Antares.TestHelpers {
         }
     }
 
-    class InputValidationAdapter {
+   export class InputValidationAdapter {
         private pageObject = {
             inputValidCss : 'ng-valid'
         }
@@ -91,15 +91,15 @@ module Antares.TestHelpers {
             return this.isInputValid() && !this.isValidationShown();
         }
 
-        private isInputValid(): boolean{
+        public isInputValid(): boolean{
             return this.input.hasClass(this.pageObject.inputValidCss);
         }
 
-        private isValidationShown(): boolean{
+        public isValidationShown(): boolean{
             return this.input.parent().find(this.validatorSelector).length > 0;
         }
 
-        private writeValue(value: string){
+        public writeValue(value: string){
             this.input.val(value).trigger('input').trigger('change').trigger('blur');
             this.scope.$apply();
         }

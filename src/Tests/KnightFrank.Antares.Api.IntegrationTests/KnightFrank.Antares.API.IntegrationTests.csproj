@@ -126,9 +126,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Extensions\StringExtension.cs" />
-    <Compile Include="Steps\Activities\ActivitiesSteps.cs" />
+    <Compile Include="Steps\Activities\ActivitySteps.cs" />
     <Compile Include="Steps\Companies\CompaniesSteps.cs" />
-    <Compile Include="Steps\Property\ConfigurePropertyTypesForADivisionAndACountrySteps.cs" />
+    <Compile Include="Steps\Property\PropertyTypesSteps.cs" />
     <Compile Include="Extensions\FixtureExtension.cs" />
     <Compile Include="Fixtures\BaseTestClassFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -139,12 +139,18 @@
     <Compile Include="Steps\Enums\EnumsSteps.cs" />
     <Compile Include="Steps\Ownership\OwnershipSteps.cs" />
     <Compile Include="Steps\Property\PropertySteps.cs" />
+    <Compile Include="Steps\Requierement\RequierementNotesSteps.cs" />
     <Compile Include="Steps\Requierement\ResidentialSalesRequierementSteps.cs" />
     <Compile Include="Steps\Resources\ResourcesSteps.cs" />
-    <Compile Include="Tests\Activities\ActivitiesController.feature.cs">
+    <Compile Include="Tests\Activities\ActivityController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ActivitiesController.feature</DependentUpon>
+      <DependentUpon>ActivityController.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Activities\ActivityType.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ActivityType.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\AddressForm\AddressFormController.feature.cs">
       <AutoGen>True</AutoGen>
@@ -176,20 +182,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EnumsController.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Property\Ownership.feature.cs">
+    <Compile Include="Tests\Property\PropertyOwnership.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Ownership.feature</DependentUpon>
+      <DependentUpon>PropertyOwnership.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Property\PropertyController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PropertyController.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\ResidentialSalesRequirement\NoteOnRequirement.feature.cs">
+    <Compile Include="Tests\ResidentialSalesRequirement\RequirementNotes.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>NoteOnRequirement.feature</DependentUpon>
+      <DependentUpon>RequirementNotes.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\ResidentialSalesRequirement\RequirementController.feature.cs">
       <AutoGen>True</AutoGen>
@@ -221,9 +227,13 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <None Include="Tests\Activities\ActivitiesController.feature">
+    <None Include="Tests\Activities\ActivityController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ActivitiesController.feature.cs</LastGenOutput>
+      <LastGenOutput>ActivityController.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Activities\ActivityType.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ActivityType.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\AddressForm\AddressFormController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
@@ -249,9 +259,9 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>EnumsController.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\ResidentialSalesRequirement\NoteOnRequirement.feature">
+    <None Include="Tests\ResidentialSalesRequirement\RequirementNotes.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>NoteOnRequirement.feature.cs</LastGenOutput>
+      <LastGenOutput>RequirementNotes.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Property\PropertyController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
@@ -261,9 +271,9 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RequirementController.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\Property\Ownership.feature">
+    <None Include="Tests\Property\PropertyOwnership.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>Ownership.feature.cs</LastGenOutput>
+      <LastGenOutput>PropertyOwnership.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\ResourcesController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

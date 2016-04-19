@@ -10,14 +10,14 @@
         {
             var attributes = new[]
             {
-                new Attribute { LabelKey = "Property.Bedrooms", NameKey = "Bedrooms" },
-                new Attribute { LabelKey = "Property.Receptions", NameKey = "Receptions" },
-                new Attribute { LabelKey = "Property.Bathrooms", NameKey = "Bathrooms" },
-                new Attribute { LabelKey = "Property.Area", NameKey = "Area" },
-                new Attribute { LabelKey = "Property.LandArea", NameKey = "LandArea" },
-                new Attribute { LabelKey = "Property.GuestRooms", NameKey = "GuestRooms" },
-                new Attribute { LabelKey = "Property.FunctionRooms", NameKey = "FunctionRooms" },
-                new Attribute { LabelKey = "Property.CarParkingSpaces", NameKey = "CarParkingSpaces" }
+                new Attribute { LabelKey = "PROPERTY.BEDROOMS", NameKey = "Bedrooms" },
+                new Attribute { LabelKey = "PROPERTY.RECEPTIONS", NameKey = "Receptions" },
+                new Attribute { LabelKey = "PROPERTY.BATHROOMS", NameKey = "Bathrooms" },
+                new Attribute { LabelKey = "PROPERTY.AREA", NameKey = "Area" },
+                new Attribute { LabelKey = "PROPERTY.LANDAREA", NameKey = "LandArea" },
+                new Attribute { LabelKey = "PROPERTY.GUESTROOMS", NameKey = "GuestRooms" },
+                new Attribute { LabelKey = "PROPERTY.FUNCTIONROOMS", NameKey = "FunctionRooms" },
+                new Attribute { LabelKey = "PROPERTY.CARPARKINGSPACES", NameKey = "CarParkingSpaces" }
             };
 
             context.Attributes.AddOrUpdate(a => a.NameKey, attributes);

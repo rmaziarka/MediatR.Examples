@@ -50,11 +50,11 @@
 
         public static void SendKeys(this IWebDriver driver, ElementLocator locator, string text)
         {
-            if (text.Equals(string.Empty))
+            if (text != null && text.Equals(string.Empty))
             {
                 driver.GetElement(locator).Clear();
             }
-            else
+            else if(text != null)
             {
                 driver.GetElement(locator).Clear();
                 driver.GetElement(locator).SendKeys(text);

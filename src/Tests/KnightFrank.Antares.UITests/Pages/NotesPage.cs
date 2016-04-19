@@ -10,9 +10,9 @@
 
     public class NotesPage : ProjectPageBase
     {
-        private readonly ElementLocator noteTextArea = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator saveNoteButton = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator listOfNotes = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator listOfNotes = new ElementLocator(Locator.CssSelector, ".note-content.ng-binding");
+        private readonly ElementLocator noteTextArea = new ElementLocator(Locator.CssSelector, ".form-control");
+        private readonly ElementLocator saveNoteButton = new ElementLocator(Locator.CssSelector, ".btn.btn-primary");
 
         public NotesPage(DriverContext driverContext) : base(driverContext)
         {
@@ -27,6 +27,7 @@
         public NotesPage SaveNote()
         {
             this.Driver.GetElement(this.saveNoteButton).Click();
+            this.Driver.WaitForAngular();
             return this;
         }
 

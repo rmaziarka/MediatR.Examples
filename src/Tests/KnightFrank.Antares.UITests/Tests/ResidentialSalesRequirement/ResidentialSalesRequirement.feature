@@ -19,7 +19,7 @@ Scenario: Create new residential sales requirement
 	When User fills in location details on create residential sales requirement page
 		| Country        | Line2        | Postcode | City   |
 		| United Kingdom | Upper Ground | SE1 9PP  | London |
-		When User fills in property details on create residential sales requirement page
+	When User fills in property details on create residential sales requirement page
 			| Type | MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
 			| Flat | 100000   | 500000   | 2           | 3           | 2                 | 4                 | 1            | 3            | 2                | 2                | 90000   | 150000  | 200000      | 300000      | Note        |
 		And User clicks save button on create residential sales requirement page
@@ -34,3 +34,9 @@ Scenario: Create new residential sales requirement
 			| FirstName | Surname |
 			| Alana     | Jones   |
 		And residential sales requirement create date is equal to today
+	When User clicks notes button on residential sales requirement page
+		And User adds note on residential sales requirement page
+			| Description                                                            |
+			| This is an example text of note. Text was created for testing purposes |
+	Then Note is displayed in recent notes area on residential sales requirement page
+		And Notes number is increased on residential sales requirement page

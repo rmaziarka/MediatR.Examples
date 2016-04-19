@@ -70,8 +70,7 @@
         [AutoMoqData]
         public void Given_NameIsTooLong_When_Validating_Then_IsInvalidAndHasAppropriateErrorMsg(
             CreateCompanyValidator validator,
-            CreateCompanyCommand cmd,
-            IFixture fixture)
+            CreateCompanyCommand cmd)
         {
             // Arrange
             cmd.Name =

@@ -15,6 +15,6 @@
         
         public Guid ActivityStatusId { get; set; }
 
-        public List<Guid> ContactIds { get; set; }
+        public IList<Guid> ContactIds { get; set; }
     }
 }

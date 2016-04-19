@@ -17,12 +17,18 @@ module Antares {
 
                     var staticTranslationsPromise = this.dataAccessService.getStaticTranslationResource().get({ isoCode: options.key }).$promise;
                     var enumTranslationsPromise = this.dataAccessService.getEnumTranslationResource().get({ isoCode: options.key }).$promise;
-
-                    this.$q.all([staticTranslationsPromise, enumTranslationsPromise]).then(
+                    var resourceTranslationsPromise = this.dataAccessService.getResourceTranslationResource().get({ isoCode: options.key }).$promise;
+                    
+                    this.$q.all([staticTranslationsPromise, enumTranslationsPromise, resourceTranslationsPromise]).then(
                         (promisesResults: any) => {
                             var translations = promisesResults[0].toJSON();
                             var enums = promisesResults[1].toJSON();
-                            translations.ENUMS = enums;
+                            var resources = promisesResults[2].toJSON();
+
+                            var dynamicTranslations: any = {};
+                            angular.extend(dynamicTranslations, enums, resources);
+                            
+                            translations[Common.Filters.DynamicTranslateFilter.DYNAMIC_TRANSLATIONS_KEY] = dynamicTranslations;
                             deferred.resolve(translations);
                         },
                         () => {

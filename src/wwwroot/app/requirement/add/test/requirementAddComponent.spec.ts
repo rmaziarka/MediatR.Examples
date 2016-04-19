@@ -1,7 +1,9 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares {
-    import RequirementAddController = Antares.Requirement.Add.RequirementAddController;
+    import RequirementAddController = Requirement.Add.RequirementAddController;
+    import Business = Common.Models.Business;
+
     describe('Given requirement is being added', () =>{
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
@@ -26,7 +28,7 @@ module Antares {
             landMaxSelector: 'input#land-max'
         };
 
-        var requirementMock = {
+        var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate({
             maxPrice: 444,
             minPrice: 0,
             maxBedrooms: 3,
@@ -35,8 +37,8 @@ module Antares {
             maxParkingSpaces: 12,
             maxArea: 1234,
             maxLandArea: 5678
-        }
-
+        });
+        
         var controller: RequirementAddController;
 
         beforeEach(inject((

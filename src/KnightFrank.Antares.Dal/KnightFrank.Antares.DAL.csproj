@@ -70,6 +70,10 @@
     <Compile Include="Model\Configuration\Address\AddressFormEntityTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\Attribute\AttributeValuesConfiguration.cs" />
     <Compile Include="Model\Configuration\Attribute\AttributeConfiguration.cs" />
+    <Compile Include="Model\Configuration\BaseAuditableEntityConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\PropertyCharacteristicConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\RequirementNoteConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\PropertyAttributeFormConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\PropertyAttributeFormDefinitionConfiguration.cs" />
     <Compile Include="Model\Configuration\BaseEntityConfiguration.cs" />
@@ -98,6 +102,14 @@
     <Compile Include="Model\Enum\EnumLocalised.cs" />
     <Compile Include="Model\Enum\EnumType.cs" />
     <Compile Include="Model\Enum\EnumTypeItem.cs" />
+    <Compile Include="Model\Property\Characteristics\Characteristic.cs" />
+    <Compile Include="Model\Property\Characteristics\CharacteristicGroup.cs" />
+    <Compile Include="Model\Property\Characteristics\CharacteristicGroupItem.cs" />
+    <Compile Include="Model\Property\Characteristics\CharacteristicGroupLocalised.cs" />
+    <Compile Include="Model\Property\Characteristics\CharacteristicGroupUsage.cs" />
+    <Compile Include="Model\Property\Characteristics\CharacteristicLocalised.cs" />
+    <Compile Include="Model\Property\PropertyCharacteristic.cs" />
+    <Compile Include="Model\Property\RequirementNote.cs" />
     <Compile Include="Model\Property\Activity.cs" />
     <Compile Include="Model\Property\Ownership.cs" />
     <Compile Include="Model\Property\Property.cs" />
@@ -130,6 +142,7 @@
     <Compile Include="Seed\LocaleData.cs" />
     <Compile Include="Seed\AddressFormData.cs" />
     <Compile Include="Seed\PropertyTypeData.cs" />
+    <Compile Include="Seed\UserData.cs" />
     <Compile Include="Seed\RoleData.cs" />
   </ItemGroup>
   <ItemGroup>

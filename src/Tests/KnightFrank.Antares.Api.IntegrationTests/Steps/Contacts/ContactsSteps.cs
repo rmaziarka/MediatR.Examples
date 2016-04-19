@@ -49,6 +49,16 @@
             this.CreateContact(contact);
         }
 
+        [Given(@"User creates contacts in database with following data")]
+        public void CreateUsersInDb(Table table)
+        {
+            IEnumerable<Contact> contact = table.CreateSet<Contact>().ToList();
+            this.fixture.DataContext.Contacts.AddRange(contact);
+            this.fixture.DataContext.SaveChanges();
+
+            this.scenarioContext.Set(contact, "Contact List");
+        }
+
         [When(@"User creates contact using api with max lenght fields")]
         public void CreateUsersWithMaxFields()
         {
@@ -62,16 +72,6 @@
             };
 
             this.CreateContact(contact);
-        }
-
-        [Given(@"User creates contacts in database with following data")]
-        public void CreateUsersInDb(Table table)
-        {
-            IEnumerable<Contact> contact = table.CreateSet<Contact>().ToList();
-            this.fixture.DataContext.Contacts.AddRange(contact);
-            this.fixture.DataContext.SaveChanges();
-
-            this.scenarioContext.Set(contact, "Contact List");
         }
 
         [When(@"Try to creates a contact with following data")]

@@ -28,7 +28,7 @@
                         <div class="col-md-7">
                             <label for="market-appraisal-price" translate="ACTIVITY.EDIT.PRICES.MARKET_APPRAISAL_PRICE"></label>
                             <div class="input-group">
-                                <input id="market-appraisal-price" name="marketAppraisalPrice" class="form-control" type="number" min="0" pattern="\d+([\.,]\d+)?" ng-model="aevm.activity.marketAppraisalPrice"/>
+                                <input id="market-appraisal-price" name="marketAppraisalPrice" class="form-control" type="number" min="0" ng-model="aevm.activity.marketAppraisalPrice"/>
                                 <div class="input-group-addon">GBP</div>
                             </div>
                             <div ng-messages="editActivityForm.marketAppraisalPrice.$error" ng-show="editActivityForm.$submitted || editActivityForm.marketAppraisalPrice.$dirty">
@@ -42,7 +42,7 @@
                         <div class="col-md-7">
                             <label for="recommended-price" translate="ACTIVITY.EDIT.PRICES.RECOMMENDED_PRICE"></label>
                             <div class="input-group">
-                                <input id="recommended-price" name="recommendedPrice" class="form-control" type="number" min="0" pattern="\d+([\.,]\d+)?" ng-model="aevm.activity.recommendedPrice"/>
+                                <input id="recommended-price" name="recommendedPrice" class="form-control" type="number" min="0" ng-model="aevm.activity.recommendedPrice"/>
                                 <div class="input-group-addon">GBP</div>
                             </div>
                             <div ng-messages="editActivityForm.recommendedPrice.$error" ng-show="editActivityForm.$submitted || editActivityForm.recommendedPrice.$dirty">
@@ -56,7 +56,7 @@
                         <div class="col-md-7">
                             <label for="vendor-estimated-price" translate="ACTIVITY.EDIT.PRICES.VENDOR_ESIMATED_PRICE"></label>
                             <div class="input-group">
-                                <input id="vendor-estimated-price" name="vendorEstimatedPrice" class="form-control" type="number" min="0" pattern="\d+([\.,]\d+)?" ng-model="aevm.activity.vendorEstimatedPrice"/>
+                                <input id="vendor-estimated-price" name="vendorEstimatedPrice" class="form-control" type="number" min="0" ng-model="aevm.activity.vendorEstimatedPrice"/>
                                 <div class="input-group-addon">GBP</div>
                             </div>
                             <div ng-messages="editActivityForm.vendorEstimatedPrice.$error" ng-show="editActivityForm.$submitted || editActivityForm.vendorEstimatedPrice.$dirty">

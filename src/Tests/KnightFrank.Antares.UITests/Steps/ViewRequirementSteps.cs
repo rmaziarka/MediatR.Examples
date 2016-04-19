@@ -33,6 +33,20 @@
             this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
         }
 
+        [When(@"User clicks notes button on residential sales requirement page")]
+        public void OpenNotes()
+        {
+            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").OpenNotes();
+        }
+
+        [When(@"User adds note on residential sales requirement page")]
+        public void InsertNotesText(Table table)
+        {
+            var details = table.CreateInstance<RequirementNote>();
+            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
+            page.Notes.SetNoteText(details.Description).SaveNote();
+        }
+
         [Then(@"residential sales requirement location details are same as the following")]
         public void CheckResidentialSalesRequirementLocationDetails(Table table)
         {
@@ -56,13 +70,33 @@
             var expectedDetails = table.CreateInstance<Requirement>();
 
             Verify.That(this.driverContext,
-                () => Assert.True(details["Price"].Contains(expectedDetails.MinPrice + " - " + expectedDetails.MaxPrice + " GBP"), "Prices are different"),
-                () => Assert.True(details["Bedrooms"].Contains(expectedDetails.MinBedrooms + " - " + expectedDetails.MaxBedrooms), "Number of bedrooms is different"),
-                () => Assert.True(details["Reception rooms"].Contains(expectedDetails.MinReceptionRooms + " - " + expectedDetails.MaxReceptionRooms), "Number of reception rooms is different"),
-                () => Assert.True(details["Bathrooms"].Contains(expectedDetails.MinBathrooms + " - " + expectedDetails.MaxBathrooms), "Number of bathrooms is different"),
-                () => Assert.True(details["Parking spaces"].Contains(expectedDetails.MinParkingSpaces + " - " + expectedDetails.MaxParkingSpaces), "Number of parking spaces is different"),
-                () => Assert.True(details["Area"].Contains(expectedDetails.MinArea + " - " + expectedDetails.MaxArea + " sq ft"), "Areas are different"),
-                () => Assert.True(details["Land area"].Contains(expectedDetails.MinLandArea + " - " + expectedDetails.MaxLandArea + " sq ft"), "Land areas are different"),
+                () =>
+                    Assert.True(details["Price"].Contains(expectedDetails.MinPrice + " - " + expectedDetails.MaxPrice + " GBP"),
+                        "Prices are different"),
+                () =>
+                    Assert.True(details["Bedrooms"].Contains(expectedDetails.MinBedrooms + " - " + expectedDetails.MaxBedrooms),
+                        "Number of bedrooms is different"),
+                () =>
+                    Assert.True(
+                        details["Reception rooms"].Contains(expectedDetails.MinReceptionRooms + " - " +
+                                                            expectedDetails.MaxReceptionRooms),
+                        "Number of reception rooms is different"),
+                () =>
+                    Assert.True(
+                        details["Bathrooms"].Contains(expectedDetails.MinBathrooms + " - " + expectedDetails.MaxBathrooms),
+                        "Number of bathrooms is different"),
+                () =>
+                    Assert.True(
+                        details["Parking spaces"].Contains(expectedDetails.MinParkingSpaces + " - " +
+                                                           expectedDetails.MaxParkingSpaces),
+                        "Number of parking spaces is different"),
+                () =>
+                    Assert.True(details["Area"].Contains(expectedDetails.MinArea + " - " + expectedDetails.MaxArea + " sq ft"),
+                        "Areas are different"),
+                () =>
+                    Assert.True(
+                        details["Land area"].Contains(expectedDetails.MinLandArea + " - " + expectedDetails.MaxLandArea + " sq ft"),
+                        "Land areas are different"),
                 () => Assert.Equal(expectedDetails.Description, details["Requirement description"]));
         }
 
@@ -86,6 +120,19 @@
             Assert.Equal(date.ToString("MMMM d, yyyy"),
                 this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage")
                     .GetRequirementCreateDate());
+        }
+
+        [Then(@"Note is displayed in recent notes area on residential sales requirement page")]
+        public void CheckIfNoteAdded()
+        {
+            Assert.Equal(1, this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").Notes.GetNumberOfNotes());
+        }
+
+        [Then(@"Notes number is increased on residential sales requirement page")]
+        public void CheckIfNotesNumberIncreased()
+        {
+            string notesNumber = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").CheckNotesNumber();
+            Assert.Equal("(1)", notesNumber);
         }
     }
 }

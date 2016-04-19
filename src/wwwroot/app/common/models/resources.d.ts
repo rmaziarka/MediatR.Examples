@@ -1,5 +1,4 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
-/// <reference path="dto/requirement.d.ts" />
 
 declare module Antares.Common.Models {
     export module Resources {
@@ -52,7 +51,9 @@ declare module Antares.Common.Models {
         }
 
         interface IOwnershipResource extends ng.resource.IResource<Antares.Common.Models.Dto.IOwnership> {
+        }
 
+        interface IRequirementNoteResource extends ng.resource.IResource<Antares.Common.Models.Dto.IRequirementNote> {
         }
 
         // *** IResourceClass extensions ***
@@ -70,6 +71,7 @@ declare module Antares.Common.Models {
         interface IPropertyResourceClass extends Resources.IBaseResourceClass<Resources.IPropertyResource> {
             createOwnership(params: any, ownership: any): ng.resource.IResource<Dto.IOwnership>;
             getPropertyTypes(params: any, ownership: any): ng.resource.IResource<Dto.IOwnership>;
+            getAttributes(params: any, ownership: any): ng.resource.IResource<Dto.IAttribute>;
         }
 
         // - country -
