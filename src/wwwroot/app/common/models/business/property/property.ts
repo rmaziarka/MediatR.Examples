@@ -8,6 +8,7 @@
         activities: Business.Activity[] = [];
         divisionId: string = null;
         division: Business.EnumTypeItem = new Business.EnumTypeItem();
+        attributeValues: any;
 
         constructor(property?: Dto.IProperty)
         {

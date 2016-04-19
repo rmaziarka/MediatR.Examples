@@ -52,6 +52,9 @@
     "FLATNUMBER": "Flat number",
     "UNIT": "Unit"
   },
+  "UNITS": {
+    "SQUARE_FEET":  "sq. ft"
+  },
   "COMPANY": {
     "ADD": {
       "CREATE_COMPANY": "Create company",

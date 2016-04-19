@@ -18,11 +18,16 @@ module Antares {
             // input should be text type for test purpose - when number then jquery val() method does not put number value formatted with comma
             element = $compile(`
                 <div>
-                    <input type="text" ddp-decimal id='number' ng-model="number"/>
+                    <input type="text" id='number' ng-model='number'/>
                 </div>
                 `)(scope);
-            scope.$apply();
-
+            
+            // ddpDecimal is added dynamically by the inputNumberDirective decorator
+            // ddp-decimal has terminal flag so it's runned before ng-model
+            // in decorator we add ddp-decimal after compiling the ng-model
+            element.find('input').attr('ddp-decimal','');
+            element = $compile(element)(scope);
+            
             var numberEl: ng.IAugmentedJQuery = element.find('#number');
             numberAdapter = new TestHelpers.InputValidationAdapter(numberEl, null, scope);
         }));

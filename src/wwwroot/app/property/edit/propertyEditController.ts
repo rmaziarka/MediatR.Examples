@@ -62,6 +62,8 @@ module Antares.Property {
         }
 
         public save() {
+            this.components.attributeList().clearHiddenAttributesFromProperty();
+
             this.propertyResource
                 .update(this.property)
                 .$promise
