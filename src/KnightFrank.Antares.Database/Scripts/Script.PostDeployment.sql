@@ -11,12 +11,12 @@
 :r .\SQL\PropertyTypeDefinition.sql
 :r .\SQL\PropertyTypeLocalised.sql
 :r .\SQL\Attribute.sql
---:r .\SQL\PropertyAttributeForm.sql
---:r .\SQL\PropertyAttributeFormDefinition.sql
+:r .\SQL\PropertyAttributeForm.sql
+:r .\SQL\PropertyAttributeFormDefinition.sql
 --:r .\SQL\AddressField.sql
 --:r .\SQL\AddressForm.sql
 --:r .\SQL\AddressFieldLabel.sql
 --:r .\SQL\AddressFieldDefinition.sql
 --:r .\SQL\AddressFormEntityType.sql
 
---:r .\SQL\Contact.sql
+:r .\SQL\Contact.sql

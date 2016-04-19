@@ -21,7 +21,7 @@ BULK INSERT #TempPropertyTypeDefinition
 MERGE dbo.PropertyTypeDefinition AS T
 	USING 
 	(
-		SELECT DISTINCT
+		SELECT
 		P.Id AS PropertyTypeId,	
 		C.Id AS CountryId,
 		I.Id AS DivisionId,
@@ -32,10 +32,11 @@ MERGE dbo.PropertyTypeDefinition AS T
 		JOIN EnumType E ON E.Id = I.EnumTypeId
 		JOIN PropertyType P ON P.Code = temp.PropertyTypeCode
 		WHERE E.Code = 'Division'
-	) AS S	
+	)	
+	AS S	
 	ON 
 	(
-        (T.Id = S.Id)
+		(T.PropertyTypeId = S.PropertyTypeId AND T.CountryId = S.CountryId AND T.DivisionId = S.DivisionId)
 	)
 	WHEN MATCHED THEN
 		UPDATE SET 

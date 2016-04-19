@@ -12,6 +12,8 @@ BULK INSERT #TempPropertyType
 		ROWTERMINATOR = '\n',
 		TABLOCK
     )
+
+ALTER TABLE PropertyType NOCHECK CONSTRAINT ALL
 	    	
 MERGE PropertyType AS T
 	USING 
@@ -23,7 +25,7 @@ MERGE PropertyType AS T
 	AS S	
 	ON 
 	(
-        (T.Code = S.Code AND T.ParentId = NULL)
+        (T.Code = S.Code AND T.ParentId IS NULL)
 	)
 	WHEN MATCHED THEN
 		UPDATE SET 

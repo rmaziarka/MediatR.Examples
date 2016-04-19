@@ -24,7 +24,7 @@ MERGE dbo.PropertyTypeLocalised AS T
 		P.Id AS PropertyTypeId,
 		L.Id AS LocaleId,
 		[Value]
-		FROM TempPropertyTypeLocalised Temp
+		FROM #TempPropertyTypeLocalised Temp
 		JOIN Locale L ON L.IsoCode = Temp.LocaleCode
 		JOIN PropertyType P ON P.Code = Temp.PropertyTypeCode
 	)
