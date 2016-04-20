@@ -9,6 +9,7 @@
 
     public class AddressTemplatePage : ProjectPageBase
     {
+        private readonly ElementLocator loader = new ElementLocator(Locator.CssSelector, "[ng-show *= 'isLoading']");
         private readonly ElementLocator propertyNumber = new ElementLocator(Locator.Id, "propertyNumber");
         private readonly ElementLocator propertyName = new ElementLocator(Locator.Id, "propertyName");
         private readonly ElementLocator propertyAddressLine1 = new ElementLocator(Locator.Id, "line1");
@@ -82,6 +83,7 @@
         // Country
         public AddressTemplatePage SelectPropertyCountry(string country)
         {
+            this.Driver.WaitUntilElementIsNoLongerFound(this.loader, BaseConfiguration.LongTimeout);
             this.Driver.WaitForAngularToFinish();
             var select = this.Driver.GetElement<Select>(this.propertyCountry);
             if (!select.SelectElement().SelectedOption.Text.Equals(country))
