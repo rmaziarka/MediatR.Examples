@@ -1,8 +1,6 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 module Antares {
-    import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
-    import PropertyAddController = Property.PropertyAddController;
 
     describe('propertyAddController', () => {
         var controller: Property.PropertyAddController;
@@ -22,6 +20,10 @@ module Antares {
             it('property should contain division from userData', () =>{
                 expect(controller.property.division.id).toBe('enumId');
                 expect(controller.property.division.code).toBe('code');
+            });
+
+            it('property should contain attribute values initiated', () => {
+                expect(controller.property.attributeValues).not.toBeUndefined();
             });
         });
 
