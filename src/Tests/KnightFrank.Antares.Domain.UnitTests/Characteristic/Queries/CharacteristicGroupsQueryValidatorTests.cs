@@ -23,7 +23,6 @@
                 .Customize(new AutoMoqCustomization());
 
             this.query = fixture.Build<CharacteristicGroupsQuery>()
-                                                   .With(x => x.CountryCode, "GB")
                                                    .With(x => x.PropertyTypeId, Guid.NewGuid())
                                                    .Create();
         }
