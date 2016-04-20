@@ -29,6 +29,7 @@
                     .Include(p => p.Division)
                     .Include(p => p.Activities.Select(o => o.Contacts))
                     .Include(p => p.Activities.Select(a => a.ActivityStatus))
+                    .Include(p => p.PropertyCharacteristics)
                     .FirstOrDefault(p => p.Id == message.Id);
 
             return result;
