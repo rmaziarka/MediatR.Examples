@@ -18,8 +18,8 @@ Scenario Outline: Create property
 
 	Examples:
 	| propertyType      | divisionCode | MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces | MinGuestRooms | MaxGuestRooms | MinFunctionRooms | MaxFunctionRooms |
-	| House             | Residential  | 1           | 3           | 1             | 3             | 2            | 3            | 1000    | 3000    | 500         | 4000        | 1                   | 3                   |               |               |                  |                  |
-	| Hotel             | Commercial   |             |             |               |               |              |              | 10000   | 50000   | 9000        | 70000       | 40                  | 60                  | 20            | 50            | 15               | 20               |
+	| House             | Residential  | 1           | 3           | 1             | 3             | 2            | 3            | 1000.1  | 3000.1  | 500.1       | 4000.1      | 1                   | 3                   |               |               |                  |                  |
+	| Hotel             | Commercial   |             |             |               |               |              |              | 10000.1 | 50000.1 | 9000.1      | 70000.1     | 40                  | 60                  | 20            | 50            | 15               | 20               |
 	# No attributes - no configuration
 	| Farm/Estate       | Residential  |             |             |               |               |              |              |         |         |             |             |                     |                     |               |               |                  |                  |
 	| Department Stores | Commercial   |             |             |               |               |              |              |         |         |             |             |                     |                     |               |               |                  |                  |
@@ -43,16 +43,16 @@ Scenario Outline: Create property with invalid data
 
 	Examples: 
 	| country | itemType | postCode    | propertyType | statusCode | divisionCode | MinBedrooms | MinArea | MinGuestRooms |
-	| GB      | invalid  | 777         | House        | BadRequest | Residential  | 1           | 1000    |               |
-	| invalid | invalid  | 777         | Hotel        | BadRequest | Commercial   |             | 10000   | 20            |
-	| invalid | Property | 777         | Hotel        | BadRequest | Commercial   |             | 10000   | 20            |
-	| GB      | Property |             | Hotel        | BadRequest | Commercial   |             | 10000   | 30            |
-	| GB      | Property | 12345678901 | Bungalow     | BadRequest | Residential  | 1           | 1000    |               |
-	| GB      | Property | 777         | invalid      | BadRequest | Commercial   | 1           | 1000    |               |
-	| GB      | Property | 777         | House        | BadRequest | Commercial   | 1           | 1000    |               |
+	| GB      | invalid  | 777         | House        | BadRequest | Residential  | 1           | 1000.1  |               |
+	| invalid | invalid  | 777         | Hotel        | BadRequest | Commercial   |             | 10000.2 | 20            |
+	| invalid | Property | 777         | Hotel        | BadRequest | Commercial   |             | 10000.3 | 20            |
+	| GB      | Property |             | Hotel        | BadRequest | Commercial   |             | 10000.4 | 30            |
+	| GB      | Property | 12345678901 | Bungalow     | BadRequest | Residential  | 1           | 1000.5  |               |
+	| GB      | Property | 777         | invalid      | BadRequest | Commercial   | 1           | 1000.6  |               |
+	| GB      | Property | 777         | House        | BadRequest | Commercial   | 1           | 1000.7  |               |
 	# Invalid attributes only
-	| GB      | Property | 777         | House        | BadRequest | Residential  | 1           | 1000    | 1             |
-	| GB      | Property | 777         | Hotel        | BadRequest | Commercial   | 1           | 20000   | 1             |
+	| GB      | Property | 777         | House        | BadRequest | Residential  | 1           | 1000.8  | 1             |
+	| GB      | Property | 777         | Hotel        | BadRequest | Commercial   | 1           | 20000.9 | 1             |
 
 @Property
 Scenario Outline: Update property
@@ -79,10 +79,10 @@ Scenario Outline: Update property
 
 	Examples:
 	| propertyType1           | propertyType2  | divisionCode1 | divisionCode2 | MinBedrooms | MaxReceptions | MaxArea | MinGuestRooms | MaxFunctionRooms | MinBedrooms2 | MaxReceptions2 | MaxArea2 | MinGuestRooms2 | MaxFunctionRooms2 |
-	| Hotel                   | Hotel          | Commercial    | Commercial    |             |               | 10000   | 10            | 10               |              |                | 20000    | 20             | 20                |
-	| House                   | House          | Residential   | Residential   | 2           | 3             | 900     |               |                  | 3            | 4              | 1000     |                |                   |
-	| Hotel                   | Flat           | Commercial    | Residential   |             |               | 10000   | 20            | 30               | 2            | 3              | 1000     |                |                   |
-	| Houseboat               | Hotel          | Residential   | Commercial    | 2           | 3             | 500     |               |                  |              |                | 10000    | 20             | 30                |
+	| Hotel                   | Hotel          | Commercial    | Commercial    |             |               | 10000.1 | 10            | 10               |              |                | 20000.2  | 20             | 20                |
+	| House                   | House          | Residential   | Residential   | 2           | 3             | 900.2   |               |                  | 3            | 4              | 1000.3   |                |                   |
+	| Hotel                   | Flat           | Commercial    | Residential   |             |               | 10000.3 | 20            | 30               | 2            | 3              | 1000.4   |                |                   |
+	| Houseboat               | Hotel          | Residential   | Commercial    | 2           | 3             | 500.4   |               |                  |              |                | 10000.5  | 20             | 30                |
 	# No attributes - no configuration
 	| Retail                  | Car Showroom   | Commercial    | Commercial    |             |               |         |               |                  |              |                |          |                |                   |
 	| Retail Unit A1          | Retail Unit A3 | Commercial    | Commercial    |             |               |         |               |                  |              |                |          |                |                   |
@@ -127,8 +127,8 @@ Scenario Outline: Update property with invalid data
 	| latest                               | GB      | Property | 123456      | House        | BadRequest | Residential   | Commercial    |             |               |         |               |                  |              |                |          |                |                   |
 	| latest                               | GB      | Property | 123456      | Office       | BadRequest | Residential   | Residential   |             |               |         |               |                  |              |                |          |                |                   |
 	#invalid attributes
-	| latest                               | GB      | Property | 123456      | House        | BadRequest | Residential   | Residential   | 2           | 3             | 1000    |               |                  | 2            | 3              | 1000     | 1              | 2                 |
-	| latest                               | GB      | Property | 123456      | Hotel        | BadRequest | Residential   | Commercial    | 2           | 3             | 1000    |               |                  | 2            | 3              | 1000     | 1              | 2                 |
+	| latest                               | GB      | Property | 123456      | House        | BadRequest | Residential   | Residential   | 2           | 3             | 1000.1  |               |                  | 2            | 3              | 1000.2   | 1              | 2                 |
+	| latest                               | GB      | Property | 123456      | Hotel        | BadRequest | Residential   | Commercial    | 2           | 3             | 1000.1  |               |                  | 2            | 3              | 1000.2   | 1              | 2                 |
 
 @Property
 Scenario: Get non existing property
@@ -149,7 +149,7 @@ Scenario: Get property
 			| Division       | Residential      |
 		And User sets attributes for property in database
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
-			| 1           | 3           | 1             | 3             | 2            | 3            | 1000    | 3000    | 500         | 4000        | 1                   | 3                   |
+			| 1           | 3           | 1             | 3             | 2            | 3            | 1000.1  | 3000.1  | 500.1       | 4000.1      | 1                   | 3                   |
         And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |  

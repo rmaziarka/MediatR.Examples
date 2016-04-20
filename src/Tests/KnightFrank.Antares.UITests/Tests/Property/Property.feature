@@ -5,6 +5,9 @@ Scenario: Create and update property
 	Given User navigates to create property page
 	When User selects United Kingdom country on create property page
 		And User selects Residential property and Flat type on create property page
+		And User fills in property details on create property page
+			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
+			| 2           | 4           | 1             | 3             | 2            | 3            | 2000.12 | 4000.12 | 6000.13     | 10000.10    | 3                   | 5                   |
 		And User fills in address details on create property page
 			| PropertyNumber | PropertyName | Line2        | Line3 | Postcode | City   | County |
 			| 55             | Knight Frank | Baker Street |       | W1U 8AN  | London | London |
@@ -13,7 +16,10 @@ Scenario: Create and update property
 		| PropertyNumber | PropertyName | Line2        | Postcode | City   | County |
 		| 55             | Knight Frank | Baker Street | W1U 8AN  | London | London |
 	When User clicks edit button on view property page
-		And User selects Commercial property and Shopping Centre type on edit property page
+		And User selects Commercial property and Hotel type on edit property page
+		And User fills in property details on edit property page
+			| MinGuestRooms | MaxGuestRooms | MinFunctionRooms | MaxFunctionRooms | MinArea | MaxArea |
+			| 120           | 200           | 10               | 20               | 4000.5  | 5500.0  |
 		And User fills in address details on edit property page
 			| PropertyNumber | PropertyName | Line2 | Line3          | Postcode | City | County |
 			|                |              |       | Address line 3 | W1U 8AN  |      |        |
@@ -32,7 +38,10 @@ Scenario: Create property with ownership and activity
 			| King  | Arthur    | Pendragon |
 	When User navigates to create property page
 		And User selects United Kingdom country on create property page
-		And User selects Residential property and Maisonette type on create property page
+		And User selects Residential property and House type on create property page
+		And User fills in property details on create property page
+			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
+			| 2           | 4           | 1             | 3             | 2            | 3            | 2000.12 | 4000.12 | 6000.13     | 10000.10    | 3                   | 5                   |
 		And User fills in address details on create property page
 			| PropertyNumber | PropertyName      | Line2    | Line3 | Postcode | City   | County      |
 			| 20             | Westminster Abbey | Deans Yd |       | SW1P 3PA | London | Westminster |

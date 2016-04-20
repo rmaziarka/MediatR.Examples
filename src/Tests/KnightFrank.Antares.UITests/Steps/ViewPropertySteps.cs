@@ -6,6 +6,7 @@
 
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.UITests.Pages;
+    using KnightFrank.Antares.UITests.Pages.Panels;
 
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;

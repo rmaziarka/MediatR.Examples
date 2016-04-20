@@ -4,9 +4,14 @@
 
     using KnightFrank.Antares.Dal.Model.Resource;
 
-    public interface ILocaled
+    public interface ILocalised : IBaseEntity
     {
+        Guid ResourceId { get; set; }
+
         Guid LocaleId { get; set; }
+
         Locale Locale { get; set; }
+
+        string Value { get; set; }
     }
 }

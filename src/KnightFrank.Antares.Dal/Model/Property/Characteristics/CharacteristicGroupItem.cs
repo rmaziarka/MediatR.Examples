@@ -6,6 +6,8 @@
     {
         public Guid CharacteristicId { get; set; }
         public virtual Characteristic Characteristic { get; set; }
+        public Guid CharacteristicGroupUsageId { get; set; }
+        public virtual CharacteristicGroupUsage CharacteristicGroupUsage { get; set; }
         public short Order { get; set; }
     }
 }

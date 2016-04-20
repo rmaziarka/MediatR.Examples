@@ -14,7 +14,8 @@ module Antares.TestHelpers {
                 ownerships: [],
                 activities: [],
                 divisionId: PropertyGenerator.makeRandom('divisionId'),
-                division: null
+                division: null,
+                attributeValues: []
             };
 
             return propertyMock;

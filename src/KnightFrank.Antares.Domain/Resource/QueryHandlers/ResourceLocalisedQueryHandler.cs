@@ -6,25 +6,27 @@
 
     using FluentValidation.Results;
 
+    using KnightFrank.Antares.Dal.Model.Common;
+    using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.Exceptions;
-    using KnightFrank.Antares.Domain.Resource.Dictionaries;
+    using KnightFrank.Antares.Domain.Common.Specifications;
     using KnightFrank.Antares.Domain.Resource.Queries;
 
     using MediatR;
 
     public class ResourceLocalisedQueryHandler : IRequestHandler<ResourceLocalisedQuery, Dictionary<Guid, string>>
     {
-        private readonly IResourceLocalisedDictionary[] dictionaries;
-
         private readonly IDomainValidator<ResourceLocalisedQuery> domainValidator;
+
+        private readonly IResourceLocalisedRepositoryProvider repositoryProvider;
 
         public ResourceLocalisedQueryHandler(
             IDomainValidator<ResourceLocalisedQuery> domainValidator,
-            IResourceLocalisedDictionary[] dictionaries)
+            IResourceLocalisedRepositoryProvider repositoryProvider)
         {
             this.domainValidator = domainValidator;
-            this.dictionaries = dictionaries;
+            this.repositoryProvider = repositoryProvider;
         }
 
         public Dictionary<Guid, string> Handle(ResourceLocalisedQuery query)
@@ -35,15 +37,13 @@
                 throw new DomainValidationException(validationResult.Errors);
             }
 
-            var result = new Dictionary<Guid, string>();
-
-            foreach (IResourceLocalisedDictionary resourceLocalisedDictionary in this.dictionaries)
-            {
-                Dictionary<Guid, string> dictionary = resourceLocalisedDictionary.GetDictionary(query.IsoCode);
-                result = result.Concat(dictionary).ToDictionary(x => x.Key, x => x.Value);
-            }
-
-            return result;
+            return
+                this.repositoryProvider.GetRepositories()
+                    .Select(
+                        covariantReadGenericRepository =>
+                        covariantReadGenericRepository.Get().Where(new IsLocalised<ILocalised>(query.IsoCode).SatisfiedBy()).ToList())
+                    .SelectMany(x => x)
+                    .ToDictionary(x => x.ResourceId, x => x.Value);
         }
     }
 }

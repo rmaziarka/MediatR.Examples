@@ -3,6 +3,7 @@
     using System;
 
     using KnightFrank.Antares.Dal.Model.Address;
+    using KnightFrank.Antares.Dal.Model.Attribute;
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;
@@ -63,19 +64,19 @@
         [When(@"User fills in property details on edit property page")]
         public void FillInPropertyDetails(Table table)
         {
-            var details = table.CreateInstance<PropertyDetails>();
+            var details = table.CreateInstance<AttributeValues>();
             var page = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
 
             page.SetMinBedrooms(details.MinBedrooms)
-                .SetMaxBathrooms(details.MaxBedrooms)
-                .SetMinReceptionRooms(details.MinReceptionRooms)
-                .SetMaxReceptionRooms(details.MaxReceptionRooms)
+                .SetMaxBedrooms(details.MaxBedrooms)
+                .SetMinReceptionRooms(details.MinReceptions)
+                .SetMaxReceptionRooms(details.MaxReceptions)
                 .SetMinBathrooms(details.MinBathrooms)
                 .SetMaxBathrooms(details.MaxBathrooms)
-                .SetMinParkingSpaces(details.MinParkingSpaces)
-                .SetMaxParkingSpaces(details.MaxParkingSpaces)
-                .SetMinPropertyArea(details.MinPropertyArea)
-                .SetMaxPropertyArea(details.MaxPropertyArea)
+                .SetMinParkingSpaces(details.MinCarParkingSpaces)
+                .SetMaxParkingSpaces(details.MaxCarParkingSpaces)
+                .SetMinPropertyArea(details.MinArea)
+                .SetMaxPropertyArea(details.MaxArea)
                 .SetMinLandArea(details.MinLandArea)
                 .SetMaxLandArea(details.MaxLandArea)
                 .SetMinGuestRooms(details.MinGuestRooms)

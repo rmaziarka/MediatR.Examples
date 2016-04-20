@@ -57,6 +57,7 @@
         /// <param name="command">Property data</param>
         /// <returns>Newly created property </returns>
         [HttpPost]
+        [Route("")]
         public Property CreateProperty(CreatePropertyCommand command)
         {
             Guid propertyId = this.mediator.Send(command);
@@ -69,6 +70,7 @@
         /// <param name="command">Property data</param>
         /// <returns>Newly updated property</returns>
         [HttpPut]
+        [Route("")]
         public Property UpdateProperty(UpdatePropertyCommand command)
         {
             Guid propertyId = this.mediator.Send(command);

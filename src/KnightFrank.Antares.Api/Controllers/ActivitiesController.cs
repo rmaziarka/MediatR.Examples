@@ -33,6 +33,7 @@
         /// </summary>
         /// <param name="command">Activity data to create</param>
         [HttpPost]
+        [Route("")]
         public Activity CreateActivity([FromBody] CreateActivityCommand command)
         {
             Guid activityId = this.mediator.Send(command);
@@ -65,6 +66,7 @@
         /// <param name="command">Activity data to update</param>
         /// <returns>Activity entity</returns>
         [HttpPut]
+        [Route("")]
         public Activity UpdateActivity(UpdateActivityCommand command)
         {
             Guid activityId = this.mediator.Send(command);

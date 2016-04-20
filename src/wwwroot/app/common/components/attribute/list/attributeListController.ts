@@ -10,6 +10,7 @@ module Antares.Common.Component {
         private property: Business.Property;
         private userData: Dto.IUserData;
         private attributes: Business.Attribute[];
+        private mode: string;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -29,10 +30,8 @@ module Antares.Common.Component {
                         countryCode: this.userData.country, propertyTypeId: this.property.propertyTypeId
                     }, null)
                     .$promise
-                    .then((attributes: any) => {
-                        this.attributes = attributes.attributes.map(function (item: Dto.IAttribute) {
-                            return new Business.Attribute(item);
-                        });
+                    .then((attributes: any) =>{
+                        this.attributes = attributes.attributes.map((item: Dto.IAttribute) => new Business.Attribute(item));
                     });
             }
         }

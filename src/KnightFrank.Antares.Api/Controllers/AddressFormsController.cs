@@ -1,14 +1,14 @@
 ﻿namespace KnightFrank.Antares.Api.Controllers
 {
+    using System;
+    using System.Net;
+    using System.Net.Http;
     using System.Web.Http;
 
     using KnightFrank.Antares.Domain.AddressForm.Queries;
     using KnightFrank.Antares.Domain.AddressForm.QueryResults;
 
     using MediatR;
-    using System;
-    using System.Net;
-    using System.Net.Http;
 
     /// <summary>
     ///     Controller class for address form
@@ -33,13 +33,14 @@
         /// <param name="addressFormQuery">Query by entity type and country code</param>
         /// <returns></returns>
         [HttpGet]
+        [Route("")]
         public AddressFormQueryResult GetAddressFormQueryResult([FromUri(Name = "")] AddressFormQuery addressFormQuery)
         {
             return this.mediator.Send(addressFormQuery);
         }
 
         /// <summary>
-        /// Gets the address form query result.
+        ///     Gets the address form query result.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Address form query result </returns>
@@ -47,10 +48,11 @@
         [Route("{id}")]
         public AddressFormQueryResult GetAddressFormQueryResult(Guid id)
         {
-            var result = this.mediator.Send(new AddressFormByIdQuery(id));
+            AddressFormQueryResult result = this.mediator.Send(new AddressFormByIdQuery(id));
             if (result == null)
             {
-                throw new HttpResponseException(this.Request.CreateErrorResponse(HttpStatusCode.NotFound, "Address form not found."));
+                throw new HttpResponseException(
+                    this.Request.CreateErrorResponse(HttpStatusCode.NotFound, "Address form not found."));
             }
 
             return result;

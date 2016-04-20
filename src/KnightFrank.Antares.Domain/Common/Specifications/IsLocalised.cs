@@ -7,11 +7,11 @@
 
     using Dal.Model.Common;
 
-    public class IsLocaled<T> : Specification<T> where T: class, ILocaled
+    public class IsLocalised<T> : Specification<T> where T: class, ILocalised
     {
         private readonly string isoCode;
 
-        public IsLocaled(string isoCode)
+        public IsLocalised(string isoCode)
         {
             this.isoCode = isoCode;
         }

@@ -7,5 +7,6 @@ declare module Antares.Common.Models.Dto {
         ownerships: Dto.IOwnership[];
         activities: Dto.IActivity[];
         division: Dto.IEnumTypeItem;
+        attributeValues: any;
     }
 }

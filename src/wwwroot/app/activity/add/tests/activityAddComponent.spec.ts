@@ -138,7 +138,8 @@ module Antares {
                     division: null,
                     address: Antares.Mock.AddressForm.FullAddress,
                     ownerships: [],
-                    activities: []
+                    activities: [],
+                    attributeValues: []
                 };
                 scope['property'] = propertyMock;
                 element = $compile('<property-view property="property"></property-view>')(scope);

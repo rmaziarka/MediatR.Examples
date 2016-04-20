@@ -283,48 +283,48 @@
 			{
 				new CountryLocalised
 				{
-					CountryId = country.Id,
+					ResourceId = country.Id,
 					LocaleId = CsLocaleId,
 					Value = csValue
 				},
 				new CountryLocalised
 				{
-					CountryId = country.Id,
+                    ResourceId = country.Id,
 					LocaleId = DeLocaleId,
 					Value = deValue
 				},
 				new CountryLocalised
 				{
-					CountryId = country.Id,
+                    ResourceId = country.Id,
 					LocaleId = EnLocaleId,
 					Value = enValue
 				},
 				new CountryLocalised
 				{
-					CountryId = country.Id,
+                    ResourceId = country.Id,
 					LocaleId = EsLocaleId,
 					Value = esValue
 				},
 				new CountryLocalised
 				{
-					CountryId = country.Id,
+                    ResourceId = country.Id,
 					LocaleId = FrLocaleId,
 					Value = frValue
 				},
 				new CountryLocalised
 				{
-					CountryId = country.Id,
+                    ResourceId = country.Id,
 					LocaleId = PlLocaleId,
 					Value = plValue
 				},
 				new CountryLocalised
 				{
-					CountryId = country.Id,
+                    ResourceId = country.Id,
 					LocaleId = SvLocaleId,
 					Value = svValue
 				}
 			};
-			context.CountryLocaliseds.AddOrUpdate(x => new { x.LocaleId, x.CountryId }, countryLocaliseds.ToArray());
+			context.CountryLocaliseds.AddOrUpdate(x => new { x.LocaleId, x.ResourceId }, countryLocaliseds.ToArray());
 		}
 	}
 }

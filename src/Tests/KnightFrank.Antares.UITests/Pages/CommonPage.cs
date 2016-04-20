@@ -10,8 +10,7 @@
 
     public class CommonPage : ProjectPageBase
     {
-        public CommonPage(DriverContext driverContext)
-            : base(driverContext)
+        public CommonPage(DriverContext driverContext) : base(driverContext)
         {
         }
 

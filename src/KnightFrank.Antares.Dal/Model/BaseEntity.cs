@@ -2,7 +2,9 @@
 {
     using System;
 
-    public abstract class BaseEntity
+    using KnightFrank.Antares.Dal.Model.Common;
+
+    public abstract class BaseEntity : IBaseEntity
     {
         public Guid Id { get; set; }
     }
