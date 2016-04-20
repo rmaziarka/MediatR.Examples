@@ -18,6 +18,7 @@
                 .WillCascadeOnDelete(false);
 
             this.Property(c => c.ResourceId).HasColumnName("CharacteristicId");
+            this.Property(p => p.Value).HasMaxLength(100);
         }
     }
 }
