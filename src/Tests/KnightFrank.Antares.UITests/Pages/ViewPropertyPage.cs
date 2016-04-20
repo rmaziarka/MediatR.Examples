@@ -18,7 +18,8 @@
         private readonly ElementLocator editButton = new ElementLocator(Locator.CssSelector, "button[ng-click*='goToEdit']");
         //locators for property details area
         private readonly ElementLocator propertyType = new ElementLocator(Locator.CssSelector, "div[translate = 'PROPERTY.VIEW.TYPE'] ~ div");
-        private readonly ElementLocator propertyDetails = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator propertyDetailsLabels = new ElementLocator(Locator.CssSelector, "[ng-repeat *= 'attribute'] div.ng-binding:not([class *= 'ng-hide']):nth-child(odd)");
+        private readonly ElementLocator propertyDetailsValues = new ElementLocator(Locator.CssSelector, "[ng-repeat *= 'attribute'] div.ng-binding:not([class *= 'ng-hide']):nth-child(even)");
         // Locators for property ownership area
         private readonly ElementLocator addOwernship = new ElementLocator(Locator.CssSelector, "card-list[show-item-add *= 'showContactList'] button");
         private readonly ElementLocator ownershipContacts = new ElementLocator(Locator.XPath, "//card-list-item[{0}]//span[contains(@ng-repeat, 'contacts')]");
@@ -43,8 +44,6 @@
         public ActivityPreviewPage PreviewDetails => new ActivityPreviewPage(this.DriverContext);
 
         public string PropertyType => this.Driver.GetElement(this.propertyType).Text;
-
-        public List<string> PropertyDetails => this.Driver.GetElements(this.propertyDetails).Select(el => el.Text).ToList();
 
         public bool IsAddressDetailsVisible(string propertyDetail)
         {
@@ -110,5 +109,31 @@
             this.Driver.WaitForAngularToFinish();
             return this.Driver.IsElementPresent(this.viewPropertyForm, BaseConfiguration.ShortTimeout);
         }
+
+        public Dictionary<string, string> GetPropertyDetails()
+        {
+            List<string> keys = this.Driver.GetElements(this.propertyDetailsLabels).Select(el => el.Text.Replace(" ", string.Empty).ToLower()).ToList();
+            List<string> values = this.Driver.GetElements(this.propertyDetailsValues).Select(el => el.Text).ToList();
+            return keys.Zip(values, (key, value) => new { key, value }).ToDictionary(x => x.key, x => x.value);
+        }
+    }
+
+    internal class PropertyDetails
+    {
+        public string Bedrooms { get; set; }
+
+        public string Receptions { get; set; }
+
+        public string Bathrooms { get; set; }
+
+        public string PropertyArea { get; set; }
+
+        public string LandArea { get; set; }
+
+        public string CarParkingSpaces { get; set; }
+
+        public string GuestRooms { get; set; }
+
+        public string FunctionRooms { get; set; }
     }
 }

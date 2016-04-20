@@ -7,7 +7,7 @@ Scenario: Create and update property
 		And User selects Residential property and Flat type on create property page
 		And User fills in property details on create property page
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
-			| 2           | 4           | 1             | 3             | 2            | 3            | 2000.12 | 4000.12 | 6000.13     | 10000.10    | 3                   | 5                   |
+			| 2           | 4           | 1             | 3             | 2            | 3            | 2000.12 | 4000.12 | 6000.13     | 10000.1     | 3                   | 5                   |
 		And User fills in address details on create property page
 			| PropertyNumber | PropertyName | Line2        | Line3 | Postcode | City   | County |
 			| 55             | Knight Frank | Baker Street |       | W1U 8AN  | London | London |
@@ -15,6 +15,9 @@ Scenario: Create and update property
 	Then New property should be created with address details 
 		| PropertyNumber | PropertyName | Line2        | Postcode | City   | County |
 		| 55             | Knight Frank | Baker Street | W1U 8AN  | London | London |
+		And New property should be created with Flat property type and following attributes
+			| Bedrooms | Receptions | Bathrooms | PropertyArea               | LandArea                   | CarParkingSpaces |
+			| 2 - 4    | 1 - 3      | 2 - 3     | 2,000.12 - 4,000.12 sq. ft | 6,000.13 - 10,000.1 sq. ft | 3 - 5            |
 	When User clicks edit button on view property page
 		And User selects Commercial property and Hotel type on edit property page
 		And User fills in property details on edit property page
@@ -27,6 +30,9 @@ Scenario: Create and update property
 	Then Property should be updated with address details 
 		| PropertyNumber | PropertyName | Line2 | Line3          | Postcode | City | County |
 		|                |              |       | Address line 3 | W1U 8AN  |      |        |
+		And Property should be updated with Hotel property type and following attributes
+			| PropertyArea           | LandArea                   | CarParkingSpaces | GuestRooms | FunctionRooms |
+			| 4,000.5 - 5,500 sq. ft | 6,000.13 - 10,000.1 sq. ft | 3 - 5            | 120 - 200  | 10 - 20       |
 
 @Property
 @Ownership
@@ -41,7 +47,7 @@ Scenario: Create property with ownership and activity
 		And User selects Residential property and House type on create property page
 		And User fills in property details on create property page
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
-			| 2           | 4           | 1             | 3             | 2            | 3            | 2000.12 | 4000.12 | 6000.13     | 10000.10    | 3                   | 5                   |
+			| 2           | 4           | 1             | 3             | 2            | 3            | 2000.12 | 4000.12 | 6000.13     | 10000.1     | 3                   | 5                   |
 		And User fills in address details on create property page
 			| PropertyNumber | PropertyName      | Line2    | Line3 | Postcode | City   | County      |
 			| 20             | Westminster Abbey | Deans Yd |       | SW1P 3PA | London | Westminster |
@@ -49,6 +55,9 @@ Scenario: Create property with ownership and activity
 	Then New property should be created with address details 
 		| PropertyNumber | PropertyName      | Line2    | Postcode | City   | County      |
 		| 20             | Westminster Abbey | Deans Yd | SW1P 3PA | London | Westminster |
+		And New property should be created with House property type and following attributes
+			| Bedrooms | Receptions | Bathrooms | PropertyArea               | LandArea                   | CarParkingSpaces |
+			| 2 - 4    | 1 - 3      | 2 - 3     | 2,000.12 - 4,000.12 sq. ft | 6,000.13 - 10,000.1 sq. ft | 3 - 5            |
 	When User selects contacts for ownership on view property page
 		| FirstName | Surname   |
 		| Arthur    | Pendragon |
