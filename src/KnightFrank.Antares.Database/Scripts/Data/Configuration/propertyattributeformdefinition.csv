@@ -1,9 +1,9 @@
 ﻿CountryCode;PropertyTypeCode;AttributeNameKey;Order
-GB;Hotel;Area;0
-GB;Hotel;LandArea;1
-GB;Hotel;GuestRooms;2
-GB;Hotel;FunctionRooms;3
-GB;Hotel;CarParkingSpaces;4
+GB;Leisure.Hotel;Area;0
+GB;Leisure.Hotel;LandArea;1
+GB;Leisure.Hotel;GuestRooms;2
+GB;Leisure.Hotel;FunctionRooms;3
+GB;Leisure.Hotel;CarParkingSpaces;4
 GB;House;Bedrooms;0
 GB;House;Receptions;1
 GB;House;Bathrooms;2

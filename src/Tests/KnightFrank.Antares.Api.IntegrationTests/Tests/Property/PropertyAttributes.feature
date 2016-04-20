@@ -7,9 +7,9 @@ Scenario Outline: Get property attributes
 	When User retrieves attributes for given property type and <countryCode> address
 	Then User should get <statusCode> http status code
 
-	Examples: 
-	| propertyType | countryCode | statusCode |
-	| House        | GB          | OK         |
-	| Hotel        | GB          | OK         |
-	| House        | invalid     | BadRequest |
-	| invalid      | GB          | BadRequest |
+	Examples:
+	| propertyType  | countryCode | statusCode |
+	| House         | GB          | OK         |
+	| Leisure.Hotel | GB          | OK         |
+	| Leisure.Hotel | invalid     | BadRequest |
+	| invalid       | GB          | BadRequest |
