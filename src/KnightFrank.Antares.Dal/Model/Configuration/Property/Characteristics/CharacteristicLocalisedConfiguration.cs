@@ -7,6 +7,15 @@
         public CharacteristicLocalisedConfiguration()
         {
             
+            this.HasRequired(x => x.Locale)
+                .WithMany()
+                .HasForeignKey(x => x.LocaleId)
+                .WillCascadeOnDelete(false);
+
+            this.HasRequired(x => x.Characteristic)
+                .WithMany()
+                .HasForeignKey(x => x.CharacteristicId)
+                .WillCascadeOnDelete(false);
         }
     }
 }

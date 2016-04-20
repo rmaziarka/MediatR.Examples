@@ -2,9 +2,6 @@
 {
     using KnightFrank.Antares.Dal.Model.Property.Characteristics;
     internal sealed class CharacteristicConfiguration : BaseEntityConfiguration<Characteristic>
-    {
-        public CharacteristicConfiguration()
-        {
-        }
+    {   
     }
 }

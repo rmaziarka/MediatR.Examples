@@ -7,6 +7,7 @@
     public class CharacteristicGroupLocalised : BaseEntity
     {
         public Guid CharacteristicGroupId { get; set; }
+        public virtual CharacteristicGroup CharacteristicGroup { get; set; }
         public string Label { get; set; }
         public Guid LocaleId { get; set; }
         public virtual Locale Locale { get; set; }
