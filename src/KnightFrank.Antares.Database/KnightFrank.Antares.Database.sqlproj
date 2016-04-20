@@ -66,6 +66,8 @@
     <Folder Include="Scripts" />
     <Folder Include="Publish" />
     <Folder Include="Scripts\Data" />
+    <Folder Include="Scripts\Data\Configuration" />
+    <Folder Include="Scripts\Data\Configuration\Characteristic" />
     <Folder Include="Scripts\Data\Test" />
     <Folder Include="Scripts\Data\Configuration" />
     <Folder Include="Scripts\SQL" />
@@ -146,6 +148,21 @@
     <None Include="Scripts\Data\Test\contact.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Scripts\Data\Configuration\Characteristic\Characteristic.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroup.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroupLocalised.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroupUsageItems.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicLocalised.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
@@ -184,6 +201,11 @@
     <None Include="Scripts\SQL\PropertyTypeLocalised.sql" />
     <None Include="Scripts\SQL\Role.sql" />
     <None Include="Scripts\SQL\Contact.sql" />
+    <None Include="Scripts\Data\Configuration\Characteristic\Characteristic.sql" />
+    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroup.sql" />
+    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroupLocalised.sql" />
+    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicLocalised.sql" />
+    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroupUsageItems.sql" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="OutputPath">

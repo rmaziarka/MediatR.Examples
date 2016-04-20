@@ -29,5 +29,7 @@
         public Guid? AttributeValuesId { get; set; }
 
         public virtual AttributeValues AttributeValues { get; set; }
+
+        public virtual ICollection<PropertyCharacteristic> PropertyCharacteristics { get; set; } = new List<PropertyCharacteristic>();
     }
 }

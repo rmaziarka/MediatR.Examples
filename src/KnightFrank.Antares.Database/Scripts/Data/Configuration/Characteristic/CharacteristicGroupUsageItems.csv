@@ -1,0 +1,254 @@
+CountryIsoCode;PropertyTypeCode;GroupCode;GroupOrder;DisplayGroupLabel;CharacteristicCode
+GB;House;Style;1;1;Detached
+GB;House;Style;1;1;SemiDetached
+GB;House;Style;1;1;Terraced
+GB;House;Style;1;1;NewBuild
+GB;House;Situation;2;1;Garden
+GB;House;Situation;2;1;Land
+GB;House;Situation;2;1;PatioTerrace
+GB;House;Situation;2;1;Conservatory
+GB;House;Location;3;1;Rural
+GB;House;Location;3;1;Village
+GB;House;Location;3;1;TownCity
+GB;House;Location;3;1;Island
+GB;House;Special;4;1;Conversion
+GB;House;Special;4;1;NewDevelopment
+GB;House;Special;4;1;Listed
+GB;House;Special;4;1;Secondaryaccomodation
+GB;House;Special;4;1;Outbuildings
+GB;House;Special;4;1;LeisureFacilities
+GB;House;Special;4;1;GolfCourse
+GB;House;Special;4;1;SwimmingPool
+GB;House;Special;4;1;TennisCourt
+GB;House;Special;4;1;Equestrian
+GB;House;Special;4;1;Fishing
+GB;House;Special;4;1;Waterside
+GB;House;Special;4;1;Coastal
+GB;House;Age;5;1;Period
+GB;House;Age;5;1;PostWarModern
+GB;House;Age;5;1;New
+GB;House;Decoration;6;1;Unmodernised
+GB;House;Decoration;6;1;Fair
+GB;House;Decoration;6;1;Good
+GB;House;Decoration;6;1;VeryGood
+GB;Flat;Style;1;1;Duplex
+GB;Flat;Style;1;1;Penthouse
+GB;Flat;Situation;2;1;Garden
+GB;Flat;Situation;2;1;Land
+GB;Flat;Situation;2;1;PatioTerrace
+GB;Flat;Situation;2;1;Conservatory
+GB;Flat;Situation;2;1;Balcony
+GB;Flat;Situation;2;1;CommunalGarden
+GB;Flat;Location;3;1;Rural
+GB;Flat;Location;3;1;Village
+GB;Flat;Location;3;1;TownCity
+GB;Flat;Location;3;1;Island
+GB;Flat;Special;4;1;PurposeBuilt
+GB;Flat;Special;4;1;NewDevelopment
+GB;Flat;Special;4;1;Listed
+GB;Flat;Special;4;1;Secondaryaccomodation
+GB;Flat;Special;4;1;PorterConceirge
+GB;Flat;Special;4;1;LeisureFacilities
+GB;Flat;Special;4;1;GolfCourse
+GB;Flat;Special;4;1;SwimmingPool
+GB;Flat;Special;4;1;TennisCourt
+GB;Flat;Special;4;1;Equestrian
+GB;Flat;Special;4;1;Fishing
+GB;Flat;Special;4;1;Waterside
+GB;Flat;Special;4;1;Coastal
+GB;Flat;Decoration;5;1;Unmodernised
+GB;Flat;Decoration;5;1;Fair
+GB;Flat;Decoration;5;1;Good
+GB;Flat;Decoration;5;1;VeryGood
+GB;Development Plot;Location;1;1;Suburban
+GB;Development Plot;Location;1;1;Rural
+GB;Development Plot;Location;1;1;Village
+GB;Development Plot;Location;1;1;TownCity
+GB;Development Plot;Location;1;1;Island
+GB;Development Plot;Special;2;1;Coastal
+GB;Development Plot;Special;2;1;Waterside
+GB;Development Plot;Special;2;1;IncomeStream
+GB;Development Plot;Special;2;1;HighRise
+GB;Development Plot;Special;2;1;ContaminatedLand
+GB;Development Plot;Special;2;1;Affordable
+GB;Development Plot;Special;2;1;Retirement
+GB;Development Plot;Special;2;1;CareHome
+GB;Development Plot;Purpose;3;1;PrivateBanking
+GB;Development Plot;Purpose;3;1;GreenfieldLand
+GB;Development Plot;Purpose;3;1;BrownfieldLand
+GB;Development Plot;Purpose;3;1;MixedUse
+GB;Development Plot;Purpose;3;1;School
+GB;Development Plot;Purpose;3;1;Hostel
+GB;Development Plot;Purpose;3;1;Placeofworship
+GB;Development Plot;Planning;4;1;Consentgranted
+GB;Development Plot;Planning;4;1;Subjecttoplanning
+GB;Development Plot;Planning;4;1;Unconditional
+GB;Development Plot;Planning;4;1;Listed
+GB;Development Plot;Planning;4;1;Startegic
+GB;Development Plot;Planning;4;1;ConservationArea
+GB;Hotel;Location;5;1;Village
+GB;Hotel;Location;5;1;TownCity
+GB;Hotel;Location;5;1;Island
+GB;Hotel;Location;5;1;Coastal
+GB;Hotel;Location;5;1;RiversideLakeside
+GB;Hotel;Location;5;1;Airport
+GB;Hotel;Location;5;1;Motorway
+GB;Hotel;Special;6;1;GolfCourse
+GB;Hotel;Special;6;1;Spa
+GB;Hotel;Special;6;1;ConferenceCentre
+GB;Hotel;Special;6;1;EventVenue
+GB;Hotel;Special;6;1;Restaurant
+GB;Hotel;Special;6;1;Bar
+GB;Hotel;Special;6;1;Lift
+GB;Hotel;Special;6;1;Ownersaccomodation
+GB;Hotel;Special;6;1;Staffaccomodation
+GB;Hotel;Special;6;1;Brasserie
+GB;Hotel;Special;6;1;WetLeisure
+GB;Hotel;Special;6;1;DryLeisure
+GB;Hotel;Special;6;1;SmallLuxuryHotels
+GB;Hotel;Category;7;1;Budget
+GB;Hotel;Category;7;1;Midmarket
+GB;Hotel;Category;7;1;FullService
+GB;Hotel;Category;7;1;ServicedApartments
+GB;Hotel;Category;7;1;FragmentedTimeshare
+GB;Office;Specification;1;1;Airconditioning
+GB;Office;Specification;1;1;Comfortcooling
+GB;Office;Specification;1;1;Centralheating
+GB;Office;Specification;1;1;Carparkingspaces
+GB;Office;Specification;1;1;Carparkingratio
+GB;Office;Specification;1;1;Raisedaccessflooring
+GB;Office;Specification;1;1;Suspendedceilings
+GB;Office;Specification;1;1;LG3lighting
+GB;Office;Specification;1;1;LG7lighting
+GB;Office;Specification;1;1;Cat2lighting
+GB;Office;Specification;1;1;Recessedlighting(noncat2
+GB;Office;Specification;1;1;Perimetertrunking
+GB;Office;Specification;1;1;Underfloortrunking
+GB;Office;Specification;1;1;24houraccess
+GB;Office;Specification;1;1;24hoursecurity
+GB;Office;Specification;1;1;Airhandling
+GB;Office;Specification;1;1;Atrium
+GB;Office;Specification;1;1;Basementstorage
+GB;Office;Specification;1;1;Broadbandenabled
+GB;Office;Specification;1;1;Buildingmanagementsystem
+GB;Office;Specification;1;1;Canopies
+GB;Office;Specification;1;1;Carpeting
+GB;Office;Specification;1;1;Ceilingheight
+GB;Office;Specification;1;1;Ceilingtype
+GB;Office;Specification;1;1;Cellularoffices
+GB;Office;Specification;1;1;Cladding
+GB;Office;Specification;1;1;Constructiontype
+GB;Office;Specification;1;1;Datebuilt
+GB;Office;Specification;1;1;Entryphonesystem
+GB;Office;Specification;1;1;Escalators
+GB;Office;Specification;1;1;Floorloading
+GB;Office;Specification;1;1;Glazing
+GB;Office;Specification;1;1;Goodslift
+GB;Office;Specification;1;1;GradeIIlisted
+GB;Office;Specification;1;1;Heating
+GB;Office;Specification;1;1;Kitchen
+GB;Office;Specification;1;1;Loadingfacilities
+GB;Office;Specification;1;1;Offices
+GB;Office;Specification;1;1;Onsitesecurity
+GB;Office;Specification;1;1;Passengerlift
+GB;Office;Specification;1;1;Planninggrid
+GB;Office;Specification;1;1;Powersupply
+GB;Office;Specification;1;1;Rooflights
+GB;Office;Specification;1;1;Serviceyard
+GB;Office;Specification;1;1;SprinklerSystem
+GB;Office;Specification;1;1;Threephasepower
+GB;Office;Specification;1;1;Toilets
+GB;Retail;Specification;1;1;Airconditioning
+GB;Retail;Specification;1;1;Comfortcooling
+GB;Retail;Specification;1;1;Centralheating
+GB;Retail;Specification;1;1;Carparkingspaces
+GB;Retail;Specification;1;1;Carparkingratio
+GB;Retail;Specification;1;1;Raisedaccessflooring
+GB;Retail;Specification;1;1;Suspendedceilings
+GB;Retail;Specification;1;1;LG3lighting
+GB;Retail;Specification;1;1;LG7lighting
+GB;Retail;Specification;1;1;Cat2lighting
+GB;Retail;Specification;1;1;Recessedlighting(noncat2
+GB;Retail;Specification;1;1;Perimetertrunking
+GB;Retail;Specification;1;1;Underfloortrunking
+GB;Retail;Specification;1;1;24houraccess
+GB;Retail;Specification;1;1;24hoursecurity
+GB;Retail;Specification;1;1;Airhandling
+GB;Retail;Specification;1;1;Atrium
+GB;Retail;Specification;1;1;Basementstorage
+GB;Retail;Specification;1;1;Broadbandenabled
+GB;Retail;Specification;1;1;Buildingmanagementsystem
+GB;Retail;Specification;1;1;Canopies
+GB;Retail;Specification;1;1;Carpeting
+GB;Retail;Specification;1;1;Ceilingheight
+GB;Retail;Specification;1;1;Ceilingtype
+GB;Retail;Specification;1;1;Cellularoffices
+GB;Retail;Specification;1;1;Cladding
+GB;Retail;Specification;1;1;Constructiontype
+GB;Retail;Specification;1;1;Datebuilt
+GB;Retail;Specification;1;1;Entryphonesystem
+GB;Retail;Specification;1;1;Escalators
+GB;Retail;Specification;1;1;Floorloading
+GB;Retail;Specification;1;1;Glazing
+GB;Retail;Specification;1;1;Goodslift
+GB;Retail;Specification;1;1;GradeIIlisted
+GB;Retail;Specification;1;1;Heating
+GB;Retail;Specification;1;1;Kitchen
+GB;Retail;Specification;1;1;Loadingfacilities
+GB;Retail;Specification;1;1;Offices
+GB;Retail;Specification;1;1;Onsitesecurity
+GB;Retail;Specification;1;1;Passengerlift
+GB;Retail;Specification;1;1;Planninggrid
+GB;Retail;Specification;1;1;Powersupply
+GB;Retail;Specification;1;1;Rooflights
+GB;Retail;Specification;1;1;Serviceyard
+GB;Retail;Specification;1;1;SprinklerSystem
+GB;Retail;Specification;1;1;Threephasepower
+GB;Retail;Specification;1;1;Toilets
+GB;Retail Unit A1;Specification;1;1;Airconditioning
+GB;Retail Unit A1;Specification;1;1;Comfortcooling
+GB;Retail Unit A1;Specification;1;1;Centralheating
+GB;Retail Unit A1;Specification;1;1;Carparkingspaces
+GB;Retail Unit A1;Specification;1;1;Carparkingratio
+GB;Retail Unit A1;Specification;1;1;Raisedaccessflooring
+GB;Retail Unit A1;Specification;1;1;Suspendedceilings
+GB;Retail Unit A1;Specification;1;1;LG3lighting
+GB;Retail Unit A1;Specification;1;1;LG7lighting
+GB;Retail Unit A1;Specification;1;1;Cat2lighting
+GB;Retail Unit A1;Specification;1;1;Recessedlighting(noncat2)
+GB;Retail Unit A1;Specification;1;1;Perimetertrunking
+GB;Retail Unit A1;Specification;1;1;Underfloortrunking
+GB;Retail Unit A1;Specification;1;1;24houraccess
+GB;Retail Unit A1;Specification;1;1;24hoursecurity
+GB;Retail Unit A1;Specification;1;1;Airhandling
+GB;Retail Unit A1;Specification;1;1;Atrium
+GB;Retail Unit A1;Specification;1;1;Basementstorage
+GB;Retail Unit A1;Specification;1;1;Broadbandenabled
+GB;Retail Unit A1;Specification;1;1;Buildingmanagementsystem
+GB;Retail Unit A1;Specification;1;1;Canopies
+GB;Retail Unit A1;Specification;1;1;Carpeting
+GB;Retail Unit A1;Specification;1;1;Ceilingheight
+GB;Retail Unit A1;Specification;1;1;Ceilingtype
+GB;Retail Unit A1;Specification;1;1;Cellularoffices
+GB;Retail Unit A1;Specification;1;1;Cladding
+GB;Retail Unit A1;Specification;1;1;Constructiontype
+GB;Retail Unit A1;Specification;1;1;Datebuilt
+GB;Retail Unit A1;Specification;1;1;Entryphonesystem
+GB;Retail Unit A1;Specification;1;1;Escalators
+GB;Retail Unit A1;Specification;1;1;Floorloading
+GB;Retail Unit A1;Specification;1;1;Glazing
+GB;Retail Unit A1;Specification;1;1;Goodslift
+GB;Retail Unit A1;Specification;1;1;GradeIIlisted
+GB;Retail Unit A1;Specification;1;1;Heating
+GB;Retail Unit A1;Specification;1;1;Kitchen
+GB;Retail Unit A1;Specification;1;1;Loadingfacilities
+GB;Retail Unit A1;Specification;1;1;Offices
+GB;Retail Unit A1;Specification;1;1;Onsitesecurity
+GB;Retail Unit A1;Specification;1;1;Passengerlift
+GB;Retail Unit A1;Specification;1;1;Planninggrid
+GB;Retail Unit A1;Specification;1;1;Powersupply
+GB;Retail Unit A1;Specification;1;1;Rooflights
+GB;Retail Unit A1;Specification;1;1;Serviceyard
+GB;Retail Unit A1;Specification;1;1;SprinklerSystem
+GB;Retail Unit A1;Specification;1;1;Threephasepower
+GB;Retail Unit A1;Specification;1;1;Toilets

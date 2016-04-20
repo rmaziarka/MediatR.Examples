@@ -2,7 +2,6 @@
 module Antares {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
-    import PropertyEditController = Property.PropertyEditController;
 
     describe('propertyEditController', () => {
         var controller: Property.PropertyEditController;
@@ -13,12 +12,17 @@ module Antares {
             controller.userData = <Dto.IUserData>{
                 division: <Dto.IEnumTypeItem>{id: 'enumId', code: 'code'}
             }; 
-            var property = <Dto.IProperty>{};
             controller.property = new Business.Property();
             var scope: ng.IScope = $rootScope.$new();
             
             controllerFunction.apply(controller, [componentRegistry, dataAccessService, scope]);
         }));
+
+        describe('when is constructed', () => {
+            it('property should contain attribute values initiated', () => {
+                expect(controller.property.attributeValues).not.toBeUndefined();
+            });
+        });
 
         describe('when changeDivision', () =>{
             beforeEach(() =>{
