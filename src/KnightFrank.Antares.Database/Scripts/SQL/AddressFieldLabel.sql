@@ -1,9 +1,7 @@
 ﻿
 CREATE TABLE #TempAddressFieldLabel (
-
-	[Id] UNIQUEIDENTIFIER  NOT NULL DEFAULT (newsequentialid()),
-	[AddressFieldId] UNIQUEIDENTIFIER  NOT NULL ,
-	[LabelKey] NVARCHAR (100) NULL ,
+	[LabelKey] NVARCHAR (100) NULL,
+	[AddressFieldName] NVARCHAR (250) NOT NULL
 );
 
 ALTER TABLE AddressFieldLabel NOCHECK CONSTRAINT ALL
@@ -17,23 +15,27 @@ BULK INSERT #TempAddressFieldLabel
 		ROWTERMINATOR = '\n',
 		TABLOCK
     )
-    	
+
 MERGE dbo.AddressFieldLabel AS T
-	USING #TempAddressFieldLabel AS S	
-	ON 
+	USING (
+		SELECT af.Id as AddressFieldId,tmp.LabelKey FROM #TempAddressFieldLabel tmp
+		JOIN AddressField af on af.Name = tmp.AddressFieldName
+	)
+	AS S
+	ON
 	(
-        (T.Id = S.Id)
+        (T.AddressFieldId = S.AddressFieldId and T.LabelKey = S.LabelKey)
 	)
 	WHEN MATCHED THEN
-		UPDATE SET 
+		UPDATE SET
 		T.[AddressFieldId] = S.[AddressFieldId],
 		T.[LabelKey] = S.[LabelKey]
 
-	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([Id], [AddressFieldId], [LabelKey])
-		VALUES ([Id], [AddressFieldId], [LabelKey])
+	WHEN NOT MATCHED BY TARGET THEN
+		INSERT ([AddressFieldId], [LabelKey])
+		VALUES ([AddressFieldId], [LabelKey])
 
     WHEN NOT MATCHED BY SOURCE THEN DELETE;
-    
+
 ALTER TABLE AddressFieldLabel WITH CHECK CHECK CONSTRAINT ALL
 DROP TABLE #TempAddressFieldLabel

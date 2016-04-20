@@ -16,7 +16,7 @@ CREATE TABLE #TempAddressFieldDefinitionCsv
                                              ColumnOrder          SMALLINT NOT NULL,
                                              ColumnSize           SMALLINT NOT NULL,
                                            );
-BULK INSERT #TempAddressFieldDefinitionCsv FROM 'C:\_Projects\KnightFrank.Antares\src\KnightFrank.Antares.Database\Scripts\Data\Configuration\AddressFieldDefinition.csv' WITH(FIRSTROW = 2, FIELDTERMINATOR = ';', ROWTERMINATOR = '\n', TABLOCK);
+BULK INSERT #TempAddressFieldDefinitionCsv FROM '$(OutputPath)\Scripts\Data\Configuration\AddressFieldDefinition.csv' WITH(FIRSTROW = 2, FIELDTERMINATOR = ';', ROWTERMINATOR = '\n', TABLOCK);
 
 /*
 	Merge table with data from .csv file and database,
@@ -298,7 +298,7 @@ WHILE @@FETCH_STATUS = 0
                                                AND afet.AddressFormId = @existingAddressFormId );
             END;
 
-        -- insert address field definition 
+        -- insert address field definition
         MERGE dbo.AddressFieldDefinition AS T
         USING( SELECT mafd.AddressFieldId,
                       mafd.AddressFieldLabelId,
@@ -336,7 +336,7 @@ WHILE @@FETCH_STATUS = 0
 CLOSE insert_address_csv_cursor;
 DEALLOCATE insert_address_csv_cursor;
 
---Handle empty enum type item 
+--Handle empty enum type item
 --DECLARE insert_empty_address_csv_cursor CURSOR
 --FOR SELECT #TempAddressFieldDefinitionCsv.CountryIsoCode,
 --           #TempAddressFieldDefinitionCsv.EnumTypeItemCode

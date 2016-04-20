@@ -12,10 +12,10 @@
 :r .\SQL\Attribute.sql
 :r .\SQL\PropertyAttributeForm.sql
 :r .\SQL\PropertyAttributeFormDefinition.sql
---:r .\SQL\AddressField.sql
+:r .\SQL\AddressField.sql
 --:r .\SQL\AddressForm.sql
---:r .\SQL\AddressFieldLabel.sql
---:r .\SQL\AddressFieldDefinition.sql
+:r .\SQL\AddressFieldLabel.sql
+:r .\SQL\AddressFieldDefinition.sql
 --:r .\SQL\AddressFormEntityType.sql
 :r .\SQL\Role.sql
 :r .\SQL\User.sql

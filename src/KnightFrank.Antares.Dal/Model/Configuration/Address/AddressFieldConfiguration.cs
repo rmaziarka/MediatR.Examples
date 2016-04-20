@@ -6,7 +6,10 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Address
     {
         public AddressFieldConfiguration()
         {
-            this.Property(p => p.Name).HasMaxLength(100);
+            this.Property(p => p.Name)
+                .HasMaxLength(100)
+                .IsUnique()
+                .IsRequired();
 
             this.HasMany(p => p.AddressFieldLabels)
                 .WithRequired(p => p.AddressField)
