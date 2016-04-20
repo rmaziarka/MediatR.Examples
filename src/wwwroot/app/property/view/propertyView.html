@@ -8,35 +8,7 @@
         <div class="row">
             <div class="col-md-4">
                 <section>
-                    <h3 class="page-header" translate="PROPERTY.VIEW.DETAILS"></h3>
-                    <div class="section-row row">
-                        <div class="col-xs-6" translate="PROPERTY.VIEW.TYPE"></div>
-                        <div class="col-xs-6">{{ vm.property.propertyTypeId | dynamicTranslate }}</div>
-                    </div>
-                    <div class="section-row row">
-                        <div class="col-xs-6">Bedrooms</div>
-                        <div class="col-xs-6">1-4</div>
-                    </div>
-                    <div class="section-row row">
-                        <div class="col-xs-6">Reception rooms</div>
-                        <div class="col-xs-6">1-4</div>
-                    </div>
-                    <div class="section-row row">
-                        <div class="col-xs-6">Bathrooms</div>
-                        <div class="col-xs-6">1-4</div>
-                    </div>
-                    <div class="section-row row">
-                        <div class="col-xs-6">Parking spaces</div>
-                        <div class="col-xs-6">1-4</div>
-                    </div>
-                    <div class="section-row row">
-                        <div class="col-xs-6">Property area</div>
-                        <div class="col-xs-6">4,500,000 sq. ft.</div>
-                    </div>
-                    <div class="section-row row">
-                        <div class="col-xs-6">Land area</div>
-                        <div class="col-xs-6">4,500,000 sq. ft.</div>
-                    </div>
+                    <property-details property="vm.property" user-data="vm.userData"></property-details>
                 </section>
             </div>
             <div class="col-md-4">

@@ -110,6 +110,8 @@
     <Compile Include="Activity\QueryHandlers\ActivityQueryHandlerTests.cs" />
     <Compile Include="AddressForm\Queries\AddressFormQueryValidatorTests.cs" />
     <Compile Include="AddressForm\Queries\GetCountriesForAddressFormQueryValidatorTests.cs" />
+    <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidatorTests.cs" />
+    <Compile Include="Characteristic\QueryHandlers\CharacteristicGroupsQueryHandlerTests.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidatorTests.cs" />
     <Compile Include="Common\Validator\LocaleValidatorTests.cs" />
     <Compile Include="Company\CommandHandlers\CreateCompanyComandHandlerTests.cs" />
@@ -156,8 +158,6 @@
     <Compile Include="InlineAutoMoqDataAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandValidatorTests.cs" />
-    <Compile Include="Resource\Dictionaries\CountryLocalisedDictionaryTests.cs" />
-    <Compile Include="Resource\Dictionaries\PropertyTypeLocalisedDictionaryTests.cs" />
     <Compile Include="Resource\Queries\ResourceLocalisedQueryDomainValidatorTests.cs" />
     <Compile Include="Resource\Queries\ResourceLocalisedQueryValidatorTests.cs" />
     <Compile Include="Resource\QueryHandlers\ResourceLocalisedQueryHandlerTests.cs" />

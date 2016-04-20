@@ -65,29 +65,24 @@
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, note);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
-
-        [When(@"User creates note for requirement in database")]
-        public void CretaeNoteInDatabase(Table table)
+        
+        [When(@"User creates notes for requirement")]
+        public void CretaeNoteInDatabase(Table notesTable)
         {
             Guid reqId = this.scenarioContext.Get<Requirement>("Requirement").Id;
 
             Requirement requirement =
                 this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(reqId));
 
-            var note = table.CreateInstance<RequirementNote>();
-            note.RequirementId = requirement.Id;
-            note.CreatedDate = DateTime.UtcNow;
-            note.LastModifiedDate = DateTime.Now;
+            List<RequirementNote> notes = notesTable.CreateSet<RequirementNote>().ToList();
+            notes.ForEach(x => x.RequirementId = requirement.Id);
 
-            requirement.RequirementNotes = new List<RequirementNote>
-            {
-                note
-            };
+            requirement.RequirementNotes = notes;
 
             this.fixture.DataContext.SaveChanges();
             this.scenarioContext.Set(requirement, "Requirement");
         }
-
+        
         [Then(@"Note is saved in data base")]
         public void CheckIfNoteSavedInDatabase()
         {
@@ -99,19 +94,18 @@
             note.ShouldBeEquivalentTo(expectedNote, opt => opt.Excluding(n => n.User).Excluding(n => n.Requirement));
         }
 
-        [Then(@"Note should be the same as added")]
+        [Then(@"Notes should be the same as added")]
         public void CheckNote()
         {
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
-            RequirementNote expectedNote =
-                JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent()).RequirementNotes.Single();
-            RequirementNote note =
-                this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(requirementId)).RequirementNotes.Single();
+            IList<RequirementNote> resultNotes =
+                JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent()).RequirementNotes.ToList();
 
-            AssertionOptions.AssertEquivalencyUsing(options =>
-                options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>());
-
-            note.ShouldBeEquivalentTo(expectedNote, opt => opt.Excluding(n => n.Requirement));
+            IList<RequirementNote> expectedNotes =
+                this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(requirementId)).RequirementNotes.ToList();
+            
+            expectedNotes.Should()
+                         .Equal(resultNotes, (n1, n2) => n1.Description == n2.Description && n1.RequirementId == n2.RequirementId);
         }
     }
 }

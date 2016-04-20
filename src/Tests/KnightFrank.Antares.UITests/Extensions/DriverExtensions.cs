@@ -48,16 +48,16 @@
             wait.Until(drv => drv.GetElement(locator).Displayed && drv.GetElement(locator).Enabled);
         }
 
-        public static void SendKeys(this IWebDriver driver, ElementLocator locator, string text)
+        public static void SendKeys(this IWebDriver driver, ElementLocator locator, object text)
         {
-            if (text != null && text.Equals(string.Empty))
+            if (text != null && text.ToString().Equals(string.Empty))
             {
                 driver.GetElement(locator).Clear();
             }
             else if(text != null)
             {
                 driver.GetElement(locator).Clear();
-                driver.GetElement(locator).SendKeys(text);
+                driver.GetElement(locator).SendKeys(text.ToString());
             }
         }
     }

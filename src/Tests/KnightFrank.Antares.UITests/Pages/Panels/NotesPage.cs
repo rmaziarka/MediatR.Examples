@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.UITests.Pages
+﻿namespace KnightFrank.Antares.UITests.Pages.Panels
 {
     using System;
 

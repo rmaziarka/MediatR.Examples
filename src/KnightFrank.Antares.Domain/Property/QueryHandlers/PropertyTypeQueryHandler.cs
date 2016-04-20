@@ -26,7 +26,7 @@
             var items = (from d in this.propertyTypeDefinitionRepository.GetWithInclude(x => x.PropertyType)
                          where d.Division.Code == message.DivisionCode
                          where d.Country.IsoCode == message.CountryCode
-                         join l in this.propertyTypeLocalisedRepository.Get() on d.PropertyTypeId equals l.PropertyTypeId
+                         join l in this.propertyTypeLocalisedRepository.Get() on d.PropertyTypeId equals l.ResourceId
                          where l.Locale.IsoCode == message.LocaleCode
                          orderby d.Order
                          select new { d.Order, d.PropertyType, l.Value }).ToList();

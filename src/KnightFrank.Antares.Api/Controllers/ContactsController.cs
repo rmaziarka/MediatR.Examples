@@ -35,6 +35,7 @@
         /// </summary>
         /// <returns>Contact entity collection</returns>
         [HttpGet]
+        [Route("")]
         public IEnumerable<Contact> GetContacts()
         {
             return this.mediator.Send(new ContactsQuery());
@@ -66,6 +67,7 @@
         /// </summary>
         /// <param name="command">Contact entity</param>
         [HttpPost]
+        [Route("")]
         public Guid CreateContact([FromBody] CreateContactCommand command)
         {
             return this.mediator.Send(command);

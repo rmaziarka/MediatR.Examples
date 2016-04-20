@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Reflection;
 
     using FluentAssertions;
 
@@ -22,13 +23,16 @@
 
     using Xunit;
 
+    using Attribute = KnightFrank.Antares.Dal.Model.Attribute.Attribute;
+
     [Collection("CreatePropertyCommandValidator")]
     [Trait("FeatureTitle", "Property")]
     public class CreatePropertyCommandValidatorTests : IClassFixture<BaseTestClassFixture>
     {
-        private readonly Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository;        
+        private readonly Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository;
         private readonly Mock<IGenericRepository<PropertyTypeDefinition>> propertyTypeDefinitionRepository;
         private readonly Mock<IGenericRepository<AddressForm>> addressFormRepository;
+        private readonly Mock<IGenericRepository<PropertyAttributeForm>> propertyAttributeFormRepository;
         private readonly CreatePropertyCommand command;
         private readonly CreatePropertyCommandValidator validator;
 
@@ -44,11 +48,18 @@
                                   .With(p => p.Address, new CreateOrUpdatePropertyAddress())
                                   .With(p => p.PropertyTypeId, Guid.NewGuid())
                                   .With(p => p.DivisionId, Guid.NewGuid())
+                                  .With(p => p.AttributeValues, new CreateOrUpdatePropertyAttributeValues())
                                   .Create();
 
             this.enumTypeItemRepository = fixture.Freeze<Mock<IGenericRepository<EnumTypeItem>>>();
             this.propertyTypeDefinitionRepository = fixture.Freeze<Mock<IGenericRepository<PropertyTypeDefinition>>>();
             this.addressFormRepository = fixture.Freeze<Mock<IGenericRepository<AddressForm>>>();
+            this.propertyAttributeFormRepository = fixture.Freeze<Mock<IGenericRepository<PropertyAttributeForm>>>();
+
+            this.enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
+                .Returns(true);
+            this.propertyTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyTypeDefinition, bool>>>()))
+                .Returns(true);
 
             this.validator = fixture.Create<CreatePropertyCommandValidator>();
         }
@@ -113,7 +124,7 @@
                     PropertyTypeId = this.command.PropertyTypeId
                 }
             };
-            
+
             this.addressFormRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new AddressForm { CountryId = countryId });
             this.enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
             this.propertyTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyTypeDefinition, bool>>>()))
@@ -156,7 +167,7 @@
                     PropertyTypeId = Guid.Empty
                 }
             };
-            
+
             this.addressFormRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new AddressForm { CountryId = countryId });
             this.enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
             this.propertyTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyTypeDefinition, bool>>>()))
@@ -169,6 +180,144 @@
 
             // Assert
             Assert.False(validationResult.IsValid);
+        }
+
+        [Fact]
+        public void Given_InvalidCreatePropertyCommand_When_AttributeValuesAreNull_Then_ValidationErrors()
+        {
+            // Arrange
+            this.command.AttributeValues = null;
+
+            // Act 
+            ValidationResult validationResult = this.validator.Validate(this.command);
+
+            // Assert
+            Assert.False(validationResult.IsValid);
+            Assert.Equal(1, validationResult.Errors.Count);
+        }
+
+        [Fact]
+        public void Given_ValidCreatePropertyCommand_When_AttributeValuesAreLowerThanZero_Then_ValidationErrors()
+        {
+            // Arrange
+            this.command.AttributeValues = new CreateOrUpdatePropertyAttributeValues() {MaxBathrooms = -1};
+
+            // Act 
+            ValidationResult validationResult = this.validator.Validate(this.command);
+
+            // Assert
+            Assert.False(validationResult.IsValid);
+            Assert.Equal(1, validationResult.Errors.Count);
+        }
+
+        [Fact]
+        public void Given_ValidCreatePropertyCommand_When_AttributeValuesMinIsGreaterThanMax_Then_ValidationErrors()
+        {
+            // Arrange
+            this.command.AttributeValues = new CreateOrUpdatePropertyAttributeValues() {MinArea = 20, MaxArea = 10};
+
+            // Act 
+            ValidationResult validationResult = this.validator.Validate(this.command);
+
+            // Assert
+            Assert.False(validationResult.IsValid);
+            Assert.Equal(1, validationResult.Errors.Count);
+        }
+
+        [Fact]
+        public void Given_ValidCreatePropertyCommand_When_AttributeValuesHasMultipleErrors_Then_MultipleValidationErrorsOccured()
+        {
+            // Arrange
+            this.command.AttributeValues = new CreateOrUpdatePropertyAttributeValues() {MinArea = 20, MaxArea = 10, MaxLandArea = -10};
+
+            // Act 
+            ValidationResult validationResult = this.validator.Validate(this.command);
+
+            // Assert
+            Assert.False(validationResult.IsValid);
+            Assert.Equal(2, validationResult.Errors.Count);
+        }
+
+        [Fact]
+        public void Given_PropertyAttributeForm_When_EmptyAttributeValuePassed_Then_NoValidationErrors()
+        {
+            // Arrange
+            var attributes = new[] { "Bedrooms", "Area" };
+            this.InitPropertyAttributeFormWithAttributes(attributes);
+
+            this.command.AttributeValues = new CreateOrUpdatePropertyAttributeValues();
+
+            // Act 
+            ValidationResult validationResult = this.validator.Validate(this.command);
+
+            // Assert
+            Assert.True(validationResult.IsValid);
+        }
+
+        [Fact]
+        public void Given_PropertyAttributeForm_When_AllowedAttributeValuePassed_Then_NoValidationErrors()
+        {
+            // Arrange
+            var attributes = new[] { "Bedrooms", "Area" };
+            this.InitPropertyAttributeFormWithAttributes(attributes);
+
+            this.command.AttributeValues = new CreateOrUpdatePropertyAttributeValues()
+            {
+                MinBedrooms = 1,
+                MaxArea = 1
+            };
+
+            // Act 
+            ValidationResult validationResult = this.validator.Validate(this.command);
+
+            // Assert
+            Assert.True(validationResult.IsValid);
+        }
+
+        [Fact]
+        public void Given_PropertyAttributeForm_When_NotAllowedAttributeValuePassed_Then_ValidationErrors()
+        {
+            // Arrange
+            var attributes = new[] { "Bedrooms", "Area" };
+            this.InitPropertyAttributeFormWithAttributes(attributes);
+
+            this.command.AttributeValues = new CreateOrUpdatePropertyAttributeValues()
+            {
+                MinBedrooms = 1,
+                MaxLandArea = 1
+            };
+            
+            // Act 
+            ValidationResult validationResult = this.validator.Validate(this.command);
+
+            // Assert
+            Assert.False(validationResult.IsValid);
+            Assert.Equal(1, validationResult.Errors.Count);
+        }
+
+        private void InitPropertyAttributeFormWithAttributes(IEnumerable<string> attributeNames)
+        {
+            var propertyAttributeForm = new PropertyAttributeForm()
+            {
+                PropertyAttributeFormDefinitions = new List<PropertyAttributeFormDefinition>()
+            };
+
+            foreach (string attribute in attributeNames)
+            {
+                var definition = new PropertyAttributeFormDefinition()
+                {
+                    Attribute = new Attribute()
+                    {
+                        NameKey = attribute
+                    }
+                };
+                propertyAttributeForm.PropertyAttributeFormDefinitions.Add(definition);
+            }
+
+            this.propertyAttributeFormRepository
+                .Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<PropertyAttributeForm, bool>>>(),
+                    It.IsAny<Expression<Func<PropertyAttributeForm, object>>>()))
+                .Returns(new[] { propertyAttributeForm });
         }
     }
 }

@@ -8,7 +8,8 @@ module Antares.Common.Component {
         bindings: {
             userData: '<',
             componentId: '<',
-            property: '='
+            property: '=',
+            mode: '@'
         }
     });
 }

@@ -56,7 +56,7 @@
             Specification<AddressForm> isAddressFormDefinedSpecification = 
                 new IsAddressFormAssignedToEntityType(enumTypeItem.Id) | new IsAddressFormGloballyDefined();
 
-            Specification<CountryLocalised> isLocaled = new IsLocaled<CountryLocalised>(message.LocaleIsoCode);
+            Specification<CountryLocalised> isLocaled = new IsLocalised<CountryLocalised>(message.LocaleIsoCode);
 
             List<CountryLocalised> countryLocaliseds = this.addressFormRepository.Get()
                                          .Where(isAddressFormDefinedSpecification.SatisfiedBy())

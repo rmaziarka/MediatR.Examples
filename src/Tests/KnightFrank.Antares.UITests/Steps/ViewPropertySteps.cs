@@ -6,6 +6,7 @@
 
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.UITests.Pages;
+    using KnightFrank.Antares.UITests.Pages.Panels;
 
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
@@ -69,7 +70,7 @@
         [When(@"User clicks save button on activity panel")]
         public void ClickSaveButtonOnActivityPanel()
         {
-            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").Activity.SaveActivity();
+            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").Activity.SaveActivity().WaitForActivityPanelToHide();
         }
 
         [When(@"User fills in ownership details on view property page")]
