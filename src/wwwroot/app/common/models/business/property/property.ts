@@ -21,6 +21,7 @@
                 this.activities = property.activities.map((activity: Dto.IActivity) => { return new Business.Activity(activity) });
 
                 this.propertyTypeId = property.propertyTypeId;
+                this.attributeValues = property.attributeValues;
             }
         }
     }

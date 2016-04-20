@@ -7,6 +7,11 @@ module Antares.Common.Component {
         public minValue: number;
         public maxValue: number;
         public attribute: Business.Attribute;
+        mode: string = 'edit';
+
+        getTemplateUrl(){
+            return 'app/common/components/attribute/range/' + this.mode + 'RangeAttribute.html';
+        }
     }
 
     angular.module('app').controller('rangeAttributeController', RangeAttributeController);

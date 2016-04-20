@@ -13,7 +13,7 @@ module Antares.Property.View {
 
         ownershipsCartListOrder: CartListOrder = new CartListOrder('purchaseDate', true, true);
         activitiesCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
-
+        userData: Common.Models.Dto.IUserData;
         property: Business.Property;
 
         constructor(
@@ -23,7 +23,6 @@ module Antares.Property.View {
             private $state: ng.ui.IStateService) {
 
             super(componentRegistry, $scope);
-
             this.propertyId = $state.params['id'];
             this.fixOwnershipDates();
         }
@@ -62,7 +61,7 @@ module Antares.Property.View {
             this.showPanel(this.components.panels.activityAdd);
         }
 
-        showActivityPreview = (activity: Common.Models.Business.Activity) => {
+        showActivityPreview = (activity: Common.Models.Business.Activity) =>{
             this.components.activityPreview().setActivity(activity);
             this.showPanel(this.components.panels.activityPreview);
         }
@@ -117,6 +116,7 @@ module Antares.Property.View {
                 ownershipSidePanelId: 'viewProperty:ownershipSidePanelComponent',
                 ownershipAddId: 'viewProperty:ownershipAddComponent',
                 ownershipViewId: 'viewProperty:ownershipViewComponent',
+                ownershipViewSidePanelId: 'viewProperty:ownershipViewSidePanelComponent',
                 activityAddId: 'viewProperty:activityAddComponent',
                 activityAddSidePanelId: 'viewProperty:activityAddSidePanelComponent',
                 activityPreviewId: 'viewProperty:activityPreviewComponent',

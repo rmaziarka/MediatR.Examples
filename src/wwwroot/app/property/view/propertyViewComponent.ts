@@ -6,7 +6,8 @@ module Antares.Property {
         controllerAs: 'vm',
         controller: 'propertyViewController',
         bindings: {
-            property: '<'
+            property: '<',
+            userData: '<'
         }
     });
 }
