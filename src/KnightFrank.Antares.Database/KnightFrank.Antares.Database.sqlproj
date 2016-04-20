@@ -71,11 +71,21 @@
   <ItemGroup>
     <None Include="Scripts\Data\PreloadContact.sql" />
     <None Include="KnightFrank.Antares.Database.nuspec" />
-    <None Include="Scripts\Data\Configuration\Characteristic\Characteristic.csv" />
-    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroup.csv" />
-    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroupLocalised.csv" />
-    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroupUsageItems.csv" />
-    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicLocalised.csv" />
+    <None Include="Scripts\Data\Configuration\Characteristic\Characteristic.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroup.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroupLocalised.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroupUsageItems.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicLocalised.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
@@ -91,11 +101,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Scripts\Data\Configuration\Characteristic\Characteristic.sql" />
-    <Build Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroup.sql" />
-    <Build Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroupLocalised.sql" />
-    <Build Include="Scripts\Data\Configuration\Characteristic\CharacteristicLocalised.sql" />
-    <Build Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroupUsageItems.sql" />
+    <None Include="Scripts\Data\Configuration\Characteristic\Characteristic.sql" />
+    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroup.sql" />
+    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroupLocalised.sql" />
+    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicLocalised.sql" />
+    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroupUsageItems.sql" />
   </ItemGroup>
   <Import Project="..\packages\OctoPack.3.0.53\tools\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.0.53\tools\OctoPack.targets')" />
   <Target Name="EnsureOctoPackImported" BeforeTargets="BeforeBuild" Condition="'$(OctoPackImported)' == ''">
