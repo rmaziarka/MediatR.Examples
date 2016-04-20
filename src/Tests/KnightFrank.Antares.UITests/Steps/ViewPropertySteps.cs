@@ -3,6 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
+
+    using FluentAssertions;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.UITests.Pages;
@@ -145,6 +148,25 @@
                     ? page.IsAddressDetailsNotVisible(field)
                     : page.IsAddressDetailsVisible(field));
             }
+        }
+
+        [Then(@"New property should be created with (.*) property type and following attributes")]
+        [Then(@"Property should be updated with (.*) property type and following attributes")]
+        public void CheckPropertyType(string propertyType, Table table)
+        {
+            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+            var details = table.CreateInstance<PropertyDetails>();
+
+            Dictionary<string, string> actualDetails = page.GetPropertyDetails();
+            Dictionary<string, string> expectedDetails =
+                details.GetType()
+                       .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                       .ToDictionary(prop => prop.Name.ToLower(), prop => prop.GetValue(details, null))
+                       .Where(item => item.Value != null)
+                       .ToDictionary(x => x.Key, x => x.Value.ToString());
+
+            Assert.Equal(propertyType, page.PropertyType);
+            actualDetails.ShouldBeEquivalentTo(expectedDetails);
         }
 
         [Then(@"Ownership details should contain following data on view property page")]
