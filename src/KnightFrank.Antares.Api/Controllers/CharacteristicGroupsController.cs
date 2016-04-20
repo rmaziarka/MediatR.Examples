@@ -30,10 +30,10 @@
         /// </summary>
         /// <returns>Contact entity collection</returns>
         [HttpGet]
-        public IEnumerable<CharacteristicGroupUsage> GetCharacteristicGroups(CharacteristicGroupsQuery query)
+        [Route("")]
+        public IEnumerable<CharacteristicGroupUsage> GetCharacteristicGroups([FromUri(Name = "")] CharacteristicGroupsQuery query)
         {
             return this.mediator.Send(query);
         }
-
     }
 }
