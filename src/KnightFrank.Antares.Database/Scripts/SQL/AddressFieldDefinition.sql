@@ -10,7 +10,7 @@ CREATE TABLE #TempAddressFieldDefinitionCsv
                                              AddressFieldLabelKey NVARCHAR(250) NOT NULL,
                                              CountryIsoCode       NVARCHAR(250) NOT NULL,
                                              EnumTypeItemCode     NVARCHAR(250),
-                                             [Required]             BIT NOT NULL,
+                                             [Required]           BIT NOT NULL,
                                              RegEx                NVARCHAR(50) NULL,
                                              RowOrder             SMALLINT NOT NULL,
                                              ColumnOrder          SMALLINT NOT NULL,
@@ -268,6 +268,7 @@ WHILE @@FETCH_STATUS = 0
                        WHERE IsoCode = @CountryIsoCode;
                 SET @existingAddressFormId = ( SELECT TOP 1 FormId
                                                FROM @AfId );
+                DELETE FROM @AfId;
                 IF( SELECT COUNT(*)
                     FROM @csvEntityCodes ) > 0
                     BEGIN
@@ -275,8 +276,7 @@ WHILE @@FETCH_STATUS = 0
                                                              ( AddressFormId,
                                                                EnumTypeItemId
                                                              )
-                               SELECT( SELECT TOP 1 FormId
-                                       FROM @AfId ),
+                               SELECT @existingAddressFormId,
                                      eti.Id
                                FROM @csvEntityCodes AS csvEC
                                     JOIN EnumTypeItem AS eti ON csvEC.Code = eti.Code;
