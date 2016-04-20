@@ -1,13 +1,15 @@
 ﻿namespace KnightFrank.Antares.API.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
 
-    using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Activity.Queries;
+    using KnightFrank.Antares.Domain.Activity.QueryResults;
 
     using MediatR;
 
@@ -72,6 +74,18 @@
             Guid activityId = this.mediator.Send(command);
 
             return this.GetActivity(activityId);
+        }
+
+        /// <summary>
+        /// Gets the activity types.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns>List of activity types</returns>
+        [HttpGet]
+        [Route("types")]
+        public IEnumerable<ActivityTypeQueryResult> GetActivityTypes([FromUri(Name = "")]ActivityTypeQuery query)
+        {
+            return this.mediator.Send(query);
         }
     }
 }

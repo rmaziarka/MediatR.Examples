@@ -5,6 +5,7 @@
     using FluentAssertions;
 
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.CommandHandlers;
     using KnightFrank.Antares.Domain.Activity.Commands;

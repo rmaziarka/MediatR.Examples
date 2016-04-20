@@ -3,6 +3,7 @@
     using System;
 
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
 
     using MediatR;
 

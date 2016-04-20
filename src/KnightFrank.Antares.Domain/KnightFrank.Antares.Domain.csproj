@@ -83,8 +83,12 @@
     <Compile Include="Activity\Commands\UpdateActivityCommandProfile.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommandValidator.cs" />
     <Compile Include="Activity\Queries\ActivityQuery.cs" />
+    <Compile Include="Activity\Queries\ActivityTypeQueryValidator.cs" />
     <Compile Include="Activity\Queries\ActivityQueryValidator.cs" />
+    <Compile Include="Activity\Queries\ActivityTypeQuery.cs" />
     <Compile Include="Activity\QueryHandlers\ActivityQueryHandler.cs" />
+    <Compile Include="Activity\QueryHandlers\ActivityTypeQueryHandler.cs" />
+    <Compile Include="Activity\QueryResults\ActivityTypeQueryResult.cs" />
     <Compile Include="AddressFieldDefinition\QueryResults\AddressFieldDefinitionResult.cs" />
     <Compile Include="AddressForm\Queries\AddressFormByIdQuery.cs" />
     <Compile Include="AddressForm\Queries\AddressFormByIdQueryValidator.cs" />

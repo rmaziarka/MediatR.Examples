@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Dal.Model.Property
+﻿namespace KnightFrank.Antares.Dal.Model.Property.Activities
 {
     using System;
     using System.Collections.Generic;
