@@ -6,8 +6,14 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Resource
     {
         public CountryLocalisedConfiguration()
         {
-            this.Property(r => r.Value)
-                .HasMaxLength(100);
+            this.Property(c => c.ResourceId).HasColumnName("CountryId");
+
+            this.HasRequired(c => c.Country)
+                .WithMany(t => t.CountryLocaliseds)
+                .HasForeignKey(c => c.ResourceId)
+                .WillCascadeOnDelete(false);
+            
+            this.Property(r => r.Value).HasMaxLength(100);
         }
     }
 }

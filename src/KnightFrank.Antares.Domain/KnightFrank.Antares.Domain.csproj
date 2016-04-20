@@ -106,7 +106,7 @@
     <Compile Include="AddressForm\Specifications\IsAddressFormGloballyDefined.cs" />
     <Compile Include="Common\Exceptions\ResourceNotFoundException.cs" />
     <Compile Include="Common\Specifications\HasId.cs" />
-    <Compile Include="Common\Specifications\IsLocaled.cs" />
+    <Compile Include="Common\Specifications\IsLocalised.cs" />
     <Compile Include="Common\ValidatorCommandHandler.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidator.cs" />
     <Compile Include="Common\Validator\ContactValidator.cs" />
@@ -195,9 +195,6 @@
     <Compile Include="Requirement\Queries\RequirementQuery.cs" />
     <Compile Include="Requirement\Queries\RequirementQueryValidator.cs" />
     <Compile Include="Requirement\QueryHandlers\RequirementQueryHandler.cs" />
-    <Compile Include="Resource\Dictionaries\CountryLocalisedDictionary.cs" />
-    <Compile Include="Resource\Dictionaries\IResourceLocalisedDictionary.cs" />
-    <Compile Include="Resource\Dictionaries\PropertyTypeLocalisedDictionary.cs" />
     <Compile Include="Resource\Queries\ResourceLocalisedQueryDomainValidator.cs" />
     <Compile Include="Resource\Queries\ResourceLocalisedQueryValidator.cs" />
     <Compile Include="Resource\Queries\ResourceLocalisedQuery.cs" />

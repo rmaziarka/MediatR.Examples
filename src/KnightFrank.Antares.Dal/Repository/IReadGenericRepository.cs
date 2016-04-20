@@ -5,12 +5,11 @@
     using System.Linq.Expressions;
 
     using KnightFrank.Antares.Dal.Model;
+    using KnightFrank.Antares.Dal.Model.Common;
 
-    public interface IReadGenericRepository<T>
-        where T : BaseEntity
+    public interface IReadGenericRepository<T> : ICovariantReadGenericRepository<T>
+        where T : IBaseEntity
     {
-        IQueryable<T> Get();
-
         IQueryable<T> GetWithInclude(params Expression<Func<T, object>>[] paths);
     }
 }

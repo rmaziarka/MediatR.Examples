@@ -51,9 +51,9 @@
 
             PropertyTypeLocalised[] propertyTypeLocalised =
                 context.PropertyTypes.ToList().Select(
-                    x => new PropertyTypeLocalised { LocaleId = localeId, PropertyTypeId = x.Id, Value = x.Code }).ToArray();
+                    x => new PropertyTypeLocalised { LocaleId = localeId, ResourceId = x.Id, Value = x.Code }).ToArray();
 
-            context.PropertyTypeLocaliseds.AddOrUpdate(x => new { x.LocaleId, x.PropertyTypeId }, propertyTypeLocalised);
+            context.PropertyTypeLocaliseds.AddOrUpdate(x => new { x.LocaleId, x.ResourceId }, propertyTypeLocalised);
             context.SaveChanges();
         }
 

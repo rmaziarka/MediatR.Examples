@@ -156,8 +156,6 @@
     <Compile Include="InlineAutoMoqDataAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandValidatorTests.cs" />
-    <Compile Include="Resource\Dictionaries\CountryLocalisedDictionaryTests.cs" />
-    <Compile Include="Resource\Dictionaries\PropertyTypeLocalisedDictionaryTests.cs" />
     <Compile Include="Resource\Queries\ResourceLocalisedQueryDomainValidatorTests.cs" />
     <Compile Include="Resource\Queries\ResourceLocalisedQueryValidatorTests.cs" />
     <Compile Include="Resource\QueryHandlers\ResourceLocalisedQueryHandlerTests.cs" />
