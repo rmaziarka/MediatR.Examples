@@ -14,8 +14,10 @@
 
             this.HasRequired(x => x.Characteristic)
                 .WithMany()
-                .HasForeignKey(x => x.CharacteristicId)
+                .HasForeignKey(x => x.ResourceId)
                 .WillCascadeOnDelete(false);
+
+            this.Property(c => c.ResourceId).HasColumnName("CharacteristicId");
         }
     }
 }

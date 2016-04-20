@@ -8,8 +8,10 @@
             this.HasRequired(p => p.Locale).WithMany().HasForeignKey(p => p.LocaleId).WillCascadeOnDelete(false);
             this.HasRequired(p => p.CharacteristicGroup)
                 .WithMany()
-                .HasForeignKey(p => p.CharacteristicGroupId)
+                .HasForeignKey(p => p.ResourceId)
                 .WillCascadeOnDelete(false);
-        } 
+
+            this.Property(c => c.ResourceId).HasColumnName("CharacteristicGroupId");
+        }
     }
 }
