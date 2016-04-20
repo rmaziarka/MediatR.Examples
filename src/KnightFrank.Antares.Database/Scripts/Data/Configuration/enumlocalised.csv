@@ -1,0 +1,10 @@
+﻿EnumTypeCode;EnumTypeItemCode;LocaleCode;Value
+EntityType;Property;en;Property
+EntityType;Requirement;en;Requirement
+OwnershipType;Freeholder;en;Freehold
+OwnershipType;Leaseholder;en;Leasehold
+ActivityStatus;PreAppraisal;en;Pre-appraisal
+ActivityStatus;MarketAppraisal;en;Market appraisal
+ActivityStatus;NotSelling;en;Not selling
+Division;Residential;en;Residential property
+Division;Commercial;en;Commercial property

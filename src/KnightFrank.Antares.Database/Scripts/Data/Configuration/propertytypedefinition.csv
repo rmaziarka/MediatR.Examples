@@ -1,0 +1,33 @@
+﻿PropertyTypeCode;CountryCode;Division;Order
+Office;GB;Commercial;1
+Leisure;GB;Commercial;2
+Leisure.Hotel;GB;Commercial;3
+Leisure.Leisure;GB;Commercial;4
+Retail;GB;Commercial;5
+Retail.Car Showroom;GB;Commercial;6
+Retail.Department Stores;GB;Commercial;7
+Retail.Shopping Centre;GB;Commercial;8
+Retail.Retail Unit A1;GB;Commercial;9
+Retail.Retail Unit A2;GB;Commercial;10
+Retail.Retail Unit A3;GB;Commercial;11
+Retail.Retail Unit A4;GB;Commercial;12
+Retail.Retail Unit A5;GB;Commercial;13
+Industrial;GB;Commercial;14
+Industrial.Industrial Estate;GB;Commercial;15
+Industrial.Industrial/Distribution;GB;Commercial;16
+Other;GB;Commercial;17
+Other.Agricultural;GB;Commercial;18
+Other.Car Park;GB;Commercial;19
+Other.Institutional;GB;Commercial;20
+Other.Mixed Use;GB;Commercial;21
+House;GB;Residential;22
+Flat;GB;Residential;23
+Bungalow;GB;Residential;24
+Maisonette;GB;Residential;25
+Studio Flat;GB;Residential;26
+Development Plot;GB;Residential;27
+Farm/Estate;GB;Residential;28
+Garage Only;GB;Residential;29
+Parking Space;GB;Residential;30
+Land;GB;Residential;31
+Houseboat;GB;Residential;32

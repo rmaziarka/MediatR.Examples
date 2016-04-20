@@ -1,0 +1,10 @@
+﻿EnumTypeCode;Code
+EntityType;Property
+EntityType;Requirement
+OwnershipType;Freeholder
+OwnershipType;Leaseholder
+ActivityStatus;PreAppraisal
+ActivityStatus;MarketAppraisal
+ActivityStatus;NotSelling
+Division;Residential
+Division;Commercial
