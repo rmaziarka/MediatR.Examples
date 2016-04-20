@@ -20,5 +20,9 @@
 :r .\SQL\Role.sql
 :r .\SQL\User.sql
 :r .\SQL\RoleUser.sql
-
+:r .\SQL\Characteristic.sql
+:r .\SQL\CharacteristicGroup.sql
+:r .\SQL\CharacteristicLocalised.sql
+:r .\SQL\CharacteristicGroupLocalised.sql
+:r .\SQL\CharacteristicGroupUsageItems.sql
 :r .\SQL\Contact.sql

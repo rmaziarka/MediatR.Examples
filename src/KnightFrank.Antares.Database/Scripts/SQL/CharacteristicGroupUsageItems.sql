@@ -11,7 +11,7 @@ CREATE TABLE #ChracteristicsMapCsv (
     CharacteristicCode  NVARCHAR(250)  NOT NULL
 );
 BULK INSERT #ChracteristicsMapCsv
-    FROM '$(OutputPath)\Scripts\Data\Configuration\Characteristic\CharacteristicGroupUsageItems.csv'
+    FROM '$(OutputPath)\Scripts\Data\Configuration\CharacteristicGroupUsageItems.csv'
         WITH
     (
 		FIRSTROW = 2,

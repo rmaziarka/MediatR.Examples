@@ -8,7 +8,7 @@ CREATE TABLE #ChracteristicsCsv (
 );
 
 BULK INSERT #ChracteristicsCsv
-    FROM '$(OutputPath)\Scripts\Data\Configuration\Characteristic\Characteristic.csv'
+    FROM '$(OutputPath)\Scripts\Data\Configuration\Characteristic.csv'
         WITH
     (
 		FIRSTROW = 2,

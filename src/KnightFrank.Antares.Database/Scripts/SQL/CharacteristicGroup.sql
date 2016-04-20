@@ -6,7 +6,7 @@ CREATE TABLE #ChracteristicsGroupsCsv (
 );
 
 BULK INSERT #ChracteristicsGroupsCsv
-    FROM '$(OutputPath)\Scripts\Data\Configuration\Characteristic\CharacteristicGroup.csv'
+    FROM '$(OutputPath)\Scripts\Data\Configuration\CharacteristicGroup.csv'
         WITH
     (
 		FIRSTROW = 2,

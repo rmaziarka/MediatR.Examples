@@ -67,7 +67,6 @@
     <Folder Include="Publish" />
     <Folder Include="Scripts\Data" />
     <Folder Include="Scripts\Data\Configuration" />
-    <Folder Include="Scripts\Data\Configuration\Characteristic" />
     <Folder Include="Scripts\Data\Test" />
     <Folder Include="Scripts\Data\Configuration" />
     <Folder Include="Scripts\SQL" />
@@ -148,19 +147,19 @@
     <None Include="Scripts\Data\Test\contact.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\Data\Configuration\Characteristic\Characteristic.csv">
+    <None Include="Scripts\Data\Configuration\characteristic.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroup.csv">
+    <None Include="Scripts\Data\Configuration\characteristicGroup.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroupLocalised.csv">
+    <None Include="Scripts\Data\Configuration\characteristicGroupLocalised.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroupUsageItems.csv">
+    <None Include="Scripts\Data\Configuration\characteristicGroupUsageItems.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicLocalised.csv">
+    <None Include="Scripts\Data\Configuration\characteristicLocalised.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -201,11 +200,6 @@
     <None Include="Scripts\SQL\PropertyTypeLocalised.sql" />
     <None Include="Scripts\SQL\Role.sql" />
     <None Include="Scripts\SQL\Contact.sql" />
-    <None Include="Scripts\Data\Configuration\Characteristic\Characteristic.sql" />
-    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroup.sql" />
-    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroupLocalised.sql" />
-    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicLocalised.sql" />
-    <None Include="Scripts\Data\Configuration\Characteristic\CharacteristicGroupUsageItems.sql" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="OutputPath">
@@ -218,6 +212,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\SQL\RoleUser.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\SQL\CharacteristicLocalised.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\SQL\CharacteristicGroupUsageItems.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\SQL\CharacteristicGroupLocalised.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\SQL\CharacteristicGroup.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\SQL\Characteristic.sql" />
   </ItemGroup>
   <Import Project="..\packages\OctoPack.3.0.53\tools\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.0.53\tools\OctoPack.targets')" />
   <Target Name="EnsureOctoPackImported" BeforeTargets="BeforeBuild" Condition="'$(OctoPackImported)' == ''">
