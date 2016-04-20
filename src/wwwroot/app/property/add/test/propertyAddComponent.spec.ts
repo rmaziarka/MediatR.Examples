@@ -18,7 +18,16 @@ module Antares {
 
 
         var countriesMock = [{ country: { id: "countryId1", isoCode: "GB" }, locale: {}, value: "United Kingdom" }];
-        var propertyTypesMock = { propertyTypes: [{ "id": "45cc9d28-51fa-e511-828b-8cdcd42baca7", "parentId": '45cc9d28-51fa-e511-828b-8cdcd42baca7', "name": "Office" }] };
+        var propertyTypesMock: any = {
+            propertyTypes: [{ id: "8b152e4f-f505-e611-828c-8cdcd42baca7", parentId: null, name: "House", children: [], order: 22 },
+                { id: "8c152e4f-f505-e611-828c-8cdcd42baca7", parentId: null, name: "Flat", children: [], order: 23 },
+                { id: "90152e4f-f505-e611-828c-8cdcd42baca7", parentId: null, name: "Development Plot", children: [], order: 27 }]
+        };
+
+        var propertyAttributesMock = { "attributes": [{ "order": 2, "nameKey": "GuestRooms", "labelKey": "PROPERTY.GUESTROOMS" }] }
+        var propertyAttributesForHouseMock = { "attributes": [{ "order": 0, "nameKey": "Area", "labelKey": "PROPERTY.AREA" }, { "order": 1, "nameKey": "LandArea", "labelKey": "PROPERTY.LANDAREA" }, { "order": 2, "nameKey": "GuestRooms", "labelKey": "PROPERTY.GUESTROOMS" }] }
+        var propertyAttributesForFlatMock = { "attributes": [{ "order": 0, "nameKey": "Bedrooms", "labelKey": "PROPERTY.BEDROOM" }, { "order": 1, "nameKey": "Receptions", "labelKey": "PROPERTY.RECEPTIONS" }, { "order": 2, "nameKey": "GuestRooms", "labelKey": "PROPERTY.GUESTROOMS" }] }
+
 
         describe('when page is loaded', () => {
             var countryMockId = countriesMock[0].country.id,
@@ -54,6 +63,18 @@ module Antares {
                     return [200, {}];
                 });
 
+                $http.whenGET(/\/api\/properties\/attributes\?countryCode=GB&propertyTypeId=8b152e4f-f505-e611-828c-8cdcd42baca7/).respond(() => {
+                    return [200, propertyAttributesForHouseMock];
+                });
+
+                $http.whenGET(/\/api\/properties\/attributes\?countryCode=GB&propertyTypeId=8c152e4f-f505-e611-828c-8cdcd42baca7/).respond(() => {
+                    return [200, propertyAttributesForFlatMock];
+                });
+
+                $http.whenGET(/\/api\/properties\/attributes/).respond(() => {
+                    return [200, propertyAttributesMock];
+                });
+
                 $http.whenGET(/\/api\/properties\/attributes/).respond(() => {
                     return [200, {}];
                 });
@@ -63,8 +84,9 @@ module Antares {
                 });
 
                 // compile
+                scope['property'] = newPropertyMock;
                 scope['userData'] = usermock;
-                element = compile('<property-add user-data="userData"></property-add>')(scope);
+                element = compile('<property-add property="property" user-data="userData"></property-add>')(scope);
                 $httpBackend.flush();
                 scope.$apply();
                 controller = element.controller('propertyAdd');
@@ -95,12 +117,60 @@ module Antares {
                 expect(button[0].getAttribute('disabled')).toBeFalsy();
             });
 
+            describe('when property type is changed', () => {
+                it('then proper attributes are shown', () => {
+                    controller.property.propertyTypeId = "8b152e4f-f505-e611-828c-8cdcd42baca7";
+                    scope.$apply();
+                    controller.loadAttributes();
+                    $http.flush();
+                    scope.$apply();
+
+                    var htmlAttributes = element.find('input#minArea, input#maxArea, input#minLandArea, input#maxLandArea, input#minGuestRooms, input#maxGuestRooms');
+                    expect(htmlAttributes.length).toEqual(6);
+
+                    controller.property.propertyTypeId = "8c152e4f-f505-e611-828c-8cdcd42baca7";
+                    scope.$apply();
+                    controller.loadAttributes();
+                    $http.flush();
+                    scope.$apply();
+
+                    htmlAttributes = element.find('input#minBedrooms, input#maxBedrooms, input#minReceptions, input#maxReceptions, input#minGuestRooms, input#maxGuestRooms');
+                    expect(htmlAttributes.length).toEqual(6);
+                });
+
+                it('then attribute values retains even if they are hidden', () => {
+                    var attributeMock = {
+                        minArea: 11,
+                        maxArea: 22,
+                        minLandArea: 33,
+                        maxLandArea: 44,
+                        minGuestRooms: 33,
+                        maxGuestRooms: 44
+                    };
+
+                    controller.property.propertyTypeId = "8b152e4f-f505-e611-828c-8cdcd42baca7";
+                    scope.$apply();
+                    controller.loadAttributes();
+                    $http.flush();
+                    controller.property.attributeValues = attributeMock;
+                    scope.$apply();
+
+                    controller.property.propertyTypeId = "8c152e4f-f505-e611-828c-8cdcd42baca7";
+                    scope.$apply();
+                    controller.loadAttributes();
+                    $http.flush();
+                    scope.$apply();
+
+                    expect(controller.property.attributeValues).toEqual(attributeMock);
+                });
+            });
+
             describe('when valid data and save button is clicked', () => {
                 it('then save method is called', () => {
                     spyOn(controller, 'save');
                     newPropertyMock.address.countryId = countryMockId;
                     newPropertyMock.propertyTypeId = propertyTypesMockId;
-                        scope.$apply();
+                    scope.$apply();
 
                     var button = element.find('button#saveBtn');
                     button.click();
@@ -122,12 +192,12 @@ module Antares {
                         return [200, propertyFromServerMock];
                     });
 
-                   var propertyId: string;
-                   spyOn(state, 'go').and.callFake((routeName: string, property: Business.Property) => {
-                       propertyId = property.id;
-                   });
+                    var propertyId: string;
+                    spyOn(state, 'go').and.callFake((routeName: string, property: Business.Property) => {
+                        propertyId = property.id;
+                    });
 
-                   newPropertyMock.address = new Business.Address();
+                    newPropertyMock.address = new Business.Address();
 
                     newPropertyMock.address.id = 'adrId1';
                     newPropertyMock.address.countryId = countryMockId;
@@ -144,6 +214,41 @@ module Antares {
                     expect(state.go).toHaveBeenCalled();
                     expect(propertyId).toEqual(propertyFromServerMock.id);
                 });
+
+                it('then hidden attribte values are removed', () => {
+                    $http.whenPUT(/\/api\/properties/).respond(() => {
+                        return [200, {}];
+                    });
+                    var attributeMock = {
+                        minArea: 11,
+                        maxArea: 22,
+                        minLandArea: 33,
+                        maxLandArea: 44,
+                        minGuestRooms: 33,
+                        maxGuestRooms: 44,
+                        minReceptions: 33,
+                        maxReceptions: 44
+                    };
+
+                    controller.property.propertyTypeId = "8b152e4f-f505-e611-828c-8cdcd42baca7";
+                    scope.$apply();
+                    controller.loadAttributes();
+                    controller.property.attributeValues = attributeMock;
+                    $http.flush();
+                    scope.$apply();
+
+                    var button = element.find('button#saveBtn');
+                    button.click();
+
+                    expect(controller.property.attributeValues.minArea).not.toBeNull();
+                    expect(controller.property.attributeValues.maxArea).not.toBeNull();
+                    expect(controller.property.attributeValues.minLandArea).not.toBeNull();
+                    expect(controller.property.attributeValues.maxLandArea).not.toBeNull();
+                    expect(controller.property.attributeValues.minGuestRooms).not.toBeNull();
+                    expect(controller.property.attributeValues.maxGuestRooms).not.toBeNull();
+                    expect(controller.property.attributeValues.minReceptions).toBeNull();
+                    expect(controller.property.attributeValues.maxReceptions).toBeNull();
+                });
             });
 
             describe('when', () => {
@@ -153,7 +258,7 @@ module Antares {
                     });
 
                     it('not missing then required message should not be displayed', () => {
-                        assertValidator.assertRequiredValidator('45cc9d28-51fa-e511-828b-8cdcd42baca7', true, pageObjectSelectors.propertyTypeSelector);
+                        assertValidator.assertRequiredValidator('8b152e4f-f505-e611-828c-8cdcd42baca7', true, pageObjectSelectors.propertyTypeSelector);
                     });
                 });
             });
