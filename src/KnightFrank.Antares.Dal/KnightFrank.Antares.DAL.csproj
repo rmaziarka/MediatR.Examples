@@ -142,18 +142,6 @@
     <Compile Include="Repository\IReadGenericRepository.cs" />
     <Compile Include="Repository\IGenericRepository.cs" />
     <Compile Include="Repository\ResourceLocalisedRepositoryProvider.cs" />
-    <Compile Include="Seed\PropertyAttributeFromData.cs" />
-    <Compile Include="Seed\AttributeData.cs" />
-    <Compile Include="Seed\Common\LocaleIsoCode.cs" />
-    <Compile Include="Seed\DepartmentData.cs" />
-    <Compile Include="Seed\BusinessData.cs" />
-    <Compile Include="Seed\EnumData.cs" />
-    <Compile Include="Seed\CountryData.cs" />
-    <Compile Include="Seed\LocaleData.cs" />
-    <Compile Include="Seed\AddressFormData.cs" />
-    <Compile Include="Seed\PropertyTypeData.cs" />
-    <Compile Include="Seed\UserData.cs" />
-    <Compile Include="Seed\RoleData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
