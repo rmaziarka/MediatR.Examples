@@ -15,7 +15,7 @@ Retail.Retail Unit A3;en;Retail Unit A3
 Retail.Retail Unit A4;en;Retail Unit A4
 Retail.Retail Unit A5;en;Retail Unit A5
 Industrial.Industrial Estate;en;Industrial Estate
-Industrial.Industrial/Distribution;en;Industrial/Distribution
+Industrial.Industrial Distribution;en;Industrial Distribution
 Other.Agricultural;en;Agricultural
 Other.Car Park;en;Car Park
 Other.Institutional;en;Institutional
@@ -31,3 +31,22 @@ Garage Only;en;Garage Only
 Parking Space;en;Parking Space
 Land;en;Land
 Houseboat;en;Houseboat
+Leisure.Leisure (Portfolio);en;Leisure (Portfolio)
+Retail.Department/Variety Store;en;Department/Variety Store
+Retail.Garden Centre;en;Garden Centre
+Retail.Retail;en;Retail
+Retail.Retail (Portfolio);en;Retail (Portfolio)
+Retail.Shopping Centre (Portfolio);en;Shopping Centre (Portfolio)
+Retail.Retail Wharehouse (Portfolio);en;Retail Wharehouse (Portfolio)
+Retail.Retail Wh (Bulky Parks);en;Retail Wh (Bulky Parks)
+Retail.Retail Wh (Bulky Solus);en;Retail Wh (Bulky Solus)
+Retail.Retail Wh (Open A1 Solus);en;Retail Wh (Open A1 Solus)
+Retail.Supermarket;en;Supermarket
+Industrial.Industrial (Portfolio);en;Industrial (Portfolio)
+Industrial.Trade park;en;Trade park
+Other.Institutional (Portfolio);en;Institutional (Portfolio)
+Other.Land/Site/Dev;en;Land/Site/Dev
+Other.Mixed (Portfolio);en;Mixed (Portfolio)
+Other.Other;en;Other
+Other.Student Accomodation;en;Student Accomodation
+Garage/Parking Space;en;Garage/Parking Space

@@ -6,20 +6,38 @@
 ;Office
 Leisure;Leisure.Hotel
 Leisure;Leisure.Leisure
+Leisure;Leisure.Leisure (Portfolio)
 Retail;Retail.Car Showroom
+Retail;Retail.Department/Variety Store
 Retail;Retail.Department Stores
+Retail;Retail.Garden Centre
+Retail;Retail.Retail
+Retail;Retail.Retail (Portfolio)
 Retail;Retail.Shopping Centre
+Retail;Retail.Shopping Centre (Portfolio)
 Retail;Retail.Retail Unit A1
 Retail;Retail.Retail Unit A2
 Retail;Retail.Retail Unit A3
 Retail;Retail.Retail Unit A4
 Retail;Retail.Retail Unit A5
+Retail;Retail.Retail Wharehouse (Portfolio)
+Retail;Retail.Retail Wh (Bulky Parks)
+Retail;Retail.Retail Wh (Bulky Solus)
+Retail;Retail.Retail Wh (Open A1 Solus)
+Retail;Retail.Supermarket
 Industrial;Industrial.Industrial Estate
-Industrial;Industrial.Industrial/Distribution
+Industrial;Industrial.Industrial Distribution
+Industrial;Industrial.Industrial (Portfolio)
+Industrial;Industrial.Trade park
 Other;Other.Agricultural
 Other;Other.Car Park
 Other;Other.Institutional
+Other;Other.Institutional (Portfolio)
+Other;Other.Land/Site/Dev
+Other;Other.Mixed (Portfolio)
 Other;Other.Mixed Use
+Other;Other.Other
+Other;Other.Student Accomodation
 ;House
 ;Flat
 ;Bungalow
@@ -29,5 +47,6 @@ Other;Other.Mixed Use
 ;Farm/Estate
 ;Garage Only
 ;Parking Space
+;Garage/Parking Space
 ;Land
 ;Houseboat
