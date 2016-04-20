@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.UITests.Pages
+﻿namespace KnightFrank.Antares.UITests.Pages.Panels
 {
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;

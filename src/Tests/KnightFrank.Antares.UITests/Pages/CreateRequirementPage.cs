@@ -4,6 +4,7 @@
     using System.Linq;
 
     using KnightFrank.Antares.UITests.Extensions;
+    using KnightFrank.Antares.UITests.Pages.Panels;
 
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
@@ -13,8 +14,8 @@
     public class CreateRequirementPage : ProjectPageBase
     {
         // Applicant locators
-        private readonly ElementLocator newApplicantButton = new ElementLocator(Locator.CssSelector, "button[ng-click = 'vm.showContactList()']");
-        private readonly ElementLocator applicantsList = new ElementLocator(Locator.CssSelector, "div[ng-repeat = 'c in vm.requirement.contacts']");
+        private readonly ElementLocator newApplicantButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
+        private readonly ElementLocator applicantsList = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'requirement.contacts']");
         // Property requirements locators
         private readonly ElementLocator propertyType = new ElementLocator(Locator.Id, string.Empty);
         private readonly ElementLocator propertyPriceMin = new ElementLocator(Locator.Id, "price-min");
