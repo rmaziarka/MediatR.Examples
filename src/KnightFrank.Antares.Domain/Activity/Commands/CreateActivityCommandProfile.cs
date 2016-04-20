@@ -3,6 +3,7 @@
     using AutoMapper;
 
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
 
     public class CreateActivityCommandProfile : Profile
     {

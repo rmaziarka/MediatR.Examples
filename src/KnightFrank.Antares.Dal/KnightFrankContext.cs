@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.Property.Characteristics;
     using KnightFrank.Antares.Dal.Model.Resource;
     using KnightFrank.Antares.Dal.Model.User;
@@ -55,6 +56,9 @@
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Activity> Activities { get; set; }
+        public DbSet<ActivityTypeDefinition> ActivityTypeDefinitions { get; set; }
+        public DbSet<ActivityType> ActivityTypes { get; set; }
+        public DbSet<ActivityTypeLocalized> ActivityTypeLocalizeds { get; set; }
         public DbSet<PropertyType> PropertyTypes { get; set; }
         public DbSet<PropertyTypeLocalised> PropertyTypeLocaliseds { get; set; }
         public DbSet<PropertyTypeDefinition> PropertyTypeDefinitions { get; set; }
