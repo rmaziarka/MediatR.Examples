@@ -14,7 +14,8 @@ module Antares.Property {
         private divisions: EnumTypeItem[];
         private attributes: Dto.IAttribute[];
         public userData: Dto.IUserData;
-
+        public characteristic: Business.CharacteristicSelect = new Business.CharacteristicSelect();
+        
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
@@ -22,6 +23,10 @@ module Antares.Property {
             private $state: ng.ui.IStateService) {
 
             super(componentRegistry, $scope);
+            
+            this.characteristic.id = '3e84bbde-a807-e611-826f-8cdcd42e5436';
+            this.characteristic.text = 'kod';
+            this.characteristic.isDisplayText = true;
 
             this.property.division.code = this.userData.division.code;
             this.property.divisionId = this.userData.division.id;

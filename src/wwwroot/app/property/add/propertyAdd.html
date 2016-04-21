@@ -40,15 +40,17 @@
                 <attribute-list component-id="vm.componentIds.attributeListId" user-data="vm.userData" property="vm.property" mode="edit"></attribute-list>
             </fieldset>
         </div>
-        <!--<div class="col-md-4">
+        <div class="col-md-4">
           <fieldset>
               <h3 class="page-header" translate="PROPERTY.CHARACTERISTICS"></h3>
               <div class="form-group has-error">
                   <p class="help-block">Select property type to enter property characteristics</p>
               </div>
               <fielset>
+                  <div> </div>
                   <div class="characteristics-group">
                       <h5 translate="{{group.value}}"></h5>
+                      <characteristic-select characteristic="vm.characteristic" ></characteristic-add>                      
                       <div class="checkbox">
                           <label>
                               <input type="checkbox" transalte="{{field.value}}" value="">                              
@@ -189,7 +191,7 @@
                   </div>
               </fielset>
         
-      </div>-->
+      </div>
         <div class="col-md-12">
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" id="saveBtn" ng-disabled="!vm.property.address.countryId"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
