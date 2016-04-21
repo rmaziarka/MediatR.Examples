@@ -101,6 +101,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Activity\Queries\ActivityTypeQueryValidatorTests.cs" />
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandlerTests.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandlerTests.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandDomainValidatorTests.cs" />

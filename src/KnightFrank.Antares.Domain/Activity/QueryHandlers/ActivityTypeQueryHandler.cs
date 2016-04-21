@@ -1,11 +1,8 @@
 ﻿namespace KnightFrank.Antares.Domain.Activity.QueryHandlers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
-    using KnightFrank.Antares.Dal.Model.Enum;
-    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Queries;
@@ -26,7 +23,7 @@
             IEnumerable<ActivityTypeQueryResult> activityTypes = this.activityTypeRepository.Get()
                              .Where(x => x.Country.IsoCode == message.CountryCode && x.PropertyTypeId == message.PropertyTypeId)
                              .OrderBy(x => x.Order)
-                             .Select(x => new ActivityTypeQueryResult()
+                             .Select(x => new ActivityTypeQueryResult
                              {
                                  Id = x.ActivityType.Id,
                                  Order = x.Order

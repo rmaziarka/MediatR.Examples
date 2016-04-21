@@ -5,7 +5,6 @@
 
     using FluentAssertions;
 
-    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Queries;
@@ -18,7 +17,7 @@
 
     using Xunit;
 
-    [Collection("Activity")]
+    [Collection("ActivityQueryHandler")]
     [Trait("FeatureTitle", "Activity")]
     public class ActivityQueryHandlerTests
     {
