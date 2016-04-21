@@ -32,6 +32,7 @@
         public void Given_ValidCommand_When_Handling_Then_ShouldSaveActivity(
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
+            [Frozen] Mock<IGenericRepository<ActivityType>> activityTypeRepository,
             CreateActivityCommandHandler handler,
             CreateActivityCommand cmd,
             Guid expectedActivityId)
@@ -48,6 +49,10 @@
 
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
                              .Returns(cmd.ContactIds.Select(id => new Contact { Id = id }));
+
+            // remove after adding activity type in view
+            activityTypeRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<ActivityType, bool>>>()))
+                             .Returns(new [] {new ActivityType()});
 
             // Act
             handler.Handle(cmd);

@@ -46,6 +46,7 @@
             var activity = new Activity
             {
                 PropertyId = propertyId,
+                ActivityTypeId = this.fixture.DataContext.ActivityTypes.First().Id,
                 ActivityStatusId = activityStatusId,
                 CreatedDate = DateTime.Now,
                 LastModifiedDate = DateTime.Now,
@@ -134,7 +135,7 @@
 
             propertyFromResponse.Activities.ToList()[0].ShouldBeEquivalentTo(
                 activitiesFromDatabase,
-                options => options.Excluding(x => x.Property).Excluding(x => x.ActivityStatus));
+                options => options.Excluding(x => x.Property).Excluding(x => x.ActivityStatus).Excluding(x => x.ActivityType));
         }
 
         [Then(@"The created Activity is saved in database")]
@@ -144,7 +145,7 @@
             Activity actualActivity = this.fixture.DataContext.Activities.Single(x => x.Id.Equals(activity.Id));
 
             actualActivity.ShouldBeEquivalentTo(activity, options => options
-                .Excluding(x => x.Property).Excluding(x => x.ActivityStatus));
+                .Excluding(x => x.Property).Excluding(x => x.ActivityStatus).Excluding(x => x.ActivityType));
 
             actualActivity.ActivityStatus.Code.ShouldBeEquivalentTo("PreAppraisal");
         }
@@ -156,7 +157,7 @@
             Activity actualActivity = this.fixture.DataContext.Activities.Single(x => x.Id.Equals(activity.Id));
 
             actualActivity.ShouldBeEquivalentTo(activity, options => options
-                .Excluding(a => a.ActivityStatus).Excluding(a => a.Contacts).Excluding(a => a.Property));
+                .Excluding(a => a.ActivityStatus).Excluding(a => a.Contacts).Excluding(a => a.Property).Excluding(a => a.ActivityType));
         }
 
         private void GetActivityResponse(string activityId)

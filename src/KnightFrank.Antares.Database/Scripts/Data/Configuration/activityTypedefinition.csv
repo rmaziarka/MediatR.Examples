@@ -1,67 +1,693 @@
 ﻿PropertyTypeCode;CountryCode;ActivityTypeCode;Order
 House;GB;Open Market Letting;1
-House;GB;Freehold Sale;
-Flat;GB;Open Market Letting;
-Flat;GB;Freehold Sale;
-Flat;GB;Long Leasehold Sale;
-Bungalow;GB;Open Market Letting;
-Bungalow;GB;Freehold Sale;
-Maisonette;GB;Open Market Letting;
-Maisonette;GB;Freehold Sale;
-Maisonette;GB;Long Leasehold Sale;
-Development Plot;GB;Freehold Sale;
-Development;GB;Long Leasehold Sale;
-Farm/Estate;GB;Freehold Sale;
-Garage / Parking Space;GB;Open Market Letting;
-Garage / Parking Space;GB;Freehold Sale;
-Land Plot;GB;Freehold Sale;
-Land;GB;Long Leasehold Sale;
-Houseboat;GB;Open Market Letting;
-Houseboat;GB;Freehold Sale;
-Office;GB;Assignment;
-Office;GB;Open Market Letting;
-Office;GB;Open Market Sub-Letting;
-Office;GB;Pre-Letting;
-Office;GB;Leasehold;
-Office;GB;Freehold (Vacant Possession);
-Office;GB;Freehold Sale;
-Office;GB;Feuhold Sale;
-Office;GB;Long Leasehold Sale;
-Office;GB;Lease Regear;
-Office;GB;Lease Renewal;
-Office;GB;Rent Review;
-Office;GB;By Arrangement;
-Office;GB;Long Leasehold (Vacant Possession);
-Office;GB;Feuhold (Vacant Possession);
-Office;GB;Lease Surrender;
+House;GB;Freehold Sale;2
+Flat;GB;Open Market Letting;1
+Flat;GB;Freehold Sale;2
+Flat;GB;Long Leasehold Sale;3
+Bungalow;GB;Open Market Letting;1
+Bungalow;GB;Freehold Sale;2
+Maisonette;GB;Open Market Letting;1
+Maisonette;GB;Freehold Sale;2
+Maisonette;GB;Long Leasehold Sale;3
+Development Plot;GB;Freehold Sale;1
+Development;GB;Long Leasehold Sale;2
+Farm/Estate;GB;Freehold Sale;1
+Garage / Parking Space;GB;Open Market Letting;1
+Garage / Parking Space;GB;Freehold Sale;2
+Land Plot;GB;Freehold Sale;1
+Land;GB;Long Leasehold Sale;2
+Houseboat;GB;Open Market Letting;1
+Houseboat;GB;Freehold Sale;2
 
-Leisure
-Retail
-Industrial
-Other
-Office
-Leisure;Leisure.Hotel
-Leisure;Leisure.Leisure
-Leisure;Leisure.Leisure (Portfolio)
-Retail.Car Showroom
-Retail.Department/Variety Store
-Retail.Department Stores
-Retail.Garden Centre
-Retail.Retail
-Retail.Retail (Portfolio)
-Retail.Shopping Centre
-Retail.Shopping Centre (Portfolio)
-Retail.Retail Unit A1
-Retail.Retail Unit A2
-Retail.Retail Unit A3
-Retail.Retail Unit A4
-Retail.Retail Unit A5
-Retail.Retail Wharehouse (Portfolio)
-Retail.Retail Wh (Bulky Parks)
-Retail.Retail Wh (Bulky Solus)
-Retail.Retail Wh (Open A1 Solus)
-Retail.Supermarket
-Industrial.Industrial Estate
-Industrial.Industrial Distribution
-Industrial.Industrial (Portfolio)
-Industrial.Trade park
+Leisure;GB;Assignment;1
+Leisure;GB;Open Market Letting;2
+Leisure;GB;Open Market Sub-Letting;3
+Leisure;GB;Pre-Letting;4
+Leisure;GB;Leasehold;5
+Leisure;GB;Freehold (Vacant Possession);6
+Leisure;GB;Freehold Sale;7
+Leisure;GB;Feuhold Sale;8
+Leisure;GB;Long Leasehold Sale;9
+Leisure;GB;Lease Regear;10
+Leisure;GB;Lease Renewal;11
+Leisure;GB;Rent Review;12
+Leisure;GB;By Arrangement;13
+Leisure;GB;Long Leasehold (Vacant Possession);14
+Leisure;GB;Feuhold (Vacant Possession);15
+Leisure;GB;Lease Surrender;16
+Retail;GB;Assignment;1
+Retail;GB;Open Market Letting;2
+Retail;GB;Open Market Sub-Letting;3
+Retail;GB;Pre-Letting;4
+Retail;GB;Leasehold;5
+Retail;GB;Freehold (Vacant Possession);6
+Retail;GB;Freehold Sale;7
+Retail;GB;Feuhold Sale;8
+Retail;GB;Long Leasehold Sale;9
+Retail;GB;Lease Regear;10
+Retail;GB;Lease Renewal;11
+Retail;GB;Rent Review;12
+Retail;GB;By Arrangement;13
+Retail;GB;Long Leasehold (Vacant Possession);14
+Retail;GB;Feuhold (Vacant Possession);15
+Retail;GB;Lease Surrender;16
+Industrial;GB;Assignment;1
+Industrial;GB;Open Market Letting;2
+Industrial;GB;Open Market Sub-Letting;3
+Industrial;GB;Pre-Letting;4
+Industrial;GB;Leasehold;5
+Industrial;GB;Freehold (Vacant Possession);6
+Industrial;GB;Freehold Sale;7
+Industrial;GB;Feuhold Sale;8
+Industrial;GB;Long Leasehold Sale;9
+Industrial;GB;Lease Regear;10
+Industrial;GB;Lease Renewal;11
+Industrial;GB;Rent Review;12
+Industrial;GB;By Arrangement;13
+Industrial;GB;Long Leasehold (Vacant Possession);14
+Industrial;GB;Feuhold (Vacant Possession);15
+Industrial;GB;Lease Surrender;16
+Other;GB;Assignment;1
+Other;GB;Open Market Letting;2
+Other;GB;Open Market Sub-Letting;3
+Other;GB;Pre-Letting;4
+Other;GB;Leasehold;5
+Other;GB;Freehold (Vacant Possession);6
+Other;GB;Freehold Sale;7
+Other;GB;Feuhold Sale;8
+Other;GB;Long Leasehold Sale;9
+Other;GB;Lease Regear;10
+Other;GB;Lease Renewal;11
+Other;GB;Rent Review;12
+Other;GB;By Arrangement;13
+Other;GB;Long Leasehold (Vacant Possession);14
+Other;GB;Feuhold (Vacant Possession);15
+Other;GB;Lease Surrender;16
+Office;GB;Assignment;1
+Office;GB;Open Market Letting;2
+Office;GB;Open Market Sub-Letting;3
+Office;GB;Pre-Letting;4
+Office;GB;Leasehold;5
+Office;GB;Freehold (Vacant Possession);6
+Office;GB;Freehold Sale;7
+Office;GB;Feuhold Sale;8
+Office;GB;Long Leasehold Sale;9
+Office;GB;Lease Regear;10
+Office;GB;Lease Renewal;11
+Office;GB;Rent Review;12
+Office;GB;By Arrangement;13
+Office;GB;Long Leasehold (Vacant Possession);14
+Office;GB;Feuhold (Vacant Possession);15
+Office;GB;Lease Surrender;16
+Office.Office;GB;Assignment;1
+Office.Office;GB;Open Market Letting;2
+Office.Office;GB;Open Market Sub-Letting;3
+Office.Office;GB;Pre-Letting;4
+Office.Office;GB;Leasehold;5
+Office.Office;GB;Freehold (Vacant Possession);6
+Office.Office;GB;Freehold Sale;7
+Office.Office;GB;Feuhold Sale;8
+Office.Office;GB;Long Leasehold Sale;9
+Office.Office;GB;Lease Regear;10
+Office.Office;GB;Lease Renewal;11
+Office.Office;GB;Rent Review;12
+Office.Office;GB;By Arrangement;13
+Office.Office;GB;Long Leasehold (Vacant Possession);14
+Office.Office;GB;Feuhold (Vacant Possession);15
+Office.Office;GB;Lease Surrender;16
+Office.Office (Bus. Park);GB;Assignment;1
+Office.Office (Bus. Park);GB;Open Market Letting;2
+Office.Office (Bus. Park);GB;Open Market Sub-Letting;3
+Office.Office (Bus. Park);GB;Pre-Letting;4
+Office.Office (Bus. Park);GB;Leasehold;5
+Office.Office (Bus. Park);GB;Freehold (Vacant Possession);6
+Office.Office (Bus. Park);GB;Freehold Sale;7
+Office.Office (Bus. Park);GB;Feuhold Sale;8
+Office.Office (Bus. Park);GB;Long Leasehold Sale;9
+Office.Office (Bus. Park);GB;Lease Regear;10
+Office.Office (Bus. Park);GB;Lease Renewal;11
+Office.Office (Bus. Park);GB;Rent Review;12
+Office.Office (Bus. Park);GB;By Arrangement;13
+Office.Office (Bus. Park);GB;Long Leasehold (Vacant Possession);14
+Office.Office (Bus. Park);GB;Feuhold (Vacant Possession);15
+Office.Office (Bus. Park);GB;Lease Surrender;16
+Office.Office (Portfolio);GB;Assignment;1
+Office.Office (Portfolio);GB;Open Market Letting;2
+Office.Office (Portfolio);GB;Open Market Sub-Letting;3
+Office.Office (Portfolio);GB;Pre-Letting;4
+Office.Office (Portfolio);GB;Leasehold;5
+Office.Office (Portfolio);GB;Freehold (Vacant Possession);6
+Office.Office (Portfolio);GB;Freehold Sale;7
+Office.Office (Portfolio);GB;Feuhold Sale;8
+Office.Office (Portfolio);GB;Long Leasehold Sale;9
+Office.Office (Portfolio);GB;Lease Regear;10
+Office.Office (Portfolio);GB;Lease Renewal;11
+Office.Office (Portfolio);GB;Rent Review;12
+Office.Office (Portfolio);GB;By Arrangement;13
+Office.Office (Portfolio);GB;Long Leasehold (Vacant Possession);14
+Office.Office (Portfolio);GB;Feuhold (Vacant Possession);15
+Office.Office (Portfolio);GB;Lease Surrender;16
+Leisure.Hotel;GB;Assignment;1
+Leisure.Hotel;GB;Open Market Letting;2
+Leisure.Hotel;GB;Open Market Sub-Letting;3
+Leisure.Hotel;GB;Pre-Letting;4
+Leisure.Hotel;GB;Leasehold;5
+Leisure.Hotel;GB;Freehold (Vacant Possession);6
+Leisure.Hotel;GB;Freehold Sale;7
+Leisure.Hotel;GB;Feuhold Sale;8
+Leisure.Hotel;GB;Long Leasehold Sale;9
+Leisure.Hotel;GB;Lease Regear;10
+Leisure.Hotel;GB;Lease Renewal;11
+Leisure.Hotel;GB;Rent Review;12
+Leisure.Hotel;GB;By Arrangement;13
+Leisure.Hotel;GB;Long Leasehold (Vacant Possession);14
+Leisure.Hotel;GB;Feuhold (Vacant Possession);15
+Leisure.Hotel;GB;Lease Surrender;16
+Leisure.Leisure;GB;Assignment;1
+Leisure.Leisure;GB;Open Market Letting;2
+Leisure.Leisure;GB;Open Market Sub-Letting;3
+Leisure.Leisure;GB;Pre-Letting;4
+Leisure.Leisure;GB;Leasehold;5
+Leisure.Leisure;GB;Freehold (Vacant Possession);6
+Leisure.Leisure;GB;Freehold Sale;7
+Leisure.Leisure;GB;Feuhold Sale;8
+Leisure.Leisure;GB;Long Leasehold Sale;9
+Leisure.Leisure;GB;Lease Regear;10
+Leisure.Leisure;GB;Lease Renewal;11
+Leisure.Leisure;GB;Rent Review;12
+Leisure.Leisure;GB;By Arrangement;13
+Leisure.Leisure;GB;Long Leasehold (Vacant Possession);14
+Leisure.Leisure;GB;Feuhold (Vacant Possession);15
+Leisure.Leisure;GB;Lease Surrender;16
+Leisure.Leisure (Portfolio);GB;Assignment;1
+Leisure.Leisure (Portfolio);GB;Open Market Letting;2
+Leisure.Leisure (Portfolio);GB;Open Market Sub-Letting;3
+Leisure.Leisure (Portfolio);GB;Pre-Letting;4
+Leisure.Leisure (Portfolio);GB;Leasehold;5
+Leisure.Leisure (Portfolio);GB;Freehold (Vacant Possession);6
+Leisure.Leisure (Portfolio);GB;Freehold Sale;7
+Leisure.Leisure (Portfolio);GB;Feuhold Sale;8
+Leisure.Leisure (Portfolio);GB;Long Leasehold Sale;9
+Leisure.Leisure (Portfolio);GB;Lease Regear;10
+Leisure.Leisure (Portfolio);GB;Lease Renewal;11
+Leisure.Leisure (Portfolio);GB;Rent Review;12
+Leisure.Leisure (Portfolio);GB;By Arrangement;13
+Leisure.Leisure (Portfolio);GB;Long Leasehold (Vacant Possession);14
+Leisure.Leisure (Portfolio);GB;Feuhold (Vacant Possession);15
+Leisure.Leisure (Portfolio);GB;Lease Surrender;16
+Retail.Car Showroom;GB;Assignment;1
+Retail.Car Showroom;GB;Open Market Letting;2
+Retail.Car Showroom;GB;Open Market Sub-Letting;3
+Retail.Car Showroom;GB;Pre-Letting;4
+Retail.Car Showroom;GB;Leasehold;5
+Retail.Car Showroom;GB;Freehold (Vacant Possession);6
+Retail.Car Showroom;GB;Freehold Sale;7
+Retail.Car Showroom;GB;Feuhold Sale;8
+Retail.Car Showroom;GB;Long Leasehold Sale;9
+Retail.Car Showroom;GB;Lease Regear;10
+Retail.Car Showroom;GB;Lease Renewal;11
+Retail.Car Showroom;GB;Rent Review;12
+Retail.Car Showroom;GB;By Arrangement;13
+Retail.Car Showroom;GB;Long Leasehold (Vacant Possession);14
+Retail.Car Showroom;GB;Feuhold (Vacant Possession);15
+Retail.Car Showroom;GB;Lease Surrender;16
+Retail.Department/Variety Store;GB;Assignment;1
+Retail.Department/Variety Store;GB;Open Market Letting;2
+Retail.Department/Variety Store;GB;Open Market Sub-Letting;3
+Retail.Department/Variety Store;GB;Pre-Letting;4
+Retail.Department/Variety Store;GB;Leasehold;5
+Retail.Department/Variety Store;GB;Freehold (Vacant Possession);6
+Retail.Department/Variety Store;GB;Freehold Sale;7
+Retail.Department/Variety Store;GB;Feuhold Sale;8
+Retail.Department/Variety Store;GB;Long Leasehold Sale;9
+Retail.Department/Variety Store;GB;Lease Regear;10
+Retail.Department/Variety Store;GB;Lease Renewal;11
+Retail.Department/Variety Store;GB;Rent Review;12
+Retail.Department/Variety Store;GB;By Arrangement;13
+Retail.Department/Variety Store;GB;Long Leasehold (Vacant Possession);14
+Retail.Department/Variety Store;GB;Feuhold (Vacant Possession);15
+Retail.Department/Variety Store;GB;Lease Surrender;16
+Retail.Department Stores;GB;Assignment;1
+Retail.Department Stores;GB;Open Market Letting;2
+Retail.Department Stores;GB;Open Market Sub-Letting;3
+Retail.Department Stores;GB;Pre-Letting;4
+Retail.Department Stores;GB;Leasehold;5
+Retail.Department Stores;GB;Freehold (Vacant Possession);6
+Retail.Department Stores;GB;Freehold Sale;7
+Retail.Department Stores;GB;Feuhold Sale;8
+Retail.Department Stores;GB;Long Leasehold Sale;9
+Retail.Department Stores;GB;Lease Regear;10
+Retail.Department Stores;GB;Lease Renewal;11
+Retail.Department Stores;GB;Rent Review;12
+Retail.Department Stores;GB;By Arrangement;13
+Retail.Department Stores;GB;Long Leasehold (Vacant Possession);14
+Retail.Department Stores;GB;Feuhold (Vacant Possession);15
+Retail.Department Stores;GB;Lease Surrender;16
+Retail.Garden Centre;GB;Assignment;1
+Retail.Garden Centre;GB;Open Market Letting;2
+Retail.Garden Centre;GB;Open Market Sub-Letting;3
+Retail.Garden Centre;GB;Pre-Letting;4
+Retail.Garden Centre;GB;Leasehold;5
+Retail.Garden Centre;GB;Freehold (Vacant Possession);6
+Retail.Garden Centre;GB;Freehold Sale;7
+Retail.Garden Centre;GB;Feuhold Sale;8
+Retail.Garden Centre;GB;Long Leasehold Sale;9
+Retail.Garden Centre;GB;Lease Regear;10
+Retail.Garden Centre;GB;Lease Renewal;11
+Retail.Garden Centre;GB;Rent Review;12
+Retail.Garden Centre;GB;By Arrangement;13
+Retail.Garden Centre;GB;Long Leasehold (Vacant Possession);14
+Retail.Garden Centre;GB;Feuhold (Vacant Possession);15
+Retail.Garden Centre;GB;Lease Surrender;16
+Retail.Retail;GB;Assignment;1
+Retail.Retail;GB;Open Market Letting;2
+Retail.Retail;GB;Open Market Sub-Letting;3
+Retail.Retail;GB;Pre-Letting;4
+Retail.Retail;GB;Leasehold;5
+Retail.Retail;GB;Freehold (Vacant Possession);6
+Retail.Retail;GB;Freehold Sale;7
+Retail.Retail;GB;Feuhold Sale;8
+Retail.Retail;GB;Long Leasehold Sale;9
+Retail.Retail;GB;Lease Regear;10
+Retail.Retail;GB;Lease Renewal;11
+Retail.Retail;GB;Rent Review;12
+Retail.Retail;GB;By Arrangement;13
+Retail.Retail;GB;Long Leasehold (Vacant Possession);14
+Retail.Retail;GB;Feuhold (Vacant Possession);15
+Retail.Retail;GB;Lease Surrender;16
+Retail.Retail (Portfolio);GB;Assignment;1
+Retail.Retail (Portfolio);GB;Open Market Letting;2
+Retail.Retail (Portfolio);GB;Open Market Sub-Letting;3
+Retail.Retail (Portfolio);GB;Pre-Letting;4
+Retail.Retail (Portfolio);GB;Leasehold;5
+Retail.Retail (Portfolio);GB;Freehold (Vacant Possession);6
+Retail.Retail (Portfolio);GB;Freehold Sale;7
+Retail.Retail (Portfolio);GB;Feuhold Sale;8
+Retail.Retail (Portfolio);GB;Long Leasehold Sale;9
+Retail.Retail (Portfolio);GB;Lease Regear;10
+Retail.Retail (Portfolio);GB;Lease Renewal;11
+Retail.Retail (Portfolio);GB;Rent Review;12
+Retail.Retail (Portfolio);GB;By Arrangement;13
+Retail.Retail (Portfolio);GB;Long Leasehold (Vacant Possession);14
+Retail.Retail (Portfolio);GB;Feuhold (Vacant Possession);15
+Retail.Retail (Portfolio);GB;Lease Surrender;16
+Retail.Shopping Centre;GB;Assignment;1
+Retail.Shopping Centre;GB;Open Market Letting;2
+Retail.Shopping Centre;GB;Open Market Sub-Letting;3
+Retail.Shopping Centre;GB;Pre-Letting;4
+Retail.Shopping Centre;GB;Leasehold;5
+Retail.Shopping Centre;GB;Freehold (Vacant Possession);6
+Retail.Shopping Centre;GB;Freehold Sale;7
+Retail.Shopping Centre;GB;Feuhold Sale;8
+Retail.Shopping Centre;GB;Long Leasehold Sale;9
+Retail.Shopping Centre;GB;Lease Regear;10
+Retail.Shopping Centre;GB;Lease Renewal;11
+Retail.Shopping Centre;GB;Rent Review;12
+Retail.Shopping Centre;GB;By Arrangement;13
+Retail.Shopping Centre;GB;Long Leasehold (Vacant Possession);14
+Retail.Shopping Centre;GB;Feuhold (Vacant Possession);15
+Retail.Shopping Centre;GB;Lease Surrender;16
+Retail.Shopping Centre (Portfolio);GB;Assignment;1
+Retail.Shopping Centre (Portfolio);GB;Open Market Letting;2
+Retail.Shopping Centre (Portfolio);GB;Open Market Sub-Letting;3
+Retail.Shopping Centre (Portfolio);GB;Pre-Letting;4
+Retail.Shopping Centre (Portfolio);GB;Leasehold;5
+Retail.Shopping Centre (Portfolio);GB;Freehold (Vacant Possession);6
+Retail.Shopping Centre (Portfolio);GB;Freehold Sale;7
+Retail.Shopping Centre (Portfolio);GB;Feuhold Sale;8
+Retail.Shopping Centre (Portfolio);GB;Long Leasehold Sale;9
+Retail.Shopping Centre (Portfolio);GB;Lease Regear;10
+Retail.Shopping Centre (Portfolio);GB;Lease Renewal;11
+Retail.Shopping Centre (Portfolio);GB;Rent Review;12
+Retail.Shopping Centre (Portfolio);GB;By Arrangement;13
+Retail.Shopping Centre (Portfolio);GB;Long Leasehold (Vacant Possession);14
+Retail.Shopping Centre (Portfolio);GB;Feuhold (Vacant Possession);15
+Retail.Shopping Centre (Portfolio);GB;Lease Surrender;16
+Retail.Retail Unit A1;GB;Assignment;1
+Retail.Retail Unit A1;GB;Open Market Letting;2
+Retail.Retail Unit A1;GB;Open Market Sub-Letting;3
+Retail.Retail Unit A1;GB;Pre-Letting;4
+Retail.Retail Unit A1;GB;Leasehold;5
+Retail.Retail Unit A1;GB;Freehold (Vacant Possession);6
+Retail.Retail Unit A1;GB;Freehold Sale;7
+Retail.Retail Unit A1;GB;Feuhold Sale;8
+Retail.Retail Unit A1;GB;Long Leasehold Sale;9
+Retail.Retail Unit A1;GB;Lease Regear;10
+Retail.Retail Unit A1;GB;Lease Renewal;11
+Retail.Retail Unit A1;GB;Rent Review;12
+Retail.Retail Unit A1;GB;By Arrangement;13
+Retail.Retail Unit A1;GB;Long Leasehold (Vacant Possession);14
+Retail.Retail Unit A1;GB;Feuhold (Vacant Possession);15
+Retail.Retail Unit A1;GB;Lease Surrender;16
+Retail.Retail Unit A2;GB;Assignment;1
+Retail.Retail Unit A2;GB;Open Market Letting;2
+Retail.Retail Unit A2;GB;Open Market Sub-Letting;3
+Retail.Retail Unit A2;GB;Pre-Letting;4
+Retail.Retail Unit A2;GB;Leasehold;5
+Retail.Retail Unit A2;GB;Freehold (Vacant Possession);6
+Retail.Retail Unit A2;GB;Freehold Sale;7
+Retail.Retail Unit A2;GB;Feuhold Sale;8
+Retail.Retail Unit A2;GB;Long Leasehold Sale;9
+Retail.Retail Unit A2;GB;Lease Regear;10
+Retail.Retail Unit A2;GB;Lease Renewal;11
+Retail.Retail Unit A2;GB;Rent Review;12
+Retail.Retail Unit A2;GB;By Arrangement;13
+Retail.Retail Unit A2;GB;Long Leasehold (Vacant Possession);14
+Retail.Retail Unit A2;GB;Feuhold (Vacant Possession);15
+Retail.Retail Unit A2;GB;Lease Surrender;16
+Retail.Retail Unit A3;GB;Assignment;1
+Retail.Retail Unit A3;GB;Open Market Letting;2
+Retail.Retail Unit A3;GB;Open Market Sub-Letting;3
+Retail.Retail Unit A3;GB;Pre-Letting;4
+Retail.Retail Unit A3;GB;Leasehold;5
+Retail.Retail Unit A3;GB;Freehold (Vacant Possession);6
+Retail.Retail Unit A3;GB;Freehold Sale;7
+Retail.Retail Unit A3;GB;Feuhold Sale;8
+Retail.Retail Unit A3;GB;Long Leasehold Sale;9
+Retail.Retail Unit A3;GB;Lease Regear;10
+Retail.Retail Unit A3;GB;Lease Renewal;11
+Retail.Retail Unit A3;GB;Rent Review;12
+Retail.Retail Unit A3;GB;By Arrangement;13
+Retail.Retail Unit A3;GB;Long Leasehold (Vacant Possession);14
+Retail.Retail Unit A3;GB;Feuhold (Vacant Possession);15
+Retail.Retail Unit A3;GB;Lease Surrender;16
+Retail.Retail Unit A4;GB;Assignment;1
+Retail.Retail Unit A4;GB;Open Market Letting;2
+Retail.Retail Unit A4;GB;Open Market Sub-Letting;3
+Retail.Retail Unit A4;GB;Pre-Letting;4
+Retail.Retail Unit A4;GB;Leasehold;5
+Retail.Retail Unit A4;GB;Freehold (Vacant Possession);6
+Retail.Retail Unit A4;GB;Freehold Sale;7
+Retail.Retail Unit A4;GB;Feuhold Sale;8
+Retail.Retail Unit A4;GB;Long Leasehold Sale;9
+Retail.Retail Unit A4;GB;Lease Regear;10
+Retail.Retail Unit A4;GB;Lease Renewal;11
+Retail.Retail Unit A4;GB;Rent Review;12
+Retail.Retail Unit A4;GB;By Arrangement;13
+Retail.Retail Unit A4;GB;Long Leasehold (Vacant Possession);14
+Retail.Retail Unit A4;GB;Feuhold (Vacant Possession);15
+Retail.Retail Unit A4;GB;Lease Surrender;16
+Retail.Retail Unit A5;GB;Assignment;1
+Retail.Retail Unit A5;GB;Open Market Letting;2
+Retail.Retail Unit A5;GB;Open Market Sub-Letting;3
+Retail.Retail Unit A5;GB;Pre-Letting;4
+Retail.Retail Unit A5;GB;Leasehold;5
+Retail.Retail Unit A5;GB;Freehold (Vacant Possession);6
+Retail.Retail Unit A5;GB;Freehold Sale;7
+Retail.Retail Unit A5;GB;Feuhold Sale;8
+Retail.Retail Unit A5;GB;Long Leasehold Sale;9
+Retail.Retail Unit A5;GB;Lease Regear;10
+Retail.Retail Unit A5;GB;Lease Renewal;11
+Retail.Retail Unit A5;GB;Rent Review;12
+Retail.Retail Unit A5;GB;By Arrangement;13
+Retail.Retail Unit A5;GB;Long Leasehold (Vacant Possession);14
+Retail.Retail Unit A5;GB;Feuhold (Vacant Possession);15
+Retail.Retail Unit A5;GB;Lease Surrender;16
+Retail.Retail Wharehouse (Portfolio);GB;Assignment;1
+Retail.Retail Wharehouse (Portfolio);GB;Open Market Letting;2
+Retail.Retail Wharehouse (Portfolio);GB;Open Market Sub-Letting;3
+Retail.Retail Wharehouse (Portfolio);GB;Pre-Letting;4
+Retail.Retail Wharehouse (Portfolio);GB;Leasehold;5
+Retail.Retail Wharehouse (Portfolio);GB;Freehold (Vacant Possession);6
+Retail.Retail Wharehouse (Portfolio);GB;Freehold Sale;7
+Retail.Retail Wharehouse (Portfolio);GB;Feuhold Sale;8
+Retail.Retail Wharehouse (Portfolio);GB;Long Leasehold Sale;9
+Retail.Retail Wharehouse (Portfolio);GB;Lease Regear;10
+Retail.Retail Wharehouse (Portfolio);GB;Lease Renewal;11
+Retail.Retail Wharehouse (Portfolio);GB;Rent Review;12
+Retail.Retail Wharehouse (Portfolio);GB;By Arrangement;13
+Retail.Retail Wharehouse (Portfolio);GB;Long Leasehold (Vacant Possession);14
+Retail.Retail Wharehouse (Portfolio);GB;Feuhold (Vacant Possession);15
+Retail.Retail Wharehouse (Portfolio);GB;Lease Surrender;16
+Retail.Retail Wh (Bulky Parks);GB;Assignment;1
+Retail.Retail Wh (Bulky Parks);GB;Open Market Letting;2
+Retail.Retail Wh (Bulky Parks);GB;Open Market Sub-Letting;3
+Retail.Retail Wh (Bulky Parks);GB;Pre-Letting;4
+Retail.Retail Wh (Bulky Parks);GB;Leasehold;5
+Retail.Retail Wh (Bulky Parks);GB;Freehold (Vacant Possession);6
+Retail.Retail Wh (Bulky Parks);GB;Freehold Sale;7
+Retail.Retail Wh (Bulky Parks);GB;Feuhold Sale;8
+Retail.Retail Wh (Bulky Parks);GB;Long Leasehold Sale;9
+Retail.Retail Wh (Bulky Parks);GB;Lease Regear;10
+Retail.Retail Wh (Bulky Parks);GB;Lease Renewal;11
+Retail.Retail Wh (Bulky Parks);GB;Rent Review;12
+Retail.Retail Wh (Bulky Parks);GB;By Arrangement;13
+Retail.Retail Wh (Bulky Parks);GB;Long Leasehold (Vacant Possession);14
+Retail.Retail Wh (Bulky Parks);GB;Feuhold (Vacant Possession);15
+Retail.Retail Wh (Bulky Parks);GB;Lease Surrender;16
+Retail.Retail Wh (Bulky Solus);GB;Assignment;1
+Retail.Retail Wh (Bulky Solus);GB;Open Market Letting;2
+Retail.Retail Wh (Bulky Solus);GB;Open Market Sub-Letting;3
+Retail.Retail Wh (Bulky Solus);GB;Pre-Letting;4
+Retail.Retail Wh (Bulky Solus);GB;Leasehold;5
+Retail.Retail Wh (Bulky Solus);GB;Freehold (Vacant Possession);6
+Retail.Retail Wh (Bulky Solus);GB;Freehold Sale;7
+Retail.Retail Wh (Bulky Solus);GB;Feuhold Sale;8
+Retail.Retail Wh (Bulky Solus);GB;Long Leasehold Sale;9
+Retail.Retail Wh (Bulky Solus);GB;Lease Regear;10
+Retail.Retail Wh (Bulky Solus);GB;Lease Renewal;11
+Retail.Retail Wh (Bulky Solus);GB;Rent Review;12
+Retail.Retail Wh (Bulky Solus);GB;By Arrangement;13
+Retail.Retail Wh (Bulky Solus);GB;Long Leasehold (Vacant Possession);14
+Retail.Retail Wh (Bulky Solus);GB;Feuhold (Vacant Possession);15
+Retail.Retail Wh (Bulky Solus);GB;Lease Surrender;16
+Retail.Retail Wh (Open A1 Solus);GB;Assignment;1
+Retail.Retail Wh (Open A1 Solus);GB;Open Market Letting;2
+Retail.Retail Wh (Open A1 Solus);GB;Open Market Sub-Letting;3
+Retail.Retail Wh (Open A1 Solus);GB;Pre-Letting;4
+Retail.Retail Wh (Open A1 Solus);GB;Leasehold;5
+Retail.Retail Wh (Open A1 Solus);GB;Freehold (Vacant Possession);6
+Retail.Retail Wh (Open A1 Solus);GB;Freehold Sale;7
+Retail.Retail Wh (Open A1 Solus);GB;Feuhold Sale;8
+Retail.Retail Wh (Open A1 Solus);GB;Long Leasehold Sale;9
+Retail.Retail Wh (Open A1 Solus);GB;Lease Regear;10
+Retail.Retail Wh (Open A1 Solus);GB;Lease Renewal;11
+Retail.Retail Wh (Open A1 Solus);GB;Rent Review;12
+Retail.Retail Wh (Open A1 Solus);GB;By Arrangement;13
+Retail.Retail Wh (Open A1 Solus);GB;Long Leasehold (Vacant Possession);14
+Retail.Retail Wh (Open A1 Solus);GB;Feuhold (Vacant Possession);15
+Retail.Retail Wh (Open A1 Solus);GB;Lease Surrender;16
+Retail.Supermarket;GB;Assignment;1
+Retail.Supermarket;GB;Open Market Letting;2
+Retail.Supermarket;GB;Open Market Sub-Letting;3
+Retail.Supermarket;GB;Pre-Letting;4
+Retail.Supermarket;GB;Leasehold;5
+Retail.Supermarket;GB;Freehold (Vacant Possession);6
+Retail.Supermarket;GB;Freehold Sale;7
+Retail.Supermarket;GB;Feuhold Sale;8
+Retail.Supermarket;GB;Long Leasehold Sale;9
+Retail.Supermarket;GB;Lease Regear;10
+Retail.Supermarket;GB;Lease Renewal;11
+Retail.Supermarket;GB;Rent Review;12
+Retail.Supermarket;GB;By Arrangement;13
+Retail.Supermarket;GB;Long Leasehold (Vacant Possession);14
+Retail.Supermarket;GB;Feuhold (Vacant Possession);15
+Retail.Supermarket;GB;Lease Surrender;16
+Industrial.Industrial Estate;GB;Assignment;1
+Industrial.Industrial Estate;GB;Open Market Letting;2
+Industrial.Industrial Estate;GB;Open Market Sub-Letting;3
+Industrial.Industrial Estate;GB;Pre-Letting;4
+Industrial.Industrial Estate;GB;Leasehold;5
+Industrial.Industrial Estate;GB;Freehold (Vacant Possession);6
+Industrial.Industrial Estate;GB;Freehold Sale;7
+Industrial.Industrial Estate;GB;Feuhold Sale;8
+Industrial.Industrial Estate;GB;Long Leasehold Sale;9
+Industrial.Industrial Estate;GB;Lease Regear;10
+Industrial.Industrial Estate;GB;Lease Renewal;11
+Industrial.Industrial Estate;GB;Rent Review;12
+Industrial.Industrial Estate;GB;By Arrangement;13
+Industrial.Industrial Estate;GB;Long Leasehold (Vacant Possession);14
+Industrial.Industrial Estate;GB;Feuhold (Vacant Possession);15
+Industrial.Industrial Estate;GB;Lease Surrender;16
+Industrial.Industrial Distribution;GB;Assignment;1
+Industrial.Industrial Distribution;GB;Open Market Letting;2
+Industrial.Industrial Distribution;GB;Open Market Sub-Letting;3
+Industrial.Industrial Distribution;GB;Pre-Letting;4
+Industrial.Industrial Distribution;GB;Leasehold;5
+Industrial.Industrial Distribution;GB;Freehold (Vacant Possession);6
+Industrial.Industrial Distribution;GB;Freehold Sale;7
+Industrial.Industrial Distribution;GB;Feuhold Sale;8
+Industrial.Industrial Distribution;GB;Long Leasehold Sale;9
+Industrial.Industrial Distribution;GB;Lease Regear;10
+Industrial.Industrial Distribution;GB;Lease Renewal;11
+Industrial.Industrial Distribution;GB;Rent Review;12
+Industrial.Industrial Distribution;GB;By Arrangement;13
+Industrial.Industrial Distribution;GB;Long Leasehold (Vacant Possession);14
+Industrial.Industrial Distribution;GB;Feuhold (Vacant Possession);15
+Industrial.Industrial Distribution;GB;Lease Surrender;16
+Industrial.Industrial (Portfolio);GB;Assignment;1
+Industrial.Industrial (Portfolio);GB;Open Market Letting;2
+Industrial.Industrial (Portfolio);GB;Open Market Sub-Letting;3
+Industrial.Industrial (Portfolio);GB;Pre-Letting;4
+Industrial.Industrial (Portfolio);GB;Leasehold;5
+Industrial.Industrial (Portfolio);GB;Freehold (Vacant Possession);6
+Industrial.Industrial (Portfolio);GB;Freehold Sale;7
+Industrial.Industrial (Portfolio);GB;Feuhold Sale;8
+Industrial.Industrial (Portfolio);GB;Long Leasehold Sale;9
+Industrial.Industrial (Portfolio);GB;Lease Regear;10
+Industrial.Industrial (Portfolio);GB;Lease Renewal;11
+Industrial.Industrial (Portfolio);GB;Rent Review;12
+Industrial.Industrial (Portfolio);GB;By Arrangement;13
+Industrial.Industrial (Portfolio);GB;Long Leasehold (Vacant Possession);14
+Industrial.Industrial (Portfolio);GB;Feuhold (Vacant Possession);15
+Industrial.Industrial (Portfolio);GB;Lease Surrender;16
+Industrial.Trade park;GB;Assignment;1
+Industrial.Trade park;GB;Open Market Letting;2
+Industrial.Trade park;GB;Open Market Sub-Letting;3
+Industrial.Trade park;GB;Pre-Letting;4
+Industrial.Trade park;GB;Leasehold;5
+Industrial.Trade park;GB;Freehold (Vacant Possession);6
+Industrial.Trade park;GB;Freehold Sale;7
+Industrial.Trade park;GB;Feuhold Sale;8
+Industrial.Trade park;GB;Long Leasehold Sale;9
+Industrial.Trade park;GB;Lease Regear;10
+Industrial.Trade park;GB;Lease Renewal;11
+Industrial.Trade park;GB;Rent Review;12
+Industrial.Trade park;GB;By Arrangement;13
+Industrial.Trade park;GB;Long Leasehold (Vacant Possession);14
+Industrial.Trade park;GB;Feuhold (Vacant Possession);15
+Industrial.Trade park;GB;Lease Surrender;16
+Other.Agricultural;GB;Assignment;1
+Other.Agricultural;GB;Open Market Letting;2
+Other.Agricultural;GB;Open Market Sub-Letting;3
+Other.Agricultural;GB;Pre-Letting;4
+Other.Agricultural;GB;Leasehold;5
+Other.Agricultural;GB;Freehold (Vacant Possession);6
+Other.Agricultural;GB;Freehold Sale;7
+Other.Agricultural;GB;Feuhold Sale;8
+Other.Agricultural;GB;Long Leasehold Sale;9
+Other.Agricultural;GB;Lease Regear;10
+Other.Agricultural;GB;Lease Renewal;11
+Other.Agricultural;GB;Rent Review;12
+Other.Agricultural;GB;By Arrangement;13
+Other.Agricultural;GB;Long Leasehold (Vacant Possession);14
+Other.Agricultural;GB;Feuhold (Vacant Possession);15
+Other.Agricultural;GB;Lease Surrender;16
+Other.Car Park;GB;Assignment;1
+Other.Car Park;GB;Open Market Letting;2
+Other.Car Park;GB;Open Market Sub-Letting;3
+Other.Car Park;GB;Pre-Letting;4
+Other.Car Park;GB;Leasehold;5
+Other.Car Park;GB;Freehold (Vacant Possession);6
+Other.Car Park;GB;Freehold Sale;7
+Other.Car Park;GB;Feuhold Sale;8
+Other.Car Park;GB;Long Leasehold Sale;9
+Other.Car Park;GB;Lease Regear;10
+Other.Car Park;GB;Lease Renewal;11
+Other.Car Park;GB;Rent Review;12
+Other.Car Park;GB;By Arrangement;13
+Other.Car Park;GB;Long Leasehold (Vacant Possession);14
+Other.Car Park;GB;Feuhold (Vacant Possession);15
+Other.Car Park;GB;Lease Surrender;16
+Other.Institutional;GB;Assignment;1
+Other.Institutional;GB;Open Market Letting;2
+Other.Institutional;GB;Open Market Sub-Letting;3
+Other.Institutional;GB;Pre-Letting;4
+Other.Institutional;GB;Leasehold;5
+Other.Institutional;GB;Freehold (Vacant Possession);6
+Other.Institutional;GB;Freehold Sale;7
+Other.Institutional;GB;Feuhold Sale;8
+Other.Institutional;GB;Long Leasehold Sale;9
+Other.Institutional;GB;Lease Regear;10
+Other.Institutional;GB;Lease Renewal;11
+Other.Institutional;GB;Rent Review;12
+Other.Institutional;GB;By Arrangement;13
+Other.Institutional;GB;Long Leasehold (Vacant Possession);14
+Other.Institutional;GB;Feuhold (Vacant Possession);15
+Other.Institutional;GB;Lease Surrender;16
+Other.Institutional (Portfolio);GB;Assignment;1
+Other.Institutional (Portfolio);GB;Open Market Letting;2
+Other.Institutional (Portfolio);GB;Open Market Sub-Letting;3
+Other.Institutional (Portfolio);GB;Pre-Letting;4
+Other.Institutional (Portfolio);GB;Leasehold;5
+Other.Institutional (Portfolio);GB;Freehold (Vacant Possession);6
+Other.Institutional (Portfolio);GB;Freehold Sale;7
+Other.Institutional (Portfolio);GB;Feuhold Sale;8
+Other.Institutional (Portfolio);GB;Long Leasehold Sale;9
+Other.Institutional (Portfolio);GB;Lease Regear;10
+Other.Institutional (Portfolio);GB;Lease Renewal;11
+Other.Institutional (Portfolio);GB;Rent Review;12
+Other.Institutional (Portfolio);GB;By Arrangement;13
+Other.Institutional (Portfolio);GB;Long Leasehold (Vacant Possession);14
+Other.Institutional (Portfolio);GB;Feuhold (Vacant Possession);15
+Other.Institutional (Portfolio);GB;Lease Surrender;16
+Other.Land/Site/Dev;GB;Assignment;1
+Other.Land/Site/Dev;GB;Open Market Letting;2
+Other.Land/Site/Dev;GB;Open Market Sub-Letting;3
+Other.Land/Site/Dev;GB;Pre-Letting;4
+Other.Land/Site/Dev;GB;Leasehold;5
+Other.Land/Site/Dev;GB;Freehold (Vacant Possession);6
+Other.Land/Site/Dev;GB;Freehold Sale;7
+Other.Land/Site/Dev;GB;Feuhold Sale;8
+Other.Land/Site/Dev;GB;Long Leasehold Sale;9
+Other.Land/Site/Dev;GB;Lease Regear;10
+Other.Land/Site/Dev;GB;Lease Renewal;11
+Other.Land/Site/Dev;GB;Rent Review;12
+Other.Land/Site/Dev;GB;By Arrangement;13
+Other.Land/Site/Dev;GB;Long Leasehold (Vacant Possession);14
+Other.Land/Site/Dev;GB;Feuhold (Vacant Possession);15
+Other.Land/Site/Dev;GB;Lease Surrender;16
+Other.Mixed (Portfolio);GB;Assignment;1
+Other.Mixed (Portfolio);GB;Open Market Letting;2
+Other.Mixed (Portfolio);GB;Open Market Sub-Letting;3
+Other.Mixed (Portfolio);GB;Pre-Letting;4
+Other.Mixed (Portfolio);GB;Leasehold;5
+Other.Mixed (Portfolio);GB;Freehold (Vacant Possession);6
+Other.Mixed (Portfolio);GB;Freehold Sale;7
+Other.Mixed (Portfolio);GB;Feuhold Sale;8
+Other.Mixed (Portfolio);GB;Long Leasehold Sale;9
+Other.Mixed (Portfolio);GB;Lease Regear;10
+Other.Mixed (Portfolio);GB;Lease Renewal;11
+Other.Mixed (Portfolio);GB;Rent Review;12
+Other.Mixed (Portfolio);GB;By Arrangement;13
+Other.Mixed (Portfolio);GB;Long Leasehold (Vacant Possession);14
+Other.Mixed (Portfolio);GB;Feuhold (Vacant Possession);15
+Other.Mixed (Portfolio);GB;Lease Surrender;16
+Other.Mixed Use;GB;Assignment;1
+Other.Mixed Use;GB;Open Market Letting;2
+Other.Mixed Use;GB;Open Market Sub-Letting;3
+Other.Mixed Use;GB;Pre-Letting;4
+Other.Mixed Use;GB;Leasehold;5
+Other.Mixed Use;GB;Freehold (Vacant Possession);6
+Other.Mixed Use;GB;Freehold Sale;7
+Other.Mixed Use;GB;Feuhold Sale;8
+Other.Mixed Use;GB;Long Leasehold Sale;9
+Other.Mixed Use;GB;Lease Regear;10
+Other.Mixed Use;GB;Lease Renewal;11
+Other.Mixed Use;GB;Rent Review;12
+Other.Mixed Use;GB;By Arrangement;13
+Other.Mixed Use;GB;Long Leasehold (Vacant Possession);14
+Other.Mixed Use;GB;Feuhold (Vacant Possession);15
+Other.Mixed Use;GB;Lease Surrender;16
+Other.Other;GB;Assignment;1
+Other.Other;GB;Open Market Letting;2
+Other.Other;GB;Open Market Sub-Letting;3
+Other.Other;GB;Pre-Letting;4
+Other.Other;GB;Leasehold;5
+Other.Other;GB;Freehold (Vacant Possession);6
+Other.Other;GB;Freehold Sale;7
+Other.Other;GB;Feuhold Sale;8
+Other.Other;GB;Long Leasehold Sale;9
+Other.Other;GB;Lease Regear;10
+Other.Other;GB;Lease Renewal;11
+Other.Other;GB;Rent Review;12
+Other.Other;GB;By Arrangement;13
+Other.Other;GB;Long Leasehold (Vacant Possession);14
+Other.Other;GB;Feuhold (Vacant Possession);15
+Other.Other;GB;Lease Surrender;16
+Other.Student Accomodatio;GB;Assignment;1
+Other.Student Accomodatio;GB;Open Market Letting;2
+Other.Student Accomodatio;GB;Open Market Sub-Letting;3
+Other.Student Accomodatio;GB;Pre-Letting;4
+Other.Student Accomodatio;GB;Leasehold;5
+Other.Student Accomodatio;GB;Freehold (Vacant Possession);6
+Other.Student Accomodatio;GB;Freehold Sale;7
+Other.Student Accomodatio;GB;Feuhold Sale;8
+Other.Student Accomodatio;GB;Long Leasehold Sale;9
+Other.Student Accomodatio;GB;Lease Regear;10
+Other.Student Accomodatio;GB;Lease Renewal;11
+Other.Student Accomodatio;GB;Rent Review;12
+Other.Student Accomodatio;GB;By Arrangement;13
+Other.Student Accomodatio;GB;Long Leasehold (Vacant Possession);14
+Other.Student Accomodatio;GB;Feuhold (Vacant Possession);15
+Other.Student Accomodatio;GB;Lease Surrender;16

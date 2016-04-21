@@ -26,5 +26,5 @@
 :r .\SQL\CharacteristicGroupLocalised.sql
 :r .\SQL\CharacteristicGroupUsageItems.sql
 :r .\SQL\Contact.sql
-
 :r .\SQL\ActivityType.sql
+:r .\SQL\ActivityTypeDefinition.sql

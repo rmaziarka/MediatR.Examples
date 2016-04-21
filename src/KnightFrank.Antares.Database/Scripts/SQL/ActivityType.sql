@@ -3,7 +3,7 @@
 );
 
 BULK INSERT #TempActivityType
-    FROM '$(OutputPath)\Scripts\Data\Configuration\ActivityType.csv'
+    FROM '$(OutputPath)\Scripts\Data\Configuration\activitytype.csv'
                WITH
     (
 		FIRSTROW = 2,
