@@ -1,10 +1,10 @@
 ﻿/// <reference path="../../../../typings/_all.d.ts" />
 
-module Antares.Chracteristic {
+module Antares.Characteristic {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
 
-    export class ChracteristicListController {
+    export class CharacteristicListController {
         private componentId: string;
         private propertyResource: Common.Models.Resources.IPropertyResourceClass;
         private property: Business.Property;
@@ -34,5 +34,5 @@ module Antares.Chracteristic {
         }
     }
 
-    angular.module('app').controller('ChracteristicListController', ChracteristicListController);
+    angular.module('app').controller('CharacteristicListController', CharacteristicListController);
 };
