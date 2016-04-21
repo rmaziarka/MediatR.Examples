@@ -2,7 +2,7 @@
     interface ICharacteristic {
         id: string;
         code: string;
-        displayText: boolean;
-        enabled: boolean;
+        isDisplayText: boolean;
+        isEnabled: boolean;
     }
 }

@@ -4,7 +4,8 @@ module Antares.Common.Component {
     import Business = Common.Models.Business;
 
     export class CharacteristicSelectController {
-        public characteristic:Business.Characteristic = null;
+        public characteristic: Business.Characteristic;
+        public characteristicSelect: Business.CharacteristicSelect;
     }
 
     angular.module('app').controller('CharacteristicSelectController', CharacteristicSelectController);

@@ -6,7 +6,8 @@ module Antares.Common.Component {
         controllerAs: 'vm',
         controller: 'CharacteristicSelectController',
         bindings: {
-            characteristic: '<'
+            characteristic: '<',
+            characteristicSelect: '='
         }
     });
 }

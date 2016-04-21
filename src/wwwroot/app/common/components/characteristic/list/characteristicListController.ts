@@ -6,7 +6,7 @@ module Antares.Characteristic {
 
     export class CharacteristicListController {
         private componentId: string;
-        private propertyResource: Common.Models.Resources.IPropertyResourceClass;
+        private characteristicGroupUsageResource: Common.Models.Resources.ICharacteristicGroupUsageResourceClass;
         private property: Business.Property;
         private characteristicGroups: Business.CharacteristicGroup[];
 
@@ -16,15 +16,15 @@ module Antares.Characteristic {
 
             componentRegistry.register(this, this.componentId);
 
-            this.propertyResource = dataAccessService.getPropertyResource();
-            this.loadChracteristics();
+            this.characteristicGroupUsageResource = dataAccessService.getCharacteristicGroupUsageResource();
+            this.loadCharacteristics();
         }
 
-        loadChracteristics = () => {
+        loadCharacteristics = () => {
             if (this.property.propertyTypeId && this.property.address.countryId) {
-                this.propertyResource
+                this.characteristicGroupUsageResource
                         //this.property.country.code
-                    .getCharacteristics({ countryCode: 'GB', propertyTypeId: this.property.propertyTypeId })
+                    .query({ countryCode: 'GB', propertyTypeId: this.property.propertyTypeId })
                     .$promise
                     .then((characteristicGroupUsages: any) => {
                         this.characteristicGroups = characteristicGroupUsages.map(

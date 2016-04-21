@@ -3,9 +3,9 @@
         id: string;
         propertyTypeId: string;
         countryId: string;
-        characteristicGroup: ICharacteristicGroup;
-        chracteristicGroupItems: ICharacteristicGroupItem[];
+        characteristicGroupId: string;
+        characteristicGroupItems: ICharacteristicGroupItem[];
         order: number;
-        displayLabel: boolean;
+        isDisplayLabel: boolean;
     }
 }

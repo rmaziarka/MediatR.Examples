@@ -2,13 +2,12 @@
 
 module Antares.Characteristic {
     angular.module('app').component('characteristicList', {
-        templateUrl: 'app/common/components/chracteristic/list/characteristicList.html',
+        templateUrl: 'app/common/components/characteristic/list/characteristicList.html',
         controllerAs : 'clvm',
-        controller: 'characteristicListController',
+        controller: 'CharacteristicListController',
         bindings: {
             componentId: '<',
-            property: '=',
-            mode: '@'
+            property: '='
         }
     });
 }

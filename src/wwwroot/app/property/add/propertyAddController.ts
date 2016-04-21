@@ -14,8 +14,8 @@ module Antares.Property {
         private divisions: EnumTypeItem[];
         private attributes: Dto.IAttribute[];
         public userData: Dto.IUserData;
-        public characteristic: Business.CharacteristicSelect = new Business.CharacteristicSelect();
-        
+        public characteristicSelect: Business.CharacteristicSelect = new Business.CharacteristicSelect();
+
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
@@ -23,10 +23,9 @@ module Antares.Property {
             private $state: ng.ui.IStateService) {
 
             super(componentRegistry, $scope);
-            
-            this.characteristic.id = '3e84bbde-a807-e611-826f-8cdcd42e5436';
-            this.characteristic.text = 'kod';
-            this.characteristic.isDisplayText = true;
+
+            this.characteristicSelect.characteristicId = '3e84bbde-a807-e611-826f-8cdcd42e5436';
+            this.characteristicSelect.text = 'kod';
 
             this.property.division.code = this.userData.division.code;
             this.property.divisionId = this.userData.division.id;
@@ -51,6 +50,11 @@ module Antares.Property {
             });
         };
 
+        changePropertyType = () => {
+            this.loadAttributes();
+            this.loadCharacteristics();
+        };
+
         loadPropertyTypes = () => {
             this.propertyResource
                 .getPropertyTypes({
@@ -66,6 +70,10 @@ module Antares.Property {
             this.components.attributeList().loadAttributes();
         }
 
+        loadCharacteristics = () => {
+            this.components.characteristicList().loadCharacteristics();
+        }
+
         public save() {
             this.components.attributeList().clearHiddenAttributesFromProperty();
 
@@ -79,13 +87,15 @@ module Antares.Property {
 
         defineComponentIds() {
             this.componentIds = {
-                attributeListId: 'editProperty:attributeListComponent'
+                attributeListId: 'editProperty:attributeListComponent',
+                characteristicListId: 'addProperty:characteristicListComponent'
             };
         }
 
         defineComponents() {
             this.components = {
-                attributeList: () => { return this.componentRegistry.get(this.componentIds.attributeListId); }
+                attributeList: () => { return this.componentRegistry.get(this.componentIds.attributeListId); },
+                characteristicList: () => { return this.componentRegistry.get(this.componentIds.characteristicListId); }
             };
         }
     }
