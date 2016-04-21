@@ -407,6 +407,82 @@
         </DebugSampler>
         <hashTree/>
       </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Note on requirement" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1461159861000</longProp>
+        <longProp name="ThreadGroup.end_time">1461159861000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Open page" enabled="true">
+          <collectionProp name="ModuleController.node_path">
+            <stringProp name="-1227702913">WorkBench</stringProp>
+            <stringProp name="1119890476">KFDDP test plan</stringProp>
+            <stringProp name="170071582">Test Fragment</stringProp>
+            <stringProp name="-802968955">Open page</stringProp>
+          </collectionProp>
+        </ModuleController>
+        <hashTree/>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Note on requirement" enabled="true"/>
+        <hashTree>
+          <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="EnumType and country" enabled="true">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="entityType" elementType="Argument">
+                <stringProp name="Argument.name">entityType</stringProp>
+                <stringProp name="Argument.value">Requirement</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="countryCode" elementType="Argument">
+                <stringProp name="Argument.name">countryCode</stringProp>
+                <stringProp name="Argument.value">GB</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </Arguments>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Create requirement" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="2031256611">Requirement</stringProp>
+              <stringProp name="2031256611">Requirement</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Add note to requirement" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="1936043501">Add note to requirement</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="View note from requirement" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="-1455081624">View requirement</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+        </hashTree>
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="false">
+          <boolProp name="displayJMeterProperties">false</boolProp>
+          <boolProp name="displayJMeterVariables">true</boolProp>
+          <boolProp name="displaySystemProperties">false</boolProp>
+        </DebugSampler>
+        <hashTree/>
+      </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Activity" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
@@ -921,7 +997,8 @@ vars.put(&apos;requirementId&apos;, response.id);</stringProp>
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
                   <stringProp name="Argument.value">{&#xd;
-  &quot;address&quot;: {&#xd;
+  &quot;address&quot;: &#xd;
+  {&#xd;
     &quot;countryId&quot;: &quot;${countryId}&quot;,&#xd;
     &quot;addressFormId&quot;: &quot;${addressFormId}&quot;,&#xd;
     &quot;propertyName&quot;: &quot;${propertyName}&quot;,&#xd;
@@ -935,7 +1012,8 @@ vars.put(&apos;requirementId&apos;, response.id);</stringProp>
   },&#xd;
   &quot;propertyTypeId&quot;: &quot;${propertyTypeId}&quot;,&#xd;
   &quot;divisionId&quot;: &quot;${divisionResId}&quot;,&#xd;
-  &quot;attributeValues&quot;: {&#xd;
+  &quot;attributeValues&quot;: &#xd;
+  {&#xd;
     &quot;minBedrooms&quot;: &quot;${minBedrooms}&quot;,&#xd;
     &quot;maxBedrooms&quot;: &quot;${maxBedrooms}&quot;,&#xd;
     &quot;minReceptions&quot;: &quot;${minReceptionRooms}&quot;,&#xd;
@@ -946,10 +1024,10 @@ vars.put(&apos;requirementId&apos;, response.id);</stringProp>
     &quot;maxArea&quot;: &quot;${maxArea}&quot;,&#xd;
     &quot;minLandArea&quot;: &quot;${minLandArea}&quot;,&#xd;
     &quot;maxLandArea&quot;: &quot;${maxLandArea}&quot;,&#xd;
-    &quot;minGuestRooms&quot;: 0,&#xd;
-    &quot;maxGuestRooms&quot;: 0,&#xd;
-    &quot;minFunctionRooms&quot;: 0,&#xd;
-    &quot;maxFunctionRooms&quot;: 0,&#xd;
+    &quot;minGuestRooms&quot;: null,&#xd;
+    &quot;maxGuestRooms&quot;: null,&#xd;
+    &quot;minFunctionRooms&quot;: null,&#xd;
+    &quot;maxFunctionRooms&quot;: null,&#xd;
     &quot;minCarParkingSpaces&quot;: &quot;${minParkingSpaces}&quot;,&#xd;
     &quot;maxCarParkingSpaces&quot;: &quot;${maxParkingSpaces}&quot;&#xd;
   }&#xd;
@@ -1662,6 +1740,70 @@ OUT.println(response.id);</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
             <stringProp name="HTTPSampler.path">${activities}/${activityId}</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.monitor">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="Referer" elementType="Header">
+                  <stringProp name="Header.name">Referer</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                </elementProp>
+                <elementProp name="Accept-Language" elementType="Header">
+                  <stringProp name="Header.name">Accept-Language</stringProp>
+                  <stringProp name="Header.value">pl,en-US;q=0.7,en;q=0.3</stringProp>
+                </elementProp>
+                <elementProp name="Origin" elementType="Header">
+                  <stringProp name="Header.name">Origin</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                </elementProp>
+                <elementProp name="Content-Type" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json;charset=utf-8</stringProp>
+                </elementProp>
+                <elementProp name="User-Agent" elementType="Header">
+                  <stringProp name="Header.name">User-Agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0</stringProp>
+                </elementProp>
+                <elementProp name="Accept" elementType="Header">
+                  <stringProp name="Header.name">Accept</stringProp>
+                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Add note to requirement" enabled="true"/>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Add note to requirement" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+	&quot;requirementId&quot;: null,&#xd;
+	&quot;description&quot;: &quot;Performance Note for requirement&quot;&#xd;
+}&#xd;
+</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">${requirement}/${requirementId}/notes</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
             <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
