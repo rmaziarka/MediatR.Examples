@@ -76,7 +76,6 @@
     <Compile Include="Model\Configuration\Property\Activities\ActivityTypeLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Activities\ActivityTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Activities\ActivityTypeDefinitionConfiguration.cs" />
-    <Compile Include="Model\Configuration\Property\ActivityTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicGroupConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicGroupItemConfiguration.cs" />
