@@ -33,6 +33,8 @@ function Deploy-Database {
 
 	try { 
 	
+        Push-Location
+
 		Invoke-SqlQuery -InputFile 'sql/Update-SqlLogin.sql'`
 			    -SqlVariable "Username = $Username","Password = $Password"
 
@@ -42,6 +44,8 @@ function Deploy-Database {
         Invoke-SqlQuery -InputFile 'sql/Update-SqlLoginRole.sql'`
 			    -SqlVariable "Username = $Username","Role = bulkadmin"
 		
+        Pop-Location
+
 	    Build-EntityFrameworkMigrations @buildParams
 
 	    Deploy-EntityFrameworkMigrations -MigrateAssembly $MigrateAssembly -ConnectionString $ConnectionString -PackagePath $outputPath
@@ -57,6 +61,8 @@ function Deploy-Database {
         $sqlCmdVariables = @{
             'OutputPath' = $projectDatabasePath
         }
+
+        Import-Module -Name "$PSScriptRoot\Import-SqlServerDacDll.ps1"
 
         Deploy-SSDTDacpac -ProjectDatabaseDocpacPath $projectDatabaseDocpacPath `
                           -ProfileName $ssdtProfileNamePath `
