@@ -1,0 +1,67 @@
+﻿PropertyTypeCode;CountryCode;ActivityTypeCode;Order
+House;GB;Open Market Letting;1
+House;GB;Freehold Sale;
+Flat;GB;Open Market Letting;
+Flat;GB;Freehold Sale;
+Flat;GB;Long Leasehold Sale;
+Bungalow;GB;Open Market Letting;
+Bungalow;GB;Freehold Sale;
+Maisonette;GB;Open Market Letting;
+Maisonette;GB;Freehold Sale;
+Maisonette;GB;Long Leasehold Sale;
+Development Plot;GB;Freehold Sale;
+Development;GB;Long Leasehold Sale;
+Farm/Estate;GB;Freehold Sale;
+Garage / Parking Space;GB;Open Market Letting;
+Garage / Parking Space;GB;Freehold Sale;
+Land Plot;GB;Freehold Sale;
+Land;GB;Long Leasehold Sale;
+Houseboat;GB;Open Market Letting;
+Houseboat;GB;Freehold Sale;
+Office;GB;Assignment;
+Office;GB;Open Market Letting;
+Office;GB;Open Market Sub-Letting;
+Office;GB;Pre-Letting;
+Office;GB;Leasehold;
+Office;GB;Freehold (Vacant Possession);
+Office;GB;Freehold Sale;
+Office;GB;Feuhold Sale;
+Office;GB;Long Leasehold Sale;
+Office;GB;Lease Regear;
+Office;GB;Lease Renewal;
+Office;GB;Rent Review;
+Office;GB;By Arrangement;
+Office;GB;Long Leasehold (Vacant Possession);
+Office;GB;Feuhold (Vacant Possession);
+Office;GB;Lease Surrender;
+
+Leisure
+Retail
+Industrial
+Other
+Office
+Leisure;Leisure.Hotel
+Leisure;Leisure.Leisure
+Leisure;Leisure.Leisure (Portfolio)
+Retail.Car Showroom
+Retail.Department/Variety Store
+Retail.Department Stores
+Retail.Garden Centre
+Retail.Retail
+Retail.Retail (Portfolio)
+Retail.Shopping Centre
+Retail.Shopping Centre (Portfolio)
+Retail.Retail Unit A1
+Retail.Retail Unit A2
+Retail.Retail Unit A3
+Retail.Retail Unit A4
+Retail.Retail Unit A5
+Retail.Retail Wharehouse (Portfolio)
+Retail.Retail Wh (Bulky Parks)
+Retail.Retail Wh (Bulky Solus)
+Retail.Retail Wh (Open A1 Solus)
+Retail.Supermarket
+Industrial.Industrial Estate
+Industrial.Industrial Distribution
+Industrial.Industrial (Portfolio)
+Industrial.Trade park
