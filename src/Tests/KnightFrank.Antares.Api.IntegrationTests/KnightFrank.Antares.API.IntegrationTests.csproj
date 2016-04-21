@@ -142,6 +142,7 @@
     <Compile Include="Steps\Requierement\RequierementNotesSteps.cs" />
     <Compile Include="Steps\Requierement\ResidentialSalesRequierementSteps.cs" />
     <Compile Include="Steps\Resources\ResourcesSteps.cs" />
+    <Compile Include="Steps\Translations\TranslationsSteps.cs" />
     <Compile Include="Tests\Activities\ActivityController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -206,6 +207,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourcesController.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Translations\TranslationsController.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TranslationsController.feature</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -278,6 +284,10 @@
     <None Include="Tests\ResourcesController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ResourcesController.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Translations\TranslationsController.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>TranslationsController.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup />
