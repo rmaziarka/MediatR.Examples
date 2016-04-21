@@ -7,7 +7,7 @@ CREATE TABLE #ChracteristicsMapCsv (
     PropertyTypeCode NVARCHAR(250)  NOT NULL,
     CharacteristicGroupCode NVARCHAR(250)  NOT NULL,
     GroupOrder int NOT NULL,
-    DisplayGroupLabel bit NOT NULL,
+    IsDisplayGroupLabel bit NOT NULL,
     CharacteristicCode  NVARCHAR(250)  NOT NULL
 );
 BULK INSERT #ChracteristicsMapCsv
@@ -36,7 +36,7 @@ CREATE TABLE #CharacteristicGroupUsage_Expected (
     CharacteristicGroupCode NVARCHAR(250)  NOT NULL,
 
     GroupOrder int NOT NULL,
-    DisplayGroupLabel bit NOT NULL
+    IsDisplayGroupLabel bit NOT NULL
 );
 INSERT INTO #CharacteristicGroupUsage_Expected
 select distinct
@@ -47,7 +47,7 @@ select distinct
     chg.Id as CharacteristicGroupId,
     chg.Code as CharacteristicGroupCode,
     csv.GroupOrder,
-    csv.DisplayGroupLabel
+    csv.IsDisplayGroupLabel
 from #ChracteristicsMapCsv csv
     inner join Country c on csv.CountryIsoCode = c.IsoCode
     inner join PropertyType pt on csv.PropertyTypeCode = pt.Code
@@ -83,11 +83,11 @@ MERGE CharacteristicGroupUsage AS T
 	WHEN MATCHED THEN
 		UPDATE SET
 		T.[Order] = S.[GroupOrder],
-		T.[DisplayLabel] = S.[DisplayGroupLabel]
+		T.[IsDisplayLabel] = S.[IsDisplayGroupLabel]
 
 	WHEN NOT MATCHED BY TARGET THEN
-		INSERT ([CharacteristicGroupId], [PropertyTypeId], [CountryId], [Order], [DisplayLabel])
-		VALUES ([CharacteristicGroupId], [PropertyTypeId], [CountryId], [GroupOrder], [DisplayGroupLabel])
+		INSERT ([CharacteristicGroupId], [PropertyTypeId], [CountryId], [Order], [IsDisplayLabel])
+		VALUES ([CharacteristicGroupId], [PropertyTypeId], [CountryId], [GroupOrder], [IsDisplayGroupLabel])
 
     WHEN NOT MATCHED BY SOURCE THEN DELETE;
 
@@ -96,7 +96,7 @@ SELECT c.IsoCode as Country
 	 ,pt.Code as PropertyType
 	 ,chg.Code as GroupCode
       ,gu.[Order]
-      ,gu.DisplayLabel
+      ,gu.IsDisplayLabel
 FROM [KnightFrank.Antares].[dbo].[CharacteristicGroupUsage] gu
     inner join [KnightFrank.Antares].[dbo].Country c on gu.[CountryId] = c.Id
     inner join [KnightFrank.Antares].[dbo].PropertyType pt on gu.[PropertyTypeId] = pt.Id

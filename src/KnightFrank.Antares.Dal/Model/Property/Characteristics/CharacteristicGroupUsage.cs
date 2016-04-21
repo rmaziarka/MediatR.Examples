@@ -15,6 +15,6 @@
         public virtual Country Country { get; set; }
         public virtual ICollection<CharacteristicGroupItem> CharacteristicGroupItems { get; set; }
         public short Order { get; set; }
-        public bool DisplayLabel { get; set; }
+        public bool IsDisplayLabel { get; set; }
     }
 }

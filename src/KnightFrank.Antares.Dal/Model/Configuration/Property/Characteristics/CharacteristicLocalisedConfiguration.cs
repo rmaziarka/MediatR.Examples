@@ -6,19 +6,13 @@
     {
         public CharacteristicLocalisedConfiguration()
         {
-            
-            this.HasRequired(x => x.Locale)
-                .WithMany()
-                .HasForeignKey(x => x.LocaleId)
-                .WillCascadeOnDelete(false);
+            this.HasRequired(x => x.Locale).WithMany().HasForeignKey(x => x.LocaleId).WillCascadeOnDelete(false);
 
-            this.HasRequired(x => x.Characteristic)
-                .WithMany()
-                .HasForeignKey(x => x.ResourceId)
-                .WillCascadeOnDelete(false);
+            this.HasRequired(x => x.Characteristic).WithMany().HasForeignKey(x => x.ResourceId).WillCascadeOnDelete(false);
 
             this.Property(c => c.ResourceId).HasColumnName("CharacteristicId");
-            this.Property(p => p.Value).HasMaxLength(100);
+
+            this.Property(p => p.Value).HasMaxLength(100).IsRequired();
         }
     }
 }

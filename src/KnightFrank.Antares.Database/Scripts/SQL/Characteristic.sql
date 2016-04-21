@@ -3,8 +3,8 @@ IF OBJECT_ID('tempDB..#ChracteristicsCsv') IS NOT NULL
 
 CREATE TABLE #ChracteristicsCsv (
 	Code NVARCHAR(250)  NOT NULL,
-	DisplayText BIT NOT NULL,
-	Enabled BIT NULL
+	IsDisplayText BIT NOT NULL,
+	IsEnabled BIT NULL
 );
 
 BULK INSERT #ChracteristicsCsv
@@ -26,11 +26,11 @@ MERGE Characteristic AS T
     )
     WHEN MATCHED THEN
 		    UPDATE SET
-		    T.Enabled = S.Enabled,
-		    T.DisplayText = S.DisplayText --ifnull
+		    T.IsEnabled = S.IsEnabled,
+		    T.IsDisplayText = S.IsDisplayText --ifnull
 
     WHEN NOT MATCHED BY TARGET THEN
-	   Insert (Code, Enabled, DisplayText) Values (S.Code, S.Enabled, S.DisplayText)
+	   Insert (Code, IsEnabled, IsDisplayText) Values (S.Code, S.IsEnabled, S.IsDisplayText)
 
     WHEN NOT MATCHED BY SOURCE THEN DELETE;
 

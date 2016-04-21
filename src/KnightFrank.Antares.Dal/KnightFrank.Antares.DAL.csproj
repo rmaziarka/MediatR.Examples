@@ -73,12 +73,14 @@
     <Compile Include="Model\Configuration\Attribute\AttributeValuesConfiguration.cs" />
     <Compile Include="Model\Configuration\Attribute\AttributeConfiguration.cs" />
     <Compile Include="Model\Configuration\BaseAuditableEntityConfiguration.cs" />
-    <Compile Include="Model\Configuration\Property\Activities\ActivityTypeConfigurationLocalized.cs" />
+    <Compile Include="Model\Configuration\Property\Activities\ActivityTypeLocalizedConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Activities\ActivityTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Activities\ActivityTypeDefinitionConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\ActivityTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicGroupConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicGroupItemConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicGroupLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicGroupLocalizedConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicGroupUsageConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicLocalisedConfiguration.cs" />
