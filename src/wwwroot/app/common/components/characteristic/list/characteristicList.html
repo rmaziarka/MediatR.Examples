@@ -1,0 +1,6 @@
+﻿<div ng-repeat="characteristicGroup in clvm.characteristicGroups | orderBy: 'order'">
+    <span>{{ characteristicGroup.code }}</span>
+    <div ng-repeat="characteristic in characteristicGroup.characteristicGroupItems | orderBy: 'order'">
+        <span>{{ characteristic.code }}</span>
+    </div>
+</div>

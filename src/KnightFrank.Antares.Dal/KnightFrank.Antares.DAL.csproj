@@ -73,13 +73,13 @@
     <Compile Include="Model\Configuration\Attribute\AttributeValuesConfiguration.cs" />
     <Compile Include="Model\Configuration\Attribute\AttributeConfiguration.cs" />
     <Compile Include="Model\Configuration\BaseAuditableEntityConfiguration.cs" />
-    <Compile Include="Model\Configuration\Property\Activities\ActivityTypeConfigurationLocalized.cs" />
+    <Compile Include="Model\Configuration\Property\Activities\ActivityTypeLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Activities\ActivityTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Activities\ActivityTypeDefinitionConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicGroupConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicGroupItemConfiguration.cs" />
-    <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicGroupLocalizedConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicGroupLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicGroupUsageConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\PropertyCharacteristicConfiguration.cs" />
@@ -113,7 +113,7 @@
     <Compile Include="Model\Enum\EnumLocalised.cs" />
     <Compile Include="Model\Enum\EnumType.cs" />
     <Compile Include="Model\Enum\EnumTypeItem.cs" />
-    <Compile Include="Model\Property\Activities\ActivityTypeLocalized.cs" />
+    <Compile Include="Model\Property\Activities\ActivityTypeLocalised.cs" />
     <Compile Include="Model\Property\Activities\ActivityType.cs" />
     <Compile Include="Model\Property\Activities\ActivityTypeDefinition.cs" />
     <Compile Include="Model\Property\Characteristics\Characteristic.cs" />

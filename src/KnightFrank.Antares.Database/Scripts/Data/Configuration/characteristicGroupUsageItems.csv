@@ -1,4 +1,4 @@
-CountryIsoCode;PropertyTypeCode;GroupCode;GroupOrder;DisplayGroupLabel;CharacteristicCode
+CountryIsoCode;PropertyTypeCode;GroupCode;GroupOrder;IsDisplayGroupLabel;CharacteristicCode
 GB;House;Style;1;1;Detached
 GB;House;Style;1;1;SemiDetached
 GB;House;Style;1;1;Terraced

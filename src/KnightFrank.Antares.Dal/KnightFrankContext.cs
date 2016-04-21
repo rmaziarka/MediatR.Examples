@@ -58,7 +58,7 @@
         public DbSet<Activity> Activities { get; set; }
         public DbSet<ActivityTypeDefinition> ActivityTypeDefinitions { get; set; }
         public DbSet<ActivityType> ActivityTypes { get; set; }
-        public DbSet<ActivityTypeLocalized> ActivityTypeLocalizeds { get; set; }
+        public DbSet<ActivityTypeLocalised> ActivityTypeLocaliseds { get; set; }
         public DbSet<PropertyType> PropertyTypes { get; set; }
         public DbSet<PropertyTypeLocalised> PropertyTypeLocaliseds { get; set; }
         public DbSet<PropertyTypeDefinition> PropertyTypeDefinitions { get; set; }

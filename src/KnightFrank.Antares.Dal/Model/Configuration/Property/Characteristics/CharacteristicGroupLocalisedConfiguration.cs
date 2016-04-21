@@ -6,7 +6,19 @@
     {
         public CharacteristicGroupLocalisedConfiguration()
         {
-            
+            this.HasRequired(x => x.Locale)
+                .WithMany()
+                .HasForeignKey(x => x.LocaleId)
+                .WillCascadeOnDelete(false);
+
+            this.HasRequired(x => x.CharacteristicGroup)
+                .WithMany()
+                .HasForeignKey(x => x.ResourceId)
+                .WillCascadeOnDelete(false);
+
+            this.Property(c => c.ResourceId).HasColumnName("CharacteristicGroupId");
+
+            this.Property(p => p.Value).HasMaxLength(100).IsRequired();
         }
     }
 }

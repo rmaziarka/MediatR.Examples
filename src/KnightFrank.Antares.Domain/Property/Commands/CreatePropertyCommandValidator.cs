@@ -48,7 +48,7 @@
                 this.RuleFor(x => x.AttributeValues)
                     .Must(this.BeOverOrEqualZero).WithMessage("Attributes values cannot be lower than 0.")
                     .Must(this.BeBetweenMinMax).WithMessage("Attributes values minumum cannot be greater than maximum.")
-                    .Must(this.BeAllowedForPropertyType).WithMessage("Attributes values minumum cannot be greater than maximum.");
+                    .Must(this.BeAllowedForPropertyType).WithMessage("Property contains attributes incorrect for given property type.");
             });
 
             this.Custom(this.DivisionExists);

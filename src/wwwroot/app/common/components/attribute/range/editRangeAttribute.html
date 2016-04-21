@@ -2,7 +2,8 @@
     <fieldset>
         <label for="{{vm.attribute.nameKey}}">{{vm.attribute.labelKey | translate}} </label>
         <div class="row">
-            <div class="col-md-3" ng-class="{'has-error': (addPropertyForm.$submitted || formAttributes.minValue.$dirty || formAttributes.maxValue.$dirty) && formAttributes.minValue.$invalid}">
+            <div ng-class="{'has-error': (addPropertyForm.$submitted || formAttributes.minValue.$dirty || formAttributes.maxValue.$dirty) && formAttributes.minValue.$invalid, 
+                 'col-md-5': vm.attribute.min == 'minArea' || vm.attribute.min == 'minLandArea', 'col-md-3': vm.attribute.min != 'minArea' && vm.attribute.min != 'minLandArea'}">
                 <div class="form-group">
                     <input class="form-control" type="number" placeholder="min" ng-model="vm.minValue" min="0" max="{{vm.maxValue}}" name="minValue" id="{{vm.attribute.min}}" pattern="{{vm.attribute.regEx}}">
                 </div>
@@ -11,7 +12,8 @@
                 </div>
             </div>
             <div class="col-md-1">-</div>
-            <div class="col-md-3" ng-class="{'has-error': (addPropertyForm.$submitted || formAttributes.minValue.$dirty || formAttributes.maxValue.$dirty) && formAttributes.maxValue.$invalid}">
+            <div ng-class="{'has-error': (addPropertyForm.$submitted || formAttributes.minValue.$dirty || formAttributes.maxValue.$dirty) && formAttributes.maxValue.$invalid,
+                 'col-md-5': vm.attribute.max == 'maxArea' || vm.attribute.max == 'maxLandArea', 'col-md-3': vm.attribute.max != 'maxArea' && vm.attribute.max != 'maxLandArea'}">
                 <div class="form-group">
                     <input class="form-control" type="number" placeholder="max" ng-model="vm.maxValue" min="0" name="maxValue" id="{{vm.attribute.max}}" pattern="{{vm.attribute.regEx}}">
                     <div ng-messages="formAttributes.maxValue.$error" ng-show="addPropertyForm.$submitted || formAttributes.maxValue.$dirty">

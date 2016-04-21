@@ -56,6 +56,9 @@ declare module Antares.Common.Models {
         interface IRequirementNoteResource extends ng.resource.IResource<Antares.Common.Models.Dto.IRequirementNote> {
         }
 
+        interface ICharacteristicGroupUsageResource extends ng.resource.IResource<Antares.Common.Models.Dto.ICharacteristicGroupUsage> {
+        }
+
         // *** IResourceClass extensions ***
 
         // - common -
@@ -72,6 +75,7 @@ declare module Antares.Common.Models {
             createOwnership(params: any, ownership: any): ng.resource.IResource<Dto.IOwnership>;
             getPropertyTypes(params: any, ownership: any): ng.resource.IResource<Dto.IOwnership>;
             getAttributes(params: any, ownership: any): ng.resource.IResource<Dto.IAttribute>;
+            getCharacteristics(params: any): ng.resource.IResource<Dto.ICharacteristicGroupUsage>;
         }
 
         // - country -

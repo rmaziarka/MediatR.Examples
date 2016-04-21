@@ -33,14 +33,162 @@
         </div>
         <div class="col-md-4">
             <fieldset>
-                <h3 class="page-header" translate="PROPERTY.DETAILS"></h3>
                 <div class="form-group has-error" ng-show="!vm.property.propertyTypeId">
                     <p class="help-block">Select property type to enter property details</p>
                 </div>
                 <attribute-list component-id="vm.componentIds.attributeListId" user-data="vm.userData" property="vm.property" mode="edit"></attribute-list>
             </fieldset>
         </div>
-
+        <div class="col-md-4">
+          <fieldset>
+              <h3 class="page-header" translate="PROPERTY.CHARACTERISTICS"></h3>
+              <div class="form-group has-error">
+                  <p class="help-block">Select property type to enter property characteristics</p>
+              </div>
+              <fielset>
+                  <div class="characteristics-group">
+                      <h5 translate="{{group.value}}"></h5>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" transalte="{{field.value}}" value="">                              
+                          </label>
+                          <button class="characteristics-button characteristics-button-filled pull-right" type="button"><i class="fa fa-comment-o" aria-hidden="true"></i></button>
+                          <input class="form-control" type="text">
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              Semi-detached
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              Terraced
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              Mews
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              New build
+                          </label>
+                          <button class="characteristics-button pull-right" type="button"><i class="fa fa-comment-o" aria-hidden="true"></i></button>
+                      </div>
+                  </div>
+              </fielset>
+              <fielset>
+                  <div class="characteristics-group">
+                      <h5>Age</h5>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              Modern
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              Post-war
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              Lorem
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              Ipsum
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              Dolor
+                          </label>
+                      </div>
+                  </div>
+              </fielset>
+              <fielset>
+                  <div class="characteristics-group">
+                      <h5>Situation</h5>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              Garden
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              Land
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              Patio / Terrace
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              Conservatory
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              Balcony
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              Communal Garden
+                          </label>
+                      </div>
+                  </div>
+              </fielset> 
+              <fielset>
+                  <div class="characteristics-group">
+                      <h5>Location</h5>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              Rural
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              Village
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              Town / City
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" value="">
+                              Island
+                          </label>
+                      </div>
+                  </div>
+              </fielset>
+        
+      </div>
         <div class="col-md-12">
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" id="saveBtn" ng-disabled="!vm.property.address.countryId"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
