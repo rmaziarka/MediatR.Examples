@@ -7,7 +7,7 @@
                 <div class="form-group attribute-min">
                     <input class="form-control" type="number" placeholder="min" ng-model="vm.minValue" min="0" max="{{vm.maxValue}}" name="minValue" id="{{vm.attribute.min}}" pattern="{{vm.attribute.regEx}}">
                 </div>
-                <div ng-messages="formAttributes.minValue.$error" ng-show="addPropertyForm.$submitted || formAttributes.minValue.$dirty">
+                <div ng-messages="formAttributes.minValue.$error" ng-show="addPropertyForm.$submitted || formAttributes.minValue.$dirty || formAttributes.maxValue.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
@@ -15,9 +15,9 @@
                  'col-xs-5': vm.attribute.max == 'maxArea' || vm.attribute.max == 'maxLandArea', 'col-xs-6 col-md-3': vm.attribute.max != 'maxArea' && vm.attribute.max != 'maxLandArea'}">
                 <div class="form-group attribute-max">
                     <input class="form-control" type="number" placeholder="max" ng-model="vm.maxValue" min="0" name="maxValue" id="{{vm.attribute.max}}" pattern="{{vm.attribute.regEx}}">
-                    <div ng-messages="formAttributes.maxValue.$error" ng-show="addPropertyForm.$submitted || formAttributes.maxValue.$dirty">
-                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
-                    </div>
+                </div>
+                <div ng-messages="formAttributes.maxValue.$error" ng-show="addPropertyForm.$submitted || formAttributes.minValue.$dirty || formAttributes.maxValue.$dirty">
+                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
             <div ng-show="vm.attribute.unit" class="col-xs-2 attribute-unit">{{vm.attribute.unit | translate}}</div>
