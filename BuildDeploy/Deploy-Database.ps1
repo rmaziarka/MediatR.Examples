@@ -32,7 +32,16 @@ function Deploy-Database {
     $sqlServerVersion = "2014"
 
 	try { 
+	
+		Invoke-SqlQuery -InputFile 'sql/Update-SqlLogin.sql'`
+			    -SqlVariable "Username = $Username","Password = $Password"
 
+        Invoke-SqlQuery -InputFile 'sql/Update-SqlLoginRole.sql'`
+			    -SqlVariable "Username = $Username","Role = dbcreator"
+
+        Invoke-SqlQuery -InputFile 'sql/Update-SqlLoginRole.sql'`
+			    -SqlVariable "Username = $Username","Role = bulkadmin"
+		
 	    Build-EntityFrameworkMigrations @buildParams
 
 	    Deploy-EntityFrameworkMigrations -MigrateAssembly $MigrateAssembly -ConnectionString $ConnectionString -PackagePath $outputPath
@@ -41,15 +50,7 @@ function Deploy-Database {
 		
         #due to the bug https://connect.microsoft.com/SQLServer/feedback/details/1420992/import-module-sqlps-may-take-longer-to-load-but-always-returns-warnings-when-the-azure-powershell-module-is-also-installed
         #the first call to Invoke-SqlCmd will return warnings
-
-	    Invoke-SqlQuery -InputFile 'sql/Update-SqlLogin.sql'`
-			    -SqlVariable "Username = $Username","Password = $Password"
-
-        Invoke-SqlQuery -InputFile 'sql/Update-SqlLoginRole.sql'`
-			    -SqlVariable "Username = $Username","Role = dbcreator"
-
-        Invoke-SqlQuery -InputFile 'sql/Update-SqlLoginRole.sql'`
-			    -SqlVariable "Username = $Username","Role = bulkadmin"
+   
         
         Build-SSDTDacpac -ProjectPath $projectDatabaseSqlProjPath -BuildConfiguration $buildConfiguration
         
