@@ -1,7 +1,4 @@
-﻿--Drop table #TempAddressFieldDefinitionCsv
---Drop table #MergeAddressFieldDefinition
-
-/*
+﻿/*
  Prepare temporary table to store data from .csv file
 */
 
@@ -32,7 +29,7 @@ CREATE TABLE #MergeAddressFieldDefinition
                                            AddressFieldLabelKey   NVARCHAR(250) NOT NULL,
                                            CountryIsoCode         NVARCHAR(250) NOT NULL,
                                            CountryId              UNIQUEIDENTIFIER NOT NULL,
-                                           EnumTypeItemId         UNIQUEIDENTIFIER NOT NULL,
+                                           EnumTypeItemId         UNIQUEIDENTIFIER,
                                            EnumTypeItemCode       NVARCHAR(250),
                                            [Required]             BIT,
                                            RegEx                  NVARCHAR(50),
@@ -63,16 +60,16 @@ INSERT INTO #MergeAddressFieldDefinition
               c.IsoCode,
               eti.Id,
               eti.Code,
-              tmpCsv.[Required],
+              tmpCsv.Required,
               tmpCsv.RegEx,
               tmpCsv.RowOrder,
               tmpCsv.ColumnOrder,
               tmpCsv.ColumnSize
        FROM #TempAddressFieldDefinitionCsv AS tmpCsv
             JOIN dbo.Country AS c ON c.IsoCode = tmpCsv.CountryIsoCode
-       JOIN dbo.AddressField AS af ON af.Name = tmpCsv.AddressFieldName
-       JOIN dbo.AddressFieldLabel AS afl ON afl.LabelKey = tmpCsv.AddressFieldLabelKey
-       JOIN dbo.EnumTypeItem AS eti ON eti.Code = tmpCsv.EnumTypeItemCode;
+			JOIN dbo.AddressField AS af ON af.Name = tmpCsv.AddressFieldName
+			JOIN dbo.AddressFieldLabel AS afl ON afl.LabelKey = tmpCsv.AddressFieldLabelKey
+			LEFT JOIN dbo.EnumTypeItem AS eti ON eti.Code = tmpCsv.EnumTypeItemCode;
 
 /*
 	Fill Merge temporary table with data
@@ -83,7 +80,7 @@ CREATE TABLE #ExistingAddressForms
                                     AddressFormEntityTyeId UNIQUEIDENTIFIER,
                                     CountryIsoCode         NVARCHAR(250) NOT NULL,
                                     CountryId              UNIQUEIDENTIFIER NOT NULL,
-                                    EnumTypeItemId         UNIQUEIDENTIFIER NOT NULL,
+                                    EnumTypeItemId         UNIQUEIDENTIFIER NULL,
                                     EnumTypeItemCode       NVARCHAR(250)
                                   );
 INSERT INTO #ExistingAddressForms
@@ -95,17 +92,8 @@ INSERT INTO #ExistingAddressForms
               eti.Code
        FROM dbo.AddressForm AS af
             JOIN dbo.Country AS c ON c.Id = af.CountryId
-       JOIN dbo.AddressFormEntityType AS afet ON afet.AddressFormId = af.Id
-       JOIN dbo.EnumTypeItem AS eti ON eti.Id = afet.EnumTypeItemId;
---SELECT #MergeAddressFieldDefinition.CountryId,
---       #MergeAddressFieldDefinition.CountryIsoCode,
---       #MergeAddressFieldDefinition.EnumTypeItemId,
---       #MergeAddressFieldDefinition.EnumTypeItemCode
---FROM #MergeAddressFieldDefinition
---GROUP BY #MergeAddressFieldDefinition.CountryId,
---         #MergeAddressFieldDefinition.CountryIsoCode,
---         #MergeAddressFieldDefinition.EnumTypeItemId,
---         #MergeAddressFieldDefinition.EnumTypeItemCode;
+       LEFT JOIN dbo.AddressFormEntityType AS afet ON afet.AddressFormId = af.Id
+       LEFT JOIN dbo.EnumTypeItem AS eti ON eti.Id = afet.EnumTypeItemId;
 CREATE TABLE #AddressFormToDelete
                                  ( AddressFormId UNIQUEIDENTIFIER
                                  );
@@ -197,9 +185,9 @@ DECLARE insert_address_csv_cursor CURSOR
 FOR SELECT #TempAddressFieldDefinitionCsv.CountryIsoCode,
            #TempAddressFieldDefinitionCsv.EnumTypeItemCode
     FROM #TempAddressFieldDefinitionCsv
-    GROUP BY CountryIsoCode,
-             EnumTypeItemCode
-    HAVING EnumTypeItemCode IS NOT NULL;
+    GROUP BY #TempAddressFieldDefinitionCsv.CountryIsoCode,
+             #TempAddressFieldDefinitionCsv.EnumTypeItemCode
+    HAVING #TempAddressFieldDefinitionCsv.EnumTypeItemCode IS NOT NULL;
 OPEN insert_address_csv_cursor;
 FETCH NEXT FROM insert_address_csv_cursor INTO
    @CountryIsoCode,
@@ -249,7 +237,7 @@ WHILE @@FETCH_STATUS = 0
                                                        JOIN dbo.EnumTypeItem AS eti ON eti.Id = afet.EnumTypeItemId
                                                        WHERE c.IsoCode = @CountryIsoCode
                                                              AND eti.Code IN(
-                                                                              SELECT Code
+                                                                              SELECT [@csvEntityCodes].Code
                                                                               FROM @csvEntityCodes
                                                                             ) );
         IF @existingAddressFormId IS NULL --adressForm not exist for a given Country code and Enum type item
@@ -263,10 +251,10 @@ WHILE @@FETCH_STATUS = 0
                                       )
                 OUTPUT INSERTED.Id  -- way to get inserted value right after insert used beceouse od guid
                        INTO @AfId
-                       SELECT TOP 1 Id
-                       FROM Country
-                       WHERE IsoCode = @CountryIsoCode;
-                SET @existingAddressFormId = ( SELECT TOP 1 FormId
+                       SELECT TOP 1 Country.Id
+                       FROM dbo.Country
+                       WHERE Country.IsoCode = @CountryIsoCode;
+                SET @existingAddressFormId = ( SELECT TOP 1 [@AfId].FormId
                                                FROM @AfId );
                 DELETE FROM @AfId;
                 IF( SELECT COUNT(*)
@@ -277,9 +265,9 @@ WHILE @@FETCH_STATUS = 0
                                                                EnumTypeItemId
                                                              )
                                SELECT @existingAddressFormId,
-                                     eti.Id
+                                      eti.Id
                                FROM @csvEntityCodes AS csvEC
-                                    JOIN EnumTypeItem AS eti ON csvEC.Code = eti.Code;
+                                    JOIN dbo.EnumTypeItem AS eti ON csvEC.Code = eti.Code;
                     END;
             END;
         ELSE --adressForm exist for a given Country code and at least one of Enum type item we need to add missing entity type items in to AddressFormEntityTypeItem table
@@ -303,7 +291,7 @@ WHILE @@FETCH_STATUS = 0
         USING( SELECT mafd.AddressFieldId,
                       mafd.AddressFieldLabelId,
                       @existingAddressFormId AS AddressFormId,
-                      mafd.[Required],
+                      mafd.Required,
                       mafd.RegEx,
                       mafd.RowOrder,
                       mafd.ColumnOrder,
@@ -317,7 +305,7 @@ WHILE @@FETCH_STATUS = 0
             )
           )
             WHEN MATCHED
-            THEN UPDATE SET T.[AddressFieldId] = S.[AddressFieldId], T.[AddressFieldLabelId] = S.[AddressFieldLabelId], T.[AddressFormId] = S.[AddressFormId], T.[Required] = S.[Required], T.[RegEx] = S.[RegEx], T.[RowOrder] = S.[RowOrder], T.[ColumnOrder] = S.[ColumnOrder], T.[ColumnSize] = S.[ColumnSize]
+            THEN UPDATE SET T.AddressFieldId = S.AddressFieldId, T.AddressFieldLabelId = S.AddressFieldLabelId, T.AddressFormId = S.AddressFormId, T.Required = S.Required, T.RegEx = S.RegEx, T.RowOrder = S.RowOrder, T.ColumnOrder = S.ColumnOrder, T.ColumnSize = S.ColumnSize
             WHEN NOT MATCHED BY TARGET
             THEN INSERT([AddressFieldId],
                         [AddressFieldLabelId],
@@ -335,114 +323,81 @@ WHILE @@FETCH_STATUS = 0
     END;
 CLOSE insert_address_csv_cursor;
 DEALLOCATE insert_address_csv_cursor;
+---------------------------------------
+--Handle empty ENUM type item
+---------------------------------------
+DECLARE insert_empty_address_csv_cursor CURSOR
+FOR SELECT #TempAddressFieldDefinitionCsv.CountryIsoCode,
+           #TempAddressFieldDefinitionCsv.EnumTypeItemCode
+    FROM #TempAddressFieldDefinitionCsv
+    GROUP BY #TempAddressFieldDefinitionCsv.CountryIsoCode,
+             #TempAddressFieldDefinitionCsv.EnumTypeItemCode
+    HAVING #TempAddressFieldDefinitionCsv.EnumTypeItemCode IS NULL;
+OPEN insert_empty_address_csv_cursor;
+FETCH NEXT FROM insert_empty_address_csv_cursor INTO
+   @CountryIsoCode,
+   @EnumTypeItemCode;
+WHILE @@FETCH_STATUS = 0
+    BEGIN
+        SET @existingAddressFormId = ( SELECT TOP 1 af.Id
+                                       FROM dbo.AddressForm AS af
+                                            JOIN dbo.Country AS c ON c.Id = af.CountryId
+                                       LEFT JOIN dbo.AddressFormEntityType AS afet ON afet.AddressFormId = af.Id
+                                       LEFT JOIN dbo.EnumTypeItem AS eti ON eti.Id = afet.EnumTypeItemId
+                                       WHERE c.IsoCode = @CountryIsoCode
+                                             AND eti.Code IS NULL );
+        IF @existingAddressFormId IS NULL --adressForm not exist for a given Country code and Enum type item
+            BEGIN
+                DELETE FROM @AfId;
+                INSERT dbo.AddressForm
+                                      ( CountryId
+                                      )
+                OUTPUT INSERTED.Id  -- way to get inserted value right after insert used beceouse od guid
+                       INTO @AfId
+                SELECT TOP 1 Country.Id
+                       FROM dbo.Country
+                       WHERE Country.IsoCode = @CountryIsoCode;
 
---Handle empty enum type item
---DECLARE insert_empty_address_csv_cursor CURSOR
---FOR SELECT #TempAddressFieldDefinitionCsv.CountryIsoCode,
---           #TempAddressFieldDefinitionCsv.EnumTypeItemCode
---    FROM #TempAddressFieldDefinitionCsv
---    GROUP BY CountryIsoCode,
---             EnumTypeItemCode
---    HAVING EnumTypeItemCode IS NULL;
---OPEN insert_address_csv_cursor;
---FETCH NEXT FROM insert_address_csv_cursor INTO
---   @CountryIsoCode,
---   @EnumTypeItemCode;
---WHILE @@FETCH_STATUS = 0
---    BEGIN
---        --split code
---        DECLARE
---           @str        NVARCHAR(250),
---           @singleCode NVARCHAR(250),
---           @commaIdx   INT;
---        DECLARE
---           @csvEntityCodes TABLE
---                                ( Code NVARCHAR(250)
---                                );
---        SET @str = @EnumTypeItemCode;
---        --BEGIN WHILE
---        WHILE @str <> ''
---            BEGIN
---                DELETE FROM @csvEntityCodes;
---                SET @commaIdx = CHARINDEX(',', @str, 1);
---                IF @commaIdx = 0
---                    BEGIN
---                        INSERT INTO @csvEntityCodes
---                        VALUES
---                               ( @str
---                               );
---                        SET @str = '';
---                    END;
---                ELSE
---                    BEGIN
---                        INSERT INTO @csvEntityCodes
---                        VALUES
---                               ( SUBSTRING(@str, 1, @commaIdx-1)
---                               );
---                        SET @str = SUBSTRING(@str, @commaIdx+1, 4000);
---                    END;
---            END;--END WHILE
---        --@CountryIsoCode
---        --@singleCode
---        --Sprawdź czy jest jakikolwiek addressForm zdefiniowany dla któregokolwiek z entity type item codeów z pliku CSV
---        DECLARE
---           @existingAddressFormId UNIQUEIDENTIFIER = ( SELECT TOP 1 af.Id
---                                                       FROM dbo.AddressForm AS af
---                                                            JOIN dbo.Country AS c ON c.Id = af.CountryId
---                                                       JOIN dbo.AddressFormEntityType AS afet ON afet.AddressFormId = af.Id
---                                                       JOIN dbo.EnumTypeItem AS eti ON eti.Id = afet.EnumTypeItemId
---                                                       WHERE c.IsoCode = @CountryIsoCode
---                                                             AND eti.Code IN(
---                                                                              SELECT Code
---                                                                              FROM @csvEntityCodes
---                                                                            ) );
---        IF @existingAddressFormId IS NULL --adressForm not exist for a given Country code and Enum type item
---            BEGIN
---                DECLARE
---                   @AfId TABLE
---                              ( FormId UNIQUEIDENTIFIER
---                              );
---                INSERT dbo.AddressForm
---                                      ( CountryId
---                                      )
---                OUTPUT INSERTED.Id  -- way to get inserted value right after insert used beceouse od guid
---                       INTO @AfId
---                       SELECT TOP 1 Id
---                       FROM Country
---                       WHERE IsoCode = @CountryIsoCode;
---                IF( SELECT COUNT(*)
---                    FROM @csvEntityCodes ) > 0
---                    BEGIN
---                        INSERT INTO dbo.AddressFormEntityType
---                                                             ( AddressFormId,
---                                                               EnumTypeItemId
---                                                             )
---                               SELECT( SELECT TOP 1 FormId
---                                       FROM @AfId ),
---                                     eti.Id
---                               FROM @csvEntityCodes AS csvEC
---                                    JOIN EnumTypeItem AS eti ON csvEC.Code = eti.Code;
---                    END;
---            END;
---        ELSE --adressForm exist for a given Country code and at least one of Enum type item we need to add missing entity type items in to AddressFormEntityTypeItem table
---            BEGIN
---                INSERT INTO dbo.AddressFormEntityType
---                                                     ( EnumTypeItemId,
---                                                       AddressFormId
---                                                     )
---                       SELECT eti.Id,
---                              @existingAddressFormId
---                       FROM @csvEntityCodes AS cec
---                            JOIN dbo.EnumTypeItem AS eti ON eti.Code = cec.Code -- and type.code = 'EntityType'
---                       WHERE NOT EXISTS( SELECT *
---                                         FROM dbo.AddressFormEntityType AS afet
---                                         WHERE afet.EnumTypeItemId = eti.Id
---                                               AND afet.AddressFormId = @existingAddressFormId );
---            END;
---        FETCH NEXT FROM insert_address_csv_cursor INTO
---           @CountryIsoCode,
---           @EnumTypeItemCode;
---    END;
+                SET @existingAddressFormId = ( SELECT TOP 1 [@AfId].FormId
+                                               FROM @AfId );
+                DELETE FROM @AfId;
+            END;
+
+        -- insert address field definition
+        MERGE dbo.AddressFieldDefinition AS T
+        USING( SELECT mafd.AddressFieldId,
+                      mafd.AddressFieldLabelId,
+                      @existingAddressFormId AS AddressFormId,
+                      mafd.Required,
+                      mafd.RegEx,
+                      mafd.RowOrder,
+                      mafd.ColumnOrder,
+                      mafd.ColumnSize
+               FROM #MergeAddressFieldDefinition mafd
+               WHERE mafd.CountryIsoCode = @CountryIsoCode
+                     AND mafd.EnumTypeItemCode IS NULL ) AS S
+        ON( ( T.AddressFieldId = S.AddressFieldId
+              AND T.AddressFieldLabelId = S.AddressFieldLabelId
+              AND T.AddressFormId = S.AddressFormId
+            )
+          )
+            WHEN MATCHED
+            THEN UPDATE SET T.AddressFieldId = S.AddressFieldId, T.AddressFieldLabelId = S.AddressFieldLabelId, T.AddressFormId = S.AddressFormId, T.Required = S.Required, T.RegEx = S.RegEx, T.RowOrder = S.RowOrder, T.ColumnOrder = S.ColumnOrder, T.ColumnSize = S.ColumnSize
+            WHEN NOT MATCHED BY TARGET
+            THEN INSERT([AddressFieldId],
+                        [AddressFieldLabelId],
+                        [AddressFormId],
+                        [Required],
+                        [RegEx],
+                        [RowOrder],
+                        [ColumnOrder],
+                        [ColumnSize]) VALUES
+                                             ( [AddressFieldId], [AddressFieldLabelId], [AddressFormId], [Required], [RegEx], [RowOrder], [ColumnOrder], [ColumnSize]
+                                             );
+        FETCH NEXT FROM insert_empty_address_csv_cursor INTO
+           @CountryIsoCode,
+           @EnumTypeItemCode;
+    END;
 -- DELETE
 -- cursor po existing address form entity types
 -- delete address form if country code not exist in csv
@@ -544,7 +499,7 @@ MERGE dbo.AddressFieldDefinition AS T
 DROP TABLE #TempAddressFieldDefinition
 */
 
-ALTER TABLE AddressFieldDefinition
+ALTER TABLE dbo.AddressFieldDefinition
 WITH CHECK CHECK CONSTRAINT ALL;
 DROP TABLE #TempAddressFieldDefinitionCsv;
 DROP TABLE #MergeAddressFieldDefinition;

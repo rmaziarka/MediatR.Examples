@@ -56,7 +56,7 @@ declare module Antares.Common.Models {
         interface IRequirementNoteResource extends ng.resource.IResource<Antares.Common.Models.Dto.IRequirementNote> {
         }
 
-        interface ICharacteristicGroupUsageResource extends ng.resource.IResource<Antares.Common.Models.Dto.ICharacteristicGroupUsage> {
+        interface ICharacteristicGroupUsageResource extends ng.resource.IResource<Dto.ICharacteristicGroupUsage> {
         }
 
         // *** IResourceClass extensions ***
@@ -96,6 +96,16 @@ declare module Antares.Common.Models {
         interface IAddressFormResourceClass extends ng.resource.IResourceClass<IAddressFormResource> {
             get(): IAddressFormResource;
             get(params: IAddressFormResourceParameters): IAddressFormResource;
+        }
+
+        // - characteristics
+        interface ICharacteristicGroupUsageResourceParameters {
+            countryCode?: string;
+            propertyTypeId?: string;
+        }
+        interface ICharacteristicGroupUsageResourceClass extends ng.resource.IResourceClass<ICharacteristicGroupUsageResource> {
+            query(): ng.resource.IResourceArray<ICharacteristicGroupUsageResource>;
+            query(params: ICharacteristicGroupUsageResourceParameters): ng.resource.IResourceArray<ICharacteristicGroupUsageResource>;
         }
     }
 }

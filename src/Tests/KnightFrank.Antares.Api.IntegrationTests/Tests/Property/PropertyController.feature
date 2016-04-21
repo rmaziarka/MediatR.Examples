@@ -86,7 +86,7 @@ Scenario Outline: Update property
 	# No attributes - no configuration
 	| Retail                             | Retail.Car Showroom   | Commercial    | Commercial    |             |               |         |               |                  |              |                |          |                |                   |
 	| Retail.Retail Unit A1              | Retail.Retail Unit A3 | Commercial    | Commercial    |             |               |         |               |                  |              |                |          |                |                   |
-	| Industrial.Industrial/Distribution | Industrial            | Commercial    | Commercial    |             |               |         |               |                  |              |                |          |                |                   |
+	| Industrial.Industrial Distribution | Industrial            | Commercial    | Commercial    |             |               |         |               |                  |              |                |          |                |                   |
 	| Office                             | Other                 | Commercial    | Commercial    |             |               |         |               |                  |              |                |          |                |                   |
 
 @Property

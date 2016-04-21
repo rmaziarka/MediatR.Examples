@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     
-    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.Activity.QueryResults;
 
     using MediatR;

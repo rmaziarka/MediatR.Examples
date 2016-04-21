@@ -1,12 +1,14 @@
-<div class="section-row row">
-    <div class="col-xs-6">{{ vm.attribute.labelKey | translate }}</div>
-    <div class="col-xs-6" ng-show="vm.minValue != vm.maxValue">
-        <span ng-show="vm.showMinPrefix">{{ 'COMMON.MIN' | translate | lowercase }}</span> {{ vm.minValue | number }}
-        <span ng-show="vm.showHyphen">-</span>
-        <span ng-show="vm.showMaxPrefix">{{ 'COMMON.MAX' | translate | lowercase }}</span> {{ vm.maxValue | number }} {{ vm.attribute.unit | translate }}
-    </div>
-    <div class="col-xs-6" ng-show="vm.minValue == vm.maxValue">
-        <span ng-show="!vm.showHyphen">{{ vm.minValue | number }} {{ vm.attribute.unit | translate }}</span>
-        <span ng-show="vm.showHyphen">-</span>
+<div class="section-row row attribute">
+    <div class="col-xs-6 attribute-label">{{ vm.attribute.labelKey | translate }}</div>
+    <div class="attribute-value">
+        <div class="col-xs-6" ng-show="vm.minValue != vm.maxValue">
+            <span ng-show="vm.showMinPrefix">{{ 'COMMON.MIN' | translate | lowercase }} </span><span class="min-value">{{ vm.minValue | number }}</span>
+            <span ng-show="vm.showHyphen">-</span>
+            <span ng-show="vm.showMaxPrefix">{{ 'COMMON.MAX' | translate | lowercase }} </span><span class="max-value">{{ vm.maxValue | number }}</span><span> {{ vm.attribute.unit | translate }}</span>
+        </div>
+        <div class="col-xs-6" ng-show="vm.minValue == vm.maxValue">
+            <span class="min-value" ng-show="!vm.showHyphen">{{ vm.minValue | number }} {{ vm.attribute.unit | translate }}</span>
+            <span ng-show="vm.showHyphen">-</span>
+        </div>
     </div>
 </div>

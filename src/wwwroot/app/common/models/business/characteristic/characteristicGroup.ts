@@ -2,27 +2,23 @@
 
 module Antares.Common.Models.Business {
 
-    export class CharacteristicGroup implements Dto.ICharacteristicGroup {
-        // base implementation for ICharacteristicGroup
+    export class CharacteristicGroup {
         id: string;
-        code: string;
-        // extension for ICharacteristicGroupUsage
         propertyTypeId: string;
         countryId: string;
-        chracteristicGroupItems: Characteristic[];
         order: number;
-        displayLabel: boolean;
+        isDisplayLabel: boolean;
+        characteristicGroupItems: Characteristic[];
 
         constructor(characteristicGroupUsage?: Dto.ICharacteristicGroupUsage){
             if (characteristicGroupUsage) {
-                angular.extend(this, characteristicGroupUsage.characteristicGroup);
-
+                this.id = characteristicGroupUsage.characteristicGroupId;
                 this.propertyTypeId = characteristicGroupUsage.propertyTypeId;
                 this.countryId = characteristicGroupUsage.countryId;
                 this.order = characteristicGroupUsage.order;
-                this.displayLabel = characteristicGroupUsage.displayLabel;
+                this.isDisplayLabel = characteristicGroupUsage.isDisplayLabel;
 
-                this.chracteristicGroupItems = characteristicGroupUsage.chracteristicGroupItems.map((characteristicGroupItem: Dto.ICharacteristicGroupItem) => { return new Characteristic(characteristicGroupItem) });
+                this.characteristicGroupItems = characteristicGroupUsage.characteristicGroupItems.map((characteristicGroupItem: Dto.ICharacteristicGroupItem) => { return new Characteristic(characteristicGroupItem) });
             }
         }
     }

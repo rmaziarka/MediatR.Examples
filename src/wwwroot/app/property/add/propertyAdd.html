@@ -13,7 +13,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <label for="type" translate="PROPERTY.ADD.TYPE"></label>
-                            <select id="type" name="type" ng-model="vm.property.propertyTypeId" ng-change="vm.loadAttributes()" class="form-control" required>
+                            <select id="type" name="type" ng-model="vm.property.propertyTypeId" ng-change="vm.changePropertyType()" class="form-control" required>
                                 <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
                                 <option ng-repeat-start="propertyType in vm.propertyTypes | orderBy:'order'" label="{{propertyType.name}}" value="{{propertyType.id}}" class="hierarchy1">{{propertyType.name}}</option>
 
@@ -37,254 +37,21 @@
                 <div class="form-group has-error" ng-show="!vm.property.propertyTypeId">
                     <p class="help-block">Select property type to enter property details</p>
                 </div>
-                <fieldset>
-                  <label for="bedrooms">Bedrooms</label>
-                  <div class="row">
-                      <div class="col-md-3">
-                          <div class="form-group">
-                              <input class="form-control" type="number" placeholder="min">
-                          </div>
-                      </div>
-                      <div class="col-md-3">
-                          <div class="form-group">
-                              <input class="form-control" type="number" placeholder="max">
-                          </div>
-                      </div>
-                  </div>
-              </fieldset>
-              <fieldset>
-                  <label for="reception-rooms">Reception rooms</label>
-                  <div class="row">
-                      <div class="col-md-3">
-                          <div class="form-group">
-                              <input class="form-control" type="number" placeholder="min">
-                          </div>
-                      </div>
-                      <div class="col-md-3">
-                          <div class="form-group">
-                              <input class="form-control" type="number" placeholder="max">
-                          </div>
-                      </div>
-                  </div>
-              </fieldset>
-              <fieldset>
-                  <label for="reception-rooms">Bathrooms</label>
-                  <div class="row">
-                      <div class="col-md-3">
-                          <div class="form-group">
-                              <input class="form-control" type="number" placeholder="min">
-                          </div>
-                      </div>
-                      <div class="col-md-3">
-                          <div class="form-group">
-                              <input class="form-control" type="number" placeholder="max">
-                          </div>
-                      </div>
-                  </div>
-              </fieldset>
-              <fieldset>
-                  <label for="reception-rooms">Parking spaces</label>
-                  <div class="row">
-                      <div class="col-md-3">
-                          <div class="form-group">
-                              <input class="form-control" type="number" placeholder="min">
-                          </div>
-                      </div>
-                      <div class="col-md-3">
-                          <div class="form-group">
-                              <input class="form-control" type="number" placeholder="max">
-                          </div>
-                      </div>
-                  </div>
-              </fieldset>
-              <fieldset>
-                  <label for="reception-rooms">Property area</label>
-                  <div class="row">
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <div class="input-group">
-                                  <input class="form-control" type="number" placeholder="min">
-                                  <div class="input-group-addon">sq. ft</div>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <div class="input-group">
-                                  <input class="form-control" type="number" placeholder="max">
-                                  <div class="input-group-addon">sq. ft</div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </fieldset>
-              <fieldset>
-                  <label for="reception-rooms">Land area</label>
-                  <div class="row">
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <div class="input-group">
-                                  <input class="form-control" type="number">
-                                  <div class="input-group-addon">sq. ft</div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </fieldset>
                 <attribute-list component-id="vm.componentIds.attributeListId" user-data="vm.userData" property="vm.property" mode="edit"></attribute-list>
             </fieldset>
         </div>
+
         <div class="col-md-4">
-          <fieldset>
-              <h3 class="page-header" translate="PROPERTY.CHARACTERISTICS"></h3>
-              <div class="form-group has-error">
-                  <p class="help-block">Select property type to enter property characteristics</p>
-              </div>
-              <fielset>
-                  <div class="characteristics-group">
-                      <h5 translate="{{group.value}}"></h5>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" transalte="{{field.value}}" value="">                              
-                          </label>
-                          <button class="characteristics-button characteristics-button-filled pull-right" type="button"><i class="fa fa-comment-o" aria-hidden="true"></i></button>
-                          <input class="form-control" type="text">
-                      </div>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              Semi-detached
-                          </label>
-                      </div>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              Terraced
-                          </label>
-                      </div>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              Mews
-                          </label>
-                      </div>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              New build
-                          </label>
-                          <button class="characteristics-button pull-right" type="button"><i class="fa fa-comment-o" aria-hidden="true"></i></button>
-                      </div>
-                  </div>
-              </fielset>
-              <fielset>
-                  <div class="characteristics-group">
-                      <h5>Age</h5>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              Modern
-                          </label>
-                      </div>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              Post-war
-                          </label>
-                      </div>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              Lorem
-                          </label>
-                      </div>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              Ipsum
-                          </label>
-                      </div>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              Dolor
-                          </label>
-                      </div>
-                  </div>
-              </fielset>
-              <fielset>
-                  <div class="characteristics-group">
-                      <h5>Situation</h5>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              Garden
-                          </label>
-                      </div>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              Land
-                          </label>
-                      </div>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              Patio / Terrace
-                          </label>
-                      </div>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              Conservatory
-                          </label>
-                      </div>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              Balcony
-                          </label>
-                      </div>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              Communal Garden
-                          </label>
-                      </div>
-                  </div>
-              </fielset> 
-              <fielset>
-                  <div class="characteristics-group">
-                      <h5>Location</h5>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              Rural
-                          </label>
-                      </div>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              Village
-                          </label>
-                      </div>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              Town / City
-                          </label>
-                      </div>
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" value="">
-                              Island
-                          </label>
-                      </div>
-                  </div>
-              </fielset>
-        
-      </div>
-        <div class="col-md-12">
+            <fieldset>
+                <h3 class="page-header" translate="PROPERTY.CHARACTERISTICS"></h3>
+                <div class="form-group has-error" ng-show="!vm.property.propertyTypeId">
+                    <p class="help-block">Select property type to enter property characteristics</p>
+                </div>
+                <characteristic-list component-id="vm.componentIds.characteristicListId" property="vm.property"></characteristic-list>
+            </fieldset>
+        </div>
+
+    <div class="col-md-12">
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" id="saveBtn" ng-disabled="!vm.property.address.countryId"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
             </div>

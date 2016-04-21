@@ -1,0 +1,10 @@
+﻿<fielset ng-repeat="characteristicGroup in clvm.characteristicGroups | orderBy: 'order'">
+    <div class="characteristics-group">
+        <h5 translate="{{characteristicGroup.id | dynamicTranslate}}"></h5>
+        <div ng-repeat="characteristic in characteristicGroup.characteristicGroupItems">
+            <characteristic-select characteristic="characteristic" characteristicSelect="clvm.property.characteristicSelect"></characteristic-select>
+        </div>
+    </div>
+</fielset>
+
+

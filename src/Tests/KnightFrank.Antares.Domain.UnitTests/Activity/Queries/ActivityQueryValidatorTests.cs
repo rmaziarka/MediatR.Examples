@@ -12,7 +12,7 @@
 
     using Xunit;
 
-    [Collection("Activity")]
+    [Collection("ActivityQueryValidator")]
     [Trait("FeatureTitle", "Activity")]
     public class ActivityQueryValidatorTests
     {

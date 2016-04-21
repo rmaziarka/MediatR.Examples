@@ -12,3 +12,18 @@ label,
     margin-left: 3px;
   }
 }
+
+.attribute-min {
+  &::after {
+    content: '-';
+    position: absolute;
+    right: -3px;
+    top: 7px;
+  }
+}
+
+.attribute-unit {
+  font-size: 13px;
+  line-height: 1;
+  padding: 11px 12px;
+}

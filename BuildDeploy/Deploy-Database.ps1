@@ -32,6 +32,19 @@ function Deploy-Database {
     $sqlServerVersion = "2014"
 
 	try { 
+	
+        Push-Location
+
+		Invoke-SqlQuery -InputFile 'sql/Update-SqlLogin.sql'`
+			    -SqlVariable "Username = $Username","Password = $Password"
+
+        Invoke-SqlQuery -InputFile 'sql/Update-SqlLoginRole.sql'`
+			    -SqlVariable "Username = $Username","Role = dbcreator"
+
+        Invoke-SqlQuery -InputFile 'sql/Update-SqlLoginRole.sql'`
+			    -SqlVariable "Username = $Username","Role = bulkadmin"
+		
+        Pop-Location
 
 	    Build-EntityFrameworkMigrations @buildParams
 
@@ -41,21 +54,15 @@ function Deploy-Database {
 		
         #due to the bug https://connect.microsoft.com/SQLServer/feedback/details/1420992/import-module-sqlps-may-take-longer-to-load-but-always-returns-warnings-when-the-azure-powershell-module-is-also-installed
         #the first call to Invoke-SqlCmd will return warnings
-
-	    Invoke-SqlQuery -InputFile 'sql/Update-SqlLogin.sql'`
-			    -SqlVariable "Username = $Username","Password = $Password"
-
-        Invoke-SqlQuery -InputFile 'sql/Update-SqlLoginRole.sql'`
-			    -SqlVariable "Username = $Username","Role = dbcreator"
-
-        Invoke-SqlQuery -InputFile 'sql/Update-SqlLoginRole.sql'`
-			    -SqlVariable "Username = $Username","Role = bulkadmin"
+   
         
         Build-SSDTDacpac -ProjectPath $projectDatabaseSqlProjPath -BuildConfiguration $buildConfiguration
         
         $sqlCmdVariables = @{
             'OutputPath' = $projectDatabasePath
         }
+
+        Import-Module -Name "$PSScriptRoot\Import-SqlServerDacDll.ps1"
 
         Deploy-SSDTDacpac -ProjectDatabaseDocpacPath $projectDatabaseDocpacPath `
                           -ProfileName $ssdtProfileNamePath `
