@@ -3,9 +3,9 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
 
-    internal sealed class ActivityTypeLocalizedConfiguration : BaseEntityConfiguration<ActivityTypeLocalized>
+    internal sealed class ActivityTypeLocalisedConfiguration : BaseEntityConfiguration<ActivityTypeLocalised>
     {
-        public ActivityTypeLocalizedConfiguration()
+        public ActivityTypeLocalisedConfiguration()
         {
             this.HasRequired(x => x.Locale)
                 .WithMany()
