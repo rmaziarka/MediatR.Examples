@@ -31,9 +31,8 @@ module Antares.Common.Component {
                         this.setDefaultCountry();
                     }
 
-                    //TODO: storing countryIsocode is temporary - webAPI should accept countryId instead of isoCode
-                    this.address.countryIsocode = this.getSelectedCountryCode();
-                    this.getAddressFormTemplete(this.entityTypeCode, this.address.countryIsocode);
+                    //TODO: webAPI should accept countryId instead of isoCode
+                    this.getAddressFormTemplete(this.entityTypeCode, this.getSelectedCountryCode());
                 })
                 .finally(() => {
                     this.isLoading = false;
@@ -43,10 +42,8 @@ module Antares.Common.Component {
         public changeCountry = (countryId: string): void => {
             this.address.clear();
             this.address.countryId = countryId;
-            //TODO: storing countryIsocode is temporary - webAPI should accept countryId instead of isoCode
-            this.address.countryIsocode = this.getSelectedCountryCode();
-
-            this.getAddressFormTemplete(this.entityTypeCode, this.address.countryIsocode);
+            //TODO: webAPI should accept countryId instead of isoCode
+            this.getAddressFormTemplete(this.entityTypeCode, this.getSelectedCountryCode());
         }
 
         public isSubmitted = (form: any) => {

@@ -7,10 +7,12 @@ module Antares.Common.Component {
     export class CharacteristicListController {
         private componentId: string;
         private characteristicGroupUsageResource: Common.Models.Resources.ICharacteristicGroupUsageResourceClass;
-        private property: Business.Property;
-        public characteristicGroups: Business.CharacteristicGroup[] = [];
 
+        public property: Business.Property;
+        public characteristicGroups: Business.CharacteristicGroup[] = [];
         public characteristicSelect: Business.CharacteristicSelect = new Business.CharacteristicSelect();
+
+        countryCode: string = 'GB';  // TODO: hardcoded!!! - component commmunication needs to be discussed and maybe api should operate on guids instead of codes
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -27,9 +29,11 @@ module Antares.Common.Component {
         }
 
         loadCharacteristics = () => {
-            if (this.property.propertyTypeId && this.property.address.countryIsocode) {
+            if (this.property.propertyTypeId && this.countryCode) {
                 this.characteristicGroupUsageResource
-                    .query({ countryCode: this.property.address.countryIsocode, propertyTypeId: this.property.propertyTypeId })
+                    .query({
+                         countryCode: this.countryCode, propertyTypeId: this.property.propertyTypeId
+                    })
                     .$promise
                     .then((characteristicGroupUsages: any) => {
                         this.characteristicGroups = characteristicGroupUsages.map(
