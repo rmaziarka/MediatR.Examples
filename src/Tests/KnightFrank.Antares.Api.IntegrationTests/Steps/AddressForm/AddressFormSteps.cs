@@ -40,6 +40,7 @@
             var country = new Country { IsoCode = countryCode };
             this.fixture.DataContext.Countries.Add(country);
             this.fixture.DataContext.SaveChanges();
+            this.scenarioContext["CountryId"] = country.Id;
         }
 
         [Given(@"There is an AddressForm for (.*) country code")]

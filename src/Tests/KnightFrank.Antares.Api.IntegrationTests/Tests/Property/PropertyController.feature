@@ -161,8 +161,13 @@ Scenario: Get property
 			| 01-05-2011   | 01-04-2013 | 1000000  | 1200000   |
 			| 01-05-2014   | 01-04-2015 | 1000000  | 1200000   |
 		And Activity for 'latest' property exists in database
+		And Property has following charactersitics
+			| CharacteristicCode | Text         |
+			| Detached           | DetachedText |
+			| Garden             | GardenText   |
 	When User retrieves property details
 	Then User should get OK http status code
 		And The created Property is saved in database
         And Ownership list should be the same as in database
 		And Activities list should be the same as in database
+		And Characteristics list should be the same as in database

@@ -44,14 +44,6 @@
             this.scenarioContext.Set(locale.Id, "LocaleId");
         }
 
-        [Given(@"I have entered followed characteristics")]
-        public void GivenIHaveEnteredFollowedCharacteristics(Table table)
-        {
-            IEnumerable<Characteristic> characteristics = table.CreateSet<Characteristic>();
-            this.fixture.DataContext.Characteristics.AddRange(characteristics);
-            this.fixture.DataContext.SaveChanges();
-        }
-
         [Given(@"I have entered followed translations for characteristics")]
         public void GivenIHaveEnteredFollowedTranslationsForCharacteristics(Table table)
         {

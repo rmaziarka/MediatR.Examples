@@ -128,6 +128,7 @@
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Steps\Activities\ActivitySteps.cs" />
     <Compile Include="Steps\Activities\ActivityTypesSteps.cs" />
+    <Compile Include="Steps\CharacteristicGroups\CharacteristicGroupsSteps.cs" />
     <Compile Include="Steps\Companies\CompaniesSteps.cs" />
     <Compile Include="Steps\Property\PropertyTypesSteps.cs" />
     <Compile Include="Extensions\FixtureExtension.cs" />
@@ -158,6 +159,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AddressFormController.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\CharacteristicGroups\CharacteristicGroupsController.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CharacteristicGroupsController.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Companies\CompaniesController.feature.cs">
       <AutoGen>True</AutoGen>
@@ -245,6 +251,10 @@
     <None Include="Tests\AddressForm\AddressFormController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>AddressFormController.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\CharacteristicGroups\CharacteristicGroupsController.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>CharacteristicGroupsController.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Companies\CompaniesController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
