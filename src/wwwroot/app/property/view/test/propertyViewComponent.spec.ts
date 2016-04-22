@@ -51,6 +51,10 @@ module Antares {
                     return [200, { attributes: []}];
                 });
 
+                $http.expectGET(/\/api\/activities\/types/).respond(() => {
+                    return [200, []];
+                });
+
                 scope = $rootScope.$new();
                 scope['userData'] = userMock;
                 scope['property'] = propertyMock;
@@ -112,6 +116,10 @@ module Antares {
                     return [200, { attributes: [] }];
                 });
 
+                $http.expectGET(/\/api\/activities\/types/).respond(() => {
+                    return [200, []];
+                });
+
                 scope = $rootScope.$new();
                 scope['userData'] = userMock;
                 compile = $compile;
@@ -160,7 +168,8 @@ module Antares {
                     new Business.Activity(<Dto.IActivity>{
                         id : 'It1',
                         propertyId : '1',
-                        activityStatusId : '123',
+                        activityStatusId: '123',
+                        activityTypeId: '123',
                         createdDate : date1Mock,
                         contacts : [
                             <Business.Contact>{ id : 'Contact1', firstName : 'John', surname : 'Test1', title : 'Mr' },
@@ -195,11 +204,12 @@ module Antares {
                 id: '1',
                 propertyTypeId: '1',
                 activities: [
-                    new Business.Activity(<Dto.IActivity>{ id: 'It1', propertyId: '1', activityStatusId: '123', createdDate: date1Mock, contacts: [] }),
+                    new Business.Activity(<Dto.IActivity>{ id: 'It1', propertyId: '1', activityStatusId: '123', activityTypeId: '123', createdDate: date1Mock, contacts: [] }),
                     new Business.Activity(<Dto.IActivity>{
                         id: 'It2',
                         propertyId: '1',
                         activityStatusId: '456',
+                        activityTypeId: '456',
                         createdDate: date2Mock,
                         contacts: [
                             <Business.Contact>{ id: 'Contact1', firstName: 'John', surname: 'Test1', title: 'Mr' },
@@ -224,6 +234,10 @@ module Antares {
 
                 $http.whenGET(/\/api\/properties\/attributes/).respond(() => {
                     return [200, { attributes: [] }];
+                });
+
+                $http.expectGET(/\/api\/activities\/types/).respond(() => {
+                    return [200, []];
                 });
 
                 scope = $rootScope.$new();

@@ -18,6 +18,13 @@ module Antares {
             vendors: '#activity-add-vendors [id^=list-item-]'
         };
 
+        var activityTypes: any =
+            [
+                { id: "1", order: 1 },
+                { id: "2", order: 2 },
+                { id: "3", order: 3 }
+            ];
+
         var activityStatuses: any = {
             items:
             [
@@ -45,6 +52,10 @@ module Antares {
                 return [200, activityStatuses];
             });
 
+            $http.expectGET(/\/api\/activities\/types/).respond(() => {
+                return [200, []];
+            });
+
             scope = $rootScope.$new();
             element = compile('<activity-add></activity-add>')(scope);
             scope.$apply();
@@ -64,7 +75,7 @@ module Antares {
         });
 
         describe('when vendors are passed to component setVendors method', () => {
-            it('and are null then empty vendors array should be set ', () =>{
+            it('and are null then empty vendors array should be set ', () => {
                 controller.setVendors(null);
 
                 expect(controller.vendors.length).toBe(0);
@@ -147,12 +158,15 @@ module Antares {
 
                 var activityAddController: Activity.ActivityAddController = element.find('activity-add').controller('activityAdd');
                 activityAddController.activityStatuses = activityStatuses.items;
+                activityAddController.activityTypes = activityTypes;
                 activityAddController.selectedActivityStatus = _.find(activityStatuses.items, { 'code': 'PreAppraisal' });
+                activityAddController.selectedActivityType = _.find(activityTypes, { id: "1" });
                 activityAddController.setVendors(vendors);
 
                 var expectedRequest = new Business.CreateActivityResource();
                 expectedRequest.propertyId = propertyMock.id;
                 expectedRequest.activityStatusId = activityAddController.selectedActivityStatus.id;
+                expectedRequest.activityTypeId = activityAddController.selectedActivityType.id;
                 expectedRequest.contactIds = vendors.map((vendor: Dto.IContact) => { return vendor.id });
 
                 scope.$apply();
@@ -177,7 +191,9 @@ module Antares {
 
                 var activityAddController: Activity.ActivityAddController = element.find('activity-add').controller('activityAdd');
                 activityAddController.activityStatuses = activityStatuses.items;
+                activityAddController.activityTypes = activityTypes;
                 activityAddController.selectedActivityStatus = _.find(activityStatuses.items, { 'code': 'PreAppraisal' });
+                activityAddController.selectedActivityType = _.find(activityTypes, { id: "1" });
                 activityAddController.setVendors(vendors);
 
                 var expectedResponse = new Business.Activity();

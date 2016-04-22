@@ -132,6 +132,7 @@
     },
     "ADD": {
       "CREATE_ACTIVITY": "Create activity",
+      "TYPE": "Type",
       "STATUS": "Status",
       "VENDORS": "Vendors"
     },

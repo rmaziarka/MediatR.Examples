@@ -9,6 +9,7 @@ module Antares.TestHelpers {
 
             var activity: Dto.IActivity = {
                 activityStatusId: ActivityGenerator.makeRandom('activityStatusId'),
+                activityTypeId: ActivityGenerator.makeRandom('activityTypeId'),
                 contacts: [],
                 createdDate: new Date(),
                 id: ActivityGenerator.makeRandom('id'),

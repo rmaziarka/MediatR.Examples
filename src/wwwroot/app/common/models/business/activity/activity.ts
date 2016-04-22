@@ -5,6 +5,8 @@ module Antares.Common.Models.Business {
         id: string = '';
         propertyId: string = '';
         activityStatusId: string = '';
+        activityTypeId: string = '';
+        activityType: Dto.IActivityType = null;
         contacts: Contact[] = [];
         property: Property = null;
         createdDate: Date = null;
