@@ -6,12 +6,16 @@
 
     using FluentAssertions;
 
+    using FluentValidation.Results;
+
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.Resource;
     using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Activity.Queries;
     using KnightFrank.Antares.Domain.Activity.QueryHandlers;
     using KnightFrank.Antares.Domain.Activity.QueryResults;
+    using KnightFrank.Antares.Domain.Common.Exceptions;
 
     using Moq;
 
@@ -156,6 +160,26 @@
             activityTypes.ElementAt(0).Id.Should().Be(id1);
             activityTypes.ElementAt(1).Id.Should().Be(id2);
             activityTypes.ElementAt(2).Id.Should().Be(id3);
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_NonExistingActivityTypeDefinition_When_Handling_Then_ShouldReturnDomainException(
+            Guid propertyTypeId,
+            string countryCode,
+            [Frozen] Mock<IReadGenericRepository<ActivityTypeDefinition>> activityTypeRepository,
+            ActivityTypeQueryHandler handler)
+        {
+            // Arrange
+            var query = new ActivityTypeQuery { CountryCode = countryCode, PropertyTypeId = propertyTypeId };
+
+            IQueryable<ActivityTypeDefinition> activityTypeDefinitions = new ActivityTypeDefinition[0].AsQueryable();
+
+            activityTypeRepository.Setup(r => r.Get())
+                                  .Returns(activityTypeDefinitions);
+
+            // Act & Assert
+            Assert.Throws<DomainValidationException>(() => { handler.Handle(query); });
         }
     }
 }
