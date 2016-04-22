@@ -9,12 +9,14 @@ Scenario: Get charactersitics
 
 
 Scenario Outline: Check error codes for get charactersitics method
+	Given I have House property type id
 	When User try to retrieves characteristics for <country> country and <propertyType> property type
 	Then User should get <statusCode> http status code
 
 	Examples: 
 	| country | propertyType | statusCode |
-	|         | bla          | BadRequest |
-	| bla     | bla          | BadRequest |
-	|         |              | BadRequest |
+	|         | proper       | BadRequest |
+	| bla     | proper       | OK         |
+	| GB      |              | BadRequest |
+	| GB      | bla          | BadRequest |
 

@@ -5,15 +5,11 @@
     using System.Linq;
     using System.Net.Http;
 
-    using FluentAssertions;
-
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Characteristics;
     using KnightFrank.Antares.Dal.Model.Resource;
-
-    using Newtonsoft.Json;
 
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
@@ -67,7 +63,6 @@
             this.scenarioContext.Set(characteristicGroup, "CharacteristicGroup");
         }
 
-
         [When(@"User retrieves characteristics for (.*) country and defined property type")]
         public void WhenUserRetrievesCharacteristicsGroupForCountryAndPropertyType(string country)
         {
@@ -79,6 +74,10 @@
         [When(@"User try to retrieves characteristics for (.*) country and (.*) property type")]
         public void WhenUserTryToRetrieveCharacteristicsGroupForCountryAndPropertyType(string countryCodeId, string propertyTypeId)
         {
+            propertyTypeId = propertyTypeId.Equals("proper")
+                ? this.scenarioContext.Get<Guid>("PropertyTypeId").ToString()
+                : propertyTypeId;
+
             this.ReciveCharacteristicsGroup(countryCodeId, propertyTypeId);
         }
 
@@ -89,6 +88,5 @@
 
             this.scenarioContext.SetHttpResponseMessage(response);
         }
-
     }
 }
