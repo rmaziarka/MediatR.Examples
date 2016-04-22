@@ -165,7 +165,9 @@
     <None Include="Scripts\Data\Configuration\activitytype.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\Data\Configuration\activitytypedefinition.csv" />
+    <None Include="Scripts\Data\Configuration\activitytypedefinition.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
