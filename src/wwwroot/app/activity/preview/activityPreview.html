@@ -2,6 +2,10 @@
     <div class="col-xs-5"><a href="" ng-click="vm.goToActivityView()" translate="ACTIVITY.PREVIEW.ACTIVITY_VIEW_LINK"></a></div>
 </div>
 <div class="row section-row">
+    <div class="col-xs-5" translate="ACTIVITY.PREVIEW.TYPE"></div>
+    <div class="col-xs-7" id="activity-preview-type">{{vm.activity.activityTypeId | dynamicTranslate}} </div>
+</div>
+<div class="row section-row">
     <div class="col-xs-5" translate="ACTIVITY.PREVIEW.STATUS"></div>
     <div class="col-xs-7" id="activity-preview-status">{{vm.activity.activityStatusId | dynamicTranslate}} </div>
 </div>

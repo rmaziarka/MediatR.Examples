@@ -151,6 +151,7 @@
     },
     "PREVIEW": {
       "ACTIVITYPREVIEW": "Activity preview",
+      "TYPE": "Type",
       "STATUS": "Status",
       "CREATION_DATE": "Creation date",
       "VENDORS": "Vendor(s)",

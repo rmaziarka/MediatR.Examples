@@ -28,3 +28,4 @@
 :r .\SQL\Contact.sql
 :r .\SQL\ActivityType.sql
 :r .\SQL\ActivityTypeDefinition.sql
+:r .\SQL\ActivityTypeLocalised.sql
