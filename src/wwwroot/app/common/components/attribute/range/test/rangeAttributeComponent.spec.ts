@@ -1,99 +1,118 @@
 ﻿/// <reference path="../../../../../typings/_all.d.ts" />
 module Antares {
     import Business = Common.Models.Business;
-    import RangeAttributeController = Antares.Common.Component.RangeAttributeController
-    import Dto = Common.Models.Dto;
+    import RangeAttributeController = Common.Component.RangeAttributeController
 
-    describe('Given range attribute component is loaded', () => {
+    describe('Given range attribute component is loaded', () =>{
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
             compile: ng.ICompileService,
             state: ng.ui.IStateService,
-            assertValidator: TestHelpers.AssertValidators;
+            assertValidator: TestHelpers.AssertValidators,
+            pageObjectSelectors = {
+                minField : 'input#min',
+                maxField : 'input#max'
+            };
 
-        describe('when attribute is initialized', () => {
+        var testValidationMessageDisplay = (shouldBeDisplayed: Boolean, fieldSelector: string) =>{
+            var isActive = element.find(fieldSelector).closest('.form-group').next('[ng-messages]').hasClass('ng-active');
+            var isHidden = element.find(fieldSelector).closest('.form-group').next('[ng-messages]').hasClass('ng-hide');
+
+            expect(isActive).toBe(shouldBeDisplayed);
+            if (isActive) {
+                expect(isHidden).toBe(false);
+            }
+        };
+
+        describe('when attribute is initialized', () =>{
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
-                $state: ng.ui.IStateService) => {
+                $state: ng.ui.IStateService) =>{
 
-                var attributeValuesMock = [{ min: 0 }, { max: 0 }];
                 var attributeMock = new Business.Attribute();
                 attributeMock.nameKey = "TestAttribute";
                 attributeMock.min = "min";
                 attributeMock.max = "max";
 
                 scope = $rootScope.$new();
-                scope['attributeValues'] = attributeValuesMock;
                 scope['attribute'] = attributeMock;
                 scope['mode'] = 'edit';
                 compile = $compile;
                 state = $state;
 
-                element = $compile('<range-attribute mode="{{mode}}" attribute="attribute" min-value="attributeValues[attribute.min]" max-value="attributeValues[attribute.max]"></range-attribute>')(scope);
+                element = $compile('<form name="form"><range-attribute mode="{{mode}}" attribute="attribute" min-value="1" max-value="4"></range-attribute></form>')(scope);
                 scope.$apply();
 
                 assertValidator = new TestHelpers.AssertValidators(element, scope);
             }));
 
-            it('when min field value is empty then min validation message should not be displayed', () => {
-                assertValidator.assertMinValueValidator(null, true, 'input#min');
+            it('when min field value is empty then min validation message should not be displayed', () =>{
+                assertValidator.assertMinValueValidator(null, true, pageObjectSelectors.minField);
+                testValidationMessageDisplay(false, pageObjectSelectors.minField);
             });
 
-            it('when min field value is empty then max validation message should not be displayed', () => {
-                assertValidator.assertMaxValueValidator(null, true, 'input#min');
+            it('when min field value is empty then max validation message should not be displayed', () =>{
+                assertValidator.assertMaxValueValidator(null, true, pageObjectSelectors.minField);
+                testValidationMessageDisplay(false, pageObjectSelectors.minField);
             });
 
-            it('when min field value is not lower than minimum validation message should not be displayed', () => {
-                var minValue = 0;
-                assertValidator.assertMinValueValidator(minValue, true, 'input#min');
+            it('when min field value is not lower than zero validation message should not be displayed', () =>{
+                assertValidator.assertMinValueValidator(0, true, pageObjectSelectors.minField);
+                testValidationMessageDisplay(false, pageObjectSelectors.minField);
             });
 
-            it('when min field value is lower then minimum then validation message should be displayed', () => {
-                var minValue = 0;
-                assertValidator.assertMinValueValidator(minValue - 1, false, 'input#min');
+            it('when min field value is lower than zero then validation message should be displayed', () =>{
+                assertValidator.assertMinValueValidator(- 1, false, pageObjectSelectors.minField);
+                testValidationMessageDisplay(true, pageObjectSelectors.minField);
             });
 
-            it('when max field value is not lower then minimum then validation message should be displayed', () => {
-                var minValue = 0;
-                assertValidator.assertMinValueValidator(minValue, true, 'input#max');
+            it('when max field value is not lower than 0 then validation message should not be displayed', () =>{
+                assertValidator.assertMinValueValidator(0, true, pageObjectSelectors.maxField);
+                testValidationMessageDisplay(false, pageObjectSelectors.maxField);
             });
 
-            it('when max field value is lower then minimum then validation message should be displayed', () => {
-                var minValue = 0;
-                assertValidator.assertMinValueValidator(minValue - 1, false, 'input#max');
+            it('when max field value is lower then 0 then validation message should be displayed', () =>{
+                assertValidator.assertMinValueValidator(-1, false, pageObjectSelectors.maxField);
+                testValidationMessageDisplay(true, pageObjectSelectors.maxField);
             });
 
-            it('when min field value is higher than max field value then validation message should be displayed', () => {
+            it('when min field value is higher than max field value then validation message should be displayed', () =>{
                 var value = 1000;
-                var max = element.find('input#max');
+                var max = element.find(pageObjectSelectors.maxField);
                 max.val(value).trigger('input').trigger('change').trigger('blur');
-                assertValidator.assertMinValueValidator(value + 1, false, 'input#min');
+                assertValidator.assertMinValueValidator(value + 1, false, pageObjectSelectors.minField);
+                testValidationMessageDisplay(true, pageObjectSelectors.minField);
             });
 
-            it('when min field value is not higher than max field value then validation message should not be displayed', () => {
+            it('when min field value is not higher than max field value then validation message should not be displayed', () =>{
                 var value = 1000;
-                var max = element.find('input#max');
+                var max = element.find(pageObjectSelectors.maxField);
                 max.val(value).trigger('input').trigger('change').trigger('blur');
-                assertValidator.assertMinValueValidator(value, true, 'input#min');
+                assertValidator.assertMinValueValidator(value, true, pageObjectSelectors.minField);
+                testValidationMessageDisplay(false, pageObjectSelectors.minField);
             });
+
+            it('when max field value is changed to lower than min field value then validation message should be displayed', () =>{
+                var value = 0;
+                var max = element.find(pageObjectSelectors.maxField);
+                max.val(value).trigger('input').trigger('change').trigger('blur');
+                testValidationMessageDisplay(true, pageObjectSelectors.minField);
         });
 
-        describe('given attribute range is rendered', () => {
+            describe('given attribute range is rendered', () =>{
             var scope: ng.IScope,
                 element: ng.IAugmentedJQuery;
 
             var pageObjectSelectors = {
-                attributeValue: '.attribute-value div:not(.ng-hide) span:not(.ng-hide)'
+                    attributeValue : '.attribute-value div:not(.ng-hide) span:not(.ng-hide)'
             };
 
             var controller: RangeAttributeController;
 
-            var attribute = {};
-
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
-                $compile: ng.ICompileService) => {
+                    $compile: ng.ICompileService) =>{
 
                 scope = $rootScope.$new();
                 element = $compile('<range-attribute mode="view" min-value="attribute.minValue" max-value="attribute.maxValue" attribute="attribute"></range-attribute>')(scope);
@@ -103,7 +122,7 @@ module Antares {
                 controller = element.controller('rangeAttributeController');
             }));
 
-            it('and attribute values are specified then valid text is visible', () => {
+                it('and attribute values are specified then valid text is visible', () =>{
                 var testData = [
                     { attribute: { minValue: 1, maxValue: 2 }, expectedText: '1-2' },
                     { attribute: { minValue: 1, maxValue: 1 }, expectedText: '1' },
@@ -119,7 +138,7 @@ module Antares {
                     { attribute: { minValue: null, maxValue: null, unit: 'UNITS.SQUARE_FEET' }, expectedText: '-' }
                 ];
 
-                testData.forEach((data) => {
+                    testData.forEach((data) =>{
                     var attribute = data.attribute;
 
                     scope['attribute'] = attribute;
@@ -133,4 +152,5 @@ module Antares {
             });
         });
     });
-}
+    });
+};
