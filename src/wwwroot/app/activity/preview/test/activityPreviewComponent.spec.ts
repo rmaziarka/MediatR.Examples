@@ -14,6 +14,7 @@ module Antares {
         var pageObjectSelectors = {
             createdDate: '#activity-preview-created-date',
             status: '#activity-preview-status',
+            type: '#activity-preview-type',
             vendor: '#activity-preview-vendors #activity-preview-vendor-item-'
         }
 
@@ -43,6 +44,16 @@ module Antares {
                 // assert
                 var statusElement = element.find(pageObjectSelectors.status);
                 expect(statusElement.text()).toBe('DYNAMICTRANSLATIONS.' + activityMock.activityStatusId);
+            });
+            
+            it('when activity is set then activity type value should be displayed', () => {
+                // arrange + act
+                controller.setActivity(activityMock);
+                scope.$apply();
+
+                // assert
+                var statusElement = element.find(pageObjectSelectors.type);
+                expect(statusElement.text()).toBe('DYNAMICTRANSLATIONS.' + activityMock.activityTypeId);
             });
 
             it('when activity is set then activity creation date value should be displayed in proper format', () => {
