@@ -1,6 +1,8 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Property.CommandHandlers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
 
     using FluentAssertions;
 
@@ -44,7 +46,7 @@
            UpdatePropertyCommandHandler handler)
         {
             // Arrange
-            propertyRepository.Setup(p => p.GetById(command.Id)).Returns(property);
+            propertyRepository.Setup(p => p.GetWithInclude(It.IsAny<Expression<Func<Property, bool>>>(), It.IsAny<Expression<Func<Property, object>>[]>())).Returns(new List<Property> { property });
 
             // Act
             handler.Handle(command);

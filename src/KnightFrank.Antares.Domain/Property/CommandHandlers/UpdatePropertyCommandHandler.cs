@@ -35,6 +35,8 @@
                 throw new ResourceNotFoundException("Property does not exist", message.Id);
             }
 
+            Mapper.Map(message, property);
+
             List<PropertyCharacteristic> existingCharacteristics = property.PropertyCharacteristics.ToList();
 
             existingCharacteristics
