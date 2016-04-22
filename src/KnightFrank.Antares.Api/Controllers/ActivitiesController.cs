@@ -43,9 +43,6 @@
         [Route("")]
         public Activity CreateActivity([FromBody] CreateActivityCommand command)
         {
-            //TODO remove after id is sent by UI
-            command.ActivityTypeId = this.repository.Get().First().Id;
-
             Guid activityId = this.mediator.Send(command);
 
             return this.GetActivity(activityId);
