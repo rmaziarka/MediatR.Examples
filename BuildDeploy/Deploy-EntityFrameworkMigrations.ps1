@@ -33,5 +33,5 @@ function Deploy-EntityFrameworkMigrations {
 		throw "Migrate assembly failed with exit code: $LASTEXITCODE"
 	}
 
-    Write-Host "Deploying Entity Framework migrations completed successfully." -ForegroundColor Green
+    Write-Host "Deploying Entity Framework migrations to '$ConnectionString' completed successfully." -ForegroundColor Green
 }

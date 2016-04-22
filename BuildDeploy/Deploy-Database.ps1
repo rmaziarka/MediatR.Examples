@@ -2,7 +2,11 @@ function Deploy-Database {
     param(
         [Parameter(Mandatory=$true)]
         [string] 
-        $ProjectRootPath
+        $ProjectRootPath,
+
+        [Parameter(Mandatory=$false)]
+        [switch]
+        $DropExistingDatabase
     )	
 
 	$packageName = 'KnightFrank.Antares.Dal'
@@ -24,11 +28,13 @@ function Deploy-Database {
 	}
 	
 	$DatabaseName = 'KnightFrank.Antares'
-	$ConnectionString = "Server=localhost;Database=KnightFrank.Antares;User Id=antares;Password=ant@res!1"
-	$IntergrationTestsConnectionString = "Server=localhost;Database=KnightFrank.Antares.Api.IntegrationTests;Integrated Security=True;"
+    $IntegrationTestsDatabaseName = 'KnightFrank.Antares.Api.IntegrationTests'
+    $Username = "antares"
+    $Password = "ant@res!1"	
+	$ConnectionString = "Server=localhost;Database=$DatabaseName;User Id=$Username;Password=$Password"
+	$IntegrationTestsConnectionString = "Server=localhost;Database=$IntegrationTestsDatabaseName;Integrated Security=True;"
 	$MigrateAssembly = 'KnightFrank.Antares.Dal.dll'
-	$Username = "antares"
-    $Password = "ant@res!1"
+	
     $sqlServerVersion = "2014"
 
 	try { 
@@ -46,11 +52,17 @@ function Deploy-Database {
 		
         Pop-Location
 
+        if($DropExistingDatabase)
+        {
+            Drop-Database -SqlDatabase $DatabaseName
+            Drop-Database -SqlDatabase $IntegrationTestsDatabaseName
+        }
+
 	    Build-EntityFrameworkMigrations @buildParams
 
 	    Deploy-EntityFrameworkMigrations -MigrateAssembly $MigrateAssembly -ConnectionString $ConnectionString -PackagePath $outputPath
 	    
-        Deploy-EntityFrameworkMigrations -MigrateAssembly $MigrateAssembly -ConnectionString $IntergrationTestsConnectionString -PackagePath $outputPath
+        Deploy-EntityFrameworkMigrations -MigrateAssembly $MigrateAssembly -ConnectionString $IntegrationTestsConnectionString -PackagePath $outputPath
 		
         #due to the bug https://connect.microsoft.com/SQLServer/feedback/details/1420992/import-module-sqlps-may-take-longer-to-load-but-always-returns-warnings-when-the-azure-powershell-module-is-also-installed
         #the first call to Invoke-SqlCmd will return warnings
@@ -73,7 +85,7 @@ function Deploy-Database {
         Deploy-SSDTDacpac -ProjectDatabaseDocpacPath $projectDatabaseDocpacPath `
                           -ProfileName $ssdtProfileNamePath `
                           -SqlServerVersion $sqlServerVersion `
-                          -ConnectionString $IntergrationTestsConnectionString `
+                          -ConnectionString $IntegrationTestsConnectionString `
                           -SqlCmdVariables $sqlCmdVariables 
 
     } finally {

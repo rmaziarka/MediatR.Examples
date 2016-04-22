@@ -27,7 +27,7 @@ function Deploy-SSDTDacpac
 
     )	
     
-    Write-Host -Object "Start deploy SSDT ..."
+    Write-Host "Deploying SSDT on '$ConnectionString'"
 
     if (!(Test-Path -Path $ProjectDatabaseDocpacPath)) 
     {
@@ -93,7 +93,7 @@ function Deploy-SSDTDacpac
     try {
         Write-Host 'Starting DACPAC deployment...'
         $dacServices.Deploy($dacPac, $targetDatabase, $upgradeExisting, $dacProfile.DeployOptions)
-        Write-Host 'Deployment succeeded!'
+        Write-Host "Deploying SSDT on '$ConnectionString' completed successfully."  -ForegroundColor Green
     } 
     catch [Microsoft.SqlServer.Dac.DacServicesException] {  
         throw ('Deployment failed: ''{0}'' Reason: ''{1}''' -f $_.Exception.Message, $_.Exception.InnerException.Message)
