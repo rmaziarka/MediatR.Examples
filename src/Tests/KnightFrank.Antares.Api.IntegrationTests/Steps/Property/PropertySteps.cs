@@ -42,7 +42,7 @@
         [Given(@"Property does not exist in DB")]
         public void GivenPropertyDoesNotExistsInDataBase()
         {
-            this.scenarioContext.Set(Guid.Empty, "AddedPropertyId");
+            this.scenarioContext.Set(Guid.NewGuid(), "AddedPropertyId");
         }
 
         [Given(@"Address for add/update property is defined")]
@@ -127,8 +127,8 @@
             }
             else
             {
-                PropertyType propertyType = this.fixture.DataContext.PropertyTypes.First(i => i.Code.Equals(propertyTypeCode));
-                this.scenarioContext.Set(propertyType.Id, "PropertyTypeId");
+                Guid propertyTypeId = this.fixture.DataContext.PropertyTypes.Single(i => i.Code.Equals(propertyTypeCode)).Id;
+                this.scenarioContext.Set(propertyTypeId, "PropertyTypeId");
             }
         }
 

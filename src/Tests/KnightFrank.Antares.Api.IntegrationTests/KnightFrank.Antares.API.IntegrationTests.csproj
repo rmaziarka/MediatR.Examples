@@ -127,6 +127,7 @@
   <ItemGroup>
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Steps\Activities\ActivitySteps.cs" />
+    <Compile Include="Steps\Activities\ActivityTypesSteps.cs" />
     <Compile Include="Steps\Companies\CompaniesSteps.cs" />
     <Compile Include="Steps\Property\PropertyTypesSteps.cs" />
     <Compile Include="Extensions\FixtureExtension.cs" />
@@ -137,7 +138,7 @@
     <Compile Include="Steps\AddressForm\AddressFormSteps.cs" />
     <Compile Include="Steps\Contacts\ContactsSteps.cs" />
     <Compile Include="Steps\Enums\EnumsSteps.cs" />
-    <Compile Include="Steps\Ownership\OwnershipSteps.cs" />
+    <Compile Include="Steps\Property\OwnershipSteps.cs" />
     <Compile Include="Steps\Property\PropertySteps.cs" />
     <Compile Include="Steps\Requierement\RequierementNotesSteps.cs" />
     <Compile Include="Steps\Requierement\ResidentialSalesRequierementSteps.cs" />

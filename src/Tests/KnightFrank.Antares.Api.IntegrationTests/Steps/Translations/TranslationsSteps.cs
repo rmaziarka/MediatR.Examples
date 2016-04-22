@@ -98,7 +98,7 @@
         [When(@"User retrieves translations for (.*) isocode")]
         public void WhenUserRetrievesTranslationsFor_Isocode(string isoCode)
         {
-            string requestUrl = $"{ApiUrl}/" + isoCode;
+            string requestUrl = $"{ApiUrl}/{isoCode}";
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
