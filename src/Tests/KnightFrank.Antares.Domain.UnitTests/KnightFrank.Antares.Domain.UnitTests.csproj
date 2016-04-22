@@ -137,6 +137,8 @@
     <Compile Include="Enum\Queries\EnumQueryValidatorTests.cs" />
     <Compile Include="Enum\QueryHandlers\EnumQueryHandlerTests.cs" />
     <Compile Include="FixtureExtension\OwnershipExtensions.cs" />
+    <Compile Include="Autofixture\IgnoreVirtualMembers.cs" />
+    <Compile Include="Autofixture\IgnoreVirtualMembersCustomisation.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandHandlerTests.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandDomainValidatorTests.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandValidatorTests.cs" />

@@ -42,13 +42,13 @@
         [AutoMoqData]
         public void Given_ActivityStatusValidator_When_Validating_Then_CorrectActivityStatusIsFiltered(
             [Frozen]Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            List<EnumTypeItem> mockedData,
             EnumTypeItem enumTypeItem,
             Guid activityStatusId,
             ActivityStatusValidator validator)
         {
             // Arrange
-            enumTypeItem.EnumType.Code = "ActivityStatus";
+            var mockedData = new List<EnumTypeItem>();
+            enumTypeItem.EnumType = new EnumType { Code = "ActivityStatus" };
             enumTypeItem.Id = activityStatusId;
 
             mockedData.Add(enumTypeItem);
