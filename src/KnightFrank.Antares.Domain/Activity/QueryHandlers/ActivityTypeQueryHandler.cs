@@ -7,6 +7,7 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Queries;
     using KnightFrank.Antares.Domain.Activity.QueryResults;
+    using KnightFrank.Antares.Domain.Common.Exceptions;
 
     using MediatR;
     public class ActivityTypeQueryHandler:IRequestHandler<ActivityTypeQuery, IEnumerable<ActivityTypeQueryResult>>
@@ -29,6 +30,11 @@
                                  Order = x.Order
                              })
                              .ToList();
+
+            if (!activityTypes.Any())
+            {
+                throw new DomainValidationException("query", "No configuration found.");
+            }
 
             return activityTypes;
         }
