@@ -25,20 +25,15 @@ module Antares {
 
         var controller: PropertyViewController;
 
-        describe('and property is loaded', () =>{
-            var propertyMock: Dto.IProperty = {
+        describe('and property is loaded', () => {
+            var propertyMock = TestHelpers.PropertyGenerator.generate({
                 id: '1',
                 propertyTypeId: 'propType1',
-                divisionId: '',
-                division: null,
-                address : Antares.Mock.AddressForm.FullAddress,
-                ownerships : [],
                 activities : [
                     new Business.Activity(<Dto.IActivity>{ id: 'It1', propertyId: '1', activityStatusId: '123', contacts:[] }),
                     new Business.Activity(<Dto.IActivity>{ id: 'It2', propertyId: '1', activityStatusId: '1234', contacts: [] })
-                ],
-                attributeValues: {}
-            };
+                ]
+            });
 
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
@@ -54,6 +49,10 @@ module Antares {
 
                 $http.whenGET(/\/api\/properties\/attributes/).respond(() => {
                     return [200, { attributes: []}];
+                });
+
+                $http.expectGET(/\/api\/activities\/types/).respond(() => {
+                    return [200, []];
                 });
 
                 scope = $rootScope.$new();
@@ -96,17 +95,8 @@ module Antares {
             });
         });
 
-        describe('and activities are loaded', () => {
-            var propertyMock: Dto.IProperty = {
-                id: '1',
-                propertyTypeId: '1',
-                divisionId: '',
-                division: null,
-                address: Antares.Mock.AddressForm.FullAddress,
-                ownerships: [],
-                activities: [],
-                attributeValues: []
-            };
+        describe('and activities are loaded', () =>{
+            var propertyMock = TestHelpers.PropertyGenerator.generate();
 
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
@@ -124,6 +114,10 @@ module Antares {
 
                 $http.whenGET(/\/api\/properties\/attributes/).respond(() => {
                     return [200, { attributes: [] }];
+                });
+
+                $http.expectGET(/\/api\/activities\/types/).respond(() => {
+                    return [200, []];
                 });
 
                 scope = $rootScope.$new();
@@ -174,7 +168,8 @@ module Antares {
                     new Business.Activity(<Dto.IActivity>{
                         id : 'It1',
                         propertyId : '1',
-                        activityStatusId : '123',
+                        activityStatusId: '123',
+                        activityTypeId: '123',
                         createdDate : date1Mock,
                         contacts : [
                             <Business.Contact>{ id : 'Contact1', firstName : 'John', surname : 'Test1', title : 'Mr' },
@@ -205,28 +200,25 @@ module Antares {
         describe('and activity details is clicked', () => {
             var date1Mock = new Date('2011-01-01');
             var date2Mock = new Date('2011-01-05');
-            var propertyMock: Dto.IProperty = {
-                id : '1',
-                propertyTypeId : '1',
-                address: Antares.Mock.AddressForm.FullAddress,
-                divisionId: '',
-                division: null,
-                ownerships : [],
-                activities : [
-                    new Business.Activity(<Dto.IActivity>{ id: 'It1', propertyId: '1', activityStatusId: '123', createdDate: date1Mock, contacts: [] }),
+            var propertyMock = TestHelpers.PropertyGenerator.generateDto({
+                id: '1',
+                propertyTypeId: '1',
+                activities: [
+                    new Business.Activity(<Dto.IActivity>{ id: 'It1', propertyId: '1', activityStatusId: '123', activityTypeId: '123', createdDate: date1Mock, contacts: [] }),
                     new Business.Activity(<Dto.IActivity>{
-                        id : 'It2',
-                        propertyId : '1',
+                        id: 'It2',
+                        propertyId: '1',
                         activityStatusId: '456',
+                        activityTypeId: '456',
                         createdDate: date2Mock,
-                        contacts : [
-                            <Business.Contact>{ id : 'Contact1', firstName : 'John', surname : 'Test1', title : 'Mr' },
-                            <Business.Contact>{ id : 'Contact2', firstName : 'Amy', surname : 'Test2', title : 'Mrs' }
+                        contacts: [
+                            <Business.Contact>{ id: 'Contact1', firstName: 'John', surname: 'Test1', title: 'Mr' },
+                            <Business.Contact>{ id: 'Contact2', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }
                         ]
                     })
-                ],
-                attributeValues: []
-            };
+                ]
+                }
+            );
 
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
@@ -242,6 +234,10 @@ module Antares {
 
                 $http.whenGET(/\/api\/properties\/attributes/).respond(() => {
                     return [200, { attributes: [] }];
+                });
+
+                $http.expectGET(/\/api\/activities\/types/).respond(() => {
+                    return [200, []];
                 });
 
                 scope = $rootScope.$new();
@@ -275,8 +271,9 @@ module Antares {
             });
         });
 
-        describe('and contact list is opened', () => {
-            var propertyMock: Dto.IProperty = {
+        describe('and contact list is opened', () =>{
+            var propertyMock = TestHelpers.PropertyGenerator.generateDto(
+            {
                 id: '1',
                 propertyTypeId: '1',
                 divisionId: '',
@@ -285,7 +282,7 @@ module Antares {
                 ownerships: [],
                 activities: [],
                 attributeValues: []
-            };
+                });
 
             beforeEach(inject(($rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
@@ -357,16 +354,9 @@ module Antares {
                 }
             ];
 
-            var propertyMock: Dto.IProperty = {
-                id: '1',
-                address: Antares.Mock.AddressForm.FullAddress,
-                divisionId: '',
-                division: null,
-                ownerships: ownerships,
-                activities: [],
-                propertyTypeId: 'typeId',
-                attributeValues: []
-            };
+            var propertyMock = TestHelpers.PropertyGenerator.generateDto({
+                ownerships: ownerships
+            });
 
             beforeEach(inject(($rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,

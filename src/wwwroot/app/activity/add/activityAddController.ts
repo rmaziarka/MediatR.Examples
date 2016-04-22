@@ -5,13 +5,15 @@ module Antares.Activity {
     import Business = Common.Models.Business;
 
     export class ActivityAddController {
-
+        propertyTypeId: string;
         componentId: string;
-        activities: Common.Models.Dto.IActivity[];
+        activities: Common.Models.Business.Activity[];
         activityStatuses: any;
         selectedActivityStatus: any;
+        selectedActivityType: any;
         defaultActivityStatusCode: string = 'PreAppraisal';
-        activityResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityResource>;
+        activityResource: Common.Models.Resources.IActivityResourceClass;
+        activityTypes: any[];
 
         public vendors: Array<Business.Contact> = [];
 
@@ -25,6 +27,18 @@ module Antares.Activity {
 
             this.activityResource = dataAccessService.getActivityResource();
             this.dataAccessService.getEnumResource().get({ code: 'ActivityStatus' }).$promise.then(this.onActivityStatusLoaded);
+            this.loadActivityTypes();
+        }
+        
+        loadActivityTypes = () => {
+            this.activityResource
+                .getActivityTypes({
+                    countryCode: "GB", propertyTypeId: this.propertyTypeId
+                }, null)
+                .$promise
+                .then((activityTypes: any) => {
+                    this.activityTypes = activityTypes;
+                });
         }
 
         onActivityStatusLoaded = (result: any) => {
@@ -45,6 +59,7 @@ module Antares.Activity {
             var activity = new Business.Activity();
             activity.propertyId = propertyId;
             activity.activityStatusId = this.selectedActivityStatus.id;
+            activity.activityTypeId = this.selectedActivityType.id;
             activity.contacts = this.vendors;
 
             return this.activityResource.save(new Business.CreateActivityResource(activity)).$promise.then((result: Dto.IActivity) => {

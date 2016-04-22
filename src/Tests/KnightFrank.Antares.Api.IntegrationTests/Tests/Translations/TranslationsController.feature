@@ -1,6 +1,5 @@
 ﻿Feature: TranslationsController
 
-
 @Translations
 Scenario: Gets translations for resource by isoCode
 	Given There is a Locale for xx country code
@@ -18,7 +17,6 @@ Scenario: Gets translations for resource by isoCode
 			| code1 | charakterystyka1 |
 	When User retrieves translations for xx isocode
 	Then translations are as expected
-
 
 @ignore
 @Translations

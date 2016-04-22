@@ -4,7 +4,6 @@
 
         id: string = '';
         countryId: string = '';
-        countryIsocode: string = '';
         addressFormId: string = '';
         propertyName: string = '';
         propertyNumber: string = '';

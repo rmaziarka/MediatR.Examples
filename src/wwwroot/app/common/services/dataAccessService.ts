@@ -6,112 +6,123 @@ module Antares.Services {
     export class DataAccessService {
         private rootUrl: string = "";
 
-        constructor(private $resource: ng.resource.IResourceService, private appConfig: Common.Models.IAppConfig){
+        constructor(private $resource: ng.resource.IResourceService, private appConfig: Common.Models.IAppConfig) {
         }
 
         private updateAction: ng.resource.IActionDescriptor = {
-            method : 'PUT',
-            isArray : false
+            method: 'PUT',
+            isArray: false
         };
 
         private createOwnershipAction: ng.resource.IActionDescriptor = {
-            url : this.appConfig.rootUrl + '/api/properties/:propertyId/ownerships',
-            method : 'POST',
-            isArray : false,
-            params : {
-                propertyId : '@propertyId'
+            url: this.appConfig.rootUrl + '/api/properties/:propertyId/ownerships',
+            method: 'POST',
+            isArray: false,
+            params: {
+                propertyId: '@propertyId'
             }
         };
 
         private getPropertyTypesAction: ng.resource.IActionDescriptor = {
-            url : this.appConfig.rootUrl + '/api/properties/types?countryCode=:countryCode&divisionCode=:divisionCode&localeCode=:localeCode',
-            method : 'GET',
-            isArray : false,
-            params : {
-                countryCode : '@countryCode',
-                divisionCode : '@divisionCode',
-                localeCode : '@localeCode'
+            url: this.appConfig.rootUrl + '/api/properties/types?countryCode=:countryCode&divisionCode=:divisionCode&localeCode=:localeCode',
+            method: 'GET',
+            isArray: false,
+            params: {
+                countryCode: '@countryCode',
+                divisionCode: '@divisionCode',
+                localeCode: '@localeCode'
+            }
+        };
+
+        private getActivityTypesAction: ng.resource.IActionDescriptor = {
+            url: this.appConfig.rootUrl + '/api/activities/types?countryCode=:countryCode&propertyTypeId=:propertyTypeId',
+            method: 'GET',
+            isArray: true,
+            params: {
+                countryCode: '@countryCode',
+                propertyTypeId: '@propertyTypeId'
             }
         };
 
         private getAttributesAction: ng.resource.IActionDescriptor = {
-            url : this.appConfig.rootUrl + '/api/properties/attributes?countryCode=:countryCode&propertyTypeId=:propertyTypeId',
-            method : 'GET',
-            isArray : false,
-            params : {
-                countryCode : '@countryCode',
-                propertyTypeId : '@propertyTypeId'
+            url: this.appConfig.rootUrl + '/api/properties/attributes?countryCode=:countryCode&propertyTypeId=:propertyTypeId',
+            method: 'GET',
+            isArray: false,
+            params: {
+                countryCode: '@countryCode',
+                propertyTypeId: '@propertyTypeId'
             }
         };
 
-        getCompanyResource(): Resources.IBaseResourceClass<Resources.ICompanyResource>{
+        getCompanyResource(): Resources.IBaseResourceClass<Resources.ICompanyResource> {
             return <Resources.IBaseResourceClass<Resources.ICompanyResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/companies/:id');
         }
 
-        getContactResource(): Resources.IBaseResourceClass<Resources.IContactResource>{
+        getContactResource(): Resources.IBaseResourceClass<Resources.IContactResource> {
             return <Resources.IBaseResourceClass<Resources.IContactResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/contacts/:id');
         }
 
-        getRequirementResource(): Resources.IBaseResourceClass<Resources.IRequirementResource>{
+        getRequirementResource(): Resources.IBaseResourceClass<Resources.IRequirementResource> {
             return <Resources.IBaseResourceClass<Resources.IRequirementResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/requirements/:id');
         }
 
-        getCountryResource(): Resources.ICountryResourceClass{
+        getCountryResource(): Resources.ICountryResourceClass {
             return <Resources.ICountryResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/resources/countries/addressform?entityTypeItemCode=:entityTypeCode');
         }
 
-        getAddressFormResource(): Resources.IAddressFormResourceClass{
+        getAddressFormResource(): Resources.IAddressFormResourceClass {
             return <Resources.IAddressFormResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/addressForms/:id?entityType=:entityTypeCode&countryCode=:countryCode');
         }
 
-        getPropertyResource(): Resources.IPropertyResourceClass{
+        getPropertyResource(): Resources.IPropertyResourceClass {
             return <Resources.IPropertyResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/properties/:id', null, {
-                    update : this.updateAction,
-                    createOwnership : this.createOwnershipAction,
-                    getPropertyTypes : this.getPropertyTypesAction,
-                    getAttributes : this.getAttributesAction
+                    update: this.updateAction,
+                    createOwnership: this.createOwnershipAction,
+                    getPropertyTypes: this.getPropertyTypesAction,
+                    getAttributes: this.getAttributesAction
                 });
         }
 
-        getEnumResource(): Resources.IBaseResourceClass<Resources.IEnumResource>{
+        getEnumResource(): Resources.IBaseResourceClass<Resources.IEnumResource> {
             return <Resources.IBaseResourceClass<Resources.IEnumResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/enums/:code/items');
         }
 
-        getEnumTranslationResource(): Resources.ITranslationResourceClass<any>{
+        getEnumTranslationResource(): Resources.ITranslationResourceClass<any> {
             return <Resources.ITranslationResourceClass<any>>
                 this.$resource(this.appConfig.rootUrl + '/api/translations/enums/:isoCode');
         }
 
-        getResourceTranslationResource(): Resources.ITranslationResourceClass<any>{
+        getResourceTranslationResource(): Resources.ITranslationResourceClass<any> {
             return <Resources.ITranslationResourceClass<any>>
                 this.$resource(this.appConfig.rootUrl + '/api/translations/resources/:isoCode');
         }
 
-        getStaticTranslationResource(): Resources.ITranslationResourceClass<any>{
+        getStaticTranslationResource(): Resources.ITranslationResourceClass<any> {
             return <Resources.ITranslationResourceClass<any>>
                 this.$resource('/translations/:isoCode.json');
         }
 
-        getActivityResource(): Resources.IBaseResourceClass<Resources.IActivityResource>{
-            return <Resources.IBaseResourceClass<Resources.IActivityResource>>
+        getActivityResource(): Resources.IActivityResourceClass {
+            return <Resources.IActivityResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/activities/:id', null, {
-                    update : this.updateAction
+                    update: this.updateAction,
+                    getActivityTypes: this.getActivityTypesAction
                 });
         }
 
-        getRequirementNoteResource(): Resources.IBaseResourceClass<Resources.IRequirementNoteResource>{
+        getRequirementNoteResource(): Resources.IBaseResourceClass<Resources.IRequirementNoteResource> {
             return <Resources.IBaseResourceClass<Resources.IRequirementNoteResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/requirements/:id/notes');
         }
 
-        getCharacteristicGroupUsageResource(): Resources.ICharacteristicGroupUsageResourceClass{
+        getCharacteristicGroupUsageResource(): Resources.ICharacteristicGroupUsageResourceClass {
             return <Resources.ICharacteristicGroupUsageResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/characteristicGroups?countryCode=:countryCode&propertyTypeId=:propertyTypeId');
         }

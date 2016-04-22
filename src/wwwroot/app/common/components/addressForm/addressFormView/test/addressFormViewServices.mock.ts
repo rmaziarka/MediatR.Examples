@@ -18,7 +18,6 @@ module Antares.Mock.AddressForm {
     };
 
     export var FullAddress = new Business.Address(address);
-    FullAddress.countryIsocode = 'GB';
 
     export var AddressFormWithOneLine =
         new Business.AddressForm('a1', 'GB', [

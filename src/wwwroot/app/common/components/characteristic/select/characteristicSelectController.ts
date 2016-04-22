@@ -1,12 +1,28 @@
 /// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Component {
-    import Business = Common.Models.Business;
+	import Business = Common.Models.Business;
 
-    export class CharacteristicSelectController {
-        public characteristic: Business.Characteristic;
-        public characteristicSelect: Business.CharacteristicSelect;
-    }
+	export class CharacteristicSelectController {
+		public characteristic: Business.Characteristic;
+		public characteristicSelect: Business.CharacteristicSelect;
+		public isCommentVisible: boolean = false;
 
-    angular.module('app').controller('CharacteristicSelectController', CharacteristicSelectController);
+		toggleComment = () =>{
+			this.isCommentVisible = !this.isCommentVisible;
+		};
+
+		onSelectCharacteristicChange = () =>{ 			
+			if (!this.characteristicSelect.isSelected) {
+				this.characteristicSelect.text = null;
+				this.isCommentVisible = false;
+			}
+		};
+
+        isTextEntered = () =>{
+	        return this.characteristicSelect.text.length > 0;
+        };
+	}
+
+	angular.module('app').controller('CharacteristicSelectController', CharacteristicSelectController);
 }

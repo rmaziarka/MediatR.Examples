@@ -15,6 +15,7 @@
 
             this.CreateMap<CreateOrUpdatePropertyAddress, Address>();
             this.CreateMap<CreateOrUpdatePropertyAttributeValues, AttributeValues>();
+            this.CreateMap<CreateOrUpdatePropertyCharacteristic, PropertyCharacteristic>();
         }
     }
 }

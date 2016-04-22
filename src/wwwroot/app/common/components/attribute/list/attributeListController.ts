@@ -11,7 +11,8 @@ module Antares.Common.Component {
         private userData: Dto.IUserData;
         private attributes: Business.Attribute[];
         private mode: string;
-
+        countryCode: string = 'GB';  // TODO: hardcoded!!! - component commmunication needs to be discussed and maybe api should operate on guids instead of codes
+        
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
@@ -23,11 +24,11 @@ module Antares.Common.Component {
         }
 
         loadAttributes = () => {
-            if (this.property.propertyTypeId && this.property.address.countryIsocode) {
+            if (this.property.propertyTypeId && this.countryCode) {
                 this.attributes = null;
                 this.propertyResource
                     .getAttributes({
-                        countryCode: this.property.address.countryIsocode, propertyTypeId: this.property.propertyTypeId
+                        countryCode: this.countryCode, propertyTypeId: this.property.propertyTypeId
                     }, null)
                     .$promise
                     .then((attributes: any) =>{

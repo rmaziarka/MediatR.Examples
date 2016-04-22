@@ -42,13 +42,18 @@
 
             this.RuleFor(x => x.AttributeValues)
                 .NotNull();
-
+            
             this.When(x => x.AttributeValues != null, () =>
             {
                 this.RuleFor(x => x.AttributeValues)
                     .Must(this.BeOverOrEqualZero).WithMessage("Attributes values cannot be lower than 0.")
-                    .Must(this.BeBetweenMinMax).WithMessage("Attributes values minumum cannot be greater than maximum.")
+                    .Must(this.BeBetweenMinMax).WithMessage("Attributes values minimum cannot be greater than maximum.")
                     .Must(this.BeAllowedForPropertyType).WithMessage("Property contains attributes incorrect for given property type.");
+            });
+
+            this.When(x => x.PropertyCharacteristics != null, () =>
+            {
+                this.RuleFor(x => x.PropertyCharacteristics).SetCollectionValidator(new CreateOrUpdatePropertyCharacteristicValidator());
             });
 
             this.Custom(this.DivisionExists);

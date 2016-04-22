@@ -33,30 +33,26 @@ module Antares {
 
         var controller: PropertyDetailsController;
 
-        describe('and property is specified', () => {
-            var propertyMock: Dto.IProperty = {
-                id: '1',
-                propertyTypeId: 'propType1',
-                divisionId: '',
-                division: null,
-                address: Mock.AddressForm.FullAddress,
-                ownerships: [],
-                activities: [],
-                attributeValues: {
-                    minBedrooms: 1,
-                    maxBedrooms: 2,
-                    minReceptions: 3,
-                    maxReceptions: 4,
-                    minBathrooms: 5,
-                    maxBathrooms: 6,
-                    minArea: 7,
-                    maxArea: null,
-                    minLandArea: 8,
-                    maxLandArea: 9,
-                    minCarParkingSpaces: 10,
-                    maxCarParkingSpaces: 11,
+        describe('and property is specified', () =>{
+            var propertyMock = TestHelpers.PropertyGenerator.generate(
+            {
+                id : '1',
+                propertyTypeId : 'propType1',
+                attributeValues : {
+                    minBedrooms : 1,
+                    maxBedrooms : 2,
+                    minReceptions : 3,
+                    maxReceptions : 4,
+                    minBathrooms : 5,
+                    maxBathrooms : 6,
+                    minArea : 7,
+                    maxArea : null,
+                    minLandArea : 8,
+                    maxLandArea : 9,
+                    minCarParkingSpaces : 10,
+                    maxCarParkingSpaces : 11,
                 }
-            };
+            });
 
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
@@ -98,7 +94,7 @@ module Antares {
                     var attributeLabel : string = $(attributeElements[am.order]).find(pageObjectSelectors.attributeLabel).first().text();
                     var attributeMinValue : string = $(attributeElements[am.order]).find(pageObjectSelectors.attributeMinValue).first().text();
                     var attributeMaxValue : string = $(attributeElements[am.order]).find(pageObjectSelectors.attributeMaxValue).first().text();
-                   
+
                     expect(attributeLabel).toBe(am.labelKey);
                     expect(attributeMinValue).toEqual((propertyMock.attributeValues['min' + am.nameKey] || '').toString());
                     expect(attributeMaxValue).toEqual((propertyMock.attributeValues['max' + am.nameKey] || '').toString());

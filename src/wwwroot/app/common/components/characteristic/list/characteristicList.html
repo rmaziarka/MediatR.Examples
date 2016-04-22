@@ -2,7 +2,7 @@
     <div id="characteristics-group-{{characteristicGroup.id}}" class="characteristics-group" data-type="characteristics-group">
         <h5 ng-if="characteristicGroup.isDisplayLabel" translate="{{characteristicGroup.id | dynamicTranslate}}"></h5>
         <div ng-repeat="characteristic in characteristicGroup.characteristicGroupItems">
-            <characteristic-select characteristic="characteristic" characteristic-select="clvm.characteristicSelect"></characteristic-select>
+            <characteristic-select characteristic="characteristic" characteristic-select="clvm.property.propertyCharacteristicsMap[characteristic.id]"></characteristic-select>
         </div>
     </div>
 </fielset>

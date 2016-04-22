@@ -1,4 +1,17 @@
 ﻿<form ng-submit="addActivityForm.$valid" name="addActivityForm" id="addActivityForm" method="post">
+    <div class="form-group" ng-class="{'has-error': (addActivityForm.$submitted || addActivityForm.type.$dirty) && addActivityForm.type.$invalid}">
+        <div class="row">
+            <div class="col-md-9">
+                <label for="type" class="" translate="ACTIVITY.ADD.TYPE"></label>
+                <select class="form-control" required id="type" name="type" ng-options="item as (item.id | dynamicTranslate) for item in vm.activityTypes track by item.id" ng-model="vm.selectedActivityType">
+                    <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
+                </select>
+                <div ng-messages="addActivityForm.type.$error" ng-show="addActivityForm.$submitted || addActivityForm.type.$dirty">
+                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="form-group" ng-class="{'has-error': (addActivityForm.$submitted || addActivityForm.status.$dirty) && addActivityForm.status.$invalid}">
         <div class="row">
             <div class="col-md-9">

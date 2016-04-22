@@ -1,8 +1,27 @@
-<div class="checkbox">
-    <label>
-        <input type="checkbox" ng-model="vm.characteristicSelect.isSelected">
-        {{vm.characteristic.id | dynamicTranslate}}
-    </label>
-    <button ng-if="vm.characteristic.isDisplayText" class="characteristics-button characteristics-button-filled pull-right" type="button"><i class="fa fa-comment-o" aria-hidden="true"></i></button>
-    <input ng-if="vm.characteristic.isDisplayText" class="form-control" type="text" ng-model="vm.characteristicSelect.text">
-</div>
+<ng-form name="formCharacteristic" ng-class="{'has-error': formCharacteristic.characteristicText.$dirty && formCharacteristic.characteristicText.$invalid}">
+    
+        <div class="checkbox">
+            <label >
+                <input type="checkbox" characteristicSelect ng-model="vm.characteristicSelect.isSelected" ng-change="vm.onSelectCharacteristicChange()">
+                {{vm.characteristic.id | dynamicTranslate}}
+            </label>
+            <button ng-if="vm.characteristic.isDisplayText"
+                    ng-show="vm.characteristicSelect.isSelected"
+                    data-type="characteristicCloudIcon"
+                    ng-class="{'characteristics-button-filled': vm.isTextEntered()}"
+                    class="characteristics-button pull-right"
+                    type="button" ng-click="vm.toggleComment()">
+                <i class="fa fa-comment-o" aria-hidden="true"></i>
+            </button>
+                <input class="form-control"
+                       data-type="characteristicText"
+                       ng-maxlength="50"
+                       type="text"
+                       name="characteristicText"
+                       ng-model="vm.characteristicSelect.text" ng-show="vm.isCommentVisible || formCharacteristic.characteristicText.$invalid">
+                <div ng-messages="formCharacteristic.characteristicText.$error" ng-show="formCharacteristic.characteristicText.$dirty">
+                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                </div>
+            </div>
+    
+</ng-form>

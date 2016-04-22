@@ -3,6 +3,7 @@ declare module Antares.Common.Models.Dto {
         id: string;
         propertyId: string;
         activityStatusId: string;
+        activityTypeId: string;
         contacts: IContact[];
         property?: IProperty;
         createdDate?: Date;
