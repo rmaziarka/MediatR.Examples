@@ -13,6 +13,7 @@
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Common.Validator;
@@ -42,6 +43,7 @@
         public void Given_ValidCreateActivityCommand_When_Validating_Then_IsValid(
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
+            [Frozen] Mock<IGenericRepository<ActivityType>> activityTypeRepository,
             CreateActivityCommandValidator validator,
             CreateActivityCommand cmd)
         {
@@ -50,6 +52,7 @@
 
             enumTypeItemRepository.Setup(r => r.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
             contactRepository.Setup(r => r.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(fakeContactResult);
+            activityTypeRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityType, bool>>>())).Returns(true);
 
             // Act
             ValidationResult validationResult = validator.Validate(cmd);
@@ -118,6 +121,43 @@
             validationResult.IsValid.Should().BeFalse();
             validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.ActivityStatusId));
             validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == NotEmptyError);
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_CommandActivityTypeIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
+            [Frozen] Mock<IGenericRepository<ActivityType>> activityTypeRepository,
+            CreateActivityCommandValidator validator)
+        {
+            // Arrange 
+            CreateActivityCommand cmd =
+                this.fixture.Build<CreateActivityCommand>().With(c => c.ActivityTypeId, default(Guid)).Create();
+            
+            // Act
+            ValidationResult validationResult = validator.Validate(cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeFalse();
+            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.ActivityTypeId));
+            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == NotEmptyError);
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_CommandActivityTypeDoesNotExist_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
+           [Frozen] Mock<IGenericRepository<ActivityType>> activityTypeRepository,
+           CreateActivityCommandValidator validator,
+           CreateActivityCommand cmd)
+        {
+            // Arrange 
+            activityTypeRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityType, bool>>>())).Returns(false);
+
+            // Act
+            ValidationResult validationResult = validator.Validate(cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeFalse();
+            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.ActivityTypeId));
         }
 
         [Theory]

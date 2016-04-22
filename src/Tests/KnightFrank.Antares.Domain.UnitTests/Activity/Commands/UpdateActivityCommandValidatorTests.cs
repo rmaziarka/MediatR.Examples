@@ -10,7 +10,6 @@
     using FluentValidation.TestHelper;
 
     using KnightFrank.Antares.Dal.Model.Enum;
-    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
@@ -18,7 +17,8 @@
 
     using Moq;
 
-    using Ploeh.AutoFixture.Xunit2;
+    using Ploeh.AutoFixture;
+    using Ploeh.AutoFixture.AutoMoq;
 
     using Xunit;
 
@@ -26,6 +26,23 @@
     [Collection("UpdateActivityCommandValidator")]
     public class UpdateActivityCommandValidatorTests
     {
+        private readonly Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository;
+        private readonly Mock<IGenericRepository<ActivityType>> activityTypeRepository;
+        private readonly Mock<IGenericRepository<Activity>> activityRepository;
+        private readonly UpdateActivityCommandValidator validator;
+
+        public UpdateActivityCommandValidatorTests()
+        {
+            IFixture fixture = new Fixture()
+                   .Customize(new AutoMoqCustomization());
+
+            this.enumTypeItemRepository = fixture.Freeze<Mock<IGenericRepository<EnumTypeItem>>>();
+            this.activityTypeRepository = fixture.Freeze<Mock<IGenericRepository<ActivityType>>>();
+            this.activityRepository = fixture.Freeze<Mock<IGenericRepository<Activity>>>();
+
+            this.validator = fixture.Create<UpdateActivityCommandValidator>();
+        }
+
         [Theory]
         [AutoMoqData]
         [InlineAutoMoqData(0)]
@@ -35,108 +52,92 @@
             decimal marketAppraisalPrice,
             decimal recommendedPrice,
             decimal vendorEstimatedPrice,
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            UpdateActivityCommand command,
-            UpdateActivityCommandValidator validator)
+            UpdateActivityCommand command)
         {
             command.MarketAppraisalPrice = marketAppraisalPrice;
             command.RecommendedPrice = recommendedPrice;
             command.VendorEstimatedPrice = vendorEstimatedPrice;
 
-            AssertIfValid(enumTypeItemRepository, command, validator);
+            this.AssertIfValid(command);
         }
 
         [Theory]
         [AutoMoqData]
         public void Given_ValidUpdateActivityCommand_When_MarketAppraisalPriceIsNotSet_Validating_Then_IsValid(
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            UpdateActivityCommand command,
-            UpdateActivityCommandValidator validator)
+            UpdateActivityCommand command)
         {
             command.MarketAppraisalPrice = null;
 
-            AssertIfValid(enumTypeItemRepository, command, validator);
+            this.AssertIfValid(command);
         }
 
         [Theory]
         [AutoMoqData]
         public void Given_ValidUpdateActivityCommand_When_RecommendedPriceIsNotSet_Validating_Then_IsValid(
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            UpdateActivityCommand command,
-            UpdateActivityCommandValidator validator)
+            UpdateActivityCommand command)
         {
             command.RecommendedPrice = null;
 
-            AssertIfValid(enumTypeItemRepository, command, validator);
+            this.AssertIfValid(command);
         }
 
         [Theory]
         [AutoMoqData]
         public void Given_ValidUpdateActivityCommand_When_VendorEstimatedPriceIsNotSet_Validating_Then_IsValid(
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            UpdateActivityCommand command,
-            UpdateActivityCommandValidator validator)
+            UpdateActivityCommand command)
         {
             command.VendorEstimatedPrice = null;
 
-            AssertIfValid(enumTypeItemRepository, command, validator);
+            this.AssertIfValid(command);
         }
 
         [Theory]
         [AutoMoqData]
         public void Given_InvalidUpdateActivityCommand_When_MarketAppraisalPriceIsNegative_Then_IsNotValid(
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            UpdateActivityCommand command,
-            UpdateActivityCommandValidator validator)
+            UpdateActivityCommand command)
         {
             command.MarketAppraisalPrice = -1;
 
-            this.AssertIfNotNegativePriceValidation(enumTypeItemRepository, command, validator, nameof(command.MarketAppraisalPrice));
+            AssertIfNotNegativePriceValidation(command, this.validator, nameof(command.MarketAppraisalPrice));
         }
 
         [Theory]
         [AutoMoqData]
         public void Given_InvalidUpdateActivityCommand_When_RecommendedPriceIsNegative_Then_IsNotValid(
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            UpdateActivityCommand command,
-            UpdateActivityCommandValidator validator)
+            UpdateActivityCommand command)
         {
             command.RecommendedPrice = -1;
 
-            this.AssertIfNotNegativePriceValidation(enumTypeItemRepository, command, validator, nameof(command.RecommendedPrice));
+            AssertIfNotNegativePriceValidation(command, this.validator, nameof(command.RecommendedPrice));
         }
 
         [Theory]
         [AutoMoqData]
         public void Given_InvalidUpdateActivityCommand_When_VendorEstimatedPriceIsNegative_Then_IsNotValid(
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            UpdateActivityCommand command,
-            UpdateActivityCommandValidator validator)
+            UpdateActivityCommand command)
         {
             command.VendorEstimatedPrice = -1;
 
-            this.AssertIfNotNegativePriceValidation(enumTypeItemRepository, command, validator, nameof(command.VendorEstimatedPrice));
+            AssertIfNotNegativePriceValidation(command, this.validator, nameof(command.VendorEstimatedPrice));
         }
 
         [Theory]
         [AutoMoqData]
-        public void Given_ValidationRules_When_Configuring_Then_ActivityStatusIdHaveValidatorSetup(UpdateActivityCommandValidator validator)
+        public void Given_ValidationRules_When_Configuring_Then_ActivityStatusIdHaveValidatorSetup()
         {
-            validator.ShouldHaveChildValidator(x => x.ActivityStatusId, typeof(ActivityStatusValidator));
+            this.validator.ShouldHaveChildValidator(x => x.ActivityStatusId, typeof(ActivityStatusValidator));
         }
 
         [Theory]
         [AutoMoqData]
         public void Given_ExistingActivityIdInCommand_When_Validating_Then_ValidationPasses(
-            [Frozen]Mock<IGenericRepository<Activity>> activityRepository,
-            [Frozen]Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            UpdateActivityCommand command,
-            UpdateActivityCommandValidator validator)
+            UpdateActivityCommand command)
         {
-            enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
-            activityRepository.Setup(x => x.GetById(command.Id)).Returns(new Activity());
+            this.enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
+            this.activityTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<ActivityType, bool>>>())).Returns(true);
+            this.activityRepository.Setup(x => x.GetById(command.Id)).Returns(new Activity());
 
-            ValidationResult validationResult = validator.Validate(command);
+            ValidationResult validationResult = this.validator.Validate(command);
 
             validationResult.IsValid.Should().BeTrue();
         }
@@ -144,30 +145,23 @@
         [Theory]
         [AutoMoqData]
         public void Given_NotExistingActivityIdInCommand_When_Validating_Then_ShouldReturnValidationError(
-            [Frozen]Mock<IGenericRepository<Activity>> activityRepository,
-            [Frozen]Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            UpdateActivityCommand command,
-            UpdateActivityCommandValidator validator)
+            UpdateActivityCommand command)
         {
-            enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
-            activityRepository.Setup(x => x.GetById(command.Id)).Returns((Activity)null);
+            this.enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
+            this.activityTypeRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityType, bool>>>())).Returns(true);
+            this.activityRepository.Setup(x => x.GetById(command.Id)).Returns((Activity)null);
 
-            ValidationResult validationResult = validator.Validate(command);
+            ValidationResult validationResult = this.validator.Validate(command);
 
             validationResult.IsValid.Should().BeFalse();
             validationResult.Errors.Should().ContainSingle(x => x.ErrorMessage == "Activity does not exist.");
             validationResult.Errors.Should().ContainSingle(x => x.PropertyName == nameof(command.Id));
         }
 
-        private void AssertIfNotNegativePriceValidation(
-            Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            UpdateActivityCommand command,
+        private static void AssertIfNotNegativePriceValidation(UpdateActivityCommand command,
             UpdateActivityCommandValidator validator,
             string propertyName)
         {
-            // Arrange
-            enumTypeItemRepository.Setup(r => r.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
-
             // Act
             ValidationResult validationResult = validator.Validate(command);
 
@@ -177,14 +171,13 @@
             validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == nameof(Messages.greaterthanorequal_error));
         }
 
-        private static void AssertIfValid(Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository, UpdateActivityCommand command,
-            UpdateActivityCommandValidator validator)
+        private void AssertIfValid(UpdateActivityCommand command)
         {
-            // Arrange
-            enumTypeItemRepository.Setup(r => r.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
+            this.enumTypeItemRepository.Setup(r => r.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
+            this.activityTypeRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityType, bool>>>())).Returns(true);
 
             // Act
-            ValidationResult validationResult = validator.Validate(command);
+            ValidationResult validationResult = this.validator.Validate(command);
 
             // Assert
             validationResult.IsValid.Should().BeTrue();

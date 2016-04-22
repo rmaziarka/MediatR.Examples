@@ -5,12 +5,10 @@
     using System.Linq.Expressions;
 
     using FluentAssertions;
-    using FluentAssertions.Common;
 
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
-    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.CommandHandlers;
@@ -32,7 +30,6 @@
         public void Given_ValidCommand_When_Handling_Then_ShouldSaveActivity(
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
-            [Frozen] Mock<IGenericRepository<ActivityType>> activityTypeRepository,
             CreateActivityCommandHandler handler,
             CreateActivityCommand cmd,
             Guid expectedActivityId)
@@ -49,10 +46,6 @@
 
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
                              .Returns(cmd.ContactIds.Select(id => new Contact { Id = id }));
-
-            // remove after adding activity type in view
-            activityTypeRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<ActivityType, bool>>>()))
-                             .Returns(new [] {new ActivityType()});
 
             // Act
             handler.Handle(cmd);

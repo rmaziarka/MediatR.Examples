@@ -1,19 +1,21 @@
 ﻿namespace KnightFrank.Antares.Domain.Activity.Commands
 {
     using System;
-    using System.Linq;
 
     using FluentValidation;
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.Validator;
 
     public class CreateActivityCommandValidator : AbstractValidator<CreateActivityCommand>
     {
-        public CreateActivityCommandValidator(IGenericRepository<Property> propertyRepository, IGenericRepository<EnumTypeItem> enumTypeItemRepository)
+        public CreateActivityCommandValidator(IGenericRepository<Property> propertyRepository,
+            IGenericRepository<EnumTypeItem> enumTypeItemRepository,
+            IGenericRepository<ActivityType> activityTypeRepository)
         {
             Func<CreateActivityCommand, ValidationFailure> propertyExists = cmd =>
             {
@@ -26,6 +28,10 @@
             this.RuleFor(x => x.ActivityStatusId).NotEmpty().SetValidator(new ActivityStatusValidator(enumTypeItemRepository));
 
             this.Custom(propertyExists);
+            this.RuleFor(x => x.ActivityTypeId).NotEmpty();
+            this.RuleFor(x => x.ActivityTypeId)
+                .SetValidator(new ActivityTypeValidator(activityTypeRepository))
+                .When(x => !x.ActivityTypeId.Equals(Guid.Empty));
         }
     }
 }

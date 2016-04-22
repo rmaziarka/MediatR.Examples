@@ -15,5 +15,7 @@
         public decimal? RecommendedPrice { get; set; }
 
         public decimal? VendorEstimatedPrice { get; set; }
+
+        public Guid ActivityTypeId { get; set; }
     }
 }

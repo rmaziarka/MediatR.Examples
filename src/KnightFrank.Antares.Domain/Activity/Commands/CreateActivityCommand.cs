@@ -16,5 +16,7 @@
         public Guid ActivityStatusId { get; set; }
 
         public IList<Guid> ContactIds { get; set; }
+
+        public Guid ActivityTypeId { get; set; }
     }
 }

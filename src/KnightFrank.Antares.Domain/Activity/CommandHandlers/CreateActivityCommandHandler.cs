@@ -7,7 +7,6 @@
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
-    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
@@ -20,14 +19,12 @@
     {
         private readonly IGenericRepository<Activity> activityRepository;
         private readonly IGenericRepository<Contact> contactRepository;
-        private readonly IGenericRepository<ActivityType> activityTypeRepository;
         private readonly IDomainValidator<CreateActivityCommand> domainValidator;
 
-        public CreateActivityCommandHandler(IGenericRepository<Activity> activityRepository, IGenericRepository<Contact> contactRepository, IGenericRepository<ActivityType> activityTypeRepository, IDomainValidator<CreateActivityCommand> domainValidator)
+        public CreateActivityCommandHandler(IGenericRepository<Activity> activityRepository, IGenericRepository<Contact> contactRepository, IDomainValidator<CreateActivityCommand> domainValidator)
         {
             this.activityRepository = activityRepository;
             this.contactRepository = contactRepository;
-            this.activityTypeRepository = activityTypeRepository;
             this.domainValidator = domainValidator;
         }
 
@@ -43,9 +40,6 @@
 
             List<Contact> vendors = this.contactRepository.FindBy(x => message.ContactIds.Contains(x.Id)).ToList();
             activity.Contacts = vendors;
-            
-            // remove after adding activity type in view
-            activity.ActivityTypeId = this.activityTypeRepository.FindBy(a => true).First().Id;
 
             this.activityRepository.Add(activity);
             this.activityRepository.Save();

@@ -1,5 +1,7 @@
 ﻿namespace KnightFrank.Antares.Domain.Activity.Commands
 {
+    using System;
+
     using FluentValidation;
     using FluentValidation.Results;
 
@@ -12,7 +14,7 @@
     {
         private readonly IGenericRepository<Activity> activityRepository;
 
-        public UpdateActivityCommandValidator(IGenericRepository<EnumTypeItem> enumTypeItemRepository, IGenericRepository<Activity> activityRepository)
+        public UpdateActivityCommandValidator(IGenericRepository<EnumTypeItem> enumTypeItemRepository, IGenericRepository<Activity> activityRepository, IGenericRepository<ActivityType> activityTypeRepository)
         {
             this.activityRepository = activityRepository;
 
@@ -23,6 +25,11 @@
             this.RuleFor(x => x.ActivityStatusId).SetValidator(new ActivityStatusValidator(enumTypeItemRepository));
 
             this.Custom(this.ActivityIdExists);
+
+            this.RuleFor(x => x.ActivityTypeId).NotEmpty();
+            this.RuleFor(x => x.ActivityTypeId)
+                .SetValidator(new ActivityTypeValidator(activityTypeRepository))
+                .When(x => !x.ActivityTypeId.Equals(Guid.Empty));
         }
 
         private ValidationFailure ActivityIdExists(UpdateActivityCommand command)
