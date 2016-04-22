@@ -113,7 +113,7 @@
         public Dictionary<string, string> GetPropertyDetails()
         {
             List<string> keys = this.Driver.GetElements(this.propertyDetailsLabels).Select(el => el.Text.Replace(" ", string.Empty).ToLower()).ToList();
-            List<string> values = this.Driver.GetElements(this.propertyDetailsValues).Select(el => el.Text).ToList();
+            List<string> values = this.Driver.GetElements(this.propertyDetailsValues).Select(el => el.Text.Trim()).ToList();
             return keys.Zip(values, (key, value) => new { key, value }).ToDictionary(x => x.key, x => x.value);
         }
     }
