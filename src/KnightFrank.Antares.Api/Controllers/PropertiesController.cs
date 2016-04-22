@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.API.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
@@ -73,6 +74,26 @@
         [Route("")]
         public Property UpdateProperty(UpdatePropertyCommand command)
         {
+            // TODO for testing. 
+            //command.PropertyCharacteristics = new List<CreateOrUpdatePropertyCharacteristic>
+            //{
+            //    new CreateOrUpdatePropertyCharacteristic
+            //    {
+            //        CharacteristicId = Guid.Parse("998D9AF0-8F08-E611-826C-7446A0AADF7F"),
+            //        Text = "Z kontrolera mowe"
+            //    },
+            //    new CreateOrUpdatePropertyCharacteristic
+            //    {
+            //        CharacteristicId = Guid.Parse("B28D9AF0-8F08-E611-826C-7446A0AADF7F"),
+            //        Text = "Z kontrolera update 3"
+            //    },
+            //    new CreateOrUpdatePropertyCharacteristic
+            //    {
+            //        CharacteristicId = Guid.Parse("F98D9AF0-8F08-E611-826C-7446A0AADF7F"),
+            //        Text = "Z kontrolera nowe--"
+            //    }
+            //};
+
             Guid propertyId = this.mediator.Send(command);
             return this.GetProperty(propertyId);
         }

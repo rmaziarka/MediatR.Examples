@@ -10,7 +10,9 @@
     {
         protected override void Configure()
         {
-            this.CreateMap<UpdatePropertyCommand, Property>();
+            this.CreateMap<UpdatePropertyCommand, Property>()
+                .ForMember(dest => dest.PropertyCharacteristics, opt => opt.Ignore());
+
             this.CreateMap<CreatePropertyCommand, Property>();
 
             this.CreateMap<CreateOrUpdatePropertyAddress, Address>();
