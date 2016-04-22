@@ -15,7 +15,8 @@ module Antares.TestHelpers {
                 activities: [],
                 divisionId: PropertyGenerator.makeRandom('divisionId'),
                 division: null,
-                attributeValues: []
+                attributeValues: {},
+                propertyCharacteristics: []
             };
 
             return angular.extend(propertyMock, specificData || {});

@@ -12,7 +12,7 @@ module Antares.TestHelpers {
                 contacts: [],
                 createdDate: new Date(),
                 id: ActivityGenerator.makeRandom('id'),
-                property: PropertyGenerator.generate(),
+                property: PropertyGenerator.generateDto(),
                 propertyId: ActivityGenerator.makeRandom('propertyId'),
             }
 

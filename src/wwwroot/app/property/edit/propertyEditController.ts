@@ -74,13 +74,15 @@ module Antares.Property {
 
         defineComponentIds() {
             this.componentIds = {
-                attributeListId: 'editProperty:attributeListComponent'
+                attributeListId: 'editProperty:attributeListComponent',
+                characteristicListId: 'editProperty:characteristicListComponent'
             };
         }
 
         defineComponents() {
             this.components = {
-                attributeList: () => { return this.componentRegistry.get(this.componentIds.attributeListId); }
+                attributeList: () => { return this.componentRegistry.get(this.componentIds.attributeListId); },
+                characteristicList: () => { return this.componentRegistry.get(this.componentIds.characteristicListId); }
             };
         }
     }

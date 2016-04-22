@@ -6,7 +6,7 @@ module Antares.Common.Models.Business {
         activityStatusId: string = '';
         contactIds: string[] = [];
 
-        constructor(activity?: Dto.IActivity) {
+        constructor(activity?: Business.Activity) {
             if (activity) {
                 this.propertyId = activity.propertyId;
                 this.activityStatusId = activity.activityStatusId;

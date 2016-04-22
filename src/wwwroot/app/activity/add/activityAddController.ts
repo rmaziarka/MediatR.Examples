@@ -7,7 +7,7 @@ module Antares.Activity {
     export class ActivityAddController {
 
         componentId: string;
-        activities: Common.Models.Dto.IActivity[];
+        activities: Common.Models.Business.Activity[];
         activityStatuses: any;
         selectedActivityStatus: any;
         defaultActivityStatusCode: string = 'PreAppraisal';

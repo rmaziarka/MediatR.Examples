@@ -5,5 +5,13 @@ module Antares.Common.Models.Business {
         characteristicId: string = null;
         text: string = null;
         isSelected: boolean = false;
+
+        constructor(characteristic?: Dto.IPropertyCharacteristic) {
+            if (characteristic) {
+                this.characteristicId = characteristic.id;
+                this.text = characteristic.text;
+                this.isSelected = true;
+            }
+        }
     }
 }

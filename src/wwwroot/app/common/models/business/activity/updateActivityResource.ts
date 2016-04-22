@@ -8,7 +8,7 @@ module Antares.Common.Models.Business {
         recommendedPrice: number = null;
         vendorEstimatedPrice: number = null;
 
-        constructor(activity?: Dto.IActivity) {
+        constructor(activity?: Business.Activity) {
             if (activity) {
                 this.id = activity.id;
                 this.activityStatusId = activity.activityStatusId;

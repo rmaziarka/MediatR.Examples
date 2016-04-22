@@ -131,16 +131,7 @@ module Antares {
                 $httpBackend.whenGET("").respond(() => { return {}; });
 
                 scope = $rootScope.$new();
-                propertyMock = {
-                    id: '1',
-                    propertyTypeId: '',
-                    divisionId: '',
-                    division: null,
-                    address: Antares.Mock.AddressForm.FullAddress,
-                    ownerships: [],
-                    activities: [],
-                    attributeValues: []
-                };
+                propertyMock = TestHelpers.PropertyGenerator.generateDto();
                 scope['property'] = propertyMock;
                 element = $compile('<property-view property="property"></property-view>')(scope);
 

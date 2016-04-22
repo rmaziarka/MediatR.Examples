@@ -74,6 +74,10 @@ module Antares {
                     return [200, propertyAttributesForFlatMock];
                 });
 
+                $http.whenGET(/\/api\/characteristicGroups/).respond(() => {
+                    return [200, []];
+                });
+
                 $http.whenGET(/\/api\/properties\/attributes/).respond(() => {
                     return [200, propertyAttributesMock];
                 });

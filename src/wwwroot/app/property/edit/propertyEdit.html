@@ -40,6 +40,15 @@
                 <attribute-list component-id="vm.componentIds.attributeListId" user-data="vm.userData" property="vm.property" mode="edit"></attribute-list>
             </fieldset>
         </div>
+        <div class="col-md-4">
+            <fieldset>
+                <h3 class="page-header" translate="PROPERTY.CHARACTERISTICS"></h3>
+                <div class="form-group has-error" ng-show="!vm.property.propertyTypeId">
+                    <p class="help-block">Select property type to enter property characteristics</p>
+                </div>
+                <characteristic-list component-id="vm.componentIds.characteristicListId" property="vm.property"></characteristic-list>
+            </fieldset>
+        </div>
         <div class="col-md-12">
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" id="saveBtn"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
