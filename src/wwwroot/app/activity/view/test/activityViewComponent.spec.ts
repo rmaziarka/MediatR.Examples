@@ -20,7 +20,8 @@ module Antares {
             well: {
                 main: '#activity-view-well',
                 createdDate: '#activity-view-well #createdDate',
-                status: '#activity-view-well #activityStatus'
+                status: '#activity-view-well #activityStatus',
+                type: '#activity-view-well #activityType'
             },
             prices: {
                 main: '#activity-view-prices',
@@ -100,6 +101,7 @@ module Antares {
                 var wellElement = element.find(pageObjectSelectors.well.main);
                 var createdDateElement = element.find(pageObjectSelectors.well.createdDate);
                 var activityStatusElement = element.find(pageObjectSelectors.well.status);
+                var activityTypeElement = element.find(pageObjectSelectors.well.type);
 
                 var formattedDate = filter('date')(activityMock.createdDate, 'dd-MM-yyyy');
                 expect(wellElement.length).toBe(1);
@@ -107,6 +109,8 @@ module Antares {
                 expect(createdDateElement.text()).toBe(formattedDate);
                 expect(activityStatusElement.length).toBe(1);
                 expect(activityStatusElement.text()).toBe('DYNAMICTRANSLATIONS.' + activityMock.activityStatusId);
+                expect(activityTypeElement.length).toBe(1);
+                expect(activityTypeElement.text()).toBe('DYNAMICTRANSLATIONS.' + activityMock.activityTypeId);
             });
 
             it('and valuation prices are null then valuation prices for activity are not displayed', () => {
