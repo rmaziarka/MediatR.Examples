@@ -33,29 +33,42 @@
         private readonly IFixture fixture;
         private const string NotEmptyError = "notempty_error";
 
+        private readonly Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository;
+        private readonly Mock<IGenericRepository<ActivityType>> activityTypeRepository;
+        private readonly Mock<IGenericRepository<ActivityTypeDefinition>> activityTypeDefinitionRepository;
+        private readonly Mock<IGenericRepository<Property>> propertyRepository;
+        private readonly CreateActivityCommandValidator validator;
+
         public CreateActivityCommandValidatorTests()
         {
             this.fixture = new Fixture().Customize(new AutoMoqCustomization());
+
+            this.enumTypeItemRepository = this.fixture.Freeze<Mock<IGenericRepository<EnumTypeItem>>>();
+            this.activityTypeRepository = this.fixture.Freeze<Mock<IGenericRepository<ActivityType>>>();
+            this.activityTypeDefinitionRepository = this.fixture.Freeze<Mock<IGenericRepository<ActivityTypeDefinition>>>();
+            this.propertyRepository = this.fixture.Freeze<Mock<IGenericRepository<Property>>>();
+
+            this.activityTypeRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityType, bool>>>())).Returns(true);
+            this.enumTypeItemRepository.Setup(r => r.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
+            this.activityTypeDefinitionRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>())).Returns(true);
+            this.propertyRepository.Setup(r => r.GetById(It.IsAny<Guid>())).Returns(new Property());
+
+            this.validator = this.fixture.Create<CreateActivityCommandValidator>();
         }
 
         [Theory]
         [AutoMoqData]
         public void Given_ValidCreateActivityCommand_When_Validating_Then_IsValid(
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
-            [Frozen] Mock<IGenericRepository<ActivityType>> activityTypeRepository,
-            CreateActivityCommandValidator validator,
             CreateActivityCommand cmd)
         {
             // Arrange 
             IEnumerable<Contact> fakeContactResult = cmd.ContactIds.Select(activityContact => new Contact { Id = activityContact });
 
-            enumTypeItemRepository.Setup(r => r.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
             contactRepository.Setup(r => r.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(fakeContactResult);
-            activityTypeRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityType, bool>>>())).Returns(true);
-
+            
             // Act
-            ValidationResult validationResult = validator.Validate(cmd);
+            ValidationResult validationResult = this.validator.Validate(cmd);
 
             // Assert
             validationResult.IsValid.Should().BeTrue();
@@ -64,33 +77,29 @@
         [Theory]
         [AutoMoqData]
         public void Given_PropertyDoesNotExist_When_Validating_Then_IsInvalid(
-            [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
-            CreateActivityCommandValidator validator,
             CreateActivityCommand cmd)
         {
             // Arrange 
-            propertyRepository.Setup(p => p.GetById(It.IsAny<Guid>())).Returns(default(Property));
+            this.propertyRepository.Setup(p => p.GetById(It.IsAny<Guid>())).Returns((Property)null);
 
             // Act
-            ValidationResult validationResult = validator.Validate(cmd);
+            ValidationResult validationResult = this.validator.Validate(cmd);
 
             // Assert
             validationResult.IsValid.Should().BeFalse();
             validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.PropertyId));
-            propertyRepository.Verify(p => p.GetById(It.IsAny<Guid>()), Times.Once);
+            this.propertyRepository.Verify(p => p.GetById(It.IsAny<Guid>()), Times.Exactly(2));
         }
 
         [Theory]
         [AutoMoqData]
-        public void Given_CommandPropertyIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
-            [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
-            CreateActivityCommandValidator validator)
+        public void Given_CommandPropertyIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode()
         {
             // Arrange 
             CreateActivityCommand cmd = this.fixture.Build<CreateActivityCommand>().With(c => c.PropertyId, default(Guid)).Create();
 
             // Act
-            ValidationResult validationResult = validator.Validate(cmd);
+            ValidationResult validationResult = this.validator.Validate(cmd);
 
             // Assert
             validationResult.IsValid.Should().BeFalse();
@@ -100,22 +109,16 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_CommandActivityStatusIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
-            [Frozen] Mock<IReadGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            CreateActivityCommandValidator validator)
+        public void Given_CommandActivityStatusIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode()
         {
             // Arrange 
             CreateActivityCommand cmd =
                 this.fixture.Build<CreateActivityCommand>().With(c => c.ActivityStatusId, default(Guid)).Create();
-            var fakeActivityStatus = new EnumTypeItem
-            {
-                Id = cmd.ActivityStatusId,
-                EnumType = new EnumType { Code = "ActivityStatus" }
-            };
-            enumTypeItemRepository.Setup(r => r.Get()).Returns(new List<EnumTypeItem> { fakeActivityStatus }.AsQueryable());
+            
+            this.enumTypeItemRepository.Setup(r => r.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(false);
 
             // Act
-            ValidationResult validationResult = validator.Validate(cmd);
+            ValidationResult validationResult = this.validator.Validate(cmd);
 
             // Assert
             validationResult.IsValid.Should().BeFalse();
@@ -125,16 +128,14 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_CommandActivityTypeIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
-            [Frozen] Mock<IGenericRepository<ActivityType>> activityTypeRepository,
-            CreateActivityCommandValidator validator)
+        public void Given_CommandActivityTypeIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode()
         {
             // Arrange 
             CreateActivityCommand cmd =
                 this.fixture.Build<CreateActivityCommand>().With(c => c.ActivityTypeId, default(Guid)).Create();
             
             // Act
-            ValidationResult validationResult = validator.Validate(cmd);
+            ValidationResult validationResult = this.validator.Validate(cmd);
 
             // Assert
             validationResult.IsValid.Should().BeFalse();
@@ -145,15 +146,13 @@
         [Theory]
         [AutoMoqData]
         public void Given_CommandActivityTypeDoesNotExist_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
-           [Frozen] Mock<IGenericRepository<ActivityType>> activityTypeRepository,
-           CreateActivityCommandValidator validator,
            CreateActivityCommand cmd)
         {
             // Arrange 
-            activityTypeRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityType, bool>>>())).Returns(false);
+            this.activityTypeRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityType, bool>>>())).Returns(false);
 
             // Act
-            ValidationResult validationResult = validator.Validate(cmd);
+            ValidationResult validationResult = this.validator.Validate(cmd);
 
             // Assert
             validationResult.IsValid.Should().BeFalse();
@@ -162,9 +161,22 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_ValidationRules_When_Configuring_Then_ActivityStatusIdHaveValidatorSetup(CreateActivityCommandValidator validator)
+        public void Given_ValidationRules_When_Configuring_Then_ActivityStatusIdHaveValidatorSetup()
         {
-            validator.ShouldHaveChildValidator(x => x.ActivityStatusId, typeof(ActivityStatusValidator));
+            this.validator.ShouldHaveChildValidator(x => x.ActivityStatusId, typeof(ActivityStatusValidator));
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_NotExistingActivityTypeDefinitionInCommand_When_Validating_Then_ShouldReturnValidationError(
+            CreateActivityCommand command)
+        {
+            this.activityTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>())).Returns(false);
+
+            ValidationResult validationResult = this.validator.Validate(command);
+
+            validationResult.IsValid.Should().BeFalse();
+            validationResult.Errors.Should().ContainSingle(x => x.PropertyName == nameof(command.ActivityTypeId));
         }
     }
 }
