@@ -31,7 +31,9 @@ module Antares.Common.Component {
                         this.setDefaultCountry();
                     }
 
-                    this.getAddressFormTemplete(this.entityTypeCode, this.address.countryId);
+                    //TODO: storing countryIsocode is temporary - webAPI should accept countryId instead of isoCode
+                    this.address.countryIsocode = this.getSelectedCountryCode();
+                    this.getAddressFormTemplete(this.entityTypeCode, this.address.countryIsocode);
                 })
                 .finally(() => {
                     this.isLoading = false;
@@ -41,8 +43,10 @@ module Antares.Common.Component {
         public changeCountry = (countryId: string): void => {
             this.address.clear();
             this.address.countryId = countryId;
+            //TODO: storing countryIsocode is temporary - webAPI should accept countryId instead of isoCode
+            this.address.countryIsocode = this.getSelectedCountryCode();
 
-            this.getAddressFormTemplete(this.entityTypeCode, countryId);
+            this.getAddressFormTemplete(this.entityTypeCode, this.address.countryIsocode);
         }
 
         public isSubmitted = (form: any) => {
@@ -53,6 +57,14 @@ module Antares.Common.Component {
             return false;
         };
 
+        public getSelectedCountryCode = (): string =>{
+            var countryLocalised: Business.CountryLocalised = _.find(this.countries, (c: Business.CountryLocalised) =>{
+                return c.country.id === this.address.countryId;
+            });
+
+            return countryLocalised ? countryLocalised.country.isoCode : '';
+        }
+
         private setDefaultCountry = (): void => {
             var userCountry: Business.CountryLocalised = _.find(this.countries, (c: Business.CountryLocalised) => {
                 return c.country.isoCode === this.userCountryCode;
@@ -61,13 +73,9 @@ module Antares.Common.Component {
             this.address.countryId = userCountry && userCountry.country ? userCountry.country.id : null;
         }
 
-        private getAddressFormTemplete = (entityTypeCode: string, countryId: string): void => {
-            var countryLocalised: Business.CountryLocalised = _.find(this.countries, (c: Business.CountryLocalised) => {
-                return c.country.id === countryId;
-            });
-
+        private getAddressFormTemplete = (entityTypeCode: string, countryIsocode: string): void => {
             this.addressFormResource
-                .get({ entityTypeCode: entityTypeCode, countryCode: countryLocalised.country.isoCode })
+                .get({ entityTypeCode: entityTypeCode, countryCode: countryIsocode })
                 .$promise
                 .then((data: Dto.IAddressForm) => {
                     this.addressForm = new Business.AddressForm(data.id, data.countryId, data.addressFieldDefinitions);

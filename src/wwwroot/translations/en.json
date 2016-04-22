@@ -97,6 +97,7 @@
     "COMMERCIAL_PROPERTY": "Commercial property",
     "RESIDENTIAL_PROPERTY": "Residential property",
     "DETAILS": "Property details",
+    "CHARACTERISTICS": "Property characteristics",
     "ADD": {
       "ADD_PROPERTY": "Create property",
       "BASIC_INFORMATION": "Basic information",
@@ -110,7 +111,7 @@
     "VIEW": {
       "VIEW_PROPERTY": "View property",
       "DETAILS": "Details",
-      "TYPE":  "Type"
+      "TYPE": "Type"
     },
     "LIST": {
       "OWNERSHIPS": "Ownerships",

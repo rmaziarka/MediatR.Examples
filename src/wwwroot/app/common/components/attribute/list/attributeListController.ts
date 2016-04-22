@@ -23,11 +23,11 @@ module Antares.Common.Component {
         }
 
         loadAttributes = () => {
-            if (this.property.propertyTypeId) {
+            if (this.property.propertyTypeId && this.property.address.countryIsocode) {
                 this.attributes = null;
                 this.propertyResource
                     .getAttributes({
-                        countryCode: this.userData.country, propertyTypeId: this.property.propertyTypeId
+                        countryCode: this.property.address.countryIsocode, propertyTypeId: this.property.propertyTypeId
                     }, null)
                     .$promise
                     .then((attributes: any) =>{

@@ -35,9 +35,9 @@
                 '!' + clientApp + '**/*.config.js'
             ],
             specsAndMocks: [
-                clientApp + '**/*.spec.js',
                 clientApp + '**/*.mock.js',
-                clientApp + '**/*.test.js'
+                clientApp + '**/*.test.js',
+                clientApp + '**/*.spec.js'
             ],
             order: [
                 '**/app.bootstrap.js',

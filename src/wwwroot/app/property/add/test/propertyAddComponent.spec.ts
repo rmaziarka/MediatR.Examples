@@ -31,6 +31,7 @@ module Antares {
 
         describe('when page is loaded', () => {
             var countryMockId = countriesMock[0].country.id,
+                countryMockIsoCode = countriesMock[0].country.isoCode,
                 propertyTypesMockId = propertyTypesMock.propertyTypes[0].id,
                 newPropertyMock: Business.Property = new Business.Property();
 
@@ -103,6 +104,7 @@ module Antares {
 
             it('then save button is disabled if country is not selected', () => {
                 newPropertyMock.address.countryId = '';
+                newPropertyMock.address.countryIsocode = '';
                 scope.$apply();
 
                 var button = element.find('button#saveBtn');
@@ -111,6 +113,7 @@ module Antares {
 
             it('then save button is enabled if country is selected', () => {
                 newPropertyMock.address.countryId = countryMockId;
+                newPropertyMock.address.countryIsocode = countryMockIsoCode;
                 scope.$apply();
 
                 var button = element.find('button#saveBtn');
@@ -119,6 +122,7 @@ module Antares {
 
             describe('when property type is changed', () => {
                 it('then proper attributes are shown', () => {
+                    controller.property.address.countryIsocode = countryMockIsoCode;
                     controller.property.propertyTypeId = "8b152e4f-f505-e611-828c-8cdcd42baca7";
                     scope.$apply();
                     controller.loadAttributes();
@@ -148,6 +152,7 @@ module Antares {
                         maxGuestRooms: 44
                     };
 
+                    controller.property.address.countryIsocode = countryMockIsoCode;
                     controller.property.propertyTypeId = "8b152e4f-f505-e611-828c-8cdcd42baca7";
                     scope.$apply();
                     controller.loadAttributes();
@@ -169,6 +174,7 @@ module Antares {
                 it('then save method is called', () => {
                     spyOn(controller, 'save');
                     newPropertyMock.address.countryId = countryMockId;
+                    newPropertyMock.address.countryIsocode = countryMockIsoCode;
                     newPropertyMock.propertyTypeId = propertyTypesMockId;
                     scope.$apply();
 
@@ -201,6 +207,7 @@ module Antares {
 
                     newPropertyMock.address.id = 'adrId1';
                     newPropertyMock.address.countryId = countryMockId;
+                    newPropertyMock.address.countryIsocode = countryMockIsoCode;
                     newPropertyMock.address.addressFormId = 'adrfrmId1';
                     newPropertyMock.address.propertyName = 'test prop name';
                     newPropertyMock.address.propertyNumber = '123456';

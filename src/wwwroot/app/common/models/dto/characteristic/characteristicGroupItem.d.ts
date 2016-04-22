@@ -2,6 +2,5 @@
     interface ICharacteristicGroupItem {
         id: string;
         characteristic: ICharacteristic;
-        order: number;
     }
 }

@@ -1,6 +1,6 @@
 ﻿/// <reference path="../../../../typings/_all.d.ts" />
 
-module Antares.Characteristic {
+module Antares.Common.Component {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
 
@@ -8,7 +8,9 @@ module Antares.Characteristic {
         private componentId: string;
         private characteristicGroupUsageResource: Common.Models.Resources.ICharacteristicGroupUsageResourceClass;
         private property: Business.Property;
-        private characteristicGroups: Business.CharacteristicGroup[];
+        public characteristicGroups: Business.CharacteristicGroup[] = [];
+
+        public characteristicSelect: Business.CharacteristicSelect = new Business.CharacteristicSelect();
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -18,13 +20,16 @@ module Antares.Characteristic {
 
             this.characteristicGroupUsageResource = dataAccessService.getCharacteristicGroupUsageResource();
             this.loadCharacteristics();
+
+            // temporary mocked single characteristic data
+            this.characteristicSelect.characteristicId = '3e84bbde-a807-e611-826f-8cdcd42e5436';
+            this.characteristicSelect.text = 'kod';
         }
 
         loadCharacteristics = () => {
-            if (this.property.propertyTypeId && this.property.address.countryId) {
+            if (this.property.propertyTypeId && this.property.address.countryIsocode) {
                 this.characteristicGroupUsageResource
-                        //this.property.country.code
-                    .query({ countryCode: 'GB', propertyTypeId: this.property.propertyTypeId })
+                    .query({ countryCode: this.property.address.countryIsocode, propertyTypeId: this.property.propertyTypeId })
                     .$promise
                     .then((characteristicGroupUsages: any) => {
                         this.characteristicGroups = characteristicGroupUsages.map(

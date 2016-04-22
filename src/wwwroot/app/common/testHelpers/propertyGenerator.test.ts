@@ -5,7 +5,7 @@ module Antares.TestHelpers {
     import Business = Common.Models.Business;
 
     export class PropertyGenerator {
-        public static generateDto(): Dto.IProperty {
+        public static generateDto(specificData?: any): Dto.IProperty {
 
             var propertyMock: Dto.IProperty = {
                 id: PropertyGenerator.makeRandom('id'),
@@ -18,7 +18,7 @@ module Antares.TestHelpers {
                 attributeValues: []
             };
 
-            return propertyMock;
+            return angular.extend(propertyMock, specificData || {});
         }
 
         public static generateManyDtos(n: number): Dto.IProperty[] {
@@ -29,8 +29,8 @@ module Antares.TestHelpers {
             return _.map<Dto.IProperty, Business.Property>(PropertyGenerator.generateManyDtos(n), (property: Dto.IProperty) => { return new Business.Property(property); });
         }
 
-        public static generate(): Business.Property {
-            return new Business.Property(PropertyGenerator.generateDto());
+        public static generate(specificData?: any): Business.Property {
+            return new Business.Property(PropertyGenerator.generateDto(specificData));
         }
 
         private static makeRandom(text: string): string {
