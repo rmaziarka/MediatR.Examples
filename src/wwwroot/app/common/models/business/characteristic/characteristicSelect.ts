@@ -2,8 +2,8 @@
 
 module Antares.Common.Models.Business {
     export class CharacteristicSelect {
-        characteristicId: string = null;
-        text: string = null;
+        characteristicId: string = '';
+        text: string = '';
         isSelected: boolean = false;
 
         constructor(characteristic?: Dto.IPropertyCharacteristic) {

@@ -4,22 +4,22 @@ module Antares.Common.Component {
 	import Business = Common.Models.Business;
 
 	export class CharacteristicSelectController {
-		public characteristic: Business.Characteristic;
-		public characteristicSelect: Business.CharacteristicSelect;
+        public characteristic: Business.Characteristic = new Business.Characteristic();
+        public characteristicSelect: Business.CharacteristicSelect = new Business.CharacteristicSelect();
 		public isCommentVisible: boolean = false;
 
-		toggleComment = () =>{
+		toggleComment = () => {
 			this.isCommentVisible = !this.isCommentVisible;
 		};
 
-		onSelectCharacteristicChange = () =>{ 			
+		onSelectCharacteristicChange = () => {
 			if (!this.characteristicSelect.isSelected) {
 				this.characteristicSelect.text = null;
 				this.isCommentVisible = false;
 			}
 		};
 
-        isTextEntered = () =>{
+        isTextEntered = () => {
 	        return this.characteristicSelect.text.length > 0;
         };
 	}
