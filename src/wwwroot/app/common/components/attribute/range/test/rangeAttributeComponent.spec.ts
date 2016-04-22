@@ -107,15 +107,15 @@ module Antares {
                 var testData = [
                     { attribute: { minValue: 1, maxValue: 2 }, expectedText: '1-2' },
                     { attribute: { minValue: 1, maxValue: 1 }, expectedText: '1' },
-                    { attribute: { minValue: null, maxValue: 2 }, expectedText: 'common.max2' },
-                    { attribute: { minValue: 2, maxValue: null }, expectedText: 'common.min2' },
+                    { attribute: { minValue: null, maxValue: 2 }, expectedText: 'common.max 2' },
+                    { attribute: { minValue: 2, maxValue: null }, expectedText: 'common.min 2' },
                     { attribute: { minValue: 0, maxValue: 3 }, expectedText: '0-3' },
                     { attribute: { minValue: 0, maxValue: 0 }, expectedText: '0' },
                     { attribute: { minValue: null, maxValue: null }, expectedText: '-' },
-                    { attribute: { minValue: 0, maxValue: null }, expectedText: 'common.min0' },
-                    { attribute: { minValue: null, maxValue: 0 }, expectedText: 'common.max0' },
+                    { attribute: { minValue: 0, maxValue: null }, expectedText: 'common.min 0' },
+                    { attribute: { minValue: null, maxValue: 0 }, expectedText: 'common.max 0' },
                     { attribute: { minValue: 1, maxValue: 1, unit: 'UNITS.SQUARE_FEET' }, expectedText: '1 UNITS.SQUARE_FEET' },
-                    { attribute: { minValue: 1, maxValue: 3, unit: 'UNITS.SQUARE_FEET' }, expectedText: '1-3UNITS.SQUARE_FEET' },
+                    { attribute: { minValue: 1, maxValue: 3, unit: 'UNITS.SQUARE_FEET' }, expectedText: '1-3 UNITS.SQUARE_FEET' },
                     { attribute: { minValue: null, maxValue: null, unit: 'UNITS.SQUARE_FEET' }, expectedText: '-' }
                 ];
 
@@ -124,8 +124,9 @@ module Antares {
 
                     scope['attribute'] = attribute;
                     scope.$apply();
-
-                    var attributeText = element.find(pageObjectSelectors.attributeValue).text().trim();
+                     
+                    var attributeText : string = element.find(pageObjectSelectors.attributeValue).text().trim()
+                        .replace(/\s/g, " "); //replaces all type of spaces i.e. nonbreaking spaces into regular spaces
                     expect(attributeText).toBe(data.expectedText);
                 });
 
