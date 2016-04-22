@@ -2,14 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
 
-    using KnightFrank.Antares.Dal;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
-    using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Activity.Queries;
     using KnightFrank.Antares.Domain.Activity.QueryResults;
@@ -23,16 +20,14 @@
     public class ActivitiesController : ApiController
     {
         private readonly IMediator mediator;
-        private readonly ReadGenericRepository<ActivityType> repository;
 
         /// <summary>
         ///     Contacts controller constructor
         /// </summary>
         /// <param name="mediator">Mediator instance.</param>
-        public ActivitiesController(IMediator mediator, ReadGenericRepository<ActivityType> repository)
+        public ActivitiesController(IMediator mediator)
         {
             this.mediator = mediator;
-            this.repository = repository;
         }
 
         /// <summary>
@@ -76,9 +71,6 @@
         [Route("")]
         public Activity UpdateActivity(UpdateActivityCommand command)
         {
-            //TODO remove after id is sent by UI
-            command.ActivityTypeId = this.repository.Get().First().Id;
-
             Guid activityId = this.mediator.Send(command);
 
             return this.GetActivity(activityId);
