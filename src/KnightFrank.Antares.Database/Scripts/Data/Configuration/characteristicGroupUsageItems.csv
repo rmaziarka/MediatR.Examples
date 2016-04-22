@@ -121,7 +121,7 @@ GB;Office;Specification;1;1;Suspendedceilings
 GB;Office;Specification;1;1;LG3lighting
 GB;Office;Specification;1;1;LG7lighting
 GB;Office;Specification;1;1;Cat2lighting
-GB;Office;Specification;1;1;Recessedlighting(noncat2
+GB;Office;Specification;1;1;Recessedlighting(noncat2)
 GB;Office;Specification;1;1;Perimetertrunking
 GB;Office;Specification;1;1;Underfloortrunking
 GB;Office;Specification;1;1;24houraccess
@@ -168,7 +168,7 @@ GB;Retail;Specification;1;1;Suspendedceilings
 GB;Retail;Specification;1;1;LG3lighting
 GB;Retail;Specification;1;1;LG7lighting
 GB;Retail;Specification;1;1;Cat2lighting
-GB;Retail;Specification;1;1;Recessedlighting(noncat2
+GB;Retail;Specification;1;1;Recessedlighting(noncat2)
 GB;Retail;Specification;1;1;Perimetertrunking
 GB;Retail;Specification;1;1;Underfloortrunking
 GB;Retail;Specification;1;1;24houraccess
