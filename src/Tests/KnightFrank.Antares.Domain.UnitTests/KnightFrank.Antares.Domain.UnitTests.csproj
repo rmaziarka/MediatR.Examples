@@ -109,6 +109,7 @@
     <Compile Include="Activity\Commands\UpdateActivityCommandValidatorTests.cs" />
     <Compile Include="Activity\Queries\ActivityQueryValidatorTests.cs" />
     <Compile Include="Activity\QueryHandlers\ActivityQueryHandlerTests.cs" />
+    <Compile Include="Activity\QueryHandlers\ActivityTypeQueryHandlerTests.cs" />
     <Compile Include="AddressForm\Queries\AddressFormQueryValidatorTests.cs" />
     <Compile Include="AddressForm\Queries\GetCountriesForAddressFormQueryValidatorTests.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidatorTests.cs" />
