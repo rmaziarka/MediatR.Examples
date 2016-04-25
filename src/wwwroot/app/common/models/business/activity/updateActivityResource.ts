@@ -3,6 +3,7 @@
 module Antares.Common.Models.Business {
     export class UpdateActivityResource implements Dto.IUpdateActivityResource {
         id: string = '';
+        activityTypeId: string = '';
         activityStatusId: string = '';
         marketAppraisalPrice: number = null;
         recommendedPrice: number = null;
@@ -11,6 +12,7 @@ module Antares.Common.Models.Business {
         constructor(activity?: Business.Activity) {
             if (activity) {
                 this.id = activity.id;
+                this.activityTypeId = activity.activityTypeId;
                 this.activityStatusId = activity.activityStatusId;
                 this.marketAppraisalPrice = activity.marketAppraisalPrice;
                 this.recommendedPrice = activity.recommendedPrice;
