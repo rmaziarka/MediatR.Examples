@@ -37,7 +37,7 @@
                         Attribute = new Dal.Model.Attribute.Attribute(),
                         PropertyAttributeForm = new PropertyAttributeForm
                         {
-                            Country = new Country { IsoCode = query.CountryCode },
+                            Country = new Country { Id = query.CountryId },
                             PropertyTypeId = query.PropertyTypeId
                         }
                     }
@@ -83,7 +83,7 @@
                         Attribute = new Dal.Model.Attribute.Attribute(),
                         PropertyAttributeForm = new PropertyAttributeForm
                         {
-                            Country = new Country { IsoCode = query.CountryCode },
+                            Country = new Country { Id = query.CountryId },
                             PropertyTypeId = query.PropertyTypeId
                         },
                         Order = 2
@@ -93,7 +93,7 @@
                        Attribute = new Dal.Model.Attribute.Attribute(),
                         PropertyAttributeForm = new PropertyAttributeForm
                         {
-                            Country = new Country { IsoCode = query.CountryCode },
+                            Country = new Country { Id = query.CountryId },
                             PropertyTypeId = query.PropertyTypeId
                         },
                         Order = 1

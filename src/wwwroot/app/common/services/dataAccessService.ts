@@ -45,11 +45,11 @@ module Antares.Services {
         };
 
         private getAttributesAction: ng.resource.IActionDescriptor = {
-            url: this.appConfig.rootUrl + '/api/properties/attributes?countryCode=:countryCode&propertyTypeId=:propertyTypeId',
+            url: this.appConfig.rootUrl + '/api/properties/attributes?countryId=:countryId&propertyTypeId=:propertyTypeId',
             method: 'GET',
             isArray: false,
             params: {
-                countryCode: '@countryCode',
+                countryId: '@countryId',
                 propertyTypeId: '@propertyTypeId'
             }
         };

@@ -23,7 +23,7 @@
                 .Customize(new AutoMoqCustomization());
 
             this.query = fixture.Build<PropertyAttributesQuery>()
-                                                   .With(x => x.CountryCode, "GB")
+                                                   .With(x => x.CountryId, Guid.NewGuid())
                                                    .With(x => x.PropertyTypeId, Guid.NewGuid())
                                                    .Create();
         }
@@ -45,9 +45,9 @@
         public void Given_InCorrectPropertyAttributesQueryWithNoCountryCode_When_Validating_Then_ValidationErrors(
            PropertyAttributesQueryValidator validator)
         {
-            this.query.CountryCode = null;
+            this.query.CountryId = Guid.Empty;
             
-            TestIncorrectCommand(validator, this.query, nameof(this.query.CountryCode));
+            TestIncorrectCommand(validator, this.query, nameof(this.query.CountryId));
         }
 
         [Theory]

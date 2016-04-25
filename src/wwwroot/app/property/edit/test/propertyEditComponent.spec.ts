@@ -11,12 +11,17 @@ module Antares {
             state: ng.ui.IStateService,
             controller: PropertyEditController;
 
-        var countriesMock = [{ country: { id: "1111", isoCode: "GB" }, locale: {}, value: "United Kingdom" }];
-        var propertyTypesMock: any = {
-            propertyTypes: [{ id: "8b152e4f-f505-e611-828c-8cdcd42baca7", parentId: null, name: "House", children: [], order: 22 },
-                { id: "8c152e4f-f505-e611-828c-8cdcd42baca7", parentId: null, name: "Flat", children: [], order: 23 },
-                { id: "90152e4f-f505-e611-828c-8cdcd42baca7", parentId: null, name: "Development Plot", children: [], order: 27 }]
+        var propertyTypes: any = {
+            House: { id: "8b152e4f-f505-e611-828c-8cdcd42baca7", parentId: null, name: "House", children: [], order: 22 },
+            Flat: { id: "8c152e4f-f505-e611-828c-8cdcd42baca7", parentId: null, name: "Flat", children: [], order: 23 },
+            DevelopmentPlot: { id: "90152e4f-f505-e611-828c-8cdcd42baca7", parentId: null, name: "Development Plot", children: [], order: 27 }
+        }
+        var countries: any = {
+            GB: {id: 'countryGB', isoCode: 'GB'}
         };
+
+        var countriesMock = [{ country: countries.GB, locale: {}, value: "United Kingdom" }];
+        var propertyTypesMock: any = { propertyTypes : [propertyTypes.House, propertyTypes.Flat, propertyTypes.DevelopmentPlot] };
         var propertyAttributesMock = { "attributes": [{ "order": 2, "nameKey": "GuestRooms", "labelKey": "PROPERTY.GUESTROOMS" }] }
         var propertyAttributesForHouseMock = { "attributes": [{ "order": 0, "nameKey": "Area", "labelKey": "PROPERTY.AREA" }, { "order": 1, "nameKey": "LandArea", "labelKey": "PROPERTY.LANDAREA" }, { "order": 2, "nameKey": "GuestRooms", "labelKey": "PROPERTY.GUESTROOMS" }] }
         var propertyAttributesForFlatMock = { "attributes": [{ "order": 0, "nameKey": "Bedrooms", "labelKey": "PROPERTY.BEDROOM" }, { "order": 1, "nameKey": "Receptions", "labelKey": "PROPERTY.RECEPTIONS" }, { "order": 2, "nameKey": "GuestRooms", "labelKey": "PROPERTY.GUESTROOMS" }] }
@@ -66,11 +71,11 @@ module Antares {
                     return [200, {}];
                 });
 
-                $http.whenGET(/\/api\/properties\/attributes\?countryCode=GB&propertyTypeId=8b152e4f-f505-e611-828c-8cdcd42baca7/).respond(() => {
+                $http.whenGET(new RegExp('\\/api\\/properties\\/attributes\\?countryId=' + countries.GB.id + '&propertyTypeId=' + propertyTypes.House.id)).respond(() => {
                     return [200, propertyAttributesForHouseMock];
                 });
 
-                $http.whenGET(/\/api\/properties\/attributes\?countryCode=GB&propertyTypeId=8c152e4f-f505-e611-828c-8cdcd42baca7/).respond(() => {
+                $http.whenGET(new RegExp('\\/api\\/properties\\/attributes\\?countryId=' + countries.GB.id + '&propertyTypeId=' + propertyTypes.Flat.id)).respond(() => {
                     return [200, propertyAttributesForFlatMock];
                 });
 
@@ -202,7 +207,7 @@ module Antares {
                         maxReceptions: 44
                     };
 
-                    controller.property.propertyTypeId = "8b152e4f-f505-e611-828c-8cdcd42baca7";
+                    controller.property.propertyTypeId = propertyTypes.House.id;
                     scope.$apply();
                     controller.loadAttributes();
                     controller.property.attributeValues = attributeMock;
