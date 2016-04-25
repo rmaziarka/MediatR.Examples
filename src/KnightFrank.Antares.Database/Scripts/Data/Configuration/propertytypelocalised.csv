@@ -4,6 +4,9 @@ Retail;en;Retail
 Industrial;en;Industrial
 Other;en;Other
 Office;en;Office
+Office.Office;en;Office
+Office.Office (Bus. Park);en;Office (Bus. Park)
+Office.Office (Portfolio);en;Office (Portfolio)
 Leisure.Hotel;en;Hotel
 Leisure.Leisure;en;Leisure
 Retail.Car Showroom;en;Car Showroom

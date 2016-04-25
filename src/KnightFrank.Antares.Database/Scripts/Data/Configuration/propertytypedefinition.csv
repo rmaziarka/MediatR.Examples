@@ -1,33 +1,54 @@
-﻿PropertyTypeCode;CountryCode;Division;Order
-Office;GB;Commercial;1
-Leisure;GB;Commercial;2
-Leisure.Hotel;GB;Commercial;3
-Leisure.Leisure;GB;Commercial;4
-Retail;GB;Commercial;5
-Retail.Car Showroom;GB;Commercial;6
-Retail.Department Stores;GB;Commercial;7
-Retail.Shopping Centre;GB;Commercial;8
-Retail.Retail Unit A1;GB;Commercial;9
-Retail.Retail Unit A2;GB;Commercial;10
-Retail.Retail Unit A3;GB;Commercial;11
-Retail.Retail Unit A4;GB;Commercial;12
-Retail.Retail Unit A5;GB;Commercial;13
-Industrial;GB;Commercial;14
-Industrial.Industrial Estate;GB;Commercial;15
-Industrial.Industrial/Distribution;GB;Commercial;16
-Other;GB;Commercial;17
-Other.Agricultural;GB;Commercial;18
-Other.Car Park;GB;Commercial;19
-Other.Institutional;GB;Commercial;20
-Other.Mixed Use;GB;Commercial;21
-House;GB;Residential;22
-Flat;GB;Residential;23
-Bungalow;GB;Residential;24
-Maisonette;GB;Residential;25
-Studio Flat;GB;Residential;26
-Development Plot;GB;Residential;27
-Farm/Estate;GB;Residential;28
-Garage Only;GB;Residential;29
-Parking Space;GB;Residential;30
-Land;GB;Residential;31
-Houseboat;GB;Residential;32
+PropertyTypeCode;CountryCode;Division;Order
+Leisure;GB;Commercial;1
+Retail;GB;Commercial;2
+Industrial;GB;Commercial;3
+Other;GB;Commercial;4
+Office;GB;Commercial;5
+Office.Office;GB;Commercial;6
+Office.Office (Bus. Park);GB;Commercial;7
+Office.Office (Portfolio);GB;Commercial;8
+Leisure.Hotel;GB;Commercial;9
+Leisure.Leisure;GB;Commercial;10
+Leisure.Leisure (Portfolio);GB;Commercial;11
+Retail.Car Showroom;GB;Commercial;12
+Retail.Department/Variety Store;GB;Commercial;13
+Retail.Department Stores;GB;Commercial;14
+Retail.Garden Centre;GB;Commercial;15
+Retail.Retail;GB;Commercial;16
+Retail.Retail (Portfolio);GB;Commercial;17
+Retail.Shopping Centre;GB;Commercial;18
+Retail.Shopping Centre (Portfolio);GB;Commercial;19
+Retail.Retail Unit A1;GB;Commercial;20
+Retail.Retail Unit A2;GB;Commercial;21
+Retail.Retail Unit A3;GB;Commercial;22
+Retail.Retail Unit A4;GB;Commercial;23
+Retail.Retail Unit A5;GB;Commercial;24
+Retail.Retail Wharehouse (Portfolio);GB;Commercial;25
+Retail.Retail Wh (Bulky Parks);GB;Commercial;26
+Retail.Retail Wh (Bulky Solus);GB;Commercial;27
+Retail.Retail Wh (Open A1 Solus);GB;Commercial;28
+Retail.Supermarket;GB;Commercial;29
+Industrial.Industrial Estate;GB;Commercial;30
+Industrial.Industrial Distribution;GB;Commercial;31
+Industrial.Industrial (Portfolio);GB;Commercial;32
+Industrial.Trade park;GB;Commercial;33
+Other.Agricultural;GB;Commercial;34
+Other.Car Park;GB;Commercial;35
+Other.Institutional;GB;Commercial;36
+Other.Institutional (Portfolio);GB;Commercial;37
+Other.Land/Site/Dev;GB;Commercial;38
+Other.Mixed (Portfolio);GB;Commercial;39
+Other.Mixed Use;GB;Commercial;40
+Other.Other;GB;Commercial;41
+Other.Student Accomodation;GB;Commercial;42
+House;GB;Residential;43
+Flat;GB;Residential;44
+Bungalow;GB;Residential;45
+Maisonette;GB;Residential;46
+Studio Flat;GB;Residential;47
+Development Plot;GB;Residential;48
+Farm/Estate;GB;Residential;49
+Garage Only;GB;Residential;50
+Parking Space;GB;Residential;51
+Land;GB;Residential;52
+Houseboat;GB;Residential;53
