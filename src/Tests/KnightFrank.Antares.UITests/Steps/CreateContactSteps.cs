@@ -28,7 +28,6 @@
         }
 
         [Given(@"User navigates to create contact page")]
-        [When(@"User navigates to create contact page")]
         public void OpenCreateContactPage()
         {
             CreateContactPage page = new CreateContactPage(this.driverContext).OpenCreateContactPage();
@@ -47,29 +46,6 @@
                     .SetSurname(contact.Surname)
                     .SaveContact();
             }
-        }
-
-        [When(@"User fills in contact details on create contact page")]
-        public void SetNewContactDetails(Table table)
-        {
-            var page = this.scenarioContext.Get<CreateContactPage>("CreateContactPage");
-            var contactDetails = table.CreateInstance<Contact>();
-
-            page.SetTitle(contactDetails.Title)
-                .SetFirstName(contactDetails.FirstName)
-                .SetSurname(contactDetails.Surname);
-        }
-
-        [When(@"User clicks save button on create contact page")]
-        public void SaveNewContact()
-        {
-            this.scenarioContext.Get<CreateContactPage>("CreateContactPage").SaveContact();
-        }
-
-        [Then(@"New contact should be created")]
-        public void CheckIfContactCreated()
-        {
-            //TODO implement check if contact was created
         }
     }
 }

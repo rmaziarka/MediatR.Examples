@@ -70,6 +70,12 @@
             this.scenarioContext.Set(page.PreviewDetails.ClickViewActivity(), "ViewActivityPage");
         }
 
+        [When(@"User selects (.*) activity type on activity panel")]
+        public void SelectActivityType(string type)
+        {
+            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").Activity.SelectActivityType(type);
+        }
+
         [When(@"User clicks save button on activity panel")]
         public void ClickSaveButtonOnActivityPanel()
         {
@@ -132,8 +138,9 @@
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
             var details = table.CreateInstance<ActivityDetails>();
 
-            Assert.Equal(details.Vendor, page.GetActivityVendor());
-            Assert.Equal(details.Status, page.GetActivityStatus());
+            Assert.Equal(details.Vendor, page.ActivityVendor);
+            Assert.Equal(details.Status, page.ActivityStatus);
+            Assert.Equal(details.Type, page.ActivityType);
         }
 
         [Then(@"Property should be updated with address details")]

@@ -26,6 +26,7 @@
         {
             var details = table.CreateInstance<EditActivityDetails>();
             var page = this.scenarioContext.Get<EditActivityPage>("EditActivityPage");
+
             page.SelectActivityStatus(details.ActivityStatus)
                 .SetMarketAppraisalPrice(details.MarketAppraisalPrice)
                 .SetRecommendedPrice(details.RecommendedPrice)

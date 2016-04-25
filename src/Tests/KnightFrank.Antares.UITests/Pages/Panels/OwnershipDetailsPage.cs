@@ -10,7 +10,7 @@
     public class OwnershipDetailsPage : ProjectPageBase
     {
         private readonly ElementLocator ownershipState = new ElementLocator(Locator.CssSelector, "input[ng-model *= 'isCurrentOwner']");
-        private readonly ElementLocator ownershipType = new ElementLocator(Locator.Id, "type");
+        private readonly ElementLocator ownershipType = new ElementLocator(Locator.CssSelector, "#addOwnershipForm #type");
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator purchaseDate = new ElementLocator(Locator.Name, "purchaseDate");
         private readonly ElementLocator purchasePrice = new ElementLocator(Locator.Id, "buying-price");
