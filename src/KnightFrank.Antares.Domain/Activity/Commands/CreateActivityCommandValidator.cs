@@ -36,28 +36,33 @@
                 .SetValidator(new ActivityTypeValidator(activityTypeRepository))
                 .When(x => !x.ActivityTypeId.Equals(Guid.Empty));
 
-            this.Custom(this.PropertyExists);
-            this.Custom(this.ActivityTypeDefinitionExists);
+            this.RuleFor(x => x)
+                .Must(this.PropertyExists)
+                .WithMessage("Property does not exist.")
+                .WithName("PropertyId")
+                .DependentRules(x => x.RuleFor(c => c)
+                                      .Must(this.ActivityTypeDefinitionExists)
+                                      .WithMessage("Specified activity type is invalid")
+                                      .WithName("ActivityTypeId"));
         }
 
-        private ValidationFailure PropertyExists(CreateActivityCommand cmd)
+        private bool PropertyExists(CreateActivityCommand cmd)
         {
             Property property = this.propertyRepository.GetById(cmd.PropertyId);
-            return property == null ? new ValidationFailure(nameof(cmd.PropertyId), "Property does not exist.") : null;
+            return property != null;
         }
 
-        private ValidationFailure ActivityTypeDefinitionExists(CreateActivityCommand cmd)
+        private bool ActivityTypeDefinitionExists(CreateActivityCommand cmd)
         {
             Property property = this.propertyRepository.GetById(cmd.PropertyId);
-            var activityTypeDefinitionExists = this.activityTypeDefinitionRepository.Any(
+
+            bool activityTypeDefinitionExists = this.activityTypeDefinitionRepository.Any(
                 x =>
                     x.CountryId == property.Address.CountryId &&
                     x.PropertyTypeId == property.PropertyTypeId &&
                     x.ActivityTypeId == cmd.ActivityTypeId);
 
-            return activityTypeDefinitionExists
-                ? null
-                : new ValidationFailure(nameof(cmd.ActivityTypeId), "Specified activity type is invalid");
+            return activityTypeDefinitionExists;
         }
     }
 }
