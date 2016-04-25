@@ -10,15 +10,19 @@ namespace KnightFrank.Antares.Domain.Property.Commands
     using KnightFrank.Antares.Dal.Model.Property.Characteristics;
     using KnightFrank.Antares.Dal.Repository;
 
-    public class PropertyCharacteristicConfigurationDomainValidator : AbstractValidator<IList<CreateOrUpdatePropertyCharacteristic>>
+    public class PropertyCharacteristicConfigurationDomainValidator :
+        AbstractValidator<IList<CreateOrUpdatePropertyCharacteristic>>
     {
         private readonly IGenericRepository<CharacteristicGroupUsage> characteristicGroupUsageRepository;
 
-        private readonly Guid propertyTypeId;
-
         private readonly Guid countryId;
 
-        public PropertyCharacteristicConfigurationDomainValidator(IGenericRepository<CharacteristicGroupUsage> characteristicGroupUsageRepository, Guid propertyTypeId, Guid countryId)
+        private readonly Guid propertyTypeId;
+
+        public PropertyCharacteristicConfigurationDomainValidator(
+            IGenericRepository<CharacteristicGroupUsage> characteristicGroupUsageRepository,
+            Guid propertyTypeId,
+            Guid countryId)
         {
             this.characteristicGroupUsageRepository = characteristicGroupUsageRepository;
             this.propertyTypeId = propertyTypeId;
@@ -27,7 +31,8 @@ namespace KnightFrank.Antares.Domain.Property.Commands
             this.Custom(this.CharacteristicAreInCharacteristicGroupUsage);
         }
 
-        private ValidationFailure CharacteristicAreInCharacteristicGroupUsage(IList<CreateOrUpdatePropertyCharacteristic> propertyCharacteristics)
+        private ValidationFailure CharacteristicAreInCharacteristicGroupUsage(
+            IList<CreateOrUpdatePropertyCharacteristic> propertyCharacteristics)
         {
             List<Guid> commandCharacteristicIds = propertyCharacteristics.Select(pc => pc.CharacteristicId).ToList();
 
@@ -44,8 +49,11 @@ namespace KnightFrank.Antares.Domain.Property.Commands
                        ? new ValidationFailure(
                              nameof(propertyCharacteristics),
                              "Property characteristics are invalid for property configuration.")
+                             {
+                                 ErrorCode =
+                                     "propertyCharacteristics_notconfigured"
+                             }
                        : null;
         }
-        
     }
 }

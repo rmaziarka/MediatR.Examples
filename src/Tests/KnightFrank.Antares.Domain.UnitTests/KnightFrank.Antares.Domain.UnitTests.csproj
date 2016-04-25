@@ -149,6 +149,8 @@
     <Compile Include="Common\Validator\PropertyTypeValidatorTests.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyCharacteristicDomainValidatorTests.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyCharacteristicValidatorTests.cs" />
+    <Compile Include="Property\Commands\PropertyCharacteristicConfigurationDomainValidatorTests.cs" />
+    <Compile Include="Property\Commands\PropertyCharacteristicsUniqueValidatorTests.cs" />
     <Compile Include="Property\Commands\UpdatePropertyCommandValidatorTests.cs" />
     <Compile Include="Property\Queries\PropertyAttributesQueryValidatorTests.cs" />
     <Compile Include="Property\QueryHandlers\PropertyTypesQueryHandlerTests.cs" />
