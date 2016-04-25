@@ -64,6 +64,7 @@ Scenario Outline: Update property
 			| Division     | Residential      |
 			| Division     | Commercial       |
         And User gets <propertyType1> for PropertyType
+		And Property characteristics are set for given property type
 		And User sets attributes for property in database
 			| MinBedrooms   | MaxReceptions   | MaxArea   | MinGuestRooms   | MaxFunctionRooms   |
 			| <MinBedrooms> | <MaxReceptions> | <MaxArea> | <MinGuestRooms> | <MaxFunctionRooms> |
@@ -92,6 +93,7 @@ Scenario Outline: Update property
 	| Industrial.Industrial Distribution | Industrial            | Commercial    | Commercial    |             |               |         |               |                  |              |                |          |                |                   |
 	| Office                             | Other                 | Commercial    | Commercial    |             |               |         |               |                  |              |                |          |                |                   |
 
+
 @Property
 Scenario Outline: Update property with invalid data
 	Given User gets GB address form for Property and country details
@@ -100,6 +102,7 @@ Scenario Outline: Update property with invalid data
 			| Division     | Residential      |
 			| Division     | Commercial       |
         And User gets House for PropertyType
+		And Property characteristics are set for given property type
 		And User sets attributes for property in database
 			| MinBedrooms   | MaxReceptions   | MaxArea   | MinGuestRooms   | MaxFunctionRooms   |
 			| <MinBedrooms> | <MaxReceptions> | <MaxArea> | <MinGuestRooms> | <MaxFunctionRooms> |
@@ -176,3 +179,27 @@ Scenario: Get property
         And Ownership list should be the same as in database
 		And Activities list should be the same as in database
 		And Characteristics list should be the same as in database
+
+@Property
+@Characteristics
+Scenario Outline: Try to create property with improper characteristic data
+	Given User gets GB address form for Property and country details
+        And User gets EnumTypeItemId and EnumTypeItem code
+			| enumTypeCode | enumTypeItemCode |
+			| Division     | Residential      |
+		And Address for add/update property is defined with max length fields
+        And User gets House for PropertyType
+		And User sets attributes for property in Api
+			| MinBedrooms | MinArea | MinGuestRooms |
+			| 1           | 2       | 3             |
+		And Followed property characteristics are chosen
+		| Code   |
+		| <code> | 
+	When User creates property with defined address and Residential division by Api
+	Then User should get <statusCode> http status code
+
+	Examples:
+	| code     | statusCode |
+	| Offices  | BadRequest | 
+	| invalid  | BadRequest | 
+	
