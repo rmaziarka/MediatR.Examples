@@ -27,12 +27,6 @@
                 this.propertyTypeId = property.propertyTypeId;
                 this.attributeValues = property.attributeValues;
 
-                property.propertyCharacteristics = [
-                    { id: '1', propertyTypeId: '33', characteristicId: 'f1be3793-a707-e611-829c-80c16efdf78c', text: '' },
-                    { id: '2', propertyTypeId: '33', characteristicId: 'f3be3793-a707-e611-829c-80c16efdf78c', text: 'def' },
-                    { id: '3', propertyTypeId: '33', characteristicId: 'f7be3793-a707-e611-829c-80c16efdf78c', text: 'sss' }
-                ];
-
                 _.reduce(property.propertyCharacteristics, (propertyCharacteristicObject, characteristicItem) => {
                     propertyCharacteristicObject[characteristicItem.characteristicId] = new CharacteristicSelect(characteristicItem);
                     return propertyCharacteristicObject;

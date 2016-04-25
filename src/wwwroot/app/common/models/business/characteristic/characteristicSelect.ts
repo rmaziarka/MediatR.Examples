@@ -8,7 +8,7 @@ module Antares.Common.Models.Business {
 
         constructor(characteristic?: Dto.IPropertyCharacteristic) {
             if (characteristic) {
-                this.characteristicId = characteristic.id;
+                this.characteristicId = characteristic.characteristicId;
                 this.text = characteristic.text;
                 this.isSelected = true;
             }

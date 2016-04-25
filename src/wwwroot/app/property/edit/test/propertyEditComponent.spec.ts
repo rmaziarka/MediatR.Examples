@@ -165,11 +165,16 @@ module Antares {
                         propertyId = property.id;
                     });
 
+                    var requestData: Business.CreateOrUpdatePropertyResource;
                     var propertyFromServerMock: Business.Property = new Business.Property();
                     propertyFromServerMock.id = 'propFromServerId1';
                     propertyFromServerMock.address = new Business.Address();
 
-                    $http.expectPUT(/\/api\/properties/, propertyMock).respond(() => {
+                    $http.expectPUT(/\/api\/properties/, (data: string) => {
+                        requestData = JSON.parse(data);
+
+                        return true;
+                    }).respond(() => {
                         return [200, propertyFromServerMock];
                     });
 
@@ -177,6 +182,7 @@ module Antares {
                     button.click();
                     $http.flush();
 
+                    expect(requestData.id).toEqual(propertyMock.id);
                     expect(state.go).toHaveBeenCalled();
                     expect(propertyId).toEqual(propertyFromServerMock.id);
                 });
