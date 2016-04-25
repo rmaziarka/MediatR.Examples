@@ -18,7 +18,9 @@
                        ng-maxlength="50"
                        type="text"
                        name="characteristicText"
-                       ng-model="vm.characteristicSelect.text" ng-show="vm.isCommentVisible || formCharacteristic.characteristicText.$invalid">
+                       ng-model="vm.characteristicSelect.text"
+                       ng-show="vm.isCommentVisible || formCharacteristic.characteristicText.$invalid"
+                       autocomplete="off">
                 <div ng-messages="formCharacteristic.characteristicText.$error" ng-show="formCharacteristic.characteristicText.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
