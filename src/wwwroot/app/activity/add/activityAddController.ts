@@ -84,6 +84,7 @@ module Antares.Activity {
         }
 
         clearActivity = () => {
+            this.selectedActivityType = null;
             this.setDefaultActivityStatus(this.activityStatuses);
             var form = this.$scope["addActivityForm"];
             form.$setPristine();
