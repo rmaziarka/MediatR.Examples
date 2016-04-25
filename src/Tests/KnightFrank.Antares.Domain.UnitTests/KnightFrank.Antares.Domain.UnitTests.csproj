@@ -119,6 +119,7 @@
     <Compile Include="Characteristic\QueryHandlers\CharacteristicGroupsQueryHandlerTests.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidatorTests.cs" />
     <Compile Include="Common\Validator\LocaleValidatorTests.cs" />
+    <Compile Include="Common\Validator\CountryValidatorTests.cs" />
     <Compile Include="Company\CommandHandlers\CreateCompanyComandHandlerTests.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommandDomainValidatorTests.cs" />
     <Compile Include="Common\Validator\ContactValidatorTests.cs" />

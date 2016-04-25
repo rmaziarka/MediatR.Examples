@@ -21,7 +21,13 @@
         private ValidationFailure PropertyTypeExists(Guid propertyTypeId)
         {
             bool propertyTypeExists = this.propertyTypeRepository.Any(x => x.Id.Equals(propertyTypeId));
-            return propertyTypeExists ? null : new ValidationFailure("PropertyTypeId", "PropertyType does not exist.") { ErrorCode = "propertytypeid_error" };
+            return propertyTypeExists
+                       ? null
+                       : new ValidationFailure(nameof(propertyTypeId), "PropertyType does not exist.")
+                             {
+                                 ErrorCode =
+                                     "propertytypeid_notexist"
+                             };
         }
     }
 }

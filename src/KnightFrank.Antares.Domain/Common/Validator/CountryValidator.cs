@@ -21,7 +21,9 @@
         private ValidationFailure CountryExists(Guid countryId)
         {
             bool countryExists = this.countryRepository.Any(x => x.Id.Equals(countryId));
-            return countryExists ? null : new ValidationFailure("CountryId", "Country does not exist.");
+            return countryExists
+                       ? null
+                       : new ValidationFailure(nameof(countryId), "Country does not exist.") { ErrorCode = "countryid_notexist" };
         }
     }
 }
