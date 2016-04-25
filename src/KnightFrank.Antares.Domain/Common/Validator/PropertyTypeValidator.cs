@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace KnightFrank.Antares.Domain.Property.Commands
+﻿namespace KnightFrank.Antares.Domain.Common.Validator
 {
+    using System;
+
     using FluentValidation;
     using FluentValidation.Results;
 
@@ -15,19 +15,13 @@ namespace KnightFrank.Antares.Domain.Property.Commands
         public PropertyTypeValidator(IGenericRepository<PropertyType> propertyTypeRepository)
         {
             this.propertyTypeRepository = propertyTypeRepository;
-
             this.Custom(this.PropertyTypeExists);
         }
 
         private ValidationFailure PropertyTypeExists(Guid propertyTypeId)
         {
-            var propertyType = this.propertyTypeRepository.GetById(propertyTypeId);
-            if (propertyType == null)
-            {
-                return new ValidationFailure("PropertyTypeId", "Specified property type is invalid.");
-            }
-            
-            return null;
+            bool propertyTypeExists = this.propertyTypeRepository.Any(x => x.Id.Equals(propertyTypeId));
+            return propertyTypeExists ? null : new ValidationFailure("PropertyTypeId", "PropertyType does not exist.") { ErrorCode = "propertytypeid_error" };
         }
     }
 }

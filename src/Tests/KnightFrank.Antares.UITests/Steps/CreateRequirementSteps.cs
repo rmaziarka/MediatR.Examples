@@ -35,7 +35,6 @@
             this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
         }
 
-        [Given(@"User navigates to create residential sales requirement page")]
         [When(@"User navigates to create residential sales requirement page")]
         public void OpenCreateRequirementPage()
         {

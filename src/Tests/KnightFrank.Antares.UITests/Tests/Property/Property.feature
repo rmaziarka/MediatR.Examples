@@ -9,12 +9,12 @@ Scenario: Create and update property
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
 			| 2           | 4           | 1             | 3             | 2            | 3            | 2000.12 | 4000.12 | 6000.13     | 10000.1     | 3                   | 5                   |
 		And User fills in address details on create property page
-			| PropertyNumber | PropertyName | Line2        | Line3 | Postcode | City   | County |
-			| 55             | Knight Frank | Baker Street |       | W1U 8AN  | London | London |
+			| PropertyNumber | PropertyName | Line2        | Line3 | Postcode | City   | County           |
+			| 55             | Knight Frank | Baker Street |       | W1U 8AN  | London | County of London |
 		And User clicks save button on create property page
 	Then New property should be created with address details 
-		| PropertyNumber | PropertyName | Line2        | Postcode | City   | County |
-		| 55             | Knight Frank | Baker Street | W1U 8AN  | London | London |
+		| PropertyNumber | PropertyName | Line2        | Postcode | City   | County           |
+		| 55             | Knight Frank | Baker Street | W1U 8AN  | London | County of London |
 		And New property should be created with Flat property type and following attributes
 			| Bedrooms | Receptions | Bathrooms | PropertyArea               | LandArea                   | CarParkingSpaces |
 			| 2 - 4    | 1 - 3      | 2 - 3     | 2,000.12 - 4,000.12 sq. ft | 6,000.13 - 10,000.1 sq. ft | 3 - 5            |
@@ -71,11 +71,12 @@ Scenario: Create property with ownership and activity
 	Then Activity details are set on activity panel
 	    | Vendor           | Status         |
 	    | Arthur Pendragon | Pre-appraisal  |
-	When User clicks save button on activity panel
+	When User selects Open Market Letting activity type on activity panel
+		And User clicks save button on activity panel
 	Then Activity creation date is set to current date on view property page
 		And Activity details are set on view property page
-			| Vendor           | Status        |
-			| Arthur Pendragon | Pre-appraisal |
+			| Vendor           | Status        | Type                |
+			| Arthur Pendragon | Pre-appraisal | Open Market Letting |
 	When User clicks activity's details link on view property page
 		And User clicks view activity link on activity preview page
 	Then Address details on view activity page are following

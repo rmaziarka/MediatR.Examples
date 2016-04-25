@@ -30,6 +30,7 @@
     {
         private readonly Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository;
         private readonly Mock<IGenericRepository<PropertyTypeDefinition>> propertyTypeDefinitionRepository;
+        private readonly Mock<IGenericRepository<PropertyType>> propertyTypeRepository;
         private readonly Mock<IGenericRepository<AddressForm>> addressFormRepository;
         private readonly Mock<IGenericRepository<PropertyAttributeForm>> propertyAttributeFormRepository;
         private readonly UpdatePropertyCommand command;
@@ -52,6 +53,7 @@
 
             this.enumTypeItemRepository = fixture.Freeze<Mock<IGenericRepository<EnumTypeItem>>>();
             this.propertyTypeDefinitionRepository = fixture.Freeze<Mock<IGenericRepository<PropertyTypeDefinition>>>();
+            this.propertyTypeRepository = fixture.Freeze<Mock<IGenericRepository<PropertyType>>>();
             this.addressFormRepository = fixture.Freeze<Mock<IGenericRepository<AddressForm>>>();
             this.propertyAttributeFormRepository = fixture.Freeze<Mock<IGenericRepository<PropertyAttributeForm>>>();
 
@@ -84,6 +86,7 @@
             this.enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
             this.propertyTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyTypeDefinition, bool>>>()))
                 .Returns(true);
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             // Act
             ValidationResult validationResult = this.validator.Validate(this.command);
@@ -130,6 +133,7 @@
                 .Returns(
                     new Func<Expression<Func<PropertyTypeDefinition, bool>>, bool>(
                         expr => propertyTypeDefinitions.Any(expr.Compile())));
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             // Act
             ValidationResult validationResult = this.validator.Validate(this.command);
@@ -186,6 +190,7 @@
         {
             // Arrange
             this.command.AttributeValues = null;
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             // Act 
             ValidationResult validationResult = this.validator.Validate(this.command);
@@ -200,6 +205,7 @@
         {
             // Arrange
             this.command.AttributeValues = new CreateOrUpdatePropertyAttributeValues() { MaxBathrooms = -1 };
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             // Act 
             ValidationResult validationResult = this.validator.Validate(this.command);
@@ -214,6 +220,7 @@
         {
             // Arrange
             this.command.AttributeValues = new CreateOrUpdatePropertyAttributeValues() { MinArea = 20, MaxArea = 10 };
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             // Act 
             ValidationResult validationResult = this.validator.Validate(this.command);
@@ -228,6 +235,7 @@
         {
             // Arrange
             this.command.AttributeValues = new CreateOrUpdatePropertyAttributeValues() { MinArea = 20, MaxArea = 10, MaxLandArea = -10 };
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             // Act 
             ValidationResult validationResult = this.validator.Validate(this.command);
@@ -243,8 +251,8 @@
             // Arrange
             var attributes = new[] { "Bedrooms", "Area" };
             this.InitPropertyAttributeFormWithAttributes(attributes);
-
             this.command.AttributeValues = new CreateOrUpdatePropertyAttributeValues();
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             // Act 
             ValidationResult validationResult = this.validator.Validate(this.command);
@@ -259,12 +267,12 @@
             // Arrange
             var attributes = new[] { "Bedrooms", "Area" };
             this.InitPropertyAttributeFormWithAttributes(attributes);
-
             this.command.AttributeValues = new CreateOrUpdatePropertyAttributeValues()
             {
                 MinBedrooms = 1,
                 MaxArea = 1
             };
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             // Act 
             ValidationResult validationResult = this.validator.Validate(this.command);
@@ -279,12 +287,12 @@
             // Arrange
             var attributes = new[] { "Bedrooms", "Area" };
             this.InitPropertyAttributeFormWithAttributes(attributes);
-
             this.command.AttributeValues = new CreateOrUpdatePropertyAttributeValues()
             {
                 MinBedrooms = 1,
                 MaxLandArea = 1
             };
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             // Act 
             ValidationResult validationResult = this.validator.Validate(this.command);

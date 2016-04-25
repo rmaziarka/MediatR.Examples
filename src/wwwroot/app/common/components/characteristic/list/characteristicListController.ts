@@ -10,7 +10,6 @@ module Antares.Common.Component {
 
         public property: Business.Property;
         public characteristicGroups: Business.CharacteristicGroup[] = [];
-        public characteristicSelect: Business.CharacteristicSelect = new Business.CharacteristicSelect();
 
         countryCode: string = 'GB';  // TODO: hardcoded!!! - component commmunication needs to be discussed and maybe api should operate on guids instead of codes
 
@@ -22,10 +21,6 @@ module Antares.Common.Component {
 
             this.characteristicGroupUsageResource = dataAccessService.getCharacteristicGroupUsageResource();
             this.loadCharacteristics();
-
-            // temporary mocked single characteristic data
-            this.characteristicSelect.characteristicId = '3e84bbde-a807-e611-826f-8cdcd42e5436';
-            this.characteristicSelect.text = 'kod';
         }
 
         loadCharacteristics = () => {
@@ -39,6 +34,29 @@ module Antares.Common.Component {
                         this.characteristicGroups = characteristicGroupUsages.map(
                             (item: Dto.ICharacteristicGroupUsage) => new Business.CharacteristicGroup(<Dto.ICharacteristicGroupUsage>item));
                     });
+            }
+        }
+
+        clearCharacteristics = () => {
+            this.characteristicGroups = [];
+        }
+
+        clearHiddenCharacteristicsDataFromProperty = () => {
+            var characteristics: Business.Characteristic[] = _.chain(this.characteristicGroups)
+                .map((group: Business.CharacteristicGroup) => {
+                    return group.characteristicGroupItems;
+                })
+                .flatten<Business.Characteristic>()
+                .value();
+
+            for (var prop in this.property.propertyCharacteristicsMap) {
+                var characteristicId: string = prop;
+                if (this.property.propertyCharacteristicsMap.hasOwnProperty(characteristicId)) {
+                    var clearCharacteristicData = characteristics.filter((item: Business.Characteristic) => { return item.id === characteristicId; }).length === 0;
+                    if (clearCharacteristicData) {
+                        this.property.propertyCharacteristicsMap[characteristicId].clear();
+                    }
+                }
             }
         }
     }

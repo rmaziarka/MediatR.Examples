@@ -118,7 +118,9 @@
     <Compile Include="Common\Validator\ActivityTypeValidator.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidator.cs" />
     <Compile Include="Common\Validator\ContactValidator.cs" />
+    <Compile Include="Common\Validator\CountryValidator.cs" />
     <Compile Include="Common\Validator\LocaleValidator.cs" />
+    <Compile Include="Common\Validator\PropertyTypeValidator.cs" />
     <Compile Include="Company\CommandHandlers\CreateCompanyCommandHandler.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommand.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommandProfile.cs" />
@@ -167,14 +169,15 @@
     <Compile Include="Property\Commands\CreateOrUpdatePropertyAttributeValues.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyCharacteristic.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyCharacteristicDomainValidator.cs" />
+    <Compile Include="Property\Commands\CreateOrUpdatePropertyCharacteristicListValidator.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyCharacteristicValidator.cs" />
     <Compile Include="Property\Commands\CreatePropertyCommand.cs" />
     <Compile Include="Property\Commands\CreatePropertyCommandDomainValidator.cs" />
     <Compile Include="Property\Commands\CreatePropertyCommandValidator.cs" />
     <Compile Include="Common\Validator\CustomDynamicValidator.cs" />
-    <Compile Include="Property\Commands\PropertyTypeValidator.cs" />
     <Compile Include="Property\Commands\UpdatePropertyCommand.cs" />
     <Compile Include="Property\Commands\PropertyCommandProfile.cs" />
+    <Compile Include="Property\Commands\UpdatePropertyCommandDomainValidator.cs" />
     <Compile Include="Property\Commands\UpdatePropertyCommandValidator.cs" />
     <Compile Include="Property\Queries\PropertyQuery.cs" />
     <Compile Include="Property\Queries\PropertyQueryValidator.cs" />

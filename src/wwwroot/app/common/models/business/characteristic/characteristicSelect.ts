@@ -13,5 +13,10 @@ module Antares.Common.Models.Business {
                 this.isSelected = true;
             }
         }
+
+        clear = () => {
+            this.text = '';
+            this.isSelected = false;
+        }
     }
 }
