@@ -42,11 +42,12 @@
         {
             Guid activityStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["PreAppraisal"];
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
+            Guid activityTypeId = this.scenarioContext.Get<Guid>("ActivityTypeId");
 
             var activity = new Activity
             {
                 PropertyId = propertyId,
-                ActivityTypeId = this.fixture.DataContext.ActivityTypes.First().Id,
+                ActivityTypeId = activityTypeId,
                 ActivityStatusId = activityStatusId,
                 CreatedDate = DateTime.Now,
                 LastModifiedDate = DateTime.Now,
@@ -66,6 +67,8 @@
 
             Guid activityStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["PreAppraisal"];
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
+            Guid activityTypeId = this.scenarioContext.Get<Guid>("ActivityTypeId");
+            
             List<Guid> vendors =
                 this.fixture.DataContext.Ownerships.Where(x => x.PropertyId.Equals(propertyId) && x.SellDate == null)
                     .SelectMany(x => x.Contacts).Select(c => c.Id)
@@ -75,11 +78,26 @@
             {
                 PropertyId = propertyId,
                 ActivityStatusId = activityStatusId,
-                ContactIds = vendors
+                ContactIds = vendors,
+                ActivityTypeId = activityTypeId
             };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, activityCommand);
             this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        [Given(@"User gets (.*) for ActivityType")]
+        public void GetActivityTypeId(string activityTypeCode)
+        {
+            if (activityTypeCode.Equals("invalid"))
+            {
+                this.scenarioContext.Set(Guid.NewGuid(), "ActivityTypeId");
+            }
+            else
+            {
+                Guid activityTypeId = this.fixture.DataContext.ActivityTypes.Single(i => i.Code.Equals(activityTypeCode)).Id;
+                this.scenarioContext.Set(activityTypeId, "ActivityTypeId");
+            }
         }
 
         [When(@"User retrieves activity details for given (.*)")]
@@ -103,6 +121,7 @@
             var updateActivityCommand = table.CreateInstance<UpdateActivityCommand>();
             var activityFromDatabase = this.scenarioContext.Get<Activity>("Added Activity");
             updateActivityCommand.Id = id.Equals("added") ? activityFromDatabase.Id : new Guid(id);
+            updateActivityCommand.ActivityTypeId = activityFromDatabase.ActivityTypeId;
             updateActivityCommand.ActivityStatusId = status.Equals("added")
                 ? activityFromDatabase.ActivityStatusId
                 : new Guid(status);
@@ -111,6 +130,7 @@
             {
                 Id = updateActivityCommand.Id,
                 ActivityStatusId = updateActivityCommand.ActivityStatusId,
+                ActivityTypeId = updateActivityCommand.ActivityTypeId,
                 MarketAppraisalPrice = updateActivityCommand.MarketAppraisalPrice,
                 RecommendedPrice = updateActivityCommand.RecommendedPrice,
                 VendorEstimatedPrice = updateActivityCommand.VendorEstimatedPrice

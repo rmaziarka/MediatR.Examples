@@ -27,17 +27,21 @@ module Antares.Common.Component {
             if (this.property.propertyTypeId && this.property.address.countryId) {
                 this.characteristicGroupUsageResource
                     .query({
-                        countryId: this.property.address.countryId, propertyTypeId: this.property.propertyTypeId
+                        countryId : this.property.address.countryId,
+                        propertyTypeId : this.property.propertyTypeId
                     })
                     .$promise
-                    .then((characteristicGroupUsages: any) => {
+                    .then((characteristicGroupUsages: any) =>{
                         this.characteristicGroups = characteristicGroupUsages.map(
-                            (item: Dto.ICharacteristicGroupUsage) => new Business.CharacteristicGroup(<Dto.ICharacteristicGroupUsage>item));
+                        (item: Dto.ICharacteristicGroupUsage) => new Business.CharacteristicGroup(<Dto.ICharacteristicGroupUsage>item));
                     });
+            }
+            else {
+                this.clearCharacteristics();
             }
         }
 
-        clearCharacteristics = () => {
+        clearCharacteristics = () =>{
             this.characteristicGroups = [];
         }
 

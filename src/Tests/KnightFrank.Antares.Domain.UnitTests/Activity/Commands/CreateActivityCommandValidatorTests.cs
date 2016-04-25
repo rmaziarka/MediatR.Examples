@@ -8,7 +8,6 @@
     using FluentAssertions;
 
     using FluentValidation.Results;
-    using FluentValidation.TestHelper;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
@@ -16,7 +15,6 @@
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
-    using KnightFrank.Antares.Domain.Common.Validator;
 
     using Moq;
 
@@ -50,7 +48,8 @@
 
             this.activityTypeRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityType, bool>>>())).Returns(true);
             this.enumTypeItemRepository.Setup(r => r.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
-            this.activityTypeDefinitionRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>())).Returns(true);
+            this.activityTypeDefinitionRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>()))
+                .Returns(true);
             this.propertyRepository.Setup(r => r.GetById(It.IsAny<Guid>())).Returns(new Property());
 
             this.validator = this.fixture.Create<CreateActivityCommandValidator>();
@@ -66,7 +65,7 @@
             IEnumerable<Contact> fakeContactResult = cmd.ContactIds.Select(activityContact => new Contact { Id = activityContact });
 
             contactRepository.Setup(r => r.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(fakeContactResult);
-            
+
             // Act
             ValidationResult validationResult = this.validator.Validate(cmd);
 
@@ -88,7 +87,7 @@
             // Assert
             validationResult.IsValid.Should().BeFalse();
             validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.PropertyId));
-            this.propertyRepository.Verify(p => p.GetById(It.IsAny<Guid>()), Times.Exactly(2));
+            this.propertyRepository.Verify(p => p.GetById(It.IsAny<Guid>()), Times.Exactly(1));
         }
 
         [Theory]
@@ -114,7 +113,7 @@
             // Arrange 
             CreateActivityCommand cmd =
                 this.fixture.Build<CreateActivityCommand>().With(c => c.ActivityStatusId, default(Guid)).Create();
-            
+
             this.enumTypeItemRepository.Setup(r => r.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(false);
 
             // Act
@@ -133,7 +132,7 @@
             // Arrange 
             CreateActivityCommand cmd =
                 this.fixture.Build<CreateActivityCommand>().With(c => c.ActivityTypeId, default(Guid)).Create();
-            
+
             // Act
             ValidationResult validationResult = this.validator.Validate(cmd);
 
@@ -146,7 +145,7 @@
         [Theory]
         [AutoMoqData]
         public void Given_CommandActivityTypeDoesNotExist_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
-           CreateActivityCommand cmd)
+            CreateActivityCommand cmd)
         {
             // Arrange 
             this.activityTypeRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityType, bool>>>())).Returns(false);
@@ -164,7 +163,8 @@
         public void Given_NotExistingActivityTypeDefinitionInCommand_When_Validating_Then_ShouldReturnValidationError(
             CreateActivityCommand command)
         {
-            this.activityTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>())).Returns(false);
+            this.activityTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>()))
+                .Returns(false);
 
             ValidationResult validationResult = this.validator.Validate(command);
 

@@ -142,6 +142,7 @@ Scenario: Get non existing property
 Scenario: Get property
 	Given User gets GB address form for Property and country details
         And User gets House for PropertyType
+		And User gets Freehold Sale for ActivityType
         And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode   | enumTypeItemCode |
 			| OwnershipType  | Freeholder       |

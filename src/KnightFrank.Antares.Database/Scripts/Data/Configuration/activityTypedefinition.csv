@@ -16,12 +16,10 @@ Garage Only;GB;Open Market Letting;1
 Garage Only;GB;Freehold Sale;2
 Parking Space;GB;Open Market Letting;1
 Parking Space;GB;Freehold Sale;2
-Land Plot;GB;Freehold Sale;1
 Land;GB;Freehold Sale;1
 Land;GB;Long Leasehold Sale;2
 Houseboat;GB;Open Market Letting;1
 Houseboat;GB;Freehold Sale;2
-
 Leisure;GB;Assignment;1
 Leisure;GB;Open Market Letting;2
 Leisure;GB;Open Market Sub-Letting;3
@@ -406,22 +404,22 @@ Retail.Retail Unit A5;GB;By Arrangement;13
 Retail.Retail Unit A5;GB;Long Leasehold (Vacant Possession);14
 Retail.Retail Unit A5;GB;Feuhold (Vacant Possession);15
 Retail.Retail Unit A5;GB;Lease Surrender;16
-Retail.Retail Wharehouse (Portfolio);GB;Assignment;1
-Retail.Retail Wharehouse (Portfolio);GB;Open Market Letting;2
-Retail.Retail Wharehouse (Portfolio);GB;Open Market Sub-Letting;3
-Retail.Retail Wharehouse (Portfolio);GB;Pre-Letting;4
-Retail.Retail Wharehouse (Portfolio);GB;Leasehold;5
-Retail.Retail Wharehouse (Portfolio);GB;Freehold (Vacant Possession);6
-Retail.Retail Wharehouse (Portfolio);GB;Freehold Sale;7
-Retail.Retail Wharehouse (Portfolio);GB;Feuhold Sale;8
-Retail.Retail Wharehouse (Portfolio);GB;Long Leasehold Sale;9
-Retail.Retail Wharehouse (Portfolio);GB;Lease Regear;10
-Retail.Retail Wharehouse (Portfolio);GB;Lease Renewal;11
-Retail.Retail Wharehouse (Portfolio);GB;Rent Review;12
-Retail.Retail Wharehouse (Portfolio);GB;By Arrangement;13
-Retail.Retail Wharehouse (Portfolio);GB;Long Leasehold (Vacant Possession);14
-Retail.Retail Wharehouse (Portfolio);GB;Feuhold (Vacant Possession);15
-Retail.Retail Wharehouse (Portfolio);GB;Lease Surrender;16
+Retail.Retail Warehouse (Portfolio);GB;Assignment;1
+Retail.Retail Warehouse (Portfolio);GB;Open Market Letting;2
+Retail.Retail Warehouse (Portfolio);GB;Open Market Sub-Letting;3
+Retail.Retail Warehouse (Portfolio);GB;Pre-Letting;4
+Retail.Retail Warehouse (Portfolio);GB;Leasehold;5
+Retail.Retail Warehouse (Portfolio);GB;Freehold (Vacant Possession);6
+Retail.Retail Warehouse (Portfolio);GB;Freehold Sale;7
+Retail.Retail Warehouse (Portfolio);GB;Feuhold Sale;8
+Retail.Retail Warehouse (Portfolio);GB;Long Leasehold Sale;9
+Retail.Retail Warehouse (Portfolio);GB;Lease Regear;10
+Retail.Retail Warehouse (Portfolio);GB;Lease Renewal;11
+Retail.Retail Warehouse (Portfolio);GB;Rent Review;12
+Retail.Retail Warehouse (Portfolio);GB;By Arrangement;13
+Retail.Retail Warehouse (Portfolio);GB;Long Leasehold (Vacant Possession);14
+Retail.Retail Warehouse (Portfolio);GB;Feuhold (Vacant Possession);15
+Retail.Retail Warehouse (Portfolio);GB;Lease Surrender;16
 Retail.Retail Wh (Bulky Parks);GB;Assignment;1
 Retail.Retail Wh (Bulky Parks);GB;Open Market Letting;2
 Retail.Retail Wh (Bulky Parks);GB;Open Market Sub-Letting;3
@@ -678,19 +676,19 @@ Other.Other;GB;By Arrangement;13
 Other.Other;GB;Long Leasehold (Vacant Possession);14
 Other.Other;GB;Feuhold (Vacant Possession);15
 Other.Other;GB;Lease Surrender;16
-Other.Student Accomodatio;GB;Assignment;1
-Other.Student Accomodatio;GB;Open Market Letting;2
-Other.Student Accomodatio;GB;Open Market Sub-Letting;3
-Other.Student Accomodatio;GB;Pre-Letting;4
-Other.Student Accomodatio;GB;Leasehold;5
-Other.Student Accomodatio;GB;Freehold (Vacant Possession);6
-Other.Student Accomodatio;GB;Freehold Sale;7
-Other.Student Accomodatio;GB;Feuhold Sale;8
-Other.Student Accomodatio;GB;Long Leasehold Sale;9
-Other.Student Accomodatio;GB;Lease Regear;10
-Other.Student Accomodatio;GB;Lease Renewal;11
-Other.Student Accomodatio;GB;Rent Review;12
-Other.Student Accomodatio;GB;By Arrangement;13
-Other.Student Accomodatio;GB;Long Leasehold (Vacant Possession);14
-Other.Student Accomodatio;GB;Feuhold (Vacant Possession);15
-Other.Student Accomodatio;GB;Lease Surrender;16
+Other.Student Accomodation;GB;Assignment;1
+Other.Student Accomodation;GB;Open Market Letting;2
+Other.Student Accomodation;GB;Open Market Sub-Letting;3
+Other.Student Accomodation;GB;Pre-Letting;4
+Other.Student Accomodation;GB;Leasehold;5
+Other.Student Accomodation;GB;Freehold (Vacant Possession);6
+Other.Student Accomodation;GB;Freehold Sale;7
+Other.Student Accomodation;GB;Feuhold Sale;8
+Other.Student Accomodation;GB;Long Leasehold Sale;9
+Other.Student Accomodation;GB;Lease Regear;10
+Other.Student Accomodation;GB;Lease Renewal;11
+Other.Student Accomodation;GB;Rent Review;12
+Other.Student Accomodation;GB;By Arrangement;13
+Other.Student Accomodation;GB;Long Leasehold (Vacant Possession);14
+Other.Student Accomodation;GB;Feuhold (Vacant Possession);15
+Other.Student Accomodation;GB;Lease Surrender;16

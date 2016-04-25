@@ -28,16 +28,20 @@ module Antares.Common.Component {
                 this.attributes = null;
                 this.propertyResource
                     .getAttributes({
-                        countryId: countryId, propertyTypeId: this.property.propertyTypeId
+                        countryId : countryId,
+                        propertyTypeId : this.property.propertyTypeId
                     }, null)
                     .$promise
                     .then((attributes: any) =>{
                         this.attributes = attributes.attributes.map((item: Dto.IAttribute) => new Business.Attribute(item));
                     });
             }
+            else {
+                this.clearAttributes();
+            }
         }
 
-        clearAttributes = () => {
+        clearAttributes = () =>{
             this.attributes = null;
         }
 
