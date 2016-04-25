@@ -10,12 +10,12 @@
     using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.Validator;
 
-    public class CreatePropertyCommandDomainValidator : AbstractValidator<CreatePropertyCommand>,
-                                                        IDomainValidator<CreatePropertyCommand>
+    public class UpdatePropertyCommandDomainValidator : AbstractValidator<UpdatePropertyCommand>,
+                                                        IDomainValidator<UpdatePropertyCommand>
     {
         private readonly CreateOrUpdatePropertyCharacteristicListValidator propertyCharacteristicListValidator;
 
-        public CreatePropertyCommandDomainValidator(
+        public UpdatePropertyCommandDomainValidator(
             IGenericRepository<Country> countryRepository,
             IGenericRepository<PropertyType> propertyTypeRepository,
             IGenericRepository<CharacteristicGroupUsage> characteristicGroupUsageRepository,
@@ -37,12 +37,12 @@
                     });
         }
 
-        private ValidationFailure PropertyCharacteristicsAreUnique(CreatePropertyCommand command)
+        private ValidationFailure PropertyCharacteristicsAreUnique(UpdatePropertyCommand command)
         {
             return this.propertyCharacteristicListValidator.PropertyCharacteristicsAreUnique(command.PropertyCharacteristics);
         }
 
-        private ValidationFailure CharacteristicAreInCharacteristicGroupUsage(CreatePropertyCommand command)
+        private ValidationFailure CharacteristicAreInCharacteristicGroupUsage(UpdatePropertyCommand command)
         {
             return this.propertyCharacteristicListValidator.CharacteristicAreInCharacteristicGroupUsage(
                 command.PropertyTypeId,

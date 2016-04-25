@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.Common.Validator;
 
     using Attribute = KnightFrank.Antares.Dal.Model.Attribute.Attribute;
 
@@ -51,6 +52,11 @@
                     .Must(this.BeOverOrEqualZero).WithMessage("Attributes values cannot be lower than 0.")
                     .Must(this.BeBetweenMinMax).WithMessage("Attributes values minumum cannot be greater than maximum.")
                     .Must(this.BeAllowedForPropertyType).WithMessage("Property contains attributes incorrect for given property type.");
+            });
+
+            this.When(x => x.PropertyCharacteristics != null, () =>
+            {
+                this.RuleFor(x => x.PropertyCharacteristics).SetCollectionValidator(new CreateOrUpdatePropertyCharacteristicValidator());
             });
 
             this.Custom(this.DivisionExists);

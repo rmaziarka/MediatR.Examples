@@ -143,7 +143,7 @@
     <Compile Include="Property\CommandHandlers\CreatePropertyCommandHandlerTests.cs" />
     <Compile Include="Property\CommandHandlers\UpdatePropertyCommandHandlerTests.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyAddressValidatorTests.cs" />
-    <Compile Include="Property\Commands\PropertyTypeValidatorTests.cs" />
+    <Compile Include="Common\Validator\PropertyTypeValidatorTests.cs" />
     <Compile Include="Property\Commands\UpdatePropertyCommandValidatorTests.cs" />
     <Compile Include="Property\Queries\PropertyAttributesQueryValidatorTests.cs" />
     <Compile Include="Property\QueryHandlers\PropertyTypesQueryHandlerTests.cs" />
