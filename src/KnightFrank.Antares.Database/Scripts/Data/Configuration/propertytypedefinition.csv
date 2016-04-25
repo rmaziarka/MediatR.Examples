@@ -1,9 +1,9 @@
 PropertyTypeCode;CountryCode;Division;Order
-Leisure;GB;Commercial;1
-Retail;GB;Commercial;2
-Industrial;GB;Commercial;3
-Other;GB;Commercial;4
-Office;GB;Commercial;5
+Leisure;GB;Commercial;2
+Retail;GB;Commercial;3
+Industrial;GB;Commercial;4
+Other;GB;Commercial;5
+Office;GB;Commercial;1
 Office.Office;GB;Commercial;6
 Office.Office (Bus. Park);GB;Commercial;7
 Office.Office (Portfolio);GB;Commercial;8
@@ -23,7 +23,7 @@ Retail.Retail Unit A2;GB;Commercial;21
 Retail.Retail Unit A3;GB;Commercial;22
 Retail.Retail Unit A4;GB;Commercial;23
 Retail.Retail Unit A5;GB;Commercial;24
-Retail.Retail Wharehouse (Portfolio);GB;Commercial;25
+Retail.Retail Warehouse (Portfolio);GB;Commercial;25
 Retail.Retail Wh (Bulky Parks);GB;Commercial;26
 Retail.Retail Wh (Bulky Solus);GB;Commercial;27
 Retail.Retail Wh (Open A1 Solus);GB;Commercial;28
