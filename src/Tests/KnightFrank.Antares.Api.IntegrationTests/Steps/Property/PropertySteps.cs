@@ -154,14 +154,36 @@
 
             foreach (PropertyCharacteristic prop in propertyCharacteristic.Select(characteristic => new PropertyCharacteristic
             {
-                CharacteristicId = this.fixture.DataContext.Characteristics.Single(x => x.Code == characteristic.CharacteristicCode).Id,
+                CharacteristicId =
+                    this.fixture.DataContext.Characteristics.Single(x => x.Code == characteristic.CharacteristicCode).Id,
                 PropertyId = id,
-                Text = characteristic.Text,
+                Text = characteristic.Text
             }))
             {
                 this.fixture.DataContext.Properties.Single(x => x.Id == id).PropertyCharacteristics.Add(prop);
             }
             this.fixture.DataContext.SaveChanges();
+        }
+
+        [Given(@"Property characteristics are set for given property type")]
+        public void GivenPropertyCharacteristicsAreSetForGivenPropertyType()
+        {
+            var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
+            var countryId = this.scenarioContext.Get<Guid>("CountryId");
+            var list = new List<Guid>();
+
+            foreach (
+                Guid id in
+                    this.fixture.DataContext.CharacteristicGroupUsages.Where(
+                        x => x.PropertyTypeId.Equals(propertyTypeId) && x.CountryId.Equals(countryId)).Select(x => x.Id).ToList())
+            {
+                list.AddRange(this.fixture.DataContext.CharacteristicGroupItems.Where(x => x.CharacteristicGroupUsageId.Equals(id))
+                                  .Select(x => x.CharacteristicId));
+            }
+
+            this.scenarioContext.Set(
+                list.Select(id => new CreateOrUpdatePropertyCharacteristic { CharacteristicId = id, Text = string.Empty }).ToList(),
+                "PropertyCharacteristics");
         }
 
         [When(@"Users updates property with defined address for (.*) id and (.*) division by Api")]
@@ -172,6 +194,8 @@
             var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
             var attributeValues = this.scenarioContext.Get<CreateOrUpdatePropertyAttributeValues>("AttributeValues");
+            var propertyCharacteristics =
+                this.scenarioContext.Get<List<CreateOrUpdatePropertyCharacteristic>>("PropertyCharacteristics");
 
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
             Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
@@ -182,7 +206,8 @@
                 Id = propertyId,
                 PropertyTypeId = propertyTypeId,
                 DivisionId = divisionId,
-                AttributeValues = attributeValues
+                AttributeValues = attributeValues,
+                PropertyCharacteristics = propertyCharacteristics
             };
 
             HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, updatedProperty);
@@ -197,6 +222,8 @@
             var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
             var attributeValues = this.scenarioContext.Get<CreateOrUpdatePropertyAttributeValues>("AttributeValues");
+            var propertyCharacteristics =
+                this.scenarioContext.Get<List<CreateOrUpdatePropertyCharacteristic>>("PropertyCharacteristics");
 
             Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
 
@@ -205,11 +232,13 @@
                 Address = address,
                 PropertyTypeId = propertyTypeId,
                 DivisionId = divisionId,
-                AttributeValues = attributeValues
+                AttributeValues = attributeValues,
+                PropertyCharacteristics = propertyCharacteristics
             };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, property);
             this.scenarioContext.SetHttpResponseMessage(response);
+            string abc = this.scenarioContext.GetResponseContent();
         }
 
         [When(@"User retrieves property details")]
@@ -243,7 +272,16 @@
                 .Excluding(x => x.Division)
                 .Excluding(x => x.PropertyType)
                 .Excluding(x => x.Address.AddressForm)
-                .Excluding(x => x.Address.Country));
+                .Excluding(x => x.Address.Country)
+                .Excluding(x => x.PropertyCharacteristics));
+
+            updatedProperty.PropertyCharacteristics.Should()
+                           .Equal(actualProperty.PropertyCharacteristics,
+                               (c1, c2) =>
+                                   c1.CharacteristicId == c2.CharacteristicId &&
+                                   c1.PropertyId == c2.PropertyId &&
+                                   c1.Text == c2.Text &&
+                                   c1.Id == c2.Id);
         }
 
         [Then(@"The created Property is saved in database")]
@@ -260,14 +298,24 @@
                 .Excluding(x => x.Address.Country)
                 .Excluding(x => x.PropertyType)
                 .Excluding(x => x.PropertyCharacteristics));
+
+            expectedProperty.PropertyCharacteristics.Should()
+                           .Equal(actualProperty.PropertyCharacteristics,
+                               (c1, c2) =>
+                                   c1.CharacteristicId == c2.CharacteristicId &&
+                                   c1.PropertyId == c2.PropertyId &&
+                                   c1.Text == c2.Text &&
+                                   c1.Id == c2.Id);
         }
 
         [Then(@"Characteristics list should be the same as in database")]
         public void ThenCharacteristicsListShouldBeTheSameAsInDatabase()
         {
             var propertyTypeId = this.scenarioContext.Get<Guid>("AddedPropertyId");
-            List<PropertyCharacteristic> expectedCharacteristics = JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent()).PropertyCharacteristics.ToList();
-            List<PropertyCharacteristic> actualCharacteristics = this.fixture.DataContext.Properties.Single(x => x.Id.Equals(propertyTypeId)).PropertyCharacteristics.ToList();
+            List<PropertyCharacteristic> expectedCharacteristics =
+                JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent()).PropertyCharacteristics.ToList();
+            List<PropertyCharacteristic> actualCharacteristics =
+                this.fixture.DataContext.Properties.Single(x => x.Id.Equals(propertyTypeId)).PropertyCharacteristics.ToList();
 
             for (var i = 0; i < actualCharacteristics.Count; i++)
             {
@@ -277,7 +325,6 @@
                 actualCharacteristics[i].Id.ShouldBeEquivalentTo(expectedCharacteristics[i].Id);
             }
         }
-
 
         internal class RequiredCharacteristics
         {
