@@ -38,8 +38,11 @@ module Antares {
                 TestHelpers.CharacteristicGroupItemGenerator.generateDto({})
             ];
 
+            var disabledCharacteristicGroupItem = TestHelpers.CharacteristicGroupItemGenerator.generateDto({});
+            disabledCharacteristicGroupItem.characteristic.isEnabled = false;
+
             var characteristicGroupsMock = [
-                TestHelpers.CharacteristicGroupUsageGenerator.generateDto({ characteristicGroupId: 'groupid1', order: 2 }),
+                TestHelpers.CharacteristicGroupUsageGenerator.generateDto({ characteristicGroupId: 'groupid1', order: 2, characteristicGroupItems: [disabledCharacteristicGroupItem] }),
                 TestHelpers.CharacteristicGroupUsageGenerator.generateDto({ characteristicGroupId: 'groupid2', order: 1, isDisplayLabel: false }),
                 TestHelpers.CharacteristicGroupUsageGenerator.generateDto({
                     characteristicGroupId: 'groupid3', order: 3,
@@ -122,9 +125,15 @@ module Antares {
                     expect(group3Element.find('characteristic-select').find('label')[1].innerText.trim()).toBe("beta");
                     expect(group3Element.find('characteristic-select').find('label')[2].innerText.trim()).toBe("gamma");
                 });
+
+                it('should not display disabled characterictics', () =>{
+                    var group1Element = element.find(pageObjectSelectors.characteristicsGroupIdPrefix + 'groupid1');
+
+                    var group1CharacteristicsElements = group1Element.find('characteristic-select');
+
+                    expect(group1CharacteristicsElements.length).toBe(0);
+                });
             });
-
-
         });
     });
 }
