@@ -65,7 +65,7 @@ module Antares.Property {
             this.components.attributeList().clearHiddenAttributesFromProperty();
 
             this.propertyResource
-                .update(this.property)
+                .update(new Business.CreateOrUpdatePropertyResource(this.property))
                 .$promise
                 .then((property: Dto.IProperty) => {
                     this.$state.go('app.property-view', property);
