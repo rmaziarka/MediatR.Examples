@@ -51,6 +51,16 @@ Scenario: Create property with ownership and activity
 		And User fills in address details on create property page
 			| PropertyNumber | PropertyName      | Line2    | Line3 | Postcode | City   | County      |
 			| 20             | Westminster Abbey | Deans Yd |       | SW1P 3PA | London | Westminster |
+		And User selects property characteristics on create property page
+			| Name   | Comment                          |
+			| Garden | Garden full of trees and flowers |
+			| Island | Tropic island                    |
+		And User selects property characteristics on create property page
+			| Name          |
+			| New Build     |
+			| Conservatory  |
+			| Swimming Pool |
+			| Fair          |
 		And User clicks save button on create property page
 	Then New property should be created with address details 
 		| PropertyNumber | PropertyName      | Line2    | Postcode | City   | County      |

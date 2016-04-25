@@ -33,6 +33,10 @@
         private readonly ElementLocator maxGuestRooms = new ElementLocator(Locator.Id, "maxGuestRooms");
         private readonly ElementLocator minFunctionRooms = new ElementLocator(Locator.Id, "minFunctionRooms");
         private readonly ElementLocator maxFunctionRooms = new ElementLocator(Locator.Id, "maxFunctionRooms");
+        // Property characteristics
+        private readonly ElementLocator characteristic = new ElementLocator(Locator.XPath, "//label[contains(text(),'{0}')]");
+        private readonly ElementLocator characteristicCommentIcon = new ElementLocator(Locator.XPath, "//label[contains(text(),'{0}')]/following-sibling::button");
+        private readonly ElementLocator characteristicComment = new ElementLocator(Locator.XPath, "//label[contains(text(),'{0}')]/following-sibling::input");
 
         public CreatePropertyPage(DriverContext driverContext) : base(driverContext)
         {
@@ -178,5 +182,25 @@
             this.Driver.SendKeys(this.maxFunctionRooms, max);
             return this;
         }
+
+        public CreatePropertyPage SelectCharacteristic(string value)
+        {
+            this.Driver.GetElement(this.characteristic.Format(value)).Click();
+            return this;
+        }
+
+        public CreatePropertyPage AddCommentToCharacteristic(string name, string comment)
+        {
+            this.Driver.GetElement(this.characteristicCommentIcon.Format(name)).Click();
+            this.Driver.SendKeys(this.characteristicComment.Format(name), comment);
+            return this;
+        }
+    }
+
+    internal class Characteristic
+    {
+        public string Name { get; set; }
+
+        public string Comment { get; set; }
     }
 }
