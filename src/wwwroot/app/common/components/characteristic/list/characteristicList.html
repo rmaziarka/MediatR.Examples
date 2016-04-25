@@ -1,7 +1,7 @@
 ﻿<fielset ng-repeat="characteristicGroup in clvm.characteristicGroups | orderBy: 'order'">
     <div id="characteristics-group-{{characteristicGroup.id}}" class="characteristics-group" data-type="characteristics-group">
-        <h5 ng-if="characteristicGroup.isDisplayLabel" translate="{{characteristicGroup.id | dynamicTranslate}}"></h5>
-        <div ng-repeat="characteristic in characteristicGroup.characteristicGroupItems | orderBy: 'id | dynamicTranslate' track by characteristic.id">
+        <h5 ng-if="characteristicGroup.isDisplayLabel" translate="{{characteristicGroup.id | dynamicTranslate}}" data-characteristicgroup-id="{{characteristicGroup.id}}"></h5>
+        <div ng-repeat="characteristic in characteristicGroup.characteristicGroupItems | filter: { isEnabled: true } | orderBy: 'id | dynamicTranslate' track by characteristic.id">
             <characteristic-select characteristic="characteristic" characteristic-select="clvm.property.propertyCharacteristicsMap[characteristic.id]"></characteristic-select>
         </div>
     </div>

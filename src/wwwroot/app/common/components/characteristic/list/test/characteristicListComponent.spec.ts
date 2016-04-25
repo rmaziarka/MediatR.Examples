@@ -3,6 +3,7 @@
 module Antares {
     import CharacteristicListController = Common.Component.CharacteristicListController;
     import Business = Common.Models.Business;
+    import Dto = Common.Models.Dto;
 
     describe('Given characteristic list component', () => {
         var scope: ng.IScope,
@@ -31,17 +32,42 @@ module Antares {
 
             var requestMock = new RegExp('/api/characteristicGroups\\?countryId=' + countries.GB.id + '&propertyTypeId=' + propertyTypes.House.id);
 
+            var characteristicGroupItemsMock: Array<Dto.ICharacteristicGroupItem> = [
+                TestHelpers.CharacteristicGroupItemGenerator.generateDto({}),
+                TestHelpers.CharacteristicGroupItemGenerator.generateDto({}),
+                TestHelpers.CharacteristicGroupItemGenerator.generateDto({})
+            ];
+
             var characteristicGroupsMock = [
                 TestHelpers.CharacteristicGroupUsageGenerator.generateDto({ characteristicGroupId: 'groupid1', order: 2 }),
                 TestHelpers.CharacteristicGroupUsageGenerator.generateDto({ characteristicGroupId: 'groupid2', order: 1, isDisplayLabel: false }),
                 TestHelpers.CharacteristicGroupUsageGenerator.generateDto({
                     characteristicGroupId: 'groupid3', order: 3,
-                    characteristicGroupItems: [
-                        TestHelpers.CharacteristicGroupItemGenerator.generateDto({}),
-                        TestHelpers.CharacteristicGroupItemGenerator.generateDto({}),
-                        TestHelpers.CharacteristicGroupItemGenerator.generateDto({})]
+                    characteristicGroupItems: characteristicGroupItemsMock
                 })
             ];
+
+            var mockTranslateFilter = (value: string) => {
+                if (value === characteristicGroupItemsMock[0].characteristic.id) {
+                    return "alfa";
+                }
+
+                if (value === characteristicGroupItemsMock[2].characteristic.id) {
+                    return "gamma";
+                }
+
+                if (value === characteristicGroupItemsMock[1].characteristic.id) {
+                    return "beta";
+                }
+
+                return value;
+            };
+
+            beforeEach(() => {
+                angular.mock.module(($provide: any) => {
+                    $provide.value('dynamicTranslateFilter', mockTranslateFilter);
+                });
+            });
 
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
@@ -68,26 +94,37 @@ module Antares {
                 $http.flush();
             }));
 
-            it('then characteristics form has proper characteristics grouped and ordered', () => {
-                // assert
-                var groupElements = element.find(pageObjectSelectors.characteristicsGroups);
-                var group1Element = element.find(pageObjectSelectors.characteristicsGroupIdPrefix + 'groupid1');
-                var group2Element = element.find(pageObjectSelectors.characteristicsGroupIdPrefix + 'groupid2');
-                var group3Element = element.find(pageObjectSelectors.characteristicsGroupIdPrefix + 'groupid3');
+            describe('then characteristics form', () =>{
+                it('has proper characteristics grouped and ordered', () => {
+                    // assert
+                    var groupElements = element.find(pageObjectSelectors.characteristicsGroups);
+                    var group1Element = element.find(pageObjectSelectors.characteristicsGroupIdPrefix + 'groupid1');
+                    var group2Element = element.find(pageObjectSelectors.characteristicsGroupIdPrefix + 'groupid2');
+                    var group3Element = element.find(pageObjectSelectors.characteristicsGroupIdPrefix + 'groupid3');
 
-                var group3CharacteristicsElements = group3Element.find('characteristic-select');
+                    expect(groupElements.length).toBe(3);
+                    expect(groupElements[0]).toBe(group2Element[0]);
+                    expect(groupElements[1]).toBe(group1Element[0]);
+                    expect(groupElements[2]).toBe(group3Element[0]);
 
-                expect(groupElements.length).toBe(3);
-                expect(groupElements[0]).toBe(group2Element[0]);
-                expect(groupElements[1]).toBe(group1Element[0]);
-                expect(groupElements[2]).toBe(group3Element[0]);
+                    expect(group1Element.find('[data-characteristicgroup-id="groupid1"]').length).toBe(1);
+                    expect(group2Element.find('[data-characteristicgroup-id="groupid2"]').length).toBe(0);
+                    expect(group3Element.find('[data-characteristicgroup-id="groupid3"]').length).toBe(1);
+                });
 
-                expect(group3CharacteristicsElements.length).toBe(3);
+                it('has characterictic items sorted by translated name', () => {
+                    var group3Element = element.find(pageObjectSelectors.characteristicsGroupIdPrefix + 'groupid3');
 
-                expect(group1Element.find('[translate="DYNAMICTRANSLATIONS.groupid1"]').length).toBe(1);
-                expect(group2Element.find('[translate="DYNAMICTRANSLATIONS.groupid2"]').length).toBe(0);
-                expect(group3Element.find('[translate="DYNAMICTRANSLATIONS.groupid3"]').length).toBe(1);
+                    var group3CharacteristicsElements = group3Element.find('characteristic-select');
+
+                    expect(group3CharacteristicsElements.length).toBe(3);
+                    expect(group3Element.find('characteristic-select').find('label')[0].innerText.trim()).toBe("alfa");
+                    expect(group3Element.find('characteristic-select').find('label')[1].innerText.trim()).toBe("beta");
+                    expect(group3Element.find('characteristic-select').find('label')[2].innerText.trim()).toBe("gamma");
+                });
             });
+
+
         });
     });
 }
