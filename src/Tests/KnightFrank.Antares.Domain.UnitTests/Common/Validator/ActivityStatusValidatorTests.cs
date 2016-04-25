@@ -34,7 +34,7 @@
 
             // Assert
             validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(activityStatusId));
+            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == "ActivityStatusId");
             validationResult.Errors.Should().ContainSingle(e => e.ErrorMessage == "Activity Status does not exist.");
         }
 

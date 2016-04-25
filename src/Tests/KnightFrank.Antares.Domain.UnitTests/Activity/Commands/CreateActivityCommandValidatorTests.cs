@@ -161,13 +161,6 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_ValidationRules_When_Configuring_Then_ActivityStatusIdHaveValidatorSetup()
-        {
-            this.validator.ShouldHaveChildValidator(x => x.ActivityStatusId, typeof(ActivityStatusValidator));
-        }
-
-        [Theory]
-        [AutoMoqData]
         public void Given_NotExistingActivityTypeDefinitionInCommand_When_Validating_Then_ShouldReturnValidationError(
             CreateActivityCommand command)
         {

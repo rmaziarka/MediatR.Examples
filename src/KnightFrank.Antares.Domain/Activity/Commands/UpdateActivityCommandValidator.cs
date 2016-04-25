@@ -26,7 +26,11 @@
             this.RuleFor(x => x.MarketAppraisalPrice).GreaterThanOrEqualTo(0);
             this.RuleFor(x => x.RecommendedPrice).GreaterThanOrEqualTo(0);
             this.RuleFor(x => x.VendorEstimatedPrice).GreaterThanOrEqualTo(0);
-            this.RuleFor(x => x.ActivityStatusId).SetValidator(new ActivityStatusValidator(enumTypeItemRepository));
+
+            this.RuleFor(x => x.ActivityStatusId).NotEmpty();
+            this.RuleFor(x => x.ActivityStatusId)
+                .SetValidator(new ActivityStatusValidator(enumTypeItemRepository))
+                .When(x => !x.ActivityStatusId.Equals(Guid.Empty));
             
             this.RuleFor(x => x.ActivityTypeId).NotEmpty();
             this.RuleFor(x => x.ActivityTypeId)

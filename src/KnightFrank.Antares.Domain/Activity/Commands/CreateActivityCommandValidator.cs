@@ -25,8 +25,11 @@
             this.activityTypeDefinitionRepository = activityTypeDefinitionRepository;
 
             this.RuleFor(x => x.PropertyId).NotEmpty();
-            this.RuleFor(x => x.ActivityStatusId).NotEmpty()
-                .SetValidator(new ActivityStatusValidator(enumTypeItemRepository));
+
+            this.RuleFor(x => x.ActivityStatusId).NotEmpty();
+            this.RuleFor(x => x.ActivityStatusId)
+                .SetValidator(new ActivityStatusValidator(enumTypeItemRepository))
+                .When(x => !x.ActivityStatusId.Equals(Guid.Empty));
 
             this.RuleFor(x => x.ActivityTypeId).NotEmpty();
             this.RuleFor(x => x.ActivityTypeId)
