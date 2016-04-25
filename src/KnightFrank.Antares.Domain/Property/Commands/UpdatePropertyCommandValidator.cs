@@ -56,6 +56,7 @@
 
             this.When(x => x.PropertyCharacteristics != null, () =>
             {
+                this.RuleFor(x => x.PropertyCharacteristics).SetValidator(new PropertyCharacteristicsUniqueValidator());
                 this.RuleFor(x => x.PropertyCharacteristics).SetCollectionValidator(new CreateOrUpdatePropertyCharacteristicValidator());
             });
 

@@ -37,13 +37,13 @@
             this.RuleFor(x => x.Address).NotNull();
             this.RuleFor(x => x.Address).SetValidator(new CreateOrUpdatePropertyAddressValidator(addressFieldDefinitionRepository, addressFormRepository));
             this.RuleFor(v => v.PropertyTypeId).NotEqual(Guid.Empty).NotNull();
-           
+
             this.RuleFor(x => x.PropertyTypeId).SetValidator(new PropertyTypeValidator(propertyTypeRepository));
             this.RuleFor(x => x.DivisionId).NotEqual(Guid.Empty);
 
             this.RuleFor(x => x.AttributeValues)
                 .NotNull();
-            
+
             this.When(x => x.AttributeValues != null, () =>
             {
                 this.RuleFor(x => x.AttributeValues)
@@ -53,9 +53,10 @@
             });
 
             this.When(x => x.PropertyCharacteristics != null, () =>
-            {
-                this.RuleFor(x => x.PropertyCharacteristics).SetCollectionValidator(new CreateOrUpdatePropertyCharacteristicValidator());
-            });
+                {
+                    this.RuleFor(x => x.PropertyCharacteristics).SetValidator(new PropertyCharacteristicsUniqueValidator());
+                    this.RuleFor(x => x.PropertyCharacteristics).SetCollectionValidator(new CreateOrUpdatePropertyCharacteristicValidator());
+                });
 
             this.Custom(this.DivisionExists);
             this.Custom(this.PropertyTypeIsValid);

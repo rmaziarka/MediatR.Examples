@@ -1,7 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.Property.Commands
 {
     using FluentValidation;
-    using FluentValidation.Results;
 
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Characteristics;
@@ -13,17 +12,12 @@
     public class CreatePropertyCommandDomainValidator : AbstractValidator<CreatePropertyCommand>,
                                                         IDomainValidator<CreatePropertyCommand>
     {
-        private readonly CreateOrUpdatePropertyCharacteristicListValidator propertyCharacteristicListValidator;
-
         public CreatePropertyCommandDomainValidator(
             IGenericRepository<Country> countryRepository,
             IGenericRepository<PropertyType> propertyTypeRepository,
             IGenericRepository<CharacteristicGroupUsage> characteristicGroupUsageRepository,
             IDomainValidator<CreateOrUpdatePropertyCharacteristic> propertyCharacteristicDomainValidator)
         {
-            this.propertyCharacteristicListValidator =
-                new CreateOrUpdatePropertyCharacteristicListValidator(characteristicGroupUsageRepository);
-
             this.RuleFor(x => x.PropertyTypeId).SetValidator(new PropertyTypeValidator(propertyTypeRepository));
             this.RuleFor(x => x.Address.CountryId).SetValidator(new CountryValidator(countryRepository));
 
@@ -31,23 +25,16 @@
                 x => x.PropertyCharacteristics != null,
                 () =>
                     {
-                        this.Custom(this.PropertyCharacteristicsAreUnique);
-                        this.Custom(this.CharacteristicAreInCharacteristicGroupUsage);
+                        this.RuleFor(x => x.PropertyCharacteristics)
+                            .SetValidator(
+                                x =>
+                                new PropertyCharacteristicConfigurationDomainValidator(
+                                    characteristicGroupUsageRepository,
+                                    x.PropertyTypeId,
+                                    x.Address.CountryId));
+
                         this.RuleFor(x => x.PropertyCharacteristics).SetCollectionValidator(propertyCharacteristicDomainValidator);
                     });
-        }
-
-        private ValidationFailure PropertyCharacteristicsAreUnique(CreatePropertyCommand command)
-        {
-            return this.propertyCharacteristicListValidator.PropertyCharacteristicsAreUnique(command.PropertyCharacteristics);
-        }
-
-        private ValidationFailure CharacteristicAreInCharacteristicGroupUsage(CreatePropertyCommand command)
-        {
-            return this.propertyCharacteristicListValidator.CharacteristicAreInCharacteristicGroupUsage(
-                command.PropertyTypeId,
-                command.Address.CountryId,
-                command.PropertyCharacteristics);
         }
     }
 }

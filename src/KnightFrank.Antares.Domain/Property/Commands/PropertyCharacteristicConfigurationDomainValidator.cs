@@ -1,44 +1,39 @@
-﻿namespace KnightFrank.Antares.Domain.Property.Commands
+namespace KnightFrank.Antares.Domain.Property.Commands
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
+    using FluentValidation;
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Dal.Model.Property.Characteristics;
     using KnightFrank.Antares.Dal.Repository;
 
-    public class CreateOrUpdatePropertyCharacteristicListValidator
+    public class PropertyCharacteristicConfigurationDomainValidator : AbstractValidator<IList<CreateOrUpdatePropertyCharacteristic>>
     {
         private readonly IGenericRepository<CharacteristicGroupUsage> characteristicGroupUsageRepository;
 
-        public CreateOrUpdatePropertyCharacteristicListValidator(
-            IGenericRepository<CharacteristicGroupUsage> characteristicGroupUsageRepository)
+        private readonly Guid propertyTypeId;
+
+        private readonly Guid countryId;
+
+        public PropertyCharacteristicConfigurationDomainValidator(IGenericRepository<CharacteristicGroupUsage> characteristicGroupUsageRepository, Guid propertyTypeId, Guid countryId)
         {
             this.characteristicGroupUsageRepository = characteristicGroupUsageRepository;
+            this.propertyTypeId = propertyTypeId;
+            this.countryId = countryId;
+
+            this.Custom(this.CharacteristicAreInCharacteristicGroupUsage);
         }
 
-        public ValidationFailure PropertyCharacteristicsAreUnique(
-            IList<CreateOrUpdatePropertyCharacteristic> propertyCharacteristics)
-        {
-            int uniqueCharacteristicId = propertyCharacteristics.Select(pc => pc.CharacteristicId).Distinct().ToList().Count;
-
-            return uniqueCharacteristicId == propertyCharacteristics.Count
-                       ? null
-                       : new ValidationFailure(nameof(propertyCharacteristics), "Property characteristic are duplicated.");
-        }
-
-        public ValidationFailure CharacteristicAreInCharacteristicGroupUsage(
-            Guid propertyTypeId,
-            Guid countryId,
-            IList<CreateOrUpdatePropertyCharacteristic> propertyCharacteristics)
+        private ValidationFailure CharacteristicAreInCharacteristicGroupUsage(IList<CreateOrUpdatePropertyCharacteristic> propertyCharacteristics)
         {
             List<Guid> commandCharacteristicIds = propertyCharacteristics.Select(pc => pc.CharacteristicId).ToList();
 
             List<Guid> characteristicIds =
                 this.characteristicGroupUsageRepository.GetWithInclude(
-                    cgu => cgu.PropertyTypeId == propertyTypeId && cgu.CountryId == countryId,
+                    cgu => cgu.PropertyTypeId == this.propertyTypeId && cgu.CountryId == this.countryId,
                     cgu => cgu.CharacteristicGroupItems)
                     .SelectMany(x => x.CharacteristicGroupItems)
                     .Select(x => x.CharacteristicId)
@@ -51,5 +46,6 @@
                              "Property characteristics are invalid for property configuration.")
                        : null;
         }
+        
     }
 }
