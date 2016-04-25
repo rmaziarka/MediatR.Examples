@@ -56,6 +56,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
@@ -144,6 +147,8 @@
     <Compile Include="Property\CommandHandlers\UpdatePropertyCommandHandlerTests.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyAddressValidatorTests.cs" />
     <Compile Include="Common\Validator\PropertyTypeValidatorTests.cs" />
+    <Compile Include="Property\Commands\CreateOrUpdatePropertyCharacteristicDomainValidatorTests.cs" />
+    <Compile Include="Property\Commands\CreateOrUpdatePropertyCharacteristicValidatorTests.cs" />
     <Compile Include="Property\Commands\UpdatePropertyCommandValidatorTests.cs" />
     <Compile Include="Property\Queries\PropertyAttributesQueryValidatorTests.cs" />
     <Compile Include="Property\QueryHandlers\PropertyTypesQueryHandlerTests.cs" />

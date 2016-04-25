@@ -26,7 +26,7 @@
             Characteristic characteristic = this.characteristicRepository.GetById(command.CharacteristicId);
 
             return characteristic == null
-                       ? new ValidationFailure(nameof(command.CharacteristicId), "Characteristic does not exist.")
+                       ? new ValidationFailure(nameof(command.CharacteristicId), "Characteristic does not exist.") { ErrorCode = "characteristicid_notexists" }
                        : null;
         }
 
@@ -36,15 +36,15 @@
 
             return characteristic == null || characteristic.IsEnabled
                        ? null
-                       : new ValidationFailure(nameof(command.CharacteristicId), "Characteristic is disabled.");
+                       : new ValidationFailure(nameof(command.CharacteristicId), "Characteristic is disabled.") { ErrorCode = "characteristicid_isdisabled" };
         }
 
         private ValidationFailure CharacteristicIsDisplayText(CreateOrUpdatePropertyCharacteristic command)
         {
             Characteristic characteristic = this.characteristicRepository.GetById(command.CharacteristicId);
 
-            return !characteristic.IsDisplayText && !string.IsNullOrWhiteSpace(command.Text)
-                       ? new ValidationFailure(nameof(command.Text), "Characteristic shouldn't have a text.")
+            return characteristic != null && !characteristic.IsDisplayText && !string.IsNullOrWhiteSpace(command.Text)
+                       ? new ValidationFailure(nameof(command.Text), "Characteristic shouldn't have a text.") { ErrorCode = "characteristictext_shouldbeempty" }
                        : null;
         }
     }
