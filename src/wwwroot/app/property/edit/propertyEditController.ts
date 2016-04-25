@@ -35,8 +35,12 @@ module Antares.Property {
             this.property.divisionId = division.id;
             this.property.division = division;
             this.property.propertyTypeId = null;
-            if (this.components.attributeList())
+            if (this.components.attributeList()) {
                 this.components.attributeList().clearAttributes();
+            }
+            if (this.components.characteristicList()) {
+                this.components.characteristicList().clearCharacteristics();
+            }
             this.loadPropertyTypes();
         }
 
@@ -44,6 +48,11 @@ module Antares.Property {
             this.dataAccessService.getEnumResource().get({ code: 'Division' }).$promise.then((divisions: any) => {
                 this.divisions = divisions.items;
             });
+        };
+
+        changePropertyType = () => {
+            this.loadAttributes();
+            this.loadCharacteristics();
         };
 
         loadPropertyTypes = () => {
@@ -57,12 +66,17 @@ module Antares.Property {
                 });
         }
 
+        loadCharacteristics = () => {
+            this.components.characteristicList().loadCharacteristics();
+        }
+
         loadAttributes = () => {
             this.components.attributeList().loadAttributes();
         }
 
         public save() {
             this.components.attributeList().clearHiddenAttributesFromProperty();
+            this.components.characteristicList().clearHiddenCharacteristicsDataFromProperty();
 
             this.propertyResource
                 .update(new Business.CreateOrUpdatePropertyResource(this.property))
