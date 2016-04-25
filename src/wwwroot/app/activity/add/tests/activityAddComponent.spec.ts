@@ -15,6 +15,7 @@ module Antares {
 
         var pageObjectSelectors = {
             activityStatusSelector: 'select#status',
+            activityTypeSelector: 'select#type',
             vendors: '#activity-add-vendors [id^=list-item-]'
         };
 
@@ -53,7 +54,7 @@ module Antares {
             });
 
             $http.expectGET(/\/api\/activities\/types/).respond(() => {
-                return [200, []];
+                return [200, activityTypes];
             });
 
             scope = $rootScope.$new();
@@ -129,6 +130,16 @@ module Antares {
             });
         });
 
+        describe('when activity type value is ', () => {
+            it('missing then required message should be displayed', () => {
+                assertValidator.assertRequiredValidator(null, false, pageObjectSelectors.activityTypeSelector);
+            });
+
+            it('not missing then required message should not be displayed', () => {
+                assertValidator.assertRequiredValidator('2', true, pageObjectSelectors.activityTypeSelector);
+            });
+        });
+
         describe('when "Save button" is clicked ', () => {
             var propertyMock: Dto.IProperty;
 
@@ -199,6 +210,7 @@ module Antares {
                 var expectedResponse = new Business.Activity();
                 expectedResponse.propertyId = propertyMock.id;
                 expectedResponse.activityStatusId = activityAddController.selectedActivityStatus.id;
+                expectedResponse.activityTypeId = activityAddController.selectedActivityType.id;
                 expectedResponse.contacts = vendors;
                 expectedResponse.createdDate = new Date('2016-02-03');
                 expectedResponse.id = '123';

@@ -35,8 +35,12 @@ module Antares.Property {
             this.property.divisionId = division.id;
             this.property.division = division;
             this.property.propertyTypeId = null;
-            if (this.components.attributeList())
+            if (this.components.attributeList()) {
                 this.components.attributeList().clearAttributes();
+            }
+            if (this.components.characteristicList()) {
+                this.components.characteristicList().clearCharacteristics();
+            }
             this.loadPropertyTypes();
         }
 
@@ -72,6 +76,7 @@ module Antares.Property {
 
         public save() {
             this.components.attributeList().clearHiddenAttributesFromProperty();
+            this.components.characteristicList().clearHiddenCharacteristicsDataFromProperty();
 
             this.propertyResource
                 .save(new Business.CreateOrUpdatePropertyResource(this.property))

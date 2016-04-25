@@ -12,8 +12,10 @@ Maisonette;GB;Long Leasehold Sale;3
 Development Plot;GB;Freehold Sale;1
 Development Plot;GB;Long Leasehold Sale;2
 Farm/Estate;GB;Freehold Sale;1
-Garage/Parking Space;GB;Open Market Letting;1
-Garage/Parking Space;GB;Freehold Sale;2
+Garage Only;GB;Open Market Letting;1
+Garage Only;GB;Freehold Sale;2
+Parking Space;GB;Open Market Letting;1
+Parking Space;GB;Freehold Sale;2
 Land Plot;GB;Freehold Sale;1
 Land;GB;Freehold Sale;1
 Land;GB;Long Leasehold Sale;2
