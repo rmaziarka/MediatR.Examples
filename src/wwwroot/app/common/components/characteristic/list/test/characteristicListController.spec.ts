@@ -32,7 +32,7 @@ module Antares {
                 controller = <CharacteristicListController>$controller('CharacteristicListController', {}, bindings);
             }));
 
-            it('and country is empty then characteristicGroups is not updated', () => {
+            it('and country is empty then characteristicGroups is set to empty', () => {
                 // arrange
                 var characteristicGroupsMock = TestHelpers.CharacteristicGroupUsageGenerator.generateMany(5);
                 var propertyMock: Business.Property = TestHelpers.PropertyGenerator.generate({
@@ -47,10 +47,10 @@ module Antares {
                 controller.loadCharacteristics();
 
                 // assert
-                expect(controller.characteristicGroups).toEqual(characteristicGroupsMock);
+                expect(controller.characteristicGroups).toEqual([]);
             });
 
-            it('and property type is empty then characteristicGroups is not updated', () => {
+            it('and property type is empty then characteristicGroups is set to empty', () => {
                 // arrange
                 var characteristicGroupsMock = TestHelpers.CharacteristicGroupUsageGenerator.generateMany(5);
                 var propertyMock: Business.Property = TestHelpers.PropertyGenerator.generate({
@@ -64,7 +64,7 @@ module Antares {
                 controller.loadCharacteristics();
 
                 // assert
-                expect(controller.characteristicGroups).toEqual(characteristicGroupsMock);
+                expect(controller.characteristicGroups).toEqual([]);
             });
 
             it('and property type and country are set then request GET for characteristicGroups is called and data returned from request is set to characteristicGroups', () => {
