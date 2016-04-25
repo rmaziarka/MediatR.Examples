@@ -222,11 +222,12 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [When(@"User retrieves attributes for given property type and (.*) address")]
-        public void GetAttributesForPropertyAndCountry(string countryCode)
+        [When(@"User retrieves attributes for given property type and country code")]
+        public void GetAttributesForPropertyAndCountry()
         {
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
-            string requestUrl = $"{ApiUrl}/attributes?countryCode={countryCode}&propertyTypeId={propertyTypeId}";
+            var countryId = this.scenarioContext.Get<Guid>("CountryId");
+            string requestUrl = $"{ApiUrl}/attributes?countryId={countryId}&propertyTypeId={propertyTypeId}";
 
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
             this.scenarioContext.SetHttpResponseMessage(response);
