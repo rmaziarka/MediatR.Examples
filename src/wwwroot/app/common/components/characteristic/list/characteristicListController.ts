@@ -24,10 +24,10 @@ module Antares.Common.Component {
         }
 
         loadCharacteristics = () => {
-            if (this.property.propertyTypeId && this.countryCode) {
+            if (this.property.propertyTypeId && this.property.address.countryId) {
                 this.characteristicGroupUsageResource
                     .query({
-                         countryCode: this.countryCode, propertyTypeId: this.property.propertyTypeId
+                        countryId: this.property.address.countryId, propertyTypeId: this.property.propertyTypeId
                     })
                     .$promise
                     .then((characteristicGroupUsages: any) => {

@@ -44,9 +44,9 @@
         public void Given_IncorrectPropertyAttributesQueryWithNoCountryCode_When_Validating_Then_ValidationErrors(
            CharacteristicGroupsQueryValidator validator)
         {
-            this.query.CountryCode = null;
+            this.query.CountryId = Guid.Empty;
 
-            TestIncorrectCommand(validator, this.query, nameof(this.query.CountryCode));
+            TestIncorrectCommand(validator, this.query, nameof(this.query.CountryId));
         }
 
         [Theory]

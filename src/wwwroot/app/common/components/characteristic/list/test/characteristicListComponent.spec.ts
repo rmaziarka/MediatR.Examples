@@ -16,16 +16,27 @@ module Antares {
             characteristicsGroupIdPrefix: 'div#characteristics-group-'
         };
 
+        var propertyTypes: any = {
+            House: { id: "8b152e4f-f505-e611-828c-8cdcd42baca7", parentId: null, name: "House", children: [], order: 22 }
+        }
+        var countries: any = {
+            GB: { id: 'countryGB', isoCode: 'GB' }
+        };
+
         describe('when component has been loaded', () => {
             var propertyMock: Business.Property = TestHelpers.PropertyGenerator.generate({
-                propertyTypeId: 'testPropertyTypeId'
+                propertyTypeId: propertyTypes.House.id
             });
+            propertyMock.address.countryId = countries.GB.id;
+
+            var requestMock = new RegExp('/api/characteristicGroups\\?countryId=' + countries.GB.id + '&propertyTypeId=' + propertyTypes.House.id);
 
             var characteristicGroupsMock = [
-                TestHelpers.CharacteristicGroupUsageGenerator.generateDto({ characteristicGroupId : 'groupid1', order : 2 }),
-                TestHelpers.CharacteristicGroupUsageGenerator.generateDto({ characteristicGroupId : 'groupid2', order : 1, isDisplayLabel : false }),
-                TestHelpers.CharacteristicGroupUsageGenerator.generateDto({ characteristicGroupId : 'groupid3', order : 3,
-                    characteristicGroupItems : [
+                TestHelpers.CharacteristicGroupUsageGenerator.generateDto({ characteristicGroupId: 'groupid1', order: 2 }),
+                TestHelpers.CharacteristicGroupUsageGenerator.generateDto({ characteristicGroupId: 'groupid2', order: 1, isDisplayLabel: false }),
+                TestHelpers.CharacteristicGroupUsageGenerator.generateDto({
+                    characteristicGroupId: 'groupid3', order: 3,
+                    characteristicGroupItems: [
                         TestHelpers.CharacteristicGroupItemGenerator.generateDto({}),
                         TestHelpers.CharacteristicGroupItemGenerator.generateDto({}),
                         TestHelpers.CharacteristicGroupItemGenerator.generateDto({})]
@@ -43,7 +54,8 @@ module Antares {
                 compile = $compile;
                 $http = $httpBackend;
 
-                $http.expectGET(/\/api\/characteristicGroups\?countryCode=GB&propertyTypeId=testPropertyTypeId/).respond(() => {
+
+                $http.expectGET(requestMock).respond(() => {
                     return [200, characteristicGroupsMock];
                 });
 

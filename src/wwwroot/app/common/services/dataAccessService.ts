@@ -124,7 +124,7 @@ module Antares.Services {
 
         getCharacteristicGroupUsageResource(): Resources.ICharacteristicGroupUsageResourceClass {
             return <Resources.ICharacteristicGroupUsageResourceClass>
-                this.$resource(this.appConfig.rootUrl + '/api/characteristicGroups?countryCode=:countryCode&propertyTypeId=:propertyTypeId');
+                this.$resource(this.appConfig.rootUrl + '/api/characteristicGroups?countryId=:countryId&propertyTypeId=:propertyTypeId');
         }
     }
 

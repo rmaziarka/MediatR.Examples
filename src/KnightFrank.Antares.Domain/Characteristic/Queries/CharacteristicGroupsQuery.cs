@@ -9,7 +9,7 @@
 
     public class CharacteristicGroupsQuery : IRequest<IEnumerable<CharacteristicGroupUsage>>
     {
-        public string CountryCode { get; set; }
+        public Guid CountryId { get; set; }
 
         public Guid PropertyTypeId { get; set; }
     }

@@ -23,7 +23,7 @@
         {
             var singleResults = this.propertyAttributeFormDefinitionRepository
                             .GetWithInclude(x => x.Attribute)
-                            .Where(x => x.PropertyAttributeForm.Country.Id == message.CountryId)
+                            .Where(x => x.PropertyAttributeForm.CountryId == message.CountryId)
                             .Where(x => x.PropertyAttributeForm.PropertyTypeId == message.PropertyTypeId)
                             .OrderBy(x => x.Order)
                             .Select(x => new PropertyAttributesQuerySingleResult

@@ -26,7 +26,7 @@
                 this.characteristicGroupUsageRepository.GetWithInclude(
                     u => u.CharacteristicGroupItems.Select(x => x.Characteristic))
                     .Where(u => u.PropertyTypeId == query.PropertyTypeId)
-                    .Where(u => u.Country.IsoCode == query.CountryCode)
+                    .Where(u => u.CountryId == query.CountryId)
                     .ToList();
 
             return characteristicGroupUsages;

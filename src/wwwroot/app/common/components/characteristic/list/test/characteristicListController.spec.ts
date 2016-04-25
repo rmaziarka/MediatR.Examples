@@ -9,28 +9,34 @@ module Antares {
             $http: ng.IHttpBackendService,
             controller: CharacteristicListController;
 
-        describe('when loadCharacteristics is called', () =>{
+        var propertyTypes: any = {
+            House: { id: "8b152e4f-f505-e611-828c-8cdcd42baca7", parentId: null, name: "House", children: [], order: 22 }
+        }
+        var countries: any = {
+            GB: { id: 'countryGB', isoCode: 'GB' }
+        };
+
+        describe('when loadCharacteristics is called', () => {
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 // 'any' must be used instead of 'ng.IControllerService' because there is invalid typing for this service function,
                 // that sais that 3rd argument is bool, but in fact it is an object containing bindings for controller (for comonents and directives)
                 $controller: any,
-                $httpBackend: ng.IHttpBackendService) =>{
+                $httpBackend: ng.IHttpBackendService) => {
 
                 // init
                 $scope = $rootScope.$new();
                 $http = $httpBackend;
 
-                var bindings = { property : new Business.Property() };
+                var bindings = { property: new Business.Property() };
                 controller = <CharacteristicListController>$controller('CharacteristicListController', {}, bindings);
             }));
 
-            //TODO - uncomment this test when loading attributes and characteristics by coubntryId/Isocode is properly implemented
-            xit('and country is empty then characteristicGroups is not updated', () => {
+            it('and country is empty then characteristicGroups is not updated', () => {
                 // arrange
                 var characteristicGroupsMock = TestHelpers.CharacteristicGroupUsageGenerator.generateMany(5);
                 var propertyMock: Business.Property = TestHelpers.PropertyGenerator.generate({
-                    propertyTypeId: 'testPropertyTypeId'
+                    propertyTypeId: propertyTypes.House.id
                 });
                 propertyMock.address.countryId = '';
 
@@ -65,10 +71,13 @@ module Antares {
                 // arrange
                 var characteristicGroupsMock = TestHelpers.CharacteristicGroupUsageGenerator.generateManyDtos(3);
                 var propertyMock: Business.Property = TestHelpers.PropertyGenerator.generate({
-                    propertyTypeId: 'testPropertyTypeId'
+                    propertyTypeId: propertyTypes.House.id
                 });
+                propertyMock.address.countryId = countries.GB.id;
 
-                $http.expectGET(/\/api\/characteristicGroups\?countryCode=GB&propertyTypeId=testPropertyTypeId/).respond(() => {
+                var requestMock = new RegExp('/api/characteristicGroups\\?countryId=' + countries.GB.id + '&propertyTypeId=' + propertyTypes.House.id);
+
+                $http.expectGET(requestMock).respond(() => {
                     return [200, characteristicGroupsMock];
                 });
 
