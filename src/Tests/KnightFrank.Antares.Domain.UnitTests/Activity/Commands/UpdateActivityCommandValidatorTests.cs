@@ -161,6 +161,33 @@
 
         [Theory]
         [AutoMoqData]
+        public void Given_NotExistingActivityStatusIdInCommand_When_Validating_Then_ShouldReturnValidationError(
+           UpdateActivityCommand command)
+        {
+            this.enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(false);
+
+            ValidationResult validationResult = this.validator.Validate(command);
+
+            validationResult.IsValid.Should().BeFalse();
+            validationResult.Errors.Should().ContainSingle(x => x.PropertyName == nameof(command.ActivityStatusId));
+        }
+
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_NotExistingActivityTypeInCommand_When_Validating_Then_ShouldReturnValidationError(
+            UpdateActivityCommand command)
+        {
+            this.activityTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<ActivityType, bool>>>())).Returns(false);
+
+            ValidationResult validationResult = this.validator.Validate(command);
+
+            validationResult.IsValid.Should().BeFalse();
+            validationResult.Errors.Should().ContainSingle(x => x.PropertyName == nameof(command.ActivityTypeId));
+        }
+
+        [Theory]
+        [AutoMoqData]
         public void Given_NotExistingActivityTypeDefinitionInCommand_When_Validating_Then_ShouldReturnValidationError(
             UpdateActivityCommand command)
         {
