@@ -25,13 +25,6 @@ module Antares {
         };
 
         describe('when component has been loaded', () => {
-            var propertyMock: Business.Property = TestHelpers.PropertyGenerator.generate({
-                propertyTypeId: propertyTypes.House.id
-            });
-            propertyMock.address.countryId = countries.GB.id;
-
-            var requestMock = new RegExp('/api/characteristicGroups\\?countryId=' + countries.GB.id + '&propertyTypeId=' + propertyTypes.House.id);
-
             var characteristicGroupItemsMock: Array<Dto.ICharacteristicGroupItem> = [
                 TestHelpers.CharacteristicGroupItemGenerator.generateDto({}),
                 TestHelpers.CharacteristicGroupItemGenerator.generateDto({}),
@@ -49,6 +42,16 @@ module Antares {
                     characteristicGroupItems: characteristicGroupItemsMock
                 })
             ];
+
+            var propertyMock: Business.Property = TestHelpers.PropertyGenerator.generate({
+                propertyTypeId: propertyTypes.House.id
+            });
+            propertyMock.address.countryId = countries.GB.id;
+            propertyMock.propertyCharacteristicsMap[characteristicGroupItemsMock[0].characteristic.id] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId: characteristicGroupItemsMock[0].characteristic.id });
+            propertyMock.propertyCharacteristicsMap[characteristicGroupItemsMock[1].characteristic.id] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId: characteristicGroupItemsMock[1].characteristic.id });
+            propertyMock.propertyCharacteristicsMap['otherCharacteristicId'] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId: 'otherCharacteristicId' });
+
+            var requestMock = new RegExp('/api/characteristicGroups\\?countryId=' + countries.GB.id + '&propertyTypeId=' + propertyTypes.House.id);
 
             var mockTranslateFilter = (value: string) => {
                 if (value === characteristicGroupItemsMock[0].characteristic.id) {
@@ -126,12 +129,28 @@ module Antares {
                     expect(group3Element.find('characteristic-select').find('label')[2].innerText.trim()).toBe("gamma");
                 });
 
-                it('should not display disabled characterictics', () =>{
+                it('should not display disabled characterictics', () => {
                     var group1Element = element.find(pageObjectSelectors.characteristicsGroupIdPrefix + 'groupid1');
 
                     var group1CharacteristicsElements = group1Element.find('characteristic-select');
 
                     expect(group1CharacteristicsElements.length).toBe(0);
+                });
+
+                it('should display mapped property characteristics values within characteristics form', () => {
+                    var group3Element = element.find(pageObjectSelectors.characteristicsGroupIdPrefix + 'groupid3');
+                    var characteristicSelectElement1 = group3Element.find('characteristic-select[data-characteristic-id="' + characteristicGroupItemsMock[0].characteristic.id + '"]');
+
+                    expect(characteristicSelectElement1.find('input[type="checkbox"]').is(':checked')).toBeTruthy();
+                    expect(characteristicSelectElement1.find('input[type="text"]').val().trim()).toBe(propertyMock.propertyCharacteristicsMap[characteristicGroupItemsMock[0].characteristic.id].text);
+                });
+
+                it('should display empty values within characteristics form when no data for characteristic from property', () => {
+                    var group3Element = element.find(pageObjectSelectors.characteristicsGroupIdPrefix + 'groupid3');
+                    var characteristicSelectElement3 = group3Element.find('characteristic-select[data-characteristic-id="' + characteristicGroupItemsMock[2].characteristic.id + '"]');
+
+                    expect(characteristicSelectElement3.find('input[type="checkbox"]').is(':checked')).toBeFalsy();
+                    expect(characteristicSelectElement3.find('input[type="text"]').val().trim()).toBe('');
                 });
             });
         });
