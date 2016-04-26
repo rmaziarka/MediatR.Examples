@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.Ownership
+﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.Property
 {
     using System;
     using System.Collections.Generic;

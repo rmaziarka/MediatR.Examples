@@ -42,13 +42,6 @@
             this.fixture.DataContext.Contacts.RemoveRange(this.fixture.DataContext.Contacts.ToList());
         }
 
-        [When(@"User creates contact using api with following data")]
-        public void CreateUsers(Table table)
-        {
-            var contact = table.CreateInstance<Contact>();
-            this.CreateContact(contact);
-        }
-
         [Given(@"User creates contacts in database with following data")]
         public void CreateUsersInDb(Table table)
         {

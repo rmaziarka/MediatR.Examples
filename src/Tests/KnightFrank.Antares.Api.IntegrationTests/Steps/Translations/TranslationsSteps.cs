@@ -44,7 +44,7 @@
             this.scenarioContext.Set(locale.Id, "LocaleId");
         }
 
-        [Given(@"I have entered followed translations for characteristics")]
+        [Given(@"User creates following translations for characteristics in database")]
         public void GivenIHaveEnteredFollowedTranslationsForCharacteristics(Table table)
         {
             var localeId = this.scenarioContext.Get<Guid>("LocaleId");
@@ -66,7 +66,7 @@
             this.scenarioContext.Set(list, "CharacteristicLocalised");
         }
 
-        [Given(@"I have entered followed translations for countries")]
+        [Given(@"User creates following translations for countries in database")]
         public void GivenIHaveEnteredFollowedTranslationsForCountries(Table table)
         {
             var localeId = this.scenarioContext.Get<Guid>("LocaleId");
@@ -95,7 +95,7 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [Then(@"translations are as expected")]
+        [Then(@"Translations are as expected")]
         public void ThenTranslationsAreAsExpected()
         {
             var characteristicLocalised = this.scenarioContext.Get<List<CharacteristicLocalised>>("CharacteristicLocalised");

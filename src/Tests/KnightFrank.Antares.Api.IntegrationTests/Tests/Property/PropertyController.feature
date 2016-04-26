@@ -76,7 +76,7 @@ Scenario Outline: Update property
 			| MinBedrooms    | MaxReceptions    | MaxArea    | MinGuestRooms    | MaxFunctionRooms    |
 			| <MinBedrooms2> | <MaxReceptions2> | <MaxArea2> | <MinGuestRooms2> | <MaxFunctionRooms2> |
 		And Property characteristics are set for given property type
-	When Users updates property with defined address for latest id and <divisionCode2> division by Api
+	When User updates property with defined address for latest id and <divisionCode2> division by Api
 	Then User should get OK http status code
 		And The updated Property is saved in database
 
@@ -115,7 +115,7 @@ Scenario Outline: Update property with invalid data
 			| MinBedrooms    | MaxReceptions    | MaxArea    | MinGuestRooms    | MaxFunctionRooms    |
 			| <MinBedrooms2> | <MaxReceptions2> | <MaxArea2> | <MinGuestRooms2> | <MaxFunctionRooms2> |
 		And Property characteristics are set for given property type
-	When Users updates property with defined address for <id> id and <divisionCode2> division by Api
+	When User updates property with defined address for <id> id and <divisionCode2> division by Api
 	Then User should get <statusCode> http status code
 
 	Examples:
@@ -136,7 +136,7 @@ Scenario Outline: Update property with invalid data
 
 @Property
 Scenario: Get non existing property
-	Given Property does not exist in DB
+	Given Property does not exist in database
 	When User retrieves property details
 	Then User should get NotFound http status code
 

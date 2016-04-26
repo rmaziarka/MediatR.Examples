@@ -66,7 +66,7 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
         
-        [When(@"User creates notes for requirement")]
+        [When(@"User creates notes for requirement in database")]
         public void CretaeNoteInDatabase(Table notesTable)
         {
             Guid reqId = this.scenarioContext.Get<Requirement>("Requirement").Id;
@@ -83,7 +83,7 @@
             this.scenarioContext.Set(requirement, "Requirement");
         }
         
-        [Then(@"Note is saved in data base")]
+        [Then(@"Note is saved in database")]
         public void CheckIfNoteSavedInDatabase()
         {
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
