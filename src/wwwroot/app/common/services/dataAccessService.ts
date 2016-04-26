@@ -45,11 +45,11 @@ module Antares.Services {
         };
 
         private getAttributesAction: ng.resource.IActionDescriptor = {
-            url: this.appConfig.rootUrl + '/api/properties/attributes?countryCode=:countryCode&propertyTypeId=:propertyTypeId',
+            url: this.appConfig.rootUrl + '/api/properties/attributes?countryId=:countryId&propertyTypeId=:propertyTypeId',
             method: 'GET',
             isArray: false,
             params: {
-                countryCode: '@countryCode',
+                countryId: '@countryId',
                 propertyTypeId: '@propertyTypeId'
             }
         };
@@ -124,7 +124,7 @@ module Antares.Services {
 
         getCharacteristicGroupUsageResource(): Resources.ICharacteristicGroupUsageResourceClass {
             return <Resources.ICharacteristicGroupUsageResourceClass>
-                this.$resource(this.appConfig.rootUrl + '/api/characteristicGroups?countryCode=:countryCode&propertyTypeId=:propertyTypeId');
+                this.$resource(this.appConfig.rootUrl + '/api/characteristicGroups?countryId=:countryId&propertyTypeId=:propertyTypeId');
         }
     }
 

@@ -37,7 +37,7 @@
                         Attribute = new Dal.Model.Attribute.Attribute(),
                         PropertyAttributeForm = new PropertyAttributeForm
                         {
-                            Country = new Country { IsoCode = query.CountryCode },
+                            CountryId = query.CountryId,
                             PropertyTypeId = query.PropertyTypeId
                         }
                     }
@@ -48,7 +48,7 @@
 
             // Assert
             propertyAttributeFormDefinitionRepository.Verify(p => p.GetWithInclude(
-                It.IsAny<Expression<Func<PropertyAttributeFormDefinition, object>>>()), 
+                It.IsAny<Expression<Func<PropertyAttributeFormDefinition, object>>>()),
                 Times.Once());
 
             Assert.True(result.Attributes.Any());
@@ -83,7 +83,7 @@
                         Attribute = new Dal.Model.Attribute.Attribute(),
                         PropertyAttributeForm = new PropertyAttributeForm
                         {
-                            Country = new Country { IsoCode = query.CountryCode },
+                            CountryId = query.CountryId,
                             PropertyTypeId = query.PropertyTypeId
                         },
                         Order = 2
@@ -93,7 +93,7 @@
                        Attribute = new Dal.Model.Attribute.Attribute(),
                         PropertyAttributeForm = new PropertyAttributeForm
                         {
-                            Country = new Country { IsoCode = query.CountryCode },
+                            CountryId = query.CountryId,
                             PropertyTypeId = query.PropertyTypeId
                         },
                         Order = 1

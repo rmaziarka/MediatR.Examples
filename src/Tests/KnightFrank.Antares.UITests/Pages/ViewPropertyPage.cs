@@ -28,7 +28,8 @@
         private readonly ElementLocator addActivityButton = new ElementLocator(Locator.CssSelector, "card-list[show-item-add *= 'showActivityAdd'] button");
         private readonly ElementLocator activityDate = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] div.panel-item");
         private readonly ElementLocator activityVendor = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] span");
-        private readonly ElementLocator activityStatus = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] small");
+        private readonly ElementLocator activityType = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] small[id *= 'activity-type']");
+        private readonly ElementLocator activityStatus = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] small[id *= 'activity-status']");
         private readonly ElementLocator activityDetailsLink = new ElementLocator(Locator.CssSelector, "#card-list-activities #detailsLink");
 
         public ViewPropertyPage(DriverContext driverContext) : base(driverContext)
@@ -45,6 +46,12 @@
 
         public string PropertyType => this.Driver.GetElement(this.propertyType).Text;
 
+        public string ActivityVendor => this.Driver.GetElement(this.activityVendor).Text;
+
+        public string ActivityStatus => this.Driver.GetElement(this.activityStatus).Text;
+
+        public string ActivityType => this.Driver.GetElement(this.activityType).Text;
+
         public bool IsAddressDetailsVisible(string propertyDetail)
         {
             return this.Driver.IsElementPresent(this.expectedAddressField.Format(propertyDetail), BaseConfiguration.MediumTimeout);
@@ -59,16 +66,6 @@
         {
             this.Driver.GetElement(this.addActivityButton).Click();
             return this;
-        }
-
-        public string GetActivityVendor()
-        {
-            return this.Driver.GetElement(this.activityVendor).Text;
-        }
-
-        public string GetActivityStatus()
-        {
-            return this.Driver.GetElement(this.activityStatus).Text;
         }
 
         public string GetActivityDate()

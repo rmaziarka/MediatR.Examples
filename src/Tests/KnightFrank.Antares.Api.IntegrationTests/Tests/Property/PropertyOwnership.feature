@@ -12,7 +12,8 @@ Scenario Outline: Save ownership with valid dates
 		And User sets attributes for property in database
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
 			| 1           | 3           | 1             | 3             | 2            | 3            | 1000.1  | 3000.2  | 500.1       | 4000.1      | 1                   | 3                   |
-        And Property with Address and Residential division is in database
+        And Property characteristics are set for given property type
+		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
         And User creates contacts in database with following data
@@ -42,7 +43,8 @@ Scenario: Save ownership where dates are overlapping
 		And User sets attributes for property in database
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
 			| 1           | 3           | 1             | 3             | 2            | 3            | 1000.1  | 3000.2  | 500.1       | 4000.1      | 1                   | 3                   |
-        And Property with Address and Residential division is in database
+        And Property characteristics are set for given property type
+		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
         And User creates contacts in database with following data

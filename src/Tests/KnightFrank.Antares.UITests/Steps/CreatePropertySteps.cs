@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
+    using System.Collections.Generic;
 
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Attribute;
@@ -98,6 +99,22 @@
         {
             var page = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
             this.scenarioContext.Set(page.SaveProperty(), "ViewPropertyPage");
+        }
+
+        [When(@"User selects property characteristics on create property page")]
+        public void SelectCharacteristics(Table table)
+        {
+            var page = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
+
+            IEnumerable<Characteristic> characteristics = table.CreateSet<Characteristic>();
+            foreach (Characteristic characteristic in characteristics)
+            {
+                page.SelectCharacteristic(characteristic.Name);
+                if (characteristic.Comment != null)
+                {
+                    page.AddCommentToCharacteristic(characteristic.Name, characteristic.Comment);
+                }
+            }
         }
     }
 }

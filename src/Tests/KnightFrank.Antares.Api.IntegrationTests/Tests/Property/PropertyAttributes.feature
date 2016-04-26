@@ -4,7 +4,8 @@
 @Attributes
 Scenario Outline: Get property attributes
 	Given User gets <propertyType> for PropertyType
-	When User retrieves attributes for given property type and <countryCode> address
+		And User retrieves <countryCode> country id
+	When User retrieves attributes for given property type id and country id
 	Then User should get <statusCode> http status code
 
 	Examples:

@@ -27,8 +27,8 @@ module Antares.Common.Component {
 			}
 		};
 
-        isTextEntered = () => {
-            return this.characteristicSelect.text.length > 0;
+        isTextEntered = () => {            
+            return this.characteristicSelect.text == null ? false : this.characteristicSelect.text.length > 0;
         };
 	}
 

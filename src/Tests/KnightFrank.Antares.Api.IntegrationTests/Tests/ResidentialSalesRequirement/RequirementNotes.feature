@@ -15,7 +15,7 @@ Scenario: Save note to existing requirement
  			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | Description |
 	When User creates note for requirement using api
 	Then User should get OK http status code
-		And Note is saved in data base
+		And Note is saved in database
 
 @ResidentialSalesRequirements
 @Notes

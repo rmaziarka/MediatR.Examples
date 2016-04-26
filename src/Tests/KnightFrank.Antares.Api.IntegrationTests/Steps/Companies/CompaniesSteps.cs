@@ -36,14 +36,14 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [When(@"User create company by API for contact")]
+        [When(@"User creates company by API for contact")]
         public void WhenUserCreateCompanyByApiForContact(Table table)
         {
             var company = table.CreateInstance<CreateCompanyCommand>();
             this.CreateCompany(company);
         }
 
-        [When(@"User create company by API for contact for maximum name length")]
+        [When(@"User creates company by API for contact for maximum name length")]
         public void CreateUsersWithMaxFields()
         {
             const int max = 128;
@@ -51,7 +51,7 @@
             this.CreateCompany(company);
         }
 
-        [Then(@"company should be added to data base")]
+        [Then(@"Company should be added to database")]
         public void ThenCompanyShouldBeAddedToDataBase()
         {
             var company = JsonConvert.DeserializeObject<Company>(this.scenarioContext.GetResponseContent());

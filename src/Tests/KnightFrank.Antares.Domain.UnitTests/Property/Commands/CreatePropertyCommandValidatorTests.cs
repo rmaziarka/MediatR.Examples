@@ -4,11 +4,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Reflection;
 
     using FluentAssertions;
 
     using FluentValidation.Results;
+    using FluentValidation.TestHelper;
 
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Enum;
@@ -31,6 +31,7 @@
     {
         private readonly Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository;
         private readonly Mock<IGenericRepository<PropertyTypeDefinition>> propertyTypeDefinitionRepository;
+        private readonly Mock<IGenericRepository<PropertyType>> propertyTypeRepository;
         private readonly Mock<IGenericRepository<AddressForm>> addressFormRepository;
         private readonly Mock<IGenericRepository<PropertyAttributeForm>> propertyAttributeFormRepository;
         private readonly CreatePropertyCommand command;
@@ -53,6 +54,7 @@
 
             this.enumTypeItemRepository = fixture.Freeze<Mock<IGenericRepository<EnumTypeItem>>>();
             this.propertyTypeDefinitionRepository = fixture.Freeze<Mock<IGenericRepository<PropertyTypeDefinition>>>();
+            this.propertyTypeRepository = fixture.Freeze<Mock<IGenericRepository<PropertyType>>>();
             this.addressFormRepository = fixture.Freeze<Mock<IGenericRepository<AddressForm>>>();
             this.propertyAttributeFormRepository = fixture.Freeze<Mock<IGenericRepository<PropertyAttributeForm>>>();
 
@@ -82,9 +84,7 @@
         public void Given_ValidCreatePropertyCommand_When_DivisionExists_Then_NoError()
         {
             // Arrange
-            this.enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
-            this.propertyTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyTypeDefinition, bool>>>()))
-                .Returns(true);
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             // Act
             ValidationResult validationResult = this.validator.Validate(this.command);
@@ -98,9 +98,7 @@
         {
             // Arrange
             this.enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(false);
-            this.propertyTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyTypeDefinition, bool>>>()))
-                .Returns(true);
-
+        
             // Act
             ValidationResult validationResult = this.validator.Validate(this.command);
 
@@ -108,29 +106,16 @@
             Assert.False(validationResult.IsValid);
         }
 
+
         [Fact]
         public void Given_PropertyTypeIsCorrect_When_Validating_Then_NoValidationErrors()
         {
             // Arrange
             Guid countryId = Guid.NewGuid();
             this.command.Address.CountryId = countryId;
-
-            var propertyTypeDefinitions = new List<PropertyTypeDefinition>
-            {
-                new PropertyTypeDefinition
-                {
-                    CountryId = this.command.Address.CountryId,
-                    DivisionId = this.command.DivisionId,
-                    PropertyTypeId = this.command.PropertyTypeId
-                }
-            };
-
+            
             this.addressFormRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new AddressForm { CountryId = countryId });
-            this.enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
-            this.propertyTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyTypeDefinition, bool>>>()))
-                .Returns(
-                    new Func<Expression<Func<PropertyTypeDefinition, bool>>, bool>(
-                        expr => propertyTypeDefinitions.Any(expr.Compile())));
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             // Act
             ValidationResult validationResult = this.validator.Validate(this.command);
@@ -170,6 +155,7 @@
 
             this.addressFormRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new AddressForm { CountryId = countryId });
             this.enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
             this.propertyTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyTypeDefinition, bool>>>()))
                 .Returns(
                     new Func<Expression<Func<PropertyTypeDefinition, bool>>, bool>(
@@ -180,6 +166,7 @@
 
             // Assert
             Assert.False(validationResult.IsValid);
+            Assert.Equal(1, validationResult.Errors.Count);
         }
 
         [Fact]
@@ -187,6 +174,7 @@
         {
             // Arrange
             this.command.AttributeValues = null;
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             // Act 
             ValidationResult validationResult = this.validator.Validate(this.command);
@@ -201,6 +189,7 @@
         {
             // Arrange
             this.command.AttributeValues = new CreateOrUpdatePropertyAttributeValues() {MaxBathrooms = -1};
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             // Act 
             ValidationResult validationResult = this.validator.Validate(this.command);
@@ -215,6 +204,7 @@
         {
             // Arrange
             this.command.AttributeValues = new CreateOrUpdatePropertyAttributeValues() {MinArea = 20, MaxArea = 10};
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             // Act 
             ValidationResult validationResult = this.validator.Validate(this.command);
@@ -229,6 +219,7 @@
         {
             // Arrange
             this.command.AttributeValues = new CreateOrUpdatePropertyAttributeValues() {MinArea = 20, MaxArea = 10, MaxLandArea = -10};
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             // Act 
             ValidationResult validationResult = this.validator.Validate(this.command);
@@ -244,8 +235,8 @@
             // Arrange
             var attributes = new[] { "Bedrooms", "Area" };
             this.InitPropertyAttributeFormWithAttributes(attributes);
-
             this.command.AttributeValues = new CreateOrUpdatePropertyAttributeValues();
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             // Act 
             ValidationResult validationResult = this.validator.Validate(this.command);
@@ -260,6 +251,7 @@
             // Arrange
             var attributes = new[] { "Bedrooms", "Area" };
             this.InitPropertyAttributeFormWithAttributes(attributes);
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             this.command.AttributeValues = new CreateOrUpdatePropertyAttributeValues()
             {
@@ -280,6 +272,7 @@
             // Arrange
             var attributes = new[] { "Bedrooms", "Area" };
             this.InitPropertyAttributeFormWithAttributes(attributes);
+            this.propertyTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             this.command.AttributeValues = new CreateOrUpdatePropertyAttributeValues()
             {
@@ -293,6 +286,13 @@
             // Assert
             Assert.False(validationResult.IsValid);
             Assert.Equal(1, validationResult.Errors.Count);
+        }
+
+        [Fact]
+        public void Given_PropertyCharacterictics_Then_PropertyCharacteristicsShouldBeValidated()
+        {
+            this.validator.ShouldHaveChildValidator(v => v.PropertyCharacteristics, typeof(PropertyCharacteristicsUniqueValidator));
+            this.validator.ShouldHaveChildValidator(v => v.PropertyCharacteristics, typeof(CreateOrUpdatePropertyCharacteristicValidator));
         }
 
         private void InitPropertyAttributeFormWithAttributes(IEnumerable<string> attributeNames)

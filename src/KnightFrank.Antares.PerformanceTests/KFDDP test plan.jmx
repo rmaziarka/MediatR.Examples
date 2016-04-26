@@ -73,6 +73,18 @@
             <stringProp name="Argument.desc">Activities API</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="activitiesTypes" elementType="Argument">
+            <stringProp name="Argument.name">activitiesTypes</stringProp>
+            <stringProp name="Argument.value">/api/activities/types</stringProp>
+            <stringProp name="Argument.desc">ActivitiesTypes API</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="characteristicGroups" elementType="Argument">
+            <stringProp name="Argument.name">characteristicGroups</stringProp>
+            <stringProp name="Argument.value">/api/characteristicGroups</stringProp>
+            <stringProp name="Argument.desc">CharacteristicGroups API</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -113,7 +125,7 @@
         <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
           <collectionProp name="Arguments.arguments"/>
         </elementProp>
-        <stringProp name="HTTPSampler.domain">knightfrank-antares-ne-ie-dev-general-wa-api-01.azurewebsites.net</stringProp>
+        <stringProp name="HTTPSampler.domain">knightfrank-antares-ne-ie-test-general-wa-api-01.azurewebsites.net</stringProp>
         <stringProp name="HTTPSampler.port"></stringProp>
         <stringProp name="HTTPSampler.connect_timeout"></stringProp>
         <stringProp name="HTTPSampler.response_timeout"></stringProp>
@@ -293,6 +305,15 @@
               <stringProp name="1119890476">KFDDP test plan</stringProp>
               <stringProp name="170071582">Test Fragment</stringProp>
               <stringProp name="1800274976">Get property type id</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Get characteristic id" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="2108429142">Get characteristic id</stringProp>
             </collectionProp>
           </ModuleController>
           <hashTree/>
@@ -561,6 +582,15 @@
             </collectionProp>
           </ModuleController>
           <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Get characteristic id" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="2108429142">Get characteristic id</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
           <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Create property" enabled="true">
             <collectionProp name="ModuleController.node_path">
               <stringProp name="-1227702913">WorkBench</stringProp>
@@ -579,12 +609,21 @@
             </collectionProp>
           </ModuleController>
           <hashTree/>
-          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Get activity type" enabled="true">
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Get activity status id" enabled="true">
             <collectionProp name="ModuleController.node_path">
               <stringProp name="-1227702913">WorkBench</stringProp>
               <stringProp name="1119890476">KFDDP test plan</stringProp>
               <stringProp name="170071582">Test Fragment</stringProp>
-              <stringProp name="261395009">Get activity type</stringProp>
+              <stringProp name="-1971838622">Get activity status id</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Get activity type id" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="443039578">Get activity type id</stringProp>
             </collectionProp>
           </ModuleController>
           <hashTree/>
@@ -707,6 +746,15 @@
               <stringProp name="1119890476">KFDDP test plan</stringProp>
               <stringProp name="170071582">Test Fragment</stringProp>
               <stringProp name="1800274976">Get property type id</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Get characteristic id" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="2108429142">Get characteristic id</stringProp>
             </collectionProp>
           </ModuleController>
           <hashTree/>
@@ -1030,7 +1078,11 @@ vars.put(&apos;requirementId&apos;, response.id);</stringProp>
     &quot;maxFunctionRooms&quot;: null,&#xd;
     &quot;minCarParkingSpaces&quot;: &quot;${minParkingSpaces}&quot;,&#xd;
     &quot;maxCarParkingSpaces&quot;: &quot;${maxParkingSpaces}&quot;&#xd;
-  }&#xd;
+  },&#xd;
+  &quot;propertyCharacteristics&quot;: [&#xd;
+    {&#xd;
+      &quot;characteristicId&quot;: &quot;${characteristicId}&quot;&#xd;
+    }&#xd;
 }</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
@@ -1358,6 +1410,65 @@ vars.put(&apos;divisionComId&apos;, data.items[1].id);
           </BSFPostProcessor>
           <hashTree/>
         </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Get characteristic id" enabled="true"/>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get characteristic id" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">${characteristicGroups}?countryId=${countryId}&amp;propertyTypeId=${propertyTypeId}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.monitor">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="Referer" elementType="Header">
+                  <stringProp name="Header.name">Referer</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                </elementProp>
+                <elementProp name="Accept-Language" elementType="Header">
+                  <stringProp name="Header.name">Accept-Language</stringProp>
+                  <stringProp name="Header.value">pl,en-US;q=0.7,en;q=0.3</stringProp>
+                </elementProp>
+                <elementProp name="Origin" elementType="Header">
+                  <stringProp name="Header.name">Origin</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                </elementProp>
+                <elementProp name="User-Agent" elementType="Header">
+                  <stringProp name="Header.name">User-Agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0</stringProp>
+                </elementProp>
+                <elementProp name="Accept" elementType="Header">
+                  <stringProp name="Header.name">Accept</stringProp>
+                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <BSFPostProcessor guiclass="TestBeanGUI" testclass="BSFPostProcessor" testname="Get characteristic id" enabled="true">
+              <stringProp name="scriptLanguage">javascript</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="script">var response = JSON.parse(prev.getResponseDataAsString());
+
+vars.put(&apos;characteristicId&apos;, response[0].characteristicGroupItems[0].characteristicId);
+OUT.println(response[0].characteristicGroupItems[0].characteristicId);</stringProp>
+            </BSFPostProcessor>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
         <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="View property" enabled="true"/>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="View property" enabled="true">
@@ -1597,9 +1708,9 @@ vars.put(&apos;ownershipTypeId&apos;, response.items[0].id);</stringProp>
             <hashTree/>
           </hashTree>
         </hashTree>
-        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Get activity type" enabled="true"/>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Get activity status id" enabled="true"/>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get activity type" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get activity status id" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1644,14 +1755,73 @@ vars.put(&apos;ownershipTypeId&apos;, response.items[0].id);</stringProp>
               </collectionProp>
             </HeaderManager>
             <hashTree/>
+            <BSFPostProcessor guiclass="TestBeanGUI" testclass="BSFPostProcessor" testname="Get activity status id" enabled="true">
+              <stringProp name="scriptLanguage">javascript</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="script">var response = JSON.parse(prev.getResponseDataAsString());
+
+vars.put(&apos;activityStatusId&apos;, response.items[0].id);
+</stringProp>
+            </BSFPostProcessor>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Get activity type id" enabled="true"/>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get activity type id" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">${activitiesTypes}?countryCode=${countryCode}&amp;propertyTypeId=${propertyTypeId}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.monitor">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="Referer" elementType="Header">
+                  <stringProp name="Header.name">Referer</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                </elementProp>
+                <elementProp name="Accept-Language" elementType="Header">
+                  <stringProp name="Header.name">Accept-Language</stringProp>
+                  <stringProp name="Header.value">pl,en-US;q=0.7,en;q=0.3</stringProp>
+                </elementProp>
+                <elementProp name="Origin" elementType="Header">
+                  <stringProp name="Header.name">Origin</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                </elementProp>
+                <elementProp name="User-Agent" elementType="Header">
+                  <stringProp name="Header.name">User-Agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0</stringProp>
+                </elementProp>
+                <elementProp name="Accept" elementType="Header">
+                  <stringProp name="Header.name">Accept</stringProp>
+                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
             <BSFPostProcessor guiclass="TestBeanGUI" testclass="BSFPostProcessor" testname="Get activity type id" enabled="true">
               <stringProp name="scriptLanguage">javascript</stringProp>
               <stringProp name="parameters"></stringProp>
               <stringProp name="filename"></stringProp>
               <stringProp name="script">var response = JSON.parse(prev.getResponseDataAsString());
 
-vars.put(&apos;activityTypeId&apos;, response.items[0].id);
-</stringProp>
+vars.put(&apos;activityTypeId&apos;, response[1].id);
+OUT.println(response[1].id);</stringProp>
             </BSFPostProcessor>
             <hashTree/>
           </hashTree>
@@ -1664,7 +1834,7 @@ vars.put(&apos;activityTypeId&apos;, response.items[0].id);
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;propertyId&quot;:&quot;${propertyId}&quot;,&quot;activityStatusId&quot;:&quot;${activityTypeId}&quot;,&quot;contacts&quot;:[{&quot;id&quot;:&quot;${contactId}&quot;}]}</stringProp>
+                  <stringProp name="Argument.value">{&quot;propertyId&quot;:&quot;${propertyId}&quot;,&quot;activityStatusId&quot;:&quot;${activityStatusId}&quot;,&quot;contacts&quot;:[{&quot;id&quot;:&quot;${contactId}&quot;}],&quot;activityTypeId&quot;:&quot;${activityTypeId}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>

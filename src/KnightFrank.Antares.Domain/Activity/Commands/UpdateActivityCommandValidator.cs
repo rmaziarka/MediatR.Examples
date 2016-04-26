@@ -3,7 +3,6 @@
     using System;
 
     using FluentValidation;
-    using FluentValidation.Results;
 
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
@@ -13,11 +12,11 @@
     public class UpdateActivityCommandValidator : AbstractValidator<UpdateActivityCommand>
     {
         private readonly IGenericRepository<Activity> activityRepository;
-        private readonly IGenericRepository<ActivityTypeDefinition> activityTypeDefinitionRepository; 
+        private readonly IGenericRepository<ActivityTypeDefinition> activityTypeDefinitionRepository;
 
-        public UpdateActivityCommandValidator(IGenericRepository<EnumTypeItem> enumTypeItemRepository, 
-            IGenericRepository<Activity> activityRepository, 
-            IGenericRepository<ActivityType> activityTypeRepository, 
+        public UpdateActivityCommandValidator(IGenericRepository<EnumTypeItem> enumTypeItemRepository,
+            IGenericRepository<Activity> activityRepository,
+            IGenericRepository<ActivityType> activityTypeRepository,
             IGenericRepository<ActivityTypeDefinition> activityTypeDefinitionRepository)
         {
             this.activityRepository = activityRepository;
@@ -26,36 +25,41 @@
             this.RuleFor(x => x.MarketAppraisalPrice).GreaterThanOrEqualTo(0);
             this.RuleFor(x => x.RecommendedPrice).GreaterThanOrEqualTo(0);
             this.RuleFor(x => x.VendorEstimatedPrice).GreaterThanOrEqualTo(0);
-            this.RuleFor(x => x.ActivityStatusId).SetValidator(new ActivityStatusValidator(enumTypeItemRepository));
-            
+
+            this.RuleFor(x => x.ActivityStatusId).NotEmpty();
+            this.RuleFor(x => x.ActivityStatusId)
+                .SetValidator(new ActivityStatusValidator(enumTypeItemRepository))
+                .When(x => !x.ActivityStatusId.Equals(Guid.Empty));
+
             this.RuleFor(x => x.ActivityTypeId).NotEmpty();
             this.RuleFor(x => x.ActivityTypeId)
                 .SetValidator(new ActivityTypeValidator(activityTypeRepository))
                 .When(x => !x.ActivityTypeId.Equals(Guid.Empty));
 
-            this.Custom(this.ActivityExists);
-            this.Custom(this.ActivityTypeDefinitionExists);
+            this.RuleFor(x => x).Must(this.ActivityExists).WithMessage("Activity does not exist.")
+                .WithName("Id").DependentRules(c => c.RuleFor(x => x).Must(this.ActivityTypeDefinitionExists)
+                                                     .WithMessage("Specified activity type is invalid")
+                                                     .WithName("ActivityTypeId"));
         }
 
-        private ValidationFailure ActivityExists(UpdateActivityCommand command)
+        private bool ActivityExists(UpdateActivityCommand command)
         {
             Activity activity = this.activityRepository.GetById(command.Id);
 
-            return activity == null ? new ValidationFailure(nameof(command.Id), "Activity does not exist.") : null;
+            return activity != null;
         }
 
-        private ValidationFailure ActivityTypeDefinitionExists(UpdateActivityCommand command)
+        private bool ActivityTypeDefinitionExists(UpdateActivityCommand command)
         {
             Activity activity = this.activityRepository.GetById(command.Id);
-            var activityTypeDefinitionExists = this.activityTypeDefinitionRepository.Any(
+
+            bool activityTypeDefinitionExists = this.activityTypeDefinitionRepository.Any(
                 x =>
                     x.CountryId == activity.Property.Address.CountryId &&
                     x.PropertyTypeId == activity.Property.PropertyTypeId &&
                     x.ActivityTypeId == command.ActivityTypeId);
 
-            return activityTypeDefinitionExists
-                ? null
-                : new ValidationFailure(nameof(command.ActivityTypeId), "Specified activity type is invalid");
+            return activityTypeDefinitionExists;
         }
     }
 }

@@ -104,7 +104,7 @@ declare module Antares.Common.Models {
 
         // - characteristics
         interface ICharacteristicGroupUsageResourceParameters {
-            countryCode?: string;
+            countryId?: string;
             propertyTypeId?: string;
         }
         interface ICharacteristicGroupUsageResourceClass extends ng.resource.IResourceClass<ICharacteristicGroupUsageResource> {

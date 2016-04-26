@@ -56,6 +56,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
@@ -108,6 +111,7 @@
     <Compile Include="Activity\Commands\CreateActivityCommandValidatorTests.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommandValidatorTests.cs" />
     <Compile Include="Activity\Queries\ActivityQueryValidatorTests.cs" />
+    <Compile Include="Activity\QueryHandlers\ActivitiesQueryHandlerTests.cs" />
     <Compile Include="Activity\QueryHandlers\ActivityQueryHandlerTests.cs" />
     <Compile Include="Activity\QueryHandlers\ActivityTypeQueryHandlerTests.cs" />
     <Compile Include="AddressForm\Queries\AddressFormQueryValidatorTests.cs" />
@@ -116,6 +120,7 @@
     <Compile Include="Characteristic\QueryHandlers\CharacteristicGroupsQueryHandlerTests.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidatorTests.cs" />
     <Compile Include="Common\Validator\LocaleValidatorTests.cs" />
+    <Compile Include="Common\Validator\CountryValidatorTests.cs" />
     <Compile Include="Company\CommandHandlers\CreateCompanyComandHandlerTests.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommandDomainValidatorTests.cs" />
     <Compile Include="Common\Validator\ContactValidatorTests.cs" />
@@ -143,7 +148,11 @@
     <Compile Include="Property\CommandHandlers\CreatePropertyCommandHandlerTests.cs" />
     <Compile Include="Property\CommandHandlers\UpdatePropertyCommandHandlerTests.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyAddressValidatorTests.cs" />
-    <Compile Include="Property\Commands\PropertyTypeValidatorTests.cs" />
+    <Compile Include="Common\Validator\PropertyTypeValidatorTests.cs" />
+    <Compile Include="Property\Commands\CreateOrUpdatePropertyCharacteristicDomainValidatorTests.cs" />
+    <Compile Include="Property\Commands\CreateOrUpdatePropertyCharacteristicValidatorTests.cs" />
+    <Compile Include="Property\Commands\PropertyCharacteristicConfigurationDomainValidatorTests.cs" />
+    <Compile Include="Property\Commands\PropertyCharacteristicsUniqueValidatorTests.cs" />
     <Compile Include="Property\Commands\UpdatePropertyCommandValidatorTests.cs" />
     <Compile Include="Property\Queries\PropertyAttributesQueryValidatorTests.cs" />
     <Compile Include="Property\QueryHandlers\PropertyTypesQueryHandlerTests.cs" />

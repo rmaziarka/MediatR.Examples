@@ -4,6 +4,9 @@ Retail;en;Retail
 Industrial;en;Industrial
 Other;en;Other
 Office;en;Office
+Office.Office;en;Office
+Office.Office (Bus. Park);en;Office (Bus. Park)
+Office.Office (Portfolio);en;Office (Portfolio)
 Leisure.Hotel;en;Hotel
 Leisure.Leisure;en;Leisure
 Retail.Car Showroom;en;Car Showroom
@@ -37,13 +40,13 @@ Retail.Garden Centre;en;Garden Centre
 Retail.Retail;en;Retail
 Retail.Retail (Portfolio);en;Retail (Portfolio)
 Retail.Shopping Centre (Portfolio);en;Shopping Centre (Portfolio)
-Retail.Retail Wharehouse (Portfolio);en;Retail Wharehouse (Portfolio)
+Retail.Retail Warehouse (Portfolio);en;Retail Warehouse (Portfolio)
 Retail.Retail Wh (Bulky Parks);en;Retail Wh (Bulky Parks)
 Retail.Retail Wh (Bulky Solus);en;Retail Wh (Bulky Solus)
 Retail.Retail Wh (Open A1 Solus);en;Retail Wh (Open A1 Solus)
 Retail.Supermarket;en;Supermarket
 Industrial.Industrial (Portfolio);en;Industrial (Portfolio)
-Industrial.Trade park;en;Trade park
+Industrial.Trade Park;en;Trade Park
 Other.Institutional (Portfolio);en;Institutional (Portfolio)
 Other.Land/Site/Dev;en;Land/Site/Dev
 Other.Mixed (Portfolio);en;Mixed (Portfolio)

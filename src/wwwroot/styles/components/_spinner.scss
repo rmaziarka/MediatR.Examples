@@ -1,0 +1,51 @@
+// Spinner
+
+.spinner {
+  animation: rotate 0.5s infinite linear;
+  border-bottom: 5px solid $gray-light;
+  border-left: 5px solid $color-crimson;
+  border-right: 5px solid $gray-light;
+  border-top: 5px solid $gray-light;
+  bottom: 0;
+  font-size: 10px;
+  left: 0;
+  margin: auto;
+  right: 0;
+  text-indent: -9999em;
+  top: 0;
+  transform: translateZ(0);
+}
+
+.spinner,
+.spinner::after {
+  border-radius: 50%;
+  height: 70px;
+  width: 70px;
+}
+
+.spinner-label {
+  left: 50%;
+  margin-left: -100px;
+  margin-top: 50px;
+  text-align: center;
+  top: 50%;
+  width: 200px;
+}
+
+.spinner,
+.spinner-label {
+  position: absolute;
+  z-index: 1070;
+}
+
+// Spinner animation
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

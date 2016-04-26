@@ -42,18 +42,7 @@ module Antares {
 
                 $http = $httpBackend;
 
-                Antares.Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Antares.Mock.AddressForm.AddressFormWithOneLine]);
-                $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
-                    return [];
-                });
-
-                $http.whenGET(/\/api\/properties\/attributes/).respond(() => {
-                    return [200, { attributes: []}];
-                });
-
-                $http.expectGET(/\/api\/activities\/types/).respond(() => {
-                    return [200, []];
-                });
+                setUpBaseHttpMocks($http);
 
                 scope = $rootScope.$new();
                 scope['userData'] = userMock;
@@ -107,18 +96,7 @@ module Antares {
                 $http = $httpBackend;
                 filter = $filter;
 
-                Antares.Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Antares.Mock.AddressForm.AddressFormWithOneLine]);
-                $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
-                    return [];
-                });
-
-                $http.whenGET(/\/api\/properties\/attributes/).respond(() => {
-                    return [200, { attributes: [] }];
-                });
-
-                $http.expectGET(/\/api\/activities\/types/).respond(() => {
-                    return [200, []];
-                });
+                setUpBaseHttpMocks($http);
 
                 scope = $rootScope.$new();
                 scope['userData'] = userMock;
@@ -196,6 +174,90 @@ module Antares {
                 expect(activityStatusElement.text()).toBe('DYNAMICTRANSLATIONS.123');
             });
         });
+        
+        describe('and add activity button is clicked', () =>{
+            var propertyMock = TestHelpers.PropertyGenerator.generate();
+            var defaultActivityStatusSelectId = "2";
+            var defaultActivityStatusSelectCode = "PreAppraisal";
+
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService,
+                $httpBackend: ng.IHttpBackendService) => {
+
+                $http = $httpBackend;
+                
+                // activity status http mock
+                $http.whenGET(/\/api\/enums\/ActivityStatus\/items/).respond(() => {
+                    return [200, {
+                        items:  [
+                                    <Dto.IEnumTypeItem>{id:'1',code:'Market', value:'Market', enumTypeId: ''},
+                                    <Dto.IEnumTypeItem>{id: defaultActivityStatusSelectId, code:defaultActivityStatusSelectCode, value:'Pre-Appraisal', enumTypeId: ''},
+                                    <Dto.IEnumTypeItem>{id:'3',code:'Other', value:'Other', enumTypeId: ''}
+                                ]
+                            }];
+                });
+                
+                // activity type http mock
+                var query = '/api/activities/types?countryCode=GB&propertyTypeId=' + propertyMock.propertyTypeId;
+                $http.whenGET(query).respond(() => {
+                    return [200, [
+                                    <Dto.IActivityTypeQueryResult>{ id:'1', order: 1 },
+                                    <Dto.IActivityTypeQueryResult>{ id:'2', order: 2 },
+                                    <Dto.IActivityTypeQueryResult>{ id:'3', order: 3 }
+                                ]
+                            ];
+                });
+                
+                setUpBaseHttpMocks($http);
+
+                scope = $rootScope.$new();
+                scope['userData'] = userMock;
+                scope['property'] = propertyMock;
+                compile = $compile;
+                
+                // act
+                element = compile('<property-view property="property" user-data="userData"></property-view>')(scope);
+                scope.$apply();
+                $http.flush();
+                
+                var addActivityButton = element.find('#card-list-activities #addItemBtn');
+                addActivityButton.click();
+            }));
+
+            it('default values are set', () => {
+                // assert
+                var activityAddController = <Antares.Activity.ActivityAddController> element.find('activity-add').controller('activityAdd');
+                
+                expect(activityAddController.selectedActivityStatus.id).toBe(defaultActivityStatusSelectId);
+                expect(activityAddController.selectedActivityType).toBe(null);
+            });
+            
+            describe('when values are changed and activity add window opened again', () =>{  
+                beforeEach(() =>{
+                    var addActivityPanel = element.find('activity-add');
+                    var activityStatusSelect = addActivityPanel.find('#addActivityForm select[name="status"]');
+                    var activityTypeSelect = addActivityPanel.find('#addActivityForm select[name="type"]');
+                    activityStatusSelect.val(1)
+                    activityTypeSelect.val(1);
+                    
+                    var closePanelButton = addActivityPanel.find('.close-side-panel');
+                    closePanelButton.click();
+                    
+                    var addActivityButton = element.find('#card-list-activities #addItemBtn');
+                    addActivityButton.click();
+                })
+                    
+                it('default values are set', () => {
+                    // assert
+                    var activityAddController = <Antares.Activity.ActivityAddController> element.find('activity-add').controller('activityAdd');
+                    
+                    expect(activityAddController.selectedActivityStatus.id).toBe(defaultActivityStatusSelectId);
+                    expect(activityAddController.selectedActivityType).toBe(null);
+                });
+            })
+            
+        });
 
         describe('and activity details is clicked', () => {
             var date1Mock = new Date('2011-01-01');
@@ -227,18 +289,7 @@ module Antares {
 
                 $http = $httpBackend;
 
-                Antares.Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Antares.Mock.AddressForm.AddressFormWithOneLine]);
-                $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
-                    return [];
-                });
-
-                $http.whenGET(/\/api\/properties\/attributes/).respond(() => {
-                    return [200, { attributes: [] }];
-                });
-
-                $http.expectGET(/\/api\/activities\/types/).respond(() => {
-                    return [200, []];
-                });
+                setUpBaseHttpMocks($http);
 
                 scope = $rootScope.$new();
                 scope['property'] = propertyMock;
@@ -409,4 +460,19 @@ module Antares {
             }
         });
     });
+    
+    function setUpBaseHttpMocks($http: ng.IHttpBackendService): void{
+        Antares.Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Antares.Mock.AddressForm.AddressFormWithOneLine]);
+        $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
+            return [];
+        });
+
+        $http.whenGET(/\/api\/properties\/attributes/).respond(() => {
+            return [200, { attributes: [] }];
+        });
+
+        $http.whenGET(/\/api\/activities\/types/).respond(() => {
+            return [200, []];
+        });
+    }
 }

@@ -25,7 +25,7 @@
             bool activityStatusExists =
                 this.enumTypeItemRepository.Any((new HasId<EnumTypeItem>(activityStatusId) & new IsActivityStatus()).SatisfiedBy());
 
-            return activityStatusExists ? null : new ValidationFailure(nameof(activityStatusId), "Activity Status does not exist.");
+            return activityStatusExists ? null : new ValidationFailure("ActivityStatusId", "Activity Status does not exist.");
         }
     }
 }

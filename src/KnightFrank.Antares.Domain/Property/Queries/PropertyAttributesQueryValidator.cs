@@ -6,7 +6,7 @@
     {
         public PropertyAttributesQueryValidator()
         {
-            this.RuleFor(x => x.CountryCode).NotEmpty();
+            this.RuleFor(x => x.CountryId).NotEmpty();
             this.RuleFor(x => x.PropertyTypeId).NotEmpty();
         }
     }

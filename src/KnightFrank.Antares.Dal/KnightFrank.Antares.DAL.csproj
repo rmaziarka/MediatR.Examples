@@ -84,6 +84,7 @@
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\PropertyCharacteristicConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\RequirementNoteConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\ViewingConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\PropertyAttributeFormConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\PropertyAttributeFormDefinitionConfiguration.cs" />
     <Compile Include="Model\Configuration\BaseEntityConfiguration.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Model\Property\Characteristics\CharacteristicGroupUsage.cs" />
     <Compile Include="Model\Property\Characteristics\CharacteristicLocalised.cs" />
     <Compile Include="Model\Property\PropertyCharacteristic.cs" />
+    <Compile Include="Model\Property\Viewing.cs" />
     <Compile Include="Model\Property\RequirementNote.cs" />
     <Compile Include="Model\Property\Activities\Activity.cs" />
     <Compile Include="Model\Property\Ownership.cs" />

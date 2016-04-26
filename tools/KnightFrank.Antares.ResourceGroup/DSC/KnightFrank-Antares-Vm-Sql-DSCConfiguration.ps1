@@ -64,6 +64,8 @@ Node localhost
 		Ensure = "Present"
 	}
 	
+    Start-Sleep -s 60
+
 	xSqlServerSetup InstallSql
 	{
 		DependsOn = "[xMountImage]MountSqlIso"

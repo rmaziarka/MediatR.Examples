@@ -33,13 +33,13 @@
             IFixture fixture)
         {
             // Arrange
-            CharacteristicGroupUsage expected = this.CreateCharacteristicGroupUsage(fixture, query.PropertyTypeId, query.CountryCode);
+            CharacteristicGroupUsage expected = this.CreateCharacteristicGroupUsage(fixture, query.PropertyTypeId, query.CountryId);
 
-            IList<CharacteristicGroupUsage> mockDataList = new List<CharacteristicGroupUsage> { 
-                 expected,           
-                 this.CreateCharacteristicGroupUsage(fixture, Guid.NewGuid(), query.CountryCode),
-                 this.CreateCharacteristicGroupUsage(fixture, query.PropertyTypeId, query.CountryCode + "Other"), 
-                 this.CreateCharacteristicGroupUsage(fixture, Guid.NewGuid(), query.CountryCode + "Other")
+            IList<CharacteristicGroupUsage> mockDataList = new List<CharacteristicGroupUsage> {
+                 expected,
+                 this.CreateCharacteristicGroupUsage(fixture, Guid.NewGuid(), query.CountryId),
+                 this.CreateCharacteristicGroupUsage(fixture, query.PropertyTypeId, Guid.NewGuid()),
+                 this.CreateCharacteristicGroupUsage(fixture, Guid.NewGuid(), Guid.NewGuid())
              };
 
             characteristicGroupUsageRepository.Setup(
@@ -58,15 +58,12 @@
                 Times.Once);
         }
 
-        private CharacteristicGroupUsage CreateCharacteristicGroupUsage(IFixture fixture, Guid propertyTypeId, string countryCode)
+        private CharacteristicGroupUsage CreateCharacteristicGroupUsage(IFixture fixture, Guid propertyTypeId, Guid countryId)
         {
-            Country country = fixture.Build<Country>().With(c => c.IsoCode, countryCode).Create();
-
             return
                 fixture.Build<CharacteristicGroupUsage>()
                        .With(u => u.PropertyTypeId, propertyTypeId)
-                       .With(u => u.CountryId, country.Id)
-                       .With(u => u.Country, country)
+                       .With(u => u.CountryId, countryId)
                        .Create();
         }
     }

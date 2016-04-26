@@ -72,6 +72,7 @@
         public DbSet<CharacteristicGroupLocalised> CharacteristicGroupLocaliseds { get; set; }
         public DbSet<CharacteristicGroupUsage> CharacteristicGroupUsages { get; set; }
         public DbSet<CharacteristicLocalised> CharacteristicLocaliseds { get; set; }
+        public DbSet<Viewing> Viewing { get; set; }
 
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {

@@ -8,7 +8,7 @@
 
     public class PropertyAttributesQuery : IRequest<PropertyAttributesQueryResult>
     {
-        public string CountryCode { get; set; }
+        public Guid CountryId { get; set; }
         public Guid PropertyTypeId { get; set; }
     }
 }

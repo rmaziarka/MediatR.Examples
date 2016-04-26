@@ -15,31 +15,61 @@
                 <section>
                     <h3 class="page-header">Characteristics</h3>
 
-                    <h5>Style</h5>
-                    <ul>
-                        <li>House</li>
-                        <li>Flat</li>
-                    </ul>
+                    <div>
+                        <h5>Style</h5>
+                        <ul class="characteristics">
+                            <li>
+                                <span class="name">House</span>
+                            </li>
+                            <li>
+                                <span class="name">Flat</span>
+                                <span class="comment">comment</span>
+                            </li>
+                        </ul>
+                    </div>
 
-                    <h5>Age</h5>
-                    <ul>
-                        <li>Modern</li>
-                    </ul>
+                    <div>
+                        <h5>Age</h5>
+                        <ul class="characteristics">
+                            <li>
+                                <span class="name">Modern</span>
+                            </li>
+                        </ul>
+                    </div>
 
-                    <h5>Location</h5>
-                    <ul>
-                        <li>Rural</li>
-                        <li>Island</li>
-                    </ul>
+                    <div>
+                        <h5>Location</h5>
+                        <ul class="characteristics">
+                            <li>
+                                <span class="name">Rural</span>
+                                <span class="comment">comment</span>
+                            </li>
+                            <li>
+                                <span class="name">Island</span>
+                            </li>
+                        </ul>
+                    </div>
 
-                    <h5>Special</h5>
-                    <ul>
-                        <li>Golf course</li>
-                        <li>Swimming pool</li>
-                        <li>Tennis court</li>
-                        <li>Stabling</li>
-                        <li>Fishing</li>
-                    </ul>
+                    <div>
+                        <h5>Special</h5>
+                        <ul class="characteristics">
+                            <li>
+                                <span class="name">Golf course</span>
+                            </li>
+                            <li>
+                                <span class="name">Swimming pool</span>
+                            </li>
+                            <li>
+                                <span class="name">Tennis court</span>
+                            </li>
+                            <li>
+                                <span class="name">Stabling</span>
+                            </li>
+                            <li>
+                                <span class="name">Fishing</span>
+                            </li>
+                        </ul>
+                    </div>
                 </section>
             </div>
             <div class="col-md-4">
@@ -72,10 +102,109 @@
                         </card-list-item>
                     </card-list>
                 </section>
+                <!--<section>
+                    <h3 class="page-header" translate="ATTACHMENT.LIST.ATTACHMENTS"></h3>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-default"><i class="fa fa-plus-circle"></i></button>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="panel-item">Lorem ipsum file.docx</div>
+                            <div><small><time>12-05-2015</time>, Brouchure, 2MB</small></div>
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <a href="#">details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>-->
             </div>
         </div>
     </div>
 </div>
+
+<side-panel>
+    <side-panel-header>
+        <h3 translate="ATTACHMENT.ATTACHMENTPREVIEW"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <div class="row section-row">
+            <div class="col-xs-5">Name</div>
+            <div class="col-xs-7 text-truncate">
+                <i class="fa fa-download pull-right" aria-hidden="true"></i>
+                <a href="#">Lorem ipsum file.docx</a>
+            </div>
+        </div>
+        <div class="row section-row">
+            <div class="col-xs-5">Type</div>
+            <div class="col-xs-7">Floor plan</div>
+        </div>
+        <div class="row section-row">
+            <div class="col-xs-5">Size</div>
+            <div class="col-xs-7">2MB</div>
+        </div>
+        <div class="row section-row">
+            <div class="col-xs-5">Added</div>
+            <div class="col-xs-7"><time>19-03-2016</time></div>
+        </div>
+        <div class="row section-row">
+            <div class="col-xs-5">By</div>
+            <div class="col-xs-7">John Smith</div>
+        </div>
+    </side-panel-content>
+</side-panel>
+
+<side-panel>
+    <side-panel-header>
+        <h3 translate="ATTACHMENT.ATTACHFILE"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <form>
+            <div class="form-group has-error">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="file">File:</label>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="button" class="close close-side-panel" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <div class="text-truncate">Lorem ipsum file.docx</div>
+                    </div>
+                    <div ng-hide="true" class="col-md-12">
+                        <span class="btn btn-default btn-file">
+                            Browse <input id="file" type="file">
+                        </span>
+                        <p class="help-block">Please select file to upload</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group required">
+                <div class="row">
+                    <div class="col-md-9">
+                        <label for="type-file">Type</label>
+                        <select id="type-file" class="form-control">
+                            <option>- select -</option>
+                            <option>File type</option>
+                            <option>File type</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="spinner"></div>
+        <div class="spinner-label">uploading</div>
+    </side-panel-content>
+    <side-panel-footer>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()" ng-show="!vm.ownershipAddPanelVisible">
+             <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+        </button>
+        <button class="btn btn-primary" type="button">
+            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+        </button>
+    </side-panel-footer>
+</side-panel>
 
 <side-panel component-id="vm.componentIds.contactSidePanelId">
     <side-panel-header>
