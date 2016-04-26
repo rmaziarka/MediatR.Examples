@@ -55,24 +55,22 @@
 
             List<PropertyCharacteristic> existingCharacteristics = property.PropertyCharacteristics.ToList();
 
-            existingCharacteristics.Where(c => IsRemovedFromExistingList(c, message.PropertyCharacteristics))
-                                   .ToList()
-                                   .ForEach(x => this.propertyCharacteristicRepository.Delete(x));
+            existingCharacteristics
+                .Where(c => IsRemovedFromExistingList(c, message.PropertyCharacteristics))
+                .ToList()
+                .ForEach(x => this.propertyCharacteristicRepository.Delete(x));
 
-            Enumerable.ToList(
-                message.PropertyCharacteristics.Where(c => IsNewlyAddedToExistingList(c, existingCharacteristics))
-                       .Select(Mapper.Map<PropertyCharacteristic>)).ForEach(p => property.PropertyCharacteristics.Add(p));
+            message.PropertyCharacteristics
+                .Where(c => IsNewlyAddedToExistingList(c, existingCharacteristics))
+                .Select(Mapper.Map<PropertyCharacteristic>)
+                .ToList()
+                .ForEach(p => property.PropertyCharacteristics.Add(p));
 
-            message.PropertyCharacteristics.Where(c => IsUpdated(c, existingCharacteristics))
-                   .Select(
-                       c =>
-                       new
-                           {
-                               newPropertyCharacteristic = c,
-                               oldPropertyCharacteristic = GetOldCharacteristic(c, existingCharacteristics)
-                           })
-                   .ToList()
-                   .ForEach(pair => Mapper.Map(pair.newPropertyCharacteristic, pair.oldPropertyCharacteristic));
+            message.PropertyCharacteristics
+                .Where(c => IsUpdated(c, existingCharacteristics))
+                .Select(c => new { newPropertyCharacteristic = c, oldPropertyCharacteristic = GetOldCharacteristic(c, existingCharacteristics) })
+                .ToList()
+                .ForEach(pair => Mapper.Map(pair.newPropertyCharacteristic, pair.oldPropertyCharacteristic));
 
             this.propertyRepository.Save();
 
