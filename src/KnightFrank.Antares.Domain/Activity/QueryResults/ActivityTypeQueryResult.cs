@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KnightFrank.Antares.Domain.Activity.QueryResults
+﻿namespace KnightFrank.Antares.Domain.Activity.QueryResults
 {
+    using System;
+
     public class ActivityTypeQueryResult
     {
         public Guid Id { get; set; }
