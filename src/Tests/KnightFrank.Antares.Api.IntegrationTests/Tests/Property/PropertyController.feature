@@ -64,6 +64,7 @@ Scenario Outline: Update property
 			| Division     | Residential      |
 			| Division     | Commercial       |
         And User gets <propertyType1> for PropertyType
+		And Property characteristics are set for given property type
 		And User sets attributes for property in database
 			| MinBedrooms   | MaxReceptions   | MaxArea   | MinGuestRooms   | MaxFunctionRooms   |
 			| <MinBedrooms> | <MaxReceptions> | <MaxArea> | <MinGuestRooms> | <MaxFunctionRooms> |
@@ -76,7 +77,7 @@ Scenario Outline: Update property
 			| MinBedrooms    | MaxReceptions    | MaxArea    | MinGuestRooms    | MaxFunctionRooms    |
 			| <MinBedrooms2> | <MaxReceptions2> | <MaxArea2> | <MinGuestRooms2> | <MaxFunctionRooms2> |
 		And Property characteristics are set for given property type
-	When Users updates property with defined address for latest id and <divisionCode2> division by Api
+	When User updates property with defined address for latest id and <divisionCode2> division by Api
 	Then User should get OK http status code
 		And The updated Property is saved in database
 
@@ -92,6 +93,7 @@ Scenario Outline: Update property
 	| Industrial.Industrial Distribution | Industrial            | Commercial    | Commercial    |             |               |         |               |                  |              |                |          |                |                   |
 	| Office                             | Other                 | Commercial    | Commercial    |             |               |         |               |                  |              |                |          |                |                   |
 
+
 @Property
 Scenario Outline: Update property with invalid data
 	Given User gets GB address form for Property and country details
@@ -100,6 +102,7 @@ Scenario Outline: Update property with invalid data
 			| Division     | Residential      |
 			| Division     | Commercial       |
         And User gets House for PropertyType
+		And Property characteristics are set for given property type
 		And User sets attributes for property in database
 			| MinBedrooms   | MaxReceptions   | MaxArea   | MinGuestRooms   | MaxFunctionRooms   |
 			| <MinBedrooms> | <MaxReceptions> | <MaxArea> | <MinGuestRooms> | <MaxFunctionRooms> |
@@ -115,7 +118,7 @@ Scenario Outline: Update property with invalid data
 			| MinBedrooms    | MaxReceptions    | MaxArea    | MinGuestRooms    | MaxFunctionRooms    |
 			| <MinBedrooms2> | <MaxReceptions2> | <MaxArea2> | <MinGuestRooms2> | <MaxFunctionRooms2> |
 		And Property characteristics are set for given property type
-	When Users updates property with defined address for <id> id and <divisionCode2> division by Api
+	When User updates property with defined address for <id> id and <divisionCode2> division by Api
 	Then User should get <statusCode> http status code
 
 	Examples:
@@ -136,7 +139,7 @@ Scenario Outline: Update property with invalid data
 
 @Property
 Scenario: Get non existing property
-	Given Property does not exist in DB
+	Given Property does not exist in database
 	When User retrieves property details
 	Then User should get NotFound http status code
 
@@ -155,7 +158,8 @@ Scenario: Get property
 		And User sets attributes for property in database
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
 			| 1           | 3           | 1             | 3             | 2            | 3            | 1000.1  | 3000.1  | 500.1       | 4000.1      | 1                   | 3                   |
-        And Property with Address and Residential division is in database
+        And Property characteristics are set for given property type
+		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
         And User creates contacts in database with following data
@@ -176,3 +180,26 @@ Scenario: Get property
         And Ownership list should be the same as in database
 		And Activities list should be the same as in database
 		And Characteristics list should be the same as in database
+
+@Property
+@Characteristics
+Scenario Outline: Try to create property with improper characteristic data
+	Given User gets GB address form for Property and country details
+        And User gets EnumTypeItemId and EnumTypeItem code
+			| enumTypeCode | enumTypeItemCode |
+			| Division     | Residential      |
+		And Address for add/update property is defined with max length fields
+        And User gets House for PropertyType
+		And User sets attributes for property in Api
+			| MinBedrooms | MinArea | MinGuestRooms |
+			| 1           | 2       | 3             |
+		And Followed property characteristics are chosen
+			| Code   |
+			| <code> | 
+	When User creates property with defined address and Residential division by Api
+	Then User should get <statusCode> http status code
+
+	Examples:
+	| code     | statusCode |
+	| Offices  | BadRequest | 
+	| invalid  | BadRequest | 	

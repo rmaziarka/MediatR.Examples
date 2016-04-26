@@ -9,6 +9,7 @@
 
     using FluentValidation;
 
+    using KnightFrank.Antares.Domain.Common.BuissnessValidators;
     using KnightFrank.Antares.Domain.Common.Exceptions;
 
     using Newtonsoft.Json;
@@ -28,6 +29,22 @@
                     Message = "The request is invalid. " + validationException.Message,
                     Errors = validationException.Errors.Select(x => x.ErrorMessage),
                     InvalidFields = validationException.Errors.Select(x => x.PropertyName)
+                };
+
+                context.Response = new HttpResponseMessage
+                {
+                    Content = CreateContent(response),
+                    StatusCode = HttpStatusCode.BadRequest
+                };
+            }
+            else if (exception is BusinessValidationException)
+            {
+                var validationException = exception as BusinessValidationException;
+
+                var response = new
+                {
+                    Message = "The request is invalid. " + validationException.Message,
+                    Errors = new { exception.Message }
                 };
 
                 context.Response = new HttpResponseMessage

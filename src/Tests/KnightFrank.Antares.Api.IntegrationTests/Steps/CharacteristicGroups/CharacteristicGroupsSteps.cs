@@ -7,7 +7,6 @@
 
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
-    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Characteristics;
     using KnightFrank.Antares.Dal.Model.Resource;
 
@@ -32,7 +31,7 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"I have entered followed characteristics")]
+        [Given(@"User creates follwoing characteristics in database")]
         public void GivenIHaveEnteredFollowedCharacteristics(Table table)
         {
             IEnumerable<Characteristic> characteristics = table.CreateSet<Characteristic>();
@@ -40,27 +39,11 @@
             this.fixture.DataContext.SaveChanges();
         }
 
-        [Given(@"I have (.*) country id")]
+        [Given(@"User retrieves (.*) country id")]
         public void GivenIHaveCountryId(string countryCode)
         {
             Country country = this.fixture.DataContext.Countries.SingleOrDefault(x => x.IsoCode == countryCode);
             this.scenarioContext["CountryId"] = country?.Id ?? Guid.NewGuid();
-        }
-
-        [Given(@"I have (.*) property type id")]
-        public void GivenIHavePropertyTypeId(string type)
-        {
-            PropertyType propertyType = this.fixture.DataContext.PropertyTypes.SingleOrDefault(x => x.Code == type);
-            this.scenarioContext["PropertyTypeId"] = propertyType?.Id ?? Guid.NewGuid();
-        }
-
-        [Given(@"And I have entered followed characteristics groups")]
-        public void GivenAndIHaveEnteredFollowedCharacteristicsGroups(Table table)
-        {
-            IEnumerable<CharacteristicGroup> characteristicGroup = table.CreateSet<CharacteristicGroup>();
-            this.fixture.DataContext.CharacteristicGroups.AddRange(characteristicGroup);
-            this.fixture.DataContext.SaveChanges();
-            this.scenarioContext.Set(characteristicGroup, "CharacteristicGroup");
         }
 
         [When(@"User retrieves characteristics for given country and defined property type")]
@@ -72,14 +55,16 @@
             this.ReciveCharacteristicsGroup(countryId, propertyTypeId);
         }
 
-        [When(@"User try to retrieves characteristics for (.*) country and (.*) property type")]
-        public void WhenUserTryToRetrieveCharacteristicsGroupForCountryAndPropertyType(string countryCodeId, string propertyTypeId)
+        [When(@"User tries to retrieves characteristics for (.*) country and (.*) property type")]
+        public void RetrieveCharacteristicsGroupForCountryAndPropertyType(object country, string propertyTypeId)
         {
-            propertyTypeId = propertyTypeId.Equals("proper")
+            propertyTypeId = propertyTypeId.Equals("valid")
                 ? this.scenarioContext.Get<Guid>("PropertyTypeId").ToString()
                 : propertyTypeId;
 
-            this.ReciveCharacteristicsGroup(countryCodeId, propertyTypeId);
+            object countryId = country.Equals("valid") ? this.scenarioContext.Get<Guid>("CountryId") : country;
+
+            this.ReciveCharacteristicsGroup(countryId, propertyTypeId);
         }
 
         private void ReciveCharacteristicsGroup(object countryId, object propertyType)

@@ -13,9 +13,11 @@
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
+    using KnightFrank.Antares.Domain.Common.BuissnessValidators;
     using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Antares.Domain.RequirementNote.CommandHandlers;
     using KnightFrank.Antares.Domain.RequirementNote.Commands;
+    using KnightFrank.Antares.Domain.Validators;
 
     using Moq;
 
@@ -62,20 +64,20 @@
         [Theory]
         [AutoMoqData]
         public void Given_CommandHasInvalidRequirement_When_Handling_Then_ShouldThrowDomainValidatorException(
-            [Frozen] Mock<IDomainValidator<CreateRequirementNoteCommand>> domainValidator,
+            [Frozen] Mock<IEntityValidator> entityValidator,
             CreateRequirementNoteCommandHandler handler,
             CreateRequirementNoteCommand cmd)
         {
             // Arrange
-            ICollection<ValidationFailure> validationFailures = new List<ValidationFailure> { new ValidationFailure(nameof(cmd.RequirementId), "Error") };
-
-            domainValidator.Setup(v => v.Validate(It.IsAny<CreateRequirementNoteCommand>()))
-                           .Returns(new ValidationResult(validationFailures));
+            var id = new Guid();
+            cmd.RequirementId = id;
+            BusinessValidationMessage validationMessage= BusinessValidationMessage.CreateEntityNotExistMessage("Requirement", id);
+            var exception = new BusinessValidationException(validationMessage);
+            entityValidator.Setup(v => v.ThrowExceptionIfNotExist<Requirement>(id)).Throws(exception);
 
             // Act & Assert
-            Assert.Throws<DomainValidationException>(() => { handler.Handle(cmd); });
-            Assert.Throws<DomainValidationException>(() => handler.Handle(cmd)).Errors.ShouldBeEquivalentTo(validationFailures);
-
+            Assert.Throws<BusinessValidationException>(() => { handler.Handle(cmd); });
+            Assert.Throws<BusinessValidationException>(() => handler.Handle(cmd)).ErrorCode.ShouldBeEquivalentTo("Requirement_"+BusinessValidationMessage.EntityNotExistErrorMessgeKey);
 
         }
     }

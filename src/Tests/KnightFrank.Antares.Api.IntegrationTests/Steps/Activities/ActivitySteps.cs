@@ -42,7 +42,7 @@
         {
             Guid activityStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["PreAppraisal"];
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
-            Guid activityTypeId = this.scenarioContext.Get<Guid>("ActivityTypeId");
+            var activityTypeId = this.scenarioContext.Get<Guid>("ActivityTypeId");
 
             var activity = new Activity
             {
@@ -67,8 +67,8 @@
 
             Guid activityStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["PreAppraisal"];
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
-            Guid activityTypeId = this.scenarioContext.Get<Guid>("ActivityTypeId");
-            
+            var activityTypeId = this.scenarioContext.Get<Guid>("ActivityTypeId");
+
             List<Guid> vendors =
                 this.fixture.DataContext.Ownerships.Where(x => x.PropertyId.Equals(propertyId) && x.SellDate == null)
                     .SelectMany(x => x.Contacts).Select(c => c.Id)
@@ -177,7 +177,10 @@
             Activity actualActivity = this.fixture.DataContext.Activities.Single(x => x.Id.Equals(activity.Id));
 
             actualActivity.ShouldBeEquivalentTo(activity, options => options
-                .Excluding(a => a.ActivityStatus).Excluding(a => a.Contacts).Excluding(a => a.Property).Excluding(a => a.ActivityType));
+                .Excluding(a => a.ActivityStatus)
+                .Excluding(a => a.Contacts)
+                .Excluding(a => a.Property)
+                .Excluding(a => a.ActivityType));
         }
 
         private void GetActivityResponse(string activityId)

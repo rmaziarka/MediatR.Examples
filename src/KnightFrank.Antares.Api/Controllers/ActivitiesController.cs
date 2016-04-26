@@ -14,7 +14,7 @@
     using MediatR;
 
     /// <summary>
-    ///     Controller class for contacts
+    ///     Controller class for activities
     /// </summary>
     [RoutePrefix("api/activities")]
     public class ActivitiesController : ApiController
@@ -22,7 +22,7 @@
         private readonly IMediator mediator;
 
         /// <summary>
-        ///     Contacts controller constructor
+        ///     Activities controller constructor
         /// </summary>
         /// <param name="mediator">Mediator instance.</param>
         public ActivitiesController(IMediator mediator)
@@ -60,6 +60,17 @@
             }
 
             return activity;
+        }
+
+        /// <summary>
+        ///     Gets all activities list
+        /// </summary>
+        /// <returns>Activity entity collection</returns>
+        [HttpGet]
+        [Route("")]
+        public IEnumerable<ActivitiesQueryResult> GetActivities()
+        {
+            return this.mediator.Send(new ActivitiesQuery());
         }
 
         /// <summary>

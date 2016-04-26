@@ -13,6 +13,7 @@
     using KnightFrank.Antares.Dal.Model.Attribute;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.Property.Characteristics;
     using KnightFrank.Antares.Dal.Model.Resource;
     using KnightFrank.Antares.Domain.Property.Commands;
 
@@ -39,7 +40,7 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"Property does not exist in DB")]
+        [Given(@"Property does not exist in database")]
         public void GivenPropertyDoesNotExistsInDataBase()
         {
             this.scenarioContext.Set(Guid.NewGuid(), "AddedPropertyId");
@@ -75,7 +76,6 @@
         }
 
         [Given(@"User gets (.*) address form for (.*) and country details")]
-        [When(@"User gets (.*) address form for (.*) and country details")]
         public void GetCountryAddressData(string countryCode, string enumType)
         {
             Country country = this.fixture.DataContext.Countries.SingleOrDefault(x => x.IsoCode == countryCode);
@@ -98,6 +98,10 @@
             var address = table.CreateInstance<Address>();
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
             var attributeValues = this.scenarioContext.Get<AttributeValues>("AttributeValues");
+            var createOrUpdatePropertyCharacteristic =
+                this.scenarioContext.Get<List<CreateOrUpdatePropertyCharacteristic>>("PropertyCharacteristics");
+
+            List<PropertyCharacteristic> propertyCharacteristic = createOrUpdatePropertyCharacteristic.Select(prop => new PropertyCharacteristic { CharacteristicId = prop.CharacteristicId, Text = prop.Text }).ToList();
 
             Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
 
@@ -109,7 +113,8 @@
                 Address = address,
                 PropertyTypeId = propertyTypeId,
                 DivisionId = divisionId,
-                AttributeValues = attributeValues
+                AttributeValues = attributeValues,
+                PropertyCharacteristics = propertyCharacteristic
             };
 
             this.fixture.DataContext.Properties.Add(property);
@@ -182,11 +187,35 @@
             }
 
             this.scenarioContext.Set(
-                list.Select(id => new CreateOrUpdatePropertyCharacteristic { CharacteristicId = id, Text = string.Empty }).ToList(),
+                list.Select(
+                    id =>
+                        new CreateOrUpdatePropertyCharacteristic
+                        {
+                            CharacteristicId = id,
+                            Text = StringExtension.GenerateMaxAlphanumericString(50)
+                        }).ToList(),
                 "PropertyCharacteristics");
         }
 
-        [When(@"Users updates property with defined address for (.*) id and (.*) division by Api")]
+        [Given(@"Followed property characteristics are chosen")]
+        public void GivenFollowedPropertyCharacteristicsAreChosen(Table table)
+        {
+            var characteristicList = new List<CreateOrUpdatePropertyCharacteristic>();
+            var propertyCharacteristic = table.CreateInstance<Characteristic>();
+
+            Characteristic characteristic =
+                    this.fixture.DataContext.Characteristics.SingleOrDefault(x => x.Code == propertyCharacteristic.Code);
+
+            characteristicList.Add(new CreateOrUpdatePropertyCharacteristic
+            {
+                CharacteristicId = characteristic?.Id ?? new Guid(),
+                Text = StringExtension.GenerateMaxAlphanumericString(50)
+            });
+
+            this.scenarioContext.Set(characteristicList, "PropertyCharacteristics");
+        }
+
+        [When(@"User updates property with defined address for (.*) id and (.*) division by Api")]
         public void WhenUsersUpdatesProperty(string id, string divisionCode)
         {
             string requestUrl = $"{ApiUrl}";
@@ -238,7 +267,6 @@
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, property);
             this.scenarioContext.SetHttpResponseMessage(response);
-            string abc = this.scenarioContext.GetResponseContent();
         }
 
         [When(@"User retrieves property details")]
@@ -251,7 +279,7 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [When(@"User retrieves attributes for given property type and country code")]
+        [When(@"User retrieves attributes for given property type id and country id")]
         public void GetAttributesForPropertyAndCountry()
         {
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
@@ -276,7 +304,7 @@
                 .Excluding(x => x.PropertyCharacteristics));
 
             updatedProperty.PropertyCharacteristics.Should()
-                           .Equal(actualProperty.PropertyCharacteristics,
+                           .Equal(actualProperty?.PropertyCharacteristics,
                                (c1, c2) =>
                                    c1.CharacteristicId == c2.CharacteristicId &&
                                    c1.PropertyId == c2.PropertyId &&
@@ -288,7 +316,7 @@
         public void ThenTheResultsShouldBeSameAsCreated()
         {
             var expectedProperty = JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent());
-            Property actualProperty = this.fixture.DataContext.Properties.Single(x => x.Id.Equals(expectedProperty.Id));
+            Property actualProperty = this.fixture.DataContext.Properties.SingleOrDefault(x => x.Id.Equals(expectedProperty.Id));
 
             actualProperty.ShouldBeEquivalentTo(expectedProperty, options => options
                 .Excluding(x => x.Activities)
@@ -300,12 +328,12 @@
                 .Excluding(x => x.PropertyCharacteristics));
 
             expectedProperty.PropertyCharacteristics.Should()
-                           .Equal(actualProperty.PropertyCharacteristics,
-                               (c1, c2) =>
-                                   c1.CharacteristicId == c2.CharacteristicId &&
-                                   c1.PropertyId == c2.PropertyId &&
-                                   c1.Text == c2.Text &&
-                                   c1.Id == c2.Id);
+                            .Equal(actualProperty?.PropertyCharacteristics,
+                                (c1, c2) =>
+                                    c1.CharacteristicId == c2.CharacteristicId &&
+                                    c1.PropertyId == c2.PropertyId &&
+                                    c1.Text == c2.Text &&
+                                    c1.Id == c2.Id);
         }
 
         [Then(@"Characteristics list should be the same as in database")]
@@ -317,14 +345,14 @@
             List<PropertyCharacteristic> actualCharacteristics =
                 this.fixture.DataContext.Properties.Single(x => x.Id.Equals(propertyTypeId)).PropertyCharacteristics.ToList();
 
-            for (var i = 0; i < actualCharacteristics.Count; i++)
-            {
-                actualCharacteristics[i].CharacteristicId.ShouldBeEquivalentTo(expectedCharacteristics[i].CharacteristicId);
-                actualCharacteristics[i].PropertyId.ShouldBeEquivalentTo(expectedCharacteristics[i].PropertyId);
-                actualCharacteristics[i].Text.ShouldBeEquivalentTo(expectedCharacteristics[i].Text);
-                actualCharacteristics[i].Id.ShouldBeEquivalentTo(expectedCharacteristics[i].Id);
+            actualCharacteristics.Should()
+                                 .Equal(expectedCharacteristics,
+                                     (c1, c2) =>
+                                         c1.CharacteristicId == c2.CharacteristicId &&
+                                         c1.PropertyId == c2.PropertyId &&
+                                         c1.Text == c2.Text &&
+                                         c1.Id == c2.Id);
             }
-        }
 
         internal class RequiredCharacteristics
         {

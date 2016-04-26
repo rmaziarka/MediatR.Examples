@@ -93,7 +93,7 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_UpdatePropertyCommand_When_AddingPropertyCharacterictic_Then_ShouldBeMarkedAsDeleted(
+        public void Given_UpdatePropertyCommand_When_AddingPropertyCharacterictic_Then_ShouldBeSaved(
            UpdatePropertyCommand command,
            CreateOrUpdatePropertyCharacteristic propertyCharacteristicToAdd,
            [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
@@ -116,7 +116,7 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_UpdatePropertyCommand_When_UpdatingPropertyCharacterictic_Then_ShouldBeMarkedAsDeleted(
+        public void Given_UpdatePropertyCommand_When_UpdatingPropertyCharacterictic_Then_ShouldBeUpdated(
            UpdatePropertyCommand command,
            [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
            Property property,

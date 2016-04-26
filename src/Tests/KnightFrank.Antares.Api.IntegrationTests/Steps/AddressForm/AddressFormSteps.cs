@@ -34,7 +34,7 @@
 
         private AddressForm AddressForm { get; set; }
 
-        [Given(@"Country code (.*) is present in DB")]
+        [Given(@"Country code (.*) is present in database")]
         public void GivenCountryCodeIsPresentInDb(string countryCode)
         {
             var country = new Country { IsoCode = countryCode };
@@ -60,7 +60,7 @@
             this.fixture.DataContext.SaveChanges();
         }
 
-        [Given(@"There exists AddressForm for (.*) EnumTypeItem")]
+        [Given(@"AddressForm exists for (.*) EnumTypeItem")]
         public void GivenThereExistsAddressFormForPropertyEnumTypeItem(string enumTypeItemCode)
         {
             EnumTypeItem enumTypeItem = this.fixture.DataContext.EnumTypeItems.FirstOrDefault(x => x.Code == enumTypeItemCode);

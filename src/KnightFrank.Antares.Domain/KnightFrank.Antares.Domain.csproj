@@ -82,12 +82,15 @@
     <Compile Include="Activity\Commands\UpdateActivityCommand.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommandProfile.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommandValidator.cs" />
+    <Compile Include="Activity\Queries\ActivitiesQuery.cs" />
     <Compile Include="Activity\Queries\ActivityQuery.cs" />
     <Compile Include="Activity\Queries\ActivityTypeQueryValidator.cs" />
     <Compile Include="Activity\Queries\ActivityQueryValidator.cs" />
     <Compile Include="Activity\Queries\ActivityTypeQuery.cs" />
+    <Compile Include="Activity\QueryHandlers\ActivitiesQueryHandler.cs" />
     <Compile Include="Activity\QueryHandlers\ActivityQueryHandler.cs" />
     <Compile Include="Activity\QueryHandlers\ActivityTypeQueryHandler.cs" />
+    <Compile Include="Activity\QueryResults\ActivitiesQueryResult.cs" />
     <Compile Include="Activity\QueryResults\ActivityTypeQueryResult.cs" />
     <Compile Include="AddressFieldDefinition\QueryResults\AddressFieldDefinitionResult.cs" />
     <Compile Include="AddressForm\Queries\AddressFormByIdQuery.cs" />
@@ -162,6 +165,11 @@
     <Compile Include="Common\Range.cs" />
     <Compile Include="Ownership\QueryHandlers\OwnershipByIdQueryHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\BusinessErrorMessages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BusinessErrorMessages.resx</DependentUpon>
+    </Compile>
     <Compile Include="Property\CommandHandlers\CreatePropertyCommandHandler.cs" />
     <Compile Include="Property\CommandHandlers\UpdatePropertyCommandHandler.cs" />
     <Compile Include="Property\Commands\PropertyCharacteristicConfigurationDomainValidator.cs" />
@@ -194,6 +202,7 @@
     <Compile Include="Property\QueryResults\PropertyTypeQueryResult.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQuerySingleResult.cs" />
     <Compile Include="RequirementNote\CommandHandlers\CreateRequirementNoteCommandHandler.cs" />
+    <Compile Include="Common\BuissnessValidators\IEntityValidator.cs" />
     <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandDomainValidator.cs" />
     <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandValidator.cs" />
     <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandProfile.cs" />
@@ -216,6 +225,9 @@
     <Compile Include="Resource\Queries\ResourceLocalisedQuery.cs" />
     <Compile Include="Resource\QueryHandlers\ResourceLocalisedQueryHandler.cs" />
     <Compile Include="User\QueryResults\UserDataResult.cs" />
+    <Compile Include="Common\BuissnessValidators\BusinessValidationMessage.cs" />
+    <Compile Include="Common\BuissnessValidators\BusinessValidationException.cs" />
+    <Compile Include="Common\BuissnessValidators\EntityValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj">
@@ -227,7 +239,12 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\BusinessErrorMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>BusinessErrorMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
