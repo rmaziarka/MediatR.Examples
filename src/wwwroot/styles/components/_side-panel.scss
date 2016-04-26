@@ -14,6 +14,17 @@
   @media (min-width: $screen-sm-min) {
     width: 350px;
   }
+
+  &::after {
+    @extend %fade;
+    z-index: 1060;
+  }
+
+  &.side-panel-loading {
+    &::after {
+      @extend %fade-in;
+    }
+  }
 }
 
 .side-panel-content {

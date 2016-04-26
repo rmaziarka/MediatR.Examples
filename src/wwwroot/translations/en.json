@@ -210,5 +210,12 @@
     "NOTES": "Notes",
     "ADDNOTE": "Add note",
     "RECENTNOTES": "Recent notes"
+  },
+  "ATTACHMENT": {
+    "LIST": {
+      "ATTACHMENTS": "Attachments"
+    },
+    "ATTACHFILE": "Attach file",
+    "ATTACHMENTPREVIEW": "Attachment preview"
   }
 }
