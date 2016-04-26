@@ -3,14 +3,13 @@
     using System;
     using System.Linq;
 
-    using FluentValidation.Results;
-
     using KnightFrank.Antares.Domain.RequirementNote.Commands;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Domain.Common;
-    using KnightFrank.Antares.Domain.Common.Exceptions;
+    using KnightFrank.Antares.Domain.Common.BuissnessValidators;
+    using KnightFrank.Antares.Domain.Validators;
 
     using MediatR;
 
@@ -19,21 +18,19 @@
         private readonly IGenericRepository<RequirementNote> requirementNoteRepository;
         private readonly IGenericRepository<User> userRepository;
         private readonly IDomainValidator<CreateRequirementNoteCommand> domainValidator;
+        private readonly IEntityValidator entityValidator;
 
-        public CreateRequirementNoteCommandHandler(IGenericRepository<RequirementNote> requirementNoteRepository, IGenericRepository<User> userRepository, IDomainValidator<CreateRequirementNoteCommand> domainValidator)
+        public CreateRequirementNoteCommandHandler(IGenericRepository<RequirementNote> requirementNoteRepository, IGenericRepository<User> userRepository, IDomainValidator<CreateRequirementNoteCommand> domainValidator, IEntityValidator entityValidator)
         {
             this.requirementNoteRepository = requirementNoteRepository;
             this.userRepository = userRepository;
             this.domainValidator = domainValidator;
+            this.entityValidator = entityValidator;
         }
 
         public Guid Handle(CreateRequirementNoteCommand message)
         {
-            ValidationResult validationResult = this.domainValidator.Validate(message);
-            if (!validationResult.IsValid)
-            {
-                throw new DomainValidationException(validationResult.Errors);
-            }
+            this.entityValidator.ThrowExceptionIfNotExist<Requirement>(message.RequirementId);
 
             var requirementNote = AutoMapper.Mapper.Map<RequirementNote>(message);
 
