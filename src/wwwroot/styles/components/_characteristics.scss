@@ -21,3 +21,21 @@
     outline: none;
   }
 }
+
+// Characteristics View
+
+.characteristics {
+  > li {
+    margin-bottom: 5px;
+
+    .name,
+    .comment {
+      display: block;
+    }
+
+    .comment {
+      color: $gray-light;
+      font-size: 12px;
+    }
+  }
+}
