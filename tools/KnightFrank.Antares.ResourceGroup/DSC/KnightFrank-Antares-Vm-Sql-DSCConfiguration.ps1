@@ -64,11 +64,22 @@ Node localhost
 		Ensure = "Present"
 	}
 	
-    Start-Sleep -s 60
+    Script WaitForMountingImage
+	{
+		TestScript = { 
+			$false
+		}
+		GetScript = {@{Result = "WaitForMountingImage"}}
+		SetScript =
+		{
+            Get-PSDrive | Out-Null
+		}
+		DependsOn = "[xMountImage]MountSqlIso"
+	}
 
 	xSqlServerSetup InstallSql
 	{
-		DependsOn = "[xMountImage]MountSqlIso"
+		DependsOn = "[Script]WaitForMountingImage"
 		SetupCredential = $setupCredential
 		SourcePath = "s:\"
 		SourceFolder = ""
