@@ -20,6 +20,16 @@ h3,
   font-size: 22px;
 }
 
+h5,
+.h5 {
+  font-size: 12px;
+  font-weight: bold;
+  margin: {
+    top: 0;
+    bottom: 5px;
+  }
+}
+
 ul,
 ol {
   margin-bottom: 30px;
