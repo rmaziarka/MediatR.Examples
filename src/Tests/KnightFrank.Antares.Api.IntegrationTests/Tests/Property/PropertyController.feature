@@ -158,7 +158,8 @@ Scenario: Get property
 		And User sets attributes for property in database
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
 			| 1           | 3           | 1             | 3             | 2            | 3            | 1000.1  | 3000.1  | 500.1       | 4000.1      | 1                   | 3                   |
-        And Property with Address and Residential division is in database
+        And Property characteristics are set for given property type
+		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
         And User creates contacts in database with following data
@@ -193,13 +194,12 @@ Scenario Outline: Try to create property with improper characteristic data
 			| MinBedrooms | MinArea | MinGuestRooms |
 			| 1           | 2       | 3             |
 		And Followed property characteristics are chosen
-		| Code   |
-		| <code> | 
+			| Code   |
+			| <code> | 
 	When User creates property with defined address and Residential division by Api
 	Then User should get <statusCode> http status code
 
 	Examples:
 	| code     | statusCode |
 	| Offices  | BadRequest | 
-	| invalid  | BadRequest | 
-	
+	| invalid  | BadRequest | 	

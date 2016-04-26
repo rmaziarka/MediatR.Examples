@@ -215,7 +215,7 @@
             this.scenarioContext.Set(characteristicList, "PropertyCharacteristics");
         }
 
-        [When(@"Users updates property with defined address for (.*) id and (.*) division by Api")]
+        [When(@"User updates property with defined address for (.*) id and (.*) division by Api")]
         public void WhenUsersUpdatesProperty(string id, string divisionCode)
         {
             string requestUrl = $"{ApiUrl}";
