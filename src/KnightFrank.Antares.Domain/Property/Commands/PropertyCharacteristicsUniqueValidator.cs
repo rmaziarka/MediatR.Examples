@@ -19,7 +19,7 @@
 
             return uniqueCharacteristicId == propertyCharacteristics.Count
                        ? null
-                       : new ValidationFailure(nameof(propertyCharacteristics), "Property characteristic are duplicated.");
+                       : new ValidationFailure(nameof(propertyCharacteristics), "Property characteristic are duplicated.") {ErrorCode = "propertyCharacteristics_duplicated" };
         }
     }
 }

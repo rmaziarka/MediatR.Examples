@@ -12,6 +12,7 @@ Scenario Outline: Create property
 		And User sets attributes for property in Api
 			| MinBedrooms   | MaxBedrooms   | MinReceptions   | MaxReceptions   | MinBathrooms   | MaxBathrooms   | MinArea   | MaxArea   | MinLandArea   | MaxLandArea   | MinCarParkingSpaces   | MaxCarParkingSpaces   | MinGuestRooms   | MaxGuestRooms   | MinFunctionRooms   | MaxFunctionRooms   |
 			| <MinBedrooms> | <MaxBedrooms> | <MinReceptions> | <MaxReceptions> | <MinBathrooms> | <MaxBathrooms> | <MinArea> | <MaxArea> | <MinLandArea> | <MaxLandArea> | <MinCarParkingSpaces> | <MaxCarParkingSpaces> | <MinGuestRooms> | <MaxGuestRooms> | <MinFunctionRooms> | <MaxFunctionRooms> |
+		And Property characteristics are set for given property type
 	When User creates property with defined address and <divisionCode> division by Api
 	Then User should get OK http status code
 		And The created Property is saved in database
@@ -38,6 +39,7 @@ Scenario Outline: Create property with invalid data
 			| PropertyName | PropertyNumber | Line2           | Line3 | Postcode   | City | County |
 			| updated abc  | 2              | 55 Baker Street |       | <postCode> |      |        |
         And User gets <propertyType> for PropertyType
+		And Property characteristics are set for given property type
 	When User creates property with defined address and <divisionCode> division by Api
 	Then User should get <statusCode> http status code
 
@@ -73,6 +75,7 @@ Scenario Outline: Update property
 		And User sets attributes for property in Api
 			| MinBedrooms    | MaxReceptions    | MaxArea    | MinGuestRooms    | MaxFunctionRooms    |
 			| <MinBedrooms2> | <MaxReceptions2> | <MaxArea2> | <MinGuestRooms2> | <MaxFunctionRooms2> |
+		And Property characteristics are set for given property type
 	When Users updates property with defined address for latest id and <divisionCode2> division by Api
 	Then User should get OK http status code
 		And The updated Property is saved in database
@@ -111,6 +114,7 @@ Scenario Outline: Update property with invalid data
 		And User sets attributes for property in Api
 			| MinBedrooms    | MaxReceptions    | MaxArea    | MinGuestRooms    | MaxFunctionRooms    |
 			| <MinBedrooms2> | <MaxReceptions2> | <MaxArea2> | <MinGuestRooms2> | <MaxFunctionRooms2> |
+		And Property characteristics are set for given property type
 	When Users updates property with defined address for <id> id and <divisionCode2> division by Api
 	Then User should get <statusCode> http status code
 

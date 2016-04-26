@@ -7,6 +7,8 @@
 
     public class UpdatePropertyCommand : IRequest<Guid>
     {
+        private IList<CreateOrUpdatePropertyCharacteristic> propertyCharacteristics;
+
         public Guid Id { get; set; }
 
         public CreateOrUpdatePropertyAddress Address { get; set; }
@@ -17,6 +19,10 @@
 
         public CreateOrUpdatePropertyAttributeValues AttributeValues { get; set; }
 
-        public IList<CreateOrUpdatePropertyCharacteristic> PropertyCharacteristics { get; set; }
+        public IList<CreateOrUpdatePropertyCharacteristic> PropertyCharacteristics 
+        {
+            get { return this.propertyCharacteristics = this.propertyCharacteristics ?? new List<CreateOrUpdatePropertyCharacteristic>(); }
+            set { this.propertyCharacteristics = value; }
+        }
     }
 }

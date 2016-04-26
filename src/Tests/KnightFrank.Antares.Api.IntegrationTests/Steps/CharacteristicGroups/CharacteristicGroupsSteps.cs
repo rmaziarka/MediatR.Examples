@@ -63,12 +63,13 @@
             this.scenarioContext.Set(characteristicGroup, "CharacteristicGroup");
         }
 
-        [When(@"User retrieves characteristics for (.*) country and defined property type")]
-        public void WhenUserRetrievesCharacteristicsGroupForCountryAndPropertyType(string country)
+        [When(@"User retrieves characteristics for given country and defined property type")]
+        public void WhenUserRetrievesCharacteristicsGroupForCountryAndPropertyType()
         {
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
+            var countryId = this.scenarioContext.Get<Guid>("CountryId");
 
-            this.ReciveCharacteristicsGroup(country, propertyTypeId);
+            this.ReciveCharacteristicsGroup(countryId, propertyTypeId);
         }
 
         [When(@"User try to retrieves characteristics for (.*) country and (.*) property type")]
@@ -81,9 +82,9 @@
             this.ReciveCharacteristicsGroup(countryCodeId, propertyTypeId);
         }
 
-        private void ReciveCharacteristicsGroup(object countryCode, object propertyType)
+        private void ReciveCharacteristicsGroup(object countryId, object propertyType)
         {
-            string requestUrl = $"{ApiUrl}?countryCode=" + countryCode + "&propertyTypeId=" + propertyType + "";
+            string requestUrl = $"{ApiUrl}?countryId=" + countryId + "&propertyTypeId=" + propertyType + "";
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
 
             this.scenarioContext.SetHttpResponseMessage(response);

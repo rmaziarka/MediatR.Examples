@@ -3,7 +3,7 @@
 module Antares {
     import CharacteristicListController = Common.Component.CharacteristicListController;
     import Business = Common.Models.Business;
-
+	
     describe('Given characteristic list controller', () => {
         var $scope: ng.IScope,
             $http: ng.IHttpBackendService,
@@ -123,5 +123,56 @@ module Antares {
                 expect(controller.characteristicGroups[2].id).toEqual(characteristicGroupsMock[2].characteristicGroupId);
             });
         });
-    });
+
+		describe('when clearHiddenCharacteristicsDataFromProperty is called', () =>{
+			var propertyMock: Business.Property = TestHelpers.PropertyGenerator.generate({
+				propertyTypeId : propertyTypes.House.id
+			});
+
+			var characteristicsMock: Array<Business.Characteristic> = [
+				TestHelpers.CharacteristicGroupItemGenerator.generate({}),
+				TestHelpers.CharacteristicGroupItemGenerator.generate({}),
+				TestHelpers.CharacteristicGroupItemGenerator.generate({})
+			];
+
+			propertyMock.propertyCharacteristicsMap[characteristicsMock[0].id] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId : characteristicsMock[0].id });
+			propertyMock.propertyCharacteristicsMap[characteristicsMock[1].id] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId : characteristicsMock[1].id });
+			propertyMock.propertyCharacteristicsMap['otherCharacteristicId'] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId : 'otherCharacteristicId' });
+			
+            var characteristicGroupsMock = [
+				TestHelpers.CharacteristicGroupUsageGenerator.generate({
+					characteristicGroupItems : characteristicsMock
+				})
+			];
+
+			beforeEach(inject((
+				$rootScope: ng.IRootScopeService,
+				// 'any' must be used instead of 'ng.IControllerService' because there is invalid typing for this service function,
+				// that sais that 3rd argument is bool, but in fact it is an object containing bindings for controller (for comonents and directives)
+				$controller: any,
+				$httpBackend: ng.IHttpBackendService) =>{
+
+				// init
+				$scope = $rootScope.$new();
+				$http = $httpBackend;
+
+				var bindings = { property : new Business.Property() };
+				controller = <CharacteristicListController>$controller('CharacteristicListController', {}, bindings);
+			}));
+
+			it('then property characteristics values not matching current characteristic groups definition should be cleared', () =>{
+                // arrange
+				controller.property = propertyMock;
+				controller.characteristicGroups = characteristicGroupsMock;
+
+                // act
+				controller.clearHiddenCharacteristicsDataFromProperty();
+                
+                // assert
+				expect(propertyMock.propertyCharacteristicsMap['otherCharacteristicId'].isSelected).toBeFalsy();
+				expect(propertyMock.propertyCharacteristicsMap['otherCharacteristicId'].text).toBe('');
+			});
+
+		});
+	});
 }

@@ -27,3 +27,25 @@ label,
   line-height: 1;
   padding: 11px 12px;
 }
+
+// File input
+
+.btn-file {
+  overflow: hidden;
+  position: relative;
+
+  input[type=file] {
+    background: transparent;
+    cursor: inherit;
+    display: block;
+    filter: alpha(opacity = 0);
+    font-size: 100px;
+    min-height: 100%;
+    min-width: 100%;
+    opacity: 0;
+    outline: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}

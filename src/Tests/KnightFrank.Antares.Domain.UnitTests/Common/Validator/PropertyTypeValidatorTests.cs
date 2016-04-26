@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.UnitTests.Property.Commands
+﻿namespace KnightFrank.Antares.Domain.UnitTests.Common.Validator
 {
     using System;
     using System.Linq.Expressions;
@@ -24,11 +24,11 @@
         [Theory]
         [AutoMoqData]
         public void Given_PropertyTypeIsCorrect_When_Validating_Then_NoValidationErrors(
+            Guid propertyTypeId,
             [Frozen] Mock<IGenericRepository<PropertyType>> propertyTypeRepository,
             PropertyTypeValidator validator)
         {
             // Arrange
-            Guid propertyTypeId = Guid.NewGuid();
             propertyTypeRepository.Setup(r => r.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(true);
 
             // Act
@@ -36,26 +36,28 @@
 
             // Asserts
             validationResult.IsValid.Should().BeTrue();
+            validationResult.Errors.Should().BeEmpty();
             propertyTypeRepository.Verify(r => r.Any(It.IsAny<Expression<Func<PropertyType, bool>>>()), Times.Once);
         }
 
         [Theory]
         [AutoMoqData]
         public void Given_PropertyTypeNotExist_When_Validating_Then_ValidationErrors(
+            Guid propertyTypeId,
             [Frozen] Mock<IGenericRepository<PropertyType>> propertyTypeRepository,
             PropertyTypeValidator validator)
         {
             // Arrange
-            Guid id = Guid.NewGuid();
             propertyTypeRepository.Setup(r => r.Any(It.IsAny<Expression<Func<PropertyType, bool>>>())).Returns(false);
             
             // Act
-            ValidationResult validationResult = validator.Validate(id);
+            ValidationResult validationResult = validator.Validate(propertyTypeId);
 
             // Asserts
             validationResult.IsValid.Should().BeFalse();
             validationResult.Errors.Should().HaveCount(1);
-            validationResult.Errors.Should().ContainSingle(p => p.ErrorCode == "propertytypeid_error");
+            validationResult.Errors.Should().Contain(e => e.PropertyName == nameof(propertyTypeId));
+            validationResult.Errors.Should().ContainSingle(p => p.ErrorCode == "propertytypeid_notexist");
             propertyTypeRepository.Verify(r => r.Any(It.IsAny<Expression<Func<PropertyType, bool>>>()), Times.Once);
         }
     }

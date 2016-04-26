@@ -8,6 +8,7 @@
     using FluentAssertions;
 
     using FluentValidation.Results;
+    using FluentValidation.TestHelper;
 
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Enum;
@@ -300,6 +301,13 @@
             // Assert
             Assert.False(validationResult.IsValid);
             Assert.Equal(1, validationResult.Errors.Count);
+        }
+
+        [Fact]
+        public void Given_PropertyCharacterictics_Then_PropertyCharacteristicsShouldBeValidated()
+        {
+            this.validator.ShouldHaveChildValidator(v => v.PropertyCharacteristics, typeof(PropertyCharacteristicsUniqueValidator));
+            this.validator.ShouldHaveChildValidator(v => v.PropertyCharacteristics, typeof(CreateOrUpdatePropertyCharacteristicValidator));
         }
 
         /// <summary>

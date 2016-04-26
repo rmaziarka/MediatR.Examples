@@ -3,29 +3,14 @@
 body {
 
   &::after {
-    background-color: $color-black-alpha;
-    bottom: 0;
-    content: '';
-    cursor: default;
-    height: 0;
-    left: 0;
-    opacity: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
-    width: 0;
-    z-index: 1040;
+    @extend %fade;
   }
 
   &.side-panel-open {
     overflow: hidden;
 
     &::after {
-      height: 100%;
-      opacity: 1;
-      transition: opacity 0.5s;
-      width: 100%;
+      @extend %fade-in;
     }
   }
 }
@@ -60,4 +45,10 @@ input[type="number"] {
 .page-header {
   margin: 20px 0;
   padding-bottom: 5px;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

@@ -4,7 +4,7 @@
 Scenario: Get charactersitics
 	Given I have House property type id
 		And I have GB country id
-	When User retrieves characteristics for GB country and defined property type
+	When User retrieves characteristics for given country and defined property type
 	Then User should get OK http status code
 
 
@@ -16,7 +16,7 @@ Scenario Outline: Check error codes for get charactersitics method
 	Examples: 
 	| country | propertyType | statusCode |
 	|         | proper       | BadRequest |
-	| bla     | proper       | OK         |
+	| bla     | proper       | BadRequest |
 	| GB      |              | BadRequest |
 	| GB      | bla          | BadRequest |
 
