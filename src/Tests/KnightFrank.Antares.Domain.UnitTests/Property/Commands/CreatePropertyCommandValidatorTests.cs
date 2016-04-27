@@ -288,13 +288,6 @@
             Assert.Equal(1, validationResult.Errors.Count);
         }
 
-        [Fact]
-        public void Given_PropertyCharacterictics_Then_PropertyCharacteristicsShouldBeValidated()
-        {
-            this.validator.ShouldHaveChildValidator(v => v.PropertyCharacteristics, typeof(PropertyCharacteristicsUniqueValidator));
-            this.validator.ShouldHaveChildValidator(v => v.PropertyCharacteristics, typeof(CreateOrUpdatePropertyCharacteristicValidator));
-        }
-
         private void InitPropertyAttributeFormWithAttributes(IEnumerable<string> attributeNames)
         {
             var propertyAttributeForm = new PropertyAttributeForm()

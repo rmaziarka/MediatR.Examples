@@ -54,8 +54,11 @@
                     .Must(this.BeAllowedForPropertyType).WithMessage("Property contains attributes incorrect for given property type.");
             });
 
-            this.RuleFor(x => x.PropertyCharacteristics).SetValidator(new PropertyCharacteristicsUniqueValidator());
-            this.RuleFor(x => x.PropertyCharacteristics).SetCollectionValidator(new CreateOrUpdatePropertyCharacteristicValidator());
+            this.When(x => x.PropertyCharacteristics != null,() =>
+            {
+                this.RuleFor(x => x.PropertyCharacteristics).SetValidator(new PropertyCharacteristicsUniqueValidator());
+                this.RuleFor(x => x.PropertyCharacteristics).SetCollectionValidator(new CreateOrUpdatePropertyCharacteristicValidator());
+            });
 
             this.Custom(this.DivisionExists);
             this.Custom(this.PropertyTypeIsValid);

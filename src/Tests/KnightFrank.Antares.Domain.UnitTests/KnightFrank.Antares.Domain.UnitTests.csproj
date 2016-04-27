@@ -129,6 +129,7 @@
     <Compile Include="Contact\QueryHandlers\ContactQueryHandlerTests.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQueryDomainValidatorTests.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQueryValidatorTests.cs" />
+    <Compile Include="Enum\QueryHandlers\EnumItemQueryHandlerTests.cs" />
     <Compile Include="Enum\QueryHandlers\EnumLocalisedQueryHandlerTests.cs" />
     <Compile Include="FixtureExtension\AddressFormFixtureExtensions.cs" />
     <Compile Include="AddressForm\QueryHandlers\AddressFormQueryHandlerTests.cs" />

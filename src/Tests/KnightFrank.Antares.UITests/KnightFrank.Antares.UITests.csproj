@@ -101,6 +101,7 @@
     <Compile Include="Extensions\DriverExtensions.cs" />
     <Compile Include="Pages\AddressTemplatePage.cs" />
     <Compile Include="Pages\CommonPage.cs" />
+    <Compile Include="Pages\Panels\ActivityListPage.cs" />
     <Compile Include="Pages\Panels\ContactsListPage.cs" />
     <Compile Include="Pages\Panels\CreateActivityPage.cs" />
     <Compile Include="Pages\CreateCompanyPage.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Pages\Panels\NotesPage.cs" />
     <Compile Include="Pages\Panels\OwnershipDetailsPage.cs" />
     <Compile Include="Pages\Panels\PropertyPreviewPage.cs" />
+    <Compile Include="Pages\Panels\ViewingDetailsPage.cs" />
     <Compile Include="Pages\ViewActivityPage.cs" />
     <Compile Include="Pages\ViewRequirementPage.cs" />
     <Compile Include="Pages\Panels\ActivityPreviewPage.cs" />

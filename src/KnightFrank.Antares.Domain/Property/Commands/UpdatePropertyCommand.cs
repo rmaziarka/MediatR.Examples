@@ -19,10 +19,6 @@
 
         public CreateOrUpdatePropertyAttributeValues AttributeValues { get; set; }
 
-        public IList<CreateOrUpdatePropertyCharacteristic> PropertyCharacteristics 
-        {
-            get { return this.propertyCharacteristics = this.propertyCharacteristics ?? new List<CreateOrUpdatePropertyCharacteristic>(); }
-            set { this.propertyCharacteristics = value; }
-        }
+        public IList<CreateOrUpdatePropertyCharacteristic> PropertyCharacteristics { get; set; }
     }
 }
