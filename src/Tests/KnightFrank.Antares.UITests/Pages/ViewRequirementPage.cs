@@ -21,12 +21,19 @@
         private readonly ElementLocator propertyRequirementsDetailsDescription = new ElementLocator(Locator.XPath, "//*[contains(@translate, 'DESCRIPTION')]/../p");
         private readonly ElementLocator requirementApplicants = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'contacts'] div");
         private readonly ElementLocator requirementDate = new ElementLocator(Locator.CssSelector, "span[translate *= 'CREATEDDATE'] ~ span");
+        private readonly ElementLocator createViewing = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator viewingDetailsLink = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator viewingDetails = new ElementLocator(Locator.Id, string.Empty);
         
         public ViewRequirementPage(DriverContext driverContext) : base(driverContext)
         {
         }
 
         public NotesPage Notes => new NotesPage(this.DriverContext);
+
+        public ActivityListPage ActivityList => new ActivityListPage(this.DriverContext);
+
+        public ViewingDetailsPage ViewingDetails => new ViewingDetailsPage(this.DriverContext);
 
         public ViewRequirementPage WaitForDetailsToLoad()
         {
@@ -80,6 +87,23 @@
         {
             this.Driver.WaitForAngularToFinish();
             return this.Driver.GetElement(this.notesNumber).Text;
+        }
+
+        public ViewRequirementPage CreateViewing()
+        {
+            this.Driver.GetElement(this.createViewing).Click();
+            return this;
+        }
+
+        public ViewRequirementPage OpenViewingDetails()
+        {
+            this.Driver.GetElement(this.viewingDetailsLink).Click();
+            return this;
+        }
+
+        public string GetViewingDetails()
+        {
+            return this.Driver.GetElement(this.viewingDetails).Text;
         }
     }
 }
