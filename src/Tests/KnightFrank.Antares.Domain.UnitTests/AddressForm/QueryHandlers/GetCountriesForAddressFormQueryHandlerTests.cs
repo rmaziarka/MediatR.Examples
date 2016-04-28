@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.AddressForm.QueryHandlers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -73,6 +74,12 @@
             Country country,
             Country otherCountry)
         {
+            country.Id = Guid.NewGuid();
+            otherCountry.Id = Guid.NewGuid();
+
+            country.CountryLocaliseds = new List<CountryLocalised>();
+            otherCountry.CountryLocaliseds = new List<CountryLocalised>();
+
             var query = this.fixture.BuildGetCountriesForAddressFormQuery(entityTypeCode, localeIsoCode);
             EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
 
@@ -107,6 +114,9 @@
             string localeValue,
             Country country)
         {
+            country.Id = Guid.NewGuid();
+            country.CountryLocaliseds = new List<CountryLocalised>();
+
             var query = this.fixture.BuildGetCountriesForAddressFormQuery(entityTypeCode, localeIsoCode);
             EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
 
@@ -141,6 +151,12 @@
             Country country,
             Country otherCountry)
         {
+            country.Id = Guid.NewGuid();
+            otherCountry.Id = Guid.NewGuid();
+
+            country.CountryLocaliseds = new List<CountryLocalised>();
+            otherCountry.CountryLocaliseds = new List<CountryLocalised>();
+
             var query = this.fixture.BuildGetCountriesForAddressFormQuery(entityTypeCode, localeIsoCode);
             EnumType enumType = this.fixture.BuildEnumType(enumTypeCode);
 
@@ -182,6 +198,9 @@
             string localeValue,
             Country country)
         {
+            country.Id = Guid.NewGuid();
+            country.CountryLocaliseds = new List<CountryLocalised>();
+
             var query = this.fixture.BuildGetCountriesForAddressFormQuery(entityTypeCode, localeIsoCode);
             EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
 
@@ -214,6 +233,9 @@
             string otherLocaleIsoCode,
             Country country)
         {
+            country.Id = Guid.NewGuid();
+            country.CountryLocaliseds = new List<CountryLocalised>();
+            
             var query = this.fixture.BuildGetCountriesForAddressFormQuery(entityTypeCode, localeIsoCode);
             EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
 
