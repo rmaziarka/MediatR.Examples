@@ -2,11 +2,13 @@
 {
     using System;
     using System.Data.Entity;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Linq.Expressions;
 
     using KnightFrank.Antares.Dal.Model;
 
+    [ExcludeFromCodeCoverage]
     public class ReadGenericRepository<T> : IReadGenericRepository<T>
         where T : BaseEntity
     {
