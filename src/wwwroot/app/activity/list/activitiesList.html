@@ -4,7 +4,7 @@
 <div class="panel panel-default" ng-repeat="activity in vm.activities">
     <div class="panel-body">
         <label>
-            <input type="radio" name="activity" ng-model="vm.selectedActivity" value="{{::activity.id}}"/>{{:: activity.propertyName + ' ' + activity.propertyNumber + ' ' + activity.line2 }}
+            <input type="radio" name="activity" ng-model="vm.selectedActivity" value="{{::activity.id}}"/>{{:: ' ' +activity.propertyName + ' ' + activity.propertyNumber + ' ' + activity.line2 }}
         </label>
     </div>
 </div>

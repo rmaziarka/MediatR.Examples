@@ -22,6 +22,9 @@
 
         public IEnumerable<ActivitiesQueryResult> Handle(ActivitiesQuery message)
         {
+            // TODO will be replaced 
+            // at the moment we get all activities and make dto in order to show data on adding viewing side panel
+            // after implementing azure search it will be replaced/removed
             return this.activityRepository.Get().Include(a => a.Property.Address).Select(x => new ActivitiesQueryResult
             {
                 Id = x.Id,

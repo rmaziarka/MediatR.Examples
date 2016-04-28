@@ -3,23 +3,7 @@
 module Antares.Requirement.Add {
     import Business = Common.Models.Business;
     
-    export class RequirementAddController {
-        componentIds: any = {
-            contactListId: 'addRequirement:contactListComponent',
-            contactSidePanelId: 'addRequirement:contactSidePanelComponent',
-            activitiesListId: 'addRequirement:activitiesListComponent',
-            configureViewingsPanelId: 'addRequirement:configureViewingsaSidePanelComponent',
-            viewingDetailsId: 'addRequirement:viewingDetailsComponent',
-            viewingDetailsSidePanelId: 'addRequirement:viewingDetailsSidePanelComponent'
-        }
-        components: any = {
-            contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
-            contactSidePanel: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
-            activitiesList: () => { return this.componentRegistry.get(this.componentIds.activitiesListId); },
-            configureViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.configureViewingsSidePanelId); },
-            viewingDetails: () => { return this.componentRegistry.get(this.componentIds.viewingDetailsId); },
-            viewingDetailsSidePanel: () => { return this.componentRegistry.get(this.componentIds.viewingDetailsSidePanelId); }
-        }
+    export class RequirementAddController extends Core.WithPanelsBaseController {
         requirementResource: any;
         requirement: Business.Requirement = new Business.Requirement();
         loadingContacts: boolean = false;
@@ -30,25 +14,29 @@ module Antares.Requirement.Add {
 
         constructor(
             private dataAccessService: Services.DataAccessService,
-            private componentRegistry: Core.Service.ComponentRegistry,
+            componentRegistry: Core.Service.ComponentRegistry,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService) {
             
+            super(componentRegistry, $scope);
             this.requirementResource = dataAccessService.getRequirementResource();
 
             $scope.$on('$destroy', () => {
                 this.componentRegistry.deregister(this.componentIds.contactListId);
                 this.componentRegistry.deregister(this.componentIds.contactSidePanelId);
+                this.componentRegistry.deregister(this.componentIds.activitiesListId);
+                this.componentRegistry.deregister(this.componentIds.viewingDetailsId);
+                this.componentRegistry.deregister(this.componentIds.configureViewingsPanelId);
             });
         }
 
         updateContacts() {
             this.requirement.contacts = this.components.contactList().getSelected();
-            this.components.contactSidePanel().hide();
+            this.components.panels.contactSidePanel().hide();
         }
 
         cancelUpdateContacts() {
-            this.components.contactSidePanel().hide();
+            this.components.panels.contactSidePanel().hide();
         }
 
         showContactList = () => {
@@ -64,7 +52,7 @@ module Antares.Requirement.Add {
                 })
                 .finally(() => { this.loadingContacts = false; });
 
-            this.components.contactSidePanel().show();
+            this.showPanel(this.components.panels.contactSidePanel);
         }
 
         showActivitiesPanel = () => {
@@ -73,7 +61,11 @@ module Antares.Requirement.Add {
                 .loadActivities()
                 .finally(() => { this.loadingActivities = false; });
 
-            this.components.configureViewingsSidePanel().show();
+            this.showPanel(this.components.panels.configureViewingsSidePanel);
+        }
+
+        cancelConfigureViewings() {
+            this.components.panels.configureViewingsSidePanel().hide();
         }
 
         save() {
@@ -88,6 +80,28 @@ module Antares.Requirement.Add {
                 .finally(() => {
                     this.isSaving = false;
                 });
+        }
+
+        defineComponentIds() {
+            this.componentIds = {
+                contactListId: 'addRequirement:contactListComponent',
+                contactSidePanelId: 'addRequirement:contactSidePanelComponent',
+                activitiesListId: 'addRequirement:activitiesListComponent',
+                viewingDetailsId: 'addRequirement:viewingDetailsComponent',
+                configureViewingsPanelId: 'addRequirement:configureViewingsSidePanelComponent',
+            }
+        }
+
+        defineComponents() {
+            this.components = {
+                contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
+                activitiesList: () => { return this.componentRegistry.get(this.componentIds.activitiesListId); },
+                viewingDetails: () => { return this.componentRegistry.get(this.componentIds.viewingDetailsId); },
+                panels: {
+                    contactSidePanel: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
+                    configureViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.configureViewingsSidePanelId); }
+                }
+            };
         }
     }
     angular.module('app').controller('requirementAddController', RequirementAddController);

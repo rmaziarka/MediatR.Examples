@@ -63,14 +63,14 @@
         }
 
         /// <summary>
-        ///     Gets all activities list
+        ///     Gets all matching activities for requirement
         /// </summary>
         /// <returns>Activity entity collection</returns>
         [HttpGet]
         [Route("")]
-        public IEnumerable<ActivitiesQueryResult> GetActivities()
+        public IEnumerable<ActivitiesQueryResult> GetMatchingActivitiesForRequirement([FromUri(Name = "")]ActivitiesQuery query)
         {
-            return this.mediator.Send(new ActivitiesQuery());
+            return this.mediator.Send(query ?? new ActivitiesQuery());
         }
 
         /// <summary>
