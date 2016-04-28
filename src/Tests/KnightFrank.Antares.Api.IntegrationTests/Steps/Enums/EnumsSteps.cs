@@ -92,7 +92,7 @@
                     this.fixture.DataContext.EnumTypeItems.SingleOrDefault(
                         i => i.EnumType.Code.Equals(enumTypeCode) && i.Code.Equals(enumTypeItemCode));
 
-                enums.Add(enumTypeItemCode, enumTypeItem?.Id ?? new Guid());
+                enums.Add(enumTypeItemCode, enumTypeItem?.Id ?? Guid.NewGuid());
             }
 
             this.scenarioContext.Set(enums, "EnumDictionary");

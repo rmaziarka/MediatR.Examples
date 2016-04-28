@@ -1,4 +1,4 @@
-﻿Feature: Activity
+﻿Feature: Activities
 
 @Activity
 Scenario Outline: Retrieve error messages for improper data
@@ -54,11 +54,11 @@ Scenario: Create Activity for an existing property
 			| 01-05-2014   |            | 1000000  |           |
 	When User creates activity for given latest property id
 	Then User should get OK http status code
-		And The created Activity is saved in database
+		And Created Activity is saved in database
 
 @Activity
 Scenario Outline: Get Activity by incorrect activity id
-	When User retrieves activity details for given <activityId>
+	When User gets activity with <activityId> id
 	Then User should get <expectedStatusCode> http status code
 
 	Examples:
@@ -83,12 +83,12 @@ Scenario: Get Activity by correct activity id
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And User creates activity for given latest property id
-	When User retrieves activity
+	When User gets activity
 	Then User should get OK http status code
-		And The received Activities should be the same as in database
+		And Retrieved activity should be same as in database
 
 @Activity
-Scenario: record and update residential sale valuation
+Scenario: Record and update residential sale valuation
 	Given User gets GB address form for Property and country details
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
@@ -103,15 +103,15 @@ Scenario: record and update residential sale valuation
 		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
-		And Activity for 'latest' property exists in database
-	When User updates activity 'added' id and 'added' status with following sale valuation
+		And Activity for latest property and PreAppraisal activity status exists in database
+	When User updates activity latest id and latest status with following sale valuation
 		| MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |
 		| 1                    | 2                | 3                    |
 	Then User should get OK http status code
-		And The received Activities should be the same as in database
+		And Retrieved activity should be same as in database
 
 @Activity
-Scenario Outline: try record and update residential sale valuation for improper data
+Scenario Outline: Record and update residential sale valuation for improper data
 	Given User gets GB address form for Property and country details
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
@@ -126,14 +126,37 @@ Scenario Outline: try record and update residential sale valuation for improper 
 		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
-		And Activity for 'latest' property exists in database
-	When User updates activity '<activityId>' id and '<activityStatusID>' status with following sale valuation
+		And Activity for latest property and PreAppraisal activity status exists in database
+	When User updates activity <activityId> id and <activityStatusID> status with following sale valuation
 		| MarketAppraisalPrice   | RecommendedPrice | VendorEstimatedPrice |
 		| <marketAppraisalPrice> | 2                | 3                    |
 	Then User should get <statusCode> http status code
 
 	Examples:
 	| activityId                           | activityStatusID                     | marketAppraisalPrice | statusCode |
-	| 00000000-0000-0000-0000-000000000002 | added                                | 1                    | BadRequest |
-	| added                                | 00000000-0000-0000-0000-000000000001 | 2                    | BadRequest |
-	#| added                                | added                                | a                    | BadRequest |
+	| 00000000-0000-0000-0000-000000000002 | latest                               | 1                    | BadRequest |
+	| latest                               | 00000000-0000-0000-0000-000000000001 | 2                    | BadRequest |
+
+@Activity
+Scenario: Get all activities
+	Given All activities have been deleted from database
+		And User gets GB address form for Property and country details
+		And User gets House for PropertyType
+		And User gets Freehold Sale for ActivityType
+		And User gets EnumTypeItemId and EnumTypeItem code
+			| enumTypeCode   | enumTypeItemCode |
+			| Division       | Residential      |
+			| ActivityStatus | NotSelling       |
+		And User sets attributes for property in database
+			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions |
+			| 1           | 3           | 1             | 3             |
+		And Property characteristics are set for given property type
+		And Property with Address and Residential division is in database
+        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
+        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+		And Activity for latest property and NotSelling activity status exists in database
+	When User gets activities
+	Then User should get OK http status code
+		And Retrieved activities should be the same as in database
+			| PropertyName | PropertyNumber | Line2              |
+			| abc          | 1              | Lewis Cubit Square |

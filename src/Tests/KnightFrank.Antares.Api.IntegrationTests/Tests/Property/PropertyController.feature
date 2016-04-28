@@ -169,7 +169,7 @@ Scenario: Get property
 			| PurchaseDate | SellDate   | BuyPrice | SellPrice |
 			| 01-05-2011   | 01-04-2013 | 1000000  | 1200000   |
 			| 01-05-2014   | 01-04-2015 | 1000000  | 1200000   |
-		And Activity for 'latest' property exists in database
+		And Activity for latest property and PreAppraisal activity status exists in database
 		And Property has following charactersitics
 			| CharacteristicCode | Text         |
 			| Detached           | DetachedText |

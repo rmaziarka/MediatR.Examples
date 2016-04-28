@@ -1,4 +1,4 @@
-﻿Feature: Activity type
+﻿Feature: Activities types
 
 @Activity
 Scenario Outline: Get activity types
