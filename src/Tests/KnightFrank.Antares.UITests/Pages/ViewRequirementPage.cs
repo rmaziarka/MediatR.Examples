@@ -33,6 +33,8 @@
 
         public ActivityListPage ActivityList => new ActivityListPage(this.DriverContext);
 
+        public CreateViewingPage Viewing => new CreateViewingPage(this.DriverContext);
+
         public ViewingDetailsPage ViewingDetails => new ViewingDetailsPage(this.DriverContext);
 
         public ViewRequirementPage WaitForDetailsToLoad()
