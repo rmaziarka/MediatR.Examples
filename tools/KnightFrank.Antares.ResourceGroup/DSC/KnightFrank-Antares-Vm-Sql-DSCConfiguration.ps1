@@ -7,14 +7,16 @@ Param (
 [string][Parameter(Mandatory = $true)] $commonShareUrl, 
 [System.Management.Automation.PSCredential][Parameter(Mandatory = $true)] $commonShareCredential,
 [string][Parameter(Mandatory = $true)] $isoFileName,
-[string][Parameter(Mandatory = $true)] $sqlInstanceName )
+[string][Parameter(Mandatory = $true)] $sqlInstanceName, 
+[string] $octopusThumbprint)
 
 Import-DscResource -ModuleName PSDesiredStateConfiguration
 Import-DscResource -ModuleName xSQLServer
 Import-DscResource -ModuleName xStorage
 
 $sqlFeatures = "SQLENGINE"    
-$downloadPath = "c:\WindowsAzure"
+$downloadPath = "c:\\WindowsAzure"
+$octopusDir = "C:\\Octopus"
 
 <# 
 	Node has to be explicitly set to localhost (and not host name as it is by default set by visual studio templates) - otherwise PSCredentials won't work.	
@@ -148,6 +150,60 @@ Node localhost
 
 			Write-Verbose "Added $userName to server roles dbcreator and bulkadmin"
 		}
+	}
+
+	Script DownloadOctopusTentacle
+    {
+        TestScript = {
+            Test-Path "C:\WindowsAzure\Octopus.Tentacle.3.3.6-x64.msi"
+        }
+        SetScript ={
+            $source = "https://download.octopusdeploy.com/octopus/Octopus.Tentacle.3.3.6-x64.msi"
+            $dest = "C:\WindowsAzure\Octopus.Tentacle.3.3.6-x64.msi"
+            Invoke-WebRequest $source -OutFile $dest
+        }
+        GetScript = {@{Result = "DownloadOctopusTentacle"}}
+    }
+
+    Package InstallOctopusTentacle
+    {
+        Ensure = "Present"  
+        Path  = "C:\WindowsAzure\Octopus.Tentacle.3.3.6-x64.msi"
+        Name = "Octopus Deploy Tentacle"
+        ProductId = "{D2622F6E-1377-47A6-9F6D-ED9AF593205D}"
+        DependsOn = "[Script]DownloadOctopusTentacle"
+    }
+
+	File OctopusDir
+	{
+		DestinationPath = $octopusDir
+		Ensure = "Present"
+		Type = "Directory"
+	}
+
+	Script ConfigureOctopusTentacleAndSetAccessPermissions
+	{
+		DependsOn = @("[Package]InstallOctopusTentacle", "[File]OctopusDir", "[xSqlServerSetup]InstallSql")
+		TestScript = {
+			Test-Path "$using:octopusDir\Tentacle.config"
+		}
+		SetScript = {
+			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" create-instance --instance "Tentacle" --config "$using:octopusDir\Tentacle.config" --console
+			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" new-certificate --instance "Tentacle" --if-blank --console
+			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --reset-trust --console
+			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --home $using:octopusDir --app "$using:octopusDir\Applications" --port "10933" --noListen "False" --console
+			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --trust "$using:octopusThumbprint" --console
+			& "netsh" advfirewall firewall add rule "name=Octopus Deploy Tentacle" dir=in action=allow protocol=TCP localport=10933
+			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" service --instance "Tentacle" --install --start --console
+			
+			$sqlWmi = Get-WmiObject win32_service | where name -eq 'mssqlserver'
+			$sqlUser = New-Object System.Security.Principal.NTAccount($sqlWmi.Name)
+			$acl = get-acl $using:octopusDir
+			$accessRule = new-object System.Security.AccessControl.FileSystemAccessRule($sqlUser, 'Read', 'Allow')
+			$acl.SetAccessRule($accessRule)
+			Set-Acl -path $using:octopusDir -AclObject $acl
+		}
+		GetScript = {@{Result = "ConfigureOctopusTentacleAndSetAccessPermissions"}}
 	}
 }
 }

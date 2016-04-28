@@ -15,7 +15,7 @@
       "value": "$Kf@admin"
     },
     "EnvironmentPrefix": {
-      "value": "test"
+      "value": "dev"
     },
     "domainToJoin": {
       "value": "a"
@@ -49,6 +49,12 @@
     },
     "CommonShareKey": {
       "value": "IQURddUmGFAe1d3/+OC2Ay1gT9YfdwPi66Nzhy+3vWKgCcy6YA02i3EfLStunvNjCw4M9RW7pxe6dL5z3Y0X9w=="
+    },
+    "VirtualNetworkSubnetId": {
+      "value": "/subscriptions/121c53d3-e96d-4890-af9a-58b104da7215/resourceGroups/RG-KnightFrank-Antares-NE-IE-Dev-Common-01/providers/Microsoft.Network/virtualNetworks/KnightFrank-Antares-NE-IE-Dev-Common-Vn-01/subnets/KnightFrank-Antares-NE-IE-Dev-Common-Subnet-01"
+    },
+    "RgStorageAccountName": {
+      "value": "kfaneiedevcommonst"
     }
   }
 }
