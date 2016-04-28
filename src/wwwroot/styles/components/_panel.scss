@@ -2,10 +2,17 @@
 
 .panel-body {
   word-wrap: break-word;
+
+  .checkbox,
+  .radio {
+    margin: {
+      bottom: 0;
+      top: 0;
+    }
+  }
 }
 
 .panel-item {
-  margin-bottom: 5px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
