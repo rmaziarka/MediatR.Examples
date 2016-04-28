@@ -29,9 +29,13 @@
             [Frozen] Mock<IReadGenericRepository<EnumType>> enumTypeRepository,
             EnumItemQuery query,
             EnumItemQueryHandler handler,
-            EnumType enumType)
+            EnumType enumType,
+            EnumTypeItem enumTypeItem)
         {
             // Arrange
+            enumType.EnumTypeItems = new List<EnumTypeItem>();
+            enumType.EnumTypeItems.Add(enumTypeItem);
+
             List<EnumItemResult> enumItemResults = enumType.EnumTypeItems.Select(eti => Mapper.Map<EnumItemResult>(eti)).ToList();
             enumTypeRepository.Setup(r => r.GetWithInclude(et => et.EnumTypeItems)).Returns(new[] { enumType }.AsQueryable());
 
