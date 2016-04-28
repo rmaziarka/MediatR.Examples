@@ -20,7 +20,7 @@ namespace KnightFrank.Antares.Domain.UnitTests
                 return new NoSpecimen(request);
             }
 
-            if (pi.GetGetMethod().IsVirtual)
+            if (pi.GetGetMethod().IsVirtual && pi.Name != "Id")
             {
                 return null;
             }
