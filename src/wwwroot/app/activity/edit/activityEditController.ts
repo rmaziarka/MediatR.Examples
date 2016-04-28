@@ -8,6 +8,8 @@ module Antares.Activity {
         public activity: Business.Activity;
         public activityStatuses: any[];
 
+        public enumTypeActivityStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityStatus;
+
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService){

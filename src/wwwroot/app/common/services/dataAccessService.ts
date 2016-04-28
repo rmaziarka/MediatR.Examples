@@ -88,10 +88,15 @@ module Antares.Services {
                     getAttributes: this.getAttributesAction
                 });
         }
-
+                
         getEnumResource(): Resources.IBaseResourceClass<Resources.IEnumResource> {
             return <Resources.IBaseResourceClass<Resources.IEnumResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/enums/:code/items');
+        }
+
+        getEnumsResource(): Resources.IBaseResourceClass<ng.resource.IResource<Antares.Common.Models.Dto.IEnumDictionary>> {
+            return <Resources.IBaseResourceClass<ng.resource.IResource<Antares.Common.Models.Dto.IEnumDictionary>>>
+                this.$resource(this.appConfig.rootUrl + '/api/enums');
         }
 
         getEnumTranslationResource(): Resources.ITranslationResourceClass<any> {
