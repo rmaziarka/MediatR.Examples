@@ -174,7 +174,7 @@ module Antares {
                 expect(activityStatusElement.text()).toBe('DYNAMICTRANSLATIONS.123');
             });
         });
-        
+
         describe('and add activity button is clicked', () =>{
             var propertyMock = TestHelpers.PropertyGenerator.generate();
             var defaultActivityStatusSelectId = "2";
@@ -186,7 +186,7 @@ module Antares {
                 $httpBackend: ng.IHttpBackendService) => {
 
                 $http = $httpBackend;
-                
+
                 // activity status http mock
                 $http.whenGET(/\/api\/enums\/ActivityStatus\/items/).respond(() => {
                     return [200, {
@@ -197,7 +197,7 @@ module Antares {
                                 ]
                             }];
                 });
-                
+
                 // activity type http mock
                 var query = '/api/activities/types?countryCode=GB&propertyTypeId=' + propertyMock.propertyTypeId;
                 $http.whenGET(query).respond(() => {
@@ -208,19 +208,19 @@ module Antares {
                                 ]
                             ];
                 });
-                
+
                 setUpBaseHttpMocks($http);
 
                 scope = $rootScope.$new();
                 scope['userData'] = userMock;
                 scope['property'] = propertyMock;
                 compile = $compile;
-                
+
                 // act
                 element = compile('<property-view property="property" user-data="userData"></property-view>')(scope);
                 scope.$apply();
                 $http.flush();
-                
+
                 var addActivityButton = element.find('#card-list-activities #addItemBtn');
                 addActivityButton.click();
             }));
@@ -228,35 +228,35 @@ module Antares {
             it('default values are set', () => {
                 // assert
                 var activityAddController = <Antares.Activity.ActivityAddController> element.find('activity-add').controller('activityAdd');
-                
+
                 expect(activityAddController.selectedActivityStatus.id).toBe(defaultActivityStatusSelectId);
                 expect(activityAddController.selectedActivityType).toBe(null);
             });
-            
-            describe('when values are changed and activity add window opened again', () =>{  
+
+            describe('when values are changed and activity add window opened again', () =>{
                 beforeEach(() =>{
                     var addActivityPanel = element.find('activity-add');
                     var activityStatusSelect = addActivityPanel.find('#addActivityForm select[name="status"]');
                     var activityTypeSelect = addActivityPanel.find('#addActivityForm select[name="type"]');
                     activityStatusSelect.val(1)
                     activityTypeSelect.val(1);
-                    
+
                     var closePanelButton = addActivityPanel.find('.close-side-panel');
                     closePanelButton.click();
-                    
+
                     var addActivityButton = element.find('#card-list-activities #addItemBtn');
                     addActivityButton.click();
                 })
-                    
+
                 it('default values are set', () => {
                     // assert
                     var activityAddController = <Antares.Activity.ActivityAddController> element.find('activity-add').controller('activityAdd');
-                    
+
                     expect(activityAddController.selectedActivityStatus.id).toBe(defaultActivityStatusSelectId);
                     expect(activityAddController.selectedActivityType).toBe(null);
                 });
             })
-            
+
         });
 
         describe('and activity details is clicked', () => {
@@ -460,7 +460,7 @@ module Antares {
             }
         });
     });
-    
+
     function setUpBaseHttpMocks($http: ng.IHttpBackendService): void{
         Antares.Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Antares.Mock.AddressForm.AddressFormWithOneLine]);
         $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
@@ -472,6 +472,10 @@ module Antares {
         });
 
         $http.whenGET(/\/api\/activities\/types/).respond(() => {
+            return [200, []];
+        });
+
+        $http.whenGET(/\/api\/characteristicGroups/).respond(() => {
             return [200, []];
         });
     }

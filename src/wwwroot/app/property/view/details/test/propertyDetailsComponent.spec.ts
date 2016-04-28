@@ -11,7 +11,7 @@ module Antares {
             element: ng.IAugmentedJQuery;
 
         var pageObjectSelectors = {
-            propertyType: '.page-header:contains("PROPERTY.VIEW.DETAILS")~.row :contains("PROPERTY.VIEW.TYPE") + div',
+            propertyType: 'div :contains("PROPERTY.VIEW.TYPE") + div',
             attributeListElement: 'attribute-list',
             attributeElements: 'attribute-list .attribute',
             attributeLabel: '.attribute-label',

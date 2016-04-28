@@ -8,68 +8,14 @@
         <div class="row">
             <div class="col-md-4">
                 <section>
+                    <h3 class="page-header" translate="PROPERTY.VIEW.DETAILS"></h3>
                     <property-details property="vm.property" user-data="vm.userData"></property-details>
                 </section>
             </div>
             <div class="col-md-4">
                 <section>
-                    <h3 class="page-header">Characteristics</h3>
-
-                    <div>
-                        <h5>Style</h5>
-                        <ul class="characteristics">
-                            <li>
-                                <span class="name">House</span>
-                            </li>
-                            <li>
-                                <span class="name">Flat</span>
-                                <span class="comment">comment</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h5>Age</h5>
-                        <ul class="characteristics">
-                            <li>
-                                <span class="name">Modern</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h5>Location</h5>
-                        <ul class="characteristics">
-                            <li>
-                                <span class="name">Rural</span>
-                                <span class="comment">comment</span>
-                            </li>
-                            <li>
-                                <span class="name">Island</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h5>Special</h5>
-                        <ul class="characteristics">
-                            <li>
-                                <span class="name">Golf course</span>
-                            </li>
-                            <li>
-                                <span class="name">Swimming pool</span>
-                            </li>
-                            <li>
-                                <span class="name">Tennis court</span>
-                            </li>
-                            <li>
-                                <span class="name">Stabling</span>
-                            </li>
-                            <li>
-                                <span class="name">Fishing</span>
-                            </li>
-                        </ul>
-                    </div>
+                    <h3 class="page-header" translate="PROPERTY.CHARACTERISTICS"></h3>
+                    <characteristic-list-view componentId="characteristicListView" property-type-id="vm.property.propertyTypeId" country-id="vm.property.address.countryId" characteristics-map="vm.property.propertyCharacteristicsMap"></characteristic-list-view>
                 </section>
             </div>
             <div class="col-md-4">

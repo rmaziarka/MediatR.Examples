@@ -43,13 +43,10 @@ module Antares {
                 })
             ];
 
-            var propertyMock: Business.Property = TestHelpers.PropertyGenerator.generate({
-                propertyTypeId: propertyTypes.House.id
-            });
-            propertyMock.address.countryId = countries.GB.id;
-            propertyMock.propertyCharacteristicsMap[characteristicGroupItemsMock[0].characteristic.id] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId: characteristicGroupItemsMock[0].characteristic.id });
-            propertyMock.propertyCharacteristicsMap[characteristicGroupItemsMock[1].characteristic.id] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId: characteristicGroupItemsMock[1].characteristic.id });
-            propertyMock.propertyCharacteristicsMap['otherCharacteristicId'] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId: 'otherCharacteristicId' });
+            var characteristicsMapMock: any = {};
+            characteristicsMapMock[characteristicGroupItemsMock[0].characteristic.id] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId: characteristicGroupItemsMock[0].characteristic.id });
+            characteristicsMapMock[characteristicGroupItemsMock[1].characteristic.id] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId: characteristicGroupItemsMock[1].characteristic.id });
+            characteristicsMapMock['otherCharacteristicId'] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId: 'otherCharacteristicId' });
 
             var requestMock = new RegExp('/api/characteristicGroups\\?countryId=' + countries.GB.id + '&propertyTypeId=' + propertyTypes.House.id);
 
@@ -92,8 +89,10 @@ module Antares {
                 });
 
                 // act
-                scope['property'] = propertyMock;
-                element = compile('<characteristic-list property="property"></characteristic-list>')(scope);
+                scope['characteristicsMap'] = characteristicsMapMock;
+                scope['propertyTypeId'] = propertyTypes.House.id;
+                scope['countryId'] = countries.GB.id;
+                element = compile('<characteristic-list property-type-id="propertyTypeId" country-id="countryId" characteristics-map="characteristicsMap"></characteristic-list>')(scope);
                 scope.$apply();
                 controller = element.controller('characteristicList');
 
@@ -142,7 +141,7 @@ module Antares {
                     var characteristicSelectElement1 = group3Element.find('characteristic-select[data-characteristic-id="' + characteristicGroupItemsMock[0].characteristic.id + '"]');
 
                     expect(characteristicSelectElement1.find('input[type="checkbox"]').is(':checked')).toBeTruthy();
-                    expect(characteristicSelectElement1.find('input[type="text"]').val().trim()).toBe(propertyMock.propertyCharacteristicsMap[characteristicGroupItemsMock[0].characteristic.id].text);
+                    expect(characteristicSelectElement1.find('input[type="text"]').val().trim()).toBe(characteristicsMapMock[characteristicGroupItemsMock[0].characteristic.id].text);
                 });
 
                 it('should display empty values within characteristics form when no data for characteristic from property', () => {

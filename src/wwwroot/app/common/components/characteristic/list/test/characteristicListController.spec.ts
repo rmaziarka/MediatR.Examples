@@ -3,7 +3,7 @@
 module Antares {
     import CharacteristicListController = Common.Component.CharacteristicListController;
     import Business = Common.Models.Business;
-	
+
     describe('Given characteristic list controller', () => {
         var $scope: ng.IScope,
             $http: ng.IHttpBackendService,
@@ -28,7 +28,7 @@ module Antares {
                 $scope = $rootScope.$new();
                 $http = $httpBackend;
 
-                var bindings = { property: new Business.Property() };
+                var bindings = { characteristicsMap: {} };
                 controller = <CharacteristicListController>$controller('CharacteristicListController', {}, bindings);
             }));
 
@@ -64,12 +64,9 @@ module Antares {
             it('and country is empty then characteristicGroups is set to empty', () => {
                 // arrange
                 var characteristicGroupsMock = TestHelpers.CharacteristicGroupUsageGenerator.generateMany(5);
-                var propertyMock: Business.Property = TestHelpers.PropertyGenerator.generate({
-                    propertyTypeId: propertyTypes.House.id
-                });
-                propertyMock.address.countryId = '';
 
-                controller.property = propertyMock;
+                controller.propertyTypeId = propertyTypes.House.id;
+                controller.countryId = '';
                 controller.characteristicGroups = characteristicGroupsMock;
 
                 //act
@@ -82,11 +79,9 @@ module Antares {
             it('and property type is empty then characteristicGroups is set to empty', () => {
                 // arrange
                 var characteristicGroupsMock = TestHelpers.CharacteristicGroupUsageGenerator.generateMany(5);
-                var propertyMock: Business.Property = TestHelpers.PropertyGenerator.generate({
-                    propertyTypeId: ''
-                });
 
-                controller.property = propertyMock;
+                controller.propertyTypeId = '';
+                controller.countryId = countries.GB.id;
                 controller.characteristicGroups = characteristicGroupsMock;
 
                 //act
@@ -99,18 +94,14 @@ module Antares {
             it('and property type and country are set then request GET for characteristicGroups is called and data returned from request is set to characteristicGroups', () => {
                 // arrange
                 var characteristicGroupsMock = TestHelpers.CharacteristicGroupUsageGenerator.generateManyDtos(3);
-                var propertyMock: Business.Property = TestHelpers.PropertyGenerator.generate({
-                    propertyTypeId: propertyTypes.House.id
-                });
-                propertyMock.address.countryId = countries.GB.id;
 
                 var requestMock = new RegExp('/api/characteristicGroups\\?countryId=' + countries.GB.id + '&propertyTypeId=' + propertyTypes.House.id);
-
                 $http.expectGET(requestMock).respond(() => {
                     return [200, characteristicGroupsMock];
                 });
 
-                controller.property = propertyMock;
+                controller.propertyTypeId = propertyTypes.House.id;
+                controller.countryId = countries.GB.id;
 
                 //act
                 controller.loadCharacteristics();
@@ -125,20 +116,17 @@ module Antares {
         });
 
 		describe('when clearHiddenCharacteristicsDataFromProperty is called', () =>{
-			var propertyMock: Business.Property = TestHelpers.PropertyGenerator.generate({
-				propertyTypeId : propertyTypes.House.id
-			});
-
 			var characteristicsMock: Array<Business.Characteristic> = [
 				TestHelpers.CharacteristicGroupItemGenerator.generate({}),
 				TestHelpers.CharacteristicGroupItemGenerator.generate({}),
 				TestHelpers.CharacteristicGroupItemGenerator.generate({})
-			];
+            ];
 
-			propertyMock.propertyCharacteristicsMap[characteristicsMock[0].id] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId : characteristicsMock[0].id });
-			propertyMock.propertyCharacteristicsMap[characteristicsMock[1].id] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId : characteristicsMock[1].id });
-			propertyMock.propertyCharacteristicsMap['otherCharacteristicId'] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId : 'otherCharacteristicId' });
-			
+            var characteristicsMapMock: any = {};
+            characteristicsMapMock[characteristicsMock[0].id] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId : characteristicsMock[0].id });
+            characteristicsMapMock[characteristicsMock[1].id] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId : characteristicsMock[1].id });
+            characteristicsMapMock['otherCharacteristicId'] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId : 'otherCharacteristicId' });
+
             var characteristicGroupsMock = [
 				TestHelpers.CharacteristicGroupUsageGenerator.generate({
 					characteristicGroupItems : characteristicsMock
@@ -162,15 +150,18 @@ module Antares {
 
 			it('then property characteristics values not matching current characteristic groups definition should be cleared', () =>{
                 // arrange
-				controller.property = propertyMock;
+                controller.characteristicsMap = characteristicsMapMock;
+                controller.propertyTypeId = propertyTypes.House.id;
+                controller.countryId = countries.GB.id;
+
 				controller.characteristicGroups = characteristicGroupsMock;
 
                 // act
 				controller.clearHiddenCharacteristicsDataFromProperty();
-                
+
                 // assert
-				expect(propertyMock.propertyCharacteristicsMap['otherCharacteristicId'].isSelected).toBeFalsy();
-				expect(propertyMock.propertyCharacteristicsMap['otherCharacteristicId'].text).toBe('');
+                expect(characteristicsMapMock['otherCharacteristicId'].isSelected).toBeFalsy();
+                expect(characteristicsMapMock['otherCharacteristicId'].text).toBe('');
 			});
 
 		});

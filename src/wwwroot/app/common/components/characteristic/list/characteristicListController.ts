@@ -8,10 +8,10 @@ module Antares.Common.Component {
         private componentId: string;
         private characteristicGroupUsageResource: Common.Models.Resources.ICharacteristicGroupUsageResourceClass;
 
-        public property: Business.Property;
+        public propertyTypeId: string;
+        public countryId: string;
+        public characteristicsMap: any;
         public characteristicGroups: Business.CharacteristicGroup[] = [];
-
-        countryCode: string = 'GB';  // TODO: hardcoded!!! - component commmunication needs to be discussed and maybe api should operate on guids instead of codes
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -24,16 +24,16 @@ module Antares.Common.Component {
         }
 
         loadCharacteristics = () => {
-            if (this.property.propertyTypeId && this.property.address.countryId) {
+            if (this.propertyTypeId && this.countryId) {
                 this.characteristicGroupUsageResource
                     .query({
-                        countryId : this.property.address.countryId,
-                        propertyTypeId : this.property.propertyTypeId
+                        countryId: this.countryId,
+                        propertyTypeId: this.propertyTypeId
                     })
                     .$promise
-                    .then((characteristicGroupUsages: any) =>{
+                    .then((characteristicGroupUsages: any) => {
                         this.characteristicGroups = characteristicGroupUsages.map(
-                        (item: Dto.ICharacteristicGroupUsage) => new Business.CharacteristicGroup(<Dto.ICharacteristicGroupUsage>item));
+                            (item: Dto.ICharacteristicGroupUsage) => new Business.CharacteristicGroup(<Dto.ICharacteristicGroupUsage>item));
                     });
             }
             else {
@@ -41,7 +41,7 @@ module Antares.Common.Component {
             }
         }
 
-        clearCharacteristics = () =>{
+        clearCharacteristics = () => {
             this.characteristicGroups = [];
         }
 
@@ -53,15 +53,25 @@ module Antares.Common.Component {
                 .flatten<Business.Characteristic>()
                 .value();
 
-            for (var prop in this.property.propertyCharacteristicsMap) {
+            for (var prop in this.characteristicsMap) {
                 var characteristicId: string = prop;
-                if (this.property.propertyCharacteristicsMap.hasOwnProperty(characteristicId)) {
+                if (this.characteristicsMap.hasOwnProperty(characteristicId)) {
                     var clearCharacteristicData = characteristics.filter((item: Business.Characteristic) => { return item.id === characteristicId; }).length === 0;
                     if (clearCharacteristicData) {
-                        this.property.propertyCharacteristicsMap[characteristicId].clear();
+                        this.characteristicsMap[characteristicId].clear();
                     }
                 }
             }
+        }
+
+        isCharacteristicDataEmpty = (characteristic: Business.Characteristic): boolean => {
+            return !this.characteristicsMap[characteristic.id];
+        }
+
+        isCharacteristicGroupDataEmpty = (group: Business.CharacteristicGroup): boolean => {
+            return !_.any(group.characteristicGroupItems, (characteristic: Business.Characteristic) => {
+                return !this.isCharacteristicDataEmpty(characteristic);
+            });
         }
     }
 
