@@ -9,7 +9,7 @@ namespace KnightFrank.Antares.Dal.Model.Attachment
         public string FileName { get; set; }
         public Guid FileTypeId { get; set; }
         public virtual EnumTypeItem FileType { get; set; }
-        public string Size { get; set; }
+        public long Size { get; set; }
         public Guid AzureDocumentId { get; set; }
     }
 }
