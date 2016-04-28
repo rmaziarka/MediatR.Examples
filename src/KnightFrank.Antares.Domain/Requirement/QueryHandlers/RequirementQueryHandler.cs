@@ -3,8 +3,6 @@
     using System.Data.Entity;
     using System.Linq;
 
-    using AutoMapper;
-
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Requirement.Queries;

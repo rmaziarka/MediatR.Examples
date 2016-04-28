@@ -205,6 +205,14 @@
     <Compile Include="Property\Queries\PropertyAttributesQueryValidator.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQueryResult.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQuerySingleResult.cs" />
+    <Compile Include="Viewing\CommandHandlers\CreateViewingCommandHandler.cs" />
+    <Compile Include="Viewing\Commands\CreateViewingCommand.cs" />
+    <Compile Include="Viewing\Commands\CreateViewingCommandDomainValidator.cs" />
+    <Compile Include="Viewing\Commands\CreateViewingCommandValidator.cs" />
+    <Compile Include="Viewing\Commands\ViewingCommandProfile.cs" />
+    <Compile Include="Viewing\Queries\ViewingQuery.cs" />
+    <Compile Include="Viewing\Queries\ViewingQueryValidator.cs" />
+    <Compile Include="Viewing\QueryHandlers\ViewingQueryHandler.cs" />
     <Compile Include="RequirementNote\CommandHandlers\CreateRequirementNoteCommandHandler.cs" />
     <Compile Include="Common\BuissnessValidators\IEntityValidator.cs" />
     <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandDomainValidator.cs" />
