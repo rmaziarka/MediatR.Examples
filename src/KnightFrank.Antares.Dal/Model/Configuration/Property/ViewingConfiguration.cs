@@ -20,6 +20,10 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property
             this.Property(r => r.EndDate)
                 .IsRequired();
 
+            this.HasRequired(p => p.Negotiator)
+                .WithMany()
+                .HasForeignKey(p => p.NegotiatorId);
+
             this.HasRequired(p => p.Activity)
                 .WithMany()
                 .HasForeignKey(p => p.ActivityId);

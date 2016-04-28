@@ -5,6 +5,7 @@
 
     using KnightFrank.Antares.Dal.Model.Contacts;
     using Activities;
+    using KnightFrank.Antares.Dal.Model.User;
 
     public class Viewing : BaseEntity
     {
@@ -23,6 +24,10 @@
         public Guid RequirementId { get; set; }
 
         public virtual Requirement Requirement { get; set; }
+
+        public Guid NegotiatorId { get; set; }
+
+        public virtual User Negotiator { get; set; }
 
         public List<Contact> Attendees { get; set; } = new List<Contact>();
     }
