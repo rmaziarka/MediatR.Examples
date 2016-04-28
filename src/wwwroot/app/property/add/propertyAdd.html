@@ -9,10 +9,10 @@
         <div class="col-md-4">
             <fieldset>
                 <h3 class="page-header" translate="PROPERTY.ADD.BASIC_INFORMATION"></h3>
-                <div class="form-group required" ng-class="{'has-error': (addPropertyForm.$submitted || addPropertyForm.type.$dirty) && addPropertyForm.type.$invalid}">
+                <div class="form-group" ng-class="{'has-error': (addPropertyForm.$submitted || addPropertyForm.type.$dirty) && addPropertyForm.type.$invalid}">
                     <div class="row">
                         <div class="col-md-8">
-                            <label for="type" translate="PROPERTY.ADD.TYPE"></label>
+                            <label class="required" for="type" translate="PROPERTY.ADD.TYPE"></label>
                             <select id="type" name="type" ng-model="vm.property.propertyTypeId" ng-change="vm.changePropertyType()" class="form-control" required>
                                 <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
                                 <option ng-repeat-start="propertyType in vm.propertyTypes | orderBy:'order'" label="{{propertyType.name}}" value="{{propertyType.id}}" class="hierarchy1">{{propertyType.name}}</option>

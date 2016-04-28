@@ -8,8 +8,8 @@
             <fieldset>
                 <h3 class="page-header" translate="COMPANY.ADD.BASIC_INFORMATION"></h3>
 
-                <div class="form-group required" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.name.$dirty) && addCompanyForm.name.$invalid}">
-                    <label for="title" translate="COMPANY.ADD.NAME"></label>
+                <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.name.$dirty) && addCompanyForm.name.$invalid}">
+                    <label class="required" for="title" translate="COMPANY.ADD.NAME"></label>
                     <input type="text" class="form-control" id="name" name="name" required ng-maxlength="128" ng-model="vm.company.name" autocomplete="off">
                     <div ng-messages="addCompanyForm.name.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.name.$dirty">
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>

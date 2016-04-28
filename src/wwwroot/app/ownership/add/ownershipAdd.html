@@ -6,10 +6,10 @@
 </div>
 
 <form ng-submit="addOwnershipForm.$valid" name="addOwnershipForm" id="addOwnershipForm" method="post" novalidate>
-    <div class="form-group required" ng-class="{'has-error': (addOwnershipForm.$submitted || addOwnershipForm.type.$dirty) && addOwnershipForm.type.$invalid}">
+    <div class="form-group" ng-class="{'has-error': (addOwnershipForm.$submitted || addOwnershipForm.type.$dirty) && addOwnershipForm.type.$invalid}">
         <div class="row">
             <div class="col-md-9">
-                <label for="type" translate="OWNERSHIP.ADD.OWNERSHIPTYPE"></label>
+                <label class="required" for="type" translate="OWNERSHIP.ADD.OWNERSHIPTYPE"></label>
                 <select class="form-control" required id="type" name="type" ng-options="item as item.value for item in vm.ownershipTypes.items track by item.id"
                 ng-model="vm.ownership.ownershipType">
                     <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
@@ -30,20 +30,20 @@
             <div class="col-md-8">
                 <label for="purchasing-date" translate="OWNERSHIP.ADD.PURCHASEDATE"></label>
                 <div class="input-group">
-                    <input type="text" 
+                    <input type="text"
                     class="form-control"
-                    name="purchaseDate" 
-                    ng-model="vm.ownership.purchaseDate" 
+                    name="purchaseDate"
+                    ng-model="vm.ownership.purchaseDate"
                     max="{{vm.ownership.sellDate}}"
-                    dont-overlap="{{vm.ownerships | filter : {ownershipTypeId: vm.ownership.ownershipType.id} }}" 
+                    dont-overlap="{{vm.ownerships | filter : {ownershipTypeId: vm.ownership.ownershipType.id} }}"
                     from-field="purchaseDate"
-                    to-field="sellDate" 
-                    dont-overlap-max="{{vm.ownership.sellDate}}" 
-                    uib-datepicker-popup="dd-MM-yyyy" 
+                    to-field="sellDate"
+                    dont-overlap-max="{{vm.ownership.sellDate}}"
+                    uib-datepicker-popup="dd-MM-yyyy"
                     is-open="vm.datepickers.purchaseOpened"
-                    close-text="Close" 
-                    date-lower-than="{{vm.ownership.sellDate}}" 
-                    kf-max-date="{{vm.maxAllowedDate}}" 
+                    close-text="Close"
+                    date-lower-than="{{vm.ownership.sellDate}}"
+                    kf-max-date="{{vm.maxAllowedDate}}"
                     />
 
                     <span class="input-group-btn">
@@ -61,19 +61,19 @@
             <div class="col-md-8">
                 <label for="purchasing-date" translate="OWNERSHIP.ADD.SELLDATE"></label>
                 <div class="input-group">
-                    <input type="text" 
+                    <input type="text"
                     class="form-control"
-                    name="sellDate" 
-                    ng-model="vm.ownership.sellDate" 
+                    name="sellDate"
+                    ng-model="vm.ownership.sellDate"
                     dont-overlap="{{vm.ownerships | filter : {ownershipTypeId: vm.ownership.ownershipType.id} }}"
-                    from-field="purchaseDate" 
-                    to-field="sellDate" 
-                    dont-overlap-min="{{vm.ownership.purchaseDate}}" 
+                    from-field="purchaseDate"
+                    to-field="sellDate"
+                    dont-overlap-min="{{vm.ownership.purchaseDate}}"
                     uib-datepicker-popup="dd-MM-yyyy"
-                    is-open="vm.datepickers.sellOpened" 
-                    close-text="Close" 
+                    is-open="vm.datepickers.sellOpened"
+                    close-text="Close"
                     date-greater-than="{{vm.ownership.purchaseDate}}"
-                    kf-max-date="{{vm.maxAllowedDate}}" 
+                    kf-max-date="{{vm.maxAllowedDate}}"
                     />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openSellDate()"><i class="fa fa-calendar"></i></button>

@@ -6,7 +6,7 @@ label,
 }
 
 .required {
-  label::after {
+  &::after {
     color: $color-red;
     content: '*';
     margin-left: 3px;
@@ -48,4 +48,11 @@ label,
     right: 0;
     top: 0;
   }
+}
+
+// Textarea character limit
+
+.character-limit {
+  font-size: 12px;
+  margin-top: 2px;
 }
