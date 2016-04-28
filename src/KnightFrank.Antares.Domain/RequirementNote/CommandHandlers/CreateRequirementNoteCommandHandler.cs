@@ -8,8 +8,7 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Domain.Common;
-    using KnightFrank.Antares.Domain.Common.BuissnessValidators;
-    using KnightFrank.Antares.Domain.Validators;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
 
     using MediatR;
 

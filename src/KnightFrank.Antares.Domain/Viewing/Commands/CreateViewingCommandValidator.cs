@@ -1,16 +1,20 @@
 namespace KnightFrank.Antares.Domain.Viewing.Commands
 {
     using FluentValidation;
-    using FluentValidation.Results;
-
-    using KnightFrank.Antares.Dal.Model.Address;
-    using KnightFrank.Antares.Dal.Model.Resource;
-    using KnightFrank.Antares.Dal.Repository;
 
     public class CreateViewingCommandValidator : AbstractValidator<CreateViewingCommand>
     {
         public CreateViewingCommandValidator()
         {
+            this.RuleFor(x => x.StartDate).NotEmpty();
+            this.RuleFor(x => x.EndDate).NotEmpty();
+            this.RuleFor(x => x.EndDate).GreaterThan(x => x.StartDate);
+            this.RuleFor(x => x.StartDate.Date).Equal(x => x.EndDate.Date);
+            this.RuleFor(x => x.ActivityId).NotEmpty();
+            this.RuleFor(x => x.RequirementId).NotEmpty();
+            this.RuleFor(x => x.InvitationText).Length(0, 4000);
+            this.RuleFor(x => x.PostViewingComment).Length(0, 4000);
+            this.RuleFor(x => x.AttendeesIds).NotEmpty();
         }
     }
 }

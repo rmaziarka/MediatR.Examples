@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.Common.BuissnessValidators
+﻿namespace KnightFrank.Antares.Domain.Common.BusinessValidators
 {
     using System;
 

@@ -1,10 +1,9 @@
-﻿namespace KnightFrank.Antares.Domain.Common.BuissnessValidators
+﻿namespace KnightFrank.Antares.Domain.Common.BusinessValidators
 {
     using System;
 
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Repository;
-    using KnightFrank.Antares.Domain.Validators;
 
     using Ninject;
 

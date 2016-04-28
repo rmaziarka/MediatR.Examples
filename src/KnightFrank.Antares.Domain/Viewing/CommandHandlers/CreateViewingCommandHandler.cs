@@ -7,12 +7,10 @@
     using Dal.Repository;
     using Commands;
 
-    using FluentValidation.Results;
-
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
-    using KnightFrank.Antares.Domain.Common;
-    using KnightFrank.Antares.Domain.Common.Exceptions;
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
 
     using MediatR;
 
@@ -20,28 +18,40 @@
     {
         private readonly IGenericRepository<Viewing> viewingRepository;
 
-        private readonly IGenericRepository<Contact> contactRepository;
+        private readonly IGenericRepository<Requirement> requirementRepository;
 
-        private readonly IDomainValidator<CreateViewingCommand> createViewingCommandDomainValidator;
+        private readonly IEntityValidator entityValidator;
 
-        public CreateViewingCommandHandler(IGenericRepository<Viewing> viewingRepository, IGenericRepository<Contact> contactRepository, IDomainValidator<CreateViewingCommand>  createViewingCommandDomainValidator)
+        public CreateViewingCommandHandler(IGenericRepository<Viewing> viewingRepository,
+            IEntityValidator entityValidator,
+            IGenericRepository<Requirement> requirementRepository)
         {
             this.viewingRepository = viewingRepository;
-            this.contactRepository = contactRepository;
-            this.createViewingCommandDomainValidator = createViewingCommandDomainValidator;
+            this.entityValidator = entityValidator;
+            this.requirementRepository = requirementRepository;
         }
 
         public Guid Handle(CreateViewingCommand message)
         {
-            ValidationResult validationResult = this.createViewingCommandDomainValidator.Validate(message);
-            if (!validationResult.IsValid)
+            this.entityValidator.ThrowExceptionIfNotExist<Activity>(message.ActivityId);
+
+            Requirement requirement = this.requirementRepository.GetById(message.RequirementId);
+            if (requirement == null)
             {
-                throw new DomainValidationException(validationResult.Errors);
+                throw new BusinessValidationException(BusinessValidationMessage.CreateEntityNotExistMessage(typeof(Requirement).ToString(), message.RequirementId));
             }
+
+            var applicantIds = requirement.Contacts.Select(y => y.Id);
+
+            if (!message.AttendeesIds.All(x => applicantIds.Contains(x)))
+            {
+                throw new BusinessValidationException(new BusinessValidationMessage("", ""));
+            }
+
+            List<Contact> existingAttendees = requirement.Contacts.Where(x => message.AttendeesIds.Contains(x.Id)).ToList();
 
             var viewing = AutoMapper.Mapper.Map<Viewing>(message);
 
-            List<Contact> existingAttendees = this.contactRepository.FindBy(x => message.AttendeesIds.Any(id => id == x.Id)).ToList();
             viewing.Attendees = existingAttendees;
 
             this.viewingRepository.Add(viewing);

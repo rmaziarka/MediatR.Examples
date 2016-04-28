@@ -9,7 +9,7 @@
 
     using FluentValidation;
 
-    using KnightFrank.Antares.Domain.Common.BuissnessValidators;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Exceptions;
 
     using Newtonsoft.Json;

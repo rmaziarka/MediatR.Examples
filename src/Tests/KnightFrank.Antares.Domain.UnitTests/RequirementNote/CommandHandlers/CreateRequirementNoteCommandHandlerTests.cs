@@ -13,11 +13,10 @@
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
-    using KnightFrank.Antares.Domain.Common.BuissnessValidators;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Antares.Domain.RequirementNote.CommandHandlers;
     using KnightFrank.Antares.Domain.RequirementNote.Commands;
-    using KnightFrank.Antares.Domain.Validators;
 
     using Moq;
 

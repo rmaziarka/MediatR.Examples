@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.Validators
+﻿namespace KnightFrank.Antares.Domain.Common.BusinessValidators
 {
     using System;
     using System.Globalization;
@@ -9,7 +9,7 @@
         public readonly string Message;
         public const string EntityNotExistErrorMessgeKey = "Entity_Not_Exists";
 
-        private BusinessValidationMessage(string errorCode, string message)
+        public BusinessValidationMessage(string errorCode, string message)
         {
             this.ErrorCode = errorCode;
             this.Message = message;

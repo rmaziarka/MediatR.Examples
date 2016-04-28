@@ -207,14 +207,13 @@
     <Compile Include="Property\QueryResults\PropertyTypeQuerySingleResult.cs" />
     <Compile Include="Viewing\CommandHandlers\CreateViewingCommandHandler.cs" />
     <Compile Include="Viewing\Commands\CreateViewingCommand.cs" />
-    <Compile Include="Viewing\Commands\CreateViewingCommandDomainValidator.cs" />
     <Compile Include="Viewing\Commands\CreateViewingCommandValidator.cs" />
     <Compile Include="Viewing\Commands\ViewingCommandProfile.cs" />
     <Compile Include="Viewing\Queries\ViewingQuery.cs" />
     <Compile Include="Viewing\Queries\ViewingQueryValidator.cs" />
     <Compile Include="Viewing\QueryHandlers\ViewingQueryHandler.cs" />
     <Compile Include="RequirementNote\CommandHandlers\CreateRequirementNoteCommandHandler.cs" />
-    <Compile Include="Common\BuissnessValidators\IEntityValidator.cs" />
+    <Compile Include="Common\BusinessValidators\IEntityValidator.cs" />
     <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandDomainValidator.cs" />
     <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandValidator.cs" />
     <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandProfile.cs" />
@@ -237,9 +236,9 @@
     <Compile Include="Resource\Queries\ResourceLocalisedQuery.cs" />
     <Compile Include="Resource\QueryHandlers\ResourceLocalisedQueryHandler.cs" />
     <Compile Include="User\QueryResults\UserDataResult.cs" />
-    <Compile Include="Common\BuissnessValidators\BusinessValidationMessage.cs" />
-    <Compile Include="Common\BuissnessValidators\BusinessValidationException.cs" />
-    <Compile Include="Common\BuissnessValidators\EntityValidator.cs" />
+    <Compile Include="Common\BusinessValidators\BusinessValidationMessage.cs" />
+    <Compile Include="Common\BusinessValidators\BusinessValidationException.cs" />
+    <Compile Include="Common\BusinessValidators\EntityValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj">
