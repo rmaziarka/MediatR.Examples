@@ -39,7 +39,7 @@
         /// </summary>
         /// <returns>Dictionary of enums.</returns>
         [HttpGet]
-        [Route("items")]
+        [Route("")]
         public Dictionary<string, ICollection<EnumItemResult>> GetEnumItems()
         {
             var query = new EnumItemQuery();
