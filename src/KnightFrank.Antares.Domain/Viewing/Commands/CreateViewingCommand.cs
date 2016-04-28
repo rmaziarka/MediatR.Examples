@@ -25,5 +25,7 @@
         public Guid RequirementId { get; set; }
 
         public Guid ActivityId { get; set; }
+
+        public Guid NegotiatorId { get; set; }
     }
 }
