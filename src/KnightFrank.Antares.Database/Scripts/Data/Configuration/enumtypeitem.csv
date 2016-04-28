@@ -8,3 +8,12 @@ ActivityStatus;MarketAppraisal
 ActivityStatus;NotSelling
 Division;Residential
 Division;Commercial
+FileType;TermsOfBusiness
+FileType;MarketingSignOff
+FileType;CDDDocument
+FileType;Photograph
+FileType;FloorPlan
+FileType;Brochure
+FileType;VideoTour
+FileType;EPC
+FileType;GasCertificate

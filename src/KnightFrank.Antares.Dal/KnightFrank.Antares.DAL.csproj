@@ -56,6 +56,7 @@
     <Compile Include="Model\Address\AddressFieldLabel.cs" />
     <Compile Include="Model\Address\AddressForm.cs" />
     <Compile Include="Model\Address\AddressFormEntityType.cs" />
+    <Compile Include="Model\Attachment\Attachment.cs" />
     <Compile Include="Model\Attribute\Attribute.cs" />
     <Compile Include="Model\Attribute\AttributeValues.cs" />
     <Compile Include="Model\BaseAuditableEntity.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Model\Configuration\Address\AddressFieldLabelConfiguration.cs" />
     <Compile Include="Model\Configuration\Address\AddressFormConfigutration.cs" />
     <Compile Include="Model\Configuration\Address\AddressFormEntityTypeConfiguration.cs" />
+    <Compile Include="Model\Configuration\Attachment\AttachmentConfiguration.cs" />
     <Compile Include="Model\Configuration\Attribute\AttributeValuesConfiguration.cs" />
     <Compile Include="Model\Configuration\Attribute\AttributeConfiguration.cs" />
     <Compile Include="Model\Configuration\BaseAuditableEntityConfiguration.cs" />

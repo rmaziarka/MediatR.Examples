@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
 
+    using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
 
@@ -27,5 +28,6 @@
         public decimal? RecommendedPrice { get; set; }
 
         public decimal? VendorEstimatedPrice { get; set; }
+        public virtual ICollection<Attachment> Attachments { get; set; }
     }
 }

@@ -31,6 +31,14 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
 
             this.Property(o => o.VendorEstimatedPrice)
                 .HasPrecision(19, 4);
+
+            this.HasMany(p => p.Attachments)
+                .WithMany()
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("ActivityId");
+                    cs.MapRightKey("AttachmentId");
+                });
         }
     }
 }
