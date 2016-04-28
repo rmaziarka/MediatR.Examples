@@ -206,7 +206,7 @@
         {
             var activity = JsonConvert.DeserializeObject<List<ActivitiesQueryResult>>(this.scenarioContext.GetResponseContent());
             List<ActivitiesQueryResult> actualActivity = table.CreateSet<ActivitiesQueryResult>().ToList();
-            actualActivity.First().ActivityId = this.scenarioContext.Get<Activity>("Activity").Id;
+            actualActivity.First().Id = this.scenarioContext.Get<Activity>("Activity").Id;
 
             actualActivity.ShouldBeEquivalentTo(activity);
         }

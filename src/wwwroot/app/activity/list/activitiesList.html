@@ -1,0 +1,10 @@
+<div ng-show="vm.isLoading">
+    <span translate="COMMON.LOADINGDATA"></span>
+</div>
+<div class="panel panel-default" ng-repeat="activity in vm.activities">
+    <div class="panel-body">
+        <label>
+            <input type="radio" name="activity" ng-model="vm.selectedActivity" value="{{::activity.id}}"/>{{:: activity.propertyName + ' ' + activity.propertyNumber + ' ' + activity.line2 }}
+        </label>
+    </div>
+</div>

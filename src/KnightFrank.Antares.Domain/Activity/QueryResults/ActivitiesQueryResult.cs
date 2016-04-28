@@ -4,7 +4,7 @@
 
     public class ActivitiesQueryResult
     {
-        public Guid ActivityId { get; set; }
+        public Guid Id { get; set; }
 
         public string PropertyName { get; set; }
 

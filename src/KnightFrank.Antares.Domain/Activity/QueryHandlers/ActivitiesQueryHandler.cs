@@ -24,7 +24,7 @@
         {
             return this.activityRepository.Get().Include(a => a.Property.Address).Select(x => new ActivitiesQueryResult
             {
-                ActivityId = x.Id,
+                Id = x.Id,
                 PropertyName = x.Property.Address.PropertyName,
                 PropertyNumber = x.Property.Address.PropertyNumber,
                 Line2 = x.Property.Address.Line2

@@ -1,23 +1,32 @@
 /// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Requirement.Add {
-    import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
     
     export class RequirementAddController {
         componentIds: any = {
             contactListId: 'addRequirement:contactListComponent',
-            contactSidePanelId: 'addRequirement:contactSidePanelComponent'
+            contactSidePanelId: 'addRequirement:contactSidePanelComponent',
+            activitiesListId: 'addRequirement:activitiesListComponent',
+            configureViewingsPanelId: 'addRequirement:configureViewingsaSidePanelComponent',
+            viewingDetailsId: 'addRequirement:viewingDetailsComponent',
+            viewingDetailsSidePanelId: 'addRequirement:viewingDetailsSidePanelComponent'
         }
         components: any = {
             contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
-            contactSidePanel: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); }
+            contactSidePanel: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
+            activitiesList: () => { return this.componentRegistry.get(this.componentIds.activitiesListId); },
+            configureViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.configureViewingsSidePanelId); },
+            viewingDetails: () => { return this.componentRegistry.get(this.componentIds.viewingDetailsId); },
+            viewingDetailsSidePanel: () => { return this.componentRegistry.get(this.componentIds.viewingDetailsSidePanelId); }
         }
         requirementResource: any;
         requirement: Business.Requirement = new Business.Requirement();
         loadingContacts: boolean = false;
+        loadingActivities: boolean = false;
         entityTypeCode: string = 'Requirement';
         isSaving: boolean = false;
+        viewingDetailsPanelVisible: boolean = false;
 
         constructor(
             private dataAccessService: Services.DataAccessService,
@@ -56,6 +65,15 @@ module Antares.Requirement.Add {
                 .finally(() => { this.loadingContacts = false; });
 
             this.components.contactSidePanel().show();
+        }
+
+        showActivitiesPanel = () => {
+            this.loadingActivities = true;
+            this.components.activitiesList()
+                .loadActivities()
+                .finally(() => { this.loadingActivities = false; });
+
+            this.components.configureViewingsSidePanel().show();
         }
 
         save() {

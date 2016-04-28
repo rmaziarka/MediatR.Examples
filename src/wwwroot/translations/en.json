@@ -8,7 +8,8 @@
     "DETAILS": "details",
     "CONFIGURE": "Configure",
     "BACK": "Back",
-    "SELECTEMPTYVALUE": "- select -"
+    "SELECTEMPTYVALUE": "- select -",
+    "LOADINGDATA": "...loading data..."
   },
   "OWNERSHIP": {
     "ADD": {
@@ -185,7 +186,10 @@
       "PARKINGSPACES": "Parking spaces",
       "AREA": "Area",
       "LANDAREA": "Land area",
-      "DESCRIPTION": "Description"
+      "DESCRIPTION": "Description",
+      "VIEWINGS": "Viewings",
+      "VIEWINGDETAILS": "Viewing details",
+      "SELECTACTIVITY": "Select activity"
     },
     "VIEW": {
       "REQUIREMENT_DETAILS": "Requirement details",
