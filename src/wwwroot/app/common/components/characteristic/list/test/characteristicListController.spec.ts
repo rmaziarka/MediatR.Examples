@@ -65,12 +65,10 @@ module Antares {
                 // arrange
                 var characteristicGroupsMock = TestHelpers.CharacteristicGroupUsageGenerator.generateMany(5);
 
-                controller.propertyTypeId = propertyTypes.House.id;
-                controller.countryId = '';
                 controller.characteristicGroups = characteristicGroupsMock;
 
                 //act
-                controller.loadCharacteristics();
+                controller.loadCharacteristics(propertyTypes.House.id, '');
 
                 // assert
                 expect(controller.characteristicGroups).toEqual([]);
@@ -80,12 +78,10 @@ module Antares {
                 // arrange
                 var characteristicGroupsMock = TestHelpers.CharacteristicGroupUsageGenerator.generateMany(5);
 
-                controller.propertyTypeId = '';
-                controller.countryId = countries.GB.id;
                 controller.characteristicGroups = characteristicGroupsMock;
 
                 //act
-                controller.loadCharacteristics();
+                controller.loadCharacteristics('', countries.GB.id);
 
                 // assert
                 expect(controller.characteristicGroups).toEqual([]);
@@ -100,11 +96,8 @@ module Antares {
                     return [200, characteristicGroupsMock];
                 });
 
-                controller.propertyTypeId = propertyTypes.House.id;
-                controller.countryId = countries.GB.id;
-
                 //act
-                controller.loadCharacteristics();
+                controller.loadCharacteristics(propertyTypes.House.id, countries.GB.id);
                 $http.flush();
 
                 // assert
@@ -151,9 +144,6 @@ module Antares {
 			it('then property characteristics values not matching current characteristic groups definition should be cleared', () =>{
                 // arrange
                 controller.characteristicsMap = characteristicsMapMock;
-                controller.propertyTypeId = propertyTypes.House.id;
-                controller.countryId = countries.GB.id;
-
 				controller.characteristicGroups = characteristicGroupsMock;
 
                 // act

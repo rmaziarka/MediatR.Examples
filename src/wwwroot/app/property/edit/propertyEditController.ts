@@ -67,7 +67,7 @@ module Antares.Property {
         }
 
         loadCharacteristics = () => {
-            this.components.characteristicList().loadCharacteristics();
+            this.components.characteristicList().loadCharacteristics(this.property.propertyTypeId, this.property.address.countryId);
         }
 
         loadAttributes = () => {
