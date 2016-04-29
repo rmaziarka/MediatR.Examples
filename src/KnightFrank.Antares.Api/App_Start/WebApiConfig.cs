@@ -20,11 +20,9 @@
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                    DateTimeZoneHandling = DateTimeZoneHandling.Utc
                 }
             });
-
-            config.Formatters.JsonFormatter.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter { AllowIntegerValues = false });
 
             config.Filters.Add(new ValidationExceptionFilterAttribute());
 

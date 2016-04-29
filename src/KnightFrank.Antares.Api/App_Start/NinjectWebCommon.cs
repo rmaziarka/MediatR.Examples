@@ -4,8 +4,6 @@
     using System.Web;
 
     using KnightFrank.Antares.Api.Core;
-    using KnightFrank.Antares.Api.Services.AzureStorage;
-    using KnightFrank.Antares.Api.Services.AzureStorage.Factories;
     using KnightFrank.Antares.Dal;
     using KnightFrank.Antares.Domain;
 
@@ -58,11 +56,6 @@
             kernel.Bind<MultiInstanceFactory>().ToMethod(ctx => t => ctx.Kernel.GetAll(t));
 
             kernel.Bind<IMediator>().To<Mediator>();
-
-            kernel.Bind<IStorageClientWrapper>().To<StorageClientWrapper>();
-            kernel.Bind<IBlobResourceFactory>().To<BlobResourceFactory>();
-            kernel.Bind<ISharedAccessBlobPolicyFactory>().To<SharedAccessBlobPolicyFactory>();
-            kernel.Bind<IStorageProvider>().To<StorageProvider>();
         }
     }
 }

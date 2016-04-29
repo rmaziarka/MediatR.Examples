@@ -3,8 +3,6 @@
     using System;
     using System.Data.Entity;
 
-    using KnightFrank.Antares.Api.IntegrationTests.MockExternalServices;
-    using KnightFrank.Antares.Api.Services.AzureStorage;
     using KnightFrank.Antares.Dal;
 
     using Microsoft.Owin.Testing;
@@ -21,11 +19,7 @@
             this.transaction = this.DataContext.Database.BeginTransaction();
 
             NinjectWebCommon.RebindAction =
-                kernel =>
-                {
-                    kernel.Rebind<KnightFrankContext>().ToMethod(context => this.DataContext);
-                    kernel.Rebind<IStorageClientWrapper>().To<MockStorageClient>();
-                };
+                kernel => { kernel.Rebind<KnightFrankContext>().ToMethod(context => this.DataContext); };
             this.Server = TestServer.Create<Startup>();
         }
 
