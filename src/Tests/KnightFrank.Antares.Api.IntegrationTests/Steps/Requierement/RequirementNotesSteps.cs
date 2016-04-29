@@ -18,14 +18,14 @@
     using TechTalk.SpecFlow.Assist;
 
     [Binding]
-    public class RequierementNotesSteps
+    public class RequirementNotesSteps
     {
         private const string ApiUrl = "/api/requirements/{0}/notes";
         private readonly BaseTestClassFixture fixture;
 
         private readonly ScenarioContext scenarioContext;
 
-        public RequierementNotesSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
+        public RequirementNotesSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {
             this.fixture = fixture;
             if (scenarioContext == null)

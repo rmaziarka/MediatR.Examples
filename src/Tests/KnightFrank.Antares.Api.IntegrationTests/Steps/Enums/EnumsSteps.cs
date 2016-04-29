@@ -45,7 +45,7 @@
         [When(@"User retrieves EnumTypes by (.*) code")]
         public void WhenUserRetrievesEnumTypesByEntityTypeCode(string code)
         {
-            string requestUrl = $"{ApiUrl}/" + code + "/items";
+            string requestUrl = $"{ApiUrl}/{code}/items";
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
 
             this.scenarioContext.SetHttpResponseMessage(response);

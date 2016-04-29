@@ -26,6 +26,10 @@
                     .Include(req => req.Contacts)
                     .Include(req => req.Address)
                     .Include(req => req.RequirementNotes)
+                    .Include(req => req.Viewings)
+                    .Include(req => req.Viewings.Select(v => v.Negotiator))
+                    .Include(req => req.Viewings.Select(v => v.Activity))
+                    .Include(req => req.Viewings.Select(v => v.Activity.Property.Address))
                     .Include(req => req.RequirementNotes.Select(rn => rn.User))
                     .SingleOrDefault(req => req.Id == message.Id);
 

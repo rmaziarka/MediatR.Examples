@@ -7,6 +7,7 @@ module Antares {
         'ui.router',
         'pascalprecht.translate',
         'app.requirement',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'fmTimepicker'
     ]);
 }

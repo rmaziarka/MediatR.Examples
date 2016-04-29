@@ -141,10 +141,11 @@
     <Compile Include="Steps\Enums\EnumsSteps.cs" />
     <Compile Include="Steps\Property\OwnershipSteps.cs" />
     <Compile Include="Steps\Property\PropertySteps.cs" />
-    <Compile Include="Steps\Requierement\RequierementNotesSteps.cs" />
-    <Compile Include="Steps\Requierement\ResidentialSalesRequierementSteps.cs" />
+    <Compile Include="Steps\Requierement\RequirementNotesSteps.cs" />
+    <Compile Include="Steps\Requierement\RequirementSteps.cs" />
     <Compile Include="Steps\Resources\ResourcesSteps.cs" />
     <Compile Include="Steps\Translations\TranslationsSteps.cs" />
+    <Compile Include="Steps\Viewings\ViewingsSteps.cs" />
     <Compile Include="Tests\Activities\ActivitiesController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -200,12 +201,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PropertyController.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\ResidentialSalesRequirement\RequirementNotes.feature.cs">
+    <Compile Include="Tests\Requirement\RequirementNotes.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RequirementNotes.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\ResidentialSalesRequirement\RequirementController.feature.cs">
+    <Compile Include="Tests\Requirement\RequirementController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RequirementController.feature</DependentUpon>
@@ -219,6 +220,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TranslationsController.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Viewings\ViewingsController.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ViewingsController.feature</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -276,7 +282,7 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>EnumsController.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\ResidentialSalesRequirement\RequirementNotes.feature">
+    <None Include="Tests\Requirement\RequirementNotes.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RequirementNotes.feature.cs</LastGenOutput>
     </None>
@@ -284,7 +290,7 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>PropertyController.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\ResidentialSalesRequirement\RequirementController.feature">
+    <None Include="Tests\Requirement\RequirementController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RequirementController.feature.cs</LastGenOutput>
     </None>
@@ -299,6 +305,10 @@
     <None Include="Tests\Translations\TranslationsController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>TranslationsController.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Viewings\ViewingsController.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ViewingsController.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup />

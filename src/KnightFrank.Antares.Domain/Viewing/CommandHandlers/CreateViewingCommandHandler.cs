@@ -7,8 +7,10 @@
     using Dal.Repository;
     using Commands;
 
+    using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
 
@@ -20,32 +22,37 @@
 
         private readonly IGenericRepository<Requirement> requirementRepository;
 
+        private readonly IReadGenericRepository<User> userRepository;
+
         private readonly IEntityValidator entityValidator;
 
         public CreateViewingCommandHandler(IGenericRepository<Viewing> viewingRepository,
             IEntityValidator entityValidator,
-            IGenericRepository<Requirement> requirementRepository)
+            IGenericRepository<Requirement> requirementRepository,
+            IReadGenericRepository<User> userRepository)
         {
             this.viewingRepository = viewingRepository;
             this.entityValidator = entityValidator;
+            this.userRepository = userRepository;
             this.requirementRepository = requirementRepository;
         }
 
+
         public Guid Handle(CreateViewingCommand message)
         {
-            this.entityValidator.ThrowExceptionIfNotExist<Activity>(message.ActivityId);
+            this.entityValidator.EntityExits<Activity>(message.ActivityId);
+            //TODO: Remove after users management is implementsd
+            message.NegotiatorId = userRepository.Get().FirstOrDefault().Id;
 
-            Requirement requirement = this.requirementRepository.GetById(message.RequirementId);
-            if (requirement == null)
-            {
-                throw new BusinessValidationException(BusinessValidationMessage.CreateEntityNotExistMessage(typeof(Requirement).ToString(), message.RequirementId));
-            }
+            Requirement requirement = this.requirementRepository.GetWithInclude(r => r.Id == message.RequirementId, r => r.Contacts).SingleOrDefault();
 
-            var applicantIds = requirement.Contacts.Select(y => y.Id);
+            this.entityValidator.EntityExits(requirement, message.RequirementId);
+
+            IEnumerable<Guid> applicantIds = requirement.Contacts.Select(y => y.Id);
 
             if (!message.AttendeesIds.All(x => applicantIds.Contains(x)))
             {
-                throw new BusinessValidationException(new BusinessValidationMessage("", ""));
+                throw new BusinessValidationException(ErrorMessage.Missing_Applicant_Id);
             }
 
             List<Contact> existingAttendees = requirement.Contacts.Where(x => message.AttendeesIds.Contains(x.Id)).ToList();

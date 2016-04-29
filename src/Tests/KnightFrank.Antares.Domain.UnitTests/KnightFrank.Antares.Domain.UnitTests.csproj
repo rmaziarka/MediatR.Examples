@@ -127,6 +127,8 @@
     <Compile Include="Company\Commands\CreateCompanyValidatorTests.cs" />
     <Compile Include="Contact\Queries\ContactQueryValidatorTests.cs" />
     <Compile Include="Contact\QueryHandlers\ContactQueryHandlerTests.cs" />
+    <Compile Include="Viewing\CommandHandlers\CreateViewingCommandHandlerTests.cs" />
+    <Compile Include="Viewing\Commands\CreateViewingCommandValidatorTests.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQueryDomainValidatorTests.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQueryValidatorTests.cs" />
     <Compile Include="Enum\QueryHandlers\EnumItemQueryHandlerTests.cs" />
@@ -143,6 +145,8 @@
     <Compile Include="Enum\Queries\EnumQueryValidatorTests.cs" />
     <Compile Include="Enum\QueryHandlers\EnumQueryHandlerTests.cs" />
     <Compile Include="FixtureExtension\OwnershipExtensions.cs" />
+    <Compile Include="Autofixture\IgnoreVirtualMembers.cs" />
+    <Compile Include="Autofixture\IgnoreVirtualMembersCustomisation.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandHandlerTests.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandDomainValidatorTests.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandValidatorTests.cs" />
@@ -189,7 +193,9 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Viewing\CommandHandlers\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -225,5 +225,15 @@
             Assert.Equal(details.Vendor, page.Activity.GetActivityVendor());
             Assert.Equal(details.Status, page.Activity.GetActivityStatus());
         }
+
+        [Then(@"Characteristics are displayed on view property page")]
+        public void CheckCharacteristics(Table table)
+        {
+            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+            Dictionary<string, string> actualDetails = page.GetCharacteristics();
+            Dictionary<string, string> characteristics = table.CreateSet<Characteristic>().ToDictionary(x => x.Name, x => x.Comment);
+
+            actualDetails.ShouldBeEquivalentTo(characteristics);
+        }
     }
 }

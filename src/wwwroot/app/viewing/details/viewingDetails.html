@@ -1,0 +1,72 @@
+<h5 translate="VIEWING.ACTIVITY">:</h5>
+<div class="panel panel-default">
+    <div class="panel-body">
+        {{ vm.activity.propertyName + ' ' + vm.activity.propertyNumber + ' ' + vm.activity.line2}}
+    </div>
+</div>
+<form>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-10">
+                <label class="required" for="viewing-date">Date:</label>
+                <div class="input-group">
+                    <input type="text"
+                           id="viewing-date"
+                           class="form-control"
+                           ng-model="vm.viewing.startDate"
+                           uib-datepicker-popup="dd-MM-yyyy"
+                           is-open="vm.dateOpened"
+                           close-text="Close"
+                           placeholder="dd-mm-yyyy"
+                           required/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openDate()"><i class="fa fa-calendar"></i></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-10 col-md-5">
+            <div class="form-group">
+                <label class="required" for="start-time">Start time:</label>
+                <fm-timepicker id="start-time"
+                               ng-model="startTime"
+                               fm-style="dropdown">
+                </fm-timepicker>
+            </div>
+        </div>
+        <div class="col-xs-10 col-md-5">
+            <div class="form-group">
+                <label class="required" for="end-time">End time:</label>
+                <fm-timepicker id="end-time"
+                               ng-model="endTime"
+                               fm-style="dropdown">
+                </fm-timepicker>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="required">Attendees:</label>
+        <div class="panel panel-default" ng-repeat="attendee in vm.attendees">
+            <div class="panel-body">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="attendee.selected"> {{:: attendee.firstName + ' ' + attendee.surname }}
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="invitation-text">Invitation text:</label>
+        <span class="pull-right character-limit">0/4000</span>
+        <textarea id="invitation-text" class="form-control" rows="6" ng-model="vm.viewing.invitationText"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="post-viewing-comment">Post-viewing comment:</label>
+        <span class="pull-right character-limit">0/4000</span>
+        <textarea id="post-viewing-comment" class="form-control" rows="6" ng-model="vm.viewing.postviewingComment" disabled="disabled"></textarea>
+    </div>
+</form>

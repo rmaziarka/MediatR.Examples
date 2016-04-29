@@ -69,7 +69,7 @@
 
         private void ReciveCharacteristicsGroup(object countryId, object propertyType)
         {
-            string requestUrl = $"{ApiUrl}?countryId=" + countryId + "&propertyTypeId=" + propertyType + "";
+            string requestUrl = $"{ApiUrl}?countryId={countryId}&propertyTypeId={propertyType}";
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
 
             this.scenarioContext.SetHttpResponseMessage(response);

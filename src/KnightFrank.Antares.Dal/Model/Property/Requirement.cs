@@ -14,6 +14,8 @@
 
         public virtual ICollection<RequirementNote> RequirementNotes { get; set; } = new List<RequirementNote>();
 
+        public virtual ICollection<Viewing> Viewings { get; set; } = new List<Viewing>();
+
         public Guid AddressId { get; set; }
 
         public virtual Address Address { get; set; }

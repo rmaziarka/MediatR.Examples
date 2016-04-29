@@ -16,20 +16,18 @@
     {
         private readonly IGenericRepository<RequirementNote> requirementNoteRepository;
         private readonly IGenericRepository<User> userRepository;
-        private readonly IDomainValidator<CreateRequirementNoteCommand> domainValidator;
         private readonly IEntityValidator entityValidator;
 
-        public CreateRequirementNoteCommandHandler(IGenericRepository<RequirementNote> requirementNoteRepository, IGenericRepository<User> userRepository, IDomainValidator<CreateRequirementNoteCommand> domainValidator, IEntityValidator entityValidator)
+        public CreateRequirementNoteCommandHandler(IGenericRepository<RequirementNote> requirementNoteRepository, IGenericRepository<User> userRepository, IDomainValidator<CreateRequirementNoteCommand> domainValidator, IEntityValidator entityValidator, IGenericRepository<Requirement> requirementRepository)
         {
             this.requirementNoteRepository = requirementNoteRepository;
             this.userRepository = userRepository;
-            this.domainValidator = domainValidator;
             this.entityValidator = entityValidator;
         }
 
         public Guid Handle(CreateRequirementNoteCommand message)
         {
-            this.entityValidator.ThrowExceptionIfNotExist<Requirement>(message.RequirementId);
+            this.entityValidator.EntityExits<Requirement>(message.RequirementId);
 
             var requirementNote = AutoMapper.Mapper.Map<RequirementNote>(message);
 

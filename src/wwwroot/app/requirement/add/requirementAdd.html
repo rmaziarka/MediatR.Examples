@@ -223,18 +223,6 @@
             </div>
         </div>
     </section>
-    <section>
-        <h3 class="page-header" translate="REQUIREMENT.ADD.VIEWINGS"></h3>
-        <div class="form-group">
-            <button type="button" class="btn btn-default" ng-click="vm.showActivitiesPanel()">
-                <i class="fa fa-plus-circle"></i>
-            </button>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-body">
-            </div>
-        </div>
-    </section>
 </div>
 <div class="col-md-12">
     <div class="form-group">
@@ -259,35 +247,5 @@
     <side-panel-footer>
         <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()"><i class="fa fa-ban"></i> Cancel</button>
         <button class="btn btn-primary" type="button" ng-click="vm.updateContacts()" ng-disabled="vm.loadingContacts"><i class="fa fa-floppy-o"></i> Save</button>
-    </side-panel-footer>
-</side-panel>
-
-<side-panel component-id="vm.componentIds.configureViewingsSidePanelId">
-    <side-panel-header>
-        <h3 translate="REQUIREMENT.ADD.SELECTACTIVITY" ng-show="!vm.viewingDetailsPanelVisiblse"></h3>
-
-        <h3 translate="REQUIREMENT.ADD.VIEWINGDETAILS" ng-show="vm.viewingDetailsPanelVisible"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <activities-list component-id="vm.componentIds.activitiesListId" ng-show="!vm.viewingDetailsPanelVisible">
-        </activities-list>
-
-        <viewing-details component-id="vm.componentIds.viewingDetailsId" ng-show="vm.viewingDetailsPanelVisible">
-        </viewing-details>
-    </side-panel-content>
-    <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-show="!vm.viewingDetailsPanelVisible">
-            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
-        </button>
-        <button class="btn btn-primary" type="button" ng-show="!vm.viewingDetailsPanelVisible">
-            <span translate="COMMON.CONFIGURE"></span> <i class="fa fa-angle-double-right"></i>
-        </button>
-
-        <button class="btn btn-default" type="button" ng-show="vm.viewingDetailsPanelVisible">
-            <i class="fa fa-angle-double-left"></i> <span translate="COMMON.BACK"></span>
-        </button>
-        <button class="btn btn-primary" type="button" ng-disabled="vm.loadingActivities" ng-show="vm.viewingDetailsPanelVisible">
-            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
-        </button>
     </side-panel-footer>
 </side-panel>

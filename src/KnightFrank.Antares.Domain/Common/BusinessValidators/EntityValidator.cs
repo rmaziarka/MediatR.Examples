@@ -15,16 +15,50 @@
         {
             this.kernel = kernel;
         }
-        public void ThrowExceptionIfNotExist<T>(Guid entityId) where T : BaseEntity
+
+        /// <summary>
+        /// Check if entity with given id exist in database and if not throw exception.
+        /// To check method is used Any() therefore entity is not retrieved from the database.
+        /// </summary>
+        /// <typeparam name="T">Database entity.</typeparam>
+        /// <param name="entityId">The entity identifier.</param>
+        /// <exception cref="BusinessValidationException"></exception>
+        public void EntityExits<T>(Guid entityId) where T : BaseEntity
         {
-            var genericRepository = this.kernel.Get<IGenericRepository<T>>();
+            IGenericRepository<T> genericRepository = this.GetEntityRepository<T>();
 
             if (genericRepository.Any(e => e.Id == entityId) == false)
             {
-                string entityName = typeof(T).Name;
-                BusinessValidationMessage buissnessMessage = BusinessValidationMessage.CreateEntityNotExistMessage(entityName, entityId);
-                throw new BusinessValidationException(buissnessMessage);
-            };
+                throw this.GetNotExistException<T>(entityId);
+            }
+        }
+
+        /// <summary>
+        /// Returns the entity if exist in database and throw exception if entity not exist.
+        /// To check method is used GetById().
+        /// </summary>
+        /// <typeparam name="T">Database entity.</typeparam>
+        /// <param name="entity">Entity to validate.</param>
+        /// <param name="entityId">Entity id.</param>
+        /// <returns>Entity instance from database.</returns>
+        public void EntityExits<T>(T entity,Guid entityId) where T : BaseEntity
+        {
+            if (entity == null)
+            {
+                throw this.GetNotExistException<T>(entityId);
+            }
+        }
+
+        private BusinessValidationException GetNotExistException<T>(Guid entityId)
+        {
+            string entityName = typeof(T).Name;
+            BusinessValidationMessage buissnessMessage = BusinessValidationMessage.CreateEntityNotExistMessage(entityName, entityId);
+            return new BusinessValidationException(buissnessMessage);
+        }
+
+        private IGenericRepository<T> GetEntityRepository<T>() where T : BaseEntity
+        {
+            return this.kernel.Get<IGenericRepository<T>>();
         }
     }
 }

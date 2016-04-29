@@ -67,7 +67,7 @@
                         .Where(e => e.State == EntityState.Added)
                         .Select(e => e.Entity)
                         .ToList()
-                        .ForEach(e => 
+                        .ForEach(e =>
                         {
                             e.CreatedDate = utcNow;
                             e.LastModifiedDate = utcNow;

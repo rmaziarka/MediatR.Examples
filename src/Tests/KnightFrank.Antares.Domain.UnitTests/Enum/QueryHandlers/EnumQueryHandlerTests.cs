@@ -30,10 +30,10 @@
             [Frozen] Mock<IReadGenericRepository<EnumLocalised>> enumLocalisedRepository,
             EnumQuery query,
             EnumQueryHandler handler,
-            List<EnumLocalised> mockedData,
             IFixture fixture)
         {
             // Arrange
+            var mockedData = new List<EnumLocalised>();
             Locale locale = fixture.Build<Locale>().With(x => x.IsoCode, isoCode).Create();
 
             EnumType enumType = fixture.Build<EnumType>().With(x => x.Code, query.Code).Create();
