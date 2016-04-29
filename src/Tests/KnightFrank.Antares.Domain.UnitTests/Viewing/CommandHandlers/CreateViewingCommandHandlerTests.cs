@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
@@ -56,6 +57,13 @@
             {
                 Contacts = contacts
             });
+            this.requirementRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Requirement, bool>>>(), It.IsAny<Expression<Func<Requirement, object>>[]>())).Returns(new Requirement[]
+            {
+                new Requirement()
+                {
+                    Contacts = contacts
+                }
+            });
             this.viewingRepository.Setup(r => r.Add(It.IsAny<Viewing>())).Returns((Viewing a) => a);
 
             this.handler = fixture.Create<CreateViewingCommandHandler>();
@@ -78,7 +86,8 @@
         public void Given_CreateViewingCommandWithInvalidRequirementId_When_Handle_Then_ShouldThrowBusinessException()
         {
             //Arrange
-            this.requirementRepository.Setup(r => r.GetById(It.IsAny<Guid>())).Returns((Requirement)null);
+            this.requirementRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Requirement, bool>>>(), It.IsAny<Expression<Func<Requirement, object>>[]>()))
+                .Returns(Enumerable.Empty<Requirement>);
             this.entityValidator.Setup(x => x.EntityExits(It.IsAny<Requirement>(),It.IsAny<Guid>()))
                 .Throws(new BusinessValidationException(It.IsAny<BusinessValidationMessage>()));
 
@@ -103,11 +112,13 @@
         public void Given_CreateViewingCommandWithInvalidAttendeesIds_When_Handle_Then_ShouldThrowBusinessException()
         {
             //Arrange
-            this.requirementRepository.Setup(r => r.GetById(It.IsAny<Guid>())).Returns(new Requirement
+            this.requirementRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Requirement, bool>>>(), It.IsAny<Expression<Func<Requirement, object>>[]>())).Returns(new Requirement[]
             {
+                new Requirement() {
                 Contacts = new List<Contact>
                 {
                     new Contact { Id = this.command.AttendeesIds[0] }
+                }
                 }
             });
 

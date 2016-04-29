@@ -44,7 +44,7 @@
             //TODO: Remove after users management is implementsd
             message.NegotiatorId = userRepository.Get().FirstOrDefault().Id;
 
-            Requirement requirement = this.requirementRepository.GetById(message.RequirementId);
+            Requirement requirement = this.requirementRepository.GetWithInclude(r => r.Id == message.RequirementId, r => r.Contacts).SingleOrDefault();
 
             this.entityValidator.EntityExits(requirement, message.RequirementId);
 
