@@ -3,6 +3,7 @@
 module Antares.Core {
     export abstract class WithPanelsBaseController {
         // TODO change to abstract property when next version of ts is released
+        // shouldn't by any type - change to specific
         components: any;
         componentIds: any;
         currentPanel: any;

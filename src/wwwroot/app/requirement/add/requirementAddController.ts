@@ -7,10 +7,8 @@ module Antares.Requirement.Add {
         requirementResource: any;
         requirement: Business.Requirement = new Business.Requirement();
         loadingContacts: boolean = false;
-        loadingActivities: boolean = false;
         entityTypeCode: string = 'Requirement';
         isSaving: boolean = false;
-        viewingDetailsPanelVisible: boolean = false;
 
         constructor(
             private dataAccessService: Services.DataAccessService,
@@ -20,14 +18,6 @@ module Antares.Requirement.Add {
             
             super(componentRegistry, $scope);
             this.requirementResource = dataAccessService.getRequirementResource();
-
-            $scope.$on('$destroy', () => {
-                this.componentRegistry.deregister(this.componentIds.contactListId);
-                this.componentRegistry.deregister(this.componentIds.contactSidePanelId);
-                this.componentRegistry.deregister(this.componentIds.activitiesListId);
-                this.componentRegistry.deregister(this.componentIds.viewingDetailsId);
-                this.componentRegistry.deregister(this.componentIds.configureViewingsPanelId);
-            });
         }
 
         updateContacts() {
@@ -55,19 +45,6 @@ module Antares.Requirement.Add {
             this.showPanel(this.components.panels.contactSidePanel);
         }
 
-        showActivitiesPanel = () => {
-            this.loadingActivities = true;
-            this.components.activitiesList()
-                .loadActivities()
-                .finally(() => { this.loadingActivities = false; });
-
-            this.showPanel(this.components.panels.configureViewingsSidePanel);
-        }
-
-        cancelConfigureViewings() {
-            this.components.panels.configureViewingsSidePanel().hide();
-        }
-
         save() {
             this.isSaving = true;
             this.requirementResource
@@ -85,21 +62,15 @@ module Antares.Requirement.Add {
         defineComponentIds() {
             this.componentIds = {
                 contactListId: 'addRequirement:contactListComponent',
-                contactSidePanelId: 'addRequirement:contactSidePanelComponent',
-                activitiesListId: 'addRequirement:activitiesListComponent',
-                viewingDetailsId: 'addRequirement:viewingDetailsComponent',
-                configureViewingsPanelId: 'addRequirement:configureViewingsSidePanelComponent',
+                contactSidePanelId: 'addRequirement:contactSidePanelComponent'
             }
         }
 
         defineComponents() {
             this.components = {
                 contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
-                activitiesList: () => { return this.componentRegistry.get(this.componentIds.activitiesListId); },
-                viewingDetails: () => { return this.componentRegistry.get(this.componentIds.viewingDetailsId); },
                 panels: {
-                    contactSidePanel: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
-                    configureViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.configureViewingsSidePanelId); }
+                    contactSidePanel: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); }
                 }
             };
         }

@@ -1,0 +1,67 @@
+<h5 translate="VIEWING.ACTIVITY">:</h5>
+<div class="panel panel-default">
+    <div class="panel-body">
+        {{:: activity.propertyName + ' ' + activity.propertyNumber + ' ' + activity.line2 }}
+    </div>
+</div>
+<form>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-8">
+                <label class="required" for="viewing-date">Date:</label>
+                <div class="input-group">
+                    <input type="text" id="viewing-date" class="form-control" placeholder="dd-mm-yyyy">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-6 col-md-3">
+            <div class="form-group">
+                timepicker
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <div class="form-group">
+                timepicker
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="required">Attendees:</label>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Robert Redford
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Robert Redford
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="invitation-text">Invitation text:</label>
+        <span class="pull-right character-limit">0/4000</span>
+        <textarea id="invitation-text" class="form-control" rows="6"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="post-viewing-comment">Post-viewing comment:</label>
+        <span class="pull-right character-limit">0/4000</span>
+        <textarea id="post-viewing-comment" class="form-control" rows="6"></textarea>
+    </div>
+</form>
