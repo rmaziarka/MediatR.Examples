@@ -79,6 +79,8 @@
         {
             //Arrange
             this.requirementRepository.Setup(r => r.GetById(It.IsAny<Guid>())).Returns((Requirement)null);
+            this.entityValidator.Setup(x => x.EntityExits(It.IsAny<Requirement>(),It.IsAny<Guid>()))
+                .Throws(new BusinessValidationException(It.IsAny<BusinessValidationMessage>()));
 
             // Act + Assert
             Assert.Throws<BusinessValidationException>(() => { this.handler.Handle(this.command); });
@@ -89,7 +91,7 @@
         public void Given_CreateViewingCommandWithInvalidActivityId_When_Handle_Then_ShouldThrowBusinessException()
         {
             //Arrange
-            this.entityValidator.Setup(x => x.ThrowExceptionIfNotExist<Activity>(It.IsAny<Guid>()))
+            this.entityValidator.Setup(x => x.EntityExits<Activity>(It.IsAny<Guid>()))
                 .Throws(new BusinessValidationException(It.IsAny<BusinessValidationMessage>()));
 
             // Act + Assert
