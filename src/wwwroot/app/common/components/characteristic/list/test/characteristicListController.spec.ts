@@ -4,6 +4,8 @@ module Antares {
     import CharacteristicListController = Common.Component.CharacteristicListController;
     import Business = Common.Models.Business;
 
+    import runDescribe = TestHelpers.runDescribe;
+
     describe('Given characteristic list controller', () => {
         var $scope: ng.IScope,
             $http: ng.IHttpBackendService,
@@ -109,11 +111,7 @@ module Antares {
         });
 
 		describe('when clearHiddenCharacteristicsDataFromProperty is called', () =>{
-			var characteristicsMock: Array<Business.Characteristic> = [
-				TestHelpers.CharacteristicGroupItemGenerator.generate({}),
-				TestHelpers.CharacteristicGroupItemGenerator.generate({}),
-				TestHelpers.CharacteristicGroupItemGenerator.generate({})
-            ];
+            var characteristicsMock: Array<Business.Characteristic> = TestHelpers.CharacteristicGroupItemGenerator.generateMany(3);
 
             var characteristicsMapMock: any = {};
             characteristicsMapMock[characteristicsMock[0].id] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId : characteristicsMock[0].id });
@@ -144,6 +142,7 @@ module Antares {
 			it('then property characteristics values not matching current characteristic groups definition should be cleared', () =>{
                 // arrange
                 controller.characteristicsMap = characteristicsMapMock;
+
 				controller.characteristicGroups = characteristicGroupsMock;
 
                 // act
@@ -153,7 +152,96 @@ module Antares {
                 expect(characteristicsMapMock['otherCharacteristicId'].isSelected).toBeFalsy();
                 expect(characteristicsMapMock['otherCharacteristicId'].text).toBe('');
 			});
+        });
 
-		});
+        describe('when isCharacteristicDataEmpty is called', () => {
+            var characteristicsMock: Array<Business.Characteristic> = TestHelpers.CharacteristicGroupItemGenerator.generateMany(3);
+            var characteristicGroupsMock = [
+                TestHelpers.CharacteristicGroupUsageGenerator.generate({ characteristicGroupItems: characteristicsMock })
+            ];
+
+            var characteristicsMapMock: any = {};
+            characteristicsMapMock[characteristicsMock[0].id] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId: characteristicsMock[0].id });
+            characteristicsMapMock[characteristicsMock[1].id] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId: characteristicsMock[1].id });
+            characteristicsMapMock['otherCharacteristicId'] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId: 'otherCharacteristicId' });
+
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                // 'any' must be used instead of 'ng.IControllerService' because there is invalid typing for this service function,
+                // that sais that 3rd argument is bool, but in fact it is an object containing bindings for controller (for comonents and directives)
+                $controller: any,
+                $httpBackend: ng.IHttpBackendService) => {
+
+                // init
+                $scope = $rootScope.$new();
+                $http = $httpBackend;
+
+                var bindings = { characteristicsMap: characteristicsMapMock };
+                controller = <CharacteristicListController>$controller('CharacteristicListController', {}, bindings);
+            }));
+
+            // Specify exact type on test cases data for strong typing within test body (helps with intelisense).
+            type TestCase = [number, boolean, string];
+            runDescribe('for characteristic ')
+                .data<TestCase>([
+                    [0, false, 'that has data then it should return false'],
+                    [2, true, 'that has no data then it should return true']])
+                .dataIt((data: TestCase) =>
+                    `${data[2]}`)
+                .run((data: TestCase) => {
+                    // arrange
+                    controller.characteristicGroups = characteristicGroupsMock;
+
+                    // act / assert
+                    expect(controller.isCharacteristicDataEmpty(characteristicsMock[data[0]])).toBe(data[1]);
+                });
+        });
+
+        describe('when isCharacteristicGroupDataEmpty is called', () => {
+            var characteristicsMock: Array<Business.Characteristic> = TestHelpers.CharacteristicGroupItemGenerator.generateMany(3);
+            var characteristicGroupsMock = [
+                TestHelpers.CharacteristicGroupUsageGenerator.generate({ characteristicGroupItems: characteristicsMock }),
+                TestHelpers.CharacteristicGroupUsageGenerator.generate({ characteristicGroupItems: [] }),
+                TestHelpers.CharacteristicGroupUsageGenerator.generate({ characteristicGroupItems: TestHelpers.CharacteristicGroupItemGenerator.generateMany(3) })
+            ];
+
+            var characteristicsMapMock: any = {};
+            characteristicsMapMock[characteristicsMock[0].id] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId: characteristicsMock[0].id });
+            characteristicsMapMock[characteristicsMock[1].id] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId: characteristicsMock[1].id });
+            characteristicsMapMock['otherCharacteristicId'] = TestHelpers.CharacteristicSelectGenerator.generate({ characteristicId: 'otherCharacteristicId' });
+
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                // 'any' must be used instead of 'ng.IControllerService' because there is invalid typing for this service function,
+                // that sais that 3rd argument is bool, but in fact it is an object containing bindings for controller (for comonents and directives)
+                $controller: any,
+                $httpBackend: ng.IHttpBackendService) => {
+
+                // init
+                $scope = $rootScope.$new();
+                $http = $httpBackend;
+
+                var bindings = { characteristicsMap: characteristicsMapMock };
+                controller = <CharacteristicListController>$controller('CharacteristicListController', {}, bindings);
+            }));
+
+            // Specify exact type on test cases data for strong typing within test body (helps with intelisense).
+            type TestCase = [number, boolean, string];
+            runDescribe('for characteristic group')
+                .data<TestCase>([
+                    [0, false, 'that contains characteristic which has data then it should return false'],
+                    [1, true, 'that contains no characteristics then it should return true'],
+                    [2, true, 'that contains characteristics but none has data then it should return true']])
+                .dataIt((data: TestCase) =>
+                    `${data[2]}`)
+                .run((data: TestCase) => {
+                    // arrange
+                    controller.characteristicGroups = characteristicGroupsMock;
+
+                    // act / assert
+                    expect(controller.isCharacteristicGroupDataEmpty(characteristicGroupsMock[data[0]])).toBe(data[1]);
+                });
+        });
+
 	});
 }

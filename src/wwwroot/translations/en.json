@@ -110,6 +110,7 @@
       "ADDRESS": "Address"
     },
     "VIEW": {
+      "CHARACTERISTICS": "Characteristics",
       "VIEW_PROPERTY": "View property",
       "DETAILS": "Details",
       "TYPE": "Type"
