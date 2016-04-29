@@ -115,7 +115,7 @@
         <activities-list component-id="vm.componentIds.activitiesListId" ng-show="!vm.viewingDetailsPanelVisible">
         </activities-list>
 
-        <viewing-details component-id="vm.componentIds.viewingDetailsId" ng-show="vm.viewingDetailsPanelVisible">
+        <viewing-details component-id="vm.componentIds.viewingDetailsId" attendees="vm.requirement.contacts" ng-show="vm.viewingDetailsPanelVisible">
         </viewing-details>
     </side-panel-content>
     <side-panel-footer>

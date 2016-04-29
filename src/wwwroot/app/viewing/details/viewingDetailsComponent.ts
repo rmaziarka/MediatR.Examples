@@ -7,7 +7,8 @@ module Antares.Component {
         templateUrl: 'app/viewing/details/viewingDetails.html',
         transclude : true,
         bindings : {
-            componentId: '<'
+            componentId: '<',
+            attendees: '<'
         }
     });
 }

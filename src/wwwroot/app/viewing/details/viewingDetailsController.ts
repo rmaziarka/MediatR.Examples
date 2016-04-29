@@ -7,16 +7,25 @@ module Antares {
         export class ViewingDetailsController {
             componentId: string;
             activity: Dto.IActivityQueryResult;
+            viewing: Dto.IViewing;
+            dateOpened: boolean = false;
+            attendees: Dto.IContact[];
+            startTime: Date;
+            endTime: Date;
 
             constructor(
                 componentRegistry: Antares.Core.Service.ComponentRegistry,
-                private dataAccessService: Antares.Services.DataAccessService) {
+                private dataAccessService: Antares.Services.DataAccessService){
 
                 componentRegistry.register(this, this.componentId);
             }
 
-            setActivity = (activity: Dto.IActivityQueryResult) => {
+            setActivity = (activity: Dto.IActivityQueryResult) =>{
                 this.activity = activity;
+            }
+
+            openDate = () =>{
+                this.dateOpened = true;
             }
         }
 
