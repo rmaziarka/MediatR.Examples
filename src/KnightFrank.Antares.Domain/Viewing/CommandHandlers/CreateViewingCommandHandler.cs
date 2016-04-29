@@ -43,7 +43,7 @@
 
             this.entityValidator.ThrowExceptionIfNotExist<Activity>(message.ActivityId);
 
-            Requirement requirement = this.requirementRepository.GetById(message.RequirementId);
+            Requirement requirement = this.requirementRepository.GetWithInclude(r => r.Id == message.RequirementId, r => r.Contacts).SingleOrDefault();
             if (requirement == null)
             {
                 throw new BusinessValidationException(BusinessValidationMessage.CreateEntityNotExistMessage(typeof(Requirement).ToString(), message.RequirementId));
@@ -53,7 +53,7 @@
 
             if (!message.AttendeesIds.All(x => applicantIds.Contains(x)))
             {
-                throw new BusinessValidationException(new BusinessValidationMessage("", ""));
+                throw new BusinessValidationException(new BusinessValidationMessage("", "Viewing attendees must be contained in requirement applicants"));
             }
 
             List<Contact> existingAttendees = requirement.Contacts.Where(x => message.AttendeesIds.Contains(x.Id)).ToList();
