@@ -6,6 +6,8 @@
 
     public interface IEntityValidator
     {
-        void ThrowExceptionIfNotExist<T>(Guid entity) where T : BaseEntity;
+        void EntityExits<T>(Guid entity) where T : BaseEntity;
+
+        void EntityExits<T>(T entity, Guid entityId) where T : BaseEntity;
     }
 }
