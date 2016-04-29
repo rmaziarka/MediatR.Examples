@@ -101,6 +101,7 @@
             this.scenarioContext.Set(page.SaveProperty(), "ViewPropertyPage");
         }
 
+        [When(@"User selects property characteristics on edit property page")]
         [When(@"User selects property characteristics on create property page")]
         public void SelectCharacteristics(Table table)
         {
@@ -114,6 +115,18 @@
                 {
                     page.AddCommentToCharacteristic(characteristic.Name, characteristic.Comment);
                 }
+            }
+        }
+
+        [When(@"User unselects characteristic on edit property page")]
+        public void UnselectsCharacteristics(Table table)
+        {
+            var page = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
+
+            IEnumerable<Characteristic> characteristics = table.CreateSet<Characteristic>();
+            foreach (Characteristic characteristic in characteristics)
+            {
+                page.UnselectCharacteristic(characteristic.Name);
             }
         }
     }
