@@ -127,6 +127,7 @@
     <Compile Include="Company\Commands\CreateCompanyValidatorTests.cs" />
     <Compile Include="Contact\Queries\ContactQueryValidatorTests.cs" />
     <Compile Include="Contact\QueryHandlers\ContactQueryHandlerTests.cs" />
+    <Compile Include="Viewing\CommandHandlers\CreateViewingCommandHandlerTests.cs" />
     <Compile Include="Viewing\Commands\CreateViewingCommandValidatorTests.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQueryDomainValidatorTests.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQueryValidatorTests.cs" />
