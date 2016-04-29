@@ -39,6 +39,15 @@
                 clientApp + '**/*.test.js',
                 clientApp + '**/*.spec.js'
             ],
+            specsAndMocksOrder: [
+                '**/testHelpers/**/*',
+                '**/common/**/*.mock.js',
+                '**/common/**/*.test.js',
+                '**/common/**/*.js',
+                '**/*.mock.js',
+                '**/*.test.js',
+                '**/*.js'
+            ],
             order: [
                 '**/app.bootstrap.js',
                 '**/app.module.js',
