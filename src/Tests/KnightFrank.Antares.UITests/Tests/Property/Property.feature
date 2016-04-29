@@ -68,6 +68,14 @@ Scenario: Create property with ownership and activity
 		And New property should be created with House property type and following attributes
 			| Bedrooms | Receptions | Bathrooms | PropertyArea               | LandArea                   | CarParkingSpaces |
 			| 2 - 4    | 1 - 3      | 2 - 3     | 2,000.12 - 4,000.12 sq. ft | 6,000.13 - 10,000.1 sq. ft | 3 - 5            |
+		And Characteristics are displayed on view property page
+			| Name          | Comment                          |
+			| New Build     |                                  |
+			| Garden        | Garden full of trees and flowers |
+			| Conservatory  |                                  |
+			| Island        | Tropic island                    |
+			| Swimming Pool |                                  |
+			| Fair          |                                  |
 	When User selects contacts for ownership on view property page
 		| FirstName | Surname   |
 		| Arthur    | Pendragon |
