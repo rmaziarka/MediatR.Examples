@@ -35,6 +35,9 @@ module Antares.Requirement.View {
                 }
             }
         }
+
+        showViewingView = (viewing: any) => {
+        }
     }
 
     angular.module('app').controller('requirementViewController', RequirementViewController);

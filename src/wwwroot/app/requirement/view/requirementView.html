@@ -51,11 +51,23 @@
 
                 <section>
                     <h3 class="page-header">Viewings</h3>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <button type="button" class="btn btn-default"><i class="fa fa-plus-circle"></i></button>
-                    </div>
+                    </div>-->
 
-                    <div>
+                    <card-list id="viewings-list" show-item-add="vm.requirement.viewings">
+                        <card-list-header>
+                        </card-list-header>
+                        <card-list-no-items ng-show="vm.requirement.viewings === 0">
+                            <p class="help-block" translate="PROPERTY.LIST.NO_ITEMS"></p>
+                        </card-list-no-items>
+                        <card-list-item ng-repeat="viewing in vm.requirement.viewings track by viewing.id">
+                            <card card-template-url="'app/requirement/view/requirementViewingsCard.html'" item="viewing" show-item-details="vm.showViewingView">
+                            </card>
+                        </card-list-item>
+                    </card-list>
+
+                    <!--<div>
                         <h5><time>12-05-2015</time></h5>
                         <div class="panel panel-default">
                             <div class="panel-body">
@@ -91,7 +103,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </section>
             </div>
         </div>
