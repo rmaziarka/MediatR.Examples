@@ -68,5 +68,14 @@ namespace KnightFrank.Antares.Domain.Properties {
                 return ResourceManager.GetString("Entity_Not_Exists", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more attendees are not on the applicant list.
+        /// </summary>
+        internal static string Missing_Applicant_Id {
+            get {
+                return ResourceManager.GetString("Missing_Applicant_Id", resourceCulture);
+            }
+        }
     }
 }

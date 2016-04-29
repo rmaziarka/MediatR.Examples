@@ -120,4 +120,7 @@
   <data name="Entity_Not_Exists" xml:space="preserve">
     <value>{0} with given id '{1}' does not exist in the database</value>
   </data>
+  <data name="Missing_Applicant_Id" xml:space="preserve">
+    <value>One or more attendees are not on the applicant list</value>
+  </data>
 </root>
