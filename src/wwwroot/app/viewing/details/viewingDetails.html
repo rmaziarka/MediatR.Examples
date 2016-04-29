@@ -1,14 +1,14 @@
-<h5 translate="VIEWING.ACTIVITY">:</h5>
+<h5 translate="VIEWING.ADD.ACTIVITY"></h5>
 <div class="panel panel-default">
     <div class="panel-body">
         {{ vm.activity.propertyName + ' ' + vm.activity.propertyNumber + ' ' + vm.activity.line2}}
     </div>
 </div>
-<form>
-    <div class="form-group">
+<form ng-submit="addViewingForm.$valid" name="addViewingForm" id="addViewingForm" method="post" novalidate>
+    <div class="form-group" ng-class="{'has-error': (addViewingForm.$submitted || addViewingForm.type.$dirty) && addViewingForm.type.$invalid}">
         <div class="row">
             <div class="col-md-10">
-                <label class="required" for="viewing-date">Date:</label>
+                <label class="required" for="viewing-date" translate="VIEWING.ADD.DATE"></label>
                 <div class="input-group">
                     <input type="text"
                            id="viewing-date"
@@ -18,7 +18,7 @@
                            is-open="vm.dateOpened"
                            close-text="Close"
                            placeholder="dd-mm-yyyy"
-                           required/>
+                           required />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openDate()"><i class="fa fa-calendar"></i></button>
                     </span>
@@ -30,25 +30,25 @@
     <div class="row">
         <div class="col-xs-10 col-md-5">
             <div class="form-group">
-                <label class="required" for="start-time">Start time:</label>
+                <label class="required" for="start-time" translate="VIEWING.ADD.STARTTIME"></label>
                 <fm-timepicker id="start-time"
-                               ng-model="startTime"
+                               ng-model="vm.startTime"
                                fm-style="dropdown">
                 </fm-timepicker>
             </div>
         </div>
         <div class="col-xs-10 col-md-5">
             <div class="form-group">
-                <label class="required" for="end-time">End time:</label>
+                <label class="required" for="end-time" translate="VIEWING.ADD.ENDTIME"></label>
                 <fm-timepicker id="end-time"
-                               ng-model="endTime"
+                               ng-model="vm.endTime"
                                fm-style="dropdown">
                 </fm-timepicker>
             </div>
         </div>
     </div>
     <div class="form-group">
-        <label class="required">Attendees:</label>
+        <label class="required" translate="VIEWING.ADD.ATTENDEES"></label>
         <div class="panel panel-default" ng-repeat="attendee in vm.attendees">
             <div class="panel-body">
                 <div class="checkbox">
@@ -60,12 +60,12 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="invitation-text">Invitation text:</label>
+        <label for="invitation-text" translate="VIEWING.ADD.INVITATIONTEXT"></label>
         <span class="pull-right character-limit">0/4000</span>
         <textarea id="invitation-text" class="form-control" rows="6" ng-model="vm.viewing.invitationText"></textarea>
     </div>
     <div class="form-group">
-        <label for="post-viewing-comment">Post-viewing comment:</label>
+        <label for="post-viewing-comment" translate="VIEWING.ADD.POSTVIEWINGCOMMENT"></label>
         <span class="pull-right character-limit">0/4000</span>
         <textarea id="post-viewing-comment" class="form-control" rows="6" ng-model="vm.viewing.postviewingComment" disabled="disabled"></textarea>
     </div>

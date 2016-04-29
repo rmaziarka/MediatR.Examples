@@ -25,7 +25,8 @@ module Antares.Requirement.View {
             this.components.activitiesList()
                 .loadActivities()
                 .finally(() => { this.loadingActivities = false; });
-
+            
+            this.components.viewingDetails().clearViewingDetails();
             this.showPanel(this.components.panels.configureViewingsSidePanel);
             this.viewingDetailsPanelVisible = false;
         }
@@ -71,6 +72,12 @@ module Antares.Requirement.View {
         }
 
         showViewingView = (viewing: any) => {
+        }
+
+        saveViewing() {
+            this.components.viewingDetails().saveViewing(this.requirement.id).then(() => {
+                this.cancelViewingDetails();
+            });
         }
     }
 

@@ -23,6 +23,15 @@ module Antares.Services {
             }
         };
 
+        private createViewingAction: ng.resource.IActionDescriptor = {
+            url: this.appConfig.rootUrl + '/api/requirements/:requirementId/viewings',
+            method: 'POST',
+            isArray: false,
+            params: {
+                propertyId: '@requirementId'
+            }
+        };
+
         private getPropertyTypesAction: ng.resource.IActionDescriptor = {
             url: this.appConfig.rootUrl + '/api/properties/types?countryCode=:countryCode&divisionCode=:divisionCode&localeCode=:localeCode',
             method: 'GET',
@@ -64,9 +73,11 @@ module Antares.Services {
                 this.$resource(this.appConfig.rootUrl + '/api/contacts/:id');
         }
 
-        getRequirementResource(): Resources.IBaseResourceClass<Resources.IRequirementResource> {
-            return <Resources.IBaseResourceClass<Resources.IRequirementResource>>
-                this.$resource(this.appConfig.rootUrl + '/api/requirements/:id');
+        getRequirementResource(): Resources.IRequirementResourceClass {
+            return <Resources.IRequirementResourceClass>
+                this.$resource(this.appConfig.rootUrl + '/api/requirements/:id', null, {
+                    createViewing: this.createViewingAction
+                });
         }
 
         getCountryResource(): Resources.ICountryResourceClass {

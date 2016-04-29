@@ -217,7 +217,15 @@
     "RECENTNOTES": "Recent notes"
   },
   "VIEWING": {
-    "ACTIVITY": "Activity"
+    "ADD": {
+      "ACTIVITY": "Activity",
+      "DATE": "Date",
+      "STARTTIME": "Start time",
+      "ENDTIME": "End time",
+      "ATTENDEES": "Attendees",
+      "INVITATIONTEXT": "Invitation text",
+      "POSTVIEWINGCOMMENT": "Post-viewing comment"
+    }
   },
   "ATTACHMENT": {
     "LIST": {

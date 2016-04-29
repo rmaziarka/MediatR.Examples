@@ -82,6 +82,10 @@ declare module Antares.Common.Models {
             getCharacteristics(params: any): ng.resource.IResource<Dto.ICharacteristicGroupUsage>;
         }
 
+        interface IRequirementResourceClass extends Resources.IBaseResourceClass<Resources.IRequirementResource> {
+            createViewing(params: any, viewing: any): ng.resource.IResource<Dto.IViewing>;
+        }
+
         // - country -
         interface ICountryLocalisedResourceParameters {
             entityTypeCode: string;
