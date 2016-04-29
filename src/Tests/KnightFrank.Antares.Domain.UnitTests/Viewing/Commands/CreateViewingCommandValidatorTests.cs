@@ -22,7 +22,6 @@
         public CreateViewingCommandValidatorTests()
         {
             IFixture fixture = new Fixture();
-
             this.cmd = fixture.Build<CreateViewingCommand>()
                               .With(x => x.StartDate, new DateTime(2000, 1, 1, 17, 30, 00))
                               .With(x => x.EndDate, new DateTime(2000, 1, 1, 18, 0, 0))
