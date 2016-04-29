@@ -31,7 +31,7 @@
     .name,
     .comment {
       display: block;
-      word-break: break-all;
+      word-wrap: break-word;
     }
 
     .comment {

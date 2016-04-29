@@ -54,7 +54,7 @@
     "UNIT": "Unit"
   },
   "UNITS": {
-    "SQUARE_FEET":  "sq. ft"
+    "SQUARE_FEET": "sq. ft"
   },
   "COMPANY": {
     "ADD": {
@@ -82,9 +82,9 @@
     "LIST_SHOULD_NOT_BE_EMPTY": "Please specify at least one applicant",
     "DATE_HAS_INVALID_FORMAT": "Date has invalid format",
     "FIELD_OVERLAPS_RANGE": "Given date range overlaps previously saved date ranges",
-    "DATE_CAN_NOT_BE_FROM_FUTURE":"Can not specify date from future",
-    "DATE_CAN_NOT_BE_GRATER_THEN":"Given date can not be later then selling date",
-    "DATE_CAN_NOT_BE_LOWER_THEN":"Given date can not be earlier then purchasing date"
+    "DATE_CAN_NOT_BE_FROM_FUTURE": "Can not specify date from future",
+    "DATE_CAN_NOT_BE_GRATER_THEN": "Given date can not be later then selling date",
+    "DATE_CAN_NOT_BE_LOWER_THEN": "Given date can not be earlier then purchasing date"
   },
   "PROPERTY": {
     "AREA": "Property area",
@@ -110,6 +110,7 @@
       "ADDRESS": "Address"
     },
     "VIEW": {
+      "CHARACTERISTICS": "Characteristics",
       "VIEW_PROPERTY": "View property",
       "DETAILS": "Details",
       "TYPE": "Type"
@@ -186,10 +187,7 @@
       "PARKINGSPACES": "Parking spaces",
       "AREA": "Area",
       "LANDAREA": "Land area",
-      "DESCRIPTION": "Description",
-      "VIEWINGS": "Viewings",
-      "VIEWINGDETAILS": "Viewing details",
-      "SELECTACTIVITY": "Select activity"
+      "DESCRIPTION": "Description"
     },
     "VIEW": {
       "REQUIREMENT_DETAILS": "Requirement details",
@@ -207,13 +205,19 @@
       "LANDAREA": "Land area",
       "DESCRIPTION": "Requirement description",
       "APPLICANT": "Applicant",
-      "CREATEDDATE": "Created"
+      "CREATEDDATE": "Created",
+      "VIEWINGS": "Viewings",
+      "VIEWINGDETAILS": "Viewing details",
+      "SELECTACTIVITY": "Select activity"
     }
   },
   "NOTES": {
     "NOTES": "Notes",
     "ADDNOTE": "Add note",
     "RECENTNOTES": "Recent notes"
+  },
+  "VIEWING": {
+    "ACTIVITY": "Activity"
   },
   "ATTACHMENT": {
     "LIST": {

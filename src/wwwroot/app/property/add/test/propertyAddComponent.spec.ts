@@ -267,6 +267,10 @@ module Antares {
                     });
 
                     it('not missing then required message should not be displayed', () => {
+                        $http.whenGET(/\/api\/characteristicGroups/).respond(() => {
+                            return [200, []];
+                        });
+
                         assertValidator.assertRequiredValidator(propertyTypes.House.id, true, pageObjectSelectors.propertyTypeSelector);
                     });
                 });

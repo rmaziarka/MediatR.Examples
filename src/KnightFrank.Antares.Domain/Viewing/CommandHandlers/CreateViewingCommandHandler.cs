@@ -10,6 +10,7 @@
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
 
@@ -21,14 +22,18 @@
 
         private readonly IGenericRepository<Requirement> requirementRepository;
 
+        private readonly IReadGenericRepository<User> userRepository;
+
         private readonly IEntityValidator entityValidator;
 
         public CreateViewingCommandHandler(IGenericRepository<Viewing> viewingRepository,
             IEntityValidator entityValidator,
-            IGenericRepository<Requirement> requirementRepository)
+            IGenericRepository<Requirement> requirementRepository,
+            IReadGenericRepository<User> userRepository)
         {
             this.viewingRepository = viewingRepository;
             this.entityValidator = entityValidator;
+            this.userRepository = userRepository;
             this.requirementRepository = requirementRepository;
         }
 
@@ -36,6 +41,8 @@
         public Guid Handle(CreateViewingCommand message)
         {
             this.entityValidator.EntityExits<Activity>(message.ActivityId);
+            //TODO: Remove after users management is implementsd
+            message.NegotiatorId = userRepository.Get().FirstOrDefault().Id;
 
             Requirement requirement = this.requirementRepository.GetById(message.RequirementId);
 

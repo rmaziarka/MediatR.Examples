@@ -67,7 +67,9 @@ module Antares.Property {
         }
 
         loadCharacteristics = () => {
-            this.components.characteristicList().loadCharacteristics();
+            // propertyTypeId and countryId must be passed directly to method even though they are binded to characteristicList
+            // - binding on value objects doesn't work for example for select-onChange event (changed values are set to binded values later then onChange method is executed)
+            this.components.characteristicList().loadCharacteristics(this.property.propertyTypeId, this.property.address.countryId);
         }
 
         loadAttributes = () => {

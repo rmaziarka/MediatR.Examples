@@ -2,8 +2,9 @@
 
 module Antares {
     import RequirementNoteAddController = RequirementNote.RequirementNoteAddController;
-    import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
+
+    import runDescribe = TestHelpers.runDescribe;
 
     describe('Given requirement note add component is displayed', () => {
         var scope: ng.IScope,
@@ -35,29 +36,36 @@ module Antares {
             }
         ));
 
-        describe('when filling note description', () => {
-            it('and value is missing then required message should be displayed', () => {
+        // RequiredValidator
+        // Specify exact type on test cases data for strong typing within test body (helps with intelisense).
+        type TestCaseForRequiredValidator = [string, boolean];
+        runDescribe('when filling note description')
+            .data<TestCaseForRequiredValidator>([
+                ['abc', true],
+                ['1', true],
+                ['', false],
+                [null, false]])
+            .dataIt((data: TestCaseForRequiredValidator) =>
+                `and value is "${data[0]}" then required message should ${data[1] ? 'not' : ''} be displayed`)
+            .run((data: TestCaseForRequiredValidator) => {
                 // arrange / act / assert
-                assertValidator.assertRequiredValidator(null, false, pageObjectSelectors.noteAddDescription);
+                assertValidator.assertRequiredValidator(data[0], data[1], pageObjectSelectors.noteAddDescription);
             });
 
-            it('and value is not missing then required message should not be displayed', () => {
+        // MaxLengthValidator
+        // Specify exact type on test cases data for strong typing within test body (helps with intelisense).
+        type TestCaseForMaxLengthValidator = [number, boolean];
+        runDescribe('when filling note description')
+            .data<TestCaseForMaxLengthValidator>([
+                [1, true],
+                [4000, true],
+                [4001, false]])
+            .dataIt((data: TestCaseForMaxLengthValidator) =>
+                `and value has length "${data[0]}" then validation message should ${data[1] ? 'not' : ''} be displayed`)
+            .run((data: TestCaseForMaxLengthValidator) => {
                 // arrange / act / assert
-                assertValidator.assertRequiredValidator('2', true, pageObjectSelectors.noteAddDescription);
+                assertValidator.assertMaxLengthValidator(data[0], data[1], pageObjectSelectors.noteAddDescription);
             });
-
-            it('and value is to long then validation message should be displayed', () => {
-                // arrange / act / assert
-                var maxLength = 4000;
-                assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.noteAddDescription);
-            });
-
-            it('and value is not to long then validation message should be displayed', () => {
-                // arrange / act / assert
-                var maxLength = 4000;
-                assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.noteAddDescription);
-            });
-        });
 
         describe('when "Save button" is clicked ', () => {
             var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate({ requirementNotes: [] });

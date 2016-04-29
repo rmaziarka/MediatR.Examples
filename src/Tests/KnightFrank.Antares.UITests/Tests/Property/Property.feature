@@ -11,6 +11,16 @@ Scenario: Create and update property
 		And User fills in address details on create property page
 			| PropertyNumber | PropertyName | Line2        | Line3 | Postcode | City   | County           |
 			| 55             | Knight Frank | Baker Street |       | W1U 8AN  | London | County of London |
+		And User selects property characteristics on create property page
+			| Name         | Comment              |
+			| Conservatory | Size about 20 sq. ft |
+			| Island       | Tropic island        |
+		And User selects property characteristics on create property page
+			| Name          |
+			| Balcony       |
+			| Duplex        |
+			| Coastal       |
+			| Swimming Pool |
 		And User clicks save button on create property page
 	Then New property should be created with address details 
 		| PropertyNumber | PropertyName | Line2        | Postcode | City   | County           |
@@ -18,6 +28,14 @@ Scenario: Create and update property
 		And New property should be created with Flat property type and following attributes
 			| Bedrooms | Receptions | Bathrooms | PropertyArea               | LandArea                   | CarParkingSpaces |
 			| 2 - 4    | 1 - 3      | 2 - 3     | 2,000.12 - 4,000.12 sq. ft | 6,000.13 - 10,000.1 sq. ft | 3 - 5            |
+		And Characteristics are displayed on view property page
+			| Name          | Comment              |
+			| Duplex        |                      |
+			| Balcony       |                      |
+			| Conservatory  | Size about 20 sq. ft |
+			| Island        | Tropic island        |
+			| Coastal       |                      |
+			| Swimming Pool |                      |
 	When User clicks edit button on view property page
 		And User selects Commercial property and Hotel type on edit property page
 		And User fills in property details on edit property page
@@ -26,6 +44,19 @@ Scenario: Create and update property
 		And User fills in address details on edit property page
 			| PropertyNumber | PropertyName | Line2 | Line3          | Postcode | City | County |
 			|                |              |       | Address line 3 | W1U 8AN  |      |        |
+		And User unselects characteristic on edit property page
+			| Name |
+			|Island|
+		And User selects property characteristics on edit property page
+			| Name              | Comment                                   |
+			| Airport           | Airport 1                                 |
+			| Conference Centre | 10 conferences rooms, each for 100 people |
+		And User selects property characteristics on edit property page
+			| Name     |
+			| Motorway |
+			| Bar      |
+			| Lift     |
+			| Spa      |
 		And User clicks save button on edit property page
 	Then Property should be updated with address details 
 		| PropertyNumber | PropertyName | Line2 | Line3          | Postcode | City | County |
@@ -33,6 +64,15 @@ Scenario: Create and update property
 		And Property should be updated with Hotel property type and following attributes
 			| PropertyArea           | LandArea                   | CarParkingSpaces | GuestRooms | FunctionRooms |
 			| 4,000.5 - 5,500 sq. ft | 6,000.13 - 10,000.1 sq. ft | 3 - 5            | 120 - 200  | 10 - 20       |
+		And Characteristics are displayed on view property page
+			| Name              | Comment                                   |
+			| Airport           | Airport 1                                 |
+			| Coastal           |                                           |
+			| Motorway          |                                           |
+			| Bar               |                                           |
+			| Conference Centre | 10 conferences rooms, each for 100 people |
+			| Lift              |                                           |
+			| Spa               |                                           |
 
 @Property
 @Ownership
@@ -51,16 +91,6 @@ Scenario: Create property with ownership and activity
 		And User fills in address details on create property page
 			| PropertyNumber | PropertyName      | Line2    | Line3 | Postcode | City   | County      |
 			| 20             | Westminster Abbey | Deans Yd |       | SW1P 3PA | London | Westminster |
-		And User selects property characteristics on create property page
-			| Name   | Comment                          |
-			| Garden | Garden full of trees and flowers |
-			| Island | Tropic island                    |
-		And User selects property characteristics on create property page
-			| Name          |
-			| New Build     |
-			| Conservatory  |
-			| Swimming Pool |
-			| Fair          |
 		And User clicks save button on create property page
 	Then New property should be created with address details 
 		| PropertyNumber | PropertyName      | Line2    | Postcode | City   | County      |

@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.AddressForm.QueryHandlers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -129,6 +130,8 @@
             EnumTypeItem otherEnumTypeItem)
         {
             // Arrange
+            country.Id = Guid.NewGuid();
+            otherCountry.Id = Guid.NewGuid();
             AddressFormQuery query = this.fixture.BuildAddressFormQuery(entityTypeCode, country.IsoCode);
             EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
 
@@ -165,6 +168,9 @@
             EnumTypeItem otherEnumTypeItem)
         {
             // Arrange
+            country.Id = Guid.NewGuid();
+            otherCountry.Id = Guid.NewGuid();
+            otherEnumTypeItem.EnumType = this.fixture.Create<EnumType>();
             AddressFormQuery query = this.fixture.BuildAddressFormQuery(entityTypeCode, country.IsoCode);
             EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
 
@@ -201,6 +207,8 @@
             EnumTypeItem otherEnumTypeItem)
         {
             // Arrange
+            country.Id = Guid.NewGuid();
+            otherCountry.Id = Guid.NewGuid();
             AddressFormQuery query = this.fixture.BuildAddressFormQuery(entityTypeCode, country.IsoCode);
             EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
 

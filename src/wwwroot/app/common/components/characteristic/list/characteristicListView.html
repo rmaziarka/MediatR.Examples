@@ -3,9 +3,9 @@
 
     <h5 ng-if="characteristicGroup.isDisplayLabel" translate="{{characteristicGroup.id | dynamicTranslate}}" data-characteristicgroup-id="{{characteristicGroup.id}}"></h5>
     <ul class="characteristics">
-        <li ng-repeat="characteristic in characteristicGroup.characteristicGroupItems | orderBy: 'id | dynamicTranslate' track by characteristic.id" ng-if="!clvm.isCharacteristicDataEmpty(characteristic)">
-            <span class="name" translate="{{characteristic.id | dynamicTranslate}}"></span>
-            <span class="comment" ng-if="!!clvm.characteristicsMap[characteristic.id].text">{{ clvm.characteristicsMap[characteristic.id].text }}</span>
+        <li ng-repeat="characteristic in characteristicGroup.characteristicGroupItems | orderBy: 'id | dynamicTranslate' track by characteristic.id" ng-if="!clvm.isCharacteristicDataEmpty(characteristic)" data-characteristic-id="{{characteristic.id}}">
+            <span class="name" data-type="characteristic-name" translate="{{characteristic.id | dynamicTranslate}}"></span>
+            <span class="comment" data-type="characteristic-comment" ng-if="!!clvm.characteristicsMap[characteristic.id].text">{{ clvm.characteristicsMap[characteristic.id].text }}</span>
         </li>
     </ul>
 

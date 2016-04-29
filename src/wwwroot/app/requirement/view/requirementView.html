@@ -50,12 +50,20 @@
                 </section>
 
                 <section>
-                    <h3 class="page-header">Viewings</h3>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-default"><i class="fa fa-plus-circle"></i></button>
-                    </div>
+                    <h3 class="page-header" translate="REQUIREMENT.VIEW.VIEWINGS"></h3>
+                    <card-list id="viewings-list" show-item-add="vm.showActivitiesPanel">
+                        <card-list-header>
+                        </card-list-header>
+                        <card-list-no-items ng-show="vm.requirement.viewings === 0">
+                            <p class="help-block" translate="PROPERTY.LIST.NO_ITEMS"></p>
+                        </card-list-no-items>
+                        <card-list-item ng-repeat="viewing in vm.requirement.viewings track by viewing.id">
+                            <card card-template-url="'app/requirement/view/requirementViewingsCard.html'" item="viewing" show-item-details="vm.showViewingView">
+                            </card>
+                        </card-list-item>
+                    </card-list>
 
-                    <div>
+                    <!--<div>
                         <h5><time>12-05-2015</time></h5>
                         <div class="panel panel-default">
                             <div class="panel-body">
@@ -78,7 +86,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div>
                         <h5><time>10-05-2015</time></h5>
                         <div class="panel panel-default">
@@ -91,131 +98,38 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </section>
             </div>
         </div>
     </div>
 </div>
 
-<side-panel>
+<<side-panel component-id="vm.componentIds.configureViewingsSidePanelId">
     <side-panel-header>
-        <h3>Select activity</h3>
+        <h3 translate="REQUIREMENT.VIEW.SELECTACTIVITY" ng-show="!vm.viewingDetailsPanelVisible"></h3>
+
+        <h3 translate="REQUIREMENT.VIEW.VIEWINGDETAILS" ng-show="vm.viewingDetailsPanelVisible"></h3>
     </side-panel-header>
     <side-panel-content>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <label>
-                    <input type="radio"> 55 Baker St.
-                </label>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <label>
-                    <input type="radio"> 55 Baker St.
-                </label>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <label>
-                    <input type="radio"> 55 Baker St.
-                </label>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <label>
-                    <input type="radio"> 55 Baker St.
-                </label>
-            </div>
-        </div>
+        <activities-list component-id="vm.componentIds.activitiesListId" ng-show="!vm.viewingDetailsPanelVisible">
+        </activities-list>
+
+        <viewing-details component-id="vm.componentIds.viewingDetailsId" ng-show="vm.viewingDetailsPanelVisible">
+        </viewing-details>
     </side-panel-content>
     <side-panel-footer>
-        <button class="btn btn-default" type="button">
+        <button class="btn btn-default" type="button" ng-click="vm.cancelConfigureViewings()" ng-show="!vm.viewingDetailsPanelVisible">
              <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
         </button>
-        <button class="btn btn-primary" type="button">
+        <button class="btn btn-primary" type="button" ng-click="vm.showViewingDetailsPanel()" ng-show="!vm.viewingDetailsPanelVisible">
             <span translate="COMMON.CONFIGURE"></span> <i class="fa fa-angle-double-right"></i>
         </button>
-    </side-panel-footer>
-</side-panel>
 
-<side-panel>
-    <side-panel-header>
-        <h3>Viewing details</h3>
-    </side-panel-header>
-    <side-panel-content>
-        <h5>Activity:</h5>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                55 Baker St.
-            </div>
-        </div>
-        <form>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-8">
-                        <label class="required" for="viewing-date">Date:</label>
-                        <div class="input-group">
-                            <input type="text" id="viewing-date" class="form-control" placeholder="dd-mm-yyyy">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-6 col-md-3">
-                    <div class="form-group">
-                        timepicker
-                    </div>
-                </div>
-                <div class="col-xs-6 col-md-3">
-                    <div class="form-group">
-                        timepicker
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="required">Attendees:</label>
-
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <label>
-                            <input type="checkbox"> Robert Redford
-                        </label>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <label>
-                            <input type="checkbox"> Robert Redford
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="invitation-text">Invitation text:</label>
-                <span class="pull-right character-limit">0/4000</span>
-                <textarea id="invitation-text" class="form-control" rows="6"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="post-viewing-comment">Post-viewing comment:</label>
-                <span class="pull-right character-limit">0/4000</span>
-                <textarea id="post-viewing-comment" class="form-control" rows="6"></textarea>
-            </div>
-        </form>
-    </side-panel-content>
-    <side-panel-footer>
-        <button class="btn btn-default" type="button">
+        <button class="btn btn-default" type="button" ng-click="vm.cancelViewingDetails()" ng-show="vm.viewingDetailsPanelVisible">
             <i class="fa fa-angle-double-left"></i> <span translate="COMMON.BACK"></span>
         </button>
-        <button class="btn btn-primary" type="button">
+        <button class="btn btn-primary" type="button" ng-disabled="vm.loadingActivities" ng-show="vm.viewingDetailsPanelVisible">
             <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
         </button>
     </side-panel-footer>

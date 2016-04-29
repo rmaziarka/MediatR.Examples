@@ -37,6 +37,9 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property
 
             this.Property(r => r.PostViewingComment)
                 .HasMaxLength(4000);
+
+            this.HasRequired<Requirement>(v => v.Requirement)
+                .WithMany(r => r.Viewings);
         }
     }
 }

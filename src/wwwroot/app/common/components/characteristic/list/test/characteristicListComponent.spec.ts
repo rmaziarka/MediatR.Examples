@@ -2,8 +2,9 @@
 
 module Antares {
     import CharacteristicListController = Common.Component.CharacteristicListController;
-    import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
+
+    import mockTranslateFilterForCharacteristicGroupItems = Mock.TranslateFilter.mockTranslateFilterForCharacteristicGroupItems;
 
     describe('Given characteristic list component', () => {
         var scope: ng.IScope,
@@ -25,22 +26,14 @@ module Antares {
         };
 
         describe('when component has been loaded', () => {
-            var characteristicGroupItemsMock: Array<Dto.ICharacteristicGroupItem> = [
-                TestHelpers.CharacteristicGroupItemGenerator.generateDto({}),
-                TestHelpers.CharacteristicGroupItemGenerator.generateDto({}),
-                TestHelpers.CharacteristicGroupItemGenerator.generateDto({})
-            ];
-
-            var disabledCharacteristicGroupItem = TestHelpers.CharacteristicGroupItemGenerator.generateDto({});
+            var characteristicGroupItemsMock: Array<Dto.ICharacteristicGroupItem> = TestHelpers.CharacteristicGroupItemGenerator.generateManyDtos(3);
+            var disabledCharacteristicGroupItem = TestHelpers.CharacteristicGroupItemGenerator.generateDto();
             disabledCharacteristicGroupItem.characteristic.isEnabled = false;
 
             var characteristicGroupsMock = [
                 TestHelpers.CharacteristicGroupUsageGenerator.generateDto({ characteristicGroupId: 'groupid1', order: 2, characteristicGroupItems: [disabledCharacteristicGroupItem] }),
                 TestHelpers.CharacteristicGroupUsageGenerator.generateDto({ characteristicGroupId: 'groupid2', order: 1, isDisplayLabel: false }),
-                TestHelpers.CharacteristicGroupUsageGenerator.generateDto({
-                    characteristicGroupId: 'groupid3', order: 3,
-                    characteristicGroupItems: characteristicGroupItemsMock
-                })
+                TestHelpers.CharacteristicGroupUsageGenerator.generateDto({ characteristicGroupId: 'groupid3', order: 3, characteristicGroupItems: characteristicGroupItemsMock })
             ];
 
             var characteristicsMapMock: any = {};
@@ -50,27 +43,7 @@ module Antares {
 
             var requestMock = new RegExp('/api/characteristicGroups\\?countryId=' + countries.GB.id + '&propertyTypeId=' + propertyTypes.House.id);
 
-            var mockTranslateFilter = (value: string) => {
-                if (value === characteristicGroupItemsMock[0].characteristic.id) {
-                    return "alfa";
-                }
-
-                if (value === characteristicGroupItemsMock[2].characteristic.id) {
-                    return "gamma";
-                }
-
-                if (value === characteristicGroupItemsMock[1].characteristic.id) {
-                    return "beta";
-                }
-
-                return value;
-            };
-
-            beforeEach(() => {
-                angular.mock.module(($provide: any) => {
-                    $provide.value('dynamicTranslateFilter', mockTranslateFilter);
-                });
-            });
+            mockTranslateFilterForCharacteristicGroupItems(characteristicGroupItemsMock, ['alfa', 'gamma', 'beta']);
 
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
@@ -90,27 +63,39 @@ module Antares {
 
                 // act
                 scope['characteristicsMap'] = characteristicsMapMock;
-                scope['propertyTypeId'] = propertyTypes.House.id;
-                scope['countryId'] = countries.GB.id;
-                element = compile('<characteristic-list property-type-id="propertyTypeId" country-id="countryId" characteristics-map="characteristicsMap"></characteristic-list>')(scope);
+                element = compile('<characteristic-list characteristics-map="characteristicsMap"></characteristic-list>')(scope);
                 scope.$apply();
                 controller = element.controller('characteristicList');
 
+                controller.loadCharacteristics(propertyTypes.House.id, countries.GB.id);
                 $http.flush();
             }));
 
-            describe('then characteristics form', () =>{
-                it('has proper characteristics grouped and ordered', () => {
+            describe('then characteristics form', () => {
+                it('displays all characteristics groups', () => {
+                    // assert
+                    var groupElements = element.find(pageObjectSelectors.characteristicsGroups);
+
+                    expect(groupElements.length).toBe(3);
+                });
+
+                it('displays characteristics groups sorted by order', () => {
                     // assert
                     var groupElements = element.find(pageObjectSelectors.characteristicsGroups);
                     var group1Element = element.find(pageObjectSelectors.characteristicsGroupIdPrefix + 'groupid1');
                     var group2Element = element.find(pageObjectSelectors.characteristicsGroupIdPrefix + 'groupid2');
                     var group3Element = element.find(pageObjectSelectors.characteristicsGroupIdPrefix + 'groupid3');
 
-                    expect(groupElements.length).toBe(3);
                     expect(groupElements[0]).toBe(group2Element[0]);
                     expect(groupElements[1]).toBe(group1Element[0]);
                     expect(groupElements[2]).toBe(group3Element[0]);
+                });
+
+                it('displays proper characteristics groups name', () => {
+                    // assert
+                    var group1Element = element.find(pageObjectSelectors.characteristicsGroupIdPrefix + 'groupid1');
+                    var group2Element = element.find(pageObjectSelectors.characteristicsGroupIdPrefix + 'groupid2');
+                    var group3Element = element.find(pageObjectSelectors.characteristicsGroupIdPrefix + 'groupid3');
 
                     expect(group1Element.find('[data-characteristicgroup-id="groupid1"]').length).toBe(1);
                     expect(group2Element.find('[data-characteristicgroup-id="groupid2"]').length).toBe(0);

@@ -22,8 +22,9 @@ module Antares {
                 this.selectedActivity = itemToSelect;
             }
 
-            getSelected = () =>{
-                return this.selectedActivity;
+            getSelectedActivity = (): Dto.IActivityQueryResult =>{
+                var activities = this.activities.filter((a: Dto.IActivityQueryResult) => { return a.id === this.selectedActivity });
+                return activities[0];
             }
 
             loadActivities = () =>{
