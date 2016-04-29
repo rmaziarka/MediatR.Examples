@@ -17,7 +17,7 @@ Scenario Outline: Retrieve error messages for improper data
 		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
-	When User creates activity for given <propertyId> property id
+	When User creates activity for given <propertyId> property id using api 
 	Then User should get <statusCode> http status code
 
 	Examples:
@@ -52,7 +52,7 @@ Scenario: Create Activity for an existing property
 			| PurchaseDate | SellDate   | BuyPrice | SellPrice |
 			| 01-05-2011   | 01-04-2013 | 1000000  |           |
 			| 01-05-2014   |            | 1000000  |           |
-	When User creates activity for given latest property id
+	When User creates activity for given latest property id using api
 	Then User should get OK http status code
 		And Created Activity is saved in database
 
@@ -82,8 +82,8 @@ Scenario: Get Activity by correct activity id
 		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
-		And User creates activity for given latest property id
-	When User gets activity
+		And Activity for latest property and PreAppraisal activity status exists in database
+	When User gets activity with latest id
 	Then User should get OK http status code
 		And Retrieved activity should be same as in database
 

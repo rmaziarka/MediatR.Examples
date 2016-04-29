@@ -67,8 +67,8 @@
             this.scenarioContext.Set(activity, "Activity");
         }
 
-        [Given(@"User creates activity for given (.*) property id")]
-        [When(@"User creates activity for given (.*) property id")]
+        [Given(@"User creates activity for given (.*) property id using api")]
+        [When(@"User creates activity for given (.*) property id using api")]
         public void CreateActivityUsingApi(string id)
         {
             string requestUrl = $"{ApiUrl}";
@@ -141,14 +141,9 @@
         [When(@"User gets activity with (.*) id")]
         public void WhenUserRetrievesActivityDetailsForGiven(string activityId)
         {
-            this.GetActivityResponse(activityId);
-        }
-
-        [When(@"User gets activity")]
-        public void WhenUserRetrievesActivity()
-        {
-            var createdActivity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
-            this.GetActivityResponse(createdActivity.Id.ToString());
+            this.GetActivityResponse(activityId.Equals("latest")
+                ? this.scenarioContext.Get<Activity>("Activity").Id.ToString()
+                : activityId);
         }
 
         [When(@"User gets activities")]

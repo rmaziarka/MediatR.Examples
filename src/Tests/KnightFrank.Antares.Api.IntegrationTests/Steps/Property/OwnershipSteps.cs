@@ -44,7 +44,7 @@
             {
                 ownership.PropertyId = this.scenarioContext.Get<Guid>("AddedPropertyId");
                 ownership.OwnershipTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Freeholder"];
-                ownership.Contacts = this.scenarioContext.Get<ICollection<Contact>>("Contact List");
+                ownership.Contacts = this.scenarioContext.Get<ICollection<Contact>>("ContactList");
             }
 
             this.fixture.DataContext.Ownerships.AddRange(ownerships);
@@ -61,7 +61,7 @@
 
             string requestUrl = string.Format($"{ApiUrl}", propertyId);
             ownership.OwnershipTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Freeholder"];
-            ownership.ContactIds = this.scenarioContext.Get<ICollection<Contact>>("Contact List").Select(x => x.Id).ToList();
+            ownership.ContactIds = this.scenarioContext.Get<ICollection<Contact>>("ContactList").Select(x => x.Id).ToList();
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, ownership);
             this.scenarioContext.SetHttpResponseMessage(response);

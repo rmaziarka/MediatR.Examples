@@ -22,14 +22,14 @@
     using Xunit;
 
     [Binding]
-    public class ResidentialSalesRequierementSteps : IClassFixture<BaseTestClassFixture>
+    public class RequirementSteps : IClassFixture<BaseTestClassFixture>
     {
         private const string ApiUrl = "/api/requirements";
         private readonly BaseTestClassFixture fixture;
 
         private readonly ScenarioContext scenarioContext;
 
-        public ResidentialSalesRequierementSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
+        public RequirementSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {
             this.fixture = fixture;
             if (scenarioContext == null)
@@ -72,7 +72,7 @@
             var requirement = table.CreateInstance<Requirement>();
 
             requirement.CreateDate = DateTime.Now;
-            requirement.Contacts.AddRange(this.scenarioContext.Get<List<Contact>>("Contact List"));
+            requirement.Contacts.AddRange(this.scenarioContext.Get<List<Contact>>("ContactList"));
 
             var location = this.scenarioContext.Get<CreateOrUpdateRequirementAddress>("Location");
             requirement.Address = new Address
@@ -95,7 +95,7 @@
         {
             string requestUrl = $"{ApiUrl}";
 
-            var contacts = this.scenarioContext.Get<List<Contact>>("Contact List");
+            var contacts = this.scenarioContext.Get<List<Contact>>("ContactList");
             var requirement = table.CreateInstance<CreateRequirementCommand>();
 
             requirement.CreateDate = DateTime.Now;
@@ -117,7 +117,7 @@
         {
             string requestUrl = $"{ApiUrl}";
 
-            var contacts = this.scenarioContext.Get<List<Contact>>("Contact List");
+            var contacts = this.scenarioContext.Get<List<Contact>>("ContactList");
             var requirement = table.CreateInstance<CreateRequirementCommand>();
             var location = this.scenarioContext.Get<CreateOrUpdateRequirementAddress>("Location");
 
@@ -183,7 +183,7 @@
             {
                 id = this.scenarioContext.Get<Requirement>("Requirement").Id.ToString();
             }
-            string requestUrl = $"{ApiUrl}/" + id + "";
+            string requestUrl = $"{ApiUrl}/{id}";
 
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
             this.scenarioContext.SetHttpResponseMessage(response);

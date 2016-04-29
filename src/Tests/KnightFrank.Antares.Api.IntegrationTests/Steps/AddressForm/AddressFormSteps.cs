@@ -74,7 +74,7 @@
         [When(@"User retrieves address template for (.*) entity type and (.*) contry code")]
         public void WhenUserTryToRetrieveContactsDetailsForFollowingData(string enumTypeItem, string countryCode)
         {
-            string requestUrl = $"{ApiUrl}?entityType=" + enumTypeItem + "&countryCode=" + countryCode + "";
+            string requestUrl = $"{ApiUrl}?entityType={enumTypeItem}&countryCode={countryCode}";
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
