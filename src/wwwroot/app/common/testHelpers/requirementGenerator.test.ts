@@ -11,7 +11,8 @@ module Antares.TestHelpers {
                 contacts: [],
                 address: null,
                 createDate: new Date(),
-                requirementNotes: []
+                requirementNotes: [],
+                viewings: []
             }
 
             return angular.extend(requirement, specificData || {});
