@@ -2,14 +2,16 @@
 
 namespace KnightFrank.Antares.Api.Controllers
 {
+    using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Security.Claims;
     using System.Web.Configuration;
     using System.Web.Http;
-
-    using KnightFrank.Antares.Domain.Enum.Queries;
-    using KnightFrank.Antares.Domain.Enum.QueryResults;
-    using KnightFrank.Antares.Domain.User.QueryResults;
+    
+    using Domain.Enum.Queries;
+    using Domain.Enum.QueryResults;
+    using Domain.User.Queries;
+    using Domain.User.QueryResults;
 
     using MediatR;
 
@@ -19,6 +21,10 @@ namespace KnightFrank.Antares.Api.Controllers
         private readonly IMediator mediator;
         private static readonly NameValueCollection config = WebConfigurationManager.AppSettings;
 
+        /// <summary>
+        ///  Initializes a new instance of the <see cref="UsersController"/> class.
+        /// </summary>
+        /// <param name="mediator"></param>
         public UsersController(IMediator mediator)
         {
             this.mediator = mediator;
@@ -42,6 +48,23 @@ namespace KnightFrank.Antares.Api.Controllers
             };
 
             return user;
+        }
+
+        /// <summary>
+        /// Get all users matching criteria within query
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("")]
+        public IEnumerable<UsersQueryResult> GetUsers([FromUri] UsersQuery query)
+        {
+            if (query == null)
+            {
+                query = new UsersQuery();
+            }
+
+            return this.mediator.Send(query);
         }
     }
 }
