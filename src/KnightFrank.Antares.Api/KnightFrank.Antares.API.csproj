@@ -60,16 +60,8 @@
       <HintPath>..\packages\FluentValidation.6.2.1.0\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="KnightFrank.Foundation, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\KnightFrank.Foundation.Antares.1.0.98.0\lib\net461\KnightFrank.Foundation.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="KnightFrank.Foundation.Antares, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\KnightFrank.Foundation.Antares.1.0.98.0\lib\net461\KnightFrank.Foundation.Antares.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MediatR, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -109,11 +101,16 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.2.1\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAzure.Storage.7.0.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -216,6 +213,13 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Services\AzureStorage\Factories\IBlobResourceFactory.cs" />
+    <Compile Include="Services\AzureStorage\Factories\ISharedAccessBlobPolicyFactory.cs" />
+    <Compile Include="Services\AzureStorage\IStorageProvider.cs" />
+    <Compile Include="Services\AzureStorage\Factories\SharedAccessBlobPolicyFactory.cs" />
+    <Compile Include="Services\AzureStorage\StorageClientWrapper.cs" />
+    <Compile Include="Services\AzureStorage\Factories\BlobResourceFactory.cs" />
+    <Compile Include="Services\AzureStorage\IStorageClientWrapper.cs" />
     <Compile Include="ContravariantBindingResolver.cs" />
     <Compile Include="Controllers\CharacteristicGroupsController.cs" />
     <Compile Include="Controllers\AddressFormsController.cs" />
@@ -228,12 +232,15 @@
     <Compile Include="Controllers\RequirementsController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
     <Compile Include="Controllers\TranslationsController.cs" />
+    <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Core\MockUserMiddleware.cs" />
     <Compile Include="Core\NinjectExtentions.cs" />
     <Compile Include="Core\ValidationExceptionFilterAttribute.cs" />
+    <Compile Include="Models\AttachmentUrlParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Services\AzureStorage\StorageProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
