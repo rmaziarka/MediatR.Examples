@@ -73,14 +73,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activity\CommandHandlers\CreateActivityAttachmentCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandler.cs" />
+    <Compile Include="Activity\Commands\CreateActivityAttachmentCommand.cs" />
+    <Compile Include="Activity\Commands\CreateActivityAttachmentCommandValidator.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
-    <Compile Include="Activity\Commands\CreateActivityCommandProfile.cs" />
+    <Compile Include="Activity\Commands\ActivityProfile.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandValidator.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandDomainValidator.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommand.cs" />
-    <Compile Include="Activity\Commands\UpdateActivityCommandProfile.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommandValidator.cs" />
     <Compile Include="Activity\Queries\ActivitiesQuery.cs" />
     <Compile Include="Activity\Queries\ActivityQuery.cs" />
@@ -120,10 +122,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CommonResources.tt</DependentUpon>
     </Compile>
+    <Compile Include="Common\BusinessValidators\EnumTypeItemValidator.cs" />
     <Compile Include="Common\BusinessValidators\IAddressValidator.cs" />
+    <Compile Include="Common\BusinessValidators\IEnumTypeItemValidator.cs" />
+    <Compile Include="Attachment\Commands\CreateAttachment.cs" />
+    <Compile Include="Attachment\Commands\CreateAttachmentProfile.cs" />
+    <Compile Include="Attachment\Commands\CreateAttachmentValidator.cs" />
     <Compile Include="Common\Commands\CreateOrUpdateAddress.cs" />
     <Compile Include="Common\Commands\CreateOrUpdateAddressValidator.cs" />
+    <Compile Include="Common\Enums\EnumType.cs" />
     <Compile Include="Common\Exceptions\ResourceNotFoundException.cs" />
+    <Compile Include="Common\Specifications\EnumTypeExists.cs" />
     <Compile Include="Common\Specifications\HasId.cs" />
     <Compile Include="Common\Specifications\IsLocalised.cs" />
     <Compile Include="Common\ValidatorCommandHandler.cs" />

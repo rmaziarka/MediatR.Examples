@@ -6,6 +6,7 @@
     using System.Net.Http;
     using System.Web.Http;
 
+    using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Activity.Queries;
@@ -97,6 +98,23 @@
         public IEnumerable<ActivityTypeQueryResult> GetActivityTypes([FromUri(Name = "")]ActivityTypeQuery query)
         {
             return this.mediator.Send(query);
+        }
+
+        /// <summary>
+        ///     Creates the attachment.
+        /// </summary>
+        /// <param name="id">Activity Id</param>
+        /// <param name="command">Attachment data</param>
+        /// <returns>Created attachment</returns>
+        [HttpPost]
+        [Route("{id}/attachments")]
+        public Attachment CreateAttachment(Guid id, CreateActivityAttachmentCommand command)
+        {
+            command.ActivityId = id;
+            this.mediator.Send(command);
+
+            // TODO Get and return attachmment.
+            return new Attachment();
         }
     }
 }

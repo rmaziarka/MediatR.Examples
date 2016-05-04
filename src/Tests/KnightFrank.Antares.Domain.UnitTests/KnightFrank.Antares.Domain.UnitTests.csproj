@@ -104,6 +104,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Activity\Commands\CreateActivityAttachmentCommandValidatorTests.cs" />
     <Compile Include="Activity\Queries\ActivityTypeQueryValidatorTests.cs" />
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandlerTests.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandlerTests.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidatorTests.cs" />
     <Compile Include="Characteristic\QueryHandlers\CharacteristicGroupsQueryHandlerTests.cs" />
     <Compile Include="Common\BusinessValidators\AddressValidatorTests.cs" />
+    <Compile Include="Attachments\Commands\CreateAttachmentValidatorTests.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidatorTests.cs" />
     <Compile Include="Common\Validator\LocaleValidatorTests.cs" />
     <Compile Include="Common\Validator\CountryValidatorTests.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="Contact\Queries\ContactQueryValidatorTests.cs" />
     <Compile Include="Contact\QueryHandlers\ContactQueryHandlerTests.cs" />
     <Compile Include="FixtureExtension\FixtureExtensions.cs" />
+    <Compile Include="FixtureExtension\ValidationResultExtensions.cs" />
     <Compile Include="Viewing\CommandHandlers\CreateViewingCommandHandlerTests.cs" />
     <Compile Include="Viewing\Commands\CreateViewingCommandValidatorTests.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQueryDomainValidatorTests.cs" />

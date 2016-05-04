@@ -70,6 +70,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enum type {0} with given item id &apos;{1}&apos; does not exist in the database..
+        /// </summary>
+        internal static string EnumType_Item_Not_Exists {
+            get {
+                return ResourceManager.GetString("EnumType_Item_Not_Exists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inconsistent address country with address form definition..
         /// </summary>
         internal static string Inconsistent_Address_Country_Id {

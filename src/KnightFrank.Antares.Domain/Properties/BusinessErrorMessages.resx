@@ -120,6 +120,9 @@
   <data name="Entity_Not_Exists" xml:space="preserve">
     <value>{0} with given id '{1}' does not exist in the database.</value>
   </data>
+  <data name="EnumType_Item_Not_Exists" xml:space="preserve">
+    <value>Enum type {0} with given item id '{1}' does not exist in the database.</value>
+  </data>
   <data name="Inconsistent_Address_Country_Id" xml:space="preserve">
     <value>Inconsistent address country with address form definition.</value>
   </data>

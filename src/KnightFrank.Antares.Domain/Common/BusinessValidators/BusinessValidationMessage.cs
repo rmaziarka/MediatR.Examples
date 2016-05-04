@@ -26,6 +26,14 @@
             string message = string.Format(errorMessageTemplate, entityType, id);
             return new BusinessValidationMessage(ErrorMessage.Entity_Not_Exists, message);
         }
+
+        public static BusinessValidationMessage CreateEnumTypeItemNotExistMessage(string enumType, Guid id)
+        {
+            string errorMessageTemplate = GetMessage(ErrorMessage.EnumType_Item_Not_Exists);
+            string message = string.Format(errorMessageTemplate, enumType, id);
+            return new BusinessValidationMessage(ErrorMessage.EnumType_Item_Not_Exists, message);
+        }
+
         public static BusinessValidationMessage CreatePropertyShouldBeEmptyMessage(string propertyName)
         {
             string errorMessageTemplate = GetMessage(ErrorMessage.Property_Should_Be_Empty);

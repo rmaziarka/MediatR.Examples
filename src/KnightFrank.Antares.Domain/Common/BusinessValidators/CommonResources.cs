@@ -8,6 +8,11 @@
         // ReSharper disable once InconsistentNaming
         Entity_Not_Exists,
         /// <summary>
+        /// Key value : Enum type {0} with given item id '{1}' does not exist in the database.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        EnumType_Item_Not_Exists,
+        /// <summary>
         /// Key value : Inconsistent address country with address form definition.
         /// </summary>
         // ReSharper disable once InconsistentNaming
@@ -23,17 +28,17 @@
         // ReSharper disable once InconsistentNaming
         Missing_Applicant_Id,
         /// <summary>
-        /// Key value : Based on the configuration '{0}' property value format is inappropriate.
+        /// Key value : The '{0}' property value format is inappropriate.
         /// </summary>
         // ReSharper disable once InconsistentNaming
         Property_Format_Is_Invalid,
         /// <summary>
-        /// Key value : Based on the configuration '{0}' property value should be empty.
+        /// Key value : The '{0}' property value should be empty.
         /// </summary>
         // ReSharper disable once InconsistentNaming
         Property_Should_Be_Empty,
         /// <summary>
-        /// Key value : Based on the configuration '{0}' property value is required.
+        /// Key value : The '{0}' property value is required.
         /// </summary>
         // ReSharper disable once InconsistentNaming
         Property_Should_Not_Be_Empty
