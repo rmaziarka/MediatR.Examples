@@ -1,4 +1,4 @@
-﻿Feature: Resources Controller	
+﻿Feature: Resources	
 
 @Resources
 Scenario: Get countries for Property of EnumTypeItem and for default location

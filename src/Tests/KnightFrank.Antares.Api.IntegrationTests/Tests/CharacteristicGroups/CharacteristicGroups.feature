@@ -1,4 +1,4 @@
-﻿Feature: CharacteristicGroupsController
+﻿Feature: Characteristic Groups
 
 Scenario: Get charactersitics
 	Given User gets House for PropertyType
