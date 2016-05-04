@@ -1,10 +1,10 @@
-<form name="activityAttachmentForm" ng-submit="activityAttachmentForm.$valid" id="activity-attachment-form">
-    <div class="form-group" ng-class="{'has-error': (activityAttachmentForm.$submitted || activityAttachmentForm.activityAttachment.$dirty) && activityAttachmentForm.activityAttachment.$invalid}">
+<form name="fileUploadForm" ng-submit="fileUploadForm.$valid" id="file-upload-form">
+    <div class="form-group" ng-class="{'has-error': (fileUploadForm.$submitted || fileUploadForm.attachment.$dirty) && fileUploadForm.attachment.$invalid}">
         <div class="row">
             <div class="col-md-12">
                 <label for="file">{{"ATTACHMENT.ADD.FILE" | translate}}</label>
             </div>
-            <div class="col-md-12" ng-show="fuvm.file != null">
+            <div class="col-md-12" ng-show="fuvm.file">
                 <button type="button" class="close close-side-panel" aria-label="Close">
                     <span aria-hidden="true" ng-click="fuvm.clearSelectedFile()">×</span>
                 </button>
@@ -12,25 +12,25 @@
             </div>
             <div class="col-md-12">
                 <span class="btn btn-default btn-file" >{{"ATTACHMENT.ADD.BROWSE" | translate}}
-                    <input id="activity-attachment" name="activityAttachment" type="file" ngf-select ng-model="fuvm.file" required>
+                    <input id="attachment" name="attachment" type="file" ngf-select ng-model="fuvm.file" required>
                 </span>
-                <div ng-messages="activityAttachmentForm.activityAttachment.$error" ng-show="activityAttachmentForm.$submitted || activityAttachmentForm.activityAttachment.$dirty">
+                <div ng-messages="fileUploadForm.attachment.$error" ng-show="fileUploadForm.$submitted || fileUploadForm.attachment.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>                
             </div>
         </div>
     </div>
-    <div class="form-group" ng-class="{'has-error': (activityAttachmentForm.$submitted || activityAttachmentForm.activityDocumentType.$dirty) && activityAttachmentForm.activityDocumentType.$invalid}">
+    <div class="form-group" ng-class="{'has-error': (fileUploadForm.$submitted || fileUploadForm.documentType.$dirty) && fileUploadForm.documentType.$invalid}">
         <div class="row">
             <div class="col-md-9">
                 <label for="type" class="required">{{"ATTACHMENT.ADD.TYPE" | translate}}</label>
-                <enum-select id="activity-document-type" 
-                    name="activityDocumentType" 
+                <enum-select id="document-type" 
+                    name="documentType" 
                     required="true"
                     ng-model="fuvm.documentTypeId" 
                     enum-type-code="{{fuvm.enumTypeActivityDocumentType}}">
                 </enum-select>
-                <div ng-messages="activityAttachmentForm.activityDocumentType.$error" ng-show="activityAttachmentForm.$submitted || activityAttachmentForm.activityDocumentType.$dirty">
+                <div ng-messages="fileUploadForm.documentType.$error" ng-show="fileUploadForm.$submitted || fileUploadForm.documentType.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
