@@ -9,7 +9,7 @@
     {
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "activity-add-button");
-        private readonly ElementLocator status = new ElementLocator(Locator.Id, "status");
+        private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, "#status > select");
         private readonly ElementLocator type = new ElementLocator(Locator.CssSelector, "#addActivityForm #type");
         private readonly ElementLocator vendor = new ElementLocator(Locator.CssSelector, "#activity-add-vendors span.ng-binding");
 

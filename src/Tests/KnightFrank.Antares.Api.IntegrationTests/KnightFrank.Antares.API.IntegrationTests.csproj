@@ -54,11 +54,39 @@
       <HintPath>..\..\packages\FluentAssertions.4.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="KnightFrank.Foundation, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\KnightFrank.Foundation.Antares.1.0.98.0\lib\net461\KnightFrank.Foundation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="KnightFrank.Foundation.Antares, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\KnightFrank.Foundation.Antares.1.0.98.0\lib\net461\KnightFrank.Foundation.Antares.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MediatR, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MediatR.2.0.2\lib\net45\MediatR.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Data.Edm.5.6.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Data.OData.5.6.4\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Data.Services.Client.5.6.4\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
@@ -74,6 +102,14 @@
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.2.1\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\WindowsAzure.Storage.7.0.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -88,9 +124,14 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Spatial, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Spatial.5.6.4\lib\net40\System.Spatial.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
@@ -126,10 +167,12 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="MockExternalServices\MockStorageClient.cs" />
     <Compile Include="Steps\Activities\ActivitiesSteps.cs" />
     <Compile Include="Steps\Activities\ActivitiesTypesSteps.cs" />
     <Compile Include="Steps\CharacteristicGroups\CharacteristicGroupsSteps.cs" />
     <Compile Include="Steps\Companies\CompaniesSteps.cs" />
+    <Compile Include="Steps\Services\ServicesSteps.cs" />
     <Compile Include="Steps\Property\PropertyTypesSteps.cs" />
     <Compile Include="Extensions\FixtureExtension.cs" />
     <Compile Include="Fixtures\BaseTestClassFixture.cs" />
@@ -146,30 +189,35 @@
     <Compile Include="Steps\Resources\ResourcesSteps.cs" />
     <Compile Include="Steps\Translations\TranslationsSteps.cs" />
     <Compile Include="Steps\Viewings\ViewingsSteps.cs" />
-    <Compile Include="Tests\Activities\ActivitiesController.feature.cs">
+    <Compile Include="Tests\Activities\Activities.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ActivitiesController.feature</DependentUpon>
+      <DependentUpon>Activities.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Activities\ActivitiesType.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ActivitiesType.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\AddressForm\AddressFormController.feature.cs">
+    <Compile Include="Tests\AddressForm\AddressForm.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AddressFormController.feature</DependentUpon>
+      <DependentUpon>AddressForm.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\CharacteristicGroups\CharacteristicGroupsController.feature.cs">
+    <Compile Include="Tests\CharacteristicGroups\CharacteristicGroups.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CharacteristicGroupsController.feature</DependentUpon>
+      <DependentUpon>CharacteristicGroups.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Companies\CompaniesController.feature.cs">
+    <Compile Include="Tests\Companies\Companies.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CompaniesController.feature</DependentUpon>
+      <DependentUpon>Companies.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Services\Services.feature.cs">
+      <DependentUpon>Services.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Tests\Property\PropertyAttributes.feature.cs">
       <AutoGen>True</AutoGen>
@@ -181,50 +229,50 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PropertyTypes.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Contacts\ContactController.feature.cs">
+    <Compile Include="Tests\Contacts\Contact.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ContactController.feature</DependentUpon>
+      <DependentUpon>Contact.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Enums\EnumsController.feature.cs">
+    <Compile Include="Tests\Enums\Enums.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EnumsController.feature</DependentUpon>
+      <DependentUpon>Enums.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Property\PropertyOwnership.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PropertyOwnership.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Property\PropertyController.feature.cs">
+    <Compile Include="Tests\Property\Property.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PropertyController.feature</DependentUpon>
+      <DependentUpon>Property.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Requirement\RequirementNotes.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RequirementNotes.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Requirement\RequirementController.feature.cs">
+    <Compile Include="Tests\Requirement\Requirement.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RequirementController.feature</DependentUpon>
+      <DependentUpon>Requirement.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\ResourcesController.feature.cs">
+    <Compile Include="Tests\Resources\Resources.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ResourcesController.feature</DependentUpon>
+      <DependentUpon>Resources.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Translations\TranslationsController.feature.cs">
+    <Compile Include="Tests\Translations\Translations.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TranslationsController.feature</DependentUpon>
+      <DependentUpon>Translations.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Viewings\ViewingsController.feature.cs">
+    <Compile Include="Tests\Viewings\Viewings.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ViewingsController.feature</DependentUpon>
+      <DependentUpon>Viewings.feature</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -246,25 +294,29 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <None Include="Tests\Activities\ActivitiesController.feature">
+    <None Include="Tests\Activities\Activities.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ActivitiesController.feature.cs</LastGenOutput>
+      <LastGenOutput>Activities.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Activities\ActivitiesType.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ActivitiesType.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\AddressForm\AddressFormController.feature">
+    <None Include="Tests\AddressForm\AddressForm.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>AddressFormController.feature.cs</LastGenOutput>
+      <LastGenOutput>AddressForm.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\CharacteristicGroups\CharacteristicGroupsController.feature">
+    <None Include="Tests\CharacteristicGroups\CharacteristicGroups.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>CharacteristicGroupsController.feature.cs</LastGenOutput>
+      <LastGenOutput>CharacteristicGroups.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\Companies\CompaniesController.feature">
+    <None Include="Tests\Companies\Companies.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>CompaniesController.feature.cs</LastGenOutput>
+      <LastGenOutput>Companies.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Services\Services.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Services.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Property\PropertyAttributes.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
@@ -274,41 +326,41 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>PropertyTypes.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\Contacts\ContactController.feature">
+    <None Include="Tests\Contacts\Contact.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ContactController.feature.cs</LastGenOutput>
+      <LastGenOutput>Contact.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\Enums\EnumsController.feature">
+    <None Include="Tests\Enums\Enums.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>EnumsController.feature.cs</LastGenOutput>
+      <LastGenOutput>Enums.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Requirement\RequirementNotes.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RequirementNotes.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\Property\PropertyController.feature">
+    <None Include="Tests\Property\Property.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>PropertyController.feature.cs</LastGenOutput>
+      <LastGenOutput>Property.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\Requirement\RequirementController.feature">
+    <None Include="Tests\Requirement\Requirement.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>RequirementController.feature.cs</LastGenOutput>
+      <LastGenOutput>Requirement.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Property\PropertyOwnership.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>PropertyOwnership.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\ResourcesController.feature">
+    <None Include="Tests\Resources\Resources.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ResourcesController.feature.cs</LastGenOutput>
+      <LastGenOutput>Resources.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\Translations\TranslationsController.feature">
+    <None Include="Tests\Translations\Translations.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>TranslationsController.feature.cs</LastGenOutput>
+      <LastGenOutput>Translations.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\Viewings\ViewingsController.feature">
+    <None Include="Tests\Viewings\Viewings.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ViewingsController.feature.cs</LastGenOutput>
+      <LastGenOutput>Viewings.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup />

@@ -41,18 +41,15 @@ module Antares {
             }
         };
 
-        var activityStatuses: any = {
-            items:
-            [
-                { id: "111", value: "Pre-appraisal", code: "PreAppraisal" },
-                { id: "testStatus222", value: "Market appraisal", code: "MarketAppraisal" },
-                { id: "333", value: "Not selling", code: "NotSelling" }
-            ]
-        };
+        var activityStatuses = [
+            { id: "111", code: "PreAppraisal" },
+            { id: "testStatus222", code: "MarketAppraisal" },
+            { id: "333", code: "NotSelling" }
+        ];
 
         describe('when activity is loaded', () =>{
             var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate({
-                activityStatusId: 'testStatus222',
+                activityStatusId: activityStatuses[1].id,
                 marketAppraisalPrice : 99,
                 recommendedPrice : 1.1,
                 vendorEstimatedPrice : 55.05
@@ -62,6 +59,7 @@ module Antares {
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
                 $state: ng.ui.IStateService,
+                enumService: Mock.EnumServiceMock,
                 $httpBackend: ng.IHttpBackendService) =>{
 
                 // init
@@ -72,9 +70,9 @@ module Antares {
 
                 // http backend
                 Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
-                $http.expectGET(/\/api\/enums\/ActivityStatus\/items/).respond(() => {
-                    return [200, activityStatuses];
-                });
+
+                // enums
+                enumService.setEnum(Dto.EnumTypeCode.ActivityStatus.toString(), activityStatuses);
 
                 // compile
                 scope['activity'] = activityMock;
@@ -115,7 +113,7 @@ module Antares {
                     var activityStatusSelectedElement = activityStatusElement.find("option:selected");
 
                     expect(activityStatusElement.length).toBe(1);
-                    expect(activityStatusSelectedElement.text()).toBe('Market appraisal');
+                    expect(activityStatusSelectedElement.val()).toBe(activityMock.activityStatusId);
                 });
 
                 it('then valuation prices for activity are displayed and should have proper data', () => {
@@ -151,9 +149,6 @@ module Antares {
 
                 // http backend
                 Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
-                $http.expectGET(/\/api\/enums\/ActivityStatus\/items/).respond(() => {
-                    return [200, activityStatuses];
-                });
             }));
 
             it('when no vendors then "no items" element should be visible', () => {
@@ -230,9 +225,6 @@ module Antares {
 
                 // http backend
                 Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
-                $http.expectGET(/\/api\/enums\/ActivityStatus\/items/).respond(() => {
-                    return [200, activityStatuses];
-                });
 
                 // compile
                 scope['activity'] = TestHelpers.ActivityGenerator.generate();
@@ -266,9 +258,6 @@ module Antares {
 
                 // http backend
                 Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
-                $http.expectGET(/\/api\/enums\/ActivityStatus\/items/).respond(() => {
-                    return [200, activityStatuses];
-                });
 
                 // compile
                 scope['activity'] = TestHelpers.ActivityGenerator.generate();
@@ -350,9 +339,6 @@ module Antares {
 
                 // http backend
                 Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
-                $http.expectGET(/\/api\/enums\/ActivityStatus\/items/).respond(() => {
-                    return [200, activityStatuses];
-                });
 
                 // compile
                 scope['activity'] = activityMock;

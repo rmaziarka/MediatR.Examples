@@ -2,10 +2,9 @@
 
 @Requirement
 Scenario: Create new residential sales requirement
-	Given User navigates to create contact page
-		And User creates contacts on create contact page
-			| Title | FirstName | Surname |
-			| Miss  | Alana     | Jones   |
+	Given Contacts are created in database
+		| Title | FirstName | Surname |
+		| Miss  | Alana     | Jones   |
 	When User navigates to create residential sales requirement page
 		And User selects contacts on create residential sales requirement page
 			| FirstName | Surname |

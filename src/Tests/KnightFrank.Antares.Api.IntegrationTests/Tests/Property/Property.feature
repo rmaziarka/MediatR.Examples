@@ -1,4 +1,4 @@
-﻿Feature: Add, update and view property
+﻿Feature: Property
 
 @Property
 @Attributes

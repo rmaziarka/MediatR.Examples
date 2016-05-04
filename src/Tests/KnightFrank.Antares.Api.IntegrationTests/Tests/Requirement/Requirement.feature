@@ -56,7 +56,7 @@ Scenario Outline: Save residential sales requirement without data
 
 @ResidentialSalesRequirements
 Scenario: Save residential sales requirement with invalid contact
-	Given User gets GB address form for Property and country details
+	Given User gets GB address form for Requirement and country details
 	When User sets locations details for the requirement
 		| Postcode | City   | Line2   |
 		| 1234     | London | Big Ben |

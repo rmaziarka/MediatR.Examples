@@ -1,7 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.Property.CommandHandlers
 {
     using System;
-    using System.Linq;
 
     using AutoMapper;
 
@@ -10,6 +9,7 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Antares.Domain.Property.Commands;
 
@@ -19,15 +19,22 @@
         private readonly IGenericRepository<Property> propertyRepository;
 
         private readonly IDomainValidator<CreatePropertyCommand> domainValidator;
+        private readonly IAddressValidator addressValidator;
 
-        public CreatePropertyCommandHandler(IGenericRepository<Property> propertyRepository, IDomainValidator<CreatePropertyCommand> domainValidator)
+        public CreatePropertyCommandHandler(
+            IGenericRepository<Property> propertyRepository,
+            IDomainValidator<CreatePropertyCommand> domainValidator,
+            IAddressValidator addressValidator)
         {
             this.propertyRepository = propertyRepository;
             this.domainValidator = domainValidator;
+            this.addressValidator = addressValidator;
         }
 
         public Guid Handle(CreatePropertyCommand message)
         {
+            this.addressValidator.Validate(message.Address);
+
             ValidationResult validationResult = this.domainValidator.Validate(message);
 
             if (!validationResult.IsValid)

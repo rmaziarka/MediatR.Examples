@@ -8,12 +8,11 @@
     using FluentAssertions;
 
     using FluentValidation.Results;
-    using FluentValidation.TestHelper;
 
-    using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.Common.Commands;
     using KnightFrank.Antares.Domain.Property.Commands;
 
     using Moq;
@@ -32,7 +31,6 @@
         private readonly Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository;
         private readonly Mock<IGenericRepository<PropertyTypeDefinition>> propertyTypeDefinitionRepository;
         private readonly Mock<IGenericRepository<PropertyType>> propertyTypeRepository;
-        private readonly Mock<IGenericRepository<AddressForm>> addressFormRepository;
         private readonly Mock<IGenericRepository<PropertyAttributeForm>> propertyAttributeFormRepository;
         private readonly UpdatePropertyCommand command;
         private readonly UpdatePropertyCommandValidator validator;
@@ -46,7 +44,7 @@
             fixture.Behaviors.Add(new OmitOnRecursionBehavior());
 
             this.command = fixture.Build<UpdatePropertyCommand>()
-                                  .With(p => p.Address, new CreateOrUpdatePropertyAddress())
+                                  .With(p => p.Address, fixture.Create<CreateOrUpdateAddress>())
                                   .With(p => p.PropertyTypeId, Guid.NewGuid())
                                   .With(p => p.DivisionId, Guid.NewGuid())
                                   .With(p => p.AttributeValues, new CreateOrUpdatePropertyAttributeValues())
@@ -55,7 +53,6 @@
             this.enumTypeItemRepository = fixture.Freeze<Mock<IGenericRepository<EnumTypeItem>>>();
             this.propertyTypeDefinitionRepository = fixture.Freeze<Mock<IGenericRepository<PropertyTypeDefinition>>>();
             this.propertyTypeRepository = fixture.Freeze<Mock<IGenericRepository<PropertyType>>>();
-            this.addressFormRepository = fixture.Freeze<Mock<IGenericRepository<AddressForm>>>();
             this.propertyAttributeFormRepository = fixture.Freeze<Mock<IGenericRepository<PropertyAttributeForm>>>();
 
             this.enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
@@ -127,8 +124,7 @@
                     PropertyTypeId = this.command.PropertyTypeId
                 }
             };
-
-            this.addressFormRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new AddressForm { CountryId = countryId });
+            
             this.enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
             this.propertyTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyTypeDefinition, bool>>>()))
                 .Returns(
@@ -172,7 +168,6 @@
                 }
             };
 
-            this.addressFormRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new AddressForm { CountryId = countryId });
             this.enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
             this.propertyTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<PropertyTypeDefinition, bool>>>()))
                 .Returns(

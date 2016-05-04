@@ -1,8 +1,8 @@
-﻿namespace KnightFrank.Antares.Domain.Property.Commands
+﻿namespace KnightFrank.Antares.Domain.Common.Commands
 {
     using System;
 
-    public class CreateOrUpdatePropertyAddress
+    public class CreateOrUpdateAddress
     {
         public Guid CountryId { get; set; }
 

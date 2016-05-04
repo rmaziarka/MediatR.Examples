@@ -178,7 +178,8 @@
             actualActivity.ShouldBeEquivalentTo(activity, options => options
                 .Excluding(x => x.Property)
                 .Excluding(x => x.ActivityStatus)
-                .Excluding(x => x.ActivityType));
+                .Excluding(x => x.ActivityType)
+                .Excluding(x => x.Attachments));
 
             actualActivity.ActivityStatus.Code.ShouldBeEquivalentTo("PreAppraisal");
         }
@@ -193,7 +194,8 @@
                 .Excluding(a => a.ActivityStatus)
                 .Excluding(a => a.Contacts)
                 .Excluding(a => a.Property)
-                .Excluding(a => a.ActivityType));
+                .Excluding(a => a.ActivityType)
+                .Excluding(a => a.Attachments));
         }
 
         [Then(@"Retrieved activities should be the same as in database")]

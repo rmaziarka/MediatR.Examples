@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using KnightFrank.Antares.Domain.Common.Commands;
+
     using MediatR;
 
     public class CreateRequirementCommand : IRequest<Guid>
@@ -16,7 +18,7 @@
 
         public IList<Guid> ContactIds { get; set; } 
 
-        public CreateOrUpdateRequirementAddress Address { get; set; }
+        public CreateOrUpdateAddress Address { get; set; }
 
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }

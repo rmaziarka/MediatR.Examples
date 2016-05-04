@@ -104,11 +104,11 @@ module Antares {
                 return createViewingCommand;
             }
 
-            combineDateWithTime(date: Date, time: Date): Date {
+            combineDateWithTime(date: Date | string, time: Date): Date {
                 return new Date(
-                    date.getFullYear(),
-                    date.getMonth(),
-                    date.getDate(),
+                    (<Date>date).getFullYear(),
+                    (<Date>date).getMonth(),
+                    (<Date>date).getDate(),
                     time.getHours(),
                     time.getMinutes(),
                     time.getSeconds(),

@@ -8,10 +8,10 @@
     using FluentValidation;
     using FluentValidation.Results;
 
-    using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.Common.Commands;
     using KnightFrank.Antares.Domain.Common.Validator;
 
     using Attribute = KnightFrank.Antares.Dal.Model.Attribute.Attribute;
@@ -22,10 +22,7 @@
         private readonly IGenericRepository<PropertyTypeDefinition> propertyTypeDefinitionRepository;
         private readonly IGenericRepository<PropertyAttributeForm> propertyAttributeFormRepository;
 
-        public UpdatePropertyCommandValidator(
-            IGenericRepository<AddressFieldDefinition> addressFieldDefinitionRepository,
-            IGenericRepository<AddressForm> addressFormRepository,
-            IGenericRepository<PropertyType> propertyTypeRepository,
+        public UpdatePropertyCommandValidator(IGenericRepository<PropertyType> propertyTypeRepository,
             IGenericRepository<PropertyTypeDefinition> propertyTypeDefinitionRepository,
             IGenericRepository<EnumTypeItem> enumTypeItemRepository,
             IGenericRepository<PropertyAttributeForm> propertyAttributeFormRepository)
@@ -37,7 +34,7 @@
             this.RuleFor(v => v.Id).NotNull();
             this.RuleFor(x => x.Address).NotNull();
             this.RuleFor(x => x.Address)
-                .SetValidator(new CreateOrUpdatePropertyAddressValidator(addressFieldDefinitionRepository, addressFormRepository));
+                .SetValidator(new CreateOrUpdateAddressValidator());
             this.RuleFor(v => v.PropertyTypeId).NotEqual(Guid.Empty).NotNull();
 
             this.RuleFor(x => x.PropertyTypeId).SetValidator(new PropertyTypeValidator(propertyTypeRepository));

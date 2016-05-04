@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Domain.Common.Commands;
     using KnightFrank.Antares.Domain.Requirement.Commands;
 
     using Newtonsoft.Json;
@@ -43,7 +44,7 @@
         [When(@"User sets locations details for the requirement")]
         public void SetRequirementLocationDetails(Table table)
         {
-            var details = table.CreateInstance<CreateOrUpdateRequirementAddress>();
+            var details = table.CreateInstance<CreateOrUpdateAddress>();
             details.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
             details.CountryId = this.scenarioContext.Get<Guid>("CountryId");
 
@@ -53,7 +54,7 @@
         [When(@"User sets locations details for the requirement with max length fields")]
         public void SetRequirementLocationDetailsWithMaxFields()
         {
-            var details = new CreateOrUpdateRequirementAddress
+            var details = new CreateOrUpdateAddress
             {
                 City = StringExtension.GenerateMaxAlphanumericString(128),
                 Line2 = StringExtension.GenerateMaxAlphanumericString(128),
@@ -74,7 +75,7 @@
             requirement.CreateDate = DateTime.Now;
             requirement.Contacts.AddRange(this.scenarioContext.Get<List<Contact>>("ContactList"));
 
-            var location = this.scenarioContext.Get<CreateOrUpdateRequirementAddress>("Location");
+            var location = this.scenarioContext.Get<CreateOrUpdateAddress>("Location");
             requirement.Address = new Address
             {
                 Line2 = location.Line2,
@@ -101,7 +102,7 @@
             requirement.CreateDate = DateTime.Now;
             requirement.ContactIds = contacts.Select(contact => contact.Id).ToList();
             
-            requirement.Address = this.scenarioContext.Get<CreateOrUpdateRequirementAddress>("Location");
+            requirement.Address = this.scenarioContext.Get<CreateOrUpdateAddress>("Location");
             if (requirement.Description.ToLower().Equals("max"))
             {
                 requirement.Description = StringExtension.GenerateMaxAlphanumericString(4000);
@@ -119,7 +120,7 @@
 
             var contacts = this.scenarioContext.Get<List<Contact>>("ContactList");
             var requirement = table.CreateInstance<CreateRequirementCommand>();
-            var location = this.scenarioContext.Get<CreateOrUpdateRequirementAddress>("Location");
+            var location = this.scenarioContext.Get<CreateOrUpdateAddress>("Location");
 
             requirement.CreateDate = DateTime.Now;
 
@@ -129,7 +130,7 @@
             }
             if (missingData.Equals("country"))
             {
-                requirement.Address = new CreateOrUpdateRequirementAddress
+                requirement.Address = new CreateOrUpdateAddress
                 {
                     AddressFormId = location.AddressFormId,
                     CountryId = Guid.NewGuid(),
@@ -140,7 +141,7 @@
             }
             else if (missingData.Equals("address form"))
             {
-                requirement.Address = new CreateOrUpdateRequirementAddress
+                requirement.Address = new CreateOrUpdateAddress
                 {
                     AddressFormId = Guid.NewGuid(),
                     CountryId = location.CountryId,
@@ -169,7 +170,7 @@
             requirement.CreateDate = DateTime.Now;
             requirement.ContactIds = new List<Guid> { Guid.NewGuid() };
 
-            requirement.Address = this.scenarioContext.Get<CreateOrUpdateRequirementAddress>("Location");
+            requirement.Address = this.scenarioContext.Get<CreateOrUpdateAddress>("Location");
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
 

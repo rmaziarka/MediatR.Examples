@@ -8,6 +8,8 @@ module Antares {
         'pascalprecht.translate',
         'app.requirement',
         'ui.bootstrap',
-        'fmTimepicker'
+        'fmTimepicker',
+        'ui.bootstrap',
+        'ngFileUpload'
     ]);
 }

@@ -175,28 +175,33 @@ module Antares {
             });
         });
 
-        describe('and add activity button is clicked', () =>{
+        describe('and add activity button is clicked', () => {
+            var activityTypes: any =
+                [
+                    { id: "1", order: 1 },
+                    { id: "2", order: 2 },
+                    { id: "3", order: 3 }
+                ];
+
+            var activityStatuses = [
+                { id: "111", code: "PreAppraisal" },
+                { id: "testStatus222", code: "MarketAppraisal" },
+                { id: "333", code: "NotSelling" }
+            ];
+
             var propertyMock = TestHelpers.PropertyGenerator.generate();
-            var defaultActivityStatusSelectId = "2";
-            var defaultActivityStatusSelectCode = "PreAppraisal";
+            var defaultActivityStatus = _.find(activityStatuses, { 'code': 'PreAppraisal' });
 
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
+                enumService: Mock.EnumServiceMock,
                 $httpBackend: ng.IHttpBackendService) => {
 
                 $http = $httpBackend;
 
-                // activity status http mock
-                $http.whenGET(/\/api\/enums\/ActivityStatus\/items/).respond(() => {
-                    return [200, {
-                        items:  [
-                                    <Dto.IEnumTypeItem>{id:'1',code:'Market', value:'Market', enumTypeId: ''},
-                                    <Dto.IEnumTypeItem>{id: defaultActivityStatusSelectId, code:defaultActivityStatusSelectCode, value:'Pre-Appraisal', enumTypeId: ''},
-                                    <Dto.IEnumTypeItem>{id:'3',code:'Other', value:'Other', enumTypeId: ''}
-                                ]
-                            }];
-                });
+                // enums
+                enumService.setEnum(Dto.EnumTypeCode.ActivityStatus.toString(), activityStatuses);
 
                 // activity type http mock
                 var query = '/api/activities/types?countryCode=GB&propertyTypeId=' + propertyMock.propertyTypeId;
@@ -229,7 +234,7 @@ module Antares {
                 // assert
                 var activityAddController = <Antares.Activity.ActivityAddController> element.find('activity-add').controller('activityAdd');
 
-                expect(activityAddController.selectedActivityStatus.id).toBe(defaultActivityStatusSelectId);
+                expect(activityAddController.selectedActivityStatusId).toBe(defaultActivityStatus.id);
                 expect(activityAddController.selectedActivityType).toBe(null);
             });
 
@@ -248,15 +253,45 @@ module Antares {
                     addActivityButton.click();
                 })
 
-                it('default values are set', () => {
+                it('default values are set', () =>{
                     // assert
                     var activityAddController = <Antares.Activity.ActivityAddController> element.find('activity-add').controller('activityAdd');
 
-                    expect(activityAddController.selectedActivityStatus.id).toBe(defaultActivityStatusSelectId);
+                    expect(activityAddController.selectedActivityStatusId).toBe(defaultActivityStatus.id);
                     expect(activityAddController.selectedActivityType).toBe(null);
                 });
-            })
+            });
 
+            describe('and "Save button" is clicked ', () => {
+                it('then new activity should be added to property activity list', () =>{
+                    var activityAddController: Activity.ActivityAddController = element.find('activity-add').controller('activityAdd');
+                    activityAddController.activityStatuses = activityStatuses;
+                    activityAddController.activityTypes = activityTypes;
+                    activityAddController.selectedActivityStatusId = _.find(activityStatuses, { 'code' : 'PreAppraisal' }).id;
+                    activityAddController.selectedActivityType = _.find(activityTypes, { id : "1" });
+
+                    var expectedResponse = new Business.Activity();
+                    expectedResponse.propertyId = propertyMock.id;
+                    expectedResponse.activityStatusId = activityAddController.selectedActivityStatusId;
+                    expectedResponse.activityTypeId = activityAddController.selectedActivityType.id;
+                    expectedResponse.contacts = [];
+                    expectedResponse.createdDate = new Date('2016-02-03');
+                    expectedResponse.id = '123';
+
+                    scope.$apply();
+
+                    $http.whenPOST(/\/api\/activities/).respond(201, expectedResponse);
+
+                    element.find('#activity-add-button').click();
+                    $http.flush();
+
+                    var activitiesList = element.find('#card-list-activities');
+                    var activityListItems = activitiesList.find('card');
+
+                    expect(propertyMock.activities.filter((item) =>{ return item.id === '123' }).length).toBe(1);
+                    expect(activityListItems.length).toBe(1);
+                });
+            });
         });
 
         describe('and activity details is clicked', () => {

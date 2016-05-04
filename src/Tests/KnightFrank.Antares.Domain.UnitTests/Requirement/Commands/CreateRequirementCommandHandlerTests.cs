@@ -11,6 +11,8 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Common.Commands;
     using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Antares.Domain.Requirement.CommandHandlers;
     using KnightFrank.Antares.Domain.Requirement.Commands;
@@ -29,6 +31,7 @@
             [Frozen] Mock<IGenericRepository<Requirement>> requirementRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             [Frozen] Mock<IDomainValidator<CreateRequirementCommand>> requirementDomainValidator,
+            [Frozen] Mock<IAddressValidator> addressValidator,
             CreateRequirementCommand command,
             CreateRequirementCommandHandler commandHandler)
         {
@@ -48,6 +51,7 @@
             [Frozen] Mock<IGenericRepository<Requirement>> requirementRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             [Frozen] Mock<IDomainValidator<CreateRequirementCommand>> requirementDomainValidator,
+            [Frozen] Mock<IAddressValidator> addressValidator,
             CreateRequirementCommand command,
             CreateRequirementCommandHandler commandHandler)
         {
@@ -57,6 +61,25 @@
 
             // Act + Assert
             Assert.Throws<DomainValidationException>(() => commandHandler.Handle(command));
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_CreateRequirementCommandWithAddress_When_Handle_Then_AddressShouldBeValidated(
+        [Frozen] Mock<IGenericRepository<Requirement>> requirementRepository,
+        [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
+        [Frozen] Mock<IDomainValidator<CreateRequirementCommand>> requirementDomainValidator,
+        [Frozen] Mock<IAddressValidator> addressValidator,
+        CreateRequirementCommand command,
+        CreateRequirementCommandHandler handler)
+        {
+            // Arrange
+            addressValidator.Setup(x => x.Validate(It.IsAny<CreateOrUpdateAddress>()))
+                            .Throws(new BusinessValidationException(It.IsAny<BusinessValidationMessage>()));
+
+            // Act + Assert
+            Assert.Throws<BusinessValidationException>(() => { handler.Handle(command); });
+            addressValidator.Verify(x => x.Validate(It.IsAny<CreateOrUpdateAddress>()), Times.Once());
         }
     }
 }

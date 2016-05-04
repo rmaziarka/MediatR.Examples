@@ -34,7 +34,7 @@
             this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
         }
 
-        [Given(@"User navigates to create company page")]
+        [When(@"User navigates to create company page")]
         public void OpenCreateCompanyPage()
         {
             CreateCompanyPage page = new CreateCompanyPage(this.driverContext).OpenCreateCompanyPage();

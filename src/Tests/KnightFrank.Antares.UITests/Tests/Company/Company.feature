@@ -2,22 +2,21 @@
 
 @Company
 Scenario: Create company
-	Given User navigates to create contact page
-		And User creates contacts on create contact page
-			| Title | FirstName | Surname |
-			| Sir   | Sean      | Connery |
-			| Mrs   | Sarah     | Johns   |
-		And User navigates to create company page
-	When User fills in company details on create company page
-		| Name         |
-		| Knight Frank |
+	Given Contacts are created in database
+		| FirstName | Surname | Title |
+		| Indiana   | Jones   | Dr    |
+		| Adam      | Sandler | Sir   |
+	When User navigates to create company page
+		And User fills in company details on create company page
+			| Name         |
+			| Knight Frank |
 		And User selects contacts on create company page
 			| FirstName | Surname |
-			| Sean      | Connery |
-			| Sarah     | Johns   |
+			| Indiana   | Jones   |
+			| Adam      | Sandler |
 	Then list of company contacts should contain following contacts
 		| FirstName | Surname |
-		| Sean      | Connery |
-		| Sarah     | Johns   |
+		| Indiana   | Jones   |
+		| Adam      | Sandler |
 	When User clicks save button on create company page
 	Then New company should be created

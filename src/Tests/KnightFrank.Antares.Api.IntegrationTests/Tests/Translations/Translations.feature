@@ -1,4 +1,4 @@
-﻿Feature: TranslationsController
+﻿Feature: Translations
 
 @Translations
 Scenario: Gets translations for resource by isoCode
@@ -17,11 +17,3 @@ Scenario: Gets translations for resource by isoCode
 			| code1 | charakterystyka1 |
 	When User retrieves translations for xx isocode
 	Then Translations are as expected
-
-@ignore
-@Translations
-Scenario: Gets translations for enums by isoCode
-	Given I have entered 50 into the calculator
-	And I have entered 70 into the calculator
-	When I press add
-	Then the result should be 120 on the screen

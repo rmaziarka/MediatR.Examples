@@ -4,8 +4,8 @@ module Antares {
 
     describe('propertyAddController', () => {
         var controller: Property.PropertyAddController;
-        
-        beforeEach(inject(($rootScope: ng.IRootScopeService, dataAccessService: Services.DataAccessService, componentRegistry: Core.Service.ComponentRegistry) => {
+
+        beforeEach(inject(($rootScope: ng.IRootScopeService, dataAccessService: Services.DataAccessService, enumService: Mock.EnumServiceMock, componentRegistry: Core.Service.ComponentRegistry) => {
             var controllerFunction = Property.PropertyAddController;
             controller = Object.create(controllerFunction.prototype);
             controller.userData = <Dto.IUserData>{
@@ -13,7 +13,7 @@ module Antares {
             };
             var scope: ng.IScope = $rootScope.$new();
 
-            controllerFunction.apply(controller, [componentRegistry, dataAccessService, scope]);
+            controllerFunction.apply(controller, [componentRegistry, dataAccessService, enumService, scope]);
         }));
 
         describe('when is constructed', () =>{

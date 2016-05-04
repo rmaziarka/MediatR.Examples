@@ -52,53 +52,22 @@
                 <section>
                     <h3 class="page-header" translate="REQUIREMENT.VIEW.VIEWINGS"></h3>
                     <card-list id="viewings-list" show-item-add="vm.showActivitiesPanel">
-                        <card-list-header>
-                        </card-list-header>
                         <card-list-no-items ng-show="vm.requirement.viewings === 0">
                             <p class="help-block" translate="PROPERTY.LIST.NO_ITEMS"></p>
                         </card-list-no-items>
-                        <card-list-item ng-repeat="viewing in vm.requirement.viewings track by viewing.id">
-                            <card card-template-url="'app/requirement/view/requirementViewingsCard.html'" item="viewing" show-item-details="vm.showViewingView">
-                            </card>
+                     
+                        <card-list-item ng-repeat="group in vm.requirement.viewingsByDay | orderBy: '-day'">
+                            <card-list-group>
+                                <card-list-group-header>
+                                    <h5><time>{{::group.viewings[0].startDate | date : 'dd-MM-yyyy'}}</time></h5>
+                                </card-list-group-header>
+                                <card-list-group-item ng-repeat="viewing in group.viewings | orderBy: '-startDate' track by viewing.id">
+                                    <card card-template-url="'app/requirement/view/requirementViewingsCard.html'" item="viewing" show-item-details="vm.showViewingView">
+                                    </card>
+                                </card-list-group-item>
+                            </card-list-group>
                         </card-list-item>
                     </card-list>
-
-                    <!--<div>
-                        <h5><time>12-05-2015</time></h5>
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="panel-item">55 Baker St.</div>
-                                <div class="row">
-                                    <div class="col-md-12 text-right">
-                                        <a href="#">details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="panel-item">55 Baker St.</div>
-                                <div class="row">
-                                    <div class="col-md-12 text-right">
-                                        <a href="#">details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <h5><time>10-05-2015</time></h5>
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="panel-item">55 Baker St.</div>
-                                <div class="row">
-                                    <div class="col-md-12 text-right">
-                                        <a href="#">details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
                 </section>
             </div>
         </div>
@@ -121,7 +90,7 @@
     </side-panel-content>
     <side-panel-footer>
         <button class="btn btn-default" type="button" ng-click="vm.cancelConfigureViewings()" ng-show="!vm.viewingDetailsPanelVisible">
-             <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
         </button>
         <button class="btn btn-primary" type="button" ng-click="vm.showViewingDetailsPanel()" ng-show="!vm.viewingDetailsPanelVisible">
             <span translate="COMMON.CONFIGURE"></span> <i class="fa fa-angle-double-right"></i>

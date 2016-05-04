@@ -27,6 +27,10 @@
         {
         }
 
+        public KnightFrankContext(string connectionString) : base(connectionString)
+        {
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

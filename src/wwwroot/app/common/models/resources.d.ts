@@ -44,9 +44,6 @@ declare module Antares.Common.Models {
         interface ICountryLocalisedResource extends ng.resource.IResource<Dto.ICountryLocalised> {
         }
 
-        interface IEnumResource extends ng.resource.IResource<Dto.IEnum> {
-        }
-
         interface ICountryResource extends ng.resource.IResource<Dto.ICountryLocalised> {
         }
 

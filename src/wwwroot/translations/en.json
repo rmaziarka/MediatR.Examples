@@ -171,7 +171,9 @@
         "MARKET_APPRAISAL_PRICE": "Market appraisal price",
         "RECOMMENDED_PRICE": "Recommended price",
         "VENDOR_ESIMATED_PRICE": "Vendor estimated price"
-      }
+      },
+      "ATTACHMENTS": "Attachments",
+      "NO_ATTACHMENTS": "No attachments"
     }
   },
   "REQUIREMENT": {
@@ -228,10 +230,11 @@
     }
   },
   "ATTACHMENT": {
-    "LIST": {
-      "ATTACHMENTS": "Attachments"
-    },
-    "ATTACHFILE": "Attach file",
-    "ATTACHMENTPREVIEW": "Attachment preview"
+    "ADD": {
+      "ATTACH_FILE": "Attach file",
+      "FILE": "File",
+      "TYPE": "Type",
+      "BROWSE": "Browse"
+    }
   }
 }

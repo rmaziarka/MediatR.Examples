@@ -18,6 +18,7 @@ module Antares.Property {
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
+            private enumService: Services.EnumService,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService) {
 
@@ -45,8 +46,8 @@ module Antares.Property {
         }
 
         loadDivisions = () => {
-            this.dataAccessService.getEnumResource().get({ code: 'Division' }).$promise.then((divisions: any) => {
-                this.divisions = divisions.items;
+            this.enumService.getEnumsPromise().then((result: any) => {
+                this.divisions = result[Dto.EnumTypeCode.Division];
             });
         };
 

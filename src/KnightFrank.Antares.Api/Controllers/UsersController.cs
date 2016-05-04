@@ -29,6 +29,7 @@ namespace KnightFrank.Antares.Api.Controllers
         {
             var identity = (ClaimsIdentity)this.User.Identity;
 
+            // TODO: EnumQuery and its handler should no longer be used - remove it after rewriting this method
             var divisionsQuery = new EnumQuery { Code = "Division" };
             EnumQueryResult divisions = this.mediator.Send(divisionsQuery);
 

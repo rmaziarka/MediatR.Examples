@@ -2,6 +2,10 @@
 
 module Antares {
     import OwnershipAddController = Antares.Property.OwnershipAddController;
+    import Dto = Common.Models.Dto;
+
+    import runDescribe = TestHelpers.runDescribe;
+
     describe('Given ownership is being added', () => {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
@@ -9,29 +13,34 @@ module Antares {
             $http: ng.IHttpBackendService;
 
         var pageObjectSelectors = {
-            ownershipTypeSelector: 'select#type',
+            ownershipTypeSelector: 'enum-select#type select',
             purchaseDateSelector: '[name=purchaseDate]',
             sellDateSelector: '[name=sellDate]',
             buyPriceSelector: '[name=buyPrice]',
             sellPriceSelector: '[name=sellPrice]'
         };
 
+        var ownershipTypes = [
+            { "id" : "1", "code" : "Freeholder" },
+            { "id" : "2", "code" : "Leaseholder" }
+        ];
+
         var controller: OwnershipAddController;
 
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService,
+            enumService: Mock.EnumServiceMock,
             $httpBackend: ng.IHttpBackendService) => {
 
             $http = $httpBackend;
-            $http.whenGET(/\/api\/enums\/OwnershipType\/items/).respond(() => {
-                return [200, { "items": [{ "id": "1", "value": "Freeholder" }, { "id": "2", "value": "Leaseholder" }] }];
-            });
+
+            // enums
+            enumService.setEnum(Dto.EnumTypeCode.OwnershipType.toString(), ownershipTypes);
 
             scope = $rootScope.$new();
             scope["ownerships"] = [];
             element = $compile('<ownership-add ownerships="ownerships"></ownership-add>')(scope);
-            $httpBackend.flush();
             scope.$apply();
 
             controller = element.controller('ownershipAdd');
@@ -40,34 +49,45 @@ module Antares {
         }));
 
         describe('when', () => {
-            describe('ownership type value is ', () => {
-                it('missing then required message should be displayed', () => {
-                    assertValidator.assertRequiredValidator(null, false, pageObjectSelectors.ownershipTypeSelector);
+            // RequiredValidator for ownership type
+            type TestCaseForRequiredValidator = [string, boolean];
+            runDescribe('ownership type ')
+                .data<TestCaseForRequiredValidator>([
+                    [ownershipTypes[0].id, true],
+                    ['typeIdThatIsNotOnTheList', false],
+                    ['', false],
+                    [null, false]])
+                .dataIt((data: TestCaseForRequiredValidator) =>
+                    `value is "${data[0]}" then required message should ${data[1] ? 'not' : ''} be displayed`)
+                .run((data: TestCaseForRequiredValidator) => {
+                    // arrange / act / assert
+                    assertValidator.assertRequiredValidator(data[0], data[1], pageObjectSelectors.ownershipTypeSelector);
                 });
 
-                it('not missing then required message should not be displayed', () => {
-                    assertValidator.assertRequiredValidator('1', true, pageObjectSelectors.ownershipTypeSelector);                    
-                });
-            });
-            describe('ownership purchasing date is ', () => {
-                it('invalid then required message should be displayed', () => {
-                    assertValidator.assertRequiredValidator('invalid date', false, pageObjectSelectors.purchaseDateSelector);
-                });
-
-                it('vaild then required message should not be displayed', () => {
-                    assertValidator.assertRequiredValidator('21-12-1984', true, pageObjectSelectors.purchaseDateSelector);
-                });
-            });
-            describe('ownership selling date is ', () => {
-
-                it('ownership selling date is invalid then required message should be displayed', () => {
-                    assertValidator.assertRequiredValidator('invalid date', false, pageObjectSelectors.sellDateSelector);
+            // RequiredValidator for ownership purchasing date
+            runDescribe('ownership purchasing date ')
+                .data<TestCaseForRequiredValidator>([
+                    ['21-12-1984', true],
+                    ['invalid date', false]])
+                .dataIt((data: TestCaseForRequiredValidator) =>
+                    `value is "${data[0]}" then required message should ${data[1] ? 'not' : ''} be displayed`)
+                .run((data: TestCaseForRequiredValidator) => {
+                    // arrange / act / assert
+                    assertValidator.assertRequiredValidator(data[0], data[1], pageObjectSelectors.purchaseDateSelector);
                 });
 
-                it('ownership selling date is valid then required message should not be displayed', () => {
-                    assertValidator.assertRequiredValidator('21-12-1984', true, pageObjectSelectors.sellDateSelector);
+            // RequiredValidator for ownership selling date
+            runDescribe('ownership selling date ')
+                .data<TestCaseForRequiredValidator>([
+                    ['21-12-1984', true],
+                    ['invalid date', false]])
+                .dataIt((data: TestCaseForRequiredValidator) =>
+                    `value is "${data[0]}" then required message should ${data[1] ? 'not' : ''} be displayed`)
+                .run((data: TestCaseForRequiredValidator) => {
+                    // arrange / act / assert
+                    assertValidator.assertRequiredValidator(data[0], data[1], pageObjectSelectors.sellDateSelector);
                 });
-            });
+
             describe('ownership buying price is ', () => {
                 it('lower then zero then validation message should be displayed', () => {
                     assertValidator.assertMinValueValidator(-10, false, pageObjectSelectors.buyPriceSelector);
@@ -105,7 +125,6 @@ module Antares {
                     var sellPriceElement = element.find(pageObjectSelectors.sellPriceSelector);
                     expect(sellPriceElement.hasClass('ng-empty')).toBeTruthy();
                 });
-                
             });
         });
     });

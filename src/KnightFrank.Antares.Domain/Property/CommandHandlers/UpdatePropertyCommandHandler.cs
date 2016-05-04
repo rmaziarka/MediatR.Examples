@@ -11,6 +11,7 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Antares.Domain.Property.Commands;
 
@@ -20,6 +21,8 @@
     {
         private readonly IDomainValidator<UpdatePropertyCommand> domainValidator;
 
+        private readonly IAddressValidator addressValidator;
+
         private readonly IGenericRepository<PropertyCharacteristic> propertyCharacteristicRepository;
 
         private readonly IGenericRepository<Property> propertyRepository;
@@ -27,15 +30,19 @@
         public UpdatePropertyCommandHandler(
             IGenericRepository<Property> propertyRepository,
             IGenericRepository<PropertyCharacteristic> propertyCharacteristicRepository,
-            IDomainValidator<UpdatePropertyCommand> domainValidator)
+            IDomainValidator<UpdatePropertyCommand> domainValidator,
+            IAddressValidator addressValidator)
         {
             this.propertyRepository = propertyRepository;
             this.propertyCharacteristicRepository = propertyCharacteristicRepository;
             this.domainValidator = domainValidator;
+            this.addressValidator = addressValidator;
         }
 
         public Guid Handle(UpdatePropertyCommand message)
         {
+            this.addressValidator.Validate(message.Address);
+
             Property property =
                 this.propertyRepository.GetWithInclude(x => x.Id == message.Id, x => x.PropertyCharacteristics).SingleOrDefault();
 

@@ -22,19 +22,6 @@
         }
 
         /// <summary>
-        ///     Gets the enum items by code.
-        /// </summary>
-        /// <param name="code">Enum item code</param>
-        /// <returns>Enum Query Result.</returns>
-        [HttpGet]
-        [Route("{code}/items")]
-        public EnumQueryResult GetEnumItemsByCode(string code)
-        {
-            var query = new EnumQuery { Code = code };
-            return this.mediator.Send(query);
-        }
-
-        /// <summary>
         ///     Gets ditionary of enums
         /// </summary>
         /// <returns>Dictionary of enums.</returns>
