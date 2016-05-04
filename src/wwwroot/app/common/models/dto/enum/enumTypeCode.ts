@@ -3,6 +3,7 @@ module Antares.Common.Models.Dto {
         EntityType = <any>'entityType',
         OwnershipType = <any>'ownershipType',
         ActivityStatus = <any>'activityStatus',
-        Division = <any>'division'
+        Division = <any>'division',
+        ActivityDocumentType = <any>'activityDocumentType'
     }
 }

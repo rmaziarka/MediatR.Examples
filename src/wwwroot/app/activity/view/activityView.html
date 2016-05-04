@@ -47,7 +47,20 @@
                             {{contact.getName()}}
                         </list-item>
                     </list>
-                </section>
+                </section> 
+                 <section id="activity-view-attachment">
+                    <list id="list-attachment">
+                        <list-header>
+                            <h3 class="page-header" translate="ACTIVITY.ATTACHMENT.ATTACHMENTS"></h3>
+                        </list-header>
+                        <div class="form-group">                                                
+                            <button type="button" class="btn btn-default" ng-click="avvm.showActivityAttachmentAdd()"><i class="fa fa-plus-circle"></i></button>                            
+                            <list-no-items ng-show="avvm.activity.contacts.length === 0">                            
+                                <p class="help-block" translate="ACTIVITY.ATTACHMENT.NO_ATTACHMENTS"></p>
+                            </list-no-items>
+                        </div>                        
+                    </list>
+                </section>               
             </div>
         </div>
     </div>
@@ -61,4 +74,21 @@
         <property-preview component-id="avvm.componentIds.propertyPreviewId">
         </property-preview>
     </side-panel-content>
+</side-panel>
+
+<side-panel component-id="avvm.componentIds.activityAttachmentAddSidePanelId">
+    <side-panel-header>
+        <h3 translate="ATTACHMENT.ADD.ATTACH_FILE"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <file-upload component-id="avvm.componentIds.activityAttachmentAddId"></file-upload>
+    </side-panel-content>
+    <side-panel-footer>
+        <button class="btn btn-default" type="button" ng-click="avvm.cancelActivityAttachmentAdd()">
+            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL" ></span>
+        </button>
+        <button class="btn btn-primary" type="button" id="attachment-add-button" ng-click="avvm.saveActivityAttachment()">
+            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+        </button>
+    </side-panel-footer>
 </side-panel>
