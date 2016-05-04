@@ -235,6 +235,14 @@
       "FILE": "File",
       "TYPE": "Type",
       "BROWSE": "Browse"
+    },
+    "PREVIEW": {
+      "ATTACHMENT_PREVIEW": "Attachment preview",
+      "NAME": "Name",
+      "TYPE": "Type",
+      "SIZE": "Size",
+      "ADDED": "Added",
+      "BY": "By"
     }
   }
 }

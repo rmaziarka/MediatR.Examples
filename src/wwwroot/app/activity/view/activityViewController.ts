@@ -26,7 +26,9 @@ module Antares.Activity.View {
             this.showPanel(this.components.panels.activityAttachmentAdd);
         }
 
-        showActivityAttachmentPreview = () => {
+        showActivityAttachmentPreview = (attachment: Common.Models.Business.Attachment) => {
+            this.components.activityAttachmentPreview().setAttachment(attachment);
+            this.showPanel(this.components.panels.activityAttachmentPreview);
         }
 
         cancelActivityAttachmentAdd = () => {
@@ -46,7 +48,9 @@ module Antares.Activity.View {
                 propertyPreviewId: 'viewActivity:propertyPreviewComponent',
                 propertyPreviewSidePanelId: 'viewActivity:propertyPreviewSidePanelComponent',
                 activityAttachmentAddSidePanelId: 'viewActivity:activityAttachmentAddSidePanelComponent',
-                activityAttachmentAddId: 'viewActivity:activityAttachmentAddComponent'
+                activityAttachmentAddId: 'viewActivity:activityAttachmentAddComponent',
+                activityAttachmentPreviewId: 'viewActivity:activityyAttachmentPreviewComponent',
+                activityAttachmentPreviewSidePanelId: 'viewActivity:activityyAttachmentPreviewSidePanelComponent'
             };
         }
 
@@ -54,9 +58,11 @@ module Antares.Activity.View {
             this.components = {
                 propertyPreview: () => { return this.componentRegistry.get(this.componentIds.propertyPreviewId); },
                 activityAttachmentAdd: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentAddId); },
+                activityAttachmentPreview: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentPreviewId); },
                 panels : {
                     propertyPreview: () => { return this.componentRegistry.get(this.componentIds.propertyPreviewSidePanelId); },
-                    activityAttachmentAdd: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentAddSidePanelId) }
+                    activityAttachmentAdd: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentAddSidePanelId) },
+                    activityAttachmentPreview: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentPreviewSidePanelId); }
                 }
             };
         }
