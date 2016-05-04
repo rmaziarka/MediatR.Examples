@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.Common;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Exceptions;
 
     using MediatR;
@@ -23,16 +24,20 @@
         private readonly IGenericRepository<Contact> contactRepository;
 
         private readonly IDomainValidator<CreateRequirementCommand> createRequirementCommandDomainValidator;
+        private readonly IAddressValidator addressValidator;
 
-        public CreateRequirementCommandHandler(IGenericRepository<Requirement> requirementRepository, IGenericRepository<Contact> contactRepository, IDomainValidator<CreateRequirementCommand>  createRequirementCommandDomainValidator)
+        public CreateRequirementCommandHandler(IGenericRepository<Requirement> requirementRepository, IGenericRepository<Contact> contactRepository, IDomainValidator<CreateRequirementCommand>  createRequirementCommandDomainValidator, IAddressValidator addressValidator)
         {
             this.requirementRepository = requirementRepository;
             this.contactRepository = contactRepository;
             this.createRequirementCommandDomainValidator = createRequirementCommandDomainValidator;
+            this.addressValidator = addressValidator;
         }
 
         public Guid Handle(CreateRequirementCommand message)
         {
+            this.addressValidator.Validate(message.Address);
+
             ValidationResult validationResult = this.createRequirementCommandDomainValidator.Validate(message);
             if (!validationResult.IsValid)
             {

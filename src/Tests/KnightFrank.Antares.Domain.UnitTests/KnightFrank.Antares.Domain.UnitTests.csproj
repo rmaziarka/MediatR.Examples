@@ -118,6 +118,7 @@
     <Compile Include="AddressForm\Queries\GetCountriesForAddressFormQueryValidatorTests.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidatorTests.cs" />
     <Compile Include="Characteristic\QueryHandlers\CharacteristicGroupsQueryHandlerTests.cs" />
+    <Compile Include="Common\BusinessValidators\AddressValidatorTests.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidatorTests.cs" />
     <Compile Include="Common\Validator\LocaleValidatorTests.cs" />
     <Compile Include="Common\Validator\CountryValidatorTests.cs" />
@@ -152,7 +153,6 @@
     <Compile Include="Ownership\Commands\CreateOwnershipCommandValidatorTests.cs" />
     <Compile Include="Property\CommandHandlers\CreatePropertyCommandHandlerTests.cs" />
     <Compile Include="Property\CommandHandlers\UpdatePropertyCommandHandlerTests.cs" />
-    <Compile Include="Property\Commands\CreateOrUpdatePropertyAddressValidatorTests.cs" />
     <Compile Include="Common\Validator\PropertyTypeValidatorTests.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyCharacteristicDomainValidatorTests.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyCharacteristicValidatorTests.cs" />
@@ -193,9 +193,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Viewing\CommandHandlers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

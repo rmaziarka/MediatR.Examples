@@ -118,9 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Entity_Not_Exists" xml:space="preserve">
-    <value>{0} with given id '{1}' does not exist in the database</value>
+    <value>{0} with given id '{1}' does not exist in the database.</value>
+  </data>
+  <data name="Inconsistent_Address_Country_Id" xml:space="preserve">
+    <value>Inconsistent address country with address form definition.</value>
+  </data>
+  <data name="Inconsistent_Dynamic_Configuration" xml:space="preserve">
+    <value>{0} configuration is inconsistent.</value>
   </data>
   <data name="Missing_Applicant_Id" xml:space="preserve">
-    <value>One or more attendees are not on the applicant list</value>
+    <value>One or more attendees are not on the applicant list.</value>
+  </data>
+  <data name="Property_Format_Is_Invalid" xml:space="preserve">
+    <value>The '{0}' property value format is inappropriate.</value>
+  </data>
+  <data name="Property_Should_Be_Empty" xml:space="preserve">
+    <value>The '{0}' property value should be empty.</value>
+  </data>
+  <data name="Property_Should_Not_Be_Empty" xml:space="preserve">
+    <value>The '{0}' property value is required.</value>
   </data>
 </root>

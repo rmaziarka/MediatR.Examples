@@ -26,6 +26,34 @@
             string message = string.Format(errorMessageTemplate, entityType, id);
             return new BusinessValidationMessage(ErrorMessage.Entity_Not_Exists, message);
         }
+        public static BusinessValidationMessage CreatePropertyShouldBeEmptyMessage(string propertyName)
+        {
+            string errorMessageTemplate = GetMessage(ErrorMessage.Property_Should_Be_Empty);
+            string message = string.Format(errorMessageTemplate, propertyName);
+            return new BusinessValidationMessage(ErrorMessage.Property_Should_Be_Empty, message);
+        }
+
+        // todo: if there will be many methods creating object with the same paramters think about refactoring
+        public static BusinessValidationMessage CreatePropertyShouldNotBeEmptyMessage(string propertyName)
+        {
+            string errorMessageTemplate = GetMessage(ErrorMessage.Property_Should_Not_Be_Empty);
+            string message = string.Format(errorMessageTemplate, propertyName);
+            return new BusinessValidationMessage(ErrorMessage.Property_Should_Not_Be_Empty, message);
+        }
+        
+        public static BusinessValidationMessage CreatePropertyFormatIsInvalidMessage(string propertyName)
+        {
+            string errorMessageTemplate = GetMessage(ErrorMessage.Property_Format_Is_Invalid);
+            string message = string.Format(errorMessageTemplate, propertyName);
+            return new BusinessValidationMessage(ErrorMessage.Property_Format_Is_Invalid, message);
+        }
+
+        public static BusinessValidationMessage CreateInconsistentDynamicConfigurationMessage(string configurationName)
+        {
+            string errorMessageTemplate = GetMessage(ErrorMessage.Inconsistent_Dynamic_Configuration);
+            string message = string.Format(errorMessageTemplate, configurationName);
+            return new BusinessValidationMessage(ErrorMessage.Inconsistent_Dynamic_Configuration, message);
+        }
 
         private static string GetMessage(ErrorMessage errorCode)
         {

@@ -114,11 +114,15 @@
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQuery.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidator.cs" />
     <Compile Include="Characteristic\QueryHandlers\CharacteristicGroupsQueryHandler.cs" />
+    <Compile Include="Common\BusinessValidators\AddressValidator.cs" />
     <Compile Include="Common\BusinessValidators\CommonResources.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CommonResources.tt</DependentUpon>
     </Compile>
+    <Compile Include="Common\BusinessValidators\IAddressValidator.cs" />
+    <Compile Include="Common\Commands\CreateOrUpdateAddress.cs" />
+    <Compile Include="Common\Commands\CreateOrUpdateAddressValidator.cs" />
     <Compile Include="Common\Exceptions\ResourceNotFoundException.cs" />
     <Compile Include="Common\Specifications\HasId.cs" />
     <Compile Include="Common\Specifications\IsLocalised.cs" />
@@ -182,8 +186,6 @@
     <Compile Include="Property\CommandHandlers\CreatePropertyCommandHandler.cs" />
     <Compile Include="Property\CommandHandlers\UpdatePropertyCommandHandler.cs" />
     <Compile Include="Property\Commands\PropertyCharacteristicConfigurationDomainValidator.cs" />
-    <Compile Include="Property\Commands\CreateOrUpdatePropertyAddress.cs" />
-    <Compile Include="Property\Commands\CreateOrUpdatePropertyAddressValidator.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyAttributeValues.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyCharacteristic.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyCharacteristicDomainValidator.cs" />
@@ -227,7 +229,6 @@
     <Compile Include="RequirementNote\Queries\RequirementNoteQueryValidator.cs" />
     <Compile Include="RequirementNote\QueryHandlers\RequirementNoteQueryHandler.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementCommandHandler.cs" />
-    <Compile Include="Requirement\Commands\CreateOrUpdateRequirementAddress.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandDomainValidator.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandValidator.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommand.cs" />

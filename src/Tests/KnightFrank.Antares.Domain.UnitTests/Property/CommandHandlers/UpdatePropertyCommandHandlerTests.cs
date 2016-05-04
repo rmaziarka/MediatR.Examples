@@ -12,6 +12,8 @@
     using Domain.Property.CommandHandlers;
 
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Common.Commands;
     using KnightFrank.Antares.Domain.Property.Commands;
 
     using Moq;
@@ -41,6 +43,7 @@
         public void Given_UpdatePropertyCommand_When_HandleNonExistingProperty_Then_ShouldThrowException(
            UpdatePropertyCommand command,
            [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
+           [Frozen] Mock<IAddressValidator> addressValidator,
            UpdatePropertyCommandHandler handler)
         {
             // Arrange 
@@ -48,6 +51,24 @@
 
             // Act + Assert
             Assert.Throws<ResourceNotFoundException>(() => handler.Handle(command)).ResourceId.Should().Be(command.Id);
+        }
+
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_UpdatePropertyCommandWithAddress_When_Handle_Then_AddressShouldBeValidated(
+           UpdatePropertyCommand command,
+           [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
+           [Frozen] Mock<IAddressValidator> addressValidator,
+           UpdatePropertyCommandHandler handler)
+        {
+            // Arrange 
+            addressValidator.Setup(x => x.Validate(It.IsAny<CreateOrUpdateAddress>()))
+                 .Throws(new BusinessValidationException(It.IsAny<BusinessValidationMessage>()));
+
+            // Act + Assert
+            Assert.Throws<BusinessValidationException>(() => { handler.Handle(command); });
+            addressValidator.Verify(x => x.Validate(It.IsAny<CreateOrUpdateAddress>()), Times.Once());
         }
 
         [Theory]

@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using KnightFrank.Antares.Domain.Common.Commands;
+
     using MediatR;
 
     public class UpdatePropertyCommand : IRequest<Guid>
@@ -11,7 +13,7 @@
 
         public Guid Id { get; set; }
 
-        public CreateOrUpdatePropertyAddress Address { get; set; }
+        public CreateOrUpdateAddress Address { get; set; }
 
         public Guid PropertyTypeId { get; set; }
 
