@@ -6,21 +6,11 @@ module Antares.Activity {
 
     export class ActivityEditController {
         public activity: Business.Activity;
-        public activityStatuses: any[];
-
         public enumTypeActivityStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityStatus;
 
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService){
-
-            this.dataAccessService.getEnumResource()
-                .get({ code: 'ActivityStatus' })
-                .$promise.then(this.onActivityStatusLoaded);
-        }
-
-        onActivityStatusLoaded = (result: any) => {
-            this.activityStatuses = result.items;
         }
 
         public save() {
