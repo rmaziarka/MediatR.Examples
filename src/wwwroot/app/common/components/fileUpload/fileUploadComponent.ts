@@ -7,6 +7,6 @@ module Antares.FileUpload {
         controller: 'FileUploadController',
         bindings: {
             componentId: '<'
-        }        
+        }
     });
 }
