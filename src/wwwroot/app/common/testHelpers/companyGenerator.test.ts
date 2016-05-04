@@ -29,7 +29,7 @@ module Antares.TestHelpers {
         }
 
         private static makeRandom(text: string): string {
-            return text + _.random(1, 1000);
+            return text + _.random(1, 1000000);
         }
     }
 }
