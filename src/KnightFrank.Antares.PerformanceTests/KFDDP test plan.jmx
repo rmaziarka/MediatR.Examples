@@ -1535,7 +1535,7 @@ vars.put(&apos;countryId&apos;, data.countryId);
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">${enums}/division/items</stringProp>
+            <stringProp name="HTTPSampler.path">${enums}</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -1576,8 +1576,8 @@ vars.put(&apos;countryId&apos;, data.countryId);
             <stringProp name="filename"></stringProp>
             <stringProp name="script">var data = JSON.parse(prev.getResponseDataAsString());
 
-vars.put(&apos;divisionResId&apos;, data.items[0].id);
-vars.put(&apos;divisionComId&apos;, data.items[1].id);
+vars.put(&apos;divisionResId&apos;, data.division[0].id);
+vars.put(&apos;divisionComId&apos;, data.division[1].id);
 
 </stringProp>
           </BSFPostProcessor>
@@ -1835,7 +1835,7 @@ OUT.println(response[0].characteristicGroupItems[0].characteristicId);</stringPr
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">${enums}/OwnershipType/items</stringProp>
+            <stringProp name="HTTPSampler.path">${enums}</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -1851,7 +1851,7 @@ OUT.println(response[0].characteristicGroupItems[0].characteristicId);</stringPr
               <stringProp name="filename"></stringProp>
               <stringProp name="script">var response = JSON.parse(prev.getResponseDataAsString());
 
-vars.put(&apos;ownershipTypeId&apos;, response.items[0].id);</stringProp>
+vars.put(&apos;ownershipTypeId&apos;, response.ownershipType[0].id);</stringProp>
             </BSFPostProcessor>
             <hashTree/>
             <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
@@ -1893,7 +1893,7 @@ vars.put(&apos;ownershipTypeId&apos;, response.items[0].id);</stringProp>
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">${enums}/ActivityStatus/items</stringProp>
+            <stringProp name="HTTPSampler.path">${enums}</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -1934,7 +1934,7 @@ vars.put(&apos;ownershipTypeId&apos;, response.items[0].id);</stringProp>
               <stringProp name="filename"></stringProp>
               <stringProp name="script">var response = JSON.parse(prev.getResponseDataAsString());
 
-vars.put(&apos;activityStatusId&apos;, response.items[0].id);
+vars.put(&apos;activityStatusId&apos;, response.activityStatus[0].id);
 </stringProp>
             </BSFPostProcessor>
             <hashTree/>
