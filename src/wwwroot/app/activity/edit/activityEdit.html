@@ -10,16 +10,9 @@
                     <div class="row">
                         <div class="col-md-8">
                             <label for="status" translate="ACTIVITY.EDIT.STATUS"></label>
-                            <select class="form-control" required id="activityStatus" name="status" ng-model="aevm.activity.activityStatusId">
-                                <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
-                                <option ng-repeat="item in aevm.activityStatuses track by item.id" value="{{item.id}}">{{item.value}}</option>
-                            </select>
-                            <!--                                
-                            TODO: should use this enum select 
                             <enum-select id="activityStatus" name="status" required="true"
                                      ng-model="aevm.activity.activityStatusId"
                                      enum-type-code="{{aevm.enumTypeActivityStatus}}"></enum-select>
-                            -->
                             <div ng-messages="editActivityForm.status.$error" ng-show="editActivityForm.$submitted || editActivityForm.status.$dirty">
                                 <div ng-messages-include="app/common/views/errorMessages.html"></div>
                             </div>

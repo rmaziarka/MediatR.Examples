@@ -85,6 +85,12 @@
             <stringProp name="Argument.desc">CharacteristicGroups API</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="viewings" elementType="Argument">
+            <stringProp name="Argument.name">viewings</stringProp>
+            <stringProp name="Argument.value">/api/viewings</stringProp>
+            <stringProp name="Argument.desc">Viewings API</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -784,6 +790,173 @@
         </DebugSampler>
         <hashTree/>
       </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Viewing" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1461937251000</longProp>
+        <longProp name="ThreadGroup.end_time">1461937251000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Open page" enabled="true">
+          <collectionProp name="ModuleController.node_path">
+            <stringProp name="-1227702913">WorkBench</stringProp>
+            <stringProp name="1119890476">KFDDP test plan</stringProp>
+            <stringProp name="170071582">Test Fragment</stringProp>
+            <stringProp name="-802968955">Open page</stringProp>
+          </collectionProp>
+        </ModuleController>
+        <hashTree/>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Simple Controller" enabled="true"/>
+        <hashTree>
+          <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="EnumType, country, division and locale" enabled="true">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="entityType" elementType="Argument">
+                <stringProp name="Argument.name">entityType</stringProp>
+                <stringProp name="Argument.value">Property</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="countryCode" elementType="Argument">
+                <stringProp name="Argument.name">countryCode</stringProp>
+                <stringProp name="Argument.value">GB</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="divisionCode" elementType="Argument">
+                <stringProp name="Argument.name">divisionCode</stringProp>
+                <stringProp name="Argument.value">Residential</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="localeCode" elementType="Argument">
+                <stringProp name="Argument.name">localeCode</stringProp>
+                <stringProp name="Argument.value">en</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </Arguments>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Create contacts" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="742813980">Create contact</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Get address/country Id" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="-538777558">Get address/country Id</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Get division id" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="1083982692">Get Division id</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Get property type id" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="1800274976">Get property type id</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Get characteristic id" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="2108429142">Get characteristic id</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Create property" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="1126707289">Create property</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Create requirement" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="-426685633">Create requirement</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Get activity status id" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="-1971838622">Get activity status id</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Get activity type id" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="443039578">Get activity type id</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Add activity" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="-1342516274">Add activity</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Add viewing" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="1018538622">Add viewing</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="View viewing" enabled="true">
+            <collectionProp name="ModuleController.node_path">
+              <stringProp name="-1227702913">WorkBench</stringProp>
+              <stringProp name="1119890476">KFDDP test plan</stringProp>
+              <stringProp name="170071582">Test Fragment</stringProp>
+              <stringProp name="192730306">View viewing</stringProp>
+            </collectionProp>
+          </ModuleController>
+          <hashTree/>
+          <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="false">
+            <boolProp name="displayJMeterProperties">false</boolProp>
+            <boolProp name="displayJMeterVariables">true</boolProp>
+            <boolProp name="displaySystemProperties">false</boolProp>
+          </DebugSampler>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
       <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
@@ -930,7 +1103,7 @@
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Referer" elementType="Header">
                   <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net/</stringProp>
                 </elementProp>
                 <elementProp name="Accept-Language" elementType="Header">
                   <stringProp name="Header.name">Accept-Language</stringProp>
@@ -938,7 +1111,7 @@
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net</stringProp>
                 </elementProp>
                 <elementProp name="Content-Type" elementType="Header">
                   <stringProp name="Header.name">Content-Type</stringProp>
@@ -1000,7 +1173,7 @@ vars.put(&apos;contactId&apos;, response);
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Referer" elementType="Header">
                   <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net/</stringProp>
                 </elementProp>
                 <elementProp name="Accept-Language" elementType="Header">
                   <stringProp name="Header.name">Accept-Language</stringProp>
@@ -1008,7 +1181,7 @@ vars.put(&apos;contactId&apos;, response);
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net</stringProp>
                 </elementProp>
                 <elementProp name="Content-Type" elementType="Header">
                   <stringProp name="Header.name">Content-Type</stringProp>
@@ -1108,7 +1281,7 @@ vars.put(&apos;requirementId&apos;, response.id);</stringProp>
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Referer" elementType="Header">
                   <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net/</stringProp>
                 </elementProp>
                 <elementProp name="Accept-Language" elementType="Header">
                   <stringProp name="Header.name">Accept-Language</stringProp>
@@ -1116,7 +1289,7 @@ vars.put(&apos;requirementId&apos;, response.id);</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net</stringProp>
                 </elementProp>
                 <elementProp name="Content-Type" elementType="Header">
                   <stringProp name="Header.name">Content-Type</stringProp>
@@ -1252,7 +1425,7 @@ vars.put(&apos;propertyTypeId&apos;, data.propertyTypes[0].id);
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Referer" elementType="Header">
                   <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net/</stringProp>
                 </elementProp>
                 <elementProp name="Accept-Language" elementType="Header">
                   <stringProp name="Header.name">Accept-Language</stringProp>
@@ -1260,7 +1433,7 @@ vars.put(&apos;propertyTypeId&apos;, data.propertyTypes[0].id);
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net</stringProp>
                 </elementProp>
                 <elementProp name="User-Agent" elementType="Header">
                   <stringProp name="Header.name">User-Agent</stringProp>
@@ -1316,7 +1489,7 @@ vars.put(&apos;propertyTypeId&apos;, data.propertyTypes[0].id);
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Referer" elementType="Header">
                   <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net/</stringProp>
                 </elementProp>
                 <elementProp name="Accept-Language" elementType="Header">
                   <stringProp name="Header.name">Accept-Language</stringProp>
@@ -1324,7 +1497,7 @@ vars.put(&apos;propertyTypeId&apos;, data.propertyTypes[0].id);
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net</stringProp>
                 </elementProp>
                 <elementProp name="User-Agent" elementType="Header">
                   <stringProp name="Header.name">User-Agent</stringProp>
@@ -1376,7 +1549,7 @@ vars.put(&apos;countryId&apos;, data.countryId);
             <collectionProp name="HeaderManager.headers">
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net/</stringProp>
               </elementProp>
               <elementProp name="Accept-Language" elementType="Header">
                 <stringProp name="Header.name">Accept-Language</stringProp>
@@ -1384,7 +1557,7 @@ vars.put(&apos;countryId&apos;, data.countryId);
               </elementProp>
               <elementProp name="Origin" elementType="Header">
                 <stringProp name="Header.name">Origin</stringProp>
-                <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net</stringProp>
               </elementProp>
               <elementProp name="User-Agent" elementType="Header">
                 <stringProp name="Header.name">User-Agent</stringProp>
@@ -1436,7 +1609,7 @@ vars.put(&apos;divisionComId&apos;, data.items[1].id);
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Referer" elementType="Header">
                   <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net/</stringProp>
                 </elementProp>
                 <elementProp name="Accept-Language" elementType="Header">
                   <stringProp name="Header.name">Accept-Language</stringProp>
@@ -1444,7 +1617,7 @@ vars.put(&apos;divisionComId&apos;, data.items[1].id);
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net</stringProp>
                 </elementProp>
                 <elementProp name="User-Agent" elementType="Header">
                   <stringProp name="Header.name">User-Agent</stringProp>
@@ -1502,7 +1675,7 @@ OUT.println(response[0].characteristicGroupItems[0].characteristicId);</stringPr
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Referer" elementType="Header">
                   <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net/</stringProp>
                 </elementProp>
                 <elementProp name="Accept-Language" elementType="Header">
                   <stringProp name="Header.name">Accept-Language</stringProp>
@@ -1510,7 +1683,7 @@ OUT.println(response[0].characteristicGroupItems[0].characteristicId);</stringPr
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net</stringProp>
                 </elementProp>
                 <elementProp name="Content-Type" elementType="Header">
                   <stringProp name="Header.name">Content-Type</stringProp>
@@ -1562,7 +1735,7 @@ OUT.println(response[0].characteristicGroupItems[0].characteristicId);</stringPr
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Referer" elementType="Header">
                   <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net/</stringProp>
                 </elementProp>
                 <elementProp name="Accept-Language" elementType="Header">
                   <stringProp name="Header.name">Accept-Language</stringProp>
@@ -1570,7 +1743,7 @@ OUT.println(response[0].characteristicGroupItems[0].characteristicId);</stringPr
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net</stringProp>
                 </elementProp>
                 <elementProp name="Content-Type" elementType="Header">
                   <stringProp name="Header.name">Content-Type</stringProp>
@@ -1623,7 +1796,7 @@ OUT.println(response[0].characteristicGroupItems[0].characteristicId);</stringPr
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Referer" elementType="Header">
                   <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net/</stringProp>
                 </elementProp>
                 <elementProp name="Accept-Language" elementType="Header">
                   <stringProp name="Header.name">Accept-Language</stringProp>
@@ -1631,7 +1804,7 @@ OUT.println(response[0].characteristicGroupItems[0].characteristicId);</stringPr
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net</stringProp>
                 </elementProp>
                 <elementProp name="Content-Type" elementType="Header">
                   <stringProp name="Header.name">Content-Type</stringProp>
@@ -1685,7 +1858,7 @@ vars.put(&apos;ownershipTypeId&apos;, response.items[0].id);</stringProp>
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Referer" elementType="Header">
                   <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net/</stringProp>
                 </elementProp>
                 <elementProp name="Accept-Language" elementType="Header">
                   <stringProp name="Header.name">Accept-Language</stringProp>
@@ -1693,7 +1866,7 @@ vars.put(&apos;ownershipTypeId&apos;, response.items[0].id);</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net</stringProp>
                 </elementProp>
                 <elementProp name="User-Agent" elementType="Header">
                   <stringProp name="Header.name">User-Agent</stringProp>
@@ -1734,7 +1907,7 @@ vars.put(&apos;ownershipTypeId&apos;, response.items[0].id);</stringProp>
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Referer" elementType="Header">
                   <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net/</stringProp>
                 </elementProp>
                 <elementProp name="Accept-Language" elementType="Header">
                   <stringProp name="Header.name">Accept-Language</stringProp>
@@ -1742,7 +1915,7 @@ vars.put(&apos;ownershipTypeId&apos;, response.items[0].id);</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net</stringProp>
                 </elementProp>
                 <elementProp name="User-Agent" elementType="Header">
                   <stringProp name="Header.name">User-Agent</stringProp>
@@ -1793,7 +1966,7 @@ vars.put(&apos;activityStatusId&apos;, response.items[0].id);
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Referer" elementType="Header">
                   <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net/</stringProp>
                 </elementProp>
                 <elementProp name="Accept-Language" elementType="Header">
                   <stringProp name="Header.name">Accept-Language</stringProp>
@@ -1801,7 +1974,7 @@ vars.put(&apos;activityStatusId&apos;, response.items[0].id);
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net</stringProp>
                 </elementProp>
                 <elementProp name="User-Agent" elementType="Header">
                   <stringProp name="Header.name">User-Agent</stringProp>
@@ -1859,7 +2032,7 @@ OUT.println(response[1].id);</stringProp>
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Referer" elementType="Header">
                   <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net/</stringProp>
                 </elementProp>
                 <elementProp name="Accept-Language" elementType="Header">
                   <stringProp name="Header.name">Accept-Language</stringProp>
@@ -1867,7 +2040,7 @@ OUT.println(response[1].id);</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net</stringProp>
                 </elementProp>
                 <elementProp name="Content-Type" elementType="Header">
                   <stringProp name="Header.name">Content-Type</stringProp>
@@ -1922,7 +2095,7 @@ OUT.println(response.id);</stringProp>
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Referer" elementType="Header">
                   <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net/</stringProp>
                 </elementProp>
                 <elementProp name="Accept-Language" elementType="Header">
                   <stringProp name="Header.name">Accept-Language</stringProp>
@@ -1930,7 +2103,7 @@ OUT.println(response.id);</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net</stringProp>
                 </elementProp>
                 <elementProp name="Content-Type" elementType="Header">
                   <stringProp name="Header.name">Content-Type</stringProp>
@@ -1986,7 +2159,7 @@ OUT.println(response.id);</stringProp>
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Referer" elementType="Header">
                   <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net/</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net/</stringProp>
                 </elementProp>
                 <elementProp name="Accept-Language" elementType="Header">
                   <stringProp name="Header.name">Accept-Language</stringProp>
@@ -1994,7 +2167,141 @@ OUT.println(response.id);</stringProp>
                 </elementProp>
                 <elementProp name="Origin" elementType="Header">
                   <stringProp name="Header.name">Origin</stringProp>
-                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-dev-general-wa-app-01.azurewebsites.net</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net</stringProp>
+                </elementProp>
+                <elementProp name="Content-Type" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json;charset=utf-8</stringProp>
+                </elementProp>
+                <elementProp name="User-Agent" elementType="Header">
+                  <stringProp name="Header.name">User-Agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0</stringProp>
+                </elementProp>
+                <elementProp name="Accept" elementType="Header">
+                  <stringProp name="Header.name">Accept</stringProp>
+                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Add viewing" enabled="true"/>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Add viewing" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+  &quot;startDate&quot;: &quot;2016-04-28T11:50:51.191Z&quot;,&#xd;
+  &quot;endDate&quot;: &quot;2016-04-28T13:50:51.191Z&quot;,&#xd;
+  &quot;invitationText&quot;: &quot;Hello and Welcome&quot;,&#xd;
+  &quot;postViewingComment&quot;: &quot;It was awsome&quot;,&#xd;
+  &quot;attendeesIds&quot;: [&#xd;
+    &quot;${contactId}&quot;&#xd;
+  ],&#xd;
+  &quot;requirementId&quot;: &quot;${requirementId}&quot;,&#xd;
+  &quot;activityId&quot;: &quot;${activityId}&quot;,&#xd;
+  &quot;negotiatorId&quot;: null&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">${viewings}</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.monitor">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="Referer" elementType="Header">
+                  <stringProp name="Header.name">Referer</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net/</stringProp>
+                </elementProp>
+                <elementProp name="Accept-Language" elementType="Header">
+                  <stringProp name="Header.name">Accept-Language</stringProp>
+                  <stringProp name="Header.value">pl,en-US;q=0.7,en;q=0.3</stringProp>
+                </elementProp>
+                <elementProp name="Origin" elementType="Header">
+                  <stringProp name="Header.name">Origin</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net</stringProp>
+                </elementProp>
+                <elementProp name="Content-Type" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json;charset=utf-8</stringProp>
+                </elementProp>
+                <elementProp name="User-Agent" elementType="Header">
+                  <stringProp name="Header.name">User-Agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0</stringProp>
+                </elementProp>
+                <elementProp name="Accept" elementType="Header">
+                  <stringProp name="Header.name">Accept</stringProp>
+                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <BSFPostProcessor guiclass="TestBeanGUI" testclass="BSFPostProcessor" testname="Get viewing id" enabled="true">
+              <stringProp name="scriptLanguage">javascript</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="script">var response = JSON.parse(prev.getResponseDataAsString());
+
+vars.put(&apos;viewingId&apos;, response.id);
+OUT.println(response.id);</stringProp>
+            </BSFPostProcessor>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="View viewing" enabled="true"/>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="View viewing" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">${viewings}/${viewingId}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.monitor">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="Referer" elementType="Header">
+                  <stringProp name="Header.name">Referer</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net/</stringProp>
+                </elementProp>
+                <elementProp name="Accept-Language" elementType="Header">
+                  <stringProp name="Header.name">Accept-Language</stringProp>
+                  <stringProp name="Header.value">pl,en-US;q=0.7,en;q=0.3</stringProp>
+                </elementProp>
+                <elementProp name="Origin" elementType="Header">
+                  <stringProp name="Header.name">Origin</stringProp>
+                  <stringProp name="Header.value">http://knightfrank-antares-ne-ie-test-general-wa-app-01.azurewebsites.net</stringProp>
                 </elementProp>
                 <elementProp name="Content-Type" elementType="Header">
                   <stringProp name="Header.name">Content-Type</stringProp>
