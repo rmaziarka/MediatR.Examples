@@ -6,9 +6,11 @@
 
     using FluentAssertions;
 
+    using KnightFrank.Antares.Dal;
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.UITests.Extensions;
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;
@@ -35,7 +37,37 @@
             this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
         }
 
-        [When(@"User navigates to create residential sales requirement page")]
+        [Given(@"Requirement for GB is created in database")]
+        public void CreateRequirementInDb(Table table)
+        {
+            var requirement = table.CreateInstance<Requirement>();
+            KnightFrankContext dataContext = DatabaseExtensions.GetDataContext();
+
+            // Get country and address form id
+            Guid countryId = dataContext.Countries.Single(x => x.IsoCode == "GB").Id;
+            Guid enumTypeId = dataContext.EnumTypeItems.Single(e => e.Code == "Requirement").Id;
+            Guid addressFormId =
+                dataContext.AddressFormEntityTypes.Single(
+                    afe => afe.AddressForm.CountryId == countryId && afe.EnumTypeItemId == enumTypeId).AddressFormId;
+
+            // Set requirement details
+            requirement.CreateDate = DateTime.UtcNow;
+            requirement.Contacts = this.scenarioContext.Get<List<Contact>>("ContactsList");
+            requirement.Address = new Address
+            {
+                Line2 = "56 Belsize Park",
+                Postcode = "NW3 4EH",
+                City = "London",
+                AddressFormId = addressFormId,
+                CountryId = countryId
+            };
+
+            dataContext.Requirements.Add(requirement);
+            dataContext.CommitAndClose();
+            this.scenarioContext.Set(requirement, "Requirement");
+        }
+
+        [When(@"User navigates to create requirement page")]
         public void OpenCreateRequirementPage()
         {
             CreateRequirementPage page =
@@ -43,7 +75,7 @@
             this.scenarioContext["CreateRequirementPage"] = page;
         }
 
-        [When(@"User fills in location details on create residential sales requirement page")]
+        [When(@"User fills in location details on create requirement page")]
         public void SetLocationRequirementDetails(Table table)
         {
             var page = this.scenarioContext.Get<CreateRequirementPage>("CreateRequirementPage");
@@ -56,14 +88,12 @@
                 .SetPropertyPostCode(details.Postcode);
         }
 
-        [When(@"User fills in property details on create residential sales requirement page")]
+        [When(@"User fills in property details on create requirement page")]
         public void SetPropertyRequirementDetails(Table table)
         {
             var page = this.scenarioContext.Get<CreateRequirementPage>("CreateRequirementPage");
-
             var details = table.CreateInstance<Requirement>();
 
-            //TODO select property type - SelectPropertyType(details.Type)
             page.SetPropertyMinPrice(details.MinPrice.ToString())
                 .SetPropertyMaxPrice(details.MaxPrice.ToString())
                 .SetPropertyBedroomsMin(details.MinBedrooms.ToString())
@@ -81,7 +111,7 @@
                 .SetPropertyRequirementsNote(details.Description);
         }
 
-        [When(@"User selects contacts on create residential sales requirement page")]
+        [When(@"User selects contacts on create requirement page")]
         public void SelectContactsForRequirement(Table table)
         {
             var page = this.scenarioContext.Get<CreateRequirementPage>("CreateRequirementPage");
@@ -97,7 +127,7 @@
             page.ContactsList.SaveContact().WaitForContactListToHide();
         }
 
-        [When(@"User clicks save button on create residential sales requirement page")]
+        [When(@"User clicks save button on create requirement page")]
         public void SaveNewResidentialSalesRequirement()
         {
             this.scenarioContext.Get<CreateRequirementPage>("CreateRequirementPage")
@@ -105,7 +135,7 @@
             this.scenarioContext["RequirementDate"] = DateTime.UtcNow;
         }
 
-        [Then(@"New residential sales requirement should be created")]
+        [Then(@"New requirement should be created")]
         public void CheckIfNewResidentialSalesRequirementCreated()
         {
             var page = new ViewRequirementPage(this.driverContext);
@@ -113,7 +143,7 @@
             this.scenarioContext["ViewRequirementPage"] = page;
         }
 
-        [Then(@"list of applicants should contain following contacts")]
+        [Then(@"List of applicants should contain following contacts")]
         public void CheckApplicantsList(Table table)
         {
             var page = this.scenarioContext.Get<CreateRequirementPage>("CreateRequirementPage");
@@ -124,7 +154,7 @@
             List<string> selectedApplicants = page.GetApplicants();
 
             Assert.Equal(applicants.Count, selectedApplicants.Count);
-            applicants.Should().BeEquivalentTo(selectedApplicants);
+            applicants.ShouldBeEquivalentTo(selectedApplicants);
         }
     }
 }

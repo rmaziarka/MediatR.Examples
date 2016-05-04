@@ -101,7 +101,7 @@
 
             requirement.CreateDate = DateTime.Now;
             requirement.ContactIds = contacts.Select(contact => contact.Id).ToList();
-            
+
             requirement.Address = this.scenarioContext.Get<CreateOrUpdateAddress>("Location");
             if (requirement.Description.ToLower().Equals("max"))
             {
@@ -200,7 +200,10 @@
                 options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>());
 
             requirement.ShouldBeEquivalentTo(expectedRequirement,
-                opt => opt.Excluding(req => req.Address.Country).Excluding(req => req.Address.AddressForm).Excluding(req => req.RequirementNotes));
+                opt =>
+                    opt.Excluding(req => req.Address.Country)
+                       .Excluding(req => req.Address.AddressForm)
+                       .Excluding(req => req.RequirementNotes));
         }
     }
 }

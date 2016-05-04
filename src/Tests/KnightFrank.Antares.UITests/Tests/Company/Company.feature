@@ -14,7 +14,7 @@ Scenario: Create company
 			| FirstName | Surname |
 			| Indiana   | Jones   |
 			| Adam      | Sandler |
-	Then list of company contacts should contain following contacts
+	Then List of company contacts should contain following contacts
 		| FirstName | Surname |
 		| Indiana   | Jones   |
 		| Adam      | Sandler |

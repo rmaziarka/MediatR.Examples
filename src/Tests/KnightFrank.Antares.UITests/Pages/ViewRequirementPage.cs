@@ -37,6 +37,12 @@
 
         public ViewingDetailsPage ViewingDetails => new ViewingDetailsPage(this.DriverContext);
 
+        public ViewRequirementPage OpenViewRequirementPageWithId(string id)
+        {
+            new CommonPage(this.DriverContext).NavigateToPageWithId("view requirement", id);
+            return this;
+        }
+
         public ViewRequirementPage WaitForDetailsToLoad()
         {
             this.Driver.WaitUntilElementIsNoLongerFound(this.loadingIndicator, BaseConfiguration.LongTimeout);

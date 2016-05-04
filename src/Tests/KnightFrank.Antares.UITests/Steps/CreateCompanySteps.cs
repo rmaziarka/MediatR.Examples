@@ -69,7 +69,7 @@
             page.ContactsList.SaveContact().WaitForContactListToHide();
         }
 
-        [Then(@"list of company contacts should contain following contacts")]
+        [Then(@"List of company contacts should contain following contacts")]
         public void CheckContactsList(Table table)
         {
             var page = this.scenarioContext.Get<CreateCompanyPage>("CreateCompanyPage");
