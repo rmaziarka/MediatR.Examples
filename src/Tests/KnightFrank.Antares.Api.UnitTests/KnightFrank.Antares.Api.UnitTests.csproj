@@ -29,6 +29,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Deployment|AnyCPU'">
+    <OutputPath>bin\Deployment\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="KnightFrank.Foundation.Antares, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\KnightFrank.Foundation.Antares.1.0.98.0\lib\net461\KnightFrank.Foundation.Antares.dll</HintPath>
