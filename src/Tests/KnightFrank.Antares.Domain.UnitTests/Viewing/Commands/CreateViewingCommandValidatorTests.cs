@@ -148,22 +148,6 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_DayOfStartDateNotEqualToEndDate_When_Validating_Then_IsInvalid(CreateViewingCommandValidator validator)
-        {
-            // Arrange
-            this.cmd.StartDate = new DateTime(2000, 1, 1);
-            this.cmd.EndDate = new DateTime(2000, 1, 2);
-
-            // Act
-            ValidationResult validationResult = validator.Validate(this.cmd);
-
-            // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(this.cmd.EndDate));
-        }
-
-        [Theory]
-        [AutoMoqData]
         public void Given_EndDateEarlierThanStartDate_When_Validating_Then_IsInvalid(CreateViewingCommandValidator validator)
         {
             // Arrange
