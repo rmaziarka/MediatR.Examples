@@ -7,20 +7,25 @@
     using KnightFrank.Antares.Api.Services.AzureStorage;
     using KnightFrank.Antares.Api.Services.AzureStorage.Factories;
     using KnightFrank.Antares.Domain.Enum.Types;
-    using KnightFrank.Foundation.Cloud.Storage.Blob.Objects.Interfaces;
+    using KnightFrank.Foundation.Antares.Cloud.Storage.Blob.Interfaces;
+    using KnightFrank.Foundation.Antares.Cloud.Storage.Blob.Objects;
 
     using Xunit;
 
-    using Antares = KnightFrank.Foundation.Cloud.Storage.Blob.Objects.Antares;
 
     public class BlobResourceFactoryTests
     {
         public static readonly IEnumerable<object[]> ActivityTestData = new List<object[]>
          {
-            new object[] {ActivityDocumentType.Brochure, typeof(Antares.CloudBlobBrochureDocumentResource) },
-            new object[] {ActivityDocumentType.MarketingSignOff, typeof(Antares.CloudBlobGeneralResource) },
-            new object[] {ActivityDocumentType.CddDocument, typeof(Antares.CloudBlobGeneralResource) },
-            new object[] {ActivityDocumentType.GasCertificate, typeof(Antares.CloudBlobGeneralResource) },
+            new object[] {ActivityDocumentType.Brochure, typeof(CloudBlobBrochureDocumentResource) },
+            new object[] {ActivityDocumentType.MarketingSignOff, typeof(CloudBlobGeneralDocumentResource) },
+            new object[] {ActivityDocumentType.CddDocument, typeof(CloudBlobGeneralDocumentResource) },
+            new object[] {ActivityDocumentType.GasCertificate, typeof(CloudBlobGeneralDocumentResource) },
+            new object[] {ActivityDocumentType.Photograph, typeof(CloudBlobImageResource) },
+            new object[] {ActivityDocumentType.FloorPlan, typeof(CloudBlobFloorPlanDocumentResource) },
+            new object[] {ActivityDocumentType.Epc, typeof(CloudBlobEPCGraphDocumentResource) },
+            new object[] {ActivityDocumentType.VideoTour, typeof(CloudBlobVideoResource) },
+            new object[] {ActivityDocumentType.TermsOfBusiness, typeof(CloudBlobGeneralDocumentResource) },
          };
 
         [Theory]

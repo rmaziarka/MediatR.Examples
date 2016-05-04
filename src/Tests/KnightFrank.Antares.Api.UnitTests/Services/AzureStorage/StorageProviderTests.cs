@@ -6,7 +6,7 @@
     using KnightFrank.Antares.Api.Services.AzureStorage;
     using KnightFrank.Antares.Api.Services.AzureStorage.Factories;
     using KnightFrank.Antares.Domain.Enum.Types;
-    using KnightFrank.Foundation.Cloud.Storage.Blob.Objects.Interfaces;
+    using KnightFrank.Foundation.Antares.Cloud.Storage.Blob.Interfaces;
 
     using Microsoft.WindowsAzure.Storage.Blob;
 

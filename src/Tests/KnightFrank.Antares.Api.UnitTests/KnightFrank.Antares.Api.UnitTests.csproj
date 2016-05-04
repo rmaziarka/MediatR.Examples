@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KnightFrank.Foundation, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\KnightFrank.Foundation.1.0.91.0\lib\net45\KnightFrank.Foundation.dll</HintPath>
+    <Reference Include="KnightFrank.Foundation.Antares, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\KnightFrank.Foundation.Antares.1.0.98.0\lib\net461\KnightFrank.Foundation.Antares.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
