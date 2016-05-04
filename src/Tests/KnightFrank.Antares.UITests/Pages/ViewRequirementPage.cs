@@ -21,7 +21,7 @@
         private readonly ElementLocator propertyRequirementsDetailsDescription = new ElementLocator(Locator.XPath, "//*[contains(@translate, 'DESCRIPTION')]/../p");
         private readonly ElementLocator requirementApplicants = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'contacts'] div");
         private readonly ElementLocator requirementDate = new ElementLocator(Locator.CssSelector, "span[translate *= 'CREATEDDATE'] ~ span");
-        private readonly ElementLocator createViewing = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator createViewing = new ElementLocator(Locator.CssSelector, "#viewings-list button");
         private readonly ElementLocator viewingDetailsLink = new ElementLocator(Locator.Id, string.Empty);
         private readonly ElementLocator viewingDetails = new ElementLocator(Locator.Id, string.Empty);
         
