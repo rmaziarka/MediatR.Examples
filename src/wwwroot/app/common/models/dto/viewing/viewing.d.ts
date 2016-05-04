@@ -4,8 +4,8 @@
         activityId: string;
         requirementId: string;
         negotiatorId: string;
-        startDate: Date;
-        endDate: Date;
+        startDate: Date | string;
+        endDate: Date | string;
         invitationText: string;
         postviewingComment: string;
         attendeesIds: string[];

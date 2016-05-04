@@ -6,15 +6,19 @@ module Antares.Common.Models.Business {
         activityId: string = null;
         requirementId: string = null;
         negotiatorId: string = null;
-        startDate: Date = null;
-        endDate: Date = null;
+        startDate: Date | string = null;
+        endDate: Date | string = null;
         invitationText: string;
         postviewingComment: string;
         attendeesIds: string[];
+        day: string;        
 
         constructor(viewing?: Dto.IViewing) {
             if (viewing) {
                 angular.extend(this, viewing);
+            this.startDate = Core.DateTimeUtils.convertDateToUtc(viewing.startDate);
+            this.endDate = Core.DateTimeUtils.convertDateToUtc(viewing.endDate);
+            this.day = (<string>viewing.startDate).substr(0, 10);
             }
         }
     }
