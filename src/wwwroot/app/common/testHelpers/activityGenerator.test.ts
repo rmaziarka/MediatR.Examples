@@ -11,6 +11,7 @@ module Antares.TestHelpers {
                 activityStatusId: ActivityGenerator.makeRandom('activityStatusId'),
                 activityTypeId: ActivityGenerator.makeRandom('activityTypeId'),
                 contacts: [],
+                attachments: [],
                 createdDate: new Date(),
                 id: ActivityGenerator.makeRandom('id'),
                 property: PropertyGenerator.generateDto(),

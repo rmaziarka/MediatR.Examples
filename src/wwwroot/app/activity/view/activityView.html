@@ -57,7 +57,7 @@
                             <p class="help-block" translate="ACTIVITY.VIEW.NO_ATTACHMENTS"></p>
                         </card-list-no-items>
                         <card-list-item ng-repeat="attachment in avvm.activity.attachments | orderBy: avvm.attachmentsCartListOrder.name : vm.attachmentsCartListOrder.descending track by attachment.id ">
-                            <card id="attachment-card-{{attachment.id}}" card-template-url="'app/activity/templates/activityCard.html'" item="attachment" show-item-details="avvm.showActivityAttachmentPreview">
+                            <card id="attachment-card-{{attachment.id}}" card-template-url="'app/activity/templates/activityAttachmentCard.html'" item="attachment" show-item-details="avvm.showActivityAttachmentPreview">
                             </card>
                         </card-list-item>
                     </card-list>

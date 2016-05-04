@@ -25,14 +25,11 @@ module Antares {
 
         var controller: PropertyViewController;
 
-        describe('and property is loaded', () => {
+        describe('and property is loaded', () =>{
             var propertyMock = TestHelpers.PropertyGenerator.generate({
-                id: '1',
-                propertyTypeId: 'propType1',
-                activities : [
-                    new Business.Activity(<Dto.IActivity>{ id: 'It1', propertyId: '1', activityStatusId: '123', contacts:[] }),
-                    new Business.Activity(<Dto.IActivity>{ id: 'It2', propertyId: '1', activityStatusId: '1234', contacts: [] })
-                ]
+                id : '1',
+                propertyTypeId : 'propType1',
+                activities : TestHelpers.ActivityGenerator.generateManyDtos(2)
             });
 
             beforeEach(inject((
@@ -122,9 +119,7 @@ module Antares {
 
             it('when existing activities then card components should be visible', () => {
                 // arrange
-                propertyMock.activities = [
-                    new Business.Activity(<Dto.IActivity>{ id: 'It1', propertyId: '1', activityStatusId: '123', contacts: [] }),
-                    new Business.Activity(<Dto.IActivity>{ id: 'It2', propertyId: '1', activityStatusId: '1234', contacts: [] })];
+                propertyMock.activities = TestHelpers.ActivityGenerator.generateMany(2);
                 scope['property'] = propertyMock;
 
                 // act
@@ -142,19 +137,18 @@ module Antares {
             it('when existing activities then card components should have proper data', () => {
                 // arrange
                 var date1Mock = new Date('2011-01-01');
-                propertyMock.activities = [
-                    new Business.Activity(<Dto.IActivity>{
-                        id : 'It1',
-                        propertyId : '1',
-                        activityStatusId: '123',
-                        activityTypeId: '123',
-                        createdDate : date1Mock,
-                        contacts : [
-                            <Business.Contact>{ id : 'Contact1', firstName : 'John', surname : 'Test1', title : 'Mr' },
-                            <Business.Contact>{ id : 'Contact2', firstName : 'Amy', surname : 'Test2', title : 'Mrs' }
-                        ]
-                    })
-                ];
+                var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate({
+                    id : 'It1',
+                    propertyId : '1',
+                    activityStatusId : '123',
+                    activityTypeId : '123',
+                    contacts : [
+                        <Dto.IContact>{ id : 'Contact1', firstName : 'John', surname : 'Test1', title : 'Mr' },
+                        <Dto.IContact>{ id : 'Contact2', firstName : 'Amy', surname : 'Test2', title : 'Mrs' }
+                    ]
+                });
+                activityMock.createdDate = date1Mock;
+                propertyMock.activities = [activityMock];
 
                 scope['property'] = propertyMock;
 
@@ -297,23 +291,27 @@ module Antares {
         describe('and activity details is clicked', () => {
             var date1Mock = new Date('2011-01-01');
             var date2Mock = new Date('2011-01-05');
-            var propertyMock = TestHelpers.PropertyGenerator.generateDto({
-                id: '1',
-                propertyTypeId: '1',
-                activities: [
-                    new Business.Activity(<Dto.IActivity>{ id: 'It1', propertyId: '1', activityStatusId: '123', activityTypeId: '123', createdDate: date1Mock, contacts: [] }),
-                    new Business.Activity(<Dto.IActivity>{
-                        id: 'It2',
-                        propertyId: '1',
-                        activityStatusId: '456',
-                        activityTypeId: '456',
-                        createdDate: date2Mock,
-                        contacts: [
-                            <Business.Contact>{ id: 'Contact1', firstName: 'John', surname: 'Test1', title: 'Mr' },
-                            <Business.Contact>{ id: 'Contact2', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }
-                        ]
-                    })
+            var activity1Mock: Business.Activity = TestHelpers.ActivityGenerator.generate({
+                id: 'It1', propertyId: '1', activityStatusId: '123', activityTypeId: '123'
+            });
+            activity1Mock.createdDate = date1Mock;
+
+            var activity2Mock: Business.Activity = TestHelpers.ActivityGenerator.generate({
+                id: 'It2',
+                propertyId: '1',
+                activityStatusId: '456',
+                activityTypeId: '456',
+                contacts: [
+                    <Dto.IContact>{ id: 'Contact1', firstName: 'John', surname: 'Test1', title: 'Mr' },
+                    <Dto.IContact>{ id: 'Contact2', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }
                 ]
+            });
+            activity2Mock.createdDate = date2Mock;
+
+            var propertyMock = TestHelpers.PropertyGenerator.generateDto({
+                    id : '1',
+                    propertyTypeId : '1',
+                    activities : [activity1Mock, activity2Mock]
                 }
             );
 
