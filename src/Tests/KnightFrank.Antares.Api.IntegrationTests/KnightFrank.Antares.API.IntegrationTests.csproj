@@ -145,6 +145,12 @@
     <Compile Include="Steps\Requierement\ResidentialSalesRequierementSteps.cs" />
     <Compile Include="Steps\Resources\ResourcesSteps.cs" />
     <Compile Include="Steps\Translations\TranslationsSteps.cs" />
+    <Compile Include="Steps\Users\UsersSteps.cs" />
+    <Compile Include="Tests\Users\UsersController.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UsersController.feature</DependentUpon>
+    </Compile>
     <Compile Include="Tests\Activities\ActivitiesController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -240,6 +246,10 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Tests\Users\UsersController.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>UsersController.feature.cs</LastGenOutput>
+    </None>
     <None Include="Tests\Activities\ActivitiesController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ActivitiesController.feature.cs</LastGenOutput>
