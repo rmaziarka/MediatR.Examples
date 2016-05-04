@@ -75,7 +75,9 @@ module Antares.Requirement.View {
         }
 
         saveViewing() {
-            this.components.viewingDetails().saveViewing(this.requirement.id).then(() => {
+            this.components.viewingDetails()
+            .saveViewing(this.requirement.id)
+            .then(() => {
                 this.cancelViewingDetails();
             });
         }

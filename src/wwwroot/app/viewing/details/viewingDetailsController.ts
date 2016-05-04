@@ -16,7 +16,6 @@ module Antares {
             startTime: any;
             endTime: any;
             viewings: Dto.IViewing[];
-
             constructor(
                 componentRegistry: Antares.Core.Service.ComponentRegistry,
                 private dataAccessService: Antares.Services.DataAccessService,
