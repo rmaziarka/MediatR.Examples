@@ -7,8 +7,8 @@ namespace KnightFrank.Antares.Dal.Model.Attachment
     public class Attachment : BaseAuditableEntity
     {
         public string FileName { get; set; }
-        public Guid FileTypeId { get; set; }
-        public virtual EnumTypeItem FileType { get; set; }
+        public Guid DocumentTypeId { get; set; }
+        public virtual EnumTypeItem DocumentType { get; set; }
         public long Size { get; set; }
         public Guid ExternalDocumentId { get; set; }
     }
