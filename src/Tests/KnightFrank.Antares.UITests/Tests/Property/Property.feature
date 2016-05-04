@@ -78,10 +78,9 @@ Scenario: Create and update property
 @Ownership
 @Activity
 Scenario: Create property with ownership and activity
-	Given User navigates to create contact page
-		And User creates contacts on create contact page
-			| Title | FirstName | Surname   |
-			| King  | Arthur    | Pendragon |
+	Given Contacts are created in database
+		| Title | FirstName | Surname   |
+		| King  | Arthur    | Pendragon |
 	When User navigates to create property page
 		And User selects United Kingdom country on create property page
 		And User selects Residential property and House type on create property page
