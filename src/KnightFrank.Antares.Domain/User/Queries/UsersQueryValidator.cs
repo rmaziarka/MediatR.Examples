@@ -6,7 +6,7 @@
     {
         public UsersQueryValidator()
         {
-            this.RuleFor(q => q.PartialName).NotNull();
+            this.RuleFor(q => q.PartialName).NotEmpty();
         }
     }
 }

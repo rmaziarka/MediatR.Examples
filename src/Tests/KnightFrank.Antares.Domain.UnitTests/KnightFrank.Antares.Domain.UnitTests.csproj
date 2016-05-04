@@ -173,6 +173,8 @@
     <Compile Include="Resource\Queries\ResourceLocalisedQueryDomainValidatorTests.cs" />
     <Compile Include="Resource\Queries\ResourceLocalisedQueryValidatorTests.cs" />
     <Compile Include="Resource\QueryHandlers\ResourceLocalisedQueryHandlerTests.cs" />
+    <Compile Include="User\Queries\UsersQueryValidatorTests.cs" />
+    <Compile Include="User\QueryHandlers\UsersQueryHandlerTests.cs" />
     <Compile Include="ValidationResultBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -189,11 +191,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="User\Queries\" />
-    <Folder Include="User\QueryHandlers\" />
-    <Folder Include="User\QueryResults\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
