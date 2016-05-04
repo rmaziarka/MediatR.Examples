@@ -1,10 +1,12 @@
 /// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Activity.View {
-    import Business = Antares.Common.Models.Business;
+    import Business = Common.Models.Business;
+    import CartListOrder = Common.Component.ListOrder;
 
     export class ActivityViewController extends Core.WithPanelsBaseController {
         activity: Business.Activity;
+        attachmentsCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -18,21 +20,24 @@ module Antares.Activity.View {
             this.components.propertyPreview().setProperty(property);
             this.showPanel(this.components.panels.propertyPreview);
         }
-        
-        showActivityAttachmentAdd = () => {  
-            this.components.activityAttachmentAdd().clearAttachmentForm();          
+
+        showActivityAttachmentAdd = () => {
+            this.components.activityAttachmentAdd().clearAttachmentForm();
             this.showPanel(this.components.panels.activityAttachmentAdd);
         }
-        
+
+        showActivityAttachmentPreview = () => {
+        }
+
         cancelActivityAttachmentAdd = () => {
             this.components.panels.activityAttachmentAdd().hide();
         };
-        
-        saveActivityAttachment() {
-            this.components.activityAttachmentAdd().saveAttachment();            
-        };        
-        
-        goToEdit() {
+
+        saveActivityAttachment = () => {
+            this.components.activityAttachmentAdd().saveAttachment();
+        };
+
+        goToEdit = () => {
             this.$state.go('app.activity-edit', { id: this.$state.params['id'] });
         }
 
@@ -52,7 +57,7 @@ module Antares.Activity.View {
                 panels : {
                     propertyPreview: () => { return this.componentRegistry.get(this.componentIds.propertyPreviewSidePanelId); },
                     activityAttachmentAdd: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentAddSidePanelId) }
-                }                
+                }
             };
         }
     }

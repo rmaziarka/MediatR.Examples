@@ -47,20 +47,21 @@
                             {{contact.getName()}}
                         </list-item>
                     </list>
-                </section> 
-                 <section id="activity-view-attachment">
-                    <list id="list-attachment">
-                        <list-header>
-                            <h3 class="page-header" translate="ACTIVITY.ATTACHMENT.ATTACHMENTS"></h3>
-                        </list-header>
-                        <div class="form-group">                                                
-                            <button type="button" class="btn btn-default" ng-click="avvm.showActivityAttachmentAdd()"><i class="fa fa-plus-circle"></i></button>                            
-                            <list-no-items ng-show="avvm.activity.contacts.length === 0">                            
-                                <p class="help-block" translate="ACTIVITY.ATTACHMENT.NO_ATTACHMENTS"></p>
-                            </list-no-items>
-                        </div>                        
-                    </list>
-                </section>               
+                </section>
+                <section id="activity-view-attachments">
+                    <card-list id="card-list-attachments" show-item-add="avvm.showActivityAttachmentAdd">
+                        <card-list-header>
+                            <h3 class="page-header" translate="ACTIVITY.VIEW.ATTACHMENTS"></h3>
+                        </card-list-header>
+                        <card-list-no-items ng-show="avvm.activity.attachments.length === 0">
+                            <p class="help-block" translate="ACTIVITY.VIEW.NO_ATTACHMENTS"></p>
+                        </card-list-no-items>
+                        <card-list-item ng-repeat="attachment in avvm.activity.attachments | orderBy: avvm.attachmentsCartListOrder.name : vm.attachmentsCartListOrder.descending track by attachment.id ">
+                            <card id="attachment-card-{{attachment.id}}" card-template-url="'app/activity/templates/activityCard.html'" item="attachment" show-item-details="avvm.showActivityAttachmentPreview">
+                            </card>
+                        </card-list-item>
+                    </card-list>
+                </section>
             </div>
         </div>
     </div>

@@ -1,0 +1,5 @@
+<div id="{{'attachment-data-' + cvm.item.id}}" class="panel-item">
+    {{cvm.item.fileName}}
+</div>
+<small id="{{'attachment-created-date-' + cvm.item.id}}">{{cvm.item.createdDate | date : 'dd-MM-yyyy'}}</small>,
+<small id="{{'attachment-type-' + cvm.item.id}}">{{cvm.item.fileTypeId |dynamicTranslate}}</small>,
