@@ -28,6 +28,7 @@
         public decimal? RecommendedPrice { get; set; }
 
         public decimal? VendorEstimatedPrice { get; set; }
+
         public virtual ICollection<Attachment> Attachments { get; set; }
     }
 }
