@@ -26,6 +26,7 @@
                     .Include(a => a.Property)
                     .Include(a => a.Property.Address)
                     .Include(a => a.Contacts)
+                    .Include(a => a.Attachments)
                     .SingleOrDefault(a => a.Id == query.Id);
 
             return result;
