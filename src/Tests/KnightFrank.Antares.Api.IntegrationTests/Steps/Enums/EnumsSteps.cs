@@ -42,15 +42,6 @@
         private EnumTypeItem EnumTypeItem { get; set; }
         private EnumLocalised EnumLocalised { get; set; }
 
-        [When(@"User retrieves EnumTypes by (.*) code")]
-        public void WhenUserRetrievesEnumTypesByEntityTypeCode(string code)
-        {
-            string requestUrl = $"{ApiUrl}/{code}/items";
-            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
-
-            this.scenarioContext.SetHttpResponseMessage(response);
-        }
-
         [Given(@"There is EnumType")]
         public void GivenThereIsEnumType(Table table)
         {
@@ -98,6 +89,24 @@
             this.scenarioContext.Set(enums, "EnumDictionary");
         }
 
+        [When(@"User retrieves EnumTypes by (.*) code")]
+        public void WhenUserRetrievesEnumTypesByEntityTypeCode(string code)
+        {
+            string requestUrl = $"{ApiUrl}/{code}/items";
+            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        [When(@"User retrieves Enums")]
+        public void WhenUserRetrievesEnums()
+        {
+            string requestUrl = $"{ApiUrl}";
+            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
         [Then(@"Result should contain single element")]
         public void ThenResultShouldContainSingleElement()
         {
@@ -122,6 +131,31 @@
             var result = JsonConvert.DeserializeObject<EnumQueryResult>(this.scenarioContext.GetResponseContent());
 
             expectedResult.Select(er => er.Value).ShouldBeEquivalentTo(result.Items.Select(r => r.Value));
+        }
+
+        [Then(@"Result should get appropriate enums with enums type")]
+        public void ThenResultShouldGetAppropriateEnumsWithEnumsType()
+        {
+            var dict = new Dictionary<string, ICollection<EnumItemResult>>();
+
+            Dictionary<string, ICollection<EnumItemResult>> actualResult =
+                JsonConvert.DeserializeObject<Dictionary<string, ICollection<EnumItemResult>>>(
+                    this.scenarioContext.GetResponseContent()).OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+
+            List<EnumItemResult> enumTypeList =
+                this.fixture.DataContext.EnumTypes.Select(x => new EnumItemResult { Id = x.Id, Code = x.Code }).ToList();
+            foreach (EnumItemResult enumType in enumTypeList)
+            {
+                List<EnumItemResult> list =
+                    this.fixture.DataContext.EnumTypeItems.Where(x => x.EnumTypeId == enumType.Id)
+                        .Select(a => new EnumItemResult
+                        {
+                            Id = a.Id,
+                            Code = a.Code
+                        }).ToList();
+                dict.Add(char.ToLowerInvariant(enumType.Code[0]) + enumType.Code.Substring(1), list);
+            }
+            actualResult.ShouldBeEquivalentTo(dict);
         }
     }
 }
