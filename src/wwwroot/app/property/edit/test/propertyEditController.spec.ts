@@ -5,17 +5,17 @@ module Antares {
 
     describe('propertyEditController', () => {
         var controller: Property.PropertyEditController;
-        
-        beforeEach(inject(($rootScope: ng.IRootScopeService, dataAccessService: Services.DataAccessService, componentRegistry: Core.Service.ComponentRegistry) => {
+
+        beforeEach(inject(($rootScope: ng.IRootScopeService, dataAccessService: Services.DataAccessService, enumService: Mock.EnumServiceMock, componentRegistry: Core.Service.ComponentRegistry) => {
             var controllerFunction = Property.PropertyEditController;
             controller = Object.create(controllerFunction.prototype);
             controller.userData = <Dto.IUserData>{
                 division: <Dto.IEnumTypeItem>{id: 'enumId', code: 'code'}
-            }; 
+            };
             controller.property = new Business.Property();
             var scope: ng.IScope = $rootScope.$new();
-            
-            controllerFunction.apply(controller, [componentRegistry, dataAccessService, scope]);
+
+            controllerFunction.apply(controller, [componentRegistry, dataAccessService, enumService, scope]);
         }));
 
         describe('when is constructed', () => {
