@@ -12,7 +12,7 @@
         private readonly ElementLocator marketAppraisalPrice = new ElementLocator(Locator.Id, "market-appraisal-price");
         private readonly ElementLocator recommendedPrice = new ElementLocator(Locator.Id, "recommended-price");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "activity-edit-save");
-        private readonly ElementLocator status = new ElementLocator(Locator.Id, "activityStatus");
+        private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, "#activityStatus > select");
         private readonly ElementLocator vendorEstimatedPrice = new ElementLocator(Locator.Id, "vendor-estimated-price");
 
         public EditActivityPage(DriverContext driverContext) : base(driverContext)

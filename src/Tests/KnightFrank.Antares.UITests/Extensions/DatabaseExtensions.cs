@@ -9,7 +9,7 @@
         private static KnightFrankContext dataContext;
         private static DbContextTransaction transaction;
 
-        public static KnightFrankContext OpenDbConnection()
+        public static KnightFrankContext GetDataContext()
         {
             dataContext = new KnightFrankContext("UI.Settings.SqlConnectionString");
             transaction = dataContext.Database.BeginTransaction();
@@ -17,7 +17,7 @@
             return dataContext;
         }
 
-        public static void CloseDbConnection(this KnightFrankContext knightFrankContext)
+        public static void CommitAndClose(this KnightFrankContext knightFrankContext)
         {
             dataContext.SaveChanges();
             transaction.Commit();

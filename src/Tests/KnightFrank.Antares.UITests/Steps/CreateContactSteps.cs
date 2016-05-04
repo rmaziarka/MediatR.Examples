@@ -41,10 +41,10 @@
         public void CreateContactsInDb(Table table)
         {
             List<Contact> contacts = table.CreateSet<Contact>().ToList();
-            KnightFrankContext dataContext = DatabaseExtensions.OpenDbConnection();
+            KnightFrankContext dataContext = DatabaseExtensions.GetDataContext();
 
             dataContext.Contacts.AddRange(contacts);
-            dataContext.CloseDbConnection();
+            dataContext.CommitAndClose();
             this.scenarioContext.Set(contacts, "ContactsList");
         }
 
