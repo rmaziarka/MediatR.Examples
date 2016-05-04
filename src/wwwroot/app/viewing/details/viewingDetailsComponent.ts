@@ -8,7 +8,9 @@ module Antares.Component {
         transclude : true,
         bindings : {
             componentId: '<',
-            attendees: '<'
+            attendees: '<',
+            requirementId: '<',
+            viewings: '='
         }
     });
 }

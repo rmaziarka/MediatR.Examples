@@ -24,12 +24,10 @@ module Antares.Services {
         };
 
         private createViewingAction: ng.resource.IActionDescriptor = {
-            url: this.appConfig.rootUrl + '/api/requirements/:requirementId/viewings',
+            url: this.appConfig.rootUrl + '/api/viewings/',
             method: 'POST',
             isArray: false,
-            params: {
-                propertyId: '@requirementId'
-            }
+            params: {}
         };
 
         private getPropertyTypesAction: ng.resource.IActionDescriptor = {
@@ -75,7 +73,12 @@ module Antares.Services {
 
         getRequirementResource(): Resources.IRequirementResourceClass {
             return <Resources.IRequirementResourceClass>
-                this.$resource(this.appConfig.rootUrl + '/api/requirements/:id', null, {
+                this.$resource(this.appConfig.rootUrl + '/api/requirements/:id');
+        }
+
+        getViewingResource(): Resources.IViewingResourceClass {
+            return <Resources.IViewingResourceClass>
+                this.$resource(this.appConfig.rootUrl + '/api/viewing/:id', null, {
                     createViewing: this.createViewingAction
                 });
         }

@@ -35,6 +35,9 @@ declare module Antares.Common.Models {
         interface IRequirementResource extends ng.resource.IResource<Dto.IRequirement> {
         }
 
+        interface IViewingResource extends ng.resource.IResource<Dto.IViewing> {
+        }
+
         interface IPropertyResource extends ng.resource.IResource<Dto.IProperty> {
         }
 
@@ -83,6 +86,9 @@ declare module Antares.Common.Models {
         }
 
         interface IRequirementResourceClass extends Resources.IBaseResourceClass<Resources.IRequirementResource> {
+        }
+
+        interface IViewingResourceClass extends Resources.IBaseResourceClass<Resources.IViewingResource> {
             createViewing(params: any, viewing: any): ng.resource.IResource<Dto.IViewing>;
         }
 

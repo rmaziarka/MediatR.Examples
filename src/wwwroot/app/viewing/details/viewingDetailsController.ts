@@ -7,12 +7,15 @@ module Antares {
 
         export class ViewingDetailsController {
             componentId: string;
+            requirementId: string;
             activity: Dto.IActivityQueryResult;
             viewing: Dto.IViewing;
             dateOpened: boolean = false;
             attendees: Dto.IContact[];
-            startTime: Date;
-            endTime: Date;
+            // Any beacuse they are momentjs object
+            startTime: any;
+            endTime: any;
+            viewings: Dto.IViewing[];
 
             constructor(
                 componentRegistry: Antares.Core.Service.ComponentRegistry,
@@ -23,7 +26,7 @@ module Antares {
                 componentRegistry.register(this, this.componentId);
             }
 
-            clearViewingDetails = () =>{
+            clearViewingDetails = () => {
                 this.viewing = new Business.Viewing();
                 this.startTime = new Date();
                 this.endTime = new Date();
@@ -32,8 +35,8 @@ module Antares {
                 form.$setPristine();
             }
 
-            getSelectedAttendees = () =>{
-                return this.attendees.filter((c: any) =>{ return c.selected });
+            getSelectedAttendees = () => {
+                return this.attendees.filter((c: any) => { return c.selected });
             }
 
             isDataValid = (): boolean => {
@@ -42,45 +45,75 @@ module Antares {
                 return form.$valid;
             }
 
-            setSelectedAttendees = (itemsToSelect: Array<string>) =>{
-                this.attendees.forEach((c: any) =>{ c.selected = false; });
+            setSelectedAttendees = (itemsToSelect: Array<string>) => {
+                this.attendees.forEach((c: any) => { c.selected = false; });
                 if (itemsToSelect === undefined || itemsToSelect === null || itemsToSelect.length === 0) {
                     return;
                 }
 
-                this.attendees.forEach((c: any) =>{
+                this.attendees.forEach((c: any) => {
                     if (itemsToSelect.indexOf(c.id) > -1) {
                         c.selected = true;
                     }
                 });
             }
 
-            setActivity = (activity: Dto.IActivityQueryResult) =>{
+            setActivity = (activity: Dto.IActivityQueryResult) => {
                 this.activity = activity;
             }
 
-            openDate = () =>{
+            openDate = () => {
                 this.dateOpened = true;
             }
 
-            saveViewing = (requirementId: string) => {
-                // TODO Prepare createViewingCommand
-
+            saveViewing = () => {
                 if (!this.isDataValid()) {
                     return this.$q.reject();
                 }
 
-//                var createViewingCommand: Dto.IViewing = angular.copy(this.viewing);
-//
-//                var requirementResource = this.dataAccessService.getRequirementResource();
-//
-//                return requirementResource
-//                    .createViewing({ requirementId: requirementId }, createViewingCommand)
-//                    .$promise
-//                    .then((viewing: Common.Models.Dto.IViewing) => {
-//                        var form = this.$scope["addViewingForm"];
-//                        form.$setPristine();
-//                    });
+                var createViewingCommand: Dto.IViewing = this.getCreateViewingCommand();
+
+                var viewingResource = this.dataAccessService.getViewingResource();
+
+                return viewingResource
+                    .createViewing(null, createViewingCommand)
+                    .$promise
+                    .then((viewing: Common.Models.Dto.IViewing) => {
+                        var viewingModel = new Business.Viewing(viewing);
+                        this.viewings.push(viewingModel);
+
+                        var form = this.$scope["addViewingForm"];
+                        form.$setPristine();
+                    });
+            }
+
+            // replace with Business.Viewing and probably extend it with selected: boolean
+            getCreateViewingCommand(): Dto.IViewing {
+                var createViewingCommand: Dto.IViewing = angular.copy(this.viewing);
+                createViewingCommand.startDate = this.combineDateWithTime(this.viewing.startDate, this.startTime.toDate());
+                createViewingCommand.endDate = this.combineDateWithTime(this.viewing.startDate, this.endTime.toDate());
+                createViewingCommand.activityId = this.activity.id;
+                createViewingCommand.requirementId = this.requirementId;
+
+                createViewingCommand.attendeesIds = this.attendees.filter((element: any): boolean => {
+                    return element.selected;
+                }).map((element: any) => {
+                    return element.id;
+                });
+
+                return createViewingCommand;
+            }
+
+            combineDateWithTime(date: Date, time: Date): Date {
+                return new Date(
+                    date.getFullYear(),
+                    date.getMonth(),
+                    date.getDate(),
+                    time.getHours(),
+                    time.getMinutes(),
+                    time.getSeconds(),
+                    time.getMilliseconds()
+                );
             }
         }
 

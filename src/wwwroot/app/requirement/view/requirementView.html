@@ -115,7 +115,8 @@
         <activities-list component-id="vm.componentIds.activitiesListId" ng-show="!vm.viewingDetailsPanelVisible">
         </activities-list>
 
-        <viewing-details component-id="vm.componentIds.viewingDetailsId" attendees="vm.requirement.contacts" ng-show="vm.viewingDetailsPanelVisible">
+        <viewing-details component-id="vm.componentIds.viewingDetailsId" requirement-id="vm.requirement.id" attendees="vm.requirement.contacts" viewings="vm.requirement.viewings"
+                         ng-show="vm.viewingDetailsPanelVisible">
         </viewing-details>
     </side-panel-content>
     <side-panel-footer>
@@ -129,7 +130,7 @@
         <button class="btn btn-default" type="button" ng-click="vm.cancelViewingDetails()" ng-show="vm.viewingDetailsPanelVisible">
             <i class="fa fa-angle-double-left"></i> <span translate="COMMON.BACK"></span>
         </button>
-        <button class="btn btn-primary" type="button" ng-disabled="vm.loadingActivities" ng-show="vm.viewingDetailsPanelVisible">
+        <button class="btn btn-primary" type="button" ng-click="vm.saveViewing()" ng-disabled="vm.loadingActivities" ng-show="vm.viewingDetailsPanelVisible">
             <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
         </button>
     </side-panel-footer>

@@ -26,6 +26,7 @@
                     .Include(v => v.Attendees)
                     .Include(v => v.Requirement)
                     .Include(v => v.Activity)
+                    .Include(v => v.Activity.Property.Address)
                     .SingleOrDefault(v => v.Id == message.Id);
 
             return viewing;
