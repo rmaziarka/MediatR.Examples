@@ -5,7 +5,7 @@ declare module Antares.Common.Models.Dto {
         activityStatusId: string;
         activityTypeId: string;
         contacts: IContact[];
-        attachments: IAttachment[];
+        attachments?: IAttachment[];
         property?: IProperty;
         createdDate?: Date;
         marketAppraisalPrice?: number;

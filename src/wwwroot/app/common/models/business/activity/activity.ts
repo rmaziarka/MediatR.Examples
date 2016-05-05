@@ -21,8 +21,13 @@ module Antares.Common.Models.Business {
 
                 this.createdDate = Core.DateTimeUtils.convertDateToUtc(activity.createdDate);
                 this.contacts = activity.contacts.map((contact: Dto.IContact) => { return new Contact(contact) });
-                this.attachments = activity.attachments.map((attachment: Dto.IAttachment) => { return new Attachment(attachment) });
                 this.property = new Property(activity.property);
+                if (activity.attachments) {
+                    this.attachments = activity.attachments.map((attachment: Dto.IAttachment) =>{ return new Attachment(attachment) });
+                }
+                else {
+                    this.attachments = [];
+                }
             }
         }
     }
