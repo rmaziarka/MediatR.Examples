@@ -7,11 +7,11 @@ module Antares.Common.Component {
     export class FileUploadController {
 
         public attachmentTypes: any[];
-        public enumTypeActivityDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityDocumentType;
-        public file: File;
+        public file: File = null;
         public documentTypeId: string;
         componentId: string;
-
+        enumDocumentType: Dto.EnumTypeCode;
+        
         constructor(private $scope: ng.IScope,
             private componentRegistry: Core.Service.ComponentRegistry) {
 
@@ -43,6 +43,8 @@ module Antares.Common.Component {
                 attachment.fileName = this.file.name;
                 attachment.size = this.file.size;
                 attachment.fileTypeId = this.documentTypeId;
+                
+                console.log('Attachment:SAVED');
             }
         };
     }

@@ -3,10 +3,12 @@
 module Antares.Activity.View {
     import Business = Common.Models.Business;
     import CartListOrder = Common.Component.ListOrder;
+    import Dto = Common.Models.Dto;
 
     export class ActivityViewController extends Core.WithPanelsBaseController {
         activity: Business.Activity;
         attachmentsCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
+        enumTypeActivityDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityDocumentType;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,

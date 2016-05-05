@@ -6,7 +6,8 @@ module Antares.FileUpload {
         controllerAs : 'fuvm',
         controller: 'FileUploadController',
         bindings: {
-            componentId: '<'
+            componentId: '<',
+            enumDocumentType: '@'
         }
     });
 }
