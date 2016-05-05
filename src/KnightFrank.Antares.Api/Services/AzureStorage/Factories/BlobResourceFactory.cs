@@ -54,7 +54,6 @@
                     {
                         blobResource = new CloudBlobImageResource(
                             Antares.CloudStorageContainerType.Activity,
-                            ImageFormat.Png, // not used
                             parameters.LocaleIsoCode,
                             parameters.EntityReferenceId.ToString(),
                             parameters.ExternalDocumentId.ToString(),
