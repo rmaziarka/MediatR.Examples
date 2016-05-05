@@ -27,7 +27,7 @@
 
         public Guid Handle(CreateRequirementNoteCommand message)
         {
-            this.entityValidator.EntityExits<Requirement>(message.RequirementId);
+            this.entityValidator.EntityExists<Requirement>(message.RequirementId);
 
             var requirementNote = AutoMapper.Mapper.Map<RequirementNote>(message);
 

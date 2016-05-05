@@ -7,11 +7,11 @@
 
     using KnightFrank.Antares.Dal.Model.Enum;
 
-    public class EnumTypeExists : Specification<EnumTypeItem>
+    public class EnumTypeItemWithEnumType : Specification<EnumTypeItem>
     {
         public Enums.EnumType EnumType { get; }
 
-        public EnumTypeExists(Enums.EnumType enumType)
+        public EnumTypeItemWithEnumType(Enums.EnumType enumType)
         {
             this.EnumType = enumType;
         }

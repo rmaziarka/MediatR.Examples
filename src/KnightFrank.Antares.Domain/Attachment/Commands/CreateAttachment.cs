@@ -11,5 +11,7 @@
         public Guid DocumentTypeId { get; set; }
 
         public Guid ExternalDocumentId { get; set; }
+
+        public Guid UserId { get; set; }
     }
 }

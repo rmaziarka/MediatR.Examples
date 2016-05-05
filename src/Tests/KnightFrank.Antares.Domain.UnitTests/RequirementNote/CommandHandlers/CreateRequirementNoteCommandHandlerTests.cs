@@ -72,7 +72,7 @@
             cmd.RequirementId = id;
             BusinessValidationMessage validationMessage= BusinessValidationMessage.CreateEntityNotExistMessage("Requirement", id);
             var exception = new BusinessValidationException(validationMessage);
-            entityValidator.Setup(v => v.EntityExits<Requirement>(id)).Throws(exception);
+            entityValidator.Setup(v => v.EntityExists<Requirement>(id)).Throws(exception);
 
             // Act & Assert
             Assert.Throws<BusinessValidationException>(() => { handler.Handle(cmd); });

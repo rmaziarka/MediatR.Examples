@@ -2,15 +2,19 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
 
     using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Dal.Model.User;
+    using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Activity.Queries;
     using KnightFrank.Antares.Domain.Activity.QueryResults;
+    using KnightFrank.Antares.Domain.Attachment.Queries;
 
     using MediatR;
 
@@ -21,14 +25,17 @@
     public class ActivitiesController : ApiController
     {
         private readonly IMediator mediator;
+        private readonly IGenericRepository<User> userRepository;
 
         /// <summary>
         ///     Activities controller constructor
         /// </summary>
         /// <param name="mediator">Mediator instance.</param>
-        public ActivitiesController(IMediator mediator)
+        /// <param name="userRepository"></param>
+        public ActivitiesController(IMediator mediator, IGenericRepository<User> userRepository)
         {
             this.mediator = mediator;
+            this.userRepository = userRepository;
         }
 
         /// <summary>
@@ -110,11 +117,18 @@
         [Route("{id}/attachments")]
         public Attachment CreateAttachment(Guid id, CreateActivityAttachmentCommand command)
         {
-            command.ActivityId = id;
-            this.mediator.Send(command);
+            // User id is mocked.
+            // TODO Set correct user id from header.
+            if (command.Attachment != null)
+            {
+                command.Attachment.UserId = this.userRepository.FindBy(u => true).First().Id;
+            }
 
-            // TODO Get and return attachmment.
-            return new Attachment();
+            command.ActivityId = id;
+            Guid attachmentId = this.mediator.Send(command);
+
+            var attachmentQuery = new AttachmentQuery { Id = attachmentId };
+            return this.mediator.Send(attachmentQuery);
         }
     }
 }

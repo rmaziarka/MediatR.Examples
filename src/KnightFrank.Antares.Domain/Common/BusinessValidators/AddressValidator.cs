@@ -25,7 +25,7 @@
         public void Validate(CreateOrUpdateAddress address)
         {
             AddressForm addressForm = this.addressFormRepository.GetById(address.AddressFormId);
-            this.entityValidator.EntityExits(addressForm, address.AddressFormId);
+            this.entityValidator.EntityExists(addressForm, address.AddressFormId);
 
             ValidateAgainstCountryConsistency(address.CountryId, addressForm.CountryId);
 

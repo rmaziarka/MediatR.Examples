@@ -15,14 +15,14 @@
             this.enumTypeItemGenericRepository = enumTypeItemGenericRepository;
         }
 
-        public void ItemExists(EnumTypeExists specification, Guid enumTypeItemId)
+        public void ItemExists(Enums.EnumType enumType, Guid enumTypeItemId)
         {
             bool enumTypeItemExists =
-                this.enumTypeItemGenericRepository.Any((new HasId<EnumTypeItem>(enumTypeItemId) & specification).SatisfiedBy());
+                this.enumTypeItemGenericRepository.Any((new HasId<EnumTypeItem>(enumTypeItemId) & new EnumTypeItemWithEnumType(enumType)).SatisfiedBy());
 
             if (!enumTypeItemExists)
             {
-                throw new BusinessValidationException(BusinessValidationMessage.CreateEnumTypeItemNotExistMessage(specification.EnumType.ToString(), enumTypeItemId));
+                throw new BusinessValidationException(BusinessValidationMessage.CreateEnumTypeItemNotExistMessage(enumType.ToString(), enumTypeItemId));
             }
         }
     }

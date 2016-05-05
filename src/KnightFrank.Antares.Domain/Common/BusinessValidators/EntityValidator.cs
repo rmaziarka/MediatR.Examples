@@ -23,7 +23,7 @@
         /// <typeparam name="T">Database entity.</typeparam>
         /// <param name="entityId">The entity identifier.</param>
         /// <exception cref="BusinessValidationException"></exception>
-        public void EntityExits<T>(Guid entityId) where T : BaseEntity
+        public void EntityExists<T>(Guid entityId) where T : BaseEntity
         {
             IGenericRepository<T> genericRepository = this.GetEntityRepository<T>();
 
@@ -41,7 +41,7 @@
         /// <param name="entity">Entity to validate.</param>
         /// <param name="entityId">Entity id.</param>
         /// <returns>Entity instance from database.</returns>
-        public void EntityExits<T>(T entity,Guid entityId) where T : BaseEntity
+        public void EntityExists<T>(T entity,Guid entityId) where T : BaseEntity
         {
             if (entity == null)
             {

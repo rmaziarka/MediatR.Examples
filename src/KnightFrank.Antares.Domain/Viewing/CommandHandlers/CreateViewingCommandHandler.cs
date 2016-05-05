@@ -40,13 +40,13 @@
 
         public Guid Handle(CreateViewingCommand message)
         {
-            this.entityValidator.EntityExits<Activity>(message.ActivityId);
+            this.entityValidator.EntityExists<Activity>(message.ActivityId);
             //TODO: Remove after users management is implementsd
             message.NegotiatorId = userRepository.Get().FirstOrDefault().Id;
 
             Requirement requirement = this.requirementRepository.GetWithInclude(r => r.Id == message.RequirementId, r => r.Contacts).SingleOrDefault();
 
-            this.entityValidator.EntityExits(requirement, message.RequirementId);
+            this.entityValidator.EntityExists(requirement, message.RequirementId);
 
             IEnumerable<Guid> applicantIds = requirement.Contacts.Select(y => y.Id);
 

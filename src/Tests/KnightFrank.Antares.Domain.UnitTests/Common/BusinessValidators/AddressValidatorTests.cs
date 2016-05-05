@@ -49,12 +49,12 @@
                                                       .Create();
 
             addressFormRepository.Setup(x => x.GetById(address.AddressFormId)).Returns((AddressForm)null);
-            entityValidator.Setup(x => x.EntityExits(It.IsAny<AddressForm>(), address.AddressFormId))
+            entityValidator.Setup(x => x.EntityExists(It.IsAny<AddressForm>(), address.AddressFormId))
               .Throws(new BusinessValidationException(It.IsAny<BusinessValidationMessage>()));
 
             // Act + Assert
             Assert.Throws<BusinessValidationException>(() => { validator.Validate(address); });
-            entityValidator.Verify(x => x.EntityExits(It.IsAny<AddressForm>(), address.AddressFormId));
+            entityValidator.Verify(x => x.EntityExists(It.IsAny<AddressForm>(), address.AddressFormId));
         }
 
         [Theory]

@@ -113,6 +113,9 @@
     <Compile Include="AddressForm\Specifications\IsAddressFormAssignedToEntityType.cs" />
     <Compile Include="AddressForm\Specifications\IsAddressFormAssignedToCountry.cs" />
     <Compile Include="AddressForm\Specifications\IsAddressFormGloballyDefined.cs" />
+    <Compile Include="Attachment\Queries\AttachmentQuery.cs" />
+    <Compile Include="Attachment\Queries\AttachmentQueryValidator.cs" />
+    <Compile Include="Attachment\QueryHandlers\AttachmentQueryHandler.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQuery.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidator.cs" />
     <Compile Include="Characteristic\QueryHandlers\CharacteristicGroupsQueryHandler.cs" />
@@ -132,7 +135,7 @@
     <Compile Include="Common\Commands\CreateOrUpdateAddressValidator.cs" />
     <Compile Include="Common\Enums\EnumType.cs" />
     <Compile Include="Common\Exceptions\ResourceNotFoundException.cs" />
-    <Compile Include="Common\Specifications\EnumTypeExists.cs" />
+    <Compile Include="Common\Specifications\EnumTypeItemWithEnumType.cs" />
     <Compile Include="Common\Specifications\HasId.cs" />
     <Compile Include="Common\Specifications\IsLocalised.cs" />
     <Compile Include="Common\ValidatorCommandHandler.cs" />

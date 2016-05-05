@@ -6,8 +6,8 @@
 
     public interface IEntityValidator
     {
-        void EntityExits<T>(Guid entity) where T : BaseEntity;
+        void EntityExists<T>(Guid entity) where T : BaseEntity;
 
-        void EntityExits<T>(T entity, Guid entityId) where T : BaseEntity;
+        void EntityExists<T>(T entity, Guid entityId) where T : BaseEntity;
     }
 }
