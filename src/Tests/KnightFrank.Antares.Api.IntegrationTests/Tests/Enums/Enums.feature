@@ -1,4 +1,5 @@
 ﻿Feature: Enums
+
 @Enums
 Scenario: Get enums
 	When User retrieves Enums
