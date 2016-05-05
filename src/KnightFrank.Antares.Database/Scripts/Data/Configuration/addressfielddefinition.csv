@@ -8,4 +8,4 @@ City;ADDRESSFORM.CITY;GB;Property;0;^.{0,128}$;5;1;8
 County;ADDRESSFORM.COUNTY;GB;Property;0;^.{0,128}$;6;1;8
 City;ADDRESSFORM.CITY;GB;Requirement;0;^.{0,128}$;1;1;8
 Line2;ADDRESSFORM.STREETNAME;GB;Requirement;0;^.{0,128}$;2;1;8
-Postcode;ADDRESSFORM.POSTCODE;GB;Requirement;0;^.{1,10}$;3;1;4
+Postcode;ADDRESSFORM.POSTCODE;GB;Requirement;0;^.{0,10}$;3;1;4
