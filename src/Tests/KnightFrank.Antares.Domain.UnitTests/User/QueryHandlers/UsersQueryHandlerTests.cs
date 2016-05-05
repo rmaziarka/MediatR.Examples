@@ -1,48 +1,125 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xunit;
 
 namespace KnightFrank.Antares.Domain.UnitTests.User.QueryHandlers
 {
-    using System.Collections;
+    using FluentAssertions;
+    using Moq;
+    using Ploeh.AutoFixture.Xunit2;
 
     using KnightFrank.Antares.Dal.Model.User;
-    using KnightFrank.Antares.Domain.UnitTests.User.Queries;
+    using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.User.Queries;
     using KnightFrank.Antares.Domain.User.QueryHandlers;
     using KnightFrank.Antares.Domain.User.QueryResults;
 
-    using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.Xunit2;
-
+    [Collection("UserQueryHandler")]
+    [Trait("FeatureTitle", "Users")]
     public class UsersQueryHandlerTests
     {
-        private IList<User> userList; 
-        //public UsersQueryHandlerTests()
-        //{
-        //    IFixture fixture= new Fixture();
-        //    User userFirst = 
-        //}
+      
+        [Theory]
+        [AutoMoqData]
+        public void Given_ExistingUsersInQuery_When_Handling_Then_CorrectResultsReturned(
+            [Frozen] Mock<IReadGenericRepository<User>> userRepository,
+            IList<Department> mockDepartments,
+            UsersQueryHandler handler,
+            UsersQuery query
+            )
+        {
+            // Arrange
+            IList<User> userList = this.CreateUserList(mockDepartments.FirstOrDefault());
+            userRepository.Setup(x => x.Get()).Returns(userList.AsQueryable());
+            query.PartialName = "jon";
 
-        //[Theory]
-        //[AutoData]
-        //public void Given_UsersQueryHandler_When_Handling_Then_CorrectResultsReturned(
-        //    UsersQueryHandler handler,
-        //    UsersQuery query,
-        //    )
-        //{
-        //    // Arrange
-        //    User user = 
-        //    query.PartialName = "j";
+            // Act
+            IEnumerable<UsersQueryResult> resultUserList = handler.Handle(query).AsQueryable();
+           
+            //Assert
+            resultUserList.Should().HaveCount(2);
+            resultUserList.Should().BeInAscendingOrder(x => x.FirstName);
+           
+            Assert.All(resultUserList, 
+                user =>Assert.True(user.FirstName.StartsWith(query.PartialName,StringComparison.CurrentCultureIgnoreCase)
+                || user.LastName.StartsWith(query.PartialName,StringComparison.CurrentCultureIgnoreCase))
+                );
+        }
 
-        //    // Act
-        //    IEnumerable<UsersQueryResult> users = handler.Handle(query);
+        [Theory]
+        [AutoMoqData]
+        public void Given_NotExistsingUserInQuery_When_Handling_Then_ShouldReturnEmptyList(
+            [Frozen] Mock<IReadGenericRepository<User>> userRepository,
+            IList<Department> mockDepartments,
+            UsersQueryHandler handler,
+            UsersQuery query)
+        {
+            //Arrange
+            IList<User> userList = this.CreateUserList(mockDepartments.FirstOrDefault());
+            userRepository.Setup(x => x.Get()).Returns(userList.AsQueryable());
 
+            query.PartialName = "abc";
 
-        //}
+            //Act
+            IEnumerable<UsersQueryResult> resultUserList = handler.Handle(query).AsQueryable();
+
+            //Assert
+            resultUserList.Should().BeEmpty();
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_EmptyStringInQuery_When_Handling_Then_ShouldReturnEmptyList(
+            [Frozen] Mock<IReadGenericRepository<User>> userRepository,
+            IList<Department> mockDepartments,
+            UsersQueryHandler handler,
+            UsersQuery query)
+        {
+            //Arrange
+            IList<User> userList = this.CreateUserList(mockDepartments.FirstOrDefault());
+            userRepository.Setup(x => x.Get()).Returns(userList.AsQueryable());
+
+            query.PartialName = string.Empty;
+
+            //Act
+            IEnumerable<UsersQueryResult> resultUserList = handler.Handle(query).AsQueryable();
+
+            //Assert
+            resultUserList.Should().BeEmpty();
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_NullStringInQuery_When_Handling_Then_ShouldReturnEmptyList(
+            [Frozen] Mock<IReadGenericRepository<User>> userRepository,
+            IList<Department> mockDepartments,
+            UsersQueryHandler handler,
+            UsersQuery query)
+        {
+            //Arrange
+            IList<User> userList = this.CreateUserList(mockDepartments.FirstOrDefault());
+            userRepository.Setup(x => x.Get()).Returns(userList.AsQueryable());
+
+            query.PartialName = null;
+
+            //Act
+            IEnumerable<UsersQueryResult> resultUserList = handler.Handle(query).AsQueryable();
+
+            //Assert
+            resultUserList.Should().BeEmpty();
+        }
+
+        private IList<User> CreateUserList(Department userDepartment)
+        {
+            var userList = new List<User>
+            {
+                new User() { FirstName = "Jon", LastName = "smoth", Department = userDepartment },
+                new User() { FirstName = "Andy", LastName = "jon", Department = userDepartment },
+                new User() { FirstName = "Andy", LastName = "San", Department = userDepartment }
+            };
+            return userList;
+        }
     }
 }
