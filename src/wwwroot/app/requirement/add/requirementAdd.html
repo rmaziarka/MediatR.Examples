@@ -219,7 +219,7 @@
         </div>
         <div class="panel panel-default" ng-repeat="c in vm.requirement.contacts">
             <div class="panel-body">
-                {{c.firstName }} {{ c.surname }}
+                {{:: c.getName() }}
             </div>
         </div>
     </section>
@@ -245,7 +245,7 @@
         </contact-list>
     </side-panel-content>
     <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()"><i class="fa fa-ban"></i> Cancel</button>
-        <button class="btn btn-primary" type="button" ng-click="vm.updateContacts()" ng-disabled="vm.loadingContacts"><i class="fa fa-floppy-o"></i> Save</button>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL">Cancel</span></button>
+        <button class="btn btn-primary" type="button" ng-click="vm.updateContacts()" ng-disabled="vm.loadingContacts"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE">Save</span></button>
     </side-panel-footer>
 </side-panel>

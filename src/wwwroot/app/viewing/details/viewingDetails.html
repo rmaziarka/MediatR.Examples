@@ -47,27 +47,31 @@
 
         </div>
     </div>
-    <div class="form-group" >
+    <div class="form-group">
         <label class="required" translate="VIEWING.ADD.ATTENDEES"></label>
         <div class="panel panel-default" ng-repeat="attendee in vm.attendees">
             <div class="panel-body">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" ng-model="attendee.selected"> {{:: attendee.firstName + ' ' + attendee.surname }}
+                        <input type="checkbox" ng-model="attendee.selected" ng-click="vm.attendeeClicked(attendee)"> {{:: attendee.firstName + ' ' + attendee.surname }}
                     </label>
                 </div>
             </div>
         </div>
+       
+    </div>
+     <list-not-empty ng-model="vm.selectedAttendees" name="numberOfAttendees" />
+    <div ng-class="{'has-error': (addViewingForm.$submitted || addViewingForm.numberOfAttendees.$dirty) && addViewingForm.numberOfAttendees.$invalid}"  
+    ng-messages="addViewingForm.numberOfAttendees.$error" ng-show="addViewingForm.$submitted || addViewingForm.numberOfAttendees.$dirty">
+        <p name="listNotEmptyValidationError" ng-message="listNotEmpty" class="help-block with-errors" translate="FORM.LIST_OF_ATTENDEES_SHOULD_NOT_BE_EMPTY"></p>
     </div>
     <div class="form-group" ng-class="{'has-error': (addViewingForm.$submitted || addViewingForm.invitationText.$dirty) && addViewingForm.invitationText.$invalid}">
         <label for="invitation-text" translate="VIEWING.ADD.INVITATIONTEXT"></label>
         <span class="pull-right character-limit">{{(vm.viewing.invitationText.length ? vm.viewing.invitationText.length : "0") + "/4000"}}</span>
-        <textarea id="invitation-text" class="form-control" rows="6" ng-maxlength="4000"
-         ng-model="vm.viewing.invitationText" name="invitationText"
-          ></textarea>
-         <div ng-messages="addViewingForm.invitationText.$error" ng-show="addViewingForm.$submitted || addViewingForm.invitationText.$dirty">
-                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
-                    </div>
+        <textarea id="invitation-text" class="form-control" rows="6" ng-maxlength="4000" ng-model="vm.viewing.invitationText" name="invitationText"></textarea>
+        <div ng-messages="addViewingForm.invitationText.$error" ng-show="addViewingForm.$submitted || addViewingForm.invitationText.$dirty">
+            <div ng-messages-include="app/common/views/errorMessages.html"></div>
+        </div>
     </div>
     <div class="form-group">
         <label for="post-viewing-comment" translate="VIEWING.ADD.POSTVIEWINGCOMMENT"></label>

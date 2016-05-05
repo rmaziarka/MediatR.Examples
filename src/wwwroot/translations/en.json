@@ -80,6 +80,7 @@
     "MIN_SHOULD_BE_LESS_THAN_MAX": "Min value must not be greater than max value",
     "FIELD_HAS_INVALID_FORMAT": "Value has invalid format",
     "LIST_SHOULD_NOT_BE_EMPTY": "Please specify at least one applicant",
+    "LIST_OF_ATTENDEES_SHOULD_NOT_BE_EMPTY": "Please specify at least one attendee",
     "DATE_HAS_INVALID_FORMAT": "Date has invalid format",
     "FIELD_OVERLAPS_RANGE": "Given date range overlaps previously saved date ranges",
     "DATE_CAN_NOT_BE_FROM_FUTURE": "Can not specify date from future",

@@ -16,6 +16,7 @@ module Antares {
             startTime: any;
             endTime: any;
             viewings: Dto.IViewing[];
+            selectedAttendees: Dto.IContact[] = [];
             constructor(
                 componentRegistry: Antares.Core.Service.ComponentRegistry,
                 private dataAccessService: Antares.Services.DataAccessService,
@@ -114,8 +115,17 @@ module Antares {
                     time.getMilliseconds()
                 );
             }
-        }
 
+            attendeeClicked(attendee: Dto.IContact): void {
+                var index: number = this.selectedAttendees.indexOf(attendee);
+                if (index > -1) {
+                    this.selectedAttendees.splice(index, 1);
+                } else {
+                    this.selectedAttendees.push(attendee);
+                }
+                this.selectedAttendees = this.selectedAttendees.slice();
+            }
+        }
         angular.module('app').controller('viewingDetailsController', ViewingDetailsController);
     }
 }
