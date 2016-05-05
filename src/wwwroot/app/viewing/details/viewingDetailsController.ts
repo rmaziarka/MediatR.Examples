@@ -7,7 +7,6 @@ module Antares {
 
         export class ViewingDetailsController {
             componentId: string;
-            requirementId: string;
             activity: Dto.IActivityQueryResult;
             viewing: Dto.IViewing;
             dateOpened: boolean = false;
@@ -15,7 +14,8 @@ module Antares {
             // Any beacuse they are momentjs object
             startTime: any;
             endTime: any;
-            viewings: Dto.IViewing[];
+            requirement: Business.Requirement;
+
             selectedAttendees: Dto.IContact[] = [];
             constructor(
                 componentRegistry: Antares.Core.Service.ComponentRegistry,
@@ -80,7 +80,8 @@ module Antares {
                     .$promise
                     .then((viewing: Common.Models.Dto.IViewing) => {
                         var viewingModel = new Business.Viewing(viewing);
-                        this.viewings.push(viewingModel);
+                        this.requirement.viewings.push(viewingModel);
+                        this.requirement.groupViewings(this.requirement.viewings);
 
                         var form = this.$scope["addViewingForm"];
                         form.$setPristine();
@@ -93,7 +94,7 @@ module Antares {
                 createViewingCommand.startDate = this.combineDateWithTime(this.viewing.startDate, this.startTime.toDate());
                 createViewingCommand.endDate = this.combineDateWithTime(this.viewing.startDate, this.endTime.toDate());
                 createViewingCommand.activityId = this.activity.id;
-                createViewingCommand.requirementId = this.requirementId;
+                createViewingCommand.requirementId = this.requirement.id;
 
                 createViewingCommand.attendeesIds = this.attendees.filter((element: any): boolean => {
                     return element.selected;

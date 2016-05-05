@@ -1,5 +1,6 @@
 ﻿{
   "COMMON": {
+    "VIEW":  "View",
     "SAVE": "Save",
     "EDIT": "Edit",
     "CANCEL": "Cancel",
@@ -227,6 +228,7 @@
       "STARTTIME": "Start time",
       "ENDTIME": "End time",
       "ATTENDEES": "Attendees",
+      "NEGOTIATOR": "Negotiator",
       "INVITATIONTEXT": "Invitation text",
       "POSTVIEWINGCOMMENT": "Post-viewing comment"
     }

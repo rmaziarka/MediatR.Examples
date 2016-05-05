@@ -39,12 +39,20 @@ module Antares.Requirement.View {
             this.showPanel(this.components.panels.configureViewingsSidePanel);
         }
 
+        showViewingPreviewPanel = () => {
+            this.showPanel(this.components.panels.previewViewingsSidePanel);
+        }
+
         cancelConfigureViewings() {
             this.components.panels.configureViewingsSidePanel().hide();
         }
 
         cancelViewingDetails(){
-            this.viewingDetailsPanelVisible = false;
+            this.hidePanels();
+        }
+
+        cancelViewingPreview() {
+            this.hidePanels();
         }
 
         defineComponentIds(): void {
@@ -54,7 +62,9 @@ module Antares.Requirement.View {
                 notesSidePanelId: 'requirementView:notesSidePanelComponent',
                 activitiesListId: 'addRequirement:activitiesListComponent',
                 viewingDetailsId: 'addRequirement:viewingDetailsComponent',
-                configureViewingsPanelId: 'addRequirement:configureViewingsSidePanelComponent'
+                viewingPreviewId: 'addRequirement:viewingPreviewComponent',
+                configureViewingsSidePanelId: 'addRequirement:configureViewingsSidePanelComponent',
+                previewViewingSidePanelId: 'addRequirement:previewViewingSidePanelComponent'
             }
         }
 
@@ -64,14 +74,19 @@ module Antares.Requirement.View {
                 noteList: () => { return this.componentRegistry.get(this.componentIds.noteListId); },
                 activitiesList: () => { return this.componentRegistry.get(this.componentIds.activitiesListId); },
                 viewingDetails: () => { return this.componentRegistry.get(this.componentIds.viewingDetailsId); },
+                viewingPreview: () => { return this.componentRegistry.get(this.componentIds.viewingPreviewId); },
                 panels: {
                     notes: () => { return this.componentRegistry.get(this.componentIds.notesSidePanelId); },
-                    configureViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.configureViewingsSidePanelId); }
+                    configureViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.configureViewingsSidePanelId); },
+                    previewViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.previewViewingSidePanelId); }
                 }
             }
         }
 
-        showViewingView = (viewing: any) => {
+        showViewingPreview = (viewing: Common.Models.Dto.IViewing) => {
+            this.components.viewingPreview().clearViewingPreview();
+            this.components.viewingPreview().setViewing(viewing);
+            this.showPanel(this.components.panels.previewViewingsSidePanel);
         }
 
         saveViewing() {

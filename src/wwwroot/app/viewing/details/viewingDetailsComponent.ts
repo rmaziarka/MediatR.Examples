@@ -9,8 +9,7 @@ module Antares.Component {
         bindings : {
             componentId: '<',
             attendees: '<',
-            requirementId: '<',
-            viewings: '='
+            requirement: '=',
         }
     });
 }

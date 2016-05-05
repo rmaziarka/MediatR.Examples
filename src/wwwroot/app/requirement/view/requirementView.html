@@ -62,7 +62,7 @@
                                     <h5><time>{{::group.viewings[0].startDate | date : 'dd-MM-yyyy'}}</time></h5>
                                 </card-list-group-header>
                                 <card-list-group-item ng-repeat="viewing in group.viewings | orderBy: '-startDate' track by viewing.id">
-                                    <card card-template-url="'app/requirement/view/requirementViewingsCard.html'" item="viewing" show-item-details="vm.showViewingView">
+                                    <card card-template-url="'app/requirement/view/requirementViewingsCard.html'" item="viewing" show-item-details="vm.showViewingPreview">
                                     </card>
                                 </card-list-group-item>
                             </card-list-group>
@@ -84,7 +84,7 @@
         <activities-list component-id="vm.componentIds.activitiesListId" ng-show="!vm.viewingDetailsPanelVisible">
         </activities-list>
 
-        <viewing-details component-id="vm.componentIds.viewingDetailsId" requirement-id="vm.requirement.id" attendees="vm.requirement.contacts" viewings="vm.requirement.viewings"
+        <viewing-details component-id="vm.componentIds.viewingDetailsId" requirement="vm.requirement" attendees="vm.requirement.contacts"
                          ng-show="vm.viewingDetailsPanelVisible">
         </viewing-details>
     </side-panel-content>
@@ -113,4 +113,17 @@
         <requirement-note-add component-id="vm.componentIds.noteAddId" requirement="vm.requirement"></requirement-note-add>
         <requirement-note-list component-id="vm.componentIds.noteListId" requirement="vm.requirement"></requirement-note-list>
     </side-panel-content>
+</side-panel>
+
+<side-panel component-id="vm.componentIds.previewViewingSidePanelId" id="viewing-panel">
+    <side-panel-header>
+        <h3 translate="REQUIREMENT.VIEW.VIEWINGDETAILS"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <viewing-preview component-id="vm.componentIds.viewingPreviewId">
+        </viewing-preview>
+    </side-panel-content>
+    <side-panel-footer>
+        <button type="button" class="btn btn-default pull-left"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span></button>
+    </side-panel-footer>
 </side-panel>
