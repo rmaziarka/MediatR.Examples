@@ -7,7 +7,7 @@
     {
         public AttachmentQueryValidator()
         {
-            this.RuleFor(x => x.Id).NotEqual(Guid.Empty);
+            this.RuleFor(x => x.Id).NotEmpty();
         }
     }
 }
