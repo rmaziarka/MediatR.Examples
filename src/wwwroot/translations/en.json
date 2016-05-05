@@ -87,7 +87,9 @@
     "DATE_CAN_NOT_BE_FROM_FUTURE": "Can not specify date from future",
     "DATE_CAN_NOT_BE_GRATER_THEN": "Given date can not be later then selling date",
     "DATE_CAN_NOT_BE_LOWER_THEN": "Given date can not be earlier then purchasing date",
-    "FILE_MUST_BE_PROVIDED": "Please select file to upload"
+    "FILE_MUST_BE_PROVIDED": "Please select file to upload",
+    "TIME_CAN_NOT_BE_GRATER_THEN": "Given time can not be later then end time",
+    "TIME_CAN_NOT_BE_LOWER_THEN": "Given time can not be earlier then start time"
   },
   "PROPERTY": {
     "AREA": "Property area",
