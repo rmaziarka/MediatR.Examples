@@ -1,7 +1,5 @@
 ﻿namespace KnightFrank.Antares.Domain.Attachment.Queries
 {
-    using System;
-
     using FluentValidation;
     public class AttachmentQueryValidator : AbstractValidator<AttachmentQuery>
     {

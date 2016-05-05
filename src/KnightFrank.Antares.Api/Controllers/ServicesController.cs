@@ -25,7 +25,17 @@
         [Route("attachment/upload/activity/")]
         public Uri GetUrlForUploadFile(ActivityDocumentType activityDocumentType, [FromUri] AttachmentUrlParameters parameters)
         {
-            // TODO: When filename is required?
+            return this.storageProvider.GetActivitySasUri(activityDocumentType, parameters);
+        }
+
+        /// <summary>
+        ///    Get destination url for downloading activity document
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("attachment/download/activity/")]
+        public Uri GetUrlForDownloadFile(ActivityDocumentType activityDocumentType, [FromUri] AttachmentUrlParameters parameters)
+        {
             return this.storageProvider.GetActivitySasUri(activityDocumentType, parameters);
         }
     }

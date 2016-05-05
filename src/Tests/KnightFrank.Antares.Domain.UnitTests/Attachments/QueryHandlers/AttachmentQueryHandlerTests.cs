@@ -1,19 +1,13 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Attachments.QueryHandlers
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
-    using FluentAssertions;
-
     using KnightFrank.Antares.Dal.Model.Attachment;
-    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Attachment.Queries;
     using KnightFrank.Antares.Domain.Attachment.QueryHandlers;
-    using KnightFrank.Antares.Domain.RequirementNote.Queries;
-    using KnightFrank.Antares.Domain.RequirementNote.QueryHandlers;
 
     using Moq;
 
