@@ -8,6 +8,8 @@ module Antares.Common.Component {
         public attachmentTypes: any[];
         public file: File = null;
         public documentTypeId: string;
+        private documentTypeList: Array<Dto.IEnumItem>;
+        private urlResource: ng.resource.IResourceClass<Antares.Common.Models.Resources.IUrlAttachmentResource>;
 
         componentId: string;
         enumDocumentType: Dto.EnumTypeCode;
@@ -15,9 +17,17 @@ module Antares.Common.Component {
         constructor(
             private $scope: ng.IScope,
             private componentRegistry: Core.Service.ComponentRegistry,
+            private enumService: Services.EnumService,
             private dataAccessService: Services.DataAccessService) {
 
+            this.enumService.getEnumsPromise().then(this.onEnumsLoaded);
+
+            this.urlResource = dataAccessService.getAzureUrlResource();
             componentRegistry.register(this, this.componentId);
+        }
+
+        private onEnumsLoaded = (result: any) => {
+            this.documentTypeList = result[Antares.Common.Models.Dto.EnumTypeCode.ActivityDocumentType];
         }
 
         isDataValid = (): boolean => {
@@ -38,10 +48,22 @@ module Antares.Common.Component {
             form.$setPristine();
         };
 
-	    uploadAttachment(onAttachmentUploaded: Function) {
+        uploadAttachment(activityId: number, onAttachmentUploaded: Function) {
             if (this.isDataValid()) {
                 //upload to azure
                 //on success ->
+
+                // TODO check if element exists
+                var documentTypeCode : string =
+                    _.find(this.documentTypeList, (type: Dto.IEnumItem) => { return type.id === this.documentTypeId }).code;
+
+                // TODO WIP stil not working
+                var url = this.urlResource.get({
+                    activityDocumentType: documentTypeCode,
+                    localeIsoCode: 'en',
+                    externalDocumentId: _.uniqueId(),
+                    filename: this.file.name
+                }).$promise.then(() =>{ console.log('hur'); });
 
                 var attachment = new Antares.Common.Models.Business.Attachment();
 
@@ -50,7 +72,7 @@ module Antares.Common.Component {
                 attachment.size = this.file.size;
                 attachment.documentTypeId = this.documentTypeId;
 
-	            onAttachmentUploaded(attachment);
+                onAttachmentUploaded(attachment);
             }
         };
     }

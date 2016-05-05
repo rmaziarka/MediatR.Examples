@@ -61,6 +61,18 @@ module Antares.Services {
             }
         };
 
+        private getUrlAction: ng.resource.IActionDescriptor = {
+            url: this.appConfig.rootUrl + 'api/services/attachment/upload/activity?activityDocumentType=:activityDocumentType&parameters.localeIsoCode=:localeIsoCode&parameters.externalDocumentId=:externalDocumentId&parameters.entityReferenceId=3&parameters.filename=:filename',
+            method: 'GET',
+            isArray: false,
+            params: {
+                activityDocumentType: '@activityDocumentType',
+                localeIsoCode: '@localeIsoCode',
+                externalDocumentId: '@externalDocumentId',
+                filename: '@filename'
+            }
+        };
+
         getCompanyResource(): Resources.IBaseResourceClass<Resources.ICompanyResource> {
             return <Resources.IBaseResourceClass<Resources.ICompanyResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/companies/:id');
@@ -144,6 +156,12 @@ module Antares.Services {
         getAttachmentResource(): Resources.IBaseResourceClass<Antares.Common.Models.Resources.IActivityAttachmentResource> {
             return <Resources.IBaseResourceClass<Antares.Common.Models.Resources.IActivityAttachmentResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/activities/:id/attachments');
+        }
+
+        getAzureUrlResource(): ng.resource.IResourceClass<Antares.Common.Models.Resources.IUrlAttachmentResource> {
+            return <ng.resource.IResourceClass<Antares.Common.Models.Resources.IUrlAttachmentResource>>
+                this.$resource(this.appConfig.rootUrl + '/api/services/attachment/upload/activity');
+                //this.$resource(this.appConfig.rootUrl + '/api/services/attachment/upload/activity?activityDocumentType=:activityDocumentType&parameters.localeIsoCode=:localeIsoCode&parameters.externalDocumentId=:externalDocumentId&parameters.entityReferenceId=3&parameters.filename=:filename');
         }
     }
 

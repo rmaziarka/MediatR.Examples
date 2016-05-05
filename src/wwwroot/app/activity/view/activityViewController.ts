@@ -42,7 +42,7 @@ module Antares.Activity.View {
         };
 
         saveActivityAttachment = () => {
-            this.components.activityAttachmentAdd().uploadAttachment(
+            this.components.activityAttachmentAdd().uploadAttachment(this.activity.id,
 	            (attachment: Antares.Common.Models.Business.Attachment) => {
 		            this.activityAttachmentResource.save({ id: this.activity.id }, new Business.CreateActivityAttachmentResource(this.activity.id,attachment))
 			            .$promise.then((result: Dto.IAttachment) =>{

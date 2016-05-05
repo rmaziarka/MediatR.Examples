@@ -62,6 +62,9 @@ declare module Antares.Common.Models {
         interface IActivityAttachmentResource extends ng.resource.IResource<Dto.IAttachment> {
         }
 
+        interface IUrlAttachmentResource extends ng.resource.IResource<string> {
+        }
+
         // *** IResourceClass extensions ***
 
         // - common -
