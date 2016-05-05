@@ -195,12 +195,6 @@
             this.Driver.SendKeys(this.characteristicComment.Format(name), comment);
             return this;
         }
-
-        public CreatePropertyPage UnselectCharacteristic(string name)
-        {
-            this.Driver.GetElement<Checkbox>(this.characteristic.Format(name)).UntickCheckbox();
-            return this;
-        }
     }
 
     internal class Characteristic

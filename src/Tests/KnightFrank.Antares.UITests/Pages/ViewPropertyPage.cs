@@ -21,11 +21,11 @@
         private readonly ElementLocator propertyDetailsLabels = new ElementLocator(Locator.CssSelector, "[ng-repeat *= 'attribute'] div.ng-binding:not([class *= 'ng-hide'])");
         private readonly ElementLocator propertyDetailsValues = new ElementLocator(Locator.CssSelector, "[ng-repeat *= 'attribute'] div.attribute-value div:not([class *= 'ng-hide'])");
         // Locators for property ownership area
-        private readonly ElementLocator addOwernship = new ElementLocator(Locator.CssSelector, "card-list[show-item-add *= 'showContactList'] button");
+        private readonly ElementLocator addOwernship = new ElementLocator(Locator.CssSelector, "#ownership-list button");
         private readonly ElementLocator ownershipContacts = new ElementLocator(Locator.XPath, "//card-list-item[{0}]//span[contains(@ng-repeat, 'contacts')]");
         private readonly ElementLocator ownershipDetails = new ElementLocator(Locator.XPath, "//card-list-item[{0}]//small/span/..");
         // Locators for property activities area
-        private readonly ElementLocator addActivityButton = new ElementLocator(Locator.CssSelector, "card-list[show-item-add *= 'showActivityAdd'] button");
+        private readonly ElementLocator addActivity = new ElementLocator(Locator.CssSelector, "#card-list-activities button");
         private readonly ElementLocator activityDate = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] div.panel-item");
         private readonly ElementLocator activityVendor = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] span");
         private readonly ElementLocator activityType = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] small[id *= 'activity-type']");
@@ -56,6 +56,12 @@
 
         public string ActivityType => this.Driver.GetElement(this.activityType).Text;
 
+        public ViewPropertyPage OpenViewPropertyPageWithId(string id)
+        {
+            new CommonPage(this.DriverContext).NavigateToPageWithId("view property", id);
+            return this;
+        }
+
         public bool IsAddressDetailsVisible(string propertyDetail)
         {
             return this.Driver.IsElementPresent(this.expectedAddressField.Format(propertyDetail), BaseConfiguration.MediumTimeout);
@@ -68,7 +74,7 @@
 
         public ViewPropertyPage AddActivity()
         {
-            this.Driver.GetElement(this.addActivityButton).Click();
+            this.Driver.GetElement(this.addActivity).Click();
             return this;
         }
 

@@ -13,9 +13,9 @@
     public class CreateCompanyPage : ProjectPageBase
     {
         private readonly ElementLocator addContact = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
-        private readonly ElementLocator companyName = new ElementLocator(Locator.Name, "name");
+        private readonly ElementLocator companyName = new ElementLocator(Locator.Id, "name");
         private readonly ElementLocator contactsList = new ElementLocator(Locator.CssSelector, "#list-contacts .ng-binding");
-        private readonly ElementLocator saveButton = new ElementLocator(Locator.CssSelector, "button[type = 'submit']");
+        private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "company-save-btn");
 
         public CreateCompanyPage(DriverContext driverContext) : base(driverContext)
         {

@@ -8,8 +8,11 @@
     using FluentAssertions;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.UITests.Pages;
     using KnightFrank.Antares.UITests.Pages.Panels;
+
+    using Objectivity.Test.Automation.Common;
 
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
@@ -19,6 +22,7 @@
     [Binding]
     public class ViewPropertySteps
     {
+        private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
 
         public ViewPropertySteps(ScenarioContext scenarioContext)
@@ -29,6 +33,15 @@
             }
 
             this.scenarioContext = scenarioContext;
+            this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
+        }
+
+        [When(@"User navigates to view property page with id")]
+        public void OpenViewRequirementPageWithId()
+        {
+            Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
+            ViewPropertyPage page = new ViewPropertyPage(this.driverContext).OpenViewPropertyPageWithId(propertyId.ToString());
+            this.scenarioContext.Set(page, "ViewPropertyPage");
         }
 
         [When(@"User clicks add activites button on view property page")]
@@ -231,7 +244,8 @@
         {
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
             Dictionary<string, string> actualDetails = page.GetCharacteristics();
-            Dictionary<string, string> characteristics = table.CreateSet<Characteristic>().ToDictionary(x => x.Name, x => x.Comment);
+            Dictionary<string, string> characteristics = table.CreateSet<Characteristic>()
+                                                              .ToDictionary(x => x.Name, x => x.Comment);
 
             actualDetails.ShouldBeEquivalentTo(characteristics);
         }

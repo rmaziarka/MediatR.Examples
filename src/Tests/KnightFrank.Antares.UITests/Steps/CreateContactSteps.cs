@@ -1,12 +1,8 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
 
-    using KnightFrank.Antares.Dal;
     using KnightFrank.Antares.Dal.Model.Contacts;
-    using KnightFrank.Antares.UITests.Extensions;
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;
@@ -35,17 +31,6 @@
         {
             CreateContactPage page = new CreateContactPage(this.driverContext).OpenCreateContactPage();
             this.scenarioContext["CreateContactPage"] = page;
-        }
-
-        [Given(@"Contacts are created in database")]
-        public void CreateContactsInDb(Table table)
-        {
-            List<Contact> contacts = table.CreateSet<Contact>().ToList();
-            KnightFrankContext dataContext = DatabaseExtensions.GetDataContext();
-
-            dataContext.Contacts.AddRange(contacts);
-            dataContext.CommitAndClose();
-            this.scenarioContext.Set(contacts, "ContactsList");
         }
 
         [When(@"User fills in contact details on create contact page")]

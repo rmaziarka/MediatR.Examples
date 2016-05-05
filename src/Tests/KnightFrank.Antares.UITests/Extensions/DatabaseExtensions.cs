@@ -17,6 +17,12 @@
             return dataContext;
         }
 
+        public static void Close(this KnightFrankContext knightFrankContext)
+        {
+            transaction.Dispose();
+            dataContext.Dispose();
+        }
+
         public static void CommitAndClose(this KnightFrankContext knightFrankContext)
         {
             dataContext.SaveChanges();
