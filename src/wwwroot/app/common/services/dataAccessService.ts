@@ -160,8 +160,7 @@ module Antares.Services {
 
         getAzureUrlResource(): ng.resource.IResourceClass<Antares.Common.Models.Resources.IUrlAttachmentResource> {
             return <ng.resource.IResourceClass<Antares.Common.Models.Resources.IUrlAttachmentResource>>
-                this.$resource(this.appConfig.rootUrl + '/api/services/attachment/upload/activity');
-                //this.$resource(this.appConfig.rootUrl + '/api/services/attachment/upload/activity?activityDocumentType=:activityDocumentType&parameters.localeIsoCode=:localeIsoCode&parameters.externalDocumentId=:externalDocumentId&parameters.entityReferenceId=3&parameters.filename=:filename');
+                this.$resource(this.appConfig.rootUrl + '/api/services/attachment/upload/activity?activityDocumentType=:activityDocumentType&localeIsoCode=:localeIsoCode&externalDocumentId=:externalDocumentId&entityReferenceId=:entityReferenceId&filename=:filename');
         }
     }
 

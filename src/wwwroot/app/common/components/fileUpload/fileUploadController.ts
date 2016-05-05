@@ -57,13 +57,15 @@ module Antares.Common.Component {
                 var documentTypeCode : string =
                     _.find(this.documentTypeList, (type: Dto.IEnumItem) => { return type.id === this.documentTypeId }).code;
 
-                // TODO WIP stil not working
+                // TODO WIP stil not working, 500 returned
                 var url = this.urlResource.get({
                     activityDocumentType: documentTypeCode,
                     localeIsoCode: 'en',
                     externalDocumentId: _.uniqueId(),
                     filename: this.file.name
-                }).$promise.then(() =>{ console.log('hur'); });
+                }).$promise.then((url: any) =>{
+                     console.log('url:' + url);
+                });
 
                 var attachment = new Antares.Common.Models.Business.Attachment();
 

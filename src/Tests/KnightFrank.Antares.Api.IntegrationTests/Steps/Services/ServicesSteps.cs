@@ -36,7 +36,7 @@
             string filename = "file.pdf";
 
             string activityUpload =
-                $"/activity?activityDocumentType={activityDocumentType}&parameters.localeIsoCode={localeIsoCode}&parameters.externalDocumentId={externalDocumentId}&parameters.entityReferenceId={entityReferenceId}&parameters.filename={filename}";
+                $"/activity?activityDocumentType={activityDocumentType}&localeIsoCode={localeIsoCode}&externalDocumentId={externalDocumentId}&entityReferenceId={entityReferenceId}&filename={filename}";
 
             HttpResponseMessage httpResponseMessage = this.fixture.SendGetRequest(ApiUrl + activityUpload);
             this.scenarioContext.SetHttpResponseMessage(httpResponseMessage);
