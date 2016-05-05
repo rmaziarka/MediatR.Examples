@@ -5,7 +5,7 @@ module Antares.Common.Component {
 
     export class AttachmentPreviewController {
         componentId: string;
-        attachment: Business.Attachment = <Business.Attachment>{};
+        attachment: Antares.Common.Models.Business.Attachment = <Antares.Common.Models.Business.Attachment>{};
 
         constructor(
             private componentRegistry: Core.Service.ComponentRegistry) {
@@ -13,7 +13,7 @@ module Antares.Common.Component {
             componentRegistry.register(this, this.componentId);
         }
 
-        setAttachment = (attachment: Business.Attachment) => {
+        setAttachment = (attachment: Antares.Common.Models.Business.Attachment) => {
             this.attachment = attachment;
         }
     }

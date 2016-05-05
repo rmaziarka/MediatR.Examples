@@ -50,13 +50,16 @@ declare module Antares.Common.Models {
         interface IAddressFormResource extends ng.resource.IResource<Dto.IAddressForm> {
         }
 
-        interface IOwnershipResource extends ng.resource.IResource<Antares.Common.Models.Dto.IOwnership> {
+        interface IOwnershipResource extends ng.resource.IResource<Dto.IOwnership> {
         }
 
-        interface IRequirementNoteResource extends ng.resource.IResource<Antares.Common.Models.Dto.IRequirementNote> {
+        interface IRequirementNoteResource extends ng.resource.IResource<Dto.IRequirementNote> {
         }
 
         interface ICharacteristicGroupUsageResource extends ng.resource.IResource<Dto.ICharacteristicGroupUsage> {
+        }
+
+        interface IActivityAttachmentResource extends ng.resource.IResource<Dto.IAttachment> {
         }
 
         // *** IResourceClass extensions ***

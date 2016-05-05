@@ -4,7 +4,7 @@
 <div>
     <small>
         <time id="{{'attachment-created-date-' + cvm.item.id}}">{{cvm.item.createdDate | date : 'dd-MM-yyyy'}}</time>,
-        <span id="{{'attachment-type-' + cvm.item.id}}">{{cvm.item.fileTypeId |dynamicTranslate}}</span>,
+        <span id="{{'attachment-type-' + cvm.item.id}}">{{cvm.item.documentTypeId |dynamicTranslate}}</span>,
         <span id="{{'attachment-file-size-' + cvm.item.id}}">{{cvm.item.size}}MB</span>
     </small>
 </div>

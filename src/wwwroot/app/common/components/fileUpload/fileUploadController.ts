@@ -5,15 +5,17 @@ module Antares.Common.Component {
     import Dto = Antares.Common.Models.Dto;
 
     export class FileUploadController {
-
         public attachmentTypes: any[];
         public file: File = null;
         public documentTypeId: string;
+
         componentId: string;
         enumDocumentType: Dto.EnumTypeCode;
-        
-        constructor(private $scope: ng.IScope,
-            private componentRegistry: Core.Service.ComponentRegistry) {
+
+        constructor(
+            private $scope: ng.IScope,
+            private componentRegistry: Core.Service.ComponentRegistry,
+            private dataAccessService: Services.DataAccessService) {
 
             componentRegistry.register(this, this.componentId);
         }
@@ -36,15 +38,19 @@ module Antares.Common.Component {
             form.$setPristine();
         };
 
-        saveAttachment() {
-            if(this.isDataValid()){
-                var attachment = new Business.Attachment();
+	    uploadAttachment(onAttachmentUploaded: Function) {
+            if (this.isDataValid()) {
+                //upload to azure
+                //on success ->
 
+                var attachment = new Antares.Common.Models.Business.Attachment();
+
+                attachment.externalDocumentId = '664940CC-8212-E611-8271-8CDCD42E5436';
                 attachment.fileName = this.file.name;
                 attachment.size = this.file.size;
-                attachment.fileTypeId = this.documentTypeId;
-                
-                console.log('Attachment:SAVED');
+                attachment.documentTypeId = this.documentTypeId;
+
+	            onAttachmentUploaded(attachment);
             }
         };
     }

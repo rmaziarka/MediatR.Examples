@@ -9,13 +9,17 @@ module Antares.Activity.View {
         activity: Business.Activity;
         attachmentsCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
         enumTypeActivityDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityDocumentType;
+        activityAttachmentResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityAttachmentResource>;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private $scope: ng.IScope,
-            private $state: ng.ui.IStateService) {
+            private $state: ng.ui.IStateService,
+            private dataAccessService: Services.DataAccessService) {
 
             super(componentRegistry, $scope);
+
+            this.activityAttachmentResource = dataAccessService.getAttachmentResource();
         }
 
         showPropertyPreview = (property: Business.Property) => {
@@ -38,7 +42,16 @@ module Antares.Activity.View {
         };
 
         saveActivityAttachment = () => {
-            this.components.activityAttachmentAdd().saveAttachment();
+            this.components.activityAttachmentAdd().uploadAttachment(
+	            (attachment: Antares.Common.Models.Business.Attachment) => {
+		            this.activityAttachmentResource.save({ id: this.activity.id }, new Business.CreateActivityAttachmentResource(this.activity.id,attachment))
+			            .$promise.then((result: Dto.IAttachment) =>{
+				            //var addedAttachment = new Antares.Common.Models.Business.CreateActivityAttachmentResource(this.activity.id, result);
+                            var addedAttachment = new Business.Attachment(result);
+				            this.activity.attachments.push(addedAttachment);
+			            });
+	            }
+            );
         };
 
         goToEdit = () => {

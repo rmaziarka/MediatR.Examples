@@ -140,6 +140,11 @@ module Antares.Services {
             return <Resources.ICharacteristicGroupUsageResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/characteristicGroups?countryId=:countryId&propertyTypeId=:propertyTypeId');
         }
+
+        getAttachmentResource(): Resources.IBaseResourceClass<Antares.Common.Models.Resources.IActivityAttachmentResource> {
+            return <Resources.IBaseResourceClass<Antares.Common.Models.Resources.IActivityAttachmentResource>>
+                this.$resource(this.appConfig.rootUrl + '/api/activities/:id/attachments');
+        }
     }
 
     angular.module('app').service('dataAccessService', DataAccessService);

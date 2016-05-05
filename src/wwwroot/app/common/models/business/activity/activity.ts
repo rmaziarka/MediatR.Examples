@@ -8,7 +8,7 @@ module Antares.Common.Models.Business {
         activityTypeId: string = '';
         activityType: Dto.IActivityType = null;
         contacts: Contact[] = [];
-        attachments: Attachment[] = [];
+        attachments: Antares.Common.Models.Business.Attachment[] = [];
         property: Property = null;
         createdDate: Date = null;
         marketAppraisalPrice: number = null;
@@ -23,7 +23,7 @@ module Antares.Common.Models.Business {
                 this.contacts = activity.contacts.map((contact: Dto.IContact) => { return new Contact(contact) });
                 this.property = new Property(activity.property);
                 if (activity.attachments) {
-                    this.attachments = activity.attachments.map((attachment: Dto.IAttachment) =>{ return new Attachment(attachment) });
+                    this.attachments = activity.attachments.map((attachment: Dto.IAttachment) =>{ return new Antares.Common.Models.Business.Attachment(attachment) });
                 }
                 else {
                     this.attachments = [];
