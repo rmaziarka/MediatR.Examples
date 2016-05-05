@@ -27,15 +27,16 @@
         <div class="col-xs-10 col-md-5">
             <div class="form-group" ng-class="{'has-error': (addViewingForm.$submitted || addViewingForm.startTime.$dirty) && addViewingForm.startTime.$invalid}">
                 <label class="required" for="start-time" translate="VIEWING.ADD.STARTTIME"></label>
-                <fm-timepicker id="start-time" fm-format="'HH:mm'" name="startTime" ng-model="vm.startTime" fm-style="dropdown" required time-lower-than="{{vm.endTime}}">
-                </fm-timepicker >
+                <fm-timepicker id="start-time" fm-format="'HH:mm'" name="startTime" ng-model="vm.startTime" fm-style="dropdown" required
+                    time-lower-than="{{vm.endTime}}">
+                </fm-timepicker>
                 <div ng-messages="addViewingForm.startTime.$error" ng-show="(addViewingForm.$submitted || addViewingForm.startTime.$dirty) && addViewingForm.startTime.$invalid">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>
 
         </div>
-        <div class="col-xs-10 col-md-5" >
+        <div class="col-xs-10 col-md-5">
             <div class="form-group" ng-class="{'has-error': (addViewingForm.$submitted || addViewingForm.endTime.$dirty) && addViewingForm.endTime.$invalid}">
                 <label class="required" for="end-time" translate="VIEWING.ADD.ENDTIME"></label>
                 <fm-timepicker fm-format="'HH:mm'" id="end-time" name="endTime" ng-model="vm.endTime" fm-style="dropdown" required time-greater-than="{{vm.startTime}}">
@@ -57,18 +58,21 @@
                 </div>
             </div>
         </div>
-       
+
     </div>
-     <list-not-empty ng-model="vm.selectedAttendees" name="numberOfAttendees" />
-    <div ng-class="{'has-error': (addViewingForm.$submitted || addViewingForm.numberOfAttendees.$dirty) && addViewingForm.numberOfAttendees.$invalid}"  
-    ng-messages="addViewingForm.numberOfAttendees.$error" ng-show="addViewingForm.$submitted || addViewingForm.numberOfAttendees.$dirty">
+    <list-not-empty ng-model="vm.selectedAttendees" name="numberOfAttendees" />
+    <div ng-class="{'has-error': (addViewingForm.$submitted || addViewingForm.numberOfAttendees.$dirty) && addViewingForm.numberOfAttendees.$invalid}"
+        ng-messages="addViewingForm.numberOfAttendees.$error" ng-show="addViewingForm.$submitted || addViewingForm.numberOfAttendees.$dirty">
         <p name="listNotEmptyValidationError" ng-message="listNotEmpty" class="help-block with-errors" translate="FORM.LIST_OF_ATTENDEES_SHOULD_NOT_BE_EMPTY"></p>
     </div>
-    <div class="form-group" ng-class="{'has-error': (addViewingForm.$submitted || addViewingForm.invitationText.$dirty) && addViewingForm.invitationText.$invalid}">
+    <div class="form-group" ng-class="{'has-error': (addViewingForm.$submitted || addViewingForm.invitationTextLength.$dirty) && addViewingForm.invitationTextLength.$invalid}">
         <label for="invitation-text" translate="VIEWING.ADD.INVITATIONTEXT"></label>
         <span class="pull-right character-limit">{{(vm.viewing.invitationText.length ? vm.viewing.invitationText.length : "0") + "/4000"}}</span>
-        <textarea id="invitation-text" class="form-control" rows="6" ng-maxlength="4000" ng-model="vm.viewing.invitationText" name="invitationText"></textarea>
-        <div ng-messages="addViewingForm.invitationText.$error" ng-show="addViewingForm.$submitted || addViewingForm.invitationText.$dirty">
+        <textarea id="invitation-text" class="form-control" rows="6" ng-model="vm.viewing.invitationText" ng-maxlength="4000" name="invitationText"></textarea>
+
+        <kf-max-count max-count='4000' ng-model="vm.viewing.invitationText.length" name='invitationTextLength'></kf-max-count>
+        
+        <div ng-messages="addViewingForm.invitationTextLength.$error" ng-show="addViewingForm.$submitted || addViewingForm.invitationTextLength.$dirty">
             <div ng-messages-include="app/common/views/errorMessages.html"></div>
         </div>
     </div>
