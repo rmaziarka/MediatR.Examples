@@ -6,9 +6,29 @@ $color-black-alpha: rgba(0, 0, 0, 0.1);
 $color-mercury: #e3e3e3;
 $color-wild-sand: #f5f5f5;
 $color-gallery: #eee;
+$color-mine-shaft: #383838;
 $color-red: #f00;
 $color-crimson: #d00f3b;
 
 // Font Awesome
 
 $fa-font-path: '../libs/font-awesome/fonts';
+
+
+// Header
+
+$header-height: 58px;
+
+// Drawer
+
+$drawer-width: 300px;
+
+// Hamburgers
+
+$hamburger-layer-width: 16px;
+$hamburger-layer-height: 2px;
+$hamburger-layer-spacing: 3px;
+$hamburger-layer-color: $color-white;
+$hamburger-layer-border-radius: 0;
+$hamburger-hover-opacity: 1;
+$hamburger-hover-transition-duration: 0.2s;

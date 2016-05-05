@@ -1,0 +1,39 @@
+// Drawer
+
+.drawer {
+  background: $color-crimson;
+  height: calc(100% - #{$header-height});
+  left: -100%;
+  overflow-y: auto;
+  position: fixed;
+  top: $header-height;
+  transition: all 0.3s linear;
+  width: 100%;
+  z-index: 1070;
+
+  @media (min-width: $screen-sm-min) {
+    left: -$drawer-width;
+    width: $drawer-width;
+  }
+}
+
+.content {
+  left: 0;
+  padding: 11px 20px;
+  position: relative;
+  transition: all 0.3s linear;
+  width: 100%;
+}
+
+.drawer-open {
+  .drawer {
+    left: 0;
+  }
+
+  .content {
+    @media (min-width: $screen-sm-min) {
+      left: $drawer-width;
+      width: calc(100% - #{$drawer-width});
+    }
+  }
+}

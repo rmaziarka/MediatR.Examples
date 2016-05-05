@@ -50,6 +50,29 @@ label,
   }
 }
 
+.radio,
+.checkbox {
+  margin: {
+    bottom: 5px;
+    top: 5px;
+  }
+
+  label {
+    font-size: $font-size-base;
+    line-height: 21px;
+  }
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 // Textarea character limit
 
 .character-limit {

@@ -1,37 +1,43 @@
-﻿<div class="navbar navbar-inverse">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a ui-sref="app.property-add">Create property</a>
-                </li>
-                <li>
-                    <a ui-sref="app.contact-add">Create contact</a>
-                </li>
-                <li>
-                    <a ui-sref="app.requirement-add">Create requirement</a>
-                </li>
-                <li>
-                    <a ui-sref="app.company-add">Create company</a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="#">{{appVm.userData.name}} ({{appVm.userData.email}})</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+﻿<!-- TODO -->
+<script>
+    $(function() {
+        var $body = $('body'),
+            $hamb = $('.hamburger');
 
-<div class="container">
-    <div class="body-content" data-ui-view>
-    </div>
+        $hamb.on('click', function() {
+            $hamb.toggleClass('is-active');
+            $body.toggleClass('drawer-open');
+        });
+    });
+</script>
+
+<div class="page-wrapper">
+    <header class="main-header">
+        <button class="hamburger hamburger--squeeze" type="button">
+            <span class="hamburger-box">
+                <span class="hamburger-inner"></span>
+            </span>
+        </button>
+        <img class="logo" src="../images/kf_logo_white.svg" width="103" height="38">
+    </header>
+
+    <nav class="drawer">
+        <ul>
+            <li>
+                <a ui-sref="app.property-add">Create property</a>
+            </li>
+            <li>
+                <a ui-sref="app.contact-add">Create contact</a>
+            </li>
+            <li>
+                <a ui-sref="app.requirement-add">Create requirement</a>
+            </li>
+            <li>
+                <a ui-sref="app.company-add">Create company</a>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="content" data-ui-view>
+    </main>
 </div>

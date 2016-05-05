@@ -1,0 +1,24 @@
+// Header
+
+.main-header {
+  background-color: $color-mine-shaft;
+  height: $header-height;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1070;
+
+  .hamburger {
+    background-color: $color-crimson;
+    height: 58px;
+    outline: none;
+    padding: 22px 21px 18px;
+  }
+
+  .logo {
+    left: 25px;
+    position: relative;
+    top: -3px;
+  }
+}

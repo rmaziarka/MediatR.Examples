@@ -66,6 +66,7 @@
         sassPaths: [
             bower.directory + 'bootstrap-sass/assets/stylesheets',
             bower.directory + 'font-awesome/scss',
+            bower.directory + 'css-hamburgers/_sass/hamburgers',
         ],
         fonts: bower.directory + 'font-awesome/fonts/**/*.*',
         ts: {
