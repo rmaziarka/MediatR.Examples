@@ -11,7 +11,14 @@
     "BACK": "Back",
     "SELECTEMPTYVALUE": "- select -",
     "LOADINGDATA": "...loading data...",
-    "FILEISUPLOADING" : "File is uploading ..."
+    "FILEISUPLOADING": "File is uploading ...",
+    "MENU": {
+      "CREATE": "Create",
+      "CONTACTS": "Contacts",      
+      "COMPANIES": "Companies",
+      "REQUIREMENTS": "Requirements",
+      "PROPERTIES": "Properties"
+    }
   },
   "OWNERSHIP": {
     "ADD": {
