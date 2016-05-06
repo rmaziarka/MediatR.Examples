@@ -3,7 +3,7 @@
 module Antares.Common.Directive {
     export class FileRequiredDirective implements ng.IDirective {
         restrict = "A";
-        require = 'ngModel';        
+        require = 'ngModel';
         scope = {
             ngModel: '=ngModel'
         };
@@ -14,7 +14,7 @@ module Antares.Common.Directive {
             };
 
             scope.$watch('ngModel', (newValue, oldValue) => {
-                if (newValue !== oldValue) {                    
+                if (newValue) {
                     ngModel.$setDirty();
                 }
             });
