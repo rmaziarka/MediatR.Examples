@@ -5,8 +5,8 @@
                 <label for="file" class="required">{{"ATTACHMENT.ADD.FILE" | translate}}</label>
             </div>
             <div class="col-md-12" ng-show="fuvm.file">
-                <button type="button" class="close close-side-panel" aria-label="Close">
-                    <span aria-hidden="true" ng-click="fuvm.clearSelectedFile()">×</span>
+                <button type="button" class="close close-side-panel" ng-click="fuvm.clearSelectedFile()" aria-label="Close">
+                    <span aria-hidden="true">×</span>
                 </button>
                 <div class="text-truncate">{{fuvm.file.name}}</div>
             </div>
