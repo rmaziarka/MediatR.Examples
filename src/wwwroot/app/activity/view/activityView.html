@@ -77,12 +77,13 @@
     </side-panel-content>
 </side-panel>
 
-<side-panel component-id="avvm.componentIds.activityAttachmentAddSidePanelId">
+<side-panel component-id="avvm.componentIds.activityAttachmentAddSidePanelId" is-busy="avvm.saveActivityAttachmentBusy">
     <side-panel-header>
         <h3 translate="ATTACHMENT.ADD.ATTACH_FILE"></h3>
     </side-panel-header>
     <side-panel-content>
         <file-upload component-id="avvm.componentIds.activityAttachmentAddId" enum-document-type="{{avvm.enumTypeActivityDocumentType}}"></file-upload>
+        <busy is-busy="avvm.saveActivityAttachmentBusy" label="{{'COMMON.FILEISUPLOADING' | translate}}"></busy>
     </side-panel-content>
     <side-panel-footer>
         <button class="btn btn-default" type="button" ng-click="avvm.cancelActivityAttachmentAdd()">

@@ -10,6 +10,7 @@ module Antares.Activity.View {
         attachmentsCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
         enumTypeActivityDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityDocumentType;
         activityAttachmentResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityAttachmentResource>;
+        saveActivityAttachmentBusy: boolean = false;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -42,15 +43,18 @@ module Antares.Activity.View {
         };
 
         saveActivityAttachment = () => {
+            this.saveActivityAttachmentBusy = true;
+
             this.components.activityAttachmentAdd().uploadAttachment(this.activity.id,
-	            (attachment: Antares.Common.Models.Business.Attachment) => {
-		            this.activityAttachmentResource.save({ id: this.activity.id }, new Business.CreateActivityAttachmentResource(this.activity.id,attachment))
-			            .$promise.then((result: Dto.IAttachment) =>{
-				            //var addedAttachment = new Antares.Common.Models.Business.CreateActivityAttachmentResource(this.activity.id, result);
+                (attachment: Antares.Common.Models.Business.Attachment) => {
+                    this.activityAttachmentResource.save({ id: this.activity.id }, new Business.CreateActivityAttachmentResource(this.activity.id, attachment))
+                        .$promise.then((result: Dto.IAttachment) => {
+                            //var addedAttachment = new Antares.Common.Models.Business.CreateActivityAttachmentResource(this.activity.id, result);
                             var addedAttachment = new Business.Attachment(result);
-				            this.activity.attachments.push(addedAttachment);
-			            });
-	            }
+                            this.activity.attachments.push(addedAttachment);
+                        })
+                        .finally(() => { this.saveActivityAttachmentBusy = false; });
+                }
             );
         };
 
@@ -58,7 +62,7 @@ module Antares.Activity.View {
             this.$state.go('app.activity-edit', { id: this.$state.params['id'] });
         }
 
-        defineComponentIds(){
+        defineComponentIds() {
             this.componentIds = {
                 propertyPreviewId: 'viewActivity:propertyPreviewComponent',
                 propertyPreviewSidePanelId: 'viewActivity:propertyPreviewSidePanelComponent',
@@ -69,12 +73,12 @@ module Antares.Activity.View {
             };
         }
 
-        defineComponents(){
+        defineComponents() {
             this.components = {
                 propertyPreview: () => { return this.componentRegistry.get(this.componentIds.propertyPreviewId); },
                 activityAttachmentAdd: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentAddId); },
                 activityAttachmentPreview: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentPreviewId); },
-                panels : {
+                panels: {
                     propertyPreview: () => { return this.componentRegistry.get(this.componentIds.propertyPreviewSidePanelId); },
                     activityAttachmentAdd: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentAddSidePanelId) },
                     activityAttachmentPreview: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentPreviewSidePanelId); }

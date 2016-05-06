@@ -10,7 +10,8 @@
     "CONFIGURE": "Configure",
     "BACK": "Back",
     "SELECTEMPTYVALUE": "- select -",
-    "LOADINGDATA": "...loading data..."
+    "LOADINGDATA": "...loading data...",
+    "FILEISUPLOADING" : "File is uploading ..."
   },
   "OWNERSHIP": {
     "ADD": {

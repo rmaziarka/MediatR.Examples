@@ -139,8 +139,7 @@
                 </div>
             </div>
         </form>
-        <div class="spinner"></div>
-        <div class="spinner-label">uploading</div>
+        <busy is-busy="true" label="{{'COMMON.FILEUPLOADING' | translate}}"></busy>
     </side-panel-content>
     <side-panel-footer>
         <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()" ng-show="!vm.ownershipAddPanelVisible">
