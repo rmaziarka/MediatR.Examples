@@ -20,8 +20,10 @@ module Antares.Common.Directive {
                 if (isNaN(maxCount)) {
                     maxCount = 0;
                 }
-
-                return (modelValue !== undefined && modelValue <= maxCount);
+                if (modelValue === undefined) {
+                    return true;
+                }
+                return (modelValue <= maxCount);
             }
             scope.$watch('ngModel', (newValue, oldValue) => {
                 if ((newValue !== undefined || oldValue !== undefined) && newValue !== oldValue) {

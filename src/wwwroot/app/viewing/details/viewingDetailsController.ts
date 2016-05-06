@@ -2,6 +2,7 @@
 
 module Antares {
     export module Component {
+        declare var moment:any;
         import Dto = Antares.Common.Models.Dto;
         import Business = Common.Models.Business;
 
@@ -91,8 +92,8 @@ module Antares {
             // replace with Business.Viewing and probably extend it with selected: boolean
             getCreateViewingCommand(): Dto.IViewing {
                 var createViewingCommand: Dto.IViewing = angular.copy(this.viewing);
-                createViewingCommand.startDate = this.combineDateWithTime(this.viewing.startDate, this.startTime.toDate());
-                createViewingCommand.endDate = this.combineDateWithTime(this.viewing.startDate, this.endTime.toDate());
+                createViewingCommand.startDate = this.combineDateWithTime(this.viewing.startDate, moment(this.startTime).toDate());
+                createViewingCommand.endDate = this.combineDateWithTime(this.viewing.startDate, moment(this.endTime).toDate());
                 createViewingCommand.activityId = this.activity.id;
                 createViewingCommand.requirementId = this.requirement.id;
 
