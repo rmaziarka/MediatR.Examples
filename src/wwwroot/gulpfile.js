@@ -163,6 +163,10 @@ gulp.task('build', ['_optimize'], function() {
     gulp.src(config.build.staticAppFiles)
         .pipe(gulp.dest(config.build.output));
 
+    log('Copying images');
+    gulp.src(config.build.imagesFiles)
+        .pipe(gulp.dest(config.build.imagesDest));
+
     log('Copying translation files');
     gulp.src(config.build.staticTranslationsFiles)
         .pipe(gulp.dest(config.build.translationsDest));

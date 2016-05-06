@@ -4,6 +4,7 @@
     var build = './build/';
     var specRunnerFile = 'specRunner.html';
     var translations = 'translations/';
+    var images = 'images/';
     var bower = {
         json: require('./bower.json'),
         directory: './libs/',
@@ -102,6 +103,8 @@
             webConfigFile: [
                 root + '_web.config'
             ],
+            imagesDest: build + images,
+            imagesFiles: images + "*.*",
         },
         vendors: []
     }
