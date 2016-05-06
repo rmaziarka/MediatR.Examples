@@ -1,4 +1,4 @@
-namespace KnightFrank.Antares.Domain.UnitTests
+namespace KnightFrank.Antares.Domain.UnitTests.Autofixture
 {
     using System;
     using System.Reflection;
