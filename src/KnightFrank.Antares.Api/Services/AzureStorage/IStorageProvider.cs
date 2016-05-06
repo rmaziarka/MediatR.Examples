@@ -7,6 +7,8 @@ namespace KnightFrank.Antares.Api.Services.AzureStorage
 
     public interface IStorageProvider
     {
-        Uri GetActivitySasUri(ActivityDocumentType activityDocumentType, AttachmentUrlParameters parameters);
+        AzureUploadUrlContainer GetActivityUploadSasUri(AttachmentUrlParameters parameters);
+
+        AzureDownloadUrlContainer GetActivityDownloadSasUri(AttachmentDownloadUrlParameters parameters);
     }
 }

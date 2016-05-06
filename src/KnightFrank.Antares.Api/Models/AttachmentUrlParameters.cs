@@ -6,7 +6,7 @@
     {
         public string LocaleIsoCode { get; set; }
 
-        public Guid ExternalDocumentId { get; set; }
+        public Guid DocumentTypeId { get; set; }
 
         public Guid EntityReferenceId { get; set; }
 

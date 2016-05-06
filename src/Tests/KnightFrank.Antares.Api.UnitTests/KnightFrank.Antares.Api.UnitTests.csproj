@@ -30,8 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="KnightFrank.Foundation, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\KnightFrank.Foundation.Antares.1.0.99.0\lib\net461\KnightFrank.Foundation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="KnightFrank.Foundation.Antares, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\KnightFrank.Foundation.Antares.1.0.98.0\lib\net461\KnightFrank.Foundation.Antares.dll</HintPath>
+      <HintPath>..\..\packages\KnightFrank.Foundation.Antares.1.0.99.0\lib\net461\KnightFrank.Foundation.Antares.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -128,6 +132,10 @@
     <ProjectReference Include="..\..\KnightFrank.Antares.Api\KnightFrank.Antares.Api.csproj">
       <Project>{0F7A831A-FEB0-41F9-A1E0-AB8205327B48}</Project>
       <Name>KnightFrank.Antares.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj">
+      <Project>{2525AF42-F89C-48D8-89A7-74449702C627}</Project>
+      <Name>KnightFrank.Antares.Dal</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\KnightFrank.Antares.Domain\KnightFrank.Antares.Domain.csproj">
       <Project>{5987D78C-856D-4315-8B8B-BAF00C286AFF}</Project>

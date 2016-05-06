@@ -4,7 +4,6 @@
     using System.Collections.Generic;
 
     using KnightFrank.Antares.Api.Models;
-    using KnightFrank.Antares.Api.Services.AzureStorage;
     using KnightFrank.Antares.Api.Services.AzureStorage.Factories;
     using KnightFrank.Antares.Domain.Enum.Types;
     using KnightFrank.Foundation.Antares.Cloud.Storage.Blob.Interfaces;
@@ -32,10 +31,11 @@
         [MemberData("ActivityTestData")]
         public void Given_ActivityDocumentType_ThenCorrectTypeShouldBeCreated(ActivityDocumentType documentType, Type type)
         {
+            Guid externalDocumentId = Guid.NewGuid();
             var parameters = new AttachmentUrlParameters { Filename = "filename" };
 
             var blobResourceFactory = new BlobResourceFactory();
-            ICloudBlobResource cloudBlobResource = blobResourceFactory.Create(documentType, parameters);
+            ICloudBlobResource cloudBlobResource = blobResourceFactory.Create(documentType, externalDocumentId, parameters);
 
             Assert.Equal(type, cloudBlobResource.GetType());
         }

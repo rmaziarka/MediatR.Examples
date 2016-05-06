@@ -217,6 +217,9 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Models\AttachmentDownloadUrlParameters.cs" />
+    <Compile Include="Services\AzureStorage\AzureDownloadUrlContainer.cs" />
+    <Compile Include="Services\AzureStorage\AzureUploadUrlContainer.cs" />
     <Compile Include="Services\AzureStorage\Factories\IBlobResourceFactory.cs" />
     <Compile Include="Services\AzureStorage\Factories\ISharedAccessBlobPolicyFactory.cs" />
     <Compile Include="Services\AzureStorage\IStorageProvider.cs" />

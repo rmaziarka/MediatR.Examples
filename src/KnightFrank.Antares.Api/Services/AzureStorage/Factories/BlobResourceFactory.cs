@@ -1,6 +1,6 @@
 ﻿namespace KnightFrank.Antares.Api.Services.AzureStorage.Factories
 {
-    using System.Drawing.Imaging;
+    using System;
 
     using KnightFrank.Antares.Api.Models;
     using KnightFrank.Antares.Domain.Common.Exceptions;
@@ -13,7 +13,7 @@
 
     public class BlobResourceFactory : IBlobResourceFactory
     {
-        public ICloudBlobResource Create(ActivityDocumentType activityDocumentType, AttachmentUrlParameters parameters)
+        public ICloudBlobResource Create(ActivityDocumentType activityDocumentType, Guid externalDocumentId, AttachmentUrlParameters parameters)
         {
             ICloudBlobResource blobResource;
 
@@ -22,11 +22,11 @@
                 case ActivityDocumentType.Brochure:
                     {
                         blobResource = new CloudBlobBrochureDocumentResource(
-                            Antares.CloudStorageContainerType.Activity,
-                            parameters.LocaleIsoCode,
-                            parameters.EntityReferenceId.ToString(),
-                            parameters.ExternalDocumentId.ToString(),
-                            parameters.Filename);
+                                Antares.CloudStorageContainerType.Activity,
+                                parameters.LocaleIsoCode,
+                                parameters.EntityReferenceId.ToString(),
+                                externalDocumentId.ToString(),
+                                parameters.Filename);
 
                         break;
                     }
@@ -36,7 +36,7 @@
                            Antares.CloudStorageContainerType.Activity,
                             parameters.LocaleIsoCode,
                             parameters.EntityReferenceId.ToString(),
-                            parameters.ExternalDocumentId.ToString(),
+                            externalDocumentId.ToString(),
                             parameters.Filename);
                         break;
                     }
@@ -46,7 +46,7 @@
                            Antares.CloudStorageContainerType.Activity,
                             parameters.LocaleIsoCode,
                             parameters.EntityReferenceId.ToString(),
-                            parameters.ExternalDocumentId.ToString(),
+                            externalDocumentId.ToString(),
                             parameters.Filename);
                         break;
                     }
@@ -56,7 +56,7 @@
                             Antares.CloudStorageContainerType.Activity,
                             parameters.LocaleIsoCode,
                             parameters.EntityReferenceId.ToString(),
-                            parameters.ExternalDocumentId.ToString(),
+                            externalDocumentId.ToString(),
                             parameters.Filename);
                         break;
                     }
@@ -67,7 +67,7 @@
                             VideoFormat.Mp4, // not used
                             parameters.LocaleIsoCode,
                             parameters.EntityReferenceId.ToString(),
-                            parameters.ExternalDocumentId.ToString(),
+                            externalDocumentId.ToString(),
                             parameters.Filename);
                         break;
                     }
@@ -80,7 +80,7 @@
                             Antares.CloudStorageContainerType.Activity,
                             parameters.LocaleIsoCode,
                             parameters.EntityReferenceId.ToString(),
-                            parameters.ExternalDocumentId.ToString(),
+                            externalDocumentId.ToString(),
                             parameters.Filename);
 
                         break;
@@ -92,7 +92,6 @@
             }
 
             return blobResource;
-
         }
     }
 }

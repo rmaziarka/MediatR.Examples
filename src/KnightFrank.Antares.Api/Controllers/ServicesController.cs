@@ -1,11 +1,9 @@
 ﻿namespace KnightFrank.Antares.Api.Controllers
 {
-    using System;
     using System.Web.Http;
 
     using KnightFrank.Antares.Api.Models;
     using KnightFrank.Antares.Api.Services.AzureStorage;
-    using KnightFrank.Antares.Domain.Enum.Types;
 
     [RoutePrefix("api/services")]
     public class ServicesController : ApiController
@@ -23,9 +21,9 @@
         /// <returns></returns>
         [HttpGet]
         [Route("attachment/upload/activity/")]
-        public Uri GetUrlForUploadFile(ActivityDocumentType activityDocumentType, [FromUri(Name = "")] AttachmentUrlParameters parameters)
+        public AzureUploadUrlContainer GetUrlForUploadFile([FromUri(Name = "")] AttachmentUrlParameters parameters)
         {
-            return this.storageProvider.GetActivitySasUri(activityDocumentType, parameters);
+            return this.storageProvider.GetActivityUploadSasUri(parameters);
         }
 
         /// <summary>
@@ -34,9 +32,9 @@
         /// <returns></returns>
         [HttpGet]
         [Route("attachment/download/activity/")]
-        public Uri GetUrlForDownloadFile(ActivityDocumentType activityDocumentType, [FromUri(Name = "")] AttachmentUrlParameters parameters)
+        public AzureDownloadUrlContainer GetUrlForDownloadFile([FromUri(Name = "")] AttachmentDownloadUrlParameters parameters)
         {
-            return this.storageProvider.GetActivitySasUri(activityDocumentType, parameters);
+            return this.storageProvider.GetActivityDownloadSasUri(parameters);
         }
     }
 }
