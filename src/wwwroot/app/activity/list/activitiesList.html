@@ -5,7 +5,7 @@
     <div class="panel-body">
         <div class="radio">
             <label>
-                <input type="radio" name="activity" ng-model="vm.selectedActivity" value="{{::activity.id}}"/>{{:: activity.propertyName + ' ' + activity.propertyNumber + ' ' + activity.line2 }}
+                <input type="radio" name="activity" ng-model="vm.selectedActivity" value="{{::activity.id}}"/>{{:: activity.propertyName ? activity.propertyName : ''  + ' ' + activity.propertyNumber ? activity.propertyNumber : ''  + ' ' + activity.line2 ? activity.line2 : '' }}
             </label>
         </div>
     </div>
