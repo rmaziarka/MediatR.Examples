@@ -57,12 +57,12 @@
                         </card-list-no-items>
                      
                         <card-list-item ng-repeat="group in vm.requirement.viewingsByDay | orderBy: '-day'">
-                            <card-list-group>
+                            <card-list-group class="viewing-group">
                                 <card-list-group-header>
                                     <h5><time>{{::group.viewings[0].startDate | date : 'dd-MM-yyyy'}}</time></h5>
                                 </card-list-group-header>
                                 <card-list-group-item ng-repeat="viewing in group.viewings | orderBy: '-startDate' track by viewing.id">
-                                    <card card-template-url="'app/requirement/view/requirementViewingsCard.html'" item="viewing" show-item-details="vm.showViewingPreview">
+                                    <card class="viewing-item" card-template-url="'app/requirement/view/requirementViewingsCard.html'" item="viewing" show-item-details="vm.showViewingPreview">
                                     </card>
                                 </card-list-group-item>
                             </card-list-group>
