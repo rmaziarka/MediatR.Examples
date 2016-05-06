@@ -18,7 +18,7 @@ namespace Antares.Common.Directive {
 
                 var fromDate: Date = moment(attrs['timeGreaterThan'].replace(/\"/g,""));
                 var toDate: Date = moment(inputValue);
-                var isValid: boolean = moment(fromDate).isSameOrBefore(toDate);
+                var isValid: boolean = moment(fromDate).isBefore(toDate);
                 ngModel.$setValidity('timeGreaterThan', isValid);
                 return inputValue;
             };
