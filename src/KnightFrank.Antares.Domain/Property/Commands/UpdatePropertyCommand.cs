@@ -9,8 +9,6 @@
 
     public class UpdatePropertyCommand : IRequest<Guid>
     {
-        private IList<CreateOrUpdatePropertyCharacteristic> propertyCharacteristics;
-
         public Guid Id { get; set; }
 
         public CreateOrUpdateAddress Address { get; set; }

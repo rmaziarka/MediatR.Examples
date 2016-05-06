@@ -1,10 +1,10 @@
-/// <reference path="../../../typings/_all.d.ts" />
+/// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Component {
     import AzureBlobUploadFactory = Antares.Factories.AzureBlobUploadFactory;
     import Dto = Common.Models.Dto;
 
-    export class FileUploadController {
+    export class AttachmentUploadController {
         public attachmentTypes: any[];
         public file: File = null;
         public documentTypeId: string;
@@ -83,5 +83,5 @@ module Antares.Common.Component {
         };
     }
 
-    angular.module('app').controller('FileUploadController', FileUploadController);
+    angular.module('app').controller('AttachmentUploadController', AttachmentUploadController);
 }
