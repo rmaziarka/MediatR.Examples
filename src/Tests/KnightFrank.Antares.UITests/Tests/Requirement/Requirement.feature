@@ -86,5 +86,5 @@ Scenario: Create viewing on requirement
 			| Kennedi Hyde |
 		And User clicks save activity button on view requirement page
 	Then Viewing details on 1 position on view requirement page are same as the following
-		| Position | Date       | Time          | Name      |
-		| Position | 12-05-2016 | 10:00 - 11:00 | Baker Str |
+		| Date       | Time          | Name      |
+		| 12-05-2016 | 10:00 - 11:00 | Baker Str |
