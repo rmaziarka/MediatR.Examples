@@ -24,7 +24,7 @@
     <nav class="drawer">
         <uib-accordion close-others="true">
             <uib-accordion-group is-open="status.openContacts">
-                <uib-accordion-heading ng-click="{status.openContacts = !status.openContacts}">
+                <uib-accordion-heading>
                     {{'COMMON.MENU.CONTACTS' | translate}} <i class="pull-right fa" ng-class="{'fa-chevron-up': status.openContacts, 'fa-chevron-down': !status.openContacts}"></i>
                 </uib-accordion-heading>
                 <a class="btn btn-default btn-sm" ui-sref="app.contact-add">{{'COMMON.MENU.CREATE' | translate}}</a>
