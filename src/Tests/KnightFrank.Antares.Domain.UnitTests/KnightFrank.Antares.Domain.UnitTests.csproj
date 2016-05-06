@@ -172,7 +172,6 @@
     <Compile Include="Property\QueryHandlers\PropertyTypesQueryHandlerTests.cs" />
     <Compile Include="Property\QueryHandlers\PropertyAttributesQueryHandlerTests.cs" />
     <Compile Include="RequirementNote\CommandHandlers\CreateRequirementNoteCommandHandlerTests.cs" />
-    <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandDomainValidatorTests.cs" />
     <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandValidatorTests.cs" />
     <Compile Include="RequirementNote\Queries\RequirementNoteQueryValidatorTests.cs" />
     <Compile Include="RequirementNote\QueryHandlers\RequirementNoteQueryHandlerTests.cs" />

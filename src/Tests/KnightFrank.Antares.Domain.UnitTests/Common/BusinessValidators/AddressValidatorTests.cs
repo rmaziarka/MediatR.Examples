@@ -38,28 +38,6 @@
         [Theory]
         [InlineAutoMoqData]
         public void
-        Given_CreateOrUpdateAddressCommand_When_Handle_EntityValidatiorShouldBeExecutedForAddressFormId(
-            [Frozen] Mock<IGenericRepository<AddressFieldDefinition>> addressFieldDefinitionRepository,
-            [Frozen] Mock<IGenericRepository<AddressForm>> addressFormRepository,
-            [Frozen] Mock<IEntityValidator> entityValidator,
-            AddressValidator validator)
-        {
-            // Arrange
-            CreateOrUpdateAddress address = this.fixture.Build<CreateOrUpdateAddress>()
-                                                      .Create();
-
-            addressFormRepository.Setup(x => x.GetById(address.AddressFormId)).Returns((AddressForm)null);
-            entityValidator.Setup(x => x.EntityExists(It.IsAny<AddressForm>(), address.AddressFormId))
-              .Throws(new BusinessValidationException(It.IsAny<BusinessValidationMessage>()));
-
-            // Act + Assert
-            Assert.Throws<BusinessValidationException>(() => { validator.Validate(address); });
-            entityValidator.Verify(x => x.EntityExists(It.IsAny<AddressForm>(), address.AddressFormId));
-        }
-
-        [Theory]
-        [InlineAutoMoqData]
-        public void
             Given_InvalidCreateOrUpdateAddressCommand_When_InconsistentCountryData_ShouldThrowBusinessException(
                 [Frozen] Mock<IGenericRepository<AddressFieldDefinition>> addressFieldDefinitionRepository,
                 [Frozen] Mock<IGenericRepository<AddressForm>> addressFormRepository,
@@ -197,6 +175,7 @@
             Given_ValidCreateOrUpdateAddressCommand_Then_NoValidationResults(
                 [Frozen] Mock<IGenericRepository<AddressFieldDefinition>> addressFieldDefinitionRepository,
                 [Frozen] Mock<IGenericRepository<AddressForm>> addressFormRepository,
+                [Frozen] Mock<IEntityValidator> entityValidator,
                 AddressValidator validator)
         {
             // Arrange
@@ -223,8 +202,11 @@
                     ))
                 .Returns(addressFieldDefinitions);
 
-            // Act + Assert
+            // Act
             validator.Validate(query);
+
+            // Assert
+            entityValidator.Verify(x => x.EntityExists(It.IsAny<AddressForm>(), query.AddressFormId));
         }
     }
 }

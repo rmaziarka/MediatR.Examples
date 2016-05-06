@@ -231,7 +231,6 @@
     <Compile Include="Viewing\QueryHandlers\ViewingQueryHandler.cs" />
     <Compile Include="RequirementNote\CommandHandlers\CreateRequirementNoteCommandHandler.cs" />
     <Compile Include="Common\BusinessValidators\IEntityValidator.cs" />
-    <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandDomainValidator.cs" />
     <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandValidator.cs" />
     <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandProfile.cs" />
     <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommand.cs" />
