@@ -1,6 +1,8 @@
 /// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Models.Business {
+    declare var filesize: Filesize.IFilesize;
+
     export class Attachment {
         fileName: string = '';
         documentTypeId: string = '';
@@ -18,9 +20,8 @@ module Antares.Common.Models.Business {
             }
         }
 
-        public getSizeInMb() {
-            //TODO - smart conversion
-            return this.size / 1000000;
+        public humanizedSize = () => {
+            return filesize(this.size, { round: 1 });
         }
     }
 }
