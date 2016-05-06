@@ -32,8 +32,9 @@ module Antares {
                 this.startTime = new Date();
                 this.endTime = new Date();
                 this.setSelectedAttendees([]);
-                var form = this.$scope["addViewingForm"];
+                var form:ng.IFormController = this.$scope["addViewingForm"];
                 form.$setPristine();
+                form.$setUntouched();
             }
 
             getSelectedAttendees = () => {
@@ -48,6 +49,7 @@ module Antares {
 
             setSelectedAttendees = (itemsToSelect: Array<string>) => {
                 this.attendees.forEach((c: any) => { c.selected = false; });
+                this.selectedAttendees.splice(0, this.selectedAttendees.length);
                 if (itemsToSelect === undefined || itemsToSelect === null || itemsToSelect.length === 0) {
                     return;
                 }
@@ -55,6 +57,7 @@ module Antares {
                 this.attendees.forEach((c: any) => {
                     if (itemsToSelect.indexOf(c.id) > -1) {
                         c.selected = true;
+                        this.selectedAttendees.push(c);
                     }
                 });
             }
@@ -83,7 +86,6 @@ module Antares {
                         var viewingModel = new Business.Viewing(viewing);
                         this.requirement.viewings.push(viewingModel);
                         this.requirement.groupViewings(this.requirement.viewings);
-
                         var form = this.$scope["addViewingForm"];
                         form.$setPristine();
                     });
