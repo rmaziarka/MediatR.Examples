@@ -45,20 +45,21 @@ module Antares.Activity.View {
         saveActivityAttachment = () => {
             this.saveActivityAttachmentBusy = true;
 
-            this.components.activityAttachmentAdd().uploadAttachment(
-                this.activity.id,
-	            (attachment: Antares.Common.Models.Business.Attachment) =>{
-	                this.activityAttachmentResource.save({ id : this.activity.id }, new Business.CreateActivityAttachmentResource(this.activity.id, attachment))
-	                    .$promise
-	                    .then((result: Dto.IAttachment) =>{
-	                        var addedAttachment = new Business.Attachment(result);
-                            this.activity.attachments.push(addedAttachment);
+            this.components.activityAttachmentAdd()
+                .uploadAttachment(this.activity.id)
+                .then((attachment: Antares.Common.Models.Business.Attachment) =>{
+                    return this.activityAttachmentResource.save({ id: this.activity.id }, new Business.CreateActivityAttachmentResource(this.activity.id, attachment))
+                        .$promise;
+                })
+                .then((result: Dto.IAttachment) => {
+                    var addedAttachment = new Business.Attachment(result);
+                    this.activity.attachments.push(addedAttachment);
 
-	                        this.hidePanels(true);
-                        })
-                        .finally(() => { this.saveActivityAttachmentBusy = false; });
-	            }
-            );
+                    this.hidePanels(true);
+                })
+                .finally(() =>{
+                     this.saveActivityAttachmentBusy = false;
+                });
         };
 
         goToEdit = () => {

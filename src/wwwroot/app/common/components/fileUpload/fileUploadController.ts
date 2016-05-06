@@ -15,6 +15,7 @@ module Antares.Common.Component {
 
         constructor(
             private $scope: ng.IScope,
+            private $q: ng.IQService,
             private componentRegistry: Core.Service.ComponentRegistry,
             private azureBlobUploadFactory: AzureBlobUploadFactory,
             private dataAccessService: Services.DataAccessService) {
@@ -42,33 +43,43 @@ module Antares.Common.Component {
             form.$setPristine();
         };
 
-        uploadAttachment(activityId: string, onAttachmentUploaded: Function) {
-            if (this.isDataValid()) {
-                this.urlResource.get({
-                        documentTypeId : this.documentTypeId,
-                        localeIsoCode: 'en',
-                        entityReferenceId: activityId,
-                        filename : this.file.name
-                    })
-                    .$promise
-                    .then((urlContainer: Antares.Common.Models.Dto.IAzureUploadUrlContainer) => {
-                        var url: string = urlContainer.url;
-
-                        this.azureBlobUploadFactory.uploadFile(this.file, url)
-                            .then(() =>{
-                                var attachment = new Common.Models.Business.Attachment();
-
-                                attachment.externalDocumentId = urlContainer.externalDocumentId;
-                                attachment.fileName = this.file.name;
-                                attachment.size = this.file.size;
-                                attachment.documentTypeId = this.documentTypeId;
-
-                                onAttachmentUploaded(attachment);
-                            });
-                    }, () => {
-                        console.error('Error sending file to azure storage.');
-                    });
+        uploadAttachment(entityReferenceId: string) {
+            if (!this.isDataValid()) {
+                var uploadResult = this.$q.defer();
+                uploadResult.reject();
+                return uploadResult.promise;
             }
+
+            return this.urlResource.get({
+                documentTypeId: this.documentTypeId,
+                localeIsoCode: 'en',
+                entityReferenceId: entityReferenceId,
+                filename: this.file.name
+            })
+                .$promise
+                .then((urlContainer: Common.Models.Dto.IAzureUploadUrlContainer) => {
+                    return this.azureBlobUploadFactory
+                        .uploadFile(this.file, <string>urlContainer.url)
+                        .then(() => {
+                             return urlContainer.externalDocumentId;
+                        });
+                }, () => {
+                    console.error('Error sending file to azure storage.');
+
+                    var uploadResult = this.$q.defer();
+                    uploadResult.reject();
+                    return uploadResult.promise;
+                })
+                .then((externalDocumentId) => {
+                    var attachment = new Common.Models.Business.Attachment();
+
+                    attachment.externalDocumentId = externalDocumentId;
+                    attachment.fileName = this.file.name;
+                    attachment.size = this.file.size;
+                    attachment.documentTypeId = this.documentTypeId;
+
+                    return attachment;
+                });
         };
     }
 
