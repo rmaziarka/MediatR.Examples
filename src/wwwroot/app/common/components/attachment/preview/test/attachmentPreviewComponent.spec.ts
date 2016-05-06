@@ -12,7 +12,8 @@ module Antares {
             controller: AttachmentPreviewController;
 
         var pageObjectSelectors = {
-            fileName: '#attachment-preview-fileName a',
+            fileNameLink: '#attachment-preview-fileName a',
+            fileNameSpan: '#attachment-preview-fileName span',
             fileTypeId: '#attachment-preview-type',
             size: '#attachment-preview-size',
             createdDate: '#attachment-preview-created-date',
@@ -20,6 +21,7 @@ module Antares {
         }
 
         describe('and proper attachment is set', () =>{
+            var activityIdMock = 'testActivityId';
             var attachmentMock = TestHelpers.AttachmentGenerator.generate({ user: new Business.User({ id: 'us1', firstName: 'firstName1', lastName: 'lastName1' })});
 
             beforeEach(inject((
@@ -31,26 +33,41 @@ module Antares {
                 $http = $httpBackend;
                 filter = $filter;
                 scope = $rootScope.$new();
+
+                $http.whenGET(/\/api\/services\/attachment\/download/).respond(() => {
+                    return {};
+                });
+
                 element = $compile('<attachment-preview></attachment-preview>')(scope);
                 scope.$apply();
 
                 // arrange + act
                 controller = element.controller('attachmentPreview');
-                controller.setAttachment(attachmentMock);
+                controller.setAttachment(attachmentMock, activityIdMock);
                 scope.$apply();
             }));
 
-            it('then attachment file name value should be displayed', () => {
+            it('then attachment file name value should be displayed as link if file url exists', () => {
+                // arrange + act
+                controller.attachmentUrl = 'some_url';
+                scope.$apply();
+
                 // assert
-                var fileNameElement = element.find(pageObjectSelectors.fileName);
+                var fileNameElement = element.find(pageObjectSelectors.fileNameLink);
+                expect(fileNameElement.text()).toBe(attachmentMock.fileName);
+            });
+
+            it('then attachment file name value should be displayed as span if file url does not exists', () => {
+                // arrange + act
+                controller.attachmentUrl = '';
+                scope.$apply();
+
+                // assert
+                var fileNameElement = element.find(pageObjectSelectors.fileNameSpan);
                 expect(fileNameElement.text()).toBe(attachmentMock.fileName);
             });
 
             it('then attachment file type value should be displayed', () => {
-                // arrange + act
-                controller.setAttachment(attachmentMock);
-                scope.$apply();
-
                 // assert
                 var fileTypeIdElement = element.find(pageObjectSelectors.fileTypeId);
                 expect(fileTypeIdElement.text()).toBe('DYNAMICTRANSLATIONS.' + attachmentMock.documentTypeId);
@@ -63,10 +80,6 @@ module Antares {
             });
 
             it('then attachment creation date value should be displayed in proper format', () => {
-                // arrange + act
-                controller.setAttachment(attachmentMock);
-                scope.$apply();
-
                 // assert
                 var formattedDate = filter('date')(attachmentMock.createdDate, 'dd-MM-yyyy');
                 var dateElement = element.find(pageObjectSelectors.createdDate);

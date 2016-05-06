@@ -13,10 +13,14 @@ module Antares.Common.Models.Business {
             if (attachment) {
                 angular.extend(this, attachment);
 
-                this.externalDocumentId = '664940CC-8212-E611-8271-8CDCD42E5436';
                 this.createdDate = Core.DateTimeUtils.convertDateToUtc(attachment.createdDate);
                 this.user = new User(attachment.user);
             }
+        }
+
+        public getSizeInMb() {
+            //TODO - smart conversion
+            return this.size / 1000000;
         }
     }
 }

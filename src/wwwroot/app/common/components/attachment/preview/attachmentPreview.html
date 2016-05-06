@@ -2,7 +2,8 @@
     <div class="col-xs-5" translate="ATTACHMENT.PREVIEW.NAME"></div>
     <div class="col-xs-7 text-truncate" id="attachment-preview-fileName">
         <i class="fa fa-download pull-right" aria-hidden="true"></i>
-        <a href="#">{{vm.attachment.fileName}}</a>
+        <a ng-if="!!vm.attachmentUrl" href="{{vm.attachmentUrl}}">{{vm.attachment.fileName}}</a>
+        <span ng-if="!vm.attachmentUrl">{{vm.attachment.fileName}}</span>
     </div>
 </div>
 <div class="row section-row">

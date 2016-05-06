@@ -1,15 +1,14 @@
 /// <reference path="../../../typings/_all.d.ts" />
 
 module Antares.Common.Component {
-    import Business = Antares.Common.Models.Business;
-    import Dto = Antares.Common.Models.Dto;
+    import AzureBlobUploadFactory = Antares.Factories.AzureBlobUploadFactory;
+    import Dto = Common.Models.Dto;
 
     export class FileUploadController {
         public attachmentTypes: any[];
         public file: File = null;
         public documentTypeId: string;
-        private documentTypeList: Array<Dto.IEnumItem>;
-        private urlResource: ng.resource.IResourceClass<Antares.Common.Models.Resources.IUrlAttachmentResource>;
+        private urlResource: ng.resource.IResourceClass<Common.Models.Resources.IAzureUploadUrlResource>;
 
         componentId: string;
         enumDocumentType: Dto.EnumTypeCode;
@@ -17,17 +16,12 @@ module Antares.Common.Component {
         constructor(
             private $scope: ng.IScope,
             private componentRegistry: Core.Service.ComponentRegistry,
-            private enumService: Services.EnumService,
+            private azureBlobUploadFactory: AzureBlobUploadFactory,
             private dataAccessService: Services.DataAccessService) {
 
-            this.enumService.getEnumsPromise().then(this.onEnumsLoaded);
+            this.urlResource = dataAccessService.getAzureUploadUrlResource();
 
-            this.urlResource = dataAccessService.getAzureUrlResource();
             componentRegistry.register(this, this.componentId);
-        }
-
-        private onEnumsLoaded = (result: any) => {
-            this.documentTypeList = result[Antares.Common.Models.Dto.EnumTypeCode.ActivityDocumentType];
         }
 
         isDataValid = (): boolean => {
@@ -48,33 +42,32 @@ module Antares.Common.Component {
             form.$setPristine();
         };
 
-        uploadAttachment(activityId: number, onAttachmentUploaded: Function) {
+        uploadAttachment(activityId: string, onAttachmentUploaded: Function) {
             if (this.isDataValid()) {
-                //upload to azure
-                //on success ->
+                this.urlResource.get({
+                        documentTypeId : this.documentTypeId,
+                        localeIsoCode: 'en',
+                        entityReferenceId: activityId,
+                        filename : this.file.name
+                    })
+                    .$promise
+                    .then((urlContainer: Antares.Common.Models.Dto.IAzureUploadUrlContainer) => {
+                        var url: string = urlContainer.url;
 
-                // TODO check if element exists
-                var documentTypeCode : string =
-                    _.find(this.documentTypeList, (type: Dto.IEnumItem) => { return type.id === this.documentTypeId }).code;
+                        this.azureBlobUploadFactory.uploadFile(this.file, url)
+                            .then(() =>{
+                                var attachment = new Common.Models.Business.Attachment();
 
-                // TODO WIP stil not working, 500 returned
-                var url = this.urlResource.get({
-                    activityDocumentType: documentTypeCode,
-                    localeIsoCode: 'en',
-                    externalDocumentId: _.uniqueId(),
-                    filename: this.file.name
-                }).$promise.then((url: any) =>{
-                     console.log('url:' + url);
-                });
+                                attachment.externalDocumentId = urlContainer.externalDocumentId;
+                                attachment.fileName = this.file.name;
+                                attachment.size = this.file.size;
+                                attachment.documentTypeId = this.documentTypeId;
 
-                var attachment = new Antares.Common.Models.Business.Attachment();
-
-                attachment.externalDocumentId = '664940CC-8212-E611-8271-8CDCD42E5436';
-                attachment.fileName = this.file.name;
-                attachment.size = this.file.size;
-                attachment.documentTypeId = this.documentTypeId;
-
-                onAttachmentUploaded(attachment);
+                                onAttachmentUploaded(attachment);
+                            });
+                    }, () => {
+                        console.error('Error sending file to azure storage.');
+                    });
             }
         };
     }

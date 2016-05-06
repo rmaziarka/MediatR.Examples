@@ -158,9 +158,14 @@ module Antares.Services {
                 this.$resource(this.appConfig.rootUrl + '/api/activities/:id/attachments');
         }
 
-        getAzureUrlResource(): ng.resource.IResourceClass<Antares.Common.Models.Resources.IUrlAttachmentResource> {
-            return <ng.resource.IResourceClass<Antares.Common.Models.Resources.IUrlAttachmentResource>>
-                this.$resource(this.appConfig.rootUrl + '/api/services/attachment/upload/activity?activityDocumentType=:activityDocumentType&localeIsoCode=:localeIsoCode&externalDocumentId=:externalDocumentId&entityReferenceId=:entityReferenceId&filename=:filename');
+        getAzureUploadUrlResource(): ng.resource.IResourceClass<Antares.Common.Models.Resources.IAzureUploadUrlResource> {
+            return <ng.resource.IResourceClass<Antares.Common.Models.Resources.IAzureUploadUrlResource>>
+                this.$resource(this.appConfig.rootUrl + '/api/services/attachment/upload/activity?documentTypeId=:documentTypeId&localeIsoCode=:localeIsoCode&entityReferenceId=:entityReferenceId&filename=:filename');
+        }
+
+        getAzureDownloadUrlResource(): ng.resource.IResourceClass<Antares.Common.Models.Resources.IAzureDownloadUrlResource> {
+            return <ng.resource.IResourceClass<Antares.Common.Models.Resources.IAzureDownloadUrlResource>>
+                this.$resource(this.appConfig.rootUrl + '/api/services/attachment/download/activity?documentTypeId=:documentTypeId&localeIsoCode=:localeIsoCode&externalDocumentId=:externalDocumentId&entityReferenceId=:entityReferenceId&filename=:filename');
         }
     }
 

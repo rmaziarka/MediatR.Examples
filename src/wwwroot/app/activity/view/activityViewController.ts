@@ -34,7 +34,7 @@ module Antares.Activity.View {
         }
 
         showActivityAttachmentPreview = (attachment: Common.Models.Business.Attachment) => {
-            this.components.activityAttachmentPreview().setAttachment(attachment);
+            this.components.activityAttachmentPreview().setAttachment(attachment, this.activity.id);
             this.showPanel(this.components.panels.activityAttachmentPreview);
         }
 
@@ -45,16 +45,19 @@ module Antares.Activity.View {
         saveActivityAttachment = () => {
             this.saveActivityAttachmentBusy = true;
 
-            this.components.activityAttachmentAdd().uploadAttachment(this.activity.id,
-                (attachment: Antares.Common.Models.Business.Attachment) => {
-                    this.activityAttachmentResource.save({ id: this.activity.id }, new Business.CreateActivityAttachmentResource(this.activity.id, attachment))
-                        .$promise.then((result: Dto.IAttachment) => {
-                            //var addedAttachment = new Antares.Common.Models.Business.CreateActivityAttachmentResource(this.activity.id, result);
-                            var addedAttachment = new Business.Attachment(result);
+            this.components.activityAttachmentAdd().uploadAttachment(
+                this.activity.id,
+	            (attachment: Antares.Common.Models.Business.Attachment) =>{
+	                this.activityAttachmentResource.save({ id : this.activity.id }, new Business.CreateActivityAttachmentResource(this.activity.id, attachment))
+	                    .$promise
+	                    .then((result: Dto.IAttachment) =>{
+	                        var addedAttachment = new Business.Attachment(result);
                             this.activity.attachments.push(addedAttachment);
+
+	                        this.hidePanels(true);
                         })
                         .finally(() => { this.saveActivityAttachmentBusy = false; });
-                }
+	            }
             );
         };
 
