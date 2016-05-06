@@ -1,7 +1,7 @@
 ﻿/// <reference path="typings/_all.d.ts" />
 
 module Antares {
-    import IAppConfig = Antares.Common.Models.IAppConfig;
+    import IAppConfig = Common.Models.IAppConfig;
     declare var deferredBootstrapper: any;
 
     deferredBootstrapper.bootstrap({
@@ -11,7 +11,8 @@ module Antares {
             appConfig: ($http: ng.IHttpService) => $http.get('app.json')
                 .then((result: ng.IHttpPromiseCallbackArg<any>): IAppConfig => {
                     return {
-                        rootUrl: result.data["App.Settings"].Api.RootUrl
+                        rootUrl: result.data["App.Settings"].Api.RootUrl,
+                        fileChunkSizeInBytes: result.data["App.Settings"].FileUpload.ChunkSizeInBytes
                     }
                 })
         }

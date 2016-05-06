@@ -2,6 +2,9 @@
   "App.Settings": {
     "Api": {
       "RootUrl": "http://dev.api.antares.knightfrank.com"
+    },
+    "FileUpload": {
+      "ChunkSizeInBytes": 1048576
     }
   }
 }
