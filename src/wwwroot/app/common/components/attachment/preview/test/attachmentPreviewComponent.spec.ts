@@ -74,9 +74,16 @@ module Antares {
             });
 
             it('then attachment file size value should be displayed', () => {
+                // arrange
+                var sizeMock = '999.5 MB';
+                spyOn(attachmentMock, 'humanizedSize').and.returnValue(sizeMock);
+
+                // act
+                scope.$apply();
+
                 // assert
                 var sizeElement = element.find(pageObjectSelectors.size);
-                expect(sizeElement.text()).toBe(attachmentMock.size + 'MB');
+                expect(sizeElement.text()).toBe(sizeMock);
             });
 
             it('then attachment creation date value should be displayed in proper format', () => {
