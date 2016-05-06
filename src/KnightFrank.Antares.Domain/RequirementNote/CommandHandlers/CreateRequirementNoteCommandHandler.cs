@@ -7,7 +7,6 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.User;
-    using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
 
     using MediatR;
@@ -18,7 +17,7 @@
         private readonly IGenericRepository<User> userRepository;
         private readonly IEntityValidator entityValidator;
 
-        public CreateRequirementNoteCommandHandler(IGenericRepository<RequirementNote> requirementNoteRepository, IGenericRepository<User> userRepository, IDomainValidator<CreateRequirementNoteCommand> domainValidator, IEntityValidator entityValidator, IGenericRepository<Requirement> requirementRepository)
+        public CreateRequirementNoteCommandHandler(IGenericRepository<RequirementNote> requirementNoteRepository, IGenericRepository<User> userRepository, IEntityValidator entityValidator)
         {
             this.requirementNoteRepository = requirementNoteRepository;
             this.userRepository = userRepository;
