@@ -1,12 +1,11 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Activity.CommandHandlers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
 
     using FluentAssertions;
-
-    using FluentValidation.Results;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
@@ -14,10 +13,11 @@
     using KnightFrank.Antares.Domain.Activity.CommandHandlers;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Common;
-    using KnightFrank.Antares.Domain.Common.Exceptions;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
 
     using Moq;
 
+    using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
@@ -31,7 +31,7 @@
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             CreateActivityCommandHandler handler,
-            CreateActivityCommand cmd,
+            CreateActivityCommand command,
             Guid expectedActivityId)
         {
             // Arrange 
@@ -45,32 +45,41 @@
             activityRepository.Setup(r => r.Save()).Callback(() => { activity.Id = expectedActivityId; });
 
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
-                             .Returns(cmd.ContactIds.Select(id => new Contact { Id = id }));
+                             .Returns(command.ContactIds.Select(id => new Contact { Id = id }));
 
             // Act
-            handler.Handle(cmd);
+            handler.Handle(command);
 
             // Assert
             activity.Should().NotBeNull();
-            activity.ShouldBeEquivalentTo(cmd, opt => opt.IncludingProperties().ExcludingMissingMembers());
+            activity.ShouldBeEquivalentTo(command, opt => opt.IncludingProperties().ExcludingMissingMembers());
             activity.Id.ShouldBeEquivalentTo(expectedActivityId);
             activityRepository.Verify(r => r.Add(It.IsAny<Activity>()), Times.Once());
             activityRepository.Verify(r => r.Save(), Times.Once());
         }
-
+        
         [Theory]
         [AutoMoqData]
-        public void Given_CommandHasInvalidContacts_When_Handling_Then_ShouldThrowDomainValidatorException(
+        public void Given_CreateActivityCommandWithInvalidVendors_When_Handling_Then_ShouldThrowBusinessException(
             [Frozen] Mock<IDomainValidator<CreateActivityCommand>> domainValidator,
+            [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             CreateActivityCommandHandler handler,
-            CreateActivityCommand cmd)
+            CreateActivityCommand command,
+            IFixture  fixture
+            )
         {
-            // Arrange 
-            domainValidator.Setup(v => v.Validate(It.IsAny<CreateActivityCommand>()))
-                           .Returns(new ValidationResult(new [] { new ValidationFailure(nameof(cmd.ContactIds), "Error") }));
-                    
-            // Act & Assert
-            Assert.Throws<DomainValidationException>(() => { handler.Handle(cmd); });
+            // Arrange
+            command.ContactIds = fixture.CreateMany<Guid>(2).ToList();
+
+            contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(
+                new List<Contact>()
+                {
+                    fixture.Build<Contact>().With(x => x.Id, command.ContactIds.First()).Create()
+                });
+
+            // Act + Assert
+            var businessValidationException = Assert.Throws<BusinessValidationException>(() => { handler.Handle(command); });
+            Assert.Equal(ErrorMessage.Missing_Activity_Vendors_Id, businessValidationException.ErrorCode);
         }
     }
 }

@@ -113,7 +113,6 @@
     <Compile Include="Activity\Queries\ActivityTypeQueryValidatorTests.cs" />
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandlerTests.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandlerTests.cs" />
-    <Compile Include="Activity\Commands\CreateActivityCommandDomainValidatorTests.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandValidatorTests.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommandValidatorTests.cs" />
     <Compile Include="Activity\Queries\ActivityQueryValidatorTests.cs" />
@@ -131,9 +130,7 @@
     <Compile Include="Common\BusinessValidators\EnumTypeItemValidatorTests.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidatorTests.cs" />
     <Compile Include="Common\Validator\LocaleValidatorTests.cs" />
-    <Compile Include="Common\Validator\CountryValidatorTests.cs" />
-    <Compile Include="Company\CommandHandlers\CreateCompanyComandHandlerTests.cs" />
-    <Compile Include="Company\Commands\CreateCompanyCommandDomainValidatorTests.cs" />
+    <Compile Include="Company\CommandHandlers\CreateCompanyCommandHandlerTests.cs" />
     <Compile Include="Common\Validator\ContactValidatorTests.cs" />
     <Compile Include="Company\Commands\CreateCompanyValidatorTests.cs" />
     <Compile Include="Contact\Queries\ContactQueryValidatorTests.cs" />
@@ -179,7 +176,6 @@
     <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandValidatorTests.cs" />
     <Compile Include="RequirementNote\Queries\RequirementNoteQueryValidatorTests.cs" />
     <Compile Include="RequirementNote\QueryHandlers\RequirementNoteQueryHandlerTests.cs" />
-    <Compile Include="Requirement\Commands\CreateRequirementCommandDomainValidatorTests.cs" />
     <Compile Include="Property\Commands\CreatePropertyCommandValidatorTests.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandHandlerTests.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidatorTests.cs" />

@@ -11,7 +11,6 @@
 
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
-    using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Exceptions;
 
@@ -23,14 +22,12 @@
 
         private readonly IGenericRepository<Contact> contactRepository;
 
-        private readonly IDomainValidator<CreateRequirementCommand> createRequirementCommandDomainValidator;
         private readonly IAddressValidator addressValidator;
 
-        public CreateRequirementCommandHandler(IGenericRepository<Requirement> requirementRepository, IGenericRepository<Contact> contactRepository, IDomainValidator<CreateRequirementCommand>  createRequirementCommandDomainValidator, IAddressValidator addressValidator)
+        public CreateRequirementCommandHandler(IGenericRepository<Requirement> requirementRepository, IGenericRepository<Contact> contactRepository, IAddressValidator addressValidator)
         {
             this.requirementRepository = requirementRepository;
             this.contactRepository = contactRepository;
-            this.createRequirementCommandDomainValidator = createRequirementCommandDomainValidator;
             this.addressValidator = addressValidator;
         }
 
@@ -38,15 +35,14 @@
         {
             this.addressValidator.Validate(message.Address);
 
-            ValidationResult validationResult = this.createRequirementCommandDomainValidator.Validate(message);
-            if (!validationResult.IsValid)
-            {
-                throw new DomainValidationException(validationResult.Errors);
-            }
-
             var requirement = AutoMapper.Mapper.Map<Requirement>(message);
 
             List<Contact> existingContacts = this.contactRepository.FindBy(x => message.ContactIds.Any(id => id == x.Id)).ToList();
+            if (!message.ContactIds.All(x => existingContacts.Select(c => c.Id).Contains(x)))
+            {
+                throw new BusinessValidationException(ErrorMessage.Missing_Requirement_Applicants_Id);
+            }
+
             requirement.Contacts = existingContacts;
             requirement.CreateDate = DateTime.UtcNow;
 

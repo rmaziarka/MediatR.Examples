@@ -77,36 +77,12 @@
             this.handler.Handle(this.command);
 
             // Assert
+            this.entityValidator.Verify(x => x.EntityExists(It.IsAny<Requirement>(), this.command.RequirementId), Times.Once);
+            this.entityValidator.Verify(x => x.EntityExists<Activity>(this.command.ActivityId), Times.Once);
             this.viewingRepository.Verify(r => r.Add(It.IsAny<Viewing>()), Times.Once());
             this.viewingRepository.Verify(r => r.Save(), Times.Once());
         }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_CreateViewingCommandWithInvalidRequirementId_When_Handle_Then_ShouldThrowBusinessException()
-        {
-            //Arrange
-            this.requirementRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Requirement, bool>>>(), It.IsAny<Expression<Func<Requirement, object>>[]>()))
-                .Returns(Enumerable.Empty<Requirement>);
-            this.entityValidator.Setup(x => x.EntityExists(It.IsAny<Requirement>(),It.IsAny<Guid>()))
-                .Throws(new BusinessValidationException(It.IsAny<BusinessValidationMessage>()));
-
-            // Act + Assert
-            Assert.Throws<BusinessValidationException>(() => { this.handler.Handle(this.command); });
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_CreateViewingCommandWithInvalidActivityId_When_Handle_Then_ShouldThrowBusinessException()
-        {
-            //Arrange
-            this.entityValidator.Setup(x => x.EntityExists<Activity>(It.IsAny<Guid>()))
-                .Throws(new BusinessValidationException(It.IsAny<BusinessValidationMessage>()));
-
-            // Act + Assert
-            Assert.Throws<BusinessValidationException>(() => { this.handler.Handle(this.command); });
-        }
-
+        
         [Theory]
         [AutoMoqData]
         public void Given_CreateViewingCommandWithInvalidAttendeesIds_When_Handle_Then_ShouldThrowBusinessException()
@@ -123,7 +99,10 @@
             });
 
             // Act + Assert
-            Assert.Throws<BusinessValidationException>(() => { this.handler.Handle(this.command); });
+            var businessValidationException = Assert.Throws<BusinessValidationException>(() => { this.handler.Handle(this.command); });
+            
+            // Assert
+            Assert.Equal(ErrorMessage.Missing_Requirement_Attendees_Id, businessValidationException.ErrorCode);
         }
     }
 }

@@ -81,7 +81,6 @@
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\ActivityProfile.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandValidator.cs" />
-    <Compile Include="Activity\Commands\CreateActivityCommandDomainValidator.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommand.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommandValidator.cs" />
     <Compile Include="Activity\Queries\ActivitiesQuery.cs" />
@@ -142,13 +141,11 @@
     <Compile Include="Common\Validator\ActivityTypeValidator.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidator.cs" />
     <Compile Include="Common\Validator\ContactValidator.cs" />
-    <Compile Include="Common\Validator\CountryValidator.cs" />
     <Compile Include="Common\Validator\LocaleValidator.cs" />
     <Compile Include="Common\Validator\PropertyTypeValidator.cs" />
     <Compile Include="Company\CommandHandlers\CreateCompanyCommandHandler.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommand.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommandProfile.cs" />
-    <Compile Include="Company\Commands\CreateCompanyCommandDomainValidator.cs" />
     <Compile Include="Company\Commands\CreateCompanyValidator.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandProfile.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidator.cs" />
@@ -242,7 +239,6 @@
     <Compile Include="RequirementNote\Queries\RequirementNoteQueryValidator.cs" />
     <Compile Include="RequirementNote\QueryHandlers\RequirementNoteQueryHandler.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementCommandHandler.cs" />
-    <Compile Include="Requirement\Commands\CreateRequirementCommandDomainValidator.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandValidator.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommand.cs" />
     <Compile Include="Requirement\Commands\RequirementCommandProfile.cs" />

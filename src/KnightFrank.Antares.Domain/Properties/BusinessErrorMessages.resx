@@ -129,7 +129,16 @@
   <data name="Inconsistent_Dynamic_Configuration" xml:space="preserve">
     <value>{0} configuration is inconsistent.</value>
   </data>
-  <data name="Missing_Applicant_Id" xml:space="preserve">
+  <data name="Missing_Activity_Vendors_Id" xml:space="preserve">
+    <value>One or more vendors are not exist.</value>
+  </data>
+  <data name="Missing_Company_Contacts_Id" xml:space="preserve">
+    <value>One or more contacts are not exist.</value>
+  </data>
+  <data name="Missing_Requirement_Applicants_Id" xml:space="preserve">
+    <value>One or more attendees are not on the applicant list.</value>
+  </data>
+  <data name="Missing_Requirement_Attendees_Id" xml:space="preserve">
     <value>One or more attendees are not on the applicant list.</value>
   </data>
   <data name="Property_Format_Is_Invalid" xml:space="preserve">

@@ -26,7 +26,8 @@
 
         private readonly IEntityValidator entityValidator;
 
-        public CreateViewingCommandHandler(IGenericRepository<Viewing> viewingRepository,
+        public CreateViewingCommandHandler(
+            IGenericRepository<Viewing> viewingRepository,
             IEntityValidator entityValidator,
             IGenericRepository<Requirement> requirementRepository,
             IReadGenericRepository<User> userRepository)
@@ -52,7 +53,7 @@
 
             if (!message.AttendeesIds.All(x => applicantIds.Contains(x)))
             {
-                throw new BusinessValidationException(ErrorMessage.Missing_Applicant_Id);
+                throw new BusinessValidationException(ErrorMessage.Missing_Requirement_Attendees_Id);
             }
 
             List<Contact> existingAttendees = requirement.Contacts.Where(x => message.AttendeesIds.Contains(x.Id)).ToList();

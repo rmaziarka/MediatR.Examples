@@ -97,11 +97,38 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One or more vendors are not exist..
+        /// </summary>
+        internal static string Missing_Activity_Vendors_Id {
+            get {
+                return ResourceManager.GetString("Missing_Activity_Vendors_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more contacts are not exist..
+        /// </summary>
+        internal static string Missing_Company_Contacts_Id {
+            get {
+                return ResourceManager.GetString("Missing_Company_Contacts_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to One or more attendees are not on the applicant list..
         /// </summary>
-        internal static string Missing_Applicant_Id {
+        internal static string Missing_Requirement_Applicants_Id {
             get {
-                return ResourceManager.GetString("Missing_Applicant_Id", resourceCulture);
+                return ResourceManager.GetString("Missing_Requirement_Applicants_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more attendees are not on the applicant list..
+        /// </summary>
+        internal static string Missing_Requirement_Attendees_Id {
+            get {
+                return ResourceManager.GetString("Missing_Requirement_Attendees_Id", resourceCulture);
             }
         }
         
