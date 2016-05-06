@@ -1,19 +1,6 @@
-﻿<!-- TODO -->
-<script>
-    $(function () {
-        var $body = $('body'),
-            $hamb = $('.hamburger');
-
-        $hamb.on('click', function () {
-            $hamb.toggleClass('is-active');
-            $body.toggleClass('drawer-open');
-        });
-    });
-</script>
-
-<div class="page-wrapper">
+﻿<div class="page-wrapper" ng-class="{'drawer-open': drawerOpen}">
     <header class="main-header">
-        <button class="hamburger hamburger--squeeze" type="button">
+        <button class="hamburger hamburger--squeeze" type="button" ng-click="drawerOpen = !drawerOpen" ng-class="{'is-active': drawerOpen}">
             <span class="hamburger-box">
                 <span class="hamburger-inner"></span>
             </span>
