@@ -185,6 +185,7 @@
 
         public CreatePropertyPage SelectCharacteristic(string value)
         {
+            this.Driver.ScrollIntoMiddle(this.characteristic.Format(value));
             this.Driver.GetElement<Checkbox>(this.characteristic.Format(value)).TickCheckbox();
             return this;
         }
