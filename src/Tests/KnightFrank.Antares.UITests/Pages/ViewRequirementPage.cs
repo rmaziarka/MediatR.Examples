@@ -21,9 +21,10 @@
         private readonly ElementLocator propertyRequirementsDetailsDescription = new ElementLocator(Locator.XPath, "//*[contains(@translate, 'DESCRIPTION')]/../p");
         private readonly ElementLocator requirementApplicants = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'contacts'] div");
         private readonly ElementLocator requirementDate = new ElementLocator(Locator.CssSelector, "span[translate *= 'CREATEDDATE'] ~ span");
-        private readonly ElementLocator createViewing = new ElementLocator(Locator.CssSelector, "#viewings-list button");
-        private readonly ElementLocator viewingDetailsLink = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator viewingDetails = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator addViewings = new ElementLocator(Locator.CssSelector, "#viewings-list button");
+        private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item");
+        private readonly ElementLocator viewingDetailsLink = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) a");
+        private readonly ElementLocator viewingDetails = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .ng-binding");
         
         public ViewRequirementPage(DriverContext driverContext) : base(driverContext)
         {
@@ -36,6 +37,8 @@
         public CreateViewingPage Viewing => new CreateViewingPage(this.DriverContext);
 
         public ViewingDetailsPage ViewingDetails => new ViewingDetailsPage(this.DriverContext);
+
+        public int ViewingsNumber => this.Driver.GetElements(this.viewings).Count;
 
         public ViewRequirementPage OpenViewRequirementPageWithId(string id)
         {
@@ -97,9 +100,9 @@
             return this.Driver.GetElement(this.notesNumber).Text;
         }
 
-        public ViewRequirementPage CreateViewing()
+        public ViewRequirementPage AddViewings()
         {
-            this.Driver.GetElement(this.createViewing).Click();
+            this.Driver.GetElement(this.addViewings).Click();
             return this;
         }
 
@@ -109,9 +112,29 @@
             return this;
         }
 
-        public string GetViewingDetails()
+        public List<string> GetViewingDetails(int position)
         {
-            return this.Driver.GetElement(this.viewingDetails).Text;
+            return this.Driver.GetElements(this.viewingDetails.Format(position)).Select(el => el.Text).ToList();
         }
+    }
+
+    internal class ViewingDetails
+    {
+        public string Date { get; set; }
+
+        public string StartTime { get; set; }
+
+        public string EndTime { get; set; }
+
+        public string InvitationText { get; set; }
+    }
+
+    internal class ViewingData
+    {
+        public string Date { get; set; }
+
+        public string Time { get; set; }
+
+        public string Name { get; set; }
     }
 }

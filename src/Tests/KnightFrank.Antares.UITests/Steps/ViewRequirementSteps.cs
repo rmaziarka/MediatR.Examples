@@ -37,17 +37,18 @@
         public void OpenViewRequirementPageWithId()
         {
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
-            ViewRequirementPage page = new ViewRequirementPage(this.driverContext).OpenViewRequirementPageWithId(requirementId.ToString());
+            ViewRequirementPage page =
+                new ViewRequirementPage(this.driverContext).OpenViewRequirementPageWithId(requirementId.ToString());
             this.scenarioContext.Set(page, "ViewRequirementPage");
         }
 
-        [When(@"User clicks notes button on residential sales requirement page")]
+        [When(@"User clicks notes button on view requirement page")]
         public void OpenNotes()
         {
             this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").OpenNotes();
         }
 
-        [When(@"User adds note on residential sales requirement page")]
+        [When(@"User adds note on view requirement page")]
         public void InsertNotesText(Table table)
         {
             var details = table.CreateInstance<RequirementNote>();
@@ -55,7 +56,53 @@
             page.Notes.SetNoteText(details.Description).SaveNote();
         }
 
-        [Then(@"Requirement location details are same as the following")]
+        [When(@"User clicks add viewings button on view requirement page")]
+        public void ClickAddViewings()
+        {
+            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").AddViewings();
+        }
+
+        [When(@"User selects viewing on view requirement page")]
+        public void SelectActivity(Table table)
+        {
+            var details = table.CreateInstance<Address>();
+            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
+
+            string activity = details.PropertyName + ", " + details.PropertyNumber + " " + details.Line2;
+            page.ActivityList.WaitForDetailsToLoad().SelectActivity(activity);
+        }
+
+        [When(@"User fills in viewing details on view requirement page")]
+        public void FillInViewingDetails(Table table)
+        {
+            var details = table.CreateInstance<ViewingDetails>();
+            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
+
+            page.Viewing
+                .SetDate(details.Date)
+                .SetStartTime(details.StartTime)
+                .SetEndTime(details.EndTime)
+                .SetInvitation(details.InvitationText);
+        }
+
+        [When(@"User selects attendees for viewing on view requirement page")]
+        public void SelectAttendeesForViewing(Table table)
+        {
+            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
+            List<string> attendees = table.Rows.Select(r => r[0]).ToList();
+
+            page.Viewing.SelectAttendees(attendees);
+        }
+
+        [When(@"User clicks save activity button on view requirement page")]
+        public void SaveViewing()
+        {
+            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").Viewing
+                .SaveViewing()
+                .WaitForViewingDetailsToHide();
+        }
+
+        [Then(@"Requirement location details on view requirement page are same as the following")]
         public void CheckResidentialSalesRequirementLocationDetails(Table table)
         {
             Dictionary<string, string> details =
@@ -69,7 +116,7 @@
                 () => Assert.Equal(expectedDetails.City, details["City"]));
         }
 
-        [Then(@"Requirement property details are same as the following")]
+        [Then(@"Requirement property details on view requirement page are same as the following")]
         public void CheckResidentialSalesRequirementPropertyDetails(Table table)
         {
             Dictionary<string, string> details =
@@ -88,7 +135,7 @@
                 () => Assert.Equal(expectedDetails.Description, details["Requirement description"]));
         }
 
-        [Then(@"Requirement applicants are same as the following")]
+        [Then(@"Requirement applicants on view requirement page are same as the following")]
         public void CheckResidentialSalesRequirementApplicants(Table table)
         {
             List<string> applicants =
@@ -110,17 +157,30 @@
                     .GetRequirementCreateDate());
         }
 
-        [Then(@"Note is displayed in recent notes area on residential sales requirement page")]
+        [Then(@"Note is displayed in recent notes area on view requirement page")]
         public void CheckIfNoteAdded()
         {
             Assert.Equal(1, this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").Notes.GetNumberOfNotes());
         }
 
-        [Then(@"Notes number increased on residential sales requirement page")]
+        [Then(@"Notes number increased on view requirement page")]
         public void CheckIfNotesNumberIncreased()
         {
             string notesNumber = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").CheckNotesNumber();
             Assert.Equal("(1)", notesNumber);
+        }
+
+        [Then(@"Viewing details on (.*) position on view requirement page are same as the following")]
+        public void CheckViewing(int position, Table table)
+        {
+            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
+            var expectedDetails = table.CreateInstance<ViewingData>();
+            List<string> actualDetails = page.GetViewingDetails(position);
+
+            Verify.That(this.driverContext, () => Assert.Equal(page.ViewingsNumber, 1),
+                () => Assert.Equal(expectedDetails.Date, actualDetails[0]),
+                () => Assert.Equal(expectedDetails.Name, actualDetails[1]),
+                () => Assert.Equal(expectedDetails.Time, actualDetails[2]));
         }
     }
 }
