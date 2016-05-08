@@ -134,6 +134,20 @@ Node localhost
         State = "Started"
 		DependsOn = @('[WindowsFeature]WebServerRole', '[File]WebAppDir')
     }   
+
+	#Script RemoveDefaultWebSite
+	#  {
+	#	TestScript = { 
+	#		Get-Website -Name "Default Web Site" 
+	#	}
+	#	SetScript = { 
+	#		Remove-Website -Name "Default Web Site" 
+	#	}
+	#	GetScript = { 
+	#		@{Result = "RemoveDefaultWebSite" } 
+	#	}
+	#  }
+
 	xWebsite WebApi
 	{
 		Name = $webApiHostName
@@ -145,7 +159,7 @@ Node localhost
 		BindingInfo = MSFT_xWebBindingInformation 
         { 
 			Protocol = "http" 
-			Port = 80  
+			Port = 81  
 			HostName = $webApiHostName
         }
 		EnabledProtocols = "http"
@@ -166,6 +180,7 @@ Node localhost
         }
 		EnabledProtocols = "http"
 	}
+
 	Script DownloadOctopusTentacle
     {
         TestScript = {
@@ -178,6 +193,7 @@ Node localhost
         }
         GetScript = {@{Result = "DownloadOctopusTentacle"}}
     }
+
     Package InstallOctopusTentacle
     {
         Ensure = "Present"  
@@ -211,5 +227,67 @@ Node localhost
 		}
 		GetScript = {@{Result = "ConfigureOctopusTentacle"}}
 	}
+
+		Script ConfigureApiAuthentication
+	{
+		DependsOn = "[xWebsite]WebApi"
+		TestScript = {
+			$isEnabled = (Get-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/windowsAuthentication" -Name enabled -Location $webApiHostName).Value
+            if ([System.Boolean]::Parse($isEnabled)) {
+               $ensure = $true
+            } else {
+               $ensure = $false
+            }
+
+			return $ensure;
+		}
+		SetScript = {
+			Set-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/windowsAuthentication" -Name enabled -Location $webApiHostName -Value True
+		}
+		GetScript = {@{Result = "ConfigureApiAuthentication"}}
+	}
+
+	Script ConfigureAppAuthentication
+	{
+		DependsOn = "[xWebsite]WebApp"
+		TestScript = {
+            if (get-website | where-object { $_.name -eq  "Default Web Site" }) {
+               $ensure = $true
+            } else {
+               $ensure = $false
+            }
+
+			return $ensure;
+		}
+		SetScript = {
+			Set-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/windowsAuthentication" -Name enabled -Location $webAppHostName -Value True
+		}
+		GetScript = {@{Result = "ConfigureAppAuthentication"}}
+	}
+	
+	Script DownloadFrameworkNet461
+    {
+        TestScript = {
+            Test-Path "C:\WindowsAzure\NDP461-KB3102438-Web.exe"
+        }
+        SetScript ={
+            $source = "https://download.microsoft.com/download/3/5/9/35980F81-60F4-4DE3-88FC-8F962B97253B/NDP461-KB3102438-Web.exe"
+            $dest = "C:\WindowsAzure\NDP461-KB3102438-Web.exe"
+            Invoke-WebRequest $source -OutFile $dest
+        }
+        GetScript = {@{Result = "DownloadFrameworkNet41"}}
+    }
+
+	Script InstallFrameworkNet461
+    {
+		DependsOn = "[Script]DownloadFrameworkNet461"
+        TestScript = {
+            Test-Path "C:\WindowsAzure\NDP461-KB3102438-Web.exe"
+        }
+        SetScript ={
+            & "C:\WindowsAzure\NDP461-KB3102438-Web.exe /q /norestart /log C:\WindowsAzure\Logs\Net461.txt"
+        }
+        GetScript = {@{Result = "DownloadFrameworkNet41"}}
+    }
   }
 }
