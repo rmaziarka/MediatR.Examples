@@ -287,7 +287,7 @@ Node localhost
         SetScript ={
             & "C:\WindowsAzure\NDP461-KB3102438-Web.exe /q /norestart /log C:\WindowsAzure\Logs\Net461.txt"
         }
-        GetScript = {@{Result = "DownloadFrameworkNet41"}}
+        GetScript = {@{Result = "InstallFrameworkNet461"}}
     }
   }
 }
