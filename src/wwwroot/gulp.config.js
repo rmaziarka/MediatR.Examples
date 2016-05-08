@@ -99,6 +99,7 @@
             staticAppFiles: [
                 root + 'wwwroot.nuspec',
                 root + 'app.json',  // tokens
+                root + 'app.Dev.json',
             ],
             webConfigFile: [
                 root + '_web.config'
