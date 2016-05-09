@@ -144,7 +144,6 @@
     <Compile Include="Common\Validator\ActivityStatusValidator.cs" />
     <Compile Include="Common\Validator\ContactValidator.cs" />
     <Compile Include="Common\Validator\LocaleValidator.cs" />
-    <Compile Include="Common\Validator\PropertyTypeValidator.cs" />
     <Compile Include="Company\CommandHandlers\CreateCompanyCommandHandler.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommand.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommandProfile.cs" />

@@ -2,21 +2,16 @@
 {
     using FluentValidation;
 
-    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Characteristics;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
-    using KnightFrank.Antares.Domain.Common.Validator;
 
     public class CreatePropertyCommandDomainValidator : AbstractValidator<CreatePropertyCommand>,
                                                         IDomainValidator<CreatePropertyCommand>
     {
-        public CreatePropertyCommandDomainValidator(IGenericRepository<PropertyType> propertyTypeRepository,
-            IGenericRepository<CharacteristicGroupUsage> characteristicGroupUsageRepository,
+        public CreatePropertyCommandDomainValidator(IGenericRepository<CharacteristicGroupUsage> characteristicGroupUsageRepository,
             IDomainValidator<CreateOrUpdatePropertyCharacteristic> propertyCharacteristicDomainValidator)
         {
-            this.RuleFor(x => x.PropertyTypeId).SetValidator(new PropertyTypeValidator(propertyTypeRepository));
-
             this.When(
                 x => x.PropertyCharacteristics != null,
                 () =>

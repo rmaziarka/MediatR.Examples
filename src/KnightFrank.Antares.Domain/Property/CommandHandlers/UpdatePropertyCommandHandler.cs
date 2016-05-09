@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Antares.Domain.Property.Commands;
 
@@ -22,6 +23,8 @@
         private readonly IDomainValidator<UpdatePropertyCommand> domainValidator;
 
         private readonly IAddressValidator addressValidator;
+        private readonly IEnumTypeItemValidator enumTypeItemValidator;
+        private readonly IEntityValidator entityValidator;
 
         private readonly IGenericRepository<PropertyCharacteristic> propertyCharacteristicRepository;
 
@@ -31,25 +34,30 @@
             IGenericRepository<Property> propertyRepository,
             IGenericRepository<PropertyCharacteristic> propertyCharacteristicRepository,
             IDomainValidator<UpdatePropertyCommand> domainValidator,
-            IAddressValidator addressValidator)
+            IAddressValidator addressValidator,
+            IEnumTypeItemValidator enumTypeItemValidator,
+            IEntityValidator entityValidator)
         {
             this.propertyRepository = propertyRepository;
             this.propertyCharacteristicRepository = propertyCharacteristicRepository;
             this.domainValidator = domainValidator;
             this.addressValidator = addressValidator;
+            this.enumTypeItemValidator = enumTypeItemValidator;
+            this.entityValidator = entityValidator;
         }
 
         public Guid Handle(UpdatePropertyCommand message)
         {
             this.addressValidator.Validate(message.Address);
 
+            this.enumTypeItemValidator.ItemExists(EnumType.Division, message.DivisionId);
+
+            this.entityValidator.EntityExists<PropertyType>(message.PropertyTypeId);
+
             Property property =
                 this.propertyRepository.GetWithInclude(x => x.Id == message.Id, x => x.PropertyCharacteristics).SingleOrDefault();
 
-            if (property == null)
-            {
-                throw new ResourceNotFoundException("Property does not exist", message.Id);
-            }
+            this.entityValidator.EntityExists(property, message.Id);
 
             ValidationResult validationResult = this.domainValidator.Validate(message);
 

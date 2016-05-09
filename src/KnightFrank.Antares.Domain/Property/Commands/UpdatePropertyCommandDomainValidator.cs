@@ -16,8 +16,6 @@
             IGenericRepository<CharacteristicGroupUsage> characteristicGroupUsageRepository,
             IDomainValidator<CreateOrUpdatePropertyCharacteristic> propertyCharacteristicDomainValidator)
         {
-            this.RuleFor(x => x.PropertyTypeId).SetValidator(new PropertyTypeValidator(propertyTypeRepository));
-            
             this.When(
                 x => x.PropertyCharacteristics != null,
                 () =>

@@ -18,7 +18,6 @@
 
     public class CreatePropertyCommandValidator : AbstractValidator<CreatePropertyCommand>
     {
-        private readonly IGenericRepository<EnumTypeItem> enumTypeItemRepository;
         private readonly IGenericRepository<PropertyTypeDefinition> propertyTypeDefinitionRepository;
         private readonly IGenericRepository<PropertyAttributeForm> propertyAttributeFormRepository;
 
@@ -27,7 +26,6 @@
             IGenericRepository<EnumTypeItem> enumTypeItemRepository,
             IGenericRepository<PropertyAttributeForm> propertyAttributeFormRepository)
         {
-            this.enumTypeItemRepository = enumTypeItemRepository;
             this.propertyTypeDefinitionRepository = propertyTypeDefinitionRepository;
             this.propertyAttributeFormRepository = propertyAttributeFormRepository;
 
@@ -35,7 +33,7 @@
             this.RuleFor(x => x.Address).SetValidator(new CreateOrUpdateAddressValidator());
             this.RuleFor(v => v.PropertyTypeId).NotEqual(Guid.Empty).NotNull();
 
-            this.RuleFor(x => x.PropertyTypeId).SetValidator(new PropertyTypeValidator(propertyTypeRepository));
+            this.RuleFor(x => x.PropertyTypeId).NotEmpty();
             this.RuleFor(x => x.DivisionId).NotEqual(Guid.Empty);
 
             this.RuleFor(x => x.AttributeValues)
@@ -54,17 +52,8 @@
                 this.RuleFor(x => x.PropertyCharacteristics).SetValidator(new PropertyCharacteristicsUniqueValidator());
                 this.RuleFor(x => x.PropertyCharacteristics).SetCollectionValidator(new CreateOrUpdatePropertyCharacteristicValidator());
             });
-
-            this.Custom(this.DivisionExists);
+         
             this.Custom(this.PropertyTypeIsValid);
-        }
-
-        private ValidationFailure DivisionExists(CreatePropertyCommand createPropertyCommand)
-        {
-            bool divisionExists = createPropertyCommand != null && this.enumTypeItemRepository.Any(x => x.Id.Equals(createPropertyCommand.DivisionId));
-            return divisionExists
-                ? null
-                : new ValidationFailure(nameof(createPropertyCommand.DivisionId), "Division does not exist.");
         }
 
         public ValidationFailure PropertyTypeIsValid(CreatePropertyCommand createPropertyCommand)

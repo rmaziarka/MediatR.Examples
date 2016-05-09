@@ -10,6 +10,7 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Antares.Domain.Property.Commands;
 
@@ -20,20 +21,30 @@
 
         private readonly IDomainValidator<CreatePropertyCommand> domainValidator;
         private readonly IAddressValidator addressValidator;
+        private readonly IEnumTypeItemValidator enumTypeItemValidator;
+        private readonly IEntityValidator entityValidator;
 
         public CreatePropertyCommandHandler(
             IGenericRepository<Property> propertyRepository,
             IDomainValidator<CreatePropertyCommand> domainValidator,
-            IAddressValidator addressValidator)
+            IAddressValidator addressValidator,
+            IEnumTypeItemValidator enumTypeItemValidator,
+            IEntityValidator entityValidator)
         {
             this.propertyRepository = propertyRepository;
             this.domainValidator = domainValidator;
             this.addressValidator = addressValidator;
+            this.enumTypeItemValidator = enumTypeItemValidator;
+            this.entityValidator = entityValidator;
         }
 
         public Guid Handle(CreatePropertyCommand message)
         {
             this.addressValidator.Validate(message.Address);
+
+            this.enumTypeItemValidator.ItemExists(EnumType.Division, message.DivisionId);
+
+            this.entityValidator.EntityExists<PropertyType>(message.PropertyTypeId);
 
             ValidationResult validationResult = this.domainValidator.Validate(message);
 

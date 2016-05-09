@@ -14,6 +14,7 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Commands;
+    using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Property.Commands;
 
     using Moq;
@@ -37,23 +38,7 @@
             this.fixture.RepeatCount = 1;
             this.fixture.Behaviors.Add(new OmitOnRecursionBehavior());
         }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_UpdatePropertyCommand_When_HandleNonExistingProperty_Then_ShouldThrowException(
-           UpdatePropertyCommand command,
-           [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
-           [Frozen] Mock<IAddressValidator> addressValidator,
-           UpdatePropertyCommandHandler handler)
-        {
-            // Arrange 
-            propertyRepository.Setup(r => r.GetById(It.IsAny<Guid>())).Returns((Property)null);
-
-            // Act + Assert
-            Assert.Throws<ResourceNotFoundException>(() => handler.Handle(command)).ResourceId.Should().Be(command.Id);
-        }
-
-
+        
         [Theory]
         [AutoMoqData]
         public void Given_UpdatePropertyCommandWithAddress_When_Handle_Then_AddressShouldBeValidated(
@@ -74,10 +59,14 @@
         [Theory]
         [AutoMoqData]
         public void Given_UpdatePropertyCommand_When_Handle_Then_ShouldUpdateAddress(
-           UpdatePropertyCommand command,
            [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
-           Property property,
-           UpdatePropertyCommandHandler handler)
+           [Frozen] Mock<IGenericRepository<PropertyCharacteristic>> propertyCharacteristicRepository,
+           [Frozen] Mock<IAddressValidator> addressValidator,
+           [Frozen] Mock<IEnumTypeItemValidator> enumTypeItemValidator,
+           [Frozen] Mock<IEntityValidator> entityValidator,
+           UpdatePropertyCommandHandler handler,
+           UpdatePropertyCommand command,
+           Property property)
         {
             property.PropertyCharacteristics = new List<PropertyCharacteristic>();
             // Arrange
@@ -88,6 +77,9 @@
 
             // Assert
             property.Address.ShouldBeEquivalentTo(command.Address, options => options.IncludingProperties().ExcludingMissingMembers());
+            entityValidator.Verify(x => x.EntityExists<PropertyType>(command.PropertyTypeId));
+            enumTypeItemValidator.Verify(x => x.ItemExists(EnumType.Division, command.DivisionId));
+            entityValidator.Verify(x => x.EntityExists(property, command.Id));
             propertyRepository.Verify(p => p.Save(), Times.Once);
         }
 
