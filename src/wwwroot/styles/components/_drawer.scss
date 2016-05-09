@@ -2,32 +2,126 @@
 
 .drawer {
   background: $color-crimson;
+  font-family: $font-lato;
   height: calc(100% - #{$header-height});
-  left: -100%;
+  left: 0;
   overflow-y: auto;
   position: fixed;
   top: $header-height;
-  transition: all 0.3s linear;
+  transform: translateZ(0) translateX(-100%);
   width: 100%;
   z-index: 1070;
 
   @media (min-width: $screen-sm-min) {
-    left: -$drawer-width;
     width: $drawer-width;
+  }
+
+  // Accordion
+
+  .panel-group {
+    .panel + .panel {
+      margin-top: 0;
+    }
+  }
+
+  .panel-open {
+    .panel-heading {
+      background-color: $color-concrete;
+    }
+
+    .accordion-toggle {
+      color: $color-gray;
+    }
+
+    .accordion-arrow {
+      color: $color-nobel;
+    }
+
+    .panel-collapse {
+      background-color: $color-concrete;
+    }
+  }
+
+  .panel-heading {
+    background-color: $color-crimson;
+    padding: 0;
+  }
+
+  .panel-title {
+    font: {
+      size: 14px;
+      weight: 700;
+    };
+    text-transform: uppercase;
+  }
+
+  .panel-collapse > .panel-body {
+    background-color: $color-concrete;
+    margin: 0 16px;
+    padding: 15px 0;
+  }
+
+  .panel {
+    border: 0;
+    border-bottom: 1px solid $color-amaranth;
+    box-shadow: none;
+  }
+
+  .accordion-button {
+    background-color: transparent;
+    border: 1px solid $color-crimson;
+    border-radius: 3px;
+    color: $color-crimson;
+    font: {
+      size: 13px;
+      weight: 700;
+    }
+    line-height: 1;
+    padding: 8px 16px;
+    transition: all 0.2s ease;
+
+    &:hover,
+    &:focus {
+      background-color: $color-crimson;
+      color: $color-white;
+    }
+  }
+
+  .accordion-toggle {
+    color: $color-white;
+    display: block;
+    letter-spacing: 3px;
+    line-height: 1;
+    outline: none;
+    padding: 16px 16px 16px 22px;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+
+    .accordion-arrow {
+      font-size: 12px;
+      line-height: 14px;
+    }
+  }
+
+  .panel-collapse > .panel-body,
+  .panel-collapse > .list-group {
+    border-top: 1px solid $color-mercury;
   }
 }
 
 .content {
   left: 0;
-  padding: 11px 20px;
+  padding: 10px 20px;
   position: relative;
-  transition: all 0.3s linear;
   width: 100%;
 }
 
 .drawer-open {
   .drawer {
-    left: 0;
+    transform: translateZ(0) translateX(0);
   }
 
   .content {

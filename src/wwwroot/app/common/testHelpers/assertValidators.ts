@@ -6,7 +6,7 @@ module Antares.TestHelpers {
             requiredValidatorSelector : '[name="requiredValidationError"]',
             minNumberValidationError : '[name="minNumberValidationError"]',
             maxNumberValidationError : '[name="maxNumberValidationError"]',
-            maxLengthValidatorSelector: '[name="maxLengthValidationError"]',
+            maxLengthValidatorSelector: '[name="maxLengthValidationError"], [name="kfMaxCountValidationError"]',
             formatValidationError: '[name="formatValidationError"]'
         };
 
@@ -86,12 +86,12 @@ module Antares.TestHelpers {
 
         }
 
-        public isValidFor(inputValue: any): boolean{
+        public isValidFor(inputValue: any): boolean {
             this.writeValue(inputValue);
             return this.isInputValid() && !this.isValidationShown();
         }
 
-        public isInputValid(): boolean{
+        public isInputValid(): boolean {
             return this.input.hasClass(this.pageObject.inputValidCss);
         }
 

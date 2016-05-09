@@ -8,12 +8,10 @@
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
 
-    using OpenQA.Selenium;
-
     public class CreateViewingPage : ProjectPageBase
     {
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
-        private readonly ElementLocator attendees = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'attendee'] label");
+        private readonly ElementLocator attendee = new ElementLocator(Locator.XPath, "//div[contains(@ng-repeat, 'attendee')]//label[contains(text(), '{0}')]");
         private readonly ElementLocator date = new ElementLocator(Locator.Id, "viewing-date");
         private readonly ElementLocator endTime = new ElementLocator(Locator.CssSelector, "#end-time input");
         private readonly ElementLocator invitationText = new ElementLocator(Locator.Id, "invitation-text");
@@ -45,16 +43,9 @@
 
         public CreateViewingPage SelectAttendees(List<string> attendeesList)
         {
-            IList<IWebElement> list = this.Driver.GetElements(this.attendees);
-            foreach (IWebElement el in list)
+            foreach (string el in attendeesList)
             {
-                foreach (string attendee in attendeesList)
-                {
-                    if (el.Text.Equals(attendee))
-                    {
-                        el.Click();
-                    }
-                }
+                this.Driver.GetElement(this.attendee.Format(el)).Click();
             }
             return this;
         }

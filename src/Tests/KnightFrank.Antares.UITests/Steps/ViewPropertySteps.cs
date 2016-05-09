@@ -141,7 +141,7 @@
         [Then(@"Activity creation date is set to current date on view property page")]
         public void CheckifActivityDateCorrect()
         {
-            Assert.Equal(DateTime.Now.ToString("dd-MM-yyyy"),
+            Assert.Equal(DateTime.UtcNow.ToString("dd-MM-yyyy"),
                 this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").GetActivityDate());
         }
 

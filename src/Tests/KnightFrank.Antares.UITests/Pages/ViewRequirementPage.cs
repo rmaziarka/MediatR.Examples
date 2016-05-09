@@ -106,9 +106,9 @@
             return this;
         }
 
-        public ViewRequirementPage OpenViewingDetails()
+        public ViewRequirementPage OpenViewingDetails(int position)
         {
-            this.Driver.GetElement(this.viewingDetailsLink).Click();
+            this.Driver.GetElement(this.viewingDetailsLink.Format(position)).Click();
             return this;
         }
 
@@ -120,11 +120,17 @@
 
     internal class ViewingDetails
     {
+        public string Activity { get; set; }
+
         public string Date { get; set; }
 
         public string StartTime { get; set; }
 
         public string EndTime { get; set; }
+
+        public string Negotiator { get; set; }
+
+        public string Attendees { get; set; }
 
         public string InvitationText { get; set; }
     }

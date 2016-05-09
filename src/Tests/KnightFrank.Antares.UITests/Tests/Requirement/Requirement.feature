@@ -88,3 +88,7 @@ Scenario: Create viewing on requirement
 	Then Viewing details on 1 position on view requirement page are same as the following
 		| Date       | Time          | Name      |
 		| 12-05-2016 | 10:00 - 11:00 | Baker Str |
+	When User clicks 1 viewings details link on view requirement page
+	Then Viewing details on view requirement page are same as the following
+		| Activity                       | Date       | StartTime | EndTime | Negotiator | Attendees                 | InvitationText |
+		| Knight Lancelot, 120 Baker Str | 12-05-2015 | 10:00     | 11:00   | John Smith | Amber Brooks;Kennedi Hyde | Text           |
