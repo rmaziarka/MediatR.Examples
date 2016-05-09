@@ -138,6 +138,7 @@
     <Compile Include="FixtureExtension\FixtureExtensions.cs" />
     <Compile Include="FixtureExtension\ValidationResultExtensions.cs" />
     <Compile Include="Viewing\CommandHandlers\CreateViewingCommandHandlerTests.cs" />
+    <Compile Include="Viewing\CommandHandlers\UpdateViewingCommandHandlerTests.cs" />
     <Compile Include="Viewing\Commands\CreateViewingCommandValidatorTests.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQueryDomainValidatorTests.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQueryValidatorTests.cs" />

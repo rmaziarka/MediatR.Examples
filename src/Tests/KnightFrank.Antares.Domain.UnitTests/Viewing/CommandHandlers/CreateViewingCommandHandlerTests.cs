@@ -35,23 +35,17 @@
             [Frozen] Mock<IReadGenericRepository<User>> userRepository,
             CreateViewingCommand command,
             CreateViewingCommandHandler handler,
-            IFixture fixture)
+            Requirement requirement,
+            List<Contact> contacts,
+            List<User> users)
         {
             // Arrange
-            command.AttendeesIds = fixture.CreateMany<Guid>(2).ToList();
-            List<Contact> contacts = command.AttendeesIds.Select(x => new Contact { Id = x }).ToList();
-            var requirements = new[]
-            {
-                new Requirement
-                {
-                    Contacts = contacts
-                }
-            };
+            requirement.Contacts = contacts;
 
             // TODO remove userRepository after userRepository is removed from tested method
-            userRepository.Setup(u => u.Get()).Returns((fixture.CreateMany<User>()).AsQueryable());
+            userRepository.Setup(u => u.Get()).Returns(users.AsQueryable());
 
-            requirementRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Requirement, bool>>>(), It.IsAny<Expression<Func<Requirement, object>>[]>())).Returns(requirements);
+            requirementRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Requirement, bool>>>(), It.IsAny<Expression<Func<Requirement, object>>[]>())).Returns(new List<Requirement> { requirement });
             viewingRepository.Setup(r => r.Add(It.IsAny<Viewing>())).Returns((Viewing a) => a);
 
             // Act
@@ -60,7 +54,7 @@
             // Assert
             entityValidator.Verify(x => x.EntityExists(It.IsAny<Requirement>(), command.RequirementId), Times.Once);
             entityValidator.Verify(x => x.EntityExists<Activity>(command.ActivityId), Times.Once);
-            collectionValidator.Verify(x => x.CollectionContainsAll(It.IsAny<IEnumerable<Guid>>(), command.AttendeesIds, It.IsAny<ErrorMessage>()));
+            collectionValidator.Verify(x => x.CollectionContainsAll(It.IsAny<IEnumerable<Guid>>(), command.AttendeesIds, It.IsAny<ErrorMessage>()), Times.Once);
             viewingRepository.Verify(r => r.Add(It.IsAny<Viewing>()), Times.Once());
             viewingRepository.Verify(r => r.Save(), Times.Once());
         }
