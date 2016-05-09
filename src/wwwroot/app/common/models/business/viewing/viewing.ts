@@ -19,7 +19,7 @@ module Antares.Common.Models.Business {
         constructor(viewing?: Dto.IViewing) {
             if (viewing) {
                 angular.extend(this, viewing);
-                this.day = Core.DateTimeUtils.getTimePart(viewing.startDate);
+                this.day = Core.DateTimeUtils.getDatePart(viewing.startDate);
             }
         }
     }

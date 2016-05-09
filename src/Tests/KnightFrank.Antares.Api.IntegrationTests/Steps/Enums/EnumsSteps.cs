@@ -107,32 +107,6 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [Then(@"Result should contain single element")]
-        public void ThenResultShouldContainSingleElement()
-        {
-            var result = JsonConvert.DeserializeObject<EnumQueryResult>(this.scenarioContext.GetResponseContent());
-
-            result.Items.Should().ContainSingle();
-        }
-
-        [Then(@"Single element has Id being set")]
-        public void ThenSingleElementHasIdBeingSet()
-        {
-            var result = JsonConvert.DeserializeObject<EnumQueryResult>(this.scenarioContext.GetResponseContent());
-
-            result.Items.Should().Contain(x => x.Id != null);
-        }
-
-        [Then(@"Single element should be equal to")]
-        public void ThenResultShouldContain(Table table)
-        {
-            IEnumerable<EnumQueryItemResult> expectedResult = table.CreateSet<EnumQueryItemResult>();
-
-            var result = JsonConvert.DeserializeObject<EnumQueryResult>(this.scenarioContext.GetResponseContent());
-
-            expectedResult.Select(er => er.Value).ShouldBeEquivalentTo(result.Items.Select(r => r.Value));
-        }
-
         [Then(@"Result should get appropriate enums with enums type")]
         public void ThenResultShouldGetAppropriateEnumsWithEnumsType()
         {
@@ -156,6 +130,20 @@
                 dict.Add(char.ToLowerInvariant(enumType.Code[0]) + enumType.Code.Substring(1), list);
             }
             actualResult.ShouldBeEquivalentTo(dict);
+        }
+
+        [Given(@"User gets (.*) for ActivityDocumentType")]
+        public void GetPropertyTypeId(string activityDocumentTypeCode)
+        {
+            if (activityDocumentTypeCode.Trim().Equals("invalid"))
+            {
+                this.scenarioContext.Set(Guid.NewGuid(), "ActivityDocumentTypeId");
+            }
+            else
+            {
+                Guid activityDocumentTypeId = this.fixture.DataContext.EnumTypeItems.Single(i => i.Code.Equals(activityDocumentTypeCode) && i.EnumType.Code == "ActivityDocumentType").Id;
+                this.scenarioContext.Set(activityDocumentTypeId, "ActivityDocumentTypeId");
+            }
         }
     }
 }

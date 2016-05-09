@@ -152,8 +152,6 @@
     <Compile Include="AutoMoqDataAttribute.cs" />
     <Compile Include="BaseTestClassFixture.cs" />
     <Compile Include="Contact\CommandHandlers\CreateContactCommandHandlerTests.cs" />
-    <Compile Include="Enum\Queries\EnumQueryValidatorTests.cs" />
-    <Compile Include="Enum\QueryHandlers\EnumQueryHandlerTests.cs" />
     <Compile Include="FixtureExtension\OwnershipExtensions.cs" />
     <Compile Include="Autofixture\IgnoreVirtualMembers.cs" />
     <Compile Include="Autofixture\IgnoreVirtualMembersCustomisation.cs" />

@@ -9,11 +9,13 @@
 
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
+    using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Activity.QueryResults;
+    using KnightFrank.Antares.Domain.Attachment.Commands;
 
     using Newtonsoft.Json;
 
@@ -58,7 +60,8 @@
                 ActivityStatusId = activityStatusId,
                 CreatedDate = DateTime.Now,
                 LastModifiedDate = DateTime.Now,
-                Contacts = new List<Contact>()
+                Contacts = new List<Contact>(),
+                Attachments = new List<Attachment>()
             };
 
             this.fixture.DataContext.Activities.Add(activity);
@@ -151,6 +154,23 @@
         {
             this.GetActivityResponse();
         }
+
+        [When(@"I upload attachment for (.*) activity id for (.*) with following data")]
+        public void WhenIUploadAttachmentForActivityIdWithFollowingData(string activityId, string documentType, Table table)
+        {
+            Guid activityIdGuid = activityId.Equals("latest") ? this.scenarioContext.Get<Activity>("Activity").Id : new Guid(activityId);
+            string requestUrl = $"{ApiUrl}/{activityIdGuid}/attachments";
+
+            var createAttachment = table.CreateInstance<CreateAttachment>();
+            createAttachment.DocumentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[documentType];
+            createAttachment.UserId = this.scenarioContext.Get<Guid>("NegotiatorId");
+            var createActivityAttachmentCommand = new CreateActivityAttachmentCommand { ActivityId = activityIdGuid, Attachment = createAttachment };
+
+            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, createActivityAttachmentCommand);
+            this.scenarioContext.SetHttpResponseMessage(response);
+            var abc = this.scenarioContext.GetResponseContent();
+        }
+
 
         [Then(@"Activities list should be the same as in database")]
         public void ThenActivitiesReturnedShouldBeTheSameAsInDatabase()

@@ -36,7 +36,7 @@ module Antares.Core{
             return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
         }
 
-        static getTimePart(datetime: any): any
+        static getDatePart(datetime: any): any
         {
             return moment(datetime).format("YYYY-MM-DD");
         }

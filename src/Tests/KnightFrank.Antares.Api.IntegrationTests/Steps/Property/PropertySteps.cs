@@ -98,9 +98,9 @@
         {
             var address = table.CreateInstance<Address>();
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
-            var attributeValues = this.scenarioContext.Get<AttributeValues>("AttributeValues");
-            var createOrUpdatePropertyCharacteristic =
-                this.scenarioContext.Get<List<CreateOrUpdatePropertyCharacteristic>>("PropertyCharacteristics");
+            AttributeValues attributeValues = this.scenarioContext.Keys.Contains("AttributeValues") ? this.scenarioContext.Get<AttributeValues>("AttributeValues") : new AttributeValues();
+            List<CreateOrUpdatePropertyCharacteristic> createOrUpdatePropertyCharacteristic = this.scenarioContext.Keys.Contains("PropertyCharacteristics") ? 
+                this.scenarioContext.Get<List<CreateOrUpdatePropertyCharacteristic>>("PropertyCharacteristics") : new List<CreateOrUpdatePropertyCharacteristic>();
 
             List<PropertyCharacteristic> propertyCharacteristic = createOrUpdatePropertyCharacteristic.Select(prop => new PropertyCharacteristic { CharacteristicId = prop.CharacteristicId, Text = prop.Text }).ToList();
 
