@@ -54,8 +54,8 @@ module Antares.Requirement.View {
             this.components.panels.configureViewingsSidePanel().hide();
         }
 
-        cancelViewingDetails(){
-            this.hidePanels();
+        cancelViewingDetails() {
+            this.viewingDetailsPanelVisible = false;
         }
 
         cancelViewingPreview() {
