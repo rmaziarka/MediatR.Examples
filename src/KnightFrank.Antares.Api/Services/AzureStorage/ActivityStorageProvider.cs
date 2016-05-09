@@ -6,6 +6,7 @@
     using KnightFrank.Antares.Api.Models;
     using KnightFrank.Antares.Api.Services.AzureStorage.Factories;
     using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Enum.Types;
@@ -21,6 +22,7 @@
         private readonly IBlobResourceFactory blobResourceFactory;
         private readonly ISharedAccessBlobPolicyFactory sharedAccessBlobPolicyFactory;
         private readonly IEnumTypeItemValidator enumTypeItemValidator;
+        private readonly IEntityValidator entityValidator;
         private readonly IGenericRepository<EnumTypeItem> enumTypeItemRepository;
 
         public ActivityStorageProvider(
@@ -28,17 +30,21 @@
             IBlobResourceFactory blobResourceFactory,
             ISharedAccessBlobPolicyFactory sharedAccessBlobPolicyFactory,
             IEnumTypeItemValidator enumTypeItemValidator,
+            IEntityValidator entityValidator,
             IGenericRepository<EnumTypeItem> enumTypeItemRepository)
         {
             this.storageClient = storageClient;
             this.blobResourceFactory = blobResourceFactory;
             this.sharedAccessBlobPolicyFactory = sharedAccessBlobPolicyFactory;
             this.enumTypeItemValidator = enumTypeItemValidator;
+            this.entityValidator = entityValidator;
             this.enumTypeItemRepository = enumTypeItemRepository;
         }
 
         public AzureUploadUrlContainer GetActivityUploadSasUri(AttachmentUrlParameters parameters)
         {
+            this.entityValidator.EntityExists<Activity>(parameters.EntityReferenceId);
+
             ActivityDocumentType activityDocumentType = this.GetActivityDocumentType(parameters.DocumentTypeId);
 
             Guid externalDocumentId = Guid.NewGuid();
@@ -52,6 +58,8 @@
 
         public AzureDownloadUrlContainer GetActivityDownloadSasUri(AttachmentDownloadUrlParameters parameters)
         {
+            this.entityValidator.EntityExists<Activity>(parameters.EntityReferenceId);
+
             ActivityDocumentType activityDocumentType = this.GetActivityDocumentType(parameters.DocumentTypeId);
 
             return new AzureDownloadUrlContainer

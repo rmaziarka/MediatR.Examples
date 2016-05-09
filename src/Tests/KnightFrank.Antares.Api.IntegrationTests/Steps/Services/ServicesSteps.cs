@@ -1,12 +1,14 @@
 ﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.Services
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
 
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
 
     using TechTalk.SpecFlow;
 
@@ -29,13 +31,13 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [When(@"User retrieves url for activity attachment upload for (.*) entity reference id")]
-        public void WhenUserRetrievesUrlForActivityAttachmentUploadForEntityReferenceId(string entityReferenceId)
+        [When(@"User retrieves url for activity attachment upload for (.*) and (.*)")]
+        public void WhenUserRetrievesUrlForActivityAttachmentUploadForEntityReferenceId(string filename, string activityDocumentTypeCode)
         {
-            var documentTypeId = this.scenarioContext.Get<Guid>("ActivityDocumentTypeId");
+            var documentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[activityDocumentTypeCode];
+            var entityReferenceId = this.scenarioContext.Get<Activity>("Activity").Id;
 
             var localeIsoCode = "en";
-            var filename = "file.pdf";
 
             string activityUpload =
                 $"/activity?documentTypeId={documentTypeId}&localeIsoCode={localeIsoCode}&entityReferenceId={entityReferenceId}&filename={filename}";
@@ -44,13 +46,14 @@
             this.scenarioContext.SetHttpResponseMessage(httpResponseMessage);
         }
 
-        [When(@"User retrieves url for activity attachment download for (.*) entity reference id")]
-        public void WhenUserRetrievesUrlForActivityAttachmentDownloadForEntityReferenceId(string entityReferenceId)
+        [When(@"User retrieves url for activity attachment download for (.*) and (.*)")]
+        public void WhenUserRetrievesUrlForActivityAttachmentDownloadForEntityReferenceId(string filename, string activityDocumentTypeCode)
         {
-            var documentTypeId = this.scenarioContext.Get<Guid>("ActivityDocumentTypeId");
+            var documentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[activityDocumentTypeCode];
+            var entityReferenceId = this.scenarioContext.Get<Activity>("Activity").Id;
+
             Guid externalDocumentId = Guid.NewGuid();
             var localeIsoCode = "en";
-            var filename = "file.pdf";
 
             string activityUpload =
                 $"/activity?documentTypeId={documentTypeId}&localeIsoCode={localeIsoCode}&entityReferenceId={entityReferenceId}&filename={filename}&externalDocumentId={externalDocumentId}";

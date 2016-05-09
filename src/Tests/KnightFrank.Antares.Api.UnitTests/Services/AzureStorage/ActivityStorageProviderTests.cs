@@ -8,6 +8,7 @@
     using KnightFrank.Antares.Api.Services.AzureStorage;
     using KnightFrank.Antares.Api.Services.AzureStorage.Factories;
     using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Enum.Types;
@@ -26,7 +27,8 @@
         [Theory]
         [AutoMoqData]
         public void Given_GetActivityUploadSasUri_Then_ShouldDelegateBehaviour(
-            [Frozen] Mock<IEnumTypeItemValidator> validator,
+            [Frozen] Mock<IEnumTypeItemValidator> enumTypeItemValidator,
+            [Frozen] Mock<IEntityValidator> entityValidator,
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IStorageClientWrapper> storageClient,
             [Frozen] Mock<IBlobResourceFactory> blobResourceFactory,
@@ -63,13 +65,15 @@
             // Assert
             blobResourceFactory.Verify(x => x.Create(activityDocumentType, It.IsAny<Guid>(), parameters), Times.Once);
             storageClient.Verify(x => x.GetSasUri(resource, policy), Times.Once);
-            validator.Verify(x => x.ItemExists(enumTypeItem, parameters.DocumentTypeId), Times.Once);
+            enumTypeItemValidator.Verify(x => x.ItemExists(enumTypeItem, parameters.DocumentTypeId), Times.Once);
+            entityValidator.Verify(x => x.EntityExists<Activity>(parameters.EntityReferenceId), Times.Once);
         }
 
         [Theory]
         [AutoMoqData]
         public void Given_GetActivityDownloadSasUri_Then_ShouldDelegateBehaviour(
-            [Frozen] Mock<IEnumTypeItemValidator> validator,
+            [Frozen] Mock<IEnumTypeItemValidator> enumTypeItemValidator,
+            [Frozen] Mock<IEntityValidator> entityValidator,
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IStorageClientWrapper> storageClient,
             [Frozen] Mock<IBlobResourceFactory> blobResourceFactory,
@@ -106,7 +110,8 @@
             // Assert
             blobResourceFactory.Verify(x => x.Create(activityDocumentType, parameters.ExternalDocumentId, parameters), Times.Once);
             storageClient.Verify(x => x.GetSasUri(resource, policy), Times.Once);
-            validator.Verify(x => x.ItemExists(enumTypeItem, parameters.DocumentTypeId), Times.Once);
+            enumTypeItemValidator.Verify(x => x.ItemExists(enumTypeItem, parameters.DocumentTypeId), Times.Once);
+            entityValidator.Verify(x => x.EntityExists<Activity>(parameters.EntityReferenceId), Times.Once);
         }
 
         [Theory]
