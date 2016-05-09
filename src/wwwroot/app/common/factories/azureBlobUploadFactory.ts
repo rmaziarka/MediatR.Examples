@@ -2,8 +2,8 @@
 
 module Antares.Factories {
     export class AzureBlobUploadFactory {
-        private uploadResult = this.$q.defer();
-        private reader = new FileReader();
+        private uploadResult: ng.IDeferred<any>;
+        private reader:FileReader;
 
         private maxBlockSize: number;
         private totalBytesRemaining: number;
@@ -32,6 +32,9 @@ module Antares.Factories {
             this.chunkIdPrefix = _.random(1000000000).toString();
             this.file = file;
             this.fileUrl = fileUrl;
+
+            this.uploadResult = this.$q.defer();
+            this.reader = new FileReader();
         }
 
         uploadFile = (file: File, fileUrl: string) => {
