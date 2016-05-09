@@ -1,5 +1,6 @@
 declare module Antares.Common.Models.Dto {
     interface IAttachment {
+        id: string,
         fileName: string;
         documentTypeId: string;
         size: number;
