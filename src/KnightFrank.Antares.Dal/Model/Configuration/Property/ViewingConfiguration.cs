@@ -11,7 +11,7 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property
                 .Map(cs =>
                 {
                     cs.MapLeftKey("ViewingId");
-                    cs.MapRightKey("AttendeetId");
+                    cs.MapRightKey("AttendeeId");
                 });
 
             this.Property(r => r.StartDate)
@@ -38,7 +38,7 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property
             this.Property(r => r.PostViewingComment)
                 .HasMaxLength(4000);
 
-            this.HasRequired<Requirement>(v => v.Requirement)
+            this.HasRequired(v => v.Requirement)
                 .WithMany(r => r.Viewings);
         }
     }

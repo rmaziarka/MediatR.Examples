@@ -29,6 +29,7 @@
         [AutoMoqData]
         public void Given_CreateViewingCommand_When_Handle_Then_ShouldCreateViewing(
             [Frozen] Mock<IEntityValidator> entityValidator,
+            [Frozen] Mock<ICollectionValidator> collectionValidator,
             [Frozen] Mock<IGenericRepository<Requirement>> requirementRepository,
             [Frozen] Mock<IGenericRepository<Viewing>> viewingRepository,
             [Frozen] Mock<IReadGenericRepository<User>> userRepository,
@@ -39,17 +40,18 @@
             // Arrange
             command.AttendeesIds = fixture.CreateMany<Guid>(2).ToList();
             List<Contact> contacts = command.AttendeesIds.Select(x => new Contact { Id = x }).ToList();
-
-            // TODO remove userRepository after userRepository is removed from tested method
-            userRepository.Setup(u => u.Get()).Returns((fixture.CreateMany<User>()).AsQueryable());
-
-            requirementRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Requirement, bool>>>(), It.IsAny<Expression<Func<Requirement, object>>[]>())).Returns(new Requirement[]
+            var requirements = new[]
             {
                 new Requirement
                 {
                     Contacts = contacts
                 }
-            });
+            };
+
+            // TODO remove userRepository after userRepository is removed from tested method
+            userRepository.Setup(u => u.Get()).Returns((fixture.CreateMany<User>()).AsQueryable());
+
+            requirementRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Requirement, bool>>>(), It.IsAny<Expression<Func<Requirement, object>>[]>())).Returns(requirements);
             viewingRepository.Setup(r => r.Add(It.IsAny<Viewing>())).Returns((Viewing a) => a);
 
             // Act
@@ -58,46 +60,9 @@
             // Assert
             entityValidator.Verify(x => x.EntityExists(It.IsAny<Requirement>(), command.RequirementId), Times.Once);
             entityValidator.Verify(x => x.EntityExists<Activity>(command.ActivityId), Times.Once);
+            collectionValidator.Verify(x => x.CollectionContainsAll(It.IsAny<IEnumerable<Guid>>(), command.AttendeesIds, It.IsAny<ErrorMessage>()));
             viewingRepository.Verify(r => r.Add(It.IsAny<Viewing>()), Times.Once());
             viewingRepository.Verify(r => r.Save(), Times.Once());
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_CreateViewingCommandWithInvalidAttendeesIds_When_Handle_Then_ShouldThrowBusinessException(
-            [Frozen] Mock<IEntityValidator> entityValidator,
-            [Frozen] Mock<IGenericRepository<Requirement>> requirementRepository,
-            [Frozen] Mock<IGenericRepository<Viewing>> viewingRepository,
-            [Frozen] Mock<IReadGenericRepository<User>> userRepository,
-            CreateViewingCommand command,
-            CreateViewingCommandHandler handler,
-            IFixture fixture)
-        {
-            // Arrange
-            command.AttendeesIds = fixture.CreateMany<Guid>(2).ToList();
-
-            // TODO remove userRepository after userRepository is removed from tested method
-            userRepository.Setup(u => u.Get()).Returns((fixture.CreateMany<User>()).AsQueryable());
-
-            requirementRepository.Setup(
-                r =>
-                    r.GetWithInclude(It.IsAny<Expression<Func<Requirement, bool>>>(),
-                        It.IsAny<Expression<Func<Requirement, object>>[]>())).Returns(new[]
-                        {
-                            new Requirement
-                            {
-                                Contacts = new List<Contact>
-                                {
-                                    fixture.Build<Contact>().With(x => x.Id, command.AttendeesIds.First()).Create()
-                                }
-                            }
-                        });
-
-            // Act + Assert
-            var businessValidationException = Assert.Throws<BusinessValidationException>(() => { handler.Handle(command); });
-
-            // Assert
-            Assert.Equal(ErrorMessage.Missing_Requirement_Attendees_Id, businessValidationException.ErrorCode);
         }
     }
 }

@@ -119,6 +119,7 @@
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidator.cs" />
     <Compile Include="Characteristic\QueryHandlers\CharacteristicGroupsQueryHandler.cs" />
     <Compile Include="Common\BusinessValidators\AddressValidator.cs" />
+    <Compile Include="Common\BusinessValidators\CollectionValidator.cs" />
     <Compile Include="Common\BusinessValidators\CommonResources.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -126,6 +127,7 @@
     </Compile>
     <Compile Include="Common\BusinessValidators\EnumTypeItemValidator.cs" />
     <Compile Include="Common\BusinessValidators\IAddressValidator.cs" />
+    <Compile Include="Common\BusinessValidators\ICollectionValidator.cs" />
     <Compile Include="Common\BusinessValidators\IEnumTypeItemValidator.cs" />
     <Compile Include="Attachment\Commands\CreateAttachment.cs" />
     <Compile Include="Attachment\Commands\CreateAttachmentProfile.cs" />
@@ -216,7 +218,10 @@
     <Compile Include="Property\Queries\PropertyAttributesQueryValidator.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQueryResult.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQuerySingleResult.cs" />
+    <Compile Include="Viewing\CommandHandlers\UpdateViewingCommandHandler.cs" />
     <Compile Include="Viewing\CommandHandlers\CreateViewingCommandHandler.cs" />
+    <Compile Include="Viewing\Commands\UpdateViewingCommandValidator.cs" />
+    <Compile Include="Viewing\Commands\UpdateViewingCommand.cs" />
     <Compile Include="Viewing\Commands\CreateViewingCommand.cs" />
     <Compile Include="Viewing\Commands\CreateViewingCommandValidator.cs" />
     <Compile Include="Viewing\Commands\ViewingCommandProfile.cs" />

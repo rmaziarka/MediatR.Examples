@@ -10,6 +10,7 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.Viewing.Queries;
     using Domain.Viewing.Commands;
+
     /// <summary>
     /// Viewings controller.
     /// </summary>
@@ -36,7 +37,7 @@
         [Route("")]
         public Viewing CreateViewing(CreateViewingCommand command)
         {
-            Guid viewingId =  this.mediator.Send(command);
+            Guid viewingId = this.mediator.Send(command);
 
             return this.GetViewingById(viewingId);
         }
@@ -58,6 +59,19 @@
             }
 
             return viewing;
+        }
+
+        /// <summary>
+        /// Updates the viewing.
+        /// </summary>
+        /// <param name="command">The command.</param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("")]
+        public Viewing UpdateViewing(UpdateViewingCommand command)
+        {
+            Guid viewingId = this.mediator.Send(command);
+            return this.GetViewingById(viewingId);
         }
     }
 }
