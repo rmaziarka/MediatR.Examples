@@ -158,19 +158,26 @@
         [When(@"I upload attachment for (.*) activity id for (.*) with following data")]
         public void WhenIUploadAttachmentForActivityIdWithFollowingData(string activityId, string documentType, Table table)
         {
-            Guid activityIdGuid = activityId.Equals("latest") ? this.scenarioContext.Get<Activity>("Activity").Id : new Guid(activityId);
-            string requestUrl = $"{ApiUrl}/{activityIdGuid}/attachments";
+            if (activityId.Equals("latest"))
+                activityId = this.scenarioContext.Get<Activity>("Activity").Id.ToString();
+                
+
+            string requestUrl = $"{ApiUrl}/{activityId}/attachments";
 
             var createAttachment = table.CreateInstance<CreateAttachment>();
+
             createAttachment.DocumentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[documentType];
             createAttachment.UserId = this.scenarioContext.Get<Guid>("NegotiatorId");
-            var createActivityAttachmentCommand = new CreateActivityAttachmentCommand { ActivityId = activityIdGuid, Attachment = createAttachment };
+
+            var createActivityAttachmentCommand = new CreateActivityAttachmentCommand
+            {
+                ActivityId = activityId.Equals(string.Empty) ? new Guid() : new Guid(activityId),
+                Attachment = createAttachment
+            };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, createActivityAttachmentCommand);
             this.scenarioContext.SetHttpResponseMessage(response);
-            var abc = this.scenarioContext.GetResponseContent();
         }
-
 
         [Then(@"Activities list should be the same as in database")]
         public void ThenActivitiesReturnedShouldBeTheSameAsInDatabase()
