@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.Api.Services.AzureStorage
 {
     using System;
+    using System.Linq;
 
     using KnightFrank.Antares.Api.Models;
     using KnightFrank.Antares.Api.Services.AzureStorage.Factories;
@@ -14,7 +15,7 @@
 
     using EnumType = KnightFrank.Antares.Domain.Common.Enums.EnumType;
 
-    public class StorageProvider : IStorageProvider
+    public class ActivityStorageProvider : IStorageProvider
     {
         private readonly IStorageClientWrapper storageClient;
         private readonly IBlobResourceFactory blobResourceFactory;
@@ -22,7 +23,7 @@
         private readonly IEnumTypeItemValidator enumTypeItemValidator;
         private readonly IGenericRepository<EnumTypeItem> enumTypeItemRepository;
 
-        public StorageProvider(
+        public ActivityStorageProvider(
             IStorageClientWrapper storageClient, 
             IBlobResourceFactory blobResourceFactory,
             ISharedAccessBlobPolicyFactory sharedAccessBlobPolicyFactory,
@@ -38,43 +39,47 @@
 
         public AzureUploadUrlContainer GetActivityUploadSasUri(AttachmentUrlParameters parameters)
         {
-            this.enumTypeItemValidator.ItemExists(EnumType.ActivityDocumentType, parameters.DocumentTypeId);
-
             ActivityDocumentType activityDocumentType = this.GetActivityDocumentType(parameters.DocumentTypeId);
 
             Guid externalDocumentId = Guid.NewGuid();
-            ICloudBlobResource cloudBlobResource = this.blobResourceFactory.Create(activityDocumentType, externalDocumentId, parameters);
-            SharedAccessBlobPolicy sharedAccessBlobPolicy = this.sharedAccessBlobPolicyFactory.Create();
 
             return new AzureUploadUrlContainer
             {
-                Url = this.storageClient.GetSasUri(cloudBlobResource, sharedAccessBlobPolicy),
+                Url = this.GetSasUrl(parameters, externalDocumentId, activityDocumentType),
                 ExternalDocumentId = externalDocumentId
             };
         }
 
         public AzureDownloadUrlContainer GetActivityDownloadSasUri(AttachmentDownloadUrlParameters parameters)
         {
-            this.enumTypeItemValidator.ItemExists(EnumType.ActivityDocumentType, parameters.DocumentTypeId);
-
             ActivityDocumentType activityDocumentType = this.GetActivityDocumentType(parameters.DocumentTypeId);
-
-            ICloudBlobResource cloudBlobResource = this.blobResourceFactory.Create(activityDocumentType, parameters.ExternalDocumentId, parameters);
-            SharedAccessBlobPolicy sharedAccessBlobPolicy = this.sharedAccessBlobPolicyFactory.Create();
 
             return new AzureDownloadUrlContainer
             {
-                Url = this.storageClient.GetSasUri(cloudBlobResource, sharedAccessBlobPolicy),
+                Url = this.GetSasUrl(parameters, parameters.ExternalDocumentId, activityDocumentType),
             };
         }
 
         private ActivityDocumentType GetActivityDocumentType(Guid documentTypeId)
         {
-            EnumTypeItem enumTypeItem = this.enumTypeItemRepository.GetById(documentTypeId);
+            EnumTypeItem enumTypeItem = 
+                this.enumTypeItemRepository
+                .GetWithInclude(x => x.Id == documentTypeId && x.EnumType.Code == EnumType.ActivityDocumentType.ToString(), x => x.EnumType)
+                .SingleOrDefault();
 
-            ActivityDocumentType activityDocumentType;
-            Enum.TryParse(enumTypeItem.Code, true, out activityDocumentType);
+            this.enumTypeItemValidator.ItemExists(enumTypeItem, documentTypeId);
+
+            var activityDocumentType = (ActivityDocumentType)Enum.Parse(typeof(ActivityDocumentType), enumTypeItem.Code, true);
+
             return activityDocumentType;
+        }
+
+        private Uri GetSasUrl(AttachmentUrlParameters urlParameters, Guid externalDocumentId, ActivityDocumentType activityDocumentType)
+        {
+            ICloudBlobResource cloudBlobResource = this.blobResourceFactory.Create(activityDocumentType, externalDocumentId, urlParameters);
+            SharedAccessBlobPolicy sharedAccessBlobPolicy = this.sharedAccessBlobPolicyFactory.Create();
+
+            return this.storageClient.GetSasUri(cloudBlobResource, sharedAccessBlobPolicy);
         }
     }
 }

@@ -247,7 +247,9 @@
     <Compile Include="Models\AttachmentUrlParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App_Start\Startup.cs" />
-    <Compile Include="Services\AzureStorage\StorageProvider.cs" />
+    <Compile Include="Services\AzureStorage\ActivityStorageProvider.cs" />
+    <Compile Include="Validators\Services\AttachmentDownloadUrlParametersValidator.cs" />
+    <Compile Include="Validators\Services\AttachmentUrlParametersValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -2,8 +2,11 @@
 {
     using System.Web.Http;
 
+    using FluentValidation;
+
     using KnightFrank.Antares.Api.Models;
     using KnightFrank.Antares.Api.Services.AzureStorage;
+    using KnightFrank.Antares.Api.Validators.Services;
 
     [RoutePrefix("api/services")]
     public class ServicesController : ApiController
@@ -23,6 +26,9 @@
         [Route("attachment/upload/activity/")]
         public AzureUploadUrlContainer GetUrlForUploadFile([FromUri(Name = "")] AttachmentUrlParameters parameters)
         {
+            var validator = new AttachmentUrlParametersValidator();
+            validator.ValidateAndThrow(parameters);
+
             return this.storageProvider.GetActivityUploadSasUri(parameters);
         }
 
@@ -34,6 +40,11 @@
         [Route("attachment/download/activity/")]
         public AzureDownloadUrlContainer GetUrlForDownloadFile([FromUri(Name = "")] AttachmentDownloadUrlParameters parameters)
         {
+            // TODO: DocumentTypeId, EntityReferenceId and Filename should be fetched from DB, not sent from client.
+
+            var validator = new AttachmentDownloadUrlParametersValidator();
+            validator.ValidateAndThrow(parameters);
+
             return this.storageProvider.GetActivityDownloadSasUri(parameters);
         }
     }
