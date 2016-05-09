@@ -8,44 +8,14 @@ Scenario Outline: Retrieve users by query
 			| AD                    | dparks               | Dave      | Parks    |
 	When User inputs <query> query
 	Then User should get <statusCode>  http status code
-		And User details should have the expected values
-	
+		And User should get <matchCount> number of results returned
+		And User should get results in correct format
 	Examples: 
-	| query | statusCode |
-	| j     | OK         |
-	| smith | OK         |
-
+	| query | statusCode | matchCount |
+	| j     | OK         | 2          |
+	| smith | OK         | 1          |
+	| bob   | OK         | 0          |
 	
-	
-
-@Users
-Scenario: Retrieve users by name query
-	Given All users have been deleted
-		And User creates users in database with the following data
-			| activeDirectoryDomain | activeDirectoryLogin | firstName | lastName | 
-			| AD                    | jsmith               | John      | Smith    | 
-			| AD                    | jjohns               | John      | Johns    |
-			| AD                    | dparks               | Dave      | Parks    |
-	When User searches for users with the following query
-		| query  |
-		| j| 
-	Then User should get OK http status code
-
-
-@Users
-Scenario: Retrieve no users by name query
-	Given All users have been deleted
-		And User creates users in database with the following data
-			| activeDirectoryDomain | activeDirectoryLogin | firstName | lastName | 
-			| AD                    | jsmith               | John      | Smith    | 
-			| AD                    | jjohns               | John      | Johns    |
-			| AD                    | dparks               | Dave      | Parks    |
-	When User searches for users with the following query
-		| query |
-		| bob   |
-	Then User should get OK http status code
-		And User details should have the expected values
-
 @Users
 Scenario Outline: Retrieve error message for improper input
 	When User inputs <query> query
@@ -54,4 +24,3 @@ Scenario Outline: Retrieve error message for improper input
 	Examples:
 	| query | statusCode |
 	|       | BadRequest |
-	| NULL  | BadRequest |

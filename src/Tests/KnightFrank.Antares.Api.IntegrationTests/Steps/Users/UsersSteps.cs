@@ -11,7 +11,7 @@
 	using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
 	using KnightFrank.Antares.Dal.Model.Resource;
 	using KnightFrank.Antares.Dal.Model.User;
-	using KnightFrank.Antares.Dal.Repository;
+	using KnightFrank.Antares.Domain.User.QueryResults;
 
 	using Newtonsoft.Json;
 
@@ -76,14 +76,6 @@
 			this.scenarioContext.Set(users, "User List");
 		}
 
-		[When(@"User searches for users with the following query")]
-		public void GetUsersByQuery(string query)
-		{
-			string requestUrl = $"{ApiUrl}?query.partialName={query}";
-			HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
-
-			this.scenarioContext.SetHttpResponseMessage(response);
-		}
 
 		[When(@"User inputs (.*) query")]
 		public void GetContactDetailsUsingId(string query)
@@ -94,14 +86,32 @@
 			this.scenarioContext.SetHttpResponseMessage(response);
 		}
 
-		[Then(@"User details should have the expected values")]
-		public void CheckUserDetailsHaveExpectedValues()
+		[Then(@"User should get (.*) number of results returned")]
+		public void CheckCorrectNumberOfResultsReturned(int matchCount)
 		{
-			var userList = this.scenarioContext.Get<List<User>>("User List");
-
-			var returnedUserList = JsonConvert.DeserializeObject<List<User>>(this.scenarioContext.GetResponseContent());
-			returnedUserList.ShouldBeEquivalentTo(userList);
+			string response = this.scenarioContext.GetResponseContent();
+            var returnedUserList = JsonConvert.DeserializeObject<List<UsersQueryResult>>(response);
+			returnedUserList.Count.ShouldBeEquivalentTo(matchCount);
+		 
 		}
 
-	}
+	    [Then(@"User should get results in correct format")]
+	    public void CheckUserDetailsInCorrectFormat()
+	    {
+            var userList = this.scenarioContext.Get<List<User>>("User List");
+
+            string response = this.scenarioContext.GetResponseContent();
+            var returnedUserList = JsonConvert.DeserializeObject<List<UsersQueryResult>>(response);
+           
+            Assert.All(returnedUserList,user=>
+            {
+                IEnumerable<User> matchingUsers = userList.Where(actual=> actual.Id == user.Id 
+                && actual.Department.Name == user.Department);
+                Assert.True(matchingUsers.Count()==1);
+            });
+         
+        }
+
+
+    }
 }

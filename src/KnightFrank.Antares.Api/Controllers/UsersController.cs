@@ -57,7 +57,7 @@ namespace KnightFrank.Antares.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("")]
-        public IEnumerable<UsersQueryResult> GetUsers([FromUri] UsersQuery query)
+        public IEnumerable<UsersQueryResult> GetUsers([FromUri(Name = "")] UsersQuery query)
         {
             if (query == null)
             {

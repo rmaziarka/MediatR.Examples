@@ -57,7 +57,7 @@ namespace KnightFrank.Antares.Domain.UnitTests.User.QueryHandlers
             //Assert
             resultUserList.Should().HaveCount(2);
             resultUserList.Should().BeInAscendingOrder(x => x.FirstName);
-
+            
             //first name OR last name matches query.
             Assert.All(resultUserList,
                 user => Assert.True(user.FirstName.StartsWith(this.query.PartialName, StringComparison.CurrentCultureIgnoreCase)
@@ -120,9 +120,9 @@ namespace KnightFrank.Antares.Domain.UnitTests.User.QueryHandlers
         {
             var userList = new List<User>
             {
-                new User() { FirstName = "Jon", LastName = "smoth", Department = userDepartment },
-                new User() { FirstName = "Andy", LastName = "jon", Department = userDepartment },
-                new User() { FirstName = "Andy", LastName = "San", Department = userDepartment }
+                new User() {Id= new Guid("10000000-0000-0000-0000-000000000000"), FirstName = "Jon", LastName = "smoth", Department = userDepartment },
+                new User() {Id= new Guid("20000000-0000-0000-0000-000000000000"), FirstName = "Andy", LastName = "jon", Department = userDepartment },
+                new User() {Id= new Guid("30000000-0000-0000-0000-000000000000"), FirstName = "Andy", LastName = "San", Department = userDepartment }
             };
             return userList;
         }

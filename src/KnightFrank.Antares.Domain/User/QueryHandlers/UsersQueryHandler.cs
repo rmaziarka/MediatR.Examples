@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.User.QueryHandlers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -21,17 +22,23 @@
 
         public IEnumerable<UsersQueryResult> Handle(UsersQuery message)
         {
-            return this.userRepository.Get()
-                       .Where(
-                           i =>
-                               i.FirstName.StartsWith(message.PartialName) ||
-                               i.LastName.StartsWith(message.PartialName))
-                       .Select(x => new UsersQueryResult
-                       {
-                           FirstName = x.FirstName,
-                           LastName = x.LastName,
-                           Department = x.Department.Name.ToString()
-                       }).OrderBy(x=>x.FirstName).ThenBy(x=>x.LastName).ToList();
+            if (!string.IsNullOrWhiteSpace(message?.PartialName))
+            {
+                IQueryable<User> userList = this.userRepository.Get();
+                return userList.Where(
+                    i =>
+                        i.FirstName.ToLower().StartsWith(message.PartialName.ToLower()) ||
+                        i.LastName.ToLower().StartsWith(message.PartialName.ToLower()))
+                               .Select(x => new UsersQueryResult
+                               {
+                                   Id = x.Id,
+                                   FirstName = x.FirstName,
+                                   LastName = x.LastName,
+                                   Department = x.Department.Name.ToString()
+                               }).OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ToList();
+            }
+
+            return new List<UsersQueryResult>();
 
         }
     }

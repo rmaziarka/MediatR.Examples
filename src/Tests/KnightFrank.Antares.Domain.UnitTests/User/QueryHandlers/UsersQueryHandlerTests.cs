@@ -115,9 +115,9 @@ namespace KnightFrank.Antares.Domain.UnitTests.User.QueryHandlers
         {
             var userList = new List<User>
             {
-                new User() { FirstName = "Jon", LastName = "smoth", Department = userDepartment },
-                new User() { FirstName = "Andy", LastName = "jon", Department = userDepartment },
-                new User() { FirstName = "Andy", LastName = "San", Department = userDepartment }
+                new User() {Id= new Guid("10000000-0000-0000-0000-000000000000"), FirstName = "Jon", LastName = "smoth", Department = userDepartment },
+                new User() {Id= new Guid("20000000-0000-0000-0000-000000000000"), FirstName = "Andy", LastName = "jon", Department = userDepartment },
+                new User() {Id= new Guid("30000000-0000-0000-0000-000000000000"), FirstName = "Andy", LastName = "San", Department = userDepartment }
             };
             return userList;
         }
