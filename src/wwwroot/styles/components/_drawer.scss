@@ -35,6 +35,7 @@
 
     .accordion-arrow {
       color: $color-nobel;
+      transform: rotateX(180deg);
     }
 
     .panel-collapse {
@@ -103,6 +104,7 @@
     .accordion-arrow {
       font-size: 12px;
       line-height: 14px;
+      transition: all 0.2s ease;
     }
   }
 
