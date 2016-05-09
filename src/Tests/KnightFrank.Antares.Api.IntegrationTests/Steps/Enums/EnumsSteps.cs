@@ -107,32 +107,6 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [Then(@"Result should contain single element")]
-        public void ThenResultShouldContainSingleElement()
-        {
-            var result = JsonConvert.DeserializeObject<EnumQueryResult>(this.scenarioContext.GetResponseContent());
-
-            result.Items.Should().ContainSingle();
-        }
-
-        [Then(@"Single element has Id being set")]
-        public void ThenSingleElementHasIdBeingSet()
-        {
-            var result = JsonConvert.DeserializeObject<EnumQueryResult>(this.scenarioContext.GetResponseContent());
-
-            result.Items.Should().Contain(x => x.Id != null);
-        }
-
-        [Then(@"Single element should be equal to")]
-        public void ThenResultShouldContain(Table table)
-        {
-            IEnumerable<EnumQueryItemResult> expectedResult = table.CreateSet<EnumQueryItemResult>();
-
-            var result = JsonConvert.DeserializeObject<EnumQueryResult>(this.scenarioContext.GetResponseContent());
-
-            expectedResult.Select(er => er.Value).ShouldBeEquivalentTo(result.Items.Select(r => r.Value));
-        }
-
         [Then(@"Result should get appropriate enums with enums type")]
         public void ThenResultShouldGetAppropriateEnumsWithEnumsType()
         {
