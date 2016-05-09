@@ -19,9 +19,7 @@ module Antares.Common.Models.Business {
         constructor(viewing?: Dto.IViewing) {
             if (viewing) {
                 angular.extend(this, viewing);
-            this.startDate = Core.DateTimeUtils.convertDateToUtc(viewing.startDate);
-            this.endDate = Core.DateTimeUtils.convertDateToUtc(viewing.endDate);
-            this.day = (<string>viewing.startDate).substr(0, 10);
+                this.day = Core.DateTimeUtils.getTimePart(viewing.startDate);
             }
         }
     }
