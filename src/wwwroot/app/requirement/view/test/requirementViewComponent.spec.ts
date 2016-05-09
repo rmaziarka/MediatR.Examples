@@ -67,6 +67,11 @@ module Antares {
                         id: '3',
                         startDate: "2016-01-02T10:00:00Z",
                         endDate: "2016-01-02T11:00:00Z"
+                    },
+                    {
+                        id: '4',
+                        startDate: "2016-01-03T00:00:00Z",
+                        endDate: "2016-01-03T01:00:00Z"
                     }
                 ]
             });
