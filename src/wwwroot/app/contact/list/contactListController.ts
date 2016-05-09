@@ -2,7 +2,10 @@
 
 module Antares {
     export module Component {
+        import Dto = Common.Models.Dto;
+        import Business = Common.Models.Business;
         export class ContactListController {
+
             static $inject = ['componentRegistry', 'dataAccessService'];
             contacts: any = [];
             selected: { [id: string]: any } = {};
@@ -34,8 +37,14 @@ module Antares {
 
             loadContacts = () => {
                 this.isLoading = true;
-                this.contacts = this.dataAccessService.getContactResource().query();
-                return this.contacts.$promise.finally(() => { this.isLoading = false; });
+                return this.dataAccessService
+                .getContactResource()
+                .query()
+                .$promise.then((data: any) => {
+                    this.contacts = data.map((dataItem:Dto.IContact) => new Business.Contact(dataItem));
+                }).finally(() => { 
+                    this.isLoading = false; 
+                });
             }
         }
 
