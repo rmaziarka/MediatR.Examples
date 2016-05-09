@@ -100,7 +100,7 @@ module Antares.Requirement.View {
             this.components.viewingDetails()
             .saveViewing(this.requirement.id)
             .then(() => {
-                this.cancelViewingDetails();
+                this.hidePanels();
             });
         }
     }
