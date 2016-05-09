@@ -186,7 +186,8 @@
             propertyFromResponse.Activities.ToList()[0].ShouldBeEquivalentTo(activitiesFromDatabase, options => options
                 .Excluding(x => x.Property)
                 .Excluding(x => x.ActivityStatus)
-                .Excluding(x => x.ActivityType));
+                .Excluding(x => x.ActivityType)
+                .Excluding(x => x.Attachments));
         }
 
         [Then(@"Created Activity is saved in database")]
