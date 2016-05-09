@@ -32,7 +32,14 @@ module Antares.Requirement.View {
         }
 
         showViewingDetailsPanel = () =>{
-            var selectedActivity : Dto.IActivityQueryResult = this.components.activitiesList().getSelectedActivity();
+            var selectedActivity : Dto.IActivityQueryResult = this.components
+                .activitiesList()
+                .getSelectedActivity();
+                
+            if(selectedActivity === null || selectedActivity === undefined){
+                return;
+            }
+            
             this.viewingDetailsPanelVisible = true;
             this.components.viewingDetails()
                 .setActivity(selectedActivity);
