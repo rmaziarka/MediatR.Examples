@@ -1,27 +1,26 @@
-﻿using System.Linq;
-
-namespace KnightFrank.Antares.Api.Controllers
+﻿namespace KnightFrank.Antares.Api.Controllers
 {
     using System.Collections.Specialized;
+    using System.Linq;
     using System.Security.Claims;
     using System.Web.Configuration;
     using System.Web.Http;
 
-    using KnightFrank.Antares.Domain.Enum.Queries;
-    using KnightFrank.Antares.Domain.Enum.QueryResults;
+    using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.User.QueryResults;
-
-    using MediatR;
 
     [RoutePrefix("api/users")]
     public class UsersController : ApiController
     {
-        private readonly IMediator mediator;
         private static readonly NameValueCollection config = WebConfigurationManager.AppSettings;
 
-        public UsersController(IMediator mediator)
+        // TODO: here should inject repository (we should use handler)
+        private readonly IReadGenericRepository<EnumTypeItem> enumTypeItemRepository;
+
+        public UsersController(IReadGenericRepository<EnumTypeItem> enumTypeItemRepository)
         {
-            this.mediator = mediator;
+            this.enumTypeItemRepository = enumTypeItemRepository;
         }
 
         [Route("data")]
@@ -29,20 +28,22 @@ namespace KnightFrank.Antares.Api.Controllers
         {
             var identity = (ClaimsIdentity)this.User.Identity;
 
-            // TODO: EnumQuery and its handler should no longer be used - remove it after rewriting this method
-            var divisionsQuery = new EnumQuery { Code = "Division" };
-            EnumQueryResult divisions = this.mediator.Send(divisionsQuery);
-
+            EnumTypeItem division = this.GetEnumTypeItemByCode(config["CurrentUser.Division"]);
             var user = new UserDataResult
-            {
-                Name = identity.Name,
-                Email = identity.Claims.First(c => c.Type == ClaimTypes.Email).Value,
-                Country = identity.Claims.First(c => c.Type == ClaimTypes.Country).Value,
-                Roles = identity.FindAll(ClaimTypes.Role).Select(claim => claim.Value),
-                Division = divisions.Items.Single(i => i.Code == config["CurrentUser.Division"])
-            };
+                           {
+                               Name = identity.Name,
+                               Email = identity.Claims.First(c => c.Type == ClaimTypes.Email).Value,
+                               Country = identity.Claims.First(c => c.Type == ClaimTypes.Country).Value,
+                               Roles = identity.FindAll(ClaimTypes.Role).Select(claim => claim.Value),
+                               Division = division
+                           };
 
             return user;
+        }
+
+        private EnumTypeItem GetEnumTypeItemByCode(string enumTypeItemCode)
+        {
+            return this.enumTypeItemRepository.Get().Single(eti => eti.Code == enumTypeItemCode);
         }
     }
 }
