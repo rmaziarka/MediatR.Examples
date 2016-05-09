@@ -28,7 +28,7 @@ module Antares.Activity {
             componentRegistry.register(this, this.componentId);
 
             this.activityResource = dataAccessService.getActivityResource();
-            this.enumService.getEnumsPromise().then(this.onEnumsLoaded);
+            this.enumService.getEnumPromise().then(this.onEnumLoaded);
 
             this.loadActivityTypes();
         }
@@ -44,7 +44,7 @@ module Antares.Activity {
                 });
         }
 
-        onEnumsLoaded = (result: any) => {
+        onEnumLoaded = (result: any) => {
             this.activityStatuses = result[Dto.EnumTypeCode.ActivityStatus];
             this.setDefaultActivityStatus(this.activityStatuses);
         }

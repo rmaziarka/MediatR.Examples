@@ -8,7 +8,7 @@ module Antares.Common.Component {
 
         public id: string;                // set via binding
         public name: string;              // set via binding
-        public required: boolean = false; // set via binding        
+        public required: boolean = false; // set via binding
         public ngModel: string;           // set via binding
         public enumTypeCode: string;      // set via binding
 
@@ -20,10 +20,10 @@ module Antares.Common.Component {
                 this.items = [<Dto.IEnumItem>{ id: this.ngModel }];
             }
 
-            this.enumService.getEnumsPromise().then(this.onEnumsLoaded);
+            this.enumService.getEnumPromise().then(this.onEnumLoaded);
         }
 
-        private onEnumsLoaded = (result: any) => {            
+        private onEnumLoaded = (result: any) => {
             this.items = result[this.enumTypeCode];
         }
 

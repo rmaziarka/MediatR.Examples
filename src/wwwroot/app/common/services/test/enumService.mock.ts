@@ -4,7 +4,7 @@ module Antares.Mock {
     import Dto = Common.Models.Dto;
 
     export class EnumServiceMock {
-        private enums: any = {};
+        private enum: any = {};
 
         private promise: ng.IPromise<Dto.IEnumDictionary> = null;
         private deferred: ng.IDeferred<Dto.IEnumDictionary> = null;
@@ -14,16 +14,16 @@ module Antares.Mock {
             this.promise = this.deferred.promise;
         }
 
-        private getEnums = () =>{
-            return this.enums;
+        private getEnum = () =>{
+            return this.enum;
         }
 
         public setEnum = (enumTypeCode: string, enumItems:any) => {
-            this.enums[enumTypeCode] = enumItems;
+            this.enum[enumTypeCode] = enumItems;
         }
 
-        public getEnumsPromise = (): ng.IPromise<Dto.IEnumDictionary> =>{
-            this.deferred.resolve(this.getEnums());
+        public getEnumPromise = (): ng.IPromise<Dto.IEnumDictionary> =>{
+            this.deferred.resolve(this.getEnum());
 
             return this.promise;
         };

@@ -46,7 +46,7 @@ module Antares.Property {
         }
 
         loadDivisions = () => {
-            this.enumService.getEnumsPromise().then((result: any) => {
+            this.enumService.getEnumPromise().then((result: any) => {
                 this.divisions = result[Dto.EnumTypeCode.Division];
             });
         };

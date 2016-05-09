@@ -115,7 +115,7 @@ module Antares.Services {
                 });
         }
 
-        getEnumsResource(): Resources.IBaseResourceClass<ng.resource.IResource<Antares.Common.Models.Dto.IEnumDictionary>> {
+        getEnumResource(): Resources.IBaseResourceClass<ng.resource.IResource<Antares.Common.Models.Dto.IEnumDictionary>> {
             return <Resources.IBaseResourceClass<ng.resource.IResource<Antares.Common.Models.Dto.IEnumDictionary>>>
                 this.$resource(this.appConfig.rootUrl + '/api/enums');
         }

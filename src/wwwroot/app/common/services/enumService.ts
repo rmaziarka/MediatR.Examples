@@ -12,10 +12,10 @@ module Antares.Services {
         }
 
         public init = () => {
-            this.promise = this.dataAccessService.getEnumsResource().get().$promise;
+            this.promise = this.dataAccessService.getEnumResource().get().$promise;
         }
 
-        public getEnumsPromise = (): ng.IPromise<Common.Models.Dto.IEnumDictionary> => {
+        public getEnumPromise = (): ng.IPromise<Common.Models.Dto.IEnumDictionary> => {
             return this.promise;
         };
     }
