@@ -80,7 +80,7 @@
         public void OpenViewActivityPage()
         {
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-            this.scenarioContext.Set(page.PreviewDetails.ClickViewActivity(), "ViewActivityPage");
+            this.scenarioContext.Set(page.PreviewDetails.WaitForPanelToBeVisible().ClickViewActivity(), "ViewActivityPage");
         }
 
         [When(@"User selects (.*) activity type on activity panel")]
