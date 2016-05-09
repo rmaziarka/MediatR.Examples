@@ -13,7 +13,8 @@
     [Binding]
     public class ServicesSteps
     {
-        private const string ApiUrl = "/api/services/attachment/upload";
+        private const string UploadApiUrl = "/api/services/attachment/upload";
+        private const string DownloadApiUrl = "/api/services/attachment/download";
 
         private BaseTestClassFixture fixture;
         private ScenarioContext scenarioContext;
@@ -28,21 +29,35 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [When(@"User retrieves url for activity attachment upload for (.*) activity document type")]
-        public void WhenUserRetrievesUrlForActivityAttachmentUploadForInvalidCodeActivityDocumentType(string documentTypeCode)
+        [When(@"User retrieves url for activity attachment upload for (.*) entity reference id")]
+        public void WhenUserRetrievesUrlForActivityAttachmentUploadForEntityReferenceId(string entityReferenceId)
         {
-            EnumTypeItem documentType = this.fixture.DataContext.EnumTypeItems.SingleOrDefault(x => x.Code == documentTypeCode);
+            var documentTypeId = this.scenarioContext.Get<Guid>("ActivityDocumentTypeId");
 
-            Guid documentTypeId = documentType?.Id ?? Guid.NewGuid();
-            string localeIsoCode = "en";
-            Guid entityReferenceId = Guid.NewGuid();
-            string filename = "file.pdf";
+            var localeIsoCode = "en";
+            var filename = "file.pdf";
 
             string activityUpload =
                 $"/activity?documentTypeId={documentTypeId}&localeIsoCode={localeIsoCode}&entityReferenceId={entityReferenceId}&filename={filename}";
 
-            HttpResponseMessage httpResponseMessage = this.fixture.SendGetRequest(ApiUrl + activityUpload);
+            HttpResponseMessage httpResponseMessage = this.fixture.SendGetRequest(UploadApiUrl + activityUpload);
             this.scenarioContext.SetHttpResponseMessage(httpResponseMessage);
         }
+
+        [When(@"User retrieves url for activity attachment download for (.*) entity reference id")]
+        public void WhenUserRetrievesUrlForActivityAttachmentDownloadForEntityReferenceId(string entityReferenceId)
+        {
+            var documentTypeId = this.scenarioContext.Get<Guid>("ActivityDocumentTypeId");
+            Guid externalDocumentId = Guid.NewGuid();
+            var localeIsoCode = "en";
+            var filename = "file.pdf";
+
+            string activityUpload =
+                $"/activity?documentTypeId={documentTypeId}&localeIsoCode={localeIsoCode}&entityReferenceId={entityReferenceId}&filename={filename}&externalDocumentId={externalDocumentId}";
+
+            HttpResponseMessage httpResponseMessage = this.fixture.SendGetRequest(DownloadApiUrl + activityUpload);
+            this.scenarioContext.SetHttpResponseMessage(httpResponseMessage);
+        }
+
     }
 }

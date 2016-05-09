@@ -157,5 +157,19 @@
             }
             actualResult.ShouldBeEquivalentTo(dict);
         }
+
+        [Given(@"User gets (.*) for ActivityDocumentType")]
+        public void GetPropertyTypeId(string activityDocumentTypeCode)
+        {
+            if (activityDocumentTypeCode.Trim().Equals("invalid"))
+            {
+                this.scenarioContext.Set(Guid.NewGuid(), "ActivityDocumentTypeId");
+            }
+            else
+            {
+                Guid activityDocumentTypeId = this.fixture.DataContext.EnumTypeItems.Single(i => i.Code.Equals(activityDocumentTypeCode) && i.EnumType.Code == "ActivityDocumentType").Id;
+                this.scenarioContext.Set(activityDocumentTypeId, "ActivityDocumentTypeId");
+            }
+        }
     }
 }
