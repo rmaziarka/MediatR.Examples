@@ -32,6 +32,7 @@
         public void Given_ValidCommand_When_Handling_Then_ShouldSaveRequirementNote(
             [Frozen] Mock<IGenericRepository<RequirementNote>> requirementNoteRepository,
             [Frozen] Mock<IGenericRepository<User>> userRepository,
+            [Frozen] Mock<IEntityValidator> entityValidator,
             User user,
             CreateRequirementNoteCommandHandler handler,
             CreateRequirementNoteCommand cmd,
@@ -58,25 +59,7 @@
             requirementNote.Id.ShouldBeEquivalentTo(expectedRequirementNoteId);
             requirementNoteRepository.Verify(r => r.Add(It.IsAny<RequirementNote>()), Times.Once());
             requirementNoteRepository.Verify(r => r.Save(), Times.Once());
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_CommandHasInvalidRequirement_When_Handling_Then_ShouldThrowDomainValidatorException(
-            [Frozen] Mock<IEntityValidator> entityValidator,
-            CreateRequirementNoteCommandHandler handler,
-            CreateRequirementNoteCommand cmd)
-        {
-            // Arrange
-            var id = new Guid();
-            cmd.RequirementId = id;
-            BusinessValidationMessage validationMessage= BusinessValidationMessage.CreateEntityNotExistMessage("Requirement", id);
-            var exception = new BusinessValidationException(validationMessage);
-            entityValidator.Setup(v => v.EntityExists<Requirement>(id)).Throws(exception);
-
-            // Act & Assert
-            Assert.Throws<BusinessValidationException>(() => { handler.Handle(cmd); });
-            Assert.Throws<BusinessValidationException>(() => handler.Handle(cmd)).ErrorCode.ShouldBeEquivalentTo(ErrorMessage.Entity_Not_Exists);
+            entityValidator.Verify(x => x.EntityExists<Requirement>(cmd.RequirementId));
         }
     }
 }

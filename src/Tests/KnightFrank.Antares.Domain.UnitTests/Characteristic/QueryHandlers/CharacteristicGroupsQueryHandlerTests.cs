@@ -8,7 +8,6 @@
     using FluentAssertions;
 
     using KnightFrank.Antares.Dal.Model.Property.Characteristics;
-    using KnightFrank.Antares.Dal.Model.Resource;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Characteristic.Queries;
     using KnightFrank.Antares.Domain.Characteristic.QueryHandlers;

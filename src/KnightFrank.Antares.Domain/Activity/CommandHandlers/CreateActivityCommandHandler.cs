@@ -4,14 +4,11 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using FluentValidation.Results;
-
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
-    using KnightFrank.Antares.Domain.Common;
-    using KnightFrank.Antares.Domain.Common.Exceptions;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
 
     using MediatR;
 
@@ -19,26 +16,23 @@
     {
         private readonly IGenericRepository<Activity> activityRepository;
         private readonly IGenericRepository<Contact> contactRepository;
-        private readonly IDomainValidator<CreateActivityCommand> domainValidator;
 
-        public CreateActivityCommandHandler(IGenericRepository<Activity> activityRepository, IGenericRepository<Contact> contactRepository, IDomainValidator<CreateActivityCommand> domainValidator)
+        public CreateActivityCommandHandler(IGenericRepository<Activity> activityRepository, IGenericRepository<Contact> contactRepository)
         {
             this.activityRepository = activityRepository;
             this.contactRepository = contactRepository;
-            this.domainValidator = domainValidator;
         }
 
         public Guid Handle(CreateActivityCommand message)
         {
-            ValidationResult validationResult = this.domainValidator.Validate(message);
-            if (!validationResult.IsValid)
-            {
-                throw new DomainValidationException(validationResult.Errors);
-            }
-
             var activity = AutoMapper.Mapper.Map<Activity>(message);
 
             List<Contact> vendors = this.contactRepository.FindBy(x => message.ContactIds.Contains(x.Id)).ToList();
+            if (!message.ContactIds.All(x => vendors.Select(c => c.Id).Contains(x)))
+            {
+                throw new BusinessValidationException(ErrorMessage.Missing_Activity_Vendors_Id);
+            }
+
             activity.Contacts = vendors;
 
             this.activityRepository.Add(activity);

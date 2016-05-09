@@ -23,10 +23,25 @@
         // ReSharper disable once InconsistentNaming
         Inconsistent_Dynamic_Configuration,
         /// <summary>
+        /// Key value : One or more vendors are not exist.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Missing_Activity_Vendors_Id,
+        /// <summary>
+        /// Key value : One or more contacts are not exist.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Missing_Company_Contacts_Id,
+        /// <summary>
         /// Key value : One or more attendees are not on the applicant list.
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        Missing_Applicant_Id,
+        Missing_Requirement_Applicants_Id,
+        /// <summary>
+        /// Key value : One or more attendees are not on the applicant list.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Missing_Requirement_Attendees_Id,
         /// <summary>
         /// Key value : The '{0}' property value format is inappropriate.
         /// </summary>

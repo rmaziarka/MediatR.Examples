@@ -17,7 +17,7 @@
     using Moq;
 
     using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.AutoMoq;
+    using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
 
@@ -25,105 +25,79 @@
     [Trait("FeatureTitle", "Viewing ")]
     public class CreateViewingCommandHandlerTests : IClassFixture<BaseTestClassFixture>
     {
-        private readonly CreateViewingCommand command;
-        private readonly CreateViewingCommandHandler handler;
-        private readonly Mock<IEntityValidator> entityValidator;
-        private readonly Mock<IGenericRepository<Requirement>> requirementRepository;
-        private readonly Mock<IGenericRepository<Viewing>> viewingRepository;
-
-        public CreateViewingCommandHandlerTests()
+        [Theory]
+        [AutoMoqData]
+        public void Given_CreateViewingCommand_When_Handle_Then_ShouldCreateViewing(
+            [Frozen] Mock<IEntityValidator> entityValidator,
+            [Frozen] Mock<IGenericRepository<Requirement>> requirementRepository,
+            [Frozen] Mock<IGenericRepository<Viewing>> viewingRepository,
+            [Frozen] Mock<IReadGenericRepository<User>> userRepository,
+            CreateViewingCommand command,
+            CreateViewingCommandHandler handler,
+            IFixture fixture)
         {
-            IFixture fixture = new Fixture().Customize(new AutoMoqCustomization());
-            fixture.Behaviors.Clear();
-            fixture.RepeatCount = 1;
-            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
-
-            List<Contact> contacts = fixture.CreateMany<Contact>(5).ToList();
-            List<Guid> attendeeIds = contacts.Select(x => x.Id).Take(2).ToList();
-
-            this.command = fixture.Build<CreateViewingCommand>()
-                                  .With(x => x.AttendeesIds, attendeeIds)
-                                  .Create();
+            // Arrange
+            command.AttendeesIds = fixture.CreateMany<Guid>(2).ToList();
+            List<Contact> contacts = command.AttendeesIds.Select(x => new Contact { Id = x }).ToList();
 
             // TODO remove userRepository after userRepository is removed from tested method
-            var userRepository = fixture.Freeze<Mock<IReadGenericRepository<User>>>();
             userRepository.Setup(u => u.Get()).Returns((fixture.CreateMany<User>()).AsQueryable());
 
-            this.requirementRepository = fixture.Freeze<Mock<IGenericRepository<Requirement>>>();
-            this.viewingRepository = fixture.Freeze<Mock<IGenericRepository<Viewing>>>();
-            this.entityValidator = fixture.Freeze<Mock<IEntityValidator>>();
-
-            this.requirementRepository.Setup(r => r.GetById(It.IsAny<Guid>())).Returns(new Requirement
+            requirementRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Requirement, bool>>>(), It.IsAny<Expression<Func<Requirement, object>>[]>())).Returns(new Requirement[]
             {
-                Contacts = contacts
-            });
-            this.requirementRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Requirement, bool>>>(), It.IsAny<Expression<Func<Requirement, object>>[]>())).Returns(new Requirement[]
-            {
-                new Requirement()
+                new Requirement
                 {
                     Contacts = contacts
                 }
             });
-            this.viewingRepository.Setup(r => r.Add(It.IsAny<Viewing>())).Returns((Viewing a) => a);
+            viewingRepository.Setup(r => r.Add(It.IsAny<Viewing>())).Returns((Viewing a) => a);
 
-            this.handler = fixture.Create<CreateViewingCommandHandler>();
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_CreateViewingCommand_When_Handle_Then_ShouldCreateViewing()
-        {
             // Act
-            this.handler.Handle(this.command);
+            handler.Handle(command);
 
             // Assert
-            this.viewingRepository.Verify(r => r.Add(It.IsAny<Viewing>()), Times.Once());
-            this.viewingRepository.Verify(r => r.Save(), Times.Once());
+            entityValidator.Verify(x => x.EntityExists(It.IsAny<Requirement>(), command.RequirementId), Times.Once);
+            entityValidator.Verify(x => x.EntityExists<Activity>(command.ActivityId), Times.Once);
+            viewingRepository.Verify(r => r.Add(It.IsAny<Viewing>()), Times.Once());
+            viewingRepository.Verify(r => r.Save(), Times.Once());
         }
 
         [Theory]
         [AutoMoqData]
-        public void Given_CreateViewingCommandWithInvalidRequirementId_When_Handle_Then_ShouldThrowBusinessException()
+        public void Given_CreateViewingCommandWithInvalidAttendeesIds_When_Handle_Then_ShouldThrowBusinessException(
+            [Frozen] Mock<IEntityValidator> entityValidator,
+            [Frozen] Mock<IGenericRepository<Requirement>> requirementRepository,
+            [Frozen] Mock<IGenericRepository<Viewing>> viewingRepository,
+            [Frozen] Mock<IReadGenericRepository<User>> userRepository,
+            CreateViewingCommand command,
+            CreateViewingCommandHandler handler,
+            IFixture fixture)
         {
-            //Arrange
-            this.requirementRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Requirement, bool>>>(), It.IsAny<Expression<Func<Requirement, object>>[]>()))
-                .Returns(Enumerable.Empty<Requirement>);
-            this.entityValidator.Setup(x => x.EntityExists(It.IsAny<Requirement>(),It.IsAny<Guid>()))
-                .Throws(new BusinessValidationException(It.IsAny<BusinessValidationMessage>()));
+            // Arrange
+            command.AttendeesIds = fixture.CreateMany<Guid>(2).ToList();
+
+            // TODO remove userRepository after userRepository is removed from tested method
+            userRepository.Setup(u => u.Get()).Returns((fixture.CreateMany<User>()).AsQueryable());
+
+            requirementRepository.Setup(
+                r =>
+                    r.GetWithInclude(It.IsAny<Expression<Func<Requirement, bool>>>(),
+                        It.IsAny<Expression<Func<Requirement, object>>[]>())).Returns(new[]
+                        {
+                            new Requirement
+                            {
+                                Contacts = new List<Contact>
+                                {
+                                    fixture.Build<Contact>().With(x => x.Id, command.AttendeesIds.First()).Create()
+                                }
+                            }
+                        });
 
             // Act + Assert
-            Assert.Throws<BusinessValidationException>(() => { this.handler.Handle(this.command); });
-        }
+            var businessValidationException = Assert.Throws<BusinessValidationException>(() => { handler.Handle(command); });
 
-        [Theory]
-        [AutoMoqData]
-        public void Given_CreateViewingCommandWithInvalidActivityId_When_Handle_Then_ShouldThrowBusinessException()
-        {
-            //Arrange
-            this.entityValidator.Setup(x => x.EntityExists<Activity>(It.IsAny<Guid>()))
-                .Throws(new BusinessValidationException(It.IsAny<BusinessValidationMessage>()));
-
-            // Act + Assert
-            Assert.Throws<BusinessValidationException>(() => { this.handler.Handle(this.command); });
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_CreateViewingCommandWithInvalidAttendeesIds_When_Handle_Then_ShouldThrowBusinessException()
-        {
-            //Arrange
-            this.requirementRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Requirement, bool>>>(), It.IsAny<Expression<Func<Requirement, object>>[]>())).Returns(new Requirement[]
-            {
-                new Requirement() {
-                Contacts = new List<Contact>
-                {
-                    new Contact { Id = this.command.AttendeesIds[0] }
-                }
-                }
-            });
-
-            // Act + Assert
-            Assert.Throws<BusinessValidationException>(() => { this.handler.Handle(this.command); });
+            // Assert
+            Assert.Equal(ErrorMessage.Missing_Requirement_Attendees_Id, businessValidationException.ErrorCode);
         }
     }
 }

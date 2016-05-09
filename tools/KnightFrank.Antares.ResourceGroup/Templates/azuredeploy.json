@@ -135,7 +135,7 @@
     "VmSqlName": "[concat(variables('ResourceNamePrefix'), 'Vm-Sql-', variables('ResourceNameSuffix'))]",
     "VmSqlImagePulisher": "MicrosoftWindowsServer",
     "VmSqlImageOffer": "WindowsServer",
-    "VmSqlOSDiskName": "KnightFrank-Antares-VmSqlOSDisk",
+    "VmSqlOSDiskName": "[concat('KnightFrank-Antares-VmSqlOSDisk', variables('ResourceNameSuffix'))]",
     "VmSqlVmSize": "Standard_D1",
     "VmStorageAccountContainerName": "vhds",
     "VmSqlNicName": "[concat(variables('ResourceNamePrefix'), 'Vm-Sql-Nic-', variables('ResourceNameSuffix'))]",
@@ -143,7 +143,7 @@
     "VmIISHostName": "[concat(variables('ResourceGroupNameTokens')[5], 'VmIIS', variables('ResourceNameSuffix'))]",
     "VmIISImagePublisher": "MicrosoftWindowsServer",
     "VmIISImageOffer": "WindowsServer",
-    "VmIISOSDiskName": "[concat('KnightFrank-Antares-VmIISOSDisk', variables('VmIISNameSuffix'))]",
+    "VmIISOSDiskName": "[concat('KnightFrank-Antares-VmIISOSDisk', variables('ResourceNameSuffix'), variables('VmIISNameSuffix'))]",
     "VmIISVmSize": "Standard_D1",
     "VmIISNicName": "[concat(variables('ResourceNamePrefix'), 'Vm-IIS-Nic-', variables('ResourceNameSuffix'), variables('VmIISNameSuffix'))]",
     "VmIISName": "[concat(variables('ResourceNamePrefix'), 'Vm-IIS-', variables('ResourceNameSuffix'), variables('VmIISNameSuffix'))]",
@@ -262,7 +262,8 @@
                 "commonShareCredential": {
                   "UserName": "[parameters('CommonShareUserName')]",
                   "Password": "[parameters('CommonShareKey')]"
-                }
+                },
+                "octopusThumbprint": "[parameters('OctopusThumbprint')]"
               }
             }
           }
