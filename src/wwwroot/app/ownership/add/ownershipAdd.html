@@ -21,7 +21,7 @@
     </div>
     <div class="form-group checkbox">
         <label>
-            <input type="checkbox" ng-model="vm.ownership.isCurrentOwner"> <span translate="OWNERSHIP.ADD.CURRENTOWNERSHIP"></span>
+            <input type="checkbox" id="current-owner-checkbox" ng-model="vm.ownership.isCurrentOwner" ng-change="vm.setCurrentOwner()"> <span translate="OWNERSHIP.ADD.CURRENTOWNERSHIP"></span>
         </label>
     </div>
     <div class="form-group" ng-class="{'has-error': (addOwnershipForm.$submitted || addOwnershipForm.purchaseDate.$dirty || addOwnershipForm.sellDate.$dirty) && addOwnershipForm.purchaseDate.$invalid}">

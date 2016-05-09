@@ -11,7 +11,7 @@ module Antares.Property {
         ownerships: Business.Ownership[];
 
         public enumTypeOwnershipType: Dto.EnumTypeCode = Dto.EnumTypeCode.OwnershipType;
-        public ownership: Dto.IOwnership = new Business.Ownership();
+        public ownership: Business.Ownership = new Business.Ownership();
         public datepickers: any = {
             purchaseOpened: false,
             sellOpened: false
@@ -64,7 +64,7 @@ module Antares.Property {
             return ownership;
         }
 
-        loadOwnership = (contacts: Dto.IContact[]) => {
+        loadOwnership = (contacts: Business.Contact[]) => {
             this.ownership.contacts = contacts;
         }
 
@@ -85,6 +85,14 @@ module Antares.Property {
             var form = this.$scope["addOwnershipForm"];
             form.$setSubmitted();
             return form.$valid;
+        }
+
+        setCurrentOwner = (): void => {
+            if (this.ownership.isCurrentOwner)
+            {
+                this.ownership.sellDate = null
+                this.ownership.sellPrice = null
+            }
         }
     }
 

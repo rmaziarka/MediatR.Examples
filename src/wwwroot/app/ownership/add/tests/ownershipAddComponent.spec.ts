@@ -17,7 +17,8 @@ module Antares {
             purchaseDateSelector: '[name=purchaseDate]',
             sellDateSelector: '[name=sellDate]',
             buyPriceSelector: '[name=buyPrice]',
-            sellPriceSelector: '[name=sellPrice]'
+            sellPriceSelector: '[name=sellPrice]',
+            currentOwnerSelector: '#current-owner-checkbox'
         };
 
         var ownershipTypes = [
@@ -126,6 +127,19 @@ module Antares {
                     expect(sellPriceElement.hasClass('ng-empty')).toBeTruthy();
                 });
             });
+            
+            it('current owner is set then sell price and date should be empty', () => {
+                //arrange
+                var sellDate = element.find(pageObjectSelectors.sellDateSelector);
+                var sellPrice = element.find(pageObjectSelectors.sellPriceSelector);
+                sellDate.val('2001-01-01');
+                sellPrice.val(100);
+                // act
+                element.find(pageObjectSelectors.currentOwnerSelector).prop('checked', true);
+                // assert
+                expect(sellDate.text()).toBe('');    
+                expect(sellPrice.text()).toBe('');                 
+            });            
         });
     });
 }
