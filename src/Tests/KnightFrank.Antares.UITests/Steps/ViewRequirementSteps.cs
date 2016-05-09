@@ -102,6 +102,12 @@
                 .WaitForViewingDetailsToHide();
         }
 
+        [When(@"User clicks (.*) viewings details link on view requirement page")]
+        public void OpenViewingsDetails(int position)
+        {
+            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").OpenViewingDetails(position);
+        }
+
         [Then(@"Requirement location details on view requirement page are same as the following")]
         public void CheckResidentialSalesRequirementLocationDetails(Table table)
         {
@@ -181,6 +187,22 @@
                 () => Assert.Equal(expectedDetails.Date, actualDetails[0]),
                 () => Assert.Equal(expectedDetails.Name, actualDetails[1]),
                 () => Assert.Equal(expectedDetails.Time, actualDetails[2]));
+        }
+
+        [Then(@"Viewing details on view requirement page are same as the following")]
+        public void CheckViewingInDetailsPanel(Table table)
+        {
+            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
+            var expectedDetails = table.CreateInstance<ViewingDetails>();
+
+            List<string> attendees = expectedDetails.Attendees.Split(';').ToList();
+
+            Verify.That(this.driverContext, 
+                () => Assert.Equal(expectedDetails.Activity, page.ViewingDetails.Activity),
+                () => Assert.Equal(expectedDetails.Date + ", " + expectedDetails.StartTime + " - " + expectedDetails.EndTime, page.ViewingDetails.Date),
+                () => Assert.Equal(expectedDetails.Negotiator, page.ViewingDetails.Negotiator),
+                () => Assert.Equal(attendees, page.ViewingDetails.Attendees),
+                () => Assert.Equal(expectedDetails.InvitationText, page.ViewingDetails.InvitationText));
         }
     }
 }

@@ -154,7 +154,7 @@
                 ActivityTypeId = activityTypeId,
                 ActivityStatusId = activityStatusId,
                 CreatedDate = DateTime.UtcNow,
-                LastModifiedDate = DateTime.Now,
+                LastModifiedDate = DateTime.UtcNow,
                 Contacts = this.scenarioContext.Get<List<Contact>>("ContactsList")
             };
 

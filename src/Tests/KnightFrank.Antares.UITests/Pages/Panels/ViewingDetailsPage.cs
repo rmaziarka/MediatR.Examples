@@ -1,5 +1,8 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages.Panels
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     using KnightFrank.Antares.UITests.Extensions;
 
     using Objectivity.Test.Automation.Common;
@@ -8,12 +11,27 @@
 
     public class ViewingDetailsPage : ProjectPageBase
     {
-        private readonly ElementLocator editViewing = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator panel = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator attendees = new ElementLocator(Locator.CssSelector, "div[id *= 'viewing-preview-attendee-item']");
+        private readonly ElementLocator date = new ElementLocator(Locator.Id, "viewing-preview-date");
+        private readonly ElementLocator activity = new ElementLocator(Locator.Id, "viewing-preview-activity-details");
+        private readonly ElementLocator editViewing = new ElementLocator(Locator.CssSelector, "#viewing-panel footer button");
+        private readonly ElementLocator invitationText = new ElementLocator(Locator.Id, "viewing-preview-invitation-text");
+        private readonly ElementLocator negotiator = new ElementLocator(Locator.Id, "viewing-preview-negotiator-details");
+        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
 
         public ViewingDetailsPage(DriverContext driverContext) : base(driverContext)
         {
         }
+
+        public string Activity => this.Driver.GetElement(this.activity).Text;
+
+        public string Date => this.Driver.GetElement(this.date).Text;
+
+        public string Negotiator => this.Driver.GetElement(this.negotiator).Text;
+
+        public string InvitationText => this.Driver.GetElement(this.invitationText).Text;
+
+        public List<string> Attendees => this.Driver.GetElements(this.attendees).Select(el => el.Text).ToList();
 
         public CreateViewingPage EditViewing()
         {
