@@ -111,6 +111,23 @@
             }
         }
 
+        [Given(@"Attachment for (.*) with following data exists in data base")]
+        public void GivenAttachmentWithFollowingDataExistsInDataBase(string documentType, Table table)
+        {
+            var attachment = table.CreateInstance<Attachment>();
+            attachment.DocumentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[documentType];
+            attachment.CreatedDate = DateTime.Now;
+            attachment.LastModifiedDate = DateTime.Now;
+            attachment.UserId = this.scenarioContext.Get<Guid>("NegotiatorId");
+
+            Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
+            Activity activity = this.fixture.DataContext.Activities.Single(x => x.Id.Equals(activityId));
+            activity.Attachments.Add(attachment);
+            this.fixture.DataContext.SaveChanges();
+
+        }
+
+
         [When(@"User updates activity (.*) id and (.*) status with following sale valuation")]
         public void WhenUserUpdatesActivityWithFollowingSaleValuation(string id, string status, Table table)
         {
@@ -224,6 +241,20 @@
                 .Excluding(a => a.Property)
                 .Excluding(a => a.ActivityType)
                 .Excluding(a => a.Attachments));
+        }
+
+        [Then(@"Retrieved activity should have expected attachments")]
+        public void ThenTheReceivedActivitiesShouldHaveExpectedAttachments()
+        {
+            var activity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
+            Activity actualActivity = this.fixture.DataContext.Activities.Single(x => x.Id.Equals(activity.Id));
+
+            actualActivity.Attachments.Should().Equal(activity.Attachments, (c1, c2) =>
+                c1.DocumentTypeId.Equals(c2.DocumentTypeId) &&
+                c1.ExternalDocumentId.Equals(c2.ExternalDocumentId) &&
+                c1.FileName.Equals(c2.FileName) &&
+                c1.Size.Equals(c2.Size) &&
+                c1.UserId.Equals(c2.UserId));
         }
 
         [Then(@"Retrieved activities should be the same as in database")]
