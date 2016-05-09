@@ -11,7 +11,8 @@ module Antares.Common.Component {
             'item': '?cardListItem'
         },
         bindings: {
-            showItemAdd: '<'
+            showItemAdd: '<',
+            showItemAddDisabled: '<'
         }
     });
 }
