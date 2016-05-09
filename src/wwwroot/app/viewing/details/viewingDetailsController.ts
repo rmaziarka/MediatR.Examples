@@ -29,8 +29,8 @@ module Antares {
 
             clearViewingDetails = () => {
                 this.viewing = new Business.Viewing();
-                this.startTime = new Date();
-                this.endTime = new Date();
+                this.startTime = moment();
+                this.endTime = moment();
                 this.setSelectedAttendees([]);
                 var form:ng.IFormController = this.$scope["addViewingForm"];
                 form.$setPristine();
