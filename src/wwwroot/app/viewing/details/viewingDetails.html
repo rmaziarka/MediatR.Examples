@@ -68,7 +68,7 @@
     <div class="form-group" ng-class="{'has-error': (addViewingForm.$submitted || addViewingForm.invitationTextLength.$dirty) && addViewingForm.invitationTextLength.$invalid}">
         <label for="invitation-text" translate="VIEWING.ADD.INVITATIONTEXT"></label>
         <span class="pull-right character-limit">{{(vm.viewing.invitationText.length ? vm.viewing.invitationText.length : "0") + "/4000"}}</span>
-        <textarea id="invitation-text" class="form-control" rows="6" ng-model="vm.viewing.invitationText" ng-maxlength="4000" name="invitationText"></textarea>
+        <textarea id="invitation-text" class="form-control" rows="6" ng-model="vm.viewing.invitationText" name="invitationText"></textarea>
 
         <kf-max-count max-count='4000' ng-model="vm.viewing.invitationText.length" name='invitationTextLength'></kf-max-count>
         
