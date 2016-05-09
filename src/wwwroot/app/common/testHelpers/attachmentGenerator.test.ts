@@ -8,6 +8,7 @@ module Antares.TestHelpers {
         public static generateDto(specificData?: any): Dto.IAttachment {
 
             var attachment: Dto.IAttachment = {
+                id: AttachmentGenerator.makeRandom('attachmentId'),
                 fileName: AttachmentGenerator.makeRandom('attachmentFileName'),
                 documentTypeId: AttachmentGenerator.makeRandom('attachmentFileTypeId'),
                 size: _.random(1, 100000),

@@ -3,6 +3,7 @@
 module Antares.Common.Component {
     import AzureBlobUploadFactory = Antares.Factories.AzureBlobUploadFactory;
     import Dto = Common.Models.Dto;
+    import Business = Common.Models.Business;
 
     export class AttachmentUploadController {
         public attachmentTypes: any[];
@@ -43,43 +44,49 @@ module Antares.Common.Component {
             form.$setPristine();
         };
 
-        uploadAttachment(entityReferenceId: string) {
+        getAzureUploadUrl = (entityReferenceId: string) => {
+            return this.urlResource.get({
+                    documentTypeId : this.documentTypeId,
+                    localeIsoCode : 'en',
+                    entityReferenceId : entityReferenceId,
+                    filename : this.file.name
+                })
+                .$promise;
+        }
+
+        uploadFile = (urlContainer: Common.Models.Dto.IAzureUploadUrlContainer) => {
+            return this.azureBlobUploadFactory
+                .uploadFile(this.file, urlContainer.url)
+                .then(() => {
+                    return urlContainer.externalDocumentId;
+                });
+        }
+
+        showError = () => {
+            var uploadResult = this.$q.defer();
+            uploadResult.reject();
+
+            return uploadResult.promise;
+        }
+
+        createAttachment = (externalDocumentId: string) => {
+            var attachment = new Business.Attachment();
+            attachment.externalDocumentId = externalDocumentId;
+            attachment.fileName = this.file.name;
+            attachment.size = this.file.size;
+            attachment.documentTypeId = this.documentTypeId;
+
+            return attachment;
+        }
+
+        uploadAttachment = (entityReferenceId: string): ng.IPromise<Business.Attachment> => {
             if (!this.isDataValid()) {
-                var uploadResult = this.$q.defer();
-                uploadResult.reject();
-                return uploadResult.promise;
+                return this.showError();
             }
 
-            return this.urlResource.get({
-                documentTypeId: this.documentTypeId,
-                localeIsoCode: 'en',
-                entityReferenceId: entityReferenceId,
-                filename: this.file.name
-            })
-                .$promise
-                .then((urlContainer: Common.Models.Dto.IAzureUploadUrlContainer) => {
-                    return this.azureBlobUploadFactory
-                        .uploadFile(this.file, <string>urlContainer.url)
-                        .then(() => {
-                             return urlContainer.externalDocumentId;
-                        });
-                }, () => {
-                    console.error('Error sending file to azure storage.');
-
-                    var uploadResult = this.$q.defer();
-                    uploadResult.reject();
-                    return uploadResult.promise;
-                })
-                .then((externalDocumentId) => {
-                    var attachment = new Common.Models.Business.Attachment();
-
-                    attachment.externalDocumentId = externalDocumentId;
-                    attachment.fileName = this.file.name;
-                    attachment.size = this.file.size;
-                    attachment.documentTypeId = this.documentTypeId;
-
-                    return attachment;
-                });
+            return this.getAzureUploadUrl(entityReferenceId)
+                .then(this.uploadFile, this.showError)
+                .then(this.createAttachment);
         };
     }
 

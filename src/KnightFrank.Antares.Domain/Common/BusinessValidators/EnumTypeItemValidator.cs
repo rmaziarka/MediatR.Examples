@@ -25,5 +25,13 @@
                 throw new BusinessValidationException(BusinessValidationMessage.CreateEnumTypeItemNotExistMessage(enumType.ToString(), enumTypeItemId));
             }
         }
+
+        public void ItemExists<T>(T enumTypeItem, Guid enumTypeItemId)
+        {
+            if (enumTypeItem == null)
+            {
+                throw new BusinessValidationException(BusinessValidationMessage.CreateEnumTypeItemNotExistMessage(typeof(T).ToString(), enumTypeItemId));
+            }
+        }
     }
 }
