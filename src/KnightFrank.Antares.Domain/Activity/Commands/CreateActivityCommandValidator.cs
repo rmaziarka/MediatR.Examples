@@ -25,7 +25,6 @@
             this.activityTypeDefinitionRepository = activityTypeDefinitionRepository;
 
             this.RuleFor(x => x.PropertyId).NotEmpty();
-            this.RuleFor(x => x.ContactIds).NotEmpty();
 
             this.RuleFor(x => x.ActivityStatusId).NotEmpty();
             this.RuleFor(x => x.ActivityStatusId)

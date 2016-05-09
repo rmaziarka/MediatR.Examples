@@ -75,6 +75,19 @@
 
         [Theory]
         [AutoMoqData]
+        public void Given_EmptyContactList_When_Validating_Then_IsValid(CreateActivityCommand cmd)
+        {
+            cmd.ContactIds = new List<Guid>();
+
+            // Act
+            ValidationResult validationResult = this.validator.Validate(cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeTrue();
+        }
+
+        [Theory]
+        [AutoMoqData]
         public void Given_PropertyDoesNotExist_When_Validating_Then_IsInvalid(
             CreateActivityCommand cmd)
         {
