@@ -199,6 +199,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ActivitiesType.feature</DependentUpon>
     </Compile>
+    <Compile Include="Tests\Activities\Attachments.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Attachments.feature</DependentUpon>
+    </Compile>
     <Compile Include="Tests\AddressForm\AddressForm.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -301,6 +306,10 @@
     <None Include="Tests\Activities\ActivitiesType.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>ActivitiesType.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Activities\Attachments.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Attachments.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\AddressForm\AddressForm.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
