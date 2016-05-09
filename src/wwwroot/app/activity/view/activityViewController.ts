@@ -42,21 +42,25 @@ module Antares.Activity.View {
             this.components.panels.activityAttachmentAdd().hide();
         };
 
+        saveAttachment = (attachment: Antares.Common.Models.Business.Attachment) =>{
+            return this.activityAttachmentResource.save({ id : this.activity.id }, new Business.CreateActivityAttachmentResource(this.activity.id, attachment))
+                .$promise;
+        }
+
+        addSavedAttachmentToList = (result: Dto.IAttachment) => {
+            var savedAttachment = new Business.Attachment(result);
+            this.activity.attachments.push(savedAttachment);
+
+            this.hidePanels(true);
+        }
+
         saveActivityAttachment = () => {
             this.saveActivityAttachmentBusy = true;
 
             this.components.activityAttachmentAdd()
                 .uploadAttachment(this.activity.id)
-                .then((attachment: Antares.Common.Models.Business.Attachment) =>{
-                    return this.activityAttachmentResource.save({ id: this.activity.id }, new Business.CreateActivityAttachmentResource(this.activity.id, attachment))
-                        .$promise;
-                })
-                .then((result: Dto.IAttachment) => {
-                    var addedAttachment = new Business.Attachment(result);
-                    this.activity.attachments.push(addedAttachment);
-
-                    this.hidePanels(true);
-                })
+                .then(this.saveAttachment)
+                .then(this.addSavedAttachmentToList)
                 .finally(() =>{
                      this.saveActivityAttachmentBusy = false;
                 });
