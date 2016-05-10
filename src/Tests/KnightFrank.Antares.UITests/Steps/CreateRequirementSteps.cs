@@ -124,5 +124,11 @@
             Assert.Equal(applicants.Count, selectedApplicants.Count);
             applicants.ShouldBeEquivalentTo(selectedApplicants);
         }
+
+        [Then(@"Requirement form on create requirement page should be displayed")]
+        public void CheckINewAppliactionButtonIsDisplayed()
+        {
+            new CreateRequirementPage(this.driverContext).IsRequirementFormPresent();
+        }
     }
 }

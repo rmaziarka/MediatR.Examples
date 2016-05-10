@@ -116,5 +116,11 @@
                 }
             }
         }
+
+        [Then(@"Property form on create property page should be displayed")]
+        public void CheckIfPropertyTypeIsDisplayed()
+        {
+            new CreatePropertyPage(this.driverContext).IsPropertyFormPresent();
+        }
     }
 }

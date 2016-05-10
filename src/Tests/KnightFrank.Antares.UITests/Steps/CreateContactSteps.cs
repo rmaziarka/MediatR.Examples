@@ -55,5 +55,11 @@
         {
             //TODO implement check if contact was created
         }
+
+        [Then(@"Contact form on create contact page should be displayed")]
+        public void CheckIfFirstNameIsDisplayed()
+        {
+            new CreateContactPage(this.driverContext).IsContactFormPresent();
+        }
     }
 }

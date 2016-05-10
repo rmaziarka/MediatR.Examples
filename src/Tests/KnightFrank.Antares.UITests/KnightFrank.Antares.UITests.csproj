@@ -110,6 +110,7 @@
     <Compile Include="Extensions\DriverExtensions.cs" />
     <Compile Include="Pages\AddressTemplatePage.cs" />
     <Compile Include="Pages\CommonPage.cs" />
+    <Compile Include="Pages\NavigationDrawerPage.cs" />
     <Compile Include="Pages\Panels\ActivityListPage.cs" />
     <Compile Include="Pages\Panels\AttachmentPreviewPage.cs" />
     <Compile Include="Pages\Panels\AttachFilePage.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Steps\Database\PropertySteps.cs" />
     <Compile Include="Steps\Database\RequirementSteps.cs" />
     <Compile Include="Steps\EditActivitySteps.cs" />
+    <Compile Include="Steps\NavigationDrawerSteps.cs" />
     <Compile Include="Steps\ViewActivitySteps.cs" />
     <Compile Include="Steps\ViewRequirementSteps.cs" />
     <Compile Include="Steps\ViewPropertySteps.cs" />
@@ -152,6 +154,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Contact.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\NavigationDrawer\NavigationDrawer.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NavigationDrawer.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Property\Property.feature.cs">
       <AutoGen>True</AutoGen>
@@ -182,6 +189,10 @@
     <None Include="Tests\Contact\Contact.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Contact.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\NavigationDrawer\NavigationDrawer.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>NavigationDrawer.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Property\Property.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

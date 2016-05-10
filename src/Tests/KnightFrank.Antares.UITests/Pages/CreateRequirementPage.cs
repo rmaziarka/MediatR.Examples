@@ -13,6 +13,7 @@
 
     public class CreateRequirementPage : ProjectPageBase
     {
+        private readonly ElementLocator requirementForm = new ElementLocator(Locator.Id, "addRequirementForm");
         // Applicant locators
         private readonly ElementLocator newApplicantButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
         private readonly ElementLocator applicantsList = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'requirement.contacts']");
@@ -161,6 +162,11 @@
         public List<string> GetApplicants()
         {
             return this.Driver.GetElements(this.applicantsList).Select(el => el.Text).ToList();
+        }
+
+        public bool IsRequirementFormPresent()
+        {
+            return this.Driver.IsElementPresent(this.requirementForm, BaseConfiguration.LongTimeout);
         }
     }
 }

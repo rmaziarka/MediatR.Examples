@@ -13,6 +13,7 @@
 
     public class CreatePropertyPage : ProjectPageBase
     {
+        private readonly ElementLocator propertyForm = new ElementLocator(Locator.CssSelector, "property-add");
         private readonly ElementLocator propertyType = new ElementLocator(Locator.Id, "type");
         private readonly ElementLocator propertyTypeLink = new ElementLocator(Locator.CssSelector, "a[ng-click *= 'changeDivision']:not([class *= 'ng-hide'])");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "saveBtn");
@@ -195,6 +196,11 @@
             this.Driver.GetElement(this.characteristicCommentIcon.Format(name)).Click();
             this.Driver.SendKeys(this.characteristicComment.Format(name), comment);
             return this;
+        }
+
+        public bool IsPropertyFormPresent()
+        {
+            return this.Driver.IsElementPresent(this.propertyForm, BaseConfiguration.LongTimeout);
         }
     }
 

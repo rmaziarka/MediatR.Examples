@@ -12,6 +12,7 @@
         private readonly ElementLocator contactSurname = new ElementLocator(Locator.Id, "surname");
         private readonly ElementLocator contactTitle = new ElementLocator(Locator.Id, "title");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "saveBtn");
+        private readonly ElementLocator contactForm = new ElementLocator(Locator.Id, "addContactForm");
 
         public CreateContactPage(DriverContext driverContext)
             : base(driverContext)
@@ -46,6 +47,11 @@
         {
             this.Driver.GetElement(this.saveButton).Click();
             return this;
+        }
+
+        public bool IsContactFormPresent()
+        {
+            return this.Driver.IsElementPresent(this.contactForm, BaseConfiguration.LongTimeout);
         }
     }
 }

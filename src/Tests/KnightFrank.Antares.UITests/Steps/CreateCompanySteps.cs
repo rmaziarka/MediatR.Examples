@@ -83,6 +83,12 @@
             contacts.Should().BeEquivalentTo(selectedContacts);
         }
 
+        [Then(@"Company form on create company page should be diaplyed")]
+        public void CheckIfCreateContactIsDisplayed()
+        {
+            new CreateCompanyPage(this.driverContext).IsCompanyFormPresent();
+        }
+
         [Then(@"New company should be created")]
         public void CheckIfCompanyCreated()
         {
