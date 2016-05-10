@@ -80,7 +80,7 @@
 		[When(@"User inputs (.*) query")]
 		public void GetContactDetailsUsingId(string query)
 		{
-			string requestUrl = $"{ApiUrl}?query.partialName={query}";
+			string requestUrl = $"{ApiUrl}?partialName={query}";
 			HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
 
 			this.scenarioContext.SetHttpResponseMessage(response);

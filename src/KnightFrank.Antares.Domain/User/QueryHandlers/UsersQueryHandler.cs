@@ -24,6 +24,7 @@
         {
             if (!string.IsNullOrWhiteSpace(message?.PartialName))
             {
+
                 IQueryable<User> userList = this.userRepository.Get();
                 return userList.Where(
                     i =>

@@ -13,9 +13,7 @@ Scenario Outline: Retrieve users by query
 	Examples: 
 	| query | statusCode | matchCount |
 	| j     | OK         | 2          |
-	| smith | OK         | 1          |
-	| bob   | OK         | 0          |
-	
+	 
 @Users
 Scenario Outline: Retrieve error message for improper input
 	When User inputs <query> query
