@@ -142,7 +142,7 @@ module Antares {
                 spyOn(controller, 'isDataValid').and.returnValue(true);
                 spyOn(controller, 'getAzureUploadUrl').and.returnValue(getAzureUploadUrlDefferedMock.promise);
                 spyOn(controller, 'uploadFile').and.returnValue(uploadFileDefferedMock.promise);
-                controller.file = new File([''], 'fileName');
+                controller.file = <File>{};
 
                 var createdAttachmentMock = TestHelpers.AttachmentGenerator.generate();
                 spyOn(controller, 'createAttachment').and.returnValue(createdAttachmentMock);
