@@ -1,4 +1,7 @@
-<div class="panel-item">{{::(cvm.item.activity.property.address.number || '') + ' ' + (cvm.item.activity.property.address.line2 || '')}}</div>
+<div class="panel-item">
+    {{:: cvm.item.activity.property.address.propertyName || ''}}<span ng-if="cvm.item.activity.property.address.propertyName && (cvm.item.activity.property.address.propertyNumber || cvm.item.activity.property.address.line2)">, </span>
+    {{::(cvm.item.activity.property.address.propertyNumber || '') + ' ' + (cvm.item.activity.property.address.line2 || '')}}
+</div>
 <small>
     {{::cvm.item.startDate | date : 'HH:mm'}} - {{::cvm.item.endDate | date : 'HH:mm'}}
 </small>
