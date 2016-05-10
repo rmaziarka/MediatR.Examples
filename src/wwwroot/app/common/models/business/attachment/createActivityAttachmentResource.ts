@@ -1,7 +1,7 @@
 /// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Models.Business {
-	export class CreateActivityAttachmentResource  {
+    export class CreateActivityAttachmentResource implements Dto.ICreateActivityAttachmentResource {
 		attachment: CreateAttachmentResource;
 		activityId : string;
 

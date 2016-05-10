@@ -1,7 +1,7 @@
 /// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Models.Business {
-    export class CreateAttachmentResource  {
+    export class CreateAttachmentResource implements Dto.ICreateAttachmentResource  {
         fileName: string = '';
         documentTypeId: string = '';
         size: number = null;
