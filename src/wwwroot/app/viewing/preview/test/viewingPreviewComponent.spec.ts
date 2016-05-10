@@ -46,7 +46,7 @@ module Antares {
                 // assert
                 var activityDetailsElement = element.find(pageObjectSelectors.activityDetails);
                 var properActiivtyTextToDisplay = viewingMock.activity.property.address.propertyName + (viewingMock.activity.property.address.propertyName ? ', ' : ' '
-                    + viewingMock.activity.property.address.propertyNumber) + " " + viewingMock.activity.property.address.propertyNumber + " " + viewingMock.activity.property.address.line2;
+                    + viewingMock.activity.property.address.propertyNumber) + viewingMock.activity.property.address.propertyNumber + " " + viewingMock.activity.property.address.line2;
                 expect(activityDetailsElement.text()).toBe(properActiivtyTextToDisplay);
             });
             
