@@ -1,7 +1,10 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages.Panels
 {
+    using System.IO;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
+    using Objectivity.Test.Automation.Common.Helpers;
     using Objectivity.Test.Automation.Common.Types;
 
     public class AttachmentPreviewPage : ProjectPageBase
@@ -35,6 +38,14 @@
             this.Driver.GetElement(this.closeButton).Click();
             this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.MediumTimeout);
             return this;
+        }
+
+        public void IsAttachmentDownloaded(string fileName)
+        {
+            int filesNumber = FilesHelper.CountFiles(this.DriverContext.DownloadFolder, FileType.Pdf);
+            this.Driver.GetElement(this.name).Click();
+            FilesHelper.WaitForFileOfGivenType(FileType.Pdf, filesNumber, this.DriverContext.DownloadFolder);
+            FileInfo file = FilesHelper.GetLastFile(this.DriverContext.DownloadFolder, FileType.Pdf);
         }
     }
 }

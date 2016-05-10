@@ -73,6 +73,12 @@
             this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").PreviewAttachment.CloseAttachmentPreviewPage();
         }
 
+        [Then(@"Attachment (.*) should be downloaded")]
+        public void ThenAttachmentShouldBeDownloaded(string attachmentName)
+        {
+            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").PreviewAttachment.IsAttachmentDownloaded(attachmentName);
+        }
+
         [Then(@"Address details on view activity page are following")]
         public void CheckViewActivityAddressDetails(Table table)
         {

@@ -125,6 +125,7 @@ Scenario: Create property
 		| PDF document.pdf | Brochure | 2.9 MB |
 	When User clicks attachment details link on view activity page
 	Then Attachment details on attachment preview panel are the same like on view activity page
+	Then Attachment PDF document.pdf should be downloaded
 	When User clicks close button on attachment preview panel
 		And User clicks edit button on view activity page
 		And User edits activity details on edit activity page
