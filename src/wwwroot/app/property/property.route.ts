@@ -11,7 +11,7 @@ module Antares.Property {
     function initRoute($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
         $stateProvider
             .state('app.property-view', {
-                url: '/property/view/:id',
+                url: '/property/:id',
                 params: {},
                 template: '<property-view user-data="appVm.userData" property="property"></property-view>',
                 controller: ($scope: ng.IScope, property: Dto.IProperty) => {
