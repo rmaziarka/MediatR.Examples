@@ -1,5 +1,5 @@
 <form name="attachmentUploadForm" ng-submit="attachmentUploadForm.$valid" id="file-upload-form">
-    <div class="form-group" ng-class="{'has-error': (attachmentUploadForm.$submitted || attachmentUploadForm.attachmentRequiredValidator.$dirty) && attachmentUploadForm.attachmentRequiredValidator.$invalid}">
+    <div class="form-group" ng-class="{'has-error': (attachmentUploadForm.$submitted || attachmentUploadForm.attachment.$dirty) && attachmentUploadForm.attachment.$invalid}">
         <div class="row">
             <div class="col-md-12">
                 <label for="file" class="required">{{"ATTACHMENT.ADD.FILE" | translate}}</label>
@@ -12,11 +12,10 @@
             </div>
             <div class="col-md-12" ng-hide="auvm.file">
                 <span class="btn btn-default btn-file">{{"ATTACHMENT.ADD.BROWSE" | translate}}
-                    <input id="attachment" name="attachment" type="file" ngf-select ng-model="auvm.file">
-                    <file-required name="attachmentRequiredValidator" ng-model="auvm.file" is-file-cleared="{{auvm.isFileCleared}}"/>
+                    <input id="attachment" name="attachment" type="file" ngf-select ng-model="auvm.file" file-required is-file-cleared="{{auvm.isFileCleared}}">                    
                 </span>
-                <div ng-class="{'has-error': attachmentUploadForm.$submitted || attachmentUploadForm.attachmentRequiredValidator.$dirty}" ng-messages="attachmentUploadForm.attachmentRequiredValidator.$error"
-                    ng-show="attachmentUploadForm.$submitted || attachmentUploadForm.attachmentRequiredValidator.$dirty">
+                <div ng-class="{'has-error': attachmentUploadForm.$submitted || attachmentUploadForm.attachment.$dirty}" ng-messages="attachmentUploadForm.attachment.$error"
+                    ng-show="attachmentUploadForm.$submitted || attachmentUploadForm.attachment.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
             </div>

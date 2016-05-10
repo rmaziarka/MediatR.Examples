@@ -2,7 +2,7 @@
 
 module Antares.Common.Directive {
     export class FileRequiredDirective implements ng.IDirective {
-        restrict = "E";
+        restrict = "A";
         require = 'ngModel';
         scope = {
             ngModel: '=ngModel'
@@ -11,7 +11,7 @@ module Antares.Common.Directive {
             
             var validateFileRequired =(inputValue: any) => {
                 var isFileCleared = JSON.parse(String(attrs['isFileCleared']));
-                var isValid = !isFileCleared || inputValue !== null;     
+                var isValid = !isFileCleared || !!inputValue;     
                 
                 ngModel.$setValidity('fileRequired', isValid);
                 return isValid;
@@ -20,12 +20,11 @@ module Antares.Common.Directive {
             ngModel.$validators['fileRequired'] = (modelValue, scope) => {
                 return validateFileRequired(modelValue);
             };
-
-           
+         
             attrs.$observe('isFileCleared', function () {
                 validateFileRequired(ngModel.$viewValue);
-            });
-            
+            });            
+                      
             scope.$watch('ngModel', (newValue, oldValue) => {
                 if ((newValue !== undefined || oldValue !== undefined) && newValue !== oldValue) {
                     ngModel.$setDirty();

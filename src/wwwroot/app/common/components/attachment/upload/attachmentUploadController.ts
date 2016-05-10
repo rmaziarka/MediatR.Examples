@@ -10,7 +10,7 @@ module Antares.Common.Component {
         public file: File = null;
         public isFileCleared: boolean = false;
         public documentTypeId: string;
-        private urlResource: ng.resource.IResourceClass<Common.Models.Resources.IAzureUploadUrlResource>;        
+        private urlResource: ng.resource.IResourceClass<Common.Models.Resources.IAzureUploadUrlResource>;
         componentId: string;
         enumDocumentType: Dto.EnumTypeCode;
 
@@ -30,7 +30,7 @@ module Antares.Common.Component {
             form.$setSubmitted();
             return form.$valid;
         }
-        
+
         clearSelectedFile = () => {
             this.file = null;
             this.isFileCleared = true;
@@ -38,9 +38,9 @@ module Antares.Common.Component {
 
         clearAttachmentForm = () => {
             this.file = null;
-            this.isFileCleared = false;            
-            this.documentTypeId = null;            
-            
+            this.isFileCleared = false;
+            this.documentTypeId = null;
+
             var form = this.$scope["attachmentUploadForm"];
             form.$setPristine();
         };
@@ -48,10 +48,10 @@ module Antares.Common.Component {
         getAzureUploadUrl = (entityReferenceId: string) => {
             return this.urlResource
                 .get({
-                    documentTypeId : this.documentTypeId,
-                    localeIsoCode : 'en',
-                    entityReferenceId : entityReferenceId,
-                    filename : this.file.name
+                    documentTypeId: this.documentTypeId,
+                    localeIsoCode: 'en',
+                    entityReferenceId: entityReferenceId,
+                    filename: this.file.name
                 })
                 .$promise;
         }
@@ -86,7 +86,11 @@ module Antares.Common.Component {
         }
 
         uploadAttachment = (entityReferenceId: string): ng.IPromise<Business.Attachment> => {
-            if (!this.isDataValid()) {
+            if (this.file === null) {
+                this.isFileCleared = true;
+            }
+            
+            if (!this.isDataValid() || this.file === null) {
                 return this.reject();
             }
 
