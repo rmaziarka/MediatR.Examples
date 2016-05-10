@@ -17,6 +17,7 @@ namespace KnightFrank.Antares.Domain.UnitTests.User.QueryHandlers
 
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.AutoMoq;
+    using Ploeh.AutoFixture.Xunit2;
 
     [Collection("UserQueryHandler2")]
     [Trait("FeatureTitle", "Users")]
@@ -29,7 +30,6 @@ namespace KnightFrank.Antares.Domain.UnitTests.User.QueryHandlers
 
         public UsersQueryHandlerTests2()
         {
-
             //???:Isn't it better to have a shared fixture that is rune once per class rather than one per test?
             IFixture fixture = new Fixture().Customize(new AutoMoqCustomization());
             fixture.Behaviors.Clear();
@@ -43,13 +43,14 @@ namespace KnightFrank.Antares.Domain.UnitTests.User.QueryHandlers
         }
 
         [Theory]
-        [AutoMoqData]
-        public void Given_ExistingUsersInQuery_When_Handling_Then_CorrectResultsReturned()
+        [InlineAutoData("jon")]
+        [InlineAutoData("JON")]
+        public void Given_ExistingUsersInQuery_When_Handling_Then_CorrectResultsReturned(string partialName)
         {
             // Arrange
             IList<User> userList = this.CreateUserList(this.mockedDepartmentData.FirstOrDefault());
             this.userRepository.Setup(x => x.Get()).Returns(userList.AsQueryable());
-            this.query.PartialName = "jon";
+            this.query.PartialName = partialName;
 
             // Act
             IEnumerable<UsersQueryResult> resultUserList = this.handler.Handle(this.query).AsQueryable();
@@ -66,14 +67,14 @@ namespace KnightFrank.Antares.Domain.UnitTests.User.QueryHandlers
         }
 
         [Theory]
-        [AutoMoqData]
-        public void Given_NotExistsingUserInQuery_When_Handling_Then_ShouldReturnEmptyList()
+        [InlineAutoData("abc")]
+        public void Given_NotExistsingUserInQuery_When_Handling_Then_ShouldReturnEmptyList(string partialName)
         {
             //Arrange
             IList<User> userList = this.CreateUserList(this.mockedDepartmentData.FirstOrDefault());
             this.userRepository.Setup(x => x.Get()).Returns(userList.AsQueryable());
 
-            this.query.PartialName = "abc";
+            this.query.PartialName = partialName;
 
             //Act
             IEnumerable<UsersQueryResult> resultUserList = this.handler.Handle(this.query).AsQueryable();
@@ -82,9 +83,8 @@ namespace KnightFrank.Antares.Domain.UnitTests.User.QueryHandlers
             resultUserList.Should().BeEmpty();
         }
 
-        [Theory]
-        [AutoMoqData]
-        public void Given_EmptyStringInQuery_When_Handling_Then_ShouldReturnEmptyList()
+        [Fact]
+       public void Given_EmptyStringInQuery_When_Handling_Then_ShouldReturnEmptyList()
         {
             //Arrange
             IList<User> userList = this.CreateUserList(this.mockedDepartmentData.FirstOrDefault());
@@ -99,8 +99,7 @@ namespace KnightFrank.Antares.Domain.UnitTests.User.QueryHandlers
             resultUserList.Should().BeEmpty();
         }
 
-        [Theory]
-        [AutoMoqData]
+        [Fact]
         public void Given_NullStringInQuery_When_Handling_Then_ShouldReturnEmptyList()
         {
             //Arrange
