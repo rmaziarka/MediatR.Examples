@@ -133,6 +133,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The ownership dates overlap..
+        /// </summary>
+        internal static string Ownership_Dates_Overlap {
+            get {
+                return ResourceManager.GetString("Ownership_Dates_Overlap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The &apos;{0}&apos; property value format is inappropriate..
         /// </summary>
         internal static string Property_Format_Is_Invalid {

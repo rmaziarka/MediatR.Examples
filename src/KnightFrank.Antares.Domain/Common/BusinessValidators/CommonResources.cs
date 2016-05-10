@@ -43,6 +43,11 @@
         // ReSharper disable once InconsistentNaming
         Missing_Requirement_Attendees_Id,
         /// <summary>
+        /// Key value : The ownership dates overlap.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Ownership_Dates_Overlap,
+        /// <summary>
         /// Key value : The '{0}' property value format is inappropriate.
         /// </summary>
         // ReSharper disable once InconsistentNaming

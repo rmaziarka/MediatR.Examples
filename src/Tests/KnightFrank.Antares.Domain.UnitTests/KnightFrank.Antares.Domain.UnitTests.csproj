@@ -159,7 +159,6 @@
     <Compile Include="Autofixture\IgnoreVirtualMembers.cs" />
     <Compile Include="Autofixture\IgnoreVirtualMembersCustomisation.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandHandlerTests.cs" />
-    <Compile Include="Ownership\Commands\CreateOwnershipCommandDomainValidatorTests.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandValidatorTests.cs" />
     <Compile Include="Property\CommandHandlers\CreatePropertyCommandHandlerTests.cs" />
     <Compile Include="Property\CommandHandlers\UpdatePropertyCommandHandlerTests.cs" />

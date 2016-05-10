@@ -6,13 +6,12 @@
 
     using AutoMapper;
 
-    using FluentValidation.Results;
-
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
-    using KnightFrank.Antares.Domain.Common.Exceptions;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Ownership.Commands;
 
     using MediatR;
@@ -21,24 +20,38 @@
     {
         private readonly IGenericRepository<Ownership> ownershipRepository;
         private readonly IGenericRepository<Contact> contactRepository;
-        private readonly IDomainValidator<CreateOwnershipCommand> ownershipDomainValidator;
+        private readonly IGenericRepository<Property> propertyRepository;
+        private readonly IEntityValidator entityValidator;
+        private readonly IEnumTypeItemValidator enumTypeItemValidator;
+        private readonly ICollectionValidator collectionValidator;
 
         public CreateOwnershipCommandHandler(IGenericRepository<Ownership> ownershipRepository,
             IGenericRepository<Contact> contactRepository,
-            IDomainValidator<CreateOwnershipCommand> ownershipDomainValidator)
+            IGenericRepository<Property> propertyRepository,
+            IEntityValidator entityValidator,
+            IEnumTypeItemValidator enumTypeItemValidator,
+            ICollectionValidator collectionValidator)
         {
             this.ownershipRepository = ownershipRepository;
             this.contactRepository = contactRepository;
-            this.ownershipDomainValidator = ownershipDomainValidator;
+            this.propertyRepository = propertyRepository;
+            this.entityValidator = entityValidator;
+            this.enumTypeItemValidator = enumTypeItemValidator;
+            this.collectionValidator = collectionValidator;
         }
 
         public Guid Handle(CreateOwnershipCommand message)
         {
-            ValidationResult validationResult = this.ownershipDomainValidator.Validate(message);
-            if (!validationResult.IsValid)
-            {
-                throw new DomainValidationException(validationResult.Errors);
-            }
+            this.enumTypeItemValidator.ItemExists(EnumType.OwnershipType, message.OwnershipTypeId);
+
+            Property property = this.propertyRepository
+                                        .GetWithInclude(p => p.Id == message.PropertyId, p => p.Ownerships)
+                                        .FirstOrDefault();
+
+            this.entityValidator.EntityExists(property, message.PropertyId);
+
+            // ReSharper disable once PossibleNullReferenceException
+            this.DatesDoNotOverlapValidator(message, property.Ownerships);
 
             var ownership = Mapper.Map<Ownership>(message);
 
@@ -49,6 +62,19 @@
             this.ownershipRepository.Save();
 
             return ownership.Id;
+        }
+
+        private void DatesDoNotOverlapValidator(CreateOwnershipCommand command, ICollection<Ownership> ownerships)
+        {
+            List<Range<DateTime>> existingDates = ownerships
+                .Where(x => x.OwnershipTypeId.Equals(command.OwnershipTypeId))
+                .Select(
+                    x => new Range<DateTime>(x.PurchaseDate.GetValueOrDefault(DateTime.MinValue), x.SellDate.GetValueOrDefault(DateTime.MaxValue)))
+                .ToList();
+
+            var datesToSave = new Range<DateTime>(command.PurchaseDate.GetValueOrDefault(DateTime.MinValue), command.SellDate.GetValueOrDefault(DateTime.MaxValue));
+
+            this.collectionValidator.RangeDoesNotOverlap(existingDates, datesToSave, ErrorMessage.Ownership_Dates_Overlap);
         }
     }
 }
