@@ -2,7 +2,7 @@
 
 module Antares {
     export module Component {
-        declare var moment:any;
+        declare var moment: any;
         import Dto = Antares.Common.Models.Dto;
         import Business = Common.Models.Business;
 
@@ -32,7 +32,7 @@ module Antares {
                 this.startTime = moment();
                 this.endTime = moment();
                 this.setSelectedAttendees([]);
-                var form:ng.IFormController = this.$scope["addViewingForm"];
+                var form: ng.IFormController = this.$scope["addViewingForm"];
                 form.$setPristine();
                 form.$setUntouched();
             }
@@ -49,7 +49,7 @@ module Antares {
 
             setSelectedAttendees = (itemsToSelect: Array<string>) => {
                 this.attendees.forEach((c: any) => { c.selected = false; });
-                this.selectedAttendees.splice(0, this.selectedAttendees.length);
+                this.selectedAttendees = [];
                 if (itemsToSelect === undefined || itemsToSelect === null || itemsToSelect.length === 0) {
                     return;
                 }
@@ -105,8 +105,6 @@ module Antares {
                         var viewingModel = new Business.Viewing(viewing);
                         this.requirement.viewings.push(viewingModel);
                         this.requirement.groupViewings(this.requirement.viewings);
-                        var form = this.$scope["addViewingForm"];
-                        form.$setPristine();
                     });
             }
 

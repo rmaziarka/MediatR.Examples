@@ -41,9 +41,11 @@ module Antares.Requirement.View {
                 return;
             }
             
+            this.components.viewingAdd().clearViewingAdd();
+            this.components.viewingAdd().setActivity(selectedActivity);
+
             this.viewingAddPanelVisible = true;
-            this.components.viewingAdd()
-                .setActivity(selectedActivity);
+
             this.showPanel(this.components.panels.configureViewingsSidePanel);
         }
 

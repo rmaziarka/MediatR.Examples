@@ -10,15 +10,10 @@ module Antares {
                     ngModel: '=ngModel'
                 };
 
-                link(scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ngModel: ng.INgModelController){
+                link(scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ngModel: ng.INgModelController) {
 
-                    ngModel.$validators['listNotEmpty'] = (modelValue) => (modelValue !== undefined && modelValue.length > 0);
-
-                    scope.$watch('ngModel', (newValue, oldValue) => {
-                        if ((newValue !== undefined || oldValue !== undefined) && newValue !== oldValue) {
-                            ngModel.$setDirty();
-                        }
-                    });
+                    ngModel.$validators['listNotEmpty'] = (modelValue) => (modelValue && modelValue.length > 0);
+                    scope.$watchCollection('ngModel', () => ngModel.$setDirty());
                 };
 
                 static factory() {
