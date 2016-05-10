@@ -839,7 +839,7 @@
           </collectionProp>
         </ModuleController>
         <hashTree/>
-        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Simple Controller" enabled="true"/>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Viewing" enabled="true"/>
         <hashTree>
           <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="EnumType, country, division and locale" enabled="true">
             <collectionProp name="Arguments.arguments">
