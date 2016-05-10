@@ -118,7 +118,15 @@ Scenario: Create property
 	Then Address details on view activity page are following
 		| PropertyNumber | PropertyName      | Line2    | Postcode | City   | County      |
 		| 20             | Westminster Abbey | Deans Yd | SW1P 3PA | London | Westminster |
-	When User clicks edit button on view activity page
+	When User clicks add attachment button on view activity page
+		And User adds PDF document.pdf file with Brochure type on attach file panel
+	Then Attachment is displayed on view activity page
+		| FileName         | Type     | Size   |
+		| PDF document.pdf | Brochure | 2.9 MB |
+	When User clicks attachment details link on view activity page
+	Then Attachment details on attachment preview panel are the same like on view activity page
+	When User clicks close button on attachment preview panel
+		And User clicks edit button on view activity page
 		And User edits activity details on edit activity page
 			| ActivityStatus   | MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |
 			| Market appraisal | 3000                 | 4000             | 5000                 |

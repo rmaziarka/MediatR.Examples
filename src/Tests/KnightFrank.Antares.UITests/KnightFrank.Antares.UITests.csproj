@@ -111,6 +111,8 @@
     <Compile Include="Pages\AddressTemplatePage.cs" />
     <Compile Include="Pages\CommonPage.cs" />
     <Compile Include="Pages\Panels\ActivityListPage.cs" />
+    <Compile Include="Pages\Panels\AttachmentPreviewPage.cs" />
+    <Compile Include="Pages\Panels\AttachFilePage.cs" />
     <Compile Include="Pages\Panels\ContactsListPage.cs" />
     <Compile Include="Pages\Panels\CreateActivityPage.cs" />
     <Compile Include="Pages\CreateCompanyPage.cs" />
@@ -170,6 +172,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <Content Include="Resources\PDF document.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Tests\Company\Company.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Company.feature.cs</LastGenOutput>
@@ -203,6 +208,7 @@
       <Name>KnightFrank.Antares.Dal</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

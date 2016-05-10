@@ -3,6 +3,8 @@
     using System;
     using System.Linq;
 
+    using FluentAssertions;
+
     using KnightFrank.Antares.UITests.Pages;
 
     using TechTalk.SpecFlow;
@@ -44,6 +46,33 @@
             this.scenarioContext.Set(page, "EditActivityPage");
         }
 
+        [When(@"User clicks add attachment button on view activity page")]
+        public void OpenAttachFilePanel()
+        {
+            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").OpenAttachFilePanel();
+        }
+
+        [When(@"User adds (.*) file with (.*) type on attach file panel")]
+        public void SelectAttachmentType(string file, string type)
+        {
+            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage")
+                .AttachFile.SelectType(type)
+                .AddFiletoAttachment(file)
+                .SaveAttachment();
+        }
+
+        [When(@"User clicks attachment details link on view activity page")]
+        public void OpenAttachmentPreview()
+        {
+            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").OpenAttachmentPreview();
+        }
+
+        [When(@"User clicks close button on attachment preview panel")]
+        public void CloseAttachmentPreviewPanel()
+        {
+            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").PreviewAttachment.CloseAttachmentPreviewPage();
+        }
+
         [Then(@"Address details on view activity page are following")]
         public void CheckViewActivityAddressDetails(Table table)
         {
@@ -67,6 +96,27 @@
             Assert.Equal(details.MarketAppraisalPrice.ToString("N2") + " GBP", page.MarketAppraisalPrice);
             Assert.Equal(details.RecommendedPrice.ToString("N2") + " GBP", page.RecommendedPrice);
             Assert.Equal(details.VendorEstimatedPrice.ToString("N2") + " GBP", page.VendorEstimatedPrice);
+        }
+
+        [Then(@"Attachment is displayed on view activity page")]
+        public void CheckIfAttachmentIsDisplayed(Table table)
+        {
+            Attachment actual =
+                this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").GetAttachmentDetails();
+            var expected = table.CreateInstance<Attachment>();
+            expected.Date = DateTime.UtcNow.ToString("dd-MM-yyyy");
+            actual.ShouldBeEquivalentTo(expected);
+        }
+
+        [Then(@"Attachment details on attachment preview panel are the same like on view activity page")]
+        public void ChackAttachmentDetails()
+        {
+            Attachment actual =
+                this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").PreviewAttachment.GetAttachmentDetails();
+            Attachment expected = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").GetAttachmentDetails();
+            expected.User = "John Smith";
+
+            actual.ShouldBeEquivalentTo(expected);
         }
     }
 }
