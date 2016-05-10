@@ -1,5 +1,5 @@
 <h5 translate="VIEWING.ADD.ACTIVITY"></h5>
-<div class="panel panel-default">
+<div id="viewing-activity" class="panel panel-default">
     <div class="panel-body">
         {{vm.activity.propertyName || ''}}<span ng-if="vm.activity.propertyName && (vm.activity.propertyNumber || vm.activity.line2)">, </span>
         {{(vm.activity.propertyNumber || '') + ' ' + (vm.activity.line2 || '')}}
@@ -50,7 +50,7 @@
     </div>
     <div class="form-group">
         <label class="required" translate="VIEWING.ADD.ATTENDEES"></label>
-        <div class="panel panel-default" ng-repeat="attendee in vm.attendees">
+        <div class="panel panel-default" id="attendees-list" ng-repeat="attendee in vm.attendees">
             <div class="panel-body">
                 <div class="checkbox">
                     <label>
