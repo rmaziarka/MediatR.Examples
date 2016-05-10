@@ -10,6 +10,11 @@ module Antares.Property {
 
     function initRoute($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
         $stateProvider
+            .state('app.property-add', {
+                url: '/property/add',
+                params: {},
+                template: '<property-add user-data="appVm.userData"></property-add>'
+            })
             .state('app.property-view', {
                 url: '/property/:id',
                 params: {},
@@ -41,12 +46,6 @@ module Antares.Property {
                         return dataAccessService.getPropertyResource().get({ id: propertyId }).$promise;
                     }
                 }
-            })
-            .state('app.property-add', {
-                url: '/property/add',
-                params: {},
-                template: '<property-add user-data="appVm.userData"></property-add>'
             });
-
     }
 }
