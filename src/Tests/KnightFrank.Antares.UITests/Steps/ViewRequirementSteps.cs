@@ -62,7 +62,7 @@
             this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").AddViewings();
         }
 
-        [When(@"User selects viewing on view requirement page")]
+        [When(@"User selects activity on view requirement page")]
         public void SelectActivity(Table table)
         {
             var details = table.CreateInstance<Address>();
