@@ -6,7 +6,8 @@
         <div class="radio">
             <label>
                 <input type="radio" name="activity" ng-model="vm.selectedActivity" value="{{::activity.id}}"/>
-                <span ng-if="activity.propertyName">{{:: activity.propertyName + ', '}}</span>{{ :: activity.propertyNumber + ' ' + activity.line2}}
+                {{:: activity.propertyName}}<span ng-if="activity.propertyName && (activity.propertyNumber || activity.line2)">, </span>
+                {{:: activity.propertyNumber + ' ' + activity.line2}}
             </label>
         </div>
     </div>

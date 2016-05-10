@@ -15,6 +15,7 @@ module Antares.Property.View {
         activitiesCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
         userData: Common.Models.Dto.IUserData;
         property: Business.Property;
+        savePropertyActivityBusy: boolean = false;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -28,7 +29,7 @@ module Antares.Property.View {
         }
 
         fixOwnershipDates = () => {
-            this.property.ownerships.forEach((ownership: Common.Models.Dto.IOwnership) =>{
+            this.property.ownerships.forEach((ownership: Common.Models.Dto.IOwnership) => {
                 ownership.purchaseDate = Core.DateTimeUtils.convertDateToUtc(ownership.purchaseDate);
                 ownership.sellDate = Core.DateTimeUtils.convertDateToUtc(ownership.sellDate);
             });
@@ -61,7 +62,7 @@ module Antares.Property.View {
             this.showPanel(this.components.panels.activityAdd);
         }
 
-        showActivityPreview = (activity: Common.Models.Business.Activity) =>{
+        showActivityPreview = (activity: Common.Models.Business.Activity) => {
             this.components.activityPreview().setActivity(activity);
             this.showPanel(this.components.panels.activityPreview);
         }
@@ -93,19 +94,23 @@ module Antares.Property.View {
             this.ownershipAddPanelVisible = false;
         }
 
-        cancelAddActivity(){
+        cancelAddActivity() {
             this.components.panels.activityAdd().hide();
         }
 
-        saveOwnership(){
-            this.components.ownershipAdd().saveOwnership(this.property.id).then(() =>{
+        saveOwnership() {
+            this.components.ownershipAdd().saveOwnership(this.property.id).then(() => {
                 this.cancelUpdateContacts();
             });
         }
 
-        saveActivity(){
-            this.components.activityAdd().saveActivity(this.property.id).then(() =>{
+        saveActivity() {
+            this.savePropertyActivityBusy = true;
+
+            this.components.activityAdd().saveActivity(this.property.id).then(() => {
                 this.cancelAddActivity();
+            }).finally(() => {
+                this.savePropertyActivityBusy = false;
             });
         }
 

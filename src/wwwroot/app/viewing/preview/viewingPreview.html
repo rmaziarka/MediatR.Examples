@@ -4,8 +4,8 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <div id="viewing-preview-activity-details" class="panel-item">
-                {{vm.viewing.activity.property.address.propertyName}}{{vm.viewing.activity.property.address.propertyName ? ', ' : ' '}}
-                {{vm.viewing.activity.property.address.propertyNumber}} {{vm.viewing.activity.property.address.line2}}
+                {{vm.viewing.activity.property.address.propertyName}}<span ng-if="vm.viewing.activity.property.address.propertyName && (vm.viewing.activity.property.address.propertyNumber || vm.viewing.activity.property.address.line2)">, </span>
+                {{vm.viewing.activity.property.address.propertyNumber + ' ' + vm.viewing.activity.property.address.line2}}
             </div>
             <div class="row">
                 <div class="col-md-12 text-right">

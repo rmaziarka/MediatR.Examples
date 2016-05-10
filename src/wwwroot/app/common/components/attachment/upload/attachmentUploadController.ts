@@ -45,7 +45,8 @@ module Antares.Common.Component {
         };
 
         getAzureUploadUrl = (entityReferenceId: string) => {
-            return this.urlResource.get({
+            return this.urlResource
+                .get({
                     documentTypeId : this.documentTypeId,
                     localeIsoCode : 'en',
                     entityReferenceId : entityReferenceId,
@@ -54,15 +55,19 @@ module Antares.Common.Component {
                 .$promise;
         }
 
-        uploadFile = (urlContainer: Common.Models.Dto.IAzureUploadUrlContainer) => {
+        uploadFile = (urlContainer: Dto.IAzureUploadUrlContainer) => {
             return this.azureBlobUploadFactory
                 .uploadFile(this.file, urlContainer.url)
                 .then(() => {
                     return urlContainer.externalDocumentId;
                 });
+            /*** ToDo: use alternative code below (for better way of passing resolved values form getAzureUploadUrl promise to createAttachment method, instead of "fake" then in uploadFile method
+             * do it after sprint 5 demo :)
+                .uploadFile(this.file, urlContainer.url);
+            */
         }
 
-        showError = () => {
+        reject = () => {
             var uploadResult = this.$q.defer();
             uploadResult.reject();
 
@@ -81,12 +86,25 @@ module Antares.Common.Component {
 
         uploadAttachment = (entityReferenceId: string): ng.IPromise<Business.Attachment> => {
             if (!this.isDataValid()) {
-                return this.showError();
+                return this.reject();
             }
 
             return this.getAzureUploadUrl(entityReferenceId)
-                .then(this.uploadFile, this.showError)
+                .then(this.uploadFile, this.reject)
                 .then(this.createAttachment);
+
+            /*** ToDo: use alternative code below (for better way of passing resolved values form getAzureUploadUrl promise to createAttachment method, instead of "fake" then in uploadFile method
+             * do it after sprint 5 demo :)
+            var getAzureUploadUrl = this.getAzureUploadUrl(entityReferenceId);
+
+            return this.$q
+                .all([
+                    getAzureUploadUrl,
+                    getAzureUploadUrl.then(this.uploadFile, this.showError)
+                ])
+                .then((values: [Dto.IAzureUploadUrlContainer]) =>
+                    this.createAttachment(<string>values[0].externalDocumentId));
+            */
         };
     }
 

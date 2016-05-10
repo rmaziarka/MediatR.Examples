@@ -6,8 +6,8 @@ module Antares.Common.Component {
         controllerAs: 'vm',
         controller: 'EnumSelectController',
         bindings: {
-            id: '<',
-            name: '<',
+            id: '@',
+            name: '@',
             required: '<',
             ngModel: '=',
             enumTypeCode: '@'

@@ -34,7 +34,7 @@
                     </card-list>
                 </section>
                 <section>
-                    <card-list id="card-list-activities" show-item-add="vm.showActivityAdd">
+                    <card-list id="card-list-activities" show-item-add="vm.showActivityAdd" show-item-add-disabled="vm.savePropertyActivityBusy">
                         <card-list-header>
                             <h3 class="page-header" translate="ACTIVITY.LIST.ACTIVITIES"></h3>
                         </card-list-header>
@@ -181,12 +181,13 @@
     </side-panel-footer>
 </side-panel>
 
-<side-panel component-id="vm.componentIds.activityAddSidePanelId">
+<side-panel component-id="vm.componentIds.activityAddSidePanelId" is-busy="vm.savePropertyActivityBusy">
     <side-panel-header>
         <h3 translate="ACTIVITY.ADD.CREATE_ACTIVITY"></h3>
     </side-panel-header>
     <side-panel-content>
         <activity-add component-id="vm.componentIds.activityAddId" activities="vm.property.activities" property-type-id="vm.property.propertyTypeId"></activity-add>
+        <busy is-busy="vm.savePropertyActivityBusy" label="{{'ACTIVITY.ADD.SAVING_ACTIVITY_IN_PROGRESS' | translate}}"></busy>
     </side-panel-content>
     <side-panel-footer>
         <button class="btn btn-default" type="button" ng-click="vm.cancelAddActivity()">
