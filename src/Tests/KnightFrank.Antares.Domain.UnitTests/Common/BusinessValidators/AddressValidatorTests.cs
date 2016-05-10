@@ -16,7 +16,6 @@
     using Moq;
 
     using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.AutoMoq;
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
@@ -29,10 +28,7 @@
 
         public AddressValidatorTests()
         {
-            this.fixture = new Fixture().Customize(new AutoMoqCustomization());
-            this.fixture.Behaviors.Clear();
-            this.fixture.RepeatCount = 1;
-            this.fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+            this.fixture = new Fixture().Customize();
         }
 
         [Theory]

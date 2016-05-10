@@ -8,7 +8,7 @@
     using FluentAssertions;
 
     using KnightFrank.Antares.Dal.Repository;
-    using KnightFrank.Antares.Domain.Common.Exceptions;
+
     using Domain.Property.CommandHandlers;
 
     using KnightFrank.Antares.Dal.Model.Property;
@@ -19,26 +19,13 @@
 
     using Moq;
 
-    using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.AutoMoq;
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
-
     [Collection("UpdatePropertyCommandHandler")]
     [Trait("FeatureTitle", "Property")]
     public class UpdatePropertyCommandHandlerTests : IClassFixture<BaseTestClassFixture>
     {
-        private readonly IFixture fixture;
-
-        public UpdatePropertyCommandHandlerTests()
-        {
-            this.fixture = new Fixture().Customize(new AutoMoqCustomization());
-            this.fixture.Behaviors.Clear();
-            this.fixture.RepeatCount = 1;
-            this.fixture.Behaviors.Add(new OmitOnRecursionBehavior());
-        }
-        
         [Theory]
         [AutoMoqData]
         public void Given_UpdatePropertyCommandWithAddress_When_Handle_Then_AddressShouldBeValidated(

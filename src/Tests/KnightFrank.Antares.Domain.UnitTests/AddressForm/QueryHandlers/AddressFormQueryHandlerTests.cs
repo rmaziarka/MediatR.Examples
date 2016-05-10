@@ -47,17 +47,18 @@
 
         public AddressFormQueryHandlerTests()
         {
-            this.fixture = new Fixture().Customize(new AutoMoqCustomization());
-            this.fixture.Behaviors.Clear();
-            this.fixture.RepeatCount = 1;
-            this.fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+            this.fixture = new Fixture().Customize();
 
             this.countryRepository = this.fixture.Freeze<Mock<IReadGenericRepository<Country>>>();
             this.enumTypeItemRepository = this.fixture.Freeze<Mock<IReadGenericRepository<EnumTypeItem>>>();
             this.addressFormRepository = this.fixture.Freeze<Mock<IReadGenericRepository<AddressForm>>>();
             this.mockedCountryData = this.fixture.CreateMany<Country>().ToList();
             this.mockedEnumTypeItemData = this.fixture.CreateMany<EnumTypeItem>().ToList();
-            this.mockedAddressFormData = this.fixture.CreateMany<AddressForm>().ToList();
+            this.mockedAddressFormData = new List<AddressForm>
+            {
+                this.fixture.BuildAddressForm(this.fixture.Create<EnumTypeItem>(), this.fixture.Create<Country>())
+            };
+
             this.handler = this.fixture.Create<AddressFormQueryHandler>();
         }
 
@@ -130,8 +131,6 @@
             EnumTypeItem otherEnumTypeItem)
         {
             // Arrange
-            country.Id = Guid.NewGuid();
-            otherCountry.Id = Guid.NewGuid();
             AddressFormQuery query = this.fixture.BuildAddressFormQuery(entityTypeCode, country.IsoCode);
             EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
 
@@ -168,8 +167,6 @@
             EnumTypeItem otherEnumTypeItem)
         {
             // Arrange
-            country.Id = Guid.NewGuid();
-            otherCountry.Id = Guid.NewGuid();
             otherEnumTypeItem.EnumType = this.fixture.Create<EnumType>();
             AddressFormQuery query = this.fixture.BuildAddressFormQuery(entityTypeCode, country.IsoCode);
             EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
@@ -207,8 +204,6 @@
             EnumTypeItem otherEnumTypeItem)
         {
             // Arrange
-            country.Id = Guid.NewGuid();
-            otherCountry.Id = Guid.NewGuid();
             AddressFormQuery query = this.fixture.BuildAddressFormQuery(entityTypeCode, country.IsoCode);
             EnumTypeItem enumTypeItem = this.fixture.BuildEnumTypeItem(enumTypeCode, entityTypeCode);
 

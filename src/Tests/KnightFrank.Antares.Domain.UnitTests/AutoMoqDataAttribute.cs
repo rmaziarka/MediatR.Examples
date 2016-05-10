@@ -13,7 +13,7 @@
             this.Fixture.Behaviors.Clear();
 
             this.Fixture.Behaviors.Add(new OmitOnRecursionBehavior());
-            this.Fixture.Customize(new IgnoreVirtualMembersCustomisation());
+            this.Fixture.Customizations.Add(new IgnoreVirtualMembers());
         }
     }
 }

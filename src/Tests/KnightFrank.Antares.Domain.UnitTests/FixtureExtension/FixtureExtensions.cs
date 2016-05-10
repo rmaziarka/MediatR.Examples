@@ -11,10 +11,9 @@
         {
             fixture.Customize(new AutoMoqCustomization());
             fixture.Behaviors.Clear();
-
             fixture.RepeatCount = 1;
             fixture.Behaviors.Add(new OmitOnRecursionBehavior());
-            fixture.Customize(new IgnoreVirtualMembersCustomisation());
+            fixture.Customizations.Add(new IgnoreVirtualMembers());
 
             return fixture;
         }

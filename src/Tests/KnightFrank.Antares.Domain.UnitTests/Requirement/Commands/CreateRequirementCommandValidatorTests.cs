@@ -6,6 +6,7 @@
 
     using KnightFrank.Antares.Domain.Common.Commands;
     using KnightFrank.Antares.Domain.Requirement.Commands;
+    using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
 
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.AutoMoq;
@@ -20,11 +21,7 @@
 
         public CreateRequirementCommandValidatorTests()
         {
-            IFixture fixture = new Fixture()
-                .Customize(new AutoMoqCustomization());
-            fixture.Behaviors.Clear();
-            fixture.RepeatCount = 1;
-            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+            IFixture fixture = new Fixture().Customize();
 
             this.command = fixture.Build<CreateRequirementCommand>()
                                .With(x => x.MinPrice, 1)
@@ -44,6 +41,7 @@
                                .With(x => x.ContactIds, new List<Guid> { fixture.Create<Guid>() })
                                .With(x => x.Address, fixture.Create<CreateOrUpdateAddress>())
                                .Create();
+
             this.validator = fixture.Create<CreateRequirementCommandValidator>();
         }
 

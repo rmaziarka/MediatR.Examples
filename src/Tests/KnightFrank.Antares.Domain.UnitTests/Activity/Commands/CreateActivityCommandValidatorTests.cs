@@ -19,11 +19,10 @@
     using Moq;
 
     using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.AutoMoq;
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
-
+    using FixtureExtension;
     [Trait("FeatureTitle", "Property Activity")]
     [Collection("CreateActivityCommandValidator")]
     public class CreateActivityCommandValidatorTests : IClassFixture<CreateActivityCommand>
@@ -39,7 +38,7 @@
 
         public CreateActivityCommandValidatorTests()
         {
-            this.fixture = new Fixture().Customize(new AutoMoqCustomization());
+            this.fixture = new Fixture().Customize();
 
             this.enumTypeItemRepository = this.fixture.Freeze<Mock<IGenericRepository<EnumTypeItem>>>();
             this.activityTypeRepository = this.fixture.Freeze<Mock<IGenericRepository<ActivityType>>>();

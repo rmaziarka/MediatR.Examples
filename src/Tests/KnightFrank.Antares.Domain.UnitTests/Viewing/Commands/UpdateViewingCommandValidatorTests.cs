@@ -12,6 +12,7 @@
     using Ploeh.AutoFixture;
 
     using Xunit;
+    using FixtureExtension;
 
     [Collection("UpdateViewingCommand")]
     [Trait("FeatureTitle", "Viewing ")]
@@ -21,7 +22,7 @@
 
         public UpdateViewingCommandValidatorTests()
         {
-            IFixture fixture = new Fixture();
+            IFixture fixture = new Fixture().Customize();
 
             this.cmd = fixture.Build<UpdateViewingCommand>()
                               .With(x => x.StartDate, new DateTime(2000, 1, 1, 17, 30, 00))
