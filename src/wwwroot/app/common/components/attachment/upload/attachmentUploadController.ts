@@ -8,9 +8,9 @@ module Antares.Common.Component {
     export class AttachmentUploadController {
         public attachmentTypes: any[];
         public file: File = null;
+        public isFileCleared: boolean = false;
         public documentTypeId: string;
-        private urlResource: ng.resource.IResourceClass<Common.Models.Resources.IAzureUploadUrlResource>;
-
+        private urlResource: ng.resource.IResourceClass<Common.Models.Resources.IAzureUploadUrlResource>;        
         componentId: string;
         enumDocumentType: Dto.EnumTypeCode;
 
@@ -20,27 +20,28 @@ module Antares.Common.Component {
             private componentRegistry: Core.Service.ComponentRegistry,
             private azureBlobUploadFactory: AzureBlobUploadFactory,
             private dataAccessService: Services.DataAccessService) {
-
             this.urlResource = dataAccessService.getAzureUploadUrlResource();
 
             componentRegistry.register(this, this.componentId);
         }
 
         isDataValid = (): boolean => {
-            var form = this.$scope["fileUploadForm"];
+            var form = this.$scope["attachmentUploadForm"];
             form.$setSubmitted();
             return form.$valid;
         }
-
+        
         clearSelectedFile = () => {
             this.file = null;
+            this.isFileCleared = true;
         };
 
         clearAttachmentForm = () => {
-            this.clearSelectedFile();
-            this.documentTypeId = null;
-
-            var form = this.$scope["fileUploadForm"];
+            this.file = null;
+            this.isFileCleared = false;            
+            this.documentTypeId = null;            
+            
+            var form = this.$scope["attachmentUploadForm"];
             form.$setPristine();
         };
 
