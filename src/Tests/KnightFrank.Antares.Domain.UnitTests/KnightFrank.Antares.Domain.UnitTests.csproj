@@ -127,6 +127,7 @@
     <Compile Include="Characteristic\QueryHandlers\CharacteristicGroupsQueryHandlerTests.cs" />
     <Compile Include="Common\BusinessValidators\AddressValidatorTests.cs" />
     <Compile Include="Attachments\Commands\CreateAttachmentValidatorTests.cs" />
+    <Compile Include="Common\BusinessValidators\CollectionValidatorTests.cs" />
     <Compile Include="Common\BusinessValidators\EnumTypeItemValidatorTests.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidatorTests.cs" />
     <Compile Include="Common\Validator\LocaleValidatorTests.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="FixtureExtension\ValidationResultExtensions.cs" />
     <Compile Include="Viewing\CommandHandlers\CreateViewingCommandHandlerTests.cs" />
     <Compile Include="Viewing\CommandHandlers\UpdateViewingCommandHandlerTests.cs" />
+    <Compile Include="Viewing\Commands\UpdateViewingCommandValidatorTests.cs" />
     <Compile Include="Viewing\Commands\CreateViewingCommandValidatorTests.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQueryDomainValidatorTests.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQueryValidatorTests.cs" />
