@@ -10,7 +10,7 @@
     {
         private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "[ng-show *= 'isLoading']");
         private readonly ElementLocator activities = new ElementLocator(Locator.CssSelector, "activities-list label.ng-binding");
-        private readonly ElementLocator configureButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showViewingDetailsPanel']");
+        private readonly ElementLocator configureButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showViewingAddPanel']");
 
         public ActivityListPage(DriverContext driverContext) : base(driverContext)
         {

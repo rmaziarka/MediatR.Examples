@@ -9,5 +9,7 @@
         invitationText: string;
         postviewingComment: string;
         attendeesIds: string[];
+        activity: Dto.IActivity;
+        attendees: Dto.IContact[];
     }
 }

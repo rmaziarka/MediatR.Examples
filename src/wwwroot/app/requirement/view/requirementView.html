@@ -76,30 +76,30 @@
 
 <side-panel component-id="vm.componentIds.configureViewingsSidePanelId">
     <side-panel-header>
-        <h3 translate="REQUIREMENT.VIEW.SELECTACTIVITY" ng-show="!vm.viewingDetailsPanelVisible"></h3>
+        <h3 translate="REQUIREMENT.VIEW.SELECTACTIVITY" ng-show="!vm.viewingAddPanelVisible"></h3>
 
-        <h3 translate="REQUIREMENT.VIEW.VIEWINGDETAILS" ng-show="vm.viewingDetailsPanelVisible"></h3>
+        <h3 translate="REQUIREMENT.VIEW.VIEWINGADD" ng-show="vm.viewingAddPanelVisible"></h3>
     </side-panel-header>
     <side-panel-content>
-        <activities-list component-id="vm.componentIds.activitiesListId" ng-show="!vm.viewingDetailsPanelVisible">
+        <activities-list component-id="vm.componentIds.activitiesListId" ng-show="!vm.viewingAddPanelVisible">
         </activities-list>
 
-        <viewing-details component-id="vm.componentIds.viewingDetailsId" requirement="vm.requirement" attendees="vm.requirement.contacts"
-                         ng-show="vm.viewingDetailsPanelVisible">
-        </viewing-details>
+        <viewing-add component-id="vm.componentIds.viewingAddId" requirement="vm.requirement" attendees="vm.requirement.contacts"
+                         ng-show="vm.viewingAddPanelVisible">
+        </viewing-add>
     </side-panel-content>
     <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelConfigureViewings()" ng-show="!vm.viewingDetailsPanelVisible">
+        <button class="btn btn-default" type="button" ng-click="vm.cancelConfigureViewings()" ng-show="!vm.viewingAddPanelVisible">
             <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
         </button>
-        <button class="btn btn-primary" type="button" ng-click="vm.showViewingDetailsPanel()" ng-show="!vm.viewingDetailsPanelVisible">
+        <button class="btn btn-primary" type="button" ng-click="vm.showViewingAddPanel()" ng-show="!vm.viewingAddPanelVisible">
             <span translate="COMMON.CONFIGURE"></span> <i class="fa fa-angle-double-right"></i>
         </button>
 
-        <button class="btn btn-default" type="button" ng-click="vm.cancelViewingDetails()" ng-show="vm.viewingDetailsPanelVisible">
+        <button class="btn btn-default" type="button" ng-click="vm.cancelViewingAdd()" ng-show="vm.viewingAddPanelVisible">
             <i class="fa fa-angle-double-left"></i> <span translate="COMMON.BACK"></span>
         </button>
-        <button class="btn btn-primary" type="button" ng-click="vm.saveViewing()" ng-disabled="vm.loadingActivities" ng-show="vm.viewingDetailsPanelVisible">
+        <button class="btn btn-primary" type="button" ng-click="vm.saveViewing()" ng-disabled="vm.loadingActivities" ng-show="vm.viewingAddPanelVisible">
             <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
         </button>
     </side-panel-footer>
@@ -117,13 +117,22 @@
 
 <side-panel component-id="vm.componentIds.previewViewingSidePanelId" id="viewing-panel">
     <side-panel-header>
-        <h3 translate="REQUIREMENT.VIEW.VIEWINGDETAILS"></h3>
+        <h3 translate="REQUIREMENT.VIEW.VIEWINGADD"></h3>
     </side-panel-header>
     <side-panel-content>
-        <viewing-preview component-id="vm.componentIds.viewingPreviewId">
+        <viewing-preview component-id="vm.componentIds.viewingPreviewId" ng-show="vm.previewPanelVisible">
         </viewing-preview>
+        <viewing-add component-id="vm.componentIds.viewingEditId" requirement="vm.requirement" attendees="vm.requirement.contacts"
+                         ng-show="!vm.previewPanelVisible">
+        </viewing-add>
     </side-panel-content>
     <side-panel-footer>
-        <button type="button" class="btn btn-default pull-left"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span></button>
+        <button type="button" class="btn btn-default pull-left" ng-click="vm.showViewingEdit()" ng-show="vm.previewPanelVisible"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span></button>
+        <button class="btn btn-default" type="button" ng-click="vm.goBackToPreviewViewing()" ng-show="!vm.previewPanelVisible">
+            <i class="fa fa-angle-double-left"></i> <span translate="COMMON.BACK"></span>
+        </button>
+        <button class="btn btn-primary" type="button" ng-click="vm.saveEditedViewing()" ng-show="!vm.previewPanelVisible">
+            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+        </button>
     </side-panel-footer>
 </side-panel>

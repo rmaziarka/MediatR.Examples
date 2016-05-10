@@ -20,7 +20,11 @@ module Antares {
                 this.viewing = new Business.Viewing();
             }
 
-            setViewing = (viewing: Dto.IViewing) => {
+            getViewing = (): Dto.IViewing => {
+                return this.viewing;
+            }
+
+            setViewing = (viewing: Dto.IViewing) =>{
                 this.viewing = viewing;
             }
         }

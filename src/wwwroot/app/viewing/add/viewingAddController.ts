@@ -6,7 +6,7 @@ module Antares {
         import Dto = Antares.Common.Models.Dto;
         import Business = Common.Models.Business;
 
-        export class ViewingDetailsController {
+        export class ViewingAddController {
             componentId: string;
             activity: Dto.IActivityQueryResult;
             viewing: Dto.IViewing;
@@ -27,7 +27,7 @@ module Antares {
                 componentRegistry.register(this, this.componentId);
             }
 
-            clearViewingDetails = () => {
+            clearViewingAdd = () => {
                 this.viewing = new Business.Viewing();
                 this.startTime = moment();
                 this.endTime = moment();
@@ -64,6 +64,25 @@ module Antares {
 
             setActivity = (activity: Dto.IActivityQueryResult) => {
                 this.activity = activity;
+            }
+
+            setViewing = (viewing: Dto.IViewing) =>{
+                this.viewing = viewing;
+                this.startTime = viewing.startDate;
+                this.endTime = viewing.endDate;
+
+                this.activity = <Dto.IActivityQueryResult> {
+                    id: viewing.activity.id,
+                    propertyName: viewing.activity.property.address.propertyName,
+                    propertyNumber: viewing.activity.property.address.propertyNumber,
+                    line2: viewing.activity.property.address.line2
+                };
+
+                var attendeesIds: string[] = [];
+                this.viewing.attendees.forEach((attendee: Dto.IContact) =>{
+                    attendeesIds.push(attendee.id);
+                });
+                this.setSelectedAttendees(attendeesIds);
             }
 
             openDate = () => {
@@ -130,6 +149,6 @@ module Antares {
                 this.selectedAttendees = this.selectedAttendees.slice();
             }
         }
-        angular.module('app').controller('viewingDetailsController', ViewingDetailsController);
+        angular.module('app').controller('viewingAddController', ViewingAddController);
     }
 }

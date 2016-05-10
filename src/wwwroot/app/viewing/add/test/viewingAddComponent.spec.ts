@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares {
-    import ViewingDetailsController = Antares.Component.ViewingDetailsController;
+    import ViewingAddController = Antares.Component.ViewingAddController;
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
     import runDescribe = TestHelpers.runDescribe;
@@ -48,7 +48,7 @@ module Antares {
             ]
         });
         
-        var controller: ViewingDetailsController;
+        var controller: ViewingAddController;
 
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
@@ -60,10 +60,10 @@ module Antares {
             scope["requirement"] = requirementMock;
             scope["attendees"] = requirementMock.contacts;
             
-            element = $compile('<viewing-details requirement="requirement" attendees="attendees"></viewing-details>')(scope);                        
+            element = $compile('<viewing-add requirement="requirement" attendees="attendees"></viewing-add>')(scope);                        
             scope.$apply();
 
-            controller = element.controller('viewingDetails');
+            controller = element.controller('viewingAdd');
             controller.startTime = "10:00";
             controller.endTime = "11:00";
             

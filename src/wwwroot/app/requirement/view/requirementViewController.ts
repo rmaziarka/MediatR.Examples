@@ -5,7 +5,8 @@ module Antares.Requirement.View {
 
     export class RequirementViewController extends Core.WithPanelsBaseController {
         requirement: Dto.IRequirement;
-        viewingDetailsPanelVisible: boolean = false;
+        viewingAddPanelVisible: boolean = false;
+        previewPanelVisible: boolean = true;
         loadingActivities: boolean = false;
 
         constructor(
@@ -26,12 +27,12 @@ module Antares.Requirement.View {
                 .loadActivities()
                 .finally(() => { this.loadingActivities = false; });
             
-            this.components.viewingDetails().clearViewingDetails();
+            this.components.viewingAdd().clearViewingAdd();
             this.showPanel(this.components.panels.configureViewingsSidePanel);
-            this.viewingDetailsPanelVisible = false;
+            this.viewingAddPanelVisible = false;
         }
 
-        showViewingDetailsPanel = () =>{
+        showViewingAddPanel = () =>{
             var selectedActivity : Dto.IActivityQueryResult = this.components
                 .activitiesList()
                 .getSelectedActivity();
@@ -40,8 +41,8 @@ module Antares.Requirement.View {
                 return;
             }
             
-            this.viewingDetailsPanelVisible = true;
-            this.components.viewingDetails()
+            this.viewingAddPanelVisible = true;
+            this.components.viewingAdd()
                 .setActivity(selectedActivity);
             this.showPanel(this.components.panels.configureViewingsSidePanel);
         }
@@ -54,8 +55,12 @@ module Antares.Requirement.View {
             this.components.panels.configureViewingsSidePanel().hide();
         }
 
-        cancelViewingDetails() {
-            this.viewingDetailsPanelVisible = false;
+        cancelViewingAdd() {
+            this.viewingAddPanelVisible = false;
+        }
+
+        goBackToPreviewViewing(){
+            this.previewPanelVisible = true;
         }
 
         cancelViewingPreview() {
@@ -68,8 +73,9 @@ module Antares.Requirement.View {
                 noteListId: 'requirementView:requirementNoteListComponent',
                 notesSidePanelId: 'requirementView:notesSidePanelComponent',
                 activitiesListId: 'addRequirement:activitiesListComponent',
-                viewingDetailsId: 'addRequirement:viewingDetailsComponent',
+                viewingAddId: 'addRequirement:viewingAddComponent',
                 viewingPreviewId: 'addRequirement:viewingPreviewComponent',
+                viewingEditId: 'requirementView:viewingEditComponent',
                 configureViewingsSidePanelId: 'addRequirement:configureViewingsSidePanelComponent',
                 previewViewingSidePanelId: 'addRequirement:previewViewingSidePanelComponent'
             }
@@ -80,7 +86,8 @@ module Antares.Requirement.View {
                 noteAdd: () => { return this.componentRegistry.get(this.componentIds.noteAddId); },
                 noteList: () => { return this.componentRegistry.get(this.componentIds.noteListId); },
                 activitiesList: () => { return this.componentRegistry.get(this.componentIds.activitiesListId); },
-                viewingDetails: () => { return this.componentRegistry.get(this.componentIds.viewingDetailsId); },
+                viewingAdd: () => { return this.componentRegistry.get(this.componentIds.viewingAddId); },
+                viewingEdit: () => { return this.componentRegistry.get(this.componentIds.viewingEditId); },
                 viewingPreview: () => { return this.componentRegistry.get(this.componentIds.viewingPreviewId); },
                 panels: {
                     notes: () => { return this.componentRegistry.get(this.componentIds.notesSidePanelId); },
@@ -94,14 +101,25 @@ module Antares.Requirement.View {
             this.components.viewingPreview().clearViewingPreview();
             this.components.viewingPreview().setViewing(viewing);
             this.showPanel(this.components.panels.previewViewingsSidePanel);
+            this.previewPanelVisible = true;
+        }
+
+        showViewingEdit = () =>{
+            var viewing = angular.copy(this.components.viewingPreview().getViewing());
+            this.components.viewingEdit().setViewing(viewing);
+            this.previewPanelVisible = false;
         }
 
         saveViewing() {
-            this.components.viewingDetails()
+            this.components.viewingAdd()
             .saveViewing(this.requirement.id)
             .then(() => {
                 this.hidePanels();
             });
+        }
+
+        saveEditedViewing(){
+            this.hidePanels();
         }
     }
 
