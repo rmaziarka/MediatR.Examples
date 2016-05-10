@@ -39,13 +39,13 @@
       "value": "en_sql_server_2014_developer_edition_with_service_pack_1_x64_dvd_6668542.iso"
     },
     "CommonShareUrl": {
-      "value": "\\\\kfantarescommon.file.core.windows.net\\iso"
+      "value": "\\\\kfaneiedevcommonst.file.core.windows.net\\iso"
     },
     "CommonShareUserName": {
-      "value": "kfantarescommon"
+      "value": "kfaneiedevcommonst"
     },
     "CommonShareKey": {
-      "value": "IQURddUmGFAe1d3/+OC2Ay1gT9YfdwPi66Nzhy+3vWKgCcy6YA02i3EfLStunvNjCw4M9RW7pxe6dL5z3Y0X9w=="
+      "value": "P7G+0uLD8g5q73RxshNg4GQdXJHr0EXasWSk6pe5UhCsp2QphVtPzZd+IcNdRlt9zoFjszQXMrK8XbIOcClakA=="
     },
     "VirtualNetworkSubnetId": {
       "value": "/subscriptions/121c53d3-e96d-4890-af9a-58b104da7215/resourceGroups/RG-KnightFrank-Antares-NE-IE-Dev-Common-01/providers/Microsoft.Network/virtualNetworks/KnightFrank-Antares-NE-IE-Dev-Common-Vn-01/subnets/KnightFrank-Antares-NE-IE-Dev-Common-Subnet-01"
