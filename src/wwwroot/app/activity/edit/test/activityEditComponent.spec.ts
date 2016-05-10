@@ -18,7 +18,7 @@ module Antares {
                 address: 'address-form-view'
             },
             basic: {
-                status: '#activity-edit-basic #activityStatus'
+                status: '#activity-edit-basic #activityStatus select'
             },
             prices: {
                 main: '#activity-edit-prices',
