@@ -74,7 +74,7 @@ module Antares {
                 var azureUrlContainerMock = { externalDocumentId: 'testExternalDocId', url: 'http:\\test.com' };
 
                 controller.uploadAttachment(activityIdMock)
-                    .then(() =>{ resultIsSucces = true; }, () =>{ resultIsSucces = false; });
+                    .then(() => { resultIsSucces = true; }, () => { resultIsSucces = false; });
 
                 getAzureUploadUrlDefferedMock.resolve(azureUrlContainerMock);
                 uploadFileDefferedMock.resolve(azureUrlContainerMock.externalDocumentId);
@@ -142,6 +142,7 @@ module Antares {
                 spyOn(controller, 'isDataValid').and.returnValue(true);
                 spyOn(controller, 'getAzureUploadUrl').and.returnValue(getAzureUploadUrlDefferedMock.promise);
                 spyOn(controller, 'uploadFile').and.returnValue(uploadFileDefferedMock.promise);
+                controller.file = new File([''], 'fileName');
 
                 var createdAttachmentMock = TestHelpers.AttachmentGenerator.generate();
                 spyOn(controller, 'createAttachment').and.returnValue(createdAttachmentMock);
@@ -171,5 +172,5 @@ module Antares {
             });
         });
 
-	});
+    });
 }
