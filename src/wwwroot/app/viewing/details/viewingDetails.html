@@ -1,7 +1,8 @@
 <h5 translate="VIEWING.ADD.ACTIVITY"></h5>
 <div class="panel panel-default">
     <div class="panel-body">
-        <span ng-if="vm.activity.propertyName">{{vm.activity.propertyName + ', '}}</span>{{ vm.activity.propertyNumber + ' ' + vm.activity.line2}}
+        {{vm.activity.propertyName}}<span ng-if="vm.activity.propertyName && (vm.activity.propertyNumber || vm.activity.line2)">, </span>
+        {{vm.activity.propertyNumber + ' ' + vm.activity.line2}}
     </div>
 </div>
 <form ng-submit="addViewingForm.$valid" name="addViewingForm" id="addViewingForm" method="post" novalidate>
