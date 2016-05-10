@@ -149,7 +149,8 @@
       "CREATE_ACTIVITY": "Create activity",
       "TYPE": "Type",
       "STATUS": "Status",
-      "VENDORS": "Vendors"
+      "VENDORS": "Vendors",
+      "SAVING_ACTIVITY_IN_PROGRESS":  "Saving activity ..."
     },
     "EDIT": {
       "EDIT_ACTIVITY": "Edit activity",
