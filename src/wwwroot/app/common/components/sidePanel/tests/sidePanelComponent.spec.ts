@@ -2,7 +2,7 @@
 
 module Antares {
     import SidePanelController = Antares.Common.Component.SidePanelController;
-
+    import runDescribe = TestHelpers.runDescribe;
 
     describe('Given side panel is rendered', () => {
         var scope: ng.IScope,
@@ -10,6 +10,7 @@ module Antares {
             controller: SidePanelController;
 
         var pageObjectSelector = {
+            aside: 'aside',
             footer: '.side-panel-footer',
             header: '#header'
         };
@@ -126,6 +127,47 @@ module Antares {
 
                 expect(headerElement.innerText).toBe(sidePanelHeader);
             });
+        });
+
+        describe('and shown', () => {
+
+            var createComponent = (isBusy: boolean) => { };
+            var panel: ng.IAugmentedJQuery;
+
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService) => {
+
+                scope = $rootScope.$new();
+
+                createComponent = (isBusy: boolean) => {
+                    element = $compile('<side-panel is-busy="' + isBusy + '"><side-panel-content></side-panel-content></side-panel>')(scope);
+                    scope.$apply();
+                    controller = element.controller('sidePanel');
+                    panel = element.find('.side-panel');
+                };
+            }));
+
+            type TestCaseForBusySidePanel = [boolean, boolean];
+            runDescribe('when flag "isBusy"')
+                .data<TestCaseForBusySidePanel>([
+                    [true, true],
+                    [false, false]])
+                .dataIt((data: TestCaseForBusySidePanel) =>
+                    `is set to "${data[0]}" then side panel ${data[1] ? 'should' : 'shouldn\'t '} have class "side-panel-loading"`)
+                .run((data: TestCaseForBusySidePanel) => {
+                    // arrange
+                    createComponent(data[0]);
+
+                    // act
+                    controller.show();
+                    scope.$apply();
+
+                    // assert
+                    expect(controller.isBusy).toBe(data[1]);
+                    expect(panel.hasClass("side-panel-loading")).toBe(data[1]);
+                });
+
         });
     });
 }

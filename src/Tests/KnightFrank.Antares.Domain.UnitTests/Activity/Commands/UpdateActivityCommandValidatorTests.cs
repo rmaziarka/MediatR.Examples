@@ -7,21 +7,18 @@
 
     using FluentValidation.Resources;
     using FluentValidation.Results;
-    using FluentValidation.TestHelper;
 
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
-    using KnightFrank.Antares.Domain.Common.Validator;
 
     using Moq;
 
     using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.AutoMoq;
 
     using Xunit;
-
+    using FixtureExtension;
     [Trait("FeatureTitle", "Property Activity")]
     [Collection("UpdateActivityCommandValidator")]
     public class UpdateActivityCommandValidatorTests
@@ -34,8 +31,7 @@
 
         public UpdateActivityCommandValidatorTests()
         {
-            IFixture fixture = new Fixture()
-                   .Customize(new AutoMoqCustomization());
+            IFixture fixture = new Fixture().Customize();
 
             this.enumTypeItemRepository = fixture.Freeze<Mock<IGenericRepository<EnumTypeItem>>>();
             this.activityTypeRepository = fixture.Freeze<Mock<IGenericRepository<ActivityType>>>();

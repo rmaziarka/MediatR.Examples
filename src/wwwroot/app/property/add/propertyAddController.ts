@@ -18,6 +18,7 @@ module Antares.Property {
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
+            private enumService: Services.EnumService,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService) {
 
@@ -45,8 +46,8 @@ module Antares.Property {
         }
 
         loadDivisions = () => {
-            this.dataAccessService.getEnumResource().get({ code: 'Division' }).$promise.then((divisions: any) => {
-                this.divisions = divisions.items;
+            this.enumService.getEnumPromise().then((result: any) => {
+                this.divisions = result[Dto.EnumTypeCode.Division];
             });
         };
 
@@ -71,7 +72,9 @@ module Antares.Property {
         }
 
         loadCharacteristics = () => {
-            this.components.characteristicList().loadCharacteristics();
+            // propertyTypeId and countryId must be passed directly to method even though they are binded to characteristicList
+            // - binding on value objects doesn't work for example for select-onChange event (changed values are set to binded values later then onChange method is executed)
+            this.components.characteristicList().loadCharacteristics(this.property.propertyTypeId, this.property.address.countryId);
         }
 
         public save() {

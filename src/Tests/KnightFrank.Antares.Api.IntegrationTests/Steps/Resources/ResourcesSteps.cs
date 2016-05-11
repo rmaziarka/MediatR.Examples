@@ -31,7 +31,7 @@
         [When(@"User retrieves countries for (.*) EnumTypeItem")]
         public void WhenUserRetrievesCountriesForPropertyEnumTypeItem(string entityTypeItemCode)
         {
-            string requestUrl = $"{ApiUrl}/countries/addressform?entityTypeItemCode=" + entityTypeItemCode;
+            string requestUrl = $"{ApiUrl}/countries/addressform?entityTypeItemCode={entityTypeItemCode}";
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
             this.scenarioContext.SetHttpResponseMessage(response);
         }

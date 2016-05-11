@@ -3,12 +3,11 @@
     using System;
     using System.Collections.Generic;
     using FluentValidation.Results;
-    using KnightFrank.Antares.Dal.Model.Address;
-    using KnightFrank.Antares.Dal.Model.Resource;
-    using KnightFrank.Antares.Dal.Repository;
-    using KnightFrank.Antares.Domain.Contact;
+
+    using KnightFrank.Antares.Domain.Common.Commands;
     using KnightFrank.Antares.Domain.Requirement.Commands;
-    using Moq;
+    using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
+
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.AutoMoq;
     using Xunit;
@@ -19,16 +18,10 @@
     {
         private readonly CreateRequirementCommand command;
         private readonly CreateRequirementCommandValidator validator;
-        private readonly Mock<IGenericRepository<AddressForm>> addressFormRepository;
-        private readonly Mock<IGenericRepository<Country>> countryRepository;
 
         public CreateRequirementCommandValidatorTests()
         {
-            IFixture fixture = new Fixture()
-                .Customize(new AutoMoqCustomization());
-            fixture.Behaviors.Clear();
-            fixture.RepeatCount = 1;
-            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+            IFixture fixture = new Fixture().Customize();
 
             this.command = fixture.Build<CreateRequirementCommand>()
                                .With(x => x.MinPrice, 1)
@@ -46,13 +39,8 @@
                                .With(x => x.MinReceptionRooms, 1)
                                .With(x => x.MaxReceptionRooms, 2)
                                .With(x => x.ContactIds, new List<Guid> { fixture.Create<Guid>() })
-                               .With(x => x.Address, new CreateOrUpdateRequirementAddress())
+                               .With(x => x.Address, fixture.Create<CreateOrUpdateAddress>())
                                .Create();
-
-            this.addressFormRepository = fixture.Freeze<Mock<IGenericRepository<AddressForm>>>();
-            this.addressFormRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new AddressForm());
-            this.countryRepository = fixture.Freeze<Mock<IGenericRepository<Country>>>();
-            this.countryRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new Country());
 
             this.validator = fixture.Create<CreateRequirementCommandValidator>();
         }
@@ -254,22 +242,6 @@
             this.command.ContactIds.Clear();
 
             TestIncorrectCommand(this.validator, this.command, nameof(this.command.ContactIds));
-        }
-
-        [Fact] 
-        public void Given_IncorrectCreateRequirementCommandWithNoAddress_When_Validating_Then_ValidationErrors()
-        {
-            this.addressFormRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns((AddressForm)null);
-
-            TestIncorrectCommand(this.validator, this.command, nameof(this.command.Address.AddressFormId));
-        }
-
-        [Fact]
-        public void Given_IncorrectCreateRequirementCommandWithNoCountry_When_Validating_Then_ValidationErrors()
-        {
-            this.countryRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns((Country)null);
-
-            TestIncorrectCommand(this.validator, this.command, nameof(this.command.Address.CountryId));
         }
 
         // ReSharper disable once UnusedParameter.Local

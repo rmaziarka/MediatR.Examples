@@ -23,6 +23,13 @@ module Antares.Services {
             }
         };
 
+        private createViewingAction: ng.resource.IActionDescriptor = {
+            url: this.appConfig.rootUrl + '/api/viewings/',
+            method: 'POST',
+            isArray: false,
+            params: {}
+        };
+
         private getPropertyTypesAction: ng.resource.IActionDescriptor = {
             url: this.appConfig.rootUrl + '/api/properties/types?countryCode=:countryCode&divisionCode=:divisionCode&localeCode=:localeCode',
             method: 'GET',
@@ -54,6 +61,18 @@ module Antares.Services {
             }
         };
 
+        private getUrlAction: ng.resource.IActionDescriptor = {
+            url: this.appConfig.rootUrl + 'api/services/attachment/upload/activity?activityDocumentType=:activityDocumentType&parameters.localeIsoCode=:localeIsoCode&parameters.externalDocumentId=:externalDocumentId&parameters.entityReferenceId=3&parameters.filename=:filename',
+            method: 'GET',
+            isArray: false,
+            params: {
+                activityDocumentType: '@activityDocumentType',
+                localeIsoCode: '@localeIsoCode',
+                externalDocumentId: '@externalDocumentId',
+                filename: '@filename'
+            }
+        };
+
         getCompanyResource(): Resources.IBaseResourceClass<Resources.ICompanyResource> {
             return <Resources.IBaseResourceClass<Resources.ICompanyResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/companies/:id');
@@ -64,9 +83,16 @@ module Antares.Services {
                 this.$resource(this.appConfig.rootUrl + '/api/contacts/:id');
         }
 
-        getRequirementResource(): Resources.IBaseResourceClass<Resources.IRequirementResource> {
-            return <Resources.IBaseResourceClass<Resources.IRequirementResource>>
+        getRequirementResource(): Resources.IRequirementResourceClass {
+            return <Resources.IRequirementResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/requirements/:id');
+        }
+
+        getViewingResource(): Resources.IViewingResourceClass {
+            return <Resources.IViewingResourceClass>
+                this.$resource(this.appConfig.rootUrl + '/api/viewing/:id', null, {
+                    createViewing: this.createViewingAction
+                });
         }
 
         getCountryResource(): Resources.ICountryResourceClass {
@@ -89,9 +115,9 @@ module Antares.Services {
                 });
         }
 
-        getEnumResource(): Resources.IBaseResourceClass<Resources.IEnumResource> {
-            return <Resources.IBaseResourceClass<Resources.IEnumResource>>
-                this.$resource(this.appConfig.rootUrl + '/api/enums/:code/items');
+        getEnumResource(): Resources.IBaseResourceClass<ng.resource.IResource<Antares.Common.Models.Dto.IEnumDictionary>> {
+            return <Resources.IBaseResourceClass<ng.resource.IResource<Antares.Common.Models.Dto.IEnumDictionary>>>
+                this.$resource(this.appConfig.rootUrl + '/api/enums');
         }
 
         getEnumTranslationResource(): Resources.ITranslationResourceClass<any> {
@@ -125,6 +151,21 @@ module Antares.Services {
         getCharacteristicGroupUsageResource(): Resources.ICharacteristicGroupUsageResourceClass {
             return <Resources.ICharacteristicGroupUsageResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/characteristicGroups?countryId=:countryId&propertyTypeId=:propertyTypeId');
+        }
+
+        getAttachmentResource(): Resources.IBaseResourceClass<Antares.Common.Models.Resources.IActivityAttachmentResource> {
+            return <Resources.IBaseResourceClass<Antares.Common.Models.Resources.IActivityAttachmentResource>>
+                this.$resource(this.appConfig.rootUrl + '/api/activities/:id/attachments');
+        }
+
+        getAzureUploadUrlResource(): ng.resource.IResourceClass<Antares.Common.Models.Resources.IAzureUploadUrlResource> {
+            return <ng.resource.IResourceClass<Antares.Common.Models.Resources.IAzureUploadUrlResource>>
+                this.$resource(this.appConfig.rootUrl + '/api/services/attachment/upload/activity?documentTypeId=:documentTypeId&localeIsoCode=:localeIsoCode&entityReferenceId=:entityReferenceId&filename=:filename');
+        }
+
+        getAzureDownloadUrlResource(): ng.resource.IResourceClass<Antares.Common.Models.Resources.IAzureDownloadUrlResource> {
+            return <ng.resource.IResourceClass<Antares.Common.Models.Resources.IAzureDownloadUrlResource>>
+                this.$resource(this.appConfig.rootUrl + '/api/services/attachment/download/activity?documentTypeId=:documentTypeId&localeIsoCode=:localeIsoCode&externalDocumentId=:externalDocumentId&entityReferenceId=:entityReferenceId&filename=:filename');
         }
     }
 

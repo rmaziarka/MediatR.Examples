@@ -8,8 +8,7 @@
 
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
-    using KnightFrank.Antares.Domain.Common.BuissnessValidators;
-    using KnightFrank.Antares.Domain.Validators;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
 
     using MediatR;
 
@@ -36,6 +35,9 @@
 
             this.Bind(typeof(IReadGenericRepository<>)).To(typeof(ReadGenericRepository<>));
             this.Bind<IEntityValidator>().To(typeof(EntityValidator));
+            this.Bind<ICollectionValidator>().To(typeof(CollectionValidator));
+            this.Bind<IEnumTypeItemValidator>().To(typeof(EnumTypeItemValidator));
+            this.Bind<IAddressValidator>().To(typeof(AddressValidator));
             AssemblyScanner.FindValidatorsInAssembly(Assembly.GetExecutingAssembly()).ForEach(
                 assemblyScanResult =>
                     {

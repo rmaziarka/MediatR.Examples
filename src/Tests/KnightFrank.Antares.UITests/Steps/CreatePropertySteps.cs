@@ -12,6 +12,8 @@
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
 
+    using Xunit;
+
     [Binding]
     public class CreatePropertySteps
     {
@@ -30,7 +32,6 @@
         }
 
         [Given(@"User navigates to create property page")]
-        [When(@"User navigates to create property page")]
         public void OpenCreatePropertyPage()
         {
             CreatePropertyPage page = new CreatePropertyPage(this.driverContext).OpenCreatePropertyPage();
@@ -101,6 +102,7 @@
             this.scenarioContext.Set(page.SaveProperty(), "ViewPropertyPage");
         }
 
+        [When(@"User selects property characteristics on edit property page")]
         [When(@"User selects property characteristics on create property page")]
         public void SelectCharacteristics(Table table)
         {
@@ -115,6 +117,12 @@
                     page.AddCommentToCharacteristic(characteristic.Name, characteristic.Comment);
                 }
             }
+        }
+
+        [Then(@"Property form on create property page should be displayed")]
+        public void CheckIfPropertyTypeIsDisplayed()
+        {
+            Assert.True(new CreatePropertyPage(this.driverContext).IsPropertyFormPresent());
         }
     }
 }

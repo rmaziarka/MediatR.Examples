@@ -6,12 +6,13 @@ module Antares.Property {
 
     export class OwnershipAddController {
         static $inject = ['componentRegistry', 'dataAccessService', '$scope', '$q','$filter'];
-        maxAllowedDate:string = this.$filter('date')(new Date(),'dd-MM-yyyy')
+        maxAllowedDate:string = this.$filter('date')(new Date(),'dd-MM-yyyy');
         componentId: string;
-        ownership: Dto.IOwnership = new Business.Ownership();
         ownerships: Business.Ownership[];
-        ownershipTypes: any;
-        datepickers: any = {
+
+        public enumTypeOwnershipType: Dto.EnumTypeCode = Dto.EnumTypeCode.OwnershipType;
+        public ownership: Business.Ownership = new Business.Ownership();
+        public datepickers: any = {
             purchaseOpened: false,
             sellOpened: false
         };
@@ -23,7 +24,6 @@ module Antares.Property {
             private $q: ng.IQService,
             private $filter:any) {
 
-            this.ownershipTypes = dataAccessService.getEnumResource().get({ code: 'OwnershipType' });
             componentRegistry.register(this, this.componentId);
         }
 
@@ -55,7 +55,6 @@ module Antares.Property {
         getCreateOwnershipCommand() {
             var ownership: any = angular.copy(this.ownership);
             ownership.contactIds = ownership.contacts.map((item: Dto.IContact) => { return item.id; });
-            ownership.ownershipTypeId = ownership.ownershipType.id;
             ownership.purchaseDate = Core.DateTimeUtils.createDateAsUtc(ownership.purchaseDate);
             ownership.sellDate = Core.DateTimeUtils.createDateAsUtc(ownership.sellDate);
 
@@ -65,7 +64,7 @@ module Antares.Property {
             return ownership;
         }
 
-        loadOwnership = (contacts: Dto.IContact[]) => {
+        loadOwnership = (contacts: Business.Contact[]) => {
             this.ownership.contacts = contacts;
         }
 
@@ -86,6 +85,14 @@ module Antares.Property {
             var form = this.$scope["addOwnershipForm"];
             form.$setSubmitted();
             return form.$valid;
+        }
+
+        setCurrentOwner = (): void => {
+            if (this.ownership.isCurrentOwner)
+            {
+                this.ownership.sellDate = null
+                this.ownership.sellPrice = null
+            }
         }
     }
 

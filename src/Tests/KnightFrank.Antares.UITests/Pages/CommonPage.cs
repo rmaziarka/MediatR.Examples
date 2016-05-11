@@ -24,6 +24,11 @@
             return new Uri(GetUrl() + ConfigurationManager.AppSettings[key]);
         }
 
+        private static Uri GetUrl(string key, string id)
+        {
+            return new Uri(GetUrl() + ConfigurationManager.AppSettings[key].Replace("id", id));
+        }
+
         public void NavigateToPage(string page)
         {
             switch (page.ToLower())
@@ -42,6 +47,22 @@
                     break;
                 case "create company":
                     this.Driver.NavigateTo(GetUrl("CreateCompanyPage"));
+                    break;
+                default:
+                    Assert.True(false, "Page does not exist");
+                    break;
+            }
+        }
+
+        public void NavigateToPageWithId(string page, string id)
+        {
+            switch (page.ToLower())
+            {
+                case "view requirement":
+                    this.Driver.NavigateTo(GetUrl("ViewRequirementPage", id));
+                    break;
+                case "view property":
+                    this.Driver.NavigateTo(GetUrl("ViewPropertyPage", id));
                     break;
                 default:
                     Assert.True(false, "Page does not exist");

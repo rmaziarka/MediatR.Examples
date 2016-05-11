@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.ModelConfiguration.Conventions;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Address;
@@ -19,9 +20,14 @@
 
     using Attribute = KnightFrank.Antares.Dal.Model.Attribute.Attribute;
 
+    [ExcludeFromCodeCoverage]
     public class KnightFrankContext : DbContext
     {
         public KnightFrankContext() : base("Api.Settings.SqlConnectionString")
+        {
+        }
+
+        public KnightFrankContext(string connectionString) : base(connectionString)
         {
         }
 

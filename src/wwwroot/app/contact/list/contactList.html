@@ -1,8 +1,10 @@
 <div ng-show="vm.isLoading">...loading data...</div>
 <div class="panel panel-default" ng-repeat="contact in vm.contacts" >
     <div class="panel-body">
-        <label>
-            <input type="checkbox" ng-model="contact.selected"> {{ contact.firstName }} {{ contact.surname }}
-        </label>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="contact.selected"> {{:: contact.getName() }}
+            </label>
+        </div>
     </div>
 </div>

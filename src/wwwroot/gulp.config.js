@@ -4,6 +4,7 @@
     var build = './build/';
     var specRunnerFile = 'specRunner.html';
     var translations = 'translations/';
+    var images = 'images/';
     var bower = {
         json: require('./bower.json'),
         directory: './libs/',
@@ -39,6 +40,15 @@
                 clientApp + '**/*.test.js',
                 clientApp + '**/*.spec.js'
             ],
+            specsAndMocksOrder: [
+                '**/testHelpers/**/*',
+                '**/common/**/*.mock.js',
+                '**/common/**/*.test.js',
+                '**/common/**/*.js',
+                '**/*.mock.js',
+                '**/*.test.js',
+                '**/*.js'
+            ],
             order: [
                 '**/app.bootstrap.js',
                 '**/app.module.js',
@@ -57,6 +67,7 @@
         sassPaths: [
             bower.directory + 'bootstrap-sass/assets/stylesheets',
             bower.directory + 'font-awesome/scss',
+            bower.directory + 'css-hamburgers/_sass/hamburgers',
         ],
         fonts: bower.directory + 'font-awesome/fonts/**/*.*',
         ts: {
@@ -92,6 +103,8 @@
             webConfigFile: [
                 root + '_web.config'
             ],
+            imagesDest: build + images,
+            imagesFiles: images + "*.*",
         },
         vendors: []
     }

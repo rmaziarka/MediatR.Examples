@@ -16,9 +16,9 @@
         <div class="row">
             <div class="col-md-9">
                 <label for="status" class="" translate="ACTIVITY.ADD.STATUS"></label>
-                <select class="form-control" required id="status" name="status" ng-options="item as item.value for item in vm.activityStatuses track by item.id" ng-model="vm.selectedActivityStatus">
-                    <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
-                </select>
+                <enum-select id="status" name="status" required="true"
+                             ng-model="vm.selectedActivityStatusId"
+                             enum-type-code="{{vm.enumTypeActivityStatus}}"></enum-select>
                 <div ng-messages="addActivityForm.status.$error" ng-show="addActivityForm.$submitted || addActivityForm.status.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>

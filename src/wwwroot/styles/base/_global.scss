@@ -1,9 +1,23 @@
 // Global Styles
 
+body,
+html {
+  height: 100%;
+}
+
 body {
+  padding-top: $header-height;
 
   &::after {
     @extend %fade;
+  }
+
+  &.drawer-open {
+    overflow: hidden;
+
+    @media (min-width: $screen-sm-min) {
+      overflow-y: visible;
+    }
   }
 
   &.side-panel-open {
@@ -15,9 +29,20 @@ body {
   }
 }
 
+.page-wrapper {
+  height: 100%;
+  overflow-x: hidden;
+}
+
 h3,
 .h3 {
-  font-size: 22px;
+  font-size: 20px;
+  margin-top: 21px;
+}
+
+h4,
+.h4 {
+  font-size: 18px;
 }
 
 h5,
@@ -34,22 +59,6 @@ ul,
 ol {
   margin-bottom: 30px;
   padding-left: 20px;
-}
-
-.radio label,
-.checkbox label {
-  font-size: $font-size-base;
-  line-height: 21px;
-}
-
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type="number"] {
-  -moz-appearance: textfield;
 }
 
 .page-header {

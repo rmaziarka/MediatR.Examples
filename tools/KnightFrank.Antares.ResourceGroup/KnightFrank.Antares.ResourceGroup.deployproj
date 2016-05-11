@@ -38,16 +38,6 @@
     <None Include="DSC\dscmetadata.json" />
     <Content Include="DSC\KnightFrank-Antares-Vm-IIS-DSCConfiguration.ps1" />
     <Content Include="DSC\KnightFrank-Antares-Vm-Sql-DSCConfiguration.ps1" />
-    <None Include="DSC\xNetworking\appveyor.yml" />
-    <None Include="DSC\xNetworking\DSCResources\MSFT_xDNSServerAddress\MSFT_xDNSServerAddress.psm1" />
-    <None Include="DSC\xNetworking\DSCResources\MSFT_xDNSServerAddress\MSFT_xDNSServerAddress.schema.mof" />
-    <None Include="DSC\xNetworking\DSCResources\MSFT_xFirewall\MSFT_xFirewall.psm1" />
-    <None Include="DSC\xNetworking\DSCResources\MSFT_xFirewall\MSFT_xFirewall.Schema.mof" />
-    <None Include="DSC\xNetworking\DSCResources\MSFT_xIPAddress\MSFT_xIPAddress.psm1" />
-    <None Include="DSC\xNetworking\DSCResources\MSFT_xIPAddress\MSFT_xIPAddress.schema.mof" />
-    <None Include="DSC\xNetworking\LICENSE" />
-    <None Include="DSC\xNetworking\README.md" />
-    <None Include="DSC\xNetworking\xNetworking.psd1" />
     <None Include="DSC\xSQLServer\appveyor.yml" />
     <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLDatabaseRecoveryModel\MSFT_xSQLDatabaseRecoveryModel.psm1" />
     <None Include="DSC\xSQLServer\DSCResources\MSFT_xSQLDatabaseRecoveryModel\MSFT_xSQLDatabaseRecoveryModel.schema.mof" />

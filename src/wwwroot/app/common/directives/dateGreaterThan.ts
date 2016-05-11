@@ -1,5 +1,6 @@
 /// <reference path="../../typings/_all.d.ts" />
 namespace Antares.Common.Directive {
+    declare var moment: any;
     class DateGreaterThan {
         require: string = 'ngModel';
 
@@ -13,9 +14,9 @@ namespace Antares.Common.Directive {
                     ngModel.$setValidity('dateGreaterThan', true);
                     return inputValue;
                 }
-
-                var fromDate: Date = this.uibDateParser.parse(attrs['dateGreaterThan'],'dd-MM-yyyy');
-                var toDate: Date = this.uibDateParser.parse(inputValue, 'dd-MM-yyyy');
+                var fromDateString : string = JSON.parse(attrs['dateGreaterThan']);
+                var fromDate: Date = new Date(fromDateString);
+                var toDate: Date = this.uibDateParser.parse(inputValue, 'yyyy-MM-dd');
                 var isValid: boolean = this.validDateRange.isValidDateRange(fromDate, toDate);
                 ngModel.$setValidity('dateGreaterThan', isValid);
                 return inputValue;

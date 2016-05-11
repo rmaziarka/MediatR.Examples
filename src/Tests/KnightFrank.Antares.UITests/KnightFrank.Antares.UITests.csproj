@@ -35,6 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentAssertions, Version=4.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FluentAssertions.4.2.2\lib\net45\FluentAssertions.dll</HintPath>
       <Private>True</Private>
@@ -98,10 +106,14 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Extensions\DatabaseExtensions.cs" />
     <Compile Include="Extensions\DriverExtensions.cs" />
     <Compile Include="Pages\AddressTemplatePage.cs" />
     <Compile Include="Pages\CommonPage.cs" />
+    <Compile Include="Pages\NavigationDrawerPage.cs" />
     <Compile Include="Pages\Panels\ActivityListPage.cs" />
+    <Compile Include="Pages\Panels\AttachmentPreviewPage.cs" />
+    <Compile Include="Pages\Panels\AttachFilePage.cs" />
     <Compile Include="Pages\Panels\ContactsListPage.cs" />
     <Compile Include="Pages\Panels\CreateActivityPage.cs" />
     <Compile Include="Pages\CreateCompanyPage.cs" />
@@ -112,6 +124,7 @@
     <Compile Include="Pages\Panels\NotesPage.cs" />
     <Compile Include="Pages\Panels\OwnershipDetailsPage.cs" />
     <Compile Include="Pages\Panels\PropertyPreviewPage.cs" />
+    <Compile Include="Pages\Panels\CreateViewingPage.cs" />
     <Compile Include="Pages\Panels\ViewingDetailsPage.cs" />
     <Compile Include="Pages\ViewActivityPage.cs" />
     <Compile Include="Pages\ViewRequirementPage.cs" />
@@ -124,7 +137,11 @@
     <Compile Include="Steps\CreatePropertySteps.cs" />
     <Compile Include="Steps\CreateContactSteps.cs" />
     <Compile Include="Steps\CreateRequirementSteps.cs" />
+    <Compile Include="Steps\Database\ContactSteps.cs" />
+    <Compile Include="Steps\Database\PropertySteps.cs" />
+    <Compile Include="Steps\Database\RequirementSteps.cs" />
     <Compile Include="Steps\EditActivitySteps.cs" />
+    <Compile Include="Steps\NavigationDrawerSteps.cs" />
     <Compile Include="Steps\ViewActivitySteps.cs" />
     <Compile Include="Steps\ViewRequirementSteps.cs" />
     <Compile Include="Steps\ViewPropertySteps.cs" />
@@ -133,15 +150,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Company.feature</DependentUpon>
     </Compile>
+    <Compile Include="Tests\Contact\Contact.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Contact.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\NavigationDrawer\NavigationDrawer.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NavigationDrawer.feature</DependentUpon>
+    </Compile>
     <Compile Include="Tests\Property\Property.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Property.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\ResidentialSalesRequirement\ResidentialSalesRequirement.feature.cs">
+    <Compile Include="Tests\Requirement\Requirement.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ResidentialSalesRequirement.feature</DependentUpon>
+      <DependentUpon>Requirement.feature</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -152,17 +179,28 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <Content Include="Resources\PDF document.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Tests\Company\Company.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Company.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Contact\Contact.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Contact.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\NavigationDrawer\NavigationDrawer.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>NavigationDrawer.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Property\Property.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Property.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\ResidentialSalesRequirement\ResidentialSalesRequirement.feature">
+    <None Include="Tests\Requirement\Requirement.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ResidentialSalesRequirement.feature.cs</LastGenOutput>
+      <LastGenOutput>Requirement.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +219,7 @@
       <Name>KnightFrank.Antares.Dal</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

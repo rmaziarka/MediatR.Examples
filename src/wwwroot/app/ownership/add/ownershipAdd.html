@@ -10,10 +10,9 @@
         <div class="row">
             <div class="col-md-9">
                 <label class="required" for="type" translate="OWNERSHIP.ADD.OWNERSHIPTYPE"></label>
-                <select class="form-control" required id="type" name="type" ng-options="item as item.value for item in vm.ownershipTypes.items track by item.id"
-                ng-model="vm.ownership.ownershipType">
-                    <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
-                </select>
+                <enum-select id="type" name="type" required="true"
+                             ng-model="vm.ownership.ownershipTypeId"
+                             enum-type-code="{{vm.enumTypeOwnershipType}}"></enum-select>
                 <div ng-messages="addOwnershipForm.type.$error" ng-show="addOwnershipForm.$submitted || addOwnershipForm.type.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>
@@ -22,7 +21,7 @@
     </div>
     <div class="form-group checkbox">
         <label>
-            <input type="checkbox" ng-model="vm.ownership.isCurrentOwner"> <span translate="OWNERSHIP.ADD.CURRENTOWNERSHIP"></span>
+            <input type="checkbox" id="current-owner-checkbox" ng-model="vm.ownership.isCurrentOwner" ng-change="vm.setCurrentOwner()"> <span translate="OWNERSHIP.ADD.CURRENTOWNERSHIP"></span>
         </label>
     </div>
     <div class="form-group" ng-class="{'has-error': (addOwnershipForm.$submitted || addOwnershipForm.purchaseDate.$dirty || addOwnershipForm.sellDate.$dirty) && addOwnershipForm.purchaseDate.$invalid}">
@@ -35,7 +34,7 @@
                     name="purchaseDate"
                     ng-model="vm.ownership.purchaseDate"
                     max="{{vm.ownership.sellDate}}"
-                    dont-overlap="{{vm.ownerships | filter : {ownershipTypeId: vm.ownership.ownershipType.id} }}"
+                    dont-overlap="{{vm.ownerships | filter : {ownershipTypeId: vm.ownership.ownershipTypeId} }}"
                     from-field="purchaseDate"
                     to-field="sellDate"
                     dont-overlap-max="{{vm.ownership.sellDate}}"
@@ -65,7 +64,7 @@
                     class="form-control"
                     name="sellDate"
                     ng-model="vm.ownership.sellDate"
-                    dont-overlap="{{vm.ownerships | filter : {ownershipTypeId: vm.ownership.ownershipType.id} }}"
+                    dont-overlap="{{vm.ownerships | filter : {ownershipTypeId: vm.ownership.ownershipTypeId} }}"
                     from-field="purchaseDate"
                     to-field="sellDate"
                     dont-overlap-min="{{vm.ownership.purchaseDate}}"

@@ -20,15 +20,15 @@ module Antares.Common.Component {
             componentRegistry.register(this, this.componentId);
 
             this.characteristicGroupUsageResource = dataAccessService.getCharacteristicGroupUsageResource();
-            this.loadCharacteristics();
+            this.loadCharacteristics(this.propertyTypeId, this.countryId);
         }
 
-        loadCharacteristics = () => {
-            if (this.propertyTypeId && this.countryId) {
+        loadCharacteristics = (propertyTypeId?: string , countryId?: string) => {
+            if (propertyTypeId && countryId) {
                 this.characteristicGroupUsageResource
                     .query({
-                        countryId: this.countryId,
-                        propertyTypeId: this.propertyTypeId
+                        countryId: countryId,
+                        propertyTypeId: propertyTypeId
                     })
                     .$promise
                     .then((characteristicGroupUsages: any) => {

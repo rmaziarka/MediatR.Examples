@@ -73,14 +73,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activity\CommandHandlers\CreateActivityAttachmentCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandler.cs" />
+    <Compile Include="Activity\Commands\CreateActivityAttachmentCommand.cs" />
+    <Compile Include="Activity\Commands\CreateActivityAttachmentCommandValidator.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
-    <Compile Include="Activity\Commands\CreateActivityCommandProfile.cs" />
+    <Compile Include="Activity\Commands\ActivityProfile.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandValidator.cs" />
-    <Compile Include="Activity\Commands\CreateActivityCommandDomainValidator.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommand.cs" />
-    <Compile Include="Activity\Commands\UpdateActivityCommandProfile.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommandValidator.cs" />
     <Compile Include="Activity\Queries\ActivitiesQuery.cs" />
     <Compile Include="Activity\Queries\ActivityQuery.cs" />
@@ -111,23 +112,41 @@
     <Compile Include="AddressForm\Specifications\IsAddressFormAssignedToEntityType.cs" />
     <Compile Include="AddressForm\Specifications\IsAddressFormAssignedToCountry.cs" />
     <Compile Include="AddressForm\Specifications\IsAddressFormGloballyDefined.cs" />
+    <Compile Include="Attachment\Queries\AttachmentQuery.cs" />
+    <Compile Include="Attachment\Queries\AttachmentQueryValidator.cs" />
+    <Compile Include="Attachment\QueryHandlers\AttachmentQueryHandler.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQuery.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidator.cs" />
     <Compile Include="Characteristic\QueryHandlers\CharacteristicGroupsQueryHandler.cs" />
+    <Compile Include="Common\BusinessValidators\AddressValidator.cs" />
+    <Compile Include="Common\BusinessValidators\CollectionValidator.cs" />
+    <Compile Include="Common\BusinessValidators\CommonResources.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommonResources.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Common\BusinessValidators\EnumTypeItemValidator.cs" />
+    <Compile Include="Common\BusinessValidators\IAddressValidator.cs" />
+    <Compile Include="Common\BusinessValidators\ICollectionValidator.cs" />
+    <Compile Include="Common\BusinessValidators\IEnumTypeItemValidator.cs" />
+    <Compile Include="Attachment\Commands\CreateAttachment.cs" />
+    <Compile Include="Attachment\Commands\CreateAttachmentProfile.cs" />
+    <Compile Include="Attachment\Commands\CreateAttachmentValidator.cs" />
+    <Compile Include="Common\Commands\CreateOrUpdateAddress.cs" />
+    <Compile Include="Common\Commands\CreateOrUpdateAddressValidator.cs" />
+    <Compile Include="Common\Enums\EnumType.cs" />
     <Compile Include="Common\Exceptions\ResourceNotFoundException.cs" />
+    <Compile Include="Common\Specifications\EnumTypeItemWithEnumType.cs" />
     <Compile Include="Common\Specifications\HasId.cs" />
     <Compile Include="Common\Specifications\IsLocalised.cs" />
     <Compile Include="Common\ValidatorCommandHandler.cs" />
     <Compile Include="Common\Validator\ActivityTypeValidator.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidator.cs" />
     <Compile Include="Common\Validator\ContactValidator.cs" />
-    <Compile Include="Common\Validator\CountryValidator.cs" />
     <Compile Include="Common\Validator\LocaleValidator.cs" />
-    <Compile Include="Common\Validator\PropertyTypeValidator.cs" />
     <Compile Include="Company\CommandHandlers\CreateCompanyCommandHandler.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommand.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommandProfile.cs" />
-    <Compile Include="Company\Commands\CreateCompanyCommandDomainValidator.cs" />
     <Compile Include="Company\Commands\CreateCompanyValidator.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandProfile.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidator.cs" />
@@ -146,27 +165,21 @@
     <Compile Include="Contact\QueryHandlers\ContactsQueryHandler.cs" />
     <Compile Include="DomainModule.cs" />
     <Compile Include="Common\Exceptions\DomainValidationException.cs" />
+    <Compile Include="Enum\Types\ActivityDocumentType.cs" />
     <Compile Include="Enum\Queries\EnumItemQuery.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQuery.cs" />
-    <Compile Include="Enum\Queries\EnumQuery.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQueryValidator.cs" />
-    <Compile Include="Enum\Queries\EnumQueryValidator.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQueryDomainValidator.cs" />
     <Compile Include="Enum\QueryHandlers\EnumItemQueryHandler.cs" />
     <Compile Include="Enum\QueryHandlers\EnumLocalisedQueryHandler.cs" />
-    <Compile Include="Enum\QueryHandlers\EnumQueryHandler.cs" />
     <Compile Include="Enum\QueryResults\EnumItemResult.cs" />
     <Compile Include="Enum\QueryResults\EnumItemResultProfile.cs" />
-    <Compile Include="Enum\QueryResults\EnumQueryItemResult.cs" />
-    <Compile Include="Enum\QueryResults\EnumQueryResult.cs" />
-    <Compile Include="Enum\QueryResults\EnumQueryResultProfile.cs" />
     <Compile Include="Enum\Specifications\IsActivityStatus.cs" />
     <Compile Include="Enum\Specifications\IsEntityType.cs" />
     <Compile Include="Helpers\Extentions\FluentValidation.cs" />
     <Compile Include="Ownership\CommandHandlers\CreateOwnershipCommandHandler.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommand.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandProfile.cs" />
-    <Compile Include="Ownership\Commands\CreateOwnershipCommandDomainValidator.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandValidator.cs" />
     <Compile Include="Common\IDomainValidator.cs" />
     <Compile Include="Common\Range.cs" />
@@ -180,8 +193,6 @@
     <Compile Include="Property\CommandHandlers\CreatePropertyCommandHandler.cs" />
     <Compile Include="Property\CommandHandlers\UpdatePropertyCommandHandler.cs" />
     <Compile Include="Property\Commands\PropertyCharacteristicConfigurationDomainValidator.cs" />
-    <Compile Include="Property\Commands\CreateOrUpdatePropertyAddress.cs" />
-    <Compile Include="Property\Commands\CreateOrUpdatePropertyAddressValidator.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyAttributeValues.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyCharacteristic.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyCharacteristicDomainValidator.cs" />
@@ -208,18 +219,19 @@
     <Compile Include="Property\Queries\PropertyAttributesQueryValidator.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQueryResult.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQuerySingleResult.cs" />
+    <Compile Include="Viewing\CommandHandlers\UpdateViewingCommandHandler.cs" />
     <Compile Include="User\QueryResults\UsersQueryResult.cs" />
     <Compile Include="Viewing\CommandHandlers\CreateViewingCommandHandler.cs" />
+    <Compile Include="Viewing\Commands\UpdateViewingCommandValidator.cs" />
+    <Compile Include="Viewing\Commands\UpdateViewingCommand.cs" />
     <Compile Include="Viewing\Commands\CreateViewingCommand.cs" />
-    <Compile Include="Viewing\Commands\CreateViewingCommandDomainValidator.cs" />
     <Compile Include="Viewing\Commands\CreateViewingCommandValidator.cs" />
     <Compile Include="Viewing\Commands\ViewingCommandProfile.cs" />
     <Compile Include="Viewing\Queries\ViewingQuery.cs" />
     <Compile Include="Viewing\Queries\ViewingQueryValidator.cs" />
     <Compile Include="Viewing\QueryHandlers\ViewingQueryHandler.cs" />
     <Compile Include="RequirementNote\CommandHandlers\CreateRequirementNoteCommandHandler.cs" />
-    <Compile Include="Common\BuissnessValidators\IEntityValidator.cs" />
-    <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandDomainValidator.cs" />
+    <Compile Include="Common\BusinessValidators\IEntityValidator.cs" />
     <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandValidator.cs" />
     <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandProfile.cs" />
     <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommand.cs" />
@@ -227,8 +239,6 @@
     <Compile Include="RequirementNote\Queries\RequirementNoteQueryValidator.cs" />
     <Compile Include="RequirementNote\QueryHandlers\RequirementNoteQueryHandler.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementCommandHandler.cs" />
-    <Compile Include="Requirement\Commands\CreateOrUpdateRequirementAddress.cs" />
-    <Compile Include="Requirement\Commands\CreateRequirementCommandDomainValidator.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandValidator.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommand.cs" />
     <Compile Include="Requirement\Commands\RequirementCommandProfile.cs" />
@@ -241,9 +251,9 @@
     <Compile Include="Resource\Queries\ResourceLocalisedQuery.cs" />
     <Compile Include="Resource\QueryHandlers\ResourceLocalisedQueryHandler.cs" />
     <Compile Include="User\QueryResults\UserDataResult.cs" />
-    <Compile Include="Common\BuissnessValidators\BusinessValidationMessage.cs" />
-    <Compile Include="Common\BuissnessValidators\BusinessValidationException.cs" />
-    <Compile Include="Common\BuissnessValidators\EntityValidator.cs" />
+    <Compile Include="Common\BusinessValidators\BusinessValidationMessage.cs" />
+    <Compile Include="Common\BusinessValidators\BusinessValidationException.cs" />
+    <Compile Include="Common\BusinessValidators\EntityValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj">
@@ -261,7 +271,15 @@
       <LastGenOutput>BusinessErrorMessages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Common\BusinessValidators\CommonResources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CommonResources.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

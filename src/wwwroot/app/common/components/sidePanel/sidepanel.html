@@ -1,4 +1,4 @@
-<aside class="side-panel" ng-class="{'slide-in': vm.stateChanged && vm.visible, 'slide-out': vm.stateChanged && !vm.visible}">
+<aside class="side-panel" ng-class="{'slide-in': vm.stateChanged && vm.visible, 'slide-out': vm.stateChanged && !vm.visible, 'side-panel-loading': vm.visible && vm.isBusy}">
     <header class="side-panel-header">
         <button id="close-side-panel" type="button" class="close close-side-panel" aria-label="Close" ng-click="vm.hide()">
             <span aria-hidden="true" >&times;</span>

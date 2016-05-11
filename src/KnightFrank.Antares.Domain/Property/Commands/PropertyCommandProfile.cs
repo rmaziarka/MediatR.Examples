@@ -5,6 +5,7 @@
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Attribute;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Domain.Common.Commands;
 
     public class PropertyCommandProfile : Profile
     {
@@ -15,7 +16,7 @@
 
             this.CreateMap<CreatePropertyCommand, Property>();
 
-            this.CreateMap<CreateOrUpdatePropertyAddress, Address>();
+            this.CreateMap<CreateOrUpdateAddress, Address>();
             this.CreateMap<CreateOrUpdatePropertyAttributeValues, AttributeValues>();
             this.CreateMap<CreateOrUpdatePropertyCharacteristic, PropertyCharacteristic>();
         }

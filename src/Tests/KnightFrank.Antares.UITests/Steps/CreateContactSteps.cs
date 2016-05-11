@@ -1,7 +1,6 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
-    using System.Collections.Generic;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.UITests.Pages;
@@ -10,6 +9,8 @@
 
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
+
+    using Xunit;
 
     [Binding]
     public class CreateContactSteps
@@ -34,18 +35,33 @@
             this.scenarioContext["CreateContactPage"] = page;
         }
 
-        [Given(@"User creates contacts on create contact page")]
-        public void CreateContacts(Table table)
+        [When(@"User fills in contact details on create contact page")]
+        public void CreateContact(Table table)
         {
             var page = this.scenarioContext.Get<CreateContactPage>("CreateContactPage");
-            IEnumerable<Contact> contacts = table.CreateSet<Contact>();
-            foreach (Contact contact in contacts)
-            {
-                page.SetTitle(contact.Title)
-                    .SetFirstName(contact.FirstName)
-                    .SetSurname(contact.Surname)
-                    .SaveContact();
-            }
+            var contact = table.CreateInstance<Contact>();
+
+            page.SetTitle(contact.Title)
+                .SetFirstName(contact.FirstName)
+                .SetSurname(contact.Surname);
+        }
+
+        [When(@"User clicks save button on create contact page")]
+        public void SaveContact()
+        {
+            this.scenarioContext.Get<CreateContactPage>("CreateContactPage").SaveContact();
+        }
+
+        [Then(@"New contact should be created")]
+        public void CheckIfContactCreated()
+        {
+            //TODO implement check if contact was created
+        }
+
+        [Then(@"Contact form on create contact page should be displayed")]
+        public void CheckIfFirstNameIsDisplayed()
+        {
+            Assert.True(new CreateContactPage(this.driverContext).IsContactFormPresent());
         }
     }
 }

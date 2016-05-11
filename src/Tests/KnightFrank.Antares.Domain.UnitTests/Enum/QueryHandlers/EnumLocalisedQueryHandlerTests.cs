@@ -41,8 +41,6 @@
                 // Arrange
                 domainValidator.Setup(v => v.Validate(query)).Returns(new ValidationResult(validationFailures));
 
-                DomainValidationException exception = null;
-
                 // Act + Assert
                 Assert.Throws<DomainValidationException>(() => handler.Handle(query)).Errors.ShouldBeEquivalentTo(validationFailures);
             }

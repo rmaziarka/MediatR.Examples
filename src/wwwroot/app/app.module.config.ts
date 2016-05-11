@@ -7,6 +7,8 @@ module Antares {
     app.config(['$provide', extendOrderByWithEmptyFields]);
     app.config(['$provide', decorateInputNumber]);
 
+    app.run(['enumService', initEnumService]);
+
     function initTranslations($translateProvider: any) {
         $translateProvider.useLoader('LocalizationLoaderFactory')
             .registerAvailableLanguageKeys(['en'], {
@@ -16,11 +18,15 @@ module Antares {
             .useSanitizeValueStrategy('escape');
     }
 
-    function extendOrderByWithEmptyFields($provider: angular.auto.IProvideService){
+    function extendOrderByWithEmptyFields($provider: angular.auto.IProvideService) {
         $provider.decorator('orderByFilter', Common.Decorators.OrderByFilterDecorator.decoratorFunction);
     }
 
-    function decorateInputNumber($provider: angular.auto.IProvideService){
+    function decorateInputNumber($provider: angular.auto.IProvideService) {
         $provider.decorator('inputDirective', Common.Decorators.InputNumberDirectiveDecorator.decoratorFunction);
+    }
+
+    function initEnumService(enumService: Antares.Services.EnumService) {
+        enumService.init();
     }
 }

@@ -7,9 +7,7 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.User;
-    using KnightFrank.Antares.Domain.Common;
-    using KnightFrank.Antares.Domain.Common.BuissnessValidators;
-    using KnightFrank.Antares.Domain.Validators;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
 
     using MediatR;
 
@@ -17,20 +15,18 @@
     {
         private readonly IGenericRepository<RequirementNote> requirementNoteRepository;
         private readonly IGenericRepository<User> userRepository;
-        private readonly IDomainValidator<CreateRequirementNoteCommand> domainValidator;
         private readonly IEntityValidator entityValidator;
 
-        public CreateRequirementNoteCommandHandler(IGenericRepository<RequirementNote> requirementNoteRepository, IGenericRepository<User> userRepository, IDomainValidator<CreateRequirementNoteCommand> domainValidator, IEntityValidator entityValidator)
+        public CreateRequirementNoteCommandHandler(IGenericRepository<RequirementNote> requirementNoteRepository, IGenericRepository<User> userRepository, IEntityValidator entityValidator)
         {
             this.requirementNoteRepository = requirementNoteRepository;
             this.userRepository = userRepository;
-            this.domainValidator = domainValidator;
             this.entityValidator = entityValidator;
         }
 
         public Guid Handle(CreateRequirementNoteCommand message)
         {
-            this.entityValidator.ThrowExceptionIfNotExist<Requirement>(message.RequirementId);
+            this.entityValidator.EntityExists<Requirement>(message.RequirementId);
 
             var requirementNote = AutoMapper.Mapper.Map<RequirementNote>(message);
 

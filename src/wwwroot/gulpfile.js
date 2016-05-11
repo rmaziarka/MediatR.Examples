@@ -143,7 +143,7 @@ gulp.task('build-specs', ['_build-specs-templatecache'], function() {
         .src('buildTemplates/specRunner.html')
         .pipe(wiredep(options))
         .pipe(inject(config.js.appFilesToTest, '', config.js.order))
-        .pipe(inject(config.js.specsAndMocks, 'specs', ['**/testHelpers/**/*', '**/common/**/*', '**/*.js']))
+        .pipe(inject(config.js.specsAndMocks, 'specs', config.js.specsAndMocksOrder))
         .pipe(inject(templateCache, 'templates'))
         .pipe(gulp.dest(config.root));
 });
@@ -162,6 +162,10 @@ gulp.task('build', ['_optimize'], function() {
     log('Copying static files');
     gulp.src(config.build.staticAppFiles)
         .pipe(gulp.dest(config.build.output));
+
+    log('Copying images');
+    gulp.src(config.build.imagesFiles)
+        .pipe(gulp.dest(config.build.imagesDest));
 
     log('Copying translation files');
     gulp.src(config.build.staticTranslationsFiles)

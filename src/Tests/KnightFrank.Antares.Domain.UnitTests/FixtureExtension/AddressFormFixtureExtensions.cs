@@ -85,10 +85,17 @@
                 addressFormEntityTypes = new List<AddressFormEntityType>();
             }
 
+            var addressFieldDefinition = fixture
+                .Build<AddressFieldDefinition>()
+                .With(x => x.AddressField, fixture.Create<AddressField>())
+                .With(x => x.AddressFieldLabel, fixture.Create<AddressFieldLabel>())
+                .Create();
+
             return fixture.Build<AddressForm>()
                           .With(a => a.Country, country)
                           .With(a => a.CountryId, country.Id)
                           .With(a => a.AddressFormEntityTypes, addressFormEntityTypes)
+                          .With(a => a.AddressFieldDefinitions, new List<AddressFieldDefinition> { addressFieldDefinition })
                           .Create();
         }
 

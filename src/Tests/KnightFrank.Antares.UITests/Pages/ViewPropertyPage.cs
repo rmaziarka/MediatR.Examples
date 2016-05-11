@@ -21,16 +21,20 @@
         private readonly ElementLocator propertyDetailsLabels = new ElementLocator(Locator.CssSelector, "[ng-repeat *= 'attribute'] div.ng-binding:not([class *= 'ng-hide'])");
         private readonly ElementLocator propertyDetailsValues = new ElementLocator(Locator.CssSelector, "[ng-repeat *= 'attribute'] div.attribute-value div:not([class *= 'ng-hide'])");
         // Locators for property ownership area
-        private readonly ElementLocator addOwernship = new ElementLocator(Locator.CssSelector, "card-list[show-item-add *= 'showContactList'] button");
+        private readonly ElementLocator addOwernship = new ElementLocator(Locator.CssSelector, "#ownership-list button");
         private readonly ElementLocator ownershipContacts = new ElementLocator(Locator.XPath, "//card-list-item[{0}]//span[contains(@ng-repeat, 'contacts')]");
         private readonly ElementLocator ownershipDetails = new ElementLocator(Locator.XPath, "//card-list-item[{0}]//small/span/..");
         // Locators for property activities area
-        private readonly ElementLocator addActivityButton = new ElementLocator(Locator.CssSelector, "card-list[show-item-add *= 'showActivityAdd'] button");
+        private readonly ElementLocator addActivity = new ElementLocator(Locator.CssSelector, "#card-list-activities button");
         private readonly ElementLocator activityDate = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] div.panel-item");
         private readonly ElementLocator activityVendor = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] span");
         private readonly ElementLocator activityType = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] small[id *= 'activity-type']");
         private readonly ElementLocator activityStatus = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] small[id *= 'activity-status']");
-        private readonly ElementLocator activityDetailsLink = new ElementLocator(Locator.CssSelector, "#card-list-activities #detailsLink");
+        private readonly ElementLocator activityDetailsLink = new ElementLocator(Locator.CssSelector, "#card-list-activities .detailsLink");
+        //locators for characteristics
+        private readonly ElementLocator characteristics = new ElementLocator(Locator.CssSelector, ".characteristics li");
+        private readonly ElementLocator characteristicName = new ElementLocator(Locator.XPath, "(//characteristic-list-view//span[contains(@class, 'name')])[{0}]");
+        private readonly ElementLocator characteristicComment = new ElementLocator(Locator.XPath, "(//characteristic-list-view//span[contains(@class, 'name')])[{0}]/following-sibling::span");
 
         public ViewPropertyPage(DriverContext driverContext) : base(driverContext)
         {
@@ -52,6 +56,12 @@
 
         public string ActivityType => this.Driver.GetElement(this.activityType).Text;
 
+        public ViewPropertyPage OpenViewPropertyPageWithId(string id)
+        {
+            new CommonPage(this.DriverContext).NavigateToPageWithId("view property", id);
+            return this;
+        }
+
         public bool IsAddressDetailsVisible(string propertyDetail)
         {
             return this.Driver.IsElementPresent(this.expectedAddressField.Format(propertyDetail), BaseConfiguration.MediumTimeout);
@@ -64,7 +74,7 @@
 
         public ViewPropertyPage AddActivity()
         {
-            this.Driver.GetElement(this.addActivityButton).Click();
+            this.Driver.GetElement(this.addActivity).Click();
             return this;
         }
 
@@ -111,6 +121,23 @@
         {
             List<string> keys = this.Driver.GetElements(this.propertyDetailsLabels).Select(el => el.Text.Replace(" ", string.Empty).ToLower()).ToList();
             List<string> values = this.Driver.GetElements(this.propertyDetailsValues).Select(el => el.Text.Trim()).ToList();
+            return keys.Zip(values, (key, value) => new { key, value }).ToDictionary(x => x.key, x => x.value);
+        }
+
+        public Dictionary<string, string> GetCharacteristics()
+        {
+            var keys = new List<string>();
+            var values = new List<string>();
+
+            int charCount = this.Driver.GetElements(this.characteristics).Count;
+
+            for (var i = 1; i <= charCount; ++i)
+            {
+                keys.Add(this.Driver.GetElement(this.characteristicName.Format(i)).Text);
+                values.Add(this.Driver.IsElementPresent(this.characteristicComment.Format(i), BaseConfiguration.ShortTimeout)
+                    ? this.Driver.GetElement(this.characteristicComment.Format(i)).Text
+                    : string.Empty);
+            }
             return keys.Zip(values, (key, value) => new { key, value }).ToDictionary(x => x.key, x => x.value);
         }
     }

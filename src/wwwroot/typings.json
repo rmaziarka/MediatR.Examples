@@ -5,6 +5,7 @@
     "angular-resource": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-resource.d.ts#621f12c6602bcc569bc6ad3a67a0af3ba3832618",
     "angular-translate": "registry:dt/angular-translate#2.4.0+20160318095457",
     "angular-ui-router": "github:DefinitelyTyped/DefinitelyTyped/angular-ui-router/angular-ui-router.d.ts#655f8c1bf3c71b0e1ba415b36309604f79326ac8",
+    "filesize": "registry:dt/filesize#3.2.1+20160412140448",
     "google.maps": "github:DefinitelyTyped/DefinitelyTyped/googlemaps/google.maps.d.ts#a81e85f5ed16049a6e33da6657ec261df06caea5",
     "jasmine": "github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#dd638012d63e069f2c99d06ef4dcc9616a943ee4",
     "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#470954c4f427e0805a2d633636a7c6aa7170def8",

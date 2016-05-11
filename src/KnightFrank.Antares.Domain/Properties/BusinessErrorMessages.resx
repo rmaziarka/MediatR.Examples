@@ -118,6 +118,39 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Entity_Not_Exists" xml:space="preserve">
-    <value>{0} with given id '{1}' does not exist in the database</value>
+    <value>{0} with given id '{1}' does not exist in the database.</value>
+  </data>
+  <data name="EnumType_Item_Not_Exists" xml:space="preserve">
+    <value>Enum type {0} with given item id '{1}' does not exist in the database.</value>
+  </data>
+  <data name="Inconsistent_Address_Country_Id" xml:space="preserve">
+    <value>Inconsistent address country with address form definition.</value>
+  </data>
+  <data name="Inconsistent_Dynamic_Configuration" xml:space="preserve">
+    <value>{0} configuration is inconsistent.</value>
+  </data>
+  <data name="Missing_Activity_Vendors_Id" xml:space="preserve">
+    <value>One or more vendors are not exist.</value>
+  </data>
+  <data name="Missing_Company_Contacts_Id" xml:space="preserve">
+    <value>One or more contacts are not exist.</value>
+  </data>
+  <data name="Missing_Requirement_Applicants_Id" xml:space="preserve">
+    <value>One or more attendees are not on the applicant list.</value>
+  </data>
+  <data name="Missing_Requirement_Attendees_Id" xml:space="preserve">
+    <value>One or more attendees are not on the applicant list.</value>
+  </data>
+  <data name="Ownership_Dates_Overlap" xml:space="preserve">
+    <value>The ownership dates overlap.</value>
+  </data>
+  <data name="Property_Format_Is_Invalid" xml:space="preserve">
+    <value>The '{0}' property value format is inappropriate.</value>
+  </data>
+  <data name="Property_Should_Be_Empty" xml:space="preserve">
+    <value>The '{0}' property value should be empty.</value>
+  </data>
+  <data name="Property_Should_Not_Be_Empty" xml:space="preserve">
+    <value>The '{0}' property value is required.</value>
   </data>
 </root>

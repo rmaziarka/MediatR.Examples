@@ -25,7 +25,8 @@ module Antares.TestHelpers {
         }
 
         public static generate(specificData?: any): Business.CharacteristicGroup {
-            return new Business.CharacteristicGroup(CharacteristicGroupUsageGenerator.generateDto(specificData));
+            var characteristicGroup = new Business.CharacteristicGroup(CharacteristicGroupUsageGenerator.generateDto());
+            return angular.extend(characteristicGroup, specificData || {});
         }
 
         public static generateMany(n: number): Business.CharacteristicGroup[] {
@@ -33,7 +34,7 @@ module Antares.TestHelpers {
         }
 
         private static makeRandom(text: string): string {
-            return text + _.random(1, 1000);
+            return text + _.random(1, 1000000);
         }
     }
 }

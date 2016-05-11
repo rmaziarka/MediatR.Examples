@@ -3,12 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Linq.Expressions;
 
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Model.Common;
 
+    [ExcludeFromCodeCoverage]
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
         private readonly KnightFrankContext dbContext;
@@ -65,7 +67,7 @@
                         .Where(e => e.State == EntityState.Added)
                         .Select(e => e.Entity)
                         .ToList()
-                        .ForEach(e => 
+                        .ForEach(e =>
                         {
                             e.CreatedDate = utcNow;
                             e.LastModifiedDate = utcNow;

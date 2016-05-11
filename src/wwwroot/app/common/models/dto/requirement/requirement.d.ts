@@ -31,5 +31,7 @@
         maxLandArea?: number;
 
         description?: string;
+
+        viewings?: IViewing[];
     }
 }

@@ -6,9 +6,9 @@
         public AttachmentConfiguration()
         {
             this.Property(p => p.FileName).HasMaxLength(255).IsRequired();
-            this.Property(p => p.AzureDocumentId).IsRequired();
+            this.Property(p => p.ExternalDocumentId).IsRequired();
 
-            this.HasRequired(p => p.FileType).WithMany().WillCascadeOnDelete(false);
+            this.HasRequired(p => p.DocumentType).WithMany().WillCascadeOnDelete(false);
         }
     }
 }

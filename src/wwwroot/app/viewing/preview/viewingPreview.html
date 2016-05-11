@@ -1,0 +1,46 @@
+
+<section class="section-details">
+    <h5 translate="VIEWING.ADD.ACTIVITY"></h5>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div id="viewing-preview-activity-details" class="panel-item">
+                {{vm.viewing.activity.property.address.propertyName || ''}}<span ng-if="vm.viewing.activity.property.address.propertyName && (vm.viewing.activity.property.address.propertyNumber || vm.viewing.activity.property.address.line2)">, </span>
+                {{(vm.viewing.activity.property.address.propertyNumber || '') + ' ' + (vm.viewing.activity.property.address.line2 || '')}}
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <a translate="COMMON.VIEW"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-details">
+    <h5 translate="VIEWING.ADD.DATE"></h5>
+    <time id="viewing-preview-date">{{vm.viewing.startDate | date : 'dd-MM-yyyy'}}, {{vm.viewing.startDate | date : 'HH:mm'}} - {{vm.viewing.endDate | date : 'HH:mm'}}</time>
+</section>
+
+<section class="section-details">
+    <h5 translate="VIEWING.ADD.NEGOTIATOR"></h5>
+    <div class="panel panel-default">
+        <div id="viewing-preview-negotiator-details" class="panel-body">{{vm.viewing.negotiator.firstName + ' ' + vm.viewing.negotiator.lastName }}</div>
+    </div>
+</section>
+
+<section class="section-details" id="viewing-preview-attendees">
+    <h5 translate="VIEWING.ADD.ATTENDEES"></h5>
+    <div class="panel panel-default" ng-repeat="attendee in vm.viewing.attendees">
+        <div id="viewing-preview-attendee-item-{{attendee.id}}" class="panel-body">{{attendee.firstName + ' ' + attendee.surname }}</div>
+    </div>
+</section>
+
+<section class="section-details">
+    <h5 translate="VIEWING.ADD.INVITATIONTEXT"></h5>
+    <p id="viewing-preview-invitation-text">{{vm.viewing.invitationText}}</p>
+</section>
+
+<section class="section-details">
+    <h5 translate="VIEWING.ADD.POSTVIEWINGCOMMENT"></h5>
+    <p id="viewing-preview-post-viewing-comment">{{vm.viewing.postviewingComment}}</p>
+</section>

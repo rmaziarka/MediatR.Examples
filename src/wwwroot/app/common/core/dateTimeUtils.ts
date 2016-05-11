@@ -1,6 +1,7 @@
 /// <reference path="../../typings/_all.d.ts" />
 module Antares.Core{
-    export class DateTimeUtils {
+    declare var moment: any;
+    export class DateTimeUtils {        
         static createDateAsUtc(date: any): Date {
             if (!date)
                 return date;
@@ -33,6 +34,11 @@ module Antares.Core{
             }
 
             return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+        }
+
+        static getDatePart(datetime: any): any
+        {
+            return moment(datetime).format("YYYY-MM-DD");
         }
     }
 }

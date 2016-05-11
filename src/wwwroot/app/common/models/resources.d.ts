@@ -35,13 +35,13 @@ declare module Antares.Common.Models {
         interface IRequirementResource extends ng.resource.IResource<Dto.IRequirement> {
         }
 
+        interface IViewingResource extends ng.resource.IResource<Dto.IViewing> {
+        }
+
         interface IPropertyResource extends ng.resource.IResource<Dto.IProperty> {
         }
 
         interface ICountryLocalisedResource extends ng.resource.IResource<Dto.ICountryLocalised> {
-        }
-
-        interface IEnumResource extends ng.resource.IResource<Dto.IEnum> {
         }
 
         interface ICountryResource extends ng.resource.IResource<Dto.ICountryLocalised> {
@@ -50,13 +50,22 @@ declare module Antares.Common.Models {
         interface IAddressFormResource extends ng.resource.IResource<Dto.IAddressForm> {
         }
 
-        interface IOwnershipResource extends ng.resource.IResource<Antares.Common.Models.Dto.IOwnership> {
+        interface IOwnershipResource extends ng.resource.IResource<Dto.IOwnership> {
         }
 
-        interface IRequirementNoteResource extends ng.resource.IResource<Antares.Common.Models.Dto.IRequirementNote> {
+        interface IRequirementNoteResource extends ng.resource.IResource<Dto.IRequirementNote> {
         }
 
         interface ICharacteristicGroupUsageResource extends ng.resource.IResource<Dto.ICharacteristicGroupUsage> {
+        }
+
+        interface IActivityAttachmentResource extends ng.resource.IResource<Dto.IAttachment> {
+        }
+
+        interface IAzureUploadUrlResource extends ng.resource.IResource<Dto.IAzureUploadUrlContainer> {
+        }
+
+        interface IAzureDownloadUrlResource extends ng.resource.IResource<Dto.IAzureDownloadUrlContainer> {
         }
 
         // *** IResourceClass extensions ***
@@ -80,6 +89,13 @@ declare module Antares.Common.Models {
             getPropertyTypes(params: any, ownership: any): ng.resource.IResource<Dto.IOwnership>;
             getAttributes(params: any, ownership: any): ng.resource.IResource<Dto.IAttribute>;
             getCharacteristics(params: any): ng.resource.IResource<Dto.ICharacteristicGroupUsage>;
+        }
+
+        interface IRequirementResourceClass extends Resources.IBaseResourceClass<Resources.IRequirementResource> {
+        }
+
+        interface IViewingResourceClass extends Resources.IBaseResourceClass<Resources.IViewingResource> {
+            createViewing(params: any, viewing: any): ng.resource.IResource<Dto.IViewing>;
         }
 
         // - country -

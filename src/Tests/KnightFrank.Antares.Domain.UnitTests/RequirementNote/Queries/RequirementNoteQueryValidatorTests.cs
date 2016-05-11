@@ -8,6 +8,7 @@
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Domain.RequirementNote.Queries;
+    using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
 
     using Ploeh.AutoFixture.Xunit2;
 
@@ -43,9 +44,7 @@
             ValidationResult validationResult = validator.Validate(query);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(query.Id));
-            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == nameof(Messages.notempty_error));
+            validationResult.IsInvalid(nameof(query.Id), nameof(Messages.notempty_error));
         }
     }
 }
