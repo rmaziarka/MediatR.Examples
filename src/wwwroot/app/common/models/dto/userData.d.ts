@@ -3,7 +3,7 @@
         name: string;
         email: string;
         country: string;
-        division: any;
+        division: IEnumTypeItem;
         roles: string[];
     }
 }

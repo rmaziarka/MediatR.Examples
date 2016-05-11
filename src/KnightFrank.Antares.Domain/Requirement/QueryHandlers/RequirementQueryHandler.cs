@@ -3,9 +3,9 @@
     using System.Data.Entity;
     using System.Linq;
 
-    using KnightFrank.Antares.Dal.Model.Property;
-    using KnightFrank.Antares.Dal.Repository;
-    using KnightFrank.Antares.Domain.Requirement.Queries;
+    using Dal.Model.Property;
+    using Dal.Repository;
+    using Queries;
 
     using MediatR;
 
@@ -26,6 +26,11 @@
                     .Include(req => req.Contacts)
                     .Include(req => req.Address)
                     .Include(req => req.RequirementNotes)
+                    .Include(req => req.Viewings)
+                    .Include(req => req.Viewings.Select(v => v.Attendees))
+                    .Include(req => req.Viewings.Select(v => v.Negotiator))
+                    .Include(req => req.Viewings.Select(v => v.Activity))
+                    .Include(req => req.Viewings.Select(v => v.Activity.Property.Address))
                     .Include(req => req.RequirementNotes.Select(rn => rn.User))
                     .SingleOrDefault(req => req.Id == message.Id);
 

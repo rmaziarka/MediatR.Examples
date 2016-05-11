@@ -5,6 +5,7 @@ module Antares {
         export module Component {
             export class SidePanelController {
                 private componentId: string;
+                isBusy: boolean = false;
 
                 isFooterVisible: boolean = false;
                 isHeaderVisible: boolean = false;

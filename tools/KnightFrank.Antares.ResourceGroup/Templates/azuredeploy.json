@@ -6,6 +6,13 @@
       "type": "string",
       "defaultValue": "dev"
     },
+    "VmIISNameSuffix": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Additional discriminator for IIS machines. Might be set e.g. to feature branch name or PBI id."
+      }
+    },
     "VmSqlAdminUserName": {
       "type": "string",
       "minLength": 1
@@ -103,37 +110,43 @@
       "type": "string"
     },
     "SqlInstanceName": {
-      "type": "string"
+      "type": "string",
+      "defaultValue": "MSSQLSERVER"
     },
     "VirtualNetworkSubnetId": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Id of the virtual network subnet configured to use within given subscription. Easiest way to get it is navigating through resources on https://resources.azure.com"
+      }
     },
     "RgStorageAccountName": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Storage account name from common shared resource group. This is where vm images will be stored."
+      }
     }
   },
   "variables": {
     "ResourceGroupNameTokens": "[split(resourceGroup().name, '-')]",
     "ResourceNameSuffix": "[variables('ResourceGroupNameTokens')[sub(length(variables('ResourceGroupNameTokens')), 1)]]",
+    "VmIISNameSuffix": "[parameters('VmIISNameSuffix')]",
     "ResourceNamePrefix": "[substring(resourceGroup().name, 3, sub(length(resourceGroup().name), add(3, length(variables('ResourceNameSuffix')))))]",
     "RgStorageAccountName": "[parameters('RgStorageAccountName')]",
     "VmSqlName": "[concat(variables('ResourceNamePrefix'), 'Vm-Sql-', variables('ResourceNameSuffix'))]",
     "VmSqlImagePulisher": "MicrosoftWindowsServer",
     "VmSqlImageOffer": "WindowsServer",
-    "VmSqlOSDiskName": "KnightFrank-Antares-VmSqlOSDisk",
+    "VmSqlOSDiskName": "[concat('KnightFrank-Antares-VmSqlOSDisk', variables('ResourceNameSuffix'))]",
     "VmSqlVmSize": "Standard_D1",
     "VmStorageAccountContainerName": "vhds",
     "VmSqlNicName": "[concat(variables('ResourceNamePrefix'), 'Vm-Sql-Nic-', variables('ResourceNameSuffix'))]",
     "VmSqlHostName": "[concat(variables('ResourceGroupNameTokens')[5], 'VmSql', variables('ResourceNameSuffix'))]",
-    "VmSqlDnsName": "[toLower(variables('VmSqlName'))]",
     "VmIISHostName": "[concat(variables('ResourceGroupNameTokens')[5], 'VmIIS', variables('ResourceNameSuffix'))]",
-    "VmIISDnsName": "[toLower(variables('VmIISName'))]",
     "VmIISImagePublisher": "MicrosoftWindowsServer",
     "VmIISImageOffer": "WindowsServer",
-    "VmIISOSDiskName": "KnightFrank-Antares-VmIISOSDisk",
+    "VmIISOSDiskName": "[concat('KnightFrank-Antares-VmIISOSDisk', variables('ResourceNameSuffix'), variables('VmIISNameSuffix'))]",
     "VmIISVmSize": "Standard_D1",
-    "VmIISNicName": "[concat(variables('ResourceNamePrefix'), 'Vm-IIS-Nic-', variables('ResourceNameSuffix'))]",
-    "VmIISName": "[concat(variables('ResourceNamePrefix'), 'Vm-IIS-', variables('ResourceNameSuffix'))]",
+    "VmIISNicName": "[concat(variables('ResourceNamePrefix'), 'Vm-IIS-Nic-', variables('ResourceNameSuffix'), variables('VmIISNameSuffix'))]",
+    "VmIISName": "[concat(variables('ResourceNamePrefix'), 'Vm-IIS-', variables('ResourceNameSuffix'), variables('VmIISNameSuffix'))]",
     "SqlUserName": "[concat('KnightFrank.Antares.', toUpper(substring(parameters('EnvironmentPrefix'), 0, 1)), toLower(substring(parameters('EnvironmentPrefix'), 1, sub(length(parameters('EnvironmentPrefix')), 1))), '.User')]",
     "VirtualNetworkSubnetRef": "[parameters('VirtualNetworkSubnetId')]"
   },
@@ -249,7 +262,8 @@
                 "commonShareCredential": {
                   "UserName": "[parameters('CommonShareUserName')]",
                   "Password": "[parameters('CommonShareKey')]"
-                }
+                },
+                "octopusThumbprint": "[parameters('OctopusThumbprint')]"
               }
             }
           }
@@ -359,14 +373,15 @@
           }
         }
       ]
-    } /*,
+    },
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('VmIISName'),'/joindomain')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', variables('VmIISName'))]"
+        "[concat('Microsoft.Compute/virtualMachines/', variables('VmIISName'))]",
+        "[concat('Microsoft.Compute/virtualMachines/', variables('VmIISName'), '/extensions/KnightFrank-Antares-Vm-IIS-DSC')]"
       ],
       "properties": {
         "publisher": "Microsoft.Compute",
@@ -390,7 +405,8 @@
       "name": "[concat(variables('VmSqlName'),'/joindomain')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', variables('VmSqlName'))]"
+        "[concat('Microsoft.Compute/virtualMachines/', variables('VmSqlName'))]",
+        "[concat('Microsoft.Compute/virtualMachines/', variables('VmSqlName'), '/extensions/KnightFrank-Antares-Vm-Sql-DSC')]"
       ],
       "properties": {
         "publisher": "Microsoft.Compute",
@@ -407,8 +423,7 @@
           "Password": "[parameters('domainPassword')]"
         }
       }
-    }*/
-
+    }
   ],
   "outputs": {
   }

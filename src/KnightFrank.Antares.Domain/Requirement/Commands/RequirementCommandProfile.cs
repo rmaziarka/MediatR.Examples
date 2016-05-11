@@ -4,6 +4,7 @@
 
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Domain.Common.Commands;
 
     public class RequirementCommandProfile : Profile
     {
@@ -11,7 +12,7 @@
         {
             this.CreateMap<CreateRequirementCommand, Requirement>();
 
-            this.CreateMap<CreateOrUpdateRequirementAddress, Address>();
+            this.CreateMap<CreateOrUpdateAddress, Address>();
         }
     }
 }

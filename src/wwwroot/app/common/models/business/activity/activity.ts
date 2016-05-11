@@ -8,6 +8,7 @@ module Antares.Common.Models.Business {
         activityTypeId: string = '';
         activityType: Dto.IActivityType = null;
         contacts: Contact[] = [];
+        attachments: Antares.Common.Models.Business.Attachment[] = [];
         property: Property = null;
         createdDate: Date = null;
         marketAppraisalPrice: number = null;
@@ -21,6 +22,12 @@ module Antares.Common.Models.Business {
                 this.createdDate = Core.DateTimeUtils.convertDateToUtc(activity.createdDate);
                 this.contacts = activity.contacts.map((contact: Dto.IContact) => { return new Contact(contact) });
                 this.property = new Property(activity.property);
+                if (activity.attachments) {
+                    this.attachments = activity.attachments.map((attachment: Dto.IAttachment) =>{ return new Antares.Common.Models.Business.Attachment(attachment) });
+                }
+                else {
+                    this.attachments = [];
+                }
             }
         }
     }

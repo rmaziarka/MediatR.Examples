@@ -3,5 +3,6 @@
 declare module Antares.Common.Models {
     interface IAppConfig {
         rootUrl: string;
+        fileChunkSizeInBytes: number;
     }
 }

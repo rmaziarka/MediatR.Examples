@@ -34,7 +34,7 @@
             this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
         }
 
-        [Given(@"User navigates to create company page")]
+        [When(@"User navigates to create company page")]
         public void OpenCreateCompanyPage()
         {
             CreateCompanyPage page = new CreateCompanyPage(this.driverContext).OpenCreateCompanyPage();
@@ -69,7 +69,7 @@
             page.ContactsList.SaveContact().WaitForContactListToHide();
         }
 
-        [Then(@"list of company contacts should contain following contacts")]
+        [Then(@"List of company contacts should contain following contacts")]
         public void CheckContactsList(Table table)
         {
             var page = this.scenarioContext.Get<CreateCompanyPage>("CreateCompanyPage");
@@ -80,7 +80,13 @@
             List<string> selectedContacts = page.Contacts;
 
             Assert.Equal(contacts.Count, selectedContacts.Count);
-            contacts.Should().BeEquivalentTo(selectedContacts);
+            contacts.ShouldBeEquivalentTo(selectedContacts);
+        }
+
+        [Then(@"Company form on create company page should be diaplyed")]
+        public void CheckIfCreateContactIsDisplayed()
+        {
+            Assert.True(new CreateCompanyPage(this.driverContext).IsCompanyFormPresent());
         }
 
         [Then(@"New company should be created")]

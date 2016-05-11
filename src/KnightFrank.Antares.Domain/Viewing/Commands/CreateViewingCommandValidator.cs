@@ -1,16 +1,27 @@
 namespace KnightFrank.Antares.Domain.Viewing.Commands
 {
-    using FluentValidation;
-    using FluentValidation.Results;
+    using System;
 
-    using KnightFrank.Antares.Dal.Model.Address;
-    using KnightFrank.Antares.Dal.Model.Resource;
-    using KnightFrank.Antares.Dal.Repository;
+    using FluentValidation;
 
     public class CreateViewingCommandValidator : AbstractValidator<CreateViewingCommand>
     {
         public CreateViewingCommandValidator()
         {
+            this.RuleFor(x => x.StartDate).NotEmpty();
+            this.RuleFor(x => x.EndDate).NotEmpty();
+
+            this.RuleFor(x => x.EndDate).GreaterThan(x => x.StartDate)
+                .When(x => x.StartDate != DateTime.MinValue)
+                .When(x => x.EndDate != DateTime.MinValue)
+                .OverridePropertyName("EndDate")
+                .WithMessage("End date cannot be earlier than start date.");
+
+            this.RuleFor(x => x.ActivityId).NotEmpty();
+            this.RuleFor(x => x.RequirementId).NotEmpty();
+            this.RuleFor(x => x.InvitationText).Length(0, 4000);
+            this.RuleFor(x => x.PostViewingComment).Length(0, 4000);
+            this.RuleFor(x => x.AttendeesIds).NotEmpty();
         }
     }
 }

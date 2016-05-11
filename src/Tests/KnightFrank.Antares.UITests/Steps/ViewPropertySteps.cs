@@ -8,8 +8,11 @@
     using FluentAssertions;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.UITests.Pages;
     using KnightFrank.Antares.UITests.Pages.Panels;
+
+    using Objectivity.Test.Automation.Common;
 
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
@@ -19,6 +22,7 @@
     [Binding]
     public class ViewPropertySteps
     {
+        private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
 
         public ViewPropertySteps(ScenarioContext scenarioContext)
@@ -29,6 +33,15 @@
             }
 
             this.scenarioContext = scenarioContext;
+            this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
+        }
+
+        [When(@"User navigates to view property page with id")]
+        public void OpenViewRequirementPageWithId()
+        {
+            Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
+            ViewPropertyPage page = new ViewPropertyPage(this.driverContext).OpenViewPropertyPageWithId(propertyId.ToString());
+            this.scenarioContext.Set(page, "ViewPropertyPage");
         }
 
         [When(@"User clicks add activites button on view property page")]
@@ -67,7 +80,7 @@
         public void OpenViewActivityPage()
         {
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-            this.scenarioContext.Set(page.PreviewDetails.ClickViewActivity(), "ViewActivityPage");
+            this.scenarioContext.Set(page.PreviewDetails.WaitForPanelToBeVisible().ClickViewActivity(), "ViewActivityPage");
         }
 
         [When(@"User selects (.*) activity type on activity panel")]
@@ -128,7 +141,7 @@
         [Then(@"Activity creation date is set to current date on view property page")]
         public void CheckifActivityDateCorrect()
         {
-            Assert.Equal(DateTime.Now.ToString("dd-MM-yyyy"),
+            Assert.Equal(DateTime.UtcNow.ToString("dd-MM-yyyy"),
                 this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").GetActivityDate());
         }
 
@@ -138,9 +151,10 @@
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
             var details = table.CreateInstance<ActivityDetails>();
 
-            Assert.Equal(details.Vendor, page.ActivityVendor);
-            Assert.Equal(details.Status, page.ActivityStatus);
-            Assert.Equal(details.Type, page.ActivityType);
+            Verify.That(this.driverContext,
+                () => Assert.Equal(details.Vendor, page.ActivityVendor),
+                () => Assert.Equal(details.Status, page.ActivityStatus),
+                () => Assert.Equal(details.Type, page.ActivityType));
         }
 
         [Then(@"Property should be updated with address details")]
@@ -222,8 +236,20 @@
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
             var details = table.CreateInstance<ActivityDetails>();
 
-            Assert.Equal(details.Vendor, page.Activity.GetActivityVendor());
-            Assert.Equal(details.Status, page.Activity.GetActivityStatus());
+            Verify.That(this.driverContext,
+                () => Assert.Equal(details.Vendor, page.Activity.GetActivityVendor()),
+                () => Assert.Equal(details.Status, page.Activity.GetActivityStatus()));
+        }
+
+        [Then(@"Characteristics are displayed on view property page")]
+        public void CheckCharacteristics(Table table)
+        {
+            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+            Dictionary<string, string> actualDetails = page.GetCharacteristics();
+            Dictionary<string, string> characteristics = table.CreateSet<Characteristic>()
+                                                              .ToDictionary(x => x.Name, x => x.Comment);
+
+            actualDetails.ShouldBeEquivalentTo(characteristics);
         }
     }
 }

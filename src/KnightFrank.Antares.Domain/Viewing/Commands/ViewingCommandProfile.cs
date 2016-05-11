@@ -8,6 +8,9 @@
         protected override void Configure()
         {
             this.CreateMap<CreateViewingCommand, Viewing>();
+
+            this.CreateMap<UpdateViewingCommand, Viewing>()
+                .ForMember(x => x.Attendees, opt => opt.Ignore());
         }
     }
 }

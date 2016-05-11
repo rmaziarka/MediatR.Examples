@@ -8,3 +8,12 @@ ActivityStatus;MarketAppraisal;en;Market appraisal
 ActivityStatus;NotSelling;en;Not selling
 Division;Residential;en;Residential property
 Division;Commercial;en;Commercial property
+ActivityDocumentType;TermsOfBusiness;en;Terms of Business
+ActivityDocumentType;MarketingSignOff;en;Marketing Sign Off
+ActivityDocumentType;CDDDocument;en;CDD Document
+ActivityDocumentType;Photograph;en;Photograph
+ActivityDocumentType;FloorPlan;en;Floor Plan
+ActivityDocumentType;Brochure;en;Brochure
+ActivityDocumentType;VideoTour;en;Video Tour
+ActivityDocumentType;EPC;en;EPC
+ActivityDocumentType;GasCertificate;en;Gas Certificate

@@ -3,8 +3,12 @@
 </div>
 <div class="panel panel-default" ng-repeat="activity in vm.activities">
     <div class="panel-body">
-        <label>
-            <input type="radio" name="activity" ng-model="vm.selectedActivity" value="{{::activity.id}}"/>{{:: activity.propertyName + ' ' + activity.propertyNumber + ' ' + activity.line2 }}
-        </label>
+        <div class="radio">
+            <label>
+                <input type="radio" name="activity" ng-model="vm.selectedActivity" value="{{::activity.id}}"/>
+                {{:: activity.propertyName || ''}}<span ng-if="activity.propertyName && (activity.propertyNumber || activity.line2)">, </span>
+                {{:: (activity.propertyNumber || '') + ' ' + (activity.line2 || '')}}
+            </label>
+        </div>
     </div>
 </div>

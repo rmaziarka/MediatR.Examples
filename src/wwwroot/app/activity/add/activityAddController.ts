@@ -7,18 +7,20 @@ module Antares.Activity {
     export class ActivityAddController {
         propertyTypeId: string;
         componentId: string;
+        defaultActivityStatusCode: string = 'PreAppraisal';
         activities: Common.Models.Business.Activity[];
         activityStatuses: any;
-        selectedActivityStatus: any;
-        selectedActivityType: any;
-        defaultActivityStatusCode: string = 'PreAppraisal';
         activityResource: Common.Models.Resources.IActivityResourceClass;
-        activityTypes: any[];
 
+        public enumTypeActivityStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityStatus;
+        public selectedActivityStatusId: string;
+        public selectedActivityType: any;
+        public activityTypes: any[];
         public vendors: Array<Business.Contact> = [];
 
         constructor(
-            componentRegistry: Core.Service.ComponentRegistry,
+            private componentRegistry: Core.Service.ComponentRegistry,
+            private enumService: Services.EnumService,
             private dataAccessService: Services.DataAccessService,
             private $scope: ng.IScope,
             private $q: ng.IQService) {
@@ -26,10 +28,11 @@ module Antares.Activity {
             componentRegistry.register(this, this.componentId);
 
             this.activityResource = dataAccessService.getActivityResource();
-            this.dataAccessService.getEnumResource().get({ code: 'ActivityStatus' }).$promise.then(this.onActivityStatusLoaded);
+            this.enumService.getEnumPromise().then(this.onEnumLoaded);
+
             this.loadActivityTypes();
         }
-        
+
         loadActivityTypes = () => {
             this.activityResource
                 .getActivityTypes({
@@ -41,10 +44,9 @@ module Antares.Activity {
                 });
         }
 
-        onActivityStatusLoaded = (result: any) => {
-            this.setDefaultActivityStatus(result.items);
-
-            this.activityStatuses = result.items;
+        onEnumLoaded = (result: any) => {
+            this.activityStatuses = result[Dto.EnumTypeCode.ActivityStatus];
+            this.setDefaultActivityStatus(this.activityStatuses);
         }
 
         setVendors(vendors: Array<Business.Contact>){
@@ -58,7 +60,7 @@ module Antares.Activity {
 
             var activity = new Business.Activity();
             activity.propertyId = propertyId;
-            activity.activityStatusId = this.selectedActivityStatus.id;
+            activity.activityStatusId = this.selectedActivityStatusId;
             activity.activityTypeId = this.selectedActivityType.id;
             activity.contacts = this.vendors;
 
@@ -79,7 +81,7 @@ module Antares.Activity {
             var defaultActivityStatus: any = _.find(result, { 'code': this.defaultActivityStatusCode });
 
             if (defaultActivityStatus) {
-                this.selectedActivityStatus = defaultActivityStatus;
+                this.selectedActivityStatusId = defaultActivityStatus.id;
             }
         }
 

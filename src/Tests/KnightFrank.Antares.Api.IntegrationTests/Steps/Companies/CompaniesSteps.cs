@@ -65,7 +65,7 @@
         private void CreateCompany(CreateCompanyCommand company)
         {
             string requestUrl = $"{ApiUrl}";
-            var contactList = this.scenarioContext.Get<List<Contact>>("Contact List");
+            var contactList = this.scenarioContext.Get<List<Contact>>("ContactList");
             company.ContactIds = contactList.Select(x => x.Id).ToList();
 
             this.scenarioContext.Set(new Company { Name = company.Name, Contacts = contactList }, "Company");

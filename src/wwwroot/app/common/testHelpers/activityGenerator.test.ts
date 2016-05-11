@@ -11,6 +11,7 @@ module Antares.TestHelpers {
                 activityStatusId: ActivityGenerator.makeRandom('activityStatusId'),
                 activityTypeId: ActivityGenerator.makeRandom('activityTypeId'),
                 contacts: [],
+                attachments: [],
                 createdDate: new Date(),
                 id: ActivityGenerator.makeRandom('id'),
                 property: PropertyGenerator.generateDto(),
@@ -33,7 +34,7 @@ module Antares.TestHelpers {
         }
 
         private static makeRandom(text: string): string {
-            return text + _.random(1, 1000);
+            return text + _.random(1, 1000000);
         }
     }
 }

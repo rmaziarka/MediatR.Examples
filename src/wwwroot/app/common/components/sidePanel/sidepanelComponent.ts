@@ -11,7 +11,8 @@ module Antares.Common.Component {
             'footer': '?sidePanelFooter'
         },
         bindings: {
-            componentId: '<'
+            componentId: '<',
+            isBusy: '<'
         }
     });
 }

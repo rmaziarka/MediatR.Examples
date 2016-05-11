@@ -45,14 +45,14 @@
         [Given(@"User creates contacts in database with following data")]
         public void CreateUsersInDb(Table table)
         {
-            IEnumerable<Contact> contact = table.CreateSet<Contact>().ToList();
-            this.fixture.DataContext.Contacts.AddRange(contact);
+            IEnumerable<Contact> contacts = table.CreateSet<Contact>().ToList();
+            this.fixture.DataContext.Contacts.AddRange(contacts);
             this.fixture.DataContext.SaveChanges();
 
-            this.scenarioContext.Set(contact, "Contact List");
+            this.scenarioContext.Set(contacts, "ContactList");
         }
 
-        [When(@"User creates contact using api with max lenght fields")]
+        [When(@"User creates contact using api with max length fields")]
         public void CreateUsersWithMaxFields()
         {
             const int max = 128;
@@ -67,14 +67,11 @@
             this.CreateContact(contact);
         }
 
-        [When(@"Try to creates a contact with following data")]
-        public void TryToCreateContact(Table table)
+        [When(@"User creates contact using api with following data")]
+        public void CreateContact(Table table)
         {
-            string requestUrl = $"{ApiUrl}";
             var contact = table.CreateInstance<Contact>();
-            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, contact);
-
-            this.scenarioContext.SetHttpResponseMessage(response);
+            this.CreateContact(contact);
         }
 
         [When(@"User retrieves all contact details")]
@@ -91,34 +88,43 @@
         {
             if (contactId.Equals("latest"))
             {
-                contactId = this.scenarioContext.GetResponseContent().Replace("\"", string.Empty);
-
-                var contacts = this.scenarioContext.Get<List<Contact>>("Contact List");
-                contacts.First().Id = new Guid(contactId);
-                this.scenarioContext["Contact List"] = contacts;
+                contactId = this.scenarioContext.Get<List<Contact>>("ContactList")[0].Id.ToString();
+            }
+            else if (contactId.Equals("invalid"))
+            {
+                contactId = Guid.NewGuid().ToString();
             }
 
-            string requestUrl = $"{ApiUrl}/" + contactId;
+            string requestUrl = $"{ApiUrl}/{contactId}";
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
 
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [Then(@"contact details should be the same as already added")]
-        public void CheckContactDetails()
+        [Then(@"Contact details should be the same as already added")]
+        public void CheckContactDetailsFromPost()
         {
-            var expectedContact = this.scenarioContext.Get<Contact>("Contact");
-            var id = new Guid(this.scenarioContext.GetResponseContent().Replace("\"", ""));
+            var contactId = JsonConvert.DeserializeObject<Guid>(this.scenarioContext.GetResponseContent());
+            var contact = this.scenarioContext.Get<Contact>("Contact");
+            contact.Id = contactId;
 
-            Contact contact = this.fixture.DataContext.Contacts.Single(x => x.Id.Equals(id));
-            expectedContact.Id = id;
+            Contact expectedContact = this.fixture.DataContext.Contacts.Single(x => x.Id.Equals(contactId));
             contact.ShouldBeEquivalentTo(expectedContact);
         }
 
-        [Then(@"contact details should have expected values")]
+        [Then(@"Get contact details should be the same as already added")]
+        public void CheckContactDetailsFromGet()
+        {
+            var contact = JsonConvert.DeserializeObject<Contact>(this.scenarioContext.GetResponseContent());
+
+            Contact expectedContact = this.fixture.DataContext.Contacts.Single(x => x.Id.Equals(contact.Id));
+            contact.ShouldBeEquivalentTo(expectedContact);
+        }
+
+        [Then(@"Contacts details should have expected values")]
         public void CheckContactDetailsHaveExpectedValues()
         {
-            var contactList = this.scenarioContext.Get<List<Contact>>("Contact List");
+            var contactList = this.scenarioContext.Get<List<Contact>>("ContactList");
 
             var currentContactsDetails =
                 JsonConvert.DeserializeObject<List<Contact>>(this.scenarioContext.GetResponseContent());

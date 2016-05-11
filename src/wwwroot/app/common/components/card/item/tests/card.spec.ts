@@ -12,7 +12,7 @@ module Antares {
         var pageObjectSelectors = {
             panelBody: 'div.panel-body',
             template: 'div.test-card-template-element',
-            detailsLink: 'a#detailsLink'
+            detailsLink: 'a.detailsLink'
         }
 
         var mockedTemplateUrl = 'app/common/components/card/item/tests/testCardTemplate.html',

@@ -15,6 +15,7 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Characteristics;
     using KnightFrank.Antares.Dal.Model.Resource;
+    using KnightFrank.Antares.Domain.Common.Commands;
     using KnightFrank.Antares.Domain.Property.Commands;
 
     using Newtonsoft.Json;
@@ -49,7 +50,7 @@
         [Given(@"Address for add/update property is defined")]
         public void AddressIsDefined(Table table)
         {
-            var address = table.CreateInstance<CreateOrUpdatePropertyAddress>();
+            var address = table.CreateInstance<CreateOrUpdateAddress>();
             address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
             address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
 
@@ -59,7 +60,7 @@
         [Given(@"Address for add/update property is defined with max length fields")]
         public void AddressIsDefinedWithMaxFields()
         {
-            var address = new CreateOrUpdatePropertyAddress
+            var address = new CreateOrUpdateAddress
             {
                 PropertyName = StringExtension.GenerateMaxAlphanumericString(128),
                 PropertyNumber = StringExtension.GenerateMaxAlphanumericString(8),
@@ -97,9 +98,9 @@
         {
             var address = table.CreateInstance<Address>();
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
-            var attributeValues = this.scenarioContext.Get<AttributeValues>("AttributeValues");
-            var createOrUpdatePropertyCharacteristic =
-                this.scenarioContext.Get<List<CreateOrUpdatePropertyCharacteristic>>("PropertyCharacteristics");
+            AttributeValues attributeValues = this.scenarioContext.Keys.Contains("AttributeValues") ? this.scenarioContext.Get<AttributeValues>("AttributeValues") : new AttributeValues();
+            List<CreateOrUpdatePropertyCharacteristic> createOrUpdatePropertyCharacteristic = this.scenarioContext.Keys.Contains("PropertyCharacteristics") ? 
+                this.scenarioContext.Get<List<CreateOrUpdatePropertyCharacteristic>>("PropertyCharacteristics") : new List<CreateOrUpdatePropertyCharacteristic>();
 
             List<PropertyCharacteristic> propertyCharacteristic = createOrUpdatePropertyCharacteristic.Select(prop => new PropertyCharacteristic { CharacteristicId = prop.CharacteristicId, Text = prop.Text }).ToList();
 
@@ -220,7 +221,7 @@
         {
             string requestUrl = $"{ApiUrl}";
 
-            var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
+            var address = this.scenarioContext.Get<CreateOrUpdateAddress>("Address");
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
             var attributeValues = this.scenarioContext.Get<CreateOrUpdatePropertyAttributeValues>("AttributeValues");
             var propertyCharacteristics =
@@ -248,7 +249,7 @@
         {
             string requestUrl = $"{ApiUrl}";
 
-            var address = this.scenarioContext.Get<CreateOrUpdatePropertyAddress>("Address");
+            var address = this.scenarioContext.Get<CreateOrUpdateAddress>("Address");
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
             var attributeValues = this.scenarioContext.Get<CreateOrUpdatePropertyAttributeValues>("AttributeValues");
             var propertyCharacteristics =

@@ -39,6 +39,10 @@
       <HintPath>..\..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Domain.Seedwork.Specification, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Domain.Seedwork.Specification.1.0.0\lib\Domain.Seedwork.Specification.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions, Version=4.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FluentAssertions.4.2.2\lib\net45\FluentAssertions.dll</HintPath>
       <Private>True</Private>
@@ -104,10 +108,11 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Activity\CommandHandlers\CreateActivityAttachmentCommandHandlerTests.cs" />
+    <Compile Include="Activity\Commands\CreateActivityAttachmentCommandValidatorTests.cs" />
     <Compile Include="Activity\Queries\ActivityTypeQueryValidatorTests.cs" />
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandlerTests.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandlerTests.cs" />
-    <Compile Include="Activity\Commands\CreateActivityCommandDomainValidatorTests.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandValidatorTests.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommandValidatorTests.cs" />
     <Compile Include="Activity\Queries\ActivityQueryValidatorTests.cs" />
@@ -116,17 +121,27 @@
     <Compile Include="Activity\QueryHandlers\ActivityTypeQueryHandlerTests.cs" />
     <Compile Include="AddressForm\Queries\AddressFormQueryValidatorTests.cs" />
     <Compile Include="AddressForm\Queries\GetCountriesForAddressFormQueryValidatorTests.cs" />
+    <Compile Include="Attachments\Queries\AttachmentQueryValidatorTests.cs" />
+    <Compile Include="Attachments\QueryHandlers\AttachmentQueryHandlerTests.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidatorTests.cs" />
     <Compile Include="Characteristic\QueryHandlers\CharacteristicGroupsQueryHandlerTests.cs" />
+    <Compile Include="Common\BusinessValidators\AddressValidatorTests.cs" />
+    <Compile Include="Attachments\Commands\CreateAttachmentValidatorTests.cs" />
+    <Compile Include="Common\BusinessValidators\CollectionValidatorTests.cs" />
+    <Compile Include="Common\BusinessValidators\EnumTypeItemValidatorTests.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidatorTests.cs" />
     <Compile Include="Common\Validator\LocaleValidatorTests.cs" />
-    <Compile Include="Common\Validator\CountryValidatorTests.cs" />
-    <Compile Include="Company\CommandHandlers\CreateCompanyComandHandlerTests.cs" />
-    <Compile Include="Company\Commands\CreateCompanyCommandDomainValidatorTests.cs" />
+    <Compile Include="Company\CommandHandlers\CreateCompanyCommandHandlerTests.cs" />
     <Compile Include="Common\Validator\ContactValidatorTests.cs" />
     <Compile Include="Company\Commands\CreateCompanyValidatorTests.cs" />
     <Compile Include="Contact\Queries\ContactQueryValidatorTests.cs" />
     <Compile Include="Contact\QueryHandlers\ContactQueryHandlerTests.cs" />
+    <Compile Include="FixtureExtension\FixtureExtensions.cs" />
+    <Compile Include="FixtureExtension\ValidationResultExtensions.cs" />
+    <Compile Include="Viewing\CommandHandlers\CreateViewingCommandHandlerTests.cs" />
+    <Compile Include="Viewing\CommandHandlers\UpdateViewingCommandHandlerTests.cs" />
+    <Compile Include="Viewing\Commands\UpdateViewingCommandValidatorTests.cs" />
+    <Compile Include="Viewing\Commands\CreateViewingCommandValidatorTests.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQueryDomainValidatorTests.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQueryValidatorTests.cs" />
     <Compile Include="Enum\QueryHandlers\EnumItemQueryHandlerTests.cs" />
@@ -140,16 +155,12 @@
     <Compile Include="AutoMoqDataAttribute.cs" />
     <Compile Include="BaseTestClassFixture.cs" />
     <Compile Include="Contact\CommandHandlers\CreateContactCommandHandlerTests.cs" />
-    <Compile Include="Enum\Queries\EnumQueryValidatorTests.cs" />
-    <Compile Include="Enum\QueryHandlers\EnumQueryHandlerTests.cs" />
     <Compile Include="FixtureExtension\OwnershipExtensions.cs" />
+    <Compile Include="Autofixture\IgnoreVirtualMembers.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandHandlerTests.cs" />
-    <Compile Include="Ownership\Commands\CreateOwnershipCommandDomainValidatorTests.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandValidatorTests.cs" />
     <Compile Include="Property\CommandHandlers\CreatePropertyCommandHandlerTests.cs" />
     <Compile Include="Property\CommandHandlers\UpdatePropertyCommandHandlerTests.cs" />
-    <Compile Include="Property\Commands\CreateOrUpdatePropertyAddressValidatorTests.cs" />
-    <Compile Include="Common\Validator\PropertyTypeValidatorTests.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyCharacteristicDomainValidatorTests.cs" />
     <Compile Include="Property\Commands\CreateOrUpdatePropertyCharacteristicValidatorTests.cs" />
     <Compile Include="Property\Commands\PropertyCharacteristicConfigurationDomainValidatorTests.cs" />
@@ -159,11 +170,9 @@
     <Compile Include="Property\QueryHandlers\PropertyTypesQueryHandlerTests.cs" />
     <Compile Include="Property\QueryHandlers\PropertyAttributesQueryHandlerTests.cs" />
     <Compile Include="RequirementNote\CommandHandlers\CreateRequirementNoteCommandHandlerTests.cs" />
-    <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandDomainValidatorTests.cs" />
     <Compile Include="RequirementNote\Commands\CreateRequirementNoteCommandValidatorTests.cs" />
     <Compile Include="RequirementNote\Queries\RequirementNoteQueryValidatorTests.cs" />
     <Compile Include="RequirementNote\QueryHandlers\RequirementNoteQueryHandlerTests.cs" />
-    <Compile Include="Requirement\Commands\CreateRequirementCommandDomainValidatorTests.cs" />
     <Compile Include="Property\Commands\CreatePropertyCommandValidatorTests.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommandHandlerTests.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidatorTests.cs" />

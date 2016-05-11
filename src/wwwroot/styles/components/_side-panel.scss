@@ -3,11 +3,11 @@
 .side-panel {
   background-color: $color-wild-sand;
   border-left: 1px solid $color-mercury;
-  height: 100%;
+  height: calc(100% - #{$header-height});
   position: fixed;
   right: 0;
-  top: 0;
-  transform: translateX(100%);
+  top: $header-height;
+  transform: translateZ(0) translateX(100%);
   width: 100%;
   z-index: 1050;
 
@@ -55,7 +55,7 @@
 
   .close-side-panel {
     position: relative;
-    top: 22px;
+    top: 23px;
   }
 }
 
@@ -69,19 +69,19 @@
 // Side Panel Animations
 
 .slide-in {
-  animation: slide-in 0.5s forwards;
+  animation: slide-in 0.4s forwards;
 }
 
 .slide-out {
-  animation: slide-out 0.5s forwards;
+  animation: slide-out 0.4s forwards;
 }
 
 @keyframes slide-in {
-  100% { transform: translateX(0%); }
+  100% { transform: translateZ(0) translateX(0%); }
 }
 
 @keyframes slide-out {
-  0% {transform: translateX(0%); }
+  0% {transform: translateZ(0) translateX(0%); }
 
-  100% { transform: translateX(100%); }
+  100% { transform: translateZ(0) translateX(100%); }
 }

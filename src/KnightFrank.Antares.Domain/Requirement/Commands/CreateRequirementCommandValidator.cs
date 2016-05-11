@@ -1,21 +1,15 @@
 namespace KnightFrank.Antares.Domain.Requirement.Commands
 {
     using FluentValidation;
-    using FluentValidation.Results;
 
-    using KnightFrank.Antares.Dal.Model.Address;
-    using KnightFrank.Antares.Dal.Model.Resource;
-    using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.Common.Commands;
 
     public class CreateRequirementCommandValidator : AbstractValidator<CreateRequirementCommand>
     {
-        private readonly IGenericRepository<AddressForm> addressFormRepository;
-        private readonly IGenericRepository<Country> countryRepository;
-
-        public CreateRequirementCommandValidator(IGenericRepository<AddressForm> addressFormRepository, IGenericRepository<Country> countryRepository)
+        public CreateRequirementCommandValidator()
         {
-            this.addressFormRepository = addressFormRepository;
-            this.countryRepository = countryRepository;
+            this.RuleFor(x => x.Address).NotNull();
+            this.RuleFor(x => x.Address).SetValidator(new CreateOrUpdateAddressValidator());
 
             this.RuleFor(x => x.MaxPrice).GreaterThanOrEqualTo(x => x.MinPrice.GetValueOrDefault(0)).GreaterThanOrEqualTo(0);
             this.RuleFor(x => x.MaxBedrooms).GreaterThanOrEqualTo(x => x.MinBedrooms.GetValueOrDefault(0)).GreaterThanOrEqualTo(0);
@@ -35,26 +29,6 @@ namespace KnightFrank.Antares.Domain.Requirement.Commands
 
             this.RuleFor(x => x.Description).Length(0, 4000);
             this.RuleFor(x => x.ContactIds).NotEmpty();
-
-            this.Custom(this.AddressValid);
-        }
-        private ValidationFailure AddressValid(CreateRequirementCommand command)
-        {
-            Country country = this.countryRepository.GetById(command.Address.CountryId);
-
-            if (country == null)
-            {
-                return new ValidationFailure(nameof(command.Address.CountryId), "Invalid country has been provided.");
-            }
-
-            AddressForm addressForm = this.addressFormRepository.GetById(command.Address.AddressFormId);
-
-            if (addressForm == null)
-            {
-                return new ValidationFailure(nameof(command.Address.AddressFormId), "Invalid address form has been provided.");
-            }
-
-            return null;
         }
     }
 }

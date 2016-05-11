@@ -5,18 +5,17 @@
     using System.Linq;
     using System.Linq.Expressions;
 
-    using FluentValidation.Results;
-
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
-    using KnightFrank.Antares.Domain.Common;
-    using KnightFrank.Antares.Domain.Common.Exceptions;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Common.Commands;
     using KnightFrank.Antares.Domain.Requirement.CommandHandlers;
     using KnightFrank.Antares.Domain.Requirement.Commands;
 
     using Moq;
 
+    using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
@@ -25,38 +24,54 @@
     {
         [Theory]
         [AutoMoqData]
-        public void Given_CorrectCommand_When_Handle_Then_ShouldReturnValidId(
+        public void Given_CorrectCommand_When_Handle_Then_ShouldCreateRequirement(
             [Frozen] Mock<IGenericRepository<Requirement>> requirementRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
-            [Frozen] Mock<IDomainValidator<CreateRequirementCommand>> requirementDomainValidator,
+            [Frozen] Mock<IAddressValidator> addressValidator,
             CreateRequirementCommand command,
-            CreateRequirementCommandHandler commandHandler)
+            CreateRequirementCommandHandler commandHandler,
+            IFixture fixture)
         {
-            contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(new List<Contact>().AsQueryable());
+            // Arrange
+            command.ContactIds = fixture.CreateMany<Guid>(2).ToList();
+
+            contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(
+                command.ContactIds.Select(x => new Contact { Id = x }));
+
             requirementRepository.Setup(x => x.Add(It.IsAny<Requirement>()));
             requirementRepository.Setup(x => x.Save());
 
+            // Act
             commandHandler.Handle(command);
 
+            // Assert
             requirementRepository.VerifyAll();
             contactRepository.VerifyAll();
+            addressValidator.Verify(x => x.Validate(It.IsAny<CreateOrUpdateAddress>()), Times.Once());
         }
 
         [Theory]
         [AutoMoqData]
-        public void Given_InvalidValidationResult_When_Handle_Then_ShouldReturnDomainException(
-            [Frozen] Mock<IGenericRepository<Requirement>> requirementRepository,
-            [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
-            [Frozen] Mock<IDomainValidator<CreateRequirementCommand>> requirementDomainValidator,
-            CreateRequirementCommand command,
-            CreateRequirementCommandHandler commandHandler)
+        public void Given_CreateRequirementCommandWithInvalidApplicants_When_Handle_Then_ShouldThrowBusinessException(
+        [Frozen] Mock<IGenericRepository<Requirement>> requirementRepository,
+        [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
+        [Frozen] Mock<IAddressValidator> addressValidator,
+        CreateRequirementCommand command,
+        CreateRequirementCommandHandler handler,
+        IFixture fixture)
         {
-            var result = new ValidationResult();
-            result.Errors.Add(new ValidationFailure(It.IsAny<string>(), It.IsAny<string>()));
-            requirementDomainValidator.Setup(x => x.Validate(It.IsAny<CreateRequirementCommand>())).Returns(result);
+            // Arrange
+            command.ContactIds = fixture.CreateMany<Guid>(2).ToList();
+
+            contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(
+                new List<Contact>()
+                {
+                    fixture.Build<Contact>().With(x => x.Id, command.ContactIds.First()).Create()
+                });
 
             // Act + Assert
-            Assert.Throws<DomainValidationException>(() => commandHandler.Handle(command));
+            var businessValidationException = Assert.Throws<BusinessValidationException>(() => { handler.Handle(command); });
+            Assert.Equal(ErrorMessage.Missing_Requirement_Applicants_Id, businessValidationException.ErrorCode);
         }
     }
 }

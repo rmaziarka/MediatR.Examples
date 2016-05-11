@@ -1,0 +1,61 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xml" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.IO" #>
+namespace <#=this.TypeNameSpace#>
+{
+    public enum <#=this.TypeName#>
+    {
+<#
+string path = this.Host.ResolvePath("");
+var keyValuePair = this.GetNames(path);
+var tmpKeyPair = new KeyValuePair<String, String>();
+for (var i=0; i < keyValuePair.Count ; i++)
+{
+tmpKeyPair = keyValuePair[i];
+#>
+        /// <summary>
+        /// Key value : <#=tmpKeyPair.Value #>
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        <#=tmpKeyPair.Key #><#= i == (keyValuePair.Count-1) ? "" : "," #>
+<#
+}
+        #>
+    }
+}
+
+<#+
+string TypeName = "ErrorMessage";
+string TypeNameSpace = "KnightFrank.Antares.Domain.Common.BusinessValidators";
+string ResourceFileName = "BusinessErrorMessages";
+#>
+<#+
+
+    public List<KeyValuePair<String, String>> GetNames(string templateFilePath)
+        {
+
+            var result = new List<KeyValuePair<String, String>>();
+
+            XmlDocument doc = new XmlDocument();
+
+            string absolutePath = Path.Combine(templateFilePath, "..\\..\\Properties", this.ResourceFileName) + ".resx";
+
+            doc.Load(absolutePath);
+
+            foreach (XmlNode node in doc.SelectNodes("/root/data"))
+            {
+
+                result.Add(new KeyValuePair<String, String>(
+                    node.Attributes["name"].InnerText,
+                    node.InnerText.Replace(Environment.NewLine,String.Empty).Trim()));
+
+            }
+
+            return result;
+
+        }
+#>

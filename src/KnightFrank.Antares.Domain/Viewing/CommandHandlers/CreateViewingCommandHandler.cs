@@ -7,12 +7,11 @@
     using Dal.Repository;
     using Commands;
 
-    using FluentValidation.Results;
-
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
-    using KnightFrank.Antares.Domain.Common;
-    using KnightFrank.Antares.Domain.Common.Exceptions;
+    using KnightFrank.Antares.Dal.Model.User;
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
 
     using MediatR;
 
@@ -20,28 +19,47 @@
     {
         private readonly IGenericRepository<Viewing> viewingRepository;
 
-        private readonly IGenericRepository<Contact> contactRepository;
+        private readonly IGenericRepository<Requirement> requirementRepository;
 
-        private readonly IDomainValidator<CreateViewingCommand> createViewingCommandDomainValidator;
+        private readonly IReadGenericRepository<User> userRepository;
 
-        public CreateViewingCommandHandler(IGenericRepository<Viewing> viewingRepository, IGenericRepository<Contact> contactRepository, IDomainValidator<CreateViewingCommand>  createViewingCommandDomainValidator)
+        private readonly IEntityValidator entityValidator;
+
+        private readonly ICollectionValidator collectionValidator;
+
+        public CreateViewingCommandHandler(
+            IGenericRepository<Viewing> viewingRepository,
+            IEntityValidator entityValidator,
+            IGenericRepository<Requirement> requirementRepository,
+            IReadGenericRepository<User> userRepository, 
+            ICollectionValidator collectionValidator)
         {
             this.viewingRepository = viewingRepository;
-            this.contactRepository = contactRepository;
-            this.createViewingCommandDomainValidator = createViewingCommandDomainValidator;
+            this.entityValidator = entityValidator;
+            this.userRepository = userRepository;
+            this.collectionValidator = collectionValidator;
+            this.requirementRepository = requirementRepository;
         }
+
 
         public Guid Handle(CreateViewingCommand message)
         {
-            ValidationResult validationResult = this.createViewingCommandDomainValidator.Validate(message);
-            if (!validationResult.IsValid)
-            {
-                throw new DomainValidationException(validationResult.Errors);
-            }
+            this.entityValidator.EntityExists<Activity>(message.ActivityId);
+            // TODO: Remove after users management is implemented
+            // ReSharper disable once PossibleNullReferenceException
+            message.NegotiatorId = this.userRepository.Get().FirstOrDefault().Id;
+
+            Requirement requirement = this.requirementRepository.GetWithInclude(r => r.Id == message.RequirementId, r => r.Contacts).SingleOrDefault();
+            this.entityValidator.EntityExists(requirement, message.RequirementId);
+
+            // ReSharper disable once PossibleNullReferenceException
+            IEnumerable<Guid> applicantIds = requirement.Contacts.Select(y => y.Id);
+            this.collectionValidator.CollectionContainsAll(applicantIds, message.AttendeesIds, ErrorMessage.Missing_Requirement_Attendees_Id);
+            
+            List<Contact> existingAttendees = requirement.Contacts.Where(x => message.AttendeesIds.Contains(x.Id)).ToList();
 
             var viewing = AutoMapper.Mapper.Map<Viewing>(message);
 
-            List<Contact> existingAttendees = this.contactRepository.FindBy(x => message.AttendeesIds.Any(id => id == x.Id)).ToList();
             viewing.Attendees = existingAttendees;
 
             this.viewingRepository.Add(viewing);

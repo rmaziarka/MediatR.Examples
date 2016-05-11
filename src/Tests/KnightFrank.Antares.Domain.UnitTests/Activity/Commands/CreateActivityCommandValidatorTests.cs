@@ -19,11 +19,10 @@
     using Moq;
 
     using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.AutoMoq;
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
-
+    using FixtureExtension;
     [Trait("FeatureTitle", "Property Activity")]
     [Collection("CreateActivityCommandValidator")]
     public class CreateActivityCommandValidatorTests : IClassFixture<CreateActivityCommand>
@@ -39,7 +38,7 @@
 
         public CreateActivityCommandValidatorTests()
         {
-            this.fixture = new Fixture().Customize(new AutoMoqCustomization());
+            this.fixture = new Fixture().Customize();
 
             this.enumTypeItemRepository = this.fixture.Freeze<Mock<IGenericRepository<EnumTypeItem>>>();
             this.activityTypeRepository = this.fixture.Freeze<Mock<IGenericRepository<ActivityType>>>();
@@ -65,6 +64,19 @@
             IEnumerable<Contact> fakeContactResult = cmd.ContactIds.Select(activityContact => new Contact { Id = activityContact });
 
             contactRepository.Setup(r => r.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(fakeContactResult);
+
+            // Act
+            ValidationResult validationResult = this.validator.Validate(cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeTrue();
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_EmptyContactList_When_Validating_Then_IsValid(CreateActivityCommand cmd)
+        {
+            cmd.ContactIds = new List<Guid>();
 
             // Act
             ValidationResult validationResult = this.validator.Validate(cmd);
