@@ -151,9 +151,10 @@
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
             var details = table.CreateInstance<ActivityDetails>();
 
-            Assert.Equal(details.Vendor, page.ActivityVendor);
-            Assert.Equal(details.Status, page.ActivityStatus);
-            Assert.Equal(details.Type, page.ActivityType);
+            Verify.That(this.driverContext,
+                () => Assert.Equal(details.Vendor, page.ActivityVendor),
+                () => Assert.Equal(details.Status, page.ActivityStatus),
+                () => Assert.Equal(details.Type, page.ActivityType));
         }
 
         [Then(@"Property should be updated with address details")]
@@ -235,8 +236,9 @@
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
             var details = table.CreateInstance<ActivityDetails>();
 
-            Assert.Equal(details.Vendor, page.Activity.GetActivityVendor());
-            Assert.Equal(details.Status, page.Activity.GetActivityStatus());
+            Verify.That(this.driverContext,
+                () => Assert.Equal(details.Vendor, page.Activity.GetActivityVendor()),
+                () => Assert.Equal(details.Status, page.Activity.GetActivityStatus()));
         }
 
         [Then(@"Characteristics are displayed on view property page")]

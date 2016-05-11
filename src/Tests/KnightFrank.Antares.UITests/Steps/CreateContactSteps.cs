@@ -10,6 +10,8 @@
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
 
+    using Xunit;
+
     [Binding]
     public class CreateContactSteps
     {
@@ -59,7 +61,7 @@
         [Then(@"Contact form on create contact page should be displayed")]
         public void CheckIfFirstNameIsDisplayed()
         {
-            new CreateContactPage(this.driverContext).IsContactFormPresent();
+            Assert.True(new CreateContactPage(this.driverContext).IsContactFormPresent());
         }
     }
 }

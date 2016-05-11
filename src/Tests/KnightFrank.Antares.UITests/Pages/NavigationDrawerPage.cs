@@ -68,6 +68,7 @@
             return this;
         }
 
+        // ReSharper disable UnusedMember.Local
         private enum DrawerMenu
         {
             Contacts,

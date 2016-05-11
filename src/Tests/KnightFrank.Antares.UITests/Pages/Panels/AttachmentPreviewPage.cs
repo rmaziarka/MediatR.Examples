@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages.Panels
 {
+    using System.Collections.Generic;
     using System.IO;
 
     using Objectivity.Test.Automation.Common;
@@ -40,12 +41,18 @@
             return this;
         }
 
-        public void IsAttachmentDownloaded(string fileName)
+        public FileInfo GetDownloadedAttachmentInfo()
         {
+            ICollection<FileInfo> test = FilesHelper.GetAllFiles(this.DriverContext.DownloadFolder, ".pdf");
+            foreach (FileInfo fileInfo in test)
+            {
+                fileInfo.Delete();
+            }
+            
             int filesNumber = FilesHelper.CountFiles(this.DriverContext.DownloadFolder, FileType.Pdf);
             this.Driver.GetElement(this.name).Click();
             FilesHelper.WaitForFileOfGivenType(FileType.Pdf, filesNumber, this.DriverContext.DownloadFolder);
-            FileInfo file = FilesHelper.GetLastFile(this.DriverContext.DownloadFolder, FileType.Pdf);
+            return FilesHelper.GetLastFile(this.DriverContext.DownloadFolder, FileType.Pdf);
         }
     }
 }

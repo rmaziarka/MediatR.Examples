@@ -12,6 +12,8 @@
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
 
+    using Xunit;
+
     [Binding]
     public class CreatePropertySteps
     {
@@ -120,7 +122,7 @@
         [Then(@"Property form on create property page should be displayed")]
         public void CheckIfPropertyTypeIsDisplayed()
         {
-            new CreatePropertyPage(this.driverContext).IsPropertyFormPresent();
+            Assert.True(new CreatePropertyPage(this.driverContext).IsPropertyFormPresent());
         }
     }
 }

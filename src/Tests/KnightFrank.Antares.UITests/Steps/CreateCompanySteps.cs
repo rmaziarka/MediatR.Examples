@@ -80,13 +80,13 @@
             List<string> selectedContacts = page.Contacts;
 
             Assert.Equal(contacts.Count, selectedContacts.Count);
-            contacts.Should().BeEquivalentTo(selectedContacts);
+            contacts.ShouldBeEquivalentTo(selectedContacts);
         }
 
         [Then(@"Company form on create company page should be diaplyed")]
         public void CheckIfCreateContactIsDisplayed()
         {
-            new CreateCompanyPage(this.driverContext).IsCompanyFormPresent();
+            Assert.True(new CreateCompanyPage(this.driverContext).IsCompanyFormPresent());
         }
 
         [Then(@"New company should be created")]

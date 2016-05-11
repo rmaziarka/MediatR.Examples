@@ -1,11 +1,14 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
+    using System.IO;
     using System.Linq;
 
     using FluentAssertions;
 
     using KnightFrank.Antares.UITests.Pages;
+
+    using Objectivity.Test.Automation.Common;
 
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
@@ -15,6 +18,7 @@
     [Binding]
     public class ViewActivitySteps
     {
+        private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
 
         public ViewActivitySteps(ScenarioContext scenarioContext)
@@ -23,7 +27,9 @@
             {
                 throw new ArgumentNullException(nameof(scenarioContext));
             }
+
             this.scenarioContext = scenarioContext;
+            this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
         }
 
         [When(@"User clicks property details link on view activity page")]
@@ -76,7 +82,12 @@
         [Then(@"Attachment (.*) should be downloaded")]
         public void ThenAttachmentShouldBeDownloaded(string attachmentName)
         {
-            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").PreviewAttachment.IsAttachmentDownloaded(attachmentName);
+            FileInfo fileInfo =
+                this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").PreviewAttachment.GetDownloadedAttachmentInfo();
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(attachmentName.ToLower(), fileInfo.Name),
+                () => Assert.Equal("." + attachmentName.Split('.')[1], fileInfo.Extension));
         }
 
         [Then(@"Address details on view activity page are following")]
@@ -98,10 +109,11 @@
             var details = table.CreateInstance<EditActivityDetails>();
             var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
 
-            Assert.Equal(details.ActivityStatus, page.Status);
-            Assert.Equal(details.MarketAppraisalPrice.ToString("N2") + " GBP", page.MarketAppraisalPrice);
-            Assert.Equal(details.RecommendedPrice.ToString("N2") + " GBP", page.RecommendedPrice);
-            Assert.Equal(details.VendorEstimatedPrice.ToString("N2") + " GBP", page.VendorEstimatedPrice);
+            Verify.That(this.driverContext,
+                () => Assert.Equal(details.ActivityStatus, page.Status),
+                () => Assert.Equal(details.MarketAppraisalPrice.ToString("N2") + " GBP", page.MarketAppraisalPrice),
+                () => Assert.Equal(details.RecommendedPrice.ToString("N2") + " GBP", page.RecommendedPrice),
+                () => Assert.Equal(details.VendorEstimatedPrice.ToString("N2") + " GBP", page.VendorEstimatedPrice));
         }
 
         [Then(@"Attachment is displayed on view activity page")]
@@ -111,6 +123,7 @@
                 this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").GetAttachmentDetails();
             var expected = table.CreateInstance<Attachment>();
             expected.Date = DateTime.UtcNow.ToString("dd-MM-yyyy");
+
             actual.ShouldBeEquivalentTo(expected);
         }
 

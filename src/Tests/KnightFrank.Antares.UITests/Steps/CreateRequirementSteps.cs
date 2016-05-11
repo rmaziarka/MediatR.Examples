@@ -128,7 +128,7 @@
         [Then(@"Requirement form on create requirement page should be displayed")]
         public void CheckINewAppliactionButtonIsDisplayed()
         {
-            new CreateRequirementPage(this.driverContext).IsRequirementFormPresent();
+            Assert.True(new CreateRequirementPage(this.driverContext).IsRequirementFormPresent());
         }
     }
 }
