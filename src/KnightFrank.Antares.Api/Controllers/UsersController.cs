@@ -16,6 +16,8 @@
     using Domain.User.Queries;
     using Domain.User.QueryResults;
 
+    using MediatR;
+
     [RoutePrefix("api/users")]
     public class UsersController : ApiController
     {
