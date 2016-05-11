@@ -24,4 +24,3 @@ Scenario: Navigate through navigation drawer and check application
 		And User opens navigation drawer menu
 	Then Drawer Requirements submenu should be displayed
 		And Requirement form on create requirement page should be displayed
-

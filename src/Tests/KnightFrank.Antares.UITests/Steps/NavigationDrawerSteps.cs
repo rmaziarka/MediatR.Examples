@@ -8,10 +8,13 @@
 
     using TechTalk.SpecFlow;
 
+    using Xunit;
+
     [Binding]
     public class NavigationDrawerSteps
     {
         private readonly DriverContext driverContext;
+        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
 
         public NavigationDrawerSteps(ScenarioContext scenarioContext)
@@ -52,13 +55,13 @@
         [Then(@"Drawer menu should be displayed")]
         public void CheckIfDrawerMenuPresent()
         {
-            new NavigationDrawerPage(this.driverContext).IsOpenedDrawerMenuPresent();
+            Assert.True(new NavigationDrawerPage(this.driverContext).IsOpenedDrawerMenuPresent());
         }
 
         [Then(@"Drawer (.*) submenu should be displayed")]
         public void CheckIfDrawerSubMenuPresent(string drawerMenu)
         {
-            new NavigationDrawerPage(this.driverContext).IsSubMenuVisible(drawerMenu);
+            Assert.True(new NavigationDrawerPage(this.driverContext).IsSubMenuVisible(drawerMenu));
         }
     }
 }
