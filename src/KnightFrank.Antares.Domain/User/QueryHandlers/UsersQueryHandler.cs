@@ -24,12 +24,12 @@
         {
             if (!string.IsNullOrWhiteSpace(message?.PartialName))
             {
-
+                string loweredPartialName = message.PartialName;//.ToLower();
                 IQueryable<User> userList = this.userRepository.Get();
                 return userList.Where(
                     i =>
-                        i.FirstName.ToLower().StartsWith(message.PartialName.ToLower()) ||
-                        i.LastName.ToLower().StartsWith(message.PartialName.ToLower()))
+                        i.FirstName.StartsWith(loweredPartialName) ||
+                        i.LastName.StartsWith(loweredPartialName))
                                .Select(x => new UsersQueryResult
                                {
                                    Id = x.Id,
