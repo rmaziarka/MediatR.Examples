@@ -14,7 +14,7 @@ module Antares.Property.View {
         ownershipsCartListOrder: CartListOrder = new CartListOrder('purchaseDate', true, true);
         activitiesCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
         userData: Common.Models.Dto.IUserData;
-        property: Business.Property;
+        property: Business.PropertyView;
         savePropertyActivityBusy: boolean = false;
 
         constructor(
@@ -62,6 +62,11 @@ module Antares.Property.View {
             this.showPanel(this.components.panels.activityAdd);
         }
 
+
+        showAreaAdd = () => {
+            this.showPanel(this.components.panels.areaAdd);
+        }
+
         showActivityPreview = (activity: Common.Models.Business.Activity) => {
             this.components.activityPreview().setActivity(activity);
             this.showPanel(this.components.panels.activityPreview);
@@ -98,6 +103,10 @@ module Antares.Property.View {
             this.components.panels.activityAdd().hide();
         }
 
+        cancelAddArea() {
+            this.components.panels.areaAdd().hide();
+        }
+
         saveOwnership() {
             this.components.ownershipAdd().saveOwnership(this.property.id).then(() => {
                 this.cancelUpdateContacts();
@@ -114,6 +123,10 @@ module Antares.Property.View {
             });
         }
 
+        saveArea() {
+            // TODO Implement
+        }
+
         defineComponentIds() {
             this.componentIds = {
                 contactListId: 'viewProperty:contactListComponent',
@@ -125,7 +138,8 @@ module Antares.Property.View {
                 activityAddId: 'viewProperty:activityAddComponent',
                 activityAddSidePanelId: 'viewProperty:activityAddSidePanelComponent',
                 activityPreviewId: 'viewProperty:activityPreviewComponent',
-                activityPreviewSidePanelId: 'viewProperty:activityPreviewSidePanelComponent'
+                activityPreviewSidePanelId: 'viewProperty:activityPreviewSidePanelComponent',
+                areaAddSidePanelId: 'viewProperty:areaAddSidePanelComponent'
             };
         }
 
@@ -136,11 +150,13 @@ module Antares.Property.View {
                 activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewId); },
                 ownershipAdd: () => { return this.componentRegistry.get(this.componentIds.ownershipAddId); },
                 ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewId); },
+                areaAdd: () => { return this.componentRegistry.get(this.componentIds.areaAddSidePanelId); },
                 panels: {
                     contact: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
                     ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); },
                     activityAdd: () => { return this.componentRegistry.get(this.componentIds.activityAddSidePanelId); },
-                    activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId); }
+                    activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId); },
+                    areaAdd: () => { return this.componentRegistry.get(this.componentIds.areaAddSidePanelId); }
                 }
             };
         }

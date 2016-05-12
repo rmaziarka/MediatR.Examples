@@ -140,6 +140,18 @@
       "PROPERTY_VIEW_LINK": "View property"
     }
   },
+  "COMMERCIAL_PROPERTY": {
+    "AREA_BREAKDOWN": {
+      "LIST": {
+        "AREA_BREAKDOWN": "Area breakdown",
+        "TOTAL_AREA": "Total area",
+        "NO_ITEMS": "Area breakdown not configured"
+      },
+      "ADD": {
+        "CREATE_AREA": "Create area"
+      }
+    }
+  },
   "ACTIVITY": {
     "LIST": {
       "ACTIVITIES": "Activities",

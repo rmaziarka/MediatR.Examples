@@ -20,7 +20,7 @@ module Antares.Property {
                 params: {},
                 template: '<property-view user-data="appVm.userData" property="property"></property-view>',
                 controller: ($scope: ng.IScope, property: Dto.IProperty) => {
-                    var propertyViewModel = new Business.Property(property);
+                    var propertyViewModel = new Business.PropertyView(property);
 
                     $scope['property'] = propertyViewModel;
                 },

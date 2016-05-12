@@ -5,12 +5,10 @@
         enumTypeId: string = null;
         code: string = null;
 
-        constructor(property?: Dto.IEnumTypeItem)
+        constructor(enumTypeItem?: Dto.IEnumTypeItem)
         {
-            if (property) {
-                this.id = property.id;
-                this.enumTypeId = property.enumTypeId;
-                this.code = property.code;
+            if (enumTypeItem) {
+                angular.extend(this, enumTypeItem);
             }
         }
     }

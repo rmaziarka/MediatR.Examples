@@ -12,52 +12,22 @@
                     <property-details property="vm.property" user-data="vm.userData"></property-details>
                 </section>
 
-                <!-- TODO #20414
-
-                <section>
-                    <h3 class="page-header">Area breakdown</h3>
-                    <div class="form-group">
-                        <div class="section-row row">
-                            <div class="col-xs-6">Total area</div>
-                            <div class="col-xs-6">6500 sq ft</div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-default" type="button"><i class="fa fa-plus-circle"></i></button>
-                    </div>
-                    <p class="help-block">Area breakdown not configured</p>
-
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="panel-item">Lorem</div>
-                            <small>1200 sq ft</small>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="panel-item">Ipsum</div>
-                            <small>1000 sq ft</small>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="panel-item">Dolor</div>
-                            <small>1200 sq ft</small>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="panel-item">Sit</div>
-                            <small>1200 sq ft</small>
-                        </div>
-                    </div>
+                <section ng-if="vm.property.isCommercial()">
+                    <card-list id="card-list-areas" show-item-add="vm.showAreaAdd">
+                        <card-list-header>
+                            <h3 class="page-header" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.LIST.AREA_BREAKDOWN"></h3>
+                        </card-list-header>
+                        <card-list-no-items ng-show="vm.property.areas.length === 0">
+                            <p class="help-block" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.LIST.NO_ITEMS"></p>
+                        </card-list-no-items>
+                        <card-list-item ng-repeat="area in vm.property.areas track by area.id ">
+                            {{area.id}}
+                            <!--<card id="activity-card-{{area.id}}" card-template-url="'app/activity/templates/activityCard.html'" item="activity" show-item-details="vm.showActivityPreview">
+                            <!--</card>-->
+                            -->
+                        </card-list-item>
+                    </card-list>
                 </section>
-
-                // -->
-
             </div>
             <div class="col-md-4">
                 <section>
@@ -100,11 +70,9 @@
     </div>
 </div>
 
-<!-- TODO #20414
-
-<side-panel>
+<!--<side-panel>
     <side-panel-header>
-        <h3>Area details</h3>
+        <h3 translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.ADD.CREATE_AREA"></h3>
     </side-panel-header>
     <side-panel-content>
         <div class="area-details">
@@ -168,15 +136,15 @@
     </side-panel-content>
     <side-panel-footer>
         <button class="btn btn-default" type="button">
-             <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
         </button>
         <button class="btn btn-primary" type="button">
             <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
         </button>
     </side-panel-footer>
-</side-panel>
+</side-panel>-->
 
-// -->
+
 
 <side-panel>
     <side-panel-header>
@@ -251,7 +219,7 @@
     </side-panel-content>
     <side-panel-footer>
         <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()" ng-show="!vm.ownershipAddPanelVisible">
-             <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
         </button>
         <button class="btn btn-primary" type="button">
             <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
@@ -269,12 +237,12 @@
         <contact-list component-id="vm.componentIds.contactListId" ng-show="!vm.ownershipAddPanelVisible">
         </contact-list>
 
-        <ownership-add component-id="vm.componentIds.ownershipAddId" ownerships="vm.property.ownerships"  ng-show="vm.ownershipAddPanelVisible">
+        <ownership-add component-id="vm.componentIds.ownershipAddId" ownerships="vm.property.ownerships" ng-show="vm.ownershipAddPanelVisible">
         </ownership-add>
     </side-panel-content>
     <side-panel-footer>
         <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()" ng-show="!vm.ownershipAddPanelVisible">
-             <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
         </button>
         <button class="btn btn-primary" type="button" ng-click="vm.showOwnershipAdd()" ng-show="!vm.ownershipAddPanelVisible" id="ownership-add-button">
             <span translate="COMMON.CONFIGURE"></span> <i class="fa fa-angle-double-right"></i>
@@ -325,4 +293,21 @@
         <activity-preview component-id="vm.componentIds.activityPreviewId">
         </activity-preview>
     </side-panel-content>
+</side-panel>
+
+<side-panel component-id="vm.componentIds.areaAddSidePanelId">
+    <side-panel-header>
+        <h3 translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.ADD.CREATE_AREA"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        TODO : Implement
+    </side-panel-content>
+    <side-panel-footer>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelAddArea()">
+            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+        </button>
+        <button class="btn btn-primary" type="button" ng-click="vm.saveArea()" ng-disabled="" id="area-add-button">
+            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+        </button>
+    </side-panel-footer>
 </side-panel>

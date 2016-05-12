@@ -22,7 +22,7 @@ module Antares.Common.Models.Business {
         }
 
         public isVendor(): boolean {
-            return this.isCurrentOwner && this.ownershipType.code == Enums.OwnershipTypeEnum.Freeholder;
+            return this.isCurrentOwner && this.ownershipType.code === Enums.OwnershipTypeEnum.Freeholder;
         }
     }
 }

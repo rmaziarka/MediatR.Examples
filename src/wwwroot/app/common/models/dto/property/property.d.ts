@@ -9,5 +9,6 @@ declare module Antares.Common.Models.Dto {
         division: Dto.IEnumTypeItem;
         attributeValues: any;
         propertyCharacteristics: IPropertyCharacteristic[];
+        areas: Dto.IPropertyArea[];
     }
 }
