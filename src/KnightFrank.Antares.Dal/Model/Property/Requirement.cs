@@ -5,6 +5,7 @@
 
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Dal.Model.Offer;
 
     public class Requirement : BaseEntity
     {
@@ -15,6 +16,8 @@
         public virtual ICollection<RequirementNote> RequirementNotes { get; set; } = new List<RequirementNote>();
 
         public virtual ICollection<Viewing> Viewings { get; set; } = new List<Viewing>();
+
+        public virtual ICollection<Offer> Offers { get; set; } = new List<Offer>();
 
         public Guid AddressId { get; set; }
 
