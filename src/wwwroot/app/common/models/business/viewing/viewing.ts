@@ -15,11 +15,13 @@ module Antares.Common.Models.Business {
         attendees: Contact[];
         day: string;
         activity: Dto.IActivity;
+        requirement: Dto.IRequirement;   
 
         constructor(viewing?: Dto.IViewing) {
             if (viewing) {
                 angular.extend(this, viewing);
                 this.day = Core.DateTimeUtils.getDatePart(viewing.startDate);
+                this.requirement = new Requirement(viewing.requirement);
             }
         }
     }

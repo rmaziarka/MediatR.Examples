@@ -1,6 +1,6 @@
 ﻿{
   "COMMON": {
-    "VIEW":  "View",
+    "VIEW": "View",
     "SAVE": "Save",
     "EDIT": "Edit",
     "CANCEL": "Cancel",
@@ -14,7 +14,7 @@
     "FILEISUPLOADING": "File is uploading ...",
     "MENU": {
       "CREATE": "Create",
-      "CONTACTS": "Contacts",      
+      "CONTACTS": "Contacts",
       "COMPANIES": "Companies",
       "REQUIREMENTS": "Requirements",
       "PROPERTIES": "Properties"
@@ -150,7 +150,7 @@
       "TYPE": "Type",
       "STATUS": "Status",
       "VENDORS": "Vendors",
-      "SAVING_ACTIVITY_IN_PROGRESS":  "Saving activity ..."
+      "SAVING_ACTIVITY_IN_PROGRESS": "Saving activity ..."
     },
     "EDIT": {
       "EDIT_ACTIVITY": "Edit activity",
@@ -186,6 +186,8 @@
         "RECOMMENDED_PRICE": "Recommended price",
         "VENDOR_ESIMATED_PRICE": "Vendor estimated price"
       },
+      "VIEWINGS": "Viewings",
+      "VIEWING_DETAILS": "Viewing details",
       "ATTACHMENTS": "Attachments",
       "NO_ATTACHMENTS": "No attachments"
     }

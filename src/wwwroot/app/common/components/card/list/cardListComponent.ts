@@ -12,7 +12,7 @@ module Antares.Common.Component {
         },
         bindings: {
             showItemAdd: '<',
-            showItemAddDisabled: '<'
+            isItemAddDisabled: '<'
         }
     });
 }

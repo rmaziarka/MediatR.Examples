@@ -10,7 +10,7 @@ module Antares {
             element: ng.IAugmentedJQuery,
             controller: CardListController;
 
-        var mockedComponentHtml = '<card-list show-item-add="showItemAdd" show-item-add-disabled="showItemAddDisabled">'
+        var mockedComponentHtml = '<card-list show-item-add="showItemAdd" is-item-add-disabled="isItemAddDisabled">'
             + '<card-list-header><p id="test-header">Header test</p></card-list-header>'
             + '<card-list-no-items><p id="test-no-items">Test</p></card-list-no-items>'
             + '<card-list-item><p id="test-item">Test</p></card-list-item>'
@@ -34,7 +34,7 @@ module Antares {
             compile = $compile;
 
             scope['showItemAdd'] = showItemAddSpy;
-            scope['showItemAddDisabled'] = false;
+            scope['isItemAddDisabled'] = false;
             element = compile(mockedComponentHtml)(scope);
             scope.$apply();
             controller = element.controller('cardList');
@@ -58,14 +58,21 @@ module Antares {
             expect(showItemAddSpy).toHaveBeenCalled();
         });
 
-        it('when add button is disabled then should have disbaled attribute', () => {
-            scope['showItemAddDisabled'] = true;
+        it('when add button is disabled then should have disabled attribute', () => {
+            scope['isItemAddDisabled'] = true;
             scope.$apply();
 
             var button = element.find(pageObjectSelectors.button);
 
-            expect(controller.showItemAddDisabled).toBe(true);
+            expect(controller.isItemAddDisabled).toBe(true);
             expect(button.attr('disabled')).toBeTruthy();
+        });
+        
+        it('when there is no add action then button should not be rendered', () => {
+            scope['showItemAdd'] = null;
+            scope.$apply();
+
+            expect(element.find(pageObjectSelectors.button).length).toBe(0);
         });
     });
 }
