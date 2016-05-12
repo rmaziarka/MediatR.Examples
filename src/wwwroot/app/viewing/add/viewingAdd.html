@@ -72,14 +72,18 @@
         <textarea id="invitation-text" class="form-control" rows="6" ng-model="vm.viewing.invitationText" name="invitationText"></textarea>
 
         <kf-max-count max-count='4000' ng-model="vm.viewing.invitationText.length" name='invitationTextLength'></kf-max-count>
-        
         <div ng-messages="addViewingForm.invitationTextLength.$error" ng-show="addViewingForm.$submitted || addViewingForm.invitationTextLength.$dirty">
             <div ng-messages-include="app/common/views/errorMessages.html"></div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{'has-error': (addViewingForm.$submitted || addViewingForm.postViewingCommentLength.$dirty) && addViewingForm.postViewingCommentLength.$invalid}">
         <label for="post-viewing-comment" translate="VIEWING.ADD.POSTVIEWINGCOMMENT"></label>
-        <span class="pull-right character-limit">0/4000</span>
-        <textarea id="post-viewing-comment" class="form-control" rows="6" ng-model="vm.viewing.postViewingComment" ng-disabled="vm.mode === 'add'"></textarea>
+        <span class="pull-right character-limit">{{(vm.viewing.postViewingComment.length ? vm.viewing.postViewingComment.length : "0") + "/4000"}}</span>
+        <textarea id="post-viewing-comment" class="form-control" rows="6" ng-model="vm.viewing.postViewingComment" name="postViewingComment" ng-disabled="vm.mode === 'add'"></textarea>
+
+        <kf-max-count max-count='4000' ng-model="vm.viewing.postViewingComment.length" name='postViewingCommentLength'></kf-max-count>
+        <div ng-messages="addViewingForm.postViewingCommentLength.$error" ng-show="addViewingForm.$submitted || addViewingForm.postViewingCommentLength.$dirty">
+            <div ng-messages-include="app/common/views/errorMessages.html"></div>
+        </div>
     </div>
 </form>
