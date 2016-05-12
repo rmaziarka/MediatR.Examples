@@ -13,6 +13,9 @@
                 .WithMany()
                 .HasForeignKey(p => p.DivisionId)
                 .WillCascadeOnDelete(false);
+
+            this.Property(x => x.TotalAreaBreakdown)
+                .IsOptional();
         }
     }
 }

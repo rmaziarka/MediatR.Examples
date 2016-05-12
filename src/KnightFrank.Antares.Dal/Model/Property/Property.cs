@@ -32,5 +32,9 @@
         public virtual AttributeValues AttributeValues { get; set; }
 
         public virtual ICollection<PropertyCharacteristic> PropertyCharacteristics { get; set; } = new List<PropertyCharacteristic>();
+
+        public double? TotalAreaBreakdown { get; set; }
+
+        public virtual ICollection<PropertyAreaBreakdown> PropertyAreaBreakdowns { get; set; } = new List<PropertyAreaBreakdown>();
     }
 }

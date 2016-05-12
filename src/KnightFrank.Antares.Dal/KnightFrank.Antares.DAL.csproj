@@ -84,6 +84,7 @@
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicGroupLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicGroupUsageConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicLocalisedConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\PropertyAreaBreakdownConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\PropertyCharacteristicConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\RequirementNoteConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\ViewingConfiguration.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Model\Property\Characteristics\CharacteristicGroupLocalised.cs" />
     <Compile Include="Model\Property\Characteristics\CharacteristicGroupUsage.cs" />
     <Compile Include="Model\Property\Characteristics\CharacteristicLocalised.cs" />
+    <Compile Include="Model\Property\PropertyAreaBreakdown.cs" />
     <Compile Include="Model\Property\PropertyCharacteristic.cs" />
     <Compile Include="Model\Property\Viewing.cs" />
     <Compile Include="Model\Property\RequirementNote.cs" />
