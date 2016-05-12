@@ -17,3 +17,7 @@ ActivityDocumentType;Brochure;en;Brochure
 ActivityDocumentType;VideoTour;en;Video Tour
 ActivityDocumentType;EPC;en;EPC
 ActivityDocumentType;GasCertificate;en;Gas Certificate
+OfferStatus;New;en;New
+OfferStatus;Withdrawn;en;Withdrawn
+OfferStatus;Rejected;en;Rejected
+OfferStatus;Accepted;en;Accepted
