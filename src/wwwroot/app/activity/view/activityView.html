@@ -65,8 +65,8 @@
                 <section id="activity-view-viewings">
                     <h3 class="page-header" translate="ACTIVITY.VIEW.VIEWINGS"></h3>
                     <card-list id="viewings-list">
-                        <card-list-no-items ng-show="avvm.activity.viewings === 0">
-                            <p class="help-block" translate="PROPERTY.LIST.NO_ITEMS"></p>
+                        <card-list-no-items ng-show="avvm.activity.viewings.length === 0">
+                            <p class="help-block" translate="ACTIVITY.VIEW.NO_VIEWINGS"></p>
                         </card-list-no-items>
                         <card-list-item ng-repeat="group in avvm.activity.viewingsByDay | orderBy: '-day'">
                             <card-list-group class="viewing-group">
@@ -74,7 +74,7 @@
                                     <h5><time>{{::group.viewings[0].startDate | date : 'dd-MM-yyyy'}}</time></h5>
                                 </card-list-group-header>
                                 <card-list-group-item ng-repeat="viewing in group.viewings | orderBy: '-startDate' track by viewing.id">
-                                    <card class="viewing-item" card-template-url="'app/activity/view/activityViewingsCard.html'" item="viewing.requirement" show-item-details="avvm.showViewingPreview">
+                                    <card class="viewing-item" card-template-url="'app/activity/view/activityViewingsCard.html'" item="viewing" show-item-details="avvm.showViewingPreview">
                                     </card>
                                 </card-list-group-item>
                             </card-list-group>

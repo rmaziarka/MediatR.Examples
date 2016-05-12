@@ -200,6 +200,7 @@
       },
       "VIEWINGS": "Viewings",
       "VIEWING_DETAILS": "Viewing details",
+      "NO_VIEWINGS": "No viewings",
       "ATTACHMENTS": "Attachments",
       "NO_ATTACHMENTS": "No attachments"
     }
@@ -238,6 +239,7 @@
       "CREATEDDATE": "Created",
       "VIEWINGS": "Viewings",
       "VIEWINGADD": "Viewing details",
+      "NO_VIEWINGS": "No viewings",
       "SELECTACTIVITY": "Select activity"
     }
   },

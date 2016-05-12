@@ -3,6 +3,7 @@
 module Antares {
     import RequirementViewController = Requirement.View.RequirementViewController;
     import Business = Common.Models.Business;
+    declare var moment: any;
 
     describe('Given view requirement page is loaded', () =>{
         var scope: ng.IScope,
@@ -52,27 +53,27 @@ module Antares {
                     new Business.RequirementNote({ id: 'note2', requirementId: '111', description: 'descr 2', createdDate: new Date(), user: null })
                 ],
                 address: Mock.AddressForm.FullAddress,
-                viewings: [                    
-                    {
-                        id: '1',
-                        startDate: "2016-01-01T10:00:00Z",
-                        endDate: "2016-01-01T11:00:00Z"
-                    },
-                    {
-                        id: '2',
-                        startDate: "2016-01-01T13:00:00Z",
-                        endDate: "2016-01-01T14:00:00Z"
-                    },
-                    {
-                        id: '3',
-                        startDate: "2016-01-02T10:00:00Z",
-                        endDate: "2016-01-02T11:00:00Z"
-                    },
-                    {
-                        id: '4',
-                        startDate: "2016-01-03T00:00:00Z",
-                        endDate: "2016-01-03T01:00:00Z"
-                    }
+                viewings: [
+                {
+                    id: '1',
+                    startDate: "2016-01-01T10:00:00Z",
+                    endDate: "2016-01-01T11:00:00Z"
+                },
+                {
+                    id: '2',
+                    startDate: "2016-01-01T13:00:00Z",
+                    endDate: "2016-01-01T14:00:00Z"
+                },
+                {
+                    id: '3',
+                    startDate: "2016-01-02T10:00:00Z",
+                    endDate: "2016-01-02T11:00:00Z"
+                },
+                {
+                    id: '4',
+                    startDate: "2016-01-03T00:00:00Z",
+                    endDate: "2016-01-03T01:00:00Z"
+                }
                 ]
             });
 
@@ -173,24 +174,15 @@ module Antares {
             it('viewing list is displayed and grouped correctly', () => {
                 var viewingGroups = element.find(pageObjectSelectors.viewings.viewingGroups);
                 var viewingGroupTitles = element.find(pageObjectSelectors.viewings.viewingGroupTitles);
-                var viewings = element.find(pageObjectSelectors.viewings.viewings);
+                var viewingItems = element.find(pageObjectSelectors.viewings.viewings);
 
                 expect(viewingGroups.length).toBe(requirementMock.viewingsByDay.length);
-                expect(viewings.length).toBe(requirementMock.viewings.length);
+                expect(viewingItems.length).toBe(requirementMock.viewings.length);
 
                 requirementMock.viewingsByDay.sort((a, b) => new Date(b.day).getTime() - new Date(a.day).getTime()).forEach((g: Business.ViewingGroup, i: number) => {
-                    var formatedDate: string = formatDate(g.day);
-                    expect(formatedDate).toBe(viewingGroupTitles[i].textContent);
-                });                
+                    expect(viewingGroupTitles[i].textContent).toBe(moment(g.day, 'YYYY-MM-DD').format('DD-MM-YYYY'));
+                });
             });
-
-            function formatDate(d: string) {
-                var date = new Date(d);
-                var yyyy = date.getFullYear().toString();
-                var mm = (date.getMonth() + 1).toString(); // getMonth() is zero-based
-                var dd = date.getDate().toString();
-                return (dd[1] ? dd : "0" + dd[0]) + '-' + (mm[1] ? mm : "0" + mm[0]) + '-'+ yyyy; // padding
-            };
         });
 
         describe('and notes button is clicked', () => {

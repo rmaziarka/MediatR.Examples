@@ -4,8 +4,9 @@ module Antares {
     import ActivityViewController = Activity.View.ActivityViewController;
     import AttachmentPreviewController = Common.Component.AttachmentPreviewController;
     import PropertyPreviewController = Property.Preview.PropertyPreviewController;
-
     import Business = Common.Models.Business;
+
+    declare var moment: any;
 
     describe('Given view activity page is loaded', () => {
         var scope: ng.IScope,
@@ -48,6 +49,13 @@ module Antares {
             propertyPreview: {
                 main: 'property-preview',
                 addressSection: '#property-preview-address'
+            },
+            viewings: {
+                list: '#activity-view-viewings card-list#viewings-list',
+                noItems: '#activity-view-viewings card-list#viewings-list card-list-no-items',
+                group: '#activity-view-viewings card-list-group.viewing-group',
+                groupTitle: '#activity-view-viewings card-list-group.viewing-group card-list-group-header h5 time',
+                item: '#activity-view-viewings card-list-group.viewing-group card-list-group-item card.viewing-item',
             }
         };
 
@@ -428,6 +436,126 @@ module Antares {
 
                     // assert
                     expect(attachmentPreviewController.setAttachment).toHaveBeenCalledWith(attachmentForDetailsClick, activityMock.id);
+                });
+            });
+        });
+
+        describe('and viewings are loaded', () => {
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService,
+                $httpBackend: ng.IHttpBackendService) => {
+
+                $http = $httpBackend;
+
+                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
+                $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
+                    return [];
+                });
+
+                scope = $rootScope.$new();
+                compile = $compile;
+            }));
+
+            it('when no viewings then "no items" element should be visible', () => {
+                // arrange
+                var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate({ viewings: [] });
+                scope['activity'] = activityMock;
+
+                // act
+                element = compile('<activity-view activity="activity"></activity-view>')(scope);
+                scope.$apply();
+                $http.flush();
+
+                // assert
+                var noItemsElement = element.find(pageObjectSelectors.viewings.noItems);
+                var groupElements = element.find(pageObjectSelectors.viewings.group);
+
+                expect(noItemsElement.hasClass('ng-hide')).toBeFalsy();
+                expect(groupElements.length).toBe(0);
+            });
+
+            it('when viewings exist then card list components should be visible', () => {
+                // arrange
+                var viewingsMock = TestHelpers.ViewingGenerator.generateMany(4);
+                var activityMock = TestHelpers.ActivityGenerator.generate({ viewings: viewingsMock });
+                scope['activity'] = activityMock;
+
+                // act
+                element = compile('<activity-view activity="activity"></activity-view>')(scope);
+                scope.$apply();
+                $http.flush();
+
+                // assert
+                var noItemsElement = element.find(pageObjectSelectors.viewings.noItems);
+                var listItemElements = element.find(pageObjectSelectors.viewings.item);
+
+                expect(noItemsElement.hasClass('ng-hide')).toBeTruthy();
+                expect(listItemElements.length).toBe(4);
+            });
+
+            it('viewing list is displayed and grouped correctly', () => {
+                // arrange
+                var viewingsMock = [
+                    {
+                        id: '1',
+                        startDate: "2016-01-01T10:00:00Z",
+                        endDate: "2016-01-01T11:00:00Z"
+                    },
+                    {
+                        id: '2',
+                        startDate: "2016-01-01T13:00:00Z",
+                        endDate: "2016-01-01T14:00:00Z"
+                    },
+                    {
+                        id: '3',
+                        startDate: "2016-01-02T10:00:00Z",
+                        endDate: "2016-01-02T11:00:00Z"
+                    },
+                    {
+                        id: '4',
+                        startDate: "2016-01-03T00:00:00Z",
+                        endDate: "2016-01-03T01:00:00Z"
+                    }
+                ];
+                var activityMock = TestHelpers.ActivityGenerator.generate({ viewings: viewingsMock });
+                scope['activity'] = activityMock;
+                
+                // act
+                element = compile('<activity-view activity="activity"></activity-view>')(scope);
+                scope.$apply();
+                $http.flush();
+
+                // assert
+                var viewingGroups = element.find(pageObjectSelectors.viewings.group);
+                var viewingGroupTitles = element.find(pageObjectSelectors.viewings.groupTitle);
+                var viewingItems = element.find(pageObjectSelectors.viewings.item);
+
+                expect(viewingGroups.length).toBe(activityMock.viewingsByDay.length);
+                expect(viewingItems.length).toBe(activityMock.viewings.length);
+
+                activityMock.viewingsByDay.sort((a, b) => new Date(b.day).getTime() - new Date(a.day).getTime()).forEach((g: Business.ViewingGroup, i: number) => {
+                    expect(viewingGroupTitles[i].textContent).toBe(moment(g.day, 'YYYY-MM-DD').format('DD-MM-YYYY'));
+                });
+            });
+            
+            it('viewing list item contains all applicants', () => {
+                // arrange
+                var contactsMock = TestHelpers.ContactGenerator.generateMany(3);
+                var requirementMock = TestHelpers.RequirementGenerator.generate({ contacts: contactsMock });
+                var viewingsMock = TestHelpers.ViewingGenerator.generate({ requirement: requirementMock });
+                var activityMock = TestHelpers.ActivityGenerator.generate({ viewings: [viewingsMock] });
+                scope['activity'] = activityMock;
+
+                // act
+                element = compile('<activity-view activity="activity"></activity-view>')(scope);
+                scope.$apply();
+                $http.flush();
+
+                var viewingItem = element.find(pageObjectSelectors.viewings.item).first();
+
+                contactsMock.forEach((c: Business.Contact) => {
+                    expect(viewingItem.text()).toContain(c.getName());
                 });
             });
         });

@@ -8,8 +8,8 @@ module Antares.TestHelpers {
         public static generateDto(specificData?: any): Dto.IViewing {
 
             var viewing: Business.Viewing = {
-                startDate: new Date().toString(),
-                endDate: new Date().toString(),
+                startDate: new Date(),
+                endDate: new Date(),
                 id: ViewingGenerator.makeRandom('id'),
                 negotiatorId: ViewingGenerator.makeRandom('negotiatorId'),
                 negotiator: new Business.User({ id: ViewingGenerator.makeRandom('id'), firstName: ViewingGenerator.makeRandom('firstName'), lastName: ViewingGenerator.makeRandom('lastName') }),
