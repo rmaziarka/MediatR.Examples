@@ -12,11 +12,13 @@
         }
 
         public Guid PropertyId { get; set; }
-        
+
         public Guid ActivityStatusId { get; set; }
 
         public IList<Guid> ContactIds { get; set; }
 
         public Guid ActivityTypeId { get; set; }
+
+        public Guid LeadNegotiatorId { get; set; }
     }
 }

@@ -177,7 +177,7 @@
         {
             if (activityId.Equals("latest"))
                 activityId = this.scenarioContext.Get<Activity>("Activity").Id.ToString();
-                
+
 
             string requestUrl = $"{ApiUrl}/{activityId}/attachments";
 
@@ -224,7 +224,8 @@
                 .Excluding(x => x.Property)
                 .Excluding(x => x.ActivityStatus)
                 .Excluding(x => x.ActivityType)
-                .Excluding(x => x.Attachments));
+                .Excluding(x => x.Attachments)
+                .Excluding(x => x.ActivityNegotiators));
 
             actualActivity.ActivityStatus.Code.ShouldBeEquivalentTo("PreAppraisal");
         }

@@ -6,6 +6,7 @@
 
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
@@ -16,11 +17,19 @@
     {
         private readonly IGenericRepository<Activity> activityRepository;
         private readonly IGenericRepository<Contact> contactRepository;
+        private readonly IGenericRepository<User> userRepository;
+        private readonly IEntityValidator entityValidator;
 
-        public CreateActivityCommandHandler(IGenericRepository<Activity> activityRepository, IGenericRepository<Contact> contactRepository)
+        public CreateActivityCommandHandler(
+            IGenericRepository<Activity> activityRepository,
+            IGenericRepository<Contact> contactRepository,
+            IGenericRepository<User> userRepository,
+            IEntityValidator entityValidator)
         {
             this.activityRepository = activityRepository;
             this.contactRepository = contactRepository;
+            this.userRepository = userRepository;
+            this.entityValidator = entityValidator;
         }
 
         public Guid Handle(CreateActivityCommand message)
@@ -34,6 +43,16 @@
             }
 
             activity.Contacts = vendors;
+
+            User negotiator = this.userRepository.FindBy(x => message.LeadNegotiatorId == x.Id).SingleOrDefault();
+            this.entityValidator.EntityExists(negotiator, message.LeadNegotiatorId);
+
+            activity.ActivityNegotiators.Add(new ActivityNegotiator
+            {
+                Activity = activity,
+                Negotiator = negotiator,
+                IsLead = true
+            });
 
             this.activityRepository.Add(activity);
             this.activityRepository.Save();

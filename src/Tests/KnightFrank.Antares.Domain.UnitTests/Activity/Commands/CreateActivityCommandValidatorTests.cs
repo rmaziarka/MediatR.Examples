@@ -23,6 +23,9 @@
 
     using Xunit;
     using FixtureExtension;
+
+    using FluentValidation.Resources;
+
     [Trait("FeatureTitle", "Property Activity")]
     [Collection("CreateActivityCommandValidator")]
     public class CreateActivityCommandValidatorTests : IClassFixture<CreateActivityCommand>
@@ -60,7 +63,7 @@
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             CreateActivityCommand cmd)
         {
-            // Arrange 
+            // Arrange
             IEnumerable<Contact> fakeContactResult = cmd.ContactIds.Select(activityContact => new Contact { Id = activityContact });
 
             contactRepository.Setup(r => r.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(fakeContactResult);
@@ -90,7 +93,7 @@
         public void Given_PropertyDoesNotExist_When_Validating_Then_IsInvalid(
             CreateActivityCommand cmd)
         {
-            // Arrange 
+            // Arrange
             this.propertyRepository.Setup(p => p.GetById(It.IsAny<Guid>())).Returns((Property)null);
 
             // Act
@@ -106,7 +109,7 @@
         [AutoMoqData]
         public void Given_CommandPropertyIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode()
         {
-            // Arrange 
+            // Arrange
             CreateActivityCommand cmd = this.fixture.Build<CreateActivityCommand>().With(c => c.PropertyId, default(Guid)).Create();
 
             // Act
@@ -122,7 +125,7 @@
         [AutoMoqData]
         public void Given_CommandActivityStatusIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode()
         {
-            // Arrange 
+            // Arrange
             CreateActivityCommand cmd =
                 this.fixture.Build<CreateActivityCommand>().With(c => c.ActivityStatusId, default(Guid)).Create();
 
@@ -141,7 +144,7 @@
         [AutoMoqData]
         public void Given_CommandActivityTypeIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode()
         {
-            // Arrange 
+            // Arrange
             CreateActivityCommand cmd =
                 this.fixture.Build<CreateActivityCommand>().With(c => c.ActivityTypeId, default(Guid)).Create();
 
@@ -159,7 +162,7 @@
         public void Given_CommandActivityTypeDoesNotExist_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
             CreateActivityCommand cmd)
         {
-            // Arrange 
+            // Arrange
             this.activityTypeRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityType, bool>>>())).Returns(false);
 
             // Act
@@ -182,6 +185,20 @@
 
             validationResult.IsValid.Should().BeFalse();
             validationResult.Errors.Should().ContainSingle(x => x.PropertyName == nameof(command.ActivityTypeId));
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_CommandNegotiatorIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(Guid leadNegotiatorId)
+        {
+            // Arrange
+            CreateActivityCommand cmd = this.fixture.Build<CreateActivityCommand>().With(c => c.LeadNegotiatorId, default(Guid)).Create();
+
+            // Act
+            ValidationResult validationResult = this.validator.Validate(cmd);
+
+            // Assert
+            validationResult.IsInvalid(nameof(cmd.LeadNegotiatorId), nameof(Messages.notempty_error));
         }
     }
 }

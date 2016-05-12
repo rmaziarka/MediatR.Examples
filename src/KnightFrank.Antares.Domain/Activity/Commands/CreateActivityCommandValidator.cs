@@ -44,6 +44,8 @@
                                       .Must(this.ActivityTypeDefinitionExists)
                                       .WithMessage("Specified activity type is invalid")
                                       .WithName("ActivityTypeId"));
+
+            this.RuleFor(x => x.LeadNegotiatorId).NotEmpty();
         }
 
         private bool PropertyExists(CreateActivityCommand cmd)

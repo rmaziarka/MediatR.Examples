@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Linq.Expressions;
 
@@ -9,6 +10,7 @@
 
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.CommandHandlers;
     using KnightFrank.Antares.Domain.Activity.Commands;
@@ -30,12 +32,18 @@
         public void Given_ValidCommand_When_Handling_Then_ShouldSaveActivity(
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
+            [Frozen] Mock<IGenericRepository<User>> userRepository,
+            User user,
             CreateActivityCommandHandler handler,
             CreateActivityCommand command,
             Guid expectedActivityId)
         {
-            // Arrange 
+            // Arrange
             Activity activity = null;
+
+            userRepository.Setup(p => p.FindBy(It.IsAny<Expression<Func<User, bool>>>()))
+                          .Returns(new List<User> { user });
+
             activityRepository.Setup(r => r.Add(It.IsAny<Activity>()))
                               .Returns((Activity a) =>
                               {
@@ -57,18 +65,51 @@
             activityRepository.Verify(r => r.Add(It.IsAny<Activity>()), Times.Once());
             activityRepository.Verify(r => r.Save(), Times.Once());
         }
-        
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_Command_When_Handling_Then_EntityExistsValidation_ShouldBeCalledForNegotiator(
+            [Frozen] Mock<IDomainValidator<CreateActivityCommand>> domainValidator,
+            [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
+            [Frozen] Mock<IGenericRepository<User>> userRepository,
+            [Frozen] Mock<IEntityValidator> entityValidator,
+            User user,
+            CreateActivityCommandHandler handler,
+            CreateActivityCommand command,
+            IFixture fixture
+            )
+        {
+            // Arrange
+            user.Id = command.LeadNegotiatorId;
+            userRepository.Setup(p => p.FindBy(It.IsAny<Expression<Func<User, bool>>>()))
+                          .Returns(new List<User> { user });
+
+            contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
+                 .Returns(command.ContactIds.Select(id => new Contact { Id = id }));
+
+            // Act
+            handler.Handle(command);
+
+            // Assert
+            entityValidator.Verify(x => x.EntityExists(user, user.Id), Times.Once);
+        }
+
         [Theory]
         [AutoMoqData]
         public void Given_CreateActivityCommandWithInvalidVendors_When_Handling_Then_ShouldThrowBusinessException(
             [Frozen] Mock<IDomainValidator<CreateActivityCommand>> domainValidator,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
+            [Frozen] Mock<IGenericRepository<User>> userRepository,
+            User user,
             CreateActivityCommandHandler handler,
             CreateActivityCommand command,
-            IFixture  fixture
+            IFixture fixture
             )
         {
             // Arrange
+            userRepository.Setup(p => p.FindBy(It.IsAny<Expression<Func<User, bool>>>()))
+                          .Returns(new List<User> { user });
+
             command.ContactIds = fixture.CreateMany<Guid>(2).ToList();
 
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(
