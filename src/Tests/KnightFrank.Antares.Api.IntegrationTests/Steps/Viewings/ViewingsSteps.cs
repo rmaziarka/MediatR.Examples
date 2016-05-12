@@ -9,6 +9,7 @@
 
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
+    using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.Viewing.Commands;
@@ -49,11 +50,40 @@
         {
             string requestUrl = $"{ApiUrl}";
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
-            List<Guid> attendeesIds = this.scenarioContext.Get<Requirement>("Requirement").Contacts.Select(contact => contact.Id).ToList();
+            List<Guid> attendeesIds =
+                this.scenarioContext.Get<Requirement>("Requirement").Contacts.Select(contact => contact.Id).ToList();
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
             var negotiatorId = this.scenarioContext.Get<Guid>("NegotiatorId");
 
-            var details = new CreateViewingCommand()
+            var details = new CreateViewingCommand
+            {
+                ActivityId = activityId,
+                AttendeesIds = attendeesIds,
+                StartDate = DateTime.UtcNow,
+                EndDate = DateTime.UtcNow.AddHours(1),
+                InvitationText = StringExtension.GenerateMaxAlphanumericString(4000),
+                NegotiatorId = negotiatorId,
+                RequirementId = requirementId
+            };
+
+            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, details);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        [When(@"User creates viewing with invalid (.*) using api")]
+        public void CreateViewingWithInvalidDataUsingApi(string data)
+        {
+            string requestUrl = $"{ApiUrl}";
+            Guid activityId = data.Equals("activity") ? Guid.NewGuid() : this.scenarioContext.Get<Activity>("Activity").Id;
+            List<Guid> attendeesIds = data.Equals("attendee")
+                ? new List<Guid> { Guid.NewGuid() }
+                : this.scenarioContext.Get<Requirement>("Requirement").Contacts.Select(contact => contact.Id).ToList();
+            Guid requirementId = data.Equals("requirement")
+                ? Guid.NewGuid()
+                : this.scenarioContext.Get<Requirement>("Requirement").Id;
+            var negotiatorId = this.scenarioContext.Get<Guid>("NegotiatorId");
+
+            var details = new CreateViewingCommand
             {
                 ActivityId = activityId,
                 AttendeesIds = attendeesIds,
@@ -69,30 +99,78 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [When(@"User creates viewing with invalid (.*) using api")]
-        public void CreateViewingWithInvalidDataUsingApi(string data)
+        [Given(@"User creates viewing in database")]
+        public void CreateViewingInDatabase()
         {
-            string requestUrl = $"{ApiUrl}";
-            Guid activityId = data.Equals("activity") ? Guid.NewGuid() : this.scenarioContext.Get<Activity>("Activity").Id;
-            List<Guid> attendeesIds = data.Equals("contact")
-                ? new List<Guid>() { Guid.NewGuid() }
-                : this.scenarioContext.Get<Requirement>("Requirement").Contacts.Select(contact => contact.Id).ToList();
-            Guid requirementId = data.Equals("requirement") ? Guid.NewGuid() : this.scenarioContext.Get<Requirement>("Requirement").Id;
-            var negotiatorId = this.scenarioContext.Get<Guid>("NegotiatorId");
+            var requirement = this.scenarioContext.Get<Requirement>("Requirement");
 
-            var details = new CreateViewingCommand()
+            var viewing = new Viewing
             {
-                ActivityId = activityId,
-                AttendeesIds = attendeesIds,
                 StartDate = DateTime.UtcNow,
                 EndDate = DateTime.UtcNow.AddHours(1),
                 InvitationText = StringExtension.GenerateMaxAlphanumericString(4000),
-                PostViewingComment = StringExtension.GenerateMaxAlphanumericString(4000),
-                NegotiatorId = negotiatorId,
-                RequirementId = requirementId
+                Attendees = new List<Contact>
+                {
+                    new Contact
+                    {
+                        Id = requirement.Contacts[0].Id,
+                        FirstName = requirement.Contacts[0].FirstName,
+                        Surname = requirement.Contacts[0].Surname,
+                        Title = requirement.Contacts[0].Title
+                    }
+                },
+                RequirementId = requirement.Id,
+                ActivityId = this.scenarioContext.Get<Activity>("Activity").Id,
+                NegotiatorId = this.scenarioContext.Get<Guid>("NegotiatorId")
             };
 
-            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, details);
+            this.fixture.DataContext.Viewing.Add(viewing);
+            this.fixture.DataContext.SaveChanges();
+
+            this.scenarioContext.Set(viewing, "Viewing");
+        }
+
+        [When(@"User updates viewing")]
+        public void UpdateViewing()
+        {
+            string requestUrl = $"{ApiUrl}";
+            var viewing = this.scenarioContext.Get<Viewing>("Viewing");
+            var details = new UpdateViewingCommand
+            {
+                Id = viewing.Id,
+                AttendeesIds = new List<Guid>
+                {
+                    this.scenarioContext.Get<Requirement>("Requirement").Contacts[1].Id
+                },
+                PostViewingComment = StringExtension.GenerateMaxAlphanumericString(4000),
+                InvitationText = StringExtension.GenerateMaxAlphanumericString(4000),
+                StartDate = DateTime.UtcNow.AddHours(1),
+                EndDate = DateTime.UtcNow.AddHours(2)
+            };
+
+            HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, details);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        [When(@"User updates viewing with invalid (.*) data")]
+        public void UpdateViewingWithInvalidData(string data)
+        {
+            string requestUrl = $"{ApiUrl}";
+            var viewing = this.scenarioContext.Get<Viewing>("Viewing");
+            var details = new UpdateViewingCommand
+            {
+                Id = data.Equals("viewing") ? Guid.NewGuid() : viewing.Id,
+                AttendeesIds = new List<Guid>
+                {
+                    data.Equals("attendee") ? Guid.NewGuid() : this.scenarioContext.Get<Requirement>("Requirement").Contacts[1].Id
+                },
+                PostViewingComment = StringExtension.GenerateMaxAlphanumericString(4000),
+                InvitationText = StringExtension.GenerateMaxAlphanumericString(4000),
+                StartDate = DateTime.UtcNow.AddHours(1),
+                EndDate = DateTime.UtcNow.AddHours(2)
+            };
+
+            HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, details);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 

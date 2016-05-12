@@ -1,7 +1,7 @@
 ﻿Feature: Attachments
 
 @Attachment
-Scenario: Upload Attachment
+Scenario: Upload attachment
 Given User gets GB address form for Property and country details
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
@@ -21,7 +21,7 @@ Given User gets GB address form for Property and country details
 	Then User should get OK http status code
 
 @Attachment
-Scenario Outline: Try to upload Attachment with improper data
+Scenario Outline: Upload attachment with invalid data
 Given User gets GB address form for Property and country details
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
@@ -38,15 +38,13 @@ Given User gets GB address form for Property and country details
 	When I upload attachment for <activityId> activity id for <documentType> with following data
 		| FileName | Size | ExternalDocumentId                   |
 		| abc.pdf  | 1024 | ba3b115b-4a5f-42c9-8e0f-25b7ed903b00 |
-	Then User should get <response> http status code
-
+	Then User should get <statusCode> http status code
 
 	Examples:
-	| documentType    | activityId                           | response   |
+	| documentType    | activityId                           | statusCode |
 	| Offices         | latest                               | BadRequest |
 	| TermsOfBusiness | ba3b115b-4a5f-42c9-8e0f-25b7ed903b00 | BadRequest |
 	| TermsOfBusiness |                                      | NotFound   |
-
 
 @Activity
 Scenario: Get Activity with attachment
@@ -69,5 +67,4 @@ Scenario: Get Activity with attachment
 	When User gets activity with latest id
 	Then User should get OK http status code
 		And Retrieved activity should be same as in database
-		And Retrieved activity should have expected attachments
-	 
+		And Retrieved activity should have expected attachments 

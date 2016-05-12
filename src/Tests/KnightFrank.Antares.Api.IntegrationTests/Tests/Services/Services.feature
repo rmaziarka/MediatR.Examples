@@ -21,8 +21,8 @@ Scenario Outline: Upload attachment for entity with ActivityDocumentType
 
 	Examples: 
 	| filename | activityDocumentTypeCode | statusCode |
-	|          | TermsOfBusiness         | BadRequest |
-	| test.png | TermsOfBusiness         | OK         |
+	|          | TermsOfBusiness          | BadRequest |
+	| test.png | TermsOfBusiness          | OK         |
 
 @Attachment
 Scenario Outline: Download attachment for entity with ActivityDocumentType
@@ -45,5 +45,5 @@ Scenario Outline: Download attachment for entity with ActivityDocumentType
 
 	Examples: 
 	| filename | activityDocumentTypeCode | statusCode |
-	|          | TermsOfBusiness         | BadRequest |
-	| test.png | TermsOfBusiness         | OK         |
+	|          | TermsOfBusiness          | BadRequest |
+	| test.png | TermsOfBusiness          | OK         |

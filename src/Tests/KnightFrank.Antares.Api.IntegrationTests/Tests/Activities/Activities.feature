@@ -21,11 +21,11 @@ Scenario Outline: Retrieve error messages for improper data
 	Then User should get <statusCode> http status code
 
 	Examples:
-	| propertyId                           | activityStatusId                     | statusCode | activityTypeCode |
-	| 00000000-0000-0000-0000-000000000002 | ActivityStatus                       | BadRequest | Freehold Sale    |
-	| latest                               | 00000000-0000-0000-0000-000000000001 | BadRequest | Freehold Sale    |
-	| latest                               | ActivityStatus                       | BadRequest | Assignment       |
-	| latest                               | ActivityStatus                       | BadRequest | invalid          |
+	| propertyId                           | activityStatusId                     | activityTypeCode | statusCode |
+	| 00000000-0000-0000-0000-000000000002 | ActivityStatus                       | Freehold Sale    | BadRequest |
+	| latest                               | 00000000-0000-0000-0000-000000000001 | Freehold Sale    | BadRequest |
+	| latest                               | ActivityStatus                       | Assignment       | BadRequest |
+	| latest                               | ActivityStatus                       | invalid          | BadRequest |
 
 @Activity
 Scenario: Create Activity for an existing property
@@ -59,12 +59,12 @@ Scenario: Create Activity for an existing property
 @Activity
 Scenario Outline: Get Activity by incorrect activity id
 	When User gets activity with <activityId> id
-	Then User should get <expectedStatusCode> http status code
+	Then User should get <statusCode> http status code
 
 	Examples:
-	| activityId                           | expectedStatusCode |
-	| a                                    | BadRequest         |
-	| 00000000-0000-0000-0000-000000000001 | NotFound           |
+	| activityId                           | statusCode |
+	| a                                    | BadRequest |
+	| 00000000-0000-0000-0000-000000000001 | NotFound   |
 
 @Activity
 Scenario: Get Activity by correct activity id
