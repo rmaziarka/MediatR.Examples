@@ -157,6 +157,12 @@
     <Compile Include="Contact\Commands\UpdateContactCommandValidator.cs" />
     <Compile Include="Contact\Queries\ContactQuery.cs" />
     <Compile Include="Contact\QueryHandlers\ContactQueryHandler.cs" />
+    <Compile Include="Offer\CommandHandlers\CreateOfferCommandHandler.cs" />
+    <Compile Include="Offer\Commands\CreateOfferCommand.cs" />
+    <Compile Include="Offer\Commands\OfferCommandProfile.cs" />
+    <Compile Include="Offer\Queries\OfferQuery.cs" />
+    <Compile Include="Offer\Queries\OfferQueryValidator.cs" />
+    <Compile Include="Offer\QueryHandlers\OfferQueryHandler.cs" />
     <Compile Include="User\Queries\UsersQuery.cs" />
     <Compile Include="Contact\Queries\ContactQueryValidator.cs" />
     <Compile Include="Contact\Queries\ContactsQuery.cs" />
@@ -280,6 +286,7 @@
       <LastGenOutput>CommonResources.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
