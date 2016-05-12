@@ -62,6 +62,7 @@
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Activity> Activities { get; set; }
+        public DbSet<ActivityNegotiator> ActivityNegotiators { get; set; }
         public DbSet<ActivityTypeDefinition> ActivityTypeDefinitions { get; set; }
         public DbSet<ActivityType> ActivityTypes { get; set; }
         public DbSet<ActivityTypeLocalised> ActivityTypeLocaliseds { get; set; }

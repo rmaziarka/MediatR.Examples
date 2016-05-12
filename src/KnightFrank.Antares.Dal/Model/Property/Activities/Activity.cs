@@ -12,7 +12,7 @@
         public Guid PropertyId { get; set; }
 
         public virtual Property Property { get; set; }
-        
+
         public Guid ActivityStatusId { get; set; }
 
         public EnumTypeItem ActivityStatus { get; set; }
@@ -32,5 +32,7 @@
         public virtual ICollection<Attachment> Attachments { get; set; }
 
         public virtual ICollection<Viewing> Viewings { get; set; } = new List<Viewing>();
+
+        public virtual ICollection<ActivityNegotiator> ActivityNegotiators { get; set; } = new List<ActivityNegotiator>();
     }
 }
