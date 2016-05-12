@@ -28,6 +28,11 @@
                     .Include(a => a.Contacts)
                     .Include(a => a.Attachments)
                     .Include(a => a.Attachments.Select(at => at.User))
+                    .Include(a => a.Viewings)
+                    .Include(a => a.Viewings.Select(v => v.Attendees))
+                    .Include(a => a.Viewings.Select(v => v.Negotiator))
+                    .Include(a => a.Viewings.Select(v => v.Requirement))
+                    .Include(a => a.Viewings.Select(v => v.Requirement.Contacts))
                     .SingleOrDefault(a => a.Id == query.Id);
 
             return result;

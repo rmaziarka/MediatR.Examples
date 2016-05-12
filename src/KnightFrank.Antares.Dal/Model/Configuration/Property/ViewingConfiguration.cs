@@ -40,6 +40,9 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property
 
             this.HasRequired(v => v.Requirement)
                 .WithMany(r => r.Viewings);
+
+            this.HasRequired(v => v.Activity)
+                .WithMany(r => r.Viewings);
         }
     }
 }
