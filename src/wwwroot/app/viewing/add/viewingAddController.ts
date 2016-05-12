@@ -9,13 +9,14 @@ module Antares {
         export class ViewingAddController {
             componentId: string;
             activity: Dto.IActivityQueryResult;
-            viewing: Dto.IViewing;
+            viewing: Business.Viewing;
             dateOpened: boolean = false;
             attendees: Dto.IContact[];
             // Any beacuse they are momentjs object
             startTime: any;
             endTime: any;
             requirement: Business.Requirement;
+            mode: string = 'edit';
 
             selectedAttendees: Dto.IContact[] = [];
             constructor(
@@ -66,10 +67,12 @@ module Antares {
                 this.activity = activity;
             }
 
-            setViewing = (viewing: Dto.IViewing) =>{
+            setViewing = (viewing: Business.Viewing) => {
                 this.viewing = viewing;
-                this.startTime = viewing.startDate;
-                this.endTime = viewing.endDate;
+                this.viewing.startDate = new Date(moment(viewing.startDate));
+                this.viewing.endDate = new Date(moment(viewing.endDate));
+                this.startTime = this.combineDateWithTime(new Date(), new Date(moment(viewing.startDate)));
+                this.endTime = this.combineDateWithTime(new Date(), new Date(moment(viewing.endDate)));
 
                 this.activity = <Dto.IActivityQueryResult> {
                     id: viewing.activity.id,
@@ -94,18 +97,30 @@ module Antares {
                     return this.$q.reject();
                 }
 
-                var createViewingCommand: Dto.IViewing = this.getCreateViewingCommand();
-
                 var viewingResource = this.dataAccessService.getViewingResource();
 
-                return viewingResource
-                    .createViewing(null, createViewingCommand)
-                    .$promise
-                    .then((viewing: Common.Models.Dto.IViewing) => {
-                        var viewingModel = new Business.Viewing(viewing);
-                        this.requirement.viewings.push(viewingModel);
-                        this.requirement.groupViewings(this.requirement.viewings);
-                    });
+                if (this.mode === 'add') {
+                    var createViewingCommand: Dto.IViewing = this.getCreateViewingCommand();
+                    return viewingResource
+                        .createViewing(null, createViewingCommand)
+                        .$promise
+                        .then((viewing: Common.Models.Dto.IViewing) =>{
+                            var viewingModel = new Business.Viewing(viewing);
+                            this.requirement.viewings.push(viewingModel);
+                            this.requirement.groupViewings(this.requirement.viewings);
+                        });
+                }
+                else if (this.mode === 'edit') {
+                    var updateViewing: Dto.IViewing = this.getUpdateViewingResource();
+
+                    return viewingResource
+                        .update(updateViewing)
+                        .$promise
+                        .then((viewing: Common.Models.Dto.IViewing) => {
+                            this.viewing = angular.copy(new Business.Viewing(viewing), this.viewing);
+                            this.requirement.groupViewings(this.requirement.viewings);
+                        });
+                }
             }
 
             // replace with Business.Viewing and probably extend it with selected: boolean
@@ -115,14 +130,26 @@ module Antares {
                 createViewingCommand.endDate = this.combineDateWithTime(this.viewing.startDate, moment(this.endTime).toDate());
                 createViewingCommand.activityId = this.activity.id;
                 createViewingCommand.requirementId = this.requirement.id;
+                createViewingCommand.attendeesIds = this.getSelectedAttendeesIds();
 
-                createViewingCommand.attendeesIds = this.attendees.filter((element: any): boolean => {
+                return createViewingCommand;
+            }
+
+            getUpdateViewingResource(): Dto.IViewing {
+                var updateViewingResource: Dto.IViewing = angular.copy(this.viewing);
+                updateViewingResource.attendeesIds = this.getSelectedAttendeesIds();
+                updateViewingResource.startDate = this.combineDateWithTime(this.viewing.startDate, moment(this.startTime).toDate());
+                updateViewingResource.endDate = this.combineDateWithTime(this.viewing.startDate, moment(this.endTime).toDate());
+
+                return updateViewingResource;
+            }
+
+            getSelectedAttendeesIds(): string[] {
+                return this.attendees.filter((element: any): boolean => {
                     return element.selected;
                 }).map((element: any) => {
                     return element.id;
                 });
-
-                return createViewingCommand;
             }
 
             combineDateWithTime(date: Date | string, time: Date): Date {

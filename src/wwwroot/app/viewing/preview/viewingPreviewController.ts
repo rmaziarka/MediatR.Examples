@@ -2,17 +2,14 @@
 
 module Antares {
     export module Component {
-        import Dto = Antares.Common.Models.Dto;
         import Business = Common.Models.Business;
 
         export class ViewingPreviewController {
             componentId: string;
-            viewing: Dto.IViewing;
+            viewing: Business.Viewing;
 
             constructor(
-                componentRegistry: Antares.Core.Service.ComponentRegistry,
-                private $q: ng.IQService) {
-
+                componentRegistry: Antares.Core.Service.ComponentRegistry) {
                 componentRegistry.register(this, this.componentId);
             }
 
@@ -20,11 +17,11 @@ module Antares {
                 this.viewing = new Business.Viewing();
             }
 
-            getViewing = (): Dto.IViewing => {
+            getViewing = (): Business.Viewing => {
                 return this.viewing;
             }
 
-            setViewing = (viewing: Dto.IViewing) =>{
+            setViewing = (viewing: Business.Viewing) =>{
                 this.viewing = viewing;
             }
         }

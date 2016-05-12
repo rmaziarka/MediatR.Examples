@@ -30,5 +30,7 @@
         public decimal? VendorEstimatedPrice { get; set; }
 
         public virtual ICollection<Attachment> Attachments { get; set; }
+
+        public virtual ICollection<Viewing> Viewings { get; set; } = new List<Viewing>();
     }
 }

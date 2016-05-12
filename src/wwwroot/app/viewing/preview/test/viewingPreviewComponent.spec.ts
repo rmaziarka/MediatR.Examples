@@ -79,7 +79,7 @@ module Antares {
 
                 // assert
                 var postViewingCommentElement = element.find(pageObjectSelectors.postViewingComment);
-                var proppePostViewingCommentToDisplay = viewingMock.postviewingComment;
+                var proppePostViewingCommentToDisplay = viewingMock.postViewingComment;
                 expect(postViewingCommentElement.text()).toBe(proppePostViewingCommentToDisplay);
             });
 

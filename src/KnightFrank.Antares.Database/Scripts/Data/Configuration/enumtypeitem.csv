@@ -17,3 +17,7 @@ ActivityDocumentType;Brochure
 ActivityDocumentType;VideoTour
 ActivityDocumentType;EPC
 ActivityDocumentType;GasCertificate
+OfferStatus;New
+OfferStatus;Withdrawn
+OfferStatus;Rejected
+OfferStatus;Accepted

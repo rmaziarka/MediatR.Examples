@@ -85,7 +85,7 @@
         </activities-list>
 
         <viewing-add component-id="vm.componentIds.viewingAddId" requirement="vm.requirement" attendees="vm.requirement.contacts"
-                         ng-show="vm.viewingAddPanelVisible">
+                         ng-show="vm.viewingAddPanelVisible" mode="add">
         </viewing-add>
     </side-panel-content>
     <side-panel-footer>
@@ -123,7 +123,7 @@
         <viewing-preview component-id="vm.componentIds.viewingPreviewId" ng-show="vm.previewPanelVisible">
         </viewing-preview>
         <viewing-add component-id="vm.componentIds.viewingEditId" requirement="vm.requirement" attendees="vm.requirement.contacts"
-                         ng-show="!vm.previewPanelVisible">
+                         ng-show="!vm.previewPanelVisible" mode="edit">
         </viewing-add>
     </side-panel-content>
     <side-panel-footer>

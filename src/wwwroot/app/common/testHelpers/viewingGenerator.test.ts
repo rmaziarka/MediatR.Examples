@@ -16,7 +16,7 @@ module Antares.TestHelpers {
                 requirementId: ViewingGenerator.makeRandom('requirementId'),
                 activityId: ViewingGenerator.makeRandom('activityId'),
                 invitationText: ViewingGenerator.makeRandom('invitationText'),
-                postviewingComment: ViewingGenerator.makeRandom('postviewingComment'),
+                postViewingComment: ViewingGenerator.makeRandom('postViewingComment'),
                 attendeesIds: [],
                 attendees: [],
                 activity: ActivityGenerator.generateDto(),
