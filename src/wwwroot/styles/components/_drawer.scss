@@ -91,7 +91,7 @@
   .accordion-toggle {
     color: $color-white;
     display: block;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     line-height: 1;
     outline: none;
     padding: 16px 16px 16px 22px;
@@ -104,7 +104,7 @@
     .accordion-arrow {
       font-size: 12px;
       line-height: 14px;
-      transition: all 0.2s ease;
+      transition: all 0.1s ease;
     }
   }
 

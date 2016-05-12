@@ -29,6 +29,14 @@ body {
   }
 }
 
+small {
+  color: $gray-light;
+}
+
+.close {
+  opacity: 0.5;
+}
+
 .page-wrapper {
   height: 100%;
   overflow-x: hidden;

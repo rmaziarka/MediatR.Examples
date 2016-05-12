@@ -11,6 +11,53 @@
                     <h3 class="page-header" translate="PROPERTY.VIEW.DETAILS"></h3>
                     <property-details property="vm.property" user-data="vm.userData"></property-details>
                 </section>
+
+                <!-- TODO #20414
+
+                <section>
+                    <h3 class="page-header">Area breakdown</h3>
+                    <div class="form-group">
+                        <div class="section-row row">
+                            <div class="col-xs-6">Total area</div>
+                            <div class="col-xs-6">6500 sq ft</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-default" type="button"><i class="fa fa-plus-circle"></i></button>
+                    </div>
+                    <p class="help-block">Area breakdown not configured</p>
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="panel-item">Lorem</div>
+                            <small>1200 sq ft</small>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="panel-item">Ipsum</div>
+                            <small>1000 sq ft</small>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="panel-item">Dolor</div>
+                            <small>1200 sq ft</small>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="panel-item">Sit</div>
+                            <small>1200 sq ft</small>
+                        </div>
+                    </div>
+                </section>
+
+                // -->
+
             </div>
             <div class="col-md-4">
                 <section>
@@ -48,27 +95,88 @@
                         </card-list-item>
                     </card-list>
                 </section>
-                <!--<section>
-                    <h3 class="page-header" translate="ATTACHMENT.LIST.ATTACHMENTS"></h3>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-default"><i class="fa fa-plus-circle"></i></button>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="panel-item">Lorem ipsum file.docx</div>
-                            <div><small><time>12-05-2015</time>, Brouchure, 2MB</small></div>
-                            <div class="row">
-                                <div class="col-md-12 text-right">
-                                    <a href="#">details</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>-->
             </div>
         </div>
     </div>
 </div>
+
+<!-- TODO #20414
+
+<side-panel>
+    <side-panel-header>
+        <h3>Area details</h3>
+    </side-panel-header>
+    <side-panel-content>
+        <div class="area-details">
+            <div class="form-group has-error">
+                <label for="name" class="required">Name</label>
+                <input id="name" class="form-control" type="text">
+                <p class="help-block">Field is required</p>
+            </div>
+            <div class="form-group has-error">
+                <label for="size" class="required">Size</label>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <input id="size" class="form-control" type="text">
+                    </div>
+                </div>
+                <p class="help-block">Field is required</p>
+            </div>
+        </div>
+
+        <div class="area-details">
+            <div class="row">
+                <div class="col-xs-12">
+                    <button class="close">&times;</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="required">Name</label>
+                <input id="name" class="form-control" type="text">
+            </div>
+            <div class="form-group">
+                <label for="size" class="required">Size</label>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <input id="size" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="area-details">
+            <div class="row">
+                <div class="col-xs-12">
+                    <button class="close">&times;</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="required">Name</label>
+                <input id="name" class="form-control" type="text">
+            </div>
+            <div class="form-group">
+                <label for="size" class="required">Size</label>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <input id="size" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-default" type="button"><i class="fa fa-plus-circle"></i></button>
+    </side-panel-content>
+    <side-panel-footer>
+        <button class="btn btn-default" type="button">
+             <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+        </button>
+        <button class="btn btn-primary" type="button">
+            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+        </button>
+    </side-panel-footer>
+</side-panel>
+
+// -->
 
 <side-panel>
     <side-panel-header>
