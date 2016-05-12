@@ -20,7 +20,8 @@ module Antares.TestHelpers {
                 attendeesIds: [],
                 attendees: [],
                 activity: ActivityGenerator.generateDto(),
-                day: ""
+                day: "",
+                requirement: RequirementGenerator.generateDto()
             }
 
             return angular.extend(viewing, specificData || {});

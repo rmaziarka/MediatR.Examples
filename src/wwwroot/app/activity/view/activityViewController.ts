@@ -66,6 +66,16 @@ module Antares.Activity.View {
                 });
         };
 
+        showViewingPreview = (viewing: Common.Models.Dto.IViewing) => {
+            this.components.viewingPreview().clearViewingPreview();
+            this.components.viewingPreview().setViewing(viewing);
+            this.showPanel(this.components.panels.previewViewingsSidePanel);
+        }
+
+        cancelViewingPreview() {
+            this.hidePanels();
+        }
+
         goToEdit = () => {
             this.$state.go('app.activity-edit', { id: this.$state.params['id'] });
         }
@@ -77,7 +87,9 @@ module Antares.Activity.View {
                 activityAttachmentAddSidePanelId: 'viewActivity:activityAttachmentAddSidePanelComponent',
                 activityAttachmentAddId: 'viewActivity:activityAttachmentAddComponent',
                 activityAttachmentPreviewId: 'viewActivity:activityyAttachmentPreviewComponent',
-                activityAttachmentPreviewSidePanelId: 'viewActivity:activityyAttachmentPreviewSidePanelComponent'
+                activityAttachmentPreviewSidePanelId: 'viewActivity:activityyAttachmentPreviewSidePanelComponent',
+                previewViewingSidePanelId: 'viewActivity:previewViewingSidePanelComponent',
+                viewingPreviewId: 'viewActivity:viewingPreviewComponent'
             };
         }
 
@@ -86,10 +98,12 @@ module Antares.Activity.View {
                 propertyPreview: () => { return this.componentRegistry.get(this.componentIds.propertyPreviewId); },
                 activityAttachmentAdd: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentAddId); },
                 activityAttachmentPreview: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentPreviewId); },
+                viewingPreview: () => { return this.componentRegistry.get(this.componentIds.viewingPreviewId); },
                 panels: {
                     propertyPreview: () => { return this.componentRegistry.get(this.componentIds.propertyPreviewSidePanelId); },
                     activityAttachmentAdd: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentAddSidePanelId) },
-                    activityAttachmentPreview: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentPreviewSidePanelId); }
+                    activityAttachmentPreview: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentPreviewSidePanelId); },
+                    previewViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.previewViewingSidePanelId); }                    
                 }
             };
         }

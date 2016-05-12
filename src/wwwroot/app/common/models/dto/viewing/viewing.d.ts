@@ -11,5 +11,6 @@
         attendeesIds: string[];
         activity: Dto.IActivity;
         attendees: Dto.IContact[];
+        requirement: Dto.IRequirement;
     }
 }

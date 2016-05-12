@@ -98,11 +98,19 @@
         {
             var address = table.CreateInstance<Address>();
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
-            AttributeValues attributeValues = this.scenarioContext.Keys.Contains("AttributeValues") ? this.scenarioContext.Get<AttributeValues>("AttributeValues") : new AttributeValues();
-            List<CreateOrUpdatePropertyCharacteristic> createOrUpdatePropertyCharacteristic = this.scenarioContext.Keys.Contains("PropertyCharacteristics") ? 
-                this.scenarioContext.Get<List<CreateOrUpdatePropertyCharacteristic>>("PropertyCharacteristics") : new List<CreateOrUpdatePropertyCharacteristic>();
 
-            List<PropertyCharacteristic> propertyCharacteristic = createOrUpdatePropertyCharacteristic.Select(prop => new PropertyCharacteristic { CharacteristicId = prop.CharacteristicId, Text = prop.Text }).ToList();
+            AttributeValues attributeValues = this.scenarioContext.Keys.Contains("AttributeValues")
+                ? this.scenarioContext.Get<AttributeValues>("AttributeValues")
+                : new AttributeValues();
+
+            List<CreateOrUpdatePropertyCharacteristic> createOrUpdatePropertyCharacteristic =
+                this.scenarioContext.Keys.Contains("PropertyCharacteristics")
+                    ? this.scenarioContext.Get<List<CreateOrUpdatePropertyCharacteristic>>("PropertyCharacteristics")
+                    : new List<CreateOrUpdatePropertyCharacteristic>();
+
+            List<PropertyCharacteristic> propertyCharacteristic =
+                createOrUpdatePropertyCharacteristic.Select(
+                    prop => new PropertyCharacteristic { CharacteristicId = prop.CharacteristicId, Text = prop.Text }).ToList();
 
             Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
 
@@ -205,7 +213,7 @@
             var propertyCharacteristic = table.CreateInstance<Characteristic>();
 
             Characteristic characteristic =
-                    this.fixture.DataContext.Characteristics.SingleOrDefault(x => x.Code == propertyCharacteristic.Code);
+                this.fixture.DataContext.Characteristics.SingleOrDefault(x => x.Code == propertyCharacteristic.Code);
 
             characteristicList.Add(new CreateOrUpdatePropertyCharacteristic
             {
@@ -223,9 +231,15 @@
 
             var address = this.scenarioContext.Get<CreateOrUpdateAddress>("Address");
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
-            var attributeValues = this.scenarioContext.Get<CreateOrUpdatePropertyAttributeValues>("AttributeValues");
-            var propertyCharacteristics =
-                this.scenarioContext.Get<List<CreateOrUpdatePropertyCharacteristic>>("PropertyCharacteristics");
+
+            CreateOrUpdatePropertyAttributeValues attributeValues = this.scenarioContext.Keys.Contains("AttributeValues")
+                ? this.scenarioContext.Get<CreateOrUpdatePropertyAttributeValues>("AttributeValues")
+                : new CreateOrUpdatePropertyAttributeValues();
+
+            List<CreateOrUpdatePropertyCharacteristic> propertyCharacteristics =
+                this.scenarioContext.Keys.Contains("PropertyCharacteristics")
+                    ? this.scenarioContext.Get<List<CreateOrUpdatePropertyCharacteristic>>("PropertyCharacteristics")
+                    : new List<CreateOrUpdatePropertyCharacteristic>();
 
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
             Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
@@ -251,9 +265,15 @@
 
             var address = this.scenarioContext.Get<CreateOrUpdateAddress>("Address");
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
-            var attributeValues = this.scenarioContext.Get<CreateOrUpdatePropertyAttributeValues>("AttributeValues");
-            var propertyCharacteristics =
-                this.scenarioContext.Get<List<CreateOrUpdatePropertyCharacteristic>>("PropertyCharacteristics");
+
+            CreateOrUpdatePropertyAttributeValues attributeValues = this.scenarioContext.Keys.Contains("AttributeValues")
+                ? this.scenarioContext.Get<CreateOrUpdatePropertyAttributeValues>("AttributeValues")
+                : new CreateOrUpdatePropertyAttributeValues();
+
+            List<CreateOrUpdatePropertyCharacteristic> propertyCharacteristics =
+                this.scenarioContext.Keys.Contains("PropertyCharacteristics")
+                    ? this.scenarioContext.Get<List<CreateOrUpdatePropertyCharacteristic>>("PropertyCharacteristics")
+                    : new List<CreateOrUpdatePropertyCharacteristic>();
 
             Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
 
@@ -353,7 +373,7 @@
                                          c1.PropertyId == c2.PropertyId &&
                                          c1.Text == c2.Text &&
                                          c1.Id == c2.Id);
-            }
+        }
 
         internal class RequiredCharacteristics
         {

@@ -10,7 +10,7 @@ Scenario: Create new company
 		And Company should be added to database
 
 @Company
-Scenario Outline: Check if validation is invoked 
+Scenario Outline: Create company with invalid data
 	Given User creates contacts in database with following data
 		| FirstName | Surname | Title |
 		| Michael   | Angel   | cheef | 

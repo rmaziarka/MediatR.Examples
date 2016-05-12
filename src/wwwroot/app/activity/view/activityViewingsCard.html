@@ -1,0 +1,5 @@
+<div class="panel-item">
+    <span ng-repeat="contact in cvm.item.contacts">
+        {{::contact.getName() + ($last ? '' : ', ')}}
+    </span>
+</div>
