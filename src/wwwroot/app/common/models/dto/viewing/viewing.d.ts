@@ -7,7 +7,7 @@
         startDate: Date | string;
         endDate: Date | string;
         invitationText: string;
-        postviewingComment: string;
+        postViewingComment: string;
         attendeesIds: string[];
         activity: Dto.IActivity;
         attendees: Dto.IContact[];

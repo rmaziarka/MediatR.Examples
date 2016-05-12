@@ -76,8 +76,8 @@ module Antares.Requirement.View {
                 notesSidePanelId: 'requirementView:notesSidePanelComponent',
                 activitiesListId: 'addRequirement:activitiesListComponent',
                 viewingAddId: 'addRequirement:viewingAddComponent',
-                viewingPreviewId: 'addRequirement:viewingPreviewComponent',
                 viewingEditId: 'requirementView:viewingEditComponent',
+                viewingPreviewId: 'addRequirement:viewingPreviewComponent',
                 configureViewingsSidePanelId: 'addRequirement:configureViewingsSidePanelComponent',
                 previewViewingSidePanelId: 'addRequirement:previewViewingSidePanelComponent'
             }
@@ -99,7 +99,7 @@ module Antares.Requirement.View {
             }
         }
 
-        showViewingPreview = (viewing: Common.Models.Dto.IViewing) => {
+        showViewingPreview = (viewing: Common.Models.Business.Viewing) => {
             this.components.viewingPreview().clearViewingPreview();
             this.components.viewingPreview().setViewing(viewing);
             this.showPanel(this.components.panels.previewViewingsSidePanel);
@@ -107,21 +107,25 @@ module Antares.Requirement.View {
         }
 
         showViewingEdit = () =>{
-            var viewing = angular.copy(this.components.viewingPreview().getViewing());
+            var viewing = this.components.viewingPreview().getViewing();
             this.components.viewingEdit().setViewing(viewing);
             this.previewPanelVisible = false;
         }
 
         saveViewing() {
             this.components.viewingAdd()
-            .saveViewing(this.requirement.id)
+            .saveViewing()
             .then(() => {
                 this.hidePanels();
             });
         }
 
-        saveEditedViewing(){
-            this.hidePanels();
+        saveEditedViewing() {
+            this.components.viewingEdit()
+                .saveViewing()
+                .then(() => {
+                    this.hidePanels();
+                });
         }
     }
 
