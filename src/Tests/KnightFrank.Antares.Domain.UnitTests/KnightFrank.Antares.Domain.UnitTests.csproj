@@ -182,6 +182,8 @@
     <Compile Include="Resource\Queries\ResourceLocalisedQueryDomainValidatorTests.cs" />
     <Compile Include="Resource\Queries\ResourceLocalisedQueryValidatorTests.cs" />
     <Compile Include="Resource\QueryHandlers\ResourceLocalisedQueryHandlerTests.cs" />
+    <Compile Include="User\Queries\UsersQueryValidatorTests.cs" />
+    <Compile Include="User\QueryHandlers\UsersQueryHandlerTests.cs" />
     <Compile Include="ValidationResultBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
