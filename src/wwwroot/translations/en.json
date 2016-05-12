@@ -148,7 +148,9 @@
         "NO_ITEMS": "Area breakdown not configured"
       },
       "ADD": {
-        "CREATE_AREA": "Create area"
+        "CREATE_AREA": "Create area",
+        "NAME": "Name",
+        "SIZE": "Size"
       }
     }
   },
