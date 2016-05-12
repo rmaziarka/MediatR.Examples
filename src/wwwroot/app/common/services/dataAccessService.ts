@@ -90,8 +90,9 @@ module Antares.Services {
 
         getViewingResource(): Resources.IViewingResourceClass {
             return <Resources.IViewingResourceClass>
-                this.$resource(this.appConfig.rootUrl + '/api/viewing/:id', null, {
-                    createViewing: this.createViewingAction
+                this.$resource(this.appConfig.rootUrl + '/api/viewings/:id', null, {
+                    createViewing: this.createViewingAction,
+                    update: this.updateAction,
                 });
         }
 

@@ -80,6 +80,6 @@
     <div class="form-group">
         <label for="post-viewing-comment" translate="VIEWING.ADD.POSTVIEWINGCOMMENT"></label>
         <span class="pull-right character-limit">0/4000</span>
-        <textarea id="post-viewing-comment" class="form-control" rows="6" ng-model="vm.viewing.postviewingComment" disabled="disabled"></textarea>
+        <textarea id="post-viewing-comment" class="form-control" rows="6" ng-model="vm.viewing.postViewingComment" ng-disabled="vm.mode === 'add'"></textarea>
     </div>
 </form>

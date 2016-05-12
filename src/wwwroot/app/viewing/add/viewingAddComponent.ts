@@ -10,6 +10,7 @@ module Antares.Component {
             componentId: '<',
             attendees: '<',
             requirement: '=',
+            mode: '@'
         }
     });
 }

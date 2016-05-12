@@ -10,11 +10,11 @@ module Antares.Common.Models.Business {
         startDate: Date | string = null;
         endDate: Date | string = null;
         invitationText: string;
-        postviewingComment: string;
+        postViewingComment: string;
         attendeesIds: string[];
         attendees: Contact[];
         day: string;
-        activity: Dto.IActivity;   
+        activity: Dto.IActivity;
 
         constructor(viewing?: Dto.IViewing) {
             if (viewing) {
