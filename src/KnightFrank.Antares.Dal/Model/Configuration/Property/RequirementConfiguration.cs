@@ -23,10 +23,10 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property
                 .HasMaxLength(4000);
 
             this.Property(r => r.MinPrice)
-                .HasPrecision(19, 4);
+                .IsMoney();
 
             this.Property(r => r.MaxPrice)
-                .HasPrecision(19, 4);
+                .IsMoney();
         }
     }
 }

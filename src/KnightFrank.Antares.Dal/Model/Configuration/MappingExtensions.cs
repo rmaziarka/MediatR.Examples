@@ -10,5 +10,10 @@
         {
             return configuration.HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute { IsUnique = true }));
         }
+
+        public static DecimalPropertyConfiguration IsMoney(this DecimalPropertyConfiguration configuration)
+        {
+            return configuration.HasPrecision(19, 4);
+        }
     }
 }

@@ -35,7 +35,7 @@
                 .IsOptional();
 
             this.Property(o => o.Price)
-                .HasPrecision(19, 4)
+                .IsMoney()
                 .IsRequired();
 
             this.Property(x => x.OfferDate)

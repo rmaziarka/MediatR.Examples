@@ -24,13 +24,13 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
 
 
             this.Property(o => o.MarketAppraisalPrice)
-                .HasPrecision(19, 4);
+                .IsMoney();
 
             this.Property(o => o.RecommendedPrice)
-                .HasPrecision(19, 4);
+                .IsMoney();
 
             this.Property(o => o.VendorEstimatedPrice)
-                .HasPrecision(19, 4);
+                .IsMoney();
 
             this.HasMany(p => p.Attachments)
                 .WithMany()

@@ -16,10 +16,10 @@
                 });
 
             this.Property(o => o.BuyPrice)
-                .HasPrecision(19, 4);
+                .IsMoney();
 
             this.Property(o => o.SellPrice)
-                .HasPrecision(19, 4);
+                .IsMoney();
         }
 
     }
