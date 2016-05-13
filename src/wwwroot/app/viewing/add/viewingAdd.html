@@ -61,7 +61,7 @@
         </div>
 
     </div>
-    <list-not-empty ng-model="vm.selectedAttendees" name="numberOfAttendees" />
+    <list-not-empty ng-model="vm.selectedAttendees" name="numberOfAttendees"></list-not-empty>
     <div ng-class="{'has-error': (addViewingForm.$submitted || addViewingForm.numberOfAttendees.$dirty) && addViewingForm.numberOfAttendees.$invalid}"
         ng-messages="addViewingForm.numberOfAttendees.$error" ng-show="addViewingForm.$submitted || addViewingForm.numberOfAttendees.$dirty">
         <p name="listNotEmptyValidationError" ng-message="listNotEmpty" class="help-block with-errors" translate="FORM.LIST_OF_ATTENDEES_SHOULD_NOT_BE_EMPTY"></p>
