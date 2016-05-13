@@ -221,7 +221,8 @@
                 .Excluding(x => x.Property)
                 .Excluding(x => x.ActivityStatus)
                 .Excluding(x => x.ActivityType)
-                .Excluding(x => x.Attachments));
+                .Excluding(x => x.Attachments)
+                .Excluding(x => x.ActivityNegotiators));
         }
 
         [Then(@"Created Activity is saved in database")]
