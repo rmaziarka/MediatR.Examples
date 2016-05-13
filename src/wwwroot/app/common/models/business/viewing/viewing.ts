@@ -25,6 +25,7 @@ module Antares.Common.Models.Business {
                 this.day = Core.DateTimeUtils.getDatePart(viewing.startDate);
                 this.requirement = new Requirement(viewing.requirement);
                 this.startDate = moment(viewing.startDate).toDate(); 
+                this.endDate = moment(viewing.endDate).toDate(); 
             }
         }
     }

@@ -71,10 +71,10 @@ module Antares {
             setViewing = (viewing: Business.Viewing) =>{
                 this.originalViewing = viewing;
                 this.viewing = angular.copy(viewing);
-                this.viewing.startDate = new Date(moment(viewing.startDate));
-                this.viewing.endDate = new Date(moment(viewing.endDate));
-                this.startTime = this.combineDateWithTime(new Date(), new Date(moment(viewing.startDate)));
-                this.endTime = this.combineDateWithTime(new Date(), new Date(moment(viewing.endDate)));
+                this.viewing.startDate = viewing.startDate;
+                this.viewing.endDate = viewing.endDate;
+                this.startTime = moment(viewing.startDate);
+                this.endTime = moment(viewing.endDate);
 
                 this.activity = <Dto.IActivityQueryResult> {
                     id: viewing.activity.id,
@@ -140,8 +140,8 @@ module Antares {
             getUpdateViewingResource(): Dto.IViewing {
                 var updateViewingResource: Dto.IViewing = angular.copy(this.viewing);
                 updateViewingResource.attendeesIds = this.getSelectedAttendeesIds();
-                updateViewingResource.startDate = this.combineDateWithTime(this.viewing.startDate, moment(this.startTime).toDate());
-                updateViewingResource.endDate = this.combineDateWithTime(this.viewing.startDate, moment(this.endTime).toDate());
+                updateViewingResource.startDate = this.combineDateWithTime(this.viewing.startDate, this.startTime.toDate());
+                updateViewingResource.endDate = this.combineDateWithTime(this.viewing.startDate, this.endTime.toDate());
 
                 return updateViewingResource;
             }
