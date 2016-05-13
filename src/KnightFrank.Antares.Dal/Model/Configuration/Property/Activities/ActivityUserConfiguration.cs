@@ -5,14 +5,14 @@
 
     using KnightFrank.Antares.Dal.Model.Property.Activities;
 
-    internal sealed class ActivityNegotiatorConfiguration : BaseEntityConfiguration<ActivityNegotiator>
+    internal sealed class ActivityUserConfiguration : BaseEntityConfiguration<ActivityUser>
     {
-        public ActivityNegotiatorConfiguration()
+        public ActivityUserConfiguration()
         {
-            this.HasRequired(an => an.Activity).WithMany(a => a.ActivityNegotiators).HasForeignKey(an => an.ActivityId).WillCascadeOnDelete(false);
-            this.HasRequired(an => an.Negotiator).WithMany().HasForeignKey(an => an.NegotiatorId).WillCascadeOnDelete(false);
+            this.HasRequired(an => an.Activity).WithMany(a => a.ActivityUsers).HasForeignKey(an => an.ActivityId).WillCascadeOnDelete(false);
+            this.HasRequired(an => an.User).WithMany().HasForeignKey(an => an.UserId).WillCascadeOnDelete(false);
 
-            var uniqueIndexName = "IX_ActivityId_NegotiatorId";
+            var uniqueIndexName = "IX_ActivityId_UserId";
             this.Property(an => an.ActivityId)
                 .HasColumnAnnotation("Index",
                     new IndexAnnotation(new IndexAttribute(uniqueIndexName, 1)
@@ -20,7 +20,7 @@
                         IsUnique = true
                     }));
 
-            this.Property(an => an.NegotiatorId)
+            this.Property(an => an.UserId)
                 .HasColumnAnnotation("Index",
                     new IndexAnnotation(new IndexAttribute(uniqueIndexName, 2)
                     {

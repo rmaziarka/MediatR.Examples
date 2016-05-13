@@ -64,6 +64,7 @@
     <Compile Include="Model\Common\IAuditableEntity.cs" />
     <Compile Include="Model\Common\IBaseEntity.cs" />
     <Compile Include="Model\Common\ILocalised.cs" />
+    <Compile Include="Model\Common\UserTypeEnum.cs" />
     <Compile Include="Model\Company\Company.cs" />
     <Compile Include="Model\Configuration\Address\AddressConfiguration.cs" />
     <Compile Include="Model\Configuration\Address\AddressFieldConfiguration.cs" />
@@ -79,7 +80,7 @@
     <Compile Include="Model\Configuration\Property\Activities\ActivityTypeLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Activities\ActivityTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Activities\ActivityTypeDefinitionConfiguration.cs" />
-    <Compile Include="Model\Configuration\Property\Activities\ActivityNegotiatorConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\Activities\ActivityUserConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicGroupConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Characteristics\CharacteristicGroupItemConfiguration.cs" />
@@ -123,7 +124,7 @@
     <Compile Include="Model\Property\Activities\ActivityTypeLocalised.cs" />
     <Compile Include="Model\Property\Activities\ActivityType.cs" />
     <Compile Include="Model\Property\Activities\ActivityTypeDefinition.cs" />
-    <Compile Include="Model\Property\Activities\ActivityNegotiator.cs" />
+    <Compile Include="Model\Property\Activities\ActivityUser.cs" />
     <Compile Include="Model\Property\Characteristics\Characteristic.cs" />
     <Compile Include="Model\Property\Characteristics\CharacteristicGroup.cs" />
     <Compile Include="Model\Property\Characteristics\CharacteristicGroupItem.cs" />

@@ -2,14 +2,15 @@
 {
     using System;
 
+    using KnightFrank.Antares.Dal.Model.Common;
     using KnightFrank.Antares.Dal.Model.User;
 
-    public class ActivityNegotiator : BaseEntity
+    public class ActivityUser : BaseEntity
     {
         public Guid ActivityId { get; set; }
         public virtual Activity Activity { get; set; }
-        public Guid NegotiatorId { get; set; }
-        public virtual User Negotiator { get; set; }
-        public bool IsLead { get; set; }
+        public Guid UserId { get; set; }
+        public virtual User User { get; set; }
+        public UserTypeEnum UserType { get; set; }
     }
 }

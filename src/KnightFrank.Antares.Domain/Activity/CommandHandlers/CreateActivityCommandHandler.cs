@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using KnightFrank.Antares.Dal.Model.Common;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.User;
@@ -47,11 +48,11 @@
             User negotiator = this.userRepository.FindBy(x => message.LeadNegotiatorId == x.Id).SingleOrDefault();
             this.entityValidator.EntityExists(negotiator, message.LeadNegotiatorId);
 
-            activity.ActivityNegotiators.Add(new ActivityNegotiator
+            activity.ActivityUsers.Add(new ActivityUser
             {
                 Activity = activity,
-                Negotiator = negotiator,
-                IsLead = true
+                User = negotiator,
+                UserType = UserTypeEnum.LeadNegotiator
             });
 
             this.activityRepository.Add(activity);

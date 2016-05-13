@@ -33,6 +33,6 @@
 
         public virtual ICollection<Viewing> Viewings { get; set; } = new List<Viewing>();
 
-        public virtual ICollection<ActivityNegotiator> ActivityNegotiators { get; set; } = new List<ActivityNegotiator>();
+        public virtual ICollection<ActivityUser> ActivityUsers { get; set; } = new List<ActivityUser>();
     }
 }
