@@ -10,6 +10,7 @@ module Antares {
             componentId: string;
             activity: Dto.IActivityQueryResult;
             viewing: Business.Viewing;
+            originalViewing: Business.Viewing;
             dateOpened: boolean = false;
             attendees: Dto.IContact[];
             // Any beacuse they are momentjs object
@@ -67,8 +68,9 @@ module Antares {
                 this.activity = activity;
             }
 
-            setViewing = (viewing: Business.Viewing) => {
-                this.viewing = viewing;
+            setViewing = (viewing: Business.Viewing) =>{
+                this.originalViewing = viewing;
+                this.viewing = angular.copy(viewing);
                 this.viewing.startDate = new Date(moment(viewing.startDate));
                 this.viewing.endDate = new Date(moment(viewing.endDate));
                 this.startTime = this.combineDateWithTime(new Date(), new Date(moment(viewing.startDate)));
@@ -117,7 +119,7 @@ module Antares {
                         .update(updateViewing)
                         .$promise
                         .then((viewing: Common.Models.Dto.IViewing) => {
-                            this.viewing = angular.copy(new Business.Viewing(viewing), this.viewing);
+                            this.originalViewing = angular.copy(new Business.Viewing(viewing), this.originalViewing);
                             this.requirement.groupViewings(this.requirement.viewings);
                         });
                 }
