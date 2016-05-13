@@ -121,6 +121,9 @@
     <Compile Include="Activity\QueryHandlers\ActivityTypeQueryHandlerTests.cs" />
     <Compile Include="AddressForm\Queries\AddressFormQueryValidatorTests.cs" />
     <Compile Include="AddressForm\Queries\GetCountriesForAddressFormQueryValidatorTests.cs" />
+    <Compile Include="AreaBreakdown\Commands\AreaValidatorTests.cs" />
+    <Compile Include="AreaBreakdown\Commands\CreateAreaBreakdownCommandValidatorTests.cs" />
+    <Compile Include="AreaBreakdown\Queries\AreaBreakdownQueryValidatorTests.cs" />
     <Compile Include="Attachments\Queries\AttachmentQueryValidatorTests.cs" />
     <Compile Include="Attachments\QueryHandlers\AttachmentQueryHandlerTests.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidatorTests.cs" />

@@ -1,12 +1,15 @@
 ﻿namespace KnightFrank.Antares.API.Controllers
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
 
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Domain.AreaBreakdown.Commands;
+    using KnightFrank.Antares.Domain.AreaBreakdown.Queries;
     using KnightFrank.Antares.Domain.Ownership.Commands;
     using KnightFrank.Antares.Domain.Ownership.Queries;
     using KnightFrank.Antares.Domain.Property.Commands;
@@ -122,6 +125,22 @@
         public PropertyAttributesQueryResult GetPropertyAttributes([FromUri(Name = "")]PropertyAttributesQuery propertyAttributesQuery)
         {
             return this.mediator.Send(propertyAttributesQuery);
+        }
+
+        /// <summary>
+        /// Creates the area breakdown.
+        /// </summary>
+        /// <param name="id">Property id.</param>
+        /// <param name="command">Command data.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("{id}/areabreakdown")]
+        public IList<PropertyAreaBreakdown> CreateAreaBreakdown(Guid id, CreateAreaBreakdownCommand command)
+        {
+            command.PropertyId = id;
+            IList<Guid> areaIds = this.mediator.Send(command);
+
+            return this.mediator.Send(new AreaBreakdownQuery { PropertyId = command.PropertyId, AreaIds = areaIds });
         }
     }
 }
