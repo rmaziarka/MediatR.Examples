@@ -52,6 +52,11 @@
             Guid activityStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[activityStatus];
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
             var activityTypeId = this.scenarioContext.Get<Guid>("ActivityTypeId");
+            Guid leadNegotiatorId = this.fixture.DataContext.Users.First().Id;
+            var activityNegotiatorList = new List<ActivityNegotiator>
+            {
+                new ActivityNegotiator { NegotiatorId = leadNegotiatorId, IsLead = true }
+            };
 
             var activity = new Activity
             {
@@ -61,7 +66,8 @@
                 CreatedDate = DateTime.Now,
                 LastModifiedDate = DateTime.Now,
                 Contacts = new List<Contact>(),
-                Attachments = new List<Attachment>()
+                Attachments = new List<Attachment>(),
+                ActivityNegotiators = activityNegotiatorList
             };
 
             this.fixture.DataContext.Activities.Add(activity);
@@ -85,12 +91,17 @@
                     .SelectMany(x => x.Contacts).Select(c => c.Id)
                     .ToList();
 
+            Guid leadNegotiatorId = this.fixture.DataContext.Users.First().Id;
+
+            this.scenarioContext.Set(leadNegotiatorId, "LeadNegotiatorId");
+
             var activityCommand = new CreateActivityCommand
             {
                 PropertyId = propertyId,
                 ActivityStatusId = activityStatusId,
                 ContactIds = vendors,
-                ActivityTypeId = activityTypeId
+                ActivityTypeId = activityTypeId,
+                LeadNegotiatorId = leadNegotiatorId
             };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, activityCommand);
@@ -124,9 +135,7 @@
             Activity activity = this.fixture.DataContext.Activities.Single(x => x.Id.Equals(activityId));
             activity.Attachments.Add(attachment);
             this.fixture.DataContext.SaveChanges();
-
         }
-
 
         [When(@"User updates activity (.*) id and (.*) status with following sale valuation")]
         public void WhenUserUpdatesActivityWithFollowingSaleValuation(string id, string status, Table table)
@@ -176,8 +185,9 @@
         public void WhenIUploadAttachmentForActivityIdWithFollowingData(string activityId, string documentType, Table table)
         {
             if (activityId.Equals("latest"))
+            {
                 activityId = this.scenarioContext.Get<Activity>("Activity").Id.ToString();
-
+            }
 
             string requestUrl = $"{ApiUrl}/{activityId}/attachments";
 
@@ -228,6 +238,11 @@
                 .Excluding(x => x.ActivityNegotiators));
 
             actualActivity.ActivityStatus.Code.ShouldBeEquivalentTo("PreAppraisal");
+
+            actualActivity.ActivityNegotiators.Should().Equal(activity.ActivityNegotiators, (c1, c2) =>
+                c1.ActivityId == c2.ActivityId &&
+                c1.IsLead == c2.IsLead &&
+                c1.NegotiatorId == c2.NegotiatorId);
         }
 
         [Then(@"Retrieved activity should be same as in database")]
@@ -241,7 +256,13 @@
                 .Excluding(a => a.Contacts)
                 .Excluding(a => a.Property)
                 .Excluding(a => a.ActivityType)
-                .Excluding(a => a.Attachments));
+                .Excluding(a => a.Attachments)
+                .Excluding(a => a.ActivityNegotiators));
+
+            actualActivity.ActivityNegotiators.Should().Equal(activity.ActivityNegotiators, (c1, c2) =>
+                c1.ActivityId == c2.ActivityId &&
+                c1.IsLead == c2.IsLead &&
+                c1.NegotiatorId == c2.NegotiatorId);
         }
 
         [Then(@"Retrieved activity should have expected attachments")]
