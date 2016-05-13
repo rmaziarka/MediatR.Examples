@@ -10,6 +10,7 @@
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal.Model.Attachment;
+    using KnightFrank.Antares.Dal.Model.Common;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
@@ -53,9 +54,9 @@
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
             var activityTypeId = this.scenarioContext.Get<Guid>("ActivityTypeId");
             Guid leadNegotiatorId = this.fixture.DataContext.Users.First().Id;
-            var activityNegotiatorList = new List<ActivityNegotiator>
+            var activityNegotiatorList = new List<ActivityUser>
             {
-                new ActivityNegotiator { NegotiatorId = leadNegotiatorId, IsLead = true }
+                new ActivityUser { UserId = leadNegotiatorId, UserType = UserTypeEnum.LeadNegotiator }
             };
 
             var activity = new Activity
@@ -67,7 +68,7 @@
                 LastModifiedDate = DateTime.Now,
                 Contacts = new List<Contact>(),
                 Attachments = new List<Attachment>(),
-                ActivityNegotiators = activityNegotiatorList
+                ActivityUsers = activityNegotiatorList
             };
 
             this.fixture.DataContext.Activities.Add(activity);
@@ -222,7 +223,7 @@
                 .Excluding(x => x.ActivityStatus)
                 .Excluding(x => x.ActivityType)
                 .Excluding(x => x.Attachments)
-                .Excluding(x => x.ActivityNegotiators));
+                .Excluding(x => x.ActivityUsers));
         }
 
         [Then(@"Created Activity is saved in database")]
@@ -240,10 +241,10 @@
 
             actualActivity.ActivityStatus.Code.ShouldBeEquivalentTo("PreAppraisal");
 
-            actualActivity.ActivityNegotiators.Should().Equal(activity.ActivityNegotiators, (c1, c2) =>
+            actualActivity.ActivityUsers.Should().Equal(activity.ActivityUsers, (c1, c2) =>
                 c1.ActivityId == c2.ActivityId &&
-                c1.IsLead == c2.IsLead &&
-                c1.NegotiatorId == c2.NegotiatorId);
+                c1.UserType == c2.UserType &&
+                c1.UserId == c2.UserId);
         }
 
         [Then(@"Retrieved activity should be same as in database")]
@@ -258,12 +259,12 @@
                 .Excluding(a => a.Property)
                 .Excluding(a => a.ActivityType)
                 .Excluding(a => a.Attachments)
-                .Excluding(a => a.ActivityNegotiators));
+                .Excluding(a => a.ActivityUsers));
 
-            actualActivity.ActivityNegotiators.Should().Equal(activity.ActivityNegotiators, (c1, c2) =>
+            actualActivity.ActivityUsers.Should().Equal(activity.ActivityUsers, (c1, c2) =>
                 c1.ActivityId == c2.ActivityId &&
-                c1.IsLead == c2.IsLead &&
-                c1.NegotiatorId == c2.NegotiatorId);
+                c1.UserType == c2.UserType &&
+                c1.UserId == c2.UserId);
         }
 
         [Then(@"Retrieved activity should have expected attachments")]
