@@ -6,9 +6,13 @@ module Antares.Property.View.AreaBreakdown {
     import Dto = Common.Models.Dto;
 
     export class AreaBreakdownAddController {
+        private componentId: string;
         areas: Business.PropertyArea[] = [];
 
-        constructor() {
+        constructor(componentRegistry: Core.Service.ComponentRegistry,
+            private $q: ng.IQService) {
+            componentRegistry.register(this, this.componentId);
+
             this.addNewArea();
         }
 
@@ -21,6 +25,14 @@ module Antares.Property.View.AreaBreakdown {
 
         removeArea(area: Business.PropertyArea): void{
             _.pull(this.areas, area);
+        }
+
+        saveAreas(propertyId: string): ng.IPromise<Business.PropertyArea[]>{
+            // TODO validate and send data
+            var defer: any = this.$q.defer();
+            defer.resolve(this.areas);
+
+            return defer.promise;
         }
     }
 
