@@ -1,7 +1,5 @@
 <div class="panel-item">
-    <span ng-repeat="contact in cvm.item.requirement.contacts">
-        {{::contact.getName() + ($last ? '' : ', ')}}
-    </span>
+    <span>{{cvm.item.requirement.getContactNames()}}</span>
 </div>
 <small>
     {{::cvm.item.startDate | date : 'HH:mm'}} - {{::cvm.item.endDate | date : 'HH:mm'}}

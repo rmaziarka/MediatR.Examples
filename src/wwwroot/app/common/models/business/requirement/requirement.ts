@@ -32,5 +32,9 @@ module Antares.Common.Models.Business {
             var groupedViewings: _.Dictionary<Viewing[]> = _.groupBy(viewings, (i: Viewing) => { return i.day; });
             this.viewingsByDay = _.map(groupedViewings, (items: Viewing[], key: string) => { return new ViewingGroup(key, items); });            
         }
+
+        public getContactNames(){
+            return this.contacts.map((c: Contact) =>{ return c.getName() }).join(", ");
+        }
     }
 }

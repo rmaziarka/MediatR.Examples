@@ -1,5 +1,5 @@
 
-<section class="section-details">
+<section class="section-details" ng-if="vm.viewing.activity">
     <h5 translate="VIEWING.ADD.ACTIVITY"></h5>
     <div class="panel panel-default">
         <div class="panel-body">
@@ -10,6 +10,22 @@
             <div class="row">
                 <div class="col-md-12 text-right">
                     <a translate="COMMON.VIEW"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-details" ng-if="vm.viewing.requirement">
+    <h5 translate="VIEWING.ADD.REQUIREMENT"></h5>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div id="viewing-preview-activity-details" class="panel-item">
+                {{vm.viewing.requirement.getContactNames()}}
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <a href="" ng-click="vm.goToRequirementView()" translate="COMMON.VIEW"></a>
                 </div>
             </div>
         </div>

@@ -23,8 +23,9 @@ module Antares.Common.Models.Business {
             if (viewing) {
                 angular.extend(this, viewing);
                 this.day = Core.DateTimeUtils.getDatePart(viewing.startDate);
-                this.requirement = new Requirement(viewing.requirement);
-                this.startDate = moment(viewing.startDate).toDate(); 
+                if (viewing.requirement)
+                    this.requirement = new Requirement(viewing.requirement);
+                this.startDate = moment(viewing.startDate).toDate();
             }
         }
     }

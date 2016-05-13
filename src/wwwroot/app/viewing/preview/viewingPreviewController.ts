@@ -9,7 +9,8 @@ module Antares {
             viewing: Business.Viewing;
 
             constructor(
-                componentRegistry: Antares.Core.Service.ComponentRegistry) {
+                private componentRegistry: Antares.Core.Service.ComponentRegistry,
+                private $state: ng.ui.IStateService) {
                 componentRegistry.register(this, this.componentId);
             }
 
@@ -21,8 +22,12 @@ module Antares {
                 return this.viewing;
             }
 
-            setViewing = (viewing: Business.Viewing) =>{
+            setViewing = (viewing: Business.Viewing) => {
                 this.viewing = viewing;
+            }
+
+            goToRequirementView = () => {
+                this.$state.go('app.requirement-view', { id: this.viewing.requirement.id });
             }
         }
 

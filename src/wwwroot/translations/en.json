@@ -253,6 +253,7 @@
   "VIEWING": {
     "ADD": {
       "ACTIVITY": "Activity",
+      "REQUIREMENT": "Requirement",
       "DATE": "Date",
       "STARTTIME": "Start time",
       "ENDTIME": "End time",
