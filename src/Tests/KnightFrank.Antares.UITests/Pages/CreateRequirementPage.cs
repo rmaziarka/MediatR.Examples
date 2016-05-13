@@ -166,7 +166,7 @@
 
         public bool IsRequirementFormPresent()
         {
-            return this.Driver.IsElementPresent(this.requirementForm, BaseConfiguration.LongTimeout);
+            return this.Driver.IsElementPresent(this.requirementForm, BaseConfiguration.MediumTimeout);
         }
     }
 }

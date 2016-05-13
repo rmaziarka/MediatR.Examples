@@ -25,7 +25,7 @@
 
         public ActivityListPage WaitForDetailsToLoad()
         {
-            this.Driver.WaitUntilElementIsNoLongerFound(this.loadingIndicator, BaseConfiguration.LongTimeout);
+            this.Driver.WaitUntilElementIsNoLongerFound(this.loadingIndicator, BaseConfiguration.MediumTimeout);
             return this;
         }
     }

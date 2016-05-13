@@ -200,7 +200,7 @@
 
         public bool IsPropertyFormPresent()
         {
-            return this.Driver.IsElementPresent(this.propertyForm, BaseConfiguration.LongTimeout);
+            return this.Driver.IsElementPresent(this.propertyForm, BaseConfiguration.MediumTimeout);
         }
     }
 

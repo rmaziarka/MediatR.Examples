@@ -50,7 +50,7 @@
             this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").AddActivity();
         }
 
-        [When(@"User clicks edit button on view property page")]
+        [When(@"User clicks edit property button on view property page")]
         public void WhenUserClicksEditButtonOnCreatePropertyPage()
         {
             this.scenarioContext.Set(this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").EditProperty(),
@@ -227,7 +227,7 @@
         [Then(@"View property page is displayed")]
         public void CheckIfViewPropertyPresent()
         {
-            Assert.True(this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").CheckIfViewPropertyPresent());
+            Assert.True(this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").IsViewPropertyFormPresent());
         }
 
         [Then(@"Activity details are set on activity panel")]

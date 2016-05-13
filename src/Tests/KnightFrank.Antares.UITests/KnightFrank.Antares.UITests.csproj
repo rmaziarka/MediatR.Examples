@@ -106,7 +106,6 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Extensions\DatabaseExtensions.cs" />
     <Compile Include="Extensions\DriverExtensions.cs" />
     <Compile Include="Pages\AddressTemplatePage.cs" />
     <Compile Include="Pages\CommonPage.cs" />
@@ -140,6 +139,7 @@
     <Compile Include="Steps\Database\ContactSteps.cs" />
     <Compile Include="Steps\Database\PropertySteps.cs" />
     <Compile Include="Steps\Database\RequirementSteps.cs" />
+    <Compile Include="Steps\Database\ViewingSteps.cs" />
     <Compile Include="Steps\EditActivitySteps.cs" />
     <Compile Include="Steps\NavigationDrawerSteps.cs" />
     <Compile Include="Steps\ViewActivitySteps.cs" />

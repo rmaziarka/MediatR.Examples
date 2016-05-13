@@ -11,13 +11,13 @@
     public class CreateViewingPage : ProjectPageBase
     {
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
-        private readonly ElementLocator attendee = new ElementLocator(Locator.XPath, "//div[contains(@ng-repeat, 'attendee')]//label[contains(text(), '{0}')]");
-        private readonly ElementLocator date = new ElementLocator(Locator.Id, "viewing-date");
-        private readonly ElementLocator endTime = new ElementLocator(Locator.CssSelector, "#end-time input");
-        private readonly ElementLocator invitationText = new ElementLocator(Locator.Id, "invitation-text");
-        private readonly ElementLocator postViewingComment = new ElementLocator(Locator.Id, "post-viewing-comment");
-        private readonly ElementLocator saveViewing = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'saveViewing']");
-        private readonly ElementLocator startTime = new ElementLocator(Locator.CssSelector, "#start-time input");
+        private readonly ElementLocator attendee = new ElementLocator(Locator.XPath, "//*[contains(@class, 'slide-in')]//div[contains(@ng-repeat, 'attendee')]//label[contains(text(), '{0}')]");
+        private readonly ElementLocator date = new ElementLocator(Locator.CssSelector, ".slide-in #viewing-date");
+        private readonly ElementLocator endTime = new ElementLocator(Locator.CssSelector, ".slide-in #end-time input");
+        private readonly ElementLocator invitationText = new ElementLocator(Locator.CssSelector, ".slide-in #invitation-text");
+        private readonly ElementLocator postViewingComment = new ElementLocator(Locator.CssSelector, ".slide-in #post-viewing-comment");
+        private readonly ElementLocator saveViewing = new ElementLocator(Locator.CssSelector, ".slide-in button[ng-click *= 'save']");
+        private readonly ElementLocator startTime = new ElementLocator(Locator.CssSelector, ".slide-in #start-time input");
 
         public CreateViewingPage(DriverContext driverContext) : base(driverContext)
         {

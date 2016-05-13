@@ -48,7 +48,7 @@
             this.scenarioContext.Get<CreateCompanyPage>("CreateCompanyPage").SetCompanyName(details.Name);
         }
 
-        [When(@"User clicks save button on create company page")]
+        [When(@"User clicks save company button on create company page")]
         public void SaveCompany()
         {
             this.scenarioContext.Get<CreateCompanyPage>("CreateCompanyPage").SaveCompany();

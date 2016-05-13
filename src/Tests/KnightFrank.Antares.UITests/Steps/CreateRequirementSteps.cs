@@ -95,7 +95,7 @@
             page.ContactsList.SaveContact().WaitForContactListToHide();
         }
 
-        [When(@"User clicks save button on create requirement page")]
+        [When(@"User clicks save requirement button on create requirement page")]
         public void SaveNewResidentialSalesRequirement()
         {
             this.scenarioContext.Get<CreateRequirementPage>("CreateRequirementPage")
@@ -109,6 +109,9 @@
             var page = new ViewRequirementPage(this.driverContext);
             page.WaitForDetailsToLoad();
             this.scenarioContext["ViewRequirementPage"] = page;
+
+            var date = this.scenarioContext.Get<DateTime>("RequirementDate");
+            Assert.Equal(date.ToString("MMMM d, yyyy"), page.GetRequirementCreateDate());
         }
 
         [Then(@"List of applicants should contain following contacts")]

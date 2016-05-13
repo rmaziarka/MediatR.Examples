@@ -22,8 +22,8 @@
 
         public ContactsListPage WaitForContactsListToLoad()
         {
-            this.Driver.WaitForElementToBeDisplayed(this.panel, BaseConfiguration.LongTimeout);
-            this.Driver.WaitUntilElementIsNoLongerFound(this.loadingIndicator, BaseConfiguration.LongTimeout);
+            this.Driver.WaitForElementToBeDisplayed(this.panel, BaseConfiguration.MediumTimeout);
+            this.Driver.WaitUntilElementIsNoLongerFound(this.loadingIndicator, BaseConfiguration.MediumTimeout);
             this.Driver.WaitForAngularToFinish();
             return this;
         }

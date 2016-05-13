@@ -48,7 +48,7 @@
 
         public ViewRequirementPage WaitForDetailsToLoad()
         {
-            this.Driver.WaitUntilElementIsNoLongerFound(this.loadingIndicator, BaseConfiguration.LongTimeout);
+            this.Driver.WaitUntilElementIsNoLongerFound(this.loadingIndicator, BaseConfiguration.MediumTimeout);
             return this;
         }
 
@@ -133,6 +133,8 @@
         public string Attendees { get; set; }
 
         public string InvitationText { get; set; }
+
+        public string PostViewingComment { get; set; }
     }
 
     internal class ViewingData

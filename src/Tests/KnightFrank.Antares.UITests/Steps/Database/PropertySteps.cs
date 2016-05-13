@@ -10,7 +10,6 @@
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
-    using KnightFrank.Antares.UITests.Extensions;
 
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
@@ -18,6 +17,7 @@
     [Binding]
     public class PropertySteps
     {
+        private readonly KnightFrankContext dataContext;
         private readonly ScenarioContext scenarioContext;
 
         public PropertySteps(ScenarioContext scenarioContext)
@@ -28,19 +28,19 @@
             }
 
             this.scenarioContext = scenarioContext;
+            this.dataContext = this.scenarioContext.Get<KnightFrankContext>("DataContext");
         }
 
         [Given(@"Property in GB is created in database")]
         public void CreatePropertyInDb(Table table)
         {
             var address = table.CreateInstance<Address>();
-            KnightFrankContext dataContext = DatabaseExtensions.GetDataContext();
 
             // Get country and address form id
-            Guid countryId = dataContext.Countries.Single(x => x.IsoCode == "GB").Id;
-            Guid enumTypeId = dataContext.EnumTypeItems.Single(e => e.Code == "Property").Id;
+            Guid countryId = this.dataContext.Countries.Single(x => x.IsoCode == "GB").Id;
+            Guid enumTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code == "Property").Id;
             Guid addressFormId =
-                dataContext.AddressFormEntityTypes.Single(
+                this.dataContext.AddressFormEntityTypes.Single(
                     afe => afe.AddressForm.CountryId == countryId && afe.EnumTypeItemId == enumTypeId).AddressFormId;
 
             // Get property type id and division id
@@ -66,21 +66,19 @@
                         : new List<PropertyCharacteristic>()
             };
 
-            dataContext.Properties.Add(property);
-            dataContext.CommitAndClose();
+            this.dataContext.Properties.Add(property);
+            this.dataContext.SaveChanges();
+
             this.scenarioContext.Set(property, "Property");
         }
 
         [Given(@"Property with (.*) division and (.*) type is defined")]
         public void GetDivisionAndType(string division, string propertyType)
         {
-            KnightFrankContext dataContext = DatabaseExtensions.GetDataContext();
-
-            Guid propertyTypeId = dataContext.PropertyTypes.Single(i => i.Code.Equals("House")).Id;
+            Guid propertyTypeId = this.dataContext.PropertyTypes.Single(i => i.Code.Equals("House")).Id;
             Guid divisionId =
-                dataContext.EnumTypeItems.Single(i => i.EnumType.Code.Equals("Division") && i.Code.Equals("Residential")).Id;
+                this.dataContext.EnumTypeItems.Single(i => i.EnumType.Code.Equals("Division") && i.Code.Equals("Residential")).Id;
 
-            dataContext.Close();
             this.scenarioContext.Set(propertyTypeId, "PropertyTypeId");
             this.scenarioContext.Set(divisionId, "DivisionId");
         }
@@ -96,21 +94,19 @@
         public void SetPropertyCharacterstics()
         {
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
-            KnightFrankContext dataContext = DatabaseExtensions.GetDataContext();
-            Guid countryId = dataContext.Countries.Single(x => x.IsoCode == "GB").Id;
+            Guid countryId = this.dataContext.Countries.Single(x => x.IsoCode == "GB").Id;
 
             var list = new List<Guid>();
 
             foreach (
                 Guid id in
-                    dataContext.CharacteristicGroupUsages.Where(
+                    this.dataContext.CharacteristicGroupUsages.Where(
                         x => x.PropertyTypeId.Equals(propertyTypeId) && x.CountryId.Equals(countryId)).Select(x => x.Id).ToList())
             {
-                list.AddRange(dataContext.CharacteristicGroupItems.Where(x => x.CharacteristicGroupUsageId.Equals(id))
-                                         .Select(x => x.CharacteristicId));
+                list.AddRange(this.dataContext.CharacteristicGroupItems.Where(x => x.CharacteristicGroupUsageId.Equals(id))
+                                  .Select(x => x.CharacteristicId));
             }
 
-            dataContext.Close();
             this.scenarioContext.Set(list.Select(id => new PropertyCharacteristic
             {
                 CharacteristicId = id,
@@ -122,30 +118,26 @@
         public void CreateOwnership(Table table)
         {
             List<Ownership> ownerships = table.CreateSet<Ownership>().ToList();
-            KnightFrankContext dataContext = DatabaseExtensions.GetDataContext();
 
             foreach (Ownership ownership in ownerships)
             {
                 ownership.PropertyId = this.scenarioContext.Get<Property>("Property").Id;
                 ownership.OwnershipTypeId =
-                    dataContext.EnumTypeItems.Single(i => i.EnumType.Code.Equals("OwnershipType") && i.Code.Equals("Freeholder"))
-                               .Id;
+                    this.dataContext.EnumTypeItems.Single(
+                        i => i.EnumType.Code.Equals("OwnershipType") && i.Code.Equals("Freeholder")).Id;
                 ownership.Contacts = this.scenarioContext.Get<List<Contact>>("ContactsList");
             }
 
-            dataContext.Ownerships.AddRange(ownerships);
-            dataContext.CommitAndClose();
+            this.dataContext.Ownerships.AddRange(ownerships);
+            this.dataContext.SaveChanges();
         }
 
         [Given(@"Property (.*) activity is defined")]
         public void CreateActivity(string activityType)
         {
-            KnightFrankContext dataContext = DatabaseExtensions.GetDataContext();
-
-            Guid activityTypeId = dataContext.ActivityTypes.Single(i => i.Code.Equals(activityType)).Id;
-            Guid activityStatusId =
-                dataContext.EnumTypeItems.Single(
-                    i => i.EnumType.Code.Equals("ActivityStatus") && i.Code.Equals("PreAppraisal")).Id;
+            Guid activityTypeId = this.dataContext.ActivityTypes.Single(i => i.Code.Equals(activityType)).Id;
+            Guid activityStatusId = this.dataContext.EnumTypeItems.Single(
+                i => i.EnumType.Code.Equals("ActivityStatus") && i.Code.Equals("PreAppraisal")).Id;
             Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
 
             var activity = new Activity
@@ -158,8 +150,9 @@
                 Contacts = this.scenarioContext.Get<List<Contact>>("ContactsList")
             };
 
-            dataContext.Activities.Add(activity);
-            dataContext.CommitAndClose();
+            this.dataContext.Activities.Add(activity);
+            this.dataContext.SaveChanges();
+
             this.scenarioContext.Set(activity, "Activity");
         }
     }

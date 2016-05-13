@@ -111,7 +111,7 @@
             return this;
         }
 
-        public bool CheckIfViewPropertyPresent()
+        public bool IsViewPropertyFormPresent()
         {
             this.Driver.WaitForAngularToFinish();
             return this.Driver.IsElementPresent(this.viewPropertyForm, BaseConfiguration.ShortTimeout);

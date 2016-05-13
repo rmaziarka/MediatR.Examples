@@ -52,7 +52,7 @@
 
         public bool IsCompanyFormPresent()
         {
-            return this.Driver.IsElementPresent(this.companyForm, BaseConfiguration.LongTimeout);
+            return this.Driver.IsElementPresent(this.companyForm, BaseConfiguration.MediumTimeout);
         }
     }
 }

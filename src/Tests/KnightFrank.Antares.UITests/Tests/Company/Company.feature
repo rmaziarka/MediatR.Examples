@@ -18,5 +18,5 @@ Scenario: Create company
 		| FirstName | Surname |
 		| Indiana   | Jones   |
 		| Adam      | Sandler |
-	When User clicks save button on create company page
+	When User clicks save company button on create company page
 	Then New company should be created

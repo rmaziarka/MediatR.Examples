@@ -18,7 +18,7 @@ Scenario: Update property
 			| 01-05-2014   | 1000000  |
 		And Property Freehold Sale activity is defined
 	When User navigates to view property page with id
-		And User clicks edit button on view property page
+		And User clicks edit property button on view property page
 		And User selects Commercial property and Hotel type on edit property page
 		And User fills in property details on edit property page
 			| MinGuestRooms | MaxGuestRooms | MinFunctionRooms | MaxFunctionRooms | MinArea | MaxArea |
@@ -32,7 +32,7 @@ Scenario: Update property
 		And User selects property characteristics on edit property page
 			| Name |
 			| Spa  |
-		And User clicks save button on edit property page
+		And User clicks save property button on edit property page
 	Then Property should be updated with address details 
 		| PropertyNumber | PropertyName | Line2 | Line3          | Postcode | City | County |
 		|                |              |       | Address line 3 | W1U 8AN  |      |        |
@@ -79,7 +79,7 @@ Scenario: Create property
 			| Duplex        |
 			| Coastal       |
 			| Swimming Pool |
-		And User clicks save button on create property page
+		And User clicks save property button on create property page
 	Then New property should be created with address details 
 		| PropertyNumber | PropertyName      | Line2    | Postcode | City   | County      |
 		| 20             | Westminster Abbey | Deans Yd | SW1P 3PA | London | Westminster |
@@ -124,9 +124,9 @@ Scenario: Create property
 		| FileName         | Type     | Size   |
 		| PDF document.pdf | Brochure | 2.9 MB |
 	When User clicks attachment details link on view activity page
-	Then Attachment details on attachment preview panel are the same like on view activity page
+	Then Attachment details on attachment preview page are the same like on view activity page
 	Then Attachment PDF document.pdf should be downloaded
-	When User clicks close button on attachment preview panel
+	When User clicks close button on attachment preview page
 		And User clicks edit button on view activity page
 		And User edits activity details on edit activity page
 			| ActivityStatus   | MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |

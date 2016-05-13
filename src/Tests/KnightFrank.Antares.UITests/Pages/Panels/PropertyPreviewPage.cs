@@ -23,7 +23,7 @@
 
         public PropertyPreviewPage WaitForPanelToBeVisible()
         {
-            this.Driver.WaitForElementToBeDisplayed(this.panel, BaseConfiguration.LongTimeout);
+            this.Driver.WaitForElementToBeDisplayed(this.panel, BaseConfiguration.MediumTimeout);
             return this;
         }
     }

@@ -82,10 +82,12 @@
                 .SetDate(details.Date)
                 .SetStartTime(details.StartTime)
                 .SetEndTime(details.EndTime)
-                .SetInvitation(details.InvitationText);
+                .SetInvitation(details.InvitationText)
+                .SetPostViewingComment(details.PostViewingComment);
         }
 
         [When(@"User selects attendees for viewing on view requirement page")]
+        [When(@"User unselects attendees for viewing on view requirement page")]
         public void SelectAttendeesForViewing(Table table)
         {
             var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
@@ -106,6 +108,12 @@
         public void OpenViewingsDetails(int position)
         {
             this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").OpenViewingDetails(position);
+        }
+
+        [When(@"User clicks edit activity button on view requirement page")]
+        public void ClickEditActivity()
+        {
+            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").ViewingDetails.EditViewing();
         }
 
         [Then(@"Requirement location details on view requirement page are same as the following")]
@@ -153,16 +161,6 @@
             Assert.Equal(expectedApplicants, applicants);
         }
 
-        [Then(@"Requirement create date is equal to today")]
-        public void CheckResidentialSalesRequirementCretaeDate()
-        {
-            var date = this.scenarioContext.Get<DateTime>("RequirementDate");
-
-            Assert.Equal(date.ToString("MMMM d, yyyy"),
-                this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage")
-                    .GetRequirementCreateDate());
-        }
-
         [Then(@"Note is displayed in recent notes area on view requirement page")]
         public void CheckIfNoteAdded()
         {
@@ -202,7 +200,8 @@
                 () => Assert.Equal(expectedDetails.Date + ", " + expectedDetails.StartTime + " - " + expectedDetails.EndTime, page.ViewingDetails.Date),
                 () => Assert.Equal(expectedDetails.Negotiator, page.ViewingDetails.Negotiator),
                 () => Assert.Equal(attendees, page.ViewingDetails.Attendees),
-                () => Assert.Equal(expectedDetails.InvitationText, page.ViewingDetails.InvitationText));
+                () => Assert.Equal(expectedDetails.InvitationText, page.ViewingDetails.InvitationText),
+                () => Assert.Equal(expectedDetails.PostViewingComment, page.ViewingDetails.PostViewingComment));
         }
     }
 }

@@ -73,7 +73,7 @@
             this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").OpenAttachmentPreview();
         }
 
-        [When(@"User clicks close button on attachment preview panel")]
+        [When(@"User clicks close button on attachment preview page")]
         public void CloseAttachmentPreviewPanel()
         {
             this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").PreviewAttachment.CloseAttachmentPreviewPage();
@@ -127,7 +127,7 @@
             actual.ShouldBeEquivalentTo(expected);
         }
 
-        [Then(@"Attachment details on attachment preview panel are the same like on view activity page")]
+        [Then(@"Attachment details on attachment preview page are the same like on view activity page")]
         public void ChackAttachmentDetails()
         {
             Attachment actual =
