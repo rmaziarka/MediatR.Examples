@@ -2,9 +2,10 @@
 
 module Antares.Requirement.View {
     import Dto = Common.Models.Dto;
+    import Business = Common.Models.Business;
 
     export class RequirementViewController extends Core.WithPanelsBaseController {
-        requirement: Dto.IRequirement;
+        requirement: Business.Requirement;
         viewingAddPanelVisible: boolean = false;
         previewPanelVisible: boolean = true;
         loadingActivities: boolean = false;
@@ -117,7 +118,10 @@ module Antares.Requirement.View {
             this.saveViewingBusy = true;
             this.components.viewingAdd()
                 .saveViewing()
-                .then(() => {
+                .then((viewing: Common.Models.Dto.IViewing) => {
+                    var viewingModel = new Business.Viewing(viewing);
+                    this.requirement.viewings.push(viewingModel);
+                    this.requirement.groupViewings(this.requirement.viewings);            
                     this.hidePanels();
                 }).finally(() => {
                     this.saveViewingBusy = false;
@@ -127,8 +131,11 @@ module Antares.Requirement.View {
         saveEditedViewing() {
             this.saveViewingBusy = true;
             this.components.viewingEdit()
-                .saveViewing()
-                .then(() => {
+                .saveViewing() 
+                .then((viewing: Common.Models.Dto.IViewing) => {
+                    var editedViewing = this.components.viewingPreview().getViewing();
+                    editedViewing = angular.copy(new Business.Viewing(viewing), editedViewing);
+                    this.requirement.groupViewings(this.requirement.viewings);
                     this.hidePanels();
                 }).finally(() => {
                     this.saveViewingBusy = false;
