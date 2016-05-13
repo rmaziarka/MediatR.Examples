@@ -79,3 +79,11 @@ input[type="number"] {
   font-size: 12px;
   margin-top: 2px;
 }
+
+.edit-form {
+  text-align: right;
+
+  .btn {
+    margin-top: 5px;
+  }
+}

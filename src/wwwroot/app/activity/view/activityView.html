@@ -13,23 +13,6 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <section id="activity-view-prices">
-                    <h3 class="page-header" translate="ACTIVITY.VIEW.PRICES.PRICES"></h3>
-                    <div class="section-row row">
-                        <div class="col-xs-6" translate="ACTIVITY.VIEW.PRICES.MARKET_APPRAISAL_PRICE"></div>
-                        <div id="marketAppraisalPrice" class="col-xs-6" ng-if="avvm.activity.marketAppraisalPrice !== null">{{avvm.activity.marketAppraisalPrice | number : 2 }} GBP</div>
-                    </div>
-                    <div class="section-row row">
-                        <div class="col-xs-6" translate="ACTIVITY.VIEW.PRICES.RECOMMENDED_PRICE"></div>
-                        <div id="recommendedPrice" class="col-xs-6" ng-if="avvm.activity.recommendedPrice !== null">{{avvm.activity.recommendedPrice | number : 2 }} GBP</div>
-                    </div>
-                    <div class="section-row row">
-                        <div class="col-xs-6" translate="ACTIVITY.VIEW.PRICES.VENDOR_ESIMATED_PRICE"></div>
-                        <div id="vendorEstimatedPrice" class="col-xs-6" ng-if="avvm.activity.vendorEstimatedPrice !== null">{{avvm.activity.vendorEstimatedPrice | number : 2 }} GBP</div>
-                    </div>
-                </section>
-            </div>
-            <div class="col-md-4">
                 <section id="activity-view-property">
                     <h3 class="page-header" translate="ACTIVITY.VIEW.PROPERTY"></h3>
                     <card id="card-property" card-template-url="'app/property/templates/propertyCard.html'" item="avvm.activity.property" show-item-details="avvm.showPropertyPreview">
@@ -48,20 +31,63 @@
                         </list-item>
                     </list>
                 </section>
-                <section id="activity-view-attachments">
-                    <card-list id="card-list-attachments" show-item-add="avvm.showActivityAttachmentAdd" is-item-add-disabled="avvm.saveActivityAttachmentBusy">
-                        <card-list-header>
-                            <h3 class="page-header" translate="ACTIVITY.VIEW.ATTACHMENTS"></h3>
-                        </card-list-header>
-                        <card-list-no-items ng-show="avvm.activity.attachments.length === 0">
-                            <p class="help-block" translate="ACTIVITY.VIEW.NO_ATTACHMENTS"></p>
-                        </card-list-no-items>
-                        <card-list-item ng-repeat="attachment in avvm.activity.attachments | orderBy: avvm.attachmentsCartListOrder.name : avvm.attachmentsCartListOrder.descending track by attachment.id ">
-                            <card id="attachment-card-{{attachment.id}}" card-template-url="'app/activity/templates/activityAttachmentCard.html'" item="attachment" show-item-details="avvm.showActivityAttachmentPreview">
-                            </card>
-                        </card-list-item>
-                    </card-list>
+                <section>
+                    <h3 class="page-header">Negotiators</h3>
+                    <h4>Lead negotiator</h4>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="panel-item">George Washington</div>
+                            <small>Dolor Sit Department</small>
+                        </div>
+                    </div>
+                    <h4>Secondary negotiator</h4>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="panel-item">Sean Cassidy</div>
+                            <small>Dolor Sit Department</small>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="panel-item">Adam Baldwin</div>
+                            <small>Dolor Sit Department</small>
+                        </div>
+                    </div>
                 </section>
+
+                <!-- Card component -->
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-item">Item name/ID</div>
+                        <div class="card-info">Additional item info to help identify item</div>
+                    </div>
+                    <div class="card-action">
+
+                    </div>
+                </div>
+
+                <!-- // Card component -->
+
+            </div>
+            <div class="col-md-4">
+                <section id="activity-view-prices">
+                    <h3 class="page-header" translate="ACTIVITY.VIEW.PRICES.PRICES"></h3>
+                    <div class="section-row row">
+                        <div class="col-xs-6" translate="ACTIVITY.VIEW.PRICES.MARKET_APPRAISAL_PRICE"></div>
+                        <div id="marketAppraisalPrice" class="col-xs-6" ng-if="avvm.activity.marketAppraisalPrice !== null">{{avvm.activity.marketAppraisalPrice | number : 2 }} GBP</div>
+                    </div>
+                    <div class="section-row row">
+                        <div class="col-xs-6" translate="ACTIVITY.VIEW.PRICES.RECOMMENDED_PRICE"></div>
+                        <div id="recommendedPrice" class="col-xs-6" ng-if="avvm.activity.recommendedPrice !== null">{{avvm.activity.recommendedPrice | number : 2 }} GBP</div>
+                    </div>
+                    <div class="section-row row">
+                        <div class="col-xs-6" translate="ACTIVITY.VIEW.PRICES.VENDOR_ESIMATED_PRICE"></div>
+                        <div id="vendorEstimatedPrice" class="col-xs-6" ng-if="avvm.activity.vendorEstimatedPrice !== null">{{avvm.activity.vendorEstimatedPrice | number : 2 }} GBP</div>
+                    </div>
+                </section>
+            </div>
+            <div class="col-md-4">
                 <section id="activity-view-viewings">
                     <h3 class="page-header" translate="ACTIVITY.VIEW.VIEWINGS"></h3>
                     <card-list id="viewings-list">
@@ -78,6 +104,20 @@
                                     </card>
                                 </card-list-group-item>
                             </card-list-group>
+                        </card-list-item>
+                    </card-list>
+                </section>
+                <section id="activity-view-attachments">
+                    <card-list id="card-list-attachments" show-item-add="avvm.showActivityAttachmentAdd" is-item-add-disabled="avvm.saveActivityAttachmentBusy">
+                        <card-list-header>
+                            <h3 class="page-header" translate="ACTIVITY.VIEW.ATTACHMENTS"></h3>
+                        </card-list-header>
+                        <card-list-no-items ng-show="avvm.activity.attachments.length === 0">
+                            <p class="help-block" translate="ACTIVITY.VIEW.NO_ATTACHMENTS"></p>
+                        </card-list-no-items>
+                        <card-list-item ng-repeat="attachment in avvm.activity.attachments | orderBy: avvm.attachmentsCartListOrder.name : avvm.attachmentsCartListOrder.descending track by attachment.id ">
+                            <card id="attachment-card-{{attachment.id}}" card-template-url="'app/activity/templates/activityAttachmentCard.html'" item="attachment" show-item-details="avvm.showActivityAttachmentPreview">
+                            </card>
                         </card-list-item>
                     </card-list>
                 </section>
@@ -132,7 +172,7 @@
         <viewing-preview component-id="avvm.componentIds.viewingPreviewId">
         </viewing-preview>
     </side-panel-content>
-    <side-panel-footer>        
+    <side-panel-footer>
         <button class="btn btn-default" type="button" ng-click="avvm.cancelViewingPreview()">
             <i class="fa fa-angle-double-left"></i> <span translate="COMMON.BACK"></span>
         </button>
