@@ -29,6 +29,10 @@ module Antares {
             goToRequirementView = () => {
                 this.$state.go('app.requirement-view', { id: this.viewing.requirement.id });
             }
+
+            goToActivityView = () => {
+                this.$state.go('app.activity-view', { id: this.viewing.activity.id });
+            }
         }
 
         angular.module('app').controller('viewingPreviewController', ViewingPreviewController);

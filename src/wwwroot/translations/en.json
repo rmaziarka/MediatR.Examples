@@ -260,7 +260,8 @@
       "ATTENDEES": "Attendees",
       "NEGOTIATOR": "Negotiator",
       "INVITATIONTEXT": "Invitation text",
-      "POSTVIEWINGCOMMENT": "Post-viewing comment"
+      "POSTVIEWINGCOMMENT": "Post-viewing comment",
+      "SAVING_VIEWING_IN_PROGRESS":  "Saving viewing ..."
     }
   },
   "ATTACHMENT": {

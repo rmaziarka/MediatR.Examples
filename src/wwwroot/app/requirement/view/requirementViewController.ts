@@ -8,6 +8,7 @@ module Antares.Requirement.View {
         viewingAddPanelVisible: boolean = false;
         previewPanelVisible: boolean = true;
         loadingActivities: boolean = false;
+        saveViewingBusy: boolean = false;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -20,27 +21,27 @@ module Antares.Requirement.View {
             this.components.noteAdd().clearNote();
             this.showPanel(this.components.panels.notes);
         }
-        
+
         showActivitiesPanel = () => {
             this.loadingActivities = true;
             this.components.activitiesList()
                 .loadActivities()
                 .finally(() => { this.loadingActivities = false; });
-            
+
             this.components.viewingAdd().clearViewingAdd();
             this.showPanel(this.components.panels.configureViewingsSidePanel);
             this.viewingAddPanelVisible = false;
         }
 
-        showViewingAddPanel = () =>{
-            var selectedActivity : Dto.IActivityQueryResult = this.components
+        showViewingAddPanel = () => {
+            var selectedActivity: Dto.IActivityQueryResult = this.components
                 .activitiesList()
                 .getSelectedActivity();
-                
-            if(selectedActivity === null || selectedActivity === undefined){
+
+            if (selectedActivity === null || selectedActivity === undefined) {
                 return;
             }
-            
+
             this.components.viewingAdd().clearViewingAdd();
             this.components.viewingAdd().setActivity(selectedActivity);
 
@@ -61,7 +62,7 @@ module Antares.Requirement.View {
             this.viewingAddPanelVisible = false;
         }
 
-        goBackToPreviewViewing(){
+        goBackToPreviewViewing() {
             this.previewPanelVisible = true;
         }
 
@@ -106,25 +107,31 @@ module Antares.Requirement.View {
             this.previewPanelVisible = true;
         }
 
-        showViewingEdit = () =>{
+        showViewingEdit = () => {
             var viewing = this.components.viewingPreview().getViewing();
             this.components.viewingEdit().setViewing(viewing);
             this.previewPanelVisible = false;
         }
 
         saveViewing() {
+            this.saveViewingBusy = true;
             this.components.viewingAdd()
-            .saveViewing()
-            .then(() => {
-                this.hidePanels();
-            });
+                .saveViewing()
+                .then(() => {
+                    this.hidePanels();
+                }).finally(() => {
+                    this.saveViewingBusy = false;
+                });
         }
 
         saveEditedViewing() {
+            this.saveViewingBusy = true;
             this.components.viewingEdit()
                 .saveViewing()
                 .then(() => {
                     this.hidePanels();
+                }).finally(() => {
+                    this.saveViewingBusy = false;
                 });
         }
     }

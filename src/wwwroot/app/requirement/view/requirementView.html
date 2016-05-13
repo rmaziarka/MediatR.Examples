@@ -51,10 +51,10 @@
 
                 <section>
                     <h3 class="page-header" translate="REQUIREMENT.VIEW.VIEWINGS"></h3>
-                    <card-list id="viewings-list" show-item-add="vm.showActivitiesPanel">
+                    <card-list id="viewings-list" show-item-add="vm.showActivitiesPanel" is-item-add-disabled="vm.saveViewingBusy">
                         <card-list-no-items ng-show="vm.requirement.viewings.length === 0">
                             <p class="help-block" translate="REQUIREMENT.VIEW.NO_VIEWINGS"></p>
-                        </card-list-no-items>                     
+                        </card-list-no-items>
                         <card-list-item ng-repeat="group in vm.requirement.viewingsByDay | orderBy: '-day'">
                             <card-list-group class="viewing-group">
                                 <card-list-group-header>
@@ -73,7 +73,7 @@
     </div>
 </div>
 
-<side-panel component-id="vm.componentIds.configureViewingsSidePanelId">
+<side-panel component-id="vm.componentIds.configureViewingsSidePanelId" is-busy="vm.saveViewingBusy">
     <side-panel-header>
         <h3 translate="REQUIREMENT.VIEW.SELECTACTIVITY" ng-show="!vm.viewingAddPanelVisible"></h3>
 
@@ -84,8 +84,9 @@
         </activities-list>
 
         <viewing-add component-id="vm.componentIds.viewingAddId" requirement="vm.requirement" attendees="vm.requirement.contacts"
-                         ng-show="vm.viewingAddPanelVisible" mode="add">
+                     ng-show="vm.viewingAddPanelVisible" mode="add">
         </viewing-add>
+        <busy is-busy="vm.saveViewingBusy" label="{{'VIEWING.ADD.SAVING_VIEWING_IN_PROGRESS' | translate}}"></busy>
     </side-panel-content>
     <side-panel-footer>
         <button class="btn btn-default" type="button" ng-click="vm.cancelConfigureViewings()" ng-show="!vm.viewingAddPanelVisible">
@@ -114,7 +115,7 @@
     </side-panel-content>
 </side-panel>
 
-<side-panel component-id="vm.componentIds.previewViewingSidePanelId" id="viewing-panel">
+<side-panel component-id="vm.componentIds.previewViewingSidePanelId" id="viewing-panel" is-busy="vm.saveViewingBusy">
     <side-panel-header>
         <h3 translate="REQUIREMENT.VIEW.VIEWINGADD"></h3>
     </side-panel-header>
@@ -122,8 +123,9 @@
         <viewing-preview component-id="vm.componentIds.viewingPreviewId" ng-show="vm.previewPanelVisible">
         </viewing-preview>
         <viewing-add component-id="vm.componentIds.viewingEditId" requirement="vm.requirement" attendees="vm.requirement.contacts"
-                         ng-show="!vm.previewPanelVisible" mode="edit">
+                     ng-show="!vm.previewPanelVisible" mode="edit">
         </viewing-add>
+        <busy is-busy="vm.saveViewingBusy" label="{{'VIEWING.ADD.SAVING_VIEWING_IN_PROGRESS' | translate}}"></busy>
     </side-panel-content>
     <side-panel-footer>
         <button type="button" class="btn btn-default pull-left" ng-click="vm.showViewingEdit()" ng-show="vm.previewPanelVisible"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span></button>
