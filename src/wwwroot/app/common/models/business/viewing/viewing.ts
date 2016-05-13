@@ -26,6 +26,7 @@ module Antares.Common.Models.Business {
                 if (viewing.requirement)
                     this.requirement = new Requirement(viewing.requirement);
                 this.startDate = moment(viewing.startDate).toDate();
+                this.endDate = moment(viewing.endDate).toDate(); 
             }
         }
     }
