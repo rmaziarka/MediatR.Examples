@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.UITests.Extensions;
     using KnightFrank.Antares.UITests.Pages.Panels;
 
@@ -10,13 +11,16 @@
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
 
+    using OpenQA.Selenium;
+    using OpenQA.Selenium.Interactions;
+
     public class ViewPropertyPage : ProjectPageBase
     {
         private readonly ElementLocator viewPropertyForm = new ElementLocator(Locator.CssSelector, "property-view");
         // Locators for property address area
         private readonly ElementLocator expectedAddressField = new ElementLocator(Locator.XPath, "//address-form-view//span[text()='{0}']");
         private readonly ElementLocator editButton = new ElementLocator(Locator.CssSelector, "button[ng-click*='goToEdit']");
-        //locators for property details area
+        // Locators for property details area
         private readonly ElementLocator propertyType = new ElementLocator(Locator.CssSelector, "div[translate = 'PROPERTY.VIEW.TYPE'] ~ div");
         private readonly ElementLocator propertyDetailsLabels = new ElementLocator(Locator.CssSelector, "[ng-repeat *= 'attribute'] div.ng-binding:not([class *= 'ng-hide'])");
         private readonly ElementLocator propertyDetailsValues = new ElementLocator(Locator.CssSelector, "[ng-repeat *= 'attribute'] div.attribute-value div:not([class *= 'ng-hide'])");
@@ -31,10 +35,16 @@
         private readonly ElementLocator activityType = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] small[id *= 'activity-type']");
         private readonly ElementLocator activityStatus = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] small[id *= 'activity-status']");
         private readonly ElementLocator activityDetailsLink = new ElementLocator(Locator.CssSelector, "#card-list-activities .detailsLink");
-        //locators for characteristics
+        // Locators for characteristics
         private readonly ElementLocator characteristics = new ElementLocator(Locator.CssSelector, ".characteristics li");
         private readonly ElementLocator characteristicName = new ElementLocator(Locator.XPath, "(//characteristic-list-view//span[contains(@class, 'name')])[{0}]");
         private readonly ElementLocator characteristicComment = new ElementLocator(Locator.XPath, "(//characteristic-list-view//span[contains(@class, 'name')])[{0}]/following-sibling::span");
+        // Locators for area breakdown
+        private readonly ElementLocator addAreaBreakdown = new ElementLocator(Locator.CssSelector, "#card-list-areas button");
+        private readonly ElementLocator areaTile = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator areaName = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator areaSize = new ElementLocator(Locator.Id, string.Empty);
+
 
         public ViewPropertyPage(DriverContext driverContext) : base(driverContext)
         {
@@ -47,6 +57,8 @@
         public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
 
         public ActivityPreviewPage PreviewDetails => new ActivityPreviewPage(this.DriverContext);
+
+        public CreateAreaPage CreateArea => new CreateAreaPage(this.DriverContext);
 
         public string PropertyType => this.Driver.GetElement(this.propertyType).Text;
 
@@ -139,6 +151,31 @@
                     : string.Empty);
             }
             return keys.Zip(values, (key, value) => new { key, value }).ToDictionary(x => x.key, x => x.value);
+        }
+
+        public ViewPropertyPage CreateAreaBreakdown()
+        {
+            this.Driver.GetElement(this.addAreaBreakdown).Click();
+            return this;
+        }
+
+        public ViewPropertyPage MoveAreas(int from, int to)
+        {
+            IWebElement source = this.Driver.GetElement(this.areaTile.Format(from));
+            IWebElement target = this.Driver.GetElement(this.areaTile.Format(to));
+            (new Actions(this.Driver)).DragAndDrop(source,target).Perform();
+            return this;
+        }
+
+        public List<PropertyAreaBreakdown> GetAreas(int size)
+        {
+            var actualResult = new List<PropertyAreaBreakdown>();
+            for (var i = 1; i <= size; i++)
+            {
+                actualResult.ElementAt(i-1).Name = this.Driver.GetElement(this.areaName.Format(i)).Text;
+                actualResult.ElementAt(i-1).Size = double.Parse(this.Driver.GetElement(this.areaSize.Format(i)).Text);
+            }
+            return actualResult;
         }
     }
 

@@ -120,6 +120,7 @@
     <Compile Include="Pages\CreateContactPage.cs" />
     <Compile Include="Pages\CreateRequirementPage.cs" />
     <Compile Include="Pages\EditActivityPage.cs" />
+    <Compile Include="Pages\Panels\CreateAreaPage.cs" />
     <Compile Include="Pages\Panels\NotesPage.cs" />
     <Compile Include="Pages\Panels\OwnershipDetailsPage.cs" />
     <Compile Include="Pages\Panels\PropertyPreviewPage.cs" />

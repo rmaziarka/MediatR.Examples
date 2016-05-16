@@ -138,6 +138,37 @@
             page.Ownership.SaveOwnership().WaitForOwnershipPanelToHide();
         }
 
+        [When(@"User clicks add area breakdown button on view property page")]
+        public void AddArea()
+        {
+            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").CreateAreaBreakdown();
+        }
+
+        [When(@"User fills in area details on create area panel")]
+        public void AddAreaDetails(Table table)
+        {
+            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+            List<PropertyAreaBreakdown> areaBreakdowns = table.CreateSet<PropertyAreaBreakdown>().ToList();
+
+            var place = 1;
+            foreach (PropertyAreaBreakdown areaBreakdown in areaBreakdowns)
+            {
+                page.CreateArea.SetAreaDetails(areaBreakdown.Name, areaBreakdown.Size, place++);
+            }
+        }
+
+        [When(@"User clicks save button on create area panel")]
+        public void SaveAreas()
+        {
+            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").CreateArea.SaveArea();
+        }
+
+        [When(@"User drags (.*) area and moves to (.*) area place on view property page")]
+        public void MoveAreas(int source, int target)
+        {
+            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").MoveAreas(source, target);
+        }
+
         [Then(@"Activity creation date is set to current date on view property page")]
         public void CheckifActivityDateCorrect()
         {
@@ -250,6 +281,15 @@
                                                               .ToDictionary(x => x.Name, x => x.Comment);
 
             actualDetails.ShouldBeEquivalentTo(characteristics);
+        }
+
+        [Then(@"Area breakdown order is following on view property page")]
+        public void CheckAreasOrder(Table table)
+        {
+            List<PropertyAreaBreakdown> expectedAreas = table.CreateSet<PropertyAreaBreakdown>().ToList();
+            int size = expectedAreas.Count();
+            IEnumerable<PropertyAreaBreakdown> actualAreas = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").GetAreas(size);
+            actualAreas.ShouldBeEquivalentTo(expectedAreas);
         }
     }
 }

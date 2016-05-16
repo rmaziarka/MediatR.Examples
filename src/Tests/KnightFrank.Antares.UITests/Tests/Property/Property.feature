@@ -56,7 +56,7 @@ Scenario: Update property
 			| Alex Johnson | Pre-appraisal | Freehold Sale |
 
 @Property
-Scenario: Create property
+Scenario: Create residential property
 	Given Contacts are created in database
 		| Title | FirstName | Surname |
 		| Dr    | Eva       | Queen   |
@@ -137,3 +137,44 @@ Scenario: Create property
 	When User clicks property details link on view activity page
 		And User clicks view property link on property preview page
 	Then View property page is displayed
+
+@Property
+Scenario: Create commercial property
+	Given Contacts are created in database
+		| Title | FirstName | Surname |
+		| Dr    | Eva       | Queen   |
+		And User navigates to create property page
+	When User selects United Kingdom country on create property page
+		And User selects Commercial property and Hotel type on create property page
+		And User fills in address details on create property page
+			| PropertyNumber | PropertyName      | Line2    | Postcode | City   | County      |
+			| 20             | Westminster Abbey | Deans Yd | SW1P 3PA | London | Westminster |
+		And User clicks save property button on create property page
+	Then New property should be created with address details 
+		| PropertyNumber | PropertyName      | Line2    | Postcode | City   | County      |
+		| 20             | Westminster Abbey | Deans Yd | SW1P 3PA | London | Westminster |
+	When User clicks add area breakdown button on view property page
+		And User fills in area details on create area panel
+			| Name               | Size |
+			| First floor        | 100  |
+			| Second floor       | 150  |
+			| Third floor area A | 70   |
+			| Third floor area B | 30   |
+			| Third floor area C | 50   |
+		And User clicks save button on create area panel
+#	Then Area breakdown order is following on view property page
+#		| Name               | Size |
+#		| First floor        | 100  |
+#		| Second floor       | 150  |
+#		| Third floor area A | 70   |
+#		| Third floor area B | 30   |
+#		| Third floor area C | 50   |
+#	When User drags 4 area and moves to 2 area place on view property page
+#		And User drags 3 area and moves to 5 area place on view property page
+#	Then Area breakdown order is following on view property page
+#		| Name               | Size |
+#		| First floor        | 100  |
+#		| Third floor area B | 150  |
+#		| Third floor area A | 70   |
+#		| Third floor area C | 30   |
+#		| Second floor       | 50   |
