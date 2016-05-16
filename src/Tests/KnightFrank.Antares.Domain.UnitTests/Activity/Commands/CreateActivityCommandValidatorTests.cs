@@ -157,22 +157,7 @@
             validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == NotEmptyError);
         }
 
-        [Theory]
-        [AutoMoqData]
-        public void Given_CommandActivityTypeDoesNotExist_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
-            CreateActivityCommand cmd)
-        {
-            // Arrange
-            this.activityTypeRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityType, bool>>>())).Returns(false);
-
-            // Act
-            ValidationResult validationResult = this.validator.Validate(cmd);
-
-            // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.ActivityTypeId));
-        }
-
+       
         [Theory]
         [AutoMoqData]
         public void Given_NotExistingActivityTypeDefinitionInCommand_When_Validating_Then_ShouldReturnValidationError(
