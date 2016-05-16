@@ -18,7 +18,7 @@
                 <label for="size" class="required" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.ADD.SIZE"></label>
                 <div class="row">
                     <div class="col-xs-4">
-                        <input id="size" name="size" class="form-control" ng-model="area.size" type="number" required>
+                        <input id="size" name="size" class="form-control" ng-model="area.size" type="number" required number-greater-than="0">
                     </div>
                 </div>
                 <div ng-messages="innerAddAreaFormForm.size.$error" ng-show="addAreaForm.$submitted || innerAddAreaFormForm.size.$dirty">
