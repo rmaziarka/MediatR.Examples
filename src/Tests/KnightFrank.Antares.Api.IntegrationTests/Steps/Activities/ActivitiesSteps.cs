@@ -76,8 +76,7 @@
 
             this.scenarioContext.Set(activity, "Activity");
         }
-
-        [Given(@"User creates activity for given (.*) property id using api")]
+        
         [When(@"User creates activity for given (.*) property id using api")]
         public void CreateActivityUsingApi(string id)
         {
@@ -124,7 +123,7 @@
         }
 
         [Given(@"Attachment for (.*) with following data exists in data base")]
-        public void GivenAttachmentWithFollowingDataExistsInDataBase(string documentType, Table table)
+        public void CreateAttachmentForActivityInDatabase(string documentType, Table table)
         {
             var attachment = table.CreateInstance<Attachment>();
             attachment.DocumentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[documentType];
@@ -139,7 +138,7 @@
         }
 
         [When(@"User updates activity (.*) id and (.*) status with following sale valuation")]
-        public void WhenUserUpdatesActivityWithFollowingSaleValuation(string id, string status, Table table)
+        public void UpdateActivitySaleValuation(string id, string status, Table table)
         {
             string requestUrl = $"{ApiUrl}";
 
@@ -169,7 +168,7 @@
         }
 
         [When(@"User gets activity with (.*) id")]
-        public void WhenUserRetrievesActivityDetailsForGiven(string activityId)
+        public void GetActivityWithId(string activityId)
         {
             this.GetActivityResponse(activityId.Equals("latest")
                 ? this.scenarioContext.Get<Activity>("Activity").Id.ToString()
@@ -183,7 +182,7 @@
         }
 
         [When(@"I upload attachment for (.*) activity id for (.*) with following data")]
-        public void WhenIUploadAttachmentForActivityIdWithFollowingData(string activityId, string documentType, Table table)
+        public void UploadAttachmentForActivity(string activityId, string documentType, Table table)
         {
             if (activityId.Equals("latest"))
             {
@@ -208,7 +207,7 @@
         }
 
         [Then(@"Activities list should be the same as in database")]
-        public void ThenActivitiesReturnedShouldBeTheSameAsInDatabase()
+        public void CheckActivitiesList()
         {
             var propertyFromResponse = JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent());
 
@@ -227,7 +226,7 @@
         }
 
         [Then(@"Created Activity is saved in database")]
-        public void ThenTheCreatedActivityIsSavedInDataBase()
+        public void CompareActivities()
         {
             var activity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
             Activity actualActivity = this.fixture.DataContext.Activities.Single(x => x.Id.Equals(activity.Id));
@@ -248,7 +247,7 @@
         }
 
         [Then(@"Retrieved activity should be same as in database")]
-        public void ThenTheReceivedActivitiesShouldBeTheSameAsInDataBase()
+        public void CheckActivity()
         {
             var activity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
             Activity actualActivity = this.fixture.DataContext.Activities.Single(x => x.Id.Equals(activity.Id));
@@ -259,7 +258,8 @@
                 .Excluding(a => a.Property)
                 .Excluding(a => a.ActivityType)
                 .Excluding(a => a.Attachments)
-                .Excluding(a => a.ActivityUsers));
+                .Excluding(a => a.ActivityUsers)
+                .Excluding(a => a.Viewings));
 
             actualActivity.ActivityUsers.Should().Equal(activity.ActivityUsers, (c1, c2) =>
                 c1.ActivityId == c2.ActivityId &&
@@ -268,7 +268,7 @@
         }
 
         [Then(@"Retrieved activity should have expected attachments")]
-        public void ThenTheReceivedActivitiesShouldHaveExpectedAttachments()
+        public void CheckActivityAttachments()
         {
             var activity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
             Activity actualActivity = this.fixture.DataContext.Activities.Single(x => x.Id.Equals(activity.Id));
@@ -279,6 +279,18 @@
                 c1.FileName.Equals(c2.FileName) &&
                 c1.Size.Equals(c2.Size) &&
                 c1.UserId.Equals(c2.UserId));
+        }
+
+        [Then(@"Retrieved activity should have expected viewing")]
+        public void CheckActivityViewing()
+        {
+            var activity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
+            Viewing viewing = this.fixture.DataContext.Viewing.Single(x => x.ActivityId.Equals(activity.Id));
+
+            activity.Viewings.Single().ShouldBeEquivalentTo(viewing, options => options
+                .Excluding(v => v.Activity)
+                .Excluding(v => v.Requirement)
+                .Excluding(v => v.Negotiator));
         }
 
         [Then(@"Retrieved activities should be the same as in database")]

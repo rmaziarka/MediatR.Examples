@@ -1,6 +1,7 @@
 ﻿Feature: Users
+
 @Users
-Scenario Outline: Retrieve users by query
+Scenario Outline: Get users
 	Given All users have been deleted
 		And User creates users in database with the following data
 			| activeDirectoryDomain | activeDirectoryLogin | firstName | lastName | 
@@ -8,15 +9,16 @@ Scenario Outline: Retrieve users by query
 			| AD                    | jjohns               | John      | Johns    |
 			| AD                    | dparks               | Dave      | Parks    |
 	When User inputs <query> query
-	Then User should get <statusCode>  http status code
+	Then User should get <statusCode> http status code
 		And User should get <matchCount> number of results returned
 		And User should get results in correct format
+
 	Examples: 
 	| query | statusCode | matchCount |
 	| j     | OK         | 2          |
 	 
 @Users
-Scenario Outline: Retrieve error message for improper input
+Scenario Outline: Get users with invalid data
 	When User inputs <query> query
 	Then User should get <statusCode> http status code
 
