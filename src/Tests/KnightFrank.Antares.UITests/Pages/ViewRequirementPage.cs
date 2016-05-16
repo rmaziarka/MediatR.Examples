@@ -22,7 +22,7 @@
         private readonly ElementLocator requirementApplicants = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'contacts'] div");
         private readonly ElementLocator requirementDate = new ElementLocator(Locator.CssSelector, "span[translate *= 'CREATEDDATE'] ~ span");
         private readonly ElementLocator addViewings = new ElementLocator(Locator.CssSelector, "#viewings-list button");
-        private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item");
+        private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item .panel-body");
         private readonly ElementLocator viewingDetailsLink = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) a");
         private readonly ElementLocator viewingDetails = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .ng-binding");
         
@@ -120,7 +120,7 @@
 
     internal class ViewingDetails
     {
-        public string Activity { get; set; }
+        public string Name { get; set; }
 
         public string Date { get; set; }
 

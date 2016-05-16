@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
 
@@ -79,6 +80,12 @@
             this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").PreviewAttachment.CloseAttachmentPreviewPage();
         }
 
+        [When(@"User clicks (.*) viewings details link on view activity page")]
+        public void OpenViewingsDetails(int position)
+        {
+            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").OpenViewingDetails(position);
+        }
+
         [Then(@"Attachment (.*) should be downloaded")]
         public void ThenAttachmentShouldBeDownloaded(string attachmentName)
         {
@@ -136,6 +143,44 @@
             expected.User = "John Smith";
 
             actual.ShouldBeEquivalentTo(expected);
+        }
+
+        [Then(@"View activity page is displayed")]
+        public void CheckIfViewActivityPresent()
+        {
+            var page = new ViewActivityPage(this.driverContext);
+            Assert.True(page.IsViewActivityFormPresent());
+            this.scenarioContext.Set(page, "ViewActivityPage");
+        }
+
+        [Then(@"Viewing details on (.*) position on view activity page are same as the following")]
+        public void CheckViewing(int position, Table table)
+        {
+            var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
+            var expectedDetails = table.CreateInstance<ViewingData>();
+            List<string> actualDetails = page.GetViewingDetails(position);
+
+            Verify.That(this.driverContext, () => Assert.Equal(page.ViewingsNumber, 1),
+                () => Assert.Equal(expectedDetails.Date, actualDetails[0]),
+                () => Assert.Equal(expectedDetails.Name, actualDetails[1]),
+                () => Assert.Equal(expectedDetails.Time, actualDetails[2]));
+        }
+
+        [Then(@"Viewing details on view activity page are same as the following")]
+        public void CheckViewingInDetailsPanel(Table table)
+        {
+            var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
+            var expectedDetails = table.CreateInstance<ViewingDetails>();
+
+            List<string> attendees = expectedDetails.Attendees.Split(';').ToList();
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Name, page.ViewingDetails.Details),
+                () => Assert.Equal(expectedDetails.Date + ", " + expectedDetails.StartTime + " - " + expectedDetails.EndTime, page.ViewingDetails.Date),
+                () => Assert.Equal(expectedDetails.Negotiator, page.ViewingDetails.Negotiator),
+                () => Assert.Equal(attendees, page.ViewingDetails.Attendees),
+                () => Assert.Equal(expectedDetails.InvitationText, page.ViewingDetails.InvitationText),
+                () => Assert.Equal(expectedDetails.PostViewingComment, page.ViewingDetails.PostViewingComment));
         }
     }
 }

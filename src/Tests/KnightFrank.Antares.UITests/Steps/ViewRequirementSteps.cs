@@ -116,6 +116,12 @@
             this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").ViewingDetails.EditViewing();
         }
 
+        [When(@"User clicks view activity on view requirement page")]
+        public void ClickViewActivity()
+        {
+            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").ViewingDetails.ClickViewLink();
+        }
+
         [Then(@"Requirement location details on view requirement page are same as the following")]
         public void CheckResidentialSalesRequirementLocationDetails(Table table)
         {
@@ -196,7 +202,7 @@
             List<string> attendees = expectedDetails.Attendees.Split(';').ToList();
 
             Verify.That(this.driverContext, 
-                () => Assert.Equal(expectedDetails.Activity, page.ViewingDetails.Activity),
+                () => Assert.Equal(expectedDetails.Name, page.ViewingDetails.Details),
                 () => Assert.Equal(expectedDetails.Date + ", " + expectedDetails.StartTime + " - " + expectedDetails.EndTime, page.ViewingDetails.Date),
                 () => Assert.Equal(expectedDetails.Negotiator, page.ViewingDetails.Negotiator),
                 () => Assert.Equal(attendees, page.ViewingDetails.Attendees),

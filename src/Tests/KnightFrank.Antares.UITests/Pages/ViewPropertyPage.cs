@@ -16,7 +16,7 @@
 
     public class ViewPropertyPage : ProjectPageBase
     {
-        private readonly ElementLocator viewPropertyForm = new ElementLocator(Locator.CssSelector, "property-view");
+        private readonly ElementLocator viewPropertyForm = new ElementLocator(Locator.CssSelector, "property-view > div");
         // Locators for property address area
         private readonly ElementLocator expectedAddressField = new ElementLocator(Locator.XPath, "//address-form-view//span[text()='{0}']");
         private readonly ElementLocator editButton = new ElementLocator(Locator.CssSelector, "button[ng-click*='goToEdit']");
@@ -126,7 +126,7 @@
         public bool IsViewPropertyFormPresent()
         {
             this.Driver.WaitForAngularToFinish();
-            return this.Driver.IsElementPresent(this.viewPropertyForm, BaseConfiguration.ShortTimeout);
+            return this.Driver.IsElementPresent(this.viewPropertyForm, BaseConfiguration.MediumTimeout);
         }
 
         public Dictionary<string, string> GetPropertyDetails()
@@ -163,7 +163,7 @@
         {
             IWebElement source = this.Driver.GetElement(this.areaTile.Format(from));
             IWebElement target = this.Driver.GetElement(this.areaTile.Format(to));
-            (new Actions(this.Driver)).DragAndDrop(source,target).Perform();
+            new Actions(this.Driver).DragAndDrop(source,target).Perform();
             return this;
         }
 
