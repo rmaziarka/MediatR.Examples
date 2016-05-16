@@ -8,10 +8,16 @@ module Antares {
             element: ng.IAugmentedJQuery,
             $http: ng.IHttpBackendService,
             filter: ng.IFilterService,
-            controller: ViewingPreviewController;
+            controller: ViewingPreviewController,
+            state: ng.ui.IStateService;
 
         var pageObjectSelectors = {
+            activitySection: '#activity-section',
             activityDetails: '#viewing-preview-activity-details',
+            activityLinkDiv: '#activity-link',
+            requirementSection: '#requirement-section',
+            requirementDetails: '#viewing-preview-requirement-details',
+            requirementLinkDiv: '#requirement-link',
             negotiatorDetails: '#viewing-preview-negotiator-details',
             invitationText: '#viewing-preview-invitation-text',
             postViewingComment: '#viewing-preview-post-viewing-comment',
@@ -20,16 +26,22 @@ module Antares {
         }
 
         describe('and proper viewing is provided', () => {
-            var viewingMock = TestHelpers.ViewingGenerator.generate();
+            var requirementMock = TestHelpers.RequirementGenerator.generate();
+            var viewingMock = TestHelpers.ViewingGenerator.generate({
+                requirement : requirementMock
+            });
+            
 
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
                 $httpBackend: ng.IHttpBackendService,
-                $filter: ng.IFilterService) => {
-
+                $filter: ng.IFilterService,
+                $state: ng.ui.IStateService) =>{
+                
                 $http = $httpBackend;
                 filter = $filter;
+                state = $state;
                 scope = $rootScope.$new();
                 element = $compile('<viewing-preview></viewing-preview>')(scope);
                 scope.$apply();
@@ -37,18 +49,97 @@ module Antares {
                 controller = element.controller('viewingPreview');
             }));
 
-            it('when viewing is set then activity should be displayed', () => {
-                // arrange + act
+            it('when viewing is set and page context is activity then requirement header should be displayed and activity header hidden', () => {
+                // arrange
+                controller.pageContext = 'activity';
+
+                // act
                 controller.setViewing(viewingMock);
+                scope.$apply();
+
+                // assert
+                var requirementSection = element.find(pageObjectSelectors.requirementSection);
+                var activitySection = element.find(pageObjectSelectors.activitySection);
+
+                expect(requirementSection.length).toBe(1);
+                expect(activitySection.length).toBe(0);
+            });
+
+            it('when viewing is set and page context is activity then requirement details should be displayed', () => {
+                // arrange
+                controller.pageContext = 'activity';
+
+                // act
+                controller.setViewing(viewingMock);
+                scope.$apply();
+
+                // assert
+                var requirementDetailsElement = element.find(pageObjectSelectors.requirementDetails);
+                var properRequirementTextToDisplay = requirementMock.getContactNames();
+                expect(requirementDetailsElement.text()).toBe(properRequirementTextToDisplay);
+            });
+
+            it('when viewing is set and page context is activity then clicking details link should get requirement', () => {
+                // arrange
+                spyOn(state, 'go');
+                controller.pageContext = 'activity';
+                
+                // act
+                controller.setViewing(viewingMock);
+                scope.$apply();
+                
+                // assert
+                var requirementLink = element.find(pageObjectSelectors.requirementLinkDiv).children("a");
+                requirementLink.click();
+                expect(state.go).toHaveBeenCalledWith('app.requirement-view', { id: viewingMock.requirement.id });
+            });            
+            
+            it('when viewing is set and page context is requirement then activity section should be displayed and requirement section hidden', () => {
+                // arrange
                 controller.pageContext = 'requirement';
+
+                // act
+                controller.setViewing(viewingMock);
+                scope.$apply();
+
+                // assert
+                var activitySection = element.find(pageObjectSelectors.activitySection);
+                var requirementSection = element.find(pageObjectSelectors.requirementSection);
+
+
+                expect(requirementSection.length).toBe(0);
+                expect(activitySection.length).toBe(1);
+            });            
+
+            it('when viewing is set and page context is requirement then activity details should be displayed', () => {
+                // arrange
+                controller.pageContext = 'requirement';
+
+                // act
+                controller.setViewing(viewingMock);
                 scope.$apply();
 
                 // assert
                 var activityDetailsElement = element.find(pageObjectSelectors.activityDetails);
-                var properActiivtyTextToDisplay = viewingMock.activity.property.address.propertyName + (viewingMock.activity.property.address.propertyName ? ', ' : ' '
+                var properActivityTextToDisplay = viewingMock.activity.property.address.propertyName + (viewingMock.activity.property.address.propertyName ? ', ' : ' '
                     + viewingMock.activity.property.address.propertyNumber) + viewingMock.activity.property.address.propertyNumber + " " + viewingMock.activity.property.address.line2;
-                expect(activityDetailsElement.text()).toBe(properActiivtyTextToDisplay);
+                expect(activityDetailsElement.text()).toBe(properActivityTextToDisplay);
             });
+
+            it('when viewing is set and page context is requirement then clicking details link should get activity', () => {
+                // arrange
+                spyOn(state, 'go');
+                controller.pageContext = 'requirement';
+
+                // act
+                controller.setViewing(viewingMock);
+                scope.$apply();
+
+                // assert
+                var activityLink = element.find(pageObjectSelectors.activityLinkDiv).children("a");
+                activityLink.click();
+                expect(state.go).toHaveBeenCalledWith('app.activity-view', { id: viewingMock.activity.id });
+            });  
             
             it('when viewing is set then negotiator should be displayed', () => {
                 // arrange + act
@@ -57,7 +148,7 @@ module Antares {
 
                 // assert
                 var negotiatorDetailsElement = element.find(pageObjectSelectors.negotiatorDetails);
-                var properNegotiatorTextToDisplay = viewingMock.negotiator.firstName + ' ' + viewingMock.negotiator.lastName;
+                var properNegotiatorTextToDisplay = viewingMock.negotiator.getName();
                 expect(negotiatorDetailsElement.text()).toBe(properNegotiatorTextToDisplay);
             });
 
