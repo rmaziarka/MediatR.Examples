@@ -1,6 +1,5 @@
 ﻿namespace KnightFrank.Antares.Domain.User.QueryHandlers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -22,25 +21,36 @@
 
         public IEnumerable<UsersQueryResult> Handle(UsersQuery message)
         {
-            if (!string.IsNullOrWhiteSpace(message?.PartialName))
+            if (string.IsNullOrWhiteSpace(message?.PartialName))
             {
-                string loweredPartialName = message.PartialName;//.ToLower();
-                IQueryable<User> userList = this.userRepository.Get();
-                return userList.Where(
-                    i =>
-                        i.FirstName.StartsWith(loweredPartialName) ||
-                        i.LastName.StartsWith(loweredPartialName))
-                               .Select(x => new UsersQueryResult
-                               {
-                                   Id = x.Id,
-                                   FirstName = x.FirstName,
-                                   LastName = x.LastName,
-                                   Department = x.Department.Name.ToString()
-                               }).OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ToList();
+                return new List<UsersQueryResult>();
             }
 
-            return new List<UsersQueryResult>();
+            string partialName = message.PartialName;
 
+            IQueryable<User> userList = this.userRepository.Get();
+            IOrderedQueryable<UsersQueryResult> orderedUserList = userList.Where(
+                i =>
+                    i.FirstName.StartsWith(partialName) ||
+                    i.LastName.StartsWith(partialName)
+
+                )
+                .Select(x => new UsersQueryResult
+                {
+                    Id = x.Id,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    Department = x.Department.Name.ToString()
+                })
+                .OrderBy(x => x.FirstName).ThenBy(x => x.LastName);
+
+            IQueryable<UsersQueryResult> usersQueryResults = 
+                message.ExcludedIds != null ? orderedUserList.Where(u => message.ExcludedIds.All(e => e != u.Id)) : orderedUserList;
+
+            if (message.Take > 0)
+                return usersQueryResults.Take(message.Take);
+
+            return usersQueryResults;
         }
     }
 }
