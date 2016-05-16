@@ -148,6 +148,8 @@
 
             updateActivityCommand.Id = id.Equals("latest") ? activityFromDatabase.Id : new Guid(id);
             updateActivityCommand.ActivityTypeId = activityFromDatabase.ActivityTypeId;
+            //TODO: implement better setting of lead negotiator id when implementing update negotiator test cases
+            updateActivityCommand.LeadNegotiatorId = activityFromDatabase.ActivityUsers.First().UserId;
             updateActivityCommand.ActivityStatusId = status.Equals("latest")
                 ? activityFromDatabase.ActivityStatusId
                 : new Guid(status);
