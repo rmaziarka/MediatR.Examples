@@ -207,6 +207,12 @@
       "NO_ATTACHMENTS": "No attachments"
     }
   },
+  "NEGOTIATORS": {
+    "NEGOTIATORS": "Negotiators",
+    "LEAD_NEGOTIATOR": "Lead negotiator",
+    "SECONDARY_NEGOTIATOR": "Secondary negotiator",
+    "NO_NEGOTIATORS": "No negotiators added yet"
+  },
   "REQUIREMENT": {
     "ADD": {
       "ADD_REQUIREMENT": "Create requirement",
@@ -261,7 +267,7 @@
       "NEGOTIATOR": "Negotiator",
       "INVITATIONTEXT": "Invitation text",
       "POSTVIEWINGCOMMENT": "Post-viewing comment",
-      "SAVING_VIEWING_IN_PROGRESS":  "Saving viewing ..."
+      "SAVING_VIEWING_IN_PROGRESS": "Saving viewing ..."
     }
   },
   "ATTACHMENT": {

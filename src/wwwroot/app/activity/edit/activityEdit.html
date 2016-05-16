@@ -4,55 +4,24 @@
     </div>
     <form ng-submit="editActivityForm.$valid && aevm.save()" name="editActivityForm" method="post" novalidate>
         <div class="col-md-4">
-            <fieldset id="activity-edit-basic">
-                <h3 class="page-header" translate="ACTIVITY.EDIT.BASIC_INFORMATION"></h3>
-                <div class="form-group" ng-class="{'has-error': (editActivityForm.$submitted || editActivityForm.status.$dirty) && editActivityForm.status.$invalid}">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <label for="status" translate="ACTIVITY.EDIT.STATUS"></label>
-                            <enum-select id="activityStatus" name="status" required="true"
-                                     ng-model="aevm.activity.activityStatusId"
-                                     enum-type-code="{{aevm.enumTypeActivityStatus}}"></enum-select>
-                            <div ng-messages="editActivityForm.status.$error" ng-show="editActivityForm.$submitted || editActivityForm.status.$dirty">
-                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+            <section id="property-basic-info">
+                <fieldset id="activity-edit-basic">
+                    <h3 class="page-header" translate="ACTIVITY.EDIT.BASIC_INFORMATION"></h3>
+                    <div class="form-group" ng-class="{'has-error': (editActivityForm.$submitted || editActivityForm.status.$dirty) && editActivityForm.status.$invalid}">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label for="status" translate="ACTIVITY.EDIT.STATUS"></label>
+                                <enum-select id="activityStatus" name="status" required="true" ng-model="aevm.activity.activityStatusId" enum-type-code="{{aevm.enumTypeActivityStatus}}"></enum-select>
+                                <div ng-messages="editActivityForm.status.$error" ng-show="editActivityForm.$submitted || editActivityForm.status.$dirty">
+                                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </fieldset>
-
-            <section>
-                <h3 class="page-header">Negotiators</h3>
-                <h4>Lead negotiator</h4>
-                <div class="form-group">
-                    <button class="btn btn-default" type="button"><i class="fa fa-pencil"></i></button>
-                </div>
-                <div class="form-group edit-form">
-                    <input class="form-control" type="text" placeholder="Add a negotiator">
-                    <button class="btn btn-default"><i class="fa fa-ban" aria-hidden="true"></i></button>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="panel-item">George Washington</div>
-                        <small>Dolor Sit Department</small>
-                    </div>
-                </div>
-                <h4>Secondary negotiator</h4>
-                <div class="form-group">
-                    <button class="btn btn-default" type="button"><i class="fa fa-plus-circle"></i></button>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="panel-item">George Washington</div>
-                        <small>Dolor Sit Department</small>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="panel-item">George Washington</div>
-                        <small>Dolor Sit Department</small>
-                    </div>
-                </div>
+                </fieldset>
+            </section>
+            <section id="activity-edit-negotiators">
+                <negotiators lead-negotiator="aevm.activity.leadNegotiator" secondary-negotiators="aevm.activity.secondaryNegotiator"></negotiators>
             </section>
         </div>
         <div class="col-md-4">

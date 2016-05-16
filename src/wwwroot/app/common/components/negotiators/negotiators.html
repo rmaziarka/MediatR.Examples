@@ -1,0 +1,23 @@
+<h3 class="page-header" translate="NEGOTIATORS.NEGOTIATORS"></h3>
+<h4 translate="NEGOTIATORS.LEAD_NEGOTIATOR"></h4>
+<div class="form-group">
+    <button class="btn btn-default" type="button"><i class="fa fa-pencil"></i></button>
+</div>
+<div class="form-group edit-form">
+    <input class="form-control" type="text" placeholder="Add a negotiator">
+    <button class="btn btn-default" disabled><i class="fa fa-ban" aria-hidden="true"></i></button>
+</div>
+<card id="card-lead-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'" item="nvm.leadNegotiator.user" ng-show="nvm.leadNegotiator.user">
+</card>
+<card-list id="card-list-negotiators" is-item-add-disabled="true" show-item-add="true">
+    <card-list-header>
+        <h4 class="page-header" translate="NEGOTIATORS.SECONDARY_NEGOTIATOR"></h4>
+    </card-list-header>
+    <card-list-no-items ng-show="!nvm.secondaryNegotiators || nvm.secondaryNegotiators.length === 0">
+        <p class="help-block" translate="NEGOTIATORS.NO_NEGOTIATORS"></p>
+    </card-list-no-items>
+    <card-list-item ng-repeat="negotiator in nvm.secondaryNegotiators | orderBy: ['user.firstName', 'user.lastName']">
+        <card item="negotiator.user" id="card-secondary-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'">
+        </card>
+    </card-list-item>
+</card-list>

@@ -12,5 +12,6 @@ declare module Antares.Common.Models.Dto {
         recommendedPrice?: number;
         vendorEstimatedPrice?: number;
         viewings?: IViewing[];
+        activityUsers: IActivityUser[]
     }
 }
