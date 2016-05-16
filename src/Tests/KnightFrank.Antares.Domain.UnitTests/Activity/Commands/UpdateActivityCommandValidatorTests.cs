@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Activity.Commands
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq.Expressions;
 
     using FluentAssertions;
@@ -37,7 +38,7 @@
             this.activityTypeRepository = fixture.Freeze<Mock<IGenericRepository<ActivityType>>>();
             this.activityRepository = fixture.Freeze<Mock<IGenericRepository<Activity>>>();
             this.activityTypeDefinitionRepository = fixture.Freeze<Mock<IGenericRepository<ActivityTypeDefinition>>>();
-            
+
             this.enumTypeItemRepository.Setup(r => r.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
             this.activityTypeRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityType, bool>>>())).Returns(true);
             this.activityRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new Activity());
@@ -122,6 +123,46 @@
             command.VendorEstimatedPrice = -1;
 
             AssertIfNotNegativePriceValidation(command, this.validator, nameof(command.VendorEstimatedPrice));
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_ValidUpdateActivityCommand_When_SecondaryNegotiatorsIsEmpty_Validating_Then_IsValid(
+            UpdateActivityCommand command)
+        {
+            command.SecondaryNegotiatorIds = new List<Guid>();
+
+            this.AssertIfValid(command);
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_ValidUpdateActivityCommand_When_LeadNegotiatorIsNotSet_Validating_Then_IsValid(
+            UpdateActivityCommand command)
+        {
+            // Arrange
+            command.LeadNegotiatorId = default(Guid);
+
+            // Act
+            ValidationResult validationResult = this.validator.Validate(command);
+
+            // Assert
+            validationResult.IsInvalid(nameof(command.LeadNegotiatorId), nameof(Messages.notempty_error));
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_ValidUpdateActivityCommand_When_SecondaryNegotiatorsIsNotSet_Validating_Then_IsValid(
+            UpdateActivityCommand command)
+        {
+            // Arrange
+            command.SecondaryNegotiatorIds = null;
+
+            // Act
+            ValidationResult validationResult = this.validator.Validate(command);
+
+            // Assert
+            validationResult.IsInvalid(nameof(command.SecondaryNegotiatorIds), nameof(Messages.notnull_error));
         }
 
         [Theory]
