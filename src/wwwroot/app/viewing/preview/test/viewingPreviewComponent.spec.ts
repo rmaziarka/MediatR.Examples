@@ -1,8 +1,7 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares {
-    import ViewingPreviewController = Antares.Component.ViewingPreviewController;
-    import Business = Common.Models.Business;
+    import ViewingPreviewController = Component.ViewingPreviewController;
 
     describe('Given viewing preview component is loaded', () => {
         var scope: ng.IScope,
@@ -17,7 +16,7 @@ module Antares {
             invitationText: '#viewing-preview-invitation-text',
             postViewingComment: '#viewing-preview-post-viewing-comment',
             attendee: '#viewing-preview-attendees #viewing-preview-attendee-item-',
-            date: '#viewing-preview-date',
+            date: '#viewing-preview-date'
         }
 
         describe('and proper viewing is provided', () => {
@@ -41,6 +40,7 @@ module Antares {
             it('when viewing is set then activity should be displayed', () => {
                 // arrange + act
                 controller.setViewing(viewingMock);
+                controller.pageContext = 'requirement';
                 scope.$apply();
 
                 // assert

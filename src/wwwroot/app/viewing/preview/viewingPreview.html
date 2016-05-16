@@ -1,5 +1,5 @@
 
-<section class="section-details" ng-if="vm.viewing.activity">
+<section class="section-details" ng-if="vm.pageContext == 'requirement'">
     <h5 translate="VIEWING.ADD.ACTIVITY"></h5>
     <div class="panel panel-default">
         <div class="panel-body">
@@ -16,7 +16,7 @@
     </div>
 </section>
 
-<section class="section-details" ng-if="vm.viewing.requirement">
+<section class="section-details" ng-if="vm.pageContext == 'activity'">
     <h5 translate="VIEWING.ADD.REQUIREMENT"></h5>
     <div class="panel panel-default">
         <div class="panel-body">

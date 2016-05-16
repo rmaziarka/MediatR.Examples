@@ -120,7 +120,7 @@
         <h3 translate="REQUIREMENT.VIEW.VIEWINGADD"></h3>
     </side-panel-header>
     <side-panel-content>
-        <viewing-preview component-id="vm.componentIds.viewingPreviewId" ng-show="vm.previewPanelVisible">
+        <viewing-preview component-id="vm.componentIds.viewingPreviewId" ng-show="vm.previewPanelVisible" page-context="requirement">
         </viewing-preview>
         <viewing-add component-id="vm.componentIds.viewingEditId" requirement="vm.requirement" attendees="vm.requirement.contacts"
                      ng-show="!vm.previewPanelVisible" mode="edit">
