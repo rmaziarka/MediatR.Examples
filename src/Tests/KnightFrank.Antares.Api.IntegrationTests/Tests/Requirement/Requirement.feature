@@ -1,7 +1,7 @@
 ﻿Feature: Requirement 
 
 @ResidentialSalesRequirements 
-Scenario: Save residential sales requirement
+Scenario: Create residential sales requirement
 	Given User gets GB address form for Requirement and country details
 		And User creates contacts in database with following data 
 			| FirstName | Surname | Title  |
@@ -10,6 +10,16 @@ Scenario: Save residential sales requirement
 		And User creates following requirement using api
  			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
  			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | max         |
+	Then User should get OK http status code
+		And Requirement should be the same as added
+
+@ResidentialSalesRequirements 
+Scenario: Create residential sales requirement with mandatory fields
+	Given User gets GB address form for Requirement and country details
+		And User creates contacts in database with following data 
+			| FirstName | Surname | Title  |
+			| Tomasz    | Bien    | Mister |
+	When User creates requirement with mandatory fields using api
 	Then User should get OK http status code
 		And Requirement should be the same as added
 
@@ -35,7 +45,7 @@ Scenario: Get residential sales requirement
 		And Notes should be the same as added
 		
 @ResidentialSalesRequirements 
-Scenario Outline: Save residential sales requirement without data
+Scenario Outline: Create residential sales requirement without data
 	Given User gets GB address form for Property and country details
 		And User creates contacts in database with following data 
 			| FirstName | Surname | Title  |
@@ -55,7 +65,7 @@ Scenario Outline: Save residential sales requirement without data
 	| address form |
 
 @ResidentialSalesRequirements
-Scenario: Save residential sales requirement with invalid contact
+Scenario: Create residential sales requirement with invalid contact
 	Given User gets GB address form for Requirement and country details
 	When User sets locations details for the requirement
 		| Postcode | City   | Line2   |
@@ -66,7 +76,7 @@ Scenario: Save residential sales requirement with invalid contact
 	Then User should get BadRequest http status code
 
 @Requirements
-Scenario Outline: Retrieve error messages for improper requirement id		
+Scenario Outline: Get residential sales requirement with invalid data		
 	When User retrieves requirement for <id> id
 	Then User should get <statusCode> http status code
 
