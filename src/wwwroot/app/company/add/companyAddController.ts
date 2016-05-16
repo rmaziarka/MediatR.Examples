@@ -5,37 +5,21 @@ module Antares.Company {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
 
-    export class CompanyAddController {
-
-        componentIds: any = {            
-            contactSidePanelId: 'addCompany:contactSidePanelComponent',
-            contactListId: 'addCompany:contactListComponent'            
-        }
-
-        private components: any = {
-            sidePanels: {
-                contact: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
-            },
-            contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); }            
-        }
-
+    export class CompanyAddController extends Core.WithPanelsBaseController  {
         company: Business.Company;
         private companyResource: Antares.Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.ICompanyResource>;
 
         constructor(
-            private componentRegistry: Core.Service.ComponentRegistry,
+            componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
             private $scope: ng.IScope,
             private $q: ng.IQService,
             private $state: ng.ui.IStateService) {
 
+            super(componentRegistry, $scope);
+
             this.company = new Business.Company();
             this.companyResource = dataAccessService.getCompanyResource();
-
-            $scope.$on('$destroy', () => {
-                this.componentRegistry.deregister(this.componentIds.contactListId);
-                this.componentRegistry.deregister(this.componentIds.contactSidePanelId);                
-            });
         }
 
         hasCompanyContacts = (): boolean => {
@@ -71,9 +55,25 @@ module Antares.Company {
                     // TODO: replaced with go to view company state
                     this.company = new Business.Company();
                     var form = this.$scope["addCompanyForm"];
-                    form.$setPristine()
+                    form.$setPristine();
                     //this.$state.go('app.company-view', company);
                 });
+        }
+
+        defineComponentIds() {
+            this.componentIds = {
+                contactSidePanelId: 'addCompany:contactSidePanelComponent',
+                contactListId: 'addCompany:contactListComponent'
+            }
+        }
+
+        defineComponents() {
+            this.components = {
+                sidePanels: {
+                    contact: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
+                },
+                contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); }            
+            };
         }
 
     }

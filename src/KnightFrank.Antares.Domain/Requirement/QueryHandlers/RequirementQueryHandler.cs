@@ -29,9 +29,11 @@
                     .Include(req => req.Viewings)
                     .Include(req => req.Viewings.Select(v => v.Attendees))
                     .Include(req => req.Viewings.Select(v => v.Negotiator))
-                    .Include(req => req.Viewings.Select(v => v.Activity))
                     .Include(req => req.Viewings.Select(v => v.Activity.Property.Address))
                     .Include(req => req.RequirementNotes.Select(rn => rn.User))
+                    .Include(req => req.Offers)
+                    .Include(req => req.Offers.Select(v => v.Negotiator))
+                    .Include(req => req.Offers.Select(v => v.Activity.Property.Address))
                     .SingleOrDefault(req => req.Id == message.Id);
 
             return requirement;

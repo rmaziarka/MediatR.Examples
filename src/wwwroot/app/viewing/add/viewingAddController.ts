@@ -73,8 +73,8 @@ module Antares {
                 this.viewing = angular.copy(viewing);
                 this.viewing.startDate = viewing.startDate;
                 this.viewing.endDate = viewing.endDate;
-                this.startTime = moment(viewing.startDate);
-                this.endTime = moment(viewing.endDate);
+                this.startTime = moment(this.combineDateWithTime(new Date, <Date>viewing.startDate));
+                this.endTime = moment(this.combineDateWithTime(new Date, <Date>viewing.endDate));
 
                 this.activity = <Dto.IActivityQueryResult> {
                     id: viewing.activity.id,

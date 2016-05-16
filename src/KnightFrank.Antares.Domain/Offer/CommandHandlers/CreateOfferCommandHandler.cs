@@ -17,17 +17,15 @@
     public class CreateOfferCommandHandler : IRequestHandler<CreateOfferCommand, Guid>
     {
         private readonly IGenericRepository<Offer> offerRepository;
-
         private readonly IReadGenericRepository<User> userRepository;
-
         private readonly IEntityValidator entityValidator;
-        private readonly EnumTypeItemValidator enumTypeItemValidator;
+        private readonly IEnumTypeItemValidator enumTypeItemValidator;
 
         public CreateOfferCommandHandler(
             IGenericRepository<Offer> offerRepository,
             IReadGenericRepository<User> userRepository, 
-            IEntityValidator entityValidator, 
-            EnumTypeItemValidator enumTypeItemValidator)
+            IEntityValidator entityValidator,
+            IEnumTypeItemValidator enumTypeItemValidator)
         {
             this.offerRepository = offerRepository;
             this.userRepository = userRepository;
