@@ -147,6 +147,9 @@
   <data name="Missing_Requirement_Attendees_Id" xml:space="preserve">
     <value>One or more attendees are not on the applicant list.</value>
   </data>
+  <data name="Only_Commercial_Property_Should_Have_AreaBreakdown" xml:space="preserve">
+    <value>Only commercial property should have area breakdown.</value>
+  </data>
   <data name="Ownership_Dates_Overlap" xml:space="preserve">
     <value>The ownership dates overlap.</value>
   </data>

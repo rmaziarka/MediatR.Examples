@@ -53,6 +53,11 @@
         // ReSharper disable once InconsistentNaming
         Missing_Requirement_Attendees_Id,
         /// <summary>
+        /// Key value : Only commercial property should have area breakdown.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Only_Commercial_Property_Should_Have_AreaBreakdown,
+        /// <summary>
         /// Key value : The ownership dates overlap.
         /// </summary>
         // ReSharper disable once InconsistentNaming

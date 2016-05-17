@@ -41,6 +41,13 @@
             return new BusinessValidationMessage(ErrorMessage.EnumType_Item_Not_Exists, message);
         }
 
+        public static BusinessValidationMessage CreateOnlyCommercialPropertyShouldHaveAreaBreakdownMessage()
+        {
+            string errorMessageTemplate = GetMessage(ErrorMessage.Only_Commercial_Property_Should_Have_AreaBreakdown);
+            string message = string.Format(errorMessageTemplate);
+            return new BusinessValidationMessage(ErrorMessage.Only_Commercial_Property_Should_Have_AreaBreakdown, message);
+        }
+
         public static BusinessValidationMessage CreatePropertyShouldBeEmptyMessage(string propertyName)
         {
             string errorMessageTemplate = GetMessage(ErrorMessage.Property_Should_Be_Empty);

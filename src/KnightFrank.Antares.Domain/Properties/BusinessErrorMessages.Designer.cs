@@ -151,6 +151,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only commercial property should have area breakdown..
+        /// </summary>
+        internal static string Only_Commercial_Property_Should_Have_AreaBreakdown {
+            get {
+                return ResourceManager.GetString("Only_Commercial_Property_Should_Have_AreaBreakdown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The ownership dates overlap..
         /// </summary>
         internal static string Ownership_Dates_Overlap {

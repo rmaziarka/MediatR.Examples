@@ -142,6 +142,7 @@
     <Compile Include="Attachment\Commands\CreateAttachmentValidator.cs" />
     <Compile Include="Common\Commands\CreateOrUpdateAddress.cs" />
     <Compile Include="Common\Commands\CreateOrUpdateAddressValidator.cs" />
+    <Compile Include="Common\Enums\DivisionEnum.cs" />
     <Compile Include="Common\Enums\EnumType.cs" />
     <Compile Include="Common\Exceptions\ResourceNotFoundException.cs" />
     <Compile Include="Common\NinjectInstanceResolver.cs" />
