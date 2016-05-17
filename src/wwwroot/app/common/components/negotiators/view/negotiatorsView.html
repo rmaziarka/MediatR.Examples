@@ -1,0 +1,16 @@
+<h3 class="page-header" translate="NEGOTIATORS.NEGOTIATORS"></h3>
+<h4 translate="NEGOTIATORS.LEAD_NEGOTIATOR"></h4>
+<card id="card-lead-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'" item="nvvm.leadNegotiator">
+</card>
+<card-list id="card-list-negotiators">
+    <card-list-header>
+        <h4 class="page-header" translate="NEGOTIATORS.SECONDARY_NEGOTIATOR"></h4>
+    </card-list-header>
+    <card-list-no-items id="empty-secondary-negotiators" ng-show="!nvvm.secondaryNegotiators || nvvm.secondaryNegotiators.length === 0">
+        <p class="help-block" translate="NEGOTIATORS.NO_NEGOTIATORS"></p>
+    </card-list-no-items>
+    <card-list-item ng-repeat="negotiator in nvvm.secondaryNegotiators | orderBy: ['user.firstName', 'user.lastName']">
+        <card item="negotiator" id="card-secondary-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'">
+        </card>
+    </card-list-item>
+</card-list>

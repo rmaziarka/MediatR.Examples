@@ -2,13 +2,9 @@
 
 .card {
   background-color: $color-white;
-  border: 1px solid $color-black;
+  border: 1px solid $color-denim;
   margin-bottom: 15px;
   position: relative;
-
-  &:hover {
-    border: 1px solid $color-denim;
-  }
 }
 
 .card-selected {
@@ -51,11 +47,13 @@
 .card-info {
   color: $color-dusty-gray;
   font-size: 12px;
+  margin-top: 5px;
 }
 
 .card-action {
   cursor: pointer;
   height: 100%;
+  outline: none;
   position: absolute;
   right: 1px;
   top: 1px;

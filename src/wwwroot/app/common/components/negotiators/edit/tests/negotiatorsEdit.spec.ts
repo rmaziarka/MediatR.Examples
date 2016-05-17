@@ -1,4 +1,4 @@
-/// <reference path="../../../../typings/_all.d.ts" />
+/// <reference path="../../../../../typings/_all.d.ts" />
 
 module Antares {
     import Business = Common.Models.Business;
@@ -18,8 +18,8 @@ module Antares {
             compile: ng.ICompileService,
             element: ng.IAugmentedJQuery;
 
-        var mockedComponentHtml = '<negotiators lead-negotiator="leadNegotiator" secondary-negotiators="secondaryNegotiator">'
-            + '</negotiators>';
+        var mockedComponentHtml = '<negotiators-edit lead-negotiator="leadNegotiator" secondary-negotiators="secondaryNegotiator">'
+            + '</negotiators-edit>';
         
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
