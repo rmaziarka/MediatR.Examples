@@ -1,19 +1,19 @@
 ﻿namespace KnightFrank.Antares.Domain.Common.BusinessValidators
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Repository;
 
-    using Ninject;
-
     public class EntityValidator : IEntityValidator
     {
-        private readonly IKernel kernel;
+        private readonly INinjectInstanceResolver ninjectInstanceResolver;
 
-        public EntityValidator(IKernel kernel)
+        public EntityValidator(INinjectInstanceResolver ninjectInstanceResolver)
         {
-            this.kernel = kernel;
+            this.ninjectInstanceResolver = ninjectInstanceResolver;
         }
 
         /// <summary>
@@ -25,11 +25,29 @@
         /// <exception cref="BusinessValidationException"></exception>
         public void EntityExists<T>(Guid entityId) where T : BaseEntity
         {
-            IGenericRepository<T> genericRepository = this.GetEntityRepository<T>();
+            IGenericRepository<T> genericRepository = this.GetEntityGenericRepository<T>();
 
             if (genericRepository.Any(e => e.Id == entityId) == false)
             {
                 throw this.GetNotExistException<T>(entityId);
+            }
+        }
+
+        /// <summary>
+        /// Check if entities with given ids exis in database and if not throw exception.
+        /// To check method is used Any() therefore entities are not retrieved from the database.
+        /// </summary>
+        /// <typeparam name="T">Database entity.</typeparam>
+        /// <param name="collection">The entity identifiers collection.</param>
+        /// <exception cref="BusinessValidationException"></exception>
+        public void EntitiesExist<T>(ICollection<Guid> collection) where T : BaseEntity
+        {
+            IGenericRepository<T> genericRepository = this.GetEntityGenericRepository<T>();
+
+            IEnumerable<Guid> existingEntities = genericRepository.FindBy(x => collection.Contains(x.Id)).Select(x => x.Id).ToList();
+            if (!collection.All(x => existingEntities.Contains(x)))
+            {
+                throw this.GetOneOfEntitiesNotExistException<T>();
             }
         }
 
@@ -56,9 +74,16 @@
             return new BusinessValidationException(buissnessMessage);
         }
 
-        private IGenericRepository<T> GetEntityRepository<T>() where T : BaseEntity
+        private BusinessValidationException GetOneOfEntitiesNotExistException<T>()
         {
-            return this.kernel.Get<IGenericRepository<T>>();
+            string entityName = typeof(T).Name;
+            BusinessValidationMessage buissnessMessage = BusinessValidationMessage.CreateOneOfEntitiesNotExistMessage(entityName);
+            return new BusinessValidationException(buissnessMessage);
+        }
+
+        private IGenericRepository<T> GetEntityGenericRepository<T>() where T : BaseEntity
+        {
+            return this.ninjectInstanceResolver.GetEntityGenericRepository<T>();
         }
     }
 }

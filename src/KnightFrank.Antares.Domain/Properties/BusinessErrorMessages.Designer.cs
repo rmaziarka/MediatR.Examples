@@ -61,6 +61,24 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One or more negotiators are duplicated..
+        /// </summary>
+        internal static string Activity_Negotiators_Not_Unique {
+            get {
+                return ResourceManager.GetString("Activity_Negotiators_Not_Unique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more {0}(s) with given ids does not exist in the database..
+        /// </summary>
+        internal static string Entity_List_Item_Not_Exists {
+            get {
+                return ResourceManager.GetString("Entity_List_Item_Not_Exists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} with given id &apos;{1}&apos; does not exist in the database..
         /// </summary>
         internal static string Entity_Not_Exists {

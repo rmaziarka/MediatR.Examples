@@ -23,6 +23,15 @@
             }
         }
 
+        public void CollectionIsUnique<T>(ICollection<T> collection, ErrorMessage errorCode)
+        {
+            int uniqueCount = collection.Distinct().ToList().Count;
+            if (uniqueCount != collection.Count)
+            {
+                throw new BusinessValidationException(errorCode);
+            }
+        }
+
         private BusinessValidationException GetNotContainsException(ErrorMessage errorCode)
         {
             var businessMessage = new BusinessValidationMessage(errorCode);
