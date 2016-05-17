@@ -8,5 +8,7 @@
         void CollectionContainsAll<T>(IEnumerable<T> collection, IEnumerable<T> set, ErrorMessage errorCode);
 
         void RangeDoesNotOverlap(List<Range<DateTime>> existingDates, Range<DateTime> range, ErrorMessage errorCode);
+
+        void CollectionIsUnique<T>(ICollection<T> collection, ErrorMessage errorCode);
     }
 }

@@ -3,6 +3,16 @@
     public enum ErrorMessage
     {
         /// <summary>
+        /// Key value : One or more negotiators are duplicated.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Activity_Negotiators_Not_Unique,
+        /// <summary>
+        /// Key value : One or more {0}(s) with given ids does not exist in the database.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Entity_List_Item_Not_Exists,
+        /// <summary>
         /// Key value : {0} with given id '{1}' does not exist in the database.
         /// </summary>
         // ReSharper disable once InconsistentNaming

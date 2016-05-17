@@ -131,6 +131,7 @@
     <Compile Include="Common\BusinessValidators\AddressValidatorTests.cs" />
     <Compile Include="Attachments\Commands\CreateAttachmentValidatorTests.cs" />
     <Compile Include="Common\BusinessValidators\CollectionValidatorTests.cs" />
+    <Compile Include="Common\BusinessValidators\EntityValidatorTests.cs" />
     <Compile Include="Common\BusinessValidators\EnumTypeItemValidatorTests.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidatorTests.cs" />
     <Compile Include="Common\Validator\LocaleValidatorTests.cs" />
