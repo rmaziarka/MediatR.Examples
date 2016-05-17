@@ -109,12 +109,11 @@
             }
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
-
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
         [When(@"User creates requirement with mandatory fields using api")]
-        public void CreateRequirementMandatoryFieldsWithApi()
+        public void CreateRequirementWithMandatoryFieldsWithApi()
         {
             string requestUrl = $"{ApiUrl}";
 
@@ -134,7 +133,6 @@
             };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
-
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
@@ -181,7 +179,6 @@
             }
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
-
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
@@ -198,7 +195,6 @@
             requirement.Address = this.scenarioContext.Get<CreateOrUpdateAddress>("Location");
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
-
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 

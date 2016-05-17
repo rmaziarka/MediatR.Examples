@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Dal.Model.Configuration;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.Property.Characteristics;
@@ -80,6 +81,7 @@
         public DbSet<CharacteristicGroupUsage> CharacteristicGroupUsages { get; set; }
         public DbSet<CharacteristicLocalised> CharacteristicLocaliseds { get; set; }
         public DbSet<Viewing> Viewing { get; set; }
+        public DbSet<Offer> Offer { get; set; }
 
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {

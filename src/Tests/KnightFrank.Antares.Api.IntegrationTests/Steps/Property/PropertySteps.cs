@@ -261,8 +261,6 @@
         [When(@"User creates property with defined address and (.*) division by Api")]
         public void CreateProperty(string divisionCode)
         {
-            string requestUrl = $"{ApiUrl}";
-
             var address = this.scenarioContext.Get<CreateOrUpdateAddress>("Address");
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
 
@@ -286,8 +284,35 @@
                 PropertyCharacteristics = propertyCharacteristics
             };
 
-            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, property);
-            this.scenarioContext.SetHttpResponseMessage(response);
+            this.CreateProperty(property);
+        }
+
+        [When(@"User creates property with defined address and (.*) division with mandatory fields by Api")]
+        public void CreatePropertyWithMandatoryFields(string divisionCode)
+        {
+            var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
+            Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
+
+            var property = new CreatePropertyCommand
+            {
+                PropertyTypeId = propertyTypeId,
+                DivisionId = divisionId,
+                AttributeValues = new CreateOrUpdatePropertyAttributeValues(),
+                Address = new CreateOrUpdateAddress
+                {
+                    AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId"),
+                    CountryId = this.scenarioContext.Get<Guid>("CountryId"),
+                    Postcode = StringExtension.GenerateMaxAlphanumericString(10),
+                    City = string.Empty,
+                    County = string.Empty,
+                    Line2 = string.Empty,
+                    Line3 = string.Empty,
+                    PropertyName = string.Empty,
+                    PropertyNumber = string.Empty
+                }
+            };
+
+            this.CreateProperty(property);
         }
 
         [When(@"User retrieves property details")]
@@ -373,6 +398,13 @@
                                          c1.PropertyId == c2.PropertyId &&
                                          c1.Text == c2.Text &&
                                          c1.Id == c2.Id);
+        }
+
+        private void CreateProperty(CreatePropertyCommand command)
+        {
+            string requestUrl = $"{ApiUrl}";
+            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, command);
+            this.scenarioContext.SetHttpResponseMessage(response);
         }
 
         internal class RequiredCharacteristics

@@ -51,19 +51,28 @@
             this.fixture.DataContext.SaveChanges();
         }
 
-        [When(@"User creates an ownership for existing property")]
-        public void WhenUserCreatesAnOwnershipForExistingProperty(Table table)
+        [When(@"User creates an ownership using api")]
+        public void CreateOwnership(Table table)
         {
             var ownership = table.CreateInstance<CreateOwnershipCommand>();
-            var propertyId = this.scenarioContext.Get<Guid>("AddedPropertyId");
 
-            string requestUrl = string.Format($"{ApiUrl}", propertyId);
             ownership.OwnershipTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Freeholder"];
             ownership.ContactIds = this.scenarioContext.Get<ICollection<Contact>>("ContactList").Select(x => x.Id).ToList();
 
-            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, ownership);
-            this.scenarioContext.SetHttpResponseMessage(response);
+            this.CreateOwnership(ownership);
+            this.scenarioContext.Set(ownership, "AddedOwnership");
+        }
 
+        [When(@"User creates an ownership with mandatory fields using api")]
+        public void CreateOwnershipWithMandatoryFields()
+        {
+            var ownership = new CreateOwnershipCommand
+            {
+                OwnershipTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Freeholder"],
+                ContactIds = this.scenarioContext.Get<ICollection<Contact>>("ContactList").Select(x => x.Id).ToList()
+            };
+
+            this.CreateOwnership(ownership);
             this.scenarioContext.Set(ownership, "AddedOwnership");
         }
 
@@ -109,6 +118,14 @@
             actualOwnership.ShouldBeEquivalentTo(expectedOwnership, options => options
                 .Excluding(x => x.Property)
                 .Excluding(x => x.OwnershipType));
+        }
+
+        private void CreateOwnership(CreateOwnershipCommand command)
+        {
+            string requestUrl = string.Format($"{ApiUrl}", this.scenarioContext.Get<Guid>("AddedPropertyId"));
+
+            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, command);
+            this.scenarioContext.SetHttpResponseMessage(response);
         }
     }
 }

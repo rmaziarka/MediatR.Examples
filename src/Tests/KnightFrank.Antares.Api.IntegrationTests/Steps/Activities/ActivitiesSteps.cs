@@ -93,8 +93,6 @@
 
             Guid leadNegotiatorId = this.fixture.DataContext.Users.First().Id;
 
-            this.scenarioContext.Set(leadNegotiatorId, "LeadNegotiatorId");
-
             var activityCommand = new CreateActivityCommand
             {
                 PropertyId = propertyId,
