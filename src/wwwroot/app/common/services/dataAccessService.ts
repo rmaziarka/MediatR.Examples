@@ -23,6 +23,15 @@ module Antares.Services {
             }
         };
 
+        private createPropertyAreaBreakdownsAction: ng.resource.IActionDescriptor = {
+            url: this.appConfig.rootUrl + '/api/properties/:propertyId/areabreakdown',
+            method: 'POST',
+            isArray: true,
+            params: {
+                propertyId: '@propertyId'
+            }
+        };
+
         private createViewingAction: ng.resource.IActionDescriptor = {
             url: this.appConfig.rootUrl + '/api/viewings/',
             method: 'POST',
@@ -152,6 +161,13 @@ module Antares.Services {
         getCharacteristicGroupUsageResource(): Resources.ICharacteristicGroupUsageResourceClass {
             return <Resources.ICharacteristicGroupUsageResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/characteristicGroups?countryId=:countryId&propertyTypeId=:propertyTypeId');
+        }
+
+        getPropertyAreaBreakdownResource(): Resources.IPropertyAreaBreakdownResourceClass {
+            return <Resources.IPropertyAreaBreakdownResourceClass>
+                this.$resource(this.appConfig.rootUrl + '/api/properties/:propertyId/areabreakdown', null, {
+                    createPropertyAreaBreakdowns: this.createPropertyAreaBreakdownsAction
+                });
         }
 
         getAttachmentResource(): Resources.IBaseResourceClass<Antares.Common.Models.Resources.IActivityAttachmentResource> {

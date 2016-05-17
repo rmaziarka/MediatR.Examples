@@ -17,14 +17,12 @@
                         <card-list-header>
                             <h3 class="page-header" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.LIST.AREA_BREAKDOWN"></h3>
                         </card-list-header>
-                        <card-list-no-items ng-show="vm.property.areas.length === 0">
+                        <card-list-no-items ng-show="vm.property.propertyAreaBreakdowns.length === 0">
                             <p class="help-block" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.LIST.NO_ITEMS"></p>
                         </card-list-no-items>
-                        <card-list-item ng-repeat="area in vm.property.areas track by area.id ">
-                            {{area.id}}
-                            <!--<card id="activity-card-{{area.id}}" card-template-url="'app/activity/templates/activityCard.html'" item="activity" show-item-details="vm.showActivityPreview">
-                            <!--</card>-->
-                            -->
+                        <card-list-item ng-repeat="propertyAreaBreakdown in vm.property.propertyAreaBreakdowns track by propertyAreaBreakdown.id">
+                            <card card-template-url="'app/property/view/areaBreakdown/list/areaBreakdownCard.html'" item="propertyAreaBreakdown">
+                            </card>
                         </card-list-item>
                     </card-list>
                 </section>

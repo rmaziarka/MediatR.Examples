@@ -5,7 +5,7 @@
         name: string = null;
         size: number = null;
 
-        constructor(propertyArea?: Dto.IPropertyArea)
+        constructor(propertyArea?: Dto.IPropertyAreaBreakdown)
         {
             if (propertyArea) {
                 angular.extend(this, propertyArea);
