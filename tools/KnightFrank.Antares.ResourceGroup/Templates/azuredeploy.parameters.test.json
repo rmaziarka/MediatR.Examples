@@ -1,0 +1,60 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "VmSqlAdminUserName": {
+      "value": "kf-antares"
+    },
+    "VmSqlAdminPassword": {
+      "value": "$Kf@admin"
+    },
+    "VmIISAdminUserName": {
+      "value": "kf-antares"
+    },
+    "VmIISAdminPassword": {
+      "value": "$Kf@admin"
+    },
+    "EnvironmentPrefix": {
+      "value": "test"
+    },
+    "domainToJoin": {
+      "value": "sa1.kf-int.com"
+    },
+    "domainUsername": {
+      "value": "objadmin"
+    },
+    "domainPassword": {
+      "value": "efnnfeih39j39r"
+    },
+    "ouPath": {
+      "value": ""
+    },
+    "SqlUserPassword": {
+      "value": "$Kf@admin2016"
+    },
+    "OctopusThumbprint": {
+      "value": "C478B5952045B390F15F0C444D4917E911713EF0"
+    },
+    "IsoFileName": {
+      "value": "en_sql_server_2014_developer_edition_with_service_pack_1_x64_dvd_6668542.iso"
+    },
+    "CommonShareUrl": {
+      "value": "\\\\kfaneiedevcommonst.file.core.windows.net\\iso"
+    },
+    "CommonShareUserName": {
+      "value": "kfaneiedevcommonst"
+    },
+    "CommonShareKey": {
+      "value": "P7G+0uLD8g5q73RxshNg4GQdXJHr0EXasWSk6pe5UhCsp2QphVtPzZd+IcNdRlt9zoFjszQXMrK8XbIOcClakA=="
+    },
+    "VirtualNetworkSubnetId": {
+      "value": "/subscriptions/a0059c98-e585-4c32-82cc-047e9ff170e2/resourceGroups/RG-KnightFrank-Antares-NE-IE-Test-Common-01/providers/Microsoft.Network/virtualNetworks/KnightFrank-Antares-NE-IE-Test-Common-Vn-01/subnets/KnightFrank-Antares-NE-IE-Test-Common-Subnet-01"
+    },
+    "RgStorageAccountName": {
+      "value": "kfaneietestcommonst"
+    },
+    "VmIISNameSuffix": {
+      "value": ""
+    }
+  }
+}

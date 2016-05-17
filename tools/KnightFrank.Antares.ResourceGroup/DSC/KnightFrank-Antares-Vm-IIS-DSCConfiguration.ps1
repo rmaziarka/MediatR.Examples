@@ -159,7 +159,7 @@ Node localhost
 		BindingInfo = MSFT_xWebBindingInformation 
         { 
 			Protocol = "http" 
-			Port = 81  
+			Port = 80
 			HostName = $webApiHostName
         }
 		EnabledProtocols = "http"
@@ -228,41 +228,72 @@ Node localhost
 		GetScript = {@{Result = "ConfigureOctopusTentacle"}}
 	}
 
-		Script ConfigureApiAuthentication
+		Script EnableWindowsAuthenticationApi
 	{
 		DependsOn = "[xWebsite]WebApi"
 		TestScript = {
-			$isEnabled = (Get-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/windowsAuthentication" -Name enabled -Location $webApiHostName).Value
-            if ([System.Boolean]::Parse($isEnabled)) {
-               $ensure = $true
-            } else {
-               $ensure = $false
+            $isExistWebSite = Get-Website | Where-Object { $_.Name -eq  $using:webApiHostName }
+            if ($isExistWebSite) {
+                $isEnabled = (Get-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/windowsAuthentication" -Name enabled -Location $webApiHostName).Value
+                return [System.Boolean]::Parse($isEnabled);
             }
-
-			return $ensure;
+            return $true;
 		}
 		SetScript = {
-			Set-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/windowsAuthentication" -Name enabled -Location $webApiHostName -Value True
+			Set-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/windowsAuthentication" -Name enabled -Location $using:webApiHostName -Value True
 		}
-		GetScript = {@{Result = "ConfigureApiAuthentication"}}
+		GetScript = {@{Result = "EnableWindowsAuthenticationApi"}}
 	}
 
-	Script ConfigureAppAuthentication
+	Script EnableWindowsAuthenticationApp
 	{
 		DependsOn = "[xWebsite]WebApp"
 		TestScript = {
-            if (get-website | where-object { $_.name -eq  "Default Web Site" }) {
-               $ensure = $true
-            } else {
-               $ensure = $false
+            $isExistWebSite = Get-Website | Where-Object { $_.Name -eq  $using:webAppHostName }
+            if ($isExistWebSite) {
+                $isEnabled = (Get-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/windowsAuthentication" -Name enabled -Location $using:webAppHostName).Value
+                return [System.Boolean]::Parse($isEnabled);
             }
-
-			return $ensure;
+            return $true;
 		}
 		SetScript = {
-			Set-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/windowsAuthentication" -Name enabled -Location $webAppHostName -Value True
+			Set-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/windowsAuthentication" -Name enabled -Location $using:webAppHostName -Value True
 		}
-		GetScript = {@{Result = "ConfigureAppAuthentication"}}
+		GetScript = {@{Result = "EnableWindowsAuthenticationApp"}}
+	}
+
+	Script DisableAnonymousAuthenticationApi
+	{
+		DependsOn = "[xWebsite]WebApi"
+		TestScript = {
+            $isExistWebSite = Get-Website | Where-Object { $_.Name -eq  $using:webApiHostName }
+            if ($isExistWebSite) {
+                $isEnabled = (Get-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/anonymousAuthentication" -Name enabled -Location $using:webApiHostName).Value
+                return -Not [System.Boolean]::Parse($isEnabled);
+            }
+            return $true;
+		}
+		SetScript = {
+			Set-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/anonymousAuthentication" -Name enabled -Location $using:webApiHostName -Value False
+		}
+		GetScript = {@{Result = "DisableAnonymousAuthenticationApi"}}
+	}
+
+	Script DisableAnonymousAuthenticationApp
+	{
+		DependsOn = "[xWebsite]WebApp"
+		TestScript = {
+            $isExistWebSite = Get-Website | Where-Object { $_.Name -eq  $using:webAppHostName }
+            if ($isExistWebSite) {
+                $isEnabled = (Get-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/anonymousAuthentication" -Name enabled -Location $using:webAppHostName).Value
+                return -Not [System.Boolean]::Parse($isEnabled);
+            }
+            return $true;
+		}
+		SetScript = {
+			Set-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/anonymousAuthentication" -Name enabled -Location $using:webAppHostName -Value False
+		}
+		GetScript = {@{Result = "DisableAnonymousAuthenticationApp"}}
 	}
 	
 	Script DownloadFrameworkNet461
@@ -282,10 +313,10 @@ Node localhost
     {
 		DependsOn = "[Script]DownloadFrameworkNet461"
         TestScript = {
-            Test-Path "C:\WindowsAzure\NDP461-KB3102438-Web.exe"
+            -Not (Test-Path "C:\WindowsAzure\NDP461-KB3102438-Web.exe")
         }
         SetScript ={
-            & "C:\WindowsAzure\NDP461-KB3102438-Web.exe /q /norestart /log C:\WindowsAzure\Logs\Net461.txt"
+            & "C:\WindowsAzure\NDP461-KB3102438-Web.exe" /q /norestart /log "C:\WindowsAzure\Logs\Net461.txt"
         }
         GetScript = {@{Result = "InstallFrameworkNet461"}}
     }
