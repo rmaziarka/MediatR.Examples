@@ -7,6 +7,7 @@
 
     using FluentAssertions;
 
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;
@@ -31,6 +32,14 @@
 
             this.scenarioContext = scenarioContext;
             this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
+        }
+
+        [When(@"User navigates to view activity page with id")]
+        public void OpenViewActivityPageWithId()
+        {
+            Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
+            ViewActivityPage page = new ViewActivityPage(this.driverContext).OpenViewActivityPageWithId(activityId.ToString());
+            this.scenarioContext.Set(page, "ViewActivityPage");
         }
 
         [When(@"User clicks property details link on view activity page")]
@@ -74,16 +83,16 @@
             this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").OpenAttachmentPreview();
         }
 
-        [When(@"User clicks close button on attachment preview page")]
-        public void CloseAttachmentPreviewPanel()
-        {
-            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").PreviewAttachment.CloseAttachmentPreviewPage();
-        }
-
         [When(@"User clicks (.*) viewings details link on view activity page")]
         public void OpenViewingsDetails(int position)
         {
             this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").OpenViewingDetails(position);
+        }
+
+        [When(@"User clicks view requirement on view activity page")]
+        public void ClickViewActivity()
+        {
+            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").ViewingDetails.ClickViewLink();
         }
 
         [Then(@"Attachment (.*) should be downloaded")]
@@ -181,6 +190,12 @@
                 () => Assert.Equal(attendees, page.ViewingDetails.Attendees),
                 () => Assert.Equal(expectedDetails.InvitationText, page.ViewingDetails.InvitationText),
                 () => Assert.Equal(expectedDetails.PostViewingComment, page.ViewingDetails.PostViewingComment));
+        }
+
+        [Then(@"User closes attachment preview page on view activity page")]
+        public void CloseAttachmentPreviewPanel()
+        {
+            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").PreviewAttachment.CloseAttachmentPreviewPage();
         }
     }
 }

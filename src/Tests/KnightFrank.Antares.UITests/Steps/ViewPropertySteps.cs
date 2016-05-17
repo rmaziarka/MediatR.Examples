@@ -89,6 +89,12 @@
             this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").Activity.SelectActivityType(type);
         }
 
+        [When(@"User selects (.*) activity status on activity panel")]
+        public void SelectActivityStatus(string status)
+        {
+            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").Activity.SelectActivityStatus(status);
+        }
+
         [When(@"User clicks save button on activity panel")]
         public void ClickSaveButtonOnActivityPanel()
         {

@@ -209,5 +209,14 @@
                 () => Assert.Equal(expectedDetails.InvitationText, page.ViewingDetails.InvitationText),
                 () => Assert.Equal(expectedDetails.PostViewingComment, page.ViewingDetails.PostViewingComment));
         }
+
+        [Then(@"View requirement page is displayed")]
+        public void CheckIfViewRequirementPresent()
+        {
+            var page = new ViewRequirementPage(this.driverContext);
+            Assert.True(page.IsViewRequirementFormPresent());
+            this.scenarioContext.Set(page, "ViewActivityPage");
+        }
+
     }
 }

@@ -13,6 +13,7 @@
 
     public class ViewRequirementPage : ProjectPageBase
     {
+        private readonly ElementLocator viewRequirementForm = new ElementLocator(Locator.CssSelector, "requirement-view > div");
         private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "[ng-show *= 'isLoading']");
         private readonly ElementLocator locationRequirementsDetails = new ElementLocator(Locator.XPath, "//*[contains(@translate, 'LOCATION')]/..//span");
         private readonly ElementLocator notesButton = new ElementLocator(Locator.Id, "notes-button");
@@ -44,6 +45,12 @@
         {
             new CommonPage(this.DriverContext).NavigateToPageWithId("view requirement", id);
             return this;
+        }
+
+        public bool IsViewRequirementFormPresent()
+        {
+            this.Driver.WaitForAngularToFinish();
+            return this.Driver.IsElementPresent(this.viewRequirementForm, BaseConfiguration.MediumTimeout);
         }
 
         public ViewRequirementPage WaitForDetailsToLoad()

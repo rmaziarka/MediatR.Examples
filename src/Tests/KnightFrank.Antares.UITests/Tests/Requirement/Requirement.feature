@@ -100,6 +100,8 @@ Scenario: Create viewing on requirement
 	Then Viewing details on view activity page are same as the following
 		| Name                                     | Date       | StartTime | EndTime | Negotiator | Attendees                 | InvitationText | PostViewingComment |
 		| Amber Brooks, Sarah Knight, Kennedi Hyde | 12-05-2016 | 10:00     | 11:00   | John Smith | Amber Brooks;Kennedi Hyde | Text           |                    |
+	When User clicks view requirement on view activity page
+	Then View requirement page is displayed
 
 @Requirement
 Scenario: Update viewing on requirement

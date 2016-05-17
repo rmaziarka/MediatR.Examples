@@ -54,6 +54,12 @@
 
         public int ViewingsNumber => this.Driver.GetElements(this.viewings).Count;
 
+        public ViewActivityPage OpenViewActivityPageWithId(string id)
+        {
+            new CommonPage(this.DriverContext).NavigateToPageWithId("view activity", id);
+            return this;
+        }
+
         public ViewActivityPage ClickDetailsLink()
         {
             this.Driver.GetElement(this.detailsLink).Click();

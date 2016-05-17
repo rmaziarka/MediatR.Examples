@@ -25,7 +25,7 @@ Scenario: Update property
 			| 120           | 200           | 10               | 20               | 4000.5  | 5500.0  |
 		And User fills in address details on edit property page
 			| PropertyNumber | PropertyName | Line2 | Line3          | Postcode | City | County |
-			|                |              |       | Address line 3 | W1U 8AN  |      |        |
+			|                |              |       | Address line 3 | W2U 8AN  |      |        |
 		And User selects property characteristics on edit property page
 			| Name    | Comment |
 			| Airport | Airport |
@@ -35,7 +35,7 @@ Scenario: Update property
 		And User clicks save property button on edit property page
 	Then Property should be updated with address details 
 		| PropertyNumber | PropertyName | Line2 | Line3          | Postcode | City | County |
-		|                |              |       | Address line 3 | W1U 8AN  |      |        |
+		|                |              |       | Address line 3 | W2U 8AN  |      |        |
 		And Property should be updated with Hotel property type and following attributes
 			| PropertyArea           | LandArea                   | CarParkingSpaces | GuestRooms | FunctionRooms |
 			| 4,000.5 - 5,500 sq. ft | 6,000.13 - 10,000.1 sq. ft | 3 - 5            | 120 - 200  | 10 - 20       |
@@ -104,15 +104,11 @@ Scenario: Create residential property
 		| Position | ContactName | ContactSurname | Type     | PurchaseDate |
 		| 1        | Eva         | Queen          | Freehold | 15-01-2014   |
 	When User clicks add activites button on view property page	
-	Then Activity details are set on activity panel
-	    | Vendor    | Status        |
-	    | Eva Queen | Pre-appraisal |
-	When User selects Open Market Letting activity type on activity panel
+		And User selects Open Market Letting activity type on activity panel
 		And User clicks save button on activity panel
-	Then Activity creation date is set to current date on view property page
-		And Activity details are set on view property page
-			| Vendor    | Status        | Type                |
-			| Eva Queen | Pre-appraisal | Open Market Letting |
+	Then Activity details are set on view property page
+		| Vendor    | Status        | Type                |
+		| Eva Queen | Pre-appraisal | Open Market Letting |
 	When User clicks activity's details link on view property page
 		And User clicks view activity link on activity preview page
 	Then Address details on view activity page are following
@@ -120,29 +116,20 @@ Scenario: Create residential property
 		| 20             | Westminster Abbey | Deans Yd | SW1P 3PA | London | Westminster |
 	When User clicks add attachment button on view activity page
 		And User adds PDF document.pdf file with Brochure type on attach file panel
-	Then Attachment is displayed on view activity page
-		| FileName         | Type     | Size   |
-		| PDF document.pdf | Brochure | 2.9 MB |
-	When User clicks attachment details link on view activity page
-	Then Attachment details on attachment preview page are the same like on view activity page
-	Then Attachment PDF document.pdf should be downloaded
-	When User clicks close button on attachment preview page
 		And User clicks edit button on view activity page
 		And User edits activity details on edit activity page
 			| ActivityStatus   | MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |
 			| Market appraisal | 3000                 | 4000             | 5000                 |
-	Then Activity details on view activty page are following
-		| ActivityStatus   | MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |
-		| Market appraisal | 3000                 | 4000             | 5000                 |
-	When User clicks property details link on view activity page
-		And User clicks view property link on property preview page
+		And User clicks property details link on view activity page
+	Then View activity page is displayed
+	When User clicks view property link on property preview page
 	Then View property page is displayed
 
 @Property
 Scenario: Create commercial property
 	Given Contacts are created in database
 		| Title | FirstName | Surname |
-		| Dr    | Eva       | Queen   |
+		| Dr    | Alexander | London  |
 		And User navigates to create property page
 	When User selects United Kingdom country on create property page
 		And User selects Commercial property and Hotel type on create property page

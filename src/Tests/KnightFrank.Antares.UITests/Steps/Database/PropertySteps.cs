@@ -75,9 +75,9 @@
         [Given(@"Property with (.*) division and (.*) type is defined")]
         public void GetDivisionAndType(string division, string propertyType)
         {
-            Guid propertyTypeId = this.dataContext.PropertyTypes.Single(i => i.Code.Equals("House")).Id;
+            Guid propertyTypeId = this.dataContext.PropertyTypes.Single(i => i.Code.Equals(propertyType)).Id;
             Guid divisionId =
-                this.dataContext.EnumTypeItems.Single(i => i.EnumType.Code.Equals("Division") && i.Code.Equals("Residential")).Id;
+                this.dataContext.EnumTypeItems.Single(i => i.EnumType.Code.Equals("Division") && i.Code.Equals(division)).Id;
 
             this.scenarioContext.Set(propertyTypeId, "PropertyTypeId");
             this.scenarioContext.Set(divisionId, "DivisionId");
