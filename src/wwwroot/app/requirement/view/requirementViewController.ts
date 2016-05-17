@@ -121,7 +121,7 @@ module Antares.Requirement.View {
                 .then((viewing: Common.Models.Dto.IViewing) => {
                     var viewingModel = new Business.Viewing(viewing);
                     this.requirement.viewings.push(viewingModel);
-                    this.requirement.groupViewings(this.requirement.viewings);            
+                    this.requirement.groupViewings(this.requirement.viewings);
                     this.hidePanels();
                 }).finally(() => {
                     this.saveViewingBusy = false;

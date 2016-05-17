@@ -14,13 +14,13 @@
         city: string = '';
         county: string = '';
 
-        constructor(address?: Dto.IAddress) {
+        constructor(address?: Dto.IAddress){
             if (address) {
                 angular.extend(this, address);
             }
         }
 
-        public clear = (): void => {
+        public clear = (): void =>{
             this.countryId = '';
             this.addressFormId = '';
             this.propertyName = '';
@@ -31,6 +31,24 @@
             this.postcode = '';
             this.city = '';
             this.county = '';
+        }
+
+        public getAddressText = (): string =>{
+            var addressSpaceSeparatedElements: string[] = [];
+            var addressCommaSeparatedElements: string[] = [];
+
+            if (this.propertyNumber) {
+                addressSpaceSeparatedElements.push(this.propertyNumber);
+            }
+            if (this.line2) {
+                addressSpaceSeparatedElements.push(this.line2);
+            }
+            if (this.propertyName) {
+                addressCommaSeparatedElements.push(this.propertyName);
+            }
+
+            addressCommaSeparatedElements.push(addressSpaceSeparatedElements.join(" "));
+            return addressCommaSeparatedElements.join(", ")
         }
     }
 }

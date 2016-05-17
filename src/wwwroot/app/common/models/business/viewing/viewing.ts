@@ -16,17 +16,21 @@ module Antares.Common.Models.Business {
         attendeesIds: string[];
         attendees: Contact[];
         day: string;
-        activity: Dto.IActivity;
-        requirement: Dto.IRequirement;
+        activity: Business.Activity;
+        requirement: Business.Requirement;
 
         constructor(viewing?: Dto.IViewing) {
             if (viewing) {
                 angular.extend(this, viewing);
                 this.day = Core.DateTimeUtils.getDatePart(viewing.startDate);
-                if (viewing.requirement)
+                if (viewing.requirement) {
                     this.requirement = new Requirement(viewing.requirement);
+                }
+                if (viewing.activity) {
+                    this.activity = new Business.Activity(viewing.activity);
+                }
                 this.startDate = moment(viewing.startDate).toDate();
-                this.endDate = moment(viewing.endDate).toDate(); 
+                this.endDate = moment(viewing.endDate).toDate();
             }
         }
     }

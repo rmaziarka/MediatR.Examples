@@ -19,9 +19,9 @@ module Antares.TestHelpers {
                 postViewingComment: ViewingGenerator.makeRandom('postViewingComment'),
                 attendeesIds: [],
                 attendees: [],
-                activity: ActivityGenerator.generateDto(),
+                activity: ActivityGenerator.generate(),
                 day: "",
-                requirement: RequirementGenerator.generateDto()
+                requirement: RequirementGenerator.generate()
             }
 
             return angular.extend(viewing, specificData || {});

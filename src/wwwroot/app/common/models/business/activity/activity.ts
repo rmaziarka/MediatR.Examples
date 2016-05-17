@@ -1,7 +1,7 @@
 /// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Models.Business {
-    export class Activity {
+    export class Activity implements Dto.IActivity{
         id: string = '';
         propertyId: string = '';
         activityStatusId: string = '';
@@ -18,12 +18,15 @@ module Antares.Common.Models.Business {
         viewings: Viewing[];
         leadNegotiator: ActivityUser = null;
         secondaryNegotiator: ActivityUser[] = [];
+        activityUsers: ActivityUser[] = [];
 
         constructor(activity?: Dto.IActivity) {
             if (activity) {
                 angular.extend(this, activity);
                 this.createdDate = Core.DateTimeUtils.convertDateToUtc(activity.createdDate);
-                this.contacts = activity.contacts.map((contact: Dto.IContact) => { return new Contact(contact) });
+                if (activity.contacts) {
+                    this.contacts = activity.contacts.map((contact: Dto.IContact) =>{ return new Contact(contact) });
+                }
                 this.property = new Property(activity.property);
                 
                 var activityleadNegotiator = _.find(activity.activityUsers,

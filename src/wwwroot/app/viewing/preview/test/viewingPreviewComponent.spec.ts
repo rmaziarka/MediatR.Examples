@@ -121,8 +121,7 @@ module Antares {
 
                 // assert
                 var activityDetailsElement = element.find(pageObjectSelectors.activityDetails);
-                var properActivityTextToDisplay = viewingMock.activity.property.address.propertyName + (viewingMock.activity.property.address.propertyName ? ', ' : ' '
-                    + viewingMock.activity.property.address.propertyNumber) + viewingMock.activity.property.address.propertyNumber + " " + viewingMock.activity.property.address.line2;
+                var properActivityTextToDisplay = viewingMock.activity.property.address.getAddressText();
                 expect(activityDetailsElement.text()).toBe(properActivityTextToDisplay);
             });
 
