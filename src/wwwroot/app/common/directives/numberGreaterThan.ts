@@ -9,14 +9,14 @@ module Antares.Common.Directive {
         };
 
         link(scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ngModel: ng.INgModelController) {
-            var greatedThanValue: number = parseInt(attrs['numberGreaterThan']);
+            var greaterThanValue: number = parseInt(attrs['numberGreaterThan']);
 
             ngModel.$validators['numberGreaterThan'] = (modelValue: number) => {
                 if (modelValue === null || modelValue === undefined) {
                     return true;
                 }
 
-                return (modelValue > greatedThanValue);
+                return (modelValue > greaterThanValue);
             };
         };
 
