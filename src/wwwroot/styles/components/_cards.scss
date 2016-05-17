@@ -2,12 +2,12 @@
 
 .card {
   background-color: $color-white;
-  border: 1px solid $color-denim;
+  border: 1px solid $color-black;
   margin-bottom: 15px;
   position: relative;
 
   &:hover {
-    border: 1px solid $color-black;
+    border: 1px solid $color-denim;
   }
 }
 
@@ -129,10 +129,12 @@
       right: 1px solid $color-black;
       top: 1px solid $color-black;
     }
+    z-index: 4;
   }
 
   .card-menu {
     display: block;
+    z-index: 3;
   }
 
   &:hover {
