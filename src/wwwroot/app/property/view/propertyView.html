@@ -43,7 +43,17 @@
                             <p class="help-block" translate="PROPERTY.LIST.NO_ITEMS"></p>
                         </card-list-no-items>
                         <card-list-item ng-repeat="ownership in vm.property.ownerships | orderBy: vm.ownershipsCartListOrder.name : vm.ownershipsCartListOrder.descending : vm.ownershipsCartListOrder.nullOnEnd track by ownership.id">
-                            <card card-template-url="'app/property/view/propertyOwnershipCard.html'" item="ownership" show-item-details="vm.showOwnershipView">
+                            <!-- example on how to use new version of component -->
+                            <!--<card show-context-menu="true" show-item-details="vm.showOwnershipView" display-new-control="true"
+                                      card-template-url="'app/property/view/propertyOwnershipCard.html'" item="ownership">
+
+                                <card-context-menu>
+                                    <context-menu-item type="edit" item="ownership" action="vm.showContactList"></context-menu-item>
+                                    <context-menu-item type="delete" item="ownership" action="vm.showContactList"></context-menu-item>
+                                </card-context-menu>
+
+                            </card>-->
+                            <card show-item-details="vm.showOwnershipView" card-template-url="'app/property/view/propertyOwnershipCard.html'" item="ownership">
                             </card>
                         </card-list-item>
                     </card-list>
