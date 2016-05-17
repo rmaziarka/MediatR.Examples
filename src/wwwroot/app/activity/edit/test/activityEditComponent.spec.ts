@@ -205,8 +205,8 @@ module Antares {
                 var vendorsItemsElement1 = element.find(pageObjectSelectors.vendorList.item + contact1Mock.id);
                 var vendorsItemsElement2 = element.find(pageObjectSelectors.vendorList.item + contact2Mock.id);
 
-                expect(vendorsItemsElement1[0].innerText).toBe(contact1Mock.getName());
-                expect(vendorsItemsElement2[0].innerText).toBe(contact2Mock.getName());
+                expect(vendorsItemsElement1[0].innerText.trim()).toBe(contact1Mock.getName());
+                expect(vendorsItemsElement2[0].innerText.trim()).toBe(contact2Mock.getName());
             });
         });
 
