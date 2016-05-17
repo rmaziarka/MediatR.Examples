@@ -9,7 +9,7 @@ module Antares.Property.View.AreaBreakdown {
     export class AreaBreakdownAddController {
         private componentId: string;
         private propertyAreaBreakdownResourceService: Resources.IPropertyAreaBreakdownResourceClass;
-        areas: Business.PropertyArea[];
+        areas: Business.CreatePropertyAreaBreakdownResource[];
 
         constructor(componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
@@ -25,24 +25,21 @@ module Antares.Property.View.AreaBreakdown {
             this.addNewArea();
         }
 
-        addNewArea(): Business.PropertyArea {
-            var area: Business.PropertyArea = new Business.PropertyArea();
-
+        addNewArea(): void {
+            var area: Business.CreatePropertyAreaBreakdownResource = new Business.CreatePropertyAreaBreakdownResource();
             this.areas.push(area);
-            return area;
         }
 
-        removeArea(area: Business.PropertyArea): void {
+        removeArea(area: Business.CreatePropertyAreaBreakdownResource): void {
             _.pull(this.areas, area);
         }
 
         saveAreas(propertyId: string): ng.IPromise<Common.Models.Dto.IPropertyAreaBreakdown[]> {
             var params: Resources.IPropertyAreaBreakdownResourceClassParameters = { propertyId: propertyId };
-            var data: Resources.IPropertyAreaBreakdownResourceClassData = { areas: [] };
-            data.areas = this.areas.map(area => new Business.CreatePropertyAreaBreakdownResource(area));
+            var data: Resources.IPropertyAreaBreakdownResourceClassData = { areas: this.areas };
 
             var onSuccess = (areas: Common.Models.Dto.IPropertyAreaBreakdown[]) => {
-                var propertyAreas: Business.PropertyArea[] =  areas.map(area => new Business.PropertyArea(area));
+                var propertyAreas: Business.PropertyAreaBreakdown[] = areas.map(area => new Business.PropertyAreaBreakdown(area));
                 return propertyAreas;
             };
             var onError = (reason: any) => { return reason;};

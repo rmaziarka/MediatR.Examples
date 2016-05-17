@@ -125,7 +125,7 @@ module Antares.Property.View {
         }
 
         saveArea() {
-            this.components.areaAdd().saveAreas(this.property.id).then((areas: Business.PropertyArea[]) => {
+            this.components.areaAdd().saveAreas(this.property.id).then((areas: Business.PropertyAreaBreakdown[]) => {
                 [].push.apply(this.property.propertyAreaBreakdowns, areas);
                 this.cancelAddArea();
             });
