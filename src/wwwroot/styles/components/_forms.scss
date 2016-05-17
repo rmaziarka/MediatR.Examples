@@ -28,6 +28,16 @@ label,
   padding: 11px 12px;
 }
 
+.has-error {
+  .input-group-btn {
+    .btn {
+      background-color: $state-danger-bg;
+      border: 1px solid $state-danger-text;
+      color: $state-danger-text;
+    }
+  }
+}
+
 // File input
 
 .btn-file {

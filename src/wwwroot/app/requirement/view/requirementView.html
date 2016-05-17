@@ -73,6 +73,122 @@
     </div>
 </div>
 
+<side-panel>
+    <side-panel-header>
+        <h3>New offer</h3>
+    </side-panel-header>
+    <side-panel-content>
+        <h5>Activity</h5>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                55 Baker St.
+                <div class="row">
+                    <div class="col-md-12 text-right"><a href="#">View</a></div>
+                </div>
+            </div>
+        </div>
+        <form>
+            <div class="form-group has-error">
+                <label class="required" for="status">Status</label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <select id="status" class="form-control">
+                            <option>New</option>
+                            <option>Withdraw</option>
+                            <option>Accepted</option>
+                            <option>Rejected</option>
+                        </select>
+                    </div>
+                </div>
+                <p class="help-block">Field is required</p>
+            </div>
+
+            <div class="form-group has-error">
+                <label for="offer" class="required">Offer</label>
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="input-group">
+                            <input id="offer" class="form-control" type="number">
+                            <div class="input-group-addon">GBP</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="help-block">Field is required</p>
+            </div>
+
+            <div class="form-group has-error">
+                <label for="offer-date" class="required">Offer date</label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <input type="text" id="offer-date" class="form-control" placeholder="dd-mm-yyyy">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <p class="help-block">Field is required</p>
+            </div>
+
+            <div class="form-group">
+                <label for="special-conditions">Special conditions</label>
+                <span class="character-limit pull-right">0/4000</span>
+                <textarea id="special-conditions" class="form-control" rows="6"></textarea>
+            </div>
+
+            <div class="form-group">
+                <h5>Negotiator</h5>
+                <div class="panel panel-default">
+                    <div class="panel-body">William Beardmore-Gray</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="proposed-exchange-date">Proposed exchange date</label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <input type="text" id="proposed-exchange-date" class="form-control" placeholder="dd-mm-yyyy">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="proposed-completion-date">Proposed completion date</label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <input type="text" id="proposed-completion-date" class="form-control" placeholder="dd-mm-yyyy">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </side-panel-content>
+    <side-panel-footer>
+        <button class="btn btn-default" type="button">
+            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+        </button>
+        <button class="btn btn-primary" type="button">
+            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+        </button>
+    </side-panel-footer>
+</side-panel>
+
 <side-panel component-id="vm.componentIds.configureViewingsSidePanelId" is-busy="vm.saveViewingBusy">
     <side-panel-header>
         <h3 translate="REQUIREMENT.VIEW.SELECTACTIVITY" ng-show="!vm.viewingAddPanelVisible"></h3>
