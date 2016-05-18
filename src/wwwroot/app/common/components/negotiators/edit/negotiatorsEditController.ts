@@ -40,6 +40,10 @@ module Antares.Common.Component {
         public addSecondaryNegotiator = (user: Dto.IDepartmentUser) => {
             this.secondaryNegotiators.push(this.createActivityUser(user, Enums.NegotiatorTypeEnum.SecondaryNegotiator));
         }
+        
+        public deleteSecondaryNegotiator = (activityUser: Business.ActivityUser) => {
+            _.remove(this.secondaryNegotiators, (itm) => itm.userId === activityUser.userId);            
+        }
 
         public cancelAddSecondaryNegotiator = () => {
             this.isSecondaryNegotiatorsInEditMode = false;
