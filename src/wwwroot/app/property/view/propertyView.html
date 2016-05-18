@@ -15,6 +15,12 @@
                     <card-list id="card-list-areas" show-item-add="vm.showAreaAdd">
                         <card-list-header>
                             <h3 class="page-header" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.LIST.AREA_BREAKDOWN"></h3>
+                            <div class="form-group">
+                                <div class="section-row row">
+                                    <div class="col-xs-6 section-title" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.LIST.TOTAL_AREA"></div>
+                                    <div class="col-xs-6">{{vm.property.totalAreaBreakdown | number:2}} sq ft</div>
+                                </div>
+                            </div>
                         </card-list-header>
                         <card-list-no-items ng-show="vm.property.propertyAreaBreakdowns.length === 0">
                             <p class="help-block" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.LIST.NO_ITEMS"></p>

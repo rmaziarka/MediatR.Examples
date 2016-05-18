@@ -10,5 +10,6 @@ declare module Antares.Common.Models.Dto {
         attributeValues: any;
         propertyCharacteristics: IPropertyCharacteristic[];
         propertyAreaBreakdowns: Dto.IPropertyAreaBreakdown[];
+        totalAreaBreakdown: number;
     }
 }

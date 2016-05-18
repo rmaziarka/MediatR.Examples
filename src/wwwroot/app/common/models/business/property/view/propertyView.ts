@@ -12,8 +12,7 @@
         propertyCharacteristicsMap: any = {};
         propertyAreaBreakdowns: Business.PropertyAreaBreakdown[] = [];
 
-        constructor(property?: Dto.IProperty)
-        {
+        constructor(property?: Dto.IProperty) {
             if (property) {
                 this.id = property.id;
                 this.address = new Business.Address();
@@ -35,7 +34,11 @@
             }
         }
 
-        isCommercial(): boolean{
+        get totalAreaBreakdown(): number {
+            return _.sum(this.propertyAreaBreakdowns, (area: Business.PropertyAreaBreakdown) => area.size);
+        }
+
+        isCommercial(): boolean {
             return this.division.code === Models.Dto.DivisionEnumTypeCode[Models.Dto.DivisionEnumTypeCode.Commercial];
         }
     }
