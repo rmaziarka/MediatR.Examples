@@ -4,6 +4,7 @@
   position: relative;
 
   .dropdown-menu {
+    box-shadow: 4px 4px 5px $color-nobel;
     margin: 0;
     max-height: 230px;
     overflow-y: auto;

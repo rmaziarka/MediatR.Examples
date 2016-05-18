@@ -1,0 +1,11 @@
+// Sortable
+
+.as-sortable-placeholder {
+  background-color: $color-concrete;
+  border: 1px dashed $color-nobel;
+  margin-bottom: 15px;
+}
+
+.as-sortable-dragging {
+  box-shadow: 4px 4px 5px $color-nobel;
+}
