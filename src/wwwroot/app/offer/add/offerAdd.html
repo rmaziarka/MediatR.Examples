@@ -1,8 +1,9 @@
 <h5 translate="OFFER.ADD.ACTIVITY"></h5>
 <div class="panel panel-default">
     <div class="panel-body">
-        {{vm.activity.property.address.propertyName || ''}}<span ng-if="vm.activity.property.address.propertyName && (vm.activity.property.address.propertyNumber || vm.activity.property.address.line2)">, </span>
-        {{(vm.activity.property.address.propertyNumber || '') + ' ' + (vm.activity.property.address.line2 || '')}}
+        <div id="offer-add-activity-details" class="panel-item ng-binding">
+            {{vm.activity.property.address.getAddressText()}}
+        </div>
         <div class="row">
             <div class="col-md-12 text-right">
                 <a href="#" translate="OFFER.ADD.VIEW"></a>
