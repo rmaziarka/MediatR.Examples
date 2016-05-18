@@ -7,7 +7,7 @@ module Antares.Common.Component {
         public onSelectItem: <T>($item: T) => void;
         public onCancel: () => void;
         public itemTemplateUrl: string;
-        public placeholder: string;
+        public searchPlaceholder: string;
 
         // component data
         public options: SearchOptions = new SearchOptions();

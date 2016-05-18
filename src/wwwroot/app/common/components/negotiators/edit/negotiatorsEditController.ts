@@ -1,25 +1,39 @@
 /// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Component {
-	import Business = Common.Models.Business;
+    import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
     import Enums = Common.Models.Enums;
 
     export class NegotiatorsEditController {
         public activityId: string;
+        public propertyDivisionId: string;
         public leadNegotiator: Business.ActivityUser;
         public secondaryNegotiators: Business.ActivityUser[];
 
         public isLeadNegotiatorInEditMode: boolean = false;
         public isSecondaryNegotiatorsInEditMode: boolean = false;
-
+        
+        public labelTranslationKey: string;
+        
         private usersSearchMaxCount: number = 100;
 
         constructor(
-            private dataAccessService: Services.DataAccessService) {
+            private dataAccessService: Services.DataAccessService,
+            private enumService: Services.EnumService) {
+                
+            this.enumService.getEnumPromise().then(this.onEnumLoaded);            
         }
-
-        public editLeadNegotiator = () =>{
+        
+        onEnumLoaded = (result: any) => {
+            var divisions: any = result[Dto.EnumTypeCode.Division];           
+            var division: any = _.find(divisions, { 'id': this.propertyDivisionId });
+            if (division){
+                this.labelTranslationKey = division.code.toUpperCase();
+            }          
+        }
+        
+        public editLeadNegotiator = () => {
             this.isLeadNegotiatorInEditMode = true;
         }
 
@@ -40,16 +54,16 @@ module Antares.Common.Component {
         public addSecondaryNegotiator = (user: Dto.IDepartmentUser) => {
             this.secondaryNegotiators.push(this.createActivityUser(user, Enums.NegotiatorTypeEnum.SecondaryNegotiator));
         }
-        
+
         public deleteSecondaryNegotiator = (activityUser: Business.ActivityUser) => {
-            _.remove(this.secondaryNegotiators, (itm) => itm.userId === activityUser.userId);            
+            _.remove(this.secondaryNegotiators, (itm) => itm.userId === activityUser.userId);
         }
 
         public cancelAddSecondaryNegotiator = () => {
             this.isSecondaryNegotiatorsInEditMode = false;
         }
 
-        public getUsers = (searchValue: string) =>{
+        public getUsers = (searchValue: string) => {
             var excludedIds: string[] = _.map<Business.ActivityUser, string>(this.secondaryNegotiators, 'userId');
             excludedIds.push(this.leadNegotiator.userId);
 
@@ -73,5 +87,5 @@ module Antares.Common.Component {
         }
     }
 
-	angular.module('app').controller('NegotiatorsEditController', NegotiatorsEditController);
+    angular.module('app').controller('NegotiatorsEditController', NegotiatorsEditController);
 }

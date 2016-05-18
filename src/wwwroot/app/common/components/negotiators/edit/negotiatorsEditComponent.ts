@@ -7,6 +7,7 @@ module Antares.Common.Component {
         controller: 'NegotiatorsEditController',
         bindings: {
             activityId: '<',
+            propertyDivisionId: '@',
             leadNegotiator: '=' ,
             secondaryNegotiators: '='
         }

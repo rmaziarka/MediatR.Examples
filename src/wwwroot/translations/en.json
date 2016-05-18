@@ -212,12 +212,22 @@
     }
   },
   "NEGOTIATORS": {
-    "NEGOTIATORS": "Negotiators",
-    "LEAD_NEGOTIATOR": "Lead negotiator",
-    "SECONDARY_NEGOTIATOR": "Secondary negotiator",
-    "NO_NEGOTIATORS": "No negotiators added yet",
-    "ADD_NEGOTIATOR": "Add a negotiator",
-    "FIND_NEGOTIATOR": "Find a negotiator"
+    "RESIDENTIAL": {
+      "HEADER": "Negotiators",
+      "LEAD": "Lead negotiator",
+      "SECONDARY": "Secondary negotiator",
+      "EMPTY": "No negotiators added yet",
+      "ADD": "Add a negotiator",
+      "FIND": "Find a negotiator"
+    },
+    "COMMERCIAL": {
+      "HEADER": "Surveyor",
+      "LEAD": "Lead surveyor",
+      "SECONDARY": "Secondary surveyor",
+      "EMPTY": "No surveyor added yet",
+      "ADD": "Add a surveyor",
+      "FIND": "Find a surveyor"
+    }
   },
   "REQUIREMENT": {
     "ADD": {
@@ -256,8 +266,8 @@
       "VIEWINGADD": "Viewing details",
       "NO_VIEWINGS": "No viewings",
       "SELECTACTIVITY": "Select activity",
-      "OFFERPREVIEW":  "Offer preview",
-      "NEWOFFER":  "New offer"
+      "OFFERPREVIEW": "Offer preview",
+      "NEWOFFER": "New offer"
     }
   },
   "NOTES": {

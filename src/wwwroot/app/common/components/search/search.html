@@ -7,6 +7,6 @@
            typeahead-on-select="vm.onSelect($item)"
            typeahead-editable="vm.options.isEditable"
            typeahead-template-url="{{vm.itemTemplateUrl}}"
-           placeholder="{{vm.placeholder}}">
+           placeholder="{{vm.searchPlaceholder | translate}}">
     <button type="button" class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>
 </div>
