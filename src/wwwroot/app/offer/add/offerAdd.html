@@ -60,13 +60,11 @@
         </div>
     </div>
 
-    <div class="form-group" ng-class="{'has-error': (vm.addOfferForm.$submitted || vm.addOfferForm.specialConditionsLength.$dirty) && vm.addOfferForm.specialConditionsLength.$invalid}">
+    <div class="form-group" ng-class="{'has-error': (vm.addOfferForm.$submitted || vm.addOfferForm.specialConditions.$dirty) && vm.addOfferForm.specialConditions.$invalid}">
         <label for="invitation-text" translate="OFFER.ADD.SPECIAL_CONDITIONS"></label>
-        <span class="pull-right character-limit">{{(vm.offer.specialConditions.length ? vm.offer.specialConditions.length : "0") + "/4000"}}</span>
-        <textarea class="form-control" rows="6" ng-model="vm.offer.specialConditions" name="specialConditions"></textarea>
-
-        <kf-max-count max-count="4000" ng-model="vm.offer.specialConditions.length" name="specialConditionsLength"></kf-max-count>
-        <div ng-messages="vm.addOfferForm.specialConditionsLength.$error" ng-show="vm.addOfferForm.$submitted || vm.addOfferForm.specialConditionsLength.$dirty">
+        <span class="pull-right character-limit">{{vm.addOfferForm.specialConditions.$viewValue.length || 0}}/4000</span>
+        <textarea class="form-control" rows="6" ng-model="vm.offer.specialConditions" name="specialConditions" kf-max-count="4000"></textarea>
+        <div ng-messages="vm.addOfferForm.specialConditions.$error" ng-show="vm.addOfferForm.$submitted || vm.addOfferForm.specialConditions.$dirty">
             <div ng-messages-include="app/common/views/errorMessages.html"></div>
         </div>
     </div>

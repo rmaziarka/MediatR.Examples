@@ -15,8 +15,8 @@ module Antares {
             };
 
         var testValidationMessageDisplay = (shouldBeDisplayed: Boolean, fieldSelector: string) =>{
-            var isActive = element.find(fieldSelector).closest('.form-group').next('[ng-messages]').hasClass('ng-active');
-            var isHidden = element.find(fieldSelector).closest('.form-group').next('[ng-messages]').hasClass('ng-hide');
+            var isActive = element.find(fieldSelector).closest('.form-group').find('[ng-messages]').hasClass('ng-active');
+            var isHidden = element.find(fieldSelector).closest('.form-group').find('[ng-messages]').hasClass('ng-hide');
 
             expect(isActive).toBe(shouldBeDisplayed);
             if (isActive) {
@@ -63,7 +63,7 @@ module Antares {
             });
 
             it('when min field value is lower than zero then validation message should be displayed', () =>{
-                assertValidator.assertMinValueValidator(- 1, false, pageObjectSelectors.minField);
+                assertValidator.assertMinValueValidator(-1, false, pageObjectSelectors.minField);
                 testValidationMessageDisplay(true, pageObjectSelectors.minField);
             });
 
@@ -81,7 +81,7 @@ module Antares {
                 var value = 1000;
                 var max = element.find(pageObjectSelectors.maxField);
                 max.val(value).trigger('input').trigger('change').trigger('blur');
-                assertValidator.assertMinValueValidator(value + 1, false, pageObjectSelectors.minField);
+                assertValidator.assertMaxValueValidator(value + 1, false, pageObjectSelectors.minField);
                 testValidationMessageDisplay(true, pageObjectSelectors.minField);
             });
 
@@ -89,7 +89,7 @@ module Antares {
                 var value = 1000;
                 var max = element.find(pageObjectSelectors.maxField);
                 max.val(value).trigger('input').trigger('change').trigger('blur');
-                assertValidator.assertMinValueValidator(value, true, pageObjectSelectors.minField);
+                assertValidator.assertMaxValueValidator(value, true, pageObjectSelectors.minField);
                 testValidationMessageDisplay(false, pageObjectSelectors.minField);
             });
 
