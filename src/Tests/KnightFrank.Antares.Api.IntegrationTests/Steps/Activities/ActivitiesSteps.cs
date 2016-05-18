@@ -9,6 +9,8 @@
 
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
+    using KnightFrank.Antares.Api.IntegrationTests.Steps.Enums;
+    using KnightFrank.Antares.Api.IntegrationTests.Steps.Property;
     using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Common;
     using KnightFrank.Antares.Dal.Model.Contacts;
@@ -39,6 +41,28 @@
                 throw new ArgumentNullException(nameof(scenarioContext));
             }
             this.scenarioContext = scenarioContext;
+        }
+
+        [Given(@"Activity exists in database")]
+        public void GivenActivityExistsInDb()
+        {
+            var enumTable = new Table(new string[] { "enumTypeCode", "enumTypeItemCode"});
+            enumTable.AddRow("ActivityStatus", "PreAppraisal");
+            enumTable.AddRow("Division", "Residential");
+            enumTable.AddRow("ActivityDocumentType", "TermsOfBusiness");
+
+            var addressTable = new Table(new string[] { "Postcode" });
+            addressTable.AddRow("N1C");
+
+            var properstySteps = new PropertySteps(this.fixture, this.scenarioContext);
+            properstySteps.GetCountryAddressData("GB", "Property");
+            properstySteps.GetPropertyTypeId("House");
+            this.GetActivityTypeId("Freehold Sale");
+
+            new EnumsSteps(this.fixture, this.scenarioContext).GetEnumTypeItemId(enumTable);
+
+            properstySteps.GivenFollowingPropertyExistsInDataBase("Residential", addressTable);
+            this.CreateActivityInDatabase("latest", "PreAppraisal");
         }
 
         [Given(@"All activities have been deleted from database")]
@@ -76,7 +100,7 @@
 
             this.scenarioContext.Set(activity, "Activity");
         }
-        
+
         [When(@"User creates activity for given (.*) property id using api")]
         public void CreateActivityUsingApi(string id)
         {
@@ -145,8 +169,10 @@
 
             updateActivityCommand.Id = id.Equals("latest") ? activityFromDatabase.Id : new Guid(id);
             updateActivityCommand.ActivityTypeId = activityFromDatabase.ActivityTypeId;
+
             //TODO: implement better setting of lead negotiator id when implementing update negotiator test cases
             updateActivityCommand.LeadNegotiatorId = activityFromDatabase.ActivityUsers.First().UserId;
+
             updateActivityCommand.ActivityStatusId = status.Equals("latest")
                 ? activityFromDatabase.ActivityStatusId
                 : new Guid(status);
