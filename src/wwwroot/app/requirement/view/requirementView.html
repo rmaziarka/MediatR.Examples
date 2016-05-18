@@ -77,15 +77,16 @@
             <div class="col-md-4">
                 <section>
                     <h3 class="page-header">Offers</h3>
+                    <card-list-item ng-repeat="offer in vm.requirement.offers track by offer.id">
+                        <card show-context-menu="true" show-item-details="vm.showViewingPreview" display-new-control="true"
+                              card-template-url="'app/requirement/view/requirementOffersCard.html'" item="offer">
 
-                    <card show-context-menu="true" show-item-details="true" display-new-control="true"
-                                card-template-url="'app/requirement/view/requirementOffersCard.html'">
+                            <card-context-menu>
+                                <context-menu-item type="edit" item="ownership" action="vm.showViewingPreview"></context-menu-item>
+                            </card-context-menu>
 
-                        <card-context-menu>
-                            <context-menu-item type="edit" item="" action=""></context-menu-item>
-                        </card-context-menu>
-
-                    </card>
+                        </card>
+                    </card-list-item>
                 </section>
             </div>
         </div>

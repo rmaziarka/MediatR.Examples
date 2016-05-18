@@ -4,5 +4,6 @@
         statusId: string;
         activityId: string;
         requirementId: string;
+        activity: IActivity;
     }
 }
