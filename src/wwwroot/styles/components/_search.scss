@@ -1,0 +1,30 @@
+// Search
+
+.search {
+  position: relative;
+
+  .dropdown-menu {
+    margin: 0;
+    max-height: 230px;
+    overflow-y: auto;
+    padding: 0;
+    width: 100%;
+
+    a {
+      padding: 10px 20px;
+    }
+
+    > li:not(:last-child) {
+      border-bottom: 1px solid $color-mercury;
+    }
+  }
+
+  .active {
+    a,
+    a:hover,
+    a:focus {
+      background-color: $color-mercury;
+      color: inherit;
+    }
+  }
+}
