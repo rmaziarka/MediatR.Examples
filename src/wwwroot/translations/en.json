@@ -252,9 +252,11 @@
       "APPLICANT": "Applicant",
       "CREATEDDATE": "Created",
       "VIEWINGS": "Viewings",
+      "OFFERS": "Offers",
       "VIEWINGADD": "Viewing details",
       "NO_VIEWINGS": "No viewings",
       "SELECTACTIVITY": "Select activity",
+      "OFFERPREVIEW":  "Offer preview",
       "NEWOFFER":  "New offer"
     }
   },
@@ -304,6 +306,16 @@
       "EXCHANGE_DATE": "Proposed exchange date",
       "COMPLETION_DATE": "Proposed completion date",
       "VIEW": "View"
+    },
+    "PREVIEW": {
+      "ACTIVITY": "Activity",
+      "STATUS": "Status",
+      "OFFER": "Offer",
+      "OFFER_DATE": "Offer date",
+      "SPECIAL_CONDITIONS": "Special conditions",
+      "NEGOTIATOR": "Negotiator",
+      "EXCHANGE_DATE": "Proposed exchange date",
+      "COMPLETION_DATE": "Proposed completion date"
     }
   }
 }
