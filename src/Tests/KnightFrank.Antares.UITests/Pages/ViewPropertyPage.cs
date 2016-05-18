@@ -41,10 +41,9 @@
         private readonly ElementLocator characteristicComment = new ElementLocator(Locator.XPath, "(//characteristic-list-view//span[contains(@class, 'name')])[{0}]/following-sibling::span");
         // Locators for area breakdown
         private readonly ElementLocator addAreaBreakdown = new ElementLocator(Locator.CssSelector, "#card-list-areas button");
-        private readonly ElementLocator areaTile = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator areaName = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator areaSize = new ElementLocator(Locator.Id, string.Empty);
-
+        private readonly ElementLocator areaTile = new ElementLocator(Locator.CssSelector, "#card-list-areas card-list-item");
+        private readonly ElementLocator areaName = new ElementLocator(Locator.CssSelector, "card-list-item:nth-of-type({0}) div.ng-binding");
+        private readonly ElementLocator areaSize = new ElementLocator(Locator.CssSelector, "card-list-item:nth-of-type({0}) small");
 
         public ViewPropertyPage(DriverContext driverContext) : base(driverContext)
         {
@@ -167,13 +166,18 @@
             return this;
         }
 
-        public List<PropertyAreaBreakdown> GetAreas(int size)
+        public List<PropertyAreaBreakdown> GetAreas()
         {
             var actualResult = new List<PropertyAreaBreakdown>();
-            for (var i = 1; i <= size; i++)
+            int areasNumber = this.Driver.GetElements(this.areaTile).Count;
+
+            for (var i = 1; i <= areasNumber; i++)
             {
-                actualResult.ElementAt(i-1).Name = this.Driver.GetElement(this.areaName.Format(i)).Text;
-                actualResult.ElementAt(i-1).Size = double.Parse(this.Driver.GetElement(this.areaSize.Format(i)).Text);
+                actualResult.Add(new PropertyAreaBreakdown
+                {
+                    Name = this.Driver.GetElement(this.areaName.Format(i)).Text,
+                    Size = double.Parse(this.Driver.GetElement(this.areaSize.Format(i)).Text.Replace("sq ft", string.Empty).Trim())
+                });
             }
             return actualResult;
         }
