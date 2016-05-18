@@ -1,0 +1,6 @@
+<a>
+    <span ng-bind-html="match.model.firstName | uibTypeaheadHighlight:query"></span>
+    <span ng-bind-html="match.model.lastName | uibTypeaheadHighlight:query"></span>
+    <br/>
+    <small>{{match.model.department}}</small>
+</a>

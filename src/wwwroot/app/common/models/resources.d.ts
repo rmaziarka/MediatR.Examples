@@ -74,6 +74,9 @@ declare module Antares.Common.Models {
         interface IAzureDownloadUrlResource extends ng.resource.IResource<Dto.IAzureDownloadUrlContainer> {
         }
 
+        interface IDepartmentUserResource extends ng.resource.IResource<Dto.IDepartmentUser> {
+        }
+
         // *** IResourceClass extensions ***
 
         // - common -
@@ -146,6 +149,17 @@ declare module Antares.Common.Models {
         }
         interface IPropertyAreaBreakdownResourceClass extends ng.resource.IResourceClass<IPropertyAreaBreakdownResource> {
             createPropertyAreaBreakdowns(params: IPropertyAreaBreakdownResourceClassParameters, data: IPropertyAreaBreakdownResourceClassData): ng.resource.IResource<Dto.IPropertyAreaBreakdown[]>;
+        }
+
+        interface IDepartmentUserResourceParameters {
+            partialName: string;
+            take: string;
+            'excludedIds[]': string[];
+        }
+
+        interface IDepartmentUserResourceClass extends ng.resource.IResourceClass<IDepartmentUserResource> {
+            query(): ng.resource.IResourceArray<IDepartmentUserResource>;
+            query(params: IDepartmentUserResourceParameters): ng.resource.IResourceArray<IDepartmentUserResource>;
         }
     }
 }

@@ -187,6 +187,11 @@ module Antares.Services {
         getAzureDownloadUrlResource(): ng.resource.IResourceClass<Common.Models.Resources.IAzureDownloadUrlResource> {
             return this.$resource(this.appConfig.rootUrl + '/api/services/attachment/download/activity?documentTypeId=:documentTypeId&localeIsoCode=:localeIsoCode&externalDocumentId=:externalDocumentId&entityReferenceId=:entityReferenceId&filename=:filename');
         }
+
+        getDepartmentUserResource(): Antares.Common.Models.Resources.IDepartmentUserResourceClass {
+            return <Antares.Common.Models.Resources.IDepartmentUserResourceClass>
+                this.$resource(this.appConfig.rootUrl + '/api/users?partialName=:partialName&take=:take&:excludedIds[]"');
+        }
     }
 
     angular.module('app').service('dataAccessService', DataAccessService);

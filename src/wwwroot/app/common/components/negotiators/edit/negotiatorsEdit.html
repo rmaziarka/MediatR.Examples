@@ -1,17 +1,22 @@
 <h3 class="page-header" translate="NEGOTIATORS.NEGOTIATORS"></h3>
+
 <h4 translate="NEGOTIATORS.LEAD_NEGOTIATOR"></h4>
+<search on-select-item="nevm.changeLeadNegotiator" on-cancel="nevm.cancelChangeLeadSecondaryNegotiator" load-items="nevm.getUsers"
+        item-template-url="app/common/components/negotiators/edit/userSearchTemplate.html"
+        placeholder="Find a negotiator"></search>
 <div class="form-group">
     <button class="btn btn-default" type="button"><i class="fa fa-pencil"></i></button>
 </div>
-<div class="form-group edit-form">
-    <input class="form-control" type="text" placeholder="Add a negotiator">
-    <button class="btn btn-default" disabled><i class="fa fa-ban" aria-hidden="true"></i></button>
-</div>
+
 <card id="card-lead-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'" item="nevm.leadNegotiator">
 </card>
+
 <card-list id="card-list-negotiators" is-item-add-disabled="true" show-item-add="true">
     <card-list-header>
         <h4 class="page-header" translate="NEGOTIATORS.SECONDARY_NEGOTIATOR"></h4>
+        <search on-select-item="nevm.addSecondaryNegotiator" on-cancel="nevm.cancelAddSecondaryNegotiator" load-items="nevm.getUsers"
+                item-template-url="app/common/components/negotiators/edit/userSearchTemplate.html"
+                placeholder="Add a negotiator"></search>
     </card-list-header>
     <card-list-no-items id="empty-secondary-negotiators" ng-show="!nevm.secondaryNegotiators || nevm.secondaryNegotiators.length === 0">
         <p class="help-block" translate="NEGOTIATORS.NO_NEGOTIATORS"></p>

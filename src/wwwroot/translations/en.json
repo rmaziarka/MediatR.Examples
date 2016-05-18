@@ -215,7 +215,9 @@
     "NEGOTIATORS": "Negotiators",
     "LEAD_NEGOTIATOR": "Lead negotiator",
     "SECONDARY_NEGOTIATOR": "Secondary negotiator",
-    "NO_NEGOTIATORS": "No negotiators added yet"
+    "NO_NEGOTIATORS": "No negotiators added yet",
+    "ADD_NEGOTIATOR": "Add a negotiator",
+    "FIND_NEGOTIATOR": "Find a negotiator"
   },
   "REQUIREMENT": {
     "ADD": {
