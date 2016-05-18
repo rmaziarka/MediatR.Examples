@@ -10,28 +10,39 @@ module Antares.Common.Component {
         public leadNegotiator: Business.ActivityUser;
         public secondaryNegotiators: Business.ActivityUser[];
 
+        public isLeadNegotiatorInEditMode: boolean = false;
+        public isSecondaryNegotiatorsInEditMode: boolean = false;
+
         private usersSearchMaxCount: number = 100;
 
         constructor(
             private dataAccessService: Services.DataAccessService) {
         }
 
-        public changeLeadNegotiator = (user: Dto.IDepartmentUser) => {
-            this.leadNegotiator = this.createActivityUser(user, Enums.NegotiatorTypeEnum.LeadNegotiator);
+        public editLeadNegotiator = () =>{
+            this.isLeadNegotiatorInEditMode = true;
         }
 
-        public cancelChangeLeadSecondaryNegotiator = () => {
-            //hide search component
+        public changeLeadNegotiator = (user: Dto.IDepartmentUser) => {
+            this.leadNegotiator = this.createActivityUser(user, Enums.NegotiatorTypeEnum.LeadNegotiator);
+
+            this.isLeadNegotiatorInEditMode = false;
+        }
+
+        public cancelChangeLeadNegotiator = () => {
+            this.isLeadNegotiatorInEditMode = false;
+        }
+
+        public editSecondaryNegotiators = () => {
+            this.isSecondaryNegotiatorsInEditMode = true;
         }
 
         public addSecondaryNegotiator = (user: Dto.IDepartmentUser) => {
             this.secondaryNegotiators.push(this.createActivityUser(user, Enums.NegotiatorTypeEnum.SecondaryNegotiator));
-
-            //hide search component
         }
 
         public cancelAddSecondaryNegotiator = () => {
-            //hide search component
+            this.isSecondaryNegotiatorsInEditMode = false;
         }
 
         public getUsers = (searchValue: string) =>{

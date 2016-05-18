@@ -1,20 +1,23 @@
 <h3 class="page-header" translate="NEGOTIATORS.NEGOTIATORS"></h3>
 
 <h4 translate="NEGOTIATORS.LEAD_NEGOTIATOR"></h4>
-<search on-select-item="nevm.changeLeadNegotiator" on-cancel="nevm.cancelChangeLeadSecondaryNegotiator" load-items="nevm.getUsers"
+<search ng-show="nevm.isLeadNegotiatorInEditMode"
+        on-select-item="nevm.changeLeadNegotiator" on-cancel="nevm.cancelChangeLeadNegotiator" load-items="nevm.getUsers"
         item-template-url="app/common/components/negotiators/edit/userSearchTemplate.html"
         placeholder="Find a negotiator"></search>
-<div class="form-group">
-    <button class="btn btn-default" type="button"><i class="fa fa-pencil"></i></button>
+<div ng-hide="nevm.isLeadNegotiatorInEditMode"
+     class="form-group">
+    <button class="btn btn-default" type="button" ng-click="nevm.editLeadNegotiator()"><i class="fa fa-pencil"></i></button>
 </div>
 
 <card id="card-lead-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'" item="nevm.leadNegotiator">
 </card>
 
-<card-list id="card-list-negotiators" is-item-add-disabled="true" show-item-add="true">
+<card-list id="card-list-negotiators" show-item-add="nevm.isSecondaryNegotiatorsInEditMode ? null : nevm.editSecondaryNegotiators">
     <card-list-header>
         <h4 class="page-header" translate="NEGOTIATORS.SECONDARY_NEGOTIATOR"></h4>
-        <search on-select-item="nevm.addSecondaryNegotiator" on-cancel="nevm.cancelAddSecondaryNegotiator" load-items="nevm.getUsers"
+        <search ng-show="nevm.isSecondaryNegotiatorsInEditMode"
+                on-select-item="nevm.addSecondaryNegotiator" on-cancel="nevm.cancelAddSecondaryNegotiator" load-items="nevm.getUsers"
                 item-template-url="app/common/components/negotiators/edit/userSearchTemplate.html"
                 placeholder="Add a negotiator"></search>
     </card-list-header>
