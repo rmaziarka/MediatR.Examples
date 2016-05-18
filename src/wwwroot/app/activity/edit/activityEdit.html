@@ -21,7 +21,7 @@
                 </fieldset>
             </section>
             <section id="activity-edit-negotiators">
-                <negotiators-edit lead-negotiator="aevm.activity.leadNegotiator" secondary-negotiators="aevm.activity.secondaryNegotiator"></negotiators-edit>
+                <negotiators-edit activity-id="aevm.activity.id" lead-negotiator="aevm.activity.leadNegotiator" secondary-negotiators="aevm.activity.secondaryNegotiator"></negotiators-edit>
             </section>
         </div>
         <div class="col-md-4">
@@ -94,8 +94,11 @@
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <button id="activity-edit-save" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
-            </div>
+                <div >
+                    <button id="activity-edit-cancel" type="button" class="btn btn-default" ng-click="aevm.cancel()"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>                    
+                    <button id="activity-edit-save" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
+                </div>
+            </div>            
         </div>
     </form>
 </div>

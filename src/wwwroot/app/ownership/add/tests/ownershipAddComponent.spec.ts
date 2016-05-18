@@ -1,15 +1,15 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares {
-    import OwnershipAddController = Antares.Property.OwnershipAddController;
+    import OwnershipAddController = Property.OwnershipAddController;
     import Dto = Common.Models.Dto;
-
     import runDescribe = TestHelpers.runDescribe;
+    type TestCaseForRequiredValidator = [string, boolean];
 
     describe('Given ownership is being added', () => {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
-            assertValidator: Antares.TestHelpers.AssertValidators,
+            assertValidator: TestHelpers.AssertValidators,
             $http: ng.IHttpBackendService;
 
         var pageObjectSelectors = {
@@ -46,12 +46,11 @@ module Antares {
 
             controller = element.controller('ownershipAdd');
 
-            assertValidator = new Antares.TestHelpers.AssertValidators(element, scope);
+            assertValidator = new TestHelpers.AssertValidators(element, scope);
         }));
 
         describe('when', () => {
             // RequiredValidator for ownership type
-            type TestCaseForRequiredValidator = [string, boolean];
             runDescribe('ownership type ')
                 .data<TestCaseForRequiredValidator>([
                     [ownershipTypes[0].id, true],
@@ -69,7 +68,7 @@ module Antares {
             runDescribe('ownership purchasing date ')
                 .data<TestCaseForRequiredValidator>([
                     ['21-12-1984', true],
-                    ['invalid date', false]])
+                    ['', true]])
                 .dataIt((data: TestCaseForRequiredValidator) =>
                     `value is "${data[0]}" then required message should ${data[1] ? 'not' : ''} be displayed`)
                 .run((data: TestCaseForRequiredValidator) => {
@@ -81,7 +80,7 @@ module Antares {
             runDescribe('ownership selling date ')
                 .data<TestCaseForRequiredValidator>([
                     ['21-12-1984', true],
-                    ['invalid date', false]])
+                    ['', true]])
                 .dataIt((data: TestCaseForRequiredValidator) =>
                     `value is "${data[0]}" then required message should ${data[1] ? 'not' : ''} be displayed`)
                 .run((data: TestCaseForRequiredValidator) => {

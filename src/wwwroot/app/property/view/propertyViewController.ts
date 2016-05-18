@@ -131,6 +131,15 @@ module Antares.Property.View {
             });
         }
 
+        areaBreakdownDndOptions: Common.Models.IDndOptions = {
+            dragStart: (event: Common.Models.IDndEvent) => {
+                
+            },
+            dragEnd: (event: Common.Models.IDndEvent) => {
+
+            }
+        };
+
         defineComponentIds() {
             this.componentIds = {
                 contactListId: 'viewProperty:contactListComponent',

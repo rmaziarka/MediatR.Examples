@@ -46,9 +46,11 @@
             if (this.propertyName) {
                 addressCommaSeparatedElements.push(this.propertyName);
             }
+            if (addressSpaceSeparatedElements.length > 0) {
+                addressCommaSeparatedElements.push(addressSpaceSeparatedElements.join(" "));
+            }
 
-            addressCommaSeparatedElements.push(addressSpaceSeparatedElements.join(" "));
-            return addressCommaSeparatedElements.join(", ")
+            return addressCommaSeparatedElements.join(", ");
         }
     }
 }

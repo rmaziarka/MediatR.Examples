@@ -6,6 +6,7 @@ module Antares.Common.Component {
         controllerAs: 'nevm',
         controller: 'NegotiatorsEditController',
         bindings: {
+            activityId: '<',
             leadNegotiator: '=' ,
             secondaryNegotiators: '='
         }

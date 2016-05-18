@@ -167,7 +167,10 @@
     <Compile Include="Contact\Commands\UpdateContactCommandValidator.cs" />
     <Compile Include="Contact\Queries\ContactQuery.cs" />
     <Compile Include="Contact\QueryHandlers\ContactQueryHandler.cs" />
+    <Compile Include="Offer\CommandHandlers\UpdateOfferCommandHandler.cs" />
     <Compile Include="Offer\CommandHandlers\CreateOfferCommandHandler.cs" />
+    <Compile Include="Offer\Commands\UpdateOfferCommandValidator.cs" />
+    <Compile Include="Offer\Commands\UpdateOfferCommand.cs" />
     <Compile Include="Offer\Commands\CreateOfferCommand.cs" />
     <Compile Include="Offer\Commands\OfferCommandProfile.cs" />
     <Compile Include="Offer\Commands\CreateOfferCommandValidator.cs" />

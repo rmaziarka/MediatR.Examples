@@ -293,9 +293,8 @@
         public void CheckAreasOrder(Table table)
         {
             List<PropertyAreaBreakdown> expectedAreas = table.CreateSet<PropertyAreaBreakdown>().ToList();
-            int size = expectedAreas.Count;
-            IEnumerable<PropertyAreaBreakdown> actualAreas = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").GetAreas(size);
-            actualAreas.ShouldBeEquivalentTo(expectedAreas);
+            List<PropertyAreaBreakdown> actualAreas = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").GetAreas();
+            Assert.Equal(actualAreas, expectedAreas);
         }
     }
 }

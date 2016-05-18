@@ -11,19 +11,28 @@
                     <h3 class="page-header" translate="PROPERTY.VIEW.DETAILS"></h3>
                     <property-details property="vm.property" user-data="vm.userData"></property-details>
                 </section>
-
                 <section ng-if="vm.property.isCommercial()">
                     <card-list id="card-list-areas" show-item-add="vm.showAreaAdd">
                         <card-list-header>
                             <h3 class="page-header" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.LIST.AREA_BREAKDOWN"></h3>
+                            <div class="form-group">
+                                <div class="section-row row">
+                                    <div class="col-xs-6 section-title" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.LIST.TOTAL_AREA"></div>
+                                    <div class="col-xs-6">{{vm.property.totalAreaBreakdown | number:2}} sq ft</div>
+                                </div>
+                            </div>
                         </card-list-header>
                         <card-list-no-items ng-show="vm.property.propertyAreaBreakdowns.length === 0">
                             <p class="help-block" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.LIST.NO_ITEMS"></p>
                         </card-list-no-items>
-                        <card-list-item ng-repeat="propertyAreaBreakdown in vm.property.propertyAreaBreakdowns track by propertyAreaBreakdown.id">
-                            <card card-template-url="'app/property/view/areaBreakdown/list/areaBreakdownCard.html'" item="propertyAreaBreakdown">
-                            </card>
-                        </card-list-item>
+                        <card-list-items as-sortable="vm.areaBreakdownDndOptions" ng-model="vm.property.propertyAreaBreakdowns">
+                            <div ng-repeat="propertyAreaBreakdown in vm.property.propertyAreaBreakdowns track by propertyAreaBreakdown.id" as-sortable-item>
+                                <div as-sortable-item-handle>
+                                    <card card-template-url="'app/property/view/areaBreakdown/list/areaBreakdownCard.html'" item="propertyAreaBreakdown" display-new-control="true">
+                                    </card>
+                                </div>
+                            </div>
+                        </card-list-items>
                     </card-list>
                 </section>
             </div>
