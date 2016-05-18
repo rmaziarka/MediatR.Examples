@@ -6,8 +6,11 @@ module Antares.Common.Component {
     import Enums = Common.Models.Enums;
 
     export class NegotiatorsEditController {
+        public activityId: string;
         public leadNegotiator: Business.ActivityUser;
         public secondaryNegotiators: Business.ActivityUser[];
+
+        private usersSearchMaxCount: number = 100;
 
         constructor(
             private dataAccessService: Services.DataAccessService) {
@@ -31,20 +34,23 @@ module Antares.Common.Component {
             //hide search component
         }
 
-        public getUsers = (searchValue: string) => {
+        public getUsers = (searchValue: string) =>{
+            var excludedIds: string[] = _.map<Business.ActivityUser, string>(this.secondaryNegotiators, 'userId');
+            excludedIds.push(this.leadNegotiator.userId);
+
             return this.dataAccessService
                 .getDepartmentUserResource()
-                .query({ partialName: searchValue, take: '100', 'excludedIds[]': ['b40e0924-eb18-e611-82a1-80c16efdf78c', 'b40e0924-eb18-e611-82a1-80c16efdf78c'] })
+                .query({ partialName: searchValue, take: this.usersSearchMaxCount, 'excludedIds[]': excludedIds })
                 .$promise
                 .then((users: any) => {
-                    return users.map((user: Antares.Common.Models.Dto.IDepartmentUser) => { return new Antares.Common.Models.Business.DepartmentUser(<Antares.Common.Models.Dto.IDepartmentUser>user); });
+                    return users.map((user: Common.Models.Dto.IDepartmentUser) => { return new Common.Models.Business.DepartmentUser(<Common.Models.Dto.IDepartmentUser>user); });
                 });
         }
 
         private createActivityUser = (user: Dto.IDepartmentUser, negotiatorType: Enums.NegotiatorTypeEnum) => {
             return new Business.ActivityUser({
                 id: '',
-                activityId: null, //this.activity.id,
+                activityId: this.activityId,
                 userId: user.id,
                 user: <Dto.IUser>user,
                 userType: negotiatorType

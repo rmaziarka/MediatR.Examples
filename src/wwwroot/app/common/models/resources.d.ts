@@ -153,7 +153,7 @@ declare module Antares.Common.Models {
 
         interface IDepartmentUserResourceParameters {
             partialName: string;
-            take: string;
+            take: number;
             'excludedIds[]': string[];
         }
 
