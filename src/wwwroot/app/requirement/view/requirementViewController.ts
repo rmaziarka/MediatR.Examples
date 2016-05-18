@@ -7,7 +7,7 @@ module Antares.Requirement.View {
     export class RequirementViewController extends Core.WithPanelsBaseController {
         requirement: Business.Requirement;
         viewingAddPanelVisible: boolean = false;
-        previewPanelVisible: boolean = true;
+        viewingPreviewPanelVisible: boolean = true;
         loadingActivities: boolean = false;
         saveViewingBusy: boolean = false;
         addOfferBusy: boolean = false;
@@ -66,7 +66,7 @@ module Antares.Requirement.View {
         }
 
         goBackToPreviewViewing() {
-            this.previewPanelVisible = true;
+            this.viewingPreviewPanelVisible = true;
         }
 
         cancelViewingPreview() {
@@ -85,7 +85,9 @@ module Antares.Requirement.View {
                 configureViewingsSidePanelId: 'addRequirement:configureViewingsSidePanelComponent',
                 previewViewingSidePanelId: 'addRequirement:previewViewingSidePanelComponent',
                 offerAddId: 'requirementView:addOfferComponent',
-                offerSidePanelId: 'requirementView:offerSidePanelComponent'
+                offerSidePanelId: 'requirementView:offerSidePanelComponent',
+                offerPreviewId: 'requirementView:offerPreviewComponent',
+                offerPreviewSidePanelId: 'requirementView:offerPreviewSidePanelComponent'
             }
         }
 
@@ -97,10 +99,12 @@ module Antares.Requirement.View {
                 viewingAdd: () => { return this.componentRegistry.get(this.componentIds.viewingAddId); },
                 viewingEdit: () => { return this.componentRegistry.get(this.componentIds.viewingEditId); },
                 viewingPreview: () => { return this.componentRegistry.get(this.componentIds.viewingPreviewId); },
+                offerPreview: () => { return this.componentRegistry.get(this.componentIds.offerPreviewId); },
                 addOffer: () => { return this.componentRegistry.get(this.componentIds.offerAddId); },
                 panels: {
                     notes: () => { return this.componentRegistry.get(this.componentIds.notesSidePanelId); },
                     configureViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.configureViewingsSidePanelId); },
+                    offerPreviewSidePanel: () => { return this.componentRegistry.get(this.componentIds.offerPreviewSidePanelId)},
                     previewViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.previewViewingSidePanelId); },
                     addOffer: () => { return this.componentRegistry.get(this.componentIds.offerSidePanelId); }
                 }
@@ -111,13 +115,19 @@ module Antares.Requirement.View {
             this.components.viewingPreview().clearViewingPreview();
             this.components.viewingPreview().setViewing(viewing);
             this.showPanel(this.components.panels.previewViewingsSidePanel);
-            this.previewPanelVisible = true;
+            this.viewingPreviewPanelVisible = true;
         }
 
         showViewingEdit = () => {
             var viewing = this.components.viewingPreview().getViewing();
             this.components.viewingEdit().setViewing(viewing);
-            this.previewPanelVisible = false;
+            this.viewingPreviewPanelVisible = false;
+        }
+
+        showOfferPreview = (offer: Common.Models.Business.Offer) => {
+            this.components.offerPreview().clearOfferPreview();
+            this.components.offerPreview().setOffer(offer);
+            this.showPanel(this.components.panels.offerPreviewSidePanel);
         }
 
         saveViewing() {
