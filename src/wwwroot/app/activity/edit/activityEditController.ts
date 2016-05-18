@@ -21,10 +21,6 @@ module Antares.Activity {
                     this.$state.go('app.activity-view', activity);
                 });
         }
-        
-        cancel() {
-            this.$state.go('app.activity-view', { id: this.$state.params['id'] });
-        }
     }
 
     angular.module('app').controller('ActivityEditController', ActivityEditController);
