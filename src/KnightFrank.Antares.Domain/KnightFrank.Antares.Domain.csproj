@@ -113,10 +113,14 @@
     <Compile Include="AddressForm\Specifications\IsAddressFormAssignedToCountry.cs" />
     <Compile Include="AddressForm\Specifications\IsAddressFormGloballyDefined.cs" />
     <Compile Include="AreaBreakdown\CommandHandlers\CreateAreaBreakdownCommandHandler.cs" />
+    <Compile Include="AreaBreakdown\CommandHandlers\UpdateAreaBreakdownOrderCommandHandler.cs" />
     <Compile Include="AreaBreakdown\Commands\Area.cs" />
     <Compile Include="AreaBreakdown\Commands\AreaValidator.cs" />
     <Compile Include="AreaBreakdown\Commands\CreateAreaBreakdownCommand.cs" />
     <Compile Include="AreaBreakdown\Commands\CreateAreaBreakdownCommandValidator.cs" />
+    <Compile Include="AreaBreakdown\Commands\UpdateAreaBreakdownCommand.cs" />
+    <Compile Include="AreaBreakdown\Commands\AreaBreakdownProfile.cs" />
+    <Compile Include="AreaBreakdown\Commands\UpdateAreaBreakdownCommandValidator.cs" />
     <Compile Include="AreaBreakdown\Queries\AreaBreakdownQuery.cs" />
     <Compile Include="AreaBreakdown\Queries\AreaBreakdownQueryValidator.cs" />
     <Compile Include="AreaBreakdown\QueryHandlers\AreaBreakdownQueryHandler.cs" />

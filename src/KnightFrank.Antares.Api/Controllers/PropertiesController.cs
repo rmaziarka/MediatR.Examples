@@ -142,5 +142,21 @@
 
             return this.mediator.Send(new AreaBreakdownQuery { PropertyId = command.PropertyId, AreaIds = areaIds });
         }
+
+        /// <summary>
+        /// Updates the area breakdown.
+        /// </summary>
+        /// <param name="id">Property id.</param>
+        /// <param name="command">Command data.</param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("{id}/areabreakdown")]
+        public IList<PropertyAreaBreakdown> UpdateAreaBreakdown(Guid id, UpdateAreaBreakdownCommand command)
+        {
+            command.PropertyId = id;
+            Guid areaId = this.mediator.Send(command);
+
+            return this.mediator.Send(new AreaBreakdownQuery { PropertyId = command.PropertyId, AreaIds = new[] { areaId } });
+        } 
     }
 }
