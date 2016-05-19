@@ -33,6 +33,7 @@
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             [Frozen] Mock<IGenericRepository<User>> userRepository,
+            [Frozen] Mock<IGenericRepository<ActivityTypeDefinition>> activityTypeDefinitionRepository,
             User user,
             CreateActivityCommandHandler handler,
             CreateActivityCommand command,
@@ -54,6 +55,8 @@
 
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
                              .Returns(command.ContactIds.Select(id => new Contact { Id = id }));
+
+            activityTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>())).Returns(true);
 
             // Act
             handler.Handle(command);
@@ -96,22 +99,5 @@
             // Assert
             entityValidator.Verify(x => x.EntityExists(user, user.Id), Times.Once);
         }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_CommandActivityTypeDoesNotExist_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(
-           CreateActivityCommand cmd)
-        {
-            // Arrange
-            this.activityTypeRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityType, bool>>>())).Returns(false);
-
-            // Act
-            ValidationResult validationResult = this.validator.Validate(cmd);
-
-            // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.ActivityTypeId));
-        }
-
     }
 }

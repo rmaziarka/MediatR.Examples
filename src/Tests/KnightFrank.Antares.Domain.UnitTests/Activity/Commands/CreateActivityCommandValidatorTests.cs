@@ -90,23 +90,6 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_PropertyDoesNotExist_When_Validating_Then_IsInvalid(
-            CreateActivityCommand cmd)
-        {
-            // Arrange
-            this.propertyRepository.Setup(p => p.GetById(It.IsAny<Guid>())).Returns((Property)null);
-
-            // Act
-            ValidationResult validationResult = this.validator.Validate(cmd);
-
-            // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.PropertyId));
-            this.propertyRepository.Verify(p => p.GetById(It.IsAny<Guid>()), Times.Exactly(1));
-        }
-
-        [Theory]
-        [AutoMoqData]
         public void Given_CommandPropertyIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode()
         {
             // Arrange
@@ -155,21 +138,6 @@
             validationResult.IsValid.Should().BeFalse();
             validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.ActivityTypeId));
             validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == NotEmptyError);
-        }
-
-       
-        [Theory]
-        [AutoMoqData]
-        public void Given_NotExistingActivityTypeDefinitionInCommand_When_Validating_Then_ShouldReturnValidationError(
-            CreateActivityCommand command)
-        {
-            this.activityTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>()))
-                .Returns(false);
-
-            ValidationResult validationResult = this.validator.Validate(command);
-
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(x => x.PropertyName == nameof(command.ActivityTypeId));
         }
 
         [Theory]
