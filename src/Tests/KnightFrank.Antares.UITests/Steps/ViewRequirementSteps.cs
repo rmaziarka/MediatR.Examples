@@ -257,5 +257,11 @@
             this.scenarioContext.Set(page, "ViewActivityPage");
         }
 
+        [Then(@"Activity details on view requirement page are same as the following")]
+        public void CheckOfferActivity(Table table)
+        {
+            var details = table.CreateInstance<OfferData>();
+            Assert.Equal(details.Activity, this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").Offer.Details);
+        }
     }
 }

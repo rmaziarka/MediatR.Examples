@@ -25,7 +25,10 @@ Scenario: Create offer
 		And Viewing for requirement is defined
 	When User navigates to view requirement page with id
 		And User clicks make an offer button for 1 activity on view requirement page
-		And User fills in offer details on view requirement page
-			| Status | Offer  | SpecialConditions |
-			| New    | 100000 | Text              |
+	Then Activity details on view requirement page are same as the following
+		| Activity                                    |
+		| John Soane’s house, 13 Lincoln’s Inn Fields |
+	When User fills in offer details on view requirement page
+		| Status | Offer  | SpecialConditions |
+		| New    | 100000 | Text              |
 		And User clicks save offer button on view requirement page

@@ -76,6 +76,8 @@
 
     internal class OfferData
     {
+        public string Activity { get; set; }
+
         public string Status { get; set; }
 
         public string Offer { get; set; }
