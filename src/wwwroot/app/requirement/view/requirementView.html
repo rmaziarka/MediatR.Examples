@@ -81,7 +81,7 @@
                         <card show-context-menu="true" show-item-details="vm.showOfferPreview" display-new-control="true"
                               card-template-url="'app/requirement/view/requirementOffersCard.html'" item="offer">
                             <card-context-menu>
-                                <context-menu-item type="edit" item="ownership" action="vm.showViewingPreview"></context-menu-item>
+                                    <context-menu-item type="edit" item="offer" action="vm.showEditOfferPanel"></context-menu-item>
                             </card-context-menu>
                         </card>
                     </card-list-item>
@@ -93,17 +93,40 @@
 
 <side-panel component-id="vm.componentIds.offerPreviewSidePanelId">
     <side-panel-header>
-        <h3 translate="REQUIREMENT.VIEW.OFFERPREVIEW"></h3>
+        <h3 translate="REQUIREMENT.VIEW.OFFERPREVIEW" ng-show="vm.offerPreviewPanelVisible"></h3>
+        <h3 translate="REQUIREMENT.VIEW.OFFERDETAILS" ng-show="!vm.offerPreviewPanelVisible"></h3>
     </side-panel-header>
     <side-panel-content>
-        <offer-preview component-id="vm.componentIds.offerPreviewId"></offer-preview>
+        <offer-preview component-id="vm.componentIds.offerPreviewId" ng-show="vm.offerPreviewPanelVisible"></offer-preview>
+        <offer-add-edit component-id="vm.componentIds.offerEditPreviewId" ng-show="!vm.offerPreviewPanelVisible"></offer-add-edit>
     </side-panel-content>
+    <side-panel-footer>
+        <button type="button" class="btn btn-default pull-left" ng-click="vm.showEditOfferPreviewPanel()" ng-show="vm.offerPreviewPanelVisible">
+            <i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span>
+        </button>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelOfferEditPreview()" ng-show="!vm.offerPreviewPanelVisible">
+            <i class="fa fa-angle-double-left"></i> <span translate="COMMON.CANCEL"></span>
+        </button>
+    </side-panel-footer>
+</side-panel>
+
+<side-panel component-id="vm.componentIds.offerEditSidePanelId">
+    <side-panel-header>
+        <h3 translate="REQUIREMENT.VIEW.OFFERDETAILS"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <offer-add-edit component-id="vm.componentIds.offerEditId"></offer-add-edit>
+    </side-panel-content>
+    <side-panel-footer>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelOfferEdit()">
+            <i class="fa fa-angle-double-left"></i> <span translate="COMMON.CANCEL"></span>
+        </button>
+    </side-panel-footer>
 </side-panel>
 
 <side-panel component-id="vm.componentIds.configureViewingsSidePanelId" is-busy="vm.saveViewingBusy">
     <side-panel-header>
         <h3 translate="REQUIREMENT.VIEW.SELECTACTIVITY" ng-show="!vm.viewingAddPanelVisible"></h3>
-
         <h3 translate="REQUIREMENT.VIEW.VIEWINGADD" ng-show="vm.viewingAddPanelVisible"></h3>
     </side-panel-header>
     <side-panel-content>
@@ -170,7 +193,7 @@
         <h3 translate="REQUIREMENT.VIEW.NEWOFFER"></h3>
     </side-panel-header>
     <side-panel-content>
-        <offer-add component-id="vm.componentIds.offerAddId" requirement="vm.requirement"></offer-add>
+        <offer-add-edit component-id="vm.componentIds.offerAddId" requirement="vm.requirement"></offer-add-edit>
     </side-panel-content>
     <side-panel-footer>
         <button class="btn btn-default" type="button" ng-click="vm.cancelSaveOffer()">
