@@ -46,12 +46,12 @@
         [Given(@"Activity exists in database")]
         public void GivenActivityExistsInDb()
         {
-            var enumTable = new Table(new string[] { "enumTypeCode", "enumTypeItemCode"});
+            var enumTable = new Table("enumTypeCode", "enumTypeItemCode");
             enumTable.AddRow("ActivityStatus", "PreAppraisal");
             enumTable.AddRow("Division", "Residential");
             enumTable.AddRow("ActivityDocumentType", "TermsOfBusiness");
 
-            var addressTable = new Table(new string[] { "Postcode" });
+            var addressTable = new Table("Postcode");
             addressTable.AddRow("N1C");
 
             var properstySteps = new PropertySteps(this.fixture, this.scenarioContext);

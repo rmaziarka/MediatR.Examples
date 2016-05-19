@@ -36,6 +36,32 @@
             this.scenarioContext = scenarioContext;
         }
 
+        [Given(@"User creates (.*) offer in database")]
+        public void CreateOfferUsingInDatabase(string status)
+        {
+            Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
+            Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
+            Guid statusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["New"];
+
+            var offer = new Offer
+            {
+                ActivityId = activityId,
+                CompletionDate = DateTime.UtcNow,
+                ExchangeDate = DateTime.UtcNow,
+                NegotiatorId = this.fixture.DataContext.Users.First().Id,
+                OfferDate = DateTime.UtcNow,
+                Price = 1000,
+                RequirementId = requirementId,
+                SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
+                StatusId = statusId
+            };
+
+            this.fixture.DataContext.Offer.Add(offer);
+            this.fixture.DataContext.SaveChanges();
+
+            this.scenarioContext.Set(offer, "Offer");
+        }
+
         [When(@"User creates (.*) offer using api")]
         public void CreateOfferUsingApi(string status)
         {
@@ -103,6 +129,16 @@
             this.CreateOffer(details);
         }
 
+        [When(@"User gets offer for (.*) id")]
+        public void GetOffer(string id)
+        {
+            Guid offerId = id.Equals("latest") ? this.scenarioContext.Get<Offer>("Offer").Id : Guid.NewGuid();
+            string requestUrl = $"{ApiUrl}/{offerId}";
+
+            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
         [Then(@"Offer details should be the same as already added")]
         public void CheckOfferDetails()
         {
@@ -114,6 +150,19 @@
                 .Excluding(o => o.Status)
                 .Excluding(o => o.Requirement)
                 .Excluding(o => o.Activity));
+        }
+
+        [Then(@"Offer details in requirement should be the same as added")]
+        public void CompareRequirementOffers()
+        {
+            Offer offer = JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent()).Offers.Single();
+            Offer expectedOffer = this.fixture.DataContext.Offer.Single(o => o.Id.Equals(offer.Id));
+
+            offer.ShouldBeEquivalentTo(expectedOffer,
+                opt => opt.Excluding(o => o.Activity)
+                          .Excluding(o => o.Negotiator)
+                          .Excluding(o => o.Requirement)
+                          .Excluding(o => o.Status));
         }
 
         private void CreateOffer(CreateOfferCommand command)
