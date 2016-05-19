@@ -157,31 +157,31 @@ Node localhost
 		State = "Started"
 		Ensure = "Present"
 		BindingInfo = MSFT_xWebBindingInformation 
-        { 
-			Protocol = "http" 
-			Port = 80
-			HostName = $webApiHostName
+        {
+            Protocol = "http" 
+            Port = 80
+            HostName = $webApiHostName
         }
-		EnabledProtocols = "http"
-	}
-	xWebsite WebApp
-	{
-		Name = $webAppHostName
-		DependsOn = "[xWebAppPool]WebAppPool"
-		ApplicationPool = $webAppHostName
-		PhysicalPath = "C:\inetpub\wwwroot\app"
-		State = "Started"
-		Ensure = "Present"
-		BindingInfo = MSFT_xWebBindingInformation 
-        { 
-			Protocol = "http" 
-			Port = 80  
-			HostName = $webAppHostName
+        EnabledProtocols = "http"
+    }
+    xWebsite WebApp
+    {
+        Name = $webAppHostName
+        DependsOn = "[xWebAppPool]WebAppPool"
+        ApplicationPool = $webAppHostName
+        PhysicalPath = "C:\inetpub\wwwroot\app"
+        State = "Started"
+        Ensure = "Present"
+        BindingInfo = MSFT_xWebBindingInformation 
+        {
+            Protocol = "http" 
+            Port = 80  
+            HostName = $webAppHostName
         }
-		EnabledProtocols = "http"
-	}
+        EnabledProtocols = "http"
+    }
 
-	Script DownloadOctopusTentacle
+    Script DownloadOctopusTentacle
     {
         TestScript = {
             Test-Path "C:\WindowsAzure\Octopus.Tentacle.3.3.6-x64.msi"
@@ -203,100 +203,100 @@ Node localhost
         DependsOn = "[Script]DownloadOctopusTentacle"
     }
 
-	File OctopusDir
-	{
-		DestinationPath = "c:\Octopus"
-		Ensure = "Present"
-		Type = "Directory"
-	}
+    File OctopusDir
+    {
+        DestinationPath = "c:\Octopus"
+        Ensure = "Present"
+        Type = "Directory"
+    }
 
-	Script ConfigureOctopusTentacle
-	{
-		DependsOn = @("[Package]InstallOctopusTentacle", "[File]OctopusDir")
-		TestScript = {
-			Test-Path "C:\Octopus\Tentacle.config"
-		}
-		SetScript = {
-			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" create-instance --instance "Tentacle" --config "C:\Octopus\Tentacle.config" --console
-			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" new-certificate --instance "Tentacle" --if-blank --console
-			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --reset-trust --console
-			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --home "C:\Octopus" --app "C:\Octopus\Applications" --port "10933" --noListen "False" --console
-			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --trust "$using:octopusThumbprint" --console
-			& "netsh" advfirewall firewall add rule "name=Octopus Deploy Tentacle" dir=in action=allow protocol=TCP localport=10933
-			& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" service --instance "Tentacle" --install --start --console
-		}
-		GetScript = {@{Result = "ConfigureOctopusTentacle"}}
-	}
+    Script ConfigureOctopusTentacle
+    {
+        DependsOn = @("[Package]InstallOctopusTentacle", "[File]OctopusDir")
+        TestScript = {
+            Test-Path "C:\Octopus\Tentacle.config"
+        }
+        SetScript = {
+            & "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" create-instance --instance "Tentacle" --config "C:\Octopus\Tentacle.config" --console
+            & "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" new-certificate --instance "Tentacle" --if-blank --console
+            & "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --reset-trust --console
+            & "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --home "C:\Octopus" --app "C:\Octopus\Applications" --port "10933" --noListen "False" --console
+            & "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --trust "$using:octopusThumbprint" --console
+            & "netsh" advfirewall firewall add rule "name=Octopus Deploy Tentacle" dir=in action=allow protocol=TCP localport=10933
+            & "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" service --instance "Tentacle" --install --start --console
+        }
+        GetScript = {@{Result = "ConfigureOctopusTentacle"}}
+    }
 
-		Script EnableWindowsAuthenticationApi
-	{
-		DependsOn = "[xWebsite]WebApi"
-		TestScript = {
+        Script EnableWindowsAuthenticationApi
+    {
+        DependsOn = "[xWebsite]WebApi"
+        TestScript = {
             $isExistWebSite = Get-Website | Where-Object { $_.Name -eq  $using:webApiHostName }
             if ($isExistWebSite) {
                 $isEnabled = (Get-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/windowsAuthentication" -Name enabled -Location $webApiHostName).Value
                 return [System.Boolean]::Parse($isEnabled);
             }
             return $true;
-		}
-		SetScript = {
-			Set-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/windowsAuthentication" -Name enabled -Location $using:webApiHostName -Value True
-		}
-		GetScript = {@{Result = "EnableWindowsAuthenticationApi"}}
-	}
+        }
+        SetScript = {
+            Set-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/windowsAuthentication" -Name enabled -Location $using:webApiHostName -Value True
+        }
+        GetScript = {@{Result = "EnableWindowsAuthenticationApi"}}
+    }
 
-	Script EnableWindowsAuthenticationApp
-	{
-		DependsOn = "[xWebsite]WebApp"
-		TestScript = {
+    Script EnableWindowsAuthenticationApp
+    {
+        DependsOn = "[xWebsite]WebApp"
+        TestScript = {
             $isExistWebSite = Get-Website | Where-Object { $_.Name -eq  $using:webAppHostName }
             if ($isExistWebSite) {
                 $isEnabled = (Get-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/windowsAuthentication" -Name enabled -Location $using:webAppHostName).Value
                 return [System.Boolean]::Parse($isEnabled);
             }
             return $true;
-		}
-		SetScript = {
-			Set-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/windowsAuthentication" -Name enabled -Location $using:webAppHostName -Value True
-		}
-		GetScript = {@{Result = "EnableWindowsAuthenticationApp"}}
-	}
+        }
+        SetScript = {
+            Set-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/windowsAuthentication" -Name enabled -Location $using:webAppHostName -Value True
+        }
+        GetScript = {@{Result = "EnableWindowsAuthenticationApp"}}
+    }
 
-	Script DisableAnonymousAuthenticationApi
-	{
-		DependsOn = "[xWebsite]WebApi"
-		TestScript = {
+    Script DisableAnonymousAuthenticationApi
+    {
+        DependsOn = "[xWebsite]WebApi"
+        TestScript = {
             $isExistWebSite = Get-Website | Where-Object { $_.Name -eq  $using:webApiHostName }
             if ($isExistWebSite) {
                 $isEnabled = (Get-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/anonymousAuthentication" -Name enabled -Location $using:webApiHostName).Value
                 return -Not [System.Boolean]::Parse($isEnabled);
             }
             return $true;
-		}
-		SetScript = {
-			Set-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/anonymousAuthentication" -Name enabled -Location $using:webApiHostName -Value False
-		}
-		GetScript = {@{Result = "DisableAnonymousAuthenticationApi"}}
-	}
+        }
+        SetScript = {
+            Set-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/anonymousAuthentication" -Name enabled -Location $using:webApiHostName -Value False
+        }
+        GetScript = {@{Result = "DisableAnonymousAuthenticationApi"}}
+    }
 
-	Script DisableAnonymousAuthenticationApp
-	{
-		DependsOn = "[xWebsite]WebApp"
-		TestScript = {
+    Script DisableAnonymousAuthenticationApp
+    {
+        DependsOn = "[xWebsite]WebApp"
+        TestScript = {
             $isExistWebSite = Get-Website | Where-Object { $_.Name -eq  $using:webAppHostName }
             if ($isExistWebSite) {
                 $isEnabled = (Get-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/anonymousAuthentication" -Name enabled -Location $using:webAppHostName).Value
                 return -Not [System.Boolean]::Parse($isEnabled);
             }
             return $true;
-		}
-		SetScript = {
-			Set-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/anonymousAuthentication" -Name enabled -Location $using:webAppHostName -Value False
-		}
-		GetScript = {@{Result = "DisableAnonymousAuthenticationApp"}}
-	}
-	
-	Script DownloadFrameworkNet461
+        }
+        SetScript = {
+            Set-WebConfigurationProperty -Filter "//System.WebServer/security/authentication/anonymousAuthentication" -Name enabled -Location $using:webAppHostName -Value False
+        }
+        GetScript = {@{Result = "DisableAnonymousAuthenticationApp"}}
+    }
+
+    Script DownloadFrameworkNet461
     {
         TestScript = {
             Test-Path "C:\WindowsAzure\NDP461-KB3102438-Web.exe"
@@ -309,16 +309,13 @@ Node localhost
         GetScript = {@{Result = "DownloadFrameworkNet41"}}
     }
 
-	Script InstallFrameworkNet461
+    WindowsProcess InstallFrameworkNet461
     {
-		DependsOn = "[Script]DownloadFrameworkNet461"
-        TestScript = {
-            -Not (Test-Path "C:\WindowsAzure\NDP461-KB3102438-Web.exe")
-        }
-        SetScript ={
-            & "C:\WindowsAzure\NDP461-KB3102438-Web.exe" /q /norestart /log "C:\WindowsAzure\Logs\Net461.txt"
-        }
-        GetScript = {@{Result = "InstallFrameworkNet461"}}
+        Arguments = "/q /norestart"
+        Path = "C:\WindowsAzure\NDP461-KB3102438-Web.exe"
+        Ensure = "Present"
+        DependsOn = "[Script]DownloadFrameworkNet461"
+        StandardOutputPath = "C:\WindowsAzure\Logs\Net461.txt"
     }
   }
 }
