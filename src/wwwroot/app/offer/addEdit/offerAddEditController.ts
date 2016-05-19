@@ -20,7 +20,7 @@ module Antares {
 
             offer: Business.Offer;
             activity: Dto.IActivity = <Dto.IActivity>{};
-            requirement: Dto.IRequirement = <Dto.IRequirement>{};
+            requirement: Dto.IRequirement;
 
             addOfferForm: any;
 
@@ -33,6 +33,7 @@ module Antares {
 
                 componentRegistry.register(this, this.componentId);
                 this.enumService.getEnumPromise().then(this.onEnumLoaded);
+                this.requirement = <Dto.IRequirement>{};
             }
 
             setOffer = (offer: Business.Offer) =>{

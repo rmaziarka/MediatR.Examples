@@ -203,7 +203,8 @@ module Antares.Requirement.View {
             this.addOfferBusy = true;
             this.components.offerAdd()
                 .saveOffer()
-                .then(() => {
+                .then((offer: Business.Offer) =>{
+                    this.requirement.offers.push(offer);
                     this.hidePanels();
                 })
                 .finally(() => {

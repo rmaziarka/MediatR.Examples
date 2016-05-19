@@ -16,7 +16,7 @@ module Antares {
             $http: ng.IHttpBackendService,
             controller: OfferAddEditController;
 
-        var pageObjectSelectors = {
+        var pageObjectSelectors: any = {
             offerDate: '[name=offerDate]',
             offer: '[name=price]',
             exchangeDate: '[name=exchangeDate]',
