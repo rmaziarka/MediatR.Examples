@@ -27,6 +27,7 @@ module Antares {
                 componentRegistry: Antares.Core.Service.ComponentRegistry,
                 private dataAccessService: Antares.Services.DataAccessService,
                 private enumService: Services.EnumService,
+                private $state: ng.ui.IStateService,
                 private $q: ng.IQService) {
 
                 componentRegistry.register(this, this.componentId);
@@ -90,6 +91,9 @@ module Antares {
                     .$promise;
             }
 
+            goToActivityView = () => {
+                this.$state.go('app.activity-view', { id: this.activity.id });
+            }
         }
         angular.module('app').controller('offerAddController', OfferAddController);
     }
