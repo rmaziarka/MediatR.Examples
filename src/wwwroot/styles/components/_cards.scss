@@ -5,10 +5,6 @@
   border: 1px solid $color-denim;
   margin-bottom: 15px;
   position: relative;
-
-  &:hover {
-    border: 1px solid $color-black;
-  }
 }
 
 .card-selected {
@@ -28,8 +24,7 @@
 }
 
 .card-body {
-  display: inline-block;
-  padding: 8px 12px;
+  padding: 12px;
   width: calc(100% - 47px);
 
   .checkbox,
@@ -43,7 +38,7 @@
 
 .card-item {
   font-size: 13px;
-  line-height: 23px;
+  line-height: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -52,14 +47,16 @@
 .card-info {
   color: $color-dusty-gray;
   font-size: 12px;
+  margin-top: 3px;
 }
 
 .card-action {
   cursor: pointer;
   height: 100%;
+  outline: none;
   position: absolute;
-  right: 1px;
-  top: 1px;
+  right: 0;
+  top: 0;
   width: 47px;
 
   &:hover {
@@ -81,7 +78,9 @@
     height: 40px;
     line-height: 40px;
     position: relative;
+    right: 1px;
     text-align: center;
+    top: 1px;
     width: 47px;
     z-index: 2;
   }
@@ -93,19 +92,19 @@
     display: none;
     list-style: none;
     margin: {
-      top: -1px;
+      bottom: 0;
     }
     min-width: 150px;
-    padding: 7px 0;
+    padding: 0;
     position: absolute;
-    right: 0;
+    right: 1px;
     z-index: 1;
 
     a {
       color: $color-black;
       display: block;
-      line-height: 1;
-      padding: 6px 15px;
+      line-height: 15px;
+      padding: 10px 15px;
       white-space: nowrap;
     }
 
@@ -130,10 +129,12 @@
       right: 1px solid $color-black;
       top: 1px solid $color-black;
     }
+    z-index: 4;
   }
 
   .card-menu {
     display: block;
+    z-index: 3;
   }
 
   &:hover {

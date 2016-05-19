@@ -9,6 +9,7 @@
         protected override void Configure()
         {
             this.CreateMap<CreateOfferCommand, Offer>();
+            this.CreateMap<UpdateOfferCommand, Offer>();
         }
     }
 }

@@ -20,36 +20,41 @@
         private readonly IGenericRepository<Activity> activityRepository;
         private readonly IGenericRepository<ActivityUser> activityUserRepository;
         private readonly IEntityValidator entityValidator;
+        private readonly ICollectionValidator collectionValidator;
 
         public UpdateActivityCommandHandler(IGenericRepository<Activity> activityRepository,
-            IGenericRepository<ActivityUser> activityUserRepository, IEntityValidator entityValidator)
+            IGenericRepository<ActivityUser> activityUserRepository, IEntityValidator entityValidator, ICollectionValidator collectionValidator)
         {
             this.activityRepository = activityRepository;
             this.activityUserRepository = activityUserRepository;
             this.entityValidator = entityValidator;
+            this.collectionValidator = collectionValidator;
         }
 
         public Guid Handle(UpdateActivityCommand message)
         {
-            Activity activity =
-                this.activityRepository.GetWithInclude(x => x.Id == message.Id, x => x.ActivityUsers).SingleOrDefault();
+            Activity activity = this.activityRepository.GetWithInclude(x => x.Id == message.Id, x => x.ActivityUsers).SingleOrDefault();
             this.entityValidator.EntityExists(activity, message.Id);
 
             this.entityValidator.EntityExists<User>(message.LeadNegotiatorId);
-
-            Mapper.Map(message, activity);
-
-            // ReSharper disable once PossibleNullReferenceException
-            List<ActivityUser> existingNegotiators = activity.ActivityUsers.ToList();
 
             var commandNegotiators = new List<ActivityUser>
             {
                 new ActivityUser { UserId = message.LeadNegotiatorId, UserType = UserTypeEnum.LeadNegotiator }
             };
 
+            this.entityValidator.EntitiesExist<User>(message.SecondaryNegotiatorIds);
+
             commandNegotiators.AddRange(
                 message.SecondaryNegotiatorIds.Select(
                     n => new ActivityUser { UserId = n, UserType = UserTypeEnum.SecondaryNegotiator }));
+
+            this.collectionValidator.CollectionIsUnique(commandNegotiators.Select(n => n.UserId).ToList(), ErrorMessage.Activity_Negotiators_Not_Unique);
+
+            Mapper.Map(message, activity);
+
+            // ReSharper disable once PossibleNullReferenceException
+            List<ActivityUser> existingNegotiators = activity.ActivityUsers.ToList();
 
             existingNegotiators
                 .Where(n => IsRemovedFromExistingList(n, commandNegotiators))

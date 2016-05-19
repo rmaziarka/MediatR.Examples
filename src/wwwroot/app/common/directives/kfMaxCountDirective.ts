@@ -2,10 +2,11 @@
 
 module Antares.Common.Directive {
     export class KfMaxCount implements ng.IDirective {
-        restrict = 'E';
+        restrict = 'A';
         require = 'ngModel';
         scope = {
-            ngModel: '=ngModel'
+            ngModel: '=ngModel',
+            maxCount: '=kfMaxCount'
         };
         link: any;
 
@@ -15,15 +16,15 @@ module Antares.Common.Directive {
 
         unboundLink(scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ngModel: ng.INgModelController) {
 
-            ngModel.$validators['kfMaxCount'] = (modelValue: number) => {
-                var maxCount: number = parseInt(attrs['maxCount']);
+            ngModel.$validators['kfMaxCount'] = (modelValue: string) => {
+                var maxCount: number = parseInt(scope["maxCount"]);
                 if (isNaN(maxCount)) {
                     maxCount = 0;
                 }
-                if (modelValue === undefined) {
+                if (!modelValue) {
                     return true;
                 }
-                return (modelValue <= maxCount);
+                return (modelValue.length <= maxCount);
             }
             scope.$watch('ngModel', (newValue, oldValue) => {
                 if ((newValue !== undefined || oldValue !== undefined) && newValue !== oldValue) {

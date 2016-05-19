@@ -66,6 +66,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="TechTalk.SpecFlow, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
@@ -120,6 +121,7 @@
     <Compile Include="Pages\CreateContactPage.cs" />
     <Compile Include="Pages\CreateRequirementPage.cs" />
     <Compile Include="Pages\EditActivityPage.cs" />
+    <Compile Include="Pages\Panels\CreateAreaPage.cs" />
     <Compile Include="Pages\Panels\NotesPage.cs" />
     <Compile Include="Pages\Panels\OwnershipDetailsPage.cs" />
     <Compile Include="Pages\Panels\PropertyPreviewPage.cs" />
@@ -145,6 +147,16 @@
     <Compile Include="Steps\ViewActivitySteps.cs" />
     <Compile Include="Steps\ViewRequirementSteps.cs" />
     <Compile Include="Steps\ViewPropertySteps.cs" />
+    <Compile Include="Tests\Activities\Activities.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Activities.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Activities\Attachments.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Attachments.feature</DependentUpon>
+    </Compile>
     <Compile Include="Tests\Company\Company.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -182,6 +194,14 @@
     <Content Include="Resources\PDF document.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Tests\Activities\Activities.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Activities.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Activities\Attachments.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Attachments.feature.cs</LastGenOutput>
+    </None>
     <None Include="Tests\Company\Company.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Company.feature.cs</LastGenOutput>

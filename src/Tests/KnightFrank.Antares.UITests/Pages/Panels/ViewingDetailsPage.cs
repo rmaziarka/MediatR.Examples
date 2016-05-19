@@ -3,8 +3,6 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using KnightFrank.Antares.UITests.Extensions;
-
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
@@ -13,18 +11,18 @@
     {
         private readonly ElementLocator attendees = new ElementLocator(Locator.CssSelector, "div[id *= 'viewing-preview-attendee-item']");
         private readonly ElementLocator date = new ElementLocator(Locator.Id, "viewing-preview-date");
-        private readonly ElementLocator activity = new ElementLocator(Locator.Id, "viewing-preview-activity-details");
+        private readonly ElementLocator details = new ElementLocator(Locator.CssSelector, ".slide-in .section-details:nth-of-type(1) .panel-item");
         private readonly ElementLocator editViewing = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showViewingEdit']");
         private readonly ElementLocator invitationText = new ElementLocator(Locator.Id, "viewing-preview-invitation-text");
         private readonly ElementLocator postViewingComment = new ElementLocator(Locator.Id, "viewing-preview-post-viewing-comment");
         private readonly ElementLocator negotiator = new ElementLocator(Locator.Id, "viewing-preview-negotiator-details");
-        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
+        private readonly ElementLocator viewLink = new ElementLocator(Locator.CssSelector, ".slide-in .section-details:nth-of-type(1) a");
 
         public ViewingDetailsPage(DriverContext driverContext) : base(driverContext)
         {
         }
 
-        public string Activity => this.Driver.GetElement(this.activity).Text;
+        public string Details => this.Driver.GetElement(this.details).Text;
 
         public string Date => this.Driver.GetElement(this.date).Text;
 
@@ -42,9 +40,9 @@
             return new CreateViewingPage(this.DriverContext);
         }
 
-        public ViewingDetailsPage WaitForPanelToBeVisible()
+        public ViewingDetailsPage ClickViewLink()
         {
-            this.Driver.WaitForElementToBeDisplayed(this.panel, BaseConfiguration.MediumTimeout);
+            this.Driver.GetElement(this.viewLink).Click();
             return this;
         }
     }

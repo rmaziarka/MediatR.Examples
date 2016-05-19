@@ -10,11 +10,8 @@
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.User.QueryResults;
-    
-    using Domain.Enum.Queries;
-    using Domain.Enum.QueryResults;
+
     using Domain.User.Queries;
-    using Domain.User.QueryResults;
 
     using MediatR;
 

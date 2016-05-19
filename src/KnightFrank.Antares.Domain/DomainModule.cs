@@ -32,6 +32,7 @@
             this.Bind(typeof(IRequestHandler<,>)).To(typeof(ValidatorCommandHandler<,>));
 
             this.Bind(typeof(IGenericRepository<>)).To(typeof(GenericRepository<>));
+            this.Bind<INinjectInstanceResolver>().To<NinjectInstanceResolver>();
 
             this.Bind(typeof(IReadGenericRepository<>)).To(typeof(ReadGenericRepository<>));
             this.Bind<IEntityValidator>().To(typeof(EntityValidator));

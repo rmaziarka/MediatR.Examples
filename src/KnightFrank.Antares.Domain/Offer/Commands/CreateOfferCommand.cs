@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace KnightFrank.Antares.Domain.Offer.Commands
+﻿namespace KnightFrank.Antares.Domain.Offer.Commands
 {
+    using System;
+
     using MediatR;
 
     public class CreateOfferCommand : IRequest<Guid>

@@ -89,8 +89,19 @@ Scenario: Create viewing on requirement
 		| 12-05-2016 | 10:00 - 11:00 | Knight Lancelot, 120 Baker Str |
 	When User clicks 1 viewings details link on view requirement page
 	Then Viewing details on view requirement page are same as the following
-		| Activity                       | Date       | StartTime | EndTime | Negotiator | Attendees                 | InvitationText | PostViewingComment |
+		| Name                           | Date       | StartTime | EndTime | Negotiator | Attendees                 | InvitationText | PostViewingComment |
 		| Knight Lancelot, 120 Baker Str | 12-05-2016 | 10:00     | 11:00   | John Smith | Amber Brooks;Kennedi Hyde | Text           |                    |
+	When User clicks view activity on view requirement page
+	Then View activity page is displayed
+		And Viewing details on 1 position on view activity page are same as the following
+			| Date       | Time          | Name                                     |
+			| 12-05-2016 | 10:00 - 11:00 | Amber Brooks, Sarah Knight, Kennedi Hyde |
+	When User clicks 1 viewings details link on view activity page
+	Then Viewing details on view activity page are same as the following
+		| Name                                     | Date       | StartTime | EndTime | Negotiator | Attendees                 | InvitationText | PostViewingComment |
+		| Amber Brooks, Sarah Knight, Kennedi Hyde | 12-05-2016 | 10:00     | 11:00   | John Smith | Amber Brooks;Kennedi Hyde | Text           |                    |
+	When User clicks view requirement on view activity page
+	Then View requirement page is displayed
 
 @Requirement
 Scenario: Update viewing on requirement
@@ -134,5 +145,5 @@ Scenario: Update viewing on requirement
 		| 12-12-2016 | 12:00 - 14:00 | My House, 6 Blisworth Cl |
 	When User clicks 1 viewings details link on view requirement page
 	Then Viewing details on view requirement page are same as the following
-		| Activity                 | Date       | StartTime | EndTime | Negotiator | Attendees      | InvitationText | PostViewingComment   |
+		| Name                     | Date       | StartTime | EndTime | Negotiator | Attendees      | InvitationText | PostViewingComment   |
 		| My House, 6 Blisworth Cl | 12-12-2016 | 12:00     | 14:00   | John Smith | Martin Jackson | Text           | Post Viewing Comment |

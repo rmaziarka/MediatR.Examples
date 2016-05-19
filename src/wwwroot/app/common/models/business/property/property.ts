@@ -1,6 +1,6 @@
 ﻿module Antares.Common.Models.Business {
 
-    export class Property {
+    export class Property implements Dto.IProperty {
         id: string = null;
         propertyTypeId: string = null;
         address: Business.Address = new Business.Address();
@@ -11,6 +11,9 @@
         attributeValues: any = {};
         // dynamic object created basing on list of characteristic (with characteristicId as key)
         propertyCharacteristicsMap: any = {};
+        propertyCharacteristics: Models.Dto.IPropertyCharacteristic[];
+        propertyAreaBreakdowns: Dto.IPropertyAreaBreakdown[];
+        totalAreaBreakdown: number = 0;
 
         constructor(property?: Dto.IProperty)
         {

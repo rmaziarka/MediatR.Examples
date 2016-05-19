@@ -44,6 +44,12 @@
             this.Driver.GetElement<Select>(this.type).SelectByText(activityType);
             return this;
         }
+
+        public CreateActivityPage SelectActivityStatus(string activityStatus)
+        {
+            this.Driver.GetElement<Select>(this.status).SelectByText(activityStatus);
+            return this;
+        }
     }
 
     internal class ActivityDetails

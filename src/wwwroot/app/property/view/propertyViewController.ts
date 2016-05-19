@@ -64,6 +64,7 @@ module Antares.Property.View {
 
 
         showAreaAdd = () => {
+            this.components.areaAdd().clearAreas();
             this.showPanel(this.components.panels.areaAdd);
         }
 
@@ -124,10 +125,20 @@ module Antares.Property.View {
         }
 
         saveArea() {
-            this.components.areaAdd().saveAreas(this.property.id).then((areas: Business.PropertyArea[]) => {
-                console.log(areas);
+            this.components.areaAdd().saveAreas(this.property.id).then((areas: Business.PropertyAreaBreakdown[]) => {
+                [].push.apply(this.property.propertyAreaBreakdowns, areas);
+                this.cancelAddArea();
             });
         }
+
+        areaBreakdownDndOptions: Common.Models.IDndOptions = {
+            dragStart: (event: Common.Models.IDndEvent) => {
+                
+            },
+            dragEnd: (event: Common.Models.IDndEvent) => {
+
+            }
+        };
 
         defineComponentIds() {
             this.componentIds = {

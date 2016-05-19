@@ -1,17 +1,17 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares {
-    import ViewingAddController = Antares.Component.ViewingAddController;
-    import Dto = Common.Models.Dto;
+    import ViewingAddController = Component.ViewingAddController;
     import Business = Common.Models.Business;
     import runDescribe = TestHelpers.runDescribe;
+    type TestCaseForRequiredValidator = [string, boolean];
 
     declare var moment: any;
 
     describe('Given viewing', () => {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
-            assertValidator: Antares.TestHelpers.AssertValidators,
+            assertValidator: TestHelpers.AssertValidators,
             $http: ng.IHttpBackendService,
             controller: ViewingAddController,
             compile: ng.ICompileService;
@@ -56,7 +56,6 @@ module Antares {
                 $http = $httpBackend;
                 scope = $rootScope.$new();
                 scope["requirement"] = requirementMock;
-                scope["requirement"] = requirementMock;
                 scope["attendees"] = requirementMock.contacts;
 
                 element = $compile('<viewing-add mode="add" requirement="requirement" attendees="attendees"></viewing-add>')(scope);
@@ -66,18 +65,16 @@ module Antares {
                 controller.startTime = "10:00";
                 controller.endTime = "11:00";
 
-                assertValidator = new Antares.TestHelpers.AssertValidators(element, scope);
+                assertValidator = new TestHelpers.AssertValidators(element, scope);
             }));
 
-            type TestCaseForRequiredValidator = [string, boolean];
             // RequiredValidator for viewing date
             runDescribe('viewing date ')
                 .data<TestCaseForRequiredValidator>([
                     ['', false],
-                    ['21-12-1984', true],
-                    ['invalid date', false]])
+                    ['21-12-1984', true]])
                 .dataIt((data: TestCaseForRequiredValidator) =>
-                    `value is "${data[0]}" then required message should ${data[1] ? 'not' : ''} be displayed`)
+                    `value is "${data[0]}" then required validation message should ${data[1] ? 'not' : ''} be displayed`)
                 .run((data: TestCaseForRequiredValidator) => {
                     // arrange / act / assert
                     assertValidator.assertRequiredValidator(data[0], data[1], pageObjectSelectors.viewingDateSelector);
@@ -158,7 +155,7 @@ module Antares {
                 .data<TestCaseForRequiredValidator>([
                     ['11:00', true],
                     ['11:70', false],
-                    ['26:00', false, ],
+                    ['26:00', false],
                     ['invalid time', false]])
                 .dataIt((data: TestCaseForRequiredValidator) =>
                     `value is "${data[0]}" then required message should ${data[1] ? 'not' : ''} be displayed`)
@@ -210,7 +207,7 @@ module Antares {
 
                 $http = $httpBackend;
                 scope = $rootScope.$new();
-                compile = $compile
+                compile = $compile;
                 scope["requirement"] = requirementMock;
                 scope["attendees"] = requirementMock.contacts;
 
@@ -221,7 +218,7 @@ module Antares {
                 controller.endTime = "11:00";
                 scope.$apply();
 
-                assertValidator = new Antares.TestHelpers.AssertValidators(element, scope);
+                assertValidator = new TestHelpers.AssertValidators(element, scope);
             }));
 
             it('all data is loaded', () => {

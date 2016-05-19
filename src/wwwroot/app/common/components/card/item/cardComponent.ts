@@ -5,10 +5,15 @@ module Antares.Common.Component {
         templateUrl: 'app/common/components/card/item/card.html',
         controllerAs: 'cvm',
         controller: 'CardController',
+        transclude: {
+            'contextMenu': '?cardContextMenu'
+        },
         bindings: {
             item: '<',
             cardTemplateUrl: '<',
-            showItemDetails: '<'
+            showItemDetails: '<',
+            showContextMenu: '<',
+            displayNewControl: '<'
         }
     });
 }

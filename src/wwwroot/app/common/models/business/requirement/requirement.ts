@@ -12,12 +12,15 @@ module Antares.Common.Models.Business {
         requirementNotes: RequirementNote[] = [];
         viewingsByDay: ViewingGroup[];
         viewings: Viewing[];
+        offers: Offer[];
 
         constructor(requirement?: Dto.IRequirement) {
             if (requirement) {
                 angular.extend(this, requirement);
                 this.createDate = Core.DateTimeUtils.convertDateToUtc(requirement.createDate);
                 this.contacts = requirement.contacts.map((contact: Dto.IContact) => { return new Contact(contact) });
+                if (this.offers)
+                    this.offers = requirement.offers.map((offer: Dto.IOffer) => { return new Offer(offer) });
                 this.address = new Address(requirement.address);
                 this.requirementNotes = requirement.requirementNotes.map((requirementNote: Dto.IRequirementNote) => { return new RequirementNote(requirementNote) });
                 if (requirement.viewings) {
@@ -26,15 +29,15 @@ module Antares.Common.Models.Business {
                 }
             }
         }
-                
+
         groupViewings(viewings: Viewing[]) {
             this.viewingsByDay = [];
             var groupedViewings: _.Dictionary<Viewing[]> = _.groupBy(viewings, (i: Viewing) => { return i.day; });
-            this.viewingsByDay = _.map(groupedViewings, (items: Viewing[], key: string) => { return new ViewingGroup(key, items); });            
+            this.viewingsByDay = _.map(groupedViewings, (items: Viewing[], key: string) => { return new ViewingGroup(key, items); });
         }
 
-        public getContactNames(){
-            return this.contacts.map((c: Contact) =>{ return c.getName() }).join(", ");
+        public getContactNames() {
+            return this.contacts.map((c: Contact) => { return c.getName() }).join(", ");
         }
     }
 }

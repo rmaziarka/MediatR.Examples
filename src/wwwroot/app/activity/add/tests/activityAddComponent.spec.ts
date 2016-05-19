@@ -100,7 +100,7 @@ module Antares {
                 expect(elements.length).toBe(1);
 
                 var vendorElement: HTMLElement = elements[0];
-                expect(vendorElement.innerText).toBe(vendor.getName());
+                expect(vendorElement.innerText.trim()).toBe(vendor.getName());
             });
         });
 

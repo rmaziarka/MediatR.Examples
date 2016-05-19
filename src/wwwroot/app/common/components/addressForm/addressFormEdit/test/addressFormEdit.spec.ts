@@ -226,11 +226,6 @@ module Antares {
                 assertValidator.assertRequiredValidator(null, false, pageObjectSelectors.fieldESelector);
             });
 
-            it('when required value is missing and value does not this match pattern then required message should be displayed', () => {
-                assertValidator.assertRequiredValidator(null, false, pageObjectSelectors.fieldBSelector);
-                assertValidator.assertPatternValidator(null, false, pageObjectSelectors.fieldBSelector);
-            });
-
             it('when value does not match pattern then invalid format message should be displayed', () => {
                 assertValidator.assertPatternValidator('123', false, pageObjectSelectors.fieldCSelector);
             });

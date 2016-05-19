@@ -13,6 +13,7 @@
 
     public class ViewRequirementPage : ProjectPageBase
     {
+        private readonly ElementLocator viewRequirementForm = new ElementLocator(Locator.CssSelector, "requirement-view > div");
         private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "[ng-show *= 'isLoading']");
         private readonly ElementLocator locationRequirementsDetails = new ElementLocator(Locator.XPath, "//*[contains(@translate, 'LOCATION')]/..//span");
         private readonly ElementLocator notesButton = new ElementLocator(Locator.Id, "notes-button");
@@ -22,9 +23,9 @@
         private readonly ElementLocator requirementApplicants = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'contacts'] div");
         private readonly ElementLocator requirementDate = new ElementLocator(Locator.CssSelector, "span[translate *= 'CREATEDDATE'] ~ span");
         private readonly ElementLocator addViewings = new ElementLocator(Locator.CssSelector, "#viewings-list button");
-        private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item");
-        private readonly ElementLocator viewingDetailsLink = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) a");
-        private readonly ElementLocator viewingDetails = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .ng-binding");
+        private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item .card");
+        private readonly ElementLocator viewingDetails = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .card");
+        private readonly ElementLocator viewingData = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .ng-binding");
         
         public ViewRequirementPage(DriverContext driverContext) : base(driverContext)
         {
@@ -44,6 +45,12 @@
         {
             new CommonPage(this.DriverContext).NavigateToPageWithId("view requirement", id);
             return this;
+        }
+
+        public bool IsViewRequirementFormPresent()
+        {
+            this.Driver.WaitForAngularToFinish();
+            return this.Driver.IsElementPresent(this.viewRequirementForm, BaseConfiguration.MediumTimeout);
         }
 
         public ViewRequirementPage WaitForDetailsToLoad()
@@ -108,19 +115,19 @@
 
         public ViewRequirementPage OpenViewingDetails(int position)
         {
-            this.Driver.GetElement(this.viewingDetailsLink.Format(position)).Click();
+            this.Driver.GetElement(this.viewingDetails.Format(position)).Click();
             return this;
         }
 
         public List<string> GetViewingDetails(int position)
         {
-            return this.Driver.GetElements(this.viewingDetails.Format(position)).Select(el => el.Text).ToList();
+            return this.Driver.GetElements(this.viewingData.Format(position)).Select(el => el.Text).ToList();
         }
     }
 
     internal class ViewingDetails
     {
-        public string Activity { get; set; }
+        public string Name { get; set; }
 
         public string Date { get; set; }
 

@@ -4,10 +4,14 @@ module Antares.TestHelpers {
     export class AssertValidators {
         private pageObjectSelectors = {
             requiredValidatorSelector : '[name="requiredValidationError"]',
-            minNumberValidationError : '[name="minNumberValidationError"]',
-            maxNumberValidationError : '[name="maxNumberValidationError"]',
+            minNumberValidationError: '[name="minNumberValidationError"]',
+            maxNumberValidationError: '[name="maxNumberValidationError"]',
+            numberGreaterThanValidationError: '[name="numberGreaterThanValidationError"]',
             maxLengthValidatorSelector: '[name="maxLengthValidationError"], [name="kfMaxCountValidationError"]',
-            formatValidationError: '[name="formatValidationError"]'
+            formatValidationError: '[name="formatValidationError"]',
+            dateFormatValidationError: '[name="dateValidationError"]',
+            numberFormatValidationError: '[name="numberValidationError"]',
+            anyValidationMessageError: 'ng-message'
         };
 
         constructor(private element: ng.IAugmentedJQuery, private scope: ng.IScope){
@@ -15,51 +19,63 @@ module Antares.TestHelpers {
             this.scope = scope;
         }
 
-        public assertRequiredValidator = (inputValue: string, expectedResult: boolean, inputSelector: string) =>{
-            var input = this.element.find(inputSelector);
-
-            var pageObject: InputValidationAdapter =
-                new InputValidationAdapter(input, this.pageObjectSelectors.requiredValidatorSelector, this.scope);
-
-            expect(pageObject.isValidFor(inputValue)).toBe(expectedResult);
+        public assertRequiredValidator = (inputValue: string | number, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
+            this.assertValidator(inputValue, expectedResult, inputSelector, this.pageObjectSelectors.requiredValidatorSelector, parentSelector);
         }
 
-        public assertMinValueValidator = (inputMinValue: number, expectedResult: boolean, inputSelector: string) =>{
-            var input = this.element.find(inputSelector);
-
-            var pageObject: InputValidationAdapter =
-                new InputValidationAdapter(input, this.pageObjectSelectors.minNumberValidationError, this.scope);
-
-            expect(pageObject.isValidFor(inputMinValue)).toBe(expectedResult);
+        public assertMinValueValidator = (inputMinValue: number, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
+            this.assertValidator(inputMinValue, expectedResult, inputSelector, this.pageObjectSelectors.minNumberValidationError, parentSelector);
         }
 
-        public assertMaxValueValidator = (inputMaxValue: number, expectedResult: boolean, inputSelector: string) =>{
-            var input = this.element.find(inputSelector);
-
-            var pageObject: InputValidationAdapter =
-                new InputValidationAdapter(input, this.pageObjectSelectors.maxNumberValidationError, this.scope);
-
-            expect(pageObject.isValidFor(inputMaxValue)).toBe(expectedResult);
+        public assertMaxValueValidator = (inputMaxValue: number, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
+            this.assertValidator(inputMaxValue, expectedResult, inputSelector, this.pageObjectSelectors.maxNumberValidationError, parentSelector);
         }
 
-        public assertMaxLengthValidator = (inputValueLength: number, expectedResult: boolean, inputSelector: string) =>{
-            var input = this.element.find(inputSelector);
-
-            var pageObject: InputValidationAdapter =
-                new InputValidationAdapter(input, this.pageObjectSelectors.maxLengthValidatorSelector, this.scope);
-
+        public assertMaxLengthValidator = (inputValueLength: number, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
             var value = this.generateString(inputValueLength);
 
-            expect(pageObject.isValidFor(value)).toBe(expectedResult);
+            this.assertValidator(value, expectedResult, inputSelector, this.pageObjectSelectors.maxLengthValidatorSelector, parentSelector);
         }
 
-        public assertPatternValidator = (inputValue: string, expectedResult: boolean, inputSelector: string) => {
+        public assertNumberGreaterThenValidator = (inputMaxValue: number, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
+            this.assertValidator(inputMaxValue, expectedResult, inputSelector, this.pageObjectSelectors.numberGreaterThanValidationError, parentSelector);
+        }
+
+        public assertPatternValidator = (inputValue: string, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
+            this.assertValidator(inputValue, expectedResult, inputSelector, this.pageObjectSelectors.formatValidationError, parentSelector);
+        }
+
+        public assertDateFormatValidator = (inputValue: string, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
+            this.assertValidator(inputValue, expectedResult, inputSelector, this.pageObjectSelectors.dateFormatValidationError, parentSelector);
+        }
+
+        public assertNumberFormatValidator = (inputValue: string, expectedResult: boolean, inputSelector: string, parentSelector?: string) =>{
+            this.assertValidator(inputValue, expectedResult, inputSelector, this.pageObjectSelectors.numberFormatValidationError, parentSelector);
+        }
+
+        public assertValidAndNoMessages = (inputValue: string, inputSelector: string, parentSelector?: string) =>{
+            var input = this.element.find(inputSelector);
+            var pageObject: InputValidationAdapter =
+                new InputValidationAdapter(input, this.pageObjectSelectors.anyValidationMessageError, this.scope, parentSelector);
+
+            pageObject.writeValue(inputValue);
+            expect(pageObject.isInputValid()).toBe(true, 'Input is invalid');
+            expect(pageObject.isValidationShown()).toBe(false, 'At least one error message is visible');
+        }
+
+        private assertValidator = (inputValue: any, expectedResult: boolean, inputSelector: string, errorSelector: string, parentSelector?: string) => {
             var input = this.element.find(inputSelector);
 
             var pageObject: InputValidationAdapter =
-                new InputValidationAdapter(input, this.pageObjectSelectors.formatValidationError, this.scope);
+                new InputValidationAdapter(input, errorSelector, this.scope, parentSelector);
 
-            expect(pageObject.isValidFor(inputValue)).toBe(expectedResult);
+            pageObject.writeValue(inputValue);
+
+            var isValidMessage = expectedResult ? "Input is invalid but is expected to be valid" : "Input is valid but is expected to be invalid";
+            var isValidationShownMessage = expectedResult ? "Validation message is shown but input is valid" : "Validation message is not shown or too many validation messages shown";
+
+            expect(pageObject.isInputValid()).toBe(expectedResult, isValidMessage);
+            expect(pageObject.isValidationShown()).toBe(!expectedResult, isValidationShownMessage);
         }
 
         public assertShowElement = (expectedResult: boolean, elementSelector: string) => {
@@ -82,13 +98,9 @@ module Antares.TestHelpers {
         constructor(
             private input: ng.IAugmentedJQuery,
             private validatorSelector: string,
-            private scope: ng.IScope){
+            private scope: ng.IScope,
+            private parentSelector: string = '.form-group') {
 
-        }
-
-        public isValidFor(inputValue: any): boolean {
-            this.writeValue(inputValue);
-            return this.isInputValid() && !this.isValidationShown();
         }
 
         public isInputValid(): boolean {
@@ -96,7 +108,7 @@ module Antares.TestHelpers {
         }
 
         public isValidationShown(): boolean{
-            return this.input.parent().find(this.validatorSelector).length > 0;
+            return this.input.closest(this.parentSelector).find(this.validatorSelector).length === 1;
         }
 
         public writeValue(value: string){

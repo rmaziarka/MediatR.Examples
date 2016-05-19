@@ -43,6 +43,19 @@
         }
 
         /// <summary>
+        /// Updates the offer.
+        /// </summary>
+        /// <param name="command">The command.</param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("")]
+        public Offer UpdateOffer(UpdateOfferCommand command)
+        {
+            Guid offerId = this.mediator.Send(command);
+            return this.GetOffer(offerId);
+        }
+
+        /// <summary>
         /// Gets the offer by Id.
         /// </summary>
         /// <param name="id">Offer Id.</param>

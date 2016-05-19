@@ -32,29 +32,8 @@
                     </list>
                 </section>
                 <section>
-                    <h3 class="page-header">Negotiators</h3>
-                    <h4>Lead negotiator</h4>
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="panel-item">George Washington</div>
-                            <small>Dolor Sit Department</small>
-                        </div>
-                    </div>
-                    <h4>Secondary negotiator</h4>
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="panel-item">Sean Cassidy</div>
-                            <small>Dolor Sit Department</small>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="panel-item">Adam Baldwin</div>
-                            <small>Dolor Sit Department</small>
-                        </div>
-                    </div>
+                    <negotiators-view property-division-id="{{avvm.activity.property.divisionId}}" lead-negotiator="avvm.activity.leadNegotiator" secondary-negotiators="avvm.activity.secondaryNegotiator"></negotiators-view>                    
                 </section>
-
             </div>
             <div class="col-md-4">
                 <section id="activity-view-prices">
@@ -110,7 +89,7 @@
 
                 <!-- Card component -->
 
-                <section>
+                <section ng-hide="true">
                     <h3 class="page-header">Cards</h3>
 
                     <div class="card">
@@ -231,9 +210,4 @@
         <viewing-preview component-id="avvm.componentIds.viewingPreviewId" page-context="activity">
         </viewing-preview>
     </side-panel-content>
-    <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="avvm.cancelViewingPreview()">
-            <i class="fa fa-angle-double-left"></i> <span translate="COMMON.BACK"></span>
-        </button>
-    </side-panel-footer>
 </side-panel>

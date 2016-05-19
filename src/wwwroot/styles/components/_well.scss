@@ -1,6 +1,9 @@
 // Well Styles
 
 .well {
+  display: inline-block;
+  width: 100%;
+
   > span {
     display: block;
   }

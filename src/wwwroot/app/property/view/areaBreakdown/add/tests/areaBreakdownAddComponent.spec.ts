@@ -33,30 +33,18 @@ module Antares {
             assertValidator = new TestHelpers.AssertValidators(element, scope);
         }));
 
-        type TestCaseForRequiredValidator = [string, boolean];
+        type TestCaseForValidator = [string | number, boolean];
 
         runDescribe('when filling name')
-            .data<TestCaseForRequiredValidator>([
+            .data<TestCaseForValidator>([
                 ['', false],
                 [null, false],
                 ['text', true]])
-            .dataIt((data: TestCaseForRequiredValidator) =>
+            .dataIt((data: TestCaseForValidator) =>
                 `and value is "${data[0]}" then required message should ${data[1] ? 'not' : ''} be displayed`)
-            .run((data: TestCaseForRequiredValidator) => {
+            .run((data: TestCaseForValidator) => {
                 // arrange / act / assert
                 assertValidator.assertRequiredValidator(data[0], data[1], pageObjectSelectors.firstNameInput);
-            });
-
-        runDescribe('when filling size')
-            .data<TestCaseForRequiredValidator>([
-                ['', false],
-                [null, false],
-                ['1', true]])
-            .dataIt((data: TestCaseForRequiredValidator) =>
-                `and value is "${data[0]}" then required message should ${data[1] ? 'not' : ''} be displayed`)
-            .run((data: TestCaseForRequiredValidator) => {
-                // arrange / act / assert
-                assertValidator.assertRequiredValidator(data[0], data[1], pageObjectSelectors.firstSizeInput);
             });
 
         it('then it should validate if name field has less than 129 characters', () => {
@@ -68,6 +56,31 @@ module Antares {
             assertValidator.assertMaxLengthValidator(129, false, pageObjectSelectors.firstNameInput);
             assertValidator.assertMaxLengthValidator(128, true, pageObjectSelectors.firstNameInput);
         });
+
+        runDescribe('when filling size')
+            .data<TestCaseForValidator>([
+                ['', false],
+                [null, false],
+                ['1', true]])
+            .dataIt((data: TestCaseForValidator) =>
+                `and value is "${data[0]}" then required message should ${data[1] ? 'not' : ''} be displayed`)
+            .run((data: TestCaseForValidator) => {
+                // arrange / act / assert
+                assertValidator.assertRequiredValidator(data[0], data[1], pageObjectSelectors.firstSizeInput);
+            });
+
+
+        runDescribe('when filling size')
+            .data<TestCaseForValidator>([
+                [0, false],
+                [-1, false],
+                [1, true]])
+            .dataIt((data: TestCaseForValidator) =>
+                `and value is "${data[0]}" then greater then message should ${data[1] ? 'not' : ''} be displayed`)
+            .run((data: TestCaseForValidator) => {
+                // arrange / act / assert
+                assertValidator.assertNumberGreaterThenValidator(<number>data[0], data[1], pageObjectSelectors.firstSizeInput);
+            });
 
         it('then it should generate correct number of area form groups', () => {
             // arrange & act

@@ -44,7 +44,7 @@
 
                     <div class="panel panel-default applicant" ng-repeat="contact in vm.requirement.contacts">
                         <div class="panel-body">
-                            {{ contact.firstName }} {{ contact.surname }}
+                            {{ contact.firstName + " " + contact.surname }}
                         </div>
                     </div>
                 </section>
@@ -61,7 +61,12 @@
                                     <h5><time>{{::group.viewings[0].startDate | date : 'dd-MM-yyyy'}}</time></h5>
                                 </card-list-group-header>
                                 <card-list-group-item ng-repeat="viewing in group.viewings | orderBy: '-startDate' track by viewing.id">
-                                    <card class="viewing-item" card-template-url="'app/requirement/view/requirementViewingsCard.html'" item="viewing" show-item-details="vm.showViewingPreview">
+                                    <card class="viewing-item" show-context-menu="true" show-item-details="vm.showViewingPreview" display-new-control="true"
+                                          card-template-url="'app/requirement/view/requirementViewingsCard.html'" item="viewing">
+
+                                        <card-context-menu>
+                                            <context-menu-item type="makeoffer" item="viewing" action="vm.showAddOfferPanel"></context-menu-item>
+                                        </card-context-menu>
                                     </card>
                                 </card-list-group-item>
                             </card-list-group>
@@ -69,9 +74,30 @@
                     </card-list>
                 </section>
             </div>
+            <div class="col-md-4">
+                <section>
+                    <h3 class="page-header" translate="REQUIREMENT.VIEW.OFFERS"></h3>
+                    <card-list-item ng-repeat="offer in vm.requirement.offers track by offer.id">
+                        <card-list-item ng-repeat="offer in vm.requirement.offers | orderBy: '-offerDate' | enumSorter: 'OfferStatus':'statusId' track by offer.id">
+
+                            <card-context-menu>
+                                <context-menu-item type="edit" item="ownership" action="vm.showViewingPreview"></context-menu-item>
+                            </card-context-menu>
+                        </card-list-item>
+                </section>
+            </div>
         </div>
     </div>
 </div>
+
+<side-panel component-id="vm.componentIds.offerPreviewSidePanelId">
+    <side-panel-header>
+        <h3 translate="REQUIREMENT.VIEW.OFFERPREVIEW"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <offer-preview component-id="vm.componentIds.offerPreviewId"></offer-preview>
+    </side-panel-content>
+</side-panel>
 
 <side-panel component-id="vm.componentIds.configureViewingsSidePanelId" is-busy="vm.saveViewingBusy">
     <side-panel-header>
@@ -120,19 +146,36 @@
         <h3 translate="REQUIREMENT.VIEW.VIEWINGADD"></h3>
     </side-panel-header>
     <side-panel-content>
-        <viewing-preview component-id="vm.componentIds.viewingPreviewId" ng-show="vm.previewPanelVisible" page-context="requirement">
+        <viewing-preview component-id="vm.componentIds.viewingPreviewId" ng-show="vm.viewingPreviewPanelVisible" page-context="requirement">
         </viewing-preview>
         <viewing-add component-id="vm.componentIds.viewingEditId" requirement="vm.requirement" attendees="vm.requirement.contacts"
-                     ng-show="!vm.previewPanelVisible" mode="edit">
+                     ng-show="!vm.viewingPreviewPanelVisible" mode="edit">
         </viewing-add>
         <busy is-busy="vm.saveViewingBusy" label="{{'VIEWING.ADD.SAVING_VIEWING_IN_PROGRESS' | translate}}"></busy>
     </side-panel-content>
     <side-panel-footer>
-        <button type="button" class="btn btn-default pull-left" ng-click="vm.showViewingEdit()" ng-show="vm.previewPanelVisible"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span></button>
-        <button class="btn btn-default" type="button" ng-click="vm.goBackToPreviewViewing()" ng-show="!vm.previewPanelVisible">
+        <button type="button" class="btn btn-default pull-left" ng-click="vm.showViewingEdit()" ng-show="vm.viewingPreviewPanelVisible"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span></button>
+        <button class="btn btn-default" type="button" ng-click="vm.goBackToPreviewViewing()" ng-show="!vm.viewingPreviewPanelVisible">
             <i class="fa fa-angle-double-left"></i> <span translate="COMMON.BACK"></span>
         </button>
-        <button class="btn btn-primary" type="button" ng-click="vm.saveEditedViewing()" ng-show="!vm.previewPanelVisible">
+        <button class="btn btn-primary" type="button" ng-click="vm.saveEditedViewing()" ng-show="!vm.viewingPreviewPanelVisible">
+            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+        </button>
+    </side-panel-footer>
+</side-panel>
+
+<side-panel component-id="vm.componentIds.offerSidePanelId" id="add-offer-panel" is-busy="vm.addOfferBusy">
+    <side-panel-header>
+        <h3 translate="REQUIREMENT.VIEW.NEWOFFER"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <offer-add component-id="vm.componentIds.offerAddId" requirement="vm.requirement"></offer-add>
+    </side-panel-content>
+    <side-panel-footer>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelSaveOffer()">
+            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+        </button>
+        <button class="btn btn-primary" type="button" ng-click="vm.saveOffer()">
             <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
         </button>
     </side-panel-footer>

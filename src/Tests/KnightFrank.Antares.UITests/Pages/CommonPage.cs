@@ -64,6 +64,9 @@
                 case "view property":
                     this.Driver.NavigateTo(GetUrl("ViewPropertyPage", id));
                     break;
+                case "view activity":
+                    this.Driver.NavigateTo(GetUrl("ViewActivityPage", id));
+                    break;
                 default:
                     Assert.True(false, "Page does not exist");
                     break;

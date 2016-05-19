@@ -10,10 +10,9 @@
         attributeValues: any = {};
         // dynamic object created basing on list of characteristic (with characteristicId as key)
         propertyCharacteristicsMap: any = {};
-        areas: Business.PropertyArea[] = [];
+        propertyAreaBreakdowns: Business.PropertyAreaBreakdown[] = [];
 
-        constructor(property?: Dto.IProperty)
-        {
+        constructor(property?: Dto.IProperty) {
             if (property) {
                 this.id = property.id;
                 this.address = new Business.Address();
@@ -21,10 +20,7 @@
 
                 this.ownerships = property.ownerships.map((ownership: Dto.IOwnership) => { return new Business.Ownership(ownership) });
                 this.activities = property.activities.map((activity: Dto.IActivity) => { return new Business.Activity(activity) });
-                if (property.areas) {
-                    // TODO remove if
-                    this.areas = property.areas.map((area: Dto.IPropertyArea) => { return new Business.PropertyArea(area) });
-                }
+                this.propertyAreaBreakdowns = property.propertyAreaBreakdowns.map((area: Dto.IPropertyAreaBreakdown) => { return new Business.PropertyAreaBreakdown(area) });
 
                 angular.extend(this.division, property.division);
 
@@ -38,7 +34,11 @@
             }
         }
 
-        isCommercial(): boolean{
+        get totalAreaBreakdown(): number {
+            return _.sum(this.propertyAreaBreakdowns, (area: Business.PropertyAreaBreakdown) => area.size);
+        }
+
+        isCommercial(): boolean {
             return this.division.code === Models.Dto.DivisionEnumTypeCode[Models.Dto.DivisionEnumTypeCode.Commercial];
         }
     }

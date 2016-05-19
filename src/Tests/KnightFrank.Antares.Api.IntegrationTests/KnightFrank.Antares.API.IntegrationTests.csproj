@@ -170,8 +170,10 @@
     <Compile Include="MockExternalServices\MockStorageClient.cs" />
     <Compile Include="Steps\Activities\ActivitiesSteps.cs" />
     <Compile Include="Steps\Activities\ActivitiesTypesSteps.cs" />
+    <Compile Include="Steps\Activities\NegotiatorsSteps.cs" />
     <Compile Include="Steps\CharacteristicGroups\CharacteristicGroupsSteps.cs" />
     <Compile Include="Steps\Companies\CompaniesSteps.cs" />
+    <Compile Include="Steps\Offers\OffersSteps.cs" />
     <Compile Include="Steps\Services\ServicesSteps.cs" />
     <Compile Include="Steps\Property\PropertyTypesSteps.cs" />
     <Compile Include="Extensions\FixtureExtension.cs" />
@@ -188,7 +190,17 @@
     <Compile Include="Steps\Requierement\RequirementSteps.cs" />
     <Compile Include="Steps\Resources\ResourcesSteps.cs" />
     <Compile Include="Steps\Translations\TranslationsSteps.cs" />
-	  <Compile Include="Steps\Users\UsersSteps.cs" />
+    <Compile Include="Steps\Users\UsersSteps.cs" />
+    <Compile Include="Tests\Activities\Negotiators.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Negotiators.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Offers\Offers.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Offers.feature</DependentUpon>
+    </Compile>
     <Compile Include="Tests\Users\UsersController.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -305,7 +317,15 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-	  <None Include="Tests\Users\UsersController.feature">
+    <None Include="Tests\Activities\Negotiators.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Negotiators.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Offers\Offers.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Offers.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Users\UsersController.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>UsersController.feature.cs</LastGenOutput>
     </None>

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,900,700">
     <!-- build:css styles/lib.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="libs/ng-sortable/dist/ng-sortable.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css styles/app.css -->
@@ -38,6 +39,7 @@
     <script src="libs/moment/moment.js"></script>
     <script src="libs/fm-timepicker/dist/fm-timepicker.tpls.js"></script>
     <script src="libs/filesize/lib/filesize.js"></script>
+    <script src="libs/ng-sortable/dist/ng-sortable.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js js/app.js -->
@@ -47,6 +49,7 @@
     <script src="app/requirement/requirement.module.js"></script>
     <script src="app/common/models/business/activity/activity.js"></script>
     <script src="app/common/models/business/activity/activityQueryResult.js"></script>
+    <script src="app/common/models/business/activity/activityUser.js"></script>
     <script src="app/common/models/business/activity/createActivityResource.js"></script>
     <script src="app/common/models/business/activity/updateActivityResource.js"></script>
     <script src="app/common/models/business/address/address.js"></script>
@@ -63,11 +66,13 @@
     <script src="app/common/models/business/company/createCompanyResource.js"></script>
     <script src="app/common/models/business/contact/contact.js"></script>
     <script src="app/common/models/business/enum/EnumTypeItem.js"></script>
+    <script src="app/common/models/business/offer/offer.js"></script>
     <script src="app/common/models/business/ownership/ownership.js"></script>
     <script src="app/common/models/business/property/createOrUpdatePropertyCharacteristicResource.js"></script>
     <script src="app/common/models/business/property/createorUpdatePropertyResource.js"></script>
+    <script src="app/common/models/business/property/createPropertyAreaBreakdownResource.js"></script>
     <script src="app/common/models/business/property/property.js"></script>
-    <script src="app/common/models/business/property/view/propertyArea.js"></script>
+    <script src="app/common/models/business/property/propertyAreaBreakdown.js"></script>
     <script src="app/common/models/business/property/view/propertyView.js"></script>
     <script src="app/common/models/business/requirement/createRequirementResource.js"></script>
     <script src="app/common/models/business/requirement/requirement.js"></script>
@@ -77,10 +82,13 @@
     <script src="app/common/models/business/resources/countryLocalised.js"></script>
     <script src="app/common/models/business/resources/locale.js"></script>
     <script src="app/common/models/business/user/user.js"></script>
+    <script src="app/common/models/business/user/userDepartmentUser.js"></script>
     <script src="app/common/models/business/viewing/viewing.js"></script>
     <script src="app/common/models/business/viewing/viewingGroup.js"></script>
     <script src="app/common/models/dto/enum/divisionEnumTypeCode.js"></script>
     <script src="app/common/models/dto/enum/enumTypeCode.js"></script>
+    <script src="app/common/models/enums/negotiatorTypeEnum.js"></script>
+    <script src="app/common/models/enums/ownershipTypeEnum.js"></script>
     <script src="app/common/components/addressForm/addressFormEdit/addressFormEditComponent.js"></script>
     <script src="app/common/components/addressForm/addressFormEdit/addressFormEditController.js"></script>
     <script src="app/common/components/addressForm/addressFormView/addressFormViewComponent.js"></script>
@@ -95,6 +103,8 @@
     <script src="app/common/components/attribute/range/rangeAttributeController.js"></script>
     <script src="app/common/components/busy/busyComponent.js"></script>
     <script src="app/common/components/busy/busyController.js"></script>
+    <script src="app/common/components/card/contextMenu/contextMenuItemComponent.js"></script>
+    <script src="app/common/components/card/contextMenu/contextMenuItemController.js"></script>
     <script src="app/common/components/card/group/cardListGroupComponent.js"></script>
     <script src="app/common/components/card/item/cardComponent.js"></script>
     <script src="app/common/components/card/item/cardController.js"></script>
@@ -109,6 +119,13 @@
     <script src="app/common/components/enum/select/enumSelectController.js"></script>
     <script src="app/common/components/list/listComponent.js"></script>
     <script src="app/common/components/listItem/listItemComponent.js"></script>
+    <script src="app/common/components/negotiators/edit/negotiatorsEditComponent.js"></script>
+    <script src="app/common/components/negotiators/edit/negotiatorsEditController.js"></script>
+    <script src="app/common/components/negotiators/view/negotiatorsViewComponent.js"></script>
+    <script src="app/common/components/negotiators/view/negotiatorsViewController.js"></script>
+    <script src="app/common/components/search/searchComponent.js"></script>
+    <script src="app/common/components/search/searchController.js"></script>
+    <script src="app/common/components/search/searchOptions.js"></script>
     <script src="app/common/components/sidePanel/sidepanelComponent.js"></script>
     <script src="app/common/components/sidePanel/sidepanelController.js"></script>
     <script src="app/common/core/controllers/WithPanelsBaseController.js"></script>
@@ -124,16 +141,18 @@
     <script src="app/common/directives/dontOverlapController.js"></script>
     <script src="app/common/directives/dontOverlapDirective.js"></script>
     <script src="app/common/directives/fileRequired.js"></script>
+    <script src="app/common/directives/focusOn.js"></script>
     <script src="app/common/directives/kfMaxCountDirective.js"></script>
     <script src="app/common/directives/listNotEmptyDirective.js"></script>
     <script src="app/common/directives/maxDateDirective.js"></script>
+    <script src="app/common/directives/numberGreaterThan.js"></script>
     <script src="app/common/directives/timeGreaterThan.js"></script>
     <script src="app/common/directives/timeLowerThan.js"></script>
     <script src="app/common/factories/azureBlobUploadFactory.js"></script>
     <script src="app/common/factories/localizationLoaderFactory.js"></script>
     <script src="app/common/filters/dynamicTranslate/dynamicTranslateFilter.js"></script>
+    <script src="app/common/filters/enumSorterFilter/enumSorterFilter.js"></script>
     <script src="app/common/filters/fileSize/fileSizeFilter.js"></script>
-    <script src="app/common/models/enums/ownershipTypeEnum.js"></script>
     <script src="app/common/services/dataAccessService.js"></script>
     <script src="app/common/services/enumService.js"></script>
     <script src="app/common/services/userService.js"></script>
@@ -161,6 +180,10 @@
     <script src="app/contact/add/contactAddController.js"></script>
     <script src="app/contact/list/contactListComponent.js"></script>
     <script src="app/contact/list/contactListController.js"></script>
+    <script src="app/offer/add/offerAddComponent.js"></script>
+    <script src="app/offer/add/offerAddController.js"></script>
+    <script src="app/offer/preview/offerPreviewComponent.js"></script>
+    <script src="app/offer/preview/offerPreviewController.js"></script>
     <script src="app/ownership/add/ownershipAddComponent.js"></script>
     <script src="app/ownership/add/ownershipAddController.js"></script>
     <script src="app/ownership/view/ownershipViewComponent.js"></script>
