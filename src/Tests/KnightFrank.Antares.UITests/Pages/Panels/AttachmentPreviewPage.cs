@@ -13,7 +13,6 @@
         private readonly ElementLocator addedTime = new ElementLocator(Locator.Id, "attachment-preview-created-date");
         private readonly ElementLocator closeButton = new ElementLocator(Locator.CssSelector, ".slide-in #close-side-panel");
         private readonly ElementLocator name = new ElementLocator(Locator.CssSelector, "#attachment-preview-fileName .ng-binding");
-        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator size = new ElementLocator(Locator.Id, "attachment-preview-size");
         private readonly ElementLocator type = new ElementLocator(Locator.Id, "attachment-preview-type");
         private readonly ElementLocator user = new ElementLocator(Locator.Id, "attachment-preview-user");
@@ -37,7 +36,6 @@
         public AttachmentPreviewPage CloseAttachmentPreviewPage()
         {
             this.Driver.GetElement(this.closeButton).Click();
-            this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.MediumTimeout);
             return this;
         }
 

@@ -36,7 +36,7 @@
         public CreateAreaPage SaveArea()
         {
             this.Driver.GetElement(this.saveArea).Click();
-            this.Driver.WaitForAngular();
+            this.Driver.WaitForAngularToFinish();
             return this;
         }
 

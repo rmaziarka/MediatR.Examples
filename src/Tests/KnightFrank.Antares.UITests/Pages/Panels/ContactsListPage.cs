@@ -12,7 +12,6 @@
     {
         private readonly ElementLocator contact = new ElementLocator(Locator.XPath, "//label[normalize-space(text()) = '{0}']//input");
         private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "[ng-show *= 'isLoading']");
-        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'updateContacts']");
         private readonly ElementLocator configureButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showOwnershipAdd']");
 
@@ -22,15 +21,8 @@
 
         public ContactsListPage WaitForContactsListToLoad()
         {
-            this.Driver.WaitForElementToBeDisplayed(this.panel, BaseConfiguration.MediumTimeout);
             this.Driver.WaitUntilElementIsNoLongerFound(this.loadingIndicator, BaseConfiguration.MediumTimeout);
             this.Driver.WaitForAngularToFinish();
-            return this;
-        }
-
-        public ContactsListPage WaitForContactListToHide()
-        {
-            this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.MediumTimeout);
             return this;
         }
 

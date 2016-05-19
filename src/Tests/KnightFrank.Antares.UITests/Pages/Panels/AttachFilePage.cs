@@ -12,7 +12,6 @@
         private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "attachment-add-button");
         private readonly ElementLocator browseButton = new ElementLocator(Locator.XPath, "//span[contains(text(), 'Browse')]/input");
         private readonly ElementLocator type = new ElementLocator(Locator.CssSelector, "#document-type > select");
-        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
 
         public AttachFilePage(DriverContext driverContext) : base(driverContext)
         {
@@ -34,7 +33,6 @@
         public AttachFilePage SaveAttachment()
         {
             this.Driver.GetElement(this.saveButton).Click();
-            this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.LongTimeout);
             return this;
         }
     }

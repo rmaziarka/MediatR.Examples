@@ -1,11 +1,9 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps.Database
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
 
     using KnightFrank.Antares.Dal;
-    using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
 
@@ -39,13 +37,10 @@
                 StartDate = DateTime.UtcNow,
                 EndDate = DateTime.UtcNow.AddHours(1),
                 InvitationText = "Invitation Text",
+                //TODO improve selecting negotiator
                 NegotiatorId = this.dataContext.Users.First().Id,
                 RequirementId = requirement.Id,
-                Attendees = new List<Contact>
-                {
-                    requirement.Contacts[0],
-                    requirement.Contacts[2]
-                },
+                Attendees = requirement.Contacts
             };
 
             this.dataContext.Viewing.Add(viewing);

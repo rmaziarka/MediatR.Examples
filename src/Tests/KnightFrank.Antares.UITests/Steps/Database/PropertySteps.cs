@@ -7,6 +7,7 @@
     using KnightFrank.Antares.Dal;
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Attribute;
+    using KnightFrank.Antares.Dal.Model.Common;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
@@ -147,7 +148,15 @@
                 ActivityStatusId = activityStatusId,
                 CreatedDate = DateTime.UtcNow,
                 LastModifiedDate = DateTime.UtcNow,
-                Contacts = this.scenarioContext.Get<List<Contact>>("ContactsList")
+                Contacts = this.scenarioContext.Get<List<Contact>>("ContactsList"),
+                ActivityUsers = new List<ActivityUser>
+                {
+                    new ActivityUser
+                    {
+                        //TODO improve selecting lead negotiator
+                        UserId = this.dataContext.Users.First().Id, UserType = UserTypeEnum.LeadNegotiator
+                    }
+                }
             };
 
             this.dataContext.Activities.Add(activity);

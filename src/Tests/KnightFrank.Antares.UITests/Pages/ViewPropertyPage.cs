@@ -16,6 +16,7 @@
 
     public class ViewPropertyPage : ProjectPageBase
     {
+        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator viewPropertyForm = new ElementLocator(Locator.CssSelector, "property-view > div");
         // Locators for property address area
         private readonly ElementLocator expectedAddressField = new ElementLocator(Locator.XPath, "//address-form-view//span[text()='{0}']");
@@ -57,7 +58,7 @@
 
         public ActivityPreviewPage PreviewDetails => new ActivityPreviewPage(this.DriverContext);
 
-        public CreateAreaPage CreateArea => new CreateAreaPage(this.DriverContext);
+        public CreateAreaPage Area => new CreateAreaPage(this.DriverContext);
 
         public string PropertyType => this.Driver.GetElement(this.propertyType).Text;
 
@@ -70,6 +71,18 @@
         public ViewPropertyPage OpenViewPropertyPageWithId(string id)
         {
             new CommonPage(this.DriverContext).NavigateToPageWithId("view property", id);
+            return this;
+        }
+
+        public ViewPropertyPage WaitForSidePanelToShow()
+        {
+            this.Driver.WaitForElementToBeDisplayed(this.panel, BaseConfiguration.MediumTimeout);
+            return this;
+        }
+
+        public ViewPropertyPage WaitForSidePanelToHide()
+        {
+            this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.MediumTimeout);
             return this;
         }
 

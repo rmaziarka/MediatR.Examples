@@ -17,6 +17,7 @@
         private readonly ElementLocator companyName = new ElementLocator(Locator.Id, "name");
         private readonly ElementLocator contactsList = new ElementLocator(Locator.CssSelector, "#list-contacts .ng-binding");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "company-save-btn");
+        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
 
         public CreateCompanyPage(DriverContext driverContext) : base(driverContext)
         {
@@ -32,10 +33,11 @@
             return this;
         }
 
-        public void AddContactToCompany()
+        public CreateCompanyPage AddContactToCompany()
         {
             this.Driver.GetElement(this.addContact).Click();
             this.Driver.WaitForAngularToFinish();
+            return this;
         }
 
         public CreateCompanyPage SetCompanyName(string name)
@@ -53,6 +55,18 @@
         public bool IsCompanyFormPresent()
         {
             return this.Driver.IsElementPresent(this.companyForm, BaseConfiguration.MediumTimeout);
+        }
+
+        public CreateCompanyPage WaitForSidePanelToShow()
+        {
+            this.Driver.WaitForElementToBeDisplayed(this.panel, BaseConfiguration.MediumTimeout);
+            return this;
+        }
+
+        public CreateCompanyPage WaitForSidePanelToHide()
+        {
+            this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.MediumTimeout);
+            return this;
         }
     }
 }

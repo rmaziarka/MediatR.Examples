@@ -24,9 +24,12 @@
         private readonly ElementLocator requirementDate = new ElementLocator(Locator.CssSelector, "span[translate *= 'CREATEDDATE'] ~ span");
         private readonly ElementLocator addViewings = new ElementLocator(Locator.CssSelector, "#viewings-list button");
         private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item .card");
-        private readonly ElementLocator viewingDetails = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .card");
+        private readonly ElementLocator viewingDetails = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .card-body");
         private readonly ElementLocator viewingData = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .ng-binding");
-        
+        private readonly ElementLocator viewingActions = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .card-menu-button");
+        private readonly ElementLocator createOffer = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) [action *= 'showAddOfferPanel']");
+        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
+
         public ViewRequirementPage(DriverContext driverContext) : base(driverContext)
         {
         }
@@ -38,6 +41,8 @@
         public CreateViewingPage Viewing => new CreateViewingPage(this.DriverContext);
 
         public ViewingDetailsPage ViewingDetails => new ViewingDetailsPage(this.DriverContext);
+
+        public CreateOfferPage Offer => new CreateOfferPage(this.DriverContext);
 
         public int ViewingsNumber => this.Driver.GetElements(this.viewings).Count;
 
@@ -122,6 +127,30 @@
         public List<string> GetViewingDetails(int position)
         {
             return this.Driver.GetElements(this.viewingData.Format(position)).Select(el => el.Text).ToList();
+        }
+
+        public ViewRequirementPage OpenViewingActions(int position)
+        {
+            this.Driver.GetElement(this.viewingActions.Format(position)).Click();
+            return this;
+        }
+
+        public ViewRequirementPage CreateOffer(int position)
+        {
+            this.Driver.GetElement(this.createOffer.Format(position)).Click();
+            return this;
+        }
+
+        public ViewRequirementPage WaitForSidePanelToShow()
+        {
+            this.Driver.WaitForElementToBeDisplayed(this.panel, BaseConfiguration.MediumTimeout);
+            return this;
+        }
+
+        public ViewRequirementPage WaitForSidePanelToHide()
+        {
+            this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.MediumTimeout);
+            return this;
         }
     }
 
