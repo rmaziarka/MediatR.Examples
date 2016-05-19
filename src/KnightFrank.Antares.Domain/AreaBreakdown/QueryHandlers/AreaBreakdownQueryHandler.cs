@@ -26,7 +26,7 @@
                 areaBreakdownQuery = areaBreakdownQuery.Where(x => query.AreaIds.Contains(x.Id));
             }
 
-            return areaBreakdownQuery.ToList();
+            return areaBreakdownQuery.OrderBy(x => x.Order).ToList();
         }
     }
 }

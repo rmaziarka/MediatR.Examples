@@ -4,15 +4,13 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoMapper;
-
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.AreaBreakdown.Commands;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
 
     using MediatR;
-    public class UpdateAreaBreakdownOrderCommandHandler : IRequestHandler<UpdateAreaBreakdownCommand, Guid>
+    public class UpdateAreaBreakdownOrderCommandHandler : IRequestHandler<UpdateAreaBreakdownOrderCommand, Guid>
     {
         private readonly IEntityValidator entityValidator;
         private readonly IGenericRepository<PropertyAreaBreakdown> areaBreakdownRepository;
@@ -28,7 +26,7 @@
             this.propertyRepository = propertyRepository;
         }
 
-        public Guid Handle(UpdateAreaBreakdownCommand command)
+        public Guid Handle(UpdateAreaBreakdownOrderCommand command)
         {
             Property property = this.propertyRepository.GetById(command.PropertyId);
             PropertyAreaBreakdown areaBreakdown = this.areaBreakdownRepository.GetById(command.AreaId);
@@ -37,9 +35,6 @@
             this.entityValidator.EntityExists(areaBreakdown, command.AreaId);
 
             IEnumerable<PropertyAreaBreakdown> orderedAreaBreakdownItems = this.GetOrderedAreaBreakdownItems(command, areaBreakdown);
-
-            Mapper.Map(command, areaBreakdown);
-
             property.TotalAreaBreakdown = orderedAreaBreakdownItems.Sum(x => x.Size);
 
             this.areaBreakdownRepository.Save();
@@ -47,24 +42,20 @@
             return areaBreakdown.Id;
         }
 
-        private IEnumerable<PropertyAreaBreakdown> GetOrderedAreaBreakdownItems(UpdateAreaBreakdownCommand command, PropertyAreaBreakdown updatedAreaBreakdown)
+        private IEnumerable<PropertyAreaBreakdown> GetOrderedAreaBreakdownItems(UpdateAreaBreakdownOrderCommand command, PropertyAreaBreakdown updatedAreaBreakdown)
         {
             List<PropertyAreaBreakdown> areaBreakdownItems =
-                this.areaBreakdownRepository.FindBy(x => x.PropertyId == command.PropertyId)
+                this.areaBreakdownRepository.FindBy(x => x.PropertyId == command.PropertyId && x.Id != command.AreaId)
                     .OrderBy(x => x.Order)
                     .ToList();
+            
+            areaBreakdownItems.Insert(command.Order, updatedAreaBreakdown);
 
-            if (command.Order != updatedAreaBreakdown.Order)
+            foreach (var items in areaBreakdownItems.Select((x, i) => new { Value = x, Index = i }))
             {
-                areaBreakdownItems.Remove(updatedAreaBreakdown);
-                areaBreakdownItems.Insert(command.Order, updatedAreaBreakdown);
-
-                foreach (var items in areaBreakdownItems.Select((x, i) => new { Value = x, Index = i }))
-                {
-                    items.Value.Order = items.Index;
-                }
+                items.Value.Order = items.Index;
             }
-
+            
             return areaBreakdownItems;
         }
     }
