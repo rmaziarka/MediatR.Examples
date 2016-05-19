@@ -26,7 +26,7 @@ module Antares {
             element = $compile(`
                 <form name=\"form\">
                     <div>
-                        <input type="number" id="number" name="number" ng-model="number" number-precision="numberPrecision" />
+                        <input type="number" id="number" name="number" ng-model="number" number-precision="{{numberPrecision}}" />
                     </div>
                 </form>
                 `)(scope);

@@ -4,10 +4,6 @@ module Antares.Common.Directive {
     export class NumberPrecisionDirective implements ng.IDirective {
         restrict = 'A';
         require = 'ngModel';
-        scope = {
-            ngModel: '=ngModel',
-            numberPrecision: '='
-        };
         link: any;
 
         constructor() {
@@ -20,7 +16,7 @@ module Antares.Common.Directive {
                     return true;
                 }
                 
-                var precision: number = parseInt(<string>scope["numberPrecision"]);
+                var precision: number = parseInt(<string>attrs["numberPrecision"]);
                 var floatRegEx: RegExp = precision > 0 ? new RegExp("^\\-?\\d+([\\.\\,]\\d{1," + precision + "})?$"): /^\-?\d+$/;
                 return floatRegEx.test(modelValue);
             }
