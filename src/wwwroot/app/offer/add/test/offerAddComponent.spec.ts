@@ -108,7 +108,6 @@ module Antares {
                 .data<TestCaseForValidator>([
                     ['offer date', datesToTest.today, pageObjectSelectors.offerDate],
                     ['offer date', datesToTest.inThePast, pageObjectSelectors.offerDate],
-                    ['offer date', datesToTest.inTheFuture, pageObjectSelectors.offerDate],
                     ['offer date', datesToTest.longAgo, pageObjectSelectors.offerDate],
                     ['offer date', datesToTest.reallyLongAgo, pageObjectSelectors.offerDate],
                     ['exchange date', datesToTest.today, pageObjectSelectors.exchangeDate],

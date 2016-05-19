@@ -18,8 +18,8 @@ module Antares {
             selectedStatus: any;
 
             offer: Dto.IOffer;
-            activity: Dto.IActivity;
-            requirement: Dto.IRequirement;
+            activity: Dto.IActivity = <Dto.IActivity>{};
+            requirement: Dto.IRequirement = <Dto.IRequirement>{};
 
             addOfferForm: any;
 
@@ -34,14 +34,11 @@ module Antares {
             }
 
             reset = () =>{
-                this.offer = <Dto.IOffer>{};
-                if (this.activity) {
-                    this.offer.activityId = this.activity.id;
-                }
-
-                if (this.requirement) {
-                    this.offer.requirementId = this.requirement.id;
-                }
+                this.offer = <Dto.IOffer>{
+                    offerDate: new Date(),
+                    activityId: this.activity.id,
+                    requirementId: this.requirement.id
+                };
 
                 this.setDefaultOfferStatus();
                 this.addOfferForm.$setPristine();

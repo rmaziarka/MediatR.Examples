@@ -48,7 +48,7 @@
                 <label class="required" for="offer-date" translate="OFFER.ADD.OFFER_DATE"></label>
                 <div class="input-group">
                     <input type="text" id="offer-date" name="offerDate" class="form-control" ng-model="vm.offer.offerDate" uib-datepicker-popup="dd-MM-yyyy"
-                           is-open="vm.offerDateOpen" close-text="Close" placeholder="dd-mm-yyyy" required />
+                           is-open="vm.offerDateOpen" close-text="Close" placeholder="dd-mm-yyyy" required date-lower-than="{{ vm.today }}"/>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openOfferDate()"><i class="fa fa-calendar"></i></button>
                     </span>
@@ -56,6 +56,7 @@
             </div>
         </div>
         <div ng-messages="vm.addOfferForm.offerDate.$error" ng-show="vm.addOfferForm.$submitted || vm.addOfferForm.offerDate.$dirty">
+            <p name="dateLowerThanValidationError" ng-message="dateLowerThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_FUTURE"></p>
             <div ng-messages-include="app/common/views/errorMessages.html"></div>
         </div>
     </div>
@@ -85,7 +86,7 @@
             </div>
         </div>
         <div ng-messages="vm.addOfferForm.exchangeDate.$error" ng-show="vm.addOfferForm.$submitted || vm.addOfferForm.exchangeDate.$dirty">
-            <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_IN_PAST"></p>
+            <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
             <div ng-messages-include="app/common/views/errorMessages.html"></div>
         </div>
     </div>
