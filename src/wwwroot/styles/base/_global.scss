@@ -29,6 +29,15 @@ body {
   }
 }
 
+a {
+  outline: none;
+
+  &:hover,
+  &:focus {
+    outline: none;
+  }
+}
+
 small {
   color: $gray-light;
 }
@@ -39,7 +48,6 @@ small {
 
 .page-wrapper {
   height: 100%;
-  overflow-x: hidden;
 }
 
 h3,

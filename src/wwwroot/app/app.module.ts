@@ -10,6 +10,7 @@ module Antares {
         'ui.bootstrap',
         'fmTimepicker',
         'ui.bootstrap',
-        'ngFileUpload'
+        'ngFileUpload',
+        'as.sortable'
     ]);
 }

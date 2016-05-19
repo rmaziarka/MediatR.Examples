@@ -33,8 +33,9 @@
       <Visible>False</Visible>
     </None>
     <Content Include="Scripts\Deploy-AzureResourceGroup.ps1" />
+    <Content Include="Templates\azuredeploy.parameters.test.json" />
     <Content Include="Templates\azuredeploy.json" />
-    <Content Include="Templates\azuredeploy.parameters.json" />
+    <Content Include="Templates\azuredeploy.parameters.dev.json" />
     <None Include="DSC\dscmetadata.json" />
     <Content Include="DSC\KnightFrank-Antares-Vm-IIS-DSCConfiguration.ps1" />
     <Content Include="DSC\KnightFrank-Antares-Vm-Sql-DSCConfiguration.ps1" />

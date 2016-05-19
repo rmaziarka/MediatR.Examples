@@ -73,8 +73,8 @@ module Antares {
                 this.viewing = angular.copy(viewing);
                 this.viewing.startDate = viewing.startDate;
                 this.viewing.endDate = viewing.endDate;
-                this.startTime = moment(viewing.startDate);
-                this.endTime = moment(viewing.endDate);
+                this.startTime = moment(this.combineDateWithTime(new Date, <Date>viewing.startDate));
+                this.endTime = moment(this.combineDateWithTime(new Date, <Date>viewing.endDate));
 
                 this.activity = <Dto.IActivityQueryResult> {
                     id: viewing.activity.id,
@@ -94,7 +94,7 @@ module Antares {
                 this.dateOpened = true;
             }
 
-            saveViewing = () => {
+            saveViewing = (): ng.IPromise<Dto.IViewing> => {
                 if (!this.isDataValid()) {
                     return this.$q.reject();
                 }
@@ -105,23 +105,14 @@ module Antares {
                     var createViewingCommand: Dto.IViewing = this.getCreateViewingCommand();
                     return viewingResource
                         .createViewing(null, createViewingCommand)
-                        .$promise
-                        .then((viewing: Common.Models.Dto.IViewing) =>{
-                            var viewingModel = new Business.Viewing(viewing);
-                            this.requirement.viewings.push(viewingModel);
-                            this.requirement.groupViewings(this.requirement.viewings);
-                        });
+                        .$promise;
                 }
                 else if (this.mode === 'edit') {
                     var updateViewing: Dto.IViewing = this.getUpdateViewingResource();
 
                     return viewingResource
                         .update(updateViewing)
-                        .$promise
-                        .then((viewing: Common.Models.Dto.IViewing) => {
-                            this.originalViewing = angular.copy(new Business.Viewing(viewing), this.originalViewing);
-                            this.requirement.groupViewings(this.requirement.viewings);
-                        });
+                        .$promise;
                 }
             }
 

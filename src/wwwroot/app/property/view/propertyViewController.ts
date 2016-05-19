@@ -64,6 +64,7 @@ module Antares.Property.View {
 
 
         showAreaAdd = () => {
+            this.components.areaAdd().clearAreas();
             this.showPanel(this.components.panels.areaAdd);
         }
 
@@ -124,8 +125,20 @@ module Antares.Property.View {
         }
 
         saveArea() {
-            // TODO Implement
+            this.components.areaAdd().saveAreas(this.property.id).then((areas: Business.PropertyAreaBreakdown[]) => {
+                [].push.apply(this.property.propertyAreaBreakdowns, areas);
+                this.cancelAddArea();
+            });
         }
+
+        areaBreakdownDndOptions: Common.Models.IDndOptions = {
+            dragStart: (event: Common.Models.IDndEvent) => {
+                
+            },
+            dragEnd: (event: Common.Models.IDndEvent) => {
+
+            }
+        };
 
         defineComponentIds() {
             this.componentIds = {
@@ -139,7 +152,8 @@ module Antares.Property.View {
                 activityAddSidePanelId: 'viewProperty:activityAddSidePanelComponent',
                 activityPreviewId: 'viewProperty:activityPreviewComponent',
                 activityPreviewSidePanelId: 'viewProperty:activityPreviewSidePanelComponent',
-                areaAddSidePanelId: 'viewProperty:areaAddSidePanelComponent'
+                areaAddSidePanelId: 'viewProperty:areaAddSidePanelComponent',
+                areaAddId: 'viewProperty:areaAddComponent'
             };
         }
 
@@ -150,7 +164,7 @@ module Antares.Property.View {
                 activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewId); },
                 ownershipAdd: () => { return this.componentRegistry.get(this.componentIds.ownershipAddId); },
                 ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewId); },
-                areaAdd: () => { return this.componentRegistry.get(this.componentIds.areaAddSidePanelId); },
+                areaAdd: () => { return this.componentRegistry.get(this.componentIds.areaAddId); },
                 panels: {
                     contact: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
                     ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); },

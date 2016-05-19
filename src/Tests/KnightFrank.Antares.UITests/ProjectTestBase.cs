@@ -25,6 +25,7 @@ SOFTWARE.
 namespace KnightFrank.Antares.UITests
 {
     using System;
+    using System.Configuration;
 
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Logger;
@@ -32,14 +33,18 @@ namespace KnightFrank.Antares.UITests
     using TechTalk.SpecFlow;
 
     using Xunit;
-
+    using Dal;
+    using System.Net.Http;
+    using System.Net.Http.Headers;    
+    
     /// <summary>
-    ///     The base class for all tests
-    /// </summary>
+    ///      The base class for all tests
+    /// /// </summary>
     [Binding]
     public class ProjectTestBase : TestBase
     {
         private readonly ScenarioContext scenarioContext;
+        private KnightFrankContext dataContext;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ProjectTestBase" /> class.
@@ -75,6 +80,7 @@ namespace KnightFrank.Antares.UITests
         public static void BeforeClass()
         {
             StartPerformanceMeasure();
+//            WarmUp();
         }
 
         /// <summary>
@@ -97,6 +103,8 @@ namespace KnightFrank.Antares.UITests
             this.LogTest.LogTestStarting(this.DriverContext);
             this.DriverContext.Start();
             this.scenarioContext["DriverContext"] = this.DriverContext;
+            this.dataContext = new KnightFrankContext("UI.Settings.SqlConnectionString");
+            this.scenarioContext["DataContext"] = this.dataContext;
         }
 
         /// <summary>
@@ -105,6 +113,7 @@ namespace KnightFrank.Antares.UITests
         [After]
         public void AfterTest()
         {
+            this.dataContext.Dispose();
             this.DriverContext.IsTestFailed = this.scenarioContext.TestError != null;
             this.SaveTestDetailsIfTestFailed(this.DriverContext);
             this.DriverContext.Stop();
@@ -113,6 +122,14 @@ namespace KnightFrank.Antares.UITests
             {
                 Assert.True(false);
             }
+        }
+
+        private static void WarmUp()
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(BaseConfiguration.Protocol + "://" + ConfigurationManager.AppSettings["api"]);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response = client.GetAsync("api/translations/resources/en").Result;
         }
     }
 }

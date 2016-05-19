@@ -61,28 +61,29 @@
         </div>
 
     </div>
-    <list-not-empty ng-model="vm.selectedAttendees" name="numberOfAttendees" />
+
+    <list-not-empty ng-model="vm.selectedAttendees" name="numberOfAttendees"></list-not-empty>
     <div ng-class="{'has-error': (addViewingForm.$submitted || addViewingForm.numberOfAttendees.$dirty) && addViewingForm.numberOfAttendees.$invalid}"
         ng-messages="addViewingForm.numberOfAttendees.$error" ng-show="addViewingForm.$submitted || addViewingForm.numberOfAttendees.$dirty">
         <p name="listNotEmptyValidationError" ng-message="listNotEmpty" class="help-block with-errors" translate="FORM.LIST_OF_ATTENDEES_SHOULD_NOT_BE_EMPTY"></p>
     </div>
-    <div class="form-group" ng-class="{'has-error': (addViewingForm.$submitted || addViewingForm.invitationTextLength.$dirty) && addViewingForm.invitationTextLength.$invalid}">
+    <div class="form-group
+         " ng-class="{'has-error': (addViewingForm.$submitted || addViewingForm.invitationText.$dirty) && addViewingForm.invitationText.$invalid}">
         <label for="invitation-text" translate="VIEWING.ADD.INVITATIONTEXT"></label>
-        <span class="pull-right character-limit">{{(vm.viewing.invitationText.length ? vm.viewing.invitationText.length : "0") + "/4000"}}</span>
-        <textarea id="invitation-text" class="form-control" rows="6" ng-model="vm.viewing.invitationText" name="invitationText"></textarea>
+        <span class="pull-right character-limit">{{addViewingForm.invitationText.$viewValue.length || 0}}/4000</span>
+        <textarea id="invitation-text" class="form-control" rows="6" ng-model="vm.viewing.invitationText" name="invitationText" kf-max-count="4000"></textarea>
 
-        <kf-max-count max-count='4000' ng-model="vm.viewing.invitationText.length" name='invitationTextLength'></kf-max-count>
-        <div ng-messages="addViewingForm.invitationTextLength.$error" ng-show="addViewingForm.$submitted || addViewingForm.invitationTextLength.$dirty">
+        <div ng-messages="addViewingForm.invitationText.$error" ng-show="addViewingForm.$submitted || addViewingForm.invitationText.$dirty">
             <div ng-messages-include="app/common/views/errorMessages.html"></div>
         </div>
     </div>
-    <div class="form-group" ng-class="{'has-error': (addViewingForm.$submitted || addViewingForm.postViewingCommentLength.$dirty) && addViewingForm.postViewingCommentLength.$invalid}">
-        <label for="post-viewing-comment" translate="VIEWING.ADD.POSTVIEWINGCOMMENT"></label>
-        <span class="pull-right character-limit">{{(vm.viewing.postViewingComment.length ? vm.viewing.postViewingComment.length : "0") + "/4000"}}</span>
-        <textarea id="post-viewing-comment" class="form-control" rows="6" ng-model="vm.viewing.postViewingComment" name="postViewingComment" ng-disabled="vm.mode === 'add'"></textarea>
 
-        <kf-max-count max-count='4000' ng-model="vm.viewing.postViewingComment.length" name='postViewingCommentLength'></kf-max-count>
-        <div ng-messages="addViewingForm.postViewingCommentLength.$error" ng-show="addViewingForm.$submitted || addViewingForm.postViewingCommentLength.$dirty">
+    <div class="form-group" ng-class="{'has-error': (addViewingForm.$submitted || addViewingForm.postViewingComment.$dirty) && addViewingForm.postViewingComment.$invalid}">
+        <label for="post-viewing-comment" translate="VIEWING.ADD.POSTVIEWINGCOMMENT"></label>
+        <span class="pull-right character-limit">{{addViewingForm.postViewingComment.$viewValue.length || 0}}/4000</span>
+        <textarea id="post-viewing-comment" class="form-control" rows="6" ng-model="vm.viewing.postViewingComment" name="postViewingComment" ng-disabled="vm.mode === 'add'" kf-max-count="4000"></textarea>
+
+        <div ng-messages="addViewingForm.postViewingComment.$error" ng-show="addViewingForm.$submitted || addViewingForm.postViewingComment.$dirty">
             <div ng-messages-include="app/common/views/errorMessages.html"></div>
         </div>
     </div>

@@ -38,6 +38,9 @@ declare module Antares.Common.Models {
         interface IViewingResource extends ng.resource.IResource<Dto.IViewing> {
         }
 
+        interface IOfferResource extends ng.resource.IResource<Dto.IOffer> {
+        }
+
         interface IPropertyResource extends ng.resource.IResource<Dto.IProperty> {
         }
 
@@ -59,6 +62,9 @@ declare module Antares.Common.Models {
         interface ICharacteristicGroupUsageResource extends ng.resource.IResource<Dto.ICharacteristicGroupUsage> {
         }
 
+        interface IPropertyAreaBreakdownResource extends ng.resource.IResource<Dto.IPropertyAreaBreakdown> {
+        }
+
         interface IActivityAttachmentResource extends ng.resource.IResource<Dto.IAttachment> {
         }
 
@@ -66,6 +72,9 @@ declare module Antares.Common.Models {
         }
 
         interface IAzureDownloadUrlResource extends ng.resource.IResource<Dto.IAzureDownloadUrlContainer> {
+        }
+
+        interface IDepartmentUserResource extends ng.resource.IResource<Dto.IDepartmentUser> {
         }
 
         // *** IResourceClass extensions ***
@@ -98,6 +107,9 @@ declare module Antares.Common.Models {
             createViewing(params: any, viewing: any): ng.resource.IResource<Dto.IViewing>;
         }
 
+        interface IOfferResourceClass extends Resources.IBaseResourceClass<Resources.IOfferResource> {
+        }
+
         // - country -
         interface ICountryLocalisedResourceParameters {
             entityTypeCode: string;
@@ -126,6 +138,28 @@ declare module Antares.Common.Models {
         interface ICharacteristicGroupUsageResourceClass extends ng.resource.IResourceClass<ICharacteristicGroupUsageResource> {
             query(): ng.resource.IResourceArray<ICharacteristicGroupUsageResource>;
             query(params: ICharacteristicGroupUsageResourceParameters): ng.resource.IResourceArray<ICharacteristicGroupUsageResource>;
+        }
+
+        // areaBreakdown
+        interface IPropertyAreaBreakdownResourceClassParameters {
+            propertyId: string;
+        }
+        interface IPropertyAreaBreakdownResourceClassData {
+            areas: Dto.ICreatePropertyAreaBreakdownResource[];
+        }
+        interface IPropertyAreaBreakdownResourceClass extends ng.resource.IResourceClass<IPropertyAreaBreakdownResource> {
+            createPropertyAreaBreakdowns(params: IPropertyAreaBreakdownResourceClassParameters, data: IPropertyAreaBreakdownResourceClassData): ng.resource.IResource<Dto.IPropertyAreaBreakdown[]>;
+        }
+
+        interface IDepartmentUserResourceParameters {
+            partialName: string;
+            take: number;
+            'excludedIds[]': string[];
+        }
+
+        interface IDepartmentUserResourceClass extends ng.resource.IResourceClass<IDepartmentUserResource> {
+            query(): ng.resource.IResourceArray<IDepartmentUserResource>;
+            query(params: IDepartmentUserResourceParameters): ng.resource.IResourceArray<IDepartmentUserResource>;
         }
     }
 }

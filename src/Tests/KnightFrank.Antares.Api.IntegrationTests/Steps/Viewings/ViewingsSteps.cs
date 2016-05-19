@@ -48,7 +48,6 @@
         [When(@"User creates viewing using api")]
         public void CreateViewingUsingApi()
         {
-            string requestUrl = $"{ApiUrl}";
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
             List<Guid> attendeesIds =
                 this.scenarioContext.Get<Requirement>("Requirement").Contacts.Select(contact => contact.Id).ToList();
@@ -66,14 +65,32 @@
                 RequirementId = requirementId
             };
 
-            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, details);
-            this.scenarioContext.SetHttpResponseMessage(response);
+            this.CreateViewing(details);
+        }
+
+        [When(@"User creates viewing with mandatory fields using api")]
+        public void CreateViewingWithMandatoryFieldsUsingApi()
+        {
+            Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
+            List<Guid> attendeesIds =
+                this.scenarioContext.Get<Requirement>("Requirement").Contacts.Select(contact => contact.Id).ToList();
+            Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
+
+            var details = new CreateViewingCommand
+            {
+                ActivityId = activityId,
+                AttendeesIds = attendeesIds,
+                StartDate = DateTime.UtcNow,
+                EndDate = DateTime.UtcNow.AddHours(1),
+                RequirementId = requirementId
+            };
+
+            this.CreateViewing(details);
         }
 
         [When(@"User creates viewing with invalid (.*) using api")]
         public void CreateViewingWithInvalidDataUsingApi(string data)
         {
-            string requestUrl = $"{ApiUrl}";
             Guid activityId = data.Equals("activity") ? Guid.NewGuid() : this.scenarioContext.Get<Activity>("Activity").Id;
             List<Guid> attendeesIds = data.Equals("attendee")
                 ? new List<Guid> { Guid.NewGuid() }
@@ -95,8 +112,7 @@
                 RequirementId = requirementId
             };
 
-            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, details);
-            this.scenarioContext.SetHttpResponseMessage(response);
+            this.CreateViewing(details);
         }
 
         [Given(@"User creates viewing in database")]
@@ -133,7 +149,6 @@
         [When(@"User updates viewing")]
         public void UpdateViewing()
         {
-            string requestUrl = $"{ApiUrl}";
             var viewing = this.scenarioContext.Get<Viewing>("Viewing");
             var details = new UpdateViewingCommand
             {
@@ -148,14 +163,12 @@
                 EndDate = DateTime.UtcNow.AddHours(2)
             };
 
-            HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, details);
-            this.scenarioContext.SetHttpResponseMessage(response);
+            this.UpdateViewing(details);
         }
 
         [When(@"User updates viewing with invalid (.*) data")]
         public void UpdateViewingWithInvalidData(string data)
         {
-            string requestUrl = $"{ApiUrl}";
             var viewing = this.scenarioContext.Get<Viewing>("Viewing");
             var details = new UpdateViewingCommand
             {
@@ -170,12 +183,11 @@
                 EndDate = DateTime.UtcNow.AddHours(2)
             };
 
-            HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, details);
-            this.scenarioContext.SetHttpResponseMessage(response);
+            this.UpdateViewing(details);
         }
 
         [Then(@"Viewing details should be the same as already added")]
-        public void ThenViewingDetailsShouldBeTheSameAsAlreadyAdded()
+        public void CheckViewingDetails()
         {
             var viewing = JsonConvert.DeserializeObject<Viewing>(this.scenarioContext.GetResponseContent());
             Viewing expectedViewing = this.fixture.DataContext.Viewing.Single(v => v.Id.Equals(viewing.Id));
@@ -184,6 +196,20 @@
                 .Excluding(v => v.Negotiator)
                 .Excluding(v => v.Activity)
                 .Excluding(v => v.Requirement));
+        }
+
+        private void CreateViewing(CreateViewingCommand command)
+        {
+            string requestUrl = $"{ApiUrl}";
+            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, command);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        private void UpdateViewing(UpdateViewingCommand command)
+        {
+            string requestUrl = $"{ApiUrl}";
+            HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, command);
+            this.scenarioContext.SetHttpResponseMessage(response);
         }
     }
 }

@@ -66,6 +66,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="TechTalk.SpecFlow, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
@@ -106,7 +107,6 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Extensions\DatabaseExtensions.cs" />
     <Compile Include="Extensions\DriverExtensions.cs" />
     <Compile Include="Pages\AddressTemplatePage.cs" />
     <Compile Include="Pages\CommonPage.cs" />
@@ -121,6 +121,8 @@
     <Compile Include="Pages\CreateContactPage.cs" />
     <Compile Include="Pages\CreateRequirementPage.cs" />
     <Compile Include="Pages\EditActivityPage.cs" />
+    <Compile Include="Pages\Panels\CreateAreaPage.cs" />
+    <Compile Include="Pages\Panels\CreateOfferPage.cs" />
     <Compile Include="Pages\Panels\NotesPage.cs" />
     <Compile Include="Pages\Panels\OwnershipDetailsPage.cs" />
     <Compile Include="Pages\Panels\PropertyPreviewPage.cs" />
@@ -140,11 +142,22 @@
     <Compile Include="Steps\Database\ContactSteps.cs" />
     <Compile Include="Steps\Database\PropertySteps.cs" />
     <Compile Include="Steps\Database\RequirementSteps.cs" />
+    <Compile Include="Steps\Database\ViewingSteps.cs" />
     <Compile Include="Steps\EditActivitySteps.cs" />
     <Compile Include="Steps\NavigationDrawerSteps.cs" />
     <Compile Include="Steps\ViewActivitySteps.cs" />
     <Compile Include="Steps\ViewRequirementSteps.cs" />
     <Compile Include="Steps\ViewPropertySteps.cs" />
+    <Compile Include="Tests\Activities\Activities.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Activities.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Activities\Attachments.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Attachments.feature</DependentUpon>
+    </Compile>
     <Compile Include="Tests\Company\Company.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -159,6 +172,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>NavigationDrawer.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Offer\Offer.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Offer.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Property\Property.feature.cs">
       <AutoGen>True</AutoGen>
@@ -182,6 +200,14 @@
     <Content Include="Resources\PDF document.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Tests\Activities\Activities.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Activities.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Activities\Attachments.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Attachments.feature.cs</LastGenOutput>
+    </None>
     <None Include="Tests\Company\Company.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Company.feature.cs</LastGenOutput>
@@ -193,6 +219,10 @@
     <None Include="Tests\NavigationDrawer\NavigationDrawer.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>NavigationDrawer.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Offer\Offer.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Offer.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Property\Property.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

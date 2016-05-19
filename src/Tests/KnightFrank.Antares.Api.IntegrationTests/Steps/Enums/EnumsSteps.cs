@@ -15,7 +15,6 @@
     using Newtonsoft.Json;
 
     using TechTalk.SpecFlow;
-    using TechTalk.SpecFlow.Assist;
 
     using Xunit;
 
@@ -38,38 +37,6 @@
             this.scenarioContext = context;
         }
 
-        private EnumType EnumType { get; set; }
-        private EnumTypeItem EnumTypeItem { get; set; }
-        private EnumLocalised EnumLocalised { get; set; }
-
-        [Given(@"There is EnumType")]
-        public void GivenThereIsEnumType(Table table)
-        {
-            this.EnumType = table.CreateInstance<EnumType>();
-            this.fixture.DataContext.EnumTypes.Add(this.EnumType);
-            this.fixture.DataContext.SaveChanges();
-        }
-
-        [Given(@"There is EnumTypeItem")]
-        public void GivenThereIsEnumTypeItem(Table table)
-        {
-            this.EnumTypeItem = table.CreateInstance<EnumTypeItem>();
-            this.EnumTypeItem.EnumTypeId = this.EnumType.Id;
-            this.fixture.DataContext.EnumTypeItems.Add(this.EnumTypeItem);
-            this.fixture.DataContext.SaveChanges();
-        }
-
-        [Given(@"There is EnumLocalized for given EnumType and (.*) Locale")]
-        public void GivenThereIsEnumLocalizedForGivenEnumTypeAndEnLocale(string localeIsoCode, Table table)
-        {
-            this.EnumLocalised = table.CreateInstance<EnumLocalised>();
-            this.EnumLocalised.Locale = this.fixture.DataContext.Locales.FirstOrDefault(l => l.IsoCode == localeIsoCode.ToLower());
-            this.EnumLocalised.EnumTypeItem = this.EnumTypeItem;
-
-            this.fixture.DataContext.EnumLocaliseds.Add(this.EnumLocalised);
-            this.fixture.DataContext.SaveChanges();
-        }
-
         [Given(@"User gets EnumTypeItemId and EnumTypeItem code")]
         public void GetEnumTypeItemId(Table table)
         {
@@ -87,15 +54,6 @@
             }
 
             this.scenarioContext.Set(enums, "EnumDictionary");
-        }
-
-        [When(@"User retrieves EnumTypes by (.*) code")]
-        public void WhenUserRetrievesEnumTypesByEntityTypeCode(string code)
-        {
-            string requestUrl = $"{ApiUrl}/{code}/items";
-            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
-
-            this.scenarioContext.SetHttpResponseMessage(response);
         }
 
         [When(@"User retrieves Enums")]

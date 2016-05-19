@@ -1,30 +1,31 @@
 <form ng-submit="addAreaForm.$valid" name="addAreaForm" id="addAreaForm" method="post" novalidate>
 
     <div class="area-details" ng-repeat="area in vm.areas">
-        <div class="row" ng-if="$index > 0">
-            <div class="col-xs-12">
-                <button class="close" ng-click="vm.removeArea(area)">&times;</button>
-            </div>
-        </div>        
-        <div class="form-group" ng-class="{'has-error': (addAreaForm.$submitted || addAreaForm.name.$dirty) && addAreaForm.name.$invalid}">
-            <label for="name" class="required" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.ADD.NAME"></label>
-            <input id="name-{{$index}}" name="name-{{$index}}" class="form-control" type="text" ng-model="area.name" required ng-maxlength="128">
-            <div ng-messages="addAreaForm.name.$error" ng-show="addAreaForm.$submitted || addAreaForm.name.$dirty">
-                <div ng-messages-include="app/common/views/errorMessages.html"></div>
-            </div>
-        </div>
-        <div class="form-group" ng-class="{'has-error': (addAreaForm.$submitted || addAreaForm.size.$dirty) && addAreaForm.size.$invalid}">
-            <label for="size" class="required" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.ADD.SIZE"></label>
-            <div class="row">
-                <div class="col-xs-4">
-                    <input id="size-{{$index}}" name="size-{{$index}}" class="form-control" ng-model="area.size" type="number" required>
+        <ng-form name="innerAddAreaForm">
+            <div class="row" ng-if="$index > 0">
+                <div class="col-xs-12">
+                    <button class="close" ng-click="vm.removeArea(area)">&times;</button>
                 </div>
             </div>
-            <div ng-messages="addAreaForm.size.$error" ng-show="addAreaForm.$submitted || addAreaForm.size.$dirty">
-                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+            <div class="form-group" ng-class="{'has-error': (addAreaForm.$submitted || innerAddAreaFormForm.name.$dirty) && innerAddAreaForm.name.$invalid}">
+                <label for="name" class="required" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.ADD.NAME"></label>
+                <input id="name" name="name" class="form-control" type="text" ng-model="area.name" required ng-maxlength="128">
+                <div ng-messages="innerAddAreaForm.name.$error" ng-show="addAreaForm.$submitted || innerAddAreaForm.name.$dirty">
+                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                </div>
             </div>
-        </div>
+            <div class="form-group" ng-class="{'has-error': (addAreaForm.$submitted || innerAddAreaForm.size.$dirty) && innerAddAreaForm.size.$invalid}" ng-init="minLength = 0">
+                <label for="size" class="required" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.ADD.SIZE"></label>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <input id="size" name="size" class="form-control" ng-model="area.size" type="number" required number-greater-than="{{minLength}}">
+                    </div>
+                </div>
+                <div ng-messages="innerAddAreaForm.size.$error" ng-show="addAreaForm.$submitted || innerAddAreaForm.size.$dirty">
+                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                </div>
+            </div>
+        </ng-form>
     </div>
-
     <button class="btn btn-default" type="button" ng-click="vm.addNewArea()"><i class="fa fa-plus-circle"></i></button>
 </form>

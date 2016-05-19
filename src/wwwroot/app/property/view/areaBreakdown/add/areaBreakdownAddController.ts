@@ -2,25 +2,49 @@
 /// <reference path="../../../../common/models/resources.d.ts" />
 
 module Antares.Property.View.AreaBreakdown {
+    import Resources = Common.Models.Resources;
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
 
     export class AreaBreakdownAddController {
-        areas: Business.PropertyArea[] = [];
+        private componentId: string;
+        private propertyAreaBreakdownResourceService: Resources.IPropertyAreaBreakdownResourceClass;
+        areas: Business.CreatePropertyAreaBreakdownResource[];
 
-        constructor() {
+        constructor(componentRegistry: Core.Service.ComponentRegistry,
+            private dataAccessService: Services.DataAccessService,
+            private $q: ng.IQService) {
+
+            componentRegistry.register(this, this.componentId);
+            this.propertyAreaBreakdownResourceService = dataAccessService.getPropertyAreaBreakdownResource();
+            this.clearAreas();
+        }
+
+        clearAreas() {
+            this.areas = [];
             this.addNewArea();
         }
 
-        addNewArea(): Business.PropertyArea {
-            var area: Business.PropertyArea = new Business.PropertyArea();
-
+        addNewArea(): void {
+            var area: Business.CreatePropertyAreaBreakdownResource = new Business.CreatePropertyAreaBreakdownResource();
             this.areas.push(area);
-            return area;
         }
 
-        removeArea(area: Business.PropertyArea): void{
+        removeArea(area: Business.CreatePropertyAreaBreakdownResource): void {
             _.pull(this.areas, area);
+        }
+
+        saveAreas(propertyId: string): ng.IPromise<Common.Models.Dto.IPropertyAreaBreakdown[]> {
+            var params: Resources.IPropertyAreaBreakdownResourceClassParameters = { propertyId: propertyId };
+            var data: Resources.IPropertyAreaBreakdownResourceClassData = { areas: this.areas };
+
+            var onSuccess = (areas: Common.Models.Dto.IPropertyAreaBreakdown[]) => {
+                var propertyAreas: Business.PropertyAreaBreakdown[] = areas.map(area => new Business.PropertyAreaBreakdown(area));
+                return propertyAreas;
+            };
+            var onError = (reason: any) => { return reason;};
+
+            return this.propertyAreaBreakdownResourceService.createPropertyAreaBreakdowns(params, data).$promise.then(onSuccess, onError);
         }
     }
 

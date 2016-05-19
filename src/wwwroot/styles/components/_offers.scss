@@ -1,0 +1,33 @@
+// Offers
+
+// Offers cards
+
+.offer-status {
+  border: 1px solid;
+  display: inline-block;
+  font-size: 10px;
+  line-height: 9px;
+  margin-right: 8px;
+  padding: 3px 4px;
+  text-transform: uppercase;
+
+  &-new {
+    border-color: $color-dove-gray;
+    color: $color-dove-gray;
+  }
+
+  &-accepted {
+    border-color: $color-limeade;
+    color: $color-limeade;
+  }
+
+  &-rejected {
+    border-color: $color-crimson;
+    color: $color-crimson;
+  }
+
+  &-withdrawn {
+    border-color: $color-silver;
+    color: $color-dove-gray;
+  }
+}

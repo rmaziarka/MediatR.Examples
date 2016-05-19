@@ -30,6 +30,7 @@
                     .Include(p => p.Activities.Select(o => o.Contacts))
                     .Include(p => p.Activities.Select(a => a.ActivityStatus))
                     .Include(p => p.PropertyCharacteristics)
+                    .Include(p => p.PropertyAreaBreakdowns)
                     .FirstOrDefault(p => p.Id == message.Id);
 
             return result;

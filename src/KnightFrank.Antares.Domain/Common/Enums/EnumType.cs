@@ -6,6 +6,7 @@
         ActivityStatus,
         Division,
         EntityType,
-        OwnershipType
+        OwnershipType,
+        OfferStatus
     }
 }

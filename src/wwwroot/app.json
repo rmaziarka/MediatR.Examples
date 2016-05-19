@@ -5,6 +5,14 @@
     },
     "FileUpload": {
       "ChunkSizeInBytes": 1048576
+    },
+    "EnumOrder": {
+      "OfferStatus": {
+        "New": 2,
+        "Withdrawn": 4,
+        "Rejected": 3,
+        "Accepted": 1
+      }
     }
   }
 }

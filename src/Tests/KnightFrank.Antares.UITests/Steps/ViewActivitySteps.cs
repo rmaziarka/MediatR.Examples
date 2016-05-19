@@ -1,11 +1,13 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
 
     using FluentAssertions;
 
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;
@@ -32,17 +34,25 @@
             this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
         }
 
+        [When(@"User navigates to view activity page with id")]
+        public void OpenViewActivityPageWithId()
+        {
+            Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
+            ViewActivityPage page = new ViewActivityPage(this.driverContext).OpenViewActivityPageWithId(activityId.ToString());
+            this.scenarioContext.Set(page, "ViewActivityPage");
+        }
+
         [When(@"User clicks property details link on view activity page")]
         public void OpenPreviewPropertyPage()
         {
-            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").ClickDetailsLink();
+            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").ClickDetailsLink().WaitForSidePanelToShow();
         }
 
         [When(@"User clicks view property link on property preview page")]
         public void OpenViewPropertyPage()
         {
             var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
-            this.scenarioContext.Set(page.PropertyPreview.WaitForPanelToBeVisible().OpenViewPropertyPage(), "ViewPropertyPage");
+            this.scenarioContext.Set(page.PropertyPreview.OpenViewPropertyPage(), "ViewPropertyPage");
         }
 
         [When(@"User clicks edit button on view activity page")]
@@ -55,28 +65,35 @@
         [When(@"User clicks add attachment button on view activity page")]
         public void OpenAttachFilePanel()
         {
-            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").OpenAttachFilePanel();
+            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").OpenAttachFilePanel().WaitForSidePanelToShow();
         }
 
         [When(@"User adds (.*) file with (.*) type on attach file panel")]
         public void SelectAttachmentType(string file, string type)
         {
-            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage")
-                .AttachFile.SelectType(type)
+            var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
+            page.AttachFile.SelectType(type)
                 .AddFiletoAttachment(file)
                 .SaveAttachment();
+            page.WaitForSidePanelToHide(BaseConfiguration.LongTimeout);
         }
 
         [When(@"User clicks attachment details link on view activity page")]
         public void OpenAttachmentPreview()
         {
-            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").OpenAttachmentPreview();
+            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").OpenAttachmentPreview().WaitForSidePanelToShow();
         }
 
-        [When(@"User clicks close button on attachment preview panel")]
-        public void CloseAttachmentPreviewPanel()
+        [When(@"User clicks (.*) viewings details link on view activity page")]
+        public void OpenViewingsDetails(int position)
         {
-            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").PreviewAttachment.CloseAttachmentPreviewPage();
+            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").OpenViewingDetails(position);
+        }
+
+        [When(@"User clicks view requirement on view activity page")]
+        public void ClickViewActivity()
+        {
+            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").ViewingDetails.ClickViewLink();
         }
 
         [Then(@"Attachment (.*) should be downloaded")]
@@ -127,7 +144,7 @@
             actual.ShouldBeEquivalentTo(expected);
         }
 
-        [Then(@"Attachment details on attachment preview panel are the same like on view activity page")]
+        [Then(@"Attachment details on attachment preview page are the same like on view activity page")]
         public void ChackAttachmentDetails()
         {
             Attachment actual =
@@ -136,6 +153,52 @@
             expected.User = "John Smith";
 
             actual.ShouldBeEquivalentTo(expected);
+        }
+
+        [Then(@"View activity page is displayed")]
+        public void CheckIfViewActivityPresent()
+        {
+            var page = new ViewActivityPage(this.driverContext);
+            Assert.True(page.IsViewActivityFormPresent());
+            this.scenarioContext.Set(page, "ViewActivityPage");
+        }
+
+        [Then(@"Viewing details on (.*) position on view activity page are same as the following")]
+        public void CheckViewing(int position, Table table)
+        {
+            var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
+            var expectedDetails = table.CreateInstance<ViewingData>();
+            List<string> actualDetails = page.GetViewingDetails(position);
+
+            Verify.That(this.driverContext, () => Assert.Equal(page.ViewingsNumber, 1),
+                () => Assert.Equal(expectedDetails.Date, actualDetails[0]),
+                () => Assert.Equal(expectedDetails.Name, actualDetails[1]),
+                () => Assert.Equal(expectedDetails.Time, actualDetails[2]));
+        }
+
+        [Then(@"Viewing details on view activity page are same as the following")]
+        public void CheckViewingInDetailsPanel(Table table)
+        {
+            var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
+            var expectedDetails = table.CreateInstance<ViewingDetails>();
+
+            List<string> attendees = expectedDetails.Attendees.Split(';').ToList();
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Name, page.ViewingDetails.Details),
+                () => Assert.Equal(expectedDetails.Date + ", " + expectedDetails.StartTime + " - " + expectedDetails.EndTime, page.ViewingDetails.Date),
+                () => Assert.Equal(expectedDetails.Negotiator, page.ViewingDetails.Negotiator),
+                () => Assert.Equal(attendees, page.ViewingDetails.Attendees),
+                () => Assert.Equal(expectedDetails.InvitationText, page.ViewingDetails.InvitationText),
+                () => Assert.Equal(expectedDetails.PostViewingComment, page.ViewingDetails.PostViewingComment));
+        }
+
+        [Then(@"User closes attachment preview page on view activity page")]
+        public void CloseAttachmentPreviewPanel()
+        {
+            var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
+            page.PreviewAttachment.CloseAttachmentPreviewPage();
+            page.WaitForSidePanelToHide();
         }
     }
 }

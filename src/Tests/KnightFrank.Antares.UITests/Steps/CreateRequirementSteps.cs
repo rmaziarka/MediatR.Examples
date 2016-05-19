@@ -84,7 +84,7 @@
         {
             var page = this.scenarioContext.Get<CreateRequirementPage>("CreateRequirementPage");
 
-            page.AddNewApllicantForResidentialSalesRequirement();
+            page.AddApplicants().WaitForSidePanelToShow();
 
             IEnumerable<Contact> contacts = table.CreateSet<Contact>();
 
@@ -92,10 +92,11 @@
             {
                 page.ContactsList.WaitForContactsListToLoad().SelectContact(contact.FirstName, contact.Surname);
             }
-            page.ContactsList.SaveContact().WaitForContactListToHide();
+            page.ContactsList.SaveContact();
+            page.WaitForSidePanelToHide();
         }
 
-        [When(@"User clicks save button on create requirement page")]
+        [When(@"User clicks save requirement button on create requirement page")]
         public void SaveNewResidentialSalesRequirement()
         {
             this.scenarioContext.Get<CreateRequirementPage>("CreateRequirementPage")
@@ -109,6 +110,9 @@
             var page = new ViewRequirementPage(this.driverContext);
             page.WaitForDetailsToLoad();
             this.scenarioContext["ViewRequirementPage"] = page;
+
+            var date = this.scenarioContext.Get<DateTime>("RequirementDate");
+            Assert.Equal(date.ToString("MMMM d, yyyy"), page.GetRequirementCreateDate());
         }
 
         [Then(@"List of applicants should contain following contacts")]

@@ -8,7 +8,8 @@ module Antares.Common.Component {
         transclude: {
             'header': '?cardListHeader',
             'noItems': '?cardListNoItems',
-            'item': '?cardListItem'
+            'item': '?cardListItem',
+            'items': '?cardListItems'
         },
         bindings: {
             showItemAdd: '<',

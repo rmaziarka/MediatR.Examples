@@ -27,11 +27,25 @@
             return new BusinessValidationMessage(ErrorMessage.Entity_Not_Exists, message);
         }
 
+        public static BusinessValidationMessage CreateOneOfEntitiesNotExistMessage(string entityType)
+        {
+            string errorMessageTemplate = GetMessage(ErrorMessage.Entity_List_Item_Not_Exists);
+            string message = string.Format(errorMessageTemplate, entityType);
+            return new BusinessValidationMessage(ErrorMessage.Entity_List_Item_Not_Exists, message);
+        }
+
         public static BusinessValidationMessage CreateEnumTypeItemNotExistMessage(string enumType, Guid id)
         {
             string errorMessageTemplate = GetMessage(ErrorMessage.EnumType_Item_Not_Exists);
             string message = string.Format(errorMessageTemplate, enumType, id);
             return new BusinessValidationMessage(ErrorMessage.EnumType_Item_Not_Exists, message);
+        }
+
+        public static BusinessValidationMessage CreateOnlyCommercialPropertyShouldHaveAreaBreakdownMessage()
+        {
+            string errorMessageTemplate = GetMessage(ErrorMessage.Only_Commercial_Property_Should_Have_AreaBreakdown);
+            string message = string.Format(errorMessageTemplate);
+            return new BusinessValidationMessage(ErrorMessage.Only_Commercial_Property_Should_Have_AreaBreakdown, message);
         }
 
         public static BusinessValidationMessage CreatePropertyShouldBeEmptyMessage(string propertyName)
@@ -48,7 +62,7 @@
             string message = string.Format(errorMessageTemplate, propertyName);
             return new BusinessValidationMessage(ErrorMessage.Property_Should_Not_Be_Empty, message);
         }
-        
+
         public static BusinessValidationMessage CreatePropertyFormatIsInvalidMessage(string propertyName)
         {
             string errorMessageTemplate = GetMessage(ErrorMessage.Property_Format_Is_Invalid);

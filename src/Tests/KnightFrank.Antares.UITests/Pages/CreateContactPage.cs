@@ -51,7 +51,7 @@
 
         public bool IsContactFormPresent()
         {
-            return this.Driver.IsElementPresent(this.contactForm, BaseConfiguration.LongTimeout);
+            return this.Driver.IsElementPresent(this.contactForm, BaseConfiguration.MediumTimeout);
         }
     }
 }

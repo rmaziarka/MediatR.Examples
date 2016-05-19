@@ -33,5 +33,6 @@
         description?: string;
 
         viewings?: IViewing[];
+        offers?: IOffer[];
     }
 }

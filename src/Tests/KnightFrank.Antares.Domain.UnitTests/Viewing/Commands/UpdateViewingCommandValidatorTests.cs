@@ -132,5 +132,21 @@
             validationResult.IsValid.Should().BeFalse();
             validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(this.cmd.EndDate));
         }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_EndDateSameAsStartDate_When_Validating_Then_IsInvalid(UpdateViewingCommandValidator validator)
+        {
+            // Arrange
+            this.cmd.StartDate = new DateTime(2000, 1, 1, 16, 0, 0);
+            this.cmd.EndDate = new DateTime(2000, 1, 1, 16, 0, 0);
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeFalse();
+            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(this.cmd.EndDate));
+        }
     }
 }

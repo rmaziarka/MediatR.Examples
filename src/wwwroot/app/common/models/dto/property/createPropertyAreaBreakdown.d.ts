@@ -1,6 +1,5 @@
 declare module Antares.Common.Models.Dto {
-    interface IPropertyArea {
-        id: string;
+    interface ICreatePropertyAreaBreakdownResource {
         name: string;
         size: number;
     }

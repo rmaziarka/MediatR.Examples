@@ -1,0 +1,116 @@
+<h5 translate="OFFER.ADD.ACTIVITY"></h5>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div id="offer-add-activity-details" class="panel-item ng-binding">
+            {{vm.activity.property.address.getAddressText()}}
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <a href="" ng-click="vm.goToActivityView()" translate="OFFER.ADD.VIEW"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form ng-submit="vm.addOfferForm.$valid" name="vm.addOfferForm" method="post" novalidate>
+    <div class="form-group" ng-class="{'has-error': (vm.addOfferForm.$submitted || vm.addOfferForm.selectedStatus.$dirty) && vm.addOfferForm.selectedStatus.$invalid}">
+        <label class="required" for="offer-statusId">Status</label>
+        <div class="row">
+            <div class="col-md-6">
+                <select class="form-control" required id="offer-status" name="selectedStatus" ng-options="item as (item.id | dynamicTranslate) for item in vm.statuses track by item.id" ng-model="vm.selectedStatus">
+                    <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
+                </select>
+            </div>
+        </div>
+        <div ng-messages="vm.addOfferForm.selectedStatus.$error" ng-show="vm.addOfferForm.$submitted || vm.addOfferForm.selectedStatus.$dirty">
+            <div ng-messages-include="app/common/views/errorMessages.html"></div>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': (vm.addOfferForm.$submitted || vm.addOfferForm.price.$dirty) && vm.addOfferForm.price.$invalid}">
+        <label for="offer-price" class="required">Offer</label>
+        <div class="row">
+            <div class="col-md-7">
+                <div class="input-group">
+                    <input id="offer-price" class="form-control" type="number" ng-model="vm.offer.price" name="price" required min="0" number-precision="0">
+                    <div class="input-group-addon">GBP</div>
+                </div>
+            </div>
+        </div>
+        <div ng-messages="vm.addOfferForm.price.$error" ng-show="vm.addOfferForm.$submitted || vm.addOfferForm.price.$dirty">
+            <p name="minValidationError" ng-message="min" class="help-block with-errors" translate="FORM.NUMBER_HAS_TO_BE_GREATER_THAN" translate-value-value="0"></p>
+            <p name="numberPrecisionValidationError" ng-message="numberPrecision" class="help-block with-errors" translate="FORM.NUMBER_HAS_TO_BE_INTEGER"></p>
+            <div ng-messages-include="app/common/views/errorMessages.html"></div>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': (vm.addOfferForm.$submitted || vm.addOfferForm.offerDate.$dirty) && vm.addOfferForm.offerDate.$invalid}">
+        <div class="row">
+            <div class="col-md-10">
+                <label class="required" for="offer-date" translate="OFFER.ADD.OFFER_DATE"></label>
+                <div class="input-group">
+                    <input type="text" id="offer-date" name="offerDate" class="form-control" ng-model="vm.offer.offerDate" uib-datepicker-popup="dd-MM-yyyy"
+                           is-open="vm.offerDateOpen" close-text="Close" placeholder="dd-mm-yyyy" required date-lower-than="{{ vm.today }}"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openOfferDate()"><i class="fa fa-calendar"></i></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div ng-messages="vm.addOfferForm.offerDate.$error" ng-show="vm.addOfferForm.$submitted || vm.addOfferForm.offerDate.$dirty">
+            <p name="dateLowerThanValidationError" ng-message="dateLowerThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_FUTURE"></p>
+            <div ng-messages-include="app/common/views/errorMessages.html"></div>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': (vm.addOfferForm.$submitted || vm.addOfferForm.specialConditions.$dirty) && vm.addOfferForm.specialConditions.$invalid}">
+        <label for="invitation-text" translate="OFFER.ADD.SPECIAL_CONDITIONS"></label>
+        <span class="pull-right character-limit">{{vm.addOfferForm.specialConditions.$viewValue.length || 0}}/4000</span>
+        <textarea class="form-control" rows="6" ng-model="vm.offer.specialConditions" name="specialConditions" kf-max-count="4000"></textarea>
+        <div ng-messages="vm.addOfferForm.specialConditions.$error" ng-show="vm.addOfferForm.$submitted || vm.addOfferForm.specialConditions.$dirty">
+            <div ng-messages-include="app/common/views/errorMessages.html"></div>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': (vm.addOfferForm.$submitted || vm.addOfferForm.exchangeDate.$dirty) && vm.addOfferForm.exchangeDate.$invalid}">
+        <label for="offer-proposed-exchange-date" translate="OFFER.ADD.EXCHANGE_DATE"></label>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="text" id="offer-proposed-exchange-date" class="form-control" placeholder="dd-mm-yyyy" uib-datepicker-popup="dd-MM-yyyy"
+                           is-open="vm.exchangeDateOpen" close-text="Close" ng-model="vm.offer.exchangeDate" name="exchangeDate" date-greater-than="{{ vm.today }}">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openExchangeDate()">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div ng-messages="vm.addOfferForm.exchangeDate.$error" ng-show="vm.addOfferForm.$submitted || vm.addOfferForm.exchangeDate.$dirty">
+            <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
+            <div ng-messages-include="app/common/views/errorMessages.html"></div>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': (vm.addOfferForm.$submitted || vm.addOfferForm.completionDate.$dirty) && vm.addOfferForm.completionDate.$invalid}">
+        <label for="proposed-completion-date" translate="OFFER.ADD.COMPLETION_DATE"></label>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="text" id="proposed-completion-date" class="form-control" placeholder="dd-mm-yyyy" uib-datepicker-popup="dd-MM-yyyy"
+                           is-open="vm.completionDateOpen" close-text="Close" ng-model="vm.offer.completionDate" name="completionDate" date-greater-than="{{ vm.today }}">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCompletionDate()">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div ng-messages="vm.addOfferForm.completionDate.$error" ng-show="vm.addOfferForm.$submitted || vm.addOfferForm.completionDate.$dirty">
+            <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_IN_PAST"></p>
+            <div ng-messages-include="app/common/views/errorMessages.html"></div>
+        </div>
+    </div>
+</form>

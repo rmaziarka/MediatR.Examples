@@ -16,7 +16,7 @@ Scenario Outline: Upload attachment for entity with ActivityDocumentType
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Activity for latest property and PreAppraisal activity status exists in database
  # end: add activity
-	When User retrieves url for activity attachment upload for <filename> and <activityDocumentTypeCode>
+	When User retrieves url for activity attachment upload for <filename> and <activityDocumentTypeCode> code
 	Then User should get <statusCode> http status code
 
 	Examples: 
@@ -40,7 +40,7 @@ Scenario Outline: Download attachment for entity with ActivityDocumentType
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Activity for latest property and PreAppraisal activity status exists in database
  # end: add activity
-	When User retrieves url for activity attachment download for <filename> and <activityDocumentTypeCode>
+	When User retrieves url for activity attachment download for <filename> and <activityDocumentTypeCode> code
 	Then User should get <statusCode> http status code
 
 	Examples: 

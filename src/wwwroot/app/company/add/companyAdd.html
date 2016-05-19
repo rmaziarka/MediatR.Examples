@@ -9,13 +9,35 @@
                 <h3 class="page-header" translate="COMPANY.ADD.BASIC_INFORMATION"></h3>
 
                 <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.name.$dirty) && addCompanyForm.name.$invalid}">
-                    <label class="required" for="title" translate="COMPANY.ADD.NAME"></label>
+                    <label class="required" for="name" translate="COMPANY.ADD.NAME"></label>
                     <input type="text" class="form-control" id="name" name="name" required ng-maxlength="128" ng-model="vm.company.name" autocomplete="off">
                     <div ng-messages="addCompanyForm.name.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.name.$dirty">
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="website">Website</label>
+                    <input type="url" class="form-control" id="website" placeholder="http://">
+                </div>
+
+                <div class="form-group">
+                    <label for="client-care-website">Client care website</label>
+                    <input type="url" class="form-control" id="client-care-website" placeholder="http://">
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="client-care-status">Client care status</label>
+                            <select id="client-care-status" class="form-control">
+                                <option>-- select --</option>
+                                <option>Option item</option>
+                                <option>Option item</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </fieldset>
         </div>
         <div class="col-md-4">
@@ -52,6 +74,56 @@
     </form>
 </div>
 
+<!-- TODO
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="page-header">View company</h2>
+
+        <div class="well">
+            <button type="button" class="btn btn-default pull-right"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT">Edit</span></button>
+            <div>A company</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h3 class="page-header">Basic info</h3>
+
+                <div class="section-row row">
+                    <div class="col-xs-4">Website</div>
+                    <div class="col-xs-8"><a href="#" target="_blank">www.companywebpage.com</a> <i class="fa fa-external-link" aria-hidden="true"></i></div>
+                </div>
+
+                <div class="section-row row">
+                    <div class="col-xs-4">Client Care website</div>
+                    <div class="col-xs-8"><a href="#" target="_blank">www.clientcare.companywebpage.com</a> <i class="fa fa-external-link" aria-hidden="true"></i></div>
+                </div>
+
+                <div class="section-row row">
+                    <div class="col-xs-4">Client Care status</div>
+                    <div class="col-xs-8">Lorem ipsum</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h3 class="page-header">Contacts</h3>
+
+                <div class="card card-no-menu">
+                    <div class="card-body">
+                        <div class="card-item">Gilberto Lyons</div>
+                    </div>
+                </div>
+
+                <div class="card card-no-menu">
+                    <div class="card-body">
+                        <div class="card-item">Drew Sanders</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+-->
 
 <side-panel component-id="vm.componentIds.contactSidePanelId">
     <side-panel-header>

@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel panel-default" ng-if="!cvm.displayNewControl">
     <div class="panel-body">
         <div ng-include src="cvm.cardTemplateUrl"></div>
 
@@ -7,5 +7,17 @@
                 <a class="detailsLink" href="" ng-click="cvm.showItemDetails(cvm.item)" translate="COMMON.DETAILS"></a>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="card" ng-class="{'card-menu-open': cvm.contextMenuOpened, 'card-no-menu': !cvm.showContextMenu, 'card-details': cvm.showItemDetails}" ng-if="cvm.displayNewControl">
+    <div class="card-body" ng-click="cvm.showItemDetails(cvm.item)">
+        <div ng-include src="cvm.cardTemplateUrl"></div>
+    </div>
+
+    <div class="card-action" ng-if="cvm.showContextMenu" tabindex="-1">
+        <a href="" ng-click="cvm.contextMenuOpened = !cvm.contextMenuOpened" ng-blur="cvm.closeContextMenu()" class="card-menu-button"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+        <ul class="card-menu" ng-transclude="contextMenu">
+        </ul>
     </div>
 </div>

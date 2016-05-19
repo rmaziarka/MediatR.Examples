@@ -7,6 +7,7 @@ module Antares {
         export class ViewingPreviewController {
             componentId: string;
             viewing: Business.Viewing;
+            pageContext: string;
 
             constructor(
                 private componentRegistry: Antares.Core.Service.ComponentRegistry,

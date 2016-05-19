@@ -36,6 +36,9 @@
                 .SetValidator(new ActivityTypeValidator(activityTypeRepository))
                 .When(x => !x.ActivityTypeId.Equals(Guid.Empty));
 
+            this.RuleFor(x => x.LeadNegotiatorId).NotEmpty();
+            this.RuleFor(x => x.SecondaryNegotiatorIds).NotNull();
+
             this.RuleFor(x => x).Must(this.ActivityExists).WithMessage("Activity does not exist.")
                 .WithName("Id").DependentRules(c => c.RuleFor(x => x).Must(this.ActivityTypeDefinitionExists)
                                                      .WithMessage("Specified activity type is invalid")

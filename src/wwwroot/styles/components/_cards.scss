@@ -1,0 +1,165 @@
+// Card component
+
+.card {
+  background-color: $color-white;
+  border: 1px solid $color-denim;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.card-selected {
+  background-color: $color-lily-white;
+}
+
+.card-no-menu {
+  .card-body {
+    width: 100%;
+  }
+}
+
+.card-details {
+  .card-body {
+    cursor: pointer;
+  }
+}
+
+.card-body {
+  padding: 12px;
+  width: calc(100% - 47px);
+
+  .checkbox,
+  .radio {
+    margin: {
+      bottom: 0;
+      top: 0;
+    }
+  }
+}
+
+.card-item {
+  font-size: 13px;
+  line-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-info {
+  color: $color-dusty-gray;
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+.card-action {
+  cursor: pointer;
+  height: 100%;
+  outline: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 47px;
+
+  &:hover {
+    .card-menu-button {
+      color: $color-red;
+    }
+  }
+
+  .card-menu-button {
+    background-color: transparent;
+    border: {
+      left: 1px solid transparent;
+      right: 1px solid transparent;
+      top: 1px solid transparent;
+    }
+    color: $color-black;
+    display: block;
+    font-size: 18px;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    right: 1px;
+    text-align: center;
+    top: 1px;
+    width: 47px;
+    z-index: 2;
+  }
+
+  .card-menu {
+    background-color: $color-white;
+    border: 1px solid $color-black;
+    cursor: default;
+    display: none;
+    list-style: none;
+    margin: {
+      bottom: 0;
+    }
+    min-width: 150px;
+    padding: 0;
+    position: absolute;
+    right: 1px;
+    z-index: 1;
+
+    a {
+      color: $color-black;
+      display: block;
+      line-height: 15px;
+      padding: 10px 15px;
+      white-space: nowrap;
+    }
+
+    a:hover,
+    a:focus {
+      text-decoration: none;
+    }
+  }
+
+  .card-menu-icon {
+    color: $color-dusty-gray;
+    font-size: 15px;
+    margin-right: 7px;
+  }
+}
+
+.card-menu-open {
+  .card-menu-button {
+    background-color: $color-white;
+    border: {
+      left: 1px solid $color-black;
+      right: 1px solid $color-black;
+      top: 1px solid $color-black;
+    }
+    z-index: 4;
+  }
+
+  .card-menu {
+    display: block;
+    z-index: 3;
+  }
+
+  &:hover {
+    .card-menu-button {
+      color: $color-black;
+    }
+  }
+}
+
+// Old cards
+
+.panel-body {
+  word-wrap: break-word;
+
+  .checkbox,
+  .radio {
+    margin: {
+      bottom: 0;
+      top: 0;
+    }
+  }
+}
+
+.panel-item {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

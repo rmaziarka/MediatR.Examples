@@ -1,6 +1,6 @@
-// Header
+// Topbar
 
-.main-header {
+.topbar {
   background-color: $color-mine-shaft;
   height: $header-height;
   left: 0;
@@ -9,7 +9,7 @@
   top: 0;
   z-index: 1070;
 
-  .hamburger {
+  .menu-button {
     background-color: $color-crimson;
     height: 58px;
     outline: none;

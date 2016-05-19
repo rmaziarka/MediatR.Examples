@@ -55,6 +55,7 @@
 
             // Assert
             enumTypeItemValidator.Verify(x => x.ItemExists(It.IsAny<EnumType>(), It.IsAny<Guid>()), Times.Once);
+            entityValidator.Verify(x => x.EntityExists(property, command.PropertyId), Times.Once);
             entityValidator.Verify(x => x.EntityExists(It.IsAny<Property>(), It.IsAny<Guid>()), Times.Once);
             collectionValidator.Verify(x => x.RangeDoesNotOverlap(It.IsAny<List<Range<DateTime>>>(), It.IsAny<Range<DateTime>>(), It.IsAny<ErrorMessage>()), Times.Once);
 

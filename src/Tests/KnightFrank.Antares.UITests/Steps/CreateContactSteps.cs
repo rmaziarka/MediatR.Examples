@@ -46,7 +46,7 @@
                 .SetSurname(contact.Surname);
         }
 
-        [When(@"User clicks save button on create contact page")]
+        [When(@"User clicks save contact button on create contact page")]
         public void SaveContact()
         {
             this.scenarioContext.Get<CreateContactPage>("CreateContactPage").SaveContact();

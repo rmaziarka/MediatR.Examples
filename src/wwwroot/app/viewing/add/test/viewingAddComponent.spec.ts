@@ -1,16 +1,20 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares {
-    import ViewingAddController = Antares.Component.ViewingAddController;
-    import Dto = Common.Models.Dto;
+    import ViewingAddController = Component.ViewingAddController;
     import Business = Common.Models.Business;
     import runDescribe = TestHelpers.runDescribe;
+    type TestCaseForRequiredValidator = [string, boolean];
 
-    describe('Given viewing is being added', () => {
+    declare var moment: any;
+
+    describe('Given viewing', () => {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
-            assertValidator: Antares.TestHelpers.AssertValidators,
-            $http: ng.IHttpBackendService;
+            assertValidator: TestHelpers.AssertValidators,
+            $http: ng.IHttpBackendService,
+            controller: ViewingAddController,
+            compile: ng.ICompileService;
 
         var pageObjectSelectors = {
             viewingDateSelector: '[name=viewingStartDate]',
@@ -34,12 +38,7 @@ module Antares {
             inputValidCss: 'ng-valid'
         };
 
-        var activityMock: Business.ActivityQueryResult = {
-            id: "id",
-            propertyName: "propertyName",
-            propertyNumber: "propertyNumber",
-            line2: "line2"
-        };
+        var activityMock = TestHelpers.ActivityQueryResultGenerator.generate();
 
         var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate({
             contacts: [
@@ -47,39 +46,35 @@ module Antares {
                 { id: '2', firstName: 'Jane', surname: 'Doe', title: 'Mrs.' }
             ]
         });
-        
-        var controller: ViewingAddController;
 
-        beforeEach(inject((
-            $rootScope: ng.IRootScopeService,
-            $compile: ng.ICompileService,
-            $httpBackend: ng.IHttpBackendService) => {
+        describe('when component is in add mode', () => {
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService,
+                $httpBackend: ng.IHttpBackendService) => {
 
-            $http = $httpBackend;
-            scope = $rootScope.$new();           
-            scope["requirement"] = requirementMock;
-            scope["attendees"] = requirementMock.contacts;
-            
-            element = $compile('<viewing-add requirement="requirement" attendees="attendees"></viewing-add>')(scope);                        
-            scope.$apply();
+                $http = $httpBackend;
+                scope = $rootScope.$new();
+                scope["requirement"] = requirementMock;
+                scope["attendees"] = requirementMock.contacts;
 
-            controller = element.controller('viewingAdd');
-            controller.startTime = "10:00";
-            controller.endTime = "11:00";
-            
-            assertValidator = new Antares.TestHelpers.AssertValidators(element, scope);
-        }));
+                element = $compile('<viewing-add mode="add" requirement="requirement" attendees="attendees"></viewing-add>')(scope);
+                scope.$apply();
 
-        describe('when', () => {          
-            type TestCaseForRequiredValidator = [string, boolean];
+                controller = element.controller('viewingAdd');
+                controller.startTime = "10:00";
+                controller.endTime = "11:00";
+
+                assertValidator = new TestHelpers.AssertValidators(element, scope);
+            }));
+
             // RequiredValidator for viewing date
             runDescribe('viewing date ')
                 .data<TestCaseForRequiredValidator>([
                     ['', false],
-                    ['21-12-1984', true],
-                    ['invalid date', false]])
+                    ['21-12-1984', true]])
                 .dataIt((data: TestCaseForRequiredValidator) =>
-                    `value is "${data[0]}" then required message should ${data[1] ? 'not' : ''} be displayed`)
+                    `value is "${data[0]}" then required validation message should ${data[1] ? 'not' : ''} be displayed`)
                 .run((data: TestCaseForRequiredValidator) => {
                     // arrange / act / assert
                     assertValidator.assertRequiredValidator(data[0], data[1], pageObjectSelectors.viewingDateSelector);
@@ -90,7 +85,7 @@ module Antares {
                 var wrapper = element.find(pageObjectSelectors.startTimeSelector);
                 var input = element.find(pageObjectSelectors.startTimeInputSelector);   
                 // act            
-                controller.startTime = null;   
+                controller.startTime = null;
                 input.val(null).trigger('input').trigger('change').trigger('blur');                   
                 // assert
                 expect(wrapper.hasClass(pageObject.inputValidCss)).toBe(false);
@@ -102,7 +97,7 @@ module Antares {
                 var wrapper = element.find(pageObjectSelectors.endTimeSelector);
                 var input = element.find(pageObjectSelectors.endTimeInputSelector);
                 // act                
-                controller.endTime = null;             
+                controller.endTime = null;
                 input.val(null).trigger('input').trigger('change').trigger('blur');         
                 //assert
                 expect(wrapper.hasClass(pageObject.inputValidCss)).toBe(false);
@@ -116,7 +111,7 @@ module Antares {
                 var startTimeInput = element.find(pageObjectSelectors.startTimeInputSelector);
                 var endTimeinput = element.find(pageObjectSelectors.endTimeInputSelector);
                 // act     
-                startTimeInput.val("11:00").trigger('input').trigger('change').trigger('blur');         
+                startTimeInput.val("11:00").trigger('input').trigger('change').trigger('blur');
                 endTimeinput.val("10:00").trigger('input').trigger('change').trigger('blur');         
                 //assert
                 expect(startTimewrapper.hasClass(pageObject.inputValidCss)).toBe(false);
@@ -150,17 +145,17 @@ module Antares {
                 // arrange
                 var activityElement = element.find(pageObjectSelectors.viewingActivitySelector); 
                 // act
-                controller.activity = activityMock;
+                controller.setActivity(activityMock);
                 scope.$apply();               
                 // assert
                 expect(activityElement.text()).toContain(activityMock.propertyName);
             });
 
             runDescribe('start time')
-                .data<TestCaseForRequiredValidator>([                    
+                .data<TestCaseForRequiredValidator>([
                     ['11:00', true],
                     ['11:70', false],
-                    ['26:00', false,],
+                    ['26:00', false],
                     ['invalid time', false]])
                 .dataIt((data: TestCaseForRequiredValidator) =>
                     `value is "${data[0]}" then required message should ${data[1] ? 'not' : ''} be displayed`)
@@ -178,7 +173,7 @@ module Antares {
                 });
 
             runDescribe('end time')
-                .data<TestCaseForRequiredValidator>([                  
+                .data<TestCaseForRequiredValidator>([
                     ['11:00', true],
                     ['11:70', false],
                     ['26:00', false],
@@ -201,6 +196,50 @@ module Antares {
             it('invitation text length is too long then validation message should be displayed', () => {
                 var maxLength = 4000;
                 assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.invitationTextSelector);
+            });
+        });
+
+        describe('when component is in edit mode', () => {
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService,
+                $httpBackend: ng.IHttpBackendService) => {
+
+                $http = $httpBackend;
+                scope = $rootScope.$new();
+                compile = $compile;
+                scope["requirement"] = requirementMock;
+                scope["attendees"] = requirementMock.contacts;
+
+                element = compile('<viewing-add mode="edit" requirement="requirement" attendees="attendees"></viewing-add>')(scope);
+                scope.$apply();
+                controller = element.controller('viewingAdd');
+                controller.startTime = "10:00";
+                controller.endTime = "11:00";
+                scope.$apply();
+
+                assertValidator = new TestHelpers.AssertValidators(element, scope);
+            }));
+
+            it('all data is loaded', () => {
+                // arange
+                var viewingMock = TestHelpers.ViewingGenerator.generate();
+                var formattedDate = moment(viewingMock.startDate).format('DD-MM-YYYY');
+                var formattedStartTime = moment(viewingMock.startDate).format('HH:mm');
+                var formattedEndTime = moment(viewingMock.endDate).format('HH:mm');
+                
+                // act                
+                controller.setViewing(viewingMock);
+                scope.$apply();
+
+                // assert                
+                expect(element.find(pageObjectSelectors.attendesElementsSelector).length).toBe(requirementMock.contacts.length);
+                expect(element.find(pageObjectSelectors.viewingDateSelector).val()).toBe(formattedDate);
+                expect(element.find(pageObjectSelectors.startTimeInputSelector).val()).toBe(formattedStartTime);
+                expect(element.find(pageObjectSelectors.endTimeInputSelector).val()).toBe(formattedEndTime);
+                expect(element.find(pageObjectSelectors.viewingActivitySelector).text()).toContain(viewingMock.activity.property.address.propertyName);
+                expect(element.find(pageObjectSelectors.invitationTextSelector).val()).toBe(viewingMock.invitationText);
+                expect(element.find(pageObjectSelectors.postViewingComment).val()).toBe(viewingMock.postViewingComment);
             });
         });
     });

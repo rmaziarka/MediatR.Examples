@@ -1,14 +1,12 @@
-
-<section class="section-details" ng-if="vm.viewing.activity">
+<section class="section-details" ng-if="vm.pageContext == 'requirement'" id="activity-section">
     <h5 translate="VIEWING.ADD.ACTIVITY"></h5>
     <div class="panel panel-default">
         <div class="panel-body">
             <div id="viewing-preview-activity-details" class="panel-item">
-                {{vm.viewing.activity.property.address.propertyName || ''}}<span ng-if="vm.viewing.activity.property.address.propertyName && (vm.viewing.activity.property.address.propertyNumber || vm.viewing.activity.property.address.line2)">, </span>
-                {{(vm.viewing.activity.property.address.propertyNumber || '') + ' ' + (vm.viewing.activity.property.address.line2 || '')}}
+                {{vm.viewing.activity.property.address.getAddressText()}}
             </div>
             <div class="row">
-                <div class="col-md-12 text-right">
+                <div class="col-md-12 text-right" id="activity-link">
                     <a href="" ng-click="vm.goToActivityView()" translate="COMMON.VIEW"></a>
                 </div>
             </div>
@@ -16,15 +14,15 @@
     </div>
 </section>
 
-<section class="section-details" ng-if="vm.viewing.requirement">
+<section class="section-details" ng-if="vm.pageContext == 'activity'" id="requirement-section">
     <h5 translate="VIEWING.ADD.REQUIREMENT"></h5>
     <div class="panel panel-default">
         <div class="panel-body">
-            <div id="viewing-preview-activity-details" class="panel-item">
+            <div id="viewing-preview-requirement-details" class="panel-item">
                 {{vm.viewing.requirement.getContactNames()}}
             </div>
             <div class="row">
-                <div class="col-md-12 text-right">
+                <div class="col-md-12 text-right" id="requirement-link">
                     <a href="" ng-click="vm.goToRequirementView()" translate="COMMON.VIEW"></a>
                 </div>
             </div>

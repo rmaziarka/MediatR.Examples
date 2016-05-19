@@ -10,7 +10,8 @@ module Antares {
     describe('Given characteristic component', () =>{
         var pageObjectSelector = {
             characteristicCommentText : 'input[data-type="characteristicText"]',
-            characteristicComment : 'button[data-type="characteristicCloudIcon"]'
+            characteristicComment: 'button[data-type="characteristicCloudIcon"]',
+            parentContainer: '.checkbox'
         }
         var assertValidator: TestHelpers.AssertValidators;
         var scope: IScope,
@@ -40,8 +41,7 @@ module Antares {
             var maxCommentLength = 50;
             scope.characteristic.isDisplayText = true;
             scope.$apply();
-            
-            assertValidator.assertMaxLengthValidator(maxCommentLength + 1, false, pageObjectSelector.characteristicCommentText);
+            assertValidator.assertMaxLengthValidator(maxCommentLength + 1, false, pageObjectSelector.characteristicCommentText, pageObjectSelector.parentContainer);
         });
         
         it('when characteristic is selected then cloud icon is visible', () =>{

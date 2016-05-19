@@ -94,8 +94,8 @@
             this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").SelectType(type).SelectPropertyType(propertyType);
         }
 
-        [When(@"User clicks save button on create property page")]
-        [When(@"User clicks save button on edit property page")]
+        [When(@"User clicks save property button on create property page")]
+        [When(@"User clicks save property button on edit property page")]
         public void ClickSaveButton()
         {
             var page = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");

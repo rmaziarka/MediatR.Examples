@@ -21,6 +21,17 @@ Scenario Outline: Create property
 	| Retail.Department Stores | Commercial   |
 
 @Property
+Scenario: Create property with mandatory fields
+	Given User gets GB address form for Property and country details
+        And User gets EnumTypeItemId and EnumTypeItem code
+			| enumTypeCode | enumTypeItemCode |
+			| Division     | Residential      |
+        And User gets House for PropertyType
+	When User creates property with defined address and Residential division with mandatory fields by Api
+	Then User should get OK http status code
+		And The created Property is saved in database
+
+@Property
 Scenario Outline: Create property with invalid data
 	Given User gets <country> address form for <itemType> and country details
         And User gets EnumTypeItemId and EnumTypeItem code

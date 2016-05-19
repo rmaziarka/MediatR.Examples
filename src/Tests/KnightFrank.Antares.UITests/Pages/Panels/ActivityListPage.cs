@@ -18,14 +18,14 @@
 
         public ActivityListPage SelectActivity(string activity)
         {
-            this.Driver.GetElements(this.activities).First(el => el.Text.Equals(activity)).Click();
+            this.Driver.GetElements(this.activities).Last(el => el.Text.Equals(activity)).Click();
             this.Driver.GetElement(this.configureButton).Click();
             return this;
         }
 
         public ActivityListPage WaitForDetailsToLoad()
         {
-            this.Driver.WaitUntilElementIsNoLongerFound(this.loadingIndicator, BaseConfiguration.LongTimeout);
+            this.Driver.WaitUntilElementIsNoLongerFound(this.loadingIndicator, BaseConfiguration.MediumTimeout);
             return this;
         }
     }

@@ -2,13 +2,16 @@
 
 module Antares.Requirement.View {
     import Dto = Common.Models.Dto;
+    import Business = Common.Models.Business;
 
     export class RequirementViewController extends Core.WithPanelsBaseController {
-        requirement: Dto.IRequirement;
+        requirement: Business.Requirement;
         viewingAddPanelVisible: boolean = false;
-        previewPanelVisible: boolean = true;
+        viewingPreviewPanelVisible: boolean = true;
         loadingActivities: boolean = false;
         saveViewingBusy: boolean = false;
+        addOfferBusy: boolean = false;
+        userData: Dto.IUserData;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -63,7 +66,7 @@ module Antares.Requirement.View {
         }
 
         goBackToPreviewViewing() {
-            this.previewPanelVisible = true;
+            this.viewingPreviewPanelVisible = true;
         }
 
         cancelViewingPreview() {
@@ -80,7 +83,11 @@ module Antares.Requirement.View {
                 viewingEditId: 'requirementView:viewingEditComponent',
                 viewingPreviewId: 'addRequirement:viewingPreviewComponent',
                 configureViewingsSidePanelId: 'addRequirement:configureViewingsSidePanelComponent',
-                previewViewingSidePanelId: 'addRequirement:previewViewingSidePanelComponent'
+                previewViewingSidePanelId: 'addRequirement:previewViewingSidePanelComponent',
+                offerAddId: 'requirementView:addOfferComponent',
+                offerSidePanelId: 'requirementView:offerSidePanelComponent',
+                offerPreviewId: 'requirementView:offerPreviewComponent',
+                offerPreviewSidePanelId: 'requirementView:offerPreviewSidePanelComponent'
             }
         }
 
@@ -92,10 +99,14 @@ module Antares.Requirement.View {
                 viewingAdd: () => { return this.componentRegistry.get(this.componentIds.viewingAddId); },
                 viewingEdit: () => { return this.componentRegistry.get(this.componentIds.viewingEditId); },
                 viewingPreview: () => { return this.componentRegistry.get(this.componentIds.viewingPreviewId); },
+                offerPreview: () => { return this.componentRegistry.get(this.componentIds.offerPreviewId); },
+                addOffer: () => { return this.componentRegistry.get(this.componentIds.offerAddId); },
                 panels: {
                     notes: () => { return this.componentRegistry.get(this.componentIds.notesSidePanelId); },
                     configureViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.configureViewingsSidePanelId); },
-                    previewViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.previewViewingSidePanelId); }
+                    offerPreviewSidePanel: () => { return this.componentRegistry.get(this.componentIds.offerPreviewSidePanelId)},
+                    previewViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.previewViewingSidePanelId); },
+                    addOffer: () => { return this.componentRegistry.get(this.componentIds.offerSidePanelId); }
                 }
             }
         }
@@ -104,20 +115,29 @@ module Antares.Requirement.View {
             this.components.viewingPreview().clearViewingPreview();
             this.components.viewingPreview().setViewing(viewing);
             this.showPanel(this.components.panels.previewViewingsSidePanel);
-            this.previewPanelVisible = true;
+            this.viewingPreviewPanelVisible = true;
         }
 
         showViewingEdit = () => {
             var viewing = this.components.viewingPreview().getViewing();
             this.components.viewingEdit().setViewing(viewing);
-            this.previewPanelVisible = false;
+            this.viewingPreviewPanelVisible = false;
+        }
+
+        showOfferPreview = (offer: Common.Models.Business.Offer) => {
+            this.components.offerPreview().clearOfferPreview();
+            this.components.offerPreview().setOffer(offer);
+            this.showPanel(this.components.panels.offerPreviewSidePanel);
         }
 
         saveViewing() {
             this.saveViewingBusy = true;
             this.components.viewingAdd()
                 .saveViewing()
-                .then(() => {
+                .then((viewing: Common.Models.Dto.IViewing) => {
+                    var viewingModel = new Business.Viewing(viewing);
+                    this.requirement.viewings.push(viewingModel);
+                    this.requirement.groupViewings(this.requirement.viewings);
                     this.hidePanels();
                 }).finally(() => {
                     this.saveViewingBusy = false;
@@ -128,10 +148,39 @@ module Antares.Requirement.View {
             this.saveViewingBusy = true;
             this.components.viewingEdit()
                 .saveViewing()
-                .then(() => {
+                .then((viewing: Common.Models.Dto.IViewing) => {
+                    var editedViewing = this.components.viewingPreview().getViewing();
+                    editedViewing = angular.copy(new Business.Viewing(viewing), editedViewing);
+                    this.requirement.groupViewings(this.requirement.viewings);
                     this.hidePanels();
                 }).finally(() => {
                     this.saveViewingBusy = false;
+                });
+        }
+
+        showAddOfferPanel = (viewing: Dto.IViewing) => {
+            if (this.components.panels.addOffer().visible) return;
+            var addOfferComponent = this.components.addOffer();
+
+            addOfferComponent.activity = viewing.activity;
+            addOfferComponent.reset();
+            
+            this.showPanel(this.components.panels.addOffer);
+        }
+
+        cancelSaveOffer = () => {
+            this.hidePanels();
+        }
+
+        saveOffer = () => {
+            this.addOfferBusy = true;
+            this.components.addOffer()
+                .saveOffer()
+                .then(() => {
+                    this.hidePanels();
+                })
+                .finally(() => {
+                    this.addOfferBusy = false;
                 });
         }
     }

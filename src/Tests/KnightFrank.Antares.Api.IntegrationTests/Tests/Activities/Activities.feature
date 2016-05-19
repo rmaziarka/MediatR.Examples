@@ -1,7 +1,7 @@
 ﻿Feature: Activities
 
 @Activity
-Scenario Outline: Retrieve error messages for improper data
+Scenario Outline: Create activity with invalid data
 	Given User gets GB address form for Property and country details
 		And User gets House for PropertyType
 		And User gets <activityTypeCode> for ActivityType
@@ -28,7 +28,7 @@ Scenario Outline: Retrieve error messages for improper data
 	| latest                               | ActivityStatus                       | invalid          | BadRequest |
 
 @Activity
-Scenario: Create Activity for an existing property
+Scenario: Create Activity
 	Given User gets GB address form for Property and country details
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
@@ -57,7 +57,7 @@ Scenario: Create Activity for an existing property
 		And Created Activity is saved in database
 
 @Activity
-Scenario Outline: Get Activity by incorrect activity id
+Scenario Outline: Get Activity using invalid data
 	When User gets activity with <activityId> id
 	Then User should get <statusCode> http status code
 
@@ -67,7 +67,7 @@ Scenario Outline: Get Activity by incorrect activity id
 	| 00000000-0000-0000-0000-000000000001 | NotFound   |
 
 @Activity
-Scenario: Get Activity by correct activity id
+Scenario: Get Activity
 	Given User gets GB address form for Property and country details
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
@@ -111,7 +111,7 @@ Scenario: Record and update residential sale valuation
 		And Retrieved activity should be same as in database
 
 @Activity
-Scenario Outline: Record and update residential sale valuation for improper data
+Scenario Outline: Record and update residential sale valuation using invalid data
 	Given User gets GB address form for Property and country details
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
@@ -160,3 +160,36 @@ Scenario: Get all activities
 		And Retrieved activities should be the same as in database
 			| PropertyName | PropertyNumber | Line2              |
 			| abc          | 1              | Lewis Cubit Square |
+
+@Activity
+Scenario: Get Activity with viewing
+	Given User gets GB address form for Property and country details
+		And User gets House for PropertyType
+		And User gets Freehold Sale for ActivityType
+		And User gets EnumTypeItemId and EnumTypeItem code
+			| enumTypeCode   | enumTypeItemCode |
+			| ActivityStatus | PreAppraisal     |
+			| Division       | Residential      |
+		And Property characteristics are set for given property type
+		And User sets attributes for property in database
+			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
+			| 1           | 3           | 1             | 3             | 2            | 3            | 1000    | 3000    | 500         | 4000        | 1                   | 3                   |
+		And Property with Address and Residential division is in database
+        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
+        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+		And Activity for latest property and PreAppraisal activity status exists in database
+		And User creates contacts in database with following data 
+			| FirstName | Surname | Title  |
+			| Tomasz    | Bien    | Mister |
+		And User sets locations details for the requirement
+			| Postcode | City   | Line2   |
+			| 1234     | London | Big Ben |
+		And User creates following requirement in database
+ 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
+ 			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | Description |
+		And User gets negotiator id from database
+		And User creates viewing in database
+	When User gets activity with latest id
+	Then User should get OK http status code
+		And Retrieved activity should be same as in database
+		And Retrieved activity should have expected viewing
