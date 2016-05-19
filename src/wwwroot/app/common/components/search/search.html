@@ -1,12 +1,15 @@
-﻿<div class="search form-group edit-form">
-    <input type="text" class="form-control"
-           ng-model="vm.selectedItem"
-           ng-model-options="vm.options.modelOptions"
-           uib-typeahead="item as item.getName() for item in vm.loadItems($viewValue)"
-           typeahead-min-length="vm.options.minLength"
-           typeahead-on-select="vm.onSelect($item)"
-           typeahead-editable="vm.options.isEditable"
-           typeahead-template-url="{{vm.itemTemplateUrl}}"
-           placeholder="{{vm.searchPlaceholder | translate}}">
-    <button type="button" class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>
+﻿<div>
+    <kf-scroll-top for-input-element=".search input" scroll-on-element=".search .dropdown-menu"></kf-scroll-top>
+    <div class="search form-group edit-form" scroll-top-on=".dropdown-menu">
+        <input type="text" class="form-control"
+               ng-model="vm.selectedItem"
+               ng-model-options="vm.options.modelOptions"
+               uib-typeahead="item as item.getName() for item in vm.loadItems($viewValue)"
+               typeahead-min-length="vm.options.minLength"
+               typeahead-on-select="vm.onSelect($item)"
+               typeahead-editable="vm.options.isEditable"
+               typeahead-template-url="{{vm.itemTemplateUrl}}"
+               placeholder="{{vm.searchPlaceholder | translate}}">
+        <button type="button" class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>
+    </div>
 </div>
