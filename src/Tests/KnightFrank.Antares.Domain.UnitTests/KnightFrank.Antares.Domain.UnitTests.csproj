@@ -143,7 +143,9 @@
     <Compile Include="Contact\QueryHandlers\ContactQueryHandlerTests.cs" />
     <Compile Include="FixtureExtension\FixtureExtensions.cs" />
     <Compile Include="FixtureExtension\ValidationResultExtensions.cs" />
+    <Compile Include="Offer\CommandHandlers\UpdateOfferCommandHandlerTests.cs" />
     <Compile Include="Offer\CommandHandlers\CreateOfferCommandHandlerTests.cs" />
+    <Compile Include="Offer\Commands\UpdateOfferCommandValidatorTests.cs" />
     <Compile Include="Offer\Commands\CreateOfferCommandValidatorTests.cs" />
     <Compile Include="Viewing\CommandHandlers\CreateViewingCommandHandlerTests.cs" />
     <Compile Include="Viewing\CommandHandlers\UpdateViewingCommandHandlerTests.cs" />
