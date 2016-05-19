@@ -77,15 +77,14 @@
             <div class="col-md-4">
                 <section>
                     <h3 class="page-header" translate="REQUIREMENT.VIEW.OFFERS"></h3>
-                    <card-list-item ng-repeat="offer in vm.requirement.offers track by offer.id">
-                        <card-list-item ng-repeat="offer in vm.requirement.offers | orderBy: '-offerDate' | enumSorter: 'OfferStatus':'statusId' track by offer.id">
-                            <card show-context-menu="true" show-item-details="vm.showOfferPreview" display-new-control="true"
-                                  card-template-url="'app/requirement/view/requirementOffersCard.html'" item="offer">
-                                <card-context-menu>
-                                    <context-menu-item type="edit" item="ownership" action="vm.showViewingPreview"></context-menu-item>
-                                </card-context-menu>
-                            </card>
-                        </card-list-item>
+                    <card-list-item ng-repeat="offer in vm.requirement.offers | orderBy: '-offerDate' | enumSorter: 'OfferStatus':'statusId' track by offer.id">
+                        <card show-context-menu="true" show-item-details="vm.showOfferPreview" display-new-control="true"
+                              card-template-url="'app/requirement/view/requirementOffersCard.html'" item="offer">
+                            <card-context-menu>
+                                <context-menu-item type="edit" item="ownership" action="vm.showViewingPreview"></context-menu-item>
+                            </card-context-menu>
+                        </card>
+                    </card-list-item>
                 </section>
             </div>
         </div>
