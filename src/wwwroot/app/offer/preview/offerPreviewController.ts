@@ -14,6 +14,10 @@ module Antares {
                 componentRegistry.register(this, this.componentId);
             }
 
+            getOffer = (): Business.Offer =>{
+                return this.offer;
+            }
+
             setOffer = (offer: Business.Offer) => {
                 this.offer = offer;
             }

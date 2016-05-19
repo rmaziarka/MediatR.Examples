@@ -3,6 +3,7 @@
 module Antares {
     export module Component {
         import Dto = Common.Models.Dto;
+        import Business = Common.Models.Business;
         declare var moment: any;
 
         export class OfferAddController {
@@ -17,7 +18,7 @@ module Antares {
             statuses: any;
             selectedStatus: any;
 
-            offer: Dto.IOffer;
+            offer: Business.Offer;
             activity: Dto.IActivity = <Dto.IActivity>{};
             requirement: Dto.IRequirement = <Dto.IRequirement>{};
 
@@ -34,12 +35,16 @@ module Antares {
                 this.enumService.getEnumPromise().then(this.onEnumLoaded);
             }
 
+            setOffer = (offer: Business.Offer) =>{
+                this.offer = offer;
+            }
+
             reset = () =>{
-                this.offer = <Dto.IOffer>{
+                this.offer = new Business.Offer(<Dto.IOffer>{
                     offerDate: new Date(),
                     activityId: this.activity.id,
                     requirementId: this.requirement.id
-                };
+                });
 
                 this.setDefaultOfferStatus();
                 this.addOfferForm.$setPristine();
