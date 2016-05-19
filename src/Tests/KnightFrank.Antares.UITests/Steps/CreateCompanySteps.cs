@@ -58,7 +58,7 @@
         public void SelectContactsForCompany(Table table)
         {
             var page = this.scenarioContext.Get<CreateCompanyPage>("CreateCompanyPage");
-            page.AddContactToCompany();
+            page.AddContactToCompany().WaitForSidePanelToShow();
 
             IEnumerable<Contact> contacts = table.CreateSet<Contact>();
 
@@ -66,7 +66,8 @@
             {
                 page.ContactsList.WaitForContactsListToLoad().SelectContact(contact.FirstName, contact.Surname);
             }
-            page.ContactsList.SaveContact().WaitForContactListToHide();
+            page.ContactsList.SaveContact();
+            page.WaitForSidePanelToHide();
         }
 
         [Then(@"List of company contacts should contain following contacts")]

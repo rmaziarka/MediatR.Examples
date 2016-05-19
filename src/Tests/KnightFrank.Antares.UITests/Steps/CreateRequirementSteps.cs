@@ -84,7 +84,7 @@
         {
             var page = this.scenarioContext.Get<CreateRequirementPage>("CreateRequirementPage");
 
-            page.AddNewApllicantForResidentialSalesRequirement();
+            page.AddApplicants().WaitForSidePanelToShow();
 
             IEnumerable<Contact> contacts = table.CreateSet<Contact>();
 
@@ -92,7 +92,8 @@
             {
                 page.ContactsList.WaitForContactsListToLoad().SelectContact(contact.FirstName, contact.Surname);
             }
-            page.ContactsList.SaveContact().WaitForContactListToHide();
+            page.ContactsList.SaveContact();
+            page.WaitForSidePanelToHide();
         }
 
         [When(@"User clicks save requirement button on create requirement page")]

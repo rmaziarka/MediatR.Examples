@@ -13,6 +13,7 @@
         propertyCharacteristicsMap: any = {};
         propertyCharacteristics: Models.Dto.IPropertyCharacteristic[];
         propertyAreaBreakdowns: Dto.IPropertyAreaBreakdown[];
+        totalAreaBreakdown: number = 0;
 
         constructor(property?: Dto.IProperty)
         {

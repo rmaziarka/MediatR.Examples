@@ -24,10 +24,9 @@ Scenario: Create activity
 	When User selects Freehold Sale activity type on activity panel
 		And User selects Market appraisal activity status on activity panel
 		And User clicks save button on activity panel
-	Then Activity creation date is set to current date on view property page
-		And Activity details are set on view property page
-			| Vendor       | Status           | Type          |
-			| Sarah Chatto | Market appraisal | Freehold Sale |
+	Then Activity details are set on view property page
+		| Vendor       | Status           | Type          |
+		| Sarah Chatto | Market appraisal | Freehold Sale |
 
 @Activity
 Scenario: Edit activity

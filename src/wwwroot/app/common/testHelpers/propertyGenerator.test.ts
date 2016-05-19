@@ -17,7 +17,8 @@ module Antares.TestHelpers {
                 division: null,
                 attributeValues: {},
                 propertyCharacteristics: [],
-                propertyAreaBreakdowns: []
+                propertyAreaBreakdowns: [],
+                totalAreaBreakdown: 0
             };
 
             return angular.extend(propertyMock, specificData || {});

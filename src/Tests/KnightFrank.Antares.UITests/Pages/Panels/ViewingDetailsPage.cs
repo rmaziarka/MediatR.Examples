@@ -34,10 +34,10 @@
 
         public List<string> Attendees => this.Driver.GetElements(this.attendees).Select(el => el.Text).ToList();
 
-        public CreateViewingPage EditViewing()
+        public ViewingDetailsPage EditViewing()
         {
             this.Driver.GetElement(this.editViewing).Click();
-            return new CreateViewingPage(this.DriverContext);
+            return this;
         }
 
         public ViewingDetailsPage ClickViewLink()

@@ -27,7 +27,7 @@
         public NotesPage SaveNote()
         {
             this.Driver.GetElement(this.saveNoteButton).Click();
-            this.Driver.WaitForAngular();
+            this.Driver.WaitForAngularToFinish();
             return this;
         }
 
@@ -35,7 +35,6 @@
         {
             try
             {
-                //TODO check timeout settings for getelements when there are no elements
                 return this.Driver.GetElements(this.listOfNotes).Count;
             }
             catch (Exception)

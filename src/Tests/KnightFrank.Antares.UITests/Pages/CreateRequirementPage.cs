@@ -36,6 +36,7 @@
         private readonly ElementLocator propertyRequirementsNote = new ElementLocator(Locator.Id, "description");
         // New residential sales requiremen actions
         private readonly ElementLocator saveResidentialSalesRequirement = new ElementLocator(Locator.Id, "saveBtn");
+        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
 
         public CreateRequirementPage(DriverContext driverContext) : base(driverContext)
         {
@@ -148,15 +149,17 @@
             return this;
         }
 
-        public void SaveRequirement()
+        public CreateRequirementPage SaveRequirement()
         {
             this.Driver.GetElement(this.saveResidentialSalesRequirement).Click();
             this.Driver.WaitForAngularToFinish(BaseConfiguration.MediumTimeout);
+            return this;
         }
 
-        public void AddNewApllicantForResidentialSalesRequirement()
+        public CreateRequirementPage AddApplicants()
         {
             this.Driver.GetElement(this.newApplicantButton).Click();
+            return this;
         }
 
         public List<string> GetApplicants()
@@ -167,6 +170,18 @@
         public bool IsRequirementFormPresent()
         {
             return this.Driver.IsElementPresent(this.requirementForm, BaseConfiguration.MediumTimeout);
+        }
+
+        public CreateRequirementPage WaitForSidePanelToShow()
+        {
+            this.Driver.WaitForElementToBeDisplayed(this.panel, BaseConfiguration.MediumTimeout);
+            return this;
+        }
+
+        public CreateRequirementPage WaitForSidePanelToHide()
+        {
+            this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.MediumTimeout);
+            return this;
         }
     }
 }

@@ -136,9 +136,6 @@ Scenario: Update viewing on requirement
 			| Attendee     |
 			| Alan Baker   |
 			| Alex Baldwin |
-		And User selects attendees for viewing on view requirement page
-			| Attendee       |
-			| Martin Jackson |
 		And User clicks save activity button on view requirement page
 	Then Viewing details on 1 position on view requirement page are same as the following
 		| Date       | Time          | Name                     |
