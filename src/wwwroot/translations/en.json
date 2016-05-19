@@ -100,9 +100,10 @@
     "FILE_MUST_BE_PROVIDED": "Please select file to upload",
     "TIME_CAN_NOT_BE_GRATER_THAN": "Given time can not be later than end time",
     "TIME_CAN_NOT_BE_LOWER_THAN": "Given time can not be earlier than start time",
-    "NUMBER_CAN_NOT_BE_GREATER_THAN": "Value must be greater than {{value}}",
+    "NUMBER_HAS_TO_BE_GREATER_THAN": "Value must be greater than {{value}}",
     "DATE_CANNOT_BE_IN_PAST": "Date cannot be in the past",
-    "DATE_CANNOT_BE_IN_FUTURE": "Date cannot be in the future"
+    "DATE_CANNOT_BE_IN_FUTURE": "Date cannot be in the future",
+    "NUMBER_HAS_TO_BE_INTEGER": "Only integer values are allowed"
   },
   "PROPERTY": {
     "AREA": "Property area",
