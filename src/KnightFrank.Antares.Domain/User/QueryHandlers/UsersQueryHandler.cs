@@ -26,14 +26,12 @@
                 return new List<UsersQueryResult>();
             }
 
-            string partialName = message.PartialName;
+            string[] partialNameParts = message.PartialName.Split();
 
             IQueryable<User> userList = this.userRepository.Get();
             IOrderedQueryable<UsersQueryResult> orderedUserList = userList.Where(
                 i =>
-                    i.FirstName.StartsWith(partialName) ||
-                    i.LastName.StartsWith(partialName)
-
+                    partialNameParts.All(pn => i.FirstName.StartsWith(pn) ||  i.LastName.StartsWith(pn))
                 )
                 .Select(x => new UsersQueryResult
                 {
@@ -44,7 +42,7 @@
                 })
                 .OrderBy(x => x.FirstName).ThenBy(x => x.LastName);
 
-            IQueryable<UsersQueryResult> usersQueryResults = 
+            IQueryable<UsersQueryResult> usersQueryResults =
                 message.ExcludedIds != null ? orderedUserList.Where(u => message.ExcludedIds.All(e => e != u.Id)) : orderedUserList;
 
             if (message.Take > 0)
