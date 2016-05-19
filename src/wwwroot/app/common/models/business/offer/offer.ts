@@ -8,7 +8,6 @@ module Antares.Common.Models.Business {
         activityId: string = null;
         requirementId: string = null;
         price: number;
-        offerDate: Date;
         exchangeDate: Date;
         completionDate: Date;
         specialConditions: string;
@@ -17,6 +16,7 @@ module Antares.Common.Models.Business {
         activity: Business.Activity;
         requirement: Business.Requirement;
         status: Business.EnumTypeItem;
+        offerDate: Date = null;
 
         constructor(offer?: Dto.IOffer) {
             angular.extend(this, offer);
