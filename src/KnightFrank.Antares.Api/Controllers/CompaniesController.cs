@@ -3,8 +3,10 @@
 namespace KnightFrank.Antares.Api.Controllers
 {
     using System;
+    using System.Collections.Generic;
 
     using KnightFrank.Antares.Dal.Model.Company;
+    using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Domain.Company.Commands;
 
     using MediatR;
@@ -48,7 +50,16 @@ namespace KnightFrank.Antares.Api.Controllers
         [Route("{id}")]
         public Company GetCompany(Guid id)
         {
-            return new Company { Id = id };
+            // TODO Implement.
+            return new Company
+            {
+                Name = "Company name",
+                Id = id,
+                Contacts = new List<Contact>
+                {
+                    new Contact { FirstName = "First name", Surname = "Surname", Title = "Title" }
+                }
+            };
         }
     }
 }

@@ -1,16 +1,12 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Company {
+    import Business = Antares.Common.Models.Business;
+
     export class CompanyViewController {
-        name: string;
+      
+        company: Business.Company;
 
-        constructor() {
-            this.name = 'Marta';
-        }
-
-        submitButton() {
-            this.name = 'Umar';
-        }
     }
 
     angular.module('app').controller('CompanyViewController', CompanyViewController);

@@ -1,4 +1,50 @@
-<div class="row">hello {{vm.name}}</div>
-<input type="submit" value="Submit" ng-click="vm.submitButton()"/>
-<input type="text" value="" id="umarTextBox" ng-model="vm.name"/>
-<input type="text" value="{{vm.name}}" id="umarTextBox2" />
+<div class="row">
+    
+    <div class="col-md-12">
+        <h2 class="page-header">View company</h2>
+
+        <div class="well">
+            <button type="button" class="btn btn-default pull-right"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT">Edit</span></button>
+            <div>A company</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h3 class="page-header">Basic info</h3>
+
+                <div class="section-row row">
+                    <div class="col-xs-4">Website</div>
+                    <div class="col-xs-8">
+                        <external-link url="vm.company.url" show-text="true"></external-link>
+                    </div>
+                </div>
+
+                <div class="section-row row">
+                    <div class="col-xs-4">Client Care website</div>
+                    <div class="col-xs-8"><a href="#" target="_blank">www.clientcare.companywebpage.com</a> <i class="fa fa-external-link" aria-hidden="true"></i>
+                    </div>
+                </div>
+
+                <div class="section-row row">
+                    <div class="col-xs-4">Client Care status</div>
+                    <div class="col-xs-8">Lorem ipsum</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h3 class="page-header">Contacts</h3>
+
+                <div class="card card-no-menu">
+                    <div class="card-body">
+                        <div class="card-item">Gilberto Lyons</div>
+                    </div>
+                </div>
+
+                <div class="card card-no-menu">
+                    <div class="card-body">
+                        <div class="card-item">Drew Sanders</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
