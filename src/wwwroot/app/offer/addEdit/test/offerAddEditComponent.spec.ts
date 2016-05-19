@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares {
-    import OfferAddController = Component.OfferAddController;
+    import OfferAddEditController = Component.OfferAddEditController;
     import Business = Common.Models.Business;
     import runDescribe = TestHelpers.runDescribe;
     type TestCaseForRequiredValidator = [string, string, boolean]; // [field_description, field_selector, is_not_required]
@@ -14,7 +14,7 @@ module Antares {
             element: ng.IAugmentedJQuery,
             assertValidator: TestHelpers.AssertValidators,
             $http: ng.IHttpBackendService,
-            controller: OfferAddController;
+            controller: OfferAddEditController;
 
         var pageObjectSelectors = {
             offerDate: '[name=offerDate]',
@@ -46,10 +46,10 @@ module Antares {
                 scope = $rootScope.$new();
                 scope["requirement"] = requirementMock;
 
-                element = $compile('<offer-add requirement="requirement"></offer-add>')(scope);
+                element = $compile('<offer-add-edit requirement="requirement"></offer-add-edit>')(scope);
                 scope.$apply();
 
-                controller = element.controller('offerAdd');
+                controller = element.controller('offerAddEdit');
                 assertValidator = new TestHelpers.AssertValidators(element, scope);
             }));
 

@@ -6,7 +6,7 @@ module Antares {
         import Business = Common.Models.Business;
         declare var moment: any;
 
-        export class OfferAddController {
+        export class OfferAddEditController {
             componentId: string;
 
             offerDateOpen: boolean = false;
@@ -100,6 +100,6 @@ module Antares {
                 this.$state.go('app.activity-view', { id: this.activity.id });
             }
         }
-        angular.module('app').controller('offerAddController', OfferAddController);
+        angular.module('app').controller('offerAddEditController', OfferAddEditController);
     }
 }
