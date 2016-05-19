@@ -8,6 +8,7 @@
     using FluentAssertions;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
@@ -32,6 +33,7 @@
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             [Frozen] Mock<IGenericRepository<User>> userRepository,
+            [Frozen] Mock<IGenericRepository<ActivityTypeDefinition>> activityTypeDefinitionRepository,
             User user,
             CreateActivityCommandHandler handler,
             CreateActivityCommand command,
@@ -54,6 +56,8 @@
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
                              .Returns(command.ContactIds.Select(id => new Contact { Id = id }));
 
+            activityTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>())).Returns(true);
+
             // Act
             handler.Handle(command);
 
@@ -72,6 +76,7 @@
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             [Frozen] Mock<IGenericRepository<User>> userRepository,
             [Frozen] Mock<IEntityValidator> entityValidator,
+            [Frozen] Mock<IGenericRepository<ActivityTypeDefinition>> activityDefinitionRepository,
             User user,
             CreateActivityCommandHandler handler,
             CreateActivityCommand command,
@@ -80,46 +85,19 @@
         {
             // Arrange
             user.Id = command.LeadNegotiatorId;
+            activityDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>()))
+                                        .Returns(true);
             userRepository.Setup(p => p.FindBy(It.IsAny<Expression<Func<User, bool>>>()))
                           .Returns(new List<User> { user });
 
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
                  .Returns(command.ContactIds.Select(id => new Contact { Id = id }));
-
+            entityValidator.Setup(x => x.EntityExists(user, user.Id));
             // Act
             handler.Handle(command);
 
             // Assert
             entityValidator.Verify(x => x.EntityExists(user, user.Id), Times.Once);
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_CreateActivityCommandWithInvalidVendors_When_Handling_Then_ShouldThrowBusinessException(
-            [Frozen] Mock<IDomainValidator<CreateActivityCommand>> domainValidator,
-            [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
-            [Frozen] Mock<IGenericRepository<User>> userRepository,
-            User user,
-            CreateActivityCommandHandler handler,
-            CreateActivityCommand command,
-            IFixture fixture
-            )
-        {
-            // Arrange
-            userRepository.Setup(p => p.FindBy(It.IsAny<Expression<Func<User, bool>>>()))
-                          .Returns(new List<User> { user });
-
-            command.ContactIds = fixture.CreateMany<Guid>(2).ToList();
-
-            contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(
-                new List<Contact>()
-                {
-                    fixture.Build<Contact>().With(x => x.Id, command.ContactIds.First()).Create()
-                });
-
-            // Act + Assert
-            var businessValidationException = Assert.Throws<BusinessValidationException>(() => { handler.Handle(command); });
-            Assert.Equal(ErrorMessage.Missing_Activity_Vendors_Id, businessValidationException.ErrorCode);
         }
     }
 }
