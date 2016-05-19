@@ -8,6 +8,7 @@ module Antares.Requirement.View {
         requirement: Business.Requirement;
         viewingAddPanelVisible: boolean = false;
         viewingPreviewPanelVisible: boolean = true;
+        offerPreviewPanelVisible: boolean = true;
         loadingActivities: boolean = false;
         saveViewingBusy: boolean = false;
         addOfferBusy: boolean = false;
@@ -32,7 +33,7 @@ module Antares.Requirement.View {
                 .finally(() => { this.loadingActivities = false; });
 
             this.components.viewingAdd().clearViewingAdd();
-            this.showPanel(this.components.panels.configureViewingsSidePanel);
+            this.showPanel(this.components.panels.configureViewings);
             this.viewingAddPanelVisible = false;
         }
 
@@ -50,15 +51,15 @@ module Antares.Requirement.View {
 
             this.viewingAddPanelVisible = true;
 
-            this.showPanel(this.components.panels.configureViewingsSidePanel);
+            this.showPanel(this.components.panels.configureViewings);
         }
 
         showViewingPreviewPanel = () => {
-            this.showPanel(this.components.panels.previewViewingsSidePanel);
+            this.showPanel(this.components.panels.previewViewings);
         }
 
         cancelConfigureViewings() {
-            this.components.panels.configureViewingsSidePanel().hide();
+            this.components.panels.configureViewings().hide();
         }
 
         cancelViewingAdd() {
@@ -85,9 +86,12 @@ module Antares.Requirement.View {
                 configureViewingsSidePanelId: 'addRequirement:configureViewingsSidePanelComponent',
                 previewViewingSidePanelId: 'addRequirement:previewViewingSidePanelComponent',
                 offerAddId: 'requirementView:addOfferComponent',
+                offerEditId: 'requirementView:editOfferComponent',
+                offerEditPreviewId: 'requirementView:editOfferPreviewComponent',
                 offerSidePanelId: 'requirementView:offerSidePanelComponent',
                 offerPreviewId: 'requirementView:offerPreviewComponent',
-                offerPreviewSidePanelId: 'requirementView:offerPreviewSidePanelComponent'
+                offerPreviewSidePanelId: 'requirementView:offerPreviewSidePanelComponent',
+                offerEditSidePanelId: 'requirementView:offerEditSidePanelComponent'
             }
         }
 
@@ -100,13 +104,16 @@ module Antares.Requirement.View {
                 viewingEdit: () => { return this.componentRegistry.get(this.componentIds.viewingEditId); },
                 viewingPreview: () => { return this.componentRegistry.get(this.componentIds.viewingPreviewId); },
                 offerPreview: () => { return this.componentRegistry.get(this.componentIds.offerPreviewId); },
-                addOffer: () => { return this.componentRegistry.get(this.componentIds.offerAddId); },
+                offerAdd: () => { return this.componentRegistry.get(this.componentIds.offerAddId); },
+                offerEdit: () => { return this.componentRegistry.get(this.componentIds.offerEditId); },
+                offerEditPreview: () => { return this.componentRegistry.get(this.componentIds.offerEditPreviewId); },
                 panels: {
                     notes: () => { return this.componentRegistry.get(this.componentIds.notesSidePanelId); },
-                    configureViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.configureViewingsSidePanelId); },
-                    offerPreviewSidePanel: () => { return this.componentRegistry.get(this.componentIds.offerPreviewSidePanelId)},
-                    previewViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.previewViewingSidePanelId); },
-                    addOffer: () => { return this.componentRegistry.get(this.componentIds.offerSidePanelId); }
+                    configureViewings: () => { return this.componentRegistry.get(this.componentIds.configureViewingsSidePanelId); },
+                    previewViewings: () => { return this.componentRegistry.get(this.componentIds.previewViewingSidePanelId); },
+                    offerPreview: () => { return this.componentRegistry.get(this.componentIds.offerPreviewSidePanelId) },
+                    offerAdd: () => { return this.componentRegistry.get(this.componentIds.offerSidePanelId); },
+                    offerEdit: () => { return this.componentRegistry.get(this.componentIds.offerEditSidePanelId) }
                 }
             }
         }
@@ -114,7 +121,7 @@ module Antares.Requirement.View {
         showViewingPreview = (viewing: Common.Models.Business.Viewing) => {
             this.components.viewingPreview().clearViewingPreview();
             this.components.viewingPreview().setViewing(viewing);
-            this.showPanel(this.components.panels.previewViewingsSidePanel);
+            this.showPanel(this.components.panels.previewViewings);
             this.viewingPreviewPanelVisible = true;
         }
 
@@ -127,7 +134,8 @@ module Antares.Requirement.View {
         showOfferPreview = (offer: Common.Models.Business.Offer) => {
             this.components.offerPreview().clearOfferPreview();
             this.components.offerPreview().setOffer(offer);
-            this.showPanel(this.components.panels.offerPreviewSidePanel);
+            this.showPanel(this.components.panels.offerPreview);
+            this.offerPreviewPanelVisible = true;
         }
 
         saveViewing() {
@@ -159,22 +167,41 @@ module Antares.Requirement.View {
         }
 
         showAddOfferPanel = (viewing: Dto.IViewing) => {
-            if (this.components.panels.addOffer().visible) return;
-            var addOfferComponent = this.components.addOffer();
+            if (this.components.panels.offerAdd().visible) return;
+            var offerAddComponent = this.components.offerAdd();
 
-            addOfferComponent.activity = viewing.activity;
-            addOfferComponent.reset();
+            offerAddComponent.activity = viewing.activity;
+            offerAddComponent.reset();
             
-            this.showPanel(this.components.panels.addOffer);
+            
+            this.showPanel(this.components.panels.offerAdd);
+        }
+
+        showEditOfferPreviewPanel = () => {
+            var offer = this.components.offerPreview().getOffer();
+            this.components.offerEditPreview().setOffer(offer);
+            this.offerPreviewPanelVisible = false;
+        }
+
+        showEditOfferPanel = () => {
+            this.showPanel(this.components.panels.offerEdit);
         }
 
         cancelSaveOffer = () => {
             this.hidePanels();
         }
 
+        cancelOfferEditPreview() {
+            this.offerPreviewPanelVisible = true;
+        }
+
+        cancelOfferEdit() {
+            this.hidePanels();
+        }
+
         saveOffer = () => {
             this.addOfferBusy = true;
-            this.components.addOffer()
+            this.components.offerAdd()
                 .saveOffer()
                 .then(() => {
                     this.hidePanels();

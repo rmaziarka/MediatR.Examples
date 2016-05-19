@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Xunit;
-
-namespace KnightFrank.Antares.Domain.UnitTests.User.QueryHandlers
+﻿namespace KnightFrank.Antares.Domain.UnitTests.User.QueryHandlers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Xunit;
     using FluentAssertions;
     using Moq;
 
@@ -42,10 +41,16 @@ namespace KnightFrank.Antares.Domain.UnitTests.User.QueryHandlers
         }
 
         [Theory]
-        [InlineAutoData("jon")]
-        [InlineAutoData("JON")]
-        [InlineAutoData("Jon")]
-        public void Given_ExistingUsersInQuery_When_Handling_Then_CorrectResultsReturned(string partialName)
+        [InlineAutoData("ev", new[] { "50000000-0000-0000-0000-000000000000" })]
+        [InlineAutoData("eve", new[] { "50000000-0000-0000-0000-000000000000" })]
+        [InlineAutoData("jon", new []{ "10000000-0000-0000-0000-000000000000", "30000000-0000-0000-0000-000000000000" })]
+        [InlineAutoData("jo", new[] { "10000000-0000-0000-0000-000000000000", "30000000-0000-0000-0000-000000000000", "40000000-0000-0000-0000-000000000000" })]
+        [InlineAutoData("jon smath", new[] { "10000000-0000-0000-0000-000000000000" })]
+        [InlineAutoData("jon sma", new[] { "10000000-0000-0000-0000-000000000000" })]
+        [InlineAutoData("sma j", new[] { "10000000-0000-0000-0000-000000000000" })]
+        [InlineAutoData("jo sm", new[] { "10000000-0000-0000-0000-000000000000", "40000000-0000-0000-0000-000000000000" })]
+        [InlineAutoData("sm jo", new[] { "10000000-0000-0000-0000-000000000000", "40000000-0000-0000-0000-000000000000" })]
+        public void Given_ExistingUsersInQuery_When_Handling_Then_CorrectResultsReturned(string partialName, string[] expectedIds)
         {
             // Arrange
             IList<User> userList = this.CreateUserList(this.mockedDepartmentData);
@@ -56,18 +61,16 @@ namespace KnightFrank.Antares.Domain.UnitTests.User.QueryHandlers
             IEnumerable<UsersQueryResult> resultUserList = this.handler.Handle(this.query).AsQueryable();
 
             //Assert
-            resultUserList.Should().HaveCount(2);
+            resultUserList.Should().HaveCount(expectedIds.Length);
             resultUserList.Should().BeInAscendingOrder(x => x.FirstName);
 
-            //first name OR last name matches query.
-            Assert.All(resultUserList,
-                user => Assert.True(user.FirstName.StartsWith(this.query.PartialName, StringComparison.CurrentCultureIgnoreCase)
-                                    || user.LastName.StartsWith(this.query.PartialName, StringComparison.CurrentCultureIgnoreCase))
-                );
+            resultUserList.Select(u => u.Id).ShouldAllBeEquivalentTo(expectedIds.Select(i => new Guid(i)));
         }
 
         [Theory]
         [InlineAutoData("abc")]
+        [InlineAutoData("jon abc")]
+        [InlineAutoData("abc jon")]
         public void Given_NotExistsingUserInQuery_When_Handling_Then_ShouldReturnEmptyList(string partialName)
         {
             //Arrange
@@ -147,7 +150,7 @@ namespace KnightFrank.Antares.Domain.UnitTests.User.QueryHandlers
             IList<Guid>  enumerable = userList.Select(x=>x.Id).Take(2).ToList();
 
            this.query.ExcludedIds = enumerable.ToList();
-            
+
             //Act
             IEnumerable<UsersQueryResult> resultUserList = this.handler.Handle(this.query).AsQueryable();
 
@@ -171,18 +174,32 @@ namespace KnightFrank.Antares.Domain.UnitTests.User.QueryHandlers
                  new User()
                 {
                     Id = new Guid("20000000-0000-0000-0000-000000000000"),
-                    FirstName = "Andy",
-                    LastName = "San",
+                    FirstName = "andy",
+                    LastName = "san",
                     Department = userDepartment
                 },
                 new User()
                 {
                     Id = new Guid("30000000-0000-0000-0000-000000000000"),
-                    FirstName = "Andy",
+                    FirstName = "andy",
                     LastName = "jon",
                     Department = userDepartment
+                },
+                new User()
+                {
+                    Id = new Guid("40000000-0000-0000-0000-000000000000"),
+                    FirstName = "joe",
+                    LastName = "smith",
+                    Department = userDepartment
+                },
+                new User()
+                {
+                    Id = new Guid("50000000-0000-0000-0000-000000000000"),
+                    FirstName = "eve",
+                    LastName = "doe",
+                    Department = userDepartment
                 }
-               
+
             };
             return userList;
         }
