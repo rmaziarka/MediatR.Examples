@@ -4,6 +4,7 @@ module Antares.Common.Component {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
     import Enums = Common.Models.Enums;
+    import DepartmentUserResourceParameters = Common.Models.Resources.IDepartmentUserResourceParameters;
 
     export class NegotiatorsEditController {
         public activityId: string;
@@ -65,13 +66,19 @@ module Antares.Common.Component {
             this.isSecondaryNegotiatorsInEditMode = false;
         }
 
-        public getUsers = (searchValue: string) => {
+        public getUsersQuery = (searchValue: string): DepartmentUserResourceParameters => {
             var excludedIds: string[] = _.map<Business.ActivityUser, string>(this.secondaryNegotiators, 'userId');
             excludedIds.push(this.leadNegotiator.userId);
 
+            return { partialName : searchValue, take : this.usersSearchMaxCount, 'excludedIds[]' : excludedIds };
+        }
+
+        public getUsers = (searchValue: string) =>{
+            var query = this.getUsersQuery(searchValue);
+
             return this.dataAccessService
                 .getDepartmentUserResource()
-                .query({ partialName: searchValue, take: this.usersSearchMaxCount, 'excludedIds[]': excludedIds })
+                .query(query)
                 .$promise
                 .then((users: any) => {
                     return users.map((user: Common.Models.Dto.IDepartmentUser) => { return new Common.Models.Business.DepartmentUser(<Common.Models.Dto.IDepartmentUser>user); });

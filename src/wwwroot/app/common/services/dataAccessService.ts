@@ -40,7 +40,7 @@ module Antares.Services {
                 propertyId: '@propertyId'
             }
         };
-        
+
         private createViewingAction: ng.resource.IActionDescriptor = {
             url: this.appConfig.rootUrl + '/api/viewings/',
             method: 'POST',
@@ -200,7 +200,7 @@ module Antares.Services {
 
         getDepartmentUserResource(): Antares.Common.Models.Resources.IDepartmentUserResourceClass {
             return <Antares.Common.Models.Resources.IDepartmentUserResourceClass>
-                this.$resource(this.appConfig.rootUrl + '/api/users?partialName=:partialName&take=:take&:excludedIds[]"');
+                this.$resource(this.appConfig.rootUrl + '/api/users?partialName=:partialName&take=:take&:excludedIds[]');
         }
     }
 
