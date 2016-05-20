@@ -207,8 +207,8 @@ module Antares.Requirement.View {
             this.components.offerAdd()
                 .saveOffer()
                 .then((offer: Dto.IOffer) =>{
-                    offer = new Business.Offer(offer);
-                    this.requirement.offers.push(offer);
+                    var savedOffer = new Business.Offer(offer);
+                    this.requirement.offers.push(savedOffer);
                     this.hidePanels();
                 })
                 .finally(() => {
