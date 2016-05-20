@@ -13,26 +13,28 @@ module Antares.Common.Component {
 
         public isLeadNegotiatorInEditMode: boolean = false;
         public isSecondaryNegotiatorsInEditMode: boolean = false;
-        
+
+        public negotiatorsSearchOptions: SearchOptions = new SearchOptions();
+
         public labelTranslationKey: string;
-        
+
         private usersSearchMaxCount: number = 100;
 
         constructor(
             private dataAccessService: Services.DataAccessService,
             private enumService: Services.EnumService) {
-                
-            this.enumService.getEnumPromise().then(this.onEnumLoaded);            
+
+            this.enumService.getEnumPromise().then(this.onEnumLoaded);
         }
-        
+
         onEnumLoaded = (result: any) => {
-            var divisions: any = result[Dto.EnumTypeCode.Division];           
+            var divisions: any = result[Dto.EnumTypeCode.Division];
             var division: any = _.find(divisions, { 'id': this.propertyDivisionId });
             if (division){
                 this.labelTranslationKey = division.code.toUpperCase();
-            }          
+            }
         }
-        
+
         public editLeadNegotiator = () => {
             this.isLeadNegotiatorInEditMode = true;
         }

@@ -2,6 +2,7 @@
 
 <h4 translate="NEGOTIATORS.{{nevm.labelTranslationKey}}.LEAD"></h4>
 <search ng-show="nevm.isLeadNegotiatorInEditMode"
+        options="nevm.negotiatorsSearchOptions"
         focus-on="nevm.isLeadNegotiatorInEditMode"
         on-select-item="nevm.changeLeadNegotiator" on-cancel="nevm.cancelChangeLeadNegotiator" load-items="nevm.getUsers"
     item-template-url="app/common/components/negotiators/edit/userSearchTemplate.html" search-placeholder="NEGOTIATORS.{{nevm.labelTranslationKey}}.FIND"></search>
@@ -14,6 +15,7 @@
     <card-list-header>
         <h4 class="page-header" translate="NEGOTIATORS.{{nevm.labelTranslationKey}}.SECONDARY"></h4>
         <search ng-show="nevm.isSecondaryNegotiatorsInEditMode"
+                options="nevm.negotiatorsSearchOptions"
                 focus-on="nevm.isSecondaryNegotiatorsInEditMode"
                 on-select-item="nevm.addSecondaryNegotiator" on-cancel="nevm.cancelAddSecondaryNegotiator" load-items="nevm.getUsers"
             item-template-url="app/common/components/negotiators/edit/userSearchTemplate.html" search-placeholder="NEGOTIATORS.{{nevm.labelTranslationKey}}.ADD"></search>
