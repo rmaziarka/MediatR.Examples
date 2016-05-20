@@ -157,6 +157,11 @@
         "CREATE_AREA": "Create area",
         "NAME": "Name",
         "SIZE": "Size"
+      },
+      "EDIT": {
+        "EDIT_AREA": "Edit area",
+        "NAME": "Name",
+        "SIZE": "Size"
       }
     }
   },

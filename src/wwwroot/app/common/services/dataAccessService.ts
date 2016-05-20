@@ -32,6 +32,15 @@ module Antares.Services {
             }
         };
 
+        private updatePropertyAreaBreakdownAction: ng.resource.IActionDescriptor = {
+            url: this.appConfig.rootUrl + '/api/properties/:propertyId/areabreakdown',
+            method: 'PUT',
+            isArray: false,
+            params: {
+                propertyId: '@propertyId'
+            }
+        };
+
         private updatePropertyAreaBreakdownOrderAction: ng.resource.IActionDescriptor = {
             url: this.appConfig.rootUrl + '/api/properties/:propertyId/areabreakdown/order',
             method: 'PUT',
@@ -181,6 +190,7 @@ module Antares.Services {
             return <Resources.IPropertyAreaBreakdownResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/properties/:propertyId/areabreakdown', null, {
                     createPropertyAreaBreakdowns: this.createPropertyAreaBreakdownsAction,
+                    updatePropertyAreaBreakdown: this.updatePropertyAreaBreakdownAction,
                     updatePropertyAreaBreakdownOrder: this.updatePropertyAreaBreakdownOrderAction
                 });
         }

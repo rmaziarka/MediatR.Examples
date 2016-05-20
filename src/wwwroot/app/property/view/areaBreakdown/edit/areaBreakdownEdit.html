@@ -1,0 +1,24 @@
+<form ng-submit="editAreaBreakdownForm.$valid" name="editAreaBreakdownForm" id="editAreaBreakdownForm" method="post" novalidate>
+
+    <div class="area-details">
+        <div class="form-group" ng-class="{'has-error': (editAreaBreakdownForm.$submitted || editAreaBreakdownForm.name.$dirty) && editAreaBreakdownForm.name.$invalid}">
+            <label for="name" class="required" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.EDIT.NAME"></label>
+            <input id="name" name="name" class="form-control" type="text" ng-model="vm.propertyAreaBreakdown.name" required ng-maxlength="128">
+            <div ng-messages="editAreaBreakdownForm.name.$error" ng-show="editAreaBreakdownForm.$submitted || editAreaBreakdownForm.name.$dirty">
+                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': (editAreaBreakdownForm.$submitted || editAreaBreakdownForm.size.$dirty) && editAreaBreakdownForm.size.$invalid}" ng-init="minLength = 0">
+            <label for="size" class="required" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.EDIT.SIZE"></label>
+            <div class="row">
+                <div class="col-xs-4">
+                    <input id="size" name="size" class="form-control" ng-model="vm.propertyAreaBreakdown.size" type="number" required number-greater-than="{{minLength}}">
+                </div>
+            </div>
+            <div ng-messages="editAreaBreakdownForm.size.$error" ng-show="editAreaBreakdownForm.$submitted || editAreaBreakdownForm.size.$dirty">
+                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+            </div>
+        </div>
+
+    </div>
+</form>

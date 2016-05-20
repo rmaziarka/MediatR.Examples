@@ -70,6 +70,11 @@ module Antares.Property.View {
             this.showPanel(this.components.panels.areaAdd);
         }
 
+        showAreaEdit = (propertyAreaBreakdown: Business.PropertyAreaBreakdown) => {
+            this.components.areaEdit().editPropertyAreaBreakdown(propertyAreaBreakdown);
+            this.showPanel(this.components.panels.areaEdit);
+        }
+
         showActivityPreview = (activity: Common.Models.Business.Activity) => {
             this.components.activityPreview().setActivity(activity);
             this.showPanel(this.components.panels.activityPreview);
@@ -110,6 +115,10 @@ module Antares.Property.View {
             this.components.panels.areaAdd().hide();
         }
 
+        cancelEditArea() {
+            this.components.panels.areaEdit().hide();
+        }
+
         saveOwnership() {
             this.components.ownershipAdd().saveOwnership(this.property.id).then(() => {
                 this.cancelUpdateContacts();
@@ -130,6 +139,16 @@ module Antares.Property.View {
             this.components.areaAdd().saveAreas(this.property.id).then((areas: Business.PropertyAreaBreakdown[]) => {
                 [].push.apply(this.property.propertyAreaBreakdowns, areas);
                 this.cancelAddArea();
+            });
+        }
+
+        updateArea() {
+            this.components.areaEdit().updatePropertyAreaBreakdown(this.property.id).then((area: Business.PropertyAreaBreakdown) => {
+                var index = _.findIndex(this.property.propertyAreaBreakdowns, (item) => { return item.id === area.id });
+                if (index >= 0) {
+                    this.property.propertyAreaBreakdowns[index] = area;
+                    this.cancelEditArea();
+                }
             });
         }
 
@@ -163,7 +182,9 @@ module Antares.Property.View {
                 activityPreviewId: 'viewProperty:activityPreviewComponent',
                 activityPreviewSidePanelId: 'viewProperty:activityPreviewSidePanelComponent',
                 areaAddSidePanelId: 'viewProperty:areaAddSidePanelComponent',
-                areaAddId: 'viewProperty:areaAddComponent'
+                areaEditSidePanelId: 'viewProperty:areaEditSidePanelComponent',
+                areaAddId: 'viewProperty:areaAddComponent',
+                areaEditId: 'viewProperty:areaEditComponent'
             };
         }
 
@@ -175,12 +196,14 @@ module Antares.Property.View {
                 ownershipAdd: () => { return this.componentRegistry.get(this.componentIds.ownershipAddId); },
                 ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewId); },
                 areaAdd: () => { return this.componentRegistry.get(this.componentIds.areaAddId); },
+                areaEdit: () => { return this.componentRegistry.get(this.componentIds.areaEditId); },
                 panels: {
                     contact: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
                     ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); },
                     activityAdd: () => { return this.componentRegistry.get(this.componentIds.activityAddSidePanelId); },
                     activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId); },
-                    areaAdd: () => { return this.componentRegistry.get(this.componentIds.areaAddSidePanelId); }
+                    areaAdd: () => { return this.componentRegistry.get(this.componentIds.areaAddSidePanelId); },
+                    areaEdit: () => { return this.componentRegistry.get(this.componentIds.areaEditSidePanelId); }
                 }
             };
         }
