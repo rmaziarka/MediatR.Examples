@@ -25,8 +25,8 @@ module Antares {
 
         var controller: PropertyViewController;
 
-        describe('and property is loaded', () =>{
-            var propertyMock = TestHelpers.PropertyGenerator.generate({
+        describe('and property is loaded', () => {
+            var propertyMock = TestHelpers.PropertyGenerator.generatePropertyView({
                 id : '1',
                 propertyTypeId : 'propType1',
                 activities : TestHelpers.ActivityGenerator.generateManyDtos(2)
@@ -82,7 +82,7 @@ module Antares {
         });
 
         describe('and activities are loaded', () =>{
-            var propertyMock = TestHelpers.PropertyGenerator.generate();
+            var propertyMock = TestHelpers.PropertyGenerator.generatePropertyView();
 
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
@@ -183,7 +183,7 @@ module Antares {
                 { id: "333", code: "NotSelling" }
             ];
 
-            var propertyMock = TestHelpers.PropertyGenerator.generate();
+            var propertyMock = TestHelpers.PropertyGenerator.generatePropertyView();
             var defaultActivityStatus = _.find(activityStatuses, { 'code': 'PreAppraisal' });
 
             beforeEach(inject((
@@ -450,7 +450,7 @@ module Antares {
                 $httpBackend.whenGET("").respond(() => { return {}; });
 
                 scope = $rootScope.$new();
-                scope['property'] = new Business.Property(propertyMock);
+                scope['property'] = new Business.PropertyView(propertyMock);
                 scope['userData'] = userMock;
                 element = $compile('<property-view property="property" user-data="userData"></property-view>')(scope);
 

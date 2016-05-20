@@ -23,7 +23,7 @@ module Antares.Activity.View {
             this.activityAttachmentResource = dataAccessService.getAttachmentResource();
         }
 
-        showPropertyPreview = (property: Business.Property) => {
+        showPropertyPreview = (property: Business.PreviewProperty) => {
             this.components.propertyPreview().setProperty(property);
             this.showPanel(this.components.panels.propertyPreview);
         }

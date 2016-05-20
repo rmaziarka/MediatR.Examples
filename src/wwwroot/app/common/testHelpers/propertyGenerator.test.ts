@@ -32,8 +32,16 @@ module Antares.TestHelpers {
             return _.map<Dto.IProperty, Business.Property>(PropertyGenerator.generateManyDtos(n), (property: Dto.IProperty) => { return new Business.Property(property); });
         }
 
+        public static generateManyPropertyView(n: number): Business.PropertyView[] {
+            return _.map<Dto.IProperty, Business.PropertyView>(PropertyGenerator.generateManyDtos(n), (property: Dto.IProperty) => { return new Business.PropertyView(property); });
+        }
+
         public static generate(specificData?: any): Business.Property {
             return new Business.Property(PropertyGenerator.generateDto(specificData));
+        }
+
+        public static generatePropertyView(specificData?: any): Business.PropertyView {
+            return new Business.PropertyView(PropertyGenerator.generateDto(specificData));
         }
 
         private static makeRandom(text: string): string {

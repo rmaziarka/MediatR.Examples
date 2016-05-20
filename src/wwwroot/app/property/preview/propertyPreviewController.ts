@@ -5,7 +5,7 @@ module Antares.Property.Preview {
 
     export class PropertyPreviewController {
         componentId: string;
-        property: Business.Property = <Business.Property>{};
+        property: Business.PreviewProperty = <Business.PreviewProperty>{};
 
         constructor(
             private componentRegistry: Core.Service.ComponentRegistry,
@@ -14,7 +14,7 @@ module Antares.Property.Preview {
             componentRegistry.register(this, this.componentId);
         }
 
-        setProperty = (property: Business.Property) => {
+        setProperty = (property: Business.PreviewProperty) => {
             this.property = property;
         }
 
