@@ -16,14 +16,18 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.website.$dirty) && addCompanyForm.website.$invalid}">
                     <label for="website">Website</label>
-                    <input type="url" class="form-control" id="website" placeholder="http://">
+                    <input type="text" class="form-control" id="website" name="website" ng-maxlength="1024" ng-model="vm.company.website" placeholder="http://">
+                    <external-link url="vm.company.website" show-text="false"></external-link>
+                    <div ng-messages="addCompanyForm.website.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.website.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="client-care-website">Client care website</label>
-                    <input type="url" class="form-control" id="client-care-website" placeholder="http://">
+                    <input type="text" class="form-control" id="client-care-website">
                 </div>
 
                 <div class="form-group">

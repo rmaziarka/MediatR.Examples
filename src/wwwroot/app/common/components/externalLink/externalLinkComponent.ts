@@ -7,7 +7,7 @@ module Antares.Common.Component{
         controllerAs:'vm',
         templateUrl:'app/common/components/externalLink/externalLink.html',
         bindings:{
-            url: '@',
+            url: '=',
             showText: '='
         }
     });

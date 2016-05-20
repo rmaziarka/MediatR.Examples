@@ -21,9 +21,10 @@ module Antares {
             $compile: ng.ICompileService) => {
 
             scope = $rootScope.$new();
-
-            createComponent = (url: string, showText: boolean)=> {
-                element = $compile('<external-link url="' + url + '" show-text="' + showText + '"></external-link>')(scope);
+   
+            createComponent = (url: string, showText: boolean) => {
+                scope['url'] = url;
+                element = $compile('<external-link url="url" show-text="' + showText + '"></external-link>')(scope);
                 scope.$apply(); 
 
                 controller = element.controller('externalLink');

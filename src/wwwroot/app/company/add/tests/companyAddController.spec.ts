@@ -19,7 +19,8 @@ module Antares {
             contactsAreRequiredHelpBlockSelector: 'p#contacts-are-required-help-block',
             listItemsSelector: '#list-contacts list-item',
             listItemSelector: (contactId: string) => { return '#list-contacts list-item#list-item-contact-' + contactId; },
-            companySaveBtnSelector: "button#company-save-btn"
+            companySaveBtnSelector: "button#company-save-btn",
+            websiteSelector: 'input#website'
         };
 
         beforeEach(inject((
@@ -52,6 +53,16 @@ module Antares {
         it('when name value has max length then validation message should not be displayed', () => {
             var maxLength = 128;
             assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.nameSelector);
+        });
+
+        it('when website value has max length then validation message should not be displayed', () => {
+            var maxLength = 1024;
+            assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.websiteSelector);
+        });
+
+        it('when website value has more than max length then validation message should be displayed', () => {
+            var maxLength = 1024;
+            assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.websiteSelector);
         });
 
         it('when contacts are not selected then only information message should be displayed', () => {
