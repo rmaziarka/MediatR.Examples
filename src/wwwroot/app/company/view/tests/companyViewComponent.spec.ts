@@ -26,7 +26,9 @@ module Antares {
         }
         ));
 
-        it('todo', () => { });
+        it('todo', () => {
+            expect(1).toBe(1);
+        });
        
     });
 }
