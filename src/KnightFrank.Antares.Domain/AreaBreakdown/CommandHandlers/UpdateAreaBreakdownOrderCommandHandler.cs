@@ -48,7 +48,12 @@
                 this.areaBreakdownRepository.FindBy(x => x.PropertyId == command.PropertyId && x.Id != command.AreaId)
                     .OrderBy(x => x.Order)
                     .ToList();
-            
+
+            if (command.Order > areaBreakdownItems.Count)
+            {
+                throw new BusinessValidationException(ErrorMessage.PropertyAreaBreakdown_OrderOutOfRange);
+            }
+
             areaBreakdownItems.Insert(command.Order, updatedAreaBreakdown);
 
             foreach (var items in areaBreakdownItems.Select((x, i) => new { Value = x, Index = i }))

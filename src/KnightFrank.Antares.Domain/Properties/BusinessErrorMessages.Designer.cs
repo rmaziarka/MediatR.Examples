@@ -194,5 +194,14 @@ namespace KnightFrank.Antares.Domain.Properties {
                 return ResourceManager.GetString("Property_Should_Not_Be_Empty", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specified order is out of available range..
+        /// </summary>
+        internal static string PropertyAreaBreakdown_OrderOutOfRange {
+            get {
+                return ResourceManager.GetString("PropertyAreaBreakdown_OrderOutOfRange", resourceCulture);
+            }
+        }
     }
 }

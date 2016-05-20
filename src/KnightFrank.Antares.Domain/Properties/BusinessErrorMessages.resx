@@ -153,6 +153,9 @@
   <data name="Ownership_Dates_Overlap" xml:space="preserve">
     <value>The ownership dates overlap.</value>
   </data>
+  <data name="PropertyAreaBreakdown_OrderOutOfRange" xml:space="preserve">
+    <value>Specified order is out of available range.</value>
+  </data>
   <data name="Property_Format_Is_Invalid" xml:space="preserve">
     <value>The '{0}' property value format is inappropriate.</value>
   </data>
