@@ -46,6 +46,7 @@
 
             expectedAreaBreakdown.ForEach(x => x.PropertyId = query.PropertyId);
             areaBreakdownList.AddRange(expectedAreaBreakdown);
+            expectedAreaBreakdown = expectedAreaBreakdown.OrderBy(x => x.Order).ToList();
 
             areaBreakdownRepository.Setup(x => x.Get()).Returns(areaBreakdownList.AsQueryable());
 
