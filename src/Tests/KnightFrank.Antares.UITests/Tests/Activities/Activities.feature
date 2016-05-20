@@ -18,12 +18,12 @@ Scenario: Create activity
 			| 01-01-2005   | 100000000 |
 	When User navigates to view property page with id
 		And User clicks add activites button on view property page	
-	Then Activity details are set on activity panel
+	Then Activity details are set on create activity page
 	    | Vendor       | Status        |
 	    | Sarah Chatto | Pre-appraisal |
-	When User selects Freehold Sale activity type on activity panel
-		And User selects Market appraisal activity status on activity panel
-		And User clicks save button on activity panel
+	When User selects Freehold Sale activity type on create activity page
+		And User selects Market appraisal activity status on create activity page
+		And User clicks save button on create activity page
 	Then Activity details are set on view property page
 		| Vendor       | Status           | Type          |
 		| Sarah Chatto | Market appraisal | Freehold Sale |

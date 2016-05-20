@@ -83,19 +83,19 @@
             this.scenarioContext.Set(page.PreviewDetails.ClickViewActivity(), "ViewActivityPage");
         }
 
-        [When(@"User selects (.*) activity type on activity panel")]
+        [When(@"User selects (.*) activity type on create activity page")]
         public void SelectActivityType(string type)
         {
             this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").Activity.SelectActivityType(type);
         }
 
-        [When(@"User selects (.*) activity status on activity panel")]
+        [When(@"User selects (.*) activity status on create activity page")]
         public void SelectActivityStatus(string status)
         {
             this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").Activity.SelectActivityStatus(status);
         }
 
-        [When(@"User clicks save button on activity panel")]
+        [When(@"User clicks save button on create activity page")]
         public void ClickSaveButtonOnActivityPanel()
         {
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
@@ -153,7 +153,7 @@
             this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").CreateAreaBreakdown().WaitForSidePanelToShow();
         }
 
-        [When(@"User fills in area details on create area panel")]
+        [When(@"User fills in area details on create area page")]
         public void AddAreaDetails(Table table)
         {
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
@@ -166,7 +166,7 @@
             }
         }
 
-        [When(@"User clicks save button on create area panel")]
+        [When(@"User clicks save button on create area page")]
         public void SaveAreas()
         {
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
@@ -266,7 +266,7 @@
             Assert.True(this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").IsViewPropertyFormPresent());
         }
 
-        [Then(@"Activity details are set on activity panel")]
+        [Then(@"Activity details are set on create activity page")]
         public void CheckActivityDetailsonActivityPanel(Table table)
         {
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");

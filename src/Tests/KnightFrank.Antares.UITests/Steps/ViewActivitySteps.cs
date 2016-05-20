@@ -68,7 +68,7 @@
             this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").OpenAttachFilePanel().WaitForSidePanelToShow();
         }
 
-        [When(@"User adds (.*) file with (.*) type on attach file panel")]
+        [When(@"User adds (.*) file with (.*) type on attach file page")]
         public void SelectAttachmentType(string file, string type)
         {
             var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");

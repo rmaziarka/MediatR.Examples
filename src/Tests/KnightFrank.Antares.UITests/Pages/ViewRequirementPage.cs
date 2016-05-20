@@ -14,21 +14,28 @@
     public class ViewRequirementPage : ProjectPageBase
     {
         private readonly ElementLocator viewRequirementForm = new ElementLocator(Locator.CssSelector, "requirement-view > div");
+        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "[ng-show *= 'isLoading']");
         private readonly ElementLocator locationRequirementsDetails = new ElementLocator(Locator.XPath, "//*[contains(@translate, 'LOCATION')]/..//span");
-        private readonly ElementLocator notesButton = new ElementLocator(Locator.Id, "notes-button");
-        private readonly ElementLocator notesNumber = new ElementLocator(Locator.CssSelector, "#notes-button .ng-binding");
         private readonly ElementLocator propertyRequirementsDetails = new ElementLocator(Locator.XPath, "//*[contains(@translate, 'BASIC_REQUIREMENTS')]/..//div[contains(@class, 'ng-binding')]");
         private readonly ElementLocator propertyRequirementsDetailsDescription = new ElementLocator(Locator.XPath, "//*[contains(@translate, 'DESCRIPTION')]/../p");
         private readonly ElementLocator requirementApplicants = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'contacts'] div");
         private readonly ElementLocator requirementDate = new ElementLocator(Locator.CssSelector, "span[translate *= 'CREATEDDATE'] ~ span");
+        // Notes
+        private readonly ElementLocator notesButton = new ElementLocator(Locator.Id, "notes-button");
+        private readonly ElementLocator notesNumber = new ElementLocator(Locator.CssSelector, "#notes-button .ng-binding");
+        // Viewings
         private readonly ElementLocator addViewings = new ElementLocator(Locator.CssSelector, "#viewings-list button");
         private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item .card");
-        private readonly ElementLocator viewingDetails = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .card-body");
+        private readonly ElementLocator viewing = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .card-body");
         private readonly ElementLocator viewingData = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .ng-binding");
         private readonly ElementLocator viewingActions = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .card-menu-button");
         private readonly ElementLocator createOffer = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) [action *= 'showAddOfferPanel']");
-        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
+        // Offers
+        private readonly ElementLocator offers = new ElementLocator(Locator.CssSelector, "card-list-item[ng-repeat *= 'offers'] .card-body");
+        private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, "card-list-item[ng-repeat *= 'offers']:nth-of-type({0}) .card-body");
+        private readonly ElementLocator offerStatus = new ElementLocator(Locator.CssSelector, "card-list-item[ng-repeat *= 'offers']:nth-of-type({0}) .offer-status");
+        private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, "card-list-item[ng-repeat *= 'offers']:nth-of-type({0}) .ng-binding");
 
         public ViewRequirementPage(DriverContext driverContext) : base(driverContext)
         {
@@ -42,9 +49,17 @@
 
         public ViewingDetailsPage ViewingDetails => new ViewingDetailsPage(this.DriverContext);
 
+        public OfferPreviewPage OfferPreview => new OfferPreviewPage(this.DriverContext);
+
         public CreateOfferPage Offer => new CreateOfferPage(this.DriverContext);
 
         public int ViewingsNumber => this.Driver.GetElements(this.viewings).Count;
+
+        public int OffersNumber => this.Driver.GetElements(this.offers).Count;
+
+        public string CreateDate => this.Driver.GetElement(this.requirementDate).Text;
+
+        public List<string> Applicants => this.Driver.GetElements(this.requirementApplicants).Select(el => el.Text).ToList();
 
         public ViewRequirementPage OpenViewRequirementPageWithId(string id)
         {
@@ -90,16 +105,6 @@
             return details;
         }
 
-        public string GetRequirementCreateDate()
-        {
-            return this.Driver.GetElement(this.requirementDate).Text;
-        }
-
-        public List<string> GetApplicants()
-        {
-            return this.Driver.GetElements(this.requirementApplicants).Select(el => el.Text).ToList();
-        }
-
         public ViewRequirementPage OpenNotes()
         {
             this.Driver.GetElement(this.notesButton).Click();
@@ -120,13 +125,29 @@
 
         public ViewRequirementPage OpenViewingDetails(int position)
         {
-            this.Driver.GetElement(this.viewingDetails.Format(position)).Click();
+            this.Driver.GetElement(this.viewing.Format(position)).Click();
+            return this;
+        }
+
+        public ViewRequirementPage OpenOfferDetails(int position)
+        {
+            this.Driver.GetElement(this.offer.Format(position)).Click();
             return this;
         }
 
         public List<string> GetViewingDetails(int position)
         {
             return this.Driver.GetElements(this.viewingData.Format(position)).Select(el => el.Text).ToList();
+        }
+
+        public List<string> GetOfferDetails(int position)
+        {
+            return this.Driver.GetElements(this.offerData.Format(position)).Select(el => el.Text).ToList();
+        }
+
+        public string GetOfferStatus(int position)
+        {
+            return this.Driver.GetElement(this.offerStatus.Format(position)).Text;
         }
 
         public ViewRequirementPage OpenViewingActions(int position)

@@ -11,9 +11,6 @@
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
 
-    using OpenQA.Selenium;
-    using OpenQA.Selenium.Interactions;
-
     public class ViewPropertyPage : ProjectPageBase
     {
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
@@ -43,8 +40,8 @@
         // Locators for area breakdown
         private readonly ElementLocator addAreaBreakdown = new ElementLocator(Locator.CssSelector, "#card-list-areas button");
         private readonly ElementLocator areaTile = new ElementLocator(Locator.CssSelector, "#card-list-areas card-list-items > div");
-        private readonly ElementLocator areaName = new ElementLocator(Locator.CssSelector, "card-list-items > div:nth-of-type({0}) div.ng-binding");
-        private readonly ElementLocator areaSize = new ElementLocator(Locator.CssSelector, "card-list-items > div:nth-of-type({0}) small");
+        private readonly ElementLocator areaName = new ElementLocator(Locator.CssSelector, "card-list-items > div:nth-of-type({0}) .card-item");
+        private readonly ElementLocator areaSize = new ElementLocator(Locator.CssSelector, "card-list-items > div:nth-of-type({0}) .card-info");
 
         public ViewPropertyPage(DriverContext driverContext) : base(driverContext)
         {
@@ -143,7 +140,10 @@
 
         public Dictionary<string, string> GetPropertyDetails()
         {
-            List<string> keys = this.Driver.GetElements(this.propertyDetailsLabels).Select(el => el.Text.Replace(" ", string.Empty).ToLower()).ToList();
+            List<string> keys =
+                this.Driver.GetElements(this.propertyDetailsLabels)
+                    .Select(el => el.Text.Replace(" ", string.Empty).ToLower())
+                    .ToList();
             List<string> values = this.Driver.GetElements(this.propertyDetailsValues).Select(el => el.Text.Trim()).ToList();
             return keys.Zip(values, (key, value) => new { key, value }).ToDictionary(x => x.key, x => x.value);
         }

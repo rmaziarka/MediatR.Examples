@@ -32,3 +32,11 @@ Scenario: Create offer
 		| Status | Offer  | SpecialConditions |
 		| New    | 100000 | Text              |
 		And User clicks save offer button on view requirement page
+	Then New offer should be created and displayed on view requirement page
+		And Offer details on 1 position on view requirement page are same as the following
+			| Activity                                    | Offer  | Status |
+			| John Soane’s house, 13 Lincoln’s Inn Fields | 100000 | NEW    |
+	When User clicks 1 offer details on view requirement page
+	Then Offer details on view requirement page are same as the following
+		| Activity                                    | Status | Offer      | SpecialConditions | Negotiator |
+		| John Soane’s house, 13 Lincoln’s Inn Fields | New    | 100000 GBP | Text              | John Smith |
