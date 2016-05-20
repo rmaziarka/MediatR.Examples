@@ -11,7 +11,7 @@ module Antares.Requirement.View {
         offerPreviewPanelVisible: boolean = true;
         loadingActivities: boolean = false;
         saveViewingBusy: boolean = false;
-        addOfferBusy: boolean = false;
+        addEditOfferBusy: boolean = false;
         userData: Dto.IUserData;
 
         constructor(
@@ -203,7 +203,7 @@ module Antares.Requirement.View {
         }
 
         saveOffer = () => {
-            this.addOfferBusy = true;
+            this.addEditOfferBusy = true;
             this.components.offerAdd()
                 .saveOffer()
                 .then((offerModel: Dto.IOffer) =>{
@@ -217,8 +217,29 @@ module Antares.Requirement.View {
                     this.hidePanels();
                 })
                 .finally(() => {
-                    this.addOfferBusy = false;
+                    this.addEditOfferBusy = false;
                 });
+        }
+
+        saveEditCore = (component: any) =>{
+            this.addEditOfferBusy = true;
+            component
+                .saveOffer()
+                .then((offer: Common.Models.Dto.IOffer) =>{
+                    var originalOffer = component.getOriginalOffer();
+                    angular.copy(new Business.Offer(offer), originalOffer);
+                    this.hidePanels();
+                }).finally(() =>{
+                    this.addEditOfferBusy = false;
+                });
+    }
+
+        saveEditOffer = () =>{
+            this.saveEditCore(this.components.offerEdit());
+        }
+
+        saveEditPreviewOffer = () =>{
+            this.saveEditCore(this.components.offerEditPreview());
         }
     }
 

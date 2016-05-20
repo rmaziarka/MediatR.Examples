@@ -147,8 +147,9 @@ declare module Antares.Common.Models {
         interface ICreatePropertyAreaBreakdownResourceClassData {
             areas: Dto.ICreatePropertyAreaBreakdownResource[];
         }
-        interface IPropertyAreaBreakdownResourceClass extends ng.resource.IResourceClass<IPropertyAreaBreakdownResource> {
+        interface IPropertyAreaBreakdownResourceClass extends ng.resource.IResourceClass<IPropertyAreaBreakdownResource> {            
             createPropertyAreaBreakdowns(params: IPropertyAreaBreakdownResourceClassParameters, data: ICreatePropertyAreaBreakdownResourceClassData): ng.resource.IResource<Dto.IPropertyAreaBreakdown[]>;
+            updatePropertyAreaBreakdown(params: IPropertyAreaBreakdownResourceClassParameters, data: Dto.IUpdatePropertyAreaBreakdownResource): ng.resource.IResource<Dto.IPropertyAreaBreakdown>;
             updatePropertyAreaBreakdownOrder(params: IPropertyAreaBreakdownResourceClassParameters, data: Dto.IUpdatePropertyAreaBreakdownOrderResource): ng.resource.IResource<Dto.IPropertyAreaBreakdown[]>;
         }
 

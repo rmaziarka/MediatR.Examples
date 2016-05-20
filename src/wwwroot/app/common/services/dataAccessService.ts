@@ -32,6 +32,15 @@ module Antares.Services {
             }
         };
 
+        private updatePropertyAreaBreakdownAction: ng.resource.IActionDescriptor = {
+            url: this.appConfig.rootUrl + '/api/properties/:propertyId/areabreakdown',
+            method: 'PUT',
+            isArray: false,
+            params: {
+                propertyId: '@propertyId'
+            }
+        };
+
         private updatePropertyAreaBreakdownOrderAction: ng.resource.IActionDescriptor = {
             url: this.appConfig.rootUrl + '/api/properties/:propertyId/areabreakdown/order',
             method: 'PUT',
@@ -40,7 +49,7 @@ module Antares.Services {
                 propertyId: '@propertyId'
             }
         };
-        
+
         private createViewingAction: ng.resource.IActionDescriptor = {
             url: this.appConfig.rootUrl + '/api/viewings/',
             method: 'POST',
@@ -114,9 +123,11 @@ module Antares.Services {
                 });
         }
 
-        getOfferResource(): Resources.IOfferResourceClass {
+        getOfferResource(): Resources.IOfferResourceClass{
             return <Resources.IOfferResourceClass>
-                this.$resource(this.appConfig.rootUrl + '/api/offers/:id');
+                this.$resource(this.appConfig.rootUrl + '/api/offers/:id', null, {
+                    update : this.updateAction
+                });
         }
 
         getCountryResource(): Resources.ICountryResourceClass {
@@ -181,6 +192,7 @@ module Antares.Services {
             return <Resources.IPropertyAreaBreakdownResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/properties/:propertyId/areabreakdown', null, {
                     createPropertyAreaBreakdowns: this.createPropertyAreaBreakdownsAction,
+                    updatePropertyAreaBreakdown: this.updatePropertyAreaBreakdownAction,
                     updatePropertyAreaBreakdownOrder: this.updatePropertyAreaBreakdownOrderAction
                 });
         }
@@ -200,7 +212,7 @@ module Antares.Services {
 
         getDepartmentUserResource(): Antares.Common.Models.Resources.IDepartmentUserResourceClass {
             return <Antares.Common.Models.Resources.IDepartmentUserResourceClass>
-                this.$resource(this.appConfig.rootUrl + '/api/users?partialName=:partialName&take=:take&:excludedIds[]"');
+                this.$resource(this.appConfig.rootUrl + '/api/users?partialName=:partialName&take=:take&:excludedIds[]');
         }
     }
 
