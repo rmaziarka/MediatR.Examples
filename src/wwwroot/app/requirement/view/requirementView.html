@@ -98,7 +98,7 @@
     </side-panel-header>
     <side-panel-content>
         <offer-preview component-id="vm.componentIds.offerPreviewId" ng-show="vm.offerPreviewPanelVisible"></offer-preview>
-        <offer-add-edit component-id="vm.componentIds.offerEditPreviewId" ng-show="!vm.offerPreviewPanelVisible"></offer-add-edit>
+        <offer-add-edit component-id="vm.componentIds.offerEditPreviewId" ng-show="!vm.offerPreviewPanelVisible" mode="edit"></offer-add-edit>
     </side-panel-content>
     <side-panel-footer>
         <button type="button" class="btn btn-default pull-left" ng-click="vm.showEditOfferPreviewPanel()" ng-show="vm.offerPreviewPanelVisible">
@@ -106,6 +106,9 @@
         </button>
         <button class="btn btn-default" type="button" ng-click="vm.cancelOfferEditPreview()" ng-show="!vm.offerPreviewPanelVisible">
             <i class="fa fa-angle-double-left"></i> <span translate="COMMON.CANCEL"></span>
+        </button>
+        <button class="btn btn-primary" type="button" ng-show="!vm.offerPreviewPanelVisible">
+            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
         </button>
     </side-panel-footer>
 </side-panel>
@@ -115,11 +118,14 @@
         <h3 translate="REQUIREMENT.VIEW.OFFERDETAILS"></h3>
     </side-panel-header>
     <side-panel-content>
-        <offer-add-edit component-id="vm.componentIds.offerEditId"></offer-add-edit>
+        <offer-add-edit component-id="vm.componentIds.offerEditId" mode="edit"></offer-add-edit>
     </side-panel-content>
     <side-panel-footer>
         <button class="btn btn-default" type="button" ng-click="vm.cancelOfferEdit()">
-            <i class="fa fa-angle-double-left"></i> <span translate="COMMON.CANCEL"></span>
+            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+        </button>
+        <button class="btn btn-primary" type="button">
+            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
         </button>
     </side-panel-footer>
 </side-panel>
@@ -193,7 +199,7 @@
         <h3 translate="REQUIREMENT.VIEW.NEWOFFER"></h3>
     </side-panel-header>
     <side-panel-content>
-        <offer-add-edit component-id="vm.componentIds.offerAddId" requirement="vm.requirement"></offer-add-edit>
+        <offer-add-edit component-id="vm.componentIds.offerAddId" requirement="vm.requirement" mode="add"></offer-add-edit>
     </side-panel-content>
     <side-panel-footer>
         <button class="btn btn-default" type="button" ng-click="vm.cancelSaveOffer()">

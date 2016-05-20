@@ -72,6 +72,16 @@
         </div>
     </div>
 
+    <div class="section-details" ng-show="vm.mode == 'edit'">
+        <h5 translate="OFFER.ADD.NEGOTIATOR"></h5>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                {{vm.offer.negotiator.getName()}}
+            </div>
+        </div>
+    </div>
+
     <div class="form-group" ng-class="{'has-error': (vm.addOfferForm.$submitted || vm.addOfferForm.exchangeDate.$dirty) && vm.addOfferForm.exchangeDate.$invalid}">
         <label for="offer-proposed-exchange-date" translate="OFFER.ADD.EXCHANGE_DATE"></label>
         <div class="row">

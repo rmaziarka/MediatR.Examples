@@ -167,12 +167,14 @@ module Antares.Requirement.View {
         }
 
         showAddOfferPanel = (viewing: Dto.IViewing) => {
-            if (this.components.panels.offerAdd().visible) return;
+            if (this.components.panels.offerAdd().visible) {
+                return;
+            }
+
             var offerAddComponent = this.components.offerAdd();
 
             offerAddComponent.activity = viewing.activity;
             offerAddComponent.reset();
-            
             
             this.showPanel(this.components.panels.offerAdd);
         }
@@ -183,7 +185,8 @@ module Antares.Requirement.View {
             this.offerPreviewPanelVisible = false;
         }
 
-        showEditOfferPanel = () => {
+        showEditOfferPanel = (offer: Dto.IOffer) =>{
+            this.components.offerEdit().setOffer(offer);
             this.showPanel(this.components.panels.offerEdit);
         }
 
@@ -203,7 +206,8 @@ module Antares.Requirement.View {
             this.addOfferBusy = true;
             this.components.offerAdd()
                 .saveOffer()
-                .then((offer: Business.Offer) =>{
+                .then((offer: Dto.IOffer) =>{
+                    offer = new Business.Offer(offer);
                     this.requirement.offers.push(offer);
                     this.hidePanels();
                 })

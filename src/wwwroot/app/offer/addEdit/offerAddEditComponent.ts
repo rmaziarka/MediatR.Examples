@@ -8,7 +8,8 @@ module Antares.Component {
         transclude : true,
         bindings : {
             componentId: '<',
-            requirement: '<'
+            requirement: '<',
+            mode: '@'
         }
     });
 }

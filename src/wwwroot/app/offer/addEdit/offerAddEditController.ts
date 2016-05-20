@@ -24,6 +24,10 @@ module Antares {
 
             addOfferForm: any;
 
+            mode: string;
+
+            originalOffer: Business.Offer;
+
             constructor(
                 componentRegistry: Antares.Core.Service.ComponentRegistry,
                 private dataAccessService: Antares.Services.DataAccessService,
@@ -36,8 +40,10 @@ module Antares {
                 this.requirement = <Dto.IRequirement>{};
             }
 
-            setOffer = (offer: Business.Offer) =>{
-                this.offer = offer;
+            setOffer = (offer: Business.Offer) => {
+                this.originalOffer = offer;
+                this.offer = angular.copy(offer);
+                this.activity = offer.activity;
             }
 
             reset = () =>{
@@ -89,12 +95,14 @@ module Antares {
                     return this.$q.reject();
                 }
 
-                this.offer.statusId = this.selectedStatus.id;
+                if (this.mode === "add") {
+                    this.offer.statusId = this.selectedStatus.id;
 
-                var offerResource = this.dataAccessService.getOfferResource();
-                return offerResource
-                    .save(this.offer)
-                    .$promise;
+                    var offerResource = this.dataAccessService.getOfferResource();
+                    return offerResource
+                        .save(this.offer)
+                        .$promise;
+                }
             }
 
             goToActivityView = () => {
