@@ -18,7 +18,7 @@
     [Binding]
     public class AreaBreakdownSteps
     {
-        private const string ApiUrl = "/api/properties/";
+        private const string ApiUrl = "/api/properties";
         private readonly BaseTestClassFixture fixture;
 
         private readonly ScenarioContext scenarioContext;
@@ -46,7 +46,7 @@
         {
             this.propertyId = property.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(property);
 
-            string url = ApiUrl + $"{this.propertyId}/areabreakdown";
+            string url = $"{ApiUrl}/{this.propertyId}/areabreakdown";
             var command = new CreateAreaBreakdownCommand
             {
                 PropertyId = this.propertyId,

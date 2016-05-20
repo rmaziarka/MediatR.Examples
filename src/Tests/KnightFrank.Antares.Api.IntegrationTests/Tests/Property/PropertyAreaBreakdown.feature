@@ -1,8 +1,6 @@
-﻿Feature: PropertyAreaBreakdown
+﻿Feature: Property area breakdown
 
-
-
-Scenario: Add property area breakdown
+Scenario: Create property area breakdown
 	Given User gets GB address form for Property and country details
         And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode | enumTypeItemCode |
@@ -20,7 +18,7 @@ Scenario: Add property area breakdown
 	Then User should get OK http status code
 		And Added property area breakdowns exists in data base
 
-Scenario Outline: Check Validation for area breakdown
+Scenario Outline: Create area breakdown with invalid data
 	Given User gets GB address form for Property and country details
         And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode | enumTypeItemCode |
@@ -41,4 +39,3 @@ Scenario Outline: Check Validation for area breakdown
 	| 2    | d    | latest                               | BadRequest |
 	| 2    |      | latest                               | BadRequest |
 	| abc  | 55   | 91AC6B12-020A-11E6-8D22-5E5517507C66 | BadRequest |
-
