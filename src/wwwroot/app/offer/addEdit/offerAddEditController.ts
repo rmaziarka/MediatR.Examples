@@ -98,6 +98,10 @@ module Antares {
                 if (this.mode === "add") {
                     this.offer.statusId = this.selectedStatus.id;
 
+                    this.offer.offerDate = Core.DateTimeUtils.createDateAsUtc(this.offer.offerDate);
+                    this.offer.exchangeDate = Core.DateTimeUtils.createDateAsUtc(this.offer.exchangeDate);
+                    this.offer.completionDate = Core.DateTimeUtils.createDateAsUtc(this.offer.completionDate);
+                    
                     var offerResource = this.dataAccessService.getOfferResource();
                     return offerResource
                         .save(this.offer)
