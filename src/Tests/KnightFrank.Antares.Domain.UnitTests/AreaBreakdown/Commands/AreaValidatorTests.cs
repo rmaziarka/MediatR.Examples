@@ -48,6 +48,18 @@
         }
 
         [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void Given_InvalidArea_With_IncorrectName_When_Validating_Then_IsNotValid(string name)
+        {
+            Area area = this.fixture.Build<Area>().With(x => x.Name, name).Create();
+
+            ValidationResult validationResult = this.validator.Validate(area);
+
+            validationResult.IsInvalid(nameof(area.Name), nameof(Messages.notempty_error));
+        }
+
+        [Theory]
         [InlineData(0)]
         [InlineData(-1)]
         public void Given_InvalidArea_With_IncorrectSize_When_Validating_Then_IsNotValid(double size)
