@@ -120,9 +120,9 @@ Scenario: Create residential property
 		And User edits activity details on edit activity page
 			| ActivityStatus   | MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |
 			| Market appraisal | 3000                 | 4000             | 5000                 |
-		And User clicks property details link on view activity page
 	Then View activity page is displayed
-	When User clicks view property link on property preview page
+	When User clicks property details link on view activity page
+		And User clicks view property link on property preview page
 	Then View property page is displayed
 
 @Property
@@ -156,12 +156,3 @@ Scenario: Create commercial property
 		| Third floor area A | 70   |
 		| Third floor area B | 30   |
 		| Third floor area C | 50   |
-#	When User drags 4 area and moves to 2 area place on view property page
-#		And User drags 3 area and moves to 5 area place on view property page
-#	Then Area breakdown order is following on view property page
-#		| Name               | Size |
-#		| First floor        | 100  |
-#		| Third floor area B | 150  |
-#		| Third floor area A | 70   |
-#		| Third floor area C | 30   |
-#		| Second floor       | 50   |

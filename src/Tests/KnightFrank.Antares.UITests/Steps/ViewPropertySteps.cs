@@ -47,7 +47,7 @@
         [When(@"User clicks add activites button on view property page")]
         public void ClickAddActivityButton()
         {
-            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").AddActivity();
+            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").AddActivity().WaitForSidePanelToShow();
         }
 
         [When(@"User clicks edit property button on view property page")]
@@ -60,7 +60,7 @@
         [When(@"User selects contacts for ownership on view property page")]
         public void SelectContactsForOwnership(Table table)
         {
-            ViewPropertyPage page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").SetOwnership();
+            ViewPropertyPage page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").SetOwnership().WaitForSidePanelToShow();
             IEnumerable<Contact> contacts = table.CreateSet<Contact>();
 
             foreach (Contact contact in contacts)
@@ -73,14 +73,14 @@
         [When(@"User clicks activity's details link on view property page")]
         public void OpenActivitiesPreview()
         {
-            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").OpenActivityDetails();
+            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").OpenActivityDetails().WaitForSidePanelToShow();
         }
 
         [When(@"User clicks view activity link on activity preview page")]
         public void OpenViewActivityPage()
         {
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-            this.scenarioContext.Set(page.PreviewDetails.WaitForPanelToBeVisible().ClickViewActivity(), "ViewActivityPage");
+            this.scenarioContext.Set(page.PreviewDetails.ClickViewActivity(), "ViewActivityPage");
         }
 
         [When(@"User selects (.*) activity type on activity panel")]
@@ -98,7 +98,9 @@
         [When(@"User clicks save button on activity panel")]
         public void ClickSaveButtonOnActivityPanel()
         {
-            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").Activity.SaveActivity().WaitForActivityPanelToHide();
+            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+            page.Activity.SaveActivity();
+            page.WaitForSidePanelToHide();
         }
 
         [When(@"User fills in ownership details on view property page")]
@@ -141,13 +143,14 @@
                     page.Ownership.SetSellDate(details.SellDate);
                 }
             }
-            page.Ownership.SaveOwnership().WaitForOwnershipPanelToHide();
+            page.Ownership.SaveOwnership();
+            page.WaitForSidePanelToHide();
         }
 
         [When(@"User clicks add area breakdown button on view property page")]
         public void AddArea()
         {
-            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").CreateAreaBreakdown();
+            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").CreateAreaBreakdown().WaitForSidePanelToShow();
         }
 
         [When(@"User fills in area details on create area panel")]
@@ -159,28 +162,23 @@
             var place = 1;
             foreach (PropertyAreaBreakdown areaBreakdown in areaBreakdowns)
             {
-                page.CreateArea.SetAreaDetails(areaBreakdown.Name, areaBreakdown.Size, place++);
+                page.Area.SetAreaDetails(areaBreakdown.Name, areaBreakdown.Size, place++);
             }
         }
 
         [When(@"User clicks save button on create area panel")]
         public void SaveAreas()
         {
-            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").CreateArea.SaveArea();
+            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+            page.Area.SaveArea();
+            page.WaitForSidePanelToHide();
         }
 
-        [When(@"User drags (.*) area and moves to (.*) area place on view property page")]
+        /*[When(@"User drags (.*) area and moves to (.*) area place on view property page")]
         public void MoveAreas(int source, int target)
         {
             this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").MoveAreas(source, target);
-        }
-
-        [Then(@"Activity creation date is set to current date on view property page")]
-        public void CheckifActivityDateCorrect()
-        {
-            Assert.Equal(DateTime.UtcNow.ToString("dd-MM-yyyy"),
-                this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").GetActivityDate());
-        }
+        }*/
 
         [Then(@"Activity details are set on view property page")]
         public void CheckActivityDetails(Table table)
@@ -191,7 +189,8 @@
             Verify.That(this.driverContext,
                 () => Assert.Equal(details.Vendor, page.ActivityVendor),
                 () => Assert.Equal(details.Status, page.ActivityStatus),
-                () => Assert.Equal(details.Type, page.ActivityType));
+                () => Assert.Equal(details.Type, page.ActivityType),
+                () => Assert.Equal(DateTime.UtcNow.ToString("dd-MM-yyyy"), page.GetActivityDate()));
         }
 
         [Then(@"Property should be updated with address details")]
@@ -294,7 +293,10 @@
         {
             List<PropertyAreaBreakdown> expectedAreas = table.CreateSet<PropertyAreaBreakdown>().ToList();
             List<PropertyAreaBreakdown> actualAreas = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").GetAreas();
-            Assert.Equal(actualAreas, expectedAreas);
+            actualAreas.Should().Equal(expectedAreas, (c1, c2) => 
+            c1.Name.Equals(c2.Name) && 
+            c1.Order.Equals(c2.Order) &&
+            c1.Size.Equals(c2.Size));
         }
     }
 }

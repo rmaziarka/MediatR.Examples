@@ -8,6 +8,7 @@
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.UITests.Pages;
+    using KnightFrank.Antares.UITests.Pages.Panels;
 
     using Objectivity.Test.Automation.Common;
 
@@ -45,7 +46,7 @@
         [When(@"User clicks notes button on view requirement page")]
         public void OpenNotes()
         {
-            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").OpenNotes();
+            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").OpenNotes().WaitForSidePanelToShow();
         }
 
         [When(@"User adds note on view requirement page")]
@@ -59,7 +60,7 @@
         [When(@"User clicks add viewings button on view requirement page")]
         public void ClickAddViewings()
         {
-            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").AddViewings();
+            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").AddViewings().WaitForSidePanelToShow();
         }
 
         [When(@"User selects activity on view requirement page")]
@@ -99,15 +100,17 @@
         [When(@"User clicks save activity button on view requirement page")]
         public void SaveViewing()
         {
-            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").Viewing
-                .SaveViewing()
-                .WaitForViewingDetailsToHide();
+            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
+            page.Viewing.SaveViewing();
+            page.WaitForSidePanelToHide();
         }
 
         [When(@"User clicks (.*) viewings details link on view requirement page")]
         public void OpenViewingsDetails(int position)
         {
-            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").OpenViewingDetails(position);
+            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage")
+                .OpenViewingDetails(position)
+                .WaitForSidePanelToShow();
         }
 
         [When(@"User clicks edit activity button on view requirement page")]
@@ -120,6 +123,42 @@
         public void ClickViewActivity()
         {
             this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").ViewingDetails.ClickViewLink();
+        }
+
+        [When(@"User clicks make an offer button for (.*) activity on view requirement page")]
+        public void MakeAnOffer(int position)
+        {
+            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage")
+                .OpenViewingActions(position)
+                .CreateOffer(1)
+                .WaitForSidePanelToShow();
+        }
+
+        [When(@"User fills in offer details on view requirement page")]
+        public void FIllOfferDetails(Table table)
+        {
+            const string format = "dd-MM-yyyy";
+            var details = table.CreateInstance<OfferData>();
+            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
+
+            details.OfferDate = DateTime.UtcNow.ToString(format);
+            details.ExchangeDate = DateTime.UtcNow.AddDays(1).ToString(format);
+            details.CompletionDate = DateTime.UtcNow.AddDays(2).ToString(format);
+
+            page.Offer.SelectStatus(details.Status)
+                .SetOffer(details.Offer)
+                .SetOfferDate(details.OfferDate)
+                .SetSpecialConditions(details.SpecialConditions)
+                .SetProposedExchangeDate(details.ExchangeDate)
+                .SetProposedCompletionDate(details.CompletionDate);
+        }
+
+        [When(@"User clicks save offer button on view requirement page")]
+        public void SaveOffer()
+        {
+            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
+            page.Offer.SaveOffer();
+            page.WaitForSidePanelToHide();
         }
 
         [Then(@"Requirement location details on view requirement page are same as the following")]
@@ -218,5 +257,11 @@
             this.scenarioContext.Set(page, "ViewActivityPage");
         }
 
+        [Then(@"Activity details on view requirement page are same as the following")]
+        public void CheckOfferActivity(Table table)
+        {
+            var details = table.CreateInstance<OfferData>();
+            Assert.Equal(details.Activity, this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").Offer.Details);
+        }
     }
 }

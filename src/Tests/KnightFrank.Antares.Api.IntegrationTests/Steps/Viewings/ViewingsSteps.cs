@@ -198,6 +198,18 @@
                 .Excluding(v => v.Requirement));
         }
 
+        [Then(@"Viewing details in requirement should be the same as added")]
+        public void CompareRequirementViewings()
+        {
+            Viewing viewing = JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent()).Viewings.Single();
+            Viewing expectedVieiwng = this.fixture.DataContext.Viewing.Single(v => v.Id.Equals(viewing.Id));
+
+            viewing.ShouldBeEquivalentTo(expectedVieiwng, opt => opt
+                .Excluding(v => v.Activity)
+                .Excluding(v => v.Requirement)
+                .Excluding(v => v.Negotiator));
+        }
+
         private void CreateViewing(CreateViewingCommand command)
         {
             string requestUrl = $"{ApiUrl}";

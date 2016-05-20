@@ -4,12 +4,9 @@ module Antares.Common.Directive {
     export class NumberGreaterThan implements ng.IDirective {
         restrict = 'A';
         require = 'ngModel';
-        scope = {
-            ngModel: '=ngModel'
-        };
 
         link(scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ngModel: ng.INgModelController) {
-            var greaterThanValue: number = parseInt(attrs['numberGreaterThan']);
+            var greaterThanValue: number = parseInt(<string>attrs['numberGreaterThan']);
 
             ngModel.$validators['numberGreaterThan'] = (modelValue: number) => {
                 if (modelValue === null || modelValue === undefined) {

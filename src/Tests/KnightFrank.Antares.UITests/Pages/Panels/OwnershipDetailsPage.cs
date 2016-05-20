@@ -11,7 +11,6 @@
     {
         private readonly ElementLocator ownershipState = new ElementLocator(Locator.CssSelector, "input[ng-model *= 'isCurrentOwner']");
         private readonly ElementLocator ownershipType = new ElementLocator(Locator.CssSelector, "#addOwnershipForm #type > select");
-        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator purchaseDate = new ElementLocator(Locator.Name, "purchaseDate");
         private readonly ElementLocator purchasePrice = new ElementLocator(Locator.Id, "buying-price");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'saveOwnership']");
@@ -20,12 +19,6 @@
 
         public OwnershipDetailsPage(DriverContext driverContext) : base(driverContext)
         {
-        }
-
-        public OwnershipDetailsPage WaitForOwnershipPanelToHide()
-        {
-            this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.MediumTimeout);
-            return this;
         }
 
         public OwnershipDetailsPage SelectOwnershipType(string type)

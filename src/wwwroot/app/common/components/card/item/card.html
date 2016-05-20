@@ -10,14 +10,13 @@
     </div>
 </div>
 
-<div class="card" ng-class="{'card-menu-open': cvm.contextMenuOpened, 'card-no-menu': !cvm.showContextMenu, 'card-details': cvm.showItemDetails}" ng-if="cvm.displayNewControl">
+<div class="card" ng-class="{'card-no-menu': !cvm.showContextMenu, 'card-details': cvm.showItemDetails}" ng-if="cvm.displayNewControl">
     <div class="card-body" ng-click="cvm.showItemDetails(cvm.item)">
         <div ng-include src="cvm.cardTemplateUrl"></div>
     </div>
-
-    <div class="card-action" ng-if="cvm.showContextMenu" tabindex="-1">
-        <a href="" ng-click="cvm.contextMenuOpened = !cvm.contextMenuOpened" ng-blur="cvm.closeContextMenu()" class="card-menu-button"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-        <ul class="card-menu" ng-transclude="contextMenu">
+    <div class="card-action" tabindex="-1" uib-dropdown uib-dropdown-toggle>
+        <a href="" class="card-menu-button"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+        <ul class="card-menu dropdown-menu" ng-transclude="contextMenu" uib-dropdown-menu role="menu">
         </ul>
     </div>
 </div>

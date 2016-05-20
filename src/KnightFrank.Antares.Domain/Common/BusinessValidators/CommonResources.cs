@@ -63,6 +63,11 @@
         // ReSharper disable once InconsistentNaming
         Ownership_Dates_Overlap,
         /// <summary>
+        /// Key value : Specified order is out of available range.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        PropertyAreaBreakdown_OrderOutOfRange,
+        /// <summary>
         /// Key value : The '{0}' property value format is inappropriate.
         /// </summary>
         // ReSharper disable once InconsistentNaming

@@ -12,6 +12,7 @@
 
     public class ViewActivityPage : ProjectPageBase
     {
+        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator viewActivityForm = new ElementLocator(Locator.CssSelector, "activity-view > div");
         private readonly ElementLocator addressElement = new ElementLocator(Locator.XPath, "//card[@id = 'card-property']//span[text()='{0}']");
         private readonly ElementLocator detailsLink = new ElementLocator(Locator.CssSelector, "#card-property .detailsLink");
@@ -104,6 +105,24 @@
         public ViewActivityPage OpenViewingDetails(int position)
         {
             this.Driver.GetElement(this.viewingDetailsLink.Format(position)).Click();
+            return this;
+        }
+
+        public ViewActivityPage WaitForSidePanelToShow()
+        {
+            this.Driver.WaitForElementToBeDisplayed(this.panel, BaseConfiguration.MediumTimeout);
+            return this;
+        }
+
+        public ViewActivityPage WaitForSidePanelToHide()
+        {
+            this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.MediumTimeout);
+            return this;
+        }
+
+        public ViewActivityPage WaitForSidePanelToHide(double timeout)
+        {
+            this.Driver.WaitUntilElementIsNoLongerFound(this.panel, timeout);
             return this;
         }
 

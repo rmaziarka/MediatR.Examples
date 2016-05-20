@@ -32,12 +32,14 @@
         <div class="row">
             <div class="col-md-7">
                 <div class="input-group">
-                    <input id="offer-price" class="form-control" type="number" ng-model="vm.offer.price" name="price" required min="0">
+                    <input id="offer-price" class="form-control" type="number" ng-model="vm.offer.price" name="price" required number-greater-than="0" number-precision="0">
                     <div class="input-group-addon">GBP</div>
                 </div>
             </div>
         </div>
         <div ng-messages="vm.addOfferForm.price.$error" ng-show="vm.addOfferForm.$submitted || vm.addOfferForm.price.$dirty">
+            <p name="numberGreaterThanValidationError" ng-message="numberGreaterThan" class="help-block with-errors" translate="FORM.NUMBER_HAS_TO_BE_GREATER_THAN" translate-value-value="0"></p>
+            <p name="numberPrecisionValidationError" ng-message="numberPrecision" class="help-block with-errors" translate="FORM.NUMBER_HAS_TO_BE_INTEGER"></p>
             <div ng-messages-include="app/common/views/errorMessages.html"></div>
         </div>
     </div>
@@ -107,7 +109,7 @@
             </div>
         </div>
         <div ng-messages="vm.addOfferForm.completionDate.$error" ng-show="vm.addOfferForm.$submitted || vm.addOfferForm.completionDate.$dirty">
-            <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_IN_PAST"></p>
+            <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
             <div ng-messages-include="app/common/views/errorMessages.html"></div>
         </div>
     </div>

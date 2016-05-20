@@ -10,7 +10,6 @@
 
     public class CreateViewingPage : ProjectPageBase
     {
-        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator attendee = new ElementLocator(Locator.XPath, "//*[contains(@class, 'slide-in')]//div[contains(@ng-repeat, 'attendee')]//label[contains(text(), '{0}')]");
         private readonly ElementLocator date = new ElementLocator(Locator.CssSelector, ".slide-in #viewing-date");
         private readonly ElementLocator endTime = new ElementLocator(Locator.CssSelector, ".slide-in #end-time input");
@@ -66,12 +65,6 @@
         {
             this.Driver.GetElement(this.saveViewing).Click();
             this.Driver.WaitForAngularToFinish();
-            return this;
-        }
-
-        public CreateViewingPage WaitForViewingDetailsToHide()
-        {
-            this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.MediumTimeout);
             return this;
         }
     }

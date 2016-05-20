@@ -56,7 +56,7 @@
             this.scenarioContext.Set(list, "SecondaryNegotiatorId");
         }
 
-        [When(@"User updates activity status with defined negotiators")]
+        [When(@"User updates activity with defined negotiators")]
         public void UpdateActivityNegotiators()
         {
             string requestUrl = $"{ApiUrl}";

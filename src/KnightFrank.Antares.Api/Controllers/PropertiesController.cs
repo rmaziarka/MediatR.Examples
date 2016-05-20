@@ -1,8 +1,8 @@
 ﻿namespace KnightFrank.Antares.API.Controllers
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
@@ -142,5 +142,21 @@
 
             return this.mediator.Send(new AreaBreakdownQuery { PropertyId = command.PropertyId, AreaIds = areaIds });
         }
+
+        /// <summary>
+        /// Updates the area breakdown order.
+        /// </summary>
+        /// <param name="id">Property id.</param>
+        /// <param name="command">Command data.</param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("{id}/areabreakdown/order")]
+        public IList<PropertyAreaBreakdown> UpdateAreaBreakdownOrder(Guid id, UpdateAreaBreakdownOrderCommand command)
+        {
+            command.PropertyId = id;
+            this.mediator.Send(command);
+
+            return this.mediator.Send(new AreaBreakdownQuery { PropertyId = command.PropertyId});
+        } 
     }
 }

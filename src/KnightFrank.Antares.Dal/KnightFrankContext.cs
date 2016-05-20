@@ -82,6 +82,7 @@
         public DbSet<CharacteristicLocalised> CharacteristicLocaliseds { get; set; }
         public DbSet<Viewing> Viewing { get; set; }
         public DbSet<Offer> Offer { get; set; }
+        public DbSet<PropertyAreaBreakdown> PropertyAreaBreakdown { get; set; }
 
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {

@@ -122,6 +122,7 @@
     <Compile Include="Pages\CreateRequirementPage.cs" />
     <Compile Include="Pages\EditActivityPage.cs" />
     <Compile Include="Pages\Panels\CreateAreaPage.cs" />
+    <Compile Include="Pages\Panels\CreateOfferPage.cs" />
     <Compile Include="Pages\Panels\NotesPage.cs" />
     <Compile Include="Pages\Panels\OwnershipDetailsPage.cs" />
     <Compile Include="Pages\Panels\PropertyPreviewPage.cs" />
@@ -172,6 +173,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NavigationDrawer.feature</DependentUpon>
     </Compile>
+    <Compile Include="Tests\Offer\Offer.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Offer.feature</DependentUpon>
+    </Compile>
     <Compile Include="Tests\Property\Property.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -213,6 +219,10 @@
     <None Include="Tests\NavigationDrawer\NavigationDrawer.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>NavigationDrawer.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Offer\Offer.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Offer.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Property\Property.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
