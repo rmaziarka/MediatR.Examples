@@ -3,9 +3,10 @@
 module Antares {
     import OfferAddEditController = Component.OfferAddEditController;
     import Business = Common.Models.Business;
+    import Dto = Common.Models.Dto;
     import runDescribe = TestHelpers.runDescribe;
     type TestCaseForRequiredValidator = [string, string, boolean]; // [field_description, field_selector, is_not_required]
-    type TestCaseForValidator = [string, string, string]; // [field_description, field_value, field_selector]
+    type TestCaseForValidator = [string, any, string]; // [field_description, field_value, field_selector]
 
     declare var moment: any;
 
@@ -22,7 +23,8 @@ module Antares {
             exchangeDate: '[name=exchangeDate]',
             completionDate: '[name=completionDate]',
             specialConditions: '[name=specialConditions]',
-            status: '[name="selectedStatus"]'
+            status: '[name="selectedStatus"]',
+            activity: '#offer-add-activity-details'
         };
 
         var format = (date: any) => date.format('DD-MM-YYYY');
@@ -36,15 +38,24 @@ module Antares {
 
         var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate();
 
+        var offerStatuses: any = [
+            { id: '1', code: 'New' },
+            { id: '2', code: 'Closed' }
+        ];
+
         describe('is in add mode', () => {
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
-                $httpBackend: ng.IHttpBackendService) => {
+                $httpBackend: ng.IHttpBackendService,
+                enumService: Mock.EnumServiceMock) => {
 
                 $http = $httpBackend;
                 scope = $rootScope.$new();
                 scope["requirement"] = requirementMock;
+
+                // enums
+                enumService.setEnum(Dto.EnumTypeCode.OfferStatus.toString(), offerStatuses);
 
                 element = $compile('<offer-add-edit requirement="requirement"></offer-add-edit>')(scope);
                 scope.$apply();
@@ -52,6 +63,19 @@ module Antares {
                 controller = element.controller('offerAddEdit');
                 assertValidator = new TestHelpers.AssertValidators(element, scope);
             }));
+
+            it('then New status is selected by default', () =>{
+                var status = element.find(pageObjectSelectors.status);
+                var selectedStatus = status.val();
+                var newStatus = offerStatuses[0];
+
+                expect(selectedStatus).toEqual(newStatus.id);
+            });
+
+            it('then activity is displayed', () =>{
+                var activityPanel = element.find(pageObjectSelectors.activity);
+                expect(activityPanel.length).toBe(1);
+            });
 
             // required validation
             runDescribe('and value for ')
@@ -101,6 +125,19 @@ module Antares {
 
                     // assertValidator.assertNumberFormatValidator(data[1], false, data[2]);
                     assertValidator.assertRequiredValidator(data[1], false, data[2]);
+                });
+
+            // greater than zero validation
+            runDescribe('and value for')
+                .data<TestCaseForValidator>([
+                    ['offer', -1, pageObjectSelectors.offer],
+                    ['offer', 0, pageObjectSelectors.offer]
+                ])
+                .dataIt((data: TestCaseForValidator) =>
+                    `"${data[0]}" is "${data[1]}" then input should be invalid and greater than zero validation message should be displayed`
+                )
+                .run((data: TestCaseForValidator) => {
+                    assertValidator.assertNumberGreaterThenValidator(data[1], false, data[2]);
                 });
 
             // valid field values                

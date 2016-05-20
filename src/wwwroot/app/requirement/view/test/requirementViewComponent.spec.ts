@@ -3,6 +3,8 @@
 module Antares {
     import RequirementViewController = Requirement.View.RequirementViewController;
     import Business = Common.Models.Business;
+    import OfferAddEditController = Antares.Component.OfferAddEditController;
+    import SidePanelController = Antares.Common.Component.SidePanelController;
     declare var moment: any;
 
     describe('Given view requirement page is loaded', () =>{
@@ -29,10 +31,18 @@ module Antares {
                 viewingGroups: '#viewings-list .viewing-group',
                 viewingGroupTitles:'#viewings-list card-list-group-header h5 time',
                 viewings: '#viewings-list .viewing-item'
+            },
+            offers:
+            {
+                saveButton: '#offer-save-btn',
+                cancelButton: '#offer-cancel-btn',
+                sidePanel: '#add-offer-panel',
+                makeOfferAction: 'context-menu-item[type=makeoffer]'
             }
         }
 
-        describe('and proper requirement id is provided', () => {
+        describe('and proper requirement id is provided', () =>{
+            var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
             var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate({
                 createDate: '2016-03-17T12:35:29.82',
                 maxPrice: 444,
@@ -57,22 +67,26 @@ module Antares {
                 {
                     id: '1',
                     startDate: "2016-01-01T10:00:00Z",
-                    endDate: "2016-01-01T11:00:00Z"
+                    endDate: "2016-01-01T11:00:00Z",
+                    activity: activityMock
                 },
                 {
                     id: '2',
                     startDate: "2016-01-01T13:00:00Z",
-                    endDate: "2016-01-01T14:00:00Z"
+                    endDate: "2016-01-01T14:00:00Z",
+                    activity: activityMock
                 },
                 {
                     id: '3',
                     startDate: "2016-01-02T10:00:00Z",
-                    endDate: "2016-01-02T11:00:00Z"
+                    endDate: "2016-01-02T11:00:00Z",
+                    activity: activityMock
                 },
                 {
                     id: '4',
                     startDate: "2016-01-03T00:00:00Z",
-                    endDate: "2016-01-03T01:00:00Z"
+                    endDate: "2016-01-03T01:00:00Z",
+                    activity: activityMock
                 }
                 ]
             });
@@ -181,6 +195,70 @@ module Antares {
 
                 requirementMock.viewingsByDay.sort((a, b) => new Date(b.day).getTime() - new Date(a.day).getTime()).forEach((g: Business.ViewingGroup, i: number) => {
                     expect(viewingGroupTitles[i].textContent).toBe(moment(g.day, 'YYYY-MM-DD').format('DD-MM-YYYY'));
+                });
+            });
+
+            describe('when make new offer action is called', () =>{
+                var
+                    newOfferController: OfferAddEditController,
+                    newOfferPanelController: SidePanelController,
+                    chosenViewing: Business.Viewing;
+
+                beforeEach(() =>{
+                    newOfferController = controller.components.offerAdd();
+                    newOfferPanelController = controller.components.panels.offerAdd();
+
+                    spyOn(newOfferController, 'reset');
+
+                    chosenViewing = requirementMock.viewings[0];
+                    controller.showAddOfferPanel(chosenViewing);
+                });
+
+                it('new offer side panel is shown', () => {
+                    var sidePanel = element.find(pageObjectSelectors.offers.sidePanel);
+                    expect(sidePanel.length).toBe(1, 'Side panel not found');
+                    expect(newOfferPanelController.visible).toBeTruthy('Side panel not visible');
+                });
+
+                it('new offer form is reset', () => {
+                    expect(newOfferController.reset).toHaveBeenCalledTimes(1);
+                });
+
+                it('activity on offer is set', () =>{
+                    expect(newOfferController.activity).toBeDefined();
+                    expect(newOfferController.activity.id).toEqual(chosenViewing.activity.id);
+                });
+
+                it('when cancel action is called side panel is hidden', () =>{
+                    controller.cancelSaveOffer();
+
+                    expect(newOfferPanelController.visible).toBeFalsy('Side panel is not hidden');
+                });
+
+                xdescribe('when save action is called', () => {
+                    var
+                        offerMock: Business.Offer;
+
+                    beforeEach(inject((
+                        $q: ng.IQService) => {
+
+                        offerMock = TestHelpers.OfferGenerator.generate();
+                        var deferred = $q.defer();
+                        spyOn(newOfferController, 'saveOffer').and.returnValue(deferred.promise);
+
+                        controller.saveOffer();
+                        deferred.resolve(offerMock);
+
+                        scope.$apply();
+                    }));
+
+                    it('side panel is hidden', () => {
+                        expect(newOfferPanelController.visible).toBeFalsy('Side panel is not hidden');
+                    });
+
+                    it('offer has been added to offers list', () => {
+                        expect(controller.requirement.offers).toContain(offerMock);
+                    });
                 });
             });
         });
