@@ -174,11 +174,11 @@
             page.WaitForSidePanelToHide();
         }
 
-        [When(@"User drags (.*) area and moves to (.*) area place on view property page")]
+        /*[When(@"User drags (.*) area and moves to (.*) area place on view property page")]
         public void MoveAreas(int source, int target)
         {
             this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").MoveAreas(source, target);
-        }
+        }*/
 
         [Then(@"Activity details are set on view property page")]
         public void CheckActivityDetails(Table table)
@@ -293,7 +293,10 @@
         {
             List<PropertyAreaBreakdown> expectedAreas = table.CreateSet<PropertyAreaBreakdown>().ToList();
             List<PropertyAreaBreakdown> actualAreas = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").GetAreas();
-            Assert.Equal(actualAreas, expectedAreas);
+            actualAreas.Should().Equal(expectedAreas, (c1, c2) => 
+            c1.Name.Equals(c2.Name) && 
+            c1.Order.Equals(c2.Order) &&
+            c1.Size.Equals(c2.Size));
         }
     }
 }
