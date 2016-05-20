@@ -70,13 +70,13 @@
             page.ContactsList.ConfigureOwnership();
         }
 
-        [When(@"User clicks activity's details link on view property page")]
+        [When(@"User clicks activity details link on view property page")]
         public void OpenActivitiesPreview()
         {
             this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").OpenActivityDetails().WaitForSidePanelToShow();
         }
 
-        [When(@"User clicks view activity link on activity preview page")]
+        [When(@"User clicks view activity link from activity on view property page")]
         public void OpenViewActivityPage()
         {
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");

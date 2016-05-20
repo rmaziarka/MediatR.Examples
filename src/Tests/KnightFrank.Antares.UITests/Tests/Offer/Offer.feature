@@ -40,3 +40,5 @@ Scenario: Create offer
 	Then Offer details on view requirement page are same as the following
 		| Activity                                    | Status | Offer      | SpecialConditions | Negotiator |
 		| John Soane’s house, 13 Lincoln’s Inn Fields | New    | 100000 GBP | Text              | John Smith |
+	When User clicks view activity from offer on view requirement page
+	Then View activity page is displayed

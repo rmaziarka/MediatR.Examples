@@ -128,10 +128,16 @@
             this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").ViewingDetails.EditViewing();
         }
 
-        [When(@"User clicks view activity on view requirement page")]
-        public void ClickViewActivity()
+        [When(@"User clicks view activity from viewing on view requirement page")]
+        public void ClickViewActivityViewing()
         {
             this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").ViewingDetails.ClickViewLink();
+        }
+
+        [When(@"User clicks view activity from offer on view requirement page")]
+        public void ClickViewActivityOffer()
+        {
+            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").OfferPreview.ClickViewLink();
         }
 
         [When(@"User clicks make an offer button for (.*) activity on view requirement page")]

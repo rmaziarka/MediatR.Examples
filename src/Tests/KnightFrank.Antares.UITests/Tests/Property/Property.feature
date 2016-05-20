@@ -109,8 +109,8 @@ Scenario: Create residential property
 	Then Activity details are set on view property page
 		| Vendor    | Status        | Type                |
 		| Eva Queen | Pre-appraisal | Open Market Letting |
-	When User clicks activity's details link on view property page
-		And User clicks view activity link on activity preview page
+	When User clicks activity details link on view property page
+		And User clicks view activity link from activity on view property page
 	Then Address details on view activity page are following
 		| PropertyNumber | PropertyName      | Line2    | Postcode | City   | County      |
 		| 20             | Westminster Abbey | Deans Yd | SW1P 3PA | London | Westminster |
@@ -122,7 +122,7 @@ Scenario: Create residential property
 			| Market appraisal | 3000                 | 4000             | 5000                 |
 	Then View activity page is displayed
 	When User clicks property details link on view activity page
-		And User clicks view property link on property preview page
+		And User clicks view property link from property on view activity page
 	Then View property page is displayed
 
 @Property
@@ -134,12 +134,12 @@ Scenario: Create commercial property
 	When User selects United Kingdom country on create property page
 		And User selects Commercial property and Hotel type on create property page
 		And User fills in address details on create property page
-			| PropertyNumber | PropertyName      | Line2    | Postcode | City   | County      |
-			| 20             | Westminster Abbey | Deans Yd | SW1P 3PA | London | Westminster |
+			| PropertyNumber | PropertyName        | Line2    | Postcode | City      | County    |
+			| 104            | Malmaison Newcastle | Quayside | NE1 3DX  | Newcastle | Newcastle |
 		And User clicks save property button on create property page
 	Then New property should be created with address details 
-		| PropertyNumber | PropertyName      | Line2    | Postcode | City   | County      |
-		| 20             | Westminster Abbey | Deans Yd | SW1P 3PA | London | Westminster |
+		| PropertyNumber | PropertyName        | Line2    | Postcode | City      | County    |
+		| 104            | Malmaison Newcastle | Quayside | NE1 3DX  | Newcastle | Newcastle |
 	When User clicks add area breakdown button on view property page
 		And User fills in area details on create area page
 			| Name               | Size |
