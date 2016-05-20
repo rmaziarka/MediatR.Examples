@@ -40,10 +40,17 @@ module Antares {
                 this.requirement = <Dto.IRequirement>{};
             }
 
-            setOffer = (offer: Business.Offer) => {
+            getOriginalOffer = (): Business.Offer =>{
+                return this.originalOffer;
+            }
+
+            setOffer = (offer: Business.Offer) =>{
                 this.originalOffer = offer;
                 this.offer = angular.copy(offer);
                 this.activity = offer.activity;
+                this.selectedStatus = this.statuses.find((status: any) =>{
+                    return status.id === this.offer.statusId;
+                });
             }
 
             reset = () =>{
@@ -95,12 +102,24 @@ module Antares {
                     return this.$q.reject();
                 }
 
+                var offerResource = this.dataAccessService.getOfferResource();
+                this.offer.statusId = this.selectedStatus.id;
+
                 if (this.mode === "add") {
                     this.offer.statusId = this.selectedStatus.id;
 
-                    var offerResource = this.dataAccessService.getOfferResource();
+                    this.offer.offerDate = Core.DateTimeUtils.createDateAsUtc(this.offer.offerDate);
+                    this.offer.exchangeDate = Core.DateTimeUtils.createDateAsUtc(this.offer.exchangeDate);
+                    this.offer.completionDate = Core.DateTimeUtils.createDateAsUtc(this.offer.completionDate);
+                    
                     return offerResource
                         .save(this.offer)
+                        .$promise;
+                }
+                else if (this.mode === "edit") {
+                    var updateOffer: Dto.IOffer = angular.copy(this.offer);
+                    return offerResource
+                        .update(updateOffer)
                         .$promise;
                 }
             }

@@ -123,9 +123,11 @@ module Antares.Services {
                 });
         }
 
-        getOfferResource(): Resources.IOfferResourceClass {
+        getOfferResource(): Resources.IOfferResourceClass{
             return <Resources.IOfferResourceClass>
-                this.$resource(this.appConfig.rootUrl + '/api/offers/:id');
+                this.$resource(this.appConfig.rootUrl + '/api/offers/:id', null, {
+                    update : this.updateAction
+                });
         }
 
         getCountryResource(): Resources.ICountryResourceClass {
