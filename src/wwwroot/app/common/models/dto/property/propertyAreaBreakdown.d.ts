@@ -4,5 +4,6 @@ declare module Antares.Common.Models.Dto {
         name: string;
         size: number;
         order: number;
+        propertyId: string;
     }
 }

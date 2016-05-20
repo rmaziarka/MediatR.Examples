@@ -3,7 +3,9 @@
 
 module Antares.Property.View {
     import Business = Common.Models.Business;
+    import Dto = Common.Models.Dto;
     import CartListOrder = Common.Component.ListOrder;
+    import Resources = Common.Models.Resources;
 
     export class PropertyViewController extends Core.WithPanelsBaseController {
         ownershipAddPanelVisible: boolean = false;
@@ -13,7 +15,7 @@ module Antares.Property.View {
 
         ownershipsCartListOrder: CartListOrder = new CartListOrder('purchaseDate', true, true);
         activitiesCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
-        userData: Common.Models.Dto.IUserData;
+        userData: Dto.IUserData;
         property: Business.PropertyView;
         savePropertyActivityBusy: boolean = false;
 
@@ -29,7 +31,7 @@ module Antares.Property.View {
         }
 
         fixOwnershipDates = () => {
-            this.property.ownerships.forEach((ownership: Common.Models.Dto.IOwnership) => {
+            this.property.ownerships.forEach((ownership: Dto.IOwnership) => {
                 ownership.purchaseDate = Core.DateTimeUtils.convertDateToUtc(ownership.purchaseDate);
                 ownership.sellDate = Core.DateTimeUtils.convertDateToUtc(ownership.sellDate);
             });
@@ -43,7 +45,7 @@ module Antares.Property.View {
             }
         }
 
-        showOwnershipView = (ownership: Common.Models.Dto.IOwnership) => {
+        showOwnershipView = (ownership: Dto.IOwnership) => {
             this.components.ownershipView().setOwnership(ownership);
             this.showPanel(this.components.panels.ownershipView);
         }
@@ -132,11 +134,19 @@ module Antares.Property.View {
         }
 
         areaBreakdownDndOptions: Common.Models.IDndOptions = {
-            dragStart: (event: Common.Models.IDndEvent) => {
-                
-            },
             dragEnd: (event: Common.Models.IDndEvent) => {
+                var movedItem: Business.PropertyAreaBreakdown = event.source.itemScope.modelValue;
+                movedItem.order = event.dest.index;
 
+                var params: Resources.IPropertyAreaBreakdownResourceClassParameters = { propertyId: movedItem.propertyId };
+                var data = new Business.UpdatePropertyAreaBreakdownOrderResource(movedItem);
+
+                this.dataAccessService.getPropertyAreaBreakdownResource()
+                    .updatePropertyAreaBreakdownOrder(params, data)
+                    .$promise.then((response: Dto.IPropertyAreaBreakdown[]) => {
+                        var areas = response.map((r: Dto.IPropertyAreaBreakdown) => new Business.PropertyAreaBreakdown(<Dto.IPropertyAreaBreakdown>r));
+                        angular.extend(event.source.sortableScope.modelValue, areas);
+                    });
             }
         };
 
