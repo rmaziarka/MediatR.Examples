@@ -1,21 +1,21 @@
 <h3 class="page-header" translate="NEGOTIATORS.{{nevm.labelTranslationKey}}.HEADER"></h3>
 
 <h4 translate="NEGOTIATORS.{{nevm.labelTranslationKey}}.LEAD"></h4>
-<search ng-show="nevm.isLeadNegotiatorInEditMode"
+<search ng-show="nevm.isLeadNegotiatorInEditMode" id="lead-search"
         options="nevm.negotiatorsSearchOptions"
         focus-on="nevm.isLeadNegotiatorInEditMode"
         blur-on="!nevm.isLeadNegotiatorInEditMode"
         on-select-item="nevm.changeLeadNegotiator" on-cancel="nevm.cancelChangeLeadNegotiator" load-items="nevm.getUsers"
     item-template-url="app/common/components/negotiators/edit/userSearchTemplate.html" search-placeholder="NEGOTIATORS.{{nevm.labelTranslationKey}}.FIND"></search>
 <div ng-hide="nevm.isLeadNegotiatorInEditMode" class="form-group">
-    <button class="btn btn-default" type="button" ng-click="nevm.editLeadNegotiator()"><i class="fa fa-pencil"></i></button>
+    <button class="btn btn-default" id="lead-edit-btn" type="button" ng-click="nevm.editLeadNegotiator()"><i class="fa fa-pencil"></i></button>
 </div>
 <card id="card-lead-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'" item="nevm.leadNegotiator">
 </card>
 <card-list id="card-list-negotiators" show-item-add="nevm.isSecondaryNegotiatorsInEditMode ? null : nevm.editSecondaryNegotiators">
     <card-list-header>
         <h4 class="page-header" translate="NEGOTIATORS.{{nevm.labelTranslationKey}}.SECONDARY"></h4>
-        <search ng-show="nevm.isSecondaryNegotiatorsInEditMode"
+        <search ng-show="nevm.isSecondaryNegotiatorsInEditMode" id="secondary-search"
                 options="nevm.negotiatorsSearchOptions"
                 focus-on="nevm.isSecondaryNegotiatorsInEditMode"
                 blur-on="!nevm.isSecondaryNegotiatorsInEditMode"
@@ -29,7 +29,10 @@
         <card id="card-secondary-negotiator" show-context-menu="true" display-new-control="true" card-template-url="'app/activity/templates/negotiatorCard.html'"
             item="negotiator">
             <card-context-menu>
-                <context-menu-item type="delete" item="negotiator" action="nevm.deleteSecondaryNegotiator"></context-menu-item>
+                <context-menu-item type="delete"
+                                   item="negotiator"
+                                   action="nevm.deleteSecondaryNegotiator">
+                </context-menu-item>
             </card-context-menu>
         </card>
     </card-list-item>
