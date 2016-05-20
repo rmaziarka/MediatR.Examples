@@ -33,6 +33,11 @@
                     .Include(p => p.PropertyAreaBreakdowns)
                     .FirstOrDefault(p => p.Id == message.Id);
 
+            if (result != null)
+            {
+                result.PropertyAreaBreakdowns = result.PropertyAreaBreakdowns.OrderBy(x => x.Order).ToList();
+            }
+
             return result;
         }
     }
