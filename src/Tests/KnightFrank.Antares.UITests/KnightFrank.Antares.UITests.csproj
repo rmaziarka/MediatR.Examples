@@ -141,6 +141,7 @@
     <Compile Include="Steps\CreateContactSteps.cs" />
     <Compile Include="Steps\CreateRequirementSteps.cs" />
     <Compile Include="Steps\Database\ContactSteps.cs" />
+    <Compile Include="Steps\Database\OfferSteps.cs" />
     <Compile Include="Steps\Database\PropertySteps.cs" />
     <Compile Include="Steps\Database\RequirementSteps.cs" />
     <Compile Include="Steps\Database\ViewingSteps.cs" />
@@ -189,6 +190,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Requirement.feature</DependentUpon>
     </Compile>
+    <Compile Include="Tests\Viewing\Viewing.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Viewing.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -232,6 +238,10 @@
     <None Include="Tests\Requirement\Requirement.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Requirement.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Viewing\Viewing.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Viewing.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

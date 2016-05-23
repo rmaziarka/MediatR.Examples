@@ -149,6 +149,15 @@
                 .WaitForSidePanelToShow();
         }
 
+        [When(@"User clicks edit offer button for (.*) offer on view requirement page")]
+        public void EditOffer(int position)
+        {
+            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage")
+                .OpenOfferActions(position)
+                .EditOffer(1)
+                .WaitForSidePanelToShow();
+        }
+
         [When(@"User fills in offer details on view requirement page")]
         public void FIllOfferDetails(Table table)
         {
@@ -165,6 +174,8 @@
                 .SetSpecialConditions(details.SpecialConditions)
                 .SetProposedExchangeDate(details.ExchangeDate)
                 .SetProposedCompletionDate(details.CompletionDate);
+
+            this.scenarioContext.Set(details, "Offer");
         }
 
         [When(@"User clicks save offer button on view requirement page")]
@@ -281,9 +292,12 @@
         {
             var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
             var expectedDetails = table.CreateInstance<OfferData>();
-            expectedDetails.OfferDate = DateTime.UtcNow.ToString(Format);
-            expectedDetails.ExchangeDate = DateTime.UtcNow.AddDays(1).ToString(Format);
-            expectedDetails.CompletionDate = DateTime.UtcNow.AddDays(2).ToString(Format);
+
+            var offer = this.scenarioContext.Get<OfferData>("Offer");
+
+            expectedDetails.OfferDate = offer.OfferDate;
+            expectedDetails.ExchangeDate = offer.ExchangeDate;
+            expectedDetails.CompletionDate = offer.CompletionDate;
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Activity, page.OfferPreview.Details),

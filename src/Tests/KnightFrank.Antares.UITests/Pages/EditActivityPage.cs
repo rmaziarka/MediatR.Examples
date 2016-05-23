@@ -20,10 +20,9 @@
         private readonly ElementLocator addSecondaryNegotiator = new ElementLocator(Locator.CssSelector, "#card-list-negotiators button:not([ng-click *= 'cancel'])");
         private readonly ElementLocator searchSecondaryNegotiator = new ElementLocator(Locator.CssSelector, "#secondary-search input");
         private readonly ElementLocator cancelSecondaryNegotiator = new ElementLocator(Locator.CssSelector, "#card-list-negotiators [ng-click *= 'cancel']");
-        private readonly ElementLocator secondaryNegotiatorMenu = new ElementLocator(Locator.CssSelector, "#activity-edit-negotiators card-list-item:nth-of-type({0}) .card-menu-button");
-        private readonly ElementLocator deleteSecondaryNegotiator = new ElementLocator(Locator.CssSelector, "#activity-edit-negotiators card-list-item:nth-of-type({0}) .dropdown-menu a");
+        private readonly ElementLocator secondaryNegotiatorActions = new ElementLocator(Locator.CssSelector, "#activity-edit-negotiators card-list-item:nth-of-type({0}) .card-menu-button");
+        private readonly ElementLocator deleteSecondaryNegotiator = new ElementLocator(Locator.CssSelector, "#activity-edit-negotiators card-list-item:nth-of-type({0}) [action *= 'deleteSecondaryNegotiator']");
         private readonly ElementLocator negotiator = new ElementLocator(Locator.XPath, "//section[@id = 'activity-edit-negotiators']//span[contains(., '{0}')]");
-
 
         public EditActivityPage(DriverContext driverContext) : base(driverContext)
         {
@@ -81,7 +80,7 @@
 
         public EditActivityPage RemoveSecondaryNegotiator(int position)
         {
-            this.Driver.GetElement(this.secondaryNegotiatorMenu.Format(position)).Click();
+            this.Driver.GetElement(this.secondaryNegotiatorActions.Format(position)).Click();
             this.Driver.GetElement(this.deleteSecondaryNegotiator.Format(position)).Click();
             return this;
         }
