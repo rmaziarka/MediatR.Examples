@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.CompilerServices;
 
     using KnightFrank.Antares.Dal;
     using KnightFrank.Antares.Dal.Model.Address;
@@ -163,6 +164,34 @@
             this.dataContext.SaveChanges();
 
             this.scenarioContext.Set(activity, "Activity");
+        }
+
+        [Given(@"Property area breakdown is defined")]
+        public void CreateAreaBreakdown()
+        {
+            Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
+            var propertyAreaBreakdowns = new List<PropertyAreaBreakdown>
+            {
+                new PropertyAreaBreakdown
+                {
+                    PropertyId = propertyId,
+                    Name = "1st floor",
+                    Order = 1,
+                    Size = 10000
+                },
+                new PropertyAreaBreakdown
+                {
+                    PropertyId = propertyId,
+                    Name = "2nd floor",
+                    Order = 2,
+                    Size = 10000
+                }
+            };
+
+            this.dataContext.PropertyAreaBreakdown.AddRange(propertyAreaBreakdowns);
+            this.dataContext.SaveChanges();
+
+            this.scenarioContext.Set(propertyAreaBreakdowns, "PropertyAreaBreakdowns");
         }
     }
 }

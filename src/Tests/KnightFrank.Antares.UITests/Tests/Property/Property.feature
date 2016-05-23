@@ -1,7 +1,7 @@
 ﻿Feature: Property UI tests
 
 @Property
-Scenario: Update property
+Scenario: Update residential property
 	Given Contacts are created in database
 		| Title | FirstName | Surname |
 		| Sir   | Alex      | Johnson |
@@ -157,3 +157,15 @@ Scenario: Create commercial property
 		| Third floor area A | 70   |
 		| Third floor area B | 30   |
 		| Third floor area C | 50   |
+
+Scenario: Update commercial property area breakdown
+	Given Property with Commercial division and Leisure.Hotel type is defined
+		And Property attributes details are defined
+			| MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces | MinGuestRooms | MaxGuestRooms | MinFunctionRooms | MaxFunctionRooms |
+			| 20000   | 30000   | 25000       | 40000       | 30                  | 40                  | 60            | 180           | 15               | 25               |
+		And Property characteristics are defined
+		And Property in GB is created in database
+			| PropertyNumber | PropertyName         | Line2          | Postcode | City     | County |
+			| 1              | Boringdon Hall Hotel | Boringdon Hill | PL7 4DP  | Plymouth | Devon  |
+		And Property area breakdown is defined
+	When User navigates to view property page with id
