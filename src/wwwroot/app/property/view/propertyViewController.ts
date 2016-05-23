@@ -160,8 +160,8 @@ module Antares.Property.View {
             var movedItem: Business.PropertyAreaBreakdown = event.source.itemScope.modelValue;
             movedItem.order = event.dest.index;
 
-            var params: Resources.IPropertyAreaBreakdownResourceClassParameters = { propertyId: movedItem.propertyId };
-            var data = new Business.UpdatePropertyAreaBreakdownOrderResource(movedItem);
+            var params: Resources.IPropertyAreaBreakdownResourceClassParameters = { propertyId: this.property.id };
+            var data = new Business.UpdatePropertyAreaBreakdownOrderResource(movedItem, this.property.id);
 
             this.dataAccessService.getPropertyAreaBreakdownResource()
                 .updatePropertyAreaBreakdownOrder(params, data)

@@ -11,7 +11,6 @@ module Antares.TestHelpers {
                 id: StringGenerator.generate(),
                 name: StringGenerator.generate(),
                 order: 1,
-                propertyId: StringGenerator.generate(),
                 size: 1
             };
 

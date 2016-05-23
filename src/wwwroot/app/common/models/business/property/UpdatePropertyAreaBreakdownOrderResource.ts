@@ -6,12 +6,10 @@ module Antares.Common.Models.Business {
         areaId: string;
         order: number;
 
-        constructor(propertyAreaBreakdown?: Business.PropertyAreaBreakdown) {
-            if (propertyAreaBreakdown) {
-                this.propertyId = propertyAreaBreakdown.propertyId;
+        constructor(propertyAreaBreakdown: Business.PropertyAreaBreakdown, propertyId: string) {
+                this.propertyId = propertyId;
                 this.areaId = propertyAreaBreakdown.id;
                 this.order = propertyAreaBreakdown.order;
-            }
         }
     }
 }

@@ -71,43 +71,56 @@ module Antares {
             });
         });
 
-        describe('when area is dragged and dropeed', () => {
+        describe('when area is dragged and dropped', () => {
             var $http: ng.IHttpBackendService,
-
-                event: Common.Models.IDndEvent;
+                event: Common.Models.IDndEvent,
+                areaToDrag: Business.PropertyAreaBreakdown,
+                newIndexOfDraggedArea: number = 1;
 
             beforeEach(inject((
-                _$http_: ng.IHttpBackendService ) => {
+                $httpBackend: ng.IHttpBackendService) => {
 
-                $http = _$http_;
+                $http = $httpBackend;
+                areaToDrag = Antares.TestHelpers.PropertyAreaBreakdownGenerator.generate();
+
+                controller.property.propertyAreaBreakdowns.push(areaToDrag);
+
+                var eventSource: Common.Models.IDndEventSource = <Common.Models.IDndEventSource>{
+                    itemScope: {
+                        modelValue: areaToDrag
+                    }
+                }
+
+                var eventDest: Common.Models.IDndEventDest = <Common.Models.IDndEventDest>{
+                    index: newIndexOfDraggedArea
+                }
+
+                event = <Common.Models.IDndEvent>{
+                    source: eventSource,
+                    dest: eventDest
+                };
+
             }));
 
             it('then new position should be saved', () => {
-                //var eventSource: Common.Models.IDndEventSource = <Common.Models.IDndEventSource>{
-                //    itemScope: {
-                //        modelValue: Antares.TestHelpers.PropertyAreaBreakdownGenerator.generate()
-                //    }
-                //}
+                // arrange
+                var requestData: Dto.IUpdatePropertyAreaBreakdownOrderResource;
 
-                //event = <Common.Models.IDndEvent> {
-                //    source: eventSource,
-                //};
+                $http.expectPUT(/\/api\/properties\/[0-9a-zA-Z]*\/areabreakdown\/order/, (data: string) => {
+                    requestData = JSON.parse(data);
+                    return true;
+                }).respond(201, {});
 
-                //var requestData: Dto.IUpdatePropertyAreaBreakdownOrderResource;
-                //var attachment: Business.Attachment = TestHelpers.AttachmentGenerator.generate();
+                // act
+                controller.onAreaDraggedAndDropped(event);
+                scope.$apply();
 
-                //$http.expectPOST(/\/api\/properties\/[0-9a-zA-Z]*\/areabreakdown\/order/, (data: string) => {
-                //    requestData = JSON.parse(data);
-                //    return true;
-                //}).respond(201, {});
-
-
-                //controller.onAreaDraggedAndDropped(event);
-                //scope.$apply();
-
-                //expect(requestData).not.toBe(null);
+                // assert
+                expect(requestData).not.toBe(null);
+                expect(requestData.areaId).toBe(areaToDrag.id);
+                expect(requestData.order).toBe(newIndexOfDraggedArea);
+                expect(requestData.propertyId).toBe(controller.property.id);
             });
-
         });
     });
 }
