@@ -3,7 +3,6 @@ module Antares {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
     import ActivityEditController = Activity.ActivityEditController;
-    import Enums = Common.Models.Enums;
 
     describe('Given edit activity page is loaded', () => {
         var scope: ng.IScope,
@@ -37,10 +36,6 @@ module Antares {
                 items: '#activity-edit-vendors list#list-vendors list-item',
                 item: '#activity-edit-vendors list#list-vendors list-item#list-item-'
             },
-            negotiators: {
-                component: "#activity-edit-negotiators negotiators-edit",
-                items: "#activity-edit-negotiators #card-secondary-negotiator"
-            },
             actions: {
                 save: 'button#activity-edit-save'
             }
@@ -57,8 +52,7 @@ module Antares {
                 activityStatusId: activityStatuses[1].id,
                 marketAppraisalPrice : 99,
                 recommendedPrice : 1.1,
-                vendorEstimatedPrice : 55.05,
-                activityUsers: TestHelpers.ActivityUserGenerator.generateManyDtos(3, Enums.NegotiatorTypeEnum.SecondaryNegotiator)
+                vendorEstimatedPrice : 55.05
             });
 
             beforeEach(inject((
@@ -112,14 +106,7 @@ module Antares {
                     expect(listNoItemsElement.length).toBe(1);
                     expect(listNoItemsElementContent.length).toBe(1);
                 });
-                
-                it('then negotiators edit component is set up', () => { 
-                    var component = element.find(pageObjectSelectors.negotiators.component);   
-                    var items = element.find(pageObjectSelectors.negotiators.items);
-                    expect(component.length).toBe(1);  
-                    expect(items.length).toBe(3);              
-                });
-                
+
                 it('then status for activity is displayed and should have proper data', () => {
                     // assert
                     var activityStatusElement = element.find(pageObjectSelectors.basic.status);
