@@ -1,6 +1,6 @@
 <div ng-transclude="header"></div>
 <div class="form-group" ng-if="!!clvm.showItemAdd">
-    <button type="button" id="addItemBtn" class="btn btn-default" ng-click="clvm.showItemAdd()" ng-disabled="clvm.isItemAddDisabled"><i class="fa fa-plus-circle"></i></button>
+    <button type="button" data-type="addItem" id="addItemBtn" class="btn btn-default" ng-click="clvm.showItemAdd()" ng-disabled="clvm.isItemAddDisabled"><i class="fa fa-plus-circle"></i></button>
 </div>
 <div id="no-items-element" ng-transclude="noItems"></div>
 

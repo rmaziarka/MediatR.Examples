@@ -380,6 +380,8 @@ module Antares {
                 var activityId: string;
                 var requestData: Dto.IUpdateActivityResource;
                 var activityFromServerMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
+                
+                activityMock.secondaryNegotiator = TestHelpers.ActivityUserGenerator.generateMany(3, Enums.NegotiatorTypeEnum.SecondaryNegotiator);
 
                 spyOn(state, 'go').and.callFake((routeName: string, activity: Business.Activity) => {
                     activityId = activity.id;
@@ -402,7 +404,10 @@ module Antares {
                 expect(requestData.marketAppraisalPrice).toEqual(activityMock.marketAppraisalPrice);
                 expect(requestData.recommendedPrice).toEqual(activityMock.recommendedPrice);
                 expect(requestData.vendorEstimatedPrice).toEqual(activityMock.vendorEstimatedPrice);
-                expect(activityId).toEqual(activityFromServerMock.id);
+                expect(requestData.leadNegotiatorId).toEqual(activityMock.leadNegotiator.userId);
+                expect(requestData.secondaryNegotiatorIds).toEqual(activityMock.secondaryNegotiator.map((negotiator) => negotiator.userId));
+                                
+                expect(activityId).toEqual(activityFromServerMock.id);                
             });
         });
     });
