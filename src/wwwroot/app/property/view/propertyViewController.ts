@@ -153,20 +153,22 @@ module Antares.Property.View {
         }
 
         areaBreakdownDndOptions: Common.Models.IDndOptions = {
-            dragEnd: (event: Common.Models.IDndEvent) => {
-                var movedItem: Business.PropertyAreaBreakdown = event.source.itemScope.modelValue;
-                movedItem.order = event.dest.index;
+            dragEnd: this.onAreaDraggedAndDropped
+        };
 
-                var params: Resources.IPropertyAreaBreakdownResourceClassParameters = { propertyId: movedItem.propertyId };
-                var data = new Business.UpdatePropertyAreaBreakdownOrderResource(movedItem);
+        onAreaDraggedAndDropped = (event: Common.Models.IDndEvent) => {
+            var movedItem: Business.PropertyAreaBreakdown = event.source.itemScope.modelValue;
+            movedItem.order = event.dest.index;
 
-                this.dataAccessService.getPropertyAreaBreakdownResource()
-                    .updatePropertyAreaBreakdownOrder(params, data)
-                    .$promise.then((response: Dto.IPropertyAreaBreakdown[]) => {
-                        var areas = response.map((r: Dto.IPropertyAreaBreakdown) => new Business.PropertyAreaBreakdown(<Dto.IPropertyAreaBreakdown>r));
-                        angular.extend(event.source.sortableScope.modelValue, areas);
-                    });
-            }
+            var params: Resources.IPropertyAreaBreakdownResourceClassParameters = { propertyId: movedItem.propertyId };
+            var data = new Business.UpdatePropertyAreaBreakdownOrderResource(movedItem);
+
+            this.dataAccessService.getPropertyAreaBreakdownResource()
+                .updatePropertyAreaBreakdownOrder(params, data)
+                .$promise.then((response: Dto.IPropertyAreaBreakdown[]) => {
+                    var areas = response.map((r: Dto.IPropertyAreaBreakdown) => new Business.PropertyAreaBreakdown(<Dto.IPropertyAreaBreakdown>r));
+                    angular.extend(event.source.sortableScope.modelValue, areas);
+                });
         };
 
         defineComponentIds() {
