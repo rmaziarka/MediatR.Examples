@@ -1,0 +1,6 @@
+[ClassVersion("1.0.1"), FriendlyName("c7zip")]
+class c7zip : OMI_BaseResource
+{
+  [Key] string ZipFileLocation;
+  [required] string UnzipFolder;
+};

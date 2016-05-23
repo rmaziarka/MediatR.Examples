@@ -32,10 +32,17 @@
     <None Include="Deployment.targets">
       <Visible>False</Visible>
     </None>
+    <Content Include="DSC\KnightFrank-Antares-Vm-Elasticsearch-DSCConfiguration.ps1" />
     <Content Include="Scripts\Deploy-AzureResourceGroup.ps1" />
     <Content Include="Templates\azuredeploy.parameters.test.json" />
     <Content Include="Templates\azuredeploy.json" />
     <Content Include="Templates\azuredeploy.parameters.dev.json" />
+    <None Include="DSC\c7zip\c7Zip.psm1" />
+    <None Include="DSC\c7zip\c7Zip.schema.mof" />
+    <None Include="DSC\cElasticsearch\cElasticSearch.psm1" />
+    <None Include="DSC\cElasticsearch\cElasticsearch.schema.mof" />
+    <None Include="DSC\cSimpleDownloader\cSimpleDownloader.psm1" />
+    <None Include="DSC\cSimpleDownloader\cSimpleDownloader.schema.mof" />
     <None Include="DSC\dscmetadata.json" />
     <Content Include="DSC\KnightFrank-Antares-Vm-IIS-DSCConfiguration.ps1" />
     <Content Include="DSC\KnightFrank-Antares-Vm-Sql-DSCConfiguration.ps1" />

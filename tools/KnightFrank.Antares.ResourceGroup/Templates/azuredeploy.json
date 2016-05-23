@@ -27,6 +27,13 @@
     "VmIISAdminPassword": {
       "type": "securestring"
     },
+    "VmElasticsearchAdminUserName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "VmElasticsearchAdminPassword": {
+      "type": "securestring"
+    },
     "VmIISWindowsOSVersion": {
       "type": "string",
       "defaultValue": "2012-R2-Datacenter",
@@ -38,6 +45,16 @@
       ]
     },
     "VmSqlWindowsOSVersion": {
+      "type": "string",
+      "defaultValue": "2012-R2-Datacenter",
+      "allowedValues": [
+        "2008-R2-SP1",
+        "2012-Datacenter",
+        "2012-R2-Datacenter",
+        "Windows-Server-Technical-Preview"
+      ]
+    },
+    "VmElasticsearchWindowsOSVersion": {
       "type": "string",
       "defaultValue": "2012-R2-Datacenter",
       "allowedValues": [
@@ -148,7 +165,14 @@
     "VmIISNicName": "[concat(variables('ResourceNamePrefix'), 'Vm-IIS-Nic-', variables('ResourceNameSuffix'), variables('VmIISNameSuffix'))]",
     "VmIISName": "[concat(variables('ResourceNamePrefix'), 'Vm-IIS-', variables('ResourceNameSuffix'), variables('VmIISNameSuffix'))]",
     "SqlUserName": "[concat('KnightFrank.Antares.', toUpper(substring(parameters('EnvironmentPrefix'), 0, 1)), toLower(substring(parameters('EnvironmentPrefix'), 1, sub(length(parameters('EnvironmentPrefix')), 1))), '.User')]",
-    "VirtualNetworkSubnetRef": "[parameters('VirtualNetworkSubnetId')]"
+    "VirtualNetworkSubnetRef": "[parameters('VirtualNetworkSubnetId')]",
+    "VmElasticsearchVmSize": "Standard_D1",
+    "VmElasticsearchName": "[concat(variables('ResourceNamePrefix'), 'Vm-Elasticsearch-', variables('ResourceNameSuffix'))]",
+    "VmElasticsearchNicName": "[concat(variables('ResourceNamePrefix'), 'Vm-Elasticsearch-Nic-', variables('ResourceNameSuffix'))]",
+    "VmElasticsearchHostName": "[concat(variables('ResourceGroupNameTokens')[5], 'VmES', variables('ResourceNameSuffix'))]",
+    "VmElasticsearchImagePublisher": "MicrosoftWindowsServer",
+    "VmElasticsearchImageOffer": "WindowsServer",
+    "VmElasticsearchOSDiskName": "[concat('KnightFrank-Antares-VmElasticsearchOSDisk', variables('ResourceNameSuffix'))]"
   },
   "resources": [
     {
@@ -267,8 +291,32 @@
               }
             }
           }
+        },  
+        {
+          "apiVersion": "2015-06-15",
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(variables('VmSqlName'),'/joindomain')]",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('VmSqlName'))]",
+            "[concat('Microsoft.Compute/virtualMachines/', variables('VmSqlName'), '/extensions/KnightFrank-Antares-Vm-Sql-DSC')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Compute",
+            "type": "JsonADDomainExtension",
+            "typeHandlerVersion": "1.0",
+            "settings": {
+              "Name": "[parameters('domainToJoin')]",
+              "OUPath": "[parameters('ouPath')]",
+              "User": "[concat(parameters('domainToJoin'), '\\', parameters('domainUsername'))]",
+              "Restart": "true",
+              "Options": "[parameters('domainJoinOptions')]"
+            },
+            "protectedsettings": {
+              "Password": "[parameters('domainPassword')]"
+            }
+          }
         }
-
       ]
     },
     {
@@ -375,6 +423,106 @@
       ]
     },
     {
+      "name": "[variables('VmElasticsearchNicName')]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "tags": {
+        "displayName": "KnightFrank-Antares-Vm-Elasticsearch-Nic"
+      },
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "[variables('VirtualNetworkSubnetRef')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "[variables('VmElasticsearchName')]",
+      "type": "Microsoft.Compute/virtualMachines",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkInterfaces/', variables('VmElasticsearchNicName'))]"
+      ],
+      "tags": {
+        "displayName": "KnightFrank-Antares-Vm-Elasticsearch"
+      },
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[variables('VmElasticsearchVmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[variables('VmElasticsearchHostName')]",
+          "adminUsername": "[parameters('VmElasticsearchAdminUsername')]",
+          "adminPassword": "[parameters('VmElasticsearchAdminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[variables('VmElasticsearchImagePublisher')]",
+            "offer": "[variables('VmElasticsearchImageOffer')]",
+            "sku": "[parameters('VmElasticsearchWindowsOSVersion')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "VmElasticsearchOSDisk",
+            "vhd": {
+              "uri": "[concat('http://', variables('RgStorageAccountName'), '.blob.core.windows.net/', variables('VmStorageAccountContainerName'), '/', variables('VmElasticsearchOSDiskName'), '.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('VmElasticsearchNicName'))]"
+            }
+          ]
+        }
+      },
+      "resources": [
+        {
+          "name": "KnightFrank-Antares-Vm-Elasticsearch-DSC",
+          "type": "extensions",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2015-06-15",
+          "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('VmElasticsearchName'))]"
+          ],
+          "tags": {
+            "displayName": "KnightFrank-Antares-Vm-Elasticsearch-DSC"
+          },
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.15",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+              "configuration": {
+                "url": "[concat(parameters('_artifactsLocation'), '/', 'dsc.zip')]",
+                "script": "KnightFrank-Antares-Vm-Elasticsearch-DSCConfiguration.ps1",
+                "function": "SetupElasticsearchVm"
+              }
+            },
+            "protectedSettings": {
+              "configurationUrlSasToken": "[parameters('_artifactsLocationSasToken')]",
+              "configurationArguments": {
+                "octopusThumbprint": "[parameters('OctopusThumbprint')]"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('VmIISName'),'/joindomain')]",
@@ -402,11 +550,10 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('VmSqlName'),'/joindomain')]",
+      "name": "[concat(variables('VmElasticsearchName'),'/joindomain')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', variables('VmSqlName'))]",
-        "[concat('Microsoft.Compute/virtualMachines/', variables('VmSqlName'), '/extensions/KnightFrank-Antares-Vm-Sql-DSC')]"
+        "[concat('Microsoft.Compute/virtualMachines/', variables('VmElasticsearchName'))]"
       ],
       "properties": {
         "publisher": "Microsoft.Compute",
