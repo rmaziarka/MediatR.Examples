@@ -120,6 +120,7 @@ Scenario: Create residential property
 		And User edits activity details on edit activity page
 			| ActivityStatus   | MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |
 			| Market appraisal | 3000                 | 4000             | 5000                 |
+		And User clicks save button on edit activity page
 	Then View activity page is displayed
 	When User clicks property details link on view activity page
 		And User clicks view property link from property on view activity page
