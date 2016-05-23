@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
+    using System.Collections.Generic;
 
     using KnightFrank.Antares.UITests.Pages;
 
@@ -31,8 +32,36 @@
                 .SetMarketAppraisalPrice(details.MarketAppraisalPrice)
                 .SetRecommendedPrice(details.RecommendedPrice)
                 .SetVendorEstimatedPrice(details.VendorEstimatedPrice);
+        }
 
+        [When(@"User clicks save button on edit activity page")]
+        public void SaveActivty()
+        {
+            var page = this.scenarioContext.Get<EditActivityPage>("EditActivityPage");
             this.scenarioContext.Set(page.SaveActivity(), "ViewActivityPage");
         }
+
+        [When(@"User changes lead negotiator to (.*) on edit activity page")]
+        public void UpdateLeadNegotiator(string user)
+        {
+            this.scenarioContext.Get<EditActivityPage>("EditActivityPage").EditLeadNegotiator(user);
+        }
+
+        [When(@"User adds secondary negotiators on edit activity page")]
+        public void AddSecondaryNegotiators(Table table)
+        {
+            IEnumerable<Negotiator> secondaryNegotiators = table.CreateSet<Negotiator>();
+            foreach (Negotiator element in secondaryNegotiators)
+            {
+                this.scenarioContext.Get<EditActivityPage>("EditActivityPage").AddSecondaryNegotiator(element);
+            }
+        }
+
+        [When(@"User removes (.*) secondary negotiator from edit activity page")]
+        public void RemoveSecondaryNegotiator(int secondaryNegotiator)
+        {
+            this.scenarioContext.Get<EditActivityPage>("EditActivityPage").RemoveSecondaryNegotiator(secondaryNegotiator);
+        }
+
     }
 }

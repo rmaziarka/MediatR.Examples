@@ -32,6 +32,10 @@
         private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-group-item");
         private readonly ElementLocator viewingDetailsLink = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) a");
         private readonly ElementLocator viewingDetails = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .ng-binding");
+        // negotiators locators
+        private readonly ElementLocator leadNegotiator = new ElementLocator(Locator.CssSelector, "#card-lead-negotiator .panel-item");
+        private readonly ElementLocator secondaryNegotiator = new ElementLocator(Locator.CssSelector, "#card-list-negotiators card-list-item .panel-item");
+
 
         public ViewActivityPage(DriverContext driverContext) : base(driverContext)
         {
@@ -54,6 +58,10 @@
         public ViewingDetailsPage ViewingDetails => new ViewingDetailsPage(this.DriverContext);
 
         public int ViewingsNumber => this.Driver.GetElements(this.viewings).Count;
+
+        public string LeadNegotiator => this.Driver.GetElement(this.leadNegotiator).Text;
+
+        public List<Negotiator> SecondaryNegotiators => this.Driver.GetElements(this.secondaryNegotiator).Select(el => new Negotiator { Name = el.Text }).ToList();
 
         public ViewActivityPage OpenViewActivityPageWithId(string id)
         {
