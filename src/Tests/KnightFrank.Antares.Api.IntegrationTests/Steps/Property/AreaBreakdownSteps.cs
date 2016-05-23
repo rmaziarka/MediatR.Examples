@@ -75,6 +75,28 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
+        [When(@"User sets (.*) order for (.*) property area breakdown for (.*) property")]
+        public void WhenUserSetsOrderForPropertyAreaBreakdown(int order, string name, string property)
+        {
+            this.propertyId = property.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(property);
+            string url = $"{ApiUrl}/{this.propertyId}/areabreakdown/order";
+
+            Property areaBreakdownProperty = this.fixture.DataContext.Properties.SingleOrDefault(x => x.Id.Equals(this.propertyId));
+
+            PropertyAreaBreakdown propertyAreaBreakdown =
+                areaBreakdownProperty?.PropertyAreaBreakdowns.SingleOrDefault(area => area.Name.Equals(name));
+
+            var command = new UpdateAreaBreakdownOrderCommand
+            {
+                PropertyId = this.propertyId,
+                AreaId = propertyAreaBreakdown?.Id ?? Guid.NewGuid(),
+                Order = order
+            };
+
+            HttpResponseMessage response = this.fixture.SendPutRequest(url, command);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
         [Then(@"Added property area breakdowns exists in data base")]
         public void ThenAddedPropertyAreaBreakdownsExistsInDataBase()
         {
@@ -100,6 +122,19 @@
                 c1.Order.Equals(c2.Order) &&
                 c1.Id.Equals(c2.Id) &&
                 c1.PropertyId.Equals(c2.PropertyId));
+        }
+
+        [Then(@"Property area breakdowns should have new order")]
+        public void ThenPropertyAreaBreakdownsShouldHaveNewOrder(Table table)
+        {
+            List<PropertyAreaBreakdown> currentPropertyAreaBreakdownList =
+                this.fixture.DataContext.Properties.Single(x => x.Id.Equals(this.propertyId)).PropertyAreaBreakdowns.ToList();
+
+            IEnumerable<PropertyAreaBreakdown> expectedAreaBreakdown = table.CreateSet<PropertyAreaBreakdown>();
+
+            currentPropertyAreaBreakdownList.Should()
+                                            .Equal(expectedAreaBreakdown,
+                                                (c1, c2) => c1.Name.Equals(c2.Name) && c1.Order.Equals(c2.Order) && c1.Size.Equals(c2.Size));
         }
     }
 }
