@@ -3,7 +3,8 @@
 module Antares {
     var app: ng.IModule = angular.module('app');
 
-    app.config(initRoute);
+    app.config(['$stateProvider', '$urlRouterProvider', initRoute]);
+    app.run(['$rootScope', 'growlMessages', onStart]);
 
     function initRoute($stateProvider: any, $urlRouterProvider: any) {
         $stateProvider
@@ -14,7 +15,7 @@ module Antares {
                 controller: 'appController',
                 controllerAs: 'appVm',
                 resolve: {
-                    'userData': (userService: Antares.Services.UserService) => {
+                    'userData': (userService: Services.UserService) => {
                         return userService.getUserData();
                     }
                 }
@@ -28,5 +29,11 @@ module Antares {
             });
 
         $urlRouterProvider.otherwise('/app/contact/add');
+    }
+
+    function onStart($rootScope: ng.IRootScopeService, growlMessages: angular.growl.IGrowlMessagesService){
+        $rootScope.$on('$stateChangeSuccess', () =>{
+            growlMessages.destroyAllMessages();
+        });
     }
 }

@@ -20,7 +20,8 @@ module Antares.Property {
             private dataAccessService: Services.DataAccessService,
             private enumService: Services.EnumService,
             private $scope: ng.IScope,
-            private $state: ng.ui.IStateService) {
+            private $state: ng.ui.IStateService,
+            private kfMessageService: Services.KfMessageService) {
 
             super(componentRegistry, $scope);
 
@@ -84,8 +85,10 @@ module Antares.Property {
             this.propertyResource
                 .save(new Business.CreateOrUpdatePropertyResource(this.property))
                 .$promise
-                .then((property: Dto.IProperty) => {
-                    this.$state.go('app.property-view', property);
+                .then((property: Dto.IProperty) =>{
+                    this.$state
+                        .go('app.property-view', property)
+                        .then(() => this.kfMessageService.showSuccessByCode('PROPERTY.ADD.PROPERTY_ADD_SUCCESS'));
                 });
         }
 

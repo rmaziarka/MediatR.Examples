@@ -7,7 +7,7 @@
         blur-on="!nevm.isLeadNegotiatorInEditMode"
         on-select-item="nevm.changeLeadNegotiator" on-cancel="nevm.cancelChangeLeadNegotiator" load-items="nevm.getUsers"
     item-template-url="app/common/components/negotiators/edit/userSearchTemplate.html" search-placeholder="NEGOTIATORS.{{nevm.labelTranslationKey}}.FIND"></search>
-<div ng-hide="nevm.isLeadNegotiatorInEditMode" class="form-group">
+<div id="lead-edit-btn-wrapper" ng-hide="nevm.isLeadNegotiatorInEditMode" class="form-group">
     <button class="btn btn-default" id="lead-edit-btn" type="button" ng-click="nevm.editLeadNegotiator()"><i class="fa fa-pencil"></i></button>
 </div>
 <card id="card-lead-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'" item="nevm.leadNegotiator">

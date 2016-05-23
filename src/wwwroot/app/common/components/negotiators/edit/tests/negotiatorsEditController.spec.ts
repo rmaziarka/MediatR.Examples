@@ -148,7 +148,7 @@ module Antares {
 
                 // assert
                 expect(controller.secondaryNegotiators.length).toBe(2);
-                expect(_.find(controller.secondaryNegotiators, (item) => { return item.user.id === negotiatroToRemove.user.id; })).toBeUndefined();
+                expect(_.find(controller.secondaryNegotiators, (item) => item.user.id === negotiatroToRemove.user.id )).toBeUndefined();
             });
         });
 

@@ -1,7 +1,7 @@
 ﻿/// <reference path="typings/_all.d.ts" />
 
 module Antares {
-    var app: ng.IModule = angular.module('app', [
+    angular.module('app', [
         'ngResource',
         'ngMessages',
         'ui.router',
@@ -11,6 +11,7 @@ module Antares {
         'fmTimepicker',
         'ui.bootstrap',
         'ngFileUpload',
-        'as.sortable'
+        'as.sortable',
+        'angular-growl'
     ]);
 }

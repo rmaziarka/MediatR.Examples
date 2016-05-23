@@ -3,8 +3,8 @@
 module Antares {
     import RequirementViewController = Requirement.View.RequirementViewController;
     import Business = Common.Models.Business;
-    import OfferAddEditController = Antares.Component.OfferAddEditController;
-    import SidePanelController = Antares.Common.Component.SidePanelController;
+    import OfferAddEditController = Component.OfferAddEditController;
+    import SidePanelController = Common.Component.SidePanelController;
     declare var moment: any;
 
     describe('Given view requirement page is loaded', () => {

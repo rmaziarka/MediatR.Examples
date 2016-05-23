@@ -25,6 +25,8 @@ module Antares {
             leadSearch: 'search#lead-search',
             secondarySearch: 'search#secondary-search',
             editLeadNegotiatorBtn: '#lead-edit-btn',
+            editLeadNegotiatorBtnWrapper: '#lead-edit-btn-wrapper',
+            addSecondaryBtn: '#card-list-negotiators button[data-type="addItem"]',
             editSecondaryNegotiatorsBtn: 'card-list#card-list-negotiators button#addItemBtn:first'
         };
 
@@ -128,31 +130,61 @@ module Antares {
                 });
             });
 
-            describe('when edit state is triggered', () => {
-                it('then secondary negotiator search component is displayed and an \'Add\' button is hidden', () => {
+            describe('when secondary negotiator edit mode is changed', () => {
+                it('to true then search component is displayed and an \'Add\' button is hidden', () => {
                     controller.isSecondaryNegotiatorsInEditMode = true;
                     scope.$apply();
-
-                    assertValidator.assertShowElement(false, pageObjectSelector.secondarySearch);
+                    
+                    assertValidator.assertElementHasHideClass(false, pageObjectSelector.secondarySearch);
+                    expect(element.find(pageObjectSelector.addSecondaryBtn).length).toBe(0);                    
                 });
 
-                it('then secondary negotiator search component is displayed and an \'Edit\' button is hidden', () => {
+                it('to false then search component is hidden and an \'Add\' button is displayed', () => {
+                    controller.isSecondaryNegotiatorsInEditMode = false;
+                    scope.$apply();
+                    
+                    assertValidator.assertElementHasHideClass(true, pageObjectSelector.secondarySearch);
+                    expect(element.find(pageObjectSelector.addSecondaryBtn).length).toBe(1);
+                });
+            });
+            
+            describe('when lead negotiator edit mode is changed', () => {
+                it('to true then search component is displayed and an \'Edit\' button is hidden', () => {
                     controller.isLeadNegotiatorInEditMode = true;
                     scope.$apply();
+                                        
+                    assertValidator.assertElementHasHideClass(false, pageObjectSelector.leadSearch);
+                    assertValidator.assertElementHasHideClass(true, pageObjectSelector.editLeadNegotiatorBtnWrapper);                
+                });
 
-                    assertValidator.assertShowElement(false, pageObjectSelector.leadSearch);
+                it('to false then lead negotiator search component is hidden and an \'Edit\' button is visible', () => {
+                    controller.isLeadNegotiatorInEditMode = false;
+                    scope.$apply();
+                    
+                    assertValidator.assertElementHasHideClass(true, pageObjectSelector.leadSearch);
+                    assertValidator.assertElementHasHideClass(false, pageObjectSelector.editLeadNegotiatorBtnWrapper);
                 });
             });
             
             describe('when new negotiator is selected', () => {
-                it('then current lead negotiator should be updated', () => {
+                it('as lead then current lead negotiator should be updated', () => {
                     var leadSearch = element.find(pageObjectSelector.leadSearch);
                     var searchController = leadSearch.controller('search');
-                    var newLeadNegotiator = <Dto.IDepartmentUser>TestHelpers.UserGenerator.generateDto();
+                    var newLeadNegotiatorUser = <Dto.IDepartmentUser>TestHelpers.UserGenerator.generateDto();
 
-                    searchController.select(newLeadNegotiator);
+                    searchController.select(newLeadNegotiatorUser);
                                         
-                    expect(controller.leadNegotiator.user).toBe(newLeadNegotiator);
+                    expect(controller.leadNegotiator.user).toBe(newLeadNegotiatorUser);
+                });
+                
+                 it('as secondary then secondary negotiator should be added', () => {
+                    var secodnarySearch = element.find(pageObjectSelector.secondarySearch);
+                    var searchController = secodnarySearch.controller('search');
+                    var newSecondarynegotiatorUser = <Dto.IDepartmentUser>TestHelpers.UserGenerator.generateDto();
+
+                    searchController.select(newSecondarynegotiatorUser);
+                                        
+                    expect(_.find(controller.secondaryNegotiators, (negotiator) => negotiator.user.id === newSecondarynegotiatorUser.id)).toBeDefined();
                 });
             });
 
