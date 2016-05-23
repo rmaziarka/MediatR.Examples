@@ -98,12 +98,10 @@
             page.Viewing.SelectAttendees(attendees);
         }
 
-        [When(@"User clicks save activity button on view requirement page")]
+        [When(@"User clicks save viewing button on view requirement page")]
         public void SaveViewing()
         {
-            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
-            page.Viewing.SaveViewing();
-            page.WaitForSidePanelToHide();
+            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").Viewing.SaveViewing();
         }
 
         [When(@"User clicks (.*) viewings details on view requirement page")]
@@ -184,6 +182,12 @@
             var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
             page.Offer.SaveOffer();
             page.WaitForSidePanelToHide();
+        }
+
+        [Then(@"Side panel should not be displayed on view requirement page")]
+        public void WaitForSidePnaleToHide()
+        {
+            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").WaitForSidePanelToHide();
         }
 
         [Then(@"Requirement location details on view requirement page are same as the following")]

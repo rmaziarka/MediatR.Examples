@@ -35,10 +35,11 @@ Scenario: Create viewing on requirement
 			| Attendee     |
 			| Amber Brooks |
 			| Kennedi Hyde |
-		And User clicks save activity button on view requirement page
-	Then Viewing details on 1 position on view requirement page are same as the following
-		| Date       | Time          | Name                           |
-		| 12-05-2016 | 10:00 - 11:00 | Knight Lancelot, 120 Baker Str |
+		And User clicks save viewing button on view requirement page
+	Then Side panel should not be displayed on view requirement page
+		And Viewing details on 1 position on view requirement page are same as the following
+			| Date       | Time          | Name                           |
+			| 12-05-2016 | 10:00 - 11:00 | Knight Lancelot, 120 Baker Str |
 	When User clicks 1 viewings details on view requirement page
 	Then Viewing details on view requirement page are same as the following
 		| Name                           | Date       | StartTime | EndTime | Negotiator | Attendees                 | InvitationText | PostViewingComment |
@@ -89,11 +90,10 @@ Scenario: Update viewing on requirement
 			| Attendee     |
 			| Alan Baker   |
 			| Alex Baldwin |
-		And User clicks save activity button on view requirement page
+		And User clicks save viewing button on view requirement page
 	Then Viewing details on 1 position on view requirement page are same as the following
 		| Date       | Time          | Name                     |
 		| 12-12-2016 | 12:00 - 14:00 | My House, 6 Blisworth Cl |
-	When User clicks 1 viewings details on view requirement page
-	Then Viewing details on view requirement page are same as the following
+	And Viewing details on view requirement page are same as the following
 		| Name                     | Date       | StartTime | EndTime | Negotiator | Attendees      | InvitationText | PostViewingComment   |
 		| My House, 6 Blisworth Cl | 12-12-2016 | 12:00     | 14:00   | John Smith | Martin Jackson | Text           | Post Viewing Comment |
