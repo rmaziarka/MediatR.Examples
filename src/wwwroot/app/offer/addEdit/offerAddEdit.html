@@ -72,11 +72,10 @@
         </div>
     </div>
 
-    <div class="section-details" ng-show="vm.mode == 'edit'">
+    <div class="section-details" ng-show="vm.mode == 'edit'" id="offer-edit-negotiator-section">
         <h5 translate="OFFER.ADD.NEGOTIATOR"></h5>
-
         <div class="panel panel-default">
-            <div class="panel-body">
+            <div class="panel-body" id="offer-edit-negotiator-details">
                 {{vm.offer.negotiator.getName()}}
             </div>
         </div>
