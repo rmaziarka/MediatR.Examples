@@ -18,7 +18,12 @@
                             <div class="form-group">
                                 <div class="section-row row">
                                     <div class="col-xs-6 section-title" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.LIST.TOTAL_AREA"></div>
-                                    <div class="col-xs-6">{{vm.property.totalAreaBreakdown | number:2}} sq ft</div>
+                                    <div ng-if="vm.property.propertyAreaBreakdowns.length > 0">
+                                        <div class="col-xs-6">{{vm.property.totalAreaBreakdown | number:2}} sq ft</div>
+                                    </div>
+                                    <div ng-if="vm.property.propertyAreaBreakdowns.length === 0">
+                                        <div class="col-xs-6" ng-show="vm.property.propertyAreaBreakdowns.length === 0">-</div>
+                                    </div>
                                 </div>
                             </div>
                         </card-list-header>
