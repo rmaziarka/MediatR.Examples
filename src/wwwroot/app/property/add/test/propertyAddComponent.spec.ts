@@ -10,7 +10,8 @@ module Antares {
             compile: ng.ICompileService,
             state: ng.ui.IStateService,
             controller: PropertyAddController,
-            assertValidator: TestHelpers.AssertValidators;
+            assertValidator: TestHelpers.AssertValidators,
+            q: ng.IQService;
 
         var pageObjectSelectors = {
             propertyTypeSelector: 'select#type'
@@ -45,13 +46,15 @@ module Antares {
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
                 $state: ng.ui.IStateService,
-                $httpBackend: ng.IHttpBackendService) => {
+                $httpBackend: ng.IHttpBackendService,
+                $q: ng.IQService) => {
 
                 // init
                 scope = $rootScope.$new();
                 compile = $compile;
                 state = $state;
                 $http = $httpBackend;
+                q = $q;
 
                 // http backend
                 $http.whenGET(/\/api\/resources\/countries\/addressform\?entityTypeItemCode=Property/).respond(() => {
@@ -177,7 +180,7 @@ module Antares {
                     expect(controller.save).toHaveBeenCalled();
                 });
 
-                it('then put request is is called and redirect to view page', () => {
+                it('then put request is called and redirect to view page', () => {
                     var addressFormMock: Business.AddressForm = new Business.AddressForm('adrfrmId1', countryMockId, []);
                     $http.whenGET(/\/api\/addressForms\/\?entityType=Property&countryCode=GB/).respond(() => {
                         return [200, addressFormMock];
@@ -196,9 +199,11 @@ module Antares {
                         return [200, propertyFromServerMock];
                     });
 
+                    var stateDeffered = q.defer();
                     var propertyId: string;
-                    spyOn(state, 'go').and.callFake((routeName: string, property: Business.Property) => {
+                    spyOn(state, 'go').and.callFake((routeName: string, property: Business.Property) =>{
                         propertyId = property.id;
+                        return stateDeffered.promise;
                     });
 
                     newPropertyMock.address = new Business.Address();
@@ -209,6 +214,7 @@ module Antares {
                     newPropertyMock.address.propertyName = 'test prop name';
                     newPropertyMock.address.propertyNumber = '123456';
 
+                    stateDeffered.resolve();
                     scope.$apply();
 
                     var button = element.find('button#saveBtn');

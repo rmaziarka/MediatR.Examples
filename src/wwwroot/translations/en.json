@@ -122,7 +122,8 @@
       "ADD_PROPERTY": "Create property",
       "BASIC_INFORMATION": "Basic information",
       "TYPE": "Type",
-      "ADDRESS": "Address"
+      "ADDRESS": "Address",
+      "PROPERTY_ADD_SUCCESS": "New property has been created"
     },
     "EDIT": {
       "EDIT_PROPERTY": "Edit property",
