@@ -85,10 +85,12 @@ module Antares.Property {
             this.propertyResource
                 .save(new Business.CreateOrUpdatePropertyResource(this.property))
                 .$promise
-                .then((property: Dto.IProperty) =>{
+                .then((property: Dto.IProperty) => {
                     this.$state
                         .go('app.property-view', property)
                         .then(() => this.kfMessageService.showSuccessByCode('PROPERTY.ADD.PROPERTY_ADD_SUCCESS'));
+                }, (response: any) => {
+                    this.kfMessageService.showErrors(response);
                 });
         }
 

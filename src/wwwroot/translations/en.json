@@ -20,7 +20,8 @@
       "REQUIREMENTS": "Requirements",
       "PROPERTIES": "Properties"
     },
-    "MAKEOFFER": "Make an offer"
+    "MAKEOFFER": "Make an offer",
+    "UNEXPECTED_SERVER_ERROR": "Unexpected error has occured"
   },
   "OWNERSHIP": {
     "ADD": {

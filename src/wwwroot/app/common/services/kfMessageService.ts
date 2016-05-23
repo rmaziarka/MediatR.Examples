@@ -16,6 +16,24 @@ module Antares.Services {
             var message: string = this.$filter('translate')(messageCode);
             return this.growl.success(message);
         }
+
+        showError(message: string): angular.growl.IGrowlMessage {
+            return this.growl.error(message);
+        }
+
+        showErrorByCode(messageCode: string): angular.growl.IGrowlMessage {
+            var message: string = this.$filter('translate')(messageCode);
+            return this.growl.error(message);
+        }
+
+        showErrors(response: any): Array<angular.growl.IGrowlMessage> {
+            var result: Array<angular.growl.IGrowlMessage> = [];
+            var errors: Array<any> = (response && response.data && response.data instanceof Array) ? response.data : [];
+            errors.forEach((error) => {
+                result.push(this.growl.error(error.message));
+            });
+            return result;
+        }
     }
 
     angular.module('app').service('kfMessageService', KfMessageService);

@@ -24,13 +24,7 @@
             {
                 var validationException = exception as ValidationException;
 
-                var response = new
-                {
-                    Message = "The request is invalid. " + validationException.Message,
-                    Errors = validationException.Errors.Select(x => x.ErrorMessage),
-                    InvalidFields = validationException.Errors.Select(x => x.PropertyName)
-                };
-
+                var response = validationException.Errors.Select(x => new { message = x.ErrorMessage, code = x.ErrorCode });
                 context.Response = new HttpResponseMessage
                 {
                     Content = CreateContent(response),
@@ -44,25 +38,8 @@
                 var response = new
                 {
                     Message = "The request is invalid. " + validationException.Message,
-                    Errors = new { exception.Message }
+                    Errors = new { message = exception.Message }
                 };
-
-                context.Response = new HttpResponseMessage
-                {
-                    Content = CreateContent(response),
-                    StatusCode = HttpStatusCode.BadRequest
-                };
-            }
-            else if (exception is ResourceNotFoundException)
-            {
-                var resourceNotFoundException = exception as ResourceNotFoundException;
-
-                var response =
-                    new
-                    {
-                        resourceNotFoundException.Message,
-                        resourceNotFoundException.ResourceId,
-                    };
 
                 context.Response = new HttpResponseMessage
                 {

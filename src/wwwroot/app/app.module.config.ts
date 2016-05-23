@@ -7,6 +7,7 @@ module Antares {
     app.config(['$provide', extendOrderByWithEmptyFields]);
     app.config(['$provide', decorateInputNumber]);
     app.config(['growlProvider', configureGrowl]);
+    app.config(['$httpProvider', setupInterceptors]);
 
     app.run(['enumService', initEnumService]);
 
@@ -35,5 +36,9 @@ module Antares {
         growlProvider.globalTimeToLive({ success : 5000 });
         growlProvider.globalPosition('top-center');
         growlProvider.globalDisableCountDown(true);
+    }
+
+    function setupInterceptors($httpProvider: angular.IHttpProvider){
+        $httpProvider.interceptors.push(Services.KfErrorInterceptor.factory);
     }
 }
