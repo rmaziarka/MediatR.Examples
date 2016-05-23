@@ -6,7 +6,7 @@ module Antares.Common.Component {
     import Enums = Common.Models.Enums;
     import DepartmentUserResourceParameters = Common.Models.Resources.IDepartmentUserResourceParameters;
 
-    export class NegotiatorsEditController {
+    export class NegotiatorsController {
         public activityId: string;
         public propertyDivisionId: string;
         public leadNegotiator: Business.ActivityUser;
@@ -96,5 +96,5 @@ module Antares.Common.Component {
         }
     }
 
-    angular.module('app').controller('NegotiatorsEditController', NegotiatorsEditController);
+    angular.module('app').controller('NegotiatorsController', NegotiatorsController);
 }

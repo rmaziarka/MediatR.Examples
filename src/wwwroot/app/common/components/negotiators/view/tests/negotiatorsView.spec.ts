@@ -4,16 +4,20 @@ module Antares {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
     import NegotiatorsController = Antares.Common.Component.NegotiatorsController;
-    import SearchController = Common.Component.SearchController;
 
     interface IScope extends ng.IScope {
         leadNegotiator: Business.ActivityUser;
-        secondaryNegotiator: Business.ActivityUser[];
-        activityId: string;
+        secondaryNegotiators: Business.ActivityUser[];
         propertyDivisionId: string;
     }
 
-    describe('Given negotiators edit component', () => {
+    describe('Given negotiators view component', () => {
+        var scope: IScope,
+            compile: ng.ICompileService,
+            element: ng.IAugmentedJQuery,
+            controller: NegotiatorsController,
+            assertValidator: TestHelpers.AssertValidators;
+            
         var pageObjectSelector = {
             secondaryNegotiatorItems: '*[id^="SecondaryNegotiator"]',
             leadNegotiatorItem: '*[id^="LeadNegotiator"]',
@@ -21,22 +25,11 @@ module Antares {
             componentSorveyorMainHeader: 'h3[translate*="COMMERCIAL"]',
             componentSorveyorSubHeaders: 'h4[translate*="COMMERCIAL"]',
             componentNegotiatorMainHeader: 'h3[translate*="RESIDENTIAL"]',
-            componentNegotiatorSubHeaders: 'h4[translate*="RESIDENTIAL"]',
-            leadSearch: 'search#lead-search',
-            secondarySearch: 'search#secondary-search',
-            editLeadNegotiatorBtn: '#lead-edit-btn',
-            editSecondaryNegotiatorsBtn: 'card-list#card-list-negotiators button#addItemBtn:first'
-        };
+            componentNegotiatorSubHeaders: 'h4[translate*="RESIDENTIAL"]'            
+        };       
 
-        var scope: IScope,
-            compile: ng.ICompileService,
-            element: ng.IAugmentedJQuery,
-            controller: NegotiatorsController,
-            assertValidator: TestHelpers.AssertValidators,
-            searchController: SearchController;
-
-        var mockedComponentHtml = '<negotiators-edit property-division-id="{{propertyDivisionId}}" activity-id="activityId" lead-negotiator="leadNegotiator" secondary-negotiators="secondaryNegotiator">'
-            + '</negotiators-edit>';
+        var mockedComponentHtml = '<negotiators-view property-division-id="{{propertyDivisionId}}" lead-negotiator="leadNegotiator" secondary-negotiators="secondaryNegotiators">'
+            + '</negotiators-view>';
 
         var divisionCodes = [
             { id: "residentialId", code: "RESIDENTIAL" },
@@ -51,14 +44,14 @@ module Antares {
             // init
             scope = <IScope>$rootScope.$new();
             scope.leadNegotiator = new Business.ActivityUser();
-            scope.secondaryNegotiator = [];
+            scope.secondaryNegotiators = [];
 
             enumService.setEnum(Dto.EnumTypeCode.Division.toString(), divisionCodes);
 
             compile = $compile;
             element = compile(mockedComponentHtml)(scope);
             scope.$apply();
-            controller = element.controller('negotiatorsEdit');
+            controller = element.controller('negotiatorsView');
 
             assertValidator = new TestHelpers.AssertValidators(element, scope);
         }));
@@ -69,7 +62,7 @@ module Antares {
 
             beforeEach(() => {
                 scope.leadNegotiator = leadNegotiator;
-                scope.secondaryNegotiator = secondaryNegotiators;
+                scope.secondaryNegotiators = secondaryNegotiators;
                 scope.$apply();
             });
 
@@ -93,7 +86,7 @@ module Antares {
 
             describe('when secondary negotiators list is empty', () => {
                 it('then no secondary negotiators id visible', () => {
-                    scope.secondaryNegotiator = null;
+                    scope.secondaryNegotiators = null;
                     scope.$apply();
 
                     assertValidator.assertShowElement(false, pageObjectSelector.noSecondaryNegotiators);
@@ -125,52 +118,6 @@ module Antares {
 
                     expect(mainHeader.text()).toContain(division.code);                    
                     _.each(subHeaders, (header) => expect(header.innerText).toContain(division.code));
-                });
-            });
-
-            describe('when edit state is triggered', () => {
-                it('then secondary negotiator search component is displayed and an \'Add\' button is hidden', () => {
-                    controller.isSecondaryNegotiatorsInEditMode = true;
-                    scope.$apply();
-
-                    assertValidator.assertShowElement(false, pageObjectSelector.secondarySearch);
-                });
-
-                it('then secondary negotiator search component is displayed and an \'Edit\' button is hidden', () => {
-                    controller.isLeadNegotiatorInEditMode = true;
-                    scope.$apply();
-
-                    assertValidator.assertShowElement(false, pageObjectSelector.leadSearch);
-                });
-            });
-            
-            describe('when new negotiator is selected', () => {
-                it('then current lead negotiator should be updated', () => {
-                    var leadSearch = element.find(pageObjectSelector.leadSearch);
-                    var searchController = leadSearch.controller('search');
-                    var newLeadNegotiator = <Dto.IDepartmentUser>TestHelpers.UserGenerator.generateDto();
-
-                    searchController.select(newLeadNegotiator);
-                                        
-                    expect(controller.leadNegotiator.user).toBe(newLeadNegotiator);
-                });
-            });
-
-            describe('when one of secondary negotiator is deleted', () => {
-                it('then list of secondary negotiators should contain one element less', () => {
-                    // arrange                    
-                    var originalSecondaryNegotiatorsCount: number = secondaryNegotiators.length;
-                    var expectedElementCount = --originalSecondaryNegotiatorsCount;
-                    
-                    // act
-                    controller.deleteSecondaryNegotiator(secondaryNegotiators[0]);
-                    scope.$apply();
-
-                    var result = element.find(pageObjectSelector.secondaryNegotiatorItems);
-                    
-                    // arrange
-                    expect(scope.secondaryNegotiator.length).toEqual(expectedElementCount);
-                    expect(result.length).toEqual(expectedElementCount);
                 });
             });
         });
