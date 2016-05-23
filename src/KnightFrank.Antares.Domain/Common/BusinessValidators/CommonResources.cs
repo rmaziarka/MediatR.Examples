@@ -63,6 +63,11 @@
         // ReSharper disable once InconsistentNaming
         Ownership_Dates_Overlap,
         /// <summary>
+        /// Key value : Area breakdown  is assigned to other property
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        PropertyAreaBreakdown_Is_Assigned_To_Other_Property,
+        /// <summary>
         /// Key value : Specified order is out of available range.
         /// </summary>
         // ReSharper disable once InconsistentNaming

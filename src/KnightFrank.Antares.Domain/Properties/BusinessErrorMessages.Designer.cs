@@ -196,6 +196,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Area breakdown  is assigned to other property.
+        /// </summary>
+        internal static string PropertyAreaBreakdown_Is_Assigned_To_Other_Property {
+            get {
+                return ResourceManager.GetString("PropertyAreaBreakdown_Is_Assigned_To_Other_Property", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Specified order is out of available range..
         /// </summary>
         internal static string PropertyAreaBreakdown_OrderOutOfRange {

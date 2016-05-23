@@ -9,7 +9,7 @@ module Antares.Common.Models.Business {
         activityType: Dto.IActivityType = null;
         contacts: Contact[] = [];
         attachments: Attachment[] = [];
-        property: Property = null;
+        property: PreviewProperty = null;
         createdDate: Date = null;
         marketAppraisalPrice: number = null;
         recommendedPrice: number = null;
@@ -27,7 +27,7 @@ module Antares.Common.Models.Business {
                 if (activity.contacts) {
                     this.contacts = activity.contacts.map((contact: Dto.IContact) =>{ return new Contact(contact) });
                 }
-                this.property = new Property(activity.property);
+                this.property = new PreviewProperty(activity.property);
                 
                 var activityleadNegotiator = _.find(activity.activityUsers,
                     (user: Dto.IActivityUser) => user.userType === Enums.NegotiatorTypeEnum.LeadNegotiator);

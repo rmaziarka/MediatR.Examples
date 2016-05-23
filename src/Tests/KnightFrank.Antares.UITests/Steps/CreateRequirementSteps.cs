@@ -112,7 +112,7 @@
             this.scenarioContext["ViewRequirementPage"] = page;
 
             var date = this.scenarioContext.Get<DateTime>("RequirementDate");
-            Assert.Equal(date.ToString("MMMM d, yyyy"), page.GetRequirementCreateDate());
+            Assert.Equal(date.ToString("MMMM d, yyyy"), page.CreateDate);
         }
 
         [Then(@"List of applicants should contain following contacts")]

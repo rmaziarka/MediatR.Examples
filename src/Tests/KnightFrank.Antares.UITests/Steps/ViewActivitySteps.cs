@@ -48,7 +48,7 @@
             this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").ClickDetailsLink().WaitForSidePanelToShow();
         }
 
-        [When(@"User clicks view property link on property preview page")]
+        [When(@"User clicks view property link from property on view activity page")]
         public void OpenViewPropertyPage()
         {
             var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
@@ -68,7 +68,7 @@
             this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").OpenAttachFilePanel().WaitForSidePanelToShow();
         }
 
-        [When(@"User adds (.*) file with (.*) type on attach file panel")]
+        [When(@"User adds (.*) file with (.*) type on attach file page")]
         public void SelectAttachmentType(string file, string type)
         {
             var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
@@ -90,7 +90,7 @@
             this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").OpenViewingDetails(position);
         }
 
-        [When(@"User clicks view requirement on view activity page")]
+        [When(@"User clicks view requirement from viewing on view activity page")]
         public void ClickViewActivity()
         {
             this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").ViewingDetails.ClickViewLink();

@@ -144,6 +144,23 @@
         }
 
         /// <summary>
+        /// Update the area breakdown name and size.
+        /// </summary>
+        /// <param name="id">Property id.</param>
+        /// <param name="command">Command data.</param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("{id}/areabreakdown")]
+        public PropertyAreaBreakdown UpdateAreaBreakdown(Guid id, UpdateAreaBreakdownCommand command)
+        {
+            command.PropertyId = id;
+            Guid propertyAreaBreakdownId = this.mediator.Send(command);
+
+            var query = new AreaBreakdownQuery { PropertyId = command.PropertyId, AreaIds = new[] { propertyAreaBreakdownId } };
+            return this.mediator.Send(query).SingleOrDefault();
+        }
+
+        /// <summary>
         /// Updates the area breakdown order.
         /// </summary>
         /// <param name="id">Property id.</param>

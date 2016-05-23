@@ -7,6 +7,7 @@ module Antares.Common.Component
         controllerAs : 'vm',
         controller: 'SearchController',
         bindings: {
+            options: '<',
             onSelectItem: '<',
             onCancel: '<',
             loadItems: '<',

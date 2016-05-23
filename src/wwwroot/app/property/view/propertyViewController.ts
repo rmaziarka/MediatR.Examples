@@ -3,7 +3,9 @@
 
 module Antares.Property.View {
     import Business = Common.Models.Business;
+    import Dto = Common.Models.Dto;
     import CartListOrder = Common.Component.ListOrder;
+    import Resources = Common.Models.Resources;
 
     export class PropertyViewController extends Core.WithPanelsBaseController {
         ownershipAddPanelVisible: boolean = false;
@@ -13,7 +15,7 @@ module Antares.Property.View {
 
         ownershipsCartListOrder: CartListOrder = new CartListOrder('purchaseDate', true, true);
         activitiesCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
-        userData: Common.Models.Dto.IUserData;
+        userData: Dto.IUserData;
         property: Business.PropertyView;
         savePropertyActivityBusy: boolean = false;
 
@@ -29,7 +31,7 @@ module Antares.Property.View {
         }
 
         fixOwnershipDates = () => {
-            this.property.ownerships.forEach((ownership: Common.Models.Dto.IOwnership) => {
+            this.property.ownerships.forEach((ownership: Dto.IOwnership) => {
                 ownership.purchaseDate = Core.DateTimeUtils.convertDateToUtc(ownership.purchaseDate);
                 ownership.sellDate = Core.DateTimeUtils.convertDateToUtc(ownership.sellDate);
             });
@@ -43,7 +45,7 @@ module Antares.Property.View {
             }
         }
 
-        showOwnershipView = (ownership: Common.Models.Dto.IOwnership) => {
+        showOwnershipView = (ownership: Dto.IOwnership) => {
             this.components.ownershipView().setOwnership(ownership);
             this.showPanel(this.components.panels.ownershipView);
         }
@@ -66,6 +68,11 @@ module Antares.Property.View {
         showAreaAdd = () => {
             this.components.areaAdd().clearAreas();
             this.showPanel(this.components.panels.areaAdd);
+        }
+
+        showAreaEdit = (propertyAreaBreakdown: Business.PropertyAreaBreakdown) => {
+            this.components.areaEdit().editPropertyAreaBreakdown(propertyAreaBreakdown);
+            this.showPanel(this.components.panels.areaEdit);
         }
 
         showActivityPreview = (activity: Common.Models.Business.Activity) => {
@@ -108,6 +115,10 @@ module Antares.Property.View {
             this.components.panels.areaAdd().hide();
         }
 
+        cancelEditArea() {
+            this.components.panels.areaEdit().hide();
+        }
+
         saveOwnership() {
             this.components.ownershipAdd().saveOwnership(this.property.id).then(() => {
                 this.cancelUpdateContacts();
@@ -131,12 +142,30 @@ module Antares.Property.View {
             });
         }
 
-        areaBreakdownDndOptions: Common.Models.IDndOptions = {
-            dragStart: (event: Common.Models.IDndEvent) => {
-                
-            },
-            dragEnd: (event: Common.Models.IDndEvent) => {
+        updateArea() {
+            this.components.areaEdit().updatePropertyAreaBreakdown(this.property.id).then((area: Business.PropertyAreaBreakdown) => {
+                var index = _.findIndex(this.property.propertyAreaBreakdowns, (item) => { return item.id === area.id });
+                if (index >= 0) {
+                    this.property.propertyAreaBreakdowns[index] = area;
+                    this.cancelEditArea();
+                }
+            });
+        }
 
+        areaBreakdownDndOptions: Common.Models.IDndOptions = {
+            dragEnd: (event: Common.Models.IDndEvent) => {
+                var movedItem: Business.PropertyAreaBreakdown = event.source.itemScope.modelValue;
+                movedItem.order = event.dest.index;
+
+                var params: Resources.IPropertyAreaBreakdownResourceClassParameters = { propertyId: movedItem.propertyId };
+                var data = new Business.UpdatePropertyAreaBreakdownOrderResource(movedItem);
+
+                this.dataAccessService.getPropertyAreaBreakdownResource()
+                    .updatePropertyAreaBreakdownOrder(params, data)
+                    .$promise.then((response: Dto.IPropertyAreaBreakdown[]) => {
+                        var areas = response.map((r: Dto.IPropertyAreaBreakdown) => new Business.PropertyAreaBreakdown(<Dto.IPropertyAreaBreakdown>r));
+                        angular.extend(event.source.sortableScope.modelValue, areas);
+                    });
             }
         };
 
@@ -153,7 +182,9 @@ module Antares.Property.View {
                 activityPreviewId: 'viewProperty:activityPreviewComponent',
                 activityPreviewSidePanelId: 'viewProperty:activityPreviewSidePanelComponent',
                 areaAddSidePanelId: 'viewProperty:areaAddSidePanelComponent',
-                areaAddId: 'viewProperty:areaAddComponent'
+                areaEditSidePanelId: 'viewProperty:areaEditSidePanelComponent',
+                areaAddId: 'viewProperty:areaAddComponent',
+                areaEditId: 'viewProperty:areaEditComponent'
             };
         }
 
@@ -165,12 +196,14 @@ module Antares.Property.View {
                 ownershipAdd: () => { return this.componentRegistry.get(this.componentIds.ownershipAddId); },
                 ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewId); },
                 areaAdd: () => { return this.componentRegistry.get(this.componentIds.areaAddId); },
+                areaEdit: () => { return this.componentRegistry.get(this.componentIds.areaEditId); },
                 panels: {
                     contact: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
                     ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); },
                     activityAdd: () => { return this.componentRegistry.get(this.componentIds.activityAddSidePanelId); },
                     activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId); },
-                    areaAdd: () => { return this.componentRegistry.get(this.componentIds.areaAddSidePanelId); }
+                    areaAdd: () => { return this.componentRegistry.get(this.componentIds.areaAddSidePanelId); },
+                    areaEdit: () => { return this.componentRegistry.get(this.componentIds.areaEditSidePanelId); }
                 }
             };
         }

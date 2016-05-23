@@ -9,14 +9,14 @@
 
     public class CreateOfferPage : ProjectPageBase
     {
-        private readonly ElementLocator activityDetails = new ElementLocator(Locator.Id, "offer-add-activity-details");
-        private readonly ElementLocator offer = new ElementLocator(Locator.Id, "offer-price");
-        private readonly ElementLocator offerDate = new ElementLocator(Locator.Id, "offer-date");
-        private readonly ElementLocator proposedCompletionDate = new ElementLocator(Locator.Id, "proposed-completion-date");
-        private readonly ElementLocator proposedExchangeDate = new ElementLocator(Locator.Id, "offer-proposed-exchange-date");
+        private readonly ElementLocator activityDetails = new ElementLocator(Locator.CssSelector, ".slide-in #offer-add-activity-details");
+        private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, ".slide-in #offer-price");
+        private readonly ElementLocator offerDate = new ElementLocator(Locator.CssSelector, ".slide-in #offer-date");
+        private readonly ElementLocator proposedCompletionDate = new ElementLocator(Locator.CssSelector, ".slide-in #proposed-completion-date");
+        private readonly ElementLocator proposedExchangeDate = new ElementLocator(Locator.CssSelector, ".slide-in #offer-proposed-exchange-date");
         private readonly ElementLocator saveOffer = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'saveOffer']");
-        private readonly ElementLocator specialConditions = new ElementLocator(Locator.Name, "specialConditions");
-        private readonly ElementLocator status = new ElementLocator(Locator.Id, "offer-status");
+        private readonly ElementLocator specialConditions = new ElementLocator(Locator.CssSelector, ".slide-in [name = 'specialConditions']");
+        private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, ".slide-in #offer-status");
         private readonly ElementLocator viewLink = new ElementLocator(Locator.CssSelector, ".slide-in div:nth-of-type(1) a");
 
         public CreateOfferPage(DriverContext driverContext) : base(driverContext)
@@ -64,6 +64,7 @@
         public CreateOfferPage SaveOffer()
         {
             this.Driver.GetElement(this.saveOffer).Click();
+            this.Driver.WaitForAngularToFinish();
             return this;
         }
 
@@ -89,5 +90,7 @@
         public string ExchangeDate { get; set; }
 
         public string CompletionDate { get; set; }
+
+        public string Negotiator { get; set; }
     }
 }

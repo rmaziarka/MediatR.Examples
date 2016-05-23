@@ -1,7 +1,7 @@
 /// <reference path="../../../../../typings/_all.d.ts" />
 
 module Antares {
-    import CardController = Antares.Common.Component.CardController;
+    import CardController = Common.Component.CardController;
     describe('Given card component', () => {
         var scope: ng.IScope,
             compile: ng.ICompileService,

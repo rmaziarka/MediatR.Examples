@@ -4,6 +4,7 @@ module Antares.Common.Component {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
     import Enums = Common.Models.Enums;
+    import DepartmentUserResourceParameters = Common.Models.Resources.IDepartmentUserResourceParameters;
 
     export class NegotiatorsEditController {
         public activityId: string;
@@ -13,26 +14,28 @@ module Antares.Common.Component {
 
         public isLeadNegotiatorInEditMode: boolean = false;
         public isSecondaryNegotiatorsInEditMode: boolean = false;
-        
+
+        public negotiatorsSearchOptions: SearchOptions = new SearchOptions();
+
         public labelTranslationKey: string;
-        
+
         private usersSearchMaxCount: number = 100;
 
         constructor(
             private dataAccessService: Services.DataAccessService,
             private enumService: Services.EnumService) {
-                
-            this.enumService.getEnumPromise().then(this.onEnumLoaded);            
+
+            this.enumService.getEnumPromise().then(this.onEnumLoaded);
         }
-        
+
         onEnumLoaded = (result: any) => {
-            var divisions: any = result[Dto.EnumTypeCode.Division];           
+            var divisions: any = result[Dto.EnumTypeCode.Division];
             var division: any = _.find(divisions, { 'id': this.propertyDivisionId });
             if (division){
                 this.labelTranslationKey = division.code.toUpperCase();
-            }          
+            }
         }
-        
+
         public editLeadNegotiator = () => {
             this.isLeadNegotiatorInEditMode = true;
         }
@@ -63,13 +66,19 @@ module Antares.Common.Component {
             this.isSecondaryNegotiatorsInEditMode = false;
         }
 
-        public getUsers = (searchValue: string) => {
+        public getUsersQuery = (searchValue: string): DepartmentUserResourceParameters => {
             var excludedIds: string[] = _.map<Business.ActivityUser, string>(this.secondaryNegotiators, 'userId');
             excludedIds.push(this.leadNegotiator.userId);
 
+            return { partialName : searchValue, take : this.usersSearchMaxCount, 'excludedIds[]' : excludedIds };
+        }
+
+        public getUsers = (searchValue: string) =>{
+            var query = this.getUsersQuery(searchValue);
+
             return this.dataAccessService
                 .getDepartmentUserResource()
-                .query({ partialName: searchValue, take: this.usersSearchMaxCount, 'excludedIds[]': excludedIds })
+                .query(query)
                 .$promise
                 .then((users: any) => {
                     return users.map((user: Common.Models.Dto.IDepartmentUser) => { return new Common.Models.Business.DepartmentUser(<Common.Models.Dto.IDepartmentUser>user); });

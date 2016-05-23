@@ -157,6 +157,11 @@
         "CREATE_AREA": "Create area",
         "NAME": "Name",
         "SIZE": "Size"
+      },
+      "EDIT": {
+        "EDIT_AREA": "Edit area",
+        "NAME": "Name",
+        "SIZE": "Size"
       }
     }
   },
@@ -318,7 +323,8 @@
       "NEGOTIATOR": "Negotiator",
       "EXCHANGE_DATE": "Proposed exchange date",
       "COMPLETION_DATE": "Proposed completion date",
-      "VIEW": "View"
+      "VIEW": "View",
+      "SAVING_OFFER_IN_PROGRESS": "Saving offer ..."
     },
     "PREVIEW": {
       "ACTIVITY": "Activity",

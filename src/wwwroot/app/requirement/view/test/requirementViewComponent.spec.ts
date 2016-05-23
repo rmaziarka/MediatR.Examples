@@ -3,9 +3,11 @@
 module Antares {
     import RequirementViewController = Requirement.View.RequirementViewController;
     import Business = Common.Models.Business;
+    import OfferAddEditController = Antares.Component.OfferAddEditController;
+    import SidePanelController = Antares.Common.Component.SidePanelController;
     declare var moment: any;
 
-    describe('Given view requirement page is loaded', () =>{
+    describe('Given view requirement page is loaded', () => {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
             compile: ng.ICompileService,
@@ -13,12 +15,11 @@ module Antares {
             filter: ng.IFilterService;
 
         var controller: RequirementViewController;
-
         var pageObjectSelectors = {
-            header : {
-                notesButton : '#notes-button'
+            header: {
+                notesButton: '#notes-button'
             },
-            notes : {
+            notes: {
                 noteAddDescription: '#requirement-note-add textarea#note-description',
                 noteAddButton: '#requirement-note-add button#note-add-button',
                 noteList: '#requirement-notes',
@@ -27,12 +28,28 @@ module Antares {
             viewings:
             {
                 viewingGroups: '#viewings-list .viewing-group',
-                viewingGroupTitles:'#viewings-list card-list-group-header h5 time',
+                viewingGroupTitles: '#viewings-list card-list-group-header h5 time',
                 viewings: '#viewings-list .viewing-item'
+            },
+            offers:
+            {
+                saveButton: '#offer-save-btn',
+                cancelButton: '#offer-cancel-btn',
+                sidePanel: '#add-offer-panel',
+                makeOfferAction: 'context-menu-item[type=makeoffer]',
+                list: '.requirement-view-offers',
+                status:
+                {
+                    New: '.offer-status-new',
+                    Accepted: '.offer-status-accepted',
+                    Rejected: '.offer-status-rejected',
+                    Withdrawn: '.offer-status-withdrawn'
+                }
             }
         }
 
         describe('and proper requirement id is provided', () => {
+            var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
             var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate({
                 createDate: '2016-03-17T12:35:29.82',
                 maxPrice: 444,
@@ -54,28 +71,93 @@ module Antares {
                 ],
                 address: Mock.AddressForm.FullAddress,
                 viewings: [
-                {
-                    id: '1',
-                    startDate: "2016-01-01T10:00:00Z",
-                    endDate: "2016-01-01T11:00:00Z"
-                },
-                {
-                    id: '2',
-                    startDate: "2016-01-01T13:00:00Z",
-                    endDate: "2016-01-01T14:00:00Z"
-                },
-                {
-                    id: '3',
-                    startDate: "2016-01-02T10:00:00Z",
-                    endDate: "2016-01-02T11:00:00Z"
-                },
-                {
-                    id: '4',
-                    startDate: "2016-01-03T00:00:00Z",
-                    endDate: "2016-01-03T01:00:00Z"
-                }
+                    {
+                        id: '1',
+                        startDate: "2016-01-01T10:00:00Z",
+                        endDate: "2016-01-01T11:00:00Z",
+                        activity: activityMock
+                    },
+                    {
+                        id: '2',
+                        startDate: "2016-01-01T13:00:00Z",
+                        endDate: "2016-01-01T14:00:00Z",
+                        activity: activityMock
+                    },
+                    {
+                        id: '3',
+                        startDate: "2016-01-02T10:00:00Z",
+                        endDate: "2016-01-02T11:00:00Z",
+                        activity: activityMock
+                    },
+                    {
+                        id: '4',
+                        startDate: "2016-01-03T00:00:00Z",
+                        endDate: "2016-01-03T01:00:00Z",
+                        activity: activityMock
+                    }
+                ],
+                offers: [
+                    {
+                        id: "1",
+                        statusId: "1",
+                        offerDate: new Date(2016, 1, 1)
+                    },
+                    {
+                        id: "2",
+                        statusId: "2",
+                        offerDate: new Date(2014, 1, 1)
+                    },
+                    {
+                        id: "3",
+                        statusId: "3",
+                        offerDate: new Date(2015, 1, 1)
+                    },
+                    {
+                        id: "4",
+                        statusId: "3",
+                        offerDate: new Date(2011, 1, 1)
+                    },
+                    {
+                        id: "5",
+                        statusId: "4",
+                        offerDate: new Date(2012, 1, 1)
+                    }
                 ]
             });
+
+            var appConfigMock: Common.Models.IAppConfig =
+                {
+                    rootUrl: "",
+                    fileChunkSizeInBytes: 12,
+                    enumOrder: {
+                        "OfferStatus": {
+                            "New": 2,
+                            "Withdrawn": 4,
+                            "Rejected": 3,
+                            "Accepted": 1
+                        }
+                    }
+                }
+
+            var mockDynamicTranslateFilter = (value: string) => {
+                switch (value) {
+                    case '1':
+                        return "New";
+                    case '2':
+                        return "Accepted";
+                    case '3':
+                        return "Rejected";
+                    case '4':
+                        return "Withdrawn";
+                }
+
+                return "";
+            };
+
+            beforeEach(angular.mock.module(($provide: angular.auto.IProvideService) => {
+                $provide.value('dynamicTranslateFilter', mockDynamicTranslateFilter);
+                $provide.constant('appConfig', appConfigMock);
+            }));
 
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
@@ -87,7 +169,6 @@ module Antares {
                 $http = $httpBackend;
 
                 Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
-
                 scope = $rootScope.$new();
                 scope['requirement'] = requirementMock;
                 element = $compile('<requirement-view requirement="requirement"></requirement-view>')(scope);
@@ -97,6 +178,16 @@ module Antares {
 
                 controller = element.controller('requirementView');
             }));
+
+            it('offers are displayed and sorted proper way (first by status then by date descending)', () => {
+                var offersList = element.find(pageObjectSelectors.offers.list);
+                expect(offersList.length).toEqual(5);
+                expect($(<Element>offersList[0]).find(pageObjectSelectors.offers.status.Accepted).length).toEqual(1);
+                expect($(<Element>offersList[1]).find(pageObjectSelectors.offers.status.New).length).toEqual(1);
+                expect($(<Element>offersList[2]).find(pageObjectSelectors.offers.status.Rejected).length).toEqual(1);
+                expect($(<Element>offersList[3]).find(pageObjectSelectors.offers.status.Rejected).length).toEqual(1);
+                expect($(<Element>offersList[4]).find(pageObjectSelectors.offers.status.Withdrawn).length).toEqual(1);
+            });
 
             it('requirement details are loaded', () => {
                 for (var property in requirementMock) {
@@ -183,6 +274,70 @@ module Antares {
                     expect(viewingGroupTitles[i].textContent).toBe(moment(g.day, 'YYYY-MM-DD').format('DD-MM-YYYY'));
                 });
             });
+
+            describe('when make new offer action is called', () => {
+                var
+                    newOfferController: OfferAddEditController,
+                    newOfferPanelController: SidePanelController,
+                    chosenViewing: Business.Viewing;
+
+                beforeEach(() => {
+                    newOfferController = controller.components.offerAdd();
+                    newOfferPanelController = controller.components.panels.offerAdd();
+
+                    spyOn(newOfferController, 'reset');
+
+                    chosenViewing = requirementMock.viewings[0];
+                    controller.showAddOfferPanel(chosenViewing);
+                });
+
+                it('new offer side panel is shown', () => {
+                    var sidePanel = element.find(pageObjectSelectors.offers.sidePanel);
+                    expect(sidePanel.length).toBe(1, 'Side panel not found');
+                    expect(newOfferPanelController.visible).toBeTruthy('Side panel not visible');
+                });
+
+                it('new offer form is reset', () => {
+                    expect(newOfferController.reset).toHaveBeenCalledTimes(1);
+                });
+
+                it('activity on offer is set', () => {
+                    expect(newOfferController.activity).toBeDefined();
+                    expect(newOfferController.activity.id).toEqual(chosenViewing.activity.id);
+                });
+
+                it('when cancel action is called side panel is hidden', () => {
+                    controller.cancelSaveOffer();
+
+                    expect(newOfferPanelController.visible).toBeFalsy('Side panel is not hidden');
+                });
+
+                xdescribe('when save action is called', () => {
+                    var
+                        offerMock: Business.Offer;
+
+                    beforeEach(inject((
+                        $q: ng.IQService) => {
+
+                        offerMock = TestHelpers.OfferGenerator.generate();
+                        var deferred = $q.defer();
+                        spyOn(newOfferController, 'saveOffer').and.returnValue(deferred.promise);
+
+                        controller.saveOffer();
+                        deferred.resolve(offerMock);
+
+                        scope.$apply();
+                    }));
+
+                    it('side panel is hidden', () => {
+                        expect(newOfferPanelController.visible).toBeFalsy('Side panel is not hidden');
+                    });
+
+                    it('offer has been added to offers list', () => {
+                        expect(controller.requirement.offers).toContain(offerMock);
+                    });
+                });
+            });
         });
 
         describe('and notes button is clicked', () => {
@@ -209,8 +364,8 @@ module Antares {
             it('then note list is displayed', () => {
                 // arrange
                 requirementMock.requirementNotes = [
-                    new Business.RequirementNote({ id : 'note1', requirementId : '111', description : 'descr 1', createdDate : new Date(), user : null }),
-                    new Business.RequirementNote({ id : 'note2', requirementId : '111', description : 'descr 2', createdDate : new Date(), user : null })
+                    new Business.RequirementNote({ id: 'note1', requirementId: '111', description: 'descr 1', createdDate: new Date(), user: null }),
+                    new Business.RequirementNote({ id: 'note2', requirementId: '111', description: 'descr 2', createdDate: new Date(), user: null })
                 ];
 
                 scope['requirement'] = requirementMock;

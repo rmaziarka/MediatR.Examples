@@ -6,7 +6,7 @@ module Antares.Common.Component {
         minLength = 3;
         modelOptions = {
             debounce: {
-                default: 500,
+                default: 250,
                 blur: 250
             }
         };

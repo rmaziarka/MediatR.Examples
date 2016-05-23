@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Models.Business {
+    declare var moment: any;
 
     export class Offer implements Dto.IOffer {
         id: string = null;
@@ -23,6 +24,13 @@ module Antares.Common.Models.Business {
             if (offer) {
                 this.activity = new Activity(offer.activity);
                 this.negotiator = new User(offer.negotiator);
+                this.offerDate = moment(offer.offerDate).toDate();
+                if (offer.completionDate) {
+                    this.completionDate = moment(offer.completionDate).toDate();
+                }
+                if (offer.exchangeDate) {
+                    this.exchangeDate = moment(offer.exchangeDate).toDate();
+                }
             }
         }
     }

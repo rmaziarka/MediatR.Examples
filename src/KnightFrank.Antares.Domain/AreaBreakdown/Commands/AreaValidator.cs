@@ -6,7 +6,7 @@
     {
         public AreaValidator()
         {
-            this.RuleFor(x => x.Name).Length(0, 128);
+            this.RuleFor(x => x.Name).NotEmpty().Length(0, 128);
             this.RuleFor(x => x.Size).GreaterThan(0);
         }
     }

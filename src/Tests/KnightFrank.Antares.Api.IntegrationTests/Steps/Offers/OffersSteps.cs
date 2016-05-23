@@ -150,6 +150,8 @@
                 .Excluding(o => o.Status)
                 .Excluding(o => o.Requirement)
                 .Excluding(o => o.Activity));
+
+            expectedOffer.NegotiatorId.Should().NotBeEmpty();
         }
 
         [Then(@"Offer details in requirement should be the same as added")]

@@ -34,11 +34,11 @@ module Antares.Property.View.AreaBreakdown {
             _.pull(this.areas, area);
         }
 
-        saveAreas(propertyId: string): ng.IPromise<Common.Models.Dto.IPropertyAreaBreakdown[]> {
+        saveAreas(propertyId: string): ng.IPromise<Business.PropertyAreaBreakdown[]> {
             var params: Resources.IPropertyAreaBreakdownResourceClassParameters = { propertyId: propertyId };
-            var data: Resources.IPropertyAreaBreakdownResourceClassData = { areas: this.areas };
+            var data: Resources.ICreatePropertyAreaBreakdownResourceClassData = { areas: this.areas };
 
-            var onSuccess = (areas: Common.Models.Dto.IPropertyAreaBreakdown[]) => {
+            var onSuccess = (areas: Dto.IPropertyAreaBreakdown[]) => {
                 var propertyAreas: Business.PropertyAreaBreakdown[] = areas.map(area => new Business.PropertyAreaBreakdown(area));
                 return propertyAreas;
             };

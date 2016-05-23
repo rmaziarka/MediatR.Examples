@@ -28,7 +28,11 @@
                         <card-list-items as-sortable="vm.areaBreakdownDndOptions" ng-model="vm.property.propertyAreaBreakdowns">
                             <div ng-repeat="propertyAreaBreakdown in vm.property.propertyAreaBreakdowns track by propertyAreaBreakdown.id" as-sortable-item>
                                 <div as-sortable-item-handle>
-                                    <card card-template-url="'app/property/view/areaBreakdown/list/areaBreakdownCard.html'" item="propertyAreaBreakdown" display-new-control="true">
+                                    <card show-context-menu="true" display-new-control="true"
+                                          card-template-url="'app/property/view/areaBreakdown/list/areaBreakdownCard.html'" item="propertyAreaBreakdown">
+                                        <card-context-menu>
+                                            <context-menu-item type="edit" item="propertyAreaBreakdown" action="vm.showAreaEdit"></context-menu-item>
+                                        </card-context-menu>
                                     </card>
                                 </div>
                             </div>
@@ -324,6 +328,23 @@
             <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
         </button>
         <button class="btn btn-primary" type="button" ng-click="vm.saveArea()" ng-disabled="" id="area-add-button">
+            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+        </button>
+    </side-panel-footer>
+</side-panel>
+
+<side-panel component-id="vm.componentIds.areaEditSidePanelId">
+    <side-panel-header>
+        <h3 translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.EDIT.EDIT_AREA"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <area-breakdown-edit component-id="vm.componentIds.areaEditId"></area-breakdown-edit>
+    </side-panel-content>
+    <side-panel-footer>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelEditArea()">
+            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+        </button>
+        <button class="btn btn-primary" type="button" ng-click="vm.updateArea()">
             <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
         </button>
     </side-panel-footer>

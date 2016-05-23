@@ -10,12 +10,10 @@ module Antares.Common.Component {
         public searchPlaceholder: string;
 
         // component data
-        public options: SearchOptions = new SearchOptions();
+        public options: SearchOptions;
         public selectedItem: any;
 
-
-
-        public onSelect = <T>($item: T) => {
+        public select = <T>($item: T) => {
             this.onSelectItem($item);
 
             this.selectedItem = null;
