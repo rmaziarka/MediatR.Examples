@@ -13,7 +13,8 @@ module Antares.Property.View.AreaBreakdown {
 
         constructor(componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
-            private $q: ng.IQService) {
+            private $q: ng.IQService,
+            private $scope: ng.IScope) {
 
             componentRegistry.register(this, this.componentId);
             this.propertyAreaBreakdownResourceService = dataAccessService.getPropertyAreaBreakdownResource();
@@ -34,7 +35,23 @@ module Antares.Property.View.AreaBreakdown {
             _.pull(this.areas, area);
         }
 
+        isValid = () => {
+            var validationResult: boolean[] = [];
+
+            for (var i = 0; i < this.areas.length; i++) {
+                var form = this.$scope['addAreaForm']['innerAddAreaForm_' + i];
+                form.$setSubmitted();
+                validationResult.push(<boolean>form.$valid);
+            }
+
+            return _.all(validationResult);
+        }
+
         saveAreas(propertyId: string): ng.IPromise<Business.PropertyAreaBreakdown[]> {
+            if (!this.isValid()) {
+                return this.$q.reject();
+            }
+
             var params: Resources.IPropertyAreaBreakdownResourceClassParameters = { propertyId: propertyId };
             var data: Resources.ICreatePropertyAreaBreakdownResourceClassData = { areas: this.areas };
 
@@ -42,7 +59,7 @@ module Antares.Property.View.AreaBreakdown {
                 var propertyAreas: Business.PropertyAreaBreakdown[] = areas.map(area => new Business.PropertyAreaBreakdown(area));
                 return propertyAreas;
             };
-            var onError = (reason: any) => { return reason;};
+            var onError = (reason: any) => { return reason; };
 
             return this.propertyAreaBreakdownResourceService.createPropertyAreaBreakdowns(params, data).$promise.then(onSuccess, onError);
         }
