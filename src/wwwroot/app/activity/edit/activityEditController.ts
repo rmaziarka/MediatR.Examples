@@ -23,7 +23,7 @@ module Antares.Activity {
         }
         
         cancel() {
-            this.$state.go('app.activity-view', { id: this.$state.params['id'] });
+            this.$state.go('app.activity-view', { id: this.activity.id });
         }
     }
 
