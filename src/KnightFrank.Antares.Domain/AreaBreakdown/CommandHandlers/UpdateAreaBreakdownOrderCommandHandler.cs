@@ -29,10 +29,15 @@
         public Guid Handle(UpdateAreaBreakdownOrderCommand command)
         {
             Property property = this.propertyRepository.GetById(command.PropertyId);
-            PropertyAreaBreakdown areaBreakdown = this.areaBreakdownRepository.GetById(command.AreaId);
-
             this.entityValidator.EntityExists(property, command.PropertyId);
+
+            PropertyAreaBreakdown areaBreakdown = this.areaBreakdownRepository.GetById(command.AreaId);
             this.entityValidator.EntityExists(areaBreakdown, command.AreaId);
+
+            if (areaBreakdown.PropertyId != property.Id)
+            {
+                throw new BusinessValidationException(ErrorMessage.PropertyAreaBreakdown_Is_Assigned_To_Other_Property);
+            }
 
             IEnumerable<PropertyAreaBreakdown> orderedAreaBreakdownItems = this.GetOrderedAreaBreakdownItems(command, areaBreakdown);
             property.TotalAreaBreakdown = orderedAreaBreakdownItems.Sum(x => x.Size);
@@ -41,7 +46,7 @@
 
             return areaBreakdown.Id;
         }
-
+        
         private IEnumerable<PropertyAreaBreakdown> GetOrderedAreaBreakdownItems(UpdateAreaBreakdownOrderCommand command, PropertyAreaBreakdown updatedAreaBreakdown)
         {
             List<PropertyAreaBreakdown> areaBreakdownItems =
