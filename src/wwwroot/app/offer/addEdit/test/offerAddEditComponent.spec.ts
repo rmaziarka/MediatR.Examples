@@ -193,7 +193,7 @@ module Antares {
                 expect(negotiatorSection.hasClass("ng-hide")).toBeFalsy();
             });
 
-            it('and offer is set then all form elements have proper values', () =>{
+            xit('and offer is set then all form elements have proper values', () =>{
                 offerMock.activity.property.address.propertyName = "West Forum";
                 offerMock.activity.property.address.propertyNumber = "142a";
                 offerMock.activity.property.address.line2 = "Strzegomska";
