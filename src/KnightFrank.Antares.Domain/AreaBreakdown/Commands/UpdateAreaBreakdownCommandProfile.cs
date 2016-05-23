@@ -8,7 +8,9 @@ namespace KnightFrank.Antares.Domain.AreaBreakdown.Commands
     {
         protected override void Configure()
         {
-            this.CreateMap<UpdateAreaBreakdownCommand, PropertyAreaBreakdown>().ForMember(a => a.PropertyId, x => x.Ignore());
+            this.CreateMap<UpdateAreaBreakdownCommand, PropertyAreaBreakdown>()
+                .ForMember(a => a.Id, x => x.Ignore())
+                .ForMember(a => a.PropertyId, x => x.Ignore());
         }
     }
 }
