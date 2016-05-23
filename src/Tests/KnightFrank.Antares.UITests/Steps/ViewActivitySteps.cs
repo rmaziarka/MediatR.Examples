@@ -200,5 +200,20 @@
             page.PreviewAttachment.CloseAttachmentPreviewPage();
             page.WaitForSidePanelToHide();
         }
+
+        [Then(@"(.*) is set as lead negotiator on view activity page")]
+        public void CheckLeadNegotiator(string expectedLead)
+        {
+            Assert.Equal(expectedLead, this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").LeadNegotiator);
+        }
+
+        [Then(@"Secondary users are set on view activity page")]
+        public void CheckSecondaryUsers(Table table)
+        {
+            List<Negotiator> expectedSecondary = table.CreateSet<Negotiator>().ToList();
+            List<Negotiator> actualSecondary = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").SecondaryNegotiators;
+            actualSecondary.Should().Equal(expectedSecondary, (c1, c2) =>
+                c1.Name.Equals(c2.Name));
+        }
     }
 }
