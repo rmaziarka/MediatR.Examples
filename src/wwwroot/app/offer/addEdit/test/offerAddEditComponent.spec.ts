@@ -63,7 +63,7 @@ module Antares {
 
         describe('is in add mode ', () =>{
             beforeEach(() => {
-                    element = $compileService('<offer-add requirement="requirement"></offer-add-edit>')(scope);
+                    element = $compileService('<offer-add requirement="requirement"></offer-add>')(scope);
                     scope.$apply();
 
                     controller = element.controller('offerAdd');
@@ -185,7 +185,7 @@ module Antares {
         });
         describe('is in edit mode', () =>{
             beforeEach(() => {
-                    element = $compileService('<offer-edit requirement="requirement"></offer-add-edit>')(scope);
+                    element = $compileService('<offer-edit requirement="requirement"></offer-edit>')(scope);
                     scope.$apply();
 
                     controller = element.controller('offerEdit');

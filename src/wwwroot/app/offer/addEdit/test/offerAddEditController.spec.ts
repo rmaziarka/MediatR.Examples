@@ -22,6 +22,7 @@ module Antares {
                 };
 
                 result.pass = util.equals(actual.requirementId, expected.requirementId)
+                    && util.equals(actual.id, expected.id)
                     && util.equals(actual.activityId, expected.activityId)
                     && util.equals(actual.statusId, expected.statusId)
                     && util.equals(actual.specialConditions, expected.specialConditions)
