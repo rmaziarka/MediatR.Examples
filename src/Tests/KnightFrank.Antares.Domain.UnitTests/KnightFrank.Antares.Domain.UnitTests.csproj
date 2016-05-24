@@ -123,6 +123,7 @@
     <Compile Include="AddressForm\Queries\GetCountriesForAddressFormQueryValidatorTests.cs" />
     <Compile Include="AreaBreakdown\CommandHandlers\CreateAreaBreakdownCommandHandlerTests.cs" />
     <Compile Include="AreaBreakdown\CommandHandlers\UpdateAreaBreakdownCommandHandlerTests.cs" />
+    <Compile Include="AreaBreakdown\CommandHandlers\UpdateAreaBreakdownOrderCommandHandlerTests.cs" />
     <Compile Include="AreaBreakdown\Commands\AreaValidatorTests.cs" />
     <Compile Include="AreaBreakdown\Commands\CreateAreaBreakdownCommandValidatorTests.cs" />
     <Compile Include="AreaBreakdown\Commands\UpdateAreaBreakdownCommandProfileTests.cs" />

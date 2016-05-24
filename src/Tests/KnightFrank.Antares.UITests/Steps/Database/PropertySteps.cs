@@ -176,14 +176,14 @@
                 {
                     PropertyId = propertyId,
                     Name = "1st floor",
-                    Order = 1,
+                    Order = 0,
                     Size = 10000
                 },
                 new PropertyAreaBreakdown
                 {
                     PropertyId = propertyId,
                     Name = "2nd floor",
-                    Order = 2,
+                    Order = 1,
                     Size = 10000
                 }
             };

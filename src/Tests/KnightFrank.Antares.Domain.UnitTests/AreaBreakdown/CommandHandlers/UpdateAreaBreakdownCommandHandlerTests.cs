@@ -37,9 +37,7 @@
             propertyRepository.Setup(r => r.GetById(command.PropertyId)).Returns(property);
             areaBreakdownRepository.Setup(r => r.GetById(command.Id)).Returns(propertyAreaBreakdown);
             areaBreakdownRepository.Setup(r => r.Save()).Callback(() => { savedPropertyAreaBreakdown = propertyAreaBreakdown; });
-            entityValidator.Setup(x => x.EntityExists(It.IsAny<Property>(), It.IsAny<Guid>()));
-            entityValidator.Setup(x => x.EntityExists(It.IsAny<PropertyAreaBreakdown>(), It.IsAny<Guid>()));
-            
+
             // Act
             Guid guid = handler.Handle(command);
 
@@ -68,11 +66,14 @@
             UpdateAreaBreakdownCommand command,
             UpdateAreaBreakdownCommandHandler handler)
         {
+            // Arrange
             propertyRepository.Setup(r => r.GetById(command.PropertyId)).Returns(property);
             areaBreakdownRepository.Setup(r => r.GetById(command.Id)).Returns(propertyAreaBreakdown);
 
+            // Act
             Action act = () => handler.Handle(command);
 
+            // Assert
             act.ShouldThrow<BusinessValidationException>().Which.ErrorCode.ShouldBeEquivalentTo(ErrorMessage.PropertyAreaBreakdown_Is_Assigned_To_Other_Property);
         }
     }

@@ -40,13 +40,13 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"Following propery areas breakdown are defined")]
+        [Given(@"Following property area breakdown is defined")]
         public void GivenFollowingProperyAreasBreakdownAreDefined(Table table)
         {
             this.areaList = table.CreateSet<Area>().ToList();
         }
 
-        [Given(@"Following propery areas breakdown are defined and put in data base")]
+        [Given(@"Following property area breakdown is in database")]
         public void GivenFollowingProperyAreasBreakdownAreDefinedAndPutInDb(Table table)
         {
             this.propertyAreaBreakdownList = table.CreateSet<PropertyAreaBreakdown>().ToList();
@@ -124,7 +124,7 @@
                 c1.PropertyId.Equals(c2.PropertyId));
         }
 
-        [Then(@"Property area breakdowns should have new order")]
+        [Then(@"Property area breakdown should have new order")]
         public void ThenPropertyAreaBreakdownsShouldHaveNewOrder(Table table)
         {
             List<PropertyAreaBreakdown> currentPropertyAreaBreakdownList =
@@ -134,7 +134,8 @@
 
             currentPropertyAreaBreakdownList.Should()
                                             .Equal(expectedAreaBreakdown,
-                                                (c1, c2) => c1.Name.Equals(c2.Name) && c1.Order.Equals(c2.Order) && c1.Size.Equals(c2.Size));
+                                                (c1, c2) =>
+                                                    c1.Name.Equals(c2.Name) && c1.Order.Equals(c2.Order) && c1.Size.Equals(c2.Size));
         }
     }
 }
