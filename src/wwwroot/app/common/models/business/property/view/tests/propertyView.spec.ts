@@ -3,7 +3,9 @@
 module Antares {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
-    import Enums = Common.Models.Enums;
+
+    import runDescribe = TestHelpers.runDescribe;
+    type TestCase = [string, boolean];
 
     describe('Given propertyView', () => {
         it('when no areas breakdown then total area should be 0', () => {
@@ -27,5 +29,19 @@ module Antares {
             property.propertyAreaBreakdowns.push(area2);
             expect(property.totalAreaBreakdown).toBe(20.91);
         });
+
+        runDescribe('when division code ')
+            .data<TestCase>([
+                ['Commercial', true],
+                ['Residential', false]])
+            .dataIt((data: TestCase) =>
+                `is set to "${data[0]}" then isCommercial flag should be ${data[1] ? 'true' : 'false'}`)
+            .run((data: TestCase) => {
+                // arrange / act / assert
+                var property = Antares.TestHelpers.PropertyGenerator.generatePropertyView();
+                property.division.code = data[0];
+
+                expect(property.isCommercial()).toBe(data[1]);
+            });
     });
 }
