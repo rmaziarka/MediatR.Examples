@@ -12,6 +12,5 @@
                 angular.extend(this, propertyArea);
             }
         }
-
     }
 }

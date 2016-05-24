@@ -224,7 +224,7 @@
     "RESIDENTIAL": {
       "HEADER": "Negotiators",
       "LEAD": "Lead negotiator",
-      "SECONDARY": "Secondary negotiator",
+      "SECONDARY": "Secondary negotiators",
       "EMPTY": "No negotiators added yet",
       "ADD": "Add a negotiator",
       "FIND": "Find a negotiator"
@@ -232,7 +232,7 @@
     "COMMERCIAL": {
       "HEADER": "Surveyor",
       "LEAD": "Lead surveyor",
-      "SECONDARY": "Secondary surveyor",
+      "SECONDARY": "Secondary surveyors",
       "EMPTY": "No surveyor added yet",
       "ADD": "Add a surveyor",
       "FIND": "Find a surveyor"
