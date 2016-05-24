@@ -10,7 +10,7 @@ Scenario: Create property area breakdown
 		And Property with Address and Commercial division is in database
 			| PropertyName | PropertyNumber | Line2 | Line3 | Postcode | City | County |
 			|              |                |       |       | N1C      |      |        |
-		And Following propery areas breakdown are defined
+		And Following property area breakdown is defined
 			| Name  | Size   |
 			| area1 | 100    |
 			| area2 | 1000   |
@@ -29,7 +29,7 @@ Scenario Outline: Create area breakdown with invalid data
 		And Property with Address and Commercial division is in database
 			| PropertyName | PropertyNumber | Line2 | Line3 | Postcode | City | County |
 			|              |                |       |       | N1C      |      |        |
-		And Following propery areas breakdown are defined
+		And Following property area breakdown is defined
 			| Name   | Size   |
 			| <name> | <size> |
 	When User creates defined property area breakdown for <property> property
@@ -47,12 +47,12 @@ Scenario: Get property with property area breakdown
 	Given User gets GB address form for Property and country details
         And User gets Office for PropertyType
         And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode   | enumTypeItemCode |
-			| Division       | Commercial      |
+			| enumTypeCode | enumTypeItemCode |
+			| Division     | Commercial       |
 		And Property with Address and Commercial division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
-		And Following propery areas breakdown are defined and put in data base
+		And Following property area breakdown is in database
 			| Name  | Size   | Order |
 			| area1 | 0.1    | 0     |
 			| area2 | 1000   | 1     |
@@ -61,42 +61,40 @@ Scenario: Get property with property area breakdown
 	Then User should get OK http status code
 		And Returned property area breakdowns are as expected
 
-
 @Property
 Scenario: Update property area breakdown order
 	Given User gets GB address form for Property and country details
         And User gets Office for PropertyType
         And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode   | enumTypeItemCode |
-			| Division       | Commercial      |
+			| enumTypeCode | enumTypeItemCode |
+			| Division     | Commercial       |
 		And Property with Address and Commercial division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
-		And Following propery areas breakdown are defined and put in data base
+		And Following property area breakdown is in database
 			| Name  | Size   | Order |
 			| area1 | 0.1    | 0     |
 			| area2 | 1000   | 1     |
 			| area3 | 999.99 | 2     |
 	When User sets 2 order for area1 property area breakdown for latest property
 	Then User should get OK http status code
-		And Property area breakdowns should have new order
+		And Property area breakdown should have new order
 			| Name  | Size   | Order |
 			| area1 | 0.1    | 2     |
 			| area2 | 1000   | 0     |
 			| area3 | 999.99 | 1     |
 
-
-	@Property
-Scenario Outline: Try to update property area breakdown order with improper data
+@Property
+Scenario Outline: Update property area breakdown order with invalid data
 	Given User gets GB address form for Property and country details
         And User gets Office for PropertyType
         And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode   | enumTypeItemCode |
-			| Division       | Commercial      |
+			| enumTypeCode | enumTypeItemCode |
+			| Division     | Commercial       |
 		And Property with Address and Commercial division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
-		And Following propery areas breakdown are defined and put in data base
+		And Following property area breakdown is in database
 			| Name  | Size   | Order |
 			| area1 | 0.1    | 0     |
 			| area2 | 1000   | 1     |
