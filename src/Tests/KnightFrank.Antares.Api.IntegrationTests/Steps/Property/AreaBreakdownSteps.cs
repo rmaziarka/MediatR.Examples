@@ -66,11 +66,13 @@
             this.propertyId = property.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(property);
 
             string url = $"{ApiUrl}/{this.propertyId}/areabreakdown";
+
             var command = new CreateAreaBreakdownCommand
             {
                 PropertyId = this.propertyId,
                 Areas = this.areaList
             };
+
             HttpResponseMessage response = this.fixture.SendPostRequest(url, command);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
@@ -78,13 +80,8 @@
         [When(@"User sets (.*) order for (.*) property area breakdown for (.*) property")]
         public void WhenUserSetsOrderForPropertyAreaBreakdown(int order, string name, string property)
         {
-            this.propertyId = property.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(property);
+            PropertyAreaBreakdown propertyAreaBreakdown = this.GetPropertyAreaBreakdown(property, name);
             string url = $"{ApiUrl}/{this.propertyId}/areabreakdown/order";
-
-            Property areaBreakdownProperty = this.fixture.DataContext.Properties.SingleOrDefault(x => x.Id.Equals(this.propertyId));
-
-            PropertyAreaBreakdown propertyAreaBreakdown =
-                areaBreakdownProperty?.PropertyAreaBreakdowns.SingleOrDefault(area => area.Name.Equals(name));
 
             var command = new UpdateAreaBreakdownOrderCommand
             {
@@ -97,7 +94,26 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [Then(@"Added property area breakdowns exists in data base")]
+        [When(@"User updates (.*) name and (.*) size property area breakdown with (.*) for (.*) property")]
+        public void WhenUserUpdatesAndPropertyAreaBreakdownWithForProperty(string updatedName, int updatedPropertySize, string name,
+            string property)
+        {
+            PropertyAreaBreakdown propertyAreaBreakdown = this.GetPropertyAreaBreakdown(property, name);
+            string url = $"{ApiUrl}/{this.propertyId}/areabreakdown";
+
+            var command = new UpdateAreaBreakdownCommand
+            {
+                PropertyId = this.propertyId,
+                Id = this.GetPropertyAreaBreakdown(property, name)?.Id ?? Guid.NewGuid(),
+                Name = updatedName,
+                Size = updatedPropertySize
+            };
+
+            HttpResponseMessage response = this.fixture.SendPutRequest(url, command);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        [Then(@"Added property area breakdowns should exist in data base")]
         public void ThenAddedPropertyAreaBreakdownsExistsInDataBase()
         {
             List<PropertyAreaBreakdown> currentPropertyAreaBreakdownList =
@@ -111,7 +127,7 @@
             }
         }
 
-        [Then(@"Returned property area breakdowns are as expected")]
+        [Then(@"Returned property area breakdowns should be as expected")]
         public void ThenReturnedPropertyAreaBreakdownsAreAsExpected()
         {
             var propertyFromResponse = JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent());
@@ -124,7 +140,7 @@
                 c1.PropertyId.Equals(c2.PropertyId));
         }
 
-        [Then(@"Property area breakdown should have new order")]
+        [Then(@"Property area breakdown should be updated")]
         public void ThenPropertyAreaBreakdownsShouldHaveNewOrder(Table table)
         {
             List<PropertyAreaBreakdown> currentPropertyAreaBreakdownList =
@@ -136,6 +152,15 @@
                                             .Equal(expectedAreaBreakdown,
                                                 (c1, c2) =>
                                                     c1.Name.Equals(c2.Name) && c1.Order.Equals(c2.Order) && c1.Size.Equals(c2.Size));
+        }
+
+        private PropertyAreaBreakdown GetPropertyAreaBreakdown(string property, string name)
+        {
+            this.propertyId = property.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(property);
+
+            Property areaBreakdownProperty = this.fixture.DataContext.Properties.SingleOrDefault(x => x.Id.Equals(this.propertyId));
+
+            return areaBreakdownProperty?.PropertyAreaBreakdowns.SingleOrDefault(area => area.Name.Equals(name));
         }
     }
 }
