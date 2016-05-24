@@ -21,7 +21,7 @@
       "PROPERTIES": "Properties"
     },
     "MAKEOFFER": "Make an offer",
-    "UNEXPECTED_SERVER_ERROR": "Unexpected error has occured"
+    "UNEXPECTED_SERVER_ERROR": "Unexpected error occured. Please try again or contact system administrator."
   },
   "OWNERSHIP": {
     "ADD": {
