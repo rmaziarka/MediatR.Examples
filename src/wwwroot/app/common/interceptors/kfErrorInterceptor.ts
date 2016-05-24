@@ -8,7 +8,7 @@ module Antares.Services {
             private $q: ng.IQService) {
         }
 
-        responseError = (rejection: ng.IHttpPromiseCallbackArg<any>) => {
+        responseError = (rejection: ng.IHttpPromiseCallbackArg<any>) =>{
             if (rejection.status === 500) {
                 this.kfMessageService.showErrorByCode('COMMON.UNEXPECTED_SERVER_ERROR');
             }
@@ -20,4 +20,6 @@ module Antares.Services {
             return new KfErrorInterceptor(kfMessageService, $q);
         }
     }
+
+    angular.module('app').factory('kfErrorInterceptor', KfErrorInterceptor.factory);
 }

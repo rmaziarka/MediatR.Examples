@@ -2,6 +2,7 @@
 module Antares {
     import Business = Common.Models.Business;
     import PropertyAddController = Property.PropertyAddController;
+    import KfMessageService = Services.KfMessageService;
 
     describe('Given add property page is loaded', () => {
         var scope: ng.IScope,
@@ -11,7 +12,8 @@ module Antares {
             state: ng.ui.IStateService,
             controller: PropertyAddController,
             assertValidator: TestHelpers.AssertValidators,
-            q: ng.IQService;
+            q: ng.IQService,
+            messageService: KfMessageService;
 
         var pageObjectSelectors = {
             propertyTypeSelector: 'select#type'
@@ -47,7 +49,8 @@ module Antares {
                 $compile: ng.ICompileService,
                 $state: ng.ui.IStateService,
                 $httpBackend: ng.IHttpBackendService,
-                $q: ng.IQService) => {
+                $q: ng.IQService,
+                kfMessageService: KfMessageService) => {
 
                 // init
                 scope = $rootScope.$new();
@@ -55,6 +58,7 @@ module Antares {
                 state = $state;
                 $http = $httpBackend;
                 q = $q;
+                messageService = kfMessageService;
 
                 // http backend
                 $http.whenGET(/\/api\/resources\/countries\/addressform\?entityTypeItemCode=Property/).respond(() => {
@@ -180,7 +184,7 @@ module Antares {
                     expect(controller.save).toHaveBeenCalled();
                 });
 
-                it('then put request is called and redirect to view page', () => {
+                it('then put request is called and redirect to view page with success message', () => {
                     var addressFormMock: Business.AddressForm = new Business.AddressForm('adrfrmId1', countryMockId, []);
                     $http.whenGET(/\/api\/addressForms\/\?entityType=Property&countryCode=GB/).respond(() => {
                         return [200, addressFormMock];
@@ -206,6 +210,8 @@ module Antares {
                         return stateDeffered.promise;
                     });
 
+                    spyOn(messageService, 'showSuccessByCode');
+
                     newPropertyMock.address = new Business.Address();
 
                     newPropertyMock.address.id = 'adrId1';
@@ -222,11 +228,13 @@ module Antares {
                     $http.flush();
 
                     expect(state.go).toHaveBeenCalled();
+                    expect(messageService.showSuccessByCode).toHaveBeenCalledWith('PROPERTY.ADD.PROPERTY_ADD_SUCCESS');
+
                     expect(requestData.id).toEqual(newPropertyMock.id);
                     expect(propertyId).toEqual(propertyFromServerMock.id);
                 });
 
-                it('then hidden attribte values are removed', () => {
+                it('then hidden attribute values are removed', () => {
                     $http.whenPOST(/\/api\/properties/).respond(() => {
                         return [200, {}];
                     });
@@ -259,6 +267,36 @@ module Antares {
                     expect(controller.property.attributeValues.maxGuestRooms).not.toBeNull();
                     expect(controller.property.attributeValues.minReceptions).toBeNull();
                     expect(controller.property.attributeValues.maxReceptions).toBeNull();
+                });
+
+                it('when server error occurs then error message is displayed and no redirect occurs', () =>{
+                    var
+                        requestData: Business.CreateOrUpdatePropertyResource,
+                        response: any= {};
+
+                    $http.expectPOST(/\/api\/properties/, (data: string) =>{
+                        requestData = JSON.parse(<string>data);
+
+                        return true;
+                    }).respond(() =>{
+                        return [500, response];
+                    });
+
+                    spyOn(state, 'go');
+                    spyOn(messageService, 'showErrors');
+
+                    scope.$apply();
+
+                    var button = element.find('button#saveBtn');
+                    button.click();
+                    $http.flush();
+
+                    expect(messageService.showErrors).toHaveBeenCalled();
+                    var showErrorsCallArgs = (<jasmine.Spy>messageService.showErrors).calls.mostRecent().args;
+                    expect(showErrorsCallArgs.length).toEqual(1);
+                    expect(showErrorsCallArgs[0].data).toBeDefined();
+                    expect(showErrorsCallArgs[0].data).toEqual(response);
+                    expect(state.go).not.toHaveBeenCalled();
                 });
             });
 
