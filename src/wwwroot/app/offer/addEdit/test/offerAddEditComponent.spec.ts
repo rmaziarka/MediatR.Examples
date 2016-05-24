@@ -13,6 +13,7 @@ module Antares {
             element: ng.IAugmentedJQuery,
             assertValidator: TestHelpers.AssertValidators,
             $http: ng.IHttpBackendService,
+            $compileService: ng.ICompileService,
             controller: OfferAddEditController;
 
         var pageObjectSelectors: any = {
@@ -51,34 +52,35 @@ module Antares {
             enumService: Mock.EnumServiceMock) =>{
 
             $http = $httpBackend;
+            $compileService = $compile;
             scope = $rootScope.$new();
             scope["requirement"] = requirementMock;
 
             // enums
             enumService.setEnum(Dto.EnumTypeCode.OfferStatus.toString(), offerStatuses);
 
-            element = $compile('<offer-add-edit requirement="requirement"></offer-add-edit>')(scope);
-            scope.$apply();
-
-            controller = element.controller('offerAddEdit');
-            assertValidator = new TestHelpers.AssertValidators(element, scope);
         }));
 
-        it('all form elements are rendered', () =>{
-            for (var formElementSelector in pageObjectSelectors) {
-                if (pageObjectSelectors.hasOwnProperty(formElementSelector)) {
-                    var formElement = element.find(pageObjectSelectors[formElementSelector]);
-                    expect(formElement.length).toBe(1, `Element ${formElementSelector} not found`);
-                }
-            }
-        });
-
         describe('is in add mode ', () =>{
-            beforeEach(() =>{
+            beforeEach(() => {
+                    element = $compileService('<offer-add requirement="requirement"></offer-add-edit>')(scope);
+                    scope.$apply();
+
+                    controller = element.controller('offerAdd');
+                    assertValidator = new TestHelpers.AssertValidators(element, scope);
                     controller.mode = "add";
                     scope.$apply();
                 }
             );
+
+            it('all form elements are rendered', () => {
+                for (var formElementSelector in pageObjectSelectors) {
+                    if (pageObjectSelectors.hasOwnProperty(formElementSelector)) {
+                        var formElement = element.find(pageObjectSelectors[formElementSelector]);
+                        expect(formElement.length).toBe(1, `Element ${formElementSelector} not found`);
+                    }
+                }
+            });
 
             it('then New status is selected by default', () =>{
                 var status = element.find(pageObjectSelectors.status);
@@ -182,11 +184,25 @@ module Antares {
             });
         });
         describe('is in edit mode', () =>{
-            beforeEach(() =>{
+            beforeEach(() => {
+                    element = $compileService('<offer-edit requirement="requirement"></offer-add-edit>')(scope);
+                    scope.$apply();
+
+                    controller = element.controller('offerEdit');
+                    assertValidator = new TestHelpers.AssertValidators(element, scope);
                     controller.mode = "edit";
                     scope.$apply();
                 }
             );
+
+            it('all form elements are rendered', () => {
+                for (var formElementSelector in pageObjectSelectors) {
+                    if (pageObjectSelectors.hasOwnProperty(formElementSelector)) {
+                        var formElement = element.find(pageObjectSelectors[formElementSelector]);
+                        expect(formElement.length).toBe(1, `Element ${formElementSelector} not found`);
+                    }
+                }
+            });
 
             it('then negotiator is displayed', () =>{
                 var negotiatorSection = element.find(pageObjectSelectors.negotiatorSection);
