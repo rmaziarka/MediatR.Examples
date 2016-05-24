@@ -34,6 +34,7 @@
     </None>
     <Content Include="DSC\KnightFrank-Antares-Vm-Elasticsearch-DSCConfiguration.ps1" />
     <Content Include="Scripts\Deploy-AzureResourceGroup.ps1" />
+    <Content Include="Templates\settings.json" />
     <Content Include="Templates\azuredeploy.parameters.test.json" />
     <Content Include="Templates\azuredeploy.json" />
     <Content Include="Templates\azuredeploy.parameters.dev.json" />
