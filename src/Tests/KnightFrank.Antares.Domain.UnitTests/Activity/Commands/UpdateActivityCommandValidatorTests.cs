@@ -24,26 +24,11 @@
     [Collection("UpdateActivityCommandValidator")]
     public class UpdateActivityCommandValidatorTests
     {
-        private readonly Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository;
-        private readonly Mock<IGenericRepository<ActivityType>> activityTypeRepository;
-        private readonly Mock<IGenericRepository<Activity>> activityRepository;
-        private readonly Mock<IGenericRepository<ActivityTypeDefinition>> activityTypeDefinitionRepository;
         private readonly UpdateActivityCommandValidator validator;
 
         public UpdateActivityCommandValidatorTests()
         {
             IFixture fixture = new Fixture().Customize();
-
-            this.enumTypeItemRepository = fixture.Freeze<Mock<IGenericRepository<EnumTypeItem>>>();
-            this.activityTypeRepository = fixture.Freeze<Mock<IGenericRepository<ActivityType>>>();
-            this.activityRepository = fixture.Freeze<Mock<IGenericRepository<Activity>>>();
-            this.activityTypeDefinitionRepository = fixture.Freeze<Mock<IGenericRepository<ActivityTypeDefinition>>>();
-
-            this.enumTypeItemRepository.Setup(r => r.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(true);
-            this.activityTypeRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityType, bool>>>())).Returns(true);
-            this.activityRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new Activity());
-            this.activityTypeDefinitionRepository.Setup(r => r.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>())).Returns(true);
-
             this.validator = fixture.Create<UpdateActivityCommandValidator>();
         }
 
@@ -173,60 +158,6 @@
             ValidationResult validationResult = this.validator.Validate(command);
 
             validationResult.IsValid.Should().BeTrue();
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_NotExistingActivityIdInCommand_When_Validating_Then_ShouldReturnValidationError(
-            UpdateActivityCommand command)
-        {
-            this.activityRepository.Setup(x => x.GetById(command.Id)).Returns((Activity)null);
-
-            ValidationResult validationResult = this.validator.Validate(command);
-
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(x => x.ErrorMessage == "Activity does not exist.");
-            validationResult.Errors.Should().ContainSingle(x => x.PropertyName == nameof(command.Id));
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_NotExistingActivityStatusIdInCommand_When_Validating_Then_ShouldReturnValidationError(
-           UpdateActivityCommand command)
-        {
-            this.enumTypeItemRepository.Setup(x => x.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(false);
-
-            ValidationResult validationResult = this.validator.Validate(command);
-
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(x => x.PropertyName == nameof(command.ActivityStatusId));
-        }
-
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_NotExistingActivityTypeInCommand_When_Validating_Then_ShouldReturnValidationError(
-            UpdateActivityCommand command)
-        {
-            this.activityTypeRepository.Setup(x => x.Any(It.IsAny<Expression<Func<ActivityType, bool>>>())).Returns(false);
-
-            ValidationResult validationResult = this.validator.Validate(command);
-
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(x => x.PropertyName == nameof(command.ActivityTypeId));
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_NotExistingActivityTypeDefinitionInCommand_When_Validating_Then_ShouldReturnValidationError(
-            UpdateActivityCommand command)
-        {
-            this.activityTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>())).Returns(false);
-
-            ValidationResult validationResult = this.validator.Validate(command);
-
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(x => x.PropertyName == nameof(command.ActivityTypeId));
         }
 
         private static void AssertIfNotNegativePriceValidation(UpdateActivityCommand command,

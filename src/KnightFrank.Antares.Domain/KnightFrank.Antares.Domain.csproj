@@ -133,6 +133,7 @@
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQuery.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidator.cs" />
     <Compile Include="Characteristic\QueryHandlers\CharacteristicGroupsQueryHandler.cs" />
+    <Compile Include="Common\BusinessValidators\ActivityTypeDefinitionValidator.cs" />
     <Compile Include="Common\BusinessValidators\AddressValidator.cs" />
     <Compile Include="Common\BusinessValidators\CollectionValidator.cs" />
     <Compile Include="Common\BusinessValidators\CommonResources.cs">
@@ -141,6 +142,7 @@
       <DependentUpon>CommonResources.tt</DependentUpon>
     </Compile>
     <Compile Include="Common\BusinessValidators\EnumTypeItemValidator.cs" />
+    <Compile Include="Common\BusinessValidators\IActivityTypeDefinitionValidator.cs" />
     <Compile Include="Common\BusinessValidators\IAddressValidator.cs" />
     <Compile Include="Common\BusinessValidators\ICollectionValidator.cs" />
     <Compile Include="Common\BusinessValidators\IEnumTypeItemValidator.cs" />
