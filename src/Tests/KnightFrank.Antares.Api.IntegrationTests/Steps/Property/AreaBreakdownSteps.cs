@@ -41,13 +41,13 @@
         }
 
         [Given(@"Following property area breakdown is defined")]
-        public void GivenFollowingProperyAreasBreakdownAreDefined(Table table)
+        public void DefineAreaBreakdown(Table table)
         {
             this.areaList = table.CreateSet<Area>().ToList();
         }
 
         [Given(@"Following property area breakdown is in database")]
-        public void GivenFollowingProperyAreasBreakdownAreDefinedAndPutInDb(Table table)
+        public void CreateAreaBreakdownInDatabase(Table table)
         {
             this.propertyAreaBreakdownList = table.CreateSet<PropertyAreaBreakdown>().ToList();
 
@@ -61,7 +61,7 @@
         }
 
         [When(@"User creates defined property area breakdown for (.*) property")]
-        public void WhenUserCreatesDefinedPropertyAreaBreakdown(string property)
+        public void CreateAreaBreakdown(string property)
         {
             this.propertyId = property.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(property);
 
@@ -78,7 +78,7 @@
         }
 
         [When(@"User sets (.*) order for (.*) property area breakdown for (.*) property")]
-        public void WhenUserSetsOrderForPropertyAreaBreakdown(int order, string name, string property)
+        public void SetAreaBreakdownOrder(int order, string name, string property)
         {
             PropertyAreaBreakdown propertyAreaBreakdown = this.GetPropertyAreaBreakdown(property, name);
             string url = $"{ApiUrl}/{this.propertyId}/areabreakdown/order";
@@ -95,8 +95,7 @@
         }
 
         [When(@"User updates (.*) name and (.*) size property area breakdown with (.*) for (.*) property")]
-        public void WhenUserUpdatesAndPropertyAreaBreakdownWithForProperty(string updatedName, int updatedPropertySize, string name,
-            string property)
+        public void UpdatePropertyAreaBreakdown(string updatedName, int updatedPropertySize, string name, string property)
         {
             PropertyAreaBreakdown propertyAreaBreakdown = this.GetPropertyAreaBreakdown(property, name);
             string url = $"{ApiUrl}/{this.propertyId}/areabreakdown";
@@ -104,7 +103,7 @@
             var command = new UpdateAreaBreakdownCommand
             {
                 PropertyId = this.propertyId,
-                Id = this.GetPropertyAreaBreakdown(property, name)?.Id ?? Guid.NewGuid(),
+                Id = propertyAreaBreakdown?.Id ?? Guid.NewGuid(),
                 Name = updatedName,
                 Size = updatedPropertySize
             };
@@ -113,8 +112,8 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [Then(@"Added property area breakdowns should exist in data base")]
-        public void ThenAddedPropertyAreaBreakdownsExistsInDataBase()
+        [Then(@"Added property area breakdown should exist in data base")]
+        public void CheckAreaBreakdownInDatabase()
         {
             List<PropertyAreaBreakdown> currentPropertyAreaBreakdownList =
                 this.fixture.DataContext.Properties.Single(x => x.Id.Equals(this.propertyId)).PropertyAreaBreakdowns.ToList();
@@ -127,8 +126,8 @@
             }
         }
 
-        [Then(@"Returned property area breakdowns should be as expected")]
-        public void ThenReturnedPropertyAreaBreakdownsAreAsExpected()
+        [Then(@"Returned property area breakdown should be as expected")]
+        public void CheckAreaBreakdown()
         {
             var propertyFromResponse = JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent());
 
@@ -141,7 +140,7 @@
         }
 
         [Then(@"Property area breakdown should be updated")]
-        public void ThenPropertyAreaBreakdownsShouldHaveNewOrder(Table table)
+        public void CheckAreaBreakdownAfterUpdate(Table table)
         {
             List<PropertyAreaBreakdown> currentPropertyAreaBreakdownList =
                 this.fixture.DataContext.Properties.Single(x => x.Id.Equals(this.propertyId)).PropertyAreaBreakdowns.ToList();

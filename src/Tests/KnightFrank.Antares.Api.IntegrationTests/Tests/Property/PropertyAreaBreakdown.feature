@@ -17,7 +17,7 @@ Scenario: Create property area breakdown
 			| area3 | 999.99 |
 	When User creates defined property area breakdown for latest property
 	Then User should get OK http status code
-		And Added property area breakdowns should exist in data base
+		And Added property area breakdown should exist in data base
 
 @Property
 Scenario Outline: Create area breakdown with invalid data
@@ -59,7 +59,7 @@ Scenario: Get property with property area breakdown
 			| area3 | 999.99 | 2     |
 	When User retrieves property details
 	Then User should get OK http status code
-		And Returned property area breakdowns should be as expected
+		And Returned property area breakdown should be as expected
 
 @Property
 Scenario Outline: Update property area breakdown order
@@ -79,7 +79,7 @@ Scenario Outline: Update property area breakdown order
 	When User sets <order1> order for area1 property area breakdown for latest property
 	Then User should get OK http status code
 		And Property area breakdown should be updated
-			| Name  | Size   | Order |
+			| Name  | Size   | Order    |
 			| area1 | 0.1    | <order1> |
 			| area2 | 1000   | <order2> |
 			| area3 | 999.99 | <order3> |
@@ -89,8 +89,8 @@ Scenario Outline: Update property area breakdown order
 		| 2      | 0      | 1      |
 		| 0      | 1      | 2      |
 
-	@Property
-Scenario Outline: Try to update property area breakdown order with invalid data
+@Property
+Scenario Outline: Update property area breakdown order with invalid data
 	Given User gets GB address form for Property and country details
         And User gets Office for PropertyType
         And User gets EnumTypeItemId and EnumTypeItem code
@@ -129,16 +129,16 @@ Scenario: Update property area breakdown name and size
 			| area1 | 0.1    | 0     |
 			| area2 | 1000   | 1     |
 			| area3 | 999.99 | 2     |
-	When User updates updatedAreaaName name and 1024 size property area breakdown with area1 for latest property
+	When User updates updatedAreaName name and 1024 size property area breakdown with area1 for latest property
 	Then User should get OK http status code
 		And Property area breakdown should be updated
-			| Name             | Size   | Order |
-			| updatedAreaaName | 1024   | 0     |
-			| area2            | 1000   | 1     |
-			| area3            | 999.99 | 2     |
+			| Name            | Size   | Order |
+			| updatedAreaName | 1024   | 0     |
+			| area2           | 1000   | 1     |
+			| area3           | 999.99 | 2     |
 
 @Property
-Scenario Outline: Try to update property area breakdown name and size with invalida name
+Scenario Outline: Update property area breakdown name and size with invalid name
 	Given User gets GB address form for Property and country details
         And User gets Office for PropertyType
         And User gets EnumTypeItemId and EnumTypeItem code
