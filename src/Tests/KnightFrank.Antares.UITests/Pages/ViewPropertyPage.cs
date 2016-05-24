@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -44,7 +45,10 @@
         private readonly ElementLocator areaSize = new ElementLocator(Locator.CssSelector, "card-list-items > div:nth-of-type({0}) .card-info");
         private readonly ElementLocator areaActions = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'propertyAreaBreakdown']:nth-of-type({0}) .card-menu-button");
         private readonly ElementLocator areaEdit = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'propertyAreaBreakdown']:nth-of-type({0}) [action *= 'showAreaEdit']");
-        
+        // Locators for messages
+        private readonly ElementLocator successMessage = new ElementLocator(Locator.CssSelector, ".alert-success {0}");
+        private readonly ElementLocator messageText = new ElementLocator(Locator.CssSelector, ".growl-message");
+
         public ViewPropertyPage(DriverContext driverContext) : base(driverContext)
         {
         }
@@ -67,6 +71,8 @@
 
         public string ActivityType => this.Driver.GetElement(this.activityType).Text;
 
+        public string SuccessMessage => this.Driver.GetElement(this.successMessage.Format(this.messageText.Value)).Text;
+
         public ViewPropertyPage OpenViewPropertyPageWithId(string id)
         {
             new CommonPage(this.DriverContext).NavigateToPageWithId("view property", id);
@@ -83,6 +89,17 @@
         {
             this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.MediumTimeout);
             return this;
+        }
+
+        public ViewPropertyPage WaitForSuccessMessageToHide()
+        {
+            this.Driver.WaitUntilElementIsNoLongerFound(this.successMessage.Format(string.Empty), TimeSpan.FromSeconds(6).TotalSeconds);
+            return this;
+        }
+
+        public bool IsSuccessMessageDisplayed()
+        {
+            return this.Driver.IsElementPresent(this.successMessage.Format(string.Empty), BaseConfiguration.MediumTimeout);
         }
 
         public bool IsAddressDetailsVisible(string propertyDetail)
@@ -192,6 +209,7 @@
 
         public ViewPropertyPage OpenAreaActions(int position)
         {
+            this.Driver.ScrollIntoMiddle(this.areaActions.Format(position));
             this.Driver.GetElement(this.areaActions.Format(position)).Click();
             return this;
         }

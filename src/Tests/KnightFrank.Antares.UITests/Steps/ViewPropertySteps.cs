@@ -303,5 +303,15 @@
                 c1.Order.Equals(c2.Order) &&
                 c1.Size.Equals(c2.Size));
         }
+
+        [Then(@"Property created success message should be displayed")]
+        public void CheckIfSuccessMessageDisplayed()
+        {
+            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+            Verify.That(this.driverContext,
+                () => Assert.True(page.IsSuccessMessageDisplayed()),
+                () => Assert.Equal("New property has been created", page.SuccessMessage));
+            page.WaitForSuccessMessageToHide();
+        }
     }
 }
