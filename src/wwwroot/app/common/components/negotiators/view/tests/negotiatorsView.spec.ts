@@ -85,7 +85,7 @@ module Antares {
             });
 
             describe('when secondary negotiators list is empty', () => {
-                it('then no secondary negotiators id visible', () => {
+                it('then no secondary negotiators message is visible', () => {
                     scope.secondaryNegotiators = null;
                     scope.$apply();
 

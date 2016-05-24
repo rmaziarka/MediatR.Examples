@@ -11,7 +11,7 @@
                     <h3 class="page-header" translate="PROPERTY.VIEW.DETAILS"></h3>
                     <property-details property="vm.property" user-data="vm.userData"></property-details>
                 </section>
-                <section ng-if="vm.property.isCommercial()">
+                <section ng-if="vm.property.isCommercial()" id="areaBreakdownSection">
                     <card-list id="card-list-areas" show-item-add="vm.showAreaAdd">
                         <card-list-header>
                             <h3 class="page-header" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.LIST.AREA_BREAKDOWN"></h3>
@@ -33,7 +33,7 @@
                         <card-list-items as-sortable="vm.areaBreakdownDndOptions" ng-model="vm.property.propertyAreaBreakdowns">
                             <div ng-repeat="propertyAreaBreakdown in vm.property.propertyAreaBreakdowns track by propertyAreaBreakdown.id" as-sortable-item>
                                 <div as-sortable-item-handle>
-                                    <card show-context-menu="true" display-new-control="true"
+                                    <card show-context-menu="true" display-new-control="true" data-type-area-breakdown="{{propertyAreaBreakdown.id}}"
                                           card-template-url="'app/property/view/areaBreakdown/list/areaBreakdownCard.html'" item="propertyAreaBreakdown">
                                         <card-context-menu>
                                             <context-menu-item type="edit" item="propertyAreaBreakdown" action="vm.showAreaEdit"></context-menu-item>
