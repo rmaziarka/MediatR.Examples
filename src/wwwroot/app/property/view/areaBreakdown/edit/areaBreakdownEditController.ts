@@ -8,9 +8,9 @@ module Antares.Property.View.AreaBreakdown {
 
     export class AreaBreakdownEditController {
         private componentId: string;
-        private propertyAreaBreakdown: Business.UpdatePropertyAreaBreakdownResource;
         private propertyAreaBreakdownResourceService: Resources.IPropertyAreaBreakdownResourceClass;
 
+        public propertyAreaBreakdown: Business.UpdatePropertyAreaBreakdownResource;
         constructor(componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
             private $q: ng.IQService,

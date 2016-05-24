@@ -24,6 +24,35 @@ module Antares {
             controller = <PropertyViewController>$controller('propertyViewController', { $scope: scope }, bindings);
         }));
 
+        describe('when showAreaAdd is executed', () => {
+            var clearAreasSpy = jasmine.createSpy('clearAreasSpy');
+            var shownPanel: any;
+
+            beforeEach(() => {
+                spyOn(controller.components, 'areaAdd').and.returnValue({
+                    clearAreas: clearAreasSpy
+                });
+
+                spyOn(controller, 'showPanel').and.callFake((panel: any) => { shownPanel = panel; });
+            });
+
+            it('then clearAreas should be called on add area component', () => {
+                // act
+                controller.showAreaAdd();
+
+                // assert
+                expect(clearAreasSpy).toHaveBeenCalled();
+            });
+
+            it('then side panel for adding area should be shown', () => {
+                // act
+                controller.showAreaAdd();
+
+                // assert
+                expect(shownPanel).toBe(controller.components.panels.areaAdd);
+            });
+        });
+
         describe('when saveArea is executed', () => {
             var $q: ng.IQService;
             var saveAreaDefferedMock: ng.IDeferred<Business.PropertyAreaBreakdown[]>;
@@ -48,7 +77,7 @@ module Antares {
                 var newAreasCount: number = 3;
                 var areas: Business.PropertyAreaBreakdown[] = Antares.TestHelpers.PropertyAreaBreakdownGenerator.generateMany(newAreasCount);
 
-                // act 
+                // act
                 controller.saveArea();
                 saveAreaDefferedMock.resolve(areas);
                 scope.$apply();
@@ -68,6 +97,97 @@ module Antares {
 
                 // assert
                 expect(controller.cancelAddArea).toHaveBeenCalled();
+            });
+        });
+
+        describe('when showAreaEdit is executed', () => {
+            var editPropertyAreaBreakdownSpy = jasmine.createSpy('editPropertyAreaBreakdownSpy');
+            var shownPanel: any;
+
+            beforeEach(() => {
+                spyOn(controller.components, 'areaEdit').and.returnValue({
+                    editPropertyAreaBreakdown : editPropertyAreaBreakdownSpy
+                });
+
+                spyOn(controller, 'showPanel').and.callFake((panel: any) =>{ shownPanel = panel; });
+            });
+
+            it('then editPropertyAreaBreakdown should be called on edit area component with area', () => {
+                // arrange
+                var areas: Business.PropertyAreaBreakdown[] = Antares.TestHelpers.PropertyAreaBreakdownGenerator.generateMany(4);
+                var areaToUpdate = Antares.TestHelpers.PropertyAreaBreakdownGenerator.generate();
+
+                controller.property.propertyAreaBreakdowns = areas;
+                areaToUpdate.id = areas[1].id;
+
+                // act
+                controller.showAreaEdit(areaToUpdate);
+
+                // assert
+                expect(editPropertyAreaBreakdownSpy).toHaveBeenCalledWith(areaToUpdate);
+            });
+
+            it('then side panel for updating area should be shown', () => {
+                // arrange
+                var areaToUpdate = Antares.TestHelpers.PropertyAreaBreakdownGenerator.generate();
+                controller.property.propertyAreaBreakdowns.push(areaToUpdate);
+
+                // act
+                controller.showAreaEdit(areaToUpdate);
+
+                // assert
+                expect(shownPanel).toBe(controller.components.panels.areaEdit);
+            });
+        });
+
+        describe('when updateArea is executed', () => {
+            var $q: ng.IQService;
+            var updateAreaDefferedMock: ng.IDeferred<Business.PropertyAreaBreakdown>;
+
+            beforeEach(inject((
+                _$q_: ng.IQService) => {
+
+                $q = _$q_;
+
+                updateAreaDefferedMock = $q.defer();
+
+                spyOn(controller.components, 'areaEdit').and.returnValue({
+                    updatePropertyAreaBreakdown: (propertyId: string) => {
+                        return updateAreaDefferedMock.promise;
+                    }
+                });
+                spyOn(controller, 'cancelEditArea').and.callFake(() => { });
+            }));
+
+            it('then area should be updated within the areas list', () => {
+                // arrange
+                var areas: Business.PropertyAreaBreakdown[] = Antares.TestHelpers.PropertyAreaBreakdownGenerator.generateMany(4);
+                var updatedArea = Antares.TestHelpers.PropertyAreaBreakdownGenerator.generate();
+
+                controller.property.propertyAreaBreakdowns = areas;
+                updatedArea.id = areas[1].id;
+
+                // act
+                controller.updateArea();
+                updateAreaDefferedMock.resolve(updatedArea);
+                scope.$apply();
+
+                // assert
+                expect(controller.property.propertyAreaBreakdowns[1]).toEqual(updatedArea);
+            });
+
+            it('then side panel for updating area should be hiden', () => {
+                // arrange
+                var updatedArea = Antares.TestHelpers.PropertyAreaBreakdownGenerator.generate();
+                controller.property.propertyAreaBreakdowns.push(updatedArea);
+
+                // act
+                controller.updateArea();
+                updateAreaDefferedMock.resolve(updatedArea);
+                scope.$apply();
+
+                // assert
+                expect(controller.cancelEditArea).toHaveBeenCalled();
             });
         });
 

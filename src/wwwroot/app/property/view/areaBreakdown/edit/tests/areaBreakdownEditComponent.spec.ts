@@ -3,7 +3,7 @@
 module Antares {
     import runDescribe = TestHelpers.runDescribe;
 
-    describe('Given areaBreakdownAdd component is loaded', () => {
+    describe('Given areaBreakdown edit component is loaded', () => {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
             $http: ng.IHttpBackendService,
@@ -15,7 +15,8 @@ module Antares {
             addAreaGroup: '.area-details'
         }
 
-        var controller: Property.View.AreaBreakdown.AreaBreakdownAddController;
+        var controller: Property.View.AreaBreakdown.AreaBreakdownEditController;
+        var areaToUpdateMock = TestHelpers.PropertyAreaBreakdownGenerator.generate();
 
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
@@ -25,11 +26,11 @@ module Antares {
             $http = $httpBackend;
 
             scope = $rootScope.$new();
-            element = $compile('<area-breakdown-add></area-breakdown-add>')(scope);
+            element = $compile('<area-breakdown-edit></area-breakdown-edit>')(scope);
 
             scope.$apply();
 
-            controller = element.controller('areaBreakdownAdd');
+            controller = element.controller('areaBreakdownEdit');
             assertValidator = new TestHelpers.AssertValidators(element, scope);
         }));
 
@@ -44,6 +45,9 @@ module Antares {
                 `and value is "${data[0]}" then required message should ${data[1] ? 'not' : ''} be displayed`)
             .run((data: TestCaseForValidator) => {
                 // arrange / act / assert
+                controller.editPropertyAreaBreakdown(areaToUpdateMock);
+                scope.$apply();
+
                 assertValidator.assertRequiredValidator(data[0], data[1], pageObjectSelectors.firstNameInput);
             });
 
@@ -55,6 +59,9 @@ module Antares {
                 `and length is "${data[0]}" then max length message should ${data[1] ? 'not' : ''} be displayed`)
             .run((data: TestCaseForValidator) => {
                 // arrange / act / assert
+                controller.editPropertyAreaBreakdown(areaToUpdateMock);
+                scope.$apply();
+
                 assertValidator.assertMaxLengthValidator(<number>data[0], data[1], pageObjectSelectors.firstNameInput);
             });
 
@@ -70,7 +77,6 @@ module Antares {
                 assertValidator.assertRequiredValidator(data[0], data[1], pageObjectSelectors.firstSizeInput);
             });
 
-
         runDescribe('when filling size')
             .data<TestCaseForValidator>([
                 [0, false],
@@ -82,16 +88,5 @@ module Antares {
                 // arrange / act / assert
                 assertValidator.assertNumberGreaterThenValidator(<number>data[0], data[1], pageObjectSelectors.firstSizeInput);
             });
-
-        it('then it should generate correct number of area form groups', () => {
-            // arrange & act
-            controller.addNewArea();
-            scope.$apply();
-            var areasCount = controller.areas.length;
-
-            // assert
-            var areasGroups = element.find(pageObjectSelectors.addAreaGroup);
-            expect(areasGroups.length).toBe(areasCount);
-        });
     });
 }

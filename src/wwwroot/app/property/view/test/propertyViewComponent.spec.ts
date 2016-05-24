@@ -20,6 +20,9 @@ module Antares {
                 vendors: '#activity-preview-vendors [id^=activity-preview-vendor-item-]'
             },
             areaBreakdown: {
+                addBtn: '#card-list-areas button#addItemBtn',
+                itemCard: (id: string) => { return '#card-list-areas #area-card-' + id; },
+                editBtn: (id: string) => { return '#card-list-areas #area-card-' + id + ' context-menu-item[type="edit"] a'; },
                 areaBreakdownSection: 'section#areaBreakdownSection',
                 noItems: 'card-list#card-list-areas card-list-no-items',
                 areaBreakdownItems: 'section#areaBreakdownSection card-list-items card[data-type-area-breakdown]'
@@ -538,6 +541,8 @@ module Antares {
                     scope['property'] = new Business.PropertyView(propertyMock);
                     element = compile('<property-view property="property" user-data="userData"></property-view>')(scope);
                     scope.$apply();
+
+                    controller = element.controller('propertyView');
                 });
 
                 it('when area breakdown list is empty then no items message is visible', () => {
@@ -552,15 +557,47 @@ module Antares {
 
                     scope['property'].propertyAreaBreakdowns = areaBreakdownList;
                     scope.$apply();
-                    var cards = element.find(pageObjectSelectors.areaBreakdown.areaBreakdownItems);
-                    
-                    var isOrdered: boolean = _.every(cards, (item, index): boolean => {
-                        var sourceElement: string = areaBreakdownList[index].id;
+                    var cards:any = element.find(pageObjectSelectors.areaBreakdown.areaBreakdownItems);
 
-                        return item.getAttribute('data-type-area-breakdown') === sourceElement;
+                    var isOrdered: boolean = _.every(cards, (item: any, index: number): boolean => {
+                        var sourceElement: string = pageObjectSelectors.areaBreakdown.itemCard(areaBreakdownList[index].id);
+
+                        return item.getAttribute('id') === sourceElement;
                     });
 
                     expect(isOrdered).toBeTruthy();
+                });
+
+                it('when add area breakdown button is clicked then showAreaAdd should be called', () => {
+                    // arrange
+                    spyOn(controller, 'showAreaAdd');
+                    scope.$apply();
+
+                    // act
+                    var button = element.find(pageObjectSelectors.areaBreakdown.addBtn);
+                    button.click();
+                    scope.$apply();
+
+                    // assert
+                    expect(controller.showAreaAdd).toHaveBeenCalled();
+                });
+
+                it('when edit area breakdown button is clicked then showAreaEdit should be called', () => {
+                    // arrange
+                    var areas: Business.PropertyAreaBreakdown[] = Antares.TestHelpers.PropertyAreaBreakdownGenerator.generateMany(3);
+
+                    spyOn(controller, 'showAreaEdit');
+
+                    controller.property.propertyAreaBreakdowns = areas;
+                    scope.$apply();
+
+                    // act
+                    var button = element.find(pageObjectSelectors.areaBreakdown.editBtn(areas[1].id));
+                    button.click();
+                    scope.$apply();
+
+                    // assert
+                    expect(controller.showAreaEdit).toHaveBeenCalledWith(areas[1]);
                 });
             });
         });

@@ -64,7 +64,6 @@ module Antares.Property.View {
             this.showPanel(this.components.panels.activityAdd);
         }
 
-
         showAreaAdd = () => {
             this.components.areaAdd().clearAreas();
             this.showPanel(this.components.panels.areaAdd);
