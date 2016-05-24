@@ -142,14 +142,14 @@ Scenario: Create commercial property
 		| PropertyNumber | PropertyName        | Line2    | Postcode | City      | County    |
 		| 104            | Malmaison Newcastle | Quayside | NE1 3DX  | Newcastle | Newcastle |
 	When User clicks add area breakdown button on view property page
-		And User fills in area details on create area page
+		And User fills in area details on view property page
 			| Name               | Size |
 			| First floor        | 100  |
 			| Second floor       | 150  |
 			| Third floor area A | 70   |
 			| Third floor area B | 30   |
 			| Third floor area C | 50   |
-		And User clicks save button on create area page
+		And User clicks save area button on view property page
 	Then Area breakdown order is following on view property page
 		| Name               | Size |
 		| First floor        | 100  |
@@ -169,3 +169,12 @@ Scenario: Update commercial property area breakdown
 			| 1              | Boringdon Hall Hotel | Boringdon Hill | PL7 4DP  | Plymouth | Devon  |
 		And Property area breakdown is defined
 	When User navigates to view property page with id
+		And User clicks edit area button for 1 area on view property page
+		And User updates area details on view property page
+			| Name        | Size  |
+			| First floor | 20000 |
+		And User clicks save area button on view property page
+	Then Area breakdown order is following on view property page
+		| Name        | Size  |
+		| First floor | 20000 |
+		| 2nd floor   | 10000 |

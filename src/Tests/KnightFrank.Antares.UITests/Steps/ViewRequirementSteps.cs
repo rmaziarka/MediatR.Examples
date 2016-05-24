@@ -111,7 +111,7 @@
                 .OpenViewingDetails(position)
                 .WaitForSidePanelToShow();
         }
-        
+
         [When(@"User clicks (.*) offer details on view requirement page")]
         public void OpenOffersDetails(int position)
         {
