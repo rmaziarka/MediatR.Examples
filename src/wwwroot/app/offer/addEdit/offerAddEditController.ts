@@ -48,9 +48,7 @@ module Antares {
                 this.originalOffer = offer;
                 this.offer = angular.copy(offer);
                 this.activity = offer.activity;
-                this.selectedStatus = this.statuses.find((status: any) =>{
-                    return status.id === this.offer.statusId;
-                });
+                this.selectedStatus = _.find(this.statuses, (status: any) => status.id === this.offer.statusId);
             }
 
             reset = () =>{
