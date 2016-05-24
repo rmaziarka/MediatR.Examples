@@ -146,7 +146,8 @@ module Antares.Property.View {
             this.components.areaEdit().updatePropertyAreaBreakdown(this.property.id).then((area: Business.PropertyAreaBreakdown) => {
                 var index = _.findIndex(this.property.propertyAreaBreakdowns, (item) => { return item.id === area.id });
                 if (index >= 0) {
-                    this.property.propertyAreaBreakdowns[index] = area;
+                    var currentArea = this.property.propertyAreaBreakdowns[index];
+                    angular.extend(currentArea, area);
                     this.cancelEditArea();
                 }
             });
