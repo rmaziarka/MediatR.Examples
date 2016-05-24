@@ -153,23 +153,25 @@ module Antares.Property.View {
         }
 
         areaBreakdownDndOptions: Common.Models.IDndOptions = {
-            dragEnd: this.onAreaDraggedAndDropped
-        };
+            dragEnd: this.onAreaDraggedAndDropped()
+        }
 
-        onAreaDraggedAndDropped = (event: Common.Models.IDndEvent) => {
-            var movedItem: Business.PropertyAreaBreakdown = event.source.itemScope.modelValue;
-            movedItem.order = event.dest.index;
+        onAreaDraggedAndDropped() {
+            return (event: Common.Models.IDndEvent) => {
+                var movedItem: Business.PropertyAreaBreakdown = event.source.itemScope.modelValue;
+                movedItem.order = event.dest.index;
 
-            var params: Resources.IPropertyAreaBreakdownResourceClassParameters = { propertyId: this.property.id };
-            var data = new Business.UpdatePropertyAreaBreakdownOrderResource(movedItem, this.property.id);
+                var params: Resources.IPropertyAreaBreakdownResourceClassParameters = { propertyId: this.property.id };
+                var data = new Business.UpdatePropertyAreaBreakdownOrderResource(movedItem, this.property.id);
 
-            this.dataAccessService.getPropertyAreaBreakdownResource()
-                .updatePropertyAreaBreakdownOrder(params, data)
-                .$promise.then((response: Dto.IPropertyAreaBreakdown[]) => {
-                    var areas = response.map((r: Dto.IPropertyAreaBreakdown) => new Business.PropertyAreaBreakdown(<Dto.IPropertyAreaBreakdown>r));
-                    angular.extend(event.source.sortableScope.modelValue, areas);
-                });
-        };
+                this.dataAccessService.getPropertyAreaBreakdownResource()
+                    .updatePropertyAreaBreakdownOrder(params, data)
+                    .$promise.then((response: Dto.IPropertyAreaBreakdown[]) => {
+                        var areas = response.map((r: Dto.IPropertyAreaBreakdown) => new Business.PropertyAreaBreakdown(<Dto.IPropertyAreaBreakdown>r));
+                        angular.extend(event.source.sortableScope.modelValue, areas);
+                    });
+            }
+        }
 
         defineComponentIds() {
             this.componentIds = {

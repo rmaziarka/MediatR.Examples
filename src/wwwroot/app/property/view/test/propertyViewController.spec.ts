@@ -112,7 +112,7 @@ module Antares {
                 }).respond(201, {});
 
                 // act
-                controller.onAreaDraggedAndDropped(event);
+                controller.onAreaDraggedAndDropped()(event);
                 scope.$apply();
 
                 // assert
