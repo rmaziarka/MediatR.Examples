@@ -31,7 +31,6 @@
 
             this.RuleFor(x => x.Address).NotNull();
             this.RuleFor(x => x.Address).SetValidator(new CreateOrUpdateAddressValidator());
-            this.RuleFor(v => v.PropertyTypeId).NotEqual(Guid.Empty).NotNull();
 
             this.RuleFor(x => x.PropertyTypeId).NotEmpty();
             this.RuleFor(x => x.DivisionId).NotEqual(Guid.Empty);

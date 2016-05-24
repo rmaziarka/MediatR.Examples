@@ -10,12 +10,19 @@
     using FluentValidation;
 
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
-    using KnightFrank.Antares.Domain.Common.Exceptions;
 
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="System.Web.Http.Filters.ExceptionFilterAttribute" />
     public class ValidationExceptionFilterAttribute : ExceptionFilterAttribute
     {
+        /// <summary>
+        /// Called when exception is thrown.
+        /// </summary>
+        /// <param name="context">The context.</param>
         public override void OnException(HttpActionExecutedContext context)
         {
             Exception exception = context.Exception;
@@ -33,14 +40,7 @@
             }
             else if (exception is BusinessValidationException)
             {
-                var validationException = exception as BusinessValidationException;
-
-                var response = new
-                {
-                    Message = "The request is invalid. " + validationException.Message,
-                    Errors = new { message = exception.Message }
-                };
-
+                var response = new[] { new { message = exception.Message } };
                 context.Response = new HttpResponseMessage
                 {
                     Content = CreateContent(response),
