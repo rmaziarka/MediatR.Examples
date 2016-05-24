@@ -133,3 +133,37 @@
     }
   }
 }
+
+.accordion-title {
+  font: {
+    size: 15px;
+    weight: 700;
+  };
+  line-height: 1;
+  margin: 0 0 12px;
+}
+
+// Recent items
+
+.recent {
+  border-bottom: 1px solid $color-alto;
+  list-style: none;
+  margin-bottom: 16px;
+  padding: {
+    bottom: 10px;
+    left: 0;
+  }
+
+  &-item {
+    color: $color-crimson;
+    margin-bottom: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    a {
+      color: inherit;
+    }
+  }
+}
+
