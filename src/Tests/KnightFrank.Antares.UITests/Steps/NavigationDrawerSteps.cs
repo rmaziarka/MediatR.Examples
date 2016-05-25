@@ -17,6 +17,8 @@
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
 
+        private NavigationDrawerPage navigationDrawerPage;
+
         public NavigationDrawerSteps(ScenarioContext scenarioContext)
         {
             if (scenarioContext == null)
@@ -31,19 +33,19 @@
         [When(@"User opens navigation drawer menu")]
         public void OpenNavigationDrawerMenu()
         {
-            new NavigationDrawerPage(this.driverContext).OpenNavigationDrawer();
+            this.navigationDrawerPage = new NavigationDrawerPage(this.driverContext).OpenNavigationDrawer();
         }
 
         [When(@"User selects (.*) menu item")]
         public void SelectMenuItem(string drawerMenuItem)
         {
-            new NavigationDrawerPage(this.driverContext).ClickDrawerMenuItem(drawerMenuItem);
+            this.navigationDrawerPage.ClickDrawerMenuItem(drawerMenuItem);
         }
 
         [When(@"User clicks create button in drawer submenu")]
         public void ClickCreateButton()
         {
-            new NavigationDrawerPage(this.driverContext).ClickCreateButton();
+            this.scenarioContext.Set(this.navigationDrawerPage.ClickCreateButton(), "CreatePropertyPage");
         }
 
         [When(@"User closes navigation drawer menu")]
