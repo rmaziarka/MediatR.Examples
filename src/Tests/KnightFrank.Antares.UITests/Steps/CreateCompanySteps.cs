@@ -23,6 +23,8 @@
         private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
 
+        private string url;
+
         public CreateCompanySteps(ScenarioContext scenarioContext)
         {
             if (scenarioContext == null)
@@ -45,7 +47,9 @@
         public void FillInCompanyData(Table table)
         {
             var details = table.CreateInstance<Company>();
+            this.url = details.WebsiteUrl;
             this.scenarioContext.Get<CreateCompanyPage>("CreateCompanyPage").SetCompanyName(details.Name);
+            this.scenarioContext.Get<CreateCompanyPage>("CreateCompanyPage").SetWebsite(details.WebsiteUrl);
         }
 
         [When(@"User clicks save company button on create company page")]
@@ -69,6 +73,14 @@
             page.ContactsList.SaveContact();
             page.WaitForSidePanelToHide();
         }
+
+        [When(@"User clicks on website url icon")]
+        public void WhenUserClicksOnWebsiteUrlIcon()
+        {
+            var page = this.scenarioContext.Get<CreateCompanyPage>("CreateCompanyPage");
+            page.ClickOnWebsiteLink();
+        }
+
 
         [Then(@"List of company contacts should contain following contacts")]
         public void CheckContactsList(Table table)
@@ -95,5 +107,15 @@
         {
             //TODO implement check if contact was created
         }
+
+        [Then(@"url opens in new tab")]
+        public void ThenUrlOpensInNewTab()
+        {
+            var page = this.scenarioContext.Get<CreateCompanyPage>("CreateCompanyPage");
+
+            Assert.True(page.CheckNewTab(this.url));
+
+        }
+
     }
 }

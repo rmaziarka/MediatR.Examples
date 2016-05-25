@@ -3,6 +3,8 @@ namespace KnightFrank.Antares.Domain.Company.Commands
     using System;
     using System.Collections.Generic;
 
+    using KnightFrank.Antares.Dal.Model.Enum;
+
     using MediatR;
 
     public class CreateCompanyCommand : IRequest<Guid>
@@ -13,6 +15,14 @@ namespace KnightFrank.Antares.Domain.Company.Commands
         }
 
         public string Name { get; set; }
+
+        public string WebsiteUrl { get; set; }
+
+        public string ClientCarePageUrl { get; set; }
+
+        public Guid? ClientCareStatusId { get; set; }
+
         public IList<Guid> ContactIds { get; set; }
+
     }
 }

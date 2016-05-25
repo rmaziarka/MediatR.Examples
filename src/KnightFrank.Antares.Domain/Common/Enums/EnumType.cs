@@ -7,6 +7,7 @@
         Division,
         EntityType,
         OwnershipType,
-        OfferStatus
+        OfferStatus,
+        ClientCareStatus
     }
 }

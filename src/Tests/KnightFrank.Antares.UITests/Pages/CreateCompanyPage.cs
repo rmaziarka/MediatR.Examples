@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
 
     using KnightFrank.Antares.UITests.Extensions;
@@ -15,10 +16,14 @@
         private readonly ElementLocator companyForm = new ElementLocator(Locator.CssSelector, "company-add");
         private readonly ElementLocator addContact = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
         private readonly ElementLocator companyName = new ElementLocator(Locator.Id, "name");
+        private readonly ElementLocator website = new ElementLocator(Locator.Id, "website");
         private readonly ElementLocator contactsList = new ElementLocator(Locator.CssSelector, "#list-contacts .ng-binding");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "company-save-btn");
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
+        private readonly ElementLocator websiteUrlIcon = new ElementLocator(Locator.CssSelector, "a[name='url'] > i");
 
+        private string currentWindowHandler;
+        
         public CreateCompanyPage(DriverContext driverContext) : base(driverContext)
         {
         }
@@ -46,6 +51,12 @@
             return this;
         }
 
+        public CreateCompanyPage SetWebsite(string website)
+        {
+            this.Driver.SendKeys(this.website, website);
+            return this;
+        }
+
         public CreateCompanyPage SaveCompany()
         {
             this.Driver.GetElement(this.saveButton).Click();
@@ -67,6 +78,33 @@
         {
             this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.MediumTimeout);
             return this;
+        }
+
+        public CreateCompanyPage ClickOnWebsiteLink()
+        {
+            this.currentWindowHandler = this.Driver.CurrentWindowHandle;
+            this.Driver.GetElement(this.websiteUrlIcon).Click();
+            return this;
+        }
+
+        public bool CheckNewTab(string url)
+        {
+            ReadOnlyCollection<string> windowHandlers = this.Driver.WindowHandles;
+            foreach (string handler in windowHandlers)
+            {
+                if (handler != this.currentWindowHandler)
+                {
+                    this.Driver.SwitchTo().Window(handler);
+                    break;
+                }
+            }
+
+            string currentUrl = this.Driver.Url;
+            this.Driver.Close();
+            this.Driver.SwitchTo().Window(this.currentWindowHandler);
+            var ah = $"http://{url}/";
+            return ah.Equals(currentUrl);
+
         }
     }
 }

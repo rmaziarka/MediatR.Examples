@@ -8,6 +8,19 @@
         {
             this.Property(p => p.Name).HasMaxLength(128).IsRequired();
 
+            this.Property(p => p.WebsiteUrl)
+                .HasMaxLength(1000)
+                .IsOptional();
+
+            this.Property(p => p.ClientCarePageUrl)
+                .HasMaxLength(1000)
+                .IsOptional();
+
+            this.HasOptional(x => x.ClientCareStatus)
+                .WithMany()
+                .HasForeignKey(x => x.ClientCareStatusId)
+                .WillCascadeOnDelete(false);
+
             this.HasMany(p => p.Contacts)
                 .WithMany()
                 .Map(cs =>
