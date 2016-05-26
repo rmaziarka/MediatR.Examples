@@ -164,6 +164,8 @@
     <Compile Include="Common\Validator\ActivityStatusValidator.cs" />
     <Compile Include="Common\Validator\LocaleValidator.cs" />
     <Compile Include="Company\CommandHandlers\CreateCompanyCommandHandler.cs" />
+    <Compile Include="Company\Commands\UpdateCompanyCommandValidator.cs" />
+    <Compile Include="Company\Commands\UpdateCompanyCommand.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommand.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommandProfile.cs" />
     <Compile Include="Company\Commands\CreateCompanyValidator.cs" />
