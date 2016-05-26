@@ -36,10 +36,30 @@
             this.scenarioContext = scenarioContext;
         }
 
+
         [When(@"User creates company by API for contact")]
         public void WhenUserCreateCompanyByApiForContact(Table table)
         {
+            string clientCareStatus =  GetClientCareStatus(table, "EnumTypeItemCode");
+           
+            Guid clientcareStatusID = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[clientCareStatus];
+
             var company = table.CreateInstance<CreateCompanyCommand>();
+            company.ClientCareStatusId = clientcareStatusID;
+
+            this.CreateCompany(company);
+        }
+
+    
+        [When(@"User creates company by API with all fields")]
+        public void WhenUserCreatesCompanyByApiWithAllFields(Table table)
+        {
+            string clientCareStatus = this.GetClientCareStatus(table, "ClientCareStatus");
+            Guid clientcareStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[clientCareStatus];
+                  
+            CreateCompanyCommand company = table.CreateInstance<CreateCompanyCommand>();
+            company.ClientCareStatusId = clientcareStatusId;
+
             this.CreateCompany(company);
         }
 
@@ -51,6 +71,7 @@
             this.CreateCompany(company);
         }
 
+
         [Then(@"Company should be added to database")]
         public void ThenCompanyShouldBeAddedToDataBase()
         {
@@ -59,18 +80,36 @@
             expectedCompany.Id = company.Id;
             Company actualCompany = this.fixture.DataContext.Companies.Single(x => x.Id.Equals(company.Id));
 
-            actualCompany.ShouldBeEquivalentTo(expectedCompany);
+            actualCompany.ShouldBeEquivalentTo(expectedCompany, opt => opt
+            .Excluding(c=>c.ClientCareStatus));
         }
-
+        
         private void CreateCompany(CreateCompanyCommand company)
         {
             string requestUrl = $"{ApiUrl}";
             var contactList = this.scenarioContext.Get<List<Contact>>("ContactList");
+           
             company.ContactIds = contactList.Select(x => x.Id).ToList();
+            this.scenarioContext.Set(new Company
+            {
+                Name = company.Name,
+                Contacts = contactList,
+                ClientCarePageUrl = company.ClientCarePageUrl,
+                ClientCareStatusId = company.ClientCareStatusId,
+                WebsiteUrl = company.WebsiteUrl
+            }, "Company");
 
-            this.scenarioContext.Set(new Company { Name = company.Name, Contacts = contactList }, "Company");
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, company);
             this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        private string GetClientCareStatus(Table table, string columName)
+        {
+            foreach (TableRow row in table.Rows)
+            {
+                return row[columName];
+            }
+            return string.Empty;
         }
     }
 }
