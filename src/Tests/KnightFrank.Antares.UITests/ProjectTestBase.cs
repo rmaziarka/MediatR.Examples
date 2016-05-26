@@ -80,7 +80,7 @@ namespace KnightFrank.Antares.UITests
         public static void BeforeClass()
         {
             StartPerformanceMeasure();
-//            WarmUp();
+            WarmUp();
         }
 
         /// <summary>

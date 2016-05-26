@@ -15,9 +15,17 @@ module Antares {
 
         var pageObjectSelectors = {
             activity: {
-                createdDate : '#activity-preview-created-date',
-                status : '#activity-preview-status',
+                createdDate: '#activity-preview-created-date',
+                status: '#activity-preview-status',
                 vendors: '#activity-preview-vendors [id^=activity-preview-vendor-item-]'
+            },
+            areaBreakdown: {
+                addBtn: '#card-list-areas button#addItemBtn',
+                itemCard: (id: string) => { return '#card-list-areas #area-card-' + id; },
+                editBtn: (id: string) => { return '#card-list-areas #area-card-' + id + ' context-menu-item[type="edit"] a'; },
+                areaBreakdownSection: 'section#areaBreakdownSection',
+                noItems: 'card-list#card-list-areas card-list-no-items',
+                areaBreakdownItems: 'section#areaBreakdownSection card-list-items card[data-type-area-breakdown]'
             }
         }
 
@@ -27,9 +35,9 @@ module Antares {
 
         describe('and property is loaded', () => {
             var propertyMock = TestHelpers.PropertyGenerator.generatePropertyView({
-                id : '1',
-                propertyTypeId : 'propType1',
-                activities : TestHelpers.ActivityGenerator.generateManyDtos(2)
+                id: '1',
+                propertyTypeId: 'propType1',
+                activities: TestHelpers.ActivityGenerator.generateManyDtos(2)
             });
 
             beforeEach(inject((
@@ -81,7 +89,7 @@ module Antares {
             });
         });
 
-        describe('and activities are loaded', () =>{
+        describe('and activities are loaded', () => {
             var propertyMock = TestHelpers.PropertyGenerator.generatePropertyView();
 
             beforeEach(inject((
@@ -138,13 +146,13 @@ module Antares {
                 // arrange
                 var date1Mock = new Date('2011-01-01');
                 var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate({
-                    id : 'It1',
-                    propertyId : '1',
-                    activityStatusId : '123',
-                    activityTypeId : '123',
-                    contacts : [
-                        <Dto.IContact>{ id : 'Contact1', firstName : 'John', surname : 'Test1', title : 'Mr' },
-                        <Dto.IContact>{ id : 'Contact2', firstName : 'Amy', surname : 'Test2', title : 'Mrs' }
+                    id: 'It1',
+                    propertyId: '1',
+                    activityStatusId: '123',
+                    activityTypeId: '123',
+                    contacts: [
+                        <Dto.IContact>{ id: 'Contact1', firstName: 'John', surname: 'Test1', title: 'Mr' },
+                        <Dto.IContact>{ id: 'Contact2', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }
                     ]
                 });
                 activityMock.createdDate = date1Mock;
@@ -201,11 +209,11 @@ module Antares {
                 var query = '/api/activities/types?countryCode=GB&propertyTypeId=' + propertyMock.propertyTypeId;
                 $http.whenGET(query).respond(() => {
                     return [200, [
-                                    <Dto.IActivityTypeQueryResult>{ id:'1', order: 1 },
-                                    <Dto.IActivityTypeQueryResult>{ id:'2', order: 2 },
-                                    <Dto.IActivityTypeQueryResult>{ id:'3', order: 3 }
-                                ]
-                            ];
+                        <Dto.IActivityTypeQueryResult>{ id: '1', order: 1 },
+                        <Dto.IActivityTypeQueryResult>{ id: '2', order: 2 },
+                        <Dto.IActivityTypeQueryResult>{ id: '3', order: 3 }
+                    ]
+                    ];
                 });
 
                 setUpBaseHttpMocks($http);
@@ -226,14 +234,14 @@ module Antares {
 
             it('default values are set', () => {
                 // assert
-                var activityAddController = <Antares.Activity.ActivityAddController> element.find('activity-add').controller('activityAdd');
+                var activityAddController = <Antares.Activity.ActivityAddController>element.find('activity-add').controller('activityAdd');
 
                 expect(activityAddController.selectedActivityStatusId).toBe(defaultActivityStatus.id);
                 expect(activityAddController.selectedActivityType).toBe(null);
             });
 
-            describe('when values are changed and activity add window opened again', () =>{
-                beforeEach(() =>{
+            describe('when values are changed and activity add window opened again', () => {
+                beforeEach(() => {
                     var addActivityPanel = element.find('activity-add');
                     var activityStatusSelect = addActivityPanel.find('#addActivityForm select[name="status"]');
                     var activityTypeSelect = addActivityPanel.find('#addActivityForm select[name="type"]');
@@ -247,9 +255,9 @@ module Antares {
                     addActivityButton.click();
                 })
 
-                it('default values are set', () =>{
+                it('default values are set', () => {
                     // assert
-                    var activityAddController = <Antares.Activity.ActivityAddController> element.find('activity-add').controller('activityAdd');
+                    var activityAddController = <Antares.Activity.ActivityAddController>element.find('activity-add').controller('activityAdd');
 
                     expect(activityAddController.selectedActivityStatusId).toBe(defaultActivityStatus.id);
                     expect(activityAddController.selectedActivityType).toBe(null);
@@ -257,12 +265,12 @@ module Antares {
             });
 
             describe('and "Save button" is clicked ', () => {
-                it('then new activity should be added to property activity list', () =>{
+                it('then new activity should be added to property activity list', () => {
                     var activityAddController: Activity.ActivityAddController = element.find('activity-add').controller('activityAdd');
                     activityAddController.activityStatuses = activityStatuses;
                     activityAddController.activityTypes = activityTypes;
-                    activityAddController.selectedActivityStatusId = _.find(activityStatuses, { 'code' : 'PreAppraisal' }).id;
-                    activityAddController.selectedActivityType = _.find(activityTypes, { id : "1" });
+                    activityAddController.selectedActivityStatusId = _.find(activityStatuses, { 'code': 'PreAppraisal' }).id;
+                    activityAddController.selectedActivityType = _.find(activityTypes, { id: "1" });
 
                     var expectedResponse = new Business.Activity();
                     expectedResponse.propertyId = propertyMock.id;
@@ -282,7 +290,7 @@ module Antares {
                     var activitiesList = element.find('#card-list-activities');
                     var activityListItems = activitiesList.find('card');
 
-                    expect(propertyMock.activities.filter((item) =>{ return item.id === '123' }).length).toBe(1);
+                    expect(propertyMock.activities.filter((item) => { return item.id === '123' }).length).toBe(1);
                     expect(activityListItems.length).toBe(1);
                 });
             });
@@ -309,10 +317,10 @@ module Antares {
             activity2Mock.createdDate = date2Mock;
 
             var propertyMock = TestHelpers.PropertyGenerator.generateDto({
-                    id : '1',
-                    propertyTypeId : '1',
-                    activities : [activity1Mock, activity2Mock]
-                }
+                id: '1',
+                propertyTypeId: '1',
+                activities: [activity1Mock, activity2Mock]
+            }
             );
 
             beforeEach(inject((
@@ -355,17 +363,17 @@ module Antares {
             });
         });
 
-        describe('and contact list is opened', () =>{
+        describe('and contact list is opened', () => {
             var propertyMock = TestHelpers.PropertyGenerator.generateDto(
-            {
-                id: '1',
-                propertyTypeId: '1',
-                divisionId: '',
-                division: null,
-                address: Antares.Mock.AddressForm.FullAddress,
-                ownerships: [],
-                activities: [],
-                attributeValues: []
+                {
+                    id: '1',
+                    propertyTypeId: '1',
+                    divisionId: '',
+                    division: null,
+                    address: Antares.Mock.AddressForm.FullAddress,
+                    ownerships: [],
+                    activities: [],
+                    attributeValues: []
                 });
 
             beforeEach(inject(($rootScope: ng.IRootScopeService,
@@ -488,13 +496,114 @@ module Antares {
                 expect(sellPrice).toBe('2000');
             });
 
-            function getValueFromElement(ownershipPanel: ng.IAugmentedJQuery, fieldId: string): string{
+            function getValueFromElement(ownershipPanel: ng.IAugmentedJQuery, fieldId: string): string {
                 return ownershipPanel.find('#' + fieldId).html();
             }
         });
+
+        describe('and area breakdown list is loaded', () => {
+            var propertyMock = TestHelpers.PropertyGenerator.generateDto();
+            var assertValidator: TestHelpers.AssertValidators;
+
+            beforeEach(inject(($rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService,
+                $httpBackend: ng.IHttpBackendService) => {
+
+                // init
+                $httpBackend.whenGET("").respond(() => { return {}; });
+
+                compile = $compile;
+                scope = $rootScope.$new();
+                scope['property'] = new Business.PropertyView(propertyMock);
+                scope['userData'] = userMock;
+                element = $compile('<property-view property="property" user-data="userData"></property-view>')(scope);
+
+                scope.$apply();
+                $httpBackend.flush();
+
+                assertValidator = new TestHelpers.AssertValidators(element, scope);
+            }));
+
+            it('when property is not commercial then area breakdown section is not rendered', () => {
+                propertyMock = TestHelpers.PropertyGenerator.generateDto();
+                scope['property'] = new Business.PropertyView(propertyMock);
+                element = compile('<property-view property="property" user-data="userData"></property-view>')(scope);
+                scope.$apply();
+
+                var areaBreakdownSection = element.find(pageObjectSelectors.areaBreakdown.areaBreakdownSection);
+
+                expect(areaBreakdownSection.length).toBe(0);
+            });
+
+            describe('when property is commercial', () => {
+                beforeEach(() => {
+                    propertyMock = TestHelpers.PropertyGenerator.generateDto({ division: { code: Dto.DivisionEnumTypeCode.Commercial } });
+                    scope['property'] = new Business.PropertyView(propertyMock);
+                    element = compile('<property-view property="property" user-data="userData"></property-view>')(scope);
+                    scope.$apply();
+
+                    controller = element.controller('propertyView');
+                });
+
+                it('when area breakdown list is empty then no items message is visible', () => {
+                    assertValidator.assertElementHasHideClass(false, pageObjectSelectors.areaBreakdown.noItems);
+                });
+
+                it('then area breakdown list should be ordered by order property', () => {
+                    var areaBreakdownList = TestHelpers.PropertyAreaBreakdownGenerator.generateMany(5);
+                    for (var i = 0; i < areaBreakdownList.length; i++) {
+                        areaBreakdownList[i].order = i;
+                    }
+
+                    scope['property'].propertyAreaBreakdowns = areaBreakdownList;
+                    scope.$apply();
+                    var cards:any = element.find(pageObjectSelectors.areaBreakdown.areaBreakdownItems);
+
+                    var isOrdered: boolean = _.every(cards, (item: any, index: number): boolean => {
+                        var sourceElement: string = pageObjectSelectors.areaBreakdown.itemCard(areaBreakdownList[index].id);
+
+                        return item.getAttribute('id') === sourceElement;
+                    });
+
+                    expect(isOrdered).toBeTruthy();
+                });
+
+                it('when add area breakdown button is clicked then showAreaAdd should be called', () => {
+                    // arrange
+                    spyOn(controller, 'showAreaAdd');
+                    scope.$apply();
+
+                    // act
+                    var button = element.find(pageObjectSelectors.areaBreakdown.addBtn);
+                    button.click();
+                    scope.$apply();
+
+                    // assert
+                    expect(controller.showAreaAdd).toHaveBeenCalled();
+                });
+
+                it('when edit area breakdown button is clicked then showAreaEdit should be called', () => {
+                    // arrange
+                    var areas: Business.PropertyAreaBreakdown[] = Antares.TestHelpers.PropertyAreaBreakdownGenerator.generateMany(3);
+
+                    spyOn(controller, 'showAreaEdit');
+
+                    controller.property.propertyAreaBreakdowns = areas;
+                    scope.$apply();
+
+                    // act
+                    var button = element.find(pageObjectSelectors.areaBreakdown.editBtn(areas[1].id));
+                    button.click();
+                    scope.$apply();
+
+                    // assert
+                    expect(controller.showAreaEdit).toHaveBeenCalledWith(areas[1]);
+                });
+            });
+        });
     });
 
-    function setUpBaseHttpMocks($http: ng.IHttpBackendService): void{
+    function setUpBaseHttpMocks($http: ng.IHttpBackendService): void {
         Antares.Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Antares.Mock.AddressForm.AddressFormWithOneLine]);
         $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
             return [];

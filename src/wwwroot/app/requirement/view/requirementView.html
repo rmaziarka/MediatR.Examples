@@ -98,7 +98,7 @@
     </side-panel-header>
     <side-panel-content>
         <offer-preview component-id="vm.componentIds.offerPreviewId" ng-show="vm.offerPreviewPanelVisible"></offer-preview>
-        <offer-add-edit component-id="vm.componentIds.offerEditPreviewId" ng-show="!vm.offerPreviewPanelVisible" mode="edit"></offer-add-edit>
+        <offer-edit component-id="vm.componentIds.offerEditPreviewId" ng-show="!vm.offerPreviewPanelVisible" mode="edit"></offer-edit>
         <busy is-busy="vm.addEditOfferBusy" label="{{'OFFER.ADD.SAVING_OFFER_IN_PROGRESS' | translate}}"></busy>
     </side-panel-content>
     <side-panel-footer>
@@ -119,7 +119,7 @@
         <h3 translate="REQUIREMENT.VIEW.OFFERDETAILS"></h3>
     </side-panel-header>
     <side-panel-content>
-        <offer-add-edit component-id="vm.componentIds.offerEditId" mode="edit"></offer-add-edit>
+        <offer-edit component-id="vm.componentIds.offerEditId" mode="edit"></offer-edit>
         <busy is-busy="vm.addEditOfferBusy" label="{{'OFFER.ADD.SAVING_OFFER_IN_PROGRESS' | translate}}"></busy>
     </side-panel-content>
     <side-panel-footer>
@@ -201,7 +201,7 @@
         <h3 translate="REQUIREMENT.VIEW.NEWOFFER"></h3>
     </side-panel-header>
     <side-panel-content>
-        <offer-add-edit component-id="vm.componentIds.offerAddId" requirement="vm.requirement" mode="add"></offer-add-edit>
+        <offer-add component-id="vm.componentIds.offerAddId" requirement="vm.requirement" mode="add"></offer-add>
         <busy is-busy="vm.addEditOfferBusy" label="{{'OFFER.ADD.SAVING_OFFER_IN_PROGRESS' | translate}}"></busy>
     </side-panel-content>
     <side-panel-footer>

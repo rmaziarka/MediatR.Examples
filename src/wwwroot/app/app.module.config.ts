@@ -6,6 +6,8 @@ module Antares {
     app.config(['$translateProvider', initTranslations]);
     app.config(['$provide', extendOrderByWithEmptyFields]);
     app.config(['$provide', decorateInputNumber]);
+    app.config(['growlProvider', configureGrowl]);
+    app.config(['$httpProvider', setupInterceptors]);
 
     app.run(['enumService', initEnumService]);
 
@@ -26,7 +28,17 @@ module Antares {
         $provider.decorator('inputDirective', Common.Decorators.InputNumberDirectiveDecorator.decoratorFunction);
     }
 
-    function initEnumService(enumService: Antares.Services.EnumService) {
+    function initEnumService(enumService: Services.EnumService) {
         enumService.init();
+    }
+
+    function configureGrowl(growlProvider: angular.growl.IGrowlProvider){
+        growlProvider.globalTimeToLive({ success : 5000 });
+        growlProvider.globalPosition('top-center');
+        growlProvider.globalDisableCountDown(true);
+    }
+
+    function setupInterceptors($httpProvider: angular.IHttpProvider){
+        $httpProvider.interceptors.push(Services.KfErrorInterceptor.factory);
     }
 }

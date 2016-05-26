@@ -60,7 +60,8 @@
         [When(@"User selects contacts for ownership on view property page")]
         public void SelectContactsForOwnership(Table table)
         {
-            ViewPropertyPage page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").SetOwnership().WaitForSidePanelToShow();
+            ViewPropertyPage page =
+                this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").SetOwnership().WaitForSidePanelToShow();
             IEnumerable<Contact> contacts = table.CreateSet<Contact>();
 
             foreach (Contact contact in contacts)
@@ -153,7 +154,8 @@
             this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").CreateAreaBreakdown().WaitForSidePanelToShow();
         }
 
-        [When(@"User fills in area details on create area page")]
+        [When(@"User fills in area details on view property page")]
+        [When(@"User updates area details on view property page")]
         public void AddAreaDetails(Table table)
         {
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
@@ -166,7 +168,7 @@
             }
         }
 
-        [When(@"User clicks save button on create area page")]
+        [When(@"User clicks save area button on view property page")]
         public void SaveAreas()
         {
             var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
@@ -174,11 +176,14 @@
             page.WaitForSidePanelToHide();
         }
 
-        /*[When(@"User drags (.*) area and moves to (.*) area place on view property page")]
-        public void MoveAreas(int source, int target)
+        [When(@"User clicks edit area button for (.*) area on view property page")]
+        public void EditArea(int position)
         {
-            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").MoveAreas(source, target);
-        }*/
+            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage")
+                .OpenAreaActions(position)
+                .EditArea(1)
+                .WaitForSidePanelToShow();
+        }
 
         [Then(@"Activity details are set on view property page")]
         public void CheckActivityDetails(Table table)
@@ -293,10 +298,20 @@
         {
             List<PropertyAreaBreakdown> expectedAreas = table.CreateSet<PropertyAreaBreakdown>().ToList();
             List<PropertyAreaBreakdown> actualAreas = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").GetAreas();
-            actualAreas.Should().Equal(expectedAreas, (c1, c2) => 
-            c1.Name.Equals(c2.Name) && 
-            c1.Order.Equals(c2.Order) &&
-            c1.Size.Equals(c2.Size));
+            actualAreas.Should().Equal(expectedAreas, (c1, c2) =>
+                c1.Name.Equals(c2.Name) &&
+                c1.Order.Equals(c2.Order) &&
+                c1.Size.Equals(c2.Size));
+        }
+
+        [Then(@"Property created success message should be displayed")]
+        public void CheckIfSuccessMessageDisplayed()
+        {
+            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
+            Verify.That(this.driverContext,
+                () => Assert.True(page.IsSuccessMessageDisplayed()),
+                () => Assert.Equal("New property has been created", page.SuccessMessage));
+            page.WaitForSuccessMessageToHide();
         }
     }
 }

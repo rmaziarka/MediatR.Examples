@@ -20,7 +20,8 @@
       "REQUIREMENTS": "Requirements",
       "PROPERTIES": "Properties"
     },
-    "MAKEOFFER": "Make an offer"
+    "MAKEOFFER": "Make an offer",
+    "UNEXPECTED_SERVER_ERROR": "Unexpected error occured. Please try again or contact system administrator."
   },
   "OWNERSHIP": {
     "ADD": {
@@ -122,7 +123,8 @@
       "ADD_PROPERTY": "Create property",
       "BASIC_INFORMATION": "Basic information",
       "TYPE": "Type",
-      "ADDRESS": "Address"
+      "ADDRESS": "Address",
+      "PROPERTY_ADD_SUCCESS": "New property has been created"
     },
     "EDIT": {
       "EDIT_PROPERTY": "Edit property",
@@ -222,7 +224,7 @@
     "RESIDENTIAL": {
       "HEADER": "Negotiators",
       "LEAD": "Lead negotiator",
-      "SECONDARY": "Secondary negotiator",
+      "SECONDARY": "Secondary negotiators",
       "EMPTY": "No negotiators added yet",
       "ADD": "Add a negotiator",
       "FIND": "Find a negotiator"
@@ -230,7 +232,7 @@
     "COMMERCIAL": {
       "HEADER": "Surveyor",
       "LEAD": "Lead surveyor",
-      "SECONDARY": "Secondary surveyor",
+      "SECONDARY": "Secondary surveyors",
       "EMPTY": "No surveyor added yet",
       "ADD": "Add a surveyor",
       "FIND": "Find a surveyor"

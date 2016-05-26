@@ -20,6 +20,8 @@
         private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
 
+        private CreatePropertyPage createPropertyPage;
+
         public CreatePropertySteps(ScenarioContext scenarioContext)
         {
             if (scenarioContext == null)
@@ -34,14 +36,13 @@
         [Given(@"User navigates to create property page")]
         public void OpenCreatePropertyPage()
         {
-            CreatePropertyPage page = new CreatePropertyPage(this.driverContext).OpenCreatePropertyPage();
-            this.scenarioContext["CreatePropertyPage"] = page;
+            this.createPropertyPage = new CreatePropertyPage(this.driverContext).OpenCreatePropertyPage();
         }
 
         [When(@"User selects (.*) country on create property page")]
         public void SelectCountryFromDropDownList(string country)
         {
-            this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").AddressTemplate.SelectPropertyCountry(country);
+            this.createPropertyPage.AddressTemplate.SelectPropertyCountry(country);
         }
 
         [When(@"User fills in address details on create property page")]
@@ -49,9 +50,9 @@
         public void FillInAddressDetails(Table table)
         {
             var address = table.CreateInstance<Address>();
-            var page = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
 
-            page.AddressTemplate
+            this.createPropertyPage
+                .AddressTemplate
                 .SetPropertyNumber(address.PropertyNumber)
                 .SetPropertyName(address.PropertyName)
                 .SetPropertyAddressLine1(address.Line1)
@@ -67,9 +68,9 @@
         public void FillInPropertyDetails(Table table)
         {
             var details = table.CreateInstance<AttributeValues>();
-            var page = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
 
-            page.SetMinBedrooms(details.MinBedrooms)
+            this.createPropertyPage
+                .SetMinBedrooms(details.MinBedrooms)
                 .SetMaxBedrooms(details.MaxBedrooms)
                 .SetMinReceptionRooms(details.MinReceptions)
                 .SetMaxReceptionRooms(details.MaxReceptions)
@@ -91,30 +92,28 @@
         [When(@"User selects (.*) property and (.*) type on edit property page")]
         public void SelectPropertyTypes(string type, string propertyType)
         {
-            this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").SelectType(type).SelectPropertyType(propertyType);
+            if (this.scenarioContext.ContainsKey("CreatePropertyPage"))
+                this.createPropertyPage = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
+            this.createPropertyPage.SelectType(type).SelectPropertyType(propertyType);
         }
 
         [When(@"User clicks save property button on create property page")]
         [When(@"User clicks save property button on edit property page")]
         public void ClickSaveButton()
         {
-            var page = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
-            this.scenarioContext.Set(page.SaveProperty(), "ViewPropertyPage");
+            this.scenarioContext.Set(this.createPropertyPage.SaveProperty(), "ViewPropertyPage");
         }
 
         [When(@"User selects property characteristics on edit property page")]
         [When(@"User selects property characteristics on create property page")]
         public void SelectCharacteristics(Table table)
         {
-            var page = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
-
-            IEnumerable<Characteristic> characteristics = table.CreateSet<Characteristic>();
-            foreach (Characteristic characteristic in characteristics)
+            foreach (Characteristic characteristic in table.CreateSet<Characteristic>())
             {
-                page.SelectCharacteristic(characteristic.Name);
+                this.createPropertyPage.SelectCharacteristic(characteristic.Name);
                 if (characteristic.Comment != null)
                 {
-                    page.AddCommentToCharacteristic(characteristic.Name, characteristic.Comment);
+                    this.createPropertyPage.AddCommentToCharacteristic(characteristic.Name, characteristic.Comment);
                 }
             }
         }
@@ -122,7 +121,7 @@
         [Then(@"Property form on create property page should be displayed")]
         public void CheckIfPropertyTypeIsDisplayed()
         {
-            Assert.True(new CreatePropertyPage(this.driverContext).IsPropertyFormPresent());
+            Assert.True(this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").IsPropertyFormPresent());
         }
     }
 }

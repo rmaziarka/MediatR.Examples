@@ -7,6 +7,7 @@
 
     using FluentAssertions;
 
+    using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
@@ -14,7 +15,6 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.CommandHandlers;
     using KnightFrank.Antares.Domain.Activity.Commands;
-    using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
 
     using Moq;
@@ -33,14 +33,19 @@
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             [Frozen] Mock<IGenericRepository<User>> userRepository,
-            [Frozen] Mock<IGenericRepository<ActivityTypeDefinition>> activityTypeDefinitionRepository,
+            [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
+            [Frozen] Mock<IActivityTypeDefinitionValidator> activityTypeDefinitionValidator,
             User user,
             CreateActivityCommandHandler handler,
             CreateActivityCommand command,
-            Guid expectedActivityId)
+            Guid expectedActivityId,
+            IFixture fixture)
         {
             // Arrange
             Activity activity = null;
+            var property = fixture.Create<Property>();
+            property.Address = fixture.Create<Address>();
+            propertyRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(property);
 
             userRepository.Setup(p => p.FindBy(It.IsAny<Expression<Func<User, bool>>>()))
                           .Returns(new List<User> { user });
@@ -56,12 +61,12 @@
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
                              .Returns(command.ContactIds.Select(id => new Contact { Id = id }));
 
-            activityTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>())).Returns(true);
 
             // Act
             handler.Handle(command);
 
             // Assert
+            activityTypeDefinitionValidator.Verify(x=>x.Validate(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>()),Times.Once);
             activity.Should().NotBeNull();
             activity.ShouldBeEquivalentTo(command, opt => opt.IncludingProperties().ExcludingMissingMembers());
             activity.Id.ShouldBeEquivalentTo(expectedActivityId);
@@ -72,11 +77,12 @@
         [Theory]
         [AutoMoqData]
         public void Given_Command_When_Handling_Then_EntityExistsValidation_ShouldBeCalledForNegotiator(
-            [Frozen] Mock<IDomainValidator<CreateActivityCommand>> domainValidator,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             [Frozen] Mock<IGenericRepository<User>> userRepository,
             [Frozen] Mock<IEntityValidator> entityValidator,
             [Frozen] Mock<IGenericRepository<ActivityTypeDefinition>> activityDefinitionRepository,
+            [Frozen] Mock<IActivityTypeDefinitionValidator> activityTypeValidator,
+            [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
             User user,
             CreateActivityCommandHandler handler,
             CreateActivityCommand command,
@@ -85,6 +91,11 @@
         {
             // Arrange
             user.Id = command.LeadNegotiatorId;
+            var property = fixture.Create<Property>();
+            property.Address = fixture.Create<Address>();
+            propertyRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(property);
+
+
             activityDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>()))
                                         .Returns(true);
             userRepository.Setup(p => p.FindBy(It.IsAny<Expression<Func<User, bool>>>()))

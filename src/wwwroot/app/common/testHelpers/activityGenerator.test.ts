@@ -3,6 +3,7 @@
 module Antares.TestHelpers {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
+    import Enums = Common.Models.Enums;
 
     export class ActivityGenerator {
         public static generateDto(specificData?: any): Dto.IActivity {
@@ -16,7 +17,7 @@ module Antares.TestHelpers {
                 id: ActivityGenerator.makeRandom('id'),
                 property: PropertyGenerator.generateDto(),
                 propertyId: ActivityGenerator.makeRandom('propertyId'),
-                activityUsers: []
+                activityUsers: [ActivityUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator)]
             }
 
             return angular.extend(activity, specificData || {});

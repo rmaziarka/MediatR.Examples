@@ -14,7 +14,7 @@
         private readonly ElementLocator offerDate = new ElementLocator(Locator.CssSelector, ".slide-in #offer-date");
         private readonly ElementLocator proposedCompletionDate = new ElementLocator(Locator.CssSelector, ".slide-in #proposed-completion-date");
         private readonly ElementLocator proposedExchangeDate = new ElementLocator(Locator.CssSelector, ".slide-in #offer-proposed-exchange-date");
-        private readonly ElementLocator saveOffer = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'saveOffer']");
+        private readonly ElementLocator saveOffer = new ElementLocator(Locator.CssSelector, ".slide-in button[ng-click *= 'save']");
         private readonly ElementLocator specialConditions = new ElementLocator(Locator.CssSelector, ".slide-in [name = 'specialConditions']");
         private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, ".slide-in #offer-status");
         private readonly ElementLocator viewLink = new ElementLocator(Locator.CssSelector, ".slide-in div:nth-of-type(1) a");

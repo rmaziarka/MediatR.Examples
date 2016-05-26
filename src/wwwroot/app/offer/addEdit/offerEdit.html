@@ -14,7 +14,7 @@
 
 <form ng-submit="vm.addOfferForm.$valid" name="vm.addOfferForm" method="post" novalidate>
     <div class="form-group" ng-class="{'has-error': (vm.addOfferForm.$submitted || vm.addOfferForm.selectedStatus.$dirty) && vm.addOfferForm.selectedStatus.$invalid}">
-        <label class="required" for="offer-statusId">Status</label>
+        <label class="required" for="offer-statusId" translate="OFFER.ADD.STATUS"></label>
         <div class="row">
             <div class="col-md-6">
                 <select class="form-control" required id="offer-status" name="selectedStatus" ng-options="item as (item.id | dynamicTranslate) for item in vm.statuses track by item.id" ng-model="vm.selectedStatus">
@@ -28,7 +28,7 @@
     </div>
 
     <div class="form-group" ng-class="{'has-error': (vm.addOfferForm.$submitted || vm.addOfferForm.price.$dirty) && vm.addOfferForm.price.$invalid}">
-        <label for="offer-price" class="required">Offer</label>
+        <label for="offer-price" class="required" translate="OFFER.ADD.OFFER"></label>
         <div class="row">
             <div class="col-md-7">
                 <div class="input-group">
@@ -50,7 +50,7 @@
                 <label class="required" for="offer-date" translate="OFFER.ADD.OFFER_DATE"></label>
                 <div class="input-group">
                     <input type="text" id="offer-date" name="offerDate" class="form-control" ng-model="vm.offer.offerDate" uib-datepicker-popup="dd-MM-yyyy"
-                           is-open="vm.offerDateOpen" close-text="Close" placeholder="dd-mm-yyyy" required date-lower-than="{{ vm.today }}"/>
+                           is-open="vm.offerDateOpen" close-text="Close" placeholder="dd-mm-yyyy" required date-lower-than="{{ vm.today }}" />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openOfferDate()"><i class="fa fa-calendar"></i></button>
                     </span>
@@ -72,11 +72,10 @@
         </div>
     </div>
 
-    <div class="section-details" ng-show="vm.mode == 'edit'">
+    <div class="section-details" ng-show="vm.mode == 'edit'" id="offer-edit-negotiator-section">
         <h5 translate="OFFER.ADD.NEGOTIATOR"></h5>
-
         <div class="panel panel-default">
-            <div class="panel-body">
+            <div class="panel-body" id="offer-edit-negotiator-details">
                 {{vm.offer.negotiator.getName()}}
             </div>
         </div>
@@ -88,7 +87,7 @@
             <div class="col-md-6">
                 <div class="input-group">
                     <input type="text" id="offer-proposed-exchange-date" class="form-control" placeholder="dd-mm-yyyy" uib-datepicker-popup="dd-MM-yyyy"
-                           is-open="vm.exchangeDateOpen" close-text="Close" ng-model="vm.offer.exchangeDate" name="exchangeDate" date-greater-than="{{ vm.today }}">
+                           is-open="vm.exchangeDateOpen" close-text="Close" ng-model="vm.offer.exchangeDate" name="exchangeDate">
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openExchangeDate()">
                             <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -98,7 +97,6 @@
             </div>
         </div>
         <div ng-messages="vm.addOfferForm.exchangeDate.$error" ng-show="vm.addOfferForm.$submitted || vm.addOfferForm.exchangeDate.$dirty">
-            <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
             <div ng-messages-include="app/common/views/errorMessages.html"></div>
         </div>
     </div>
@@ -109,7 +107,7 @@
             <div class="col-md-6">
                 <div class="input-group">
                     <input type="text" id="proposed-completion-date" class="form-control" placeholder="dd-mm-yyyy" uib-datepicker-popup="dd-MM-yyyy"
-                           is-open="vm.completionDateOpen" close-text="Close" ng-model="vm.offer.completionDate" name="completionDate" date-greater-than="{{ vm.today }}">
+                           is-open="vm.completionDateOpen" close-text="Close" ng-model="vm.offer.completionDate" name="completionDate">
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openCompletionDate()">
                             <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -119,7 +117,6 @@
             </div>
         </div>
         <div ng-messages="vm.addOfferForm.completionDate.$error" ng-show="vm.addOfferForm.$submitted || vm.addOfferForm.completionDate.$dirty">
-            <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
             <div ng-messages-include="app/common/views/errorMessages.html"></div>
         </div>
     </div>

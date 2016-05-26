@@ -3,6 +3,7 @@ module Antares {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
     import ActivityEditController = Activity.ActivityEditController;
+    import Enums = Common.Models.Enums;
 
     describe('Given edit activity page is loaded', () => {
         var scope: ng.IScope,
@@ -36,8 +37,13 @@ module Antares {
                 items: '#activity-edit-vendors list#list-vendors list-item',
                 item: '#activity-edit-vendors list#list-vendors list-item#list-item-'
             },
+            negotiators: {
+                component: "#activity-edit-negotiators negotiators-edit",
+                items: "#activity-edit-negotiators #card-secondary-negotiator"
+            },
             actions: {
-                save: 'button#activity-edit-save'
+                save: 'button#activity-edit-save',
+                cancel: 'button#activity-edit-cancel'
             }
         };
 
@@ -47,12 +53,13 @@ module Antares {
             { id: "333", code: "NotSelling" }
         ];
 
-        describe('when activity is loaded', () =>{
+        describe('when activity is loaded', () => {
             var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate({
                 activityStatusId: activityStatuses[1].id,
-                marketAppraisalPrice : 99,
-                recommendedPrice : 1.1,
-                vendorEstimatedPrice : 55.05
+                marketAppraisalPrice: 99,
+                recommendedPrice: 1.1,
+                vendorEstimatedPrice: 55.05,
+                activityUsers: TestHelpers.ActivityUserGenerator.generateManyDtos(3, Enums.NegotiatorTypeEnum.SecondaryNegotiator)
             });
 
             beforeEach(inject((
@@ -60,7 +67,7 @@ module Antares {
                 $compile: ng.ICompileService,
                 $state: ng.ui.IStateService,
                 enumService: Mock.EnumServiceMock,
-                $httpBackend: ng.IHttpBackendService) =>{
+                $httpBackend: ng.IHttpBackendService) => {
 
                 // init
                 scope = $rootScope.$new();
@@ -105,6 +112,13 @@ module Antares {
                     expect(listHeaderElementContent.length).toBe(1);
                     expect(listNoItemsElement.length).toBe(1);
                     expect(listNoItemsElementContent.length).toBe(1);
+                });
+
+                it('then negotiators edit component is set up', () => {
+                    var component = element.find(pageObjectSelectors.negotiators.component);
+                    var items = element.find(pageObjectSelectors.negotiators.items);
+                    expect(component.length).toBe(1);
+                    expect(items.length).toBe(3);
                 });
 
                 it('then status for activity is displayed and should have proper data', () => {
@@ -322,7 +336,7 @@ module Antares {
             });
         });
 
-        describe('when valid data and and save button is clicked', () =>{
+        describe('when form action is called', () => {
             var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
 
             beforeEach(inject((
@@ -350,47 +364,69 @@ module Antares {
                 controller = element.controller('activityEdit');
             }));
 
-            it('then save method is called', () => {
-                // arrange
-                spyOn(controller, 'save');
+            describe('when valid data is provided and save button is clicked', () => {
+                it('then save method is called', () => {
+                    // arrange
+                    spyOn(controller, 'save');
 
-                // act
-                var button = element.find(pageObjectSelectors.actions.save);
-                button.click();
+                    // act
+                    var button = element.find(pageObjectSelectors.actions.save);
+                    button.click();
 
-                // assert
-                expect(controller.save).toHaveBeenCalled();
-            });
-
-            it('then put request is is called with valid data and redirect to view page', () => {
-                // arrange
-                var activityId: string;
-                var requestData: Dto.IUpdateActivityResource;
-                var activityFromServerMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
-
-                spyOn(state, 'go').and.callFake((routeName: string, activity: Business.Activity) => {
-                    activityId = activity.id;
+                    // assert
+                    expect(controller.save).toHaveBeenCalled();
                 });
 
-                $http.expectPUT(/\/api\/activities/, (data: string) => {
-                    requestData = JSON.parse(data);
-                    return true;
-                }).respond(201, activityFromServerMock);
+                it('then put request is is called with valid data and redirect to view page', () => {
+                    // arrange
+                    var activityId: string;
+                    var requestData: Dto.IUpdateActivityResource;
+                    var activityFromServerMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
 
-                // act
-                var button = element.find(pageObjectSelectors.actions.save);
-                button.click();
-                $http.flush();
+                    activityMock.secondaryNegotiator = TestHelpers.ActivityUserGenerator.generateMany(3, Enums.NegotiatorTypeEnum.SecondaryNegotiator);
 
-                // assert
-                expect(state.go).toHaveBeenCalled();
-                expect(requestData.id).toEqual(activityMock.id);
-                expect(requestData.activityStatusId).toEqual(activityMock.activityStatusId);
-                expect(requestData.marketAppraisalPrice).toEqual(activityMock.marketAppraisalPrice);
-                expect(requestData.recommendedPrice).toEqual(activityMock.recommendedPrice);
-                expect(requestData.vendorEstimatedPrice).toEqual(activityMock.vendorEstimatedPrice);
-                expect(activityId).toEqual(activityFromServerMock.id);
+                    spyOn(state, 'go').and.callFake((routeName: string, activity: Business.Activity) => {
+                        activityId = activity.id;
+                    });
+
+                    $http.expectPUT(/\/api\/activities/, (data: string) => {
+                        requestData = JSON.parse(data);
+                        return true;
+                    }).respond(201, activityFromServerMock);
+
+                    // act
+                    var button = element.find(pageObjectSelectors.actions.save);
+                    button.click();
+                    $http.flush();
+
+                    // assert
+                    expect(state.go).toHaveBeenCalled();
+                    expect(requestData.id).toEqual(activityMock.id);
+                    expect(requestData.activityStatusId).toEqual(activityMock.activityStatusId);
+                    expect(requestData.marketAppraisalPrice).toEqual(activityMock.marketAppraisalPrice);
+                    expect(requestData.recommendedPrice).toEqual(activityMock.recommendedPrice);
+                    expect(requestData.vendorEstimatedPrice).toEqual(activityMock.vendorEstimatedPrice);
+                    expect(requestData.leadNegotiatorId).toEqual(activityMock.leadNegotiator.userId);
+                    expect(requestData.secondaryNegotiatorIds).toEqual(activityMock.secondaryNegotiator.map((negotiator) => negotiator.userId));
+
+                    expect(activityId).toEqual(activityFromServerMock.id);
+                });
             });
+
+            describe('when cancel action is called', () => {
+                it('then redrection to activity view page should be triggered', () => {
+                    // arrange
+                    var cancelBtn = element.find(pageObjectSelectors.actions.cancel);
+                    spyOn(state, 'go');
+
+                    // act
+                    cancelBtn.click();
+
+                    // assert
+                    expect(state.go).toHaveBeenCalledWith('app.activity-view', { id: activityMock.id });
+                });
+            });
+
         });
     });
 }

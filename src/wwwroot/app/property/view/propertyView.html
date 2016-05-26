@@ -11,14 +11,19 @@
                     <h3 class="page-header" translate="PROPERTY.VIEW.DETAILS"></h3>
                     <property-details property="vm.property" user-data="vm.userData"></property-details>
                 </section>
-                <section ng-if="vm.property.isCommercial()">
+                <section ng-if="vm.property.isCommercial()" id="areaBreakdownSection">
                     <card-list id="card-list-areas" show-item-add="vm.showAreaAdd">
                         <card-list-header>
                             <h3 class="page-header" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.LIST.AREA_BREAKDOWN"></h3>
                             <div class="form-group">
                                 <div class="section-row row">
                                     <div class="col-xs-6 section-title" translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.LIST.TOTAL_AREA"></div>
-                                    <div class="col-xs-6">{{vm.property.totalAreaBreakdown | number:2}} sq ft</div>
+                                    <div ng-if="vm.property.propertyAreaBreakdowns.length > 0">
+                                        <div class="col-xs-6">{{vm.property.totalAreaBreakdown | number:2}} sq ft</div>
+                                    </div>
+                                    <div ng-if="vm.property.propertyAreaBreakdowns.length === 0">
+                                        <div class="col-xs-6" ng-show="vm.property.propertyAreaBreakdowns.length === 0">-</div>
+                                    </div>
                                 </div>
                             </div>
                         </card-list-header>
@@ -28,7 +33,7 @@
                         <card-list-items as-sortable="vm.areaBreakdownDndOptions" ng-model="vm.property.propertyAreaBreakdowns">
                             <div ng-repeat="propertyAreaBreakdown in vm.property.propertyAreaBreakdowns track by propertyAreaBreakdown.id" as-sortable-item>
                                 <div as-sortable-item-handle>
-                                    <card show-context-menu="true" display-new-control="true"
+                                    <card id="area-card-{{propertyAreaBreakdown.id}}" show-context-menu="true" display-new-control="true"
                                           card-template-url="'app/property/view/areaBreakdown/list/areaBreakdownCard.html'" item="propertyAreaBreakdown">
                                         <card-context-menu>
                                             <context-menu-item type="edit" item="propertyAreaBreakdown" action="vm.showAreaEdit"></context-menu-item>
@@ -90,82 +95,6 @@
         </div>
     </div>
 </div>
-
-<!--<side-panel>
-    <side-panel-header>
-        <h3 translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.ADD.CREATE_AREA"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <div class="area-details">
-            <div class="form-group has-error">
-                <label for="name" class="required">Name</label>
-                <input id="name" class="form-control" type="text">
-                <p class="help-block">Field is required</p>
-            </div>
-            <div class="form-group has-error">
-                <label for="size" class="required">Size</label>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <input id="size" class="form-control" type="text">
-                    </div>
-                </div>
-                <p class="help-block">Field is required</p>
-            </div>
-        </div>
-
-        <div class="area-details">
-            <div class="row">
-                <div class="col-xs-12">
-                    <button class="close">&times;</button>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="name" class="required">Name</label>
-                <input id="name" class="form-control" type="text">
-            </div>
-            <div class="form-group">
-                <label for="size" class="required">Size</label>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <input id="size" class="form-control" type="text">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="area-details">
-            <div class="row">
-                <div class="col-xs-12">
-                    <button class="close">&times;</button>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="name" class="required">Name</label>
-                <input id="name" class="form-control" type="text">
-            </div>
-            <div class="form-group">
-                <label for="size" class="required">Size</label>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <input id="size" class="form-control" type="text">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <button class="btn btn-default" type="button"><i class="fa fa-plus-circle"></i></button>
-    </side-panel-content>
-    <side-panel-footer>
-        <button class="btn btn-default" type="button">
-            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
-        </button>
-        <button class="btn btn-primary" type="button">
-            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
-        </button>
-    </side-panel-footer>
-</side-panel>-->
-
-
 
 <side-panel>
     <side-panel-header>

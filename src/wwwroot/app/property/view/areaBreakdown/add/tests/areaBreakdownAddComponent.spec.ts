@@ -47,15 +47,16 @@ module Antares {
                 assertValidator.assertRequiredValidator(data[0], data[1], pageObjectSelectors.firstNameInput);
             });
 
-        it('then it should validate if name field has less than 129 characters', () => {
-            // act
-            controller.addNewArea();
-            scope.$apply();
-
-            // assert
-            assertValidator.assertMaxLengthValidator(129, false, pageObjectSelectors.firstNameInput);
-            assertValidator.assertMaxLengthValidator(128, true, pageObjectSelectors.firstNameInput);
-        });
+        runDescribe('when filling name')
+            .data<TestCaseForValidator>([
+                [129, false],
+                [128, true]])
+            .dataIt((data: TestCaseForValidator) =>
+                `and length is "${data[0]}" then max length message should ${data[1] ? 'not' : ''} be displayed`)
+            .run((data: TestCaseForValidator) => {
+                // arrange / act / assert
+                assertValidator.assertMaxLengthValidator(<number>data[0], data[1], pageObjectSelectors.firstNameInput);
+            });
 
         runDescribe('when filling size')
             .data<TestCaseForValidator>([

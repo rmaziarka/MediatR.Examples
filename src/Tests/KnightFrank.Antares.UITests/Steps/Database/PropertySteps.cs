@@ -164,5 +164,33 @@
 
             this.scenarioContext.Set(activity, "Activity");
         }
+
+        [Given(@"Property area breakdown is defined")]
+        public void CreateAreaBreakdown()
+        {
+            Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
+            var propertyAreaBreakdowns = new List<PropertyAreaBreakdown>
+            {
+                new PropertyAreaBreakdown
+                {
+                    PropertyId = propertyId,
+                    Name = "1st floor",
+                    Order = 0,
+                    Size = 10000
+                },
+                new PropertyAreaBreakdown
+                {
+                    PropertyId = propertyId,
+                    Name = "2nd floor",
+                    Order = 1,
+                    Size = 10000
+                }
+            };
+
+            this.dataContext.PropertyAreaBreakdown.AddRange(propertyAreaBreakdowns);
+            this.dataContext.SaveChanges();
+
+            this.scenarioContext.Set(propertyAreaBreakdowns, "PropertyAreaBreakdowns");
+        }
     }
 }

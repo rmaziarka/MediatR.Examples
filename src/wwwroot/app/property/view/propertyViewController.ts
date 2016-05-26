@@ -64,7 +64,6 @@ module Antares.Property.View {
             this.showPanel(this.components.panels.activityAdd);
         }
 
-
         showAreaAdd = () => {
             this.components.areaAdd().clearAreas();
             this.showPanel(this.components.panels.areaAdd);
@@ -146,19 +145,24 @@ module Antares.Property.View {
             this.components.areaEdit().updatePropertyAreaBreakdown(this.property.id).then((area: Business.PropertyAreaBreakdown) => {
                 var index = _.findIndex(this.property.propertyAreaBreakdowns, (item) => { return item.id === area.id });
                 if (index >= 0) {
-                    this.property.propertyAreaBreakdowns[index] = area;
+                    var currentArea = this.property.propertyAreaBreakdowns[index];
+                    angular.extend(currentArea, area);
                     this.cancelEditArea();
                 }
             });
         }
 
         areaBreakdownDndOptions: Common.Models.IDndOptions = {
-            dragEnd: (event: Common.Models.IDndEvent) => {
+            dragEnd: this.onAreaDraggedAndDropped()
+        }
+
+        onAreaDraggedAndDropped() {
+            return (event: Common.Models.IDndEvent) => {
                 var movedItem: Business.PropertyAreaBreakdown = event.source.itemScope.modelValue;
                 movedItem.order = event.dest.index;
 
-                var params: Resources.IPropertyAreaBreakdownResourceClassParameters = { propertyId: movedItem.propertyId };
-                var data = new Business.UpdatePropertyAreaBreakdownOrderResource(movedItem);
+                var params: Resources.IPropertyAreaBreakdownResourceClassParameters = { propertyId: this.property.id };
+                var data = new Business.UpdatePropertyAreaBreakdownOrderResource(movedItem, this.property.id);
 
                 this.dataAccessService.getPropertyAreaBreakdownResource()
                     .updatePropertyAreaBreakdownOrder(params, data)
@@ -167,7 +171,7 @@ module Antares.Property.View {
                         angular.extend(event.source.sortableScope.modelValue, areas);
                     });
             }
-        };
+        }
 
         defineComponentIds() {
             this.componentIds = {

@@ -41,7 +41,7 @@
         {
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
-            Guid statusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["New"];
+            Guid statusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[status];
 
             var offer = new Offer
             {
@@ -139,6 +139,45 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
+        [When(@"User updates offer")]
+        public void UpdateOffer()
+        {
+            var offer = this.scenarioContext.Get<Offer>("Offer");
+            var details = new UpdateOfferCommand
+            {
+                Id = offer.Id,
+                StatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Accepted"],
+                Price = 2000,
+                SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
+                CompletionDate = DateTime.UtcNow.AddDays(2),
+                ExchangeDate = DateTime.UtcNow.AddDays(2),
+                OfferDate = DateTime.UtcNow
+            };
+
+            this.UpdateOffer(details);
+        }
+
+        [When(@"User updates offer with invalid (.*) data")]
+        public void UpdateOfferWithInvalidData(string data)
+        {
+            var offer = this.scenarioContext.Get<Offer>("Offer");
+            var details = new UpdateOfferCommand
+            {
+                Id = data.Equals("offer") ? Guid.NewGuid() : offer.Id,
+                StatusId =
+                    data.Equals("status")
+                        ? Guid.NewGuid()
+                        : this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["New"],
+                CompletionDate = DateTime.UtcNow,
+                ExchangeDate = DateTime.UtcNow,
+                SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
+                Price = 1000,
+                OfferDate = DateTime.UtcNow
+            };
+
+            this.UpdateOffer(details);
+        }
+
         [Then(@"Offer details should be the same as already added")]
         public void CheckOfferDetails()
         {
@@ -171,6 +210,13 @@
         {
             string requestUrl = $"{ApiUrl}";
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, command);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        private void UpdateOffer(UpdateOfferCommand command)
+        {
+            string requestUrl = $"{ApiUrl}";
+            HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, command);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
     }

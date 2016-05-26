@@ -98,12 +98,10 @@
             page.Viewing.SelectAttendees(attendees);
         }
 
-        [When(@"User clicks save activity button on view requirement page")]
+        [When(@"User clicks save viewing button on view requirement page")]
         public void SaveViewing()
         {
-            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
-            page.Viewing.SaveViewing();
-            page.WaitForSidePanelToHide();
+            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").Viewing.SaveViewing();
         }
 
         [When(@"User clicks (.*) viewings details on view requirement page")]
@@ -113,7 +111,7 @@
                 .OpenViewingDetails(position)
                 .WaitForSidePanelToShow();
         }
-        
+
         [When(@"User clicks (.*) offer details on view requirement page")]
         public void OpenOffersDetails(int position)
         {
@@ -149,6 +147,15 @@
                 .WaitForSidePanelToShow();
         }
 
+        [When(@"User clicks edit offer button for (.*) offer on view requirement page")]
+        public void EditOffer(int position)
+        {
+            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage")
+                .OpenOfferActions(position)
+                .EditOffer(1)
+                .WaitForSidePanelToShow();
+        }
+
         [When(@"User fills in offer details on view requirement page")]
         public void FIllOfferDetails(Table table)
         {
@@ -165,6 +172,8 @@
                 .SetSpecialConditions(details.SpecialConditions)
                 .SetProposedExchangeDate(details.ExchangeDate)
                 .SetProposedCompletionDate(details.CompletionDate);
+
+            this.scenarioContext.Set(details, "Offer");
         }
 
         [When(@"User clicks save offer button on view requirement page")]
@@ -173,6 +182,12 @@
             var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
             page.Offer.SaveOffer();
             page.WaitForSidePanelToHide();
+        }
+
+        [Then(@"Side panel should not be displayed on view requirement page")]
+        public void WaitForSidePnaleToHide()
+        {
+            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").WaitForSidePanelToHide();
         }
 
         [Then(@"Requirement location details on view requirement page are same as the following")]
@@ -281,9 +296,12 @@
         {
             var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
             var expectedDetails = table.CreateInstance<OfferData>();
-            expectedDetails.OfferDate = DateTime.UtcNow.ToString(Format);
-            expectedDetails.ExchangeDate = DateTime.UtcNow.AddDays(1).ToString(Format);
-            expectedDetails.CompletionDate = DateTime.UtcNow.AddDays(2).ToString(Format);
+
+            var offer = this.scenarioContext.Get<OfferData>("Offer");
+
+            expectedDetails.OfferDate = offer.OfferDate;
+            expectedDetails.ExchangeDate = offer.ExchangeDate;
+            expectedDetails.CompletionDate = offer.CompletionDate;
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Activity, page.OfferPreview.Details),

@@ -10,14 +10,14 @@ Scenario: Create property area breakdown
 		And Property with Address and Commercial division is in database
 			| PropertyName | PropertyNumber | Line2 | Line3 | Postcode | City | County |
 			|              |                |       |       | N1C      |      |        |
-		And Following propery areas breakdown are defined
+		And Following property area breakdown is defined
 			| Name  | Size   |
 			| area1 | 100    |
 			| area2 | 1000   |
 			| area3 | 999.99 |
 	When User creates defined property area breakdown for latest property
 	Then User should get OK http status code
-		And Added property area breakdowns exists in data base
+		And Added property area breakdown should exist in data base
 
 @Property
 Scenario Outline: Create area breakdown with invalid data
@@ -29,7 +29,7 @@ Scenario Outline: Create area breakdown with invalid data
 		And Property with Address and Commercial division is in database
 			| PropertyName | PropertyNumber | Line2 | Line3 | Postcode | City | County |
 			|              |                |       |       | N1C      |      |        |
-		And Following propery areas breakdown are defined
+		And Following property area breakdown is defined
 			| Name   | Size   |
 			| <name> | <size> |
 	When User creates defined property area breakdown for <property> property
@@ -47,16 +47,116 @@ Scenario: Get property with property area breakdown
 	Given User gets GB address form for Property and country details
         And User gets Office for PropertyType
         And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode   | enumTypeItemCode |
-			| Division       | Commercial      |
+			| enumTypeCode | enumTypeItemCode |
+			| Division     | Commercial       |
 		And Property with Address and Commercial division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
-		And Following propery areas breakdown are defined and put in data base
+		And Following property area breakdown is in database
 			| Name  | Size   | Order |
 			| area1 | 0.1    | 0     |
 			| area2 | 1000   | 1     |
 			| area3 | 999.99 | 2     |
 	When User retrieves property details
 	Then User should get OK http status code
-		And Returned property area breakdowns are as expected
+		And Returned property area breakdown should be as expected
+
+@Property
+Scenario Outline: Update property area breakdown order
+	Given User gets GB address form for Property and country details
+        And User gets Office for PropertyType
+        And User gets EnumTypeItemId and EnumTypeItem code
+			| enumTypeCode | enumTypeItemCode |
+			| Division     | Commercial       |
+		And Property with Address and Commercial division is in database
+        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
+        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+		And Following property area breakdown is in database
+			| Name  | Size   | Order |
+			| area1 | 0.1    | 0     |
+			| area2 | 1000   | 1     |
+			| area3 | 999.99 | 2     |
+	When User sets <order1> order for area1 property area breakdown for latest property
+	Then User should get OK http status code
+		And Property area breakdown should be updated
+			| Name  | Size   | Order    |
+			| area1 | 0.1    | <order1> |
+			| area2 | 1000   | <order2> |
+			| area3 | 999.99 | <order3> |
+
+	Examples: 
+		| order1 | order2 | order3 |
+		| 2      | 0      | 1      |
+		| 0      | 1      | 2      |
+
+@Property
+Scenario Outline: Update property area breakdown order with invalid data
+	Given User gets GB address form for Property and country details
+        And User gets Office for PropertyType
+        And User gets EnumTypeItemId and EnumTypeItem code
+			| enumTypeCode | enumTypeItemCode |
+			| Division     | Commercial       |
+		And Property with Address and Commercial division is in database
+        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
+        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+		And Following property area breakdown is in database
+			| Name  | Size   | Order |
+			| area1 | 0.1    | 0     |
+			| area2 | 1000   | 1     |
+			| area3 | 999.99 | 2     |
+	When User sets <order> order for <name> property area breakdown for <property> property
+	Then User should get <response> http status code
+
+	Examples: 
+	| property                             | name  | order | response   |
+	| latest                               | area1 | -1    | BadRequest |
+	| latest                               | area  | 1     | BadRequest |
+	| 91AC6B12-020A-11E6-8D22-5E5517507C66 | area1 | 0     | BadRequest |
+
+
+@Property
+Scenario: Update property area breakdown name and size
+	Given User gets GB address form for Property and country details
+        And User gets Office for PropertyType
+        And User gets EnumTypeItemId and EnumTypeItem code
+			| enumTypeCode   | enumTypeItemCode |
+			| Division       | Commercial      |
+		And Property with Address and Commercial division is in database
+        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
+        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+		And Following property area breakdown is in database
+			| Name  | Size   | Order |
+			| area1 | 0.1    | 0     |
+			| area2 | 1000   | 1     |
+			| area3 | 999.99 | 2     |
+	When User updates updatedAreaName name and 1024 size property area breakdown with area1 for latest property
+	Then User should get OK http status code
+		And Property area breakdown should be updated
+			| Name            | Size   | Order |
+			| updatedAreaName | 1024   | 0     |
+			| area2           | 1000   | 1     |
+			| area3           | 999.99 | 2     |
+
+@Property
+Scenario Outline: Update property area breakdown name and size with invalid name
+	Given User gets GB address form for Property and country details
+        And User gets Office for PropertyType
+        And User gets EnumTypeItemId and EnumTypeItem code
+			| enumTypeCode   | enumTypeItemCode |
+			| Division       | Commercial      |
+		And Property with Address and Commercial division is in database
+        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
+        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+		And Following property area breakdown is in database
+			| Name  | Size   | Order |
+			| area1 | 0.1    | 0     |
+			| area2 | 1000   | 1     |
+			| area3 | 999.99 | 2     |
+	When User updates <updatedName> name and <size> size property area breakdown with <name> for <property> property
+	Then User should get <responseCode> http status code
+
+Examples: 
+	| property                             | name  | size | updatedName | responseCode |
+	| latest                               | k     | 1    | updatedName | BadRequest   |
+	| 91AC6B12-020A-11E6-8D22-5E5517507C66 | area1 | 0    | updatedName | BadRequest   |
+	| latest                               | area1 | 1    |             | BadRequest   |

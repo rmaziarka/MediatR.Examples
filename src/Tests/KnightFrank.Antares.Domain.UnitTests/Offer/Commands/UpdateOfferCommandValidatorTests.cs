@@ -140,33 +140,5 @@
             // Assert
             validationResult.IsInvalid(nameof(this.cmd.Price), nameof(Messages.greaterthan_error));
         }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_CompletionDateInPast_When_Validating_Then_IsInvalid(UpdateOfferCommandValidator validator)
-        {
-            // Arrange
-            this.cmd.CompletionDate = DateTime.UtcNow.Date.AddDays(-1);
-
-            // Act
-            ValidationResult validationResult = validator.Validate(this.cmd);
-
-            // Assert
-            validationResult.IsInvalid(nameof(this.cmd.CompletionDate), nameof(Messages.greaterthanorequal_error));
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_ExchangeDateInPast_When_Validating_Then_IsInvalid(UpdateOfferCommandValidator validator)
-        {
-            // Arrange
-            this.cmd.ExchangeDate = DateTime.UtcNow.Date.AddDays(-1);
-
-            // Act
-            ValidationResult validationResult = validator.Validate(this.cmd);
-
-            // Assert
-            validationResult.IsInvalid(nameof(this.cmd.ExchangeDate), nameof(Messages.greaterthanorequal_error));
-        }
     }
 }

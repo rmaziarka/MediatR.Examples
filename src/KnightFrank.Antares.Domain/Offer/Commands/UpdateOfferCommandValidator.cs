@@ -17,16 +17,6 @@
             this.RuleFor(x => x.OfferDate.Date)
                 .LessThanOrEqualTo(x => DateTime.UtcNow.Date)
                 .OverridePropertyName(nameof(CreateOfferCommand.OfferDate));
-
-            this.RuleFor(v => v.ExchangeDate.Value.Date)
-                .GreaterThanOrEqualTo(v => DateTime.UtcNow.Date)
-                .When(v => v.ExchangeDate.HasValue)
-                .OverridePropertyName(nameof(CreateOfferCommand.ExchangeDate));
-
-            this.RuleFor(v => v.CompletionDate.Value.Date)
-                .GreaterThanOrEqualTo(v => DateTime.UtcNow.Date)
-                .When(v => v.CompletionDate.HasValue)
-                .OverridePropertyName(nameof(CreateOfferCommand.CompletionDate));
         }
     }
 }

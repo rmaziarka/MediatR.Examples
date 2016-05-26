@@ -29,20 +29,24 @@
         public Guid Handle(UpdateAreaBreakdownOrderCommand command)
         {
             Property property = this.propertyRepository.GetById(command.PropertyId);
-            PropertyAreaBreakdown areaBreakdown = this.areaBreakdownRepository.GetById(command.AreaId);
-
             this.entityValidator.EntityExists(property, command.PropertyId);
+
+            PropertyAreaBreakdown areaBreakdown = this.areaBreakdownRepository.GetById(command.AreaId);
             this.entityValidator.EntityExists(areaBreakdown, command.AreaId);
 
-            IEnumerable<PropertyAreaBreakdown> orderedAreaBreakdownItems = this.GetOrderedAreaBreakdownItems(command, areaBreakdown);
-            property.TotalAreaBreakdown = orderedAreaBreakdownItems.Sum(x => x.Size);
+            if (areaBreakdown.PropertyId != property.Id)
+            {
+                throw new BusinessValidationException(ErrorMessage.PropertyAreaBreakdown_Is_Assigned_To_Other_Property);
+            }
+
+            this.UpdatePropertyAreaBreakdownsOrder(command, areaBreakdown);
 
             this.areaBreakdownRepository.Save();
 
             return areaBreakdown.Id;
         }
-
-        private IEnumerable<PropertyAreaBreakdown> GetOrderedAreaBreakdownItems(UpdateAreaBreakdownOrderCommand command, PropertyAreaBreakdown updatedAreaBreakdown)
+        
+        private void UpdatePropertyAreaBreakdownsOrder(UpdateAreaBreakdownOrderCommand command, PropertyAreaBreakdown updatedAreaBreakdown)
         {
             List<PropertyAreaBreakdown> areaBreakdownItems =
                 this.areaBreakdownRepository.FindBy(x => x.PropertyId == command.PropertyId && x.Id != command.AreaId)
@@ -60,8 +64,6 @@
             {
                 items.Value.Order = items.Index;
             }
-            
-            return areaBreakdownItems;
         }
     }
 }

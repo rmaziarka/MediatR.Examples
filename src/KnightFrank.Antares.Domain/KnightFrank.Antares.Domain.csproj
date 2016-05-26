@@ -113,8 +113,6 @@
     <Compile Include="AddressForm\Specifications\IsAddressFormAssignedToCountry.cs" />
     <Compile Include="AddressForm\Specifications\IsAddressFormGloballyDefined.cs" />
     <Compile Include="AreaBreakdown\CommandHandlers\CreateAreaBreakdownCommandHandler.cs" />
-    <Compile Include="AreaBreakdown\CommandHandlers\PropertyAreaBreakDownValidator.cs" />
-    <Compile Include="AreaBreakdown\CommandHandlers\IPropertyAreaBreakDownValidator.cs" />
     <Compile Include="AreaBreakdown\CommandHandlers\UpdateAreaBreakdownCommandHandler.cs" />
     <Compile Include="AreaBreakdown\CommandHandlers\UpdateAreaBreakdownOrderCommandHandler.cs" />
     <Compile Include="AreaBreakdown\Commands\Area.cs" />
@@ -135,6 +133,7 @@
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQuery.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidator.cs" />
     <Compile Include="Characteristic\QueryHandlers\CharacteristicGroupsQueryHandler.cs" />
+    <Compile Include="Common\BusinessValidators\ActivityTypeDefinitionValidator.cs" />
     <Compile Include="Common\BusinessValidators\AddressValidator.cs" />
     <Compile Include="Common\BusinessValidators\CollectionValidator.cs" />
     <Compile Include="Common\BusinessValidators\CommonResources.cs">
@@ -143,6 +142,7 @@
       <DependentUpon>CommonResources.tt</DependentUpon>
     </Compile>
     <Compile Include="Common\BusinessValidators\EnumTypeItemValidator.cs" />
+    <Compile Include="Common\BusinessValidators\IActivityTypeDefinitionValidator.cs" />
     <Compile Include="Common\BusinessValidators\IAddressValidator.cs" />
     <Compile Include="Common\BusinessValidators\ICollectionValidator.cs" />
     <Compile Include="Common\BusinessValidators\IEnumTypeItemValidator.cs" />
@@ -153,7 +153,6 @@
     <Compile Include="Common\Commands\CreateOrUpdateAddressValidator.cs" />
     <Compile Include="Common\Enums\DivisionEnum.cs" />
     <Compile Include="Common\Enums\EnumType.cs" />
-    <Compile Include="Common\Exceptions\ResourceNotFoundException.cs" />
     <Compile Include="Common\NinjectInstanceResolver.cs" />
     <Compile Include="Common\INinjectInstanceResolver.cs" />
     <Compile Include="Common\Specifications\EnumTypeItemWithEnumType.cs" />

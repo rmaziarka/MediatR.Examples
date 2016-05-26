@@ -25,7 +25,7 @@
         private readonly IEnumTypeItemValidator enumTypeItemValidator;
         private readonly ICollectionValidator collectionValidator;
         private readonly IGenericRepository<Property> propertyRepository;
-        private readonly IGenericRepository<ActivityTypeDefinition> activityTypeDefinitionRepository;
+        private readonly IActivityTypeDefinitionValidator activityTypeDefinitionValidator;
 
         public CreateActivityCommandHandler(
             IGenericRepository<Activity> activityRepository,
@@ -33,9 +33,9 @@
             IGenericRepository<User> userRepository,
             IEntityValidator entityValidator,
             IEnumTypeItemValidator enumTypeItemValidator,
-            ICollectionValidator collectionValidator, 
+            ICollectionValidator collectionValidator,
             IGenericRepository<Property> propertyRepository,
-            IGenericRepository<ActivityTypeDefinition> activityTypeDefinitionRepository)
+            IActivityTypeDefinitionValidator activityTypeDefinitionValidator)
         {
             this.activityRepository = activityRepository;
             this.contactRepository = contactRepository;
@@ -44,21 +44,16 @@
             this.enumTypeItemValidator = enumTypeItemValidator;
             this.collectionValidator = collectionValidator;
             this.propertyRepository = propertyRepository;
-            this.activityTypeDefinitionRepository = activityTypeDefinitionRepository;
+            this.activityTypeDefinitionValidator = activityTypeDefinitionValidator;
         }
 
         public Guid Handle(CreateActivityCommand message)
         {
 
             Property property = this.propertyRepository.GetById(message.PropertyId);
-            this.entityValidator.EntityExists<Property>(property, message.PropertyId);
-            bool activityTypeDefinitionExists = this.ActivityTypeDefinitionExists(message.ActivityTypeId, property);
+            this.entityValidator.EntityExists(property, message.PropertyId);
 
-            if (activityTypeDefinitionExists == false)
-            {
-                BusinessValidationMessage errorMessage = BusinessValidationMessage.CreateEntityNotExistMessage(typeof(ActivityTypeDefinition).Name, message.ActivityTypeId);
-                throw new BusinessValidationException(errorMessage);
-            }
+            this.activityTypeDefinitionValidator.Validate(message.ActivityTypeId, property.Address.CountryId, property.PropertyTypeId);
 
             this.entityValidator.EntityExists<ActivityType>(message.ActivityTypeId);
             this.enumTypeItemValidator.ItemExists(EnumType.ActivityStatus, message.ActivityStatusId);
@@ -67,7 +62,7 @@
 
             List<Contact> vendors = this.contactRepository.FindBy(x => message.ContactIds.Contains(x.Id)).ToList();
             this.collectionValidator.CollectionContainsAll(vendors.Select(c => c.Id), message.ContactIds, ErrorMessage.Missing_Activity_Vendors_Id);
-            
+
             activity.Contacts = vendors;
 
             User negotiator = this.userRepository.FindBy(x => message.LeadNegotiatorId == x.Id).SingleOrDefault();
@@ -84,17 +79,6 @@
             this.activityRepository.Save();
 
             return activity.Id;
-        }
-        private bool ActivityTypeDefinitionExists(Guid activityTypeId,Property property)
-        {
-
-            bool activityTypeDefinitionExists = this.activityTypeDefinitionRepository.Any(
-                x =>
-                    x.CountryId == property.Address.CountryId &&
-                    x.PropertyTypeId == property.PropertyTypeId &&
-                    x.ActivityTypeId == activityTypeId);
-
-            return activityTypeDefinitionExists;
         }
     }
 }

@@ -7,7 +7,9 @@
 
     using FluentAssertions;
 
+    using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Common;
+    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
@@ -30,13 +32,15 @@
         [AutoMoqData]
         public void Given_ValidCommand_When_Handling_Then_ShouldUpdateActivity(
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
+            [Frozen] Mock<IGenericRepository<ActivityTypeDefinition>> activityTypeDefinitionRepository,
             UpdateActivityCommand command,
             UpdateActivityCommandHandler handler,
-            Activity activity)
+            IFixture fixture)
         {
+            Activity activity = this.GetActivity(fixture);
             activity.ActivityUsers = new List<ActivityUser>();
             activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
-
+            activityTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>())).Returns(true);
             handler.Handle(command);
 
             activity.ShouldBeEquivalentTo(
@@ -55,12 +59,11 @@
             [Frozen] Mock<IEntityValidator> entityValidator,
             UpdateActivityCommandHandler handler,
             UpdateActivityCommand command,
-            Activity activity,
             IFixture fixture
             )
         {
             // Arrange
-            activity.ActivityUsers = new List<ActivityUser>();
+            Activity activity = this.GetActivity(fixture);
             activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
 
             // Act
@@ -77,11 +80,11 @@
             [Frozen] Mock<IEntityValidator> entityValidator,
             UpdateActivityCommandHandler handler,
             UpdateActivityCommand command,
-            Activity activity,
             IFixture fixture
             )
         {
             // Arrange
+            Activity activity = this.GetActivity(fixture);
             activity.ActivityUsers = new List<ActivityUser>();
             activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
 
@@ -99,11 +102,11 @@
             [Frozen] Mock<IEntityValidator> entityValidator,
             UpdateActivityCommandHandler handler,
             UpdateActivityCommand command,
-            Activity activity,
             IFixture fixture
             )
         {
             // Arrange
+            Activity activity = this.GetActivity(fixture);
             activity.ActivityUsers = new List<ActivityUser>();
             activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
 
@@ -122,14 +125,12 @@
             [Frozen] Mock<ICollectionValidator> collectionValidator,
             UpdateActivityCommandHandler handler,
             UpdateActivityCommand command,
-            Activity activity,
             IFixture fixture
             )
         {
             // Arrange
             var calledNegotiators = new List<Guid>();
-
-            activity.ActivityUsers = new List<ActivityUser>();
+            Activity activity = this.GetActivity(fixture);
             activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
             collectionValidator.Setup(x => x.CollectionIsUnique(It.IsAny<ICollection<Guid>>(), It.IsAny<ErrorMessage>()))
                                .Callback((ICollection<Guid> list, ErrorMessage error) => { calledNegotiators.AddRange(list); });
@@ -152,11 +153,12 @@
            [Frozen] Mock<IGenericRepository<ActivityUser>> activityUserRepository,
            UpdateActivityCommand command,
            UpdateActivityCommandHandler handler,
-           Activity activity,
-           ActivityUser activityUserToDelete)
+           ActivityUser activityUserToDelete,
+                       IFixture fixture)
         {
             // Arrange
             activityUserToDelete.UserType = UserTypeEnum.SecondaryNegotiator;
+            Activity activity = this.GetActivity(fixture);
             activity.ActivityUsers = new List<ActivityUser> { activityUserToDelete };
             activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
 
@@ -173,12 +175,12 @@
            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
            UpdateActivityCommand command,
            UpdateActivityCommandHandler handler,
-           Activity activity,
-           Guid secondaryNegotiatorIdToAdd)
+           Guid secondaryNegotiatorIdToAdd,
+           IFixture fixture)
         {
             // Arrange
             command.SecondaryNegotiatorIds.Add(secondaryNegotiatorIdToAdd);
-            activity.ActivityUsers = new List<ActivityUser>();
+            Activity activity = this.GetActivity(fixture);
             activityRepository.Setup(p => p.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
 
             // Act
@@ -197,15 +199,16 @@
            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
            UpdateActivityCommand command,
            UpdateActivityCommandHandler handler,
-           Activity activity,
            ActivityUser activityUserToUpdate,
-           Guid secondaryNegotiatorIdToUpdate)
+           Guid secondaryNegotiatorIdToUpdate,
+           IFixture fixture)
         {
             // Arrange
             command.SecondaryNegotiatorIds.Add(secondaryNegotiatorIdToUpdate);
 
             activityUserToUpdate.UserId = secondaryNegotiatorIdToUpdate;
             activityUserToUpdate.UserType = UserTypeEnum.SecondaryNegotiator;
+            Activity activity = this.GetActivity(fixture);
             activity.ActivityUsers = new List<ActivityUser> { activityUserToUpdate };
 
             activityRepository.Setup(p => p.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
@@ -226,15 +229,16 @@
            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
            UpdateActivityCommand command,
            UpdateActivityCommandHandler handler,
-           Activity activity,
            ActivityUser activityUserToUpdate,
-           Guid leadNegotiatorIdToUpdate)
+           Guid leadNegotiatorIdToUpdate,
+           IFixture fixture)
         {
             // Arrange
             command.LeadNegotiatorId = leadNegotiatorIdToUpdate;
 
             activityUserToUpdate.UserId = leadNegotiatorIdToUpdate;
             activityUserToUpdate.UserType = UserTypeEnum.LeadNegotiator;
+            Activity activity = this.GetActivity(fixture);
             activity.ActivityUsers = new List<ActivityUser> { activityUserToUpdate };
 
             activityRepository.Setup(p => p.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
@@ -255,15 +259,16 @@
            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
            UpdateActivityCommand command,
            UpdateActivityCommandHandler handler,
-           Activity activity,
            ActivityUser activityUserToUpdate,
-           Guid secondaryNegotiatorIdToUpdateToLead)
+           Guid secondaryNegotiatorIdToUpdateToLead,
+           IFixture fixture)
         {
             // Arrange
             command.LeadNegotiatorId = secondaryNegotiatorIdToUpdateToLead;
 
             activityUserToUpdate.UserId = secondaryNegotiatorIdToUpdateToLead;
             activityUserToUpdate.UserType = UserTypeEnum.SecondaryNegotiator;
+            Activity activity = this.GetActivity(fixture);
             activity.ActivityUsers = new List<ActivityUser> { activityUserToUpdate };
 
             activityRepository.Setup(p => p.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
@@ -289,15 +294,16 @@
            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
            UpdateActivityCommand command,
            UpdateActivityCommandHandler handler,
-           Activity activity,
            ActivityUser activityUserToUpdate,
-           Guid leadNegotiatorIdToUpdateToSecondary)
+           Guid leadNegotiatorIdToUpdateToSecondary,
+           IFixture fixture)
         {
             // Arrange
             command.SecondaryNegotiatorIds.Add(leadNegotiatorIdToUpdateToSecondary);
 
             activityUserToUpdate.UserId = leadNegotiatorIdToUpdateToSecondary;
             activityUserToUpdate.UserType = UserTypeEnum.LeadNegotiator;
+            Activity activity = this.GetActivity(fixture);
             activity.ActivityUsers = new List<ActivityUser> { activityUserToUpdate };
 
             activityRepository.Setup(p => p.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
@@ -315,6 +321,15 @@
                     .Count(u => u.UserId == leadNegotiatorIdToUpdateToSecondary && u.UserType == UserTypeEnum.LeadNegotiator)
                     .Should()
                     .Be(0);
+        }
+
+        private Activity GetActivity(IFixture fixture)
+        {
+            var activity = fixture.Create<Activity>();
+            activity.ActivityUsers = new List<ActivityUser>();
+            activity.Property = fixture.Create<Property>();
+            activity.Property.Address = fixture.Create<Address>();
+            return activity;
         }
     }
 }

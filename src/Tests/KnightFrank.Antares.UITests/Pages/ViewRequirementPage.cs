@@ -34,8 +34,10 @@
         // Offers
         private readonly ElementLocator offers = new ElementLocator(Locator.CssSelector, "card-list-item[ng-repeat *= 'offers'] .card-body");
         private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, "card-list-item[ng-repeat *= 'offers']:nth-of-type({0}) .card-body");
+        private readonly ElementLocator offerActions = new ElementLocator(Locator.CssSelector, "card-list-item[ng-repeat *= 'offers']:nth-of-type({0}) .card-menu-button");
         private readonly ElementLocator offerStatus = new ElementLocator(Locator.CssSelector, "card-list-item[ng-repeat *= 'offers']:nth-of-type({0}) .offer-status");
         private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, "card-list-item[ng-repeat *= 'offers']:nth-of-type({0}) .ng-binding");
+        private readonly ElementLocator editOffer = new ElementLocator(Locator.CssSelector, "card-list-item[ng-repeat *= 'offers']:nth-of-type({0}) [action *= 'showEditOfferPanel']");
 
         public ViewRequirementPage(DriverContext driverContext) : base(driverContext)
         {
@@ -156,9 +158,22 @@
             return this;
         }
 
+        public ViewRequirementPage OpenOfferActions(int position)
+        {
+            this.Driver.GetElement(this.offerActions.Format(position)).Click();
+            return this;
+        }
+
         public ViewRequirementPage CreateOffer(int position)
         {
             this.Driver.GetElement(this.createOffer.Format(position)).Click();
+            return this;
+        }
+
+
+        public ViewRequirementPage EditOffer(int position)
+        {
+            this.Driver.GetElement(this.editOffer.Format(position)).Click();
             return this;
         }
 

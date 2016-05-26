@@ -78,11 +78,17 @@ module Antares.TestHelpers {
             expect(pageObject.isValidationShown()).toBe(!expectedResult, isValidationShownMessage);
         }
 
+        // TODO: method name not valid for what it does... use everywhere method below (assertElementHasHideClass)
         public assertShowElement = (expectedResult: boolean, elementSelector: string) => {
             var selectedElement = this.element.find(elementSelector);
             expect(selectedElement.hasClass("ng-hide")).toBe(expectedResult);
         }
-
+        
+        public assertElementHasHideClass = (expectedResult: boolean, elementSelector: string) => {
+            var selectedElement = this.element.find(elementSelector);
+            expect(selectedElement.hasClass("ng-hide")).toBe(expectedResult);
+        }        
+        
         private generateString = (length: number): string =>{
             return new Array(length + 1).join('x');
         }

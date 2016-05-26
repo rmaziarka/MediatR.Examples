@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Common.Enums;
 
     using MediatR;
 
@@ -21,35 +22,52 @@
         private readonly IGenericRepository<ActivityUser> activityUserRepository;
         private readonly IEntityValidator entityValidator;
         private readonly ICollectionValidator collectionValidator;
+        private readonly IEnumTypeItemValidator enumTypeItemValidator;
+        private readonly IActivityTypeDefinitionValidator activityTypeDefinitionValidator;
 
         public UpdateActivityCommandHandler(IGenericRepository<Activity> activityRepository,
-            IGenericRepository<ActivityUser> activityUserRepository, IEntityValidator entityValidator, ICollectionValidator collectionValidator)
+            IGenericRepository<ActivityUser> activityUserRepository,
+            IGenericRepository<ActivityTypeDefinition> activityTypeDefinitionRepository,
+            IEntityValidator entityValidator,
+            ICollectionValidator collectionValidator,
+            IEnumTypeItemValidator enumTypeItemValidator,
+            IActivityTypeDefinitionValidator activityTypeDefinitionValidator)
         {
             this.activityRepository = activityRepository;
             this.activityUserRepository = activityUserRepository;
             this.entityValidator = entityValidator;
             this.collectionValidator = collectionValidator;
+            this.enumTypeItemValidator = enumTypeItemValidator;
+            this.activityTypeDefinitionValidator = activityTypeDefinitionValidator;
         }
 
         public Guid Handle(UpdateActivityCommand message)
         {
-            Activity activity = this.activityRepository.GetWithInclude(x => x.Id == message.Id, x => x.ActivityUsers).SingleOrDefault();
+            Activity activity =
+                this.activityRepository.GetWithInclude(x => x.Id == message.Id, x => x.ActivityUsers).SingleOrDefault();
+
             this.entityValidator.EntityExists(activity, message.Id);
+            this.entityValidator.EntityExists<ActivityType>(message.ActivityTypeId);
+            this.enumTypeItemValidator.ItemExists(EnumType.ActivityStatus, message.ActivityStatusId);
+
+            // ReSharper disable once PossibleNullReferenceException
+            this.activityTypeDefinitionValidator.Validate(message.ActivityTypeId, activity.Property.Address.CountryId, activity.Property.PropertyTypeId);
 
             this.entityValidator.EntityExists<User>(message.LeadNegotiatorId);
+
+            this.entityValidator.EntitiesExist<User>(message.SecondaryNegotiatorIds);
 
             var commandNegotiators = new List<ActivityUser>
             {
                 new ActivityUser { UserId = message.LeadNegotiatorId, UserType = UserTypeEnum.LeadNegotiator }
             };
 
-            this.entityValidator.EntitiesExist<User>(message.SecondaryNegotiatorIds);
-
             commandNegotiators.AddRange(
                 message.SecondaryNegotiatorIds.Select(
                     n => new ActivityUser { UserId = n, UserType = UserTypeEnum.SecondaryNegotiator }));
 
-            this.collectionValidator.CollectionIsUnique(commandNegotiators.Select(n => n.UserId).ToList(), ErrorMessage.Activity_Negotiators_Not_Unique);
+            this.collectionValidator.CollectionIsUnique(commandNegotiators.Select(n => n.UserId).ToList(),
+                ErrorMessage.Activity_Negotiators_Not_Unique);
 
             Mapper.Map(message, activity);
 

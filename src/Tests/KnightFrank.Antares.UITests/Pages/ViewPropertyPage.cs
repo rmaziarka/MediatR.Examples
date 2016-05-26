@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -26,7 +27,7 @@
         private readonly ElementLocator addOwernship = new ElementLocator(Locator.CssSelector, "#ownership-list button");
         private readonly ElementLocator ownershipContacts = new ElementLocator(Locator.XPath, "//card-list-item[{0}]//span[contains(@ng-repeat, 'contacts')]");
         private readonly ElementLocator ownershipDetails = new ElementLocator(Locator.XPath, "//card-list-item[{0}]//small/span/..");
-        // Locators for property activities area
+        // Locators for property activities area        
         private readonly ElementLocator addActivity = new ElementLocator(Locator.CssSelector, "#card-list-activities button");
         private readonly ElementLocator activityDate = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] div.panel-item");
         private readonly ElementLocator activityVendor = new ElementLocator(Locator.CssSelector, "card[item = 'activity'] span");
@@ -42,6 +43,11 @@
         private readonly ElementLocator areaTile = new ElementLocator(Locator.CssSelector, "#card-list-areas card-list-items > div");
         private readonly ElementLocator areaName = new ElementLocator(Locator.CssSelector, "card-list-items > div:nth-of-type({0}) .card-item");
         private readonly ElementLocator areaSize = new ElementLocator(Locator.CssSelector, "card-list-items > div:nth-of-type({0}) .card-info");
+        private readonly ElementLocator areaActions = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'propertyAreaBreakdown']:nth-of-type({0}) .card-menu-button");
+        private readonly ElementLocator areaEdit = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'propertyAreaBreakdown']:nth-of-type({0}) [action *= 'showAreaEdit']");
+        // Locators for messages
+        private readonly ElementLocator successMessage = new ElementLocator(Locator.CssSelector, ".alert-success {0}");
+        private readonly ElementLocator messageText = new ElementLocator(Locator.CssSelector, ".growl-message");
 
         public ViewPropertyPage(DriverContext driverContext) : base(driverContext)
         {
@@ -65,6 +71,8 @@
 
         public string ActivityType => this.Driver.GetElement(this.activityType).Text;
 
+        public string SuccessMessage => this.Driver.GetElement(this.successMessage.Format(this.messageText.Value)).Text;
+
         public ViewPropertyPage OpenViewPropertyPageWithId(string id)
         {
             new CommonPage(this.DriverContext).NavigateToPageWithId("view property", id);
@@ -81,6 +89,17 @@
         {
             this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.MediumTimeout);
             return this;
+        }
+
+        public ViewPropertyPage WaitForSuccessMessageToHide()
+        {
+            this.Driver.WaitUntilElementIsNoLongerFound(this.successMessage.Format(string.Empty), TimeSpan.FromSeconds(6).TotalSeconds);
+            return this;
+        }
+
+        public bool IsSuccessMessageDisplayed()
+        {
+            return this.Driver.IsElementPresent(this.successMessage.Format(string.Empty), BaseConfiguration.MediumTimeout);
         }
 
         public bool IsAddressDetailsVisible(string propertyDetail)
@@ -181,10 +200,24 @@
                 actualResult.Add(new PropertyAreaBreakdown
                 {
                     Name = this.Driver.GetElement(this.areaName.Format(i)).Text,
-                    Size = double.Parse(this.Driver.GetElement(this.areaSize.Format(i)).Text.Replace(".00 sq ft", string.Empty).Trim())
+                    Size =
+                        double.Parse(this.Driver.GetElement(this.areaSize.Format(i)).Text.Replace(".00 sq ft", string.Empty).Trim())
                 });
             }
             return actualResult;
+        }
+
+        public ViewPropertyPage OpenAreaActions(int position)
+        {
+            this.Driver.ScrollIntoMiddle(this.areaActions.Format(position));
+            this.Driver.GetElement(this.areaActions.Format(position)).Click();
+            return this;
+        }
+
+        public ViewPropertyPage EditArea(int position)
+        {
+            this.Driver.GetElement(this.areaEdit.Format(position)).Click();
+            return this;
         }
     }
 

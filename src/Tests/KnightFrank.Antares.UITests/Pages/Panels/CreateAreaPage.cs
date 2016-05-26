@@ -8,10 +8,10 @@
 
     public class CreateAreaPage: ProjectPageBase
     {
-        private readonly ElementLocator name = new ElementLocator(Locator.CssSelector, "#addAreaForm div.area-details:nth-of-type({0}) #name");
-        private readonly ElementLocator size = new ElementLocator(Locator.CssSelector, "#addAreaForm div.area-details:nth-of-type({0}) #size");
+        private readonly ElementLocator name = new ElementLocator(Locator.CssSelector, ".slide-in div.area-details:nth-of-type({0}) #name");
+        private readonly ElementLocator size = new ElementLocator(Locator.CssSelector, ".slide-in div.area-details:nth-of-type({0}) #size");
         private readonly ElementLocator addArea = new ElementLocator(Locator.CssSelector, "#addAreaForm [ng-click *= 'addNewArea']");
-        private readonly ElementLocator saveArea = new ElementLocator(Locator.CssSelector, "#area-add-button");
+        private readonly ElementLocator saveArea = new ElementLocator(Locator.CssSelector, ".slide-in .btn.btn-primary");
 
         public CreateAreaPage(DriverContext driverContext) : base(driverContext)
         {
@@ -39,6 +39,5 @@
             this.Driver.WaitForAngularToFinish();
             return this;
         }
-
     }
 }

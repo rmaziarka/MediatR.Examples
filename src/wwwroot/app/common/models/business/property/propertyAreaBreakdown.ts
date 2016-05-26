@@ -5,7 +5,6 @@
         name: string = null;
         size: number = null;
         order: number = null;
-        propertyId: string = null;
 
         constructor(propertyArea?: Dto.IPropertyAreaBreakdown)
         {
@@ -13,6 +12,5 @@
                 angular.extend(this, propertyArea);
             }
         }
-
     }
 }

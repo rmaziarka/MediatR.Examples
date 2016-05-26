@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../../../typings/_all.d.ts" />
 
 module Antares {
-    import NegotiatorsEditController = Common.Component.NegotiatorsEditController;
+    import NegotiatorsController = Common.Component.NegotiatorsController;
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
     import Enums = Common.Models.Enums;
@@ -9,7 +9,7 @@ module Antares {
     describe('Given negotiators controller', () => {
         var $scope: ng.IScope,
             $http: ng.IHttpBackendService,
-            controller: NegotiatorsEditController;
+            controller: NegotiatorsController;
 
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
@@ -21,7 +21,7 @@ module Antares {
             $http = $httpBackend;
 
             var bindings = { activityId: 'testId' };
-            controller = <NegotiatorsEditController>$controller('NegotiatorsEditController', {}, bindings);
+            controller = <NegotiatorsController>$controller('NegotiatorsController', {}, bindings);
         }));
 
         describe('when editLeadNegotiator is called', () => {
@@ -148,7 +148,7 @@ module Antares {
 
                 // assert
                 expect(controller.secondaryNegotiators.length).toBe(2);
-                expect(_.find(controller.secondaryNegotiators, (item) => { return item.user.id === negotiatroToRemove.user.id; })).toBeUndefined();
+                expect(_.find(controller.secondaryNegotiators, (item) => item.user.id === negotiatroToRemove.user.id )).toBeUndefined();
             });
         });
 
