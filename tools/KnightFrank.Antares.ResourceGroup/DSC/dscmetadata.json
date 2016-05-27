@@ -1,1 +1,1 @@
-{ "Modules": [ "xWebAdministration", "xSQLServer", "xStorage", "c7zip", "cGripDevDSC" ] }
+{ "Modules": [ "xWebAdministration", "xSQLServer", "xStorage", "cGripDevDSC", "xNetworking", "xPSDesiredStateConfiguration" ] }
