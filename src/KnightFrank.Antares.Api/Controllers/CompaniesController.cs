@@ -41,12 +41,26 @@ namespace KnightFrank.Antares.Api.Controllers
             return this.GetCompany(companyId);
         }
 
-        /// <summary>
-        ///     Gets the company.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns>Company entity</returns>
-        [HttpGet]
+		/// <summary>
+		/// Updates a company
+		/// </summary>
+		/// <param name="command">The command</param>
+		/// <returns></returns>
+	    [HttpPut]
+	    [Route("")]
+	    public Company UpdateCompany(UpdateCompanyCommand command)
+	    {
+			Guid companyId = this.mediator.Send(command);
+
+			return this.GetCompany(companyId);
+		}
+
+		/// <summary>
+		///     Gets the company.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		/// <returns>Company entity</returns>
+		[HttpGet]
         [Route("{id}")]
         public Company GetCompany(Guid id)
         {

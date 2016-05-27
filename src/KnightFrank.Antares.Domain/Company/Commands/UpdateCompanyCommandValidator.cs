@@ -4,7 +4,6 @@
 
     using FluentValidation;
 
-    //  using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
 
@@ -18,10 +17,9 @@
 
             this.RuleFor(p => p.Name).NotEmpty().Length(1, 128);
             this.RuleFor(p => p.ContactIds).NotEmpty();
-            this.RuleFor(p => p.WebsiteUrl).Length(1, 1000);
-            this.RuleFor(p => p.ClientCarePageUrl).Length(1, 1000);
+            this.RuleFor(p => p.WebsiteUrl).Length(1, 2500);
+            this.RuleFor(p => p.ClientCarePageUrl).Length(1, 2500);
             this.RuleFor(p => p.ClientCareStatusId).Must(this.IsValidEnum);
-
         }
 
         private bool IsValidEnum(Guid? enumItemId)
