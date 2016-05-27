@@ -29,7 +29,7 @@
         [Theory]
         [AutoMoqData]
         public void Given_ValidCreateCompanyCommand_When_Validating_Then_IsValid(
-            CreateCompanyValidator validator,
+            CreateCompanyCommandValidator validator,
             CreateCompanyCommand cmd)
         {
             // Act
@@ -42,7 +42,7 @@
         [Theory]
         [AutoMoqData]
         public void Given_EmptyName_When_Validating_Then_IsInvalidAndHasAppropriateErrorMsg(
-            CreateCompanyValidator validator,
+            CreateCompanyCommandValidator validator,
             CreateCompanyCommand cmd)
         {
             // Arrange
@@ -61,7 +61,7 @@
         [AutoMoqData]
         public void Given_CorrectCreateCompanyCommand_When_Validating_Then_NoValidationErrors(
             [Frozen] Mock<IEnumTypeItemValidator> enumTypeItemValidator,
-            CreateCompanyValidator validator,
+            CreateCompanyCommandValidator validator,
             CreateCompanyCommand cmd)
         {
             // Act
@@ -76,7 +76,7 @@
         [Theory]
         [AutoMoqData]
         public void Given_NameIsTooLong_When_Validating_Then_IsInvalidAndHasAppropriateErrorMsg(
-        CreateCompanyValidator validator,
+        CreateCompanyCommandValidator validator,
         CreateCompanyCommand cmd)
         {
           
@@ -95,7 +95,7 @@
         [Theory]
         [AutoMoqData]
         public void Given_WebsiteUrlIsTooLong_When_Validating_Then_IsInvalidAndHasAppropriateErrorMsg(
-            CreateCompanyValidator validator,
+            CreateCompanyCommandValidator validator,
             CreateCompanyCommand cmd)
         {
            // Arrange
@@ -113,7 +113,7 @@
         [Theory]
         [AutoMoqData]
         public void Given_ClientCarePageUrlIsTooLong_When_Validating_Then_IsInvalidAndHasAppropriateErrorMsg(
-            CreateCompanyValidator validator,
+            CreateCompanyCommandValidator validator,
             CreateCompanyCommand cmd)
         {
             // Arrange
@@ -131,7 +131,7 @@
         [Theory]
         [AutoMoqData]
         public void Given_ContactsIdsListIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorMsg(
-            CreateCompanyValidator validator,
+            CreateCompanyCommandValidator validator,
             CreateCompanyCommand cmd)
         {
             // Arrange

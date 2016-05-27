@@ -4,15 +4,14 @@
 
     using FluentValidation;
 
-    //  using KnightFrank.Antares.Dal.Model.Enum;
-    using KnightFrank.Antares.Domain.Common.BusinessValidators;
+ using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
 
-    public class CreateCompanyValidator : AbstractValidator<CreateCompanyCommand>
+    public class CreateCompanyCommandValidator : AbstractValidator<CreateCompanyCommand>
     {
         private readonly IEnumTypeItemValidator enumTypeItemValidator;
 
-        public CreateCompanyValidator(IEnumTypeItemValidator enumTypeItemValidator)
+        public CreateCompanyCommandValidator(IEnumTypeItemValidator enumTypeItemValidator)
         {
             this.enumTypeItemValidator = enumTypeItemValidator;
 

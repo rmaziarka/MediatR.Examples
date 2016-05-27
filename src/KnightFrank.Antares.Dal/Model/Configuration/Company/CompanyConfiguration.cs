@@ -9,11 +9,11 @@
             this.Property(p => p.Name).HasMaxLength(128).IsRequired();
 
             this.Property(p => p.WebsiteUrl)
-                .HasMaxLength(1000)
+                .HasMaxLength(2500)
                 .IsOptional();
 
             this.Property(p => p.ClientCarePageUrl)
-                .HasMaxLength(1000)
+                .HasMaxLength(2500)
                 .IsOptional();
 
             this.HasOptional(x => x.ClientCareStatus)
