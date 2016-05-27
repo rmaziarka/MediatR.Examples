@@ -51,7 +51,7 @@ Configuration SetupElasticsearchVm
             Ensure = 'Present'
         }        
 
-        #TODO maybe mount share as separate task
+        #maybe mount share as separate task
  
         Script CopyJRE
 	    {
@@ -60,8 +60,11 @@ Configuration SetupElasticsearchVm
 		    }
 		    GetScript = {@{Result = "CopyJRE"}}
 		    SetScript =
-		    {                
-			    New-PSDrive -Name P -PSProvider FileSystem -Root $using:commonShareUrl -Credential $using:commonShareCredential                
+		    {
+                $secpasswd = ConvertTo-SecureString “P7G+0uLD8g5q73RxshNg4GQdXJHr0EXasWSk6pe5UhCsp2QphVtPzZd+IcNdRlt9zoFjszQXMrK8XbIOcClakA==” -AsPlainText -Force
+                $mycreds = New-Object System.Management.Automation.PSCredential("kfaneiedevcommonst", $secpasswd)
+
+			    New-PSDrive -Name P -PSProvider FileSystem -Root $using:commonShareUrl -Credential $mycreds                
                 Copy-Item (Join-Path "P:" -ChildPath $using:javaSource | Join-Path -ChildPath $using:javaFileName) (Join-Path $using:tempDownloadFolder $using:javaFileName)
 			    Remove-PSDrive -Name P
 		    }
@@ -116,3 +119,5 @@ Configuration SetupElasticsearchVm
         }
 	}
 }
+SetupElasticsearchVm -commonShareUrl "\\kfaneiedevcommonst.file.core.windows.net\setupfiles" -commonShareCredential null
+Start-DscConfiguration -Path .\SetupElasticsearchVm -ComputerName localhost -Wait -Force -Verbose
