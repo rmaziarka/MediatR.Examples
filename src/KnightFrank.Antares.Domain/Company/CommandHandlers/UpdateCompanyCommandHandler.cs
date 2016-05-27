@@ -28,28 +28,39 @@
 
         public Guid Handle(UpdateCompanyCommand message)
         {
-	        Company company = this.companyRepository.GetById(message.Id);
+			// Check that company exists in the database
+			Company company = this.companyRepository
+								  .GetWithInclude(x => x.Id == message.Id, 
+												  x => x.Contacts).SingleOrDefault();
 
-            Mapper.Map(message, company);
+			if (company == null)
+			{
+				throw new BusinessValidationException(ErrorMessage.Missing_Company_Id);
+			}
+
+			Mapper.Map(message, company);
 
 			// Check that all supplied company contacts exist in the database
 			List<Contact> companyContacts = this.contactRepository.FindBy(x => message.ContactIds.Contains(x.Id)).ToList();
+
 			if (!message.ContactIds.All(x => companyContacts.Select(c => c.Id).Contains(x)))
 			{
 				throw new BusinessValidationException(ErrorMessage.Missing_Company_Contacts_Id);
 			}
 
-			List<Contact> existingCompanyContacts = company.Contacts.ToList();
+	        if (company.Contacts != null)
+	        {
+		        List<Contact> existingCompanyContacts = company.Contacts.ToList();
 
-			existingCompanyContacts
-				.Where(n => IsRemovedFromExistingList(n.Id, message.ContactIds))
-				.ToList()
-				.ForEach(n => this.contactRepository.Delete(n));
+		        existingCompanyContacts
+			        .Where(n => IsRemovedFromExistingList(n.Id, message.ContactIds))
+			        .ToList()
+			        .ForEach(n => this.contactRepository.Delete(n));
+	        }
 
 			message.ContactIds
-				.Where(n => IsNewlyAddedToExistingList(n, existingCompanyContacts))
-				.ToList()
-				.ForEach(n => company.Contacts.Add(this.contactRepository.FindBy(x => x.Id.Equals(n)).Single()));
+					.ToList()
+					.ForEach(n => company.Contacts.Add(this.contactRepository.GetById(n)));
 
 			this.companyRepository.Save();
 
@@ -61,12 +72,6 @@
 				IList<Guid> commandContactIds)
 		{
 			return !commandContactIds.Select(x => x).Contains(existingCompanyContactId);
-		}
-		private static bool IsNewlyAddedToExistingList(
-			Guid commandContactId,
-			IEnumerable<Contact> existingCompanyContacts)
-		{
-			return !existingCompanyContacts.Select(x => x.Id).Contains(commandContactId);
 		}
 	}
 }

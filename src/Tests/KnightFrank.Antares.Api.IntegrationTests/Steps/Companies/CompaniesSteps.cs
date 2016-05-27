@@ -36,16 +36,26 @@
             this.scenarioContext = scenarioContext;
         }
 
+		[Given(@"User creates company in database with following data")]
+		public void CreateCompanyInDb(Table table)
+		{
+			Company company = table.CreateSet<Company>().Single();
+			this.fixture.DataContext.Companies.Add(company);
+			this.fixture.DataContext.SaveChanges();
 
-        [When(@"User creates company by API for contact")]
+			this.scenarioContext.Set(company, "Company");
+		}
+
+
+		[When(@"User creates company by API for contact")]
         public void WhenUserCreateCompanyByApiForContact(Table table)
         {
             string clientCareStatus =  GetClientCareStatus(table, "EnumTypeItemCode");
            
-            Guid clientcareStatusID = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[clientCareStatus];
+            Guid clientCareStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[clientCareStatus];
 
             var company = table.CreateInstance<CreateCompanyCommand>();
-            company.ClientCareStatusId = clientcareStatusID;
+            company.ClientCareStatusId = clientCareStatusId;
 
             this.CreateCompany(company);
         }
@@ -71,8 +81,22 @@
             this.CreateCompany(company);
         }
 
+		[When(@"User updates company by API with maximum length fields")]
+		public void UpdateCompanyWithMaxFields()
+		{
+			var company = new UpdateCompanyCommand
+			{
+				Id = this.scenarioContext.Get<Company>("Company").Id,
+				Name = StringExtension.GenerateMaxAlphanumericString(128),
+				WebsiteUrl = StringExtension.GenerateMaxAlphanumericString(2500),
+				ClientCarePageUrl = StringExtension.GenerateMaxAlphanumericString(2500)
+			};
 
-        [Then(@"Company should be added to database")]
+			this.UpdateCompany(company);
+		}
+
+
+		[Then(@"Company should be added to database")]
         public void ThenCompanyShouldBeAddedToDataBase()
         {
             var company = JsonConvert.DeserializeObject<Company>(this.scenarioContext.GetResponseContent());
@@ -83,8 +107,20 @@
             actualCompany.ShouldBeEquivalentTo(expectedCompany, opt => opt
             .Excluding(c=>c.ClientCareStatus));
         }
-        
-        private void CreateCompany(CreateCompanyCommand company)
+
+		[Then(@"Company should be updated")]
+		public void ThenCompanyShouldBeUpdatedInDataBase()
+		{
+			var company = JsonConvert.DeserializeObject<Company>(this.scenarioContext.GetResponseContent());
+			var expectedCompany = this.scenarioContext.Get<Company>("Company");
+
+			Company actualCompany = this.fixture.DataContext.Companies.Single(x => x.Id.Equals(company.Id));
+
+			actualCompany.ShouldBeEquivalentTo(expectedCompany, opt => opt
+						 .Excluding(c => c.ClientCareStatus));
+		}
+
+		private void CreateCompany(CreateCompanyCommand company)
         {
             string requestUrl = $"{ApiUrl}";
             var contactList = this.scenarioContext.Get<List<Contact>>("ContactList");
@@ -103,7 +139,27 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        private string GetClientCareStatus(Table table, string columName)
+		private void UpdateCompany(UpdateCompanyCommand company)
+		{
+			string requestUrl = $"{ApiUrl}";
+			var contactList = this.scenarioContext.Get<List<Contact>>("ContactList");
+
+			company.ContactIds = contactList.Select(x => x.Id).ToList();
+			this.scenarioContext.Set(new Company
+			{
+				Id = company.Id,
+				Name = company.Name,
+				Contacts = contactList,
+				ClientCarePageUrl = company.ClientCarePageUrl,
+				ClientCareStatusId = company.ClientCareStatusId,
+				WebsiteUrl = company.WebsiteUrl
+			}, "Company");
+
+			HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, company);
+			this.scenarioContext.SetHttpResponseMessage(response);
+		}
+
+		private string GetClientCareStatus(Table table, string columName)
         {
             foreach (TableRow row in table.Rows)
             {

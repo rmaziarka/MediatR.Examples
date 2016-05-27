@@ -42,11 +42,16 @@
         /// </summary>
         // ReSharper disable once InconsistentNaming
         Missing_Company_Contacts_Id,
-        /// <summary>
-        /// Key value : One or more attendees are not on the applicant list.
-        /// </summary>
-        // ReSharper disable once InconsistentNaming
-        Missing_Requirement_Applicants_Id,
+		/// <summary>
+		/// Key value : Company does not exist.
+		/// </summary>
+		// ReSharper disable once InconsistentNaming
+		Missing_Company_Id,
+		/// <summary>
+		/// Key value : One or more attendees are not on the applicant list.
+		/// </summary>
+		// ReSharper disable once InconsistentNaming
+		Missing_Requirement_Applicants_Id,
         /// <summary>
         /// Key value : One or more attendees are not on the applicant list.
         /// </summary>

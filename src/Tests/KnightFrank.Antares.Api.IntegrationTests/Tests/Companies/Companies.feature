@@ -45,3 +45,15 @@ Scenario Outline: Create company with invalid data
 	| name         | enumTypeCode     | enumTypeItemCode | statusCode |
 	| Company Test | OfferStatus      | Accepted         | BadRequest |
 	|              | ClientCareStatus | KeyClient        | BadRequest |
+
+@Company
+Scenario: Update company with required fields
+	Given User creates contacts in database with following data
+		| FirstName | Surname | Title |
+		| Michael   | Angel   | cheef | 
+	And User creates company in database with following data
+	 	| Name         | WebsiteUrl  | ClientCarePageUrl  | ClientCareStatus    |
+	 	| Test Company | www.api.com | www.clientcare.com | MassiveActionClient |
+	When User updates company by API with maximum length fields
+	Then User should get OK http status code
+		And Company should be updated
