@@ -238,6 +238,9 @@
       "EMPTY": "No surveyor added yet",
       "ADD": "Add a surveyor",
       "FIND": "Find a surveyor"
+    },
+    "COMMON": {
+      "NEXTCALL": "Next call"
     }
   },
   "REQUIREMENT": {
