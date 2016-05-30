@@ -7,7 +7,7 @@
     "DELETE": "Delete",
     "MIN": "Min",
     "MAX": "Max",
-    "DETAILS": "details",
+    "DETAILS": "Details",
     "CONFIGURE": "Configure",
     "BACK": "Back",
     "SELECTEMPTYVALUE": "- select -",
@@ -335,14 +335,19 @@
       "SAVING_OFFER_IN_PROGRESS": "Saving offer ..."
     },
     "PREVIEW": {
-      "ACTIVITY": "Activity",
-      "STATUS": "Status",
-      "OFFER": "Offer",
-      "OFFER_DATE": "Offer date",
-      "SPECIAL_CONDITIONS": "Special conditions",
-      "NEGOTIATOR": "Negotiator",
-      "EXCHANGE_DATE": "Proposed exchange date",
-      "COMPLETION_DATE": "Proposed completion date"
+        "ACTIVITY": "Activity",
+        "STATUS": "Status",
+        "OFFER": "Offer",
+        "OFFER_DATE": "Offer date",
+        "SPECIAL_CONDITIONS": "Special conditions",
+        "NEGOTIATOR": "Negotiator",
+        "EXCHANGE_DATE": "Proposed exchange date",
+        "COMPLETION_DATE": "Proposed completion date"
+    },
+    "VIEW": {
+        "VENDOR": "Vendor",
+        "APPLICANT":  "Applicant",
+        "BASIC_INFORMATION":  "Basic information"
     }
   }
 }

@@ -16,7 +16,8 @@ module Antares.Requirement.View {
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
-            private $scope: ng.IScope){
+            private $scope: ng.IScope,
+            private $state: ng.ui.IStateService) {
 
             super(componentRegistry, $scope);
         }
@@ -188,6 +189,10 @@ module Antares.Requirement.View {
         showEditOfferPanel = (offer: Dto.IOffer) =>{
             this.components.offerEdit().setOffer(offer);
             this.showPanel(this.components.panels.offerEdit);
+        }
+
+        showOfferDetailsView = (offer: Dto.IOffer) =>{
+            this.$state.go('app.offer-view', { id: offer.id });
         }
 
         cancelSaveOffer = () =>{

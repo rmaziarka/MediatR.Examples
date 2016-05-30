@@ -1,0 +1,28 @@
+﻿<div>Hello offer from HTML file</div>
+
+<section>
+    <h3 class="page-header" translate="REQUIREMENT.VIEW.OFFERS"></h3>
+    <card-list-item class="requirement-view-offers" ng-repeat="offer in vm.requirement.offers | orderBy: '-offerDate' | enumSorter: 'OfferStatus':'statusId' track by offer.id + offer.statusId + offer.offerDate">
+        <card show-context-menu="true" show-item-details="vm.showOfferPreview" display-new-control="true"
+              card-template-url="'app/requirement/view/requirementOffersCard.html'" item="offer">
+            <card-context-menu>
+                <context-menu-item type="edit" item="offer" action="vm.showEditOfferPanel"></context-menu-item>
+                <context-menu-item type="details" item="offer" action="vm.showOfferDetailsView"></context-menu-item>
+            </card-context-menu>
+        </card>
+    </card-list-item>
+</section>
+
+<h3>Basic info:</h3>
+<p>Status: {{vm.offer.statusId | dynamicTranslate}}</p>
+<p>Offer: {{vm.offer.price | number : 2 }} GBP</p>
+<p>Offer date: {{vm.offer.offerDate | date : 'dd-MM-yyyy'}}</p>
+<br/>
+<h3>Special conditions</h3>
+<p>{{vm.offer.specialConditions}}</p>
+<br/>
+<p>Proposed exchange date: {{vm.offer.exchangeDate | date : 'dd-MM-yyyy'}}</p>
+<p>Proposed completion date: {{vm.offer.completionDate | date : 'dd-MM-yyyy'}}</p>
+<br/>
+<h3>Negotiator</h3>
+<p>{{vm.offer.negotiator.firstName}} {{vm.offer.negotiator.lastName}}</p>+
