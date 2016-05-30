@@ -66,6 +66,13 @@ module Antares.Common.Component {
             this.isSecondaryNegotiatorsInEditMode = false;
         }
 
+        public switchToLeadNegotiator = (activityUser: Business.ActivityUser) =>{
+            _.remove(this.secondaryNegotiators, (itm) => itm.userId === activityUser.userId);
+            this.secondaryNegotiators.push(this.leadNegotiator);
+
+            this.leadNegotiator = activityUser;
+        }
+
         public getUsersQuery = (searchValue: string): DepartmentUserResourceParameters => {
             var excludedIds: string[] = _.map<Business.ActivityUser, string>(this.secondaryNegotiators, 'userId');
             excludedIds.push(this.leadNegotiator.userId);

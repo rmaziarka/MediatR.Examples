@@ -21,6 +21,7 @@
       "PROPERTIES": "Properties"
     },
     "MAKEOFFER": "Make an offer",
+    "SETASLEAD": "Set as lead",
     "UNEXPECTED_SERVER_ERROR": "Unexpected error occured. Please try again or contact system administrator."
   },
   "OWNERSHIP": {

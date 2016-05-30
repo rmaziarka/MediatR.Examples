@@ -152,6 +152,28 @@ module Antares {
             });
         });
 
+        describe('when switchToLeadNegotiator is called', () => {
+            it('then negotiators are changed properly', () => {
+                // arrange
+                controller.changeLeadNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+
+                controller.secondaryNegotiators = [];
+                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+
+                //act
+                var oldLeadNegotiator = controller.leadNegotiator;
+                var negotiatorToSwitch = controller.secondaryNegotiators[1];
+                controller.switchToLeadNegotiator(negotiatorToSwitch);
+
+                // assert
+                expect(controller.leadNegotiator).toBe(negotiatorToSwitch);
+                expect(controller.secondaryNegotiators.indexOf(oldLeadNegotiator)).not.toBe(-1);
+            });
+        });
+
         describe('when getUsersQuery is called', () => {
             it('then proper query is returned', () => {
                 // arrange
