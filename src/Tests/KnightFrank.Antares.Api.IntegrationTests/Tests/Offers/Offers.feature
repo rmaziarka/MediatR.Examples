@@ -3,10 +3,11 @@
 @Offers
 Scenario: Create residential sales offer
 	Given User gets EnumTypeItemId and EnumTypeItem code
-		| enumTypeCode   | enumTypeItemCode |
-		| OfferStatus    | New              |
-		| ActivityStatus | PreAppraisal     |
-		| Division       | Residential      |
+		| enumTypeCode     | enumTypeItemCode |
+		| OfferStatus      | New              |
+		| ActivityStatus   | PreAppraisal     |
+		| Division         | Residential      |
+		| ActivityUserType | LeadNegotiator   |
 		And User gets GB address form for Property and country details
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
@@ -32,10 +33,11 @@ Scenario: Create residential sales offer
 @Offers
 Scenario: Create residential sales offer with mandatory fields
 	Given User gets EnumTypeItemId and EnumTypeItem code
-		| enumTypeCode   | enumTypeItemCode |
-		| OfferStatus    | Accepted         |
-		| ActivityStatus | PreAppraisal     |
-		| Division       | Residential      |
+		| enumTypeCode     | enumTypeItemCode |
+		| OfferStatus      | Accepted         |
+		| ActivityStatus   | PreAppraisal     |
+		| Division         | Residential      |
+		| ActivityUserType | LeadNegotiator   |
 		And User gets GB address form for Property and country details
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
@@ -61,10 +63,11 @@ Scenario: Create residential sales offer with mandatory fields
 @Offers
 Scenario Outline: Create residential sales offer with invalid data
 	Given User gets EnumTypeItemId and EnumTypeItem code
-		| enumTypeCode   | enumTypeItemCode |
-		| OfferStatus    | New              |
-		| ActivityStatus | PreAppraisal     |
-		| Division       | Residential      |
+		| enumTypeCode     | enumTypeItemCode |
+		| OfferStatus      | New              |
+		| ActivityStatus   | PreAppraisal     |
+		| Division         | Residential      |
+		| ActivityUserType | LeadNegotiator   |
 		And User gets GB address form for Property and country details
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
@@ -95,10 +98,11 @@ Scenario Outline: Create residential sales offer with invalid data
 @Offers
 Scenario: Get residential sales offer
 	Given User gets EnumTypeItemId and EnumTypeItem code
-		| enumTypeCode   | enumTypeItemCode |
-		| OfferStatus    | New              |
-		| ActivityStatus | PreAppraisal     |
-		| Division       | Residential      |
+		| enumTypeCode     | enumTypeItemCode |
+		| OfferStatus      | New              |
+		| ActivityStatus   | PreAppraisal     |
+		| Division         | Residential      |
+		| ActivityUserType | LeadNegotiator   |
 		And User gets GB address form for Property and country details
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
@@ -125,10 +129,11 @@ Scenario: Get residential sales offer
 @Offers
 Scenario: Get residential sales offer with invalid data
 	Given User gets EnumTypeItemId and EnumTypeItem code
-		| enumTypeCode   | enumTypeItemCode |
-		| OfferStatus    | New              |
-		| ActivityStatus | PreAppraisal     |
-		| Division       | Residential      |
+		| enumTypeCode     | enumTypeItemCode |
+		| OfferStatus      | New              |
+		| ActivityStatus   | PreAppraisal     |
+		| Division         | Residential      |
+		| ActivityUserType | LeadNegotiator   |
 		And User gets GB address form for Property and country details
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
@@ -154,10 +159,11 @@ Scenario: Get residential sales offer with invalid data
 @Offers
 Scenario: Update residential sales offer
 	Given User gets EnumTypeItemId and EnumTypeItem code
-		| enumTypeCode   | enumTypeItemCode |
-		| OfferStatus    | New              |
-		| ActivityStatus | PreAppraisal     |
-		| Division       | Residential      |
+		| enumTypeCode     | enumTypeItemCode |
+		| OfferStatus      | New              |
+		| ActivityStatus   | PreAppraisal     |
+		| Division         | Residential      |
+		| ActivityUserType | LeadNegotiator   |
 		And User gets GB address form for Property and country details
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
@@ -187,10 +193,11 @@ Scenario: Update residential sales offer
 @Offers
 Scenario Outline: Update residential sales offer with invalid data
 	Given User gets EnumTypeItemId and EnumTypeItem code
-		| enumTypeCode   | enumTypeItemCode |
-		| OfferStatus    | New              |
-		| ActivityStatus | PreAppraisal     |
-		| Division       | Residential      |
+		| enumTypeCode     | enumTypeItemCode |
+		| OfferStatus      | New              |
+		| ActivityStatus   | PreAppraisal     |
+		| Division         | Residential      |
+		| ActivityUserType | LeadNegotiator   |
 		And User gets GB address form for Property and country details
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType

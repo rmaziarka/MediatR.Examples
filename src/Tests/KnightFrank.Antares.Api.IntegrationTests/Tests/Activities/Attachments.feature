@@ -10,6 +10,7 @@ Given User gets GB address form for Property and country details
 			| ActivityStatus       | PreAppraisal     |
 			| Division             | Residential      |
 			| ActivityDocumentType | TermsOfBusiness  |
+			| ActivityUserType     | LeadNegotiator   |
 		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
@@ -30,6 +31,7 @@ Given User gets GB address form for Property and country details
 			| ActivityStatus       | PreAppraisal     |
 			| Division             | Residential      |
 			| ActivityDocumentType | <documentType>   |
+			| ActivityUserType     | LeadNegotiator   |
 		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
@@ -56,6 +58,7 @@ Scenario: Get Activity with attachment
 			| ActivityStatus       | PreAppraisal     |
 			| Division             | Residential      |
 			| ActivityDocumentType | TermsOfBusiness  |
+			| ActivityUserType     | LeadNegotiator   |
 		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |

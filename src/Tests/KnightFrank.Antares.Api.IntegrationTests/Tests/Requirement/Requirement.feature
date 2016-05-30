@@ -88,10 +88,11 @@ Scenario Outline: Get residential sales requirement with invalid data
 @Offers
 Scenario: Get requirement with offer and viewing
 	Given User gets EnumTypeItemId and EnumTypeItem code
-		| enumTypeCode   | enumTypeItemCode |
-		| OfferStatus    | New              |
-		| ActivityStatus | PreAppraisal     |
-		| Division       | Residential      |
+		| enumTypeCode     | enumTypeItemCode    |
+		| OfferStatus      | New                 |
+		| ActivityStatus   | PreAppraisal        |
+		| Division         | Residential         |
+		| ActivityUserType | LeadNegotiator      |
 		And User gets GB address form for Property and country details
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType

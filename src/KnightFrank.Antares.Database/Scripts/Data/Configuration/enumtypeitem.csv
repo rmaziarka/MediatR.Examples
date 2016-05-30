@@ -21,3 +21,5 @@ OfferStatus;New
 OfferStatus;Withdrawn
 OfferStatus;Rejected
 OfferStatus;Accepted
+ActivityUserType;LeadNegotiator
+ActivityUserType;SecondaryNegotiator

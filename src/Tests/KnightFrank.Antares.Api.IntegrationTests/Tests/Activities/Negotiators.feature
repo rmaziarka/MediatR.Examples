@@ -6,7 +6,7 @@ Scenario: Update Activity with negotiators
 		And Following secondary negotiators exists in database
 		| ActiveDirectoryLogin |
 		| jdoe                 |
-		| jrambo               |	
+		| jrambo               |
 	When User updates activity with defined negotiators
 	Then User should get OK http status code
 		And Activity details should be the same as already added

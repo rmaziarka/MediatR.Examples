@@ -26,6 +26,11 @@
                     {
                         IsUnique = true
                     }));
+
+            this.HasRequired(a => a.UserType).WithMany().WillCascadeOnDelete(false);
+
+            this.Property(an => an.CallDate)
+                .IsOptional();
         }
     }
 }

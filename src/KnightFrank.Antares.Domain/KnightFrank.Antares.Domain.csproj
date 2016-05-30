@@ -153,6 +153,7 @@
     <Compile Include="Common\Commands\CreateOrUpdateAddressValidator.cs" />
     <Compile Include="Common\Enums\DivisionEnum.cs" />
     <Compile Include="Common\Enums\EnumType.cs" />
+    <Compile Include="Common\Enums\EnumTypeItemCode.cs" />
     <Compile Include="Common\NinjectInstanceResolver.cs" />
     <Compile Include="Common\INinjectInstanceResolver.cs" />
     <Compile Include="Common\Specifications\EnumTypeItemWithEnumType.cs" />
