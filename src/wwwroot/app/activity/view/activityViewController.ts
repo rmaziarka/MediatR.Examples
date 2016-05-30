@@ -42,7 +42,7 @@ module Antares.Activity.View {
             this.components.panels.activityAttachmentAdd().hide();
         };
 
-        saveAttachment = (attachment: Antares.Common.Models.Business.Attachment) =>{
+        saveAttachment = (attachment: Common.Models.Business.Attachment) =>{
             return this.activityAttachmentResource.save({ id : this.activity.id }, new Business.CreateActivityAttachmentResource(this.activity.id, attachment))
                 .$promise;
         }
@@ -72,6 +72,11 @@ module Antares.Activity.View {
             this.showPanel(this.components.panels.previewViewingsSidePanel);
         }
 
+        showOfferPreview = (offer: Common.Models.Dto.IOffer) => {
+            this.components.offerPreview().setOffer(offer);
+            this.showPanel(this.components.panels.offerPreview);
+        }
+
         cancelViewingPreview() {
             this.hidePanels();
         }
@@ -89,7 +94,9 @@ module Antares.Activity.View {
                 activityAttachmentPreviewId: 'viewActivity:activityyAttachmentPreviewComponent',
                 activityAttachmentPreviewSidePanelId: 'viewActivity:activityyAttachmentPreviewSidePanelComponent',
                 previewViewingSidePanelId: 'viewActivity:previewViewingSidePanelComponent',
-                viewingPreviewId: 'viewActivity:viewingPreviewComponent'
+                viewingPreviewId: 'viewActivity:viewingPreviewComponent',
+                offerPreviewId: 'viewActivity:offerPreviewComponent',
+                offerPreviewSidePanelId: 'viewActivity:offerPreviewSidePanelComponent'
             };
         }
 
@@ -99,15 +106,17 @@ module Antares.Activity.View {
                 activityAttachmentAdd: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentAddId); },
                 activityAttachmentPreview: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentPreviewId); },
                 viewingPreview: () => { return this.componentRegistry.get(this.componentIds.viewingPreviewId); },
+                offerPreview: () => { return this.componentRegistry.get(this.componentIds.offerPreviewId);  },
                 panels: {
                     propertyPreview: () => { return this.componentRegistry.get(this.componentIds.propertyPreviewSidePanelId); },
                     activityAttachmentAdd: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentAddSidePanelId) },
                     activityAttachmentPreview: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentPreviewSidePanelId); },
-                    previewViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.previewViewingSidePanelId); }                    
+                    previewViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.previewViewingSidePanelId); },
+                    offerPreview: () =>{ return this.componentRegistry.get(this.componentIds.offerPreviewSidePanelId); }
                 }
             };
         }
     }
 
-    angular.module('app').controller('activityViewController', Antares.Activity.View.ActivityViewController);
+    angular.module('app').controller('activityViewController', ActivityViewController);
 }
