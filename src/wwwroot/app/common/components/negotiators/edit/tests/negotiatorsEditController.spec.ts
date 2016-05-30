@@ -71,10 +71,9 @@ module Antares {
                 controller.changeLeadNegotiator(user);
 
                 // assert
-                expect(controller.leadNegotiator.user).toBe(user);
+                expect(controller.leadNegotiator.user).toEqual(user);
                 expect(controller.leadNegotiator.userId).toBe(user.id);
                 expect(controller.leadNegotiator.activityId).toBe(controller.activityId);
-                expect(controller.leadNegotiator.userType).toBe(Enums.NegotiatorTypeEnum.LeadNegotiator);
             });
         });
 
@@ -127,10 +126,9 @@ module Antares {
 
                 // assert
                 expect(controller.secondaryNegotiators.length).toBe(1);
-                expect(controller.secondaryNegotiators[0].user).toBe(user);
+                expect(controller.secondaryNegotiators[0].user).toEqual(user);
                 expect(controller.secondaryNegotiators[0].userId).toBe(user.id);
                 expect(controller.secondaryNegotiators[0].activityId).toBe(controller.activityId);
-                expect(controller.secondaryNegotiators[0].userType).toBe(Enums.NegotiatorTypeEnum.SecondaryNegotiator);
             });
         });
 

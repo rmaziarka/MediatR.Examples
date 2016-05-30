@@ -29,14 +29,15 @@ module Antares.Common.Models.Business {
                     this.contacts = activity.contacts.map((contact: Dto.IContact) =>{ return new Contact(contact) });
                 }
                 this.property = new PreviewProperty(activity.property);
-                
+
                 var activityleadNegotiator = _.find(activity.activityUsers,
-                    (user: Dto.IActivityUser) => user.userType === Enums.NegotiatorTypeEnum.LeadNegotiator);
+                    (user: Dto.IActivityUser) => user.userType.code === Enums.NegotiatorTypeEnum[Enums.NegotiatorTypeEnum.LeadNegotiator]);
                 this.leadNegotiator = new ActivityUser(activityleadNegotiator);
-                
-                this.secondaryNegotiator = _.filter(activity.activityUsers, (user: Business.ActivityUser) => user.userType === Enums.NegotiatorTypeEnum.SecondaryNegotiator)
+
+                this.secondaryNegotiator = _.filter(activity.activityUsers,
+                    (user: Dto.IActivityUser) => user.userType.code === Enums.NegotiatorTypeEnum[Enums.NegotiatorTypeEnum.SecondaryNegotiator])
                     .map((user: Dto.IActivityUser) => new ActivityUser(user));
-                    
+
                 if (activity.attachments) {
                     this.attachments = activity.attachments.map((attachment: Dto.IAttachment) => { return new Business.Attachment(attachment) });
                 }

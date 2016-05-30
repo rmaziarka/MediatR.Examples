@@ -2,15 +2,15 @@
 
 module Antares.Common.Models.Business {
     export class ActivityUser {
-        id: string ="";        
-        activityId: string = "";        
+        id: string ="";
+        activityId: string = "";
         userId: string = "";
         user: User = null;
-        userType: Enums.NegotiatorTypeEnum = null;
-        
+        userType: Dto.IEnumTypeItem;
+
         constructor(activityUser?: Dto.IActivityUser) {
             if(activityUser) {
-	            angular.extend(this, activityUser);
+                angular.extend(this, activityUser);
             }
         }
     }

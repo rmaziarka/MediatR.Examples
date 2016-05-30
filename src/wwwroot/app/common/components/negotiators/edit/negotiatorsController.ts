@@ -92,14 +92,13 @@ module Antares.Common.Component {
                 });
         }
 
-        private createActivityUser = (user: Dto.IDepartmentUser, negotiatorType: Enums.NegotiatorTypeEnum) => {
-            return new Business.ActivityUser({
-                id: '',
-                activityId: this.activityId,
-                userId: user.id,
-                user: <Dto.IUser>user,
-                userType: negotiatorType
-            });
+        private createActivityUser = (user: Dto.IDepartmentUser, negotiatorType: Enums.NegotiatorTypeEnum) =>{
+            var activityUser = new Business.ActivityUser();
+            activityUser.activityId = this.activityId;
+            activityUser.userId = user.id;
+            activityUser.user = new Business.DepartmentUser(<Dto.IUser>user);
+
+            return activityUser;
         }
     }
 

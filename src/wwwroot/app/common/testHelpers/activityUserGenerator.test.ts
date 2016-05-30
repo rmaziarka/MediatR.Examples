@@ -3,16 +3,22 @@
 module Antares.TestHelpers {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
+    import Enums = Common.Models.Enums;
 
     export class ActivityUserGenerator {
-        public static generateDto(userType: Common.Models.Enums.NegotiatorTypeEnum): Dto.IActivityUser {
+        public static generateDto(userType: Common.Models.Enums.NegotiatorTypeEnum): Dto.IActivityUser{
+            var enumUserTypeItem: Dto.IEnumTypeItem = {
+                id: ActivityUserGenerator.makeRandom('enumId'),
+                code: Enums.NegotiatorTypeEnum[userType],
+                enumTypeId: ActivityUserGenerator.makeRandom('enumTypeId')
+            };
 
             var activityUser: Dto.IActivityUser = {
                 id: ActivityUserGenerator.makeRandom('id'),
                 user: UserGenerator.generateDto(),
-                activityId: ActivityUserGenerator.makeRandom('activityId'),                
+                activityId: ActivityUserGenerator.makeRandom('activityId'),
                 userId: ActivityUserGenerator.makeRandom('userId'),
-                userType: userType
+                userType: enumUserTypeItem
             }
 
             return activityUser;
