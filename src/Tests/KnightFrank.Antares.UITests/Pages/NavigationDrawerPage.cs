@@ -62,10 +62,10 @@
                 BaseConfiguration.ShortTimeout);
         }
 
-        public CreatePropertyPage ClickCreateButton()
+        public NavigationDrawerPage ClickCreateButton()
         {
             this.Driver.GetElement(this.createButton).Click();
-            return new CreatePropertyPage(this.DriverContext);
+            return this;
         }
 
         // ReSharper disable UnusedMember.Local

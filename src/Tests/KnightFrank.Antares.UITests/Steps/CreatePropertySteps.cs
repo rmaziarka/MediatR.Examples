@@ -1,7 +1,6 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
-    using System.Collections.Generic;
 
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Attribute;
@@ -121,7 +120,7 @@
         [Then(@"Property form on create property page should be displayed")]
         public void CheckIfPropertyTypeIsDisplayed()
         {
-            Assert.True(this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").IsPropertyFormPresent());
+            Assert.True(new CreatePropertyPage(this.driverContext).IsPropertyFormPresent());
         }
     }
 }
