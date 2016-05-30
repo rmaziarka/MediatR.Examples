@@ -129,6 +129,11 @@
       right: 1px solid $color-black;
       top: 1px solid $color-black;
     }
+    z-index: 5;
+  }
+
+  .card-menu {
+    z-index: 4;
   }
 
   &:hover {
