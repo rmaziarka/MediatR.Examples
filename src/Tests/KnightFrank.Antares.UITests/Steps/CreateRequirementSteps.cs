@@ -23,6 +23,7 @@
     {
         private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
+        private CreateRequirementPage page;
 
         public CreateRequirementSteps(ScenarioContext scenarioContext)
         {
@@ -33,24 +34,25 @@
 
             this.scenarioContext = scenarioContext;
             this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
+
+            if (this.page == null)
+            {
+                this.page = new CreateRequirementPage(this.driverContext);
+            }
         }
 
         [When(@"User navigates to create requirement page")]
         public void OpenCreateRequirementPage()
         {
-            CreateRequirementPage page =
-                new CreateRequirementPage(this.driverContext).OpenCreateRequirementPage();
-            this.scenarioContext["CreateRequirementPage"] = page;
+            this.page = new CreateRequirementPage(this.driverContext).OpenCreateRequirementPage();
         }
 
         [When(@"User fills in location details on create requirement page")]
         public void SetLocationRequirementDetails(Table table)
         {
-            var page = this.scenarioContext.Get<CreateRequirementPage>("CreateRequirementPage");
-
             var details = table.CreateInstance<Address>();
 
-            page.AddressTemplate.SelectPropertyCountry(table.Rows[0]["Country"])
+            this.page.AddressTemplate.SelectPropertyCountry(table.Rows[0]["Country"])
                 .SetPropertyCity(details.City)
                 .SetPropertyAddressLine2(details.Line2)
                 .SetPropertyPostCode(details.Postcode);
@@ -59,10 +61,9 @@
         [When(@"User fills in property details on create requirement page")]
         public void SetPropertyRequirementDetails(Table table)
         {
-            var page = this.scenarioContext.Get<CreateRequirementPage>("CreateRequirementPage");
             var details = table.CreateInstance<Requirement>();
 
-            page.SetPropertyMinPrice(details.MinPrice.ToString())
+            this.page.SetPropertyMinPrice(details.MinPrice.ToString())
                 .SetPropertyMaxPrice(details.MaxPrice.ToString())
                 .SetPropertyBedroomsMin(details.MinBedrooms.ToString())
                 .SetPropertyBedroomMax(details.MaxBedrooms.ToString())
@@ -82,48 +83,32 @@
         [When(@"User selects contacts on create requirement page")]
         public void SelectContactsForRequirement(Table table)
         {
-            var page = this.scenarioContext.Get<CreateRequirementPage>("CreateRequirementPage");
-
-            page.AddApplicants().WaitForSidePanelToShow();
+            this.page.AddApplicants().WaitForSidePanelToShow();
 
             IEnumerable<Contact> contacts = table.CreateSet<Contact>();
 
             foreach (Contact contact in contacts)
             {
-                page.ContactsList.WaitForContactsListToLoad().SelectContact(contact.FirstName, contact.Surname);
+                this.page.ContactsList.WaitForContactsListToLoad().SelectContact(contact.FirstName, contact.Surname);
             }
-            page.ContactsList.SaveContact();
-            page.WaitForSidePanelToHide();
+            this.page.ContactsList.SaveContact();
+            this.page.WaitForSidePanelToHide();
         }
 
         [When(@"User clicks save requirement button on create requirement page")]
         public void SaveNewResidentialSalesRequirement()
         {
-            this.scenarioContext.Get<CreateRequirementPage>("CreateRequirementPage")
-                .SaveRequirement();
+            this.page.SaveRequirement();
             this.scenarioContext["RequirementDate"] = DateTime.UtcNow;
-        }
-
-        [Then(@"New requirement should be created")]
-        public void CheckIfNewResidentialSalesRequirementCreated()
-        {
-            var page = new ViewRequirementPage(this.driverContext);
-            page.WaitForDetailsToLoad();
-            this.scenarioContext["ViewRequirementPage"] = page;
-
-            var date = this.scenarioContext.Get<DateTime>("RequirementDate");
-            Assert.Equal(date.ToString("MMMM d, yyyy"), page.CreateDate);
         }
 
         [Then(@"List of applicants should contain following contacts")]
         public void CheckApplicantsList(Table table)
         {
-            var page = this.scenarioContext.Get<CreateRequirementPage>("CreateRequirementPage");
-
             List<string> applicants =
                 table.CreateSet<Contact>().Select(contact => contact.FirstName + " " + contact.Surname).ToList();
 
-            List<string> selectedApplicants = page.GetApplicants();
+            List<string> selectedApplicants = this.page.GetApplicants();
 
             Assert.Equal(applicants.Count, selectedApplicants.Count);
             applicants.ShouldBeEquivalentTo(selectedApplicants);

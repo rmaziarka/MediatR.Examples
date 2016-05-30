@@ -5,13 +5,19 @@
 
     using KnightFrank.Antares.UITests.Pages;
 
+    using Objectivity.Test.Automation.Common;
+
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
 
     [Binding]
     public class EditActivitySteps
     {
+        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
+        private readonly DriverContext driverContext;
+        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
+        private readonly EditActivityPage page;
 
         public EditActivitySteps(ScenarioContext scenarioContext)
         {
@@ -19,16 +25,22 @@
             {
                 throw new ArgumentNullException(nameof(scenarioContext));
             }
+
             this.scenarioContext = scenarioContext;
+            this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
+
+            if (this.page == null)
+            {
+                this.page = new EditActivityPage(this.driverContext);
+            }
         }
 
         [When(@"User edits activity details on edit activity page")]
         public void EditActivityDetails(Table table)
         {
             var details = table.CreateInstance<EditActivityDetails>();
-            var page = this.scenarioContext.Get<EditActivityPage>("EditActivityPage");
 
-            page.SelectActivityStatus(details.ActivityStatus)
+            this.page.SelectActivityStatus(details.ActivityStatus)
                 .SetMarketAppraisalPrice(details.MarketAppraisalPrice)
                 .SetRecommendedPrice(details.RecommendedPrice)
                 .SetVendorEstimatedPrice(details.VendorEstimatedPrice);
@@ -37,14 +49,13 @@
         [When(@"User clicks save button on edit activity page")]
         public void SaveActivty()
         {
-            var page = this.scenarioContext.Get<EditActivityPage>("EditActivityPage");
-            this.scenarioContext.Set(page.SaveActivity(), "ViewActivityPage");
+            this.page.SaveActivity();
         }
 
         [When(@"User changes lead negotiator to (.*) on edit activity page")]
         public void UpdateLeadNegotiator(string user)
         {
-            this.scenarioContext.Get<EditActivityPage>("EditActivityPage").EditLeadNegotiator(user);
+            this.page.EditLeadNegotiator(user);
         }
 
         [When(@"User adds secondary negotiators on edit activity page")]
@@ -53,15 +64,14 @@
             IEnumerable<Negotiator> secondaryNegotiators = table.CreateSet<Negotiator>();
             foreach (Negotiator element in secondaryNegotiators)
             {
-                this.scenarioContext.Get<EditActivityPage>("EditActivityPage").AddSecondaryNegotiator(element);
+                this.page.AddSecondaryNegotiator(element);
             }
         }
 
         [When(@"User removes (.*) secondary negotiator from edit activity page")]
         public void RemoveSecondaryNegotiator(int secondaryNegotiator)
         {
-            this.scenarioContext.Get<EditActivityPage>("EditActivityPage").RemoveSecondaryNegotiator(secondaryNegotiator);
+            this.page.RemoveSecondaryNegotiator(secondaryNegotiator);
         }
-
     }
 }

@@ -20,9 +20,10 @@
     [Binding]
     public class ViewRequirementSteps
     {
+        private const string Format = "dd-MM-yyyy";
         private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
-        private const string Format = "dd-MM-yyyy";
+        private ViewRequirementPage page;
 
         public ViewRequirementSteps(ScenarioContext scenarioContext)
         {
@@ -33,54 +34,54 @@
 
             this.scenarioContext = scenarioContext;
             this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
+
+            if (this.page == null)
+            {
+                this.page = new ViewRequirementPage(this.driverContext);
+            }
         }
 
         [When(@"User navigates to view requirement page with id")]
         public void OpenViewRequirementPageWithId()
         {
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
-            ViewRequirementPage page =
-                new ViewRequirementPage(this.driverContext).OpenViewRequirementPageWithId(requirementId.ToString());
-            this.scenarioContext.Set(page, "ViewRequirementPage");
+            this.page = new ViewRequirementPage(this.driverContext).OpenViewRequirementPageWithId(requirementId.ToString());
         }
 
         [When(@"User clicks notes button on view requirement page")]
         public void OpenNotes()
         {
-            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").OpenNotes().WaitForSidePanelToShow();
+            this.page.OpenNotes().WaitForSidePanelToShow();
         }
 
         [When(@"User adds note on view requirement page")]
         public void InsertNotesText(Table table)
         {
             var details = table.CreateInstance<RequirementNote>();
-            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
-            page.Notes.SetNoteText(details.Description).SaveNote();
+            this.page.Notes.SetNoteText(details.Description).SaveNote();
         }
 
         [When(@"User clicks add viewings button on view requirement page")]
         public void ClickAddViewings()
         {
-            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").AddViewings().WaitForSidePanelToShow();
+            this.page.AddViewings().WaitForSidePanelToShow();
         }
 
         [When(@"User selects activity on view requirement page")]
         public void SelectActivity(Table table)
         {
             var details = table.CreateInstance<Address>();
-            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
 
             string activity = details.PropertyName + ", " + details.PropertyNumber + " " + details.Line2;
-            page.ActivityList.WaitForDetailsToLoad().SelectActivity(activity);
+            this.page.ActivityList.WaitForDetailsToLoad().SelectActivity(activity);
         }
 
         [When(@"User fills in viewing details on view requirement page")]
         public void FillInViewingDetails(Table table)
         {
             var details = table.CreateInstance<ViewingDetails>();
-            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
 
-            page.Viewing
+            this.page.Viewing
                 .SetDate(details.Date)
                 .SetStartTime(details.StartTime)
                 .SetEndTime(details.EndTime)
@@ -92,57 +93,53 @@
         [When(@"User unselects attendees for viewing on view requirement page")]
         public void SelectAttendeesForViewing(Table table)
         {
-            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
             List<string> attendees = table.Rows.Select(r => r[0]).ToList();
 
-            page.Viewing.SelectAttendees(attendees);
+            this.page.Viewing.SelectAttendees(attendees);
         }
 
         [When(@"User clicks save viewing button on view requirement page")]
         public void SaveViewing()
         {
-            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").Viewing.SaveViewing();
+            this.page.Viewing.SaveViewing();
         }
 
         [When(@"User clicks (.*) viewings details on view requirement page")]
         public void OpenViewingsDetails(int position)
         {
-            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage")
-                .OpenViewingDetails(position)
+            this.page.OpenViewingDetails(position)
                 .WaitForSidePanelToShow();
         }
 
         [When(@"User clicks (.*) offer details on view requirement page")]
         public void OpenOffersDetails(int position)
         {
-            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage")
-                .OpenOfferDetails(position)
+            this.page.OpenOfferDetails(position)
                 .WaitForSidePanelToShow();
         }
 
         [When(@"User clicks edit activity button on view requirement page")]
         public void ClickEditActivity()
         {
-            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").ViewingDetails.EditViewing();
+            this.page.ViewingDetails.EditViewing();
         }
 
         [When(@"User clicks view activity from viewing on view requirement page")]
         public void ClickViewActivityViewing()
         {
-            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").ViewingDetails.ClickViewLink();
+            this.page.ViewingDetails.ClickViewLink();
         }
 
         [When(@"User clicks view activity from offer on view requirement page")]
         public void ClickViewActivityOffer()
         {
-            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").OfferPreview.ClickViewLink();
+            this.page.OfferPreview.ClickViewLink();
         }
 
         [When(@"User clicks make an offer button for (.*) activity on view requirement page")]
         public void MakeAnOffer(int position)
         {
-            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage")
-                .OpenViewingActions(position)
+            this.page.OpenViewingActions(position)
                 .CreateOffer(1)
                 .WaitForSidePanelToShow();
         }
@@ -150,8 +147,7 @@
         [When(@"User clicks edit offer button for (.*) offer on view requirement page")]
         public void EditOffer(int position)
         {
-            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage")
-                .OpenOfferActions(position)
+            this.page.OpenOfferActions(position)
                 .EditOffer(1)
                 .WaitForSidePanelToShow();
         }
@@ -160,13 +156,12 @@
         public void FIllOfferDetails(Table table)
         {
             var details = table.CreateInstance<OfferData>();
-            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
 
             details.OfferDate = DateTime.UtcNow.ToString(Format);
             details.ExchangeDate = DateTime.UtcNow.AddDays(1).ToString(Format);
             details.CompletionDate = DateTime.UtcNow.AddDays(2).ToString(Format);
 
-            page.Offer.SelectStatus(details.Status)
+            this.page.Offer.SelectStatus(details.Status)
                 .SetOffer(details.Offer)
                 .SetOfferDate(details.OfferDate)
                 .SetSpecialConditions(details.SpecialConditions)
@@ -179,23 +174,20 @@
         [When(@"User clicks save offer button on view requirement page")]
         public void SaveOffer()
         {
-            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
-            page.Offer.SaveOffer();
-            page.WaitForSidePanelToHide();
+            this.page.Offer.SaveOffer();
+            this.page.WaitForSidePanelToHide();
         }
 
         [Then(@"Side panel should not be displayed on view requirement page")]
         public void WaitForSidePnaleToHide()
         {
-            this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").WaitForSidePanelToHide();
+            this.page.WaitForSidePanelToHide();
         }
 
         [Then(@"Requirement location details on view requirement page are same as the following")]
         public void CheckResidentialSalesRequirementLocationDetails(Table table)
         {
-            Dictionary<string, string> details =
-                this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage")
-                    .GetLocationRequirements();
+            Dictionary<string, string> details = this.page.GetLocationRequirements();
             var expectedDetails = table.CreateInstance<Address>();
 
             Verify.That(this.driverContext,
@@ -207,9 +199,7 @@
         [Then(@"Requirement property details on view requirement page are same as the following")]
         public void CheckResidentialSalesRequirementPropertyDetails(Table table)
         {
-            Dictionary<string, string> details =
-                this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage")
-                    .GetPropertyRequirements();
+            Dictionary<string, string> details = this.page.GetPropertyRequirements();
             var expectedDetails = table.CreateInstance<Requirement>();
 
             Verify.That(this.driverContext,
@@ -226,8 +216,7 @@
         [Then(@"Requirement applicants on view requirement page are same as the following")]
         public void CheckResidentialSalesRequirementApplicants(Table table)
         {
-            List<string> applicants =
-                this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").Applicants;
+            List<string> applicants = this.page.Applicants;
             List<string> expectedApplicants =
                 table.CreateSet<Contact>().Select(contact => contact.FirstName + " " + contact.Surname).ToList();
 
@@ -237,24 +226,23 @@
         [Then(@"Note is displayed in recent notes area on view requirement page")]
         public void CheckIfNoteAdded()
         {
-            Assert.Equal(1, this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").Notes.GetNumberOfNotes());
+            Assert.Equal(1, this.page.Notes.GetNumberOfNotes());
         }
 
         [Then(@"Notes number increased on view requirement page")]
         public void CheckIfNotesNumberIncreased()
         {
-            string notesNumber = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").CheckNotesNumber();
+            string notesNumber = this.page.CheckNotesNumber();
             Assert.Equal("(1)", notesNumber);
         }
 
         [Then(@"Viewing details on (.*) position on view requirement page are same as the following")]
         public void CheckViewing(int position, Table table)
         {
-            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
             var expectedDetails = table.CreateInstance<ViewingData>();
-            List<string> actualDetails = page.GetViewingDetails(position);
+            List<string> actualDetails = this.page.GetViewingDetails(position);
 
-            Verify.That(this.driverContext, () => Assert.Equal(page.ViewingsNumber, 1),
+            Verify.That(this.driverContext, () => Assert.Equal(this.page.ViewingsNumber, 1),
                 () => Assert.Equal(expectedDetails.Date, actualDetails[0]),
                 () => Assert.Equal(expectedDetails.Name, actualDetails[1]),
                 () => Assert.Equal(expectedDetails.Time, actualDetails[2]));
@@ -263,12 +251,11 @@
         [Then(@"Offer details on (.*) position on view requirement page are same as the following")]
         public void CheckOffer(int position, Table table)
         {
-            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
             var expectedDetails = table.CreateInstance<OfferData>();
-            List<string> actualDetails = page.GetOfferDetails(position);
-            string status = page.GetOfferStatus(position);
+            List<string> actualDetails = this.page.GetOfferDetails(position);
+            string status = this.page.GetOfferStatus(position);
 
-            Verify.That(this.driverContext, 
+            Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Activity, actualDetails[0]),
                 () => Assert.Equal(expectedDetails.Offer, actualDetails[1]),
                 () => Assert.Equal(expectedDetails.Status, status));
@@ -277,24 +264,22 @@
         [Then(@"Viewing details on view requirement page are same as the following")]
         public void CheckViewingInDetailsPanel(Table table)
         {
-            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
             var expectedDetails = table.CreateInstance<ViewingDetails>();
 
             List<string> attendees = expectedDetails.Attendees.Split(';').ToList();
 
-            Verify.That(this.driverContext, 
-                () => Assert.Equal(expectedDetails.Name, page.ViewingDetails.Details),
-                () => Assert.Equal(expectedDetails.Date + ", " + expectedDetails.StartTime + " - " + expectedDetails.EndTime, page.ViewingDetails.Date),
-                () => Assert.Equal(expectedDetails.Negotiator, page.ViewingDetails.Negotiator),
-                () => Assert.Equal(attendees, page.ViewingDetails.Attendees),
-                () => Assert.Equal(expectedDetails.InvitationText, page.ViewingDetails.InvitationText),
-                () => Assert.Equal(expectedDetails.PostViewingComment, page.ViewingDetails.PostViewingComment));
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Name, this.page.ViewingDetails.Details),
+                () => Assert.Equal(expectedDetails.Date + ", " + expectedDetails.StartTime + " - " + expectedDetails.EndTime, this.page.ViewingDetails.Date),
+                () => Assert.Equal(expectedDetails.Negotiator, this.page.ViewingDetails.Negotiator),
+                () => Assert.Equal(attendees, this.page.ViewingDetails.Attendees),
+                () => Assert.Equal(expectedDetails.InvitationText, this.page.ViewingDetails.InvitationText),
+                () => Assert.Equal(expectedDetails.PostViewingComment, this.page.ViewingDetails.PostViewingComment));
         }
 
         [Then(@"Offer details on view requirement page are same as the following")]
         public void CheckOfferInDetailsPanel(Table table)
         {
-            var page = this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage");
             var expectedDetails = table.CreateInstance<OfferData>();
 
             var offer = this.scenarioContext.Get<OfferData>("Offer");
@@ -304,35 +289,41 @@
             expectedDetails.CompletionDate = offer.CompletionDate;
 
             Verify.That(this.driverContext,
-                () => Assert.Equal(expectedDetails.Activity, page.OfferPreview.Details),
-                () => Assert.Equal(expectedDetails.Status, page.OfferPreview.Status),
-                () => Assert.Equal(expectedDetails.Offer, page.OfferPreview.Offer),
-                () => Assert.Equal(expectedDetails.OfferDate, page.OfferPreview.Date),
-                () => Assert.Equal(expectedDetails.SpecialConditions, page.OfferPreview.SpecialConditions),
-                () => Assert.Equal(expectedDetails.Negotiator, page.OfferPreview.Negotiator),
-                () => Assert.Equal(expectedDetails.ExchangeDate, page.OfferPreview.ProposedexchangeDate),
-                () => Assert.Equal(expectedDetails.CompletionDate, page.OfferPreview.ProposedCompletionDate));
+                () => Assert.Equal(expectedDetails.Activity, this.page.OfferPreview.Details),
+                () => Assert.Equal(expectedDetails.Status, this.page.OfferPreview.Status),
+                () => Assert.Equal(expectedDetails.Offer, this.page.OfferPreview.Offer),
+                () => Assert.Equal(expectedDetails.OfferDate, this.page.OfferPreview.Date),
+                () => Assert.Equal(expectedDetails.SpecialConditions, this.page.OfferPreview.SpecialConditions),
+                () => Assert.Equal(expectedDetails.Negotiator, this.page.OfferPreview.Negotiator),
+                () => Assert.Equal(expectedDetails.ExchangeDate, this.page.OfferPreview.ProposedexchangeDate),
+                () => Assert.Equal(expectedDetails.CompletionDate, this.page.OfferPreview.ProposedCompletionDate));
         }
 
         [Then(@"View requirement page is displayed")]
         public void CheckIfViewRequirementPresent()
         {
-            var page = new ViewRequirementPage(this.driverContext);
-            Assert.True(page.IsViewRequirementFormPresent());
-            this.scenarioContext.Set(page, "ViewActivityPage");
+            Assert.True(this.page.IsViewRequirementFormPresent());
         }
 
         [Then(@"Activity details on view requirement page are same as the following")]
         public void CheckOfferActivity(Table table)
         {
             var details = table.CreateInstance<OfferData>();
-            Assert.Equal(details.Activity, this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").Offer.Details);
+            Assert.Equal(details.Activity, this.page.Offer.Details);
         }
 
         [Then(@"New offer should be created and displayed on view requirement page")]
         public void CheckIfOfferCreated()
         {
-            Assert.Equal(1, this.scenarioContext.Get<ViewRequirementPage>("ViewRequirementPage").OffersNumber);
+            Assert.Equal(1, this.page.OffersNumber);
+        }
+
+        [Then(@"New requirement should be created")]
+        public void CheckIfNewResidentialSalesRequirementCreated()
+        {
+            this.page.WaitForDetailsToLoad();
+            var date = this.scenarioContext.Get<DateTime>("RequirementDate");
+            Assert.Equal(date.ToString("MMMM d, yyyy"), this.page.CreateDate);
         }
     }
 }
