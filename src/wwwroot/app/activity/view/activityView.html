@@ -51,8 +51,6 @@
                         <div id="vendorEstimatedPrice" class="col-xs-6" ng-if="avvm.activity.vendorEstimatedPrice !== null">{{avvm.activity.vendorEstimatedPrice | number : 2 }} GBP</div>
                     </div>
                 </section>
-            </div>
-            <div class="col-md-4">
                 <section id="activity-view-viewings">
                     <h3 class="page-header" translate="ACTIVITY.VIEW.VIEWINGS"></h3>
                     <card-list id="viewings-list">
@@ -158,7 +156,15 @@
                 </section>
 
                 <!-- // Card component -->
-
+            </div>
+            <div class="col-md-4">
+                <section>
+                    <h3 class="page-header" translate="ACTIVITY.VIEW.OFFERS"></h3>
+                    <card-list-item class="activity-view-offers" ng-repeat="offer in avvm.activity.offers | orderBy: '-offerDate' | enumSorter: 'OfferStatus':'statusId' track by offer.id + offer.statusId + offer.offerDate">
+                        <card card-template-url="'app/activity/view/activityOffersCard.html'" item="offer" display-new-control="true">
+                        </card>
+                    </card-list-item>
+                </section>
             </div>
         </div>
     </div>

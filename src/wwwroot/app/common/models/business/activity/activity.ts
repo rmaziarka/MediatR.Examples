@@ -19,6 +19,7 @@ module Antares.Common.Models.Business {
         leadNegotiator: ActivityUser = null;
         secondaryNegotiator: ActivityUser[] = [];
         activityUsers: ActivityUser[] = [];
+        offers: Offer[];
 
         constructor(activity?: Dto.IActivity) {
             if (activity) {
@@ -37,14 +38,19 @@ module Antares.Common.Models.Business {
                     .map((user: Dto.IActivityUser) => new ActivityUser(user));
                     
                 if (activity.attachments) {
-                    this.attachments = activity.attachments.map((attachment: Dto.IAttachment) => { return new Antares.Common.Models.Business.Attachment(attachment) });
+                    this.attachments = activity.attachments.map((attachment: Dto.IAttachment) => { return new Business.Attachment(attachment) });
                 }
                 else {
                     this.attachments = [];
                 }
+
                 if (activity.viewings) {
                     this.viewings = activity.viewings.map((item) => new Viewing(item));
                     this.groupViewings(this.viewings);
+                }
+
+                if (activity.offers) {
+                    this.offers = activity.offers.map((item) => new Offer(item));
                 }
             }
         }
@@ -52,7 +58,7 @@ module Antares.Common.Models.Business {
         groupViewings(viewings: Viewing[]) {
             this.viewingsByDay = [];
             var groupedViewings: _.Dictionary<Viewing[]> = _.groupBy(viewings, (i: Viewing) => { return i.day; });
-            this.viewingsByDay = _.map(groupedViewings, (items: Viewing[], key: string) => { return new ViewingGroup(key, items); });
+            this.viewingsByDay = <ViewingGroup[]>_.map(groupedViewings, (items: Viewing[], key: string) => { return new ViewingGroup(key, items); });
         }
     }
 }
