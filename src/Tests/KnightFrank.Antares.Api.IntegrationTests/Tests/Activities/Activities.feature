@@ -54,7 +54,7 @@ Scenario: Create Activity
 			| 01-05-2014   |            | 1000000  |           |
 	When User creates activity for given latest property id using api
 	Then User should get OK http status code
-		And Created Activity is saved in database
+		And Activity details should be the same as already added
 
 @Activity
 Scenario Outline: Get Activity using invalid data
@@ -85,7 +85,7 @@ Scenario: Get Activity
 		And Activity for latest property and PreAppraisal activity status exists in database
 	When User gets activity with latest id
 	Then User should get OK http status code
-		And Retrieved activity should be same as in database
+		And Activity details should be the same as already added
 
 @Activity
 Scenario: Record and update residential sale valuation
@@ -108,7 +108,7 @@ Scenario: Record and update residential sale valuation
 		| MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |
 		| 1                    | 2                | 3                    |
 	Then User should get OK http status code
-		And Retrieved activity should be same as in database
+		And Activity details should be the same as already added
 
 @Activity
 Scenario Outline: Record and update residential sale valuation using invalid data
@@ -162,7 +162,7 @@ Scenario: Get all activities
 			| abc          | 1              | Lewis Cubit Square |
 
 @Activity
-Scenario: Get Activity with viewing
+Scenario: Get Activity with viewing and offer
 	Given User gets GB address form for Property and country details
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
@@ -170,6 +170,7 @@ Scenario: Get Activity with viewing
 			| enumTypeCode   | enumTypeItemCode |
 			| ActivityStatus | PreAppraisal     |
 			| Division       | Residential      |
+			| OfferStatus    | New              |
 		And Property characteristics are set for given property type
 		And User sets attributes for property in database
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
@@ -189,7 +190,8 @@ Scenario: Get Activity with viewing
  			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | Description |
 		And User gets negotiator id from database
 		And User creates viewing in database
+		And User creates New offer in database
 	When User gets activity with latest id
 	Then User should get OK http status code
-		And Retrieved activity should be same as in database
 		And Retrieved activity should have expected viewing
+		And Retrieved activity should have expected offer

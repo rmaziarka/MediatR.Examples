@@ -9,16 +9,14 @@ Scenario: Update Activity with negotiators
 		| jrambo               |	
 	When User updates activity with defined negotiators
 	Then User should get OK http status code
-		And Retrieved activity should be same as in database
+		And Activity details should be the same as already added
 
 Scenario: Update Activity with lead negotiator only
 	Given Activity exists in database
 		And Lead negotiator with ActiveDirectoryLogin jsmith exists in database
-		And Following secondary negotiators exists in database
-		| ActiveDirectoryLogin |	
 	When User updates activity with defined negotiators
 	Then User should get OK http status code
-		And Retrieved activity should be same as in database
+		And Activity details should be the same as already added
 
 Scenario Outline: Update activity with invalid negotiators data
 	Given Activity exists in database

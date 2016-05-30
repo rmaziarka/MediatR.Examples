@@ -37,7 +37,7 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"Attachment for (.*) with following data exists in data base")]
+        [Given(@"Attachment for (.*) with following data exists in database")]
         public void CreateAttachmentForActivityInDatabase(string documentType, Table table)
         {
             var attachment = table.CreateInstance<Attachment>();
@@ -52,7 +52,7 @@
             this.fixture.DataContext.SaveChanges();
         }
 
-        [When(@"I upload attachment for (.*) activity id for (.*) with following data")]
+        [When(@"User uploads attachment for (.*) activity id for (.*) with following data")]
         public void UploadAttachmentForActivity(string activityId, string documentType, Table table)
         {
             if (activityId.Equals("latest"))

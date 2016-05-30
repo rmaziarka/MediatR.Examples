@@ -42,17 +42,10 @@
         [Given(@"Following secondary negotiators exists in database")]
         public void GivenFollowingSecondaryNegotiatorsExistsInDatabase(Table table)
         {
-            var list = new List<Guid>();
-
-            if (table.Rows.Count > 0)
-            {
-                list =
-                    table.Rows.Select(row => row["ActiveDirectoryLogin"])
-                         .Select(
-                             login => this.fixture.DataContext.Users.Single(x => x.ActiveDirectoryLogin.Equals(login)).Id)
-                         .ToList();
-            }
-
+            List<Guid> list =
+                table.Rows.Select(row => row["ActiveDirectoryLogin"])
+                     .Select(login => this.fixture.DataContext.Users.Single(x => x.ActiveDirectoryLogin.Equals(login)).Id)
+                     .ToList();
             this.scenarioContext.Set(list, "SecondaryNegotiatorId");
         }
 
@@ -62,8 +55,9 @@
             string requestUrl = $"{ApiUrl}";
 
             var leadNegotiatorId = this.scenarioContext.Get<Guid>("LeadNegotiatorId");
-            var secondaryNegotiatorsIds = this.scenarioContext.Get<List<Guid>>("SecondaryNegotiatorId");
-
+            List<Guid> secondaryNegotiatorsIds = this.scenarioContext.ContainsKey("SecondaryNegotiatorId")
+                ? this.scenarioContext.Get<List<Guid>>("SecondaryNegotiatorId")
+                : new List<Guid>();
             var activityFromDatabase = this.scenarioContext.Get<Activity>("Activity");
 
             var updateActivityCommand = new UpdateActivityCommand

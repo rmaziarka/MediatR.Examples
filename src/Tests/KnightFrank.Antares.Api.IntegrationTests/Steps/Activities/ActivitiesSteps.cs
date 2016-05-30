@@ -14,6 +14,7 @@
     using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Common;
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.Activity.Commands;
@@ -208,7 +209,7 @@
                 .Excluding(x => x.ActivityUsers));
         }
 
-        [Then(@"Created Activity is saved in database")]
+        [Then(@"Activity details should be the same as already added")]
         public void CompareActivities()
         {
             var activity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
@@ -222,28 +223,6 @@
                 .Excluding(x => x.ActivityUsers));
 
             actualActivity.ActivityStatus.Code.ShouldBeEquivalentTo("PreAppraisal");
-
-            actualActivity.ActivityUsers.Should().Equal(activity.ActivityUsers, (c1, c2) =>
-                c1.ActivityId == c2.ActivityId &&
-                c1.UserType == c2.UserType &&
-                c1.UserId == c2.UserId);
-        }
-
-        [Then(@"Retrieved activity should be same as in database")]
-        public void CheckActivity()
-        {
-            var activity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
-            Activity actualActivity = this.fixture.DataContext.Activities.Single(x => x.Id.Equals(activity.Id));
-
-            actualActivity.ShouldBeEquivalentTo(activity, options => options
-                .Excluding(a => a.ActivityStatus)
-                .Excluding(a => a.Contacts)
-                .Excluding(a => a.Property)
-                .Excluding(a => a.ActivityType)
-                .Excluding(a => a.Attachments)
-                .Excluding(a => a.ActivityUsers)
-                .Excluding(a => a.Viewings));
-
             actualActivity.ActivityUsers.Should().Equal(activity.ActivityUsers, (c1, c2) =>
                 c1.ActivityId == c2.ActivityId &&
                 c1.UserType == c2.UserType &&
@@ -260,6 +239,19 @@
                 .Excluding(v => v.Activity)
                 .Excluding(v => v.Requirement)
                 .Excluding(v => v.Negotiator));
+        }
+
+        [Then(@"Retrieved activity should have expected offer")]
+        public void CheckActivityOffer()
+        {
+            var activity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
+            Offer offer = this.fixture.DataContext.Offer.Single(x => x.ActivityId.Equals(activity.Id));
+
+            activity.Offers.Single().ShouldBeEquivalentTo(offer, options => options
+                .Excluding(o => o.Activity)
+                .Excluding(o => o.Requirement)
+                .Excluding(o => o.Negotiator)
+                .Excluding(o => o.Status));
         }
 
         [Then(@"Retrieved activities should be the same as in database")]
