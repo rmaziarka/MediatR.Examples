@@ -1,7 +1,7 @@
 <li>
     <a class="contextMenuItem" href="" ng-click="vm.action(vm.item)">
-        <i class="card-menu-icon fa" aria-hidden="true" 
-           ng-class="{'fa-pencil': vm.type == 'edit', 'fa-times': vm.type == 'delete'}">
+        <i class="card-menu-icon fa" aria-hidden="true"
+           ng-class="{'fa-pencil': vm.type == 'edit', 'fa-times': vm.type == 'delete', 'fa-eye': vm.type == 'details'}">
         </i>
         <span translate="{{ 'COMMON.' + vm.type | uppercase}}"></span>
     </a>
