@@ -10,6 +10,8 @@ module Antares.TestHelpers {
             var company = <Dto.ICompany> {
                 id: CompanyGenerator.makeRandom('id'),
                 name: CompanyGenerator.makeRandom('name'),
+                websiteUrl: '',
+                clientCarePageUrl:'',
                 contacts: ContactGenerator.generateMany(3)
             }
 

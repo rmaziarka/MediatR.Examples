@@ -8,8 +8,10 @@ module Antares.Common.Component {
         public showText: boolean;          // set via binding
 
         formatUrlWithProtocol = (): string => {
-            // TODO check if http is set if not - add it
-            return 'http://' + this.url;
+            //regular expression for url with a protocol (case insensitive)
+            var r = new RegExp('^(?:[a-z]+:)?//', 'i');
+            if (r.test(this.url)) {return this.url;}
+            else {return 'http://' + this.url;}
         }
     }
 

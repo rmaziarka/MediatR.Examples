@@ -17,8 +17,8 @@
 
             this.RuleFor(p => p.Name).NotEmpty().Length(1, 128);
             this.RuleFor(p => p.ContactIds).NotEmpty();
-            this.RuleFor(p => p.WebsiteUrl).Length(1, 1000);
-            this.RuleFor(p => p.ClientCarePageUrl).Length(1, 1000);
+            this.RuleFor(p => p.WebsiteUrl).Length(0, 2500);
+            this.RuleFor(p => p.ClientCarePageUrl).Length(0, 2500);
             this.RuleFor(p => p.ClientCareStatusId).Must(this.IsValidEnum);
 
         }

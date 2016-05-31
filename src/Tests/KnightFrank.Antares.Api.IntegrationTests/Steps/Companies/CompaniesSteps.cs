@@ -42,10 +42,10 @@
         {
             string clientCareStatus =  GetClientCareStatus(table, "EnumTypeItemCode");
            
-            Guid clientcareStatusID = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[clientCareStatus];
+            Guid clientcareStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[clientCareStatus];
 
             var company = table.CreateInstance<CreateCompanyCommand>();
-            company.ClientCareStatusId = clientcareStatusID;
+            company.ClientCareStatusId = clientcareStatusId;
 
             this.CreateCompany(company);
         }

@@ -13,7 +13,6 @@
         public string ClientCarePageUrl { get; set; }
         public Guid? ClientCareStatusId { get; set; }
         public EnumTypeItem ClientCareStatus { get; set; }
-
         public virtual ICollection<Contact> Contacts { get; set; }
     }
 }
