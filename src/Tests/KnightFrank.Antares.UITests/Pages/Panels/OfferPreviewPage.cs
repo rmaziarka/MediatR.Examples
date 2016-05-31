@@ -6,7 +6,7 @@
 
     public class OfferPreviewPage : ProjectPageBase
     {
-        private readonly ElementLocator details = new ElementLocator(Locator.Id, "offer-preview-activity-details");
+        private readonly ElementLocator details = new ElementLocator(Locator.CssSelector, "offer-preview-custom-item .ng-binding");
         private readonly ElementLocator status = new ElementLocator(Locator.Id, "offer-preview-status");
         private readonly ElementLocator offer = new ElementLocator(Locator.Id, "offer-preview-price");
         private readonly ElementLocator offerDate = new ElementLocator(Locator.Id, "offer-preview-date");
