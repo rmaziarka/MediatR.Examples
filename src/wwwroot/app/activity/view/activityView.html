@@ -32,7 +32,7 @@
                     </list>
                 </section>
                 <section>
-                    <negotiators-view property-division-id="{{avvm.activity.property.divisionId}}" lead-negotiator="avvm.activity.leadNegotiator" secondary-negotiators="avvm.activity.secondaryNegotiator"></negotiators-view>                    
+                    <negotiators-view property-division-id="{{avvm.activity.property.divisionId}}" lead-negotiator="avvm.activity.leadNegotiator" secondary-negotiators="avvm.activity.secondaryNegotiator"></negotiators-view>
                 </section>
             </div>
             <div class="col-md-4">
@@ -89,7 +89,11 @@
                 <section>
                     <h3 class="page-header" translate="ACTIVITY.VIEW.OFFERS"></h3>
                     <card-list-item class="activity-view-offers" ng-repeat="offer in avvm.activity.offers | orderBy: '-offerDate' | enumSorter: 'OfferStatus':'statusId' track by offer.id + offer.statusId + offer.offerDate">
-                        <card card-template-url="'app/activity/view/activityOffersCard.html'" item="offer" show-item-details="avvm.showOfferPreview" display-new-control="true">
+                        <card card-template-url="'app/activity/view/activityOffersCard.html'"
+                              item="offer" show-item-details="avvm.showOfferPreview" display-new-control="true" show-context-menu="true">
+                            <card-context-menu>
+                                <context-menu-item type="details" item="offer" action="avvm.navigateToOfferView"></context-menu-item>
+                            </card-context-menu>
                         </card>
                     </card-list-item>
                 </section>
@@ -118,7 +122,7 @@
     </side-panel-content>
     <side-panel-footer>
         <button class="btn btn-default" type="button" ng-click="avvm.cancelActivityAttachmentAdd()">
-            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL" ></span>
+            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
         </button>
         <button class="btn btn-primary" type="button" id="attachment-add-button" ng-click="avvm.saveActivityAttachment()">
             <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
@@ -151,7 +155,7 @@
         <h3 translate="ACTIVITY.VIEW.OFFERPREVIEW"></h3>
     </side-panel-header>
     <side-panel-content>
-        <offer-preview component-id="avvm.componentIds.offerPreviewId" offer="avvm.selectedOffer" >
+        <offer-preview component-id="avvm.componentIds.offerPreviewId" offer="avvm.selectedOffer">
             <offer-preview-custom-item>
                 <requirement-card requirement="avvm.selectedOffer.requirement" />
             </offer-preview-custom-item>

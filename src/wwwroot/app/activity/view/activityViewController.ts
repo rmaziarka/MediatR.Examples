@@ -86,6 +86,10 @@ module Antares.Activity.View {
             this.$state.go('app.activity-edit', { id: this.$state.params['id'] });
         }
 
+        navigateToOfferView = (offer: Common.Models.Dto.IOffer) =>{
+            this.$state.go('app.offer-view', { id: offer.id });
+        }
+
         defineComponentIds() {
             this.componentIds = {
                 propertyPreviewId: 'viewActivity:propertyPreviewComponent',
