@@ -38,8 +38,8 @@ module Antares {
                 item: '#activity-edit-vendors list#list-vendors list-item#list-item-'
             },
             negotiators: {
-                component: "#activity-edit-negotiators negotiators-edit",
-                items: "#activity-edit-negotiators #card-secondary-negotiator"
+                component: '#activity-edit-negotiators negotiators-edit',
+                items: '#activity-edit-negotiators card[id^="card-secondary-negotiator"]'
             },
             actions: {
                 save: 'button#activity-edit-save',
@@ -406,8 +406,8 @@ module Antares {
                     expect(requestData.marketAppraisalPrice).toEqual(activityMock.marketAppraisalPrice);
                     expect(requestData.recommendedPrice).toEqual(activityMock.recommendedPrice);
                     expect(requestData.vendorEstimatedPrice).toEqual(activityMock.vendorEstimatedPrice);
-                    expect(requestData.leadNegotiatorId).toEqual(activityMock.leadNegotiator.userId);
-                    expect(requestData.secondaryNegotiatorIds).toEqual(activityMock.secondaryNegotiator.map((negotiator) => negotiator.userId));
+                    expect(requestData.leadNegotiator.id).toEqual(activityMock.leadNegotiator.userId);
+                    expect(requestData.secondaryNegotiators.map((negotiator) => negotiator.id)).toEqual(activityMock.secondaryNegotiator.map((negotiator) => negotiator.userId));
 
                     expect(activityId).toEqual(activityFromServerMock.id);
                 });

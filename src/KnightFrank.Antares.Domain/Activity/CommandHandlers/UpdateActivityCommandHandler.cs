@@ -68,22 +68,23 @@
                 activity.Property.Address.CountryId,
                 activity.Property.PropertyTypeId);
 
-            this.entityValidator.EntityExists<User>(message.LeadNegotiatorId);
-
-            this.entityValidator.EntitiesExist<User>(message.SecondaryNegotiatorIds);
+            this.entityValidator.EntityExists<User>(message.LeadNegotiator.Id);
 
             var commandNegotiators = new List<ActivityUser>
                                          {
                                              new ActivityUser
                                                  {
-                                                     UserId = message.LeadNegotiatorId,
-                                                     UserType = this.GetLeadNegotiatorUserType()
+                                                     UserId = message.LeadNegotiator.Id,
+                                                     UserType = this.GetLeadNegotiatorUserType(),
+                                                     CallDate =  message.LeadNegotiator.CallDate
                                                  }
                                          };
 
+            this.entityValidator.EntitiesExist<User>(message.SecondaryNegotiators.Select(n => n.Id).ToList());
+
             commandNegotiators.AddRange(
-                message.SecondaryNegotiatorIds.Select(
-                    n => new ActivityUser { UserId = n, UserType = this.GetSecondaryNegotiatorUserType() }));
+                message.SecondaryNegotiators.Select(
+                    n => new ActivityUser { UserId = n.Id, UserType = this.GetSecondaryNegotiatorUserType(), CallDate = n.CallDate }));
 
             this.collectionValidator.CollectionIsUnique(
                 commandNegotiators.Select(n => n.UserId).ToList(),
@@ -112,9 +113,10 @@
             return activity.Id;
         }
 
-        private static void UpdateNegotiator(ActivityUser newNagotiator, ActivityUser oldNegotiator)
+        private static void UpdateNegotiator(ActivityUser newNegotiator, ActivityUser oldNegotiator)
         {
-            oldNegotiator.UserType = newNagotiator.UserType;
+            oldNegotiator.UserType = newNegotiator.UserType;
+            oldNegotiator.CallDate = newNegotiator.CallDate;
         }
 
         private static bool IsRemovedFromExistingList(ActivityUser existingActivityUser, IEnumerable<ActivityUser> activityUsers)

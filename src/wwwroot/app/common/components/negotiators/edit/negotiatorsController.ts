@@ -16,8 +16,10 @@ module Antares.Common.Component {
         public isSecondaryNegotiatorsInEditMode: boolean = false;
 
         public negotiatorsSearchOptions: SearchOptions = new SearchOptions();
-
         public labelTranslationKey: string;
+        public nagotiatorCallDateOpened: any = {};
+
+        public today: Date = new Date();
 
         private usersSearchMaxCount: number = 100;
 
@@ -73,6 +75,10 @@ module Antares.Common.Component {
             this.leadNegotiator = activityUser;
         }
 
+        public openNegotiatorCallDate = (nagotiatorUserId: string) => {
+            this.nagotiatorCallDateOpened[nagotiatorUserId] = true;
+        }
+
         public getUsersQuery = (searchValue: string): DepartmentUserResourceParameters => {
             var excludedIds: string[] = _.map<Business.ActivityUser, string>(this.secondaryNegotiators, 'userId');
             excludedIds.push(this.leadNegotiator.userId);
@@ -91,6 +97,14 @@ module Antares.Common.Component {
                     return users.map((user: Common.Models.Dto.IDepartmentUser) => { return new Common.Models.Business.DepartmentUser(<Common.Models.Dto.IDepartmentUser>user); });
                 });
         }
+
+        public isSubmitted = (form: any) => {
+            while (!!form) {
+                if (form.$submitted) return true;
+                form = form.$$parentForm;
+            }
+            return false;
+        };
 
         private createActivityUser = (user: Dto.IDepartmentUser, negotiatorType: Enums.NegotiatorTypeEnum) =>{
             var activityUser = new Business.ActivityUser();

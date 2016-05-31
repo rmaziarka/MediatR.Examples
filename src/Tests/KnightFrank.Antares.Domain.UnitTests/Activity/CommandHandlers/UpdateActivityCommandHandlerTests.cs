@@ -121,7 +121,7 @@
             handler.Handle(command);
 
             // Assert
-            entityValidator.Verify(x => x.EntityExists<User>(command.LeadNegotiatorId), Times.Once);
+            entityValidator.Verify(x => x.EntityExists<User>(command.LeadNegotiator.Id), Times.Once);
         }
 
         [Theory]
@@ -151,7 +151,7 @@
             handler.Handle(command);
 
             // Assert
-            entityValidator.Verify(x => x.EntitiesExist<User>(command.SecondaryNegotiatorIds), Times.Once);
+            entityValidator.Verify(x => x.EntitiesExist<User>(It.Is<List<Guid>>( list => list.SequenceEqual(command.SecondaryNegotiators.Select(n => n.Id).ToList()))), Times.Once);
         }
 
         [Theory]
@@ -184,8 +184,8 @@
             handler.Handle(command);
 
             // Assert
-            IList<Guid> expectedNegotiators = command.SecondaryNegotiatorIds;
-            expectedNegotiators.Add(command.LeadNegotiatorId);
+            IList<Guid> expectedNegotiators = command.SecondaryNegotiators.Select(n => n.Id).ToList();
+            expectedNegotiators.Add(command.LeadNegotiator.Id);
 
             calledNegotiators.ShouldAllBeEquivalentTo(expectedNegotiators);
             collectionValidator.Verify(x => x.CollectionIsUnique(It.IsAny<ICollection<Guid>>(), ErrorMessage.Activity_Negotiators_Not_Unique), Times.Once);
@@ -230,10 +230,11 @@
            UpdateActivityCommand command,
            UpdateActivityCommandHandler handler,
            Guid secondaryNegotiatorIdToAdd,
+           DateTime callDate,
            IFixture fixture)
         {
             // Arrange
-            command.SecondaryNegotiatorIds.Add(secondaryNegotiatorIdToAdd);
+            command.SecondaryNegotiators.Add(new UpdateActivityUserCommand {Id = secondaryNegotiatorIdToAdd, CallDate = callDate });
             Activity activity = this.GetActivity(fixture);
             activityRepository.Setup(p => p.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
             enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
@@ -248,10 +249,11 @@
             handler.Handle(command);
 
             // Assert
-            activity.ActivityUsers
-                    .Count(u => u.UserId == secondaryNegotiatorIdToAdd && u.UserType.Code == EnumTypeItemCode.SecondaryNegotiator)
-                    .Should()
-                    .Be(1);
+            ActivityUser negotiator = activity.ActivityUsers.SingleOrDefault(u => u.UserId == secondaryNegotiatorIdToAdd);
+            negotiator.Should().NotBeNull();
+            // ReSharper disable once PossibleNullReferenceException
+            negotiator.UserType.Code.Should().Be(EnumTypeItemCode.SecondaryNegotiator);
+            negotiator.CallDate.Should().Be(callDate);
         }
 
         [Theory]
@@ -263,10 +265,11 @@
            UpdateActivityCommandHandler handler,
            ActivityUser activityUserToUpdate,
            Guid secondaryNegotiatorIdToUpdate,
+           DateTime callDate,
            IFixture fixture)
         {
             // Arrange
-            command.SecondaryNegotiatorIds.Add(secondaryNegotiatorIdToUpdate);
+            command.SecondaryNegotiators.Add(new UpdateActivityUserCommand { Id = secondaryNegotiatorIdToUpdate, CallDate = callDate });
 
             activityUserToUpdate.UserId = secondaryNegotiatorIdToUpdate;
             activityUserToUpdate.UserType = this.GetSecondaryNegotiatorUserType(fixture);
@@ -287,10 +290,11 @@
             handler.Handle(command);
 
             // Assert
-            activity.ActivityUsers
-                    .Count(u => u.UserId == secondaryNegotiatorIdToUpdate && u.UserType.Code == EnumTypeItemCode.SecondaryNegotiator)
-                    .Should()
-                    .Be(1);
+            ActivityUser negotiator = activity.ActivityUsers.SingleOrDefault(u => u.UserId == secondaryNegotiatorIdToUpdate);
+            negotiator.Should().NotBeNull();
+            // ReSharper disable once PossibleNullReferenceException
+            negotiator.UserType.Code.Should().Be(EnumTypeItemCode.SecondaryNegotiator);
+            negotiator.CallDate.Should().Be(callDate);
         }
 
         [Theory]
@@ -302,10 +306,12 @@
            UpdateActivityCommandHandler handler,
            ActivityUser activityUserToUpdate,
            Guid leadNegotiatorIdToUpdate,
+           DateTime callDate,
            IFixture fixture)
         {
             // Arrange
-            command.LeadNegotiatorId = leadNegotiatorIdToUpdate;
+            command.LeadNegotiator.Id = leadNegotiatorIdToUpdate;
+            command.LeadNegotiator.CallDate = callDate;
 
             activityUserToUpdate.UserId = leadNegotiatorIdToUpdate;
             activityUserToUpdate.UserType = this.GetLeadNegotiatorUserType(fixture);
@@ -326,10 +332,11 @@
             handler.Handle(command);
 
             // Assert
-            activity.ActivityUsers
-                    .Count(u => u.UserId == leadNegotiatorIdToUpdate && u.UserType.Code == EnumTypeItemCode.LeadNegotiator)
-                    .Should()
-                    .Be(1);
+            ActivityUser negotiator = activity.ActivityUsers.SingleOrDefault(u => u.UserId == leadNegotiatorIdToUpdate);
+            negotiator.Should().NotBeNull();
+            // ReSharper disable once PossibleNullReferenceException
+            negotiator.UserType.Code.Should().Be(EnumTypeItemCode.LeadNegotiator);
+            negotiator.CallDate.Should().Be(callDate);
         }
 
         [Theory]
@@ -341,10 +348,12 @@
            UpdateActivityCommandHandler handler,
            ActivityUser activityUserToUpdate,
            Guid secondaryNegotiatorIdToUpdateToLead,
+           DateTime callDate,
            IFixture fixture)
         {
             // Arrange
-            command.LeadNegotiatorId = secondaryNegotiatorIdToUpdateToLead;
+            command.LeadNegotiator.Id = secondaryNegotiatorIdToUpdateToLead;
+            command.LeadNegotiator.CallDate = callDate;
 
             activityUserToUpdate.UserId = secondaryNegotiatorIdToUpdateToLead;
             activityUserToUpdate.UserType = this.GetSecondaryNegotiatorUserType(fixture);
@@ -370,10 +379,11 @@
                     .Should()
                     .Be(0);
 
-            activity.ActivityUsers
-                    .Count(u => u.UserId == secondaryNegotiatorIdToUpdateToLead && u.UserType.Code == EnumTypeItemCode.LeadNegotiator)
-                    .Should()
-                    .Be(1);
+            ActivityUser negotiator = activity.ActivityUsers.SingleOrDefault(u => u.UserId == secondaryNegotiatorIdToUpdateToLead);
+            negotiator.Should().NotBeNull();
+            // ReSharper disable once PossibleNullReferenceException
+            negotiator.UserType.Code.Should().Be(EnumTypeItemCode.LeadNegotiator);
+            negotiator.CallDate.Should().Be(callDate);
         }
 
         [Theory]
@@ -385,10 +395,11 @@
            UpdateActivityCommandHandler handler,
            ActivityUser activityUserToUpdate,
            Guid leadNegotiatorIdToUpdateToSecondary,
+           DateTime callDate,
            IFixture fixture)
         {
             // Arrange
-            command.SecondaryNegotiatorIds.Add(leadNegotiatorIdToUpdateToSecondary);
+            command.SecondaryNegotiators.Add(new UpdateActivityUserCommand { Id = leadNegotiatorIdToUpdateToSecondary, CallDate = callDate });
 
             activityUserToUpdate.UserId = leadNegotiatorIdToUpdateToSecondary;
             activityUserToUpdate.UserType = this.GetLeadNegotiatorUserType(fixture);
@@ -409,10 +420,11 @@
             handler.Handle(command);
 
             // Assert
-            activity.ActivityUsers
-                    .Count(u => u.UserId == leadNegotiatorIdToUpdateToSecondary && u.UserType.Code == EnumTypeItemCode.SecondaryNegotiator)
-                    .Should()
-                    .Be(1);
+            ActivityUser negotiator = activity.ActivityUsers.SingleOrDefault(u => u.UserId == leadNegotiatorIdToUpdateToSecondary);
+            negotiator.Should().NotBeNull();
+            // ReSharper disable once PossibleNullReferenceException
+            negotiator.UserType.Code.Should().Be(EnumTypeItemCode.SecondaryNegotiator);
+            negotiator.CallDate.Should().Be(callDate);
 
             activity.ActivityUsers
                     .Count(u => u.UserId == leadNegotiatorIdToUpdateToSecondary && u.UserType.Code == EnumTypeItemCode.LeadNegotiator)

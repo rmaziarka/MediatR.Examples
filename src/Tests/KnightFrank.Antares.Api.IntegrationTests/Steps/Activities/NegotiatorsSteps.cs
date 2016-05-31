@@ -65,8 +65,8 @@
                 Id = activityFromDatabase.Id,
                 ActivityTypeId = activityFromDatabase.ActivityTypeId,
                 ActivityStatusId = activityFromDatabase.ActivityStatusId,
-                LeadNegotiatorId = leadNegotiatorId,
-                SecondaryNegotiatorIds = secondaryNegotiatorsIds
+                LeadNegotiator = new UpdateActivityUserCommand { Id = leadNegotiatorId, CallDate = DateTime.UtcNow.AddDays(1) },
+                SecondaryNegotiators = secondaryNegotiatorsIds.Select(n => new UpdateActivityUserCommand { Id = n }).ToList()
             };
 
             HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, updateActivityCommand);

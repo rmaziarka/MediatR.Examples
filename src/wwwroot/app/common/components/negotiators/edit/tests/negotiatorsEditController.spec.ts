@@ -172,6 +172,26 @@ module Antares {
             });
         });
 
+        describe('when openNegotiatorCallDate is called', () => {
+            it('then proper "open flag" for negotiator is set', () => {
+                // arrange
+                controller.changeLeadNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+
+                controller.secondaryNegotiators = [];
+                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+
+                //act
+                controller.openNegotiatorCallDate(controller.leadNegotiator.userId);
+                controller.openNegotiatorCallDate(controller.secondaryNegotiators[0].userId);
+
+                // assert
+                expect(controller.nagotiatorCallDateOpened[controller.leadNegotiator.userId]).toBeTruthy();
+                expect(controller.nagotiatorCallDateOpened[controller.secondaryNegotiators[0].userId]).toBeTruthy();
+                expect(controller.nagotiatorCallDateOpened[controller.secondaryNegotiators[1].userId]).toBeFalsy();
+            });
+        });
+
         describe('when getUsersQuery is called', () => {
             it('then proper query is returned', () => {
                 // arrange

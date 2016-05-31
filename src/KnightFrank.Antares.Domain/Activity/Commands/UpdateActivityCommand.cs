@@ -9,7 +9,7 @@
     {
         public UpdateActivityCommand()
         {
-            this.SecondaryNegotiatorIds = new List<Guid>();
+            this.SecondaryNegotiators = new List<UpdateActivityUserCommand>();
         }
 
         public Guid Id { get; set; }
@@ -24,8 +24,8 @@
 
         public Guid ActivityTypeId { get; set; }
 
-        public Guid LeadNegotiatorId { get; set; }
+        public UpdateActivityUserCommand LeadNegotiator { get; set; }
 
-        public IList<Guid> SecondaryNegotiatorIds { get; set; }
+        public IList<UpdateActivityUserCommand> SecondaryNegotiators { get; set; }
     }
 }

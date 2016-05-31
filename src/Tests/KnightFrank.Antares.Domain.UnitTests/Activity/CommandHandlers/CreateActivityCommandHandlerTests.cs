@@ -67,7 +67,6 @@
                                   activity = a;
                                   return activity;
                               });
-            activityRepository.Setup(r => r.Save()).Callback(() => { activity.Id = expectedActivityId; });
 
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
                              .Returns(command.ContactIds.Select(id => new Contact { Id = id }));
@@ -77,10 +76,17 @@
             handler.Handle(command);
 
             // Assert
-            activityTypeDefinitionValidator.Verify(x=>x.Validate(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>()),Times.Once);
+            ActivityUser activityLeadNegotiator = activity.ActivityUsers.SingleOrDefault(u => u.UserType.Code == EnumTypeItemCode.LeadNegotiator);
+
+            activityTypeDefinitionValidator.Verify(x => x.Validate(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>()), Times.Once);
             activity.Should().NotBeNull();
             activity.ShouldBeEquivalentTo(command, opt => opt.IncludingProperties().ExcludingMissingMembers());
-            activity.Id.ShouldBeEquivalentTo(expectedActivityId);
+
+            activityLeadNegotiator.Should().NotBeNull();
+            // ReSharper disable once PossibleNullReferenceException
+            activityLeadNegotiator.User.Should().Be(user);
+            activityLeadNegotiator.CallDate.Should().HaveValue();
+
             activityRepository.Verify(r => r.Add(It.IsAny<Activity>()), Times.Once());
             activityRepository.Verify(r => r.Save(), Times.Once());
         }

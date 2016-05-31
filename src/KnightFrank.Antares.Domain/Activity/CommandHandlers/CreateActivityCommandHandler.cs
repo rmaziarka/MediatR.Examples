@@ -22,6 +22,7 @@
 
     public class CreateActivityCommandHandler : IRequestHandler<CreateActivityCommand, Guid>
     {
+        private const int NextCallDateDays = 14;
         private readonly IGenericRepository<Activity> activityRepository;
 
         private readonly IActivityTypeDefinitionValidator activityTypeDefinitionValidator;
@@ -89,7 +90,12 @@
             this.entityValidator.EntityExists(negotiator, message.LeadNegotiatorId);
 
             activity.ActivityUsers.Add(
-                new ActivityUser { Activity = activity, User = negotiator, UserType = this.GetLeadNegotiatorUserType() });
+                new ActivityUser
+                {
+                    User = negotiator,
+                    UserType = this.GetLeadNegotiatorUserType(),
+                    CallDate = DateTime.UtcNow.AddDays(NextCallDateDays)
+                });
 
             this.activityRepository.Add(activity);
             this.activityRepository.Save();
