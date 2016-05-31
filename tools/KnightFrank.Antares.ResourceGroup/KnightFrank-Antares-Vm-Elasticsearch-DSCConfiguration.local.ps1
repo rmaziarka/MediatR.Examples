@@ -1,27 +1,77 @@
 Configuration SetupElasticsearchVmLocal
 {
 	Param ( 
-        [string][Parameter(Mandatory = $true)] 
-        $commonShareUrl)
+		[Parameter(Mandatory = $true)]
+		[string] 
+		$CommonShareUrl,
 
-    $tempDownloadFolder = "$env:SystemDrive\temp\download\"
-    
-    $javaSource =  'java'
-    $javaFileName = 'jdk-8u91-windows-x64.exe'
-    $javaFolder = "$env:SystemDrive\Program Files\java\jdk\$javaVersion\"
-    $javaVersion = '8u91'
-        
-    $elasticsearchSource = 'elasticsearch'
-    $elasticsearchFileName = 'elasticsearch-2.3.2.zip'
-    $elasticsearchFolder = "$env:SystemDrive\elasticsearch"    
-    $elasticsearchVersion = '2.3.2'
-        
-    $jdbcSource =  'elasticsearch'
-    $jdbcFileName = 'elasticsearch-jdbc-2.3.1.0-dist.zip'
-    $jdbcFolder = "$env:SystemDrive\jdbc"
-    $jdbcVersion = '2.3.1.0'
-    
-    Import-DscResource -Module cGripDevDSC
+		[Parameter(Mandatory = $true)]
+		[string]
+		$ElasticsearchIp,
+
+		[Parameter(Mandatory = $true)]
+		[string]
+		$SqlIp,
+
+		[Parameter(Mandatory = $true)]
+		[string]
+		$SqlPort,
+
+		[Parameter(Mandatory = $true)]
+		[string]
+		$SqlDatabaseName,
+
+		[Parameter(Mandatory = $true)]
+		[string]
+		$SqlUser,
+
+		[Parameter(Mandatory = $true)]
+		[string]
+		$SqlPassword,
+
+		[Parameter(Mandatory = $true)]
+		[string]
+		$ElasticsearchIndex,
+
+		[Parameter(Mandatory = $true)]
+		[string]
+		$JdbcSchedule,
+
+		[Parameter(Mandatory = $true)]
+		[string]
+		$BranchName,
+
+		[Parameter(Mandatory = $false)]
+		[hashtable]
+		$AdditionalJdbcConfigValues,    
+
+		[Parameter(Mandatory = $false)]
+		[hashtable]
+		$ElasticsearchAdditionalConfigValues
+		)
+
+	$tempDownloadFolder = "$env:SystemDrive\temp\download\"
+
+	$javaSource =  'java'
+	$javaFileName = 'jdk-8u91-windows-x64.exe'
+	$javaVersion = '8u91'
+	$javaFolder = "$env:SystemDrive\Program Files\java\jdk\$javaVersion"
+
+	$elasticsearchSource = 'elasticsearch'
+	$elasticsearchFileName = 'elasticsearch-2.3.2.zip'
+	$elasticsearchUnpack = "$env:SystemDrive\elasticsearch"    
+	$elasticsearchVersion = '2.3.2'
+	$elasticsearchFolder = "$elasticsearchUnpack\$elasticsearchVersion\elasticsearch-$elasticsearchVersion"
+	$elasticsearchHost = "localhost"
+	$elasticsearchPort = "9200"
+
+	$jdbcSource =  'elasticsearch'
+	$jdbcFileName = 'elasticsearch-jdbc-2.3.2.0.zip'
+	$jdbcUnpack = "$env:SystemDrive\jdbc\$BranchName"
+	$jdbcVersion = '2.3.2.0'
+	$jdbcFolder = "$jdbcUnpack\elasticsearch-jdbc-$jdbcVersion"
+
+	Import-DscResource -Module cGripDevDSC
 	Import-DscResource -Module xPSDesiredStateConfiguration
 	Import-DscResource -Module xNetworking
 
@@ -29,7 +79,7 @@ Configuration SetupElasticsearchVmLocal
 		Node has to be explicitly set to localhost (and not host name as it is by default set by visual studio templates) - otherwise PSCredentials won't work.	
 		https://blogs.msdn.microsoft.com/powershell/2014/09/10/secure-credentials-in-the-azure-powershell-desired-state-configuration-dsc-extension/ - paragraph Limitations point 1.
 	#>
-	
+
 	Node localhost
 	{
 		LocalConfigurationManager
@@ -38,17 +88,10 @@ Configuration SetupElasticsearchVmLocal
 			ActionAfterReboot = "ContinueConfiguration"
 		}
 		#####
-        #Download and set env variable for JDK
-        #####
+		#Download and set env variable for JDK
+		#####
   
-        xPackage _7zip {
-            Name = '7-Zip 9.20 (x64 edition)'
-            Path = 'http://www.7-zip.org/a/7z920-x64.msi'
-            ProductId = '23170F69-40C1-2702-0920-000001000000'
-            Ensure = 'Present'
-        }
-
-        Script CopyJDK
+		Script CopyJDK
 	    {
 		    TestScript = { 
 			    Test-Path "$using:tempDownloadFolder\\$using:javaFileName"
@@ -56,37 +99,46 @@ Configuration SetupElasticsearchVmLocal
 		    GetScript = {@{Result = "CopyJDK"}}
 		    SetScript =
 		    {
-                $secpasswd = ConvertTo-SecureString “P7G+0uLD8g5q73RxshNg4GQdXJHr0EXasWSk6pe5UhCsp2QphVtPzZd+IcNdRlt9zoFjszQXMrK8XbIOcClakA==” -AsPlainText -Force
-                $mycreds = New-Object System.Management.Automation.PSCredential("kfaneiedevcommonst", $secpasswd)
+				$secpasswd = ConvertTo-SecureString “P7G+0uLD8g5q73RxshNg4GQdXJHr0EXasWSk6pe5UhCsp2QphVtPzZd+IcNdRlt9zoFjszQXMrK8XbIOcClakA==” -AsPlainText -Force
+				$mycreds = New-Object System.Management.Automation.PSCredential("kfaneiedevcommonst", $secpasswd)
 
-			    New-PSDrive -Name P -PSProvider FileSystem -Root $using:commonShareUrl -Credential $mycreds                
-                Copy-Item (Join-Path "P:" -ChildPath $using:javaSource | Join-Path -ChildPath $using:javaFileName) (Join-Path $using:tempDownloadFolder $using:javaFileName)
+			    New-PSDrive -Name P -PSProvider FileSystem -Root $using:CommonShareUrl -Credential $mycreds                
+				Copy-Item (Join-Path - Path "P:" -ChildPath $using:javaSource | Join-Path -ChildPath $using:javaFileName) (Join-Path -Path $using:tempDownloadFolder -ChildPath $using:javaFileName)
 			    Remove-PSDrive -Name P
 		    }
-        }
+		}
 
-        xPackage Java {
-            Name = 'Java SE Development Kit 8 Update 91 (64-bit)'
-            Path =  Join-Path $tempDownloadFolder $javaFileName
-            Arguments = "/s INSTALLDIR=`"$javaFolder`" STATIC=1"
-            ProductId = ''
+		xPackage Java {
+			Name = 'Java SE Development Kit 8 Update 91 (64-bit)'
+			Path =  Join-Path -Path $tempDownloadFolder -ChildPath $javaFileName
+			Arguments = "/s INSTALLDIR=`"$javaFolder`" STATIC=1"
+			ProductId = ''
 			DependsOn = '[Script]CopyJDK'
-        }
-          
-        Environment SetJDKEnviromentVar
-        {
-            Name = "JAVA_HOME"
-            Ensure = "Present"
-            Path = $false
-            Value = $javaFolder
-            DependsOn = "[xPackage]Java"
-        }
+		}
+		  
+		Environment SetJDKEnviromentVar
+		{
+			Name = "JAVA_HOME"
+			Ensure = "Present"
+			Path = $false
+			Value = $javaFolder
+			DependsOn = "[xPackage]Java"
+		}
 
-        #####
-        #Download and install elasticsearch
-        #####
-    
-        Script CopyElasticsearchZip
+		Environment AddJDKToPath
+		{
+			Name = "JDK"
+			Ensure = "Present"
+			Path = $true
+			Value = "$javaFolder\bin"
+			DependsOn = "[xPackage]Java"
+		}
+
+		#####
+		#Download and install elasticsearch
+		#####
+
+		Script CopyElasticsearchZip
 	    {
 		    TestScript = { 
 			    Test-Path "$using:tempDownloadFolder\\$using:elasticsearchFileName"
@@ -94,67 +146,64 @@ Configuration SetupElasticsearchVmLocal
 		    GetScript = {@{Result = "CopyElasticsearchZip"}}
 		    SetScript =
 		    {
-                $secpasswd = ConvertTo-SecureString “P7G+0uLD8g5q73RxshNg4GQdXJHr0EXasWSk6pe5UhCsp2QphVtPzZd+IcNdRlt9zoFjszQXMrK8XbIOcClakA==” -AsPlainText -Force
-                $mycreds = New-Object System.Management.Automation.PSCredential("kfaneiedevcommonst", $secpasswd)
+				$secpasswd = ConvertTo-SecureString “P7G+0uLD8g5q73RxshNg4GQdXJHr0EXasWSk6pe5UhCsp2QphVtPzZd+IcNdRlt9zoFjszQXMrK8XbIOcClakA==” -AsPlainText -Force
+				$mycreds = New-Object System.Management.Automation.PSCredential("kfaneiedevcommonst", $secpasswd)
 
-			    New-PSDrive -Name P -PSProvider FileSystem -Root $using:commonShareUrl -Credential $mycreds
-			    Copy-Item (Join-Path "P:" -ChildPath $using:elasticsearchSource | Join-Path -ChildPath $using:elasticsearchFileName) (Join-Path $using:tempDownloadFolder $using:elasticsearchFileName)
+			    New-PSDrive -Name P -PSProvider FileSystem -Root $using:CommonShareUrl -Credential $mycreds
+			    Copy-Item (Join-Path "P:" -ChildPath $using:elasticsearchSource | Join-Path -ChildPath $using:elasticsearchFileName) (Join-Path -Path $using:tempDownloadFolder -ChildPath $using:elasticsearchFileName)
 			    Remove-PSDrive -Name P
 		    }
 	    }
   
-        xArchive UnzipElasticsearch {
-            Path = Join-Path $tempDownloadFolder $elasticsearchFileName
-            Destination = Join-Path $elasticsearchFolder $elasticsearchVersion
-            DependsOn = @('[xPackage]_7zip', '[Script]CopyElasticsearchZip')
+		xArchive UnzipElasticsearch {
+			Path = Join-Path -Path $tempDownloadFolder -ChildPath $elasticsearchFileName
+			Destination = Join-Path -Path $elasticsearchUnpack -ChildPath $elasticsearchVersion
+			DependsOn = @('[Script]CopyElasticsearchZip')
 			DestinationType= "Directory"
-        }
+		}
   
-        Script ConfigureElasticsearch
+		Script ConfigureElasticsearch
 	    {
 		    TestScript = { 
-			    $true
+			    $false
 		    }
 		    GetScript = {@{Result = "ConfigureElasticsearch"}}
 		    SetScript =
 		    {
-                $path = "$elasticsearchFolder\$elasticsearchVersion\elasticsearch-$elasticsearchVersion\config\elasticsearch.yml" 
-                #replace placeholders (host)
+				$path = "$using:elasticsearchFolder\config\elasticsearch.yml" 
+				$parameters = @{}
+				$parameters."host.name" = $using:ElasticsearchIp
+				if($using:ElasticsearchAdditionalConfigValues) {
+					$parameters | Add-Member -PassThru -NotePropertyMembers $using:ElasticsearchAdditionalConfigValues
+				}
+				$yaml = $parameters.Keys | % { "$_ : " + $parameters.Item($_) }
+				[System.IO.File]::WriteAllLines($path, $yaml)
 		    }
-            DependsOn = '[xArchive]UnzipElasticsearch'
+			DependsOn = '[xArchive]UnzipElasticsearch'
 	    }
 
-        cElasticsearch InstallElasticsearch
-        {
-            DependsOn = @('[Script]ConfigureElasticsearch','[Environment]SetJDKEnviromentVar')
-            UnzipFolder = Join-Path $elasticsearchFolder $elasticsearchVersion
-        }
+		cElasticsearch InstallElasticsearch
+		{
+			DependsOn = @('[Script]ConfigureElasticsearch','[Environment]SetJDKEnviromentVar','[Environment]SetJDKEnviromentVar')
+			UnzipFolder = Join-Path -Path $elasticsearchUnpack -ChildPath $elasticsearchVersion
+		}
 
-        xFirewall OpenElasticsearchPort
-        {
-            Access = 'Allow'
-            Name = 'Elasticsearch'
-            Direction = 'Inbound'
-            Ensure = 'Present'
-            LocalPort = '9200'
-            Protocol = 'TCP'
-            DependsOn = '[cElasticsearch]InstallElasticsearch'
-        }
+		xFirewall OpenElasticsearchPort
+		{
+			Access = 'Allow'
+			Name = 'Elasticsearch'
+			Direction = 'Inbound'
+			Ensure = 'Present'
+			LocalPort = '9200'
+			Protocol = 'TCP'
+			DependsOn = '[cElasticsearch]InstallElasticsearch'
+		}
 
-        <#
-        Script ConfigureFirewall
-        {
-            DependsOn = @("[Package]InstallOctopusTentacle", "[File]OctopusDir")
-            TestScript = {
-                Test-Path "C:\Octopus\Tentacle.config"
-            }
-            SetScript = {
-                & "netsh" advfirewall firewall add rule "name=Elasticsearch" dir=in action=allow protocol=TCP localport=9200                
-            }
-            GetScript = {@{Result = "ConfigureOctopusTentacle"}}
-        }#>
+		#####
+		#Download and install JDBC
+		#####
 
-        Script CopyJdbcZip
+		Script CopyJdbcZip
 	    {
 		    TestScript = { 
 			    Test-Path "$using:tempDownloadFolder\\$using:jdbcFileName"
@@ -162,47 +211,81 @@ Configuration SetupElasticsearchVmLocal
 		    GetScript = {@{Result = "CopyjdbcZip"}}
 		    SetScript =
 		    {
-                $secpasswd = ConvertTo-SecureString “P7G+0uLD8g5q73RxshNg4GQdXJHr0EXasWSk6pe5UhCsp2QphVtPzZd+IcNdRlt9zoFjszQXMrK8XbIOcClakA==” -AsPlainText -Force
-                $mycreds = New-Object System.Management.Automation.PSCredential("kfaneiedevcommonst", $secpasswd)
+				$secpasswd = ConvertTo-SecureString “P7G+0uLD8g5q73RxshNg4GQdXJHr0EXasWSk6pe5UhCsp2QphVtPzZd+IcNdRlt9zoFjszQXMrK8XbIOcClakA==” -AsPlainText -Force
+				$mycreds = New-Object System.Management.Automation.PSCredential("kfaneiedevcommonst", $secpasswd)
 
-			    New-PSDrive -Name P -PSProvider FileSystem -Root $using:commonShareUrl -Credential $mycreds
-			    Copy-Item (Join-Path "P:" -ChildPath $using:jdbcSource | Join-Path -ChildPath $using:jdbcFileName) (Join-Path $using:tempDownloadFolder $using:jdbcFileName)
+			    New-PSDrive -Name P -PSProvider FileSystem -Root $using:CommonShareUrl -Credential $mycreds
+			    Copy-Item (Join-Path "P:" -ChildPath $using:jdbcSource | Join-Path -ChildPath $using:jdbcFileName) (Join-Path -Path $using:tempDownloadFolder -ChildPath $using:jdbcFileName)
 			    Remove-PSDrive -Name P
 		    }
 	    }
 
-        xArchive UnzipJdbc {
-            Path = Join-Path $tempDownloadFolder $jdbcFileName
-            Destination = $jdbcFolder
-            DependsOn = @('[xPackage]_7zip', '[Script]CopyJdbcZip')
+		xArchive UnzipJdbc {
+			Path = Join-Path -Path $tempDownloadFolder -ChildPath $jdbcFileName
+			Destination = $jdbcUnpack
+			DependsOn = @('[Script]CopyJdbcZip')
 			DestinationType = "Directory"
-        }
+		}
 
-        Script ConfigureJdbc
+		Script ConfigureJdbc
 	    {
 		    TestScript = { 
-			    $true
+			    $false
 		    }
 		    GetScript = {@{Result = "ConfigureJdbc"}}
 		    SetScript =
 		    {
-                $pathToExecute = "$jdbcFolder\elasticsearch-jdbc-$jdbcVersion\bin\execute.bat" 
-                $pathToSettings = "$jdbcFolder\elasticsearch-jdbc-$jdbcVersion\bin\settings.json" 
-                
-                #replace placeholders in $pathToExecute (paths)
-                #replace placeholders in $pathToSettings (all)
+				#$pathToExecute = "$using:jdbcFolder\bin\execute.bat" 
+				$pathToSettings = "$using:jdbcFolder\bin\settings.json" 
+				
+				#(Get-Content -Path $pathToExecute).replace('$jdbcFolder', "$using:jdbcFolder").replace('$javaFolder', $using:javaFolder) | Set-Content $pathToExecute
+				
+				$settings = Get-Content -Path $pathToSettings -Raw | ConvertFrom-Json
+				$settings.jdbc.url = "jdbc:sqlserver://" + $using:SqlIp + ":" + $using:SqlPort+ ";databaseName=$using:SqlDatabaseName"
+				$settings.jdbc.user = $using:SqlUser
+				$settings.jdbc.password = $using:SqlPassword
+				$settings.jdbc.index = $using:ElasticsearchIndex
+				#$settings.jdbc."elasticsearch.Host" = $using:elasticsearchHost
+				#$settings.jdbc."elasticsearch.Port" = $using:elasticsearchPort
+				$settings.jdbc.schedule = $using:JdbcSchedule
+				if($using:AdditionalJdbcConfigValues) {
+					$settings.jdbc | Add-Member -PassThru -NotePropertyMembers $using:AdditionalJdbcConfigValues
+				}
+				
+				$json = $settings | ConvertTo-Json -Depth 999
+				Write-Verbose $json
+				[System.IO.File]::WriteAllLines($pathToSettings, $json)
 		    }
-            DependsOn = '[xArchive]UnzipJdbc'
+			DependsOn = '[xArchive]UnzipJdbc'
 	    }
 
-        xWindowsProcess StartJdbc {
-            Path = Join-Path $jdbcFolder "elasticsearch-jdbc-$jdbcVersion\bin\execute.bat" 
-            Arguments = ''
-            DependsOn = '[Script]ConfigureJdbc'
-            StandardErrorPath = Join-Path $jdbcFolder "elasticsearch-jdbc-$jdbcVersion\bin\log.txt" 
-        }
+		<#        
+		xWindowsProcess StartJdbc {
+			Path = "$jdbcFolder\bin\execute.bat" 
+			Arguments = ''
+			StandardErrorPath = "$jdbcUnpack\elasticsearch-jdbc-$jdbcVersion\bin\log.txt" 
+			DependsOn = '[Script]ConfigureJdbc'
+		}
+		#>
 
+		xWindowsProcess StartJdbc {
+			Path = "$javaFolder\bin\java.exe"
+			Arguments = "-cp `"$jdbcFolder\lib\*`" -Dlog4j.configurationFile=`"$jdbcFolder\bin\log4j2.xml`" org.xbib.tools.Runner org.xbib.tools.JDBCImporter `"$jdbcFolder\bin\settings.json`""
+			StandardErrorPath = "$jdbcFolder\log.txt" 
+			DependsOn = '[Script]ConfigureJdbc'
+		}
 	}
 }
-SetupElasticsearchVmLocal -commonShareUrl "\\kfaneiedevcommonst.file.core.windows.net\setupfiles"
+
+SetupElasticsearchVmLocal `
+-CommonShareUrl "\\kfaneiedevcommonst.file.core.windows.net\setupfiles" `
+-SqlIp "localhost"`
+-SqlPort "1433"`
+-SqlDatabaseName "KnightFrank.Antares"`
+-SqlUser "antares"`
+-SqlPassword "ant@res!1"`
+-ElasticsearchIndex "properties_v7"`
+-JdbcSchedule "0 0/10 * * * ?"`
+-ElasticsearchIp "localhost"
+
 Start-DscConfiguration -Path .\SetupElasticsearchVmLocal -ComputerName localhost -Force -Verbose -Wait
