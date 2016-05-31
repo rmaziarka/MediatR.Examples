@@ -155,7 +155,7 @@
                     {
                         //TODO improve selecting lead negotiator
                         UserId = this.dataContext.Users.First().Id,
-                        UserType = new EnumTypeItem {Code = "LeadNegotiator"} 
+                        UserTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("LeadNegotiator")).Id
                     }
                 }
             };
