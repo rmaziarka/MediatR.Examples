@@ -151,7 +151,10 @@
         <h3 translate="ACTIVITY.VIEW.OFFERPREVIEW"></h3>
     </side-panel-header>
     <side-panel-content>
-        <offer-preview component-id="avvm.componentIds.offerPreviewId">
+        <offer-preview component-id="avvm.componentIds.offerPreviewId" offer="avvm.selectedOffer" >
+            <offer-preview-custom-item>
+                <requirement-card requirement="avvm.selectedOffer.requirement" />
+            </offer-preview-custom-item>
         </offer-preview>
     </side-panel-content>
 </side-panel>

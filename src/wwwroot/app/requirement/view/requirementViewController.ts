@@ -13,6 +13,7 @@ module Antares.Requirement.View {
         saveViewingBusy: boolean = false;
         addEditOfferBusy: boolean = false;
         userData: Dto.IUserData;
+        selectedOffer: Dto.IOffer;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -133,8 +134,7 @@ module Antares.Requirement.View {
         }
 
         showOfferPreview = (offer: Common.Models.Business.Offer) =>{
-            this.components.offerPreview().clearOfferPreview();
-            this.components.offerPreview().setOffer(offer);
+            this.selectedOffer = offer;
             this.showPanel(this.components.panels.offerPreview);
             this.offerPreviewPanelVisible = true;
         }
@@ -181,8 +181,7 @@ module Antares.Requirement.View {
         }
 
         showEditOfferPreviewPanel = () =>{
-            var offer = this.components.offerPreview().getOffer();
-            this.components.offerEditPreview().setOffer(offer);
+            this.components.offerEditPreview().setOffer(this.selectedOffer);
             this.offerPreviewPanelVisible = false;
         }
 

@@ -11,6 +11,7 @@ module Antares.Activity.View {
         enumTypeActivityDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityDocumentType;
         activityAttachmentResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityAttachmentResource>;
         saveActivityAttachmentBusy: boolean = false;
+        selectedOffer: Dto.IOffer;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -73,7 +74,7 @@ module Antares.Activity.View {
         }
 
         showOfferPreview = (offer: Common.Models.Dto.IOffer) => {
-            this.components.offerPreview().setOffer(offer);
+            this.selectedOffer = offer;
             this.showPanel(this.components.panels.offerPreview);
         }
 

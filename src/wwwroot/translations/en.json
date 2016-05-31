@@ -13,6 +13,7 @@
     "SELECTEMPTYVALUE": "- select -",
     "LOADINGDATA": "...loading data...",
     "FILEISUPLOADING": "File is uploading ...",
+    "REQUIREMENT": "Requirement",
     "MENU": {
       "CREATE": "Create",
       "CONTACTS": "Contacts",

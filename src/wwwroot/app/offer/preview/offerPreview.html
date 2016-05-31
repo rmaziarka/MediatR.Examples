@@ -6,20 +6,7 @@
     </div>
 </div>
 
-<div class="section-details">
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <div id="offer-preview-activity-details" class="panel-item">
-                {{::vm.offer.activity.property.address.getAddressText()}}
-            </div>
-            <div class="row">
-                <div class="col-md-12 text-right" id="activity-link">
-                    <a ui-sref="app.activity-view({id: vm.offer.activity.id})" translate="COMMON.VIEW"></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<div class="section-details" ng-transclude="customItem"></div>
 
 <div class="section-details">
     <div class="section-row row">
@@ -28,17 +15,17 @@
     </div>
     <div class="section-row row">
         <div class="col-xs-6 section-title" translate="OFFER.PREVIEW.OFFER"></div>
-        <div class="col-xs-6" id="offer-preview-price">{{::vm.offer.price}} GBP</div>
+        <div class="col-xs-6" id="offer-preview-price">{{vm.offer.price}} GBP</div>
     </div>
     <div class="section-row row">
         <div class="col-xs-6 section-title" translate="OFFER.PREVIEW.OFFER_DATE"></div>
-        <div class="col-xs-6" id="offer-preview-date"><time>{{::vm.offer.offerDate | date : 'dd-MM-yyyy'}}</time></div>
+        <div class="col-xs-6" id="offer-preview-date"><time>{{vm.offer.offerDate | date : 'dd-MM-yyyy'}}</time></div>
     </div>
 </div>
 
 <div class="section-details">
     <h5 translate="OFFER.PREVIEW.SPECIAL_CONDITIONS"></h5>
-    <p id="offer-preview-special-conditions">{{::vm.offer.specialConditions}}</p>
+    <p id="offer-preview-special-conditions">{{vm.offer.specialConditions}}</p>
 </div>
 
 <div class="section-details">
@@ -46,7 +33,7 @@
 
     <div class="panel panel-default">
         <div class="panel-body" id="offer-preview-negotiator">
-            {{::vm.offer.negotiator.getName()}}
+            {{vm.offer.negotiator.getName()}}
         </div>
     </div>
 </div>
@@ -54,10 +41,10 @@
 <div class="section-details">
     <div class="section-row row">
         <div class="col-xs-6 section-title" translate="OFFER.PREVIEW.EXCHANGE_DATE"></div>
-        <div class="col-xs-6"><time id="offer-preview-exchange-date">{{::vm.offer.exchangeDate | date : 'dd-MM-yyyy'}}</time></div>
+        <div class="col-xs-6"><time id="offer-preview-exchange-date">{{vm.offer.exchangeDate | date : 'dd-MM-yyyy'}}</time></div>
     </div>
     <div class="section-row row">
         <div class="col-xs-6 section-title" translate="OFFER.PREVIEW.COMPLETION_DATE"></div>
-        <div class="col-xs-6"><time id="offer-preview-completion-date">{{::vm.offer.completionDate | date : 'dd-MM-yyyy'}}</time></div>
+        <div class="col-xs-6"><time id="offer-preview-completion-date">{{vm.offer.completionDate | date : 'dd-MM-yyyy'}}</time></div>
     </div>
 </div>
