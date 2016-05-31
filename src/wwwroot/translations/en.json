@@ -347,7 +347,7 @@
     "VIEW": {
         "VENDOR": "Vendor",
         "APPLICANT":  "Applicant",
-        "BASIC_INFORMATION":  "Basic information"
+        "BASIC_INFORMATION": "Basic information"
     }
   }
 }

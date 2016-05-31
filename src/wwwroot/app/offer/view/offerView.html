@@ -2,20 +2,42 @@
     <div class="col-md-12">
         <h2 class="page-header">View offer</h2>
         <div class="well">
-            <div><span class="offer-status">{{vm.offer.statusId | dynamicTranslate}}</span> Michael Meyrs, Freddy Krueger</div>
+            <div>
+                <span class="offer-status offer-status-{{vm.offer.statusId | dynamicTranslate | lowercase}}">{{vm.offer.statusId | dynamicTranslate}}</span> {{vm.offer.requirement.getContactNames()}}
+            </div>
         </div>
     </div>
     <div class="col-md-4">
         <section>
-            <h3 class="page-header">Vendor</h3>
+            <h3 class="page-header" translate="OFFER.VIEW.VENDOR"></h3>
+
+            <h5 translate="OFFER.PREVIEW.ACTIVITY"></h5>
+            <card-list-item class="requirement-view-offers">
+                <card show-context-menu="true" show-item-details="vm.showOfferPreview" display-new-control="true"
+                      card-template-url="'app/offer/view/offerVendorCard.html'" item="vm.offer">
+                    <card-context-menu>
+                        <context-menu-item type="details" item="vm.offer.activity" action="vm.navigateToActivity"></context-menu-item>
+                    </card-context-menu>
+                </card>
+            </card-list-item>
         </section>
         <section>
-            <h3 class="page-header">Applicant</h3>
+            <h3 class="page-header" translate="OFFER.VIEW.APPLICANT"></h3>
+
+            <h5 translate="VIEWING.ADD.REQUIREMENT"></h5>
+            <card-list-item class="requirement-view-offers">
+                <card show-context-menu="true" display-new-control="true"
+                      card-template-url="'app/offer/view/offerRequirementCard.html'" item="vm.offer">
+                    <card-context-menu>
+                        <context-menu-item type="details" item="vm.offer.requirement" action="vm.navigateToRequirement"></context-menu-item>
+                    </card-context-menu>
+                </card>
+            </card-list-item>
         </section>
     </div>
     <div class="col-md-4">
         <section>
-            <h3 class="page-header">Basic information</h3>
+            <h3 class="page-header" translate="OFFER.VIEW.BASIC_INFORMATION"></h3>
 
             <div class="section-details">
                 <div class="section-row row">
@@ -30,8 +52,8 @@
                     <div class="section-title col-xs-6">Offer date</div>
                     <div class="col-xs-6"><time>{{vm.offer.offerDate | date : 'dd-MM-yyyy'}}</time></div>
                 </div>
-             </div>
-             <div class="section-details">
+            </div>
+            <div class="section-details">
                 <div class="section-row row">
                     <div class="section-title col-xs-12">
                         <h5>Special conditions</h5>
@@ -40,26 +62,24 @@
                         <p>{{vm.offer.specialConditions}}</p>
                     </div>
                 </div>
-             </div>
+            </div>
             <div class="section-details">
                 <div class="section-row row">
-                    <div class="section-title col-xs-6">Proposed exchange date</div>
+                    <div class="section-title col-xs-6" translate="OFFER.PREVIEW.EXCHANGE_DATE"></div>
                     <div class="col-xs-6"><time>{{vm.offer.exchangeDate | date : 'dd-MM-yyyy'}}</time></div>
                 </div>
                 <div class="section-row row">
-                    <div class="section-title col-xs-6">Proposed completion date</div>
+                    <div class="section-title col-xs-6" translate="OFFER.PREVIEW.COMPLETION_DATE"></div>
                     <div class="col-xs-6"><time>{{vm.offer.completionDate | date : 'dd-MM-yyyy'}}</time></div>
                 </div>
                 <div class="section-row row">
                     <div class="col-xs-12">
-                        <h5>Negotiator</h5>
+                        <h5 translate="OFFER.PREVIEW.NEGOTIATOR"></h5>
                     </div>
                     <div class="col-xs-12">
-                        <div class="card card-no-menu">
-                            <div class="card-body">
-                                <div class="card-item">
-                                    John Smith
-                                </div>
+                        <div class="panel panel-default applicant">
+                            <div class="panel-body">
+                                {{ vm.offer.negotiator.getName() }}
                             </div>
                         </div>
                     </div>
