@@ -27,7 +27,7 @@ Scenario: Create residential sales offer on requirement
 	When User navigates to view requirement page with id
 		And User clicks make an offer button for 1 activity on view requirement page
 	Then Activity details on view requirement page are same as the following
-		| Activity                                    |
+		| Details                                     |
 		| John Soane’s house, 13 Lincoln’s Inn Fields |
 	When User fills in offer details on view requirement page
 		| Status | Offer  | SpecialConditions |
@@ -35,14 +35,22 @@ Scenario: Create residential sales offer on requirement
 		And User clicks save offer button on view requirement page
 	Then New offer should be created and displayed on view requirement page
 		And Offer details on 1 position on view requirement page are same as the following
-			| Activity                                    | Offer      | Status |
+			| Details                                     | Offer      | Status |
 			| John Soane’s house, 13 Lincoln’s Inn Fields | 100000 GBP | NEW    |
 	When User clicks 1 offer details on view requirement page
 	Then Offer details on view requirement page are same as the following
-		| Activity                                    | Status | Offer      | SpecialConditions | Negotiator |
+		| Details                                     | Status | Offer      | SpecialConditions | Negotiator |
 		| John Soane’s house, 13 Lincoln’s Inn Fields | New    | 100000 GBP | Text              | John Smith |
 	When User clicks view activity from offer on view requirement page
 	Then View activity page is displayed
+		And Offer should be displayed on view activity page
+		And Offer details on 1 position on view activity page are same as the following
+			| Details                                    | Offer      | Status |
+			| John Soane, Robert McAlpine, Edward Graham | 100000 GBP | NEW    |
+	When User clicks 1 offer details on view activity page
+	Then Offer details on view activity page are same as the following
+		| Details                                    | Status | Offer      | SpecialConditions | Negotiator |
+		| John Soane, Robert McAlpine, Edward Graham | New    | 100000 GBP | Text              | John Smith |
 
 @Requirement
 @Offer
@@ -70,7 +78,7 @@ Scenario: Update residential sales offer on requirement
 	When User navigates to view requirement page with id
 		And User clicks edit offer button for 1 offer on view requirement page
 	Then Activity details on view requirement page are same as the following
-		| Activity            |
+		| Details             |
 		| House, 22 Eltham Dr |
 	When User fills in offer details on view requirement page
 		| Status   | Offer | SpecialConditions  |
@@ -78,5 +86,5 @@ Scenario: Update residential sales offer on requirement
 		And User clicks save offer button on view requirement page
 		And User clicks 1 offer details on view requirement page
 	Then Offer details on view requirement page are same as the following
-		| Activity            | Status   | Offer    | SpecialConditions  | Negotiator |
+		| Details             | Status   | Offer    | SpecialConditions  | Negotiator |
 		| House, 22 Eltham Dr | Accepted | 2000 GBP | Special conditions | John Smith |

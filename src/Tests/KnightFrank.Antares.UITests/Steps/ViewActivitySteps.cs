@@ -9,6 +9,7 @@
 
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.UITests.Pages;
+    using KnightFrank.Antares.UITests.Pages.Panels;
 
     using Objectivity.Test.Automation.Common;
 
@@ -96,6 +97,13 @@
         public void ClickViewActivity()
         {
             this.page.ViewingDetails.ClickViewLink();
+        }
+
+        [When(@"User clicks (.*) offer details on view activity page")]
+        public void OpenOffersDetails(int position)
+        {
+            this.page.OpenOfferDetails(position)
+                .WaitForSidePanelToShow();
         }
 
         [Then(@"Attachment (.*) should be downloaded")]
@@ -205,6 +213,47 @@
             List<Negotiator> actualSecondary = this.page.SecondaryNegotiators;
             actualSecondary.Should().Equal(expectedSecondary, (c1, c2) =>
                 c1.Name.Equals(c2.Name));
+        }
+
+        [Then(@"Offer should be displayed on view activity page")]
+        public void CheckIfOfferDisplayed()
+        {
+            Assert.Equal(1, this.page.OffersNumber);
+        }
+
+        [Then(@"Offer details on (.*) position on view activity page are same as the following")]
+        public void CheckOffer(int position, Table table)
+        {
+            var expectedDetails = table.CreateInstance<OfferData>();
+            List<string> actualDetails = this.page.GetOfferDetails(position);
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Details, actualDetails[0]),
+                () => Assert.Equal(expectedDetails.Offer, actualDetails[1]),
+                () => Assert.Equal(expectedDetails.Status, actualDetails[2]));
+        }
+
+        [Then(@"Offer details on view activity page are same as the following")]
+        public void CheckOfferInDetailsPanel(Table table)
+        {
+            var expectedDetails = table.CreateInstance<OfferData>();
+
+            var offer = this.scenarioContext.Get<OfferData>("Offer");
+
+            expectedDetails.OfferDate = offer.OfferDate;
+            expectedDetails.ExchangeDate = offer.ExchangeDate;
+            expectedDetails.CompletionDate = offer.CompletionDate;
+
+            Verify.That(this.driverContext,
+
+                //() => Assert.Equal(expectedDetails.Details, this.page.OfferPreview.Details),
+                () => Assert.Equal(expectedDetails.Status, this.page.OfferPreview.Status),
+                () => Assert.Equal(expectedDetails.Offer, this.page.OfferPreview.Offer),
+                () => Assert.Equal(expectedDetails.OfferDate, this.page.OfferPreview.Date),
+                () => Assert.Equal(expectedDetails.SpecialConditions, this.page.OfferPreview.SpecialConditions),
+                () => Assert.Equal(expectedDetails.Negotiator, this.page.OfferPreview.Negotiator),
+                () => Assert.Equal(expectedDetails.ExchangeDate, this.page.OfferPreview.ProposedexchangeDate),
+                () => Assert.Equal(expectedDetails.CompletionDate, this.page.OfferPreview.ProposedCompletionDate));
         }
     }
 }

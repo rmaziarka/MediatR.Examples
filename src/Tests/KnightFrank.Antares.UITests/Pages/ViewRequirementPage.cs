@@ -32,12 +32,12 @@
         private readonly ElementLocator viewingActions = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .card-menu-button");
         private readonly ElementLocator createOffer = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) [action *= 'showAddOfferPanel']");
         // Offers
-        private readonly ElementLocator offers = new ElementLocator(Locator.CssSelector, "card-list-item[ng-repeat *= 'offers'] .card-body");
-        private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, "card-list-item[ng-repeat *= 'offers']:nth-of-type({0}) .card-body");
-        private readonly ElementLocator offerActions = new ElementLocator(Locator.CssSelector, "card-list-item[ng-repeat *= 'offers']:nth-of-type({0}) .card-menu-button");
-        private readonly ElementLocator offerStatus = new ElementLocator(Locator.CssSelector, "card-list-item[ng-repeat *= 'offers']:nth-of-type({0}) .offer-status");
-        private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, "card-list-item[ng-repeat *= 'offers']:nth-of-type({0}) .ng-binding");
-        private readonly ElementLocator editOffer = new ElementLocator(Locator.CssSelector, "card-list-item[ng-repeat *= 'offers']:nth-of-type({0}) [action *= 'showEditOfferPanel']");
+        private readonly ElementLocator offers = new ElementLocator(Locator.CssSelector, ".requirement-view-offers .card-body");
+        private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .card-body");
+        private readonly ElementLocator offerActions = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .card-menu-button");
+        private readonly ElementLocator offerStatus = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .offer-status");
+        private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .ng-binding");
+        private readonly ElementLocator editOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showEditOfferPanel']");
 
         public ViewRequirementPage(DriverContext driverContext) : base(driverContext)
         {
@@ -144,12 +144,9 @@
 
         public List<string> GetOfferDetails(int position)
         {
-            return this.Driver.GetElements(this.offerData.Format(position)).Select(el => el.Text).ToList();
-        }
-
-        public string GetOfferStatus(int position)
-        {
-            return this.Driver.GetElement(this.offerStatus.Format(position)).Text;
+            List<string> details = this.Driver.GetElements(this.offerData.Format(position)).Select(el => el.Text).ToList();
+            details.Add(this.Driver.GetElement(this.offerStatus.Format(position)).Text);
+            return details;
         }
 
         public ViewRequirementPage OpenViewingActions(int position)

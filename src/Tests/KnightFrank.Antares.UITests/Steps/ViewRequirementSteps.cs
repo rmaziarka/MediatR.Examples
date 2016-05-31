@@ -253,12 +253,11 @@
         {
             var expectedDetails = table.CreateInstance<OfferData>();
             List<string> actualDetails = this.page.GetOfferDetails(position);
-            string status = this.page.GetOfferStatus(position);
 
             Verify.That(this.driverContext,
-                () => Assert.Equal(expectedDetails.Activity, actualDetails[0]),
+                () => Assert.Equal(expectedDetails.Details, actualDetails[0]),
                 () => Assert.Equal(expectedDetails.Offer, actualDetails[1]),
-                () => Assert.Equal(expectedDetails.Status, status));
+                () => Assert.Equal(expectedDetails.Status, actualDetails[2]));
         }
 
         [Then(@"Viewing details on view requirement page are same as the following")]
@@ -289,7 +288,7 @@
             expectedDetails.CompletionDate = offer.CompletionDate;
 
             Verify.That(this.driverContext,
-                () => Assert.Equal(expectedDetails.Activity, this.page.OfferPreview.Details),
+                () => Assert.Equal(expectedDetails.Details, this.page.OfferPreview.Details),
                 () => Assert.Equal(expectedDetails.Status, this.page.OfferPreview.Status),
                 () => Assert.Equal(expectedDetails.Offer, this.page.OfferPreview.Offer),
                 () => Assert.Equal(expectedDetails.OfferDate, this.page.OfferPreview.Date),
@@ -309,7 +308,7 @@
         public void CheckOfferActivity(Table table)
         {
             var details = table.CreateInstance<OfferData>();
-            Assert.Equal(details.Activity, this.page.Offer.Details);
+            Assert.Equal(details.Details, this.page.Offer.Details);
         }
 
         [Then(@"New offer should be created and displayed on view requirement page")]
