@@ -71,6 +71,12 @@ Configuration SetupElasticsearchVmLocal
 	$jdbcVersion = '2.3.2.0'
 	$jdbcFolder = "$jdbcUnpack\elasticsearch-jdbc-$jdbcVersion"
 
+    $nssmSource = 'nssm'
+    $nssmFileName = 'nssm-2.24.zip'
+    $nssmVersion = '2.24'
+    $nssmUnpack = "$env:SystemDrive\Program Files\nssm"
+    $nssmFolder = "$nssmUnpack\nssm-$nssmVersion"
+
 	Import-DscResource -Module cGripDevDSC
 	Import-DscResource -Module xPSDesiredStateConfiguration
 	Import-DscResource -Module xNetworking
@@ -91,6 +97,7 @@ Configuration SetupElasticsearchVmLocal
 		#Download and set env variable for JDK
 		#####
   
+
         File TempFolder {
             DestinationPath = $tempDownloadFolder
             Type = "Directory"
@@ -99,7 +106,7 @@ Configuration SetupElasticsearchVmLocal
 		Script CopyJDK
 	    {
 		    TestScript = { 
-			    Test-Path "$using:tempDownloadFolder\\$using:javaFileName"
+			    Test-Path "$using:tempDownloadFolder\\$using:nssmFileName"
 		    }
 		    GetScript = {@{Result = "CopyJDK"}}
 		    SetScript =
@@ -108,27 +115,27 @@ Configuration SetupElasticsearchVmLocal
 				$mycreds = New-Object System.Management.Automation.PSCredential("kfaneiedevcommonst", $secpasswd)
 
 			    New-PSDrive -Name P -PSProvider FileSystem -Root $using:CommonShareUrl -Credential $mycreds                
-				Copy-Item (Join-Path -Path "P:" -ChildPath $using:javaSource | Join-Path -ChildPath $using:javaFileName) (Join-Path -Path $using:tempDownloadFolder -ChildPath $using:javaFileName)
+				Copy-Item (Join-Path -Path "P:" -ChildPath $using:nssmSource | Join-Path -ChildPath $using:nssmFileName) (Join-Path -Path $using:tempDownloadFolder -ChildPath $using:nssmFileName)
 			    Remove-PSDrive -Name P
 		    }
             DependsOn = '[File]TempFolder'
 		}
 
-		xPackage Java {
-			Name = 'Java SE Development Kit 8 Update 91 (64-bit)'
-			Path =  Join-Path -Path $tempDownloadFolder -ChildPath $javaFileName
-			Arguments = "/s INSTALLDIR=`"$javaFolder`" STATIC=1"
+		xPackage nssm {
+			Name = 'nssm SE Development Kit 8 Update 91 (64-bit)'
+			Path =  Join-Path -Path $tempDownloadFolder -ChildPath $nssmFileName
+			Arguments = "/s INSTALLDIR=`"$nssmFolder`" STATIC=1"
 			ProductId = ''
 			DependsOn = '[Script]CopyJDK'
 		}
 		  
 		Environment SetJDKEnviromentVar
 		{
-			Name = "JAVA_HOME"
+			Name = "nssm_HOME"
 			Ensure = "Present"
 			Path = $false
-			Value = $javaFolder
-			DependsOn = "[xPackage]Java"
+			Value = $nssmFolder
+			DependsOn = "[xPackage]nssm"
 		}
 
 		Environment AddJDKToPath
@@ -136,8 +143,8 @@ Configuration SetupElasticsearchVmLocal
 			Name = "Path"
 			Ensure = "Present"
 			Path = $true
-			Value = "%JAVA_HOME%\bin"
-			DependsOn = "[xPackage]Java"
+			Value = "%nssm_HOME%\bin"
+			DependsOn = "[xPackage]nssm"
 		}
 
 		#####
@@ -243,10 +250,10 @@ Configuration SetupElasticsearchVmLocal
 		    GetScript = {@{Result = "ConfigureJdbc"}}
 		    SetScript =
 		    {
-				#$pathToExecute = "$using:jdbcFolder\bin\execute.bat" 
+				$pathToExecute = "$using:jdbcFolder\bin\execute.bat" 
 				$pathToSettings = "$using:jdbcFolder\bin\settings.json" 
 				
-				#(Get-Content -Path $pathToExecute).replace('$jdbcFolder', "$using:jdbcFolder").replace('$javaFolder', $using:javaFolder) | Set-Content $pathToExecute
+				(Get-Content -Path $pathToExecute).replace('$jdbcFolder', "$using:jdbcFolder").replace('$nssmFolder', $using:nssmFolder) | Set-Content $pathToExecute
 				
 				$settings = Get-Content -Path $pathToSettings -Raw | ConvertFrom-Json
 				$settings.jdbc.url = "jdbc:sqlserver://" + $using:SqlIp + ":" + $using:SqlPort+ ";databaseName=$using:SqlDatabaseName"
@@ -260,28 +267,44 @@ Configuration SetupElasticsearchVmLocal
 					$settings.jdbc | Add-Member -PassThru -NotePropertyMembers $using:AdditionalJdbcConfigValues
 				}
 				
-				$json = $settings | ConvertTo-Json -Depth 999
-				Write-Verbose $json
+				$json = $settings | ConvertTo-Json -Depth 999				
 				[System.IO.File]::WriteAllLines($pathToSettings, $json)
 		    }
 			DependsOn = '[xArchive]UnzipJdbc'
 	    }
+        
+        Script CopyNssm
+	    {
+		    TestScript = { 
+			    Test-Path "$using:tempDownloadFolder\\$using:nssmFileName"
+		    }
+		    GetScript = {@{Result = "CopyNssm"}}
+		    SetScript =
+		    {
+				$secpasswd = ConvertTo-SecureString “P7G+0uLD8g5q73RxshNg4GQdXJHr0EXasWSk6pe5UhCsp2QphVtPzZd+IcNdRlt9zoFjszQXMrK8XbIOcClakA==” -AsPlainText -Force
+				$mycreds = New-Object System.Management.Automation.PSCredential("kfaneiedevcommonst", $secpasswd)
 
-		<#        
-		xWindowsProcess StartJdbc {
-			Path = "$jdbcFolder\bin\execute.bat" 
-			Arguments = ''
-			StandardErrorPath = "$jdbcUnpack\elasticsearch-jdbc-$jdbcVersion\bin\log.txt" 
-			DependsOn = '[Script]ConfigureJdbc'
+			    New-PSDrive -Name P -PSProvider FileSystem -Root $using:CommonShareUrl -Credential $mycreds                
+				Copy-Item (Join-Path -Path "P:" -ChildPath $using:nssmSource | Join-Path -ChildPath $using:nssmFileName) (Join-Path -Path $using:tempDownloadFolder -ChildPath $using:nssmFileName)
+			    Remove-PSDrive -Name P
+		    }
+            DependsOn = '[File]TempFolder'
 		}
-		#>
 
-		xWindowsProcess StartJdbc {
-			Path = "$javaFolder\bin\java.exe"
-			Arguments = "-cp `"$jdbcFolder\lib\*`" -Dlog4j.configurationFile=`"$jdbcFolder\bin\log4j2.xml`" org.xbib.tools.Runner org.xbib.tools.JDBCImporter `"$jdbcFolder\bin\settings.json`""
-			StandardErrorPath = "$jdbcFolder\log.txt" 
-			DependsOn = '[Script]ConfigureJdbc'
+        xArchive UnzipNssm {
+			Path = Join-Path -Path $tempDownloadFolder -ChildPath $nssmFileName
+			Destination = $nssmUnpack
+			DependsOn = @('[Script]CopyNssm')
+			DestinationType = "Directory"
 		}
+
+        cNssm StartJdbc {
+            ExeFolder = "$jdbcFolder\bin"
+            ExeOrBatName = "execute.bat"
+            NssmFolder = $nssmFolder
+            ServiceName = "jdbc-$jdbcVersion-$BranchName"
+            DependsON = @('[xArchive]UnzipNssm', '[Script]ConfigureJdbc')
+        }
 	}
 }
 
@@ -296,4 +319,5 @@ SetupElasticsearchVmLocal `
 -JdbcSchedule "0 0/10 * * * ?"`
 -ElasticsearchIp "localhost"`
 -BranchName 'feature1'
+
 Start-DscConfiguration -Path .\SetupElasticsearchVmLocal -ComputerName localhost -Force -Verbose -Wait

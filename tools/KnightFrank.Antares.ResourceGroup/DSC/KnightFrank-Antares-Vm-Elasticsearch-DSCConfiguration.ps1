@@ -93,6 +93,12 @@ Configuration SetupElasticsearchVm
 	$jdbcUnpack = "$env:SystemDrive\jdbc\$BranchName"    
 	$jdbcFolder = "$jdbcUnpack\elasticsearch-jdbc-$JdbcVersion"
 
+	$nssmSource = 'nssm'
+    $nssmFileName = 'nssm-2.24.zip'
+    $nssmVersion = '2.24'
+    $nssmUnpack = "$env:SystemDrive\Program Files\nssm"
+    $nssmFolder = "$nssmUnpack\nssm-$nssmVersion"
+
 	Import-DscResource -Module cGripDevDSC
 	Import-DscResource -Module xPSDesiredStateConfiguration
 	Import-DscResource -Module xNetworking
@@ -256,20 +262,27 @@ Configuration SetupElasticsearchVm
 			DependsOn = '[xArchive]UnzipJdbc'
 	    }
 
-		<#        
-		xWindowsProcess StartJdbc {
-			Path = "$jdbcFolder\bin\execute.bat" 
-			Arguments = ''
-			StandardErrorPath = "$jdbcUnpack\elasticsearch-jdbc-$JdbcVersion\bin\log.txt" 
-			DependsOn = '[Script]ConfigureJdbc'
+		xRemoteFile CopyNssm
+	    {
+		    DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $nssmFileName
+			Uri = Join-Path $CommonShareUrl -ChildPath $nssmSource | Join-Path -ChildPath $nssmFileName
+			Credential = $CommonShareCredential
+            DependsOn = '[File]TempFolder'
 		}
-		#>
 
-		xWindowsProcess StartJdbc {
-			Path = "$javaFolder\bin\java.exe"
-			Arguments = "-cp `"$jdbcFolder\lib\*`" -Dlog4j.configurationFile=`"$jdbcFolder\bin\log4j2.xml`" org.xbib.tools.Runner org.xbib.tools.JDBCImporter `"$jdbcFolder\bin\settings.json`""
-			StandardErrorPath = "$jdbcFolder\log.txt" 
-			DependsOn = '[Script]ConfigureJdbc'
+        xArchive UnzipNssm {
+			Path = Join-Path -Path $tempDownloadFolder -ChildPath $nssmFileName
+			Destination = $nssmUnpack
+			DependsOn = @('[xRemoteFile]CopyNssm')
+			DestinationType = "Directory"
 		}
+
+        cNssm StartJdbc {
+            ExeFolder = "$jdbcFolder\bin"
+            ExeOrBatName = "execute.bat"
+            NssmFolder = $nssmFolder
+            ServiceName = "jdbc-$jdbcVersion-$BranchName"
+            DependsON = @('[xArchive]UnzipNssm', '[Script]ConfigureJdbc')
+        }
 	}
 }
