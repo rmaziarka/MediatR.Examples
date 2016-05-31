@@ -91,6 +91,11 @@ Configuration SetupElasticsearchVmLocal
 		#Download and set env variable for JDK
 		#####
   
+        File TempFolder {
+            DestinationPath = $tempDownloadFolder
+            Type = "Directory"
+        }
+
 		Script CopyJDK
 	    {
 		    TestScript = { 
@@ -103,9 +108,10 @@ Configuration SetupElasticsearchVmLocal
 				$mycreds = New-Object System.Management.Automation.PSCredential("kfaneiedevcommonst", $secpasswd)
 
 			    New-PSDrive -Name P -PSProvider FileSystem -Root $using:CommonShareUrl -Credential $mycreds                
-				Copy-Item (Join-Path - Path "P:" -ChildPath $using:javaSource | Join-Path -ChildPath $using:javaFileName) (Join-Path -Path $using:tempDownloadFolder -ChildPath $using:javaFileName)
+				Copy-Item (Join-Path -Path "P:" -ChildPath $using:javaSource | Join-Path -ChildPath $using:javaFileName) (Join-Path -Path $using:tempDownloadFolder -ChildPath $using:javaFileName)
 			    Remove-PSDrive -Name P
 		    }
+            DependsOn = '[File]TempFolder'
 		}
 
 		xPackage Java {
@@ -127,10 +133,10 @@ Configuration SetupElasticsearchVmLocal
 
 		Environment AddJDKToPath
 		{
-			Name = "JDK"
+			Name = "Path"
 			Ensure = "Present"
 			Path = $true
-			Value = "$javaFolder\bin"
+			Value = "%JAVA_HOME%\bin"
 			DependsOn = "[xPackage]Java"
 		}
 
@@ -150,9 +156,10 @@ Configuration SetupElasticsearchVmLocal
 				$mycreds = New-Object System.Management.Automation.PSCredential("kfaneiedevcommonst", $secpasswd)
 
 			    New-PSDrive -Name P -PSProvider FileSystem -Root $using:CommonShareUrl -Credential $mycreds
-			    Copy-Item (Join-Path "P:" -ChildPath $using:elasticsearchSource | Join-Path -ChildPath $using:elasticsearchFileName) (Join-Path -Path $using:tempDownloadFolder -ChildPath $using:elasticsearchFileName)
+			    Copy-Item (Join-Path -Path "P:" -ChildPath $using:elasticsearchSource | Join-Path -ChildPath $using:elasticsearchFileName) (Join-Path -Path $using:tempDownloadFolder -ChildPath $using:elasticsearchFileName)
 			    Remove-PSDrive -Name P
 		    }
+            DependsOn = '[File]TempFolder'
 	    }
   
 		xArchive UnzipElasticsearch {
@@ -215,9 +222,10 @@ Configuration SetupElasticsearchVmLocal
 				$mycreds = New-Object System.Management.Automation.PSCredential("kfaneiedevcommonst", $secpasswd)
 
 			    New-PSDrive -Name P -PSProvider FileSystem -Root $using:CommonShareUrl -Credential $mycreds
-			    Copy-Item (Join-Path "P:" -ChildPath $using:jdbcSource | Join-Path -ChildPath $using:jdbcFileName) (Join-Path -Path $using:tempDownloadFolder -ChildPath $using:jdbcFileName)
+			    Copy-Item (Join-Path -Path "P:" -ChildPath $using:jdbcSource | Join-Path -ChildPath $using:jdbcFileName) (Join-Path -Path $using:tempDownloadFolder -ChildPath $using:jdbcFileName)
 			    Remove-PSDrive -Name P
 		    }
+            DependsOn = '[File]TempFolder'
 	    }
 
 		xArchive UnzipJdbc {
@@ -286,6 +294,6 @@ SetupElasticsearchVmLocal `
 -SqlPassword "ant@res!1"`
 -ElasticsearchIndex "properties_v7"`
 -JdbcSchedule "0 0/10 * * * ?"`
--ElasticsearchIp "localhost"
-
+-ElasticsearchIp "localhost"`
+-BranchName 'feature1'
 Start-DscConfiguration -Path .\SetupElasticsearchVmLocal -ComputerName localhost -Force -Verbose -Wait

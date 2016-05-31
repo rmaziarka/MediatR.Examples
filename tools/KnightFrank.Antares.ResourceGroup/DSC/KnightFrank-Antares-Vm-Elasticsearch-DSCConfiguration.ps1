@@ -112,11 +112,17 @@ Configuration SetupElasticsearchVm
 		#####
 		#Download and set env variable for JDK
 		#####
+		
+        File TempFolder {
+            DestinationPath = $tempDownloadFolder
+            Type = "Directory"
+        }
 
 		xRemoteFile CopyJDK {
 			DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $JavaFileName
 			Uri = Join-Path $CommonShareUrl -ChildPath $javaSource | Join-Path -ChildPath $JavaFileName
 			Credential = $CommonShareCredential
+            DependsOn = '[File]TempFolder'
 		}
 
 		xPackage Java {
@@ -138,10 +144,10 @@ Configuration SetupElasticsearchVm
 
 		Environment AddJDKToPath
 		{
-			Name = "JDK"
+			Name = "Path"
 			Ensure = "Present"
 			Path = $true
-			Value = "$javaFolder\bin"
+			Value = "%JAVA_HOME%\bin"
 			DependsOn = "[xPackage]Java"
 		}
 
@@ -153,6 +159,7 @@ Configuration SetupElasticsearchVm
 			DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $JavaFileName
 			Uri = Join-Path $CommonShareUrl -ChildPath $JavaSource | Join-Path -ChildPath $JavaFileName
 			Credential = $CommonShareCredential
+            DependsOn = '[File]TempFolder'
 		}
 
 	    xArchive UnzipElasticsearch {
@@ -207,6 +214,7 @@ Configuration SetupElasticsearchVm
 			DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $JdbcFileName
 			Uri = Join-Path $CommonShareUrl -ChildPath $jdbcSource | Join-Path -ChildPath $JdbcFileName
 			Credential = $CommonShareCredential
+            DependsOn = '[File]TempFolder'
 		}
 
 		xArchive UnzipJdbc {
