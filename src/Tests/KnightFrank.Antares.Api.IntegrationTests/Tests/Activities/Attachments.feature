@@ -15,7 +15,6 @@ Given User gets GB address form for Property and country details
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Activity for latest property and PreAppraisal activity status exists in database
-		And User gets negotiator id from database
 	When User uploads attachment for latest activity id for TermsOfBusiness with following data
 		| FileName | Size | ExternalDocumentId                   |
 		| abc.pdf  | 1024 | ba3b115b-4a5f-42c9-8e0f-25b7ed903b00 |
@@ -36,7 +35,6 @@ Given User gets GB address form for Property and country details
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Activity for latest property and PreAppraisal activity status exists in database
-		And User gets negotiator id from database
 	When User uploads attachment for <activityId> activity id for <documentType> with following data
 		| FileName | Size | ExternalDocumentId                   |
 		| abc.pdf  | 1024 | ba3b115b-4a5f-42c9-8e0f-25b7ed903b00 |
@@ -63,7 +61,6 @@ Scenario: Get Activity with attachment
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Activity for latest property and PreAppraisal activity status exists in database
-		And User gets negotiator id from database
 		And Attachment for TermsOfBusiness with following data exists in database
 			| FileName | Size | ExternalDocumentId                   |
 			| abc.pdf  | 1024 | ba3b115b-4a5f-42c9-8e0f-25b7ed903b00 |

@@ -195,7 +195,6 @@ Scenario: Get Activity with viewing and offer
 		And User creates following requirement in database
  			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
  			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | Description |
-		And User gets negotiator id from database
 		And User creates viewing in database
 		And User creates New offer in database
 	When User gets activity with latest id

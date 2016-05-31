@@ -38,13 +38,6 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"User gets negotiator id from database")]
-        public void GetNegotiatorId()
-        {
-            Guid negotiatorId = this.fixture.DataContext.Users.First().Id;
-            this.scenarioContext.Set(negotiatorId, "NegotiatorId");
-        }
-
         [When(@"User creates viewing using api")]
         public void CreateViewingUsingApi()
         {
@@ -52,7 +45,7 @@
             List<Guid> attendeesIds =
                 this.scenarioContext.Get<Requirement>("Requirement").Contacts.Select(contact => contact.Id).ToList();
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
-            var negotiatorId = this.scenarioContext.Get<Guid>("NegotiatorId");
+            Guid negotiatorId = this.fixture.DataContext.Users.First().Id;
 
             var details = new CreateViewingCommand
             {
@@ -98,7 +91,7 @@
             Guid requirementId = data.Equals("requirement")
                 ? Guid.NewGuid()
                 : this.scenarioContext.Get<Requirement>("Requirement").Id;
-            var negotiatorId = this.scenarioContext.Get<Guid>("NegotiatorId");
+            Guid negotiatorId = this.fixture.DataContext.Users.First().Id;
 
             var details = new CreateViewingCommand
             {
@@ -137,7 +130,7 @@
                 },
                 RequirementId = requirement.Id,
                 ActivityId = this.scenarioContext.Get<Activity>("Activity").Id,
-                NegotiatorId = this.scenarioContext.Get<Guid>("NegotiatorId")
+                NegotiatorId = this.fixture.DataContext.Users.First().Id
             };
 
             this.fixture.DataContext.Viewing.Add(viewing);
