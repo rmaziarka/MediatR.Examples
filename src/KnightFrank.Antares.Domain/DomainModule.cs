@@ -6,15 +6,12 @@
 
     using FluentValidation;
 
-    using KnightFrank.Antares.Dal.Model.Common;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
-    using KnightFrank.Antares.Domain.LatestView.DataProviders;
 
     using MediatR;
 
-    using Ninject;
     using Ninject.Extensions.Conventions;
     using Ninject.Modules;
 
@@ -51,18 +48,6 @@
                         this.Kernel.Bind(domainValidatorType ?? assemblyScanResult.InterfaceType)
                             .To(assemblyScanResult.ValidatorType);
                     });
-
-            this.Bind<Func<EntityTypeEnum, ILatestViewDataProvider>>()
-                .ToConstant(new Func<EntityTypeEnum, ILatestViewDataProvider>(
-                    entityType =>
-                    {
-                        if (entityType == EntityTypeEnum.Property)
-                        {
-                            return this.Kernel.Get<PropertyLatestViewDataProvider>();
-                        }
-
-                        return null;
-                    }));
         }
 
         private static Type GetDomainValidatorType(AssemblyScanner.AssemblyScanResult assemblyScanResult)

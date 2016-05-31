@@ -10,6 +10,10 @@
                 .WithMany()
                 .HasForeignKey(x => x.UserId)
                 .WillCascadeOnDelete(false);
+
+            this.Ignore(x => x.EntityType);
+
+            this.Property(x => x.EntityTypeString).HasColumnName("EntityType");
         }
     }
 }

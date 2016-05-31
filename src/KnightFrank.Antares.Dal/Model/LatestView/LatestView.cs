@@ -15,5 +15,18 @@
         public Guid EntityId { get; set; }
 
         public EntityTypeEnum EntityType { get; set; }
+
+        public string EntityTypeString
+        {
+            get
+            {
+                return this.EntityType.ToString();
+            }
+
+            private set
+            {
+                this.EntityType = (EntityTypeEnum)Enum.Parse(typeof(EntityTypeEnum), value, true);
+            }
+        }
     }
 }

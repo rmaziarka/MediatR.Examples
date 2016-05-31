@@ -2,13 +2,12 @@ namespace KnightFrank.Antares.Domain.LatestView.DataProviders
 {
     using System.Linq;
 
-    using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Model.LatestView;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.LatestView.QueryResults;
 
-    public class PropertyLatestViewDataProvider : BaseLatestViewDataProvider 
+    public class PropertyLatestViewDataProvider : BaseLatestViewDataProvider<Property>
     {
         private readonly IReadGenericRepository<Property> propertyRepository;
 
@@ -16,23 +15,19 @@ namespace KnightFrank.Antares.Domain.LatestView.DataProviders
         {
             this.propertyRepository = propertyRepository;
         }
-        
-        public override IQueryable GetEntitiesWithIncludes()
+
+        public override IQueryable<Property> GetEntitiesWithIncludes()
         {
             return this.propertyRepository.GetWithInclude(x => x.Address);
         }
 
-        public override LatestViewData CreateLatestViewData(BaseEntity entity, LatestView latestView)
+        public override LatestViewData CreateLatestViewData(Property property, LatestView latestView)
         {
-            var property = (Property)entity;
             return new LatestViewData
             {
                 Id = latestView.EntityId,
                 CreatedDate = latestView.CreatedDate,
-                Data = new
-                {
-                    property.Address
-                }
+                Data = property.Address
             };
         }
     }
