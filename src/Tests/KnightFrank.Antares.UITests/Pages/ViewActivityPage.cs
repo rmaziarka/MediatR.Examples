@@ -32,6 +32,13 @@
         private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-group-item");
         private readonly ElementLocator viewingDetailsLink = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) a");
         private readonly ElementLocator viewingDetails = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .ng-binding");
+        // offer locators
+        private readonly ElementLocator offers = new ElementLocator(Locator.CssSelector, ".activity-view-offers .card-body");
+        private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .card-body");
+        private readonly ElementLocator offerActions = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .card-menu-button");
+        private readonly ElementLocator offerStatus = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .offer-status");
+        private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .ng-binding");
+
         // negotiators locators
         private readonly ElementLocator leadNegotiator = new ElementLocator(Locator.CssSelector, "#card-lead-negotiator .panel-item");
         private readonly ElementLocator secondaryNegotiator = new ElementLocator(Locator.CssSelector, "#card-list-negotiators card-list-item .panel-item");
@@ -62,6 +69,10 @@
         public string LeadNegotiator => this.Driver.GetElement(this.leadNegotiator).Text;
 
         public List<Negotiator> SecondaryNegotiators => this.Driver.GetElements(this.secondaryNegotiator).Select(el => new Negotiator { Name = el.Text }).ToList();
+
+        public int OffersNumber => this.Driver.GetElements(this.offers).Count;
+
+        public OfferPreviewPage OfferPreview => new OfferPreviewPage(this.DriverContext);
 
         public ViewActivityPage OpenViewActivityPageWithId(string id)
         {
@@ -132,6 +143,25 @@
         {
             this.Driver.WaitUntilElementIsNoLongerFound(this.panel, timeout);
             return this;
+        }
+
+        public ViewActivityPage OpenOfferDetails(int position)
+        {
+            this.Driver.GetElement(this.offer.Format(position)).Click();
+            return this;
+        }
+
+        public ViewActivityPage OpenOfferActions(int position)
+        {
+            this.Driver.GetElement(this.offerActions.Format(position)).Click();
+            return this;
+        }
+
+        public List<string> GetOfferDetails(int position)
+        {
+            List<string> details = this.Driver.GetElements(this.offerData.Format(position)).Select(el => el.Text).ToList();
+            details.Add(this.Driver.GetElement(this.offerStatus.Format(position)).Text);
+            return details;
         }
 
         public List<string> GetViewingDetails(int position)

@@ -5,6 +5,7 @@
 
     using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Enum;
 
     public class Activity : BaseAuditableEntity
@@ -34,5 +35,7 @@
         public virtual ICollection<Viewing> Viewings { get; set; } = new List<Viewing>();
 
         public virtual ICollection<ActivityUser> ActivityUsers { get; set; } = new List<ActivityUser>();
+
+        public virtual ICollection<Offer> Offers { get; set; } = new List<Offer>();
     }
 }

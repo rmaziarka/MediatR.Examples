@@ -8,7 +8,7 @@
     using FluentAssertions;
 
     using KnightFrank.Antares.Dal.Model.Address;
-    using KnightFrank.Antares.Dal.Model.Common;
+    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.User;
@@ -16,6 +16,7 @@
     using KnightFrank.Antares.Domain.Activity.CommandHandlers;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Common.Enums;
 
     using Moq;
 
@@ -33,16 +34,28 @@
         public void Given_ValidCommand_When_Handling_Then_ShouldUpdateActivity(
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             [Frozen] Mock<IGenericRepository<ActivityTypeDefinition>> activityTypeDefinitionRepository,
+            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             UpdateActivityCommand command,
             UpdateActivityCommandHandler handler,
             IFixture fixture)
         {
+            // Arrange
             Activity activity = this.GetActivity(fixture);
             activity.ActivityUsers = new List<ActivityUser>();
             activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
             activityTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>())).Returns(true);
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
+                                  .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
+                                      new[]
+                                          {
+                                              this.GetLeadNegotiatorUserType(fixture),
+                                              this.GetSecondaryNegotiatorUserType(fixture)
+                                          }.Where(expr.Compile()));
+
+            // Act
             handler.Handle(command);
 
+            // Assert
             activity.ShouldBeEquivalentTo(
                 command,
                 options =>
@@ -57,6 +70,7 @@
         public void Given_ValidCommand_When_Handling_Then_EntityExistsValidation_ShouldBeCalledForActivity(
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             [Frozen] Mock<IEntityValidator> entityValidator,
+            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             UpdateActivityCommandHandler handler,
             UpdateActivityCommand command,
             IFixture fixture
@@ -65,6 +79,13 @@
             // Arrange
             Activity activity = this.GetActivity(fixture);
             activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
+                                  .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
+                                      new[]
+                                          {
+                                              this.GetLeadNegotiatorUserType(fixture),
+                                              this.GetSecondaryNegotiatorUserType(fixture)
+                                          }.Where(expr.Compile()));
 
             // Act
             handler.Handle(command);
@@ -77,6 +98,7 @@
         [AutoMoqData]
         public void Given_ValidCommand_When_Handling_Then_EntityExistsValidation_ShouldBeCalledForLeadNegotiator(
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
+            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IEntityValidator> entityValidator,
             UpdateActivityCommandHandler handler,
             UpdateActivityCommand command,
@@ -87,6 +109,13 @@
             Activity activity = this.GetActivity(fixture);
             activity.ActivityUsers = new List<ActivityUser>();
             activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
+                                  .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
+                                      new[]
+                                          {
+                                              this.GetLeadNegotiatorUserType(fixture),
+                                              this.GetSecondaryNegotiatorUserType(fixture)
+                                          }.Where(expr.Compile()));
 
             // Act
             handler.Handle(command);
@@ -99,6 +128,7 @@
         [AutoMoqData]
         public void Given_ValidCommand_When_Handling_Then_EntityExistsValidation_ShouldBeCalledForSecondaryNegotiators(
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
+            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IEntityValidator> entityValidator,
             UpdateActivityCommandHandler handler,
             UpdateActivityCommand command,
@@ -109,6 +139,13 @@
             Activity activity = this.GetActivity(fixture);
             activity.ActivityUsers = new List<ActivityUser>();
             activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
+                                  .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
+                                      new[]
+                                          {
+                                              this.GetLeadNegotiatorUserType(fixture),
+                                              this.GetSecondaryNegotiatorUserType(fixture)
+                                          }.Where(expr.Compile()));
 
             // Act
             handler.Handle(command);
@@ -121,6 +158,7 @@
         [AutoMoqData]
         public void Given_ValidCommand_When_Handling_Then_CollectionIsUniqueValidation_ShouldBeCalledForAllNegotiators(
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
+            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IEntityValidator> entityValidator,
             [Frozen] Mock<ICollectionValidator> collectionValidator,
             UpdateActivityCommandHandler handler,
@@ -134,6 +172,13 @@
             activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
             collectionValidator.Setup(x => x.CollectionIsUnique(It.IsAny<ICollection<Guid>>(), It.IsAny<ErrorMessage>()))
                                .Callback((ICollection<Guid> list, ErrorMessage error) => { calledNegotiators.AddRange(list); });
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
+                                  .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
+                                      new[]
+                                          {
+                                              this.GetLeadNegotiatorUserType(fixture),
+                                              this.GetSecondaryNegotiatorUserType(fixture)
+                                          }.Where(expr.Compile()));
 
             // Act
             handler.Handle(command);
@@ -151,16 +196,24 @@
         public void Given_ValidCommand_When_DeletingSecondaryNegotiator_Then_ShouldBeMarkedAsDeleted(
            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
            [Frozen] Mock<IGenericRepository<ActivityUser>> activityUserRepository,
+           [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
            UpdateActivityCommand command,
            UpdateActivityCommandHandler handler,
            ActivityUser activityUserToDelete,
                        IFixture fixture)
         {
             // Arrange
-            activityUserToDelete.UserType = UserTypeEnum.SecondaryNegotiator;
+            activityUserToDelete.UserType = this.GetSecondaryNegotiatorUserType(fixture);
             Activity activity = this.GetActivity(fixture);
             activity.ActivityUsers = new List<ActivityUser> { activityUserToDelete };
             activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
+                                 .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
+                                     new[]
+                                         {
+                                              this.GetLeadNegotiatorUserType(fixture),
+                                              this.GetSecondaryNegotiatorUserType(fixture)
+                                         }.Where(expr.Compile()));
 
             // Act
             handler.Handle(command);
@@ -173,6 +226,7 @@
         [AutoMoqData]
         public void Given_ValidCommand_When_AddingSecondaryNegotiator_Then_ShouldBeSaved(
            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
+           [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
            UpdateActivityCommand command,
            UpdateActivityCommandHandler handler,
            Guid secondaryNegotiatorIdToAdd,
@@ -182,13 +236,20 @@
             command.SecondaryNegotiatorIds.Add(secondaryNegotiatorIdToAdd);
             Activity activity = this.GetActivity(fixture);
             activityRepository.Setup(p => p.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
+                                 .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
+                                     new[]
+                                         {
+                                              this.GetLeadNegotiatorUserType(fixture),
+                                              this.GetSecondaryNegotiatorUserType(fixture)
+                                         }.Where(expr.Compile()));
 
             // Act
             handler.Handle(command);
 
             // Assert
             activity.ActivityUsers
-                    .Count(u => u.UserId == secondaryNegotiatorIdToAdd && u.UserType == UserTypeEnum.SecondaryNegotiator)
+                    .Count(u => u.UserId == secondaryNegotiatorIdToAdd && u.UserType.Code == EnumTypeItemCode.SecondaryNegotiator)
                     .Should()
                     .Be(1);
         }
@@ -197,6 +258,7 @@
         [AutoMoqData]
         public void Given_ValidCommand_When_UpdatingSecondaryNegotiator_AndNoUserTypeChanges_Then_ShouldBeUpdated(
            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
+           [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
            UpdateActivityCommand command,
            UpdateActivityCommandHandler handler,
            ActivityUser activityUserToUpdate,
@@ -207,18 +269,26 @@
             command.SecondaryNegotiatorIds.Add(secondaryNegotiatorIdToUpdate);
 
             activityUserToUpdate.UserId = secondaryNegotiatorIdToUpdate;
-            activityUserToUpdate.UserType = UserTypeEnum.SecondaryNegotiator;
+            activityUserToUpdate.UserType = this.GetSecondaryNegotiatorUserType(fixture);
             Activity activity = this.GetActivity(fixture);
             activity.ActivityUsers = new List<ActivityUser> { activityUserToUpdate };
 
             activityRepository.Setup(p => p.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
+
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
+                                 .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
+                                     new[]
+                                         {
+                                              this.GetLeadNegotiatorUserType(fixture),
+                                              this.GetSecondaryNegotiatorUserType(fixture)
+                                         }.Where(expr.Compile()));
 
             // Act
             handler.Handle(command);
 
             // Assert
             activity.ActivityUsers
-                    .Count(u => u.UserId == secondaryNegotiatorIdToUpdate && u.UserType == UserTypeEnum.SecondaryNegotiator)
+                    .Count(u => u.UserId == secondaryNegotiatorIdToUpdate && u.UserType.Code == EnumTypeItemCode.SecondaryNegotiator)
                     .Should()
                     .Be(1);
         }
@@ -227,6 +297,7 @@
         [AutoMoqData]
         public void Given_ValidCommand_When_UpdatingLeadNegotiator_AndNoUserTypeChanges_Then_ShouldBeUpdated(
            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
+           [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
            UpdateActivityCommand command,
            UpdateActivityCommandHandler handler,
            ActivityUser activityUserToUpdate,
@@ -237,18 +308,26 @@
             command.LeadNegotiatorId = leadNegotiatorIdToUpdate;
 
             activityUserToUpdate.UserId = leadNegotiatorIdToUpdate;
-            activityUserToUpdate.UserType = UserTypeEnum.LeadNegotiator;
+            activityUserToUpdate.UserType = this.GetLeadNegotiatorUserType(fixture);
             Activity activity = this.GetActivity(fixture);
             activity.ActivityUsers = new List<ActivityUser> { activityUserToUpdate };
 
             activityRepository.Setup(p => p.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
+
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
+                                 .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
+                                     new[]
+                                         {
+                                              this.GetLeadNegotiatorUserType(fixture),
+                                              this.GetSecondaryNegotiatorUserType(fixture)
+                                         }.Where(expr.Compile()));
 
             // Act
             handler.Handle(command);
 
             // Assert
             activity.ActivityUsers
-                    .Count(u => u.UserId == leadNegotiatorIdToUpdate && u.UserType == UserTypeEnum.LeadNegotiator)
+                    .Count(u => u.UserId == leadNegotiatorIdToUpdate && u.UserType.Code == EnumTypeItemCode.LeadNegotiator)
                     .Should()
                     .Be(1);
         }
@@ -257,6 +336,7 @@
         [AutoMoqData]
         public void Given_ValidCommand_When_UpdatingSecondaryNegotiator_AndChangedToLeadNegotiator_Then_ShouldBeUpdated(
            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
+           [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
            UpdateActivityCommand command,
            UpdateActivityCommandHandler handler,
            ActivityUser activityUserToUpdate,
@@ -267,23 +347,31 @@
             command.LeadNegotiatorId = secondaryNegotiatorIdToUpdateToLead;
 
             activityUserToUpdate.UserId = secondaryNegotiatorIdToUpdateToLead;
-            activityUserToUpdate.UserType = UserTypeEnum.SecondaryNegotiator;
+            activityUserToUpdate.UserType = this.GetSecondaryNegotiatorUserType(fixture);
             Activity activity = this.GetActivity(fixture);
             activity.ActivityUsers = new List<ActivityUser> { activityUserToUpdate };
 
             activityRepository.Setup(p => p.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
+
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
+                                 .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
+                                     new[]
+                                         {
+                                              this.GetLeadNegotiatorUserType(fixture),
+                                              this.GetSecondaryNegotiatorUserType(fixture)
+                                         }.Where(expr.Compile()));
 
             // Act
             handler.Handle(command);
 
             // Assert
             activity.ActivityUsers
-                    .Count(u => u.UserId == secondaryNegotiatorIdToUpdateToLead && u.UserType == UserTypeEnum.SecondaryNegotiator)
+                    .Count(u => u.UserId == secondaryNegotiatorIdToUpdateToLead && u.UserType.Code == EnumTypeItemCode.SecondaryNegotiator)
                     .Should()
                     .Be(0);
 
             activity.ActivityUsers
-                    .Count(u => u.UserId == secondaryNegotiatorIdToUpdateToLead && u.UserType == UserTypeEnum.LeadNegotiator)
+                    .Count(u => u.UserId == secondaryNegotiatorIdToUpdateToLead && u.UserType.Code == EnumTypeItemCode.LeadNegotiator)
                     .Should()
                     .Be(1);
         }
@@ -292,6 +380,7 @@
         [AutoMoqData]
         public void Given_ValidCommand_When_UpdatingLeadNegotiator_AndChangedToSecondaryNegotiator_Then_ShouldBeUpdated(
            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
+           [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
            UpdateActivityCommand command,
            UpdateActivityCommandHandler handler,
            ActivityUser activityUserToUpdate,
@@ -302,23 +391,31 @@
             command.SecondaryNegotiatorIds.Add(leadNegotiatorIdToUpdateToSecondary);
 
             activityUserToUpdate.UserId = leadNegotiatorIdToUpdateToSecondary;
-            activityUserToUpdate.UserType = UserTypeEnum.LeadNegotiator;
+            activityUserToUpdate.UserType = this.GetLeadNegotiatorUserType(fixture);
             Activity activity = this.GetActivity(fixture);
             activity.ActivityUsers = new List<ActivityUser> { activityUserToUpdate };
 
             activityRepository.Setup(p => p.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
+
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
+                                 .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
+                                     new[]
+                                         {
+                                              this.GetLeadNegotiatorUserType(fixture),
+                                              this.GetSecondaryNegotiatorUserType(fixture)
+                                         }.Where(expr.Compile()));
 
             // Act
             handler.Handle(command);
 
             // Assert
             activity.ActivityUsers
-                    .Count(u => u.UserId == leadNegotiatorIdToUpdateToSecondary && u.UserType == UserTypeEnum.SecondaryNegotiator)
+                    .Count(u => u.UserId == leadNegotiatorIdToUpdateToSecondary && u.UserType.Code == EnumTypeItemCode.SecondaryNegotiator)
                     .Should()
                     .Be(1);
 
             activity.ActivityUsers
-                    .Count(u => u.UserId == leadNegotiatorIdToUpdateToSecondary && u.UserType == UserTypeEnum.LeadNegotiator)
+                    .Count(u => u.UserId == leadNegotiatorIdToUpdateToSecondary && u.UserType.Code == EnumTypeItemCode.LeadNegotiator)
                     .Should()
                     .Be(0);
         }
@@ -330,6 +427,16 @@
             activity.Property = fixture.Create<Property>();
             activity.Property.Address = fixture.Create<Address>();
             return activity;
+        }
+
+        private EnumTypeItem GetLeadNegotiatorUserType(IFixture fixture)
+        {
+            return fixture.Build<EnumTypeItem>().With(i => i.Code, EnumTypeItemCode.LeadNegotiator).Create();
+        }
+
+        private EnumTypeItem GetSecondaryNegotiatorUserType(IFixture fixture)
+        {
+            return fixture.Build<EnumTypeItem>().With(i => i.Code, EnumTypeItemCode.SecondaryNegotiator).Create();
         }
     }
 }

@@ -1,0 +1,132 @@
+﻿<div class="row">
+    <div id="view-offer-header" class="col-md-12">
+        <h2 class="page-header" translate="OFFER.VIEW.VIEW_OFFER"></h2>
+        <div class="well">
+            <div>
+                <span class="offer-status offer-status-{{vm.offer.statusId | dynamicTranslate | lowercase}}">{{vm.offer.statusId | dynamicTranslate}}</span> {{vm.offer.requirement.getContactNames()}}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <section id="section-vendor">
+            <h3 class="page-header" translate="OFFER.VIEW.VENDOR"></h3>
+
+            <h5 translate="OFFER.PREVIEW.ACTIVITY"></h5>
+            <card-list-item class="requirement-view-offers">
+                <card show-context-menu="true" show-item-details="vm.showActivityPreview" display-new-control="true"
+                      card-template-url="'app/offer/view/offerVendorCard.html'" item="vm.offer">
+                    <card-context-menu>
+                        <context-menu-item type="details" item="vm.offer.activity" action="vm.navigateToActivity"></context-menu-item>
+                    </card-context-menu>
+                </card>
+            </card-list-item>
+        </section>
+        <section id="section-applicant">
+            <h3 class="page-header" translate="OFFER.VIEW.APPLICANT"></h3>
+
+            <h5 translate="VIEWING.ADD.REQUIREMENT"></h5>
+            <card-list-item class="requirement-view-offers">
+                <card show-context-menu="true" display-new-control="true"
+                      card-template-url="'app/offer/view/offerRequirementCard.html'" item="vm.offer">
+                    <card-context-menu>
+                        <context-menu-item type="details" item="vm.offer.requirement" action="vm.navigateToRequirement"></context-menu-item>
+                    </card-context-menu>
+                </card>
+            </card-list-item>
+        </section>
+    </div>
+    <div class="col-md-4">
+        <section id="section-basic-information">
+            <h3 class="page-header" translate="OFFER.VIEW.BASIC_INFORMATION"></h3>
+
+            <div class="section-details">
+                <div class="section-row row">
+                    <div class="section-title col-xs-6">Status</div>
+                    <div class="col-xs-6">{{vm.offer.statusId | dynamicTranslate}}</div>
+                </div>
+                <div class="section-row row">
+                    <div class="section-title col-xs-6">Offer</div>
+                    <div class="col-xs-6">{{vm.offer.price | number : 2 }} GBP</div>
+                </div>
+                <div class="section-row row">
+                    <div class="section-title col-xs-6">Offer date</div>
+                    <div class="col-xs-6"><time>{{vm.offer.offerDate | date : 'dd-MM-yyyy'}}</time></div>
+                </div>
+            </div>
+            <div class="section-details">
+                <div class="section-row row">
+                    <div class="section-title col-xs-12">
+                        <h5>Special conditions</h5>
+                    </div>
+                    <div class="col-xs-12">
+                        <p>{{vm.offer.specialConditions}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="section-details">
+                <div class="section-row row">
+                    <div class="section-title col-xs-6" translate="OFFER.PREVIEW.EXCHANGE_DATE"></div>
+                    <div class="col-xs-6"><time>{{vm.offer.exchangeDate | date : 'dd-MM-yyyy'}}</time></div>
+                </div>
+                <div class="section-row row">
+                    <div class="section-title col-xs-6" translate="OFFER.PREVIEW.COMPLETION_DATE"></div>
+                    <div class="col-xs-6"><time>{{vm.offer.completionDate | date : 'dd-MM-yyyy'}}</time></div>
+                </div>
+                <div class="section-row row">
+                    <div class="col-xs-12">
+                        <h5 translate="OFFER.PREVIEW.NEGOTIATOR"></h5>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="panel panel-default applicant">
+                            <div class="panel-body">
+                                {{ vm.offer.negotiator.getName() }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<side-panel component-id="vm.componentIds.activityPreviewSidePanelId">
+    <side-panel-header>
+        <h3 translate="ACTIVITY.PREVIEW.ACTIVITYPREVIEW"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <div class="row section-row">
+            <div class="col-xs-5">
+                <a ui-sref="app.activity-view({id: vm.offer.activity.id})" translate="ACTIVITY.PREVIEW.ACTIVITY_VIEW_LINK"></a>
+            </div>
+        </div>
+        <dv class="row section-row">
+            <h3 class="page-header" translate="OFFER.VIEW.BASIC_INFORMATION"></h3>
+        </dv>
+        <div class="row section-row">
+            <div class="col-xs-5" translate="ACTIVITY.PREVIEW.STATUS"></div>
+            <div class="col-xs-7" id="activity-preview-status">{{vm.offer.activity.activityStatusId | dynamicTranslate}} </div>
+        </div>
+        <div class="row section-row">
+            <div class="col-xs-5" translate="OFFER.PREVIEW.NEGOTIATOR"></div>
+            <div class="col-xs-7" id="activity-preview-status">{{vm.offer.negotiator.getName()}} </div>
+        </div>
+        <div class="row section-row">
+            <div class="col-xs-5" translate="ACTIVITY.PREVIEW.CREATION_DATE"></div>
+            <div class="col-xs-7" id="activity-preview-created-date">{{vm.offer.activity.createdDate | date : 'dd-MM-yyyy'}}</div>
+        </div>
+        <div class="row section-row">
+            <div class="col-xs-5" translate="ACTIVITY.PREVIEW.VENDORS"></div>
+            <div class="col-xs-7" id="activity-preview-vendors">
+                <div class="row">
+                    <div class="col-md-12" id="activity-preview-vendor-item-{{contact.id}}" ng-repeat="contact in vm.offer.activity.contacts track by $id(contact)">
+                        {{contact.getName()}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row section-row">
+            <div class="col-xs-5" translate="ACTIVITY.PREVIEW.TYPE"></div>
+            <div class="col-xs-7" id="activity-preview-type">{{vm.offer.activity.activityTypeId | dynamicTranslate}} </div>
+        </div>
+    </side-panel-content>
+</side-panel>

@@ -17,16 +17,16 @@ module Antares {
             element: ng.IAugmentedJQuery,
             controller: NegotiatorsController,
             assertValidator: TestHelpers.AssertValidators;
-            
+
         var pageObjectSelector = {
-            secondaryNegotiatorItems: '*[id^="SecondaryNegotiator"]',
-            leadNegotiatorItem: '*[id^="LeadNegotiator"]',
+            secondaryNegotiatorItems: '#card-list-negotiators [id^="negotiator-"]',
+            leadNegotiatorItem: '#card-lead-negotiator [id^="negotiator-"]',
             noSecondaryNegotiators: '*[id="empty-secondary-negotiators"]',
             componentSorveyorMainHeader: 'h3[translate*="COMMERCIAL"]',
             componentSorveyorSubHeaders: 'h4[translate*="COMMERCIAL"]',
             componentNegotiatorMainHeader: 'h3[translate*="RESIDENTIAL"]',
-            componentNegotiatorSubHeaders: 'h4[translate*="RESIDENTIAL"]'            
-        };       
+            componentNegotiatorSubHeaders: 'h4[translate*="RESIDENTIAL"]'
+        };
 
         var mockedComponentHtml = '<negotiators-view property-division-id="{{propertyDivisionId}}" lead-negotiator="leadNegotiator" secondary-negotiators="secondaryNegotiators">'
             + '</negotiators-view>';
@@ -96,7 +96,7 @@ module Antares {
             describe('when property division is set to \'Commercial\'', () => {
                 it('then all component\'s headers should contain \'Surveyor\'', () => {
                     var division = _.find(divisionCodes, (division) =>  division.id === 'commmercialId');
-                    controller.labelTranslationKey = division.code;                             
+                    controller.labelTranslationKey = division.code;
                     scope.$apply();
 
                     var mainHeader: ng.IAugmentedJQuery = element.find(pageObjectSelector.componentSorveyorMainHeader);
@@ -110,13 +110,13 @@ module Antares {
             describe('when property division is set to \'Residential\'', () => {
                 it('then all component\'s headers should contain \'Negotiator\'', () => {
                     var division = _.find(divisionCodes, (division) =>  division.id === 'residentialId');
-                    controller.labelTranslationKey = division.code;                    
+                    controller.labelTranslationKey = division.code;
                     scope.$apply();
 
                     var mainHeader: ng.IAugmentedJQuery = element.find(pageObjectSelector.componentNegotiatorMainHeader);
                     var subHeaders: ng.IAugmentedJQuery = element.find(pageObjectSelector.componentNegotiatorSubHeaders);
 
-                    expect(mainHeader.text()).toContain(division.code);                    
+                    expect(mainHeader.text()).toContain(division.code);
                     _.each(subHeaders, (header) => expect(header.innerText).toContain(division.code));
                 });
             });

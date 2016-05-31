@@ -14,7 +14,7 @@
 </card>
 <card-list id="card-list-negotiators" show-item-add="nevm.isSecondaryNegotiatorsInEditMode ? null : nevm.editSecondaryNegotiators">
     <card-list-header>
-        <h4 class="page-header" translate="NEGOTIATORS.{{nevm.labelTranslationKey}}.SECONDARY"></h4>
+        <h4 translate="NEGOTIATORS.{{nevm.labelTranslationKey}}.SECONDARY"></h4>
         <search ng-show="nevm.isSecondaryNegotiatorsInEditMode" id="secondary-search"
                 options="nevm.negotiatorsSearchOptions"
                 focus-on="nevm.isSecondaryNegotiatorsInEditMode"
@@ -32,6 +32,10 @@
                 <context-menu-item type="delete"
                                    item="negotiator"
                                    action="nevm.deleteSecondaryNegotiator">
+                </context-menu-item>
+                <context-menu-item type="setAslead"
+                                   item="negotiator"
+                                   action="nevm.switchToLeadNegotiator">
                 </context-menu-item>
             </card-context-menu>
         </card>

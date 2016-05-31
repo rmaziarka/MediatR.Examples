@@ -24,8 +24,10 @@
                 this.offerRepository
                     .Get()
                     .Include(v => v.Requirement)
+                    .Include(v => v.Requirement.Contacts)
                     .Include(v => v.Negotiator)
                     .Include(v => v.Activity)
+                    .Include(v => v.Activity.Contacts)
                     .Include(v => v.Activity.Property.Address)
                     .SingleOrDefault(v => v.Id == message.Id);
 

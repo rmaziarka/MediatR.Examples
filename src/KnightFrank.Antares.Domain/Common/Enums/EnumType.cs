@@ -8,6 +8,7 @@
         EntityType,
         OwnershipType,
         OfferStatus,
+        ActivityUserType,
         ClientCareStatus
     }
 }

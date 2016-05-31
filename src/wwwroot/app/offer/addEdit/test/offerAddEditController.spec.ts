@@ -34,6 +34,10 @@ module Antares {
                 if (!result.pass) {
                     result.message = "Expected actual offer: " + JSON.stringify(actual, null, 4) + " to be same as expected offer: " + JSON.stringify(expected, null, 4);
                 }
+                else {
+                    // if used with .not
+                    result.message = "Expected actual offer to be different than expected offer but they are the same.";
+                }
 
                 return result;
             }

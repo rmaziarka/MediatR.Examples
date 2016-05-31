@@ -9,6 +9,7 @@
 
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.User;
@@ -16,6 +17,7 @@
     using KnightFrank.Antares.Domain.Activity.CommandHandlers;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Common.Enums;
 
     using Moq;
 
@@ -34,6 +36,7 @@
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             [Frozen] Mock<IGenericRepository<User>> userRepository,
             [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
+            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IActivityTypeDefinitionValidator> activityTypeDefinitionValidator,
             User user,
             CreateActivityCommandHandler handler,
@@ -46,6 +49,14 @@
             var property = fixture.Create<Property>();
             property.Address = fixture.Create<Address>();
             propertyRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(property);
+
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
+                                  .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
+                                      new[]
+                                          {
+                                              this.CreateEnumTypeItem(EnumTypeItemCode.LeadNegotiator, fixture),
+                                              this.CreateEnumTypeItem(EnumTypeItemCode.SecondaryNegotiator, fixture)
+                                          }.Where(expr.Compile()));
 
             userRepository.Setup(p => p.FindBy(It.IsAny<Expression<Func<User, bool>>>()))
                           .Returns(new List<User> { user });
@@ -83,6 +94,7 @@
             [Frozen] Mock<IGenericRepository<ActivityTypeDefinition>> activityDefinitionRepository,
             [Frozen] Mock<IActivityTypeDefinitionValidator> activityTypeValidator,
             [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
+            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             User user,
             CreateActivityCommandHandler handler,
             CreateActivityCommand command,
@@ -94,7 +106,13 @@
             var property = fixture.Create<Property>();
             property.Address = fixture.Create<Address>();
             propertyRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(property);
-
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
+                                  .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
+                                      new[]
+                                          {
+                                              this.CreateEnumTypeItem(EnumTypeItemCode.LeadNegotiator, fixture),
+                                              this.CreateEnumTypeItem(EnumTypeItemCode.SecondaryNegotiator, fixture)
+                                          }.Where(expr.Compile()));
 
             activityDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>()))
                                         .Returns(true);
@@ -109,6 +127,11 @@
 
             // Assert
             entityValidator.Verify(x => x.EntityExists(user, user.Id), Times.Once);
+        }
+
+        private EnumTypeItem CreateEnumTypeItem(string code, IFixture fixture)
+        {
+            return fixture.Build<EnumTypeItem>().With(i => i.Code, code).Create();
         }
     }
 }

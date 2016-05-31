@@ -17,7 +17,7 @@
                 .WillCascadeOnDelete(false);
 
             this.HasRequired(p => p.Activity)
-                .WithMany()
+                .WithMany(r => r.Offers)
                 .HasForeignKey(p => p.ActivityId)
                 .WillCascadeOnDelete(false);
 

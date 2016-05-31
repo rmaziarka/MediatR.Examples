@@ -24,6 +24,7 @@
     {
         private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
+        private ViewPropertyPage page;
 
         public ViewPropertySteps(ScenarioContext scenarioContext)
         {
@@ -34,153 +35,149 @@
 
             this.scenarioContext = scenarioContext;
             this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
+
+            if (this.page == null)
+            {
+                this.page = new ViewPropertyPage(this.driverContext);
+            }
         }
 
         [When(@"User navigates to view property page with id")]
         public void OpenViewRequirementPageWithId()
         {
             Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
-            ViewPropertyPage page = new ViewPropertyPage(this.driverContext).OpenViewPropertyPageWithId(propertyId.ToString());
-            this.scenarioContext.Set(page, "ViewPropertyPage");
+            this.page = new ViewPropertyPage(this.driverContext).OpenViewPropertyPageWithId(propertyId.ToString());
         }
 
         [When(@"User clicks add activites button on view property page")]
         public void ClickAddActivityButton()
         {
-            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").AddActivity().WaitForSidePanelToShow();
+            this.page.AddActivity().WaitForSidePanelToShow();
         }
 
         [When(@"User clicks edit property button on view property page")]
         public void WhenUserClicksEditButtonOnCreatePropertyPage()
         {
-            this.scenarioContext.Set(this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").EditProperty(),
-                "CreatePropertyPage");
+            this.page.EditProperty();
         }
 
         [When(@"User selects contacts for ownership on view property page")]
         public void SelectContactsForOwnership(Table table)
         {
-            ViewPropertyPage page =
-                this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").SetOwnership().WaitForSidePanelToShow();
+            this.page.SetOwnership().WaitForSidePanelToShow();
             IEnumerable<Contact> contacts = table.CreateSet<Contact>();
 
             foreach (Contact contact in contacts)
             {
-                page.ContactsList.WaitForContactsListToLoad().SelectContact(contact.FirstName, contact.Surname);
+                this.page.ContactsList.WaitForContactsListToLoad().SelectContact(contact.FirstName, contact.Surname);
             }
-            page.ContactsList.ConfigureOwnership();
+            this.page.ContactsList.ConfigureOwnership();
         }
 
         [When(@"User clicks activity details link on view property page")]
         public void OpenActivitiesPreview()
         {
-            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").OpenActivityDetails().WaitForSidePanelToShow();
+            this.page.OpenActivityDetails().WaitForSidePanelToShow();
         }
 
         [When(@"User clicks view activity link from activity on view property page")]
         public void OpenViewActivityPage()
         {
-            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-            this.scenarioContext.Set(page.PreviewDetails.ClickViewActivity(), "ViewActivityPage");
+            this.page.PreviewDetails.ClickViewActivity();
         }
 
         [When(@"User selects (.*) activity type on create activity page")]
         public void SelectActivityType(string type)
         {
-            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").Activity.SelectActivityType(type);
+            this.page.Activity.SelectActivityType(type);
         }
 
         [When(@"User selects (.*) activity status on create activity page")]
         public void SelectActivityStatus(string status)
         {
-            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").Activity.SelectActivityStatus(status);
+            this.page.Activity.SelectActivityStatus(status);
         }
 
         [When(@"User clicks save button on create activity page")]
         public void ClickSaveButtonOnActivityPanel()
         {
-            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-            page.Activity.SaveActivity();
-            page.WaitForSidePanelToHide();
+            this.page.Activity.SaveActivity();
+            this.page.WaitForSidePanelToHide();
         }
 
         [When(@"User fills in ownership details on view property page")]
         public void FillInOwnershipDetails(Table table)
         {
-            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
             var details = table.CreateInstance<OwnershipDetails>();
 
             if (Convert.ToBoolean(details.Current))
             {
-                page.Ownership.SetCurrentOwnership()
+                this.page.Ownership.SetCurrentOwnership()
                     .SelectOwnershipType(details.Type);
                 if (!string.IsNullOrEmpty(details.PurchasePrice))
                 {
-                    page.Ownership.SetPurchasePrice(details.PurchasePrice);
+                    this.page.Ownership.SetPurchasePrice(details.PurchasePrice);
                 }
                 if (!string.IsNullOrEmpty(details.PurchaseDate))
                 {
-                    page.Ownership.SetPurchaseDate(details.PurchaseDate);
+                    this.page.Ownership.SetPurchaseDate(details.PurchaseDate);
                 }
             }
             else
             {
-                page.Ownership.SetOwnership()
+                this.page.Ownership.SetOwnership()
                     .SelectOwnershipType(details.Type);
                 if (!string.IsNullOrEmpty(details.PurchasePrice))
                 {
-                    page.Ownership.SetPurchasePrice(details.PurchasePrice);
+                    this.page.Ownership.SetPurchasePrice(details.PurchasePrice);
                 }
                 if (!string.IsNullOrEmpty(details.SellPrice))
                 {
-                    page.Ownership.SetSellPrice(details.SellPrice);
+                    this.page.Ownership.SetSellPrice(details.SellPrice);
                 }
                 if (!string.IsNullOrEmpty(details.PurchaseDate))
                 {
-                    page.Ownership.SetPurchaseDate(details.PurchaseDate);
+                    this.page.Ownership.SetPurchaseDate(details.PurchaseDate);
                 }
                 if (!string.IsNullOrEmpty(details.SellDate))
                 {
-                    page.Ownership.SetSellDate(details.SellDate);
+                    this.page.Ownership.SetSellDate(details.SellDate);
                 }
             }
-            page.Ownership.SaveOwnership();
-            page.WaitForSidePanelToHide();
+            this.page.Ownership.SaveOwnership();
+            this.page.WaitForSidePanelToHide();
         }
 
         [When(@"User clicks add area breakdown button on view property page")]
         public void AddArea()
         {
-            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").CreateAreaBreakdown().WaitForSidePanelToShow();
+            this.page.CreateAreaBreakdown().WaitForSidePanelToShow();
         }
 
         [When(@"User fills in area details on view property page")]
         [When(@"User updates area details on view property page")]
         public void AddAreaDetails(Table table)
         {
-            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
             List<PropertyAreaBreakdown> areaBreakdowns = table.CreateSet<PropertyAreaBreakdown>().ToList();
 
             var place = 1;
             foreach (PropertyAreaBreakdown areaBreakdown in areaBreakdowns)
             {
-                page.Area.SetAreaDetails(areaBreakdown.Name, areaBreakdown.Size, place++);
+                this.page.Area.SetAreaDetails(areaBreakdown.Name, areaBreakdown.Size, place++);
             }
         }
 
         [When(@"User clicks save area button on view property page")]
         public void SaveAreas()
         {
-            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-            page.Area.SaveArea();
-            page.WaitForSidePanelToHide();
+            this.page.Area.SaveArea();
+            this.page.WaitForSidePanelToHide();
         }
 
         [When(@"User clicks edit area button for (.*) area on view property page")]
         public void EditArea(int position)
         {
-            this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage")
-                .OpenAreaActions(position)
+            this.page.OpenAreaActions(position)
                 .EditArea(1)
                 .WaitForSidePanelToShow();
         }
@@ -188,27 +185,24 @@
         [Then(@"Activity details are set on view property page")]
         public void CheckActivityDetails(Table table)
         {
-            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
             var details = table.CreateInstance<ActivityDetails>();
 
             Verify.That(this.driverContext,
-                () => Assert.Equal(details.Vendor, page.ActivityVendor),
-                () => Assert.Equal(details.Status, page.ActivityStatus),
-                () => Assert.Equal(details.Type, page.ActivityType),
-                () => Assert.Equal(DateTime.UtcNow.ToString("dd-MM-yyyy"), page.GetActivityDate()));
+                () => Assert.Equal(details.Vendor, this.page.ActivityVendor),
+                () => Assert.Equal(details.Status, this.page.ActivityStatus),
+                () => Assert.Equal(details.Type, this.page.ActivityType),
+                () => Assert.Equal(DateTime.UtcNow.ToString("dd-MM-yyyy"), this.page.GetActivityDate()));
         }
 
         [Then(@"Property should be updated with address details")]
         [Then(@"New property should be created with address details")]
         public void CheckIfPropertyCreated(Table table)
         {
-            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-
             foreach (string field in table.Rows.SelectMany(row => row.Values))
             {
                 Assert.True(field.Equals(string.Empty)
-                    ? page.IsAddressDetailsNotVisible(field)
-                    : page.IsAddressDetailsVisible(field));
+                    ? this.page.IsAddressDetailsNotVisible(field)
+                    : this.page.IsAddressDetailsVisible(field));
             }
         }
 
@@ -216,10 +210,9 @@
         [Then(@"Property should be updated with (.*) property type and following attributes")]
         public void CheckPropertyType(string propertyType, Table table)
         {
-            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
             var details = table.CreateInstance<PropertyDetails>();
 
-            Dictionary<string, string> actualDetails = page.GetPropertyDetails();
+            Dictionary<string, string> actualDetails = this.page.GetPropertyDetails();
             Dictionary<string, string> expectedDetails =
                 details.GetType()
                        .GetProperties(BindingFlags.Instance | BindingFlags.Public)
@@ -227,20 +220,19 @@
                        .Where(item => item.Value != null)
                        .ToDictionary(x => x.Key, x => x.Value.ToString());
 
-            Assert.Equal(propertyType, page.PropertyType);
+            Assert.Equal(propertyType, this.page.PropertyType);
             actualDetails.ShouldBeEquivalentTo(expectedDetails);
         }
 
         [Then(@"Ownership details should contain following data on view property page")]
         public void CheckOwnershipContacts(Table table)
         {
-            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
             IEnumerable<OwnershipDetails> details = table.CreateSet<OwnershipDetails>();
 
             foreach (OwnershipDetails ownershipDetails in details)
             {
-                string contact = page.GetOwnershipContact(ownershipDetails.Position);
-                string currentOwnershipDetails = page.GetOwnershipDetails(ownershipDetails.Position);
+                string contact = this.page.GetOwnershipContact(ownershipDetails.Position);
+                string currentOwnershipDetails = this.page.GetOwnershipDetails(ownershipDetails.Position);
                 string expectdOwnershipDetails = ownershipDetails.Type.ToUpper();
 
                 if (!string.IsNullOrEmpty(ownershipDetails.PurchaseDate) && string.IsNullOrEmpty(ownershipDetails.SellDate))
@@ -268,25 +260,23 @@
         [Then(@"View property page is displayed")]
         public void CheckIfViewPropertyPresent()
         {
-            Assert.True(this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").IsViewPropertyFormPresent());
+            Assert.True(this.page.IsViewPropertyFormPresent());
         }
 
         [Then(@"Activity details are set on create activity page")]
         public void CheckActivityDetailsonActivityPanel(Table table)
         {
-            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
             var details = table.CreateInstance<ActivityDetails>();
 
             Verify.That(this.driverContext,
-                () => Assert.Equal(details.Vendor, page.Activity.GetActivityVendor()),
-                () => Assert.Equal(details.Status, page.Activity.GetActivityStatus()));
+                () => Assert.Equal(details.Vendor, this.page.Activity.GetActivityVendor()),
+                () => Assert.Equal(details.Status, this.page.Activity.GetActivityStatus()));
         }
 
         [Then(@"Characteristics are displayed on view property page")]
         public void CheckCharacteristics(Table table)
         {
-            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
-            Dictionary<string, string> actualDetails = page.GetCharacteristics();
+            Dictionary<string, string> actualDetails = this.page.GetCharacteristics();
             Dictionary<string, string> characteristics = table.CreateSet<Characteristic>()
                                                               .ToDictionary(x => x.Name, x => x.Comment);
 
@@ -297,7 +287,7 @@
         public void CheckAreasOrder(Table table)
         {
             List<PropertyAreaBreakdown> expectedAreas = table.CreateSet<PropertyAreaBreakdown>().ToList();
-            List<PropertyAreaBreakdown> actualAreas = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage").GetAreas();
+            List<PropertyAreaBreakdown> actualAreas = this.page.GetAreas();
             actualAreas.Should().Equal(expectedAreas, (c1, c2) =>
                 c1.Name.Equals(c2.Name) &&
                 c1.Order.Equals(c2.Order) &&
@@ -307,11 +297,10 @@
         [Then(@"Property created success message should be displayed")]
         public void CheckIfSuccessMessageDisplayed()
         {
-            var page = this.scenarioContext.Get<ViewPropertyPage>("ViewPropertyPage");
             Verify.That(this.driverContext,
-                () => Assert.True(page.IsSuccessMessageDisplayed()),
-                () => Assert.Equal("New property has been created", page.SuccessMessage));
-            page.WaitForSuccessMessageToHide();
+                () => Assert.True(this.page.IsSuccessMessageDisplayed()),
+                () => Assert.Equal("New property has been created", this.page.SuccessMessage));
+            this.page.WaitForSuccessMessageToHide();
         }
     }
 }

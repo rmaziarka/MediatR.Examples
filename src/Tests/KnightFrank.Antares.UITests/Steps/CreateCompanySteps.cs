@@ -21,7 +21,9 @@
     public class CreateCompanySteps
     {
         private readonly DriverContext driverContext;
+        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
+        private CreateCompanyPage page;
 
         private string url;
 
@@ -31,16 +33,20 @@
             {
                 throw new ArgumentNullException(nameof(scenarioContext));
             }
-            this.scenarioContext = scenarioContext;
 
+            this.scenarioContext = scenarioContext;
             this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
+
+            if (this.page == null)
+            {
+                this.page = new CreateCompanyPage(this.driverContext);
+            }
         }
 
         [When(@"User navigates to create company page")]
         public void OpenCreateCompanyPage()
         {
-            CreateCompanyPage page = new CreateCompanyPage(this.driverContext).OpenCreateCompanyPage();
-            this.scenarioContext["CreateCompanyPage"] = page;
+            this.page = new CreateCompanyPage(this.driverContext).OpenCreateCompanyPage();
         }
 
         [When(@"User fills in company details on create company page")]
@@ -50,28 +56,28 @@
             this.url = details.WebsiteUrl;
             this.scenarioContext.Get<CreateCompanyPage>("CreateCompanyPage").SetCompanyName(details.Name);
             this.scenarioContext.Get<CreateCompanyPage>("CreateCompanyPage").SetWebsite(details.WebsiteUrl);
+            this.page.SetCompanyName(details.Name);
         }
 
         [When(@"User clicks save company button on create company page")]
         public void SaveCompany()
         {
-            this.scenarioContext.Get<CreateCompanyPage>("CreateCompanyPage").SaveCompany();
+            this.page.SaveCompany();
         }
 
         [When(@"User selects contacts on create company page")]
         public void SelectContactsForCompany(Table table)
         {
-            var page = this.scenarioContext.Get<CreateCompanyPage>("CreateCompanyPage");
-            page.AddContactToCompany().WaitForSidePanelToShow();
+            this.page.AddContactToCompany().WaitForSidePanelToShow();
 
             IEnumerable<Contact> contacts = table.CreateSet<Contact>();
 
             foreach (Contact contact in contacts)
             {
-                page.ContactsList.WaitForContactsListToLoad().SelectContact(contact.FirstName, contact.Surname);
+                this.page.ContactsList.WaitForContactsListToLoad().SelectContact(contact.FirstName, contact.Surname);
             }
-            page.ContactsList.SaveContact();
-            page.WaitForSidePanelToHide();
+            this.page.ContactsList.SaveContact();
+            this.page.WaitForSidePanelToHide();
         }
 
         [When(@"User clicks on website url icon")]
@@ -85,12 +91,10 @@
         [Then(@"List of company contacts should contain following contacts")]
         public void CheckContactsList(Table table)
         {
-            var page = this.scenarioContext.Get<CreateCompanyPage>("CreateCompanyPage");
-
             List<string> contacts =
                 table.CreateSet<Contact>().Select(contact => contact.FirstName + " " + contact.Surname).ToList();
 
-            List<string> selectedContacts = page.Contacts;
+            List<string> selectedContacts = this.page.Contacts;
 
             Assert.Equal(contacts.Count, selectedContacts.Count);
             contacts.ShouldBeEquivalentTo(selectedContacts);
@@ -99,7 +103,7 @@
         [Then(@"Company form on create company page should be diaplyed")]
         public void CheckIfCreateContactIsDisplayed()
         {
-            Assert.True(new CreateCompanyPage(this.driverContext).IsCompanyFormPresent());
+            Assert.True(this.page.IsCompanyFormPresent());
         }
 
         [Then(@"New company should be created")]

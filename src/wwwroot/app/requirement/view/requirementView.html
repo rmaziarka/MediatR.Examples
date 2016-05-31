@@ -81,7 +81,8 @@
                         <card show-context-menu="true" show-item-details="vm.showOfferPreview" display-new-control="true"
                               card-template-url="'app/requirement/view/requirementOffersCard.html'" item="offer">
                             <card-context-menu>
-                                    <context-menu-item type="edit" item="offer" action="vm.showEditOfferPanel"></context-menu-item>
+                                <context-menu-item type="edit" item="offer" action="vm.showEditOfferPanel"></context-menu-item>
+                                <context-menu-item type="details" item="offer" action="vm.showOfferDetailsView"></context-menu-item>
                             </card-context-menu>
                         </card>
                     </card-list-item>
@@ -97,7 +98,11 @@
         <h3 translate="REQUIREMENT.VIEW.OFFERDETAILS" ng-show="!vm.offerPreviewPanelVisible"></h3>
     </side-panel-header>
     <side-panel-content>
-        <offer-preview component-id="vm.componentIds.offerPreviewId" ng-show="vm.offerPreviewPanelVisible"></offer-preview>
+        <offer-preview component-id="vm.componentIds.offerPreviewId" offer="vm.selectedOffer" ng-show="vm.offerPreviewPanelVisible">
+            <offer-preview-custom-item>
+                <activity-card activity="vm.selectedOffer.activity" />
+            </offer-preview-custom-item>
+        </offer-preview>
         <offer-edit component-id="vm.componentIds.offerEditPreviewId" ng-show="!vm.offerPreviewPanelVisible" mode="edit"></offer-edit>
         <busy is-busy="vm.addEditOfferBusy" label="{{'OFFER.ADD.SAVING_OFFER_IN_PROGRESS' | translate}}"></busy>
     </side-panel-content>

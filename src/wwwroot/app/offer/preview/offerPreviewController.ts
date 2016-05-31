@@ -13,22 +13,6 @@ module Antares {
                 private $state: ng.ui.IStateService) {
                 componentRegistry.register(this, this.componentId);
             }
-
-            getOffer = (): Business.Offer =>{
-                return this.offer;
-            }
-
-            setOffer = (offer: Business.Offer) => {
-                this.offer = offer;
-            }
-
-            clearOfferPreview = () => {
-                this.offer = new Business.Offer();
-            }
-
-            goToActivityView = () => {
-                this.$state.go('app.activity-view', { id: this.offer.activity.id });
-            }
         }
 
         angular.module('app').controller('offerPreviewController', OfferPreviewController);

@@ -1,0 +1,14 @@
+﻿<div class="section-details">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="panel-item">
+                {{:: vm.activity.property.address.getAddressText()}}
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-right" id="activity-link">
+                    <a ui-sref="app.activity-view({id: vm.activity.id})" translate="COMMON.VIEW"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

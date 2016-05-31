@@ -14,7 +14,7 @@
     <div class="card-body" ng-click="cvm.showItemDetails(cvm.item)">
         <div ng-include src="cvm.cardTemplateUrl"></div>
     </div>
-    <div class="card-action" tabindex="-1" uib-dropdown uib-dropdown-toggle>
+    <div class="card-action" tabindex="-1" ng-if="cvm.showContextMenu" uib-dropdown uib-dropdown-toggle>
         <a href="" class="card-menu-button"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
         <ul class="card-menu dropdown-menu" ng-transclude="contextMenu" uib-dropdown-menu role="menu">
         </ul>

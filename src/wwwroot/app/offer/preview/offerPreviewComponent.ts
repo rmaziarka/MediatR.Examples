@@ -5,9 +5,12 @@ module Antares.Component {
         controller: 'offerPreviewController',
         controllerAs : 'vm',
         templateUrl: 'app/offer/preview/offerPreview.html',
-        transclude : true,
+        transclude : {
+            customItem: "?offerPreviewCustomItem"
+        },
         bindings : {
             componentId: '<',
+            offer: '<'
         }
     });
 }

@@ -16,7 +16,9 @@
     public class CreateContactSteps
     {
         private readonly DriverContext driverContext;
+        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
+        private CreateContactPage page;
 
         public CreateContactSteps(ScenarioContext scenarioContext)
         {
@@ -24,24 +26,28 @@
             {
                 throw new ArgumentNullException(nameof(scenarioContext));
             }
+
             this.scenarioContext = scenarioContext;
             this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
+
+            if (this.page == null)
+            {
+                this.page = new CreateContactPage(this.driverContext);
+            }
         }
 
         [Given(@"User navigates to create contact page")]
         public void OpenCreateContactPage()
         {
-            CreateContactPage page = new CreateContactPage(this.driverContext).OpenCreateContactPage();
-            this.scenarioContext["CreateContactPage"] = page;
+            this.page = new CreateContactPage(this.driverContext).OpenCreateContactPage();
         }
 
         [When(@"User fills in contact details on create contact page")]
         public void CreateContact(Table table)
         {
-            var page = this.scenarioContext.Get<CreateContactPage>("CreateContactPage");
             var contact = table.CreateInstance<Contact>();
 
-            page.SetTitle(contact.Title)
+            this.page.SetTitle(contact.Title)
                 .SetFirstName(contact.FirstName)
                 .SetSurname(contact.Surname);
         }
@@ -49,7 +55,7 @@
         [When(@"User clicks save contact button on create contact page")]
         public void SaveContact()
         {
-            this.scenarioContext.Get<CreateContactPage>("CreateContactPage").SaveContact();
+            this.page.SaveContact();
         }
 
         [Then(@"New contact should be created")]
