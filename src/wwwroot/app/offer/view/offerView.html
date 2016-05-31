@@ -3,7 +3,8 @@
         <h2 class="page-header" translate="OFFER.VIEW.VIEW_OFFER"></h2>
         <div class="well">
             <div>
-                <span class="offer-status offer-status-{{vm.offer.statusId | dynamicTranslate | lowercase}}">{{vm.offer.statusId | dynamicTranslate}}</span> {{vm.offer.requirement.getContactNames()}}
+                <span class="offer-status offer-status-{{vm.offer.statusId | dynamicTranslate | lowercase}}">{{vm.offer.statusId | dynamicTranslate}}</span>
+                <span class="offer-title">{{vm.offer.requirement.getContactNames()}}</span>
             </div>
         </div>
     </div>
