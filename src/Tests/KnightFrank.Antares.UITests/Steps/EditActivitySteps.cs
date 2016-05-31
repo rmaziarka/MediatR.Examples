@@ -73,5 +73,11 @@
         {
             this.page.RemoveSecondaryNegotiator(secondaryNegotiator);
         }
+
+        [When(@"User sets (.*) secondary negotiator as lead negotiator on edit activity page")]
+        public void SetLeadNegotiatorFromSecondaryNegotiator(int position)
+        {
+            this.page.SetSecondaryNegotiatorAsLeadNegotiator(position);
+        }
     }
 }
