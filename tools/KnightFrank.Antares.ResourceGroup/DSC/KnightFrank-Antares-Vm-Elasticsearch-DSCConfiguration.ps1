@@ -29,49 +29,9 @@ Configuration SetupElasticsearchVm
 		[string]
 		$JdbcFileName,
 
-		[Parameter(Mandatory = $true)] 
-		[string]
-		$JdbcVersion,
-
 		[Parameter(Mandatory = $true)]
 		[string]
-		$ElasticsearchIp,
-
-		[Parameter(Mandatory = $true)]
-		[string]
-		$SqlIp,
-
-		[Parameter(Mandatory = $true)]
-		[string]
-		$SqlPort,
-
-		[Parameter(Mandatory = $true)]
-		[string]
-		$SqlDatabaseName,
-
-		[Parameter(Mandatory = $true)]
-		[string]
-		$SqlUser,
-
-		[Parameter(Mandatory = $true)]
-		[string]
-		$SqlPassword,
-
-		[Parameter(Mandatory = $true)]
-		[string]
-		$ElasticsearchIndex,
-
-		[Parameter(Mandatory = $true)]
-		[string]
-		$JdbcSchedule,
-
-		[Parameter(Mandatory = $true)]
-		[string]
-		$BranchName,
-
-		[Parameter(Mandatory = $false)]
-		[hashtable]
-		$AdditionalJdbcConfigValues,    
+		$ElasticsearchIp,  
 
 		[Parameter(Mandatory = $false)]
 		[hashtable]
@@ -90,8 +50,7 @@ Configuration SetupElasticsearchVm
 	$elasticsearchPort = "9200"
 
 	$jdbcSource =  'elasticsearch'
-	$jdbcUnpack = "$env:SystemDrive\jdbc\$BranchName"    
-	$jdbcFolder = "$jdbcUnpack\elasticsearch-jdbc-$JdbcVersion"
+	$jdbcFileName = 'elasticsearch-jdbc-2.3.2.0.zip'	
 
 	$nssmSource = 'nssm'
     $nssmFileName = 'nssm-2.24.zip'
@@ -223,45 +182,6 @@ Configuration SetupElasticsearchVm
             DependsOn = '[File]TempFolder'
 		}
 
-		xArchive UnzipJdbc {
-			Path = Join-Path -Path $tempDownloadFolder -ChildPath $JdbcFileName
-			Destination = $jdbcUnpack
-			DependsOn = @('[Script]CopyJdbcZip')
-			DestinationType = "Directory"
-		}
-
-		Script ConfigureJdbc
-	    {
-		    TestScript = { 
-			    $false
-		    }
-		    GetScript = {@{Result = "ConfigureJdbc"}}
-		    SetScript =
-		    {
-				#$pathToExecute = "$using:jdbcFolder\bin\execute.bat" 
-				$pathToSettings = "$using:jdbcFolder\bin\settings.json" 
-				
-				#(Get-Content -Path $pathToExecute).replace('$jdbcFolder', "$using:jdbcFolder").replace('$javaFolder', $using:javaFolder) | Set-Content $pathToExecute
-				
-				$settings = Get-Content -Path $pathToSettings -Raw | ConvertFrom-Json
-				$settings.jdbc.url = "jdbc:sqlserver://" + $using:SqlIp + ":" + $using:SqlPort+ ";databaseName=$using:SqlDatabaseName"
-				$settings.jdbc.user = $using:SqlUser
-				$settings.jdbc.password = $using:SqlPassword
-				$settings.jdbc.index = $using:ElasticsearchIndex
-				#$settings.jdbc."elasticsearch.Host" = $using:elasticsearchHost
-				#$settings.jdbc."elasticsearch.Port" = $using:elasticsearchPort
-				$settings.jdbc.schedule = $using:JdbcSchedule
-				if($using:AdditionalJdbcConfigValues) {
-					$settings.jdbc | Add-Member -PassThru -NotePropertyMembers $using:AdditionalJdbcConfigValues
-				}
-				
-				$json = $settings | ConvertTo-Json -Depth 999
-				Write-Verbose $json
-				[System.IO.File]::WriteAllLines($pathToSettings, $json)
-		    }
-			DependsOn = '[xArchive]UnzipJdbc'
-	    }
-
 		xRemoteFile CopyNssm
 	    {
 		    DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $nssmFileName
@@ -276,13 +196,5 @@ Configuration SetupElasticsearchVm
 			DependsOn = @('[xRemoteFile]CopyNssm')
 			DestinationType = "Directory"
 		}
-
-        cNssm StartJdbc {
-            ExeFolder = "$jdbcFolder\bin"
-            ExeOrBatName = "execute.bat"
-            NssmFolder = $nssmFolder
-            ServiceName = "jdbc-$jdbcVersion-$BranchName"
-            DependsON = @('[xArchive]UnzipNssm', '[Script]ConfigureJdbc')
-        }
 	}
 }

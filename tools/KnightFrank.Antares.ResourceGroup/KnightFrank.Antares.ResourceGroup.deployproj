@@ -181,6 +181,7 @@
     <None Include="DSC\xWebAdministration\LICENSE" />
     <None Include="DSC\xWebAdministration\README.md" />
     <None Include="DSC\xWebAdministration\xWebAdministration.psd1" />
+    <None Include="OctupusJdbc.ps1" />
     <None Include="KnightFrank-Antares-Vm-Elasticsearch-DSCConfiguration.local.ps1" />
     <None Include="resourcegroup.nuspec" />
   </ItemGroup>
