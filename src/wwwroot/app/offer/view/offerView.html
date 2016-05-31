@@ -1,6 +1,6 @@
 ﻿<div class="row">
-    <div class="col-md-12">
-        <h2 class="page-header">View offer</h2>
+    <div id="view-offer-header" lass="col-md-12">
+        <h2 class="page-header" translate="OFFER.VIEW.VIEW_OFFER"></h2>
         <div class="well">
             <div>
                 <span class="offer-status offer-status-{{vm.offer.statusId | dynamicTranslate | lowercase}}">{{vm.offer.statusId | dynamicTranslate}}</span> {{vm.offer.requirement.getContactNames()}}
@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <section>
+        <section id="section-vendor">
             <h3 class="page-header" translate="OFFER.VIEW.VENDOR"></h3>
 
             <h5 translate="OFFER.PREVIEW.ACTIVITY"></h5>
@@ -21,7 +21,7 @@
                 </card>
             </card-list-item>
         </section>
-        <section>
+        <section id="section-applicant">
             <h3 class="page-header" translate="OFFER.VIEW.APPLICANT"></h3>
 
             <h5 translate="VIEWING.ADD.REQUIREMENT"></h5>
@@ -36,7 +36,7 @@
         </section>
     </div>
     <div class="col-md-4">
-        <section>
+        <section id="section-basic-information">
             <h3 class="page-header" translate="OFFER.VIEW.BASIC_INFORMATION"></h3>
 
             <div class="section-details">
