@@ -1,15 +1,12 @@
-﻿namespace KnightFrank.Antares.Domain.Contact.Queries
+﻿namespace KnightFrank.Antares.Domain.Company.Queries
 {
-    using System;
-
     using FluentValidation;
 
     public class CompanyQueryValidator : AbstractValidator<CompanyQuery>
     {
         public CompanyQueryValidator()
         {
-            this.RuleFor(q => q).NotNull();
-            this.RuleFor(q => q.Id).NotEqual(Guid.Empty);
-        }
+            this.RuleFor(q => q.Id).NotEmpty();
+         }
     }
 }

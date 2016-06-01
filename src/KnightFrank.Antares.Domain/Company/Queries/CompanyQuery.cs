@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.Contact.Queries
+﻿namespace KnightFrank.Antares.Domain.Company.Queries
 {
     using System;
 

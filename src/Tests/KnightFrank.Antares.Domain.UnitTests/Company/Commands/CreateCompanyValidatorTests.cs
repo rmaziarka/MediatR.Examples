@@ -27,19 +27,7 @@
     [Collection("CreateCompanyValidator")]
     public class CreateCompanyValidatorTests : IClassFixture<BaseTestClassFixture>
     {
-        [Theory]
-        [AutoMoqData]
-        public void Given_ValidCreateCompanyCommand_When_Validating_Then_IsValid(
-            CreateCompanyCommandValidator validator,
-            CreateCompanyCommand cmd)
-        {
-            // Act
-            ValidationResult result = validator.Validate(cmd);
-
-            // Assert
-            result.IsValid.Should().BeTrue();
-        }
-
+  
         [Theory]
         [AutoMoqData]
         public void Given_EmptyName_When_Validating_Then_IsInvalidAndHasAppropriateErrorMsg(

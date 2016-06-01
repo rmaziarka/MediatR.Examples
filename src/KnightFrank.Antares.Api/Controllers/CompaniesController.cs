@@ -3,14 +3,12 @@
 namespace KnightFrank.Antares.Api.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
 
     using KnightFrank.Antares.Dal.Model.Company;
-    using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Domain.Company.Commands;
-    using KnightFrank.Antares.Domain.Contact.Queries;
+    using KnightFrank.Antares.Domain.Company.Queries;
 
     using MediatR;
 
