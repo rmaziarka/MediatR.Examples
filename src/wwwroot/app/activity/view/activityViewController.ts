@@ -12,6 +12,7 @@ module Antares.Activity.View {
         activityAttachmentResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityAttachmentResource>;
         saveActivityAttachmentBusy: boolean = false;
         selectedOffer: Dto.IOffer;
+        selectedViewing: Dto.IViewing;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -67,9 +68,8 @@ module Antares.Activity.View {
                 });
         };
 
-        showViewingPreview = (viewing: Common.Models.Dto.IViewing) => {
-            this.components.viewingPreview().clearViewingPreview();
-            this.components.viewingPreview().setViewing(viewing);
+        showViewingPreview = (viewing: Common.Models.Dto.IViewing) =>{
+            this.selectedViewing = viewing;
             this.showPanel(this.components.panels.previewViewingsSidePanel);
         }
 

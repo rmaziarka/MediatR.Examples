@@ -145,7 +145,10 @@
         <h3 translate="ACTIVITY.VIEW.VIEWING_DETAILS"></h3>
     </side-panel-header>
     <side-panel-content>
-        <viewing-preview component-id="avvm.componentIds.viewingPreviewId" page-context="activity">
+        <viewing-preview component-id="avvm.componentIds.viewingPreviewId" viewing="avvm.selectedViewing">
+            <viewing-preview-custom-item>
+                <requirement-card requirement="avvm.selectedViewing.requirement" />
+            </viewing-preview-custom-item>
         </viewing-preview>
     </side-panel-content>
 </side-panel>

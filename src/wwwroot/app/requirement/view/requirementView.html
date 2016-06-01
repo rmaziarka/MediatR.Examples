@@ -183,7 +183,10 @@
         <h3 translate="REQUIREMENT.VIEW.VIEWINGADD"></h3>
     </side-panel-header>
     <side-panel-content>
-        <viewing-preview component-id="vm.componentIds.viewingPreviewId" ng-show="vm.viewingPreviewPanelVisible" page-context="requirement">
+        <viewing-preview component-id="vm.componentIds.viewingPreviewId" viewing="vm.selectedViewing" ng-show="vm.viewingPreviewPanelVisible">
+            <viewing-preview-custom-item>
+                <activity-card activity="vm.selectedViewing.activity" />
+            </viewing-preview-custom-item>
         </viewing-preview>
         <viewing-add component-id="vm.componentIds.viewingEditId" requirement="vm.requirement" attendees="vm.requirement.contacts"
                      ng-show="!vm.viewingPreviewPanelVisible" mode="edit">
