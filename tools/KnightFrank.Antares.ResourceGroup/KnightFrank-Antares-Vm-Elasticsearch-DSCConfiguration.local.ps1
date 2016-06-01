@@ -90,7 +90,7 @@ Configuration SetupElasticsearchVmLocal
 	{
 		LocalConfigurationManager
 		{
-			RebootNodeIfNeeded = $false
+			RebootNodeIfNeeded = $true
 			ActionAfterReboot = "ContinueConfiguration"
 		}
 		#####
