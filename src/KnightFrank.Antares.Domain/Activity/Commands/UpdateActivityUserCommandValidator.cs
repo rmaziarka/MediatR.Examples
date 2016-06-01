@@ -7,7 +7,7 @@
         public UpdateActivityUserCommandValidator(
 )
         {
-            this.RuleFor(x => x.Id).NotEmpty();
+            this.RuleFor(x => x.UserId).NotEmpty();
         }
     }
 }

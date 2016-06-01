@@ -160,7 +160,7 @@
             updateActivityCommand.ActivityTypeId = activityFromDatabase.ActivityTypeId;
             updateActivityCommand.LeadNegotiator = new UpdateActivityUserCommand
             {
-                Id = activityFromDatabase.ActivityUsers.First().UserId,
+                UserId = activityFromDatabase.ActivityUsers.First().UserId,
                 CallDate = DateTime.UtcNow.AddDays(1)
             };
 
