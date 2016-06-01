@@ -15,6 +15,7 @@
     using Xunit;
 
     using System.Collections.Generic;
+    using System.Linq;
 
     using KnightFrank.Antares.Domain.Activity.Commands;
 
@@ -113,14 +114,24 @@
         public void Given_ValidUpdateActivityCommand_When_SecondaryNegotiatorsIsEmpty_Validating_Then_IsValid(
             UpdateActivityCommand command)
         {
-            command.SecondaryNegotiators = new List<UpdateActivityUserCommand>();
+            command.SecondaryNegotiators = new List<UpdateActivityUser>();
 
             this.AssertIfValid(command);
         }
 
         [Theory]
         [AutoMoqData]
-        public void Given_ValidUpdateActivityCommand_When_LeadNegotiatorIsNotSet_Validating_Then_IsNotValid(
+        public void Given_ValidUpdateActivityCommand_When_SecondaryNegotiatorCallDateIsNull_Validating_Then_IsValid(
+            UpdateActivityCommand command)
+        {
+            command.SecondaryNegotiators.First().CallDate = null;
+
+            this.AssertIfValid(command);
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_UpdateActivityCommand_When_LeadNegotiatorIsNotSet_Validating_Then_IsNotValid(
             UpdateActivityCommand command)
         {
             // Arrange
@@ -133,10 +144,25 @@
             validationResult.IsInvalid(nameof(command.LeadNegotiator), nameof(Messages.notnull_error));
         }
 
+        [Theory]
+        [AutoMoqData]
+        public void Given_UpdateActivityCommand_When_LeadNegotiatorCallDateIsNull_Validating_Then_IsNotValid(
+            UpdateActivityCommand command)
+        {
+            // Arrange
+            command.LeadNegotiator.CallDate = null;
+
+            // Act
+            ValidationResult validationResult = this.validator.Validate(command);
+
+            // Assert
+            validationResult.IsInvalid(nameof(command.LeadNegotiator) + "." + nameof(command.LeadNegotiator.CallDate), nameof(Messages.notnull_error));
+        }
+
         [Fact]
         public void Given_UpdateActivityCommandValidator_When_Validating_LeadNegotiatorHaveConfiguredValidator()
         {
-            this.validator.ShouldHaveChildValidator(x => x.LeadNegotiator, typeof(UpdateActivityUserCommandValidator));
+            this.validator.ShouldHaveChildValidator(x => x.LeadNegotiator, typeof(UpdateActivityUserValidator));
         }
 
         [Theory]
@@ -157,7 +183,7 @@
         [Fact]
         public void Given_UpdateActivityCommandValidator_When_Validating_SecondaryNegotiatorsHaveConfiguredValidator()
         {
-            this.validator.ShouldHaveChildValidator(x => x.SecondaryNegotiators, typeof(UpdateActivityUserCommandValidator));
+            this.validator.ShouldHaveChildValidator(x => x.SecondaryNegotiators, typeof(UpdateActivityUserValidator));
         }
 
         [Theory]

@@ -234,7 +234,7 @@
            IFixture fixture)
         {
             // Arrange
-            command.SecondaryNegotiators.Add(new UpdateActivityUserCommand {UserId = secondaryNegotiatorIdToAdd, CallDate = callDate });
+            command.SecondaryNegotiators.Add(new UpdateActivityUser {UserId = secondaryNegotiatorIdToAdd, CallDate = callDate });
             Activity activity = this.GetActivity(fixture);
             activityRepository.Setup(p => p.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
             enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
@@ -269,7 +269,7 @@
            IFixture fixture)
         {
             // Arrange
-            command.SecondaryNegotiators.Add(new UpdateActivityUserCommand { UserId = secondaryNegotiatorIdToUpdate, CallDate = callDate });
+            command.SecondaryNegotiators.Add(new UpdateActivityUser { UserId = secondaryNegotiatorIdToUpdate, CallDate = callDate });
 
             activityUserToUpdate.UserId = secondaryNegotiatorIdToUpdate;
             activityUserToUpdate.UserType = this.GetSecondaryNegotiatorUserType(fixture);
@@ -399,7 +399,7 @@
            IFixture fixture)
         {
             // Arrange
-            command.SecondaryNegotiators.Add(new UpdateActivityUserCommand { UserId = leadNegotiatorIdToUpdateToSecondary, CallDate = callDate });
+            command.SecondaryNegotiators.Add(new UpdateActivityUser { UserId = leadNegotiatorIdToUpdateToSecondary, CallDate = callDate });
 
             activityUserToUpdate.UserId = leadNegotiatorIdToUpdateToSecondary;
             activityUserToUpdate.UserType = this.GetLeadNegotiatorUserType(fixture);

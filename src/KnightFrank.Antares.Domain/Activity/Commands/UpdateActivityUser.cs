@@ -4,7 +4,7 @@
 
     using MediatR;
 
-    public class UpdateActivityUserCommand : IRequest<Guid>
+    public class UpdateActivityUser : IRequest<Guid>
     {
         public Guid UserId { get; set; }
 

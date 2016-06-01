@@ -82,8 +82,8 @@
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\ActivityProfile.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandValidator.cs" />
-    <Compile Include="Activity\Commands\UpdateActivityUserCommandValidator.cs" />
-    <Compile Include="Activity\Commands\UpdateActivityUserCommand.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityUserValidator.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityUser.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommand.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommandValidator.cs" />
     <Compile Include="Activity\Queries\ActivitiesQuery.cs" />
