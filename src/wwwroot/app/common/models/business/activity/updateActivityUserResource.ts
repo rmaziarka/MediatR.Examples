@@ -2,12 +2,12 @@
 
 module Antares.Common.Models.Business {
     export class UpdateActivityUserResource implements Dto.IUpdateActivityUserResource {
-        id: string = '';
+        userId: string = '';
         callDate: Date = null;
 
         constructor(activityUser?: Business.ActivityUser) {
             if (activityUser) {
-                this.id = activityUser.userId;
+                this.userId = activityUser.userId;
                 this.callDate = activityUser.callDate;
             }
         }
