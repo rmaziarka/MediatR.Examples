@@ -1,6 +1,6 @@
 ﻿declare module Antares.Common.Models.Dto {
     interface IUpdateActivityUserResource {
-        id: string;
+        userId: string;
         callDate?: Date;
     }
 }

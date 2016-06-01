@@ -1,5 +1,22 @@
 // Buttons
 
+.btn {
+  &:active,
+  &:focus,
+  &.focus {
+    box-shadow: none;
+    outline: none;
+  }
+
+  &:active,
+  &.active {
+    &:focus,
+    &.focus {
+      outline: none;
+    }
+  }
+}
+
 .btn-no-style {
   background-color: transparent;
   font-size: 17px;

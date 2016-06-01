@@ -110,7 +110,7 @@
   <ItemGroup>
     <Compile Include="Activity\CommandHandlers\CreateActivityAttachmentCommandHandlerTests.cs" />
     <Compile Include="Activity\Commands\CreateActivityAttachmentCommandValidatorTests.cs" />
-    <Compile Include="Activity\Commands\UpdateActivityUserCommandValidatorTests.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityUserValidatorTests.cs" />
     <Compile Include="Activity\Queries\ActivityTypeQueryValidatorTests.cs" />
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandlerTests.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandlerTests.cs" />

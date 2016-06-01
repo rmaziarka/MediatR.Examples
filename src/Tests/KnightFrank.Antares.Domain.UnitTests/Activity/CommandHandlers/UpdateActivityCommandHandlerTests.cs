@@ -35,13 +35,14 @@
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             [Frozen] Mock<IGenericRepository<ActivityTypeDefinition>> activityTypeDefinitionRepository,
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
+            [Frozen] Mock<IEntityValidator> entityValidator,
+            [Frozen] Mock<ICollectionValidator> collectionValidator,
             UpdateActivityCommand command,
             UpdateActivityCommandHandler handler,
             IFixture fixture)
         {
             // Arrange
             Activity activity = this.GetActivity(fixture);
-            activity.ActivityUsers = new List<ActivityUser>();
             activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
             activityTypeDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>())).Returns(true);
             enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
@@ -51,11 +52,23 @@
                                               this.GetLeadNegotiatorUserType(fixture),
                                               this.GetSecondaryNegotiatorUserType(fixture)
                                           }.Where(expr.Compile()));
+            var calledNegotiators = new List<Guid>();
+            collectionValidator.Setup(x => x.CollectionIsUnique(It.IsAny<ICollection<Guid>>(), It.IsAny<ErrorMessage>()))
+                               .Callback((ICollection<Guid> list, ErrorMessage error) => { calledNegotiators.AddRange(list); });
 
             // Act
             handler.Handle(command);
 
             // Assert
+            entityValidator.Verify(x => x.EntityExists(activity, activity.Id), Times.Once);
+            entityValidator.Verify(x => x.EntityExists<User>(command.LeadNegotiator.UserId), Times.Once);
+            entityValidator.Verify(x => x.EntitiesExist<User>(It.Is<List<Guid>>(list => list.SequenceEqual(command.SecondaryNegotiators.Select(n => n.UserId).ToList()))), Times.Once);
+
+            IList<Guid> expectedNegotiators = command.SecondaryNegotiators.Select(n => n.UserId).ToList();
+            expectedNegotiators.Add(command.LeadNegotiator.UserId);
+            calledNegotiators.ShouldAllBeEquivalentTo(expectedNegotiators);
+            collectionValidator.Verify(x => x.CollectionIsUnique(It.IsAny<ICollection<Guid>>(), ErrorMessage.Activity_Negotiators_Not_Unique), Times.Once);
+
             activity.ShouldBeEquivalentTo(
                 command,
                 options =>
@@ -63,132 +76,6 @@
                        .Including(x => x.MarketAppraisalPrice)
                        .Including(x => x.RecommendedPrice)
                        .Including(x => x.VendorEstimatedPrice));
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_ValidCommand_When_Handling_Then_EntityExistsValidation_ShouldBeCalledForActivity(
-            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
-            [Frozen] Mock<IEntityValidator> entityValidator,
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            UpdateActivityCommandHandler handler,
-            UpdateActivityCommand command,
-            IFixture fixture
-            )
-        {
-            // Arrange
-            Activity activity = this.GetActivity(fixture);
-            activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
-            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
-                                  .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
-                                      new[]
-                                          {
-                                              this.GetLeadNegotiatorUserType(fixture),
-                                              this.GetSecondaryNegotiatorUserType(fixture)
-                                          }.Where(expr.Compile()));
-
-            // Act
-            handler.Handle(command);
-
-            // Assert
-            entityValidator.Verify(x => x.EntityExists(activity, activity.Id), Times.Once);
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_ValidCommand_When_Handling_Then_EntityExistsValidation_ShouldBeCalledForLeadNegotiator(
-            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            [Frozen] Mock<IEntityValidator> entityValidator,
-            UpdateActivityCommandHandler handler,
-            UpdateActivityCommand command,
-            IFixture fixture
-            )
-        {
-            // Arrange
-            Activity activity = this.GetActivity(fixture);
-            activity.ActivityUsers = new List<ActivityUser>();
-            activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
-            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
-                                  .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
-                                      new[]
-                                          {
-                                              this.GetLeadNegotiatorUserType(fixture),
-                                              this.GetSecondaryNegotiatorUserType(fixture)
-                                          }.Where(expr.Compile()));
-
-            // Act
-            handler.Handle(command);
-
-            // Assert
-            entityValidator.Verify(x => x.EntityExists<User>(command.LeadNegotiator.UserId), Times.Once);
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_ValidCommand_When_Handling_Then_EntityExistsValidation_ShouldBeCalledForSecondaryNegotiators(
-            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            [Frozen] Mock<IEntityValidator> entityValidator,
-            UpdateActivityCommandHandler handler,
-            UpdateActivityCommand command,
-            IFixture fixture
-            )
-        {
-            // Arrange
-            Activity activity = this.GetActivity(fixture);
-            activity.ActivityUsers = new List<ActivityUser>();
-            activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
-            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
-                                  .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
-                                      new[]
-                                          {
-                                              this.GetLeadNegotiatorUserType(fixture),
-                                              this.GetSecondaryNegotiatorUserType(fixture)
-                                          }.Where(expr.Compile()));
-
-            // Act
-            handler.Handle(command);
-
-            // Assert
-            entityValidator.Verify(x => x.EntitiesExist<User>(It.Is<List<Guid>>( list => list.SequenceEqual(command.SecondaryNegotiators.Select(n => n.UserId).ToList()))), Times.Once);
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_ValidCommand_When_Handling_Then_CollectionIsUniqueValidation_ShouldBeCalledForAllNegotiators(
-            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            [Frozen] Mock<IEntityValidator> entityValidator,
-            [Frozen] Mock<ICollectionValidator> collectionValidator,
-            UpdateActivityCommandHandler handler,
-            UpdateActivityCommand command,
-            IFixture fixture
-            )
-        {
-            // Arrange
-            var calledNegotiators = new List<Guid>();
-            Activity activity = this.GetActivity(fixture);
-            activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
-            collectionValidator.Setup(x => x.CollectionIsUnique(It.IsAny<ICollection<Guid>>(), It.IsAny<ErrorMessage>()))
-                               .Callback((ICollection<Guid> list, ErrorMessage error) => { calledNegotiators.AddRange(list); });
-            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
-                                  .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
-                                      new[]
-                                          {
-                                              this.GetLeadNegotiatorUserType(fixture),
-                                              this.GetSecondaryNegotiatorUserType(fixture)
-                                          }.Where(expr.Compile()));
-
-            // Act
-            handler.Handle(command);
-
-            // Assert
-            IList<Guid> expectedNegotiators = command.SecondaryNegotiators.Select(n => n.UserId).ToList();
-            expectedNegotiators.Add(command.LeadNegotiator.UserId);
-
-            calledNegotiators.ShouldAllBeEquivalentTo(expectedNegotiators);
-            collectionValidator.Verify(x => x.CollectionIsUnique(It.IsAny<ICollection<Guid>>(), ErrorMessage.Activity_Negotiators_Not_Unique), Times.Once);
         }
 
         [Theory]
@@ -234,7 +121,7 @@
            IFixture fixture)
         {
             // Arrange
-            command.SecondaryNegotiators.Add(new UpdateActivityUserCommand {UserId = secondaryNegotiatorIdToAdd, CallDate = callDate });
+            command.SecondaryNegotiators.Add(new UpdateActivityUser {UserId = secondaryNegotiatorIdToAdd, CallDate = callDate });
             Activity activity = this.GetActivity(fixture);
             activityRepository.Setup(p => p.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
             enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
@@ -269,7 +156,7 @@
            IFixture fixture)
         {
             // Arrange
-            command.SecondaryNegotiators.Add(new UpdateActivityUserCommand { UserId = secondaryNegotiatorIdToUpdate, CallDate = callDate });
+            command.SecondaryNegotiators.Add(new UpdateActivityUser { UserId = secondaryNegotiatorIdToUpdate, CallDate = callDate });
 
             activityUserToUpdate.UserId = secondaryNegotiatorIdToUpdate;
             activityUserToUpdate.UserType = this.GetSecondaryNegotiatorUserType(fixture);
@@ -399,7 +286,7 @@
            IFixture fixture)
         {
             // Arrange
-            command.SecondaryNegotiators.Add(new UpdateActivityUserCommand { UserId = leadNegotiatorIdToUpdateToSecondary, CallDate = callDate });
+            command.SecondaryNegotiators.Add(new UpdateActivityUser { UserId = leadNegotiatorIdToUpdateToSecondary, CallDate = callDate });
 
             activityUserToUpdate.UserId = leadNegotiatorIdToUpdateToSecondary;
             activityUserToUpdate.UserType = this.GetLeadNegotiatorUserType(fixture);

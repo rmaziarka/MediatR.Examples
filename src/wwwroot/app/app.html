@@ -26,17 +26,8 @@
                 <uib-accordion-heading>
                     {{'COMMON.MENU.PROPERTIES' | translate}} <i class="pull-right fa accordion-arrow fa-chevron-down"></i>
                 </uib-accordion-heading>
-
-                <h5 class="accordion-title">Recent properties</h5>
-
-                <!-- Recent items -->
-                <ul class="recent">
-                    <li class="recent-item"><a href="#" title="55 Baker St., London">55 Baker St., London</a></li>
-                    <li class="recent-item"><a href="#" title="142a Strzegomska, Wrocław">142a Strzegomska, Wrocław</a></li>
-                    <li class="recent-item"><a href="#" title="Bishop Court, 76 Bishop's Bridge Road">Bishop Court, 76 Bishop's Bridge Road</a></li>
-                </ul>
-               <!-- // Recent items -->
-
+                <navigation-drawer title-key="COMMON.NAVIGATIONDRAWER.RECENTPROPERTIES" drawer-field-name="properties">
+                </navigation-drawer>
                 <a class="accordion-button btn btn-default btn-sm" ui-sref="app.property-add">{{'COMMON.MENU.CREATE' | translate}}</a>
             </uib-accordion-group>
             <uib-accordion-group>

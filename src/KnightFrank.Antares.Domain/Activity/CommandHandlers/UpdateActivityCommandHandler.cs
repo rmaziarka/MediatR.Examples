@@ -66,6 +66,7 @@
 
             Mapper.Map(message, activity);
 
+            this.ValidateActivityNegotiators(commandNegotiators, activity);
             this.UpdateActivityNegotiators(commandNegotiators, activity);
 
             this.activityRepository.Save();
@@ -115,6 +116,26 @@
             return commandNegotiators;
         }
 
+        private void ValidateActivityNegotiators(List<ActivityUser> commandNegotiators, Activity activity)
+        {
+            List<ActivityUser> existingNegotiators = activity.ActivityUsers.ToList();
+
+            commandNegotiators.Where(n => IsNewlyAddedToExistingList(n, existingNegotiators))
+                              .ToList()
+                              .ForEach(ValidateNegotiatorCallDate);
+
+            commandNegotiators.Where(n => IsUpdated(n, existingNegotiators))
+                              .Select(n => new { newNagotiator = n, oldNegotiator = GetOldActivityUser(n, existingNegotiators) })
+                              .ToList()
+                              .ForEach(pair =>
+                              {
+                                  if (pair.newNagotiator.CallDate != pair.oldNegotiator.CallDate)
+                                  {
+                                      ValidateNegotiatorCallDate(pair.newNagotiator);
+                                  }
+                              });
+        }
+
         private void UpdateActivityNegotiators(List<ActivityUser> commandNegotiators, Activity activity)
         {
             List<ActivityUser> existingNegotiators = activity.ActivityUsers.ToList();
@@ -131,6 +152,14 @@
                               .Select(n => new { newNagotiator = n, oldNegotiator = GetOldActivityUser(n, existingNegotiators) })
                               .ToList()
                               .ForEach(pair => UpdateNegotiator(pair.newNagotiator, pair.oldNegotiator));
+        }
+
+        private static void ValidateNegotiatorCallDate(ActivityUser negotiator)
+        {
+            if (negotiator.CallDate.HasValue && (negotiator.CallDate.Value.Date < DateTime.UtcNow.Date))
+            {
+                //throw new BusinessValidationException(ErrorMessage.Activity_Negotiator_CallDate_InPast);
+            }
         }
 
         private static void UpdateNegotiator(ActivityUser newNegotiator, ActivityUser oldNegotiator)

@@ -61,6 +61,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Activity negotiator call date cannot be set in the past..
+        /// </summary>
+        internal static string Activity_Negotiator_CallDate_InPast {
+            get {
+                return ResourceManager.GetString("Activity_Negotiator_CallDate_InPast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to One or more negotiators are duplicated..
         /// </summary>
         internal static string Activity_Negotiators_Not_Unique {

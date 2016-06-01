@@ -22,6 +22,9 @@
       "REQUIREMENTS": "Requirements",
       "PROPERTIES": "Properties"
     },
+    "NAVIGATIONDRAWER": {
+      "RECENTPROPERTIES": "Recent properties"
+    },
     "MAKEOFFER": "Make an offer",
     "SETASLEAD": "Set as lead",
     "UNEXPECTED_SERVER_ERROR": "Unexpected error occured. Please try again or contact system administrator."

@@ -406,8 +406,8 @@ module Antares {
                     expect(requestData.marketAppraisalPrice).toEqual(activityMock.marketAppraisalPrice);
                     expect(requestData.recommendedPrice).toEqual(activityMock.recommendedPrice);
                     expect(requestData.vendorEstimatedPrice).toEqual(activityMock.vendorEstimatedPrice);
-                    expect(requestData.leadNegotiator.id).toEqual(activityMock.leadNegotiator.userId);
-                    expect(requestData.secondaryNegotiators.map((negotiator) => negotiator.id)).toEqual(activityMock.secondaryNegotiator.map((negotiator) => negotiator.userId));
+                    expect(requestData.leadNegotiator.userId).toEqual(activityMock.leadNegotiator.userId);
+                    expect(requestData.secondaryNegotiators.map((negotiator) => negotiator.userId)).toEqual(activityMock.secondaryNegotiator.map((negotiator) => negotiator.userId));
 
                     expect(activityId).toEqual(activityFromServerMock.id);
                 });

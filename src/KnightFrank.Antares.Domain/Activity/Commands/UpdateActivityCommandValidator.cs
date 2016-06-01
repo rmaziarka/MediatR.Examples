@@ -14,8 +14,10 @@
 
             this.RuleFor(x => x.ActivityTypeId).NotEmpty();
 
-            this.RuleFor(x => x.LeadNegotiator).NotNull().SetValidator(new UpdateActivityUserCommandValidator());
-            this.RuleFor(x => x.SecondaryNegotiators).NotNull().SetCollectionValidator(new UpdateActivityUserCommandValidator());
+            this.RuleFor(x => x.LeadNegotiator).NotNull().SetValidator(new UpdateActivityUserValidator());
+            this.RuleFor(x => x.LeadNegotiator.CallDate).NotNull().When(x => x.LeadNegotiator != null);
+
+            this.RuleFor(x => x.SecondaryNegotiators).NotNull().SetCollectionValidator(new UpdateActivityUserValidator());
         }
     }
 }

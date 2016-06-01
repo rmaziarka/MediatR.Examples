@@ -2,10 +2,9 @@
 {
     using FluentValidation;
 
-    public class UpdateActivityUserCommandValidator : AbstractValidator<UpdateActivityUserCommand>
+    public class UpdateActivityUserValidator : AbstractValidator<UpdateActivityUser>
     {
-        public UpdateActivityUserCommandValidator(
-)
+        public UpdateActivityUserValidator()
         {
             this.RuleFor(x => x.UserId).NotEmpty();
         }

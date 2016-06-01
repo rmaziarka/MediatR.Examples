@@ -158,7 +158,7 @@
 
             updateActivityCommand.Id = id.Equals("latest") ? activityFromDatabase.Id : new Guid(id);
             updateActivityCommand.ActivityTypeId = activityFromDatabase.ActivityTypeId;
-            updateActivityCommand.LeadNegotiator = new UpdateActivityUserCommand
+            updateActivityCommand.LeadNegotiator = new UpdateActivityUser
             {
                 UserId = activityFromDatabase.ActivityUsers.First().UserId,
                 CallDate = DateTime.UtcNow.AddDays(1)
