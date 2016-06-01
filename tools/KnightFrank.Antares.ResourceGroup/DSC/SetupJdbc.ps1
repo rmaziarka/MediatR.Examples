@@ -3,7 +3,7 @@ Configuration SetupJdbc
 	Param ( 
 		[Parameter(Mandatory = $true)]
 		[string]
-		$ElasticsearchIp,
+		$ElasticsearchHost,
 
 		[Parameter(Mandatory = $true)]
 		[string]
@@ -103,7 +103,7 @@ Configuration SetupJdbc
 				$settings.jdbc.url = "jdbc:sqlserver://" + $using:SqlIp + ":" + $using:SqlPort+ ";databaseName=$using:SqlDatabaseName"
 				$settings.jdbc.user = $using:SqlUser
 				$settings.jdbc.password = $using:SqlPassword
-				$settings.jdbc."elasticsearch.Host" = $using:ElasticsearchIp
+				$settings.jdbc."elasticsearch.Host" = $using:ElasticsearchHost
 				$settings.jdbc."elasticsearch.Port" = $using:ElasticsearchPort
 				if($using:ElasticsearchIndex)
 				{
