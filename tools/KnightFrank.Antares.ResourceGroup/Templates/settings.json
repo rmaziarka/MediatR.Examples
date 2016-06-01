@@ -1,22 +1,18 @@
 ﻿{
   "type": "jdbc",
   "jdbc": {
-    "url": "[parameters('JdbcSqlConnectionString')]",
-    "user": "[parameters('SqlUserLogin')]",
-    "password": "[parameters('SqlUserPassword')]",
+    "url": "",
+    "user": "",
+    "password": "",
     "sql": [
       {
-        "statement": "select 1"
-      },
-      {
-        "statement": "select 1,2,3"
+        "statement": "select * from dbo.Contact"
       }
     ],
-    "index": "[parameters('JdbcIndex')]",
-
-    "elasticsearch.host": "[parameters('ElasticSearchHost')]",
-    "elasticsearch.port": "[parameters('ElasticSearchPort')]",
+    "index": "",
+    "elasticsearch.host": "",
+    "elasticsearch.port": "",
     "detect_json": "true",
-    "schedule": "[parameters('JdbSchedule')]"
+    "schedule": ""
   }
 }
