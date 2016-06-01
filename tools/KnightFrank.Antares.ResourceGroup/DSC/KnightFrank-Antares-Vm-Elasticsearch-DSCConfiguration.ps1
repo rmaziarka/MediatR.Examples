@@ -67,6 +67,9 @@ Configuration SetupElasticsearchVm
     $nssmUnpack = "$env:SystemDrive\Program Files\nssm"
     $nssmFolder = "$nssmUnpack\nssm-$nssmVersion"
 
+    $octopusDir = "$env:SystemDrive\octopus"
+    $azureDir = "$env:SystemDrive\WindowsAzure"
+
 	Import-DscResource -Module cGripDevDSC
 	Import-DscResource -Module xPSDesiredStateConfiguration
 	Import-DscResource -Module xNetworking
@@ -213,11 +216,11 @@ Configuration SetupElasticsearchVm
 		Script DownloadOctopusTentacle
 		{
 			TestScript = {
-				Test-Path "C:\WindowsAzure\Octopus.Tentacle.3.3.6-x64.msi"
+				Test-Path "$using:azureDir\Octopus.Tentacle.3.3.6-x64.msi"
 			}
 			SetScript ={
 				$source = "https://download.octopusdeploy.com/octopus/Octopus.Tentacle.3.3.6-x64.msi"
-				$dest = "C:\WindowsAzure\Octopus.Tentacle.3.3.6-x64.msi"
+				$dest = "$using:azureDir\Octopus.Tentacle.3.3.6-x64.msi"
 				Invoke-WebRequest $source -OutFile $dest
 			}
 			GetScript = {@{Result = "DownloadOctopusTentacle"}}
@@ -226,7 +229,7 @@ Configuration SetupElasticsearchVm
 		Package InstallOctopusTentacle
 		{
 			Ensure = "Present"  
-			Path  = "C:\WindowsAzure\Octopus.Tentacle.3.3.6-x64.msi"
+			Path  = "$azureDir\Octopus.Tentacle.3.3.6-x64.msi"
 			Name = "Octopus Deploy Tentacle"
 			ProductId = "{D2622F6E-1377-47A6-9F6D-ED9AF593205D}"
 			DependsOn = "[Script]DownloadOctopusTentacle"
@@ -234,7 +237,7 @@ Configuration SetupElasticsearchVm
 
 		File OctopusDir
 		{
-			DestinationPath = "c:\Octopus"
+			DestinationPath = $octopusDir
 			Ensure = "Present"
 			Type = "Directory"
 		}
@@ -243,13 +246,13 @@ Configuration SetupElasticsearchVm
 		{
 			DependsOn = @("[Package]InstallOctopusTentacle", "[File]OctopusDir")
 			TestScript = {
-				Test-Path "C:\Octopus\Tentacle.config"
+				Test-Path "$using:octopusDir\Tentacle.config"
 			}
 			SetScript = {
-				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" create-instance --instance "Tentacle" --config "C:\Octopus\Tentacle.config" --console
+				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" create-instance --instance "Tentacle" --config "$using:octopusDir\Tentacle.config" --console
 				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" new-certificate --instance "Tentacle" --if-blank --console
 				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --reset-trust --console
-				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --home "C:\Octopus" --app "C:\Octopus\Applications" --port "10933" --noListen "False" --console
+				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --home $using:octopusDir --app "$using:octopusDir\Applications" --port "10933" --noListen "False" --console
 				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --trust "$using:OctopusThumbprint" --console
 				& "netsh" advfirewall firewall add rule "name=Octopus Deploy Tentacle" dir=in action=allow protocol=TCP localport=10933
 				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" service --instance "Tentacle" --install --start --console
