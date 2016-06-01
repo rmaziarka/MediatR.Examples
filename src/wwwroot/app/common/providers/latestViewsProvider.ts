@@ -7,6 +7,7 @@ module Antares.Providers {
     import ILatestListEntry = Common.Models.Dto.ILatestListEntry;
     import ILatestViewResultItem = Common.Models.Dto.ILatestViewResultItem;
     import EntityTypeEnum = Common.Models.Enums.EntityTypeEnum;
+    import LatestViewCommand = Common.Models.Commands.ICreateLatestViewCommand;
 
     export class LatestViewsProvider {
         [key: string]: any;
@@ -19,6 +20,12 @@ module Antares.Providers {
         public refresh = (): ng.IPromise<void> => {
             return this.latestViewsService
                 .get()
+                .then(this.loadLatestData);
+        }
+
+        public addViewing = (command: LatestViewCommand) => {
+            this.latestViewsService
+                .post(command)
                 .then(this.loadLatestData);
         }
 
