@@ -1,0 +1,19 @@
+// Negotiators
+
+.negotiators-call-date {
+  border-bottom: 1px solid $color-alto;
+  padding-bottom: 15px;
+
+  label {
+    padding-top: 10px;
+    white-space: nowrap;
+  }
+
+  .btn-no-style {
+    line-height: 1;
+  }
+
+  &-old {
+    color: $brand-warning;
+  }
+}
