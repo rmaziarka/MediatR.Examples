@@ -16,5 +16,6 @@
     <file src="Templates\*.*" target="content" />
     <file src="Scripts\configure-*.*" target="scripts" />
     <file src="DSC\*.*" target="dsc" />
+    <file src="settings.json" />
   </files>
 </package>

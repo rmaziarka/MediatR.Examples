@@ -1,4 +1,4 @@
-Configuration SetupElasticsearchVmLocal
+Configuration SetupJdbc
 {
 	Param ( 
 		[Parameter(Mandatory = $true)]
@@ -29,7 +29,7 @@ Configuration SetupElasticsearchVmLocal
 		[string]
 		$SqlPassword,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $false)]
 		[string]
 		$ElasticsearchIndex,
 
@@ -37,9 +37,9 @@ Configuration SetupElasticsearchVmLocal
 		[string]
 		$JdbcSchedule,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $false)]
 		[string]
-		$BranchName,
+		$BranchName = "master",
 
 		[Parameter(Mandatory = $false)]
 		[hashtable]
@@ -47,7 +47,7 @@ Configuration SetupElasticsearchVmLocal
 
 		[Parameter(Mandatory = $true)]
 		[string]
-		$PathToSettings
+		$PathToSettingsTemplate
 		)
 
 	$tempDownloadFolder = "$env:SystemDrive\temp\download\"
@@ -95,22 +95,28 @@ Configuration SetupElasticsearchVmLocal
 		    SetScript =
 		    {
 				$pathToExecute = "$using:jdbcFolder\bin\execute.bat" 
-				$pathToSettings = "$using:PathToSettings" 
+				$pathToSettings = "$using:jdbcFolder\bin\settings.json" 
 				
 				(Get-Content -Path $pathToExecute).replace('$jdbcFolder', "$using:jdbcFolder").replace('$nssmFolder', $using:nssmFolder) | Set-Content $pathToExecute
 				
-				$settings = Get-Content -Path $pathToSettings -Raw | ConvertFrom-Json
+				$settings = Get-Content -Path $using:PathToSettingsTemplate -Raw | ConvertFrom-Json				
 				$settings.jdbc.url = "jdbc:sqlserver://" + $using:SqlIp + ":" + $using:SqlPort+ ";databaseName=$using:SqlDatabaseName"
 				$settings.jdbc.user = $using:SqlUser
 				$settings.jdbc.password = $using:SqlPassword
-				$settings.jdbc.index = $using:ElasticsearchIndex
 				$settings.jdbc."elasticsearch.Host" = $using:ElasticsearchIp
 				$settings.jdbc."elasticsearch.Port" = $using:ElasticsearchPort
-				$settings.jdbc.schedule = $using:JdbcSchedule
-				if($using:AdditionalJdbcConfigValues) {
+				if($using:ElasticsearchIndex)
+				{
+					$settings.jdbc.index = $using:ElasticsearchIndex
+				}
+				if($using:JdbcSchedule)
+				{
+					$settings.jdbc.schedule = $using:JdbcSchedule
+				}
+				if($using:AdditionalJdbcConfigValues) 
+				{
 					$settings.jdbc | Add-Member -PassThru -NotePropertyMembers $using:AdditionalJdbcConfigValues
 				}
-				
 				$json = $settings | ConvertTo-Json -Depth 999				
 				[System.IO.File]::WriteAllLines($pathToSettings, $json)
 		    }
@@ -126,18 +132,3 @@ Configuration SetupElasticsearchVmLocal
         }
 	}
 }
-
-SetupElasticsearchVmLocal `
--SqlIp "localhost"`
--SqlPort "1433"`
--SqlDatabaseName "KnightFrank.Antares"`
--SqlUser "antares"`
--SqlPassword "ant@res!1"`
--ElasticsearchIndex "properties_v7"`
--JdbcSchedule "0 0/10 * * * ?"`
--ElasticsearchIp "localhost"`
--ElasticsearchPort "9200"`
--BranchName 'feature1'
--PathToSettings 'settings.json'
-
-Start-DscConfiguration -Path .\SetupElasticsearchVmLocal -ComputerName localhost -Force -Verbose -Wait
