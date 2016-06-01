@@ -12,7 +12,8 @@ module Antares {
             createComponent = (url: string, showText: boolean) => { };
 
         var pageObjectSelector = {
-            icon: '.fa-external-link',
+            iconAsLink: 'a .fa-external-link[style!="display:none"]',
+            iconNotAsLink: '.fa-external-link[style!="display:none"]',
             url: '[name=url]'
         };
 
@@ -31,9 +32,16 @@ module Antares {
             };
         }));
 
-        it('the icon is displayed', () => {
+        it('the icon is displayed as a link when url is not displayed', () => {
+            createComponent('www.test.com', false);
+            var iconElements = element.find(pageObjectSelector.iconAsLink);
+
+            expect(iconElements.length).toBe(1);
+        });
+
+        it('the icon is not displayed as a link when url is displayed', () => {
             createComponent('www.test.com', true);
-            var iconElements = element.find(pageObjectSelector.icon);
+            var iconElements = element.find(pageObjectSelector.iconNotAsLink);
 
             expect(iconElements.length).toBe(1);
         });

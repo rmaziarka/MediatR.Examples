@@ -55,7 +55,7 @@ module Antares.Company {
             this.components.sidePanels.contact().hide();
         }
      
-        formatUrlWithProtocol = (url):string=> {
+        formatUrlWithProtocol = (url:string):string=> {
             //regular expression for url with a protocol (case insensitive)
             var r = new RegExp('^(?:[a-z]+:)?//', 'i');
             if (r.test(url)) { return url; }
@@ -71,8 +71,7 @@ module Antares.Company {
                 .save(new Business.CreateCompanyResource(this.company))
                 .$promise
                 .then((company: Dto.ICompany) => {                
-                    // TODO: replaced with go to view company state
-                    this.company = new Business.Company();
+                   this.company = new Business.Company();
                     var form = this.$scope["addCompanyForm"];
                     form.$setPristine();
                     this.$state.go('app.company-view', company);

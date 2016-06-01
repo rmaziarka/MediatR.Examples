@@ -29,11 +29,19 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="client-care-website">Client care page website</label>
-                    <input type="text" class="form-control" id="client-care-url"  ng-maxlength="2500" ng-model="vm.company.clientCarePageUrl" placeholder="http://">
-                    <external-link url="vm.company.clientCarePageUrl" show-text="false"></external-link>
+                <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.clientcareurl.$dirty) && addCompanyForm.clientcareurl.$invalid}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="clientcareurl">Client care page website</label>
+                            <input type="text" class="form-control" id="clientcareurl" name="clientcareurl" ng-maxlength="2500" ng-model="vm.company.clientCarePageUrl" placeholder="http://">
+                            <external-link url="vm.company.clientCarePageUrl" show-text="false"></external-link>
+                        </div>
+                    </div>
+                    <div ng-messages="addCompanyForm.clientcareurl.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.clientcareurl.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
                 </div>
+       
 
                 <div class="form-group">
                     <div class="row">

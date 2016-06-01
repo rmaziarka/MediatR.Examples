@@ -1,15 +1,19 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
-
+    using Dal.Model.Enum;
     using KnightFrank.Antares.UITests.Extensions;
     using KnightFrank.Antares.UITests.Pages.Panels;
 
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
+    using Objectivity.Test.Automation.Common.WebElements;
+
+    using OpenQA.Selenium;
 
     public class CreateCompanyPage : ProjectPageBase
     {
@@ -17,6 +21,8 @@
         private readonly ElementLocator addContact = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
         private readonly ElementLocator companyName = new ElementLocator(Locator.Id, "name");
         private readonly ElementLocator website = new ElementLocator(Locator.Id, "website");
+        private readonly ElementLocator clientCarePage = new ElementLocator(Locator.Id, "clientcareurl");
+        private readonly ElementLocator clientCareStatus = new ElementLocator(Locator.Id, "client-care-status");
         private readonly ElementLocator contactsList = new ElementLocator(Locator.CssSelector, "#list-contacts .ng-binding");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "company-save-btn");
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
@@ -38,6 +44,7 @@
             return this;
         }
 
+     
         public CreateCompanyPage AddContactToCompany()
         {
             this.Driver.GetElement(this.addContact).Click();
@@ -51,9 +58,25 @@
             return this;
         }
 
-        public CreateCompanyPage SetWebsite(string website)
+        public CreateCompanyPage SetWebsite(string websiteUrl)
         {
-            this.Driver.SendKeys(this.website, website);
+            this.Driver.SendKeys(this.website, websiteUrl);
+            return this;
+        }
+
+        public CreateCompanyPage SetClientCareUrl(string clientCarePageUrl)
+        {
+            this.Driver.SendKeys(this.clientCarePage, clientCarePageUrl);
+            return this;
+        }
+
+        public CreateCompanyPage SetClientCareStatus()
+        {
+            //select the first in the drop down.
+            var select = this.Driver.GetElement<Select>(this.clientCareStatus);
+          //  IWebElement element = select.SelectElement().Options.Single(o => o.Text.Trim().Equals(clientCareStatus));
+            select.SelectByIndex(1);
+            this.Driver.WaitForAngularToFinish();
             return this;
         }
 
@@ -106,5 +129,7 @@
             return ah.Equals(currentUrl);
 
         }
+
+     
     }
 }

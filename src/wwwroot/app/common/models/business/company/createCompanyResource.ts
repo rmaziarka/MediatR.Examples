@@ -5,7 +5,7 @@ module Antares.Common.Models.Business {
         name: string = '';    
         websiteUrl: string = '';
         clientCarePageUrl:  string = '';    
-       clientCareStatusId:string = '';
+        clientCareStatusId:string = '';
         contactIds: string[] = [];
 
         constructor(company?: Dto.ICompany) {
@@ -17,5 +17,7 @@ module Antares.Common.Models.Business {
                 this.contactIds = company.contacts.map((contact: Dto.IContact) => { return contact.id });
             }
         }
+
+       
     }
 }
