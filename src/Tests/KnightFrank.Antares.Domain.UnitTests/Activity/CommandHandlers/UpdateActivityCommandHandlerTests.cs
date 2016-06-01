@@ -121,7 +121,7 @@
             handler.Handle(command);
 
             // Assert
-            entityValidator.Verify(x => x.EntityExists<User>(command.LeadNegotiator.Id), Times.Once);
+            entityValidator.Verify(x => x.EntityExists<User>(command.LeadNegotiator.UserId), Times.Once);
         }
 
         [Theory]
@@ -151,7 +151,7 @@
             handler.Handle(command);
 
             // Assert
-            entityValidator.Verify(x => x.EntitiesExist<User>(It.Is<List<Guid>>( list => list.SequenceEqual(command.SecondaryNegotiators.Select(n => n.Id).ToList()))), Times.Once);
+            entityValidator.Verify(x => x.EntitiesExist<User>(It.Is<List<Guid>>( list => list.SequenceEqual(command.SecondaryNegotiators.Select(n => n.UserId).ToList()))), Times.Once);
         }
 
         [Theory]
@@ -184,8 +184,8 @@
             handler.Handle(command);
 
             // Assert
-            IList<Guid> expectedNegotiators = command.SecondaryNegotiators.Select(n => n.Id).ToList();
-            expectedNegotiators.Add(command.LeadNegotiator.Id);
+            IList<Guid> expectedNegotiators = command.SecondaryNegotiators.Select(n => n.UserId).ToList();
+            expectedNegotiators.Add(command.LeadNegotiator.UserId);
 
             calledNegotiators.ShouldAllBeEquivalentTo(expectedNegotiators);
             collectionValidator.Verify(x => x.CollectionIsUnique(It.IsAny<ICollection<Guid>>(), ErrorMessage.Activity_Negotiators_Not_Unique), Times.Once);
@@ -234,7 +234,7 @@
            IFixture fixture)
         {
             // Arrange
-            command.SecondaryNegotiators.Add(new UpdateActivityUserCommand {Id = secondaryNegotiatorIdToAdd, CallDate = callDate });
+            command.SecondaryNegotiators.Add(new UpdateActivityUserCommand {UserId = secondaryNegotiatorIdToAdd, CallDate = callDate });
             Activity activity = this.GetActivity(fixture);
             activityRepository.Setup(p => p.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
             enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
@@ -269,7 +269,7 @@
            IFixture fixture)
         {
             // Arrange
-            command.SecondaryNegotiators.Add(new UpdateActivityUserCommand { Id = secondaryNegotiatorIdToUpdate, CallDate = callDate });
+            command.SecondaryNegotiators.Add(new UpdateActivityUserCommand { UserId = secondaryNegotiatorIdToUpdate, CallDate = callDate });
 
             activityUserToUpdate.UserId = secondaryNegotiatorIdToUpdate;
             activityUserToUpdate.UserType = this.GetSecondaryNegotiatorUserType(fixture);
@@ -310,7 +310,7 @@
            IFixture fixture)
         {
             // Arrange
-            command.LeadNegotiator.Id = leadNegotiatorIdToUpdate;
+            command.LeadNegotiator.UserId = leadNegotiatorIdToUpdate;
             command.LeadNegotiator.CallDate = callDate;
 
             activityUserToUpdate.UserId = leadNegotiatorIdToUpdate;
@@ -352,7 +352,7 @@
            IFixture fixture)
         {
             // Arrange
-            command.LeadNegotiator.Id = secondaryNegotiatorIdToUpdateToLead;
+            command.LeadNegotiator.UserId = secondaryNegotiatorIdToUpdateToLead;
             command.LeadNegotiator.CallDate = callDate;
 
             activityUserToUpdate.UserId = secondaryNegotiatorIdToUpdateToLead;
@@ -399,7 +399,7 @@
            IFixture fixture)
         {
             // Arrange
-            command.SecondaryNegotiators.Add(new UpdateActivityUserCommand { Id = leadNegotiatorIdToUpdateToSecondary, CallDate = callDate });
+            command.SecondaryNegotiators.Add(new UpdateActivityUserCommand { UserId = leadNegotiatorIdToUpdateToSecondary, CallDate = callDate });
 
             activityUserToUpdate.UserId = leadNegotiatorIdToUpdateToSecondary;
             activityUserToUpdate.UserType = this.GetLeadNegotiatorUserType(fixture);

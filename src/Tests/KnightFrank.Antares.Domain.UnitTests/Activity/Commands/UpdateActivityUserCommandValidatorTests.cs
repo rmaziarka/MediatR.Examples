@@ -51,13 +51,13 @@
             UpdateActivityUserCommand command)
         {
             // Arrange
-            command.Id = default(Guid);
+            command.UserId = default(Guid);
 
             // Act
             ValidationResult validationResult = this.validator.Validate(command);
 
             // Assert
-            validationResult.IsInvalid(nameof(command.Id), nameof(Messages.notempty_error));
+            validationResult.IsInvalid(nameof(command.UserId), nameof(Messages.notempty_error));
         }
 
         private void AssertIfValid(UpdateActivityUserCommand command)
