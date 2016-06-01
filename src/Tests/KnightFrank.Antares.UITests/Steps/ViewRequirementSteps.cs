@@ -178,6 +178,12 @@
             this.page.WaitForSidePanelToHide();
         }
 
+        [When(@"User clicks details offer link on view requirement page")]
+        public void OpenViewOfferPage()
+        {
+            this.page.OfferPreview.ClickDetailsLink();
+        }
+
         [Then(@"Side panel should not be displayed on view requirement page")]
         public void WaitForSidePnaleToHide()
         {

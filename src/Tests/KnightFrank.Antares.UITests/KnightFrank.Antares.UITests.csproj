@@ -130,12 +130,14 @@
     <Compile Include="Pages\Panels\CreateViewingPage.cs" />
     <Compile Include="Pages\Panels\ViewingDetailsPage.cs" />
     <Compile Include="Pages\ViewActivityPage.cs" />
+    <Compile Include="Pages\ViewOfferPage.cs" />
     <Compile Include="Pages\ViewRequirementPage.cs" />
     <Compile Include="Pages\Panels\ActivityPreviewPage.cs" />
     <Compile Include="Pages\ViewPropertyPage.cs" />
     <Compile Include="ProjectPageBase.cs" />
     <Compile Include="ProjectTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Steps\CommonSteps.cs" />
     <Compile Include="Steps\CreateCompanySteps.cs" />
     <Compile Include="Steps\CreatePropertySteps.cs" />
     <Compile Include="Steps\CreateContactSteps.cs" />
@@ -148,6 +150,7 @@
     <Compile Include="Steps\EditActivitySteps.cs" />
     <Compile Include="Steps\NavigationDrawerSteps.cs" />
     <Compile Include="Steps\ViewActivitySteps.cs" />
+    <Compile Include="Steps\ViewOfferSteps.cs" />
     <Compile Include="Steps\ViewRequirementSteps.cs" />
     <Compile Include="Steps\ViewPropertySteps.cs" />
     <Compile Include="Tests\Activities\Activities.feature.cs">

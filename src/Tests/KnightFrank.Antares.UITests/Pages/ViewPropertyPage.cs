@@ -59,7 +59,7 @@
 
         public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
 
-        public ActivityPreviewPage PreviewDetails => new ActivityPreviewPage(this.DriverContext);
+        public ActivityPreviewPage ActivityPreview => new ActivityPreviewPage(this.DriverContext);
 
         public CreateAreaPage Area => new CreateAreaPage(this.DriverContext);
 

@@ -83,7 +83,7 @@
         [When(@"User clicks view activity link from activity on view property page")]
         public void OpenViewActivityPage()
         {
-            this.page.PreviewDetails.ClickViewActivity();
+            this.page.ActivityPreview.ClickViewActivity();
         }
 
         [When(@"User selects (.*) activity type on create activity page")]
