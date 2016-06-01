@@ -7,24 +7,11 @@ module Antares {
         export class ViewingPreviewController {
             componentId: string;
             viewing: Business.Viewing;
-            pageContext: string;
 
             constructor(
                 private componentRegistry: Antares.Core.Service.ComponentRegistry,
                 private $state: ng.ui.IStateService) {
                 componentRegistry.register(this, this.componentId);
-            }
-
-            clearViewingPreview = () => {
-                this.viewing = new Business.Viewing();
-            }
-
-            getViewing = (): Business.Viewing => {
-                return this.viewing;
-            }
-
-            setViewing = (viewing: Business.Viewing) => {
-                this.viewing = viewing;
             }
 
             goToRequirementView = () => {

@@ -15,6 +15,7 @@
     "LOADINGDATA": "...loading data...",
     "FILEISUPLOADING": "File is uploading ...",
     "REQUIREMENT": "Requirement",
+    "ACTIVITY": "Activity",
     "MENU": {
       "CREATE": "Create",
       "CONTACTS": "Contacts",

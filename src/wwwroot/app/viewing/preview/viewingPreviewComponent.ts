@@ -5,10 +5,12 @@ module Antares.Component {
         controller: 'viewingPreviewController',
         controllerAs : 'vm',
         templateUrl: 'app/viewing/preview/viewingPreview.html',
-        transclude : true,
+        transclude: {
+            customItem: "?viewingPreviewCustomItem"
+        },
         bindings : {
             componentId: '<',
-            pageContext: '@'
+            viewing: '<'
         }
     });
 }

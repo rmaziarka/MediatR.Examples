@@ -3,34 +3,39 @@
 module Antares {
     import ViewingPreviewController = Component.ViewingPreviewController;
 
-    describe('Given viewing preview component is loaded', () => {
+    describe('Given viewing preview component is loaded', () =>{
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
             $http: ng.IHttpBackendService,
             filter: ng.IFilterService,
             controller: ViewingPreviewController,
-            state: ng.ui.IStateService;
+            state: ng.ui.IStateService,
+            compile: ng.ICompileService;
 
         var pageObjectSelectors = {
-            activitySection: '#activity-section',
-            activityDetails: '#viewing-preview-activity-details',
-            activityLinkDiv: '#activity-link',
-            requirementSection: '#requirement-section',
-            requirementDetails: '#viewing-preview-requirement-details',
-            requirementLinkDiv: '#requirement-link',
-            negotiatorDetails: '#viewing-preview-negotiator-details',
-            invitationText: '#viewing-preview-invitation-text',
-            postViewingComment: '#viewing-preview-post-viewing-comment',
-            attendee: '#viewing-preview-attendees #viewing-preview-attendee-item-',
-            date: '#viewing-preview-date'
+            activityCard : 'activity-card',
+            activityDetails : '#activity-details',
+            activityLinkDiv : '#activity-link',
+            requirementCard : 'requirement-card',
+            requirementDetails : '#requirement-details',
+            requirementLinkDiv : '#requirement-link',
+            negotiatorDetails : '#viewing-preview-negotiator-details',
+            invitationText : '#viewing-preview-invitation-text',
+            postViewingComment : '#viewing-preview-post-viewing-comment',
+            attendee : '#viewing-preview-attendees #viewing-preview-attendee-item-',
+            date : '#viewing-preview-date'
         }
 
-        describe('and proper viewing is provided', () => {
-            var requirementMock = TestHelpers.RequirementGenerator.generate();
-            var viewingMock = TestHelpers.ViewingGenerator.generate({
-                requirement : requirementMock
+        describe('and proper viewing is provided', () =>{
+            var requirementMock = TestHelpers.RequirementGenerator.generate({
+                contacts : TestHelpers.ContactGenerator.generateMany(3)
             });
-            
+
+            var activityMock = TestHelpers.ActivityGenerator.generate();
+            var viewingMock = TestHelpers.ViewingGenerator.generate({
+                requirement : requirementMock,
+                activity : activityMock
+            });
 
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
@@ -38,111 +43,23 @@ module Antares {
                 $httpBackend: ng.IHttpBackendService,
                 $filter: ng.IFilterService,
                 $state: ng.ui.IStateService) =>{
-                
+
                 $http = $httpBackend;
+                compile = $compile;
                 filter = $filter;
                 state = $state;
                 scope = $rootScope.$new();
-                element = $compile('<viewing-preview></viewing-preview>')(scope);
-                scope.$apply();
 
+                element = compile('<viewing-preview></viewing-preview>')(scope);
+                scope.$apply();
                 controller = element.controller('viewingPreview');
             }));
 
-            it('when viewing is set and page context is activity then requirement header should be displayed and activity header hidden', () => {
-                // arrange
-                controller.pageContext = 'activity';
+            it('when viewing is set then negotiator should be displayed', () =>{
+                // arrange 
+                controller.viewing = viewingMock;
 
                 // act
-                controller.setViewing(viewingMock);
-                scope.$apply();
-
-                // assert
-                var requirementSection = element.find(pageObjectSelectors.requirementSection);
-                var activitySection = element.find(pageObjectSelectors.activitySection);
-
-                expect(requirementSection.length).toBe(1);
-                expect(activitySection.length).toBe(0);
-            });
-
-            it('when viewing is set and page context is activity then requirement details should be displayed', () => {
-                // arrange
-                controller.pageContext = 'activity';
-
-                // act
-                controller.setViewing(viewingMock);
-                scope.$apply();
-
-                // assert
-                var requirementDetailsElement = element.find(pageObjectSelectors.requirementDetails);
-                var properRequirementTextToDisplay = requirementMock.getContactNames();
-                expect(requirementDetailsElement.text()).toBe(properRequirementTextToDisplay);
-            });
-
-            it('when viewing is set and page context is activity then clicking details link should get requirement', () => {
-                // arrange
-                spyOn(state, 'go');
-                controller.pageContext = 'activity';
-                
-                // act
-                controller.setViewing(viewingMock);
-                scope.$apply();
-                
-                // assert
-                var requirementLink = element.find(pageObjectSelectors.requirementLinkDiv).children("a");
-                requirementLink.click();
-                expect(state.go).toHaveBeenCalledWith('app.requirement-view', { id: viewingMock.requirement.id });
-            });            
-            
-            it('when viewing is set and page context is requirement then activity section should be displayed and requirement section hidden', () => {
-                // arrange
-                controller.pageContext = 'requirement';
-
-                // act
-                controller.setViewing(viewingMock);
-                scope.$apply();
-
-                // assert
-                var activitySection = element.find(pageObjectSelectors.activitySection);
-                var requirementSection = element.find(pageObjectSelectors.requirementSection);
-
-
-                expect(requirementSection.length).toBe(0);
-                expect(activitySection.length).toBe(1);
-            });            
-
-            it('when viewing is set and page context is requirement then activity details should be displayed', () => {
-                // arrange
-                controller.pageContext = 'requirement';
-
-                // act
-                controller.setViewing(viewingMock);
-                scope.$apply();
-
-                // assert
-                var activityDetailsElement = element.find(pageObjectSelectors.activityDetails);
-                var properActivityTextToDisplay = viewingMock.activity.property.address.getAddressText();
-                expect(activityDetailsElement.text()).toBe(properActivityTextToDisplay);
-            });
-
-            it('when viewing is set and page context is requirement then clicking details link should get activity', () => {
-                // arrange
-                spyOn(state, 'go');
-                controller.pageContext = 'requirement';
-
-                // act
-                controller.setViewing(viewingMock);
-                scope.$apply();
-
-                // assert
-                var activityLink = element.find(pageObjectSelectors.activityLinkDiv).children("a");
-                activityLink.click();
-                expect(state.go).toHaveBeenCalledWith('app.activity-view', { id: viewingMock.activity.id });
-            });  
-            
-            it('when viewing is set then negotiator should be displayed', () => {
-                // arrange + act
-                controller.setViewing(viewingMock);
                 scope.$apply();
 
                 // assert
@@ -151,9 +68,11 @@ module Antares {
                 expect(negotiatorDetailsElement.text()).toBe(properNegotiatorTextToDisplay);
             });
 
-            it('when viewing is set then invitation text should be displayed', () => {
-                // arrange + act
-                controller.setViewing(viewingMock);
+            it('when viewing is set then invitation text should be displayed', () =>{
+                // arrange 
+                controller.viewing = viewingMock;
+
+                // act 
                 scope.$apply();
 
                 // assert
@@ -162,9 +81,11 @@ module Antares {
                 expect(invitationTextElement.text()).toBe(proppeInvitationTextToDisplay);
             });
 
-            it('when viewing is set then post viewing comment should be displayed', () => {
-                // arrange + act
-                controller.setViewing(viewingMock);
+            it('when viewing is set then post viewing comment should be displayed', () =>{
+                // arrange 
+                controller.viewing = viewingMock;
+
+                // act
                 scope.$apply();
 
                 // assert
@@ -173,9 +94,11 @@ module Antares {
                 expect(postViewingCommentElement.text()).toBe(proppePostViewingCommentToDisplay);
             });
 
-            it('when viewing is set then viewing date and time period value should be displayed in proper format', () => {
-                // arrange + act
-                controller.setViewing(viewingMock);
+            it('when viewing is set then viewing date and time period value should be displayed in proper format', () =>{
+                // arrange 
+                controller.viewing = viewingMock;
+
+                // act
                 scope.$apply();
 
                 // assert
@@ -188,15 +111,15 @@ module Antares {
                 expect(dateElement.text()).toBe(properDateToDisplay);
             });
 
-            it('when viewing is set then activity vendors should be displayed', () => {
+            it('when viewing is set then activity vendors should be displayed', () =>{
                 // arrange
                 var contact1Mock = TestHelpers.ContactGenerator.generate();
                 var contact2Mock = TestHelpers.ContactGenerator.generate();
 
                 viewingMock.attendees = [contact1Mock, contact2Mock];
+                controller.viewing = viewingMock;
 
                 // act
-                controller.setViewing(viewingMock);
                 scope.$apply();
 
                 // assert
@@ -205,6 +128,20 @@ module Antares {
 
                 expect(attendeeItemsElement1[0].innerText).toBe(contact1Mock.getName());
                 expect(attendeeItemsElement2[0].innerText).toBe(contact2Mock.getName());
+            });
+
+            describe('and viewing-preview-custom-item is provided as transclude ', () => {
+                beforeEach(() => {
+                    element = compile('<viewing-preview viewing="viewing"><viewing-preview-custom-item><requirement-card requirement="viewing.requirement"/></viewing-preview-custom-item></viewing-preview>')(scope);
+                    scope["viewing"] = viewingMock;
+                    scope.$apply();
+                });
+
+                it('then viewing-preview-custom-item should be displayed', () =>{
+                    // assert
+                    var requirementCard = element.find(pageObjectSelectors.requirementCard);
+                    expect(requirementCard.length).toBe(1);
+                });
             });
         });
     });
