@@ -38,7 +38,7 @@ module Antares.Providers {
             var properties = latestPropertiesViews.map(view =>
                 <ILatestListEntry>{
                     id : view.id,
-                    name : new Address(view.data).getAddressText(),
+                    name : new Address(view.data).getAddressText() || '-',
                     url : this.$state.href("app.property-view", { id : view.id })
                 });
 

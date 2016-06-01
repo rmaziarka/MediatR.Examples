@@ -6,8 +6,7 @@ module Antares.Common.Component {
         controllerAs: 'vm',
         templateUrl: 'app/common/components/navigationDrawer/navigationDrawer.html',
         bindings: {
-            titleKey: '@',
-            drawerFieldName: '@'
+            type: '@'
         }
     });
 }
