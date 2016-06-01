@@ -8,6 +8,11 @@
         // ReSharper disable once InconsistentNaming
         Activity_Negotiators_Not_Unique,
         /// <summary>
+        /// Key value : Activity negotiator call date cannot be set in the past.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Activity_Negotiator_CallDate_InPast,
+        /// <summary>
         /// Key value : One or more {0}(s) with given ids does not exist in the database.
         /// </summary>
         // ReSharper disable once InconsistentNaming
