@@ -106,7 +106,7 @@ Configuration SetupElasticsearchVmLocal
 		Script CopyJDK
 	    {
 		    TestScript = { 
-			    Test-Path "$using:tempDownloadFolder\\$using:nssmFileName"
+			    Test-Path "$using:tempDownloadFolder\\$using:javaFileName"
 		    }
 		    GetScript = {@{Result = "CopyJDK"}}
 		    SetScript =
@@ -115,7 +115,7 @@ Configuration SetupElasticsearchVmLocal
 				$mycreds = New-Object System.Management.Automation.PSCredential("kfaneiedevcommonst", $secpasswd)
 
 			    New-PSDrive -Name P -PSProvider FileSystem -Root $using:CommonShareUrl -Credential $mycreds                
-				Copy-Item (Join-Path -Path "P:" -ChildPath $using:nssmSource | Join-Path -ChildPath $using:nssmFileName) (Join-Path -Path $using:tempDownloadFolder -ChildPath $using:nssmFileName)
+				Copy-Item (Join-Path -Path "P:" -ChildPath $using:javaSource | Join-Path -ChildPath $using:javaFileName) (Join-Path -Path $using:tempDownloadFolder -ChildPath $using:javaFileName)
 			    Remove-PSDrive -Name P
 		    }
             DependsOn = '[File]TempFolder'

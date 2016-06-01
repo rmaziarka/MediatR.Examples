@@ -184,7 +184,6 @@
     <None Include="DSC\xWebAdministration\xWebAdministration.psd1" />
     <None Include="KnightFrank-Antares-Vm-Elasticsearch-DSCConfiguration.local.ps1" />
     <None Include="resourcegroup.nuspec" />
-    <None Include="settings.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Tools\AzCopy.exe" />

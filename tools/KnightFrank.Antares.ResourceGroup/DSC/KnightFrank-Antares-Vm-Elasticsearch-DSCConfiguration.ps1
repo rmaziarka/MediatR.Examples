@@ -133,8 +133,8 @@ Configuration SetupElasticsearchVm
 		#####
 
 		xRemoteFile CopyElasticsearchZip {
-			DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $JavaFileName
-			Uri = Join-Path $CommonShareUrl -ChildPath $JavaSource | Join-Path -ChildPath $JavaFileName
+			DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $ElasticsearchFileName
+			Uri = Join-Path $CommonShareUrl -ChildPath $ElasticsearchSource | Join-Path -ChildPath $ElasticsearchFileName
 			Credential = $CommonShareCredential
             DependsOn = '[File]TempFolder'
 		}

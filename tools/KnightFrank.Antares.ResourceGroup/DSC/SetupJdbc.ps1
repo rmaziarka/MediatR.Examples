@@ -97,7 +97,7 @@ Configuration SetupJdbc
 				$pathToExecute = "$using:jdbcFolder\bin\execute.bat" 
 				$pathToSettings = "$using:jdbcFolder\bin\settings.json" 
 				
-				(Get-Content -Path $pathToExecute).replace('$jdbcFolder', "$using:jdbcFolder").replace('$nssmFolder', $using:nssmFolder) | Set-Content $pathToExecute
+				(Get-Content -Path $pathToExecute).replace('$jdbcFolder', "$using:jdbcFolder").replace('$javaFolder', $using:javaFolder) | Set-Content $pathToExecute
 				
 				$settings = Get-Content -Path $using:PathToSettingsTemplate -Raw | ConvertFrom-Json				
 				$settings.jdbc.url = "jdbc:sqlserver://" + $using:SqlIp + ":" + $using:SqlPort+ ";databaseName=$using:SqlDatabaseName"
