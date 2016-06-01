@@ -121,21 +121,21 @@ Configuration SetupElasticsearchVmLocal
             DependsOn = '[File]TempFolder'
 		}
 
-		xPackage nssm {
-			Name = 'nssm SE Development Kit 8 Update 91 (64-bit)'
-			Path =  Join-Path -Path $tempDownloadFolder -ChildPath $nssmFileName
-			Arguments = "/s INSTALLDIR=`"$nssmFolder`" STATIC=1"
+		xPackage Java {
+			Name = 'Java SE Development Kit 8 Update 91 (64-bit)'
+			Path =  Join-Path -Path $tempDownloadFolder -ChildPath $javaFileName
+			Arguments = "/s INSTALLDIR=`"$javaFolder`" STATIC=1"
 			ProductId = ''
 			DependsOn = '[Script]CopyJDK'
 		}
 		  
 		Environment SetJDKEnviromentVar
 		{
-			Name = "nssm_HOME"
+			Name = "JAVA_HOME"
 			Ensure = "Present"
 			Path = $false
-			Value = $nssmFolder
-			DependsOn = "[xPackage]nssm"
+			Value = $javaFolder
+			DependsOn = "[xPackage]Java"
 		}
 
 		Environment AddJDKToPath
@@ -143,8 +143,8 @@ Configuration SetupElasticsearchVmLocal
 			Name = "Path"
 			Ensure = "Present"
 			Path = $true
-			Value = "%nssm_HOME%\bin"
-			DependsOn = "[xPackage]nssm"
+			Value = "%JAVA_HOME%\bin"
+			DependsOn = "[xPackage]Java"
 		}
 
 		#####
@@ -253,15 +253,15 @@ Configuration SetupElasticsearchVmLocal
 				$pathToExecute = "$using:jdbcFolder\bin\execute.bat" 
 				$pathToSettings = "$using:jdbcFolder\bin\settings.json" 
 				
-				(Get-Content -Path $pathToExecute).replace('$jdbcFolder', "$using:jdbcFolder").replace('$nssmFolder', $using:nssmFolder) | Set-Content $pathToExecute
+				(Get-Content -Path $pathToExecute).replace('$jdbcFolder', "$using:jdbcFolder").replace('$javaFolder', $using:javaFolder) | Set-Content $pathToExecute
 				
 				$settings = Get-Content -Path $pathToSettings -Raw | ConvertFrom-Json
 				$settings.jdbc.url = "jdbc:sqlserver://" + $using:SqlIp + ":" + $using:SqlPort+ ";databaseName=$using:SqlDatabaseName"
 				$settings.jdbc.user = $using:SqlUser
 				$settings.jdbc.password = $using:SqlPassword
 				$settings.jdbc.index = $using:ElasticsearchIndex
-				#$settings.jdbc."elasticsearch.Host" = $using:elasticsearchHost
-				#$settings.jdbc."elasticsearch.Port" = $using:elasticsearchPort
+				$settings.jdbc."elasticsearch.Host" = $using:elasticsearchHost
+				$settings.jdbc."elasticsearch.Port" = $using:elasticsearchPort
 				$settings.jdbc.schedule = $using:JdbcSchedule
 				if($using:AdditionalJdbcConfigValues) {
 					$settings.jdbc | Add-Member -PassThru -NotePropertyMembers $using:AdditionalJdbcConfigValues
