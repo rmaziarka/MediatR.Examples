@@ -72,5 +72,10 @@
                     break;
             }
         }
+
+        public void GoBack()
+        {
+            this.Driver.Navigate().Back();
+        }
     }
 }

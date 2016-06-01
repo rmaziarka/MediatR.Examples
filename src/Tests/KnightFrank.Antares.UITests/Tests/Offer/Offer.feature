@@ -88,3 +88,58 @@ Scenario: Update residential sales offer on requirement
 	Then Offer details on view requirement page are same as the following
 		| Details             | Status   | Offer    | SpecialConditions  | Negotiator |
 		| House, 22 Eltham Dr | Accepted | 2000 GBP | Special conditions | John Smith |
+
+@Requirement
+@Offer
+Scenario: View offer details page
+	Given Contacts are created in database
+		| Title  | FirstName | Surname |
+		| Madame | Judith    | Greciet |
+		| Chef   | Julius    | Chaloff |
+		And Property with Residential division and House type is defined
+		And Property attributes details are defined
+			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
+			| 4           | 5           | 2             | 4             | 1            | 2            | 2000    | 2500    | 3000        | 5000        | 1                   | 1                   |
+		And Property characteristics are defined
+		And Property in GB is created in database
+			| PropertyNumber | PropertyName    | Line2   | Postcode | City      | County     |
+			| 34             | Greciet’s house | Bixteth | L3 9BA   | Liverpool | Merseyside |
+		And Property ownership is defined
+			| PurchaseDate | BuyPrice |
+			| 10-01-2015   | 100000   |
+		And Property Freehold Sale activity is defined
+		And Requirement for GB is created in database
+			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
+			| 90000    | 120000   | 3           | 4           | 2                 | 4                 | 2            | 2            | 1                | 2                | 2000    | 2500    | 3000        | 5000        | Note        |
+		And Viewing for requirement is defined
+	When User navigates to view requirement page with id
+		And User clicks make an offer button for 1 activity on view requirement page
+		And User fills in offer details on view requirement page
+			| Status   | Offer | SpecialConditions     |
+			| Accepted | 95000 | My special conditions |
+		And User clicks save offer button on view requirement page
+	Then New offer should be created and displayed on view requirement page
+	When User clicks 1 offer details on view requirement page
+		And User clicks details offer link on view requirement page
+	Then View offer page is displayed
+		And Offer header details on view offer page are same as the following
+			| Details                        | Status   |
+			| Judith Greciet, Julius Chaloff | Accepted |
+		And Offer activity details on view offer page are same as the following
+			| Details                     |
+			| Greciet’s house, 34 Bixteth |
+		And Offer requirement details on view offer page are same as the following
+			| Details                        |
+			| Judith Greciet, Julius Chaloff |
+		And Offer details on view offer page are same as the following
+			| Status   | Offer     | SpecialConditions     | Negotiator |
+			| Accepted | 95,000.00 | My special conditions | John Smith |
+	When User clicks activity details on view offer page
+	Then Activity details on view offer page are same as the following 
+		| Status        | Negotiator | Vendor                        | Type          |
+		| Pre-appraisal | John Smith | Judith Greciet;Julius Chaloff | Freehold Sale |
+	When User clicks view activity link from activity on view offer page
+	Then View activity page is displayed
+	When User goes back to previous page
+		And User clicks requirement details button on view offer page
+	Then View requirement page is displayed

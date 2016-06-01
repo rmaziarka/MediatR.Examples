@@ -50,6 +50,8 @@
             // Set property details
             address.AddressFormId = addressFormId;
             address.CountryId = countryId;
+            address.Line1 = string.Empty;
+            address.Line3 = string.Empty;
 
             var property = new Property
             {
@@ -154,7 +156,8 @@
                     {
                         //TODO improve selecting lead negotiator
                         UserId = this.dataContext.Users.First().Id,
-                        UserTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("LeadNegotiator")).Id
+                        UserTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("LeadNegotiator")).Id,
+                        CallDate = DateTime.UtcNow.AddDays(14)
                     }
                 }
             };

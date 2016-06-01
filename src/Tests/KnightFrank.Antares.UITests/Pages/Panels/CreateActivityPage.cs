@@ -52,5 +52,9 @@
         public string Status { get; set; }
 
         public string Type { get; set; }
+
+        public string Negotiator { get; set; }
+
+        public string CreationDate { get; set; }
     }
 }
