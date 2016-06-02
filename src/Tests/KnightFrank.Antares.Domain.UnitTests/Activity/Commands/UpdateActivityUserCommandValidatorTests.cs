@@ -40,21 +40,21 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_IdIsEmpty_When_Validating_Then_IsInvalid(
+        public void Given_UserIdIsEmpty_When_Validating_Then_IsInvalid(
             DateTime? callDate,
             UpdateActivityUserCommandValidator validator,
             IFixture fixture)
         {
             // Arrange
             UpdateActivityUserCommand command =
-                fixture.Build<UpdateActivityUserCommand>().With(c => c.Id, Guid.Empty).Create();
+                fixture.Build<UpdateActivityUserCommand>().With(c => c.UserId, Guid.Empty).Create();
 
             // Act
             ValidationResult validationResult = validator.Validate(command);
 
             // Assert
             validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(command.Id));
+            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(command.UserId));
             validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == nameof(Messages.notempty_error));
         }
 

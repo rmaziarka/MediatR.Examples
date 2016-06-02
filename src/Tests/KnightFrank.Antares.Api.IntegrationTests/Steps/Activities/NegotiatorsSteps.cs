@@ -107,7 +107,7 @@
             {
                 CallDate = callDate,
                 ActivityId = this.activity.Id,
-                Id = activityUserId
+                UserId = activityUserId
             };
 
             HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, updateActivityUserCommand);

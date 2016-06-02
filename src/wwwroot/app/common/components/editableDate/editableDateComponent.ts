@@ -6,7 +6,8 @@ module Antares.Common.Component {
         controllerAs: 'vm',
         controller: 'EditableDateController',
         bindings: {
-            selectedDate: '='
+            selectedDate: '=',
+            onSave: '&'
         }
     });
 }

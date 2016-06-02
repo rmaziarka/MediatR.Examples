@@ -77,8 +77,25 @@ module Antares.Common.Component {
             this.fixLeadNegotiatorCallDate();
         }
 
-        public openNegotiatorCallDate = (nagotiatorUserId: string) => {
-            this.nagotiatorCallDateOpened[nagotiatorUserId] = true;
+        public openNegotiatorCallDate = (negotiatorUserId: string) => {
+            this.nagotiatorCallDateOpened[negotiatorUserId] = true;
+        }
+
+        public updateNegotiatorCallDate = (activityUser: Business.ActivityUser) => {
+            return (date: Date) => {
+                var dto = new Business.UpdateActivityUserResource(activityUser);
+                dto.callDate = date;
+
+                var promise = this.dataAccessService.getActivityUserResource()
+                    .update({ id: activityUser.activityId }, dto)
+                    .$promise;
+
+                promise.then(() => {
+                    activityUser.callDate = date;
+                }); 
+
+                return promise;
+            }
         }
 
         public getUsersQuery = (searchValue: string): DepartmentUserResourceParameters => {

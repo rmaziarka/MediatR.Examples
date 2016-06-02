@@ -105,6 +105,13 @@ module Antares.Services {
                 this.$resource(this.appConfig.rootUrl + '/api/companies/:id');
         }
 
+        getActivityUserResource(): Resources.IBaseResourceClass<Resources.IActivityUserResource> {
+            return <Resources.IBaseResourceClass<Resources.IActivityUserResource>>
+                this.$resource(this.appConfig.rootUrl + '/api/activities/:id/negotiators', null, {
+                    update: this.updateAction
+                });
+        }
+
         getContactResource(): Resources.IBaseResourceClass<Resources.IContactResource> {
             return <Resources.IBaseResourceClass<Resources.IContactResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/contacts/:id');
@@ -123,10 +130,10 @@ module Antares.Services {
                 });
         }
 
-        getOfferResource(): Resources.IOfferResourceClass{
+        getOfferResource(): Resources.IOfferResourceClass {
             return <Resources.IOfferResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/offers/:id', null, {
-                    update : this.updateAction
+                    update: this.updateAction
                 });
         }
 

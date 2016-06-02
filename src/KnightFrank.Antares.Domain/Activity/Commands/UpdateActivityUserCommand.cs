@@ -6,7 +6,7 @@
 
     public class UpdateActivityUserCommand : IRequest<Guid>
     {
-        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
 
         public Guid ActivityId { get; set; }
 
