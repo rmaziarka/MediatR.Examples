@@ -4,6 +4,8 @@ module Antares.Activity.View {
     import Business = Common.Models.Business;
     import CartListOrder = Common.Component.ListOrder;
     import Dto = Common.Models.Dto;
+    import LatestViewsProvider = Providers.LatestViewsProvider;
+    import EntityType = Common.Models.Enums.EntityTypeEnum;
 
     export class ActivityViewController extends Core.WithPanelsBaseController {
         activity: Business.Activity;
@@ -18,7 +20,8 @@ module Antares.Activity.View {
             componentRegistry: Core.Service.ComponentRegistry,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService,
-            private dataAccessService: Services.DataAccessService) {
+            private dataAccessService: Services.DataAccessService,
+            private latestViewsProvider: LatestViewsProvider) {
 
             super(componentRegistry, $scope);
 
@@ -28,6 +31,11 @@ module Antares.Activity.View {
         showPropertyPreview = (property: Business.PreviewProperty) => {
             this.components.propertyPreview().setProperty(property);
             this.showPanel(this.components.panels.propertyPreview);
+
+            this.latestViewsProvider.addViewing({
+                entityId: property.id,
+                entityType: EntityType.Property
+            });
         }
 
         showActivityAttachmentAdd = () => {
