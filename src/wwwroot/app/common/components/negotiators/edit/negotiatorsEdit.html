@@ -16,17 +16,27 @@
 
 <ng-form name="negotiatorForm">
     <div class="negotiators-call-date form-inline form-group" ng-class="{'has-error': (nevm.isSubmitted(negotiatorForm) || negotiatorForm.callDate.$dirty) && negotiatorForm.callDate.$invalid}">
-        <label for="callDate"><span translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:</label>
-        <div class="input-group">
-            <input type="text" id="lead-call-date" name="callDate" class="form-control" ng-model="nevm.leadNegotiator.callDate" uib-datepicker-popup="dd-MM-yyyy"
-                   is-open="nevm.nagotiatorCallDateOpened[nevm.leadNegotiator.userId]" close-text="Close" placeholder="dd-mm-yyyy" required date-greater-than="{{ nevm.today }}" />
-            <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="nevm.openNegotiatorCallDate(nevm.leadNegotiator.userId)"><i class="fa fa-calendar"></i></button>
-            </span>
+        <div class="row">
+            <div class="col-md-12 col-lg-2">
+                <label class="required" for="lead-call-date"><span translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:</label>
+            </div>
+            <div class="col-md-12 col-lg-10">
+                <div class="input-group">
+                    <input type="text" id="lead-call-date" name="callDate" class="form-control" ng-model="nevm.leadNegotiator.callDate" uib-datepicker-popup="dd-MM-yyyy"
+                        is-open="nevm.nagotiatorCallDateOpened[nevm.leadNegotiator.userId]" close-text="Close" placeholder="dd-mm-yyyy" required date-greater-than="{{ nevm.today }}" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="nevm.openNegotiatorCallDate(nevm.leadNegotiator.userId)"><i class="fa fa-calendar"></i></button>
+                    </span>
+                </div>
+            </div>
         </div>
-        <div ng-messages="negotiatorForm.callDate.$error" ng-show="nevm.isSubmitted(negotiatorForm) || negotiatorForm.callDate.$dirty">
-            <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
-            <div ng-messages-include="app/common/views/errorMessages.html"></div>
+        <div class="row">
+            <div class="col-md-12 col-lg-10 col-lg-offset-2">
+                <div ng-messages="negotiatorForm.callDate.$error" ng-show="nevm.isSubmitted(negotiatorForm) || negotiatorForm.callDate.$dirty">
+                    <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
+                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                </div>
+            </div>
         </div>
     </div>
 </ng-form>
@@ -61,17 +71,27 @@
         </card>
         <ng-form name="negotiatorForm">
             <div class="negotiators-call-date form-inline form-group" ng-class="{'has-error': (nevm.isSubmitted(negotiatorForm) || negotiatorForm.callDate.$dirty) && negotiatorForm.callDate.$invalid}">
-                <label for="secCallDate{{negotiator.userId}}"><span translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:</label>
-                <div class="input-group">
-                    <input type="text" id="call-date-{{negotiator.userId}}" name="callDate" class="form-control" ng-model="negotiator.callDate" uib-datepicker-popup="dd-MM-yyyy"
-                           is-open="nevm.nagotiatorCallDateOpened[negotiator.userId]" close-text="Close" placeholder="dd-mm-yyyy" date-greater-than="{{ nevm.today }}" date-validate-when-changed=""/>
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="nevm.openNegotiatorCallDate(negotiator.userId)"><i class="fa fa-calendar"></i></button>
-                    </span>
+                <div class="row">
+                    <div class="col-md-12 col-lg-2">
+                        <label for="call-date-{{negotiator.userId}}"><span translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:</label>
+                    </div>
+                    <div class="col-md-12 col-lg-10">
+                        <div class="input-group">
+                            <input type="text" id="call-date-{{negotiator.userId}}" name="callDate" class="form-control" ng-model="negotiator.callDate" uib-datepicker-popup="dd-MM-yyyy"
+                                is-open="nevm.nagotiatorCallDateOpened[negotiator.userId]" close-text="Close" placeholder="dd-mm-yyyy" date-greater-than="{{ nevm.today }}" date-validate-when-changed=""/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="nevm.openNegotiatorCallDate(negotiator.userId)"><i class="fa fa-calendar"></i></button>
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <div ng-messages="negotiatorForm.callDate.$error" ng-show="nevm.isSubmitted(negotiatorForm) || negotiatorForm.callDate.$dirty">
-                    <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
-                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-10 col-lg-offset-2">
+                        <div ng-messages="negotiatorForm.callDate.$error" ng-show="nevm.isSubmitted(negotiatorForm) || negotiatorForm.callDate.$dirty">
+                            <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
+                            <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </ng-form>

@@ -81,7 +81,7 @@ module Antares.Property.View {
             this.components.activityPreview().setActivity(activity);
             this.showPanel(this.components.panels.activityPreview);
 
-            this.latestViewsProvider.addViewing({
+            this.latestViewsProvider.addView({
                 entityId: activity.id,
                 entityType: EntityType.Activity
             });
