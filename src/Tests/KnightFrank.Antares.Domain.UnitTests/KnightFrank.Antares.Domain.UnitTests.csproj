@@ -153,6 +153,7 @@
     <Compile Include="Contact\QueryHandlers\ContactQueryHandlerTests.cs" />
     <Compile Include="FixtureExtension\FixtureExtensions.cs" />
     <Compile Include="FixtureExtension\ValidationResultExtensions.cs" />
+    <Compile Include="LatestView\Commands\CreateLatestViewCommandValidatorTests.cs" />
     <Compile Include="MemberAutoMoqDataAttribute.cs" />
     <Compile Include="Offer\CommandHandlers\UpdateOfferCommandHandlerTests.cs" />
     <Compile Include="Offer\CommandHandlers\CreateOfferCommandHandlerTests.cs" />
