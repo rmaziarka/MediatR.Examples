@@ -14,5 +14,6 @@
         activity: Dto.IActivity;
         requirement: Dto.IRequirement;
         status: Dto.IEnumTypeItem;
+        createdDate?:Date;
     }
 }

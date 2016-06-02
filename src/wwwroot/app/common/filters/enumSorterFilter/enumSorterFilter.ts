@@ -8,21 +8,20 @@ module Antares {
 
             export class EnumSorterFilter {
                 private filter: any;
-
                 constructor(public $filter: ng.IFilterService, public appConfig: Common.Models.IAppConfig) {
                     this.filter = this.$filter('dynamicTranslate');
                 }
 
-                sort = (items: any, enumType: string, field: string): any => {
-                    var filtered: any[] = [];
-                    angular.forEach(items, (item) => {
-                        filtered.push(item);
-                    });
+                sort = (items: any[], enumType: string, field: string): any => {
+                    if (!!items === false) {
+                        return items;
+                    }
+                    var filtered: any[] = items.slice();
 
                     filtered.sort((nextOffer: any, previousOffer: any) => {
                         var nextOfferEnumValue = this.filter(nextOffer[field]);
                         var previousOfferEnumValue = this.filter(previousOffer[field]);
-                        return this.appConfig.enumOrder[enumType][nextOfferEnumValue] > this.appConfig.enumOrder[enumType][previousOfferEnumValue] ? 1 : -1;
+                        return this.appConfig.enumOrder[enumType][nextOfferEnumValue] - this.appConfig.enumOrder[enumType][previousOfferEnumValue];
                     });
 
                     return filtered;

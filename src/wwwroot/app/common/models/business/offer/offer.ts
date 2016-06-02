@@ -18,7 +18,7 @@ module Antares.Common.Models.Business {
         requirement: Business.Requirement;
         status: Business.EnumTypeItem;
         offerDate: Date = null;
-
+        createdDate:Date = null;
         constructor(offer?: Dto.IOffer) {
             angular.extend(this, offer);
             if (offer) {
