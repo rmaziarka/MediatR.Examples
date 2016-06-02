@@ -16,6 +16,10 @@ module Antares {
                     "property": {
                         titleKey: "COMMON.NAVIGATIONDRAWER.RECENTPROPERTIES",
                         fieldName:"properties"
+                    },
+                    "activity": {
+                        titleKey: "COMMON.NAVIGATIONDRAWER.RECENTACTIVITIES",
+                        fieldName: "activities"
                     }
                 }
 

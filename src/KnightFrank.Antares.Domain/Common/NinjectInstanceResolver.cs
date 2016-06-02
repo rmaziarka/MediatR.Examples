@@ -30,6 +30,11 @@
                 return this.kernel.Get<PropertyLatestViewDataProvider>();
             }
 
+            if (entityType == EntityTypeEnum.Activity)
+            {
+                return this.kernel.Get<ActivityLatestViewDataProvider>();
+            }
+
             throw new NotImplementedException();
         }
     }

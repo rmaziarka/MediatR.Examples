@@ -21,10 +21,12 @@
       "CONTACTS": "Contacts",
       "COMPANIES": "Companies",
       "REQUIREMENTS": "Requirements",
-      "PROPERTIES": "Properties"
+      "PROPERTIES": "Properties",
+      "ACTIVITIES": "Activities"
     },
     "NAVIGATIONDRAWER": {
-      "RECENTPROPERTIES": "Recent properties"
+      "RECENTPROPERTIES": "Recent properties",
+      "RECENTACTIVITIES": "Recent activities"
     },
     "MAKEOFFER": "Make an offer",
     "SETASLEAD": "Set as lead",

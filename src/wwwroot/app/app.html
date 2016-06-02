@@ -32,6 +32,13 @@
             </uib-accordion-group>
             <uib-accordion-group>
                 <uib-accordion-heading>
+                    {{'COMMON.MENU.ACTIVITIES' | translate}} <i class="pull-right fa accordion-arrow fa-chevron-down"></i>
+                </uib-accordion-heading>
+                <navigation-drawer type="activity">
+                </navigation-drawer>
+            </uib-accordion-group>
+            <uib-accordion-group>
+                <uib-accordion-heading>
                     {{'COMMON.MENU.REQUIREMENTS' | translate}} <i class="pull-right fa accordion-arrow fa-chevron-down"></i>
                 </uib-accordion-heading>
                 <a class="accordion-button btn btn-default btn-sm" ui-sref="app.requirement-add">{{'COMMON.MENU.CREATE' | translate}}</a>

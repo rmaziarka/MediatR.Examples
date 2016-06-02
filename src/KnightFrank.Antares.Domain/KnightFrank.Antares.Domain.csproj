@@ -189,6 +189,7 @@
     <Compile Include="LatestView\Commands\CreateLatestViewCommand.cs" />
     <Compile Include="LatestView\Commands\CreateLatestViewCommandValidator.cs" />
     <Compile Include="LatestView\Commands\LatestViewCommandProfile.cs" />
+    <Compile Include="LatestView\DataProviders\ActivityLatestViewDataProvider.cs" />
     <Compile Include="LatestView\DataProviders\BaseLatestViewDataProvider.cs" />
     <Compile Include="LatestView\DataProviders\EntityLatestViews.cs" />
     <Compile Include="LatestView\DataProviders\ILatestViewDataProvider.cs" />
