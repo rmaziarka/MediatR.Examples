@@ -234,7 +234,7 @@ module Antares {
 
             it('default values are set', () => {
                 // assert
-                var activityAddController = <Antares.Activity.ActivityAddController>element.find('activity-add').controller('activityAdd');
+                var activityAddController = <Activity.ActivityAddController>element.find('activity-add').controller('activityAdd');
 
                 expect(activityAddController.selectedActivityStatusId).toBe(defaultActivityStatus.id);
                 expect(activityAddController.selectedActivityType).toBe(null);
@@ -257,7 +257,7 @@ module Antares {
 
                 it('default values are set', () => {
                     // assert
-                    var activityAddController = <Antares.Activity.ActivityAddController>element.find('activity-add').controller('activityAdd');
+                    var activityAddController = <Activity.ActivityAddController>element.find('activity-add').controller('activityAdd');
 
                     expect(activityAddController.selectedActivityStatusId).toBe(defaultActivityStatus.id);
                     expect(activityAddController.selectedActivityType).toBe(null);
@@ -342,6 +342,11 @@ module Antares {
             }));
 
             it('then activity details are visible on activity preview panel', () => {
+                // arrange 
+                $http.expectPOST(/\/api\/latestviews/, () =>{
+                    return true;
+                }).respond(200, []);
+
                 // act
                 var cardListElement = element.find('card-list');
                 var cardElement = cardListElement.find('card#activity-card-It2');
@@ -370,7 +375,7 @@ module Antares {
                     propertyTypeId: '1',
                     divisionId: '',
                     division: null,
-                    address: Antares.Mock.AddressForm.FullAddress,
+                    address: Mock.AddressForm.FullAddress,
                     ownerships: [],
                     activities: [],
                     attributeValues: []
@@ -421,7 +426,7 @@ module Antares {
         });
 
         describe('and contact list is opened', () => {
-            var createDateAsUtc = Antares.Core.DateTimeUtils.createDateAsUtc;
+            var createDateAsUtc = Core.DateTimeUtils.createDateAsUtc;
 
             var contacts1: Dto.IContact[] = [
                 { id: 'db9b4d6b-178a-41ce-8d29-8182b8a533c6', firstName: 'John', surname: 'Papa', title: 'Mr' },
@@ -584,7 +589,7 @@ module Antares {
 
                 it('when edit area breakdown button is clicked then showAreaEdit should be called', () => {
                     // arrange
-                    var areas: Business.PropertyAreaBreakdown[] = Antares.TestHelpers.PropertyAreaBreakdownGenerator.generateMany(3);
+                    var areas: Business.PropertyAreaBreakdown[] = TestHelpers.PropertyAreaBreakdownGenerator.generateMany(3);
 
                     spyOn(controller, 'showAreaEdit');
 
@@ -604,7 +609,7 @@ module Antares {
     });
 
     function setUpBaseHttpMocks($http: ng.IHttpBackendService): void {
-        Antares.Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Antares.Mock.AddressForm.AddressFormWithOneLine]);
+        Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
         $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
             return [];
         });

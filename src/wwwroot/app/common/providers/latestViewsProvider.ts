@@ -13,6 +13,7 @@ module Antares.Providers {
         [key: string]: any;
 
         public properties: ILatestListEntry[];
+        public activities: ILatestListEntry[];
 
         constructor(private latestViewsService: LatestViewsService, private $state: angular.ui.IStateService) {
         }
@@ -31,6 +32,26 @@ module Antares.Providers {
 
         public loadLatestData = (result: angular.IHttpPromiseCallbackArg<ILatestViewResultItem[]>) => {
             this.loadProperties(result.data);
+            this.loadActivities(result.data);
+        }
+
+        public loadActivities = (latestViewsItems: ILatestViewResultItem[]) => {
+            var latestActivities = latestViewsItems
+                .filter((item) => item.entityTypeCode === <any>EntityTypeEnum.Activity)[0];
+
+            if (!latestActivities)
+                return;
+
+            var latestActivitiesViews = latestActivities.list;
+
+            var activities = latestActivitiesViews.map(view =>
+                <ILatestListEntry>{
+                    id: view.id,
+                    name: new Address(view.data).getAddressText() || '-',
+                    url: this.$state.href("app.activity-view", { id: view.id })
+                });
+
+            this.activities = activities;
         }
 
         public loadProperties = (latestViewsItems: ILatestViewResultItem[]) =>{
