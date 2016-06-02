@@ -22,3 +22,15 @@
   opacity: 1;
   transition: opacity 0.5s;
 }
+
+%status {
+  border: 1px solid;
+  display: inline-block;
+  font-size: 10px;
+  font-weight: bold;
+  line-height: 9px;
+  margin-right: 8px;
+  padding: 3px 4px;
+  text-transform: uppercase;
+  vertical-align: middle;
+}

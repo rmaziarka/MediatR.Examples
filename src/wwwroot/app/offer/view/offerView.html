@@ -73,6 +73,8 @@
                     <div class="section-title col-xs-6" translate="OFFER.PREVIEW.COMPLETION_DATE"></div>
                     <div class="col-xs-6"><time>{{vm.offer.completionDate | date : 'dd-MM-yyyy'}}</time></div>
                 </div>
+            </div>
+            <div class="section-details">
                 <div class="section-row row">
                     <div class="col-xs-12">
                         <h5 translate="OFFER.PREVIEW.NEGOTIATOR"></h5>
@@ -100,9 +102,11 @@
                 <a ui-sref="app.activity-view({id: vm.offer.activity.id})" translate="ACTIVITY.PREVIEW.ACTIVITY_VIEW_LINK"></a>
             </div>
         </div>
-        <dv class="row section-row">
-            <h3 class="page-header" translate="OFFER.VIEW.BASIC_INFORMATION"></h3>
-        </dv>
+        <div class="row section-row">
+            <div class="col-xs-12">
+                <h4 translate="OFFER.VIEW.BASIC_INFORMATION"></h4>
+            </div>
+        </div>
         <div class="row section-row">
             <div class="col-xs-5" translate="ACTIVITY.PREVIEW.STATUS"></div>
             <div class="col-xs-7" id="activity-preview-status">{{vm.offer.activity.activityStatusId | dynamicTranslate}} </div>

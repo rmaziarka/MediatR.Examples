@@ -109,7 +109,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Activity\CommandHandlers\CreateActivityAttachmentCommandHandlerTests.cs" />
+    <Compile Include="Activity\CommandHandlers\UpdateActivityUserCommandHandlerTests.cs" />
     <Compile Include="Activity\Commands\CreateActivityAttachmentCommandValidatorTests.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityUserCommandValidatorTests.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUserValidatorTests.cs" />
     <Compile Include="Activity\Queries\ActivityTypeQueryValidatorTests.cs" />
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandlerTests.cs" />
@@ -117,9 +119,11 @@
     <Compile Include="Activity\Commands\CreateActivityCommandValidatorTests.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommandValidatorTests.cs" />
     <Compile Include="Activity\Queries\ActivityQueryValidatorTests.cs" />
+    <Compile Include="Activity\Queries\ActivityUserQueryValidatorTests.cs" />
     <Compile Include="Activity\QueryHandlers\ActivitiesQueryHandlerTests.cs" />
     <Compile Include="Activity\QueryHandlers\ActivityQueryHandlerTests.cs" />
     <Compile Include="Activity\QueryHandlers\ActivityTypeQueryHandlerTests.cs" />
+    <Compile Include="Activity\QueryHandlers\ActivityUserQueryHandlerTests.cs" />
     <Compile Include="AddressForm\Queries\AddressFormQueryValidatorTests.cs" />
     <Compile Include="AddressForm\Queries\GetCountriesForAddressFormQueryValidatorTests.cs" />
     <Compile Include="AreaBreakdown\CommandHandlers\CreateAreaBreakdownCommandHandlerTests.cs" />
@@ -149,6 +153,7 @@
     <Compile Include="Contact\QueryHandlers\ContactQueryHandlerTests.cs" />
     <Compile Include="FixtureExtension\FixtureExtensions.cs" />
     <Compile Include="FixtureExtension\ValidationResultExtensions.cs" />
+    <Compile Include="MemberAutoMoqDataAttribute.cs" />
     <Compile Include="Offer\CommandHandlers\UpdateOfferCommandHandlerTests.cs" />
     <Compile Include="Offer\CommandHandlers\CreateOfferCommandHandlerTests.cs" />
     <Compile Include="Offer\Commands\UpdateOfferCommandValidatorTests.cs" />
@@ -209,6 +214,10 @@
     <ProjectReference Include="..\..\KnightFrank.Antares.Domain\KnightFrank.Antares.Domain.csproj">
       <Project>{5987d78c-856d-4315-8b8b-baf00c286aff}</Project>
       <Name>KnightFrank.Antares.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KnightFrank.Antares.Api.UnitTests\KnightFrank.Antares.Api.UnitTests.csproj">
+      <Project>{F9F91CF8-73E3-462C-A23F-25ABE7CF4D24}</Project>
+      <Name>KnightFrank.Antares.Api.UnitTests</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

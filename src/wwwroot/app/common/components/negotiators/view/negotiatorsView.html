@@ -2,6 +2,9 @@
 <h4 translate="NEGOTIATORS.{{nvvm.labelTranslationKey}}.LEAD"></h4>
 <card id="card-lead-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'" item="nvvm.leadNegotiator">
 </card>
+<div class="negotiators-call-date form-group">
+    <editable-date selected-date="nvvm.leadNegotiator.callDate"></editable-date>
+</div>
 
 <card-list id="card-list-negotiators">
     <card-list-header>
@@ -15,6 +18,19 @@
         </card>
     </card-list-item>
 </card-list>
+
+<section>
+    <card-list>
+        <card-list-header>
+            <h3 class="page-header" translate="DEPARTMENTS.COMMON.HEADER"></h3>
+        </card-list-header>
+        <card-list-item>
+            <card card-template-url="'app/activity/templates/departmentCard.html'" display-new-control="true">
+            </card>
+        </card-list-item>
+    </card-list>
+</section>
+
 
 <!-- Call date template
 

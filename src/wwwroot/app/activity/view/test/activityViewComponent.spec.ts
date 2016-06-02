@@ -304,6 +304,10 @@ module Antares {
 
                     spyOn(propertyPreviewController, 'setProperty');
 
+                    $http.expectPOST(/\/api\/latestviews/, () => {
+                        return true;
+                    }).respond(200, []);
+
                     // act
                     var cardElement = element.find(pageObjectSelectors.property.card);
                     cardElement.find(pageObjectSelectors.common.detailsLink).click();

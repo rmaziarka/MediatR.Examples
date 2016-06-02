@@ -94,7 +94,7 @@
                 {
                     User = negotiator,
                     UserType = this.GetLeadNegotiatorUserType(),
-                    CallDate = DateTime.UtcNow.AddDays(NextCallDateDays)
+                    CallDate = DateTime.UtcNow.AddDays(NextCallDateDays).Date
                 });
 
             this.activityRepository.Add(activity);

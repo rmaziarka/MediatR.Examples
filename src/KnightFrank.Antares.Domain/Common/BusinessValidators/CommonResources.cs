@@ -3,6 +3,16 @@
     public enum ErrorMessage
     {
         /// <summary>
+        /// Key value : Call date is required.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ActivityUser_CallDate_Is_Required,
+        /// <summary>
+        /// Key value : Negotiator is assigned to other activity.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ActivityUser_Is_Assigned_To_Other_Activity,
+        /// <summary>
         /// Key value : One or more negotiators are duplicated.
         /// </summary>
         // ReSharper disable once InconsistentNaming

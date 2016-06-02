@@ -76,12 +76,15 @@
   <ItemGroup>
     <Compile Include="Activity\CommandHandlers\CreateActivityAttachmentCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandler.cs" />
+    <Compile Include="Activity\CommandHandlers\UpdateActivityUserCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandler.cs" />
     <Compile Include="Activity\Commands\CreateActivityAttachmentCommand.cs" />
     <Compile Include="Activity\Commands\CreateActivityAttachmentCommandValidator.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\ActivityProfile.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandValidator.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityUserCommand.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityUserCommandValidator.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUserValidator.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUser.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommand.cs" />
@@ -91,7 +94,10 @@
     <Compile Include="Activity\Queries\ActivityTypeQueryValidator.cs" />
     <Compile Include="Activity\Queries\ActivityQueryValidator.cs" />
     <Compile Include="Activity\Queries\ActivityTypeQuery.cs" />
+    <Compile Include="Activity\Queries\ActivityUserQuery.cs" />
+    <Compile Include="Activity\Queries\ActivityUserQueryValidator.cs" />
     <Compile Include="Activity\QueryHandlers\ActivitiesQueryHandler.cs" />
+    <Compile Include="Activity\QueryHandlers\ActivityUserQueryHandler.cs" />
     <Compile Include="Activity\QueryHandlers\ActivityQueryHandler.cs" />
     <Compile Include="Activity\QueryHandlers\ActivityTypeQueryHandler.cs" />
     <Compile Include="Activity\QueryResults\ActivitiesQueryResult.cs" />

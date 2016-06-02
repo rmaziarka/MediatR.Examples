@@ -2,12 +2,13 @@
 {
     using System;
 
-    using KnightFrank.Antares.Dal.Model.Enum;
-    using KnightFrank.Antares.Dal.Model.Property;
-    using KnightFrank.Antares.Dal.Model.Property.Activities;
-    using KnightFrank.Antares.Dal.Model.User;
+    using Common;
+    using Enum;
+    using Property;
+    using Property.Activities;
+    using User;
 
-    public class Offer : BaseEntity
+    public class Offer : BaseEntity, IAuditableEntity
     {
         public Guid StatusId { get; set; }
 
@@ -35,5 +36,8 @@
 
         public string SpecialConditions { get; set; }
 
+        public DateTime CreatedDate { get; set; }
+
+        public DateTime LastModifiedDate { get; set; }
     }
 }

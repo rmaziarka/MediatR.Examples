@@ -3,7 +3,6 @@
 module Antares.Common.Component {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
-    import Enums = Common.Models.Enums;
     import DepartmentUserResourceParameters = Common.Models.Resources.IDepartmentUserResourceParameters;
 
     export class NegotiatorsController {
@@ -17,7 +16,7 @@ module Antares.Common.Component {
 
         public negotiatorsSearchOptions: SearchOptions = new SearchOptions();
         public labelTranslationKey: string;
-        public nagotiatorCallDateOpened: any = {};
+        public nagotiatorCallDateOpened: { [id: string]: boolean; } = {};
 
         public today: Date = new Date();
 
@@ -43,7 +42,8 @@ module Antares.Common.Component {
         }
 
         public changeLeadNegotiator = (user: Dto.IDepartmentUser) => {
-            this.leadNegotiator = this.createActivityUser(user, Enums.NegotiatorTypeEnum.LeadNegotiator);
+            this.leadNegotiator = this.createActivityUser(user, this.leadNegotiator ? this.leadNegotiator.callDate : null);
+            this.fixLeadNegotiatorCallDate();
 
             this.isLeadNegotiatorInEditMode = false;
         }
@@ -57,7 +57,7 @@ module Antares.Common.Component {
         }
 
         public addSecondaryNegotiator = (user: Dto.IDepartmentUser) => {
-            this.secondaryNegotiators.push(this.createActivityUser(user, Enums.NegotiatorTypeEnum.SecondaryNegotiator));
+            this.secondaryNegotiators.push(this.createActivityUser(user, null));
         }
 
         public deleteSecondaryNegotiator = (activityUser: Business.ActivityUser) => {
@@ -72,7 +72,9 @@ module Antares.Common.Component {
             _.remove(this.secondaryNegotiators, (itm) => itm.userId === activityUser.userId);
             this.secondaryNegotiators.push(this.leadNegotiator);
 
+            activityUser.callDate = activityUser.callDate || this.leadNegotiator.callDate;
             this.leadNegotiator = activityUser;
+            this.fixLeadNegotiatorCallDate();
         }
 
         public openNegotiatorCallDate = (nagotiatorUserId: string) => {
@@ -106,11 +108,18 @@ module Antares.Common.Component {
             return false;
         };
 
-        private createActivityUser = (user: Dto.IDepartmentUser, negotiatorType: Enums.NegotiatorTypeEnum) =>{
+        private fixLeadNegotiatorCallDate = () => {
+            if (this.leadNegotiator.callDate === null || moment(this.leadNegotiator.callDate).isBefore(this.today, 'day')) {
+                this.leadNegotiator.callDate = this.today;
+            }
+        }
+
+        private createActivityUser = (user: Dto.IDepartmentUser, callDate: Date) =>{
             var activityUser = new Business.ActivityUser();
             activityUser.activityId = this.activityId;
             activityUser.userId = user.id;
             activityUser.user = new Business.DepartmentUser(<Dto.IUser>user);
+            activityUser.callDate = callDate;
 
             return activityUser;
         }

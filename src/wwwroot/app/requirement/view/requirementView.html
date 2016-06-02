@@ -77,7 +77,7 @@
             <div class="col-md-4">
                 <section>
                     <h3 class="page-header" translate="REQUIREMENT.VIEW.OFFERS"></h3>
-                    <card-list-item class="requirement-view-offers" ng-repeat="offer in vm.requirement.offers | orderBy: '-offerDate' | enumSorter: 'OfferStatus':'statusId' track by offer.id + offer.statusId + offer.offerDate">
+                    <card-list-item class="requirement-view-offers" ng-repeat="offer in vm.requirement.offers | orderBy: '-createdDate' | enumSorter: 'OfferStatus':'statusId' track by offer.id + offer.statusId + offer.offerDate">
                         <card show-context-menu="true" show-item-details="vm.showOfferPreview" display-new-control="true"
                               card-template-url="'app/requirement/view/requirementOffersCard.html'" item="offer">
                             <card-context-menu>

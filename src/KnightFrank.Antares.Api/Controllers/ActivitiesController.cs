@@ -134,5 +134,34 @@
             var attachmentQuery = new AttachmentQuery { Id = attachmentId };
             return this.mediator.Send(attachmentQuery);
         }
+
+        /// <summary>
+        ///     Updates the activity user call date
+        /// </summary>
+        /// <param name="id">Activity Id</param>
+        /// <param name="command">ActivityUser data to update</param>
+        /// <returns>ActivityUser entity</returns>
+        [HttpPut]
+        [Route("{id}/negotiators")]
+        public ActivityUser UpdateActivityUser(Guid id, UpdateActivityUserCommand command)
+        {
+            command.ActivityId = id;
+            Guid activityUserId = this.mediator.Send(command);
+
+            return this.GetActivityUser(id, activityUserId);
+        }
+
+        private ActivityUser GetActivityUser(Guid activityId, Guid activityUserId)
+        {
+            ActivityUser activityUser = this.mediator.Send(new ActivityUserQuery { Id = activityUserId, ActivityId = activityId });
+
+            if (activityUser == null)
+            {
+                throw new HttpResponseException(
+                    this.Request.CreateErrorResponse(HttpStatusCode.NotFound, "ActivityUser not found."));
+            }
+
+            return activityUser;
+        }
     }
 }

@@ -28,7 +28,8 @@
     },
     "MAKEOFFER": "Make an offer",
     "SETASLEAD": "Set as lead",
-    "UNEXPECTED_SERVER_ERROR": "Unexpected error occured. Please try again or contact system administrator."
+    "UNEXPECTED_SERVER_ERROR": "Unexpected error occured. Please try again or contact system administrator.",
+    "SETASMANAGING": "Set as managing"
   },
   "OWNERSHIP": {
     "ADD": {
@@ -355,6 +356,11 @@
         "VENDOR": "Vendor",
         "APPLICANT": "Applicant",
         "BASIC_INFORMATION": "Basic information"
+    }
+  },
+  "DEPARTMENTS": {
+    "COMMON": {
+      "HEADER": "Departments"
     }
   }
 }

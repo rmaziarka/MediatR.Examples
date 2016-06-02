@@ -157,8 +157,7 @@ module Antares.Requirement.View {
             this.components.viewingEdit()
                 .saveViewing()
                 .then((viewing: Common.Models.Dto.IViewing) =>{
-                    var editedViewing = this.components.viewingPreview().getViewing();
-                    angular.copy(new Business.Viewing(viewing), editedViewing);
+                    angular.copy<Dto.IViewing>(new Business.Viewing(viewing), this.selectedViewing);
                     this.requirement.groupViewings(this.requirement.viewings);
                     this.viewingPreviewPanelVisible = true;
                 }).finally(() =>{

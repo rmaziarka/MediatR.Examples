@@ -14,12 +14,10 @@
     using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Offer;
-    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Activity.QueryResults;
-    using KnightFrank.Antares.Domain.Common.Enums;
 
     using Newtonsoft.Json;
 
@@ -80,11 +78,12 @@
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
             var activityTypeId = this.scenarioContext.Get<Guid>("ActivityTypeId");
 
-            Guid userTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["LeadNegotiator"];
+            Guid leadNegotiatorTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["LeadNegotiator"];
             Guid leadNegotiatorId = this.fixture.DataContext.Users.First().Id;
+
             var activityNegotiatorList = new List<ActivityUser>
             {
-                new ActivityUser { UserId = leadNegotiatorId, UserTypeId = userTypeId }
+                new ActivityUser { UserId = leadNegotiatorId, UserTypeId = leadNegotiatorTypeId }
             };
 
             var activity = new Activity
@@ -234,7 +233,8 @@
             actualActivity.ActivityUsers.Should().Equal(activity.ActivityUsers, (c1, c2) =>
                 c1.ActivityId == c2.ActivityId &&
                 c1.UserTypeId == c2.UserTypeId &&
-                c1.UserId == c2.UserId);
+                c1.UserId == c2.UserId &&
+                c1.CallDate.Equals(c2.CallDate));
         }
 
         [Then(@"Retrieved activity should have expected viewing")]
