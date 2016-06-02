@@ -49,6 +49,7 @@
                         List =
                             x.GroupBy(lv => lv.EntityId)
                              .Select(gLv => gLv.OrderByDescending(lv => lv.CreatedDate).FirstOrDefault())
+                             .OrderByDescending(lv => lv.CreatedDate)
                              .Take(maxLatestViews)
                     })
                     .ToList();
