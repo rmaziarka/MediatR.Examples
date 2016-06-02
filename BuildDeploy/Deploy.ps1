@@ -20,8 +20,10 @@ try {
     . ".\Build-SSDTDacpac.ps1"
     . ".\Deploy-SSDTDacpac.ps1"
     . ".\Drop-Database.ps1"
+    . ".\Configure-Jdbc.ps1"
 
     Deploy-Database -ProjectRootPath $ProjectRootPath -DropExistingDatabase:$DropExistingDatabase
+    Configure-Jdbc -PathToSettingsTemplate ".\Templates\settings.json" -PathToNssm "C:\Program Files\nssm\nssm-2.24" -PathToJdbc "C:\jdbc\elasticsearch-jdbc-2.3.2.0"
     
 } finally {
     Pop-Location
