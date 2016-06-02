@@ -67,8 +67,7 @@ Configuration SetupElasticsearchVm
     $nssmUnpack = "$env:SystemDrive\Program Files\nssm"
     $nssmFolder = "$nssmUnpack\nssm-$nssmVersion"
 
-    $octopusDir = "$env:SystemDrive\octopus"
-    $azureDir = "$env:SystemDrive\WindowsAzure"
+    $octopusFolder = "$env:SystemDrive\octopus"
 
 	Import-DscResource -Module cGripDevDSC
 	Import-DscResource -Module xPSDesiredStateConfiguration
@@ -83,7 +82,7 @@ Configuration SetupElasticsearchVm
 	{
 		LocalConfigurationManager
 		{
-			RebootNodeIfNeeded = $false
+			RebootNodeIfNeeded = $true
 			ActionAfterReboot = "ContinueConfiguration"
 		}
 		#####
@@ -95,46 +94,46 @@ Configuration SetupElasticsearchVm
             Type = "Directory"
         }
 
-		xRemoteFile CopyJDK {
+		File CopyJava {
 			DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $JavaFileName
-			Uri = Join-Path $CommonShareUrl -ChildPath $javaSource | Join-Path -ChildPath $JavaFileName
+			SourcePath = Join-Path $CommonShareUrl -ChildPath $javaSource | Join-Path -ChildPath $JavaFileName
 			Credential = $CommonShareCredential
             DependsOn = '[File]TempFolder'
 		}
 
-		xPackage Java {
+		xPackage InstallJava {
 			Name = 'Java SE Development Kit 8 Update 91 (64-bit)'
 			Path =  Join-Path -Path $tempDownloadFolder -ChildPath $JavaFileName
 			Arguments = "/s INSTALLDIR=`"$javaFolder`" STATIC=1"
 			ProductId = ''
-			DependsOn = '[Script]CopyJDK'
+			DependsOn = '[File]CopyJava'
 		}
 		  
-		Environment SetJDKEnviromentVar
+		Environment SetJavaHome
 		{
 			Name = "JAVA_HOME"
 			Ensure = "Present"
 			Path = $false
 			Value = $javaFolder
-			DependsOn = "[xPackage]Java"
+			DependsOn = "[xPackage]InstallJava"
 		}
 
-		Environment AddJDKToPath
+		Environment AddJavaToPath
 		{
 			Name = "Path"
 			Ensure = "Present"
 			Path = $true
 			Value = "%JAVA_HOME%\bin"
-			DependsOn = "[xPackage]Java"
+			DependsOn = "[xPackage]InstallJava"
 		}
 
 		#####
 		#Download and install elasticsearch
 		#####
 
-		xRemoteFile CopyElasticsearchZip {
+		File CopyElasticsearch {
 			DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $ElasticsearchFileName
-			Uri = Join-Path $CommonShareUrl -ChildPath $ElasticsearchSource | Join-Path -ChildPath $ElasticsearchFileName
+			SourcePath = Join-Path $CommonShareUrl -ChildPath $ElasticsearchSource | Join-Path -ChildPath $ElasticsearchFileName
 			Credential = $CommonShareCredential
             DependsOn = '[File]TempFolder'
 		}
@@ -142,8 +141,8 @@ Configuration SetupElasticsearchVm
 	    xArchive UnzipElasticsearch {
 			Path = Join-Path -Path $tempDownloadFolder -ChildPath $ElasticsearchFileName
 			Destination = Join-Path -Path $elasticsearchUnpack -ChildPath $ElasticsearchVersion
-			DependsOn = @('[Script]CopyElasticsearchZip')
 			DestinationType= "Directory"
+			DependsOn = @('[File]CopyElasticsearch')
 		}
   
 		Script ConfigureElasticsearch
@@ -168,8 +167,8 @@ Configuration SetupElasticsearchVm
 
 		cElasticsearch InstallElasticsearch
 		{
-			DependsOn = @('[Script]ConfigureElasticsearch','[Environment]SetJDKEnviromentVar','[Environment]SetJDKEnviromentVar')
 			UnzipFolder = Join-Path -Path $elasticsearchUnpack -ChildPath $ElasticsearchVersion
+			DependsOn = @('[Script]ConfigureElasticsearch','[Environment]SetJavaHome','[Environment]AddJavaToPath')
 		}
 
 		xFirewall OpenElasticsearchPort
@@ -180,24 +179,23 @@ Configuration SetupElasticsearchVm
 			Ensure = 'Present'
 			LocalPort = '9200'
 			Protocol = 'TCP'
-			DependsOn = '[cElasticsearch]InstallElasticsearch'
 		}
 
 		#####
 		#Download and install JDBC
 		#####
 
-		xRemoteFile CopyJdbcZip {
+		File CopyJdbc {
 			DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $JdbcFileName
-			Uri = Join-Path $CommonShareUrl -ChildPath $jdbcSource | Join-Path -ChildPath $JdbcFileName
+			SourcePath = Join-Path $CommonShareUrl -ChildPath $jdbcSource | Join-Path -ChildPath $JdbcFileName
 			Credential = $CommonShareCredential
             DependsOn = '[File]TempFolder'
 		}
 
-		xRemoteFile CopyNssm
+		File CopyNssm
 	    {
 		    DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $nssmFileName
-			Uri = Join-Path $CommonShareUrl -ChildPath $nssmSource | Join-Path -ChildPath $nssmFileName
+			SourcePath = Join-Path $CommonShareUrl -ChildPath $nssmSource | Join-Path -ChildPath $nssmFileName
 			Credential = $CommonShareCredential
             DependsOn = '[File]TempFolder'
 		}
@@ -205,7 +203,7 @@ Configuration SetupElasticsearchVm
         xArchive UnzipNssm {
 			Path = Join-Path -Path $tempDownloadFolder -ChildPath $nssmFileName
 			Destination = $nssmUnpack
-			DependsOn = @('[xRemoteFile]CopyNssm')
+			DependsOn = @('[File]CopyNssm')
 			DestinationType = "Directory"
 		}
 
@@ -213,51 +211,45 @@ Configuration SetupElasticsearchVm
 		#Install Octopus Tentacle
 		#####
 
-		Script DownloadOctopusTentacle
+        File OctopusFolder
 		{
-			TestScript = {
-				Test-Path "$using:azureDir\Octopus.Tentacle.3.3.6-x64.msi"
-			}
-			SetScript ={
-				$source = "https://download.octopusdeploy.com/octopus/Octopus.Tentacle.3.3.6-x64.msi"
-				$dest = "$using:azureDir\Octopus.Tentacle.3.3.6-x64.msi"
-				Invoke-WebRequest $source -OutFile $dest
-			}
-			GetScript = {@{Result = "DownloadOctopusTentacle"}}
+			DestinationPath = $octopusFolder
+			Ensure = "Present"
+			Type = "Directory"
+		}
+
+		xRemoteFile DownloadOctopusTentacle
+		{
+            Uri = "https://download.octopusdeploy.com/octopus/Octopus.Tentacle.3.3.6-x64.msi"
+            DestinationPath = "$tempDownloadFolder\Octopus.Tentacle.3.3.6-x64.msi"
+            DependsOn = @('[File]TempFolder')
 		}
 
 		Package InstallOctopusTentacle
 		{
 			Ensure = "Present"  
-			Path  = "$azureDir\Octopus.Tentacle.3.3.6-x64.msi"
+			Path  = "$tempDownloadFolder\Octopus.Tentacle.3.3.6-x64.msi"
 			Name = "Octopus Deploy Tentacle"
 			ProductId = "{D2622F6E-1377-47A6-9F6D-ED9AF593205D}"
-			DependsOn = "[Script]DownloadOctopusTentacle"
-		}
-
-		File OctopusDir
-		{
-			DestinationPath = $octopusDir
-			Ensure = "Present"
-			Type = "Directory"
+			DependsOn = "[xRemoteFile]DownloadOctopusTentacle"
 		}
 
 		Script ConfigureOctopusTentacle
 		{
-			DependsOn = @("[Package]InstallOctopusTentacle", "[File]OctopusDir")
 			TestScript = {
-				Test-Path "$using:octopusDir\Tentacle.config"
+				Test-Path "$using:octopusFolder\Tentacle.config"
 			}
 			SetScript = {
-				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" create-instance --instance "Tentacle" --config "$using:octopusDir\Tentacle.config" --console
+				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" create-instance --instance "Tentacle" --config "$using:octopusFolder\Tentacle.config" --console
 				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" new-certificate --instance "Tentacle" --if-blank --console
 				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --reset-trust --console
-				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --home $using:octopusDir --app "$using:octopusDir\Applications" --port "10933" --noListen "False" --console
+				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --home $using:octopusFolder --app "$using:octopusFolder\Applications" --port "10933" --noListen "False" --console
 				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --trust "$using:OctopusThumbprint" --console
 				& "netsh" advfirewall firewall add rule "name=Octopus Deploy Tentacle" dir=in action=allow protocol=TCP localport=10933
 				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" service --instance "Tentacle" --install --start --console
 			}
 			GetScript = {@{Result = "ConfigureOctopusTentacle"}}
+			DependsOn = @("[Package]InstallOctopusTentacle", "[File]OctopusFolder")
 		}
 	}
 }

@@ -543,7 +543,7 @@
                 "ElasticsearchFileName": "[parameters('ElasticsearchFileName')]",
                 "JdbcFileName": "[parameters('JdbcFileName')]",
                 "JdbcVersion": "[parameters('JdbcVersion')]",
-                "ElasticsearchIp": "[parameters('ElasticsearchIp')]",
+                "ElasticsearchIp": "reference(resourceId([variables('VmElasticsearchNicName')]).ipConfigurations[0].properties.privateIPAddress",
                 "ElasticsearchAdditionalConfigValues": "[parameters('ElasticsearchAdditionalConfigValues')]"
               }
             },

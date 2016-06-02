@@ -5,6 +5,10 @@ Configuration SetupElasticsearchVmLocal
 		[string] 
 		$CommonShareUrl,
 
+		[Parameter(Mandatory = $true)] 
+		[System.Management.Automation.PSCredential]
+		$CommonShareCredential,
+
 		[Parameter(Mandatory = $true)]
 		[string]
 		$ElasticsearchIp,
@@ -77,6 +81,11 @@ Configuration SetupElasticsearchVmLocal
     $nssmUnpack = "$env:SystemDrive\Program Files\nssm"
     $nssmFolder = "$nssmUnpack\nssm-$nssmVersion"
 
+	$OctopusThumbprint = 'C478B5952045B390F15F0C444D4917E911713EF0'
+
+	$octopusDir = "$env:SystemDrive\octopus"
+    $azureDir = "$env:SystemDrive\WindowsAzure"
+
 	Import-DscResource -Module cGripDevDSC
 	Import-DscResource -Module xPSDesiredStateConfiguration
 	Import-DscResource -Module xNetworking
@@ -90,7 +99,7 @@ Configuration SetupElasticsearchVmLocal
 	{
 		LocalConfigurationManager
 		{
-			RebootNodeIfNeeded = $true
+			RebootNodeIfNeeded = $false
 			ActionAfterReboot = "ContinueConfiguration"
 		}
 		#####
@@ -103,76 +112,54 @@ Configuration SetupElasticsearchVmLocal
             Type = "Directory"
         }
 
-		Script CopyJDK
-	    {
-		    TestScript = { 
-			    Test-Path "$using:tempDownloadFolder\\$using:javaFileName"
-		    }
-		    GetScript = {@{Result = "CopyJDK"}}
-		    SetScript =
-		    {
-				$secpasswd = ConvertTo-SecureString “P7G+0uLD8g5q73RxshNg4GQdXJHr0EXasWSk6pe5UhCsp2QphVtPzZd+IcNdRlt9zoFjszQXMrK8XbIOcClakA==” -AsPlainText -Force
-				$mycreds = New-Object System.Management.Automation.PSCredential("kfaneiedevcommonst", $secpasswd)
-
-			    New-PSDrive -Name P -PSProvider FileSystem -Root $using:CommonShareUrl -Credential $mycreds                
-				Copy-Item (Join-Path -Path "P:" -ChildPath $using:javaSource | Join-Path -ChildPath $using:javaFileName) (Join-Path -Path $using:tempDownloadFolder -ChildPath $using:javaFileName)
-			    Remove-PSDrive -Name P
-		    }
+        File CopyJava {
+			DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $JavaFileName
+			SourcePath = Join-Path $CommonShareUrl -ChildPath $javaSource | Join-Path -ChildPath $JavaFileName
+			Credential = $CommonShareCredential
             DependsOn = '[File]TempFolder'
 		}
 
-		xPackage Java {
+		xPackage InstallJava {
 			Name = 'Java SE Development Kit 8 Update 91 (64-bit)'
 			Path =  Join-Path -Path $tempDownloadFolder -ChildPath $javaFileName
 			Arguments = "/s INSTALLDIR=`"$javaFolder`" STATIC=1"
 			ProductId = ''
-			DependsOn = '[Script]CopyJDK'
+			DependsOn = '[File]CopyJava'
 		}
 		  
-		Environment SetJDKEnviromentVar
+		Environment SetJavaHome
 		{
 			Name = "JAVA_HOME"
 			Ensure = "Present"
 			Path = $false
 			Value = $javaFolder
-			DependsOn = "[xPackage]Java"
+			DependsOn = "[xPackage]InstallJava"
 		}
 
-		Environment AddJDKToPath
+		Environment AddJavaToPath
 		{
 			Name = "Path"
 			Ensure = "Present"
 			Path = $true
 			Value = "%JAVA_HOME%\bin"
-			DependsOn = "[xPackage]Java"
+			DependsOn = "[xPackage]InstallJava"
 		}
 
 		#####
 		#Download and install elasticsearch
 		#####
 
-		Script CopyElasticsearchZip
-	    {
-		    TestScript = { 
-			    Test-Path "$using:tempDownloadFolder\\$using:elasticsearchFileName"
-		    }
-		    GetScript = {@{Result = "CopyElasticsearchZip"}}
-		    SetScript =
-		    {
-				$secpasswd = ConvertTo-SecureString “P7G+0uLD8g5q73RxshNg4GQdXJHr0EXasWSk6pe5UhCsp2QphVtPzZd+IcNdRlt9zoFjszQXMrK8XbIOcClakA==” -AsPlainText -Force
-				$mycreds = New-Object System.Management.Automation.PSCredential("kfaneiedevcommonst", $secpasswd)
-
-			    New-PSDrive -Name P -PSProvider FileSystem -Root $using:CommonShareUrl -Credential $mycreds
-			    Copy-Item (Join-Path -Path "P:" -ChildPath $using:elasticsearchSource | Join-Path -ChildPath $using:elasticsearchFileName) (Join-Path -Path $using:tempDownloadFolder -ChildPath $using:elasticsearchFileName)
-			    Remove-PSDrive -Name P
-		    }
+		File CopyElasticsearch {
+			DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $elasticsearchFileName
+			SourcePath = Join-Path $CommonShareUrl -ChildPath $elasticsearchSource | Join-Path -ChildPath $elasticsearchFileName
+			Credential = $CommonShareCredential
             DependsOn = '[File]TempFolder'
-	    }
+		}
   
 		xArchive UnzipElasticsearch {
 			Path = Join-Path -Path $tempDownloadFolder -ChildPath $elasticsearchFileName
 			Destination = Join-Path -Path $elasticsearchUnpack -ChildPath $elasticsearchVersion
-			DependsOn = @('[Script]CopyElasticsearchZip')
+			DependsOn = @('[File]CopyElasticsearch')
 			DestinationType= "Directory"
 		}
   
@@ -198,7 +185,7 @@ Configuration SetupElasticsearchVmLocal
 
 		cElasticsearch InstallElasticsearch
 		{
-			DependsOn = @('[Script]ConfigureElasticsearch','[Environment]SetJDKEnviromentVar','[Environment]SetJDKEnviromentVar')
+			DependsOn = @('[Script]ConfigureElasticsearch','[Environment]SetJavaHome','[Environment]AddJavaToPath')
 			UnzipFolder = Join-Path -Path $elasticsearchUnpack -ChildPath $elasticsearchVersion
 		}
 
@@ -217,28 +204,17 @@ Configuration SetupElasticsearchVmLocal
 		#Download and install JDBC
 		#####
 
-		Script CopyJdbcZip
-	    {
-		    TestScript = { 
-			    Test-Path "$using:tempDownloadFolder\\$using:jdbcFileName"
-		    }
-		    GetScript = {@{Result = "CopyjdbcZip"}}
-		    SetScript =
-		    {
-				$secpasswd = ConvertTo-SecureString “P7G+0uLD8g5q73RxshNg4GQdXJHr0EXasWSk6pe5UhCsp2QphVtPzZd+IcNdRlt9zoFjszQXMrK8XbIOcClakA==” -AsPlainText -Force
-				$mycreds = New-Object System.Management.Automation.PSCredential("kfaneiedevcommonst", $secpasswd)
-
-			    New-PSDrive -Name P -PSProvider FileSystem -Root $using:CommonShareUrl -Credential $mycreds
-			    Copy-Item (Join-Path -Path "P:" -ChildPath $using:jdbcSource | Join-Path -ChildPath $using:jdbcFileName) (Join-Path -Path $using:tempDownloadFolder -ChildPath $using:jdbcFileName)
-			    Remove-PSDrive -Name P
-		    }
+		File CopyJdbc {
+			DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $jdbcFileName
+			SourcePath = Join-Path $CommonShareUrl -ChildPath $jdbcSource | Join-Path -ChildPath $jdbcFileName
+			Credential = $CommonShareCredential
             DependsOn = '[File]TempFolder'
-	    }
+		}
 
 		xArchive UnzipJdbc {
 			Path = Join-Path -Path $tempDownloadFolder -ChildPath $jdbcFileName
 			Destination = $jdbcUnpack
-			DependsOn = @('[Script]CopyJdbcZip')
+			DependsOn = @('[File]CopyJdbc')
 			DestinationType = "Directory"
 		}
 
@@ -260,9 +236,6 @@ Configuration SetupElasticsearchVmLocal
 				$settings.jdbc.user = $using:SqlUser
 				$settings.jdbc.password = $using:SqlPassword
 				$settings.jdbc.index = $using:ElasticsearchIndex
-				$settings.jdbc."elasticsearch.Host" = $using:elasticsearchHost
-				$settings.jdbc."elasticsearch.Port" = $using:elasticsearchPort
-				$settings.jdbc.schedule = $using:JdbcSchedule
 				if($using:AdditionalJdbcConfigValues) {
 					$settings.jdbc | Add-Member -PassThru -NotePropertyMembers $using:AdditionalJdbcConfigValues
 				}
@@ -273,28 +246,18 @@ Configuration SetupElasticsearchVmLocal
 			DependsOn = '[xArchive]UnzipJdbc'
 	    }
         
-        Script CopyNssm
+        File CopyNssm
 	    {
-		    TestScript = { 
-			    Test-Path "$using:tempDownloadFolder\\$using:nssmFileName"
-		    }
-		    GetScript = {@{Result = "CopyNssm"}}
-		    SetScript =
-		    {
-				$secpasswd = ConvertTo-SecureString “P7G+0uLD8g5q73RxshNg4GQdXJHr0EXasWSk6pe5UhCsp2QphVtPzZd+IcNdRlt9zoFjszQXMrK8XbIOcClakA==” -AsPlainText -Force
-				$mycreds = New-Object System.Management.Automation.PSCredential("kfaneiedevcommonst", $secpasswd)
-
-			    New-PSDrive -Name P -PSProvider FileSystem -Root $using:CommonShareUrl -Credential $mycreds                
-				Copy-Item (Join-Path -Path "P:" -ChildPath $using:nssmSource | Join-Path -ChildPath $using:nssmFileName) (Join-Path -Path $using:tempDownloadFolder -ChildPath $using:nssmFileName)
-			    Remove-PSDrive -Name P
-		    }
+		    DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $nssmFileName
+			SourcePath = Join-Path $CommonShareUrl -ChildPath $nssmSource | Join-Path -ChildPath $nssmFileName
+			Credential = $CommonShareCredential
             DependsOn = '[File]TempFolder'
 		}
 
         xArchive UnzipNssm {
 			Path = Join-Path -Path $tempDownloadFolder -ChildPath $nssmFileName
 			Destination = $nssmUnpack
-			DependsOn = @('[Script]CopyNssm')
+			DependsOn = @('[File]CopyNssm')
 			DestinationType = "Directory"
 		}
 
@@ -305,10 +268,78 @@ Configuration SetupElasticsearchVmLocal
             ServiceName = "jdbc-$jdbcVersion-$BranchName"
             DependsON = @('[xArchive]UnzipNssm', '[Script]ConfigureJdbc')
         }
+        
+		File AzureDir
+		{
+			DestinationPath = $azureDir
+			Ensure = "Present"
+			Type = "Directory"
+		}
+
+		Script DownloadOctopusTentacle
+		{
+			TestScript = {
+				Test-Path "$using:azureDir\Octopus.Tentacle.3.3.6-x64.msi"
+			}
+			SetScript ={
+				$source = "https://download.octopusdeploy.com/octopus/Octopus.Tentacle.3.3.6-x64.msi"
+				$dest = "$using:azureDir\Octopus.Tentacle.3.3.6-x64.msi"
+				Invoke-WebRequest $source -OutFile $dest
+			}
+			GetScript = {@{Result = "DownloadOctopusTentacle"}}
+		}
+
+		Package InstallOctopusTentacle
+		{
+			Ensure = "Present"  
+			Path  = "$azureDir\Octopus.Tentacle.3.3.6-x64.msi"
+			Name = "Octopus Deploy Tentacle"
+			ProductId = "{D2622F6E-1377-47A6-9F6D-ED9AF593205D}"
+			DependsOn = "[Script]DownloadOctopusTentacle"
+		}
+
+		File OctopusDir
+		{
+			DestinationPath = $octopusDir
+			Ensure = "Present"
+			Type = "Directory"
+		}
+
+		Script ConfigureOctopusTentacle
+		{
+			DependsOn = @("[Package]InstallOctopusTentacle", "[File]OctopusDir")
+			TestScript = {
+				Test-Path "$using:octopusDir\Tentacle.config"
+			}
+			SetScript = {
+				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" create-instance --instance "Tentacle" --config "$using:octopusDir\Tentacle.config" --console
+				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" new-certificate --instance "Tentacle" --if-blank --console
+				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --reset-trust --console
+				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --home $using:octopusDir --app "$using:octopusDir\Applications" --port "10933" --noListen "False" --console
+				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --trust "$using:OctopusThumbprint" --console
+				& "netsh" advfirewall firewall add rule "name=Octopus Deploy Tentacle" dir=in action=allow protocol=TCP localport=10933
+				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" service --instance "Tentacle" --install --start --console
+			}
+			GetScript = {@{Result = "ConfigureOctopusTentacle"}}
+		}
 	}
 }
 
+$ConfigData = @{
+    AllNodes = @(
+        @{
+            NodeName                    = "localhost"
+            PSDscAllowPlainTextPassword = $true
+        }
+    )
+}
+
+$securedPassword = ConvertTo-SecureString “P7G+0uLD8g5q73RxshNg4GQdXJHr0EXasWSk6pe5UhCsp2QphVtPzZd+IcNdRlt9zoFjszQXMrK8XbIOcClakA==” -AsPlainText -Force
+$credentials = New-Object System.Management.Automation.PSCredential("kfaneiedevcommonst", $securedPassword)
+
 SetupElasticsearchVmLocal `
+-ConfigurationData $ConfigData `
+-CommonShareCredential $credentials `
 -CommonShareUrl "\\kfaneiedevcommonst.file.core.windows.net\setupfiles" `
 -SqlIp "localhost"`
 -SqlPort "1433"`
