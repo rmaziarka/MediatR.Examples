@@ -18,6 +18,7 @@
     public class CreateCompanyPage : ProjectPageBase
     {
         private readonly ElementLocator companyForm = new ElementLocator(Locator.CssSelector, "company-add");
+        private readonly ElementLocator companyViewForm = new ElementLocator(Locator.CssSelector, "company-view");
         private readonly ElementLocator addContact = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
         private readonly ElementLocator companyName = new ElementLocator(Locator.Id, "name");
         private readonly ElementLocator website = new ElementLocator(Locator.Id, "website");
@@ -86,11 +87,15 @@
             return this;
         }
 
-        public bool IsCompanyFormPresent()
+        public bool IsAddCompanyFormPresent()
         {
             return this.Driver.IsElementPresent(this.companyForm, BaseConfiguration.MediumTimeout);
         }
 
+        public bool IsViewCompanyFormPresent()
+        {
+            return this.Driver.IsElementPresent(this.companyViewForm, BaseConfiguration.MediumTimeout);
+        }
         public CreateCompanyPage WaitForSidePanelToShow()
         {
             this.Driver.WaitForElementToBeDisplayed(this.panel, BaseConfiguration.MediumTimeout);
@@ -130,6 +135,6 @@
 
         }
 
-     
+    
     }
 }

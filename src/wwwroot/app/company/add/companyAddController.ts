@@ -58,13 +58,16 @@ module Antares.Company {
         formatUrlWithProtocol = (url:string):string=> {
             //regular expression for url with a protocol (case insensitive)
             var r = new RegExp('^(?:[a-z]+:)?//', 'i');
-            if (r.test(url)) { return url; }
-            else { return 'http://' + url; }
+            if (url.length > 0) {
+                if (!r.test(url)) {
+                    return `http://${url}`;
+                }
+             }
+            return url;
         }
    
         createCompany = () => {
-        
-            this.company.clientCareStatusId = this.selectedStatus.id;
+            this.company.clientCareStatusId = this.selectedStatus != null? this.selectedStatus.id:"";
             this.company.websiteUrl = this.formatUrlWithProtocol(this.company.websiteUrl);
             this.company.clientCarePageUrl = this.formatUrlWithProtocol(this.company.clientCarePageUrl);
             this.companyResource

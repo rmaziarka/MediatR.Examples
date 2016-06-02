@@ -3,7 +3,8 @@
 module Antares {
    
     import runDescribe = TestHelpers.runDescribe;
-    type TestCase = [boolean, string];
+    type TestCaseShowText = [boolean, string];
+    type TestCaseProtocolCheck = [string,string];
 
     describe('Given external link component', () => {
         var scope: ng.IScope,
@@ -47,13 +48,13 @@ module Antares {
         });
 
         runDescribe('when showText')
-            .data<TestCase>([
+            .data<TestCaseShowText>([
                 [true, 'http://www.test.com'],
                 [false, ''],
             ])
-            .dataIt((data: TestCase) =>
-                ` is set to "${data[0] ? 'true' : 'false'}" then url should ${data[0] ? '' : 'not'} be displayed`)
-            .run((data: TestCase) => {
+            .dataIt((data: TestCaseShowText) =>
+                ` is set to "${data[0] ? 'true' : 'false'}" then url text should ${data[0] ? '' : 'not'} be displayed`)
+            .run((data: TestCaseShowText) => {
                 var expectedUrl = data[1];
 
                 createComponent(expectedUrl, data[0]);
@@ -62,6 +63,26 @@ module Antares {
                 //Assert
                 expect(urlElements.length).toBe(1);
                 expect(urlElements[0].innerText.trim()).toBe(expectedUrl);
+            });
+
+        runDescribe('when url is')
+            .data<TestCaseProtocolCheck>([
+                ["http://www.test.com/index.html", "http://www.test.com/index.html"],
+                ["www.test.com/", "http://www.test.com/"],
+                ["https://www.test.com/", "https://www.test.com/"]
+            ])
+            .dataIt((data: TestCaseProtocolCheck) =>
+                ` is set to "${data[0]}" then href of a tag should ${data[1]}`)
+            .run((data: TestCaseProtocolCheck) => {
+                var expectedUrl = data[1];
+
+                createComponent(data[0], false);
+                var urlElements = element.find(pageObjectSelector.url);
+                var anchorElement = <HTMLAnchorElement>urlElements[0];
+
+                //Assert
+               expect(anchorElement.href).toBe(expectedUrl);
+              
             });
     });
 }

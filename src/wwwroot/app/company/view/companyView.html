@@ -1,50 +1,53 @@
 <div class="row">
     
     <div class="col-md-12">
-        <h2 class="page-header">View company</h2>
-
-        <div class="well">
-            <button type="button" class="btn btn-default pull-right"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT">Edit</span></button>
-            <div>A company</div>
+       <div class="well">
+            <button type="button" class="btn btn-default pull-right"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span></button>
+            <div id="name">{{vm.company.name}}</div>
         </div>
 
         <div class="row">
             <div class="col-md-4">
-                <h3 class="page-header">Basic info</h3>
+                <h3 class="page-header" translate="COMPANY.BASIC_INFO"></h3>
 
                 <div class="section-row row">
-                    <div class="col-xs-4">Website</div>
+                    <div class="col-xs-4"><label translate="COMPANY.WEBSITE"></label></div>
                     <div class="col-xs-8">
-                        <external-link url="vm.company.website" show-text="true"></external-link>
+                        <external-link id="websiteUrl" url="vm.company.websiteUrl" show-text="true"></external-link>
                     </div>
                 </div>
 
                 <div class="section-row row">
-                    <div class="col-xs-4">Client Care website</div>
-                    <div class="col-xs-8"><a href="#" target="_blank">www.clientcare.companywebpage.com</a> <i class="fa fa-external-link" aria-hidden="true"></i>
+                    <div class="col-xs-4"><label translate="COMPANY.CLIENT_CARE_WEBSITE"></label></div>
+                    <div class="col-xs-8">
+                        <external-link id="clientCarePageUrl" url="vm.company.clientCarePageUrl" show-text="true"></external-link>
                     </div>
                 </div>
 
                 <div class="section-row row">
-                    <div class="col-xs-4">Client Care status</div>
-                    <div class="col-xs-8">Lorem ipsum</div>
+                    <div class="col-xs-4"><label translate="COMPANY.CLIENT_CARE_STATUS"></label></div>
+                    <div class="col-xs-8" id="clientCareStatus" ng-show="vm.company.clientCareStatusId != null">{{vm.company.clientCareStatusId | dynamicTranslate}}</div>
                 </div>
             </div>
             <div class="col-md-4">
-                <h3 class="page-header">Contacts</h3>
+                <section>
+                    <list id="list-contacts">
+                        <list-header>
+                            <h3 class="page-header" translate="COMPANY.CONTACTS"></h3>
+                        </list-header>
+                     
+                        <list-no-items ng-show="vm.hasCompanyContacts() === false" ng-class="{'has-error': addCompanyForm.$submitted}">
+                            <p class="help-block" id="no-contacts-help-block" ng-show="addCompanyForm.$submitted === false" translate="COMPANY.ADD.NO_CONTACTS"></p>
+                            <p class="help-block" id="contacts-are-required-help-block" ng-show="addCompanyForm.$submitted" translate="COMPANY.ADD.CONTACTS_ARE_REQUIRED"></p>
+                        </list-no-items>
+                        <list-item id="list-item-contact-{{contact.id}}" ng-repeat="contact in vm.company.contacts">
+                            {{contact.getName()}}
+                        </list-item>
+                    </list>
+                </section>
 
-                <div class="card card-no-menu">
-                    <div class="card-body">
-                        <div class="card-item">Gilberto Lyons</div>
-                    </div>
-                </div>
-
-                <div class="card card-no-menu">
-                    <div class="card-body">
-                        <div class="card-item">Drew Sanders</div>
-                    </div>
-                </div>
             </div>
+           
         </div>
     </div>
 </div>

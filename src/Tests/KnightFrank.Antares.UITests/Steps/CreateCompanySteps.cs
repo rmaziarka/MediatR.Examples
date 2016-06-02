@@ -106,20 +106,13 @@
         [Then(@"Company form on create company page should be diaplyed")]
         public void CheckIfCreateContactIsDisplayed()
         {
-            Assert.True(this.page.IsCompanyFormPresent());
+            Assert.True(this.page.IsAddCompanyFormPresent());
         }
 
         [Then(@"View company page is displayed")]
         public void ThenViewCompanyPageIsDisplayed()
         {
-         //   Assert.True(this.page.IsViewCompanyFormPresent());
-         Assert.True(true);
-        }
-
-        [Then(@"New company should be created")]
-        public void CheckIfCompanyCreated()
-        {
-            //TODO implement check if contact was created
+            Assert.True(this.page.IsViewCompanyFormPresent()); 
         }
 
         [Then(@"url opens in new tab")]

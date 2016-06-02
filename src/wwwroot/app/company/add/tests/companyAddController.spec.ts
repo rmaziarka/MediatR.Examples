@@ -4,7 +4,6 @@ module Antares {
     import CompanyAddController = Antares.Company.CompanyAddController;
     import Business = Antares.Common.Models.Business;
     import Dto = Antares.Common.Models.Dto;
-   import TestHelpers = Antares.TestHelpers;
 
     describe('Given company is being added', () =>{
         var scope: ng.IScope,
