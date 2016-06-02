@@ -122,18 +122,12 @@
 
             commandNegotiators.Where(n => IsNewlyAddedToExistingList(n, existingNegotiators))
                               .ToList()
-                              .ForEach(ValidateNegotiatorCallDate);
+                              .ForEach(n => ValidateNegotiatorCallDate(n.CallDate, null));
 
             commandNegotiators.Where(n => IsUpdated(n, existingNegotiators))
-                              .Select(n => new { newNagotiator = n, oldNegotiator = GetOldActivityUser(n, existingNegotiators) })
+                              .Select(n => new { newNegotiator = n, oldNegotiator = GetOldActivityUser(n, existingNegotiators) })
                               .ToList()
-                              .ForEach(pair =>
-                              {
-                                  if (pair.newNagotiator.CallDate != pair.oldNegotiator.CallDate)
-                                  {
-                                      ValidateNegotiatorCallDate(pair.newNagotiator);
-                                  }
-                              });
+                              .ForEach(pair => ValidateNegotiatorCallDate(pair.newNegotiator.CallDate, pair.oldNegotiator.CallDate));
         }
 
         private void UpdateActivityNegotiators(List<ActivityUser> commandNegotiators, Activity activity)
@@ -154,18 +148,28 @@
                               .ForEach(pair => UpdateNegotiator(pair.newNagotiator, pair.oldNegotiator));
         }
 
-        private static void ValidateNegotiatorCallDate(ActivityUser negotiator)
+        private static void ValidateNegotiatorCallDate(DateTime? newNegotiatorCallDate, DateTime? oldNegotiatorCallDate)
         {
-            if (negotiator.CallDate.HasValue && (negotiator.CallDate.Value.Date < DateTime.UtcNow.Date))
+            if (!newNegotiatorCallDate.HasValue)
             {
-                //throw new BusinessValidationException(ErrorMessage.Activity_Negotiator_CallDate_InPast);
+                return;
+            }
+
+            if (oldNegotiatorCallDate.HasValue && (newNegotiatorCallDate.Value.Date == oldNegotiatorCallDate.Value.Date))
+            {
+                return;
+            }
+
+            if (newNegotiatorCallDate.Value.Date < DateTime.UtcNow.Date)
+            {
+                throw new BusinessValidationException(ErrorMessage.Activity_Negotiator_CallDate_InPast);
             }
         }
 
         private static void UpdateNegotiator(ActivityUser newNegotiator, ActivityUser oldNegotiator)
         {
             oldNegotiator.UserType = newNegotiator.UserType;
-            oldNegotiator.CallDate = newNegotiator.CallDate;
+            oldNegotiator.CallDate = newNegotiator.CallDate?.Date;
         }
 
         private static bool IsRemovedFromExistingList(ActivityUser existingActivityUser, IEnumerable<ActivityUser> activityUsers)

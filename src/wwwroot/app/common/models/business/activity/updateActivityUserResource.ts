@@ -8,7 +8,7 @@ module Antares.Common.Models.Business {
         constructor(activityUser?: Business.ActivityUser) {
             if (activityUser) {
                 this.userId = activityUser.userId;
-                this.callDate = activityUser.callDate;
+                this.callDate = Core.DateTimeUtils.createDateAsUtc(activityUser.callDate);
             }
         }
     }

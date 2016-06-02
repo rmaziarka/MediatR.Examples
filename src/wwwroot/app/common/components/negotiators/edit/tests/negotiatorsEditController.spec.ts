@@ -5,11 +5,19 @@ module Antares {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
     import Enums = Common.Models.Enums;
+    import runDescribe = TestHelpers.runDescribe;
 
     describe('Given negotiators controller', () => {
         var $scope: ng.IScope,
             $http: ng.IHttpBackendService,
             controller: NegotiatorsController;
+
+        var datesToTest: any = {
+            today: moment(),
+            inThePast: moment().day(-7),
+            inTheFuture: moment().day(7),
+            inTheFutureOther: moment().day(10)
+        };
 
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
@@ -75,6 +83,28 @@ module Antares {
                 expect(controller.leadNegotiator.userId).toBe(user.id);
                 expect(controller.leadNegotiator.activityId).toBe(controller.activityId);
             });
+
+            type TestCaseForCallDate = [Date, Date, string, string]; //[lead CallDate, expected lead CallDate, test description part 1, , test description part 2]
+            runDescribe('and when call date for leadNegotiator is ')
+                .data<TestCaseForCallDate>([
+                    [datesToTest.inTheFuture, datesToTest.inTheFuture, 'in the future','not be changed'],
+                    [datesToTest.today, datesToTest.today, 'today','not be changed'],
+                    [datesToTest.inThePast, datesToTest.today, 'in the past', 'be changed to today']])
+                .dataIt((data: TestCaseForCallDate) =>
+                    `${data[2]} then call date should ${data[3]}`)
+                .run((data: TestCaseForCallDate) => {
+                    // arrange
+                    controller.today = datesToTest.today;
+                    controller.changeLeadNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+
+                    controller.leadNegotiator.callDate = data[0];
+
+                    //act
+                    controller.changeLeadNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+
+                    // assert
+                    expect(controller.leadNegotiator.callDate).toEqual(data[1]);
+                });
         });
 
         describe('when editSecondaryNegotiators is called', () => {
@@ -129,6 +159,7 @@ module Antares {
                 expect(controller.secondaryNegotiators[0].user).toEqual(user);
                 expect(controller.secondaryNegotiators[0].userId).toBe(user.id);
                 expect(controller.secondaryNegotiators[0].activityId).toBe(controller.activityId);
+                expect(controller.secondaryNegotiators[0].callDate).toBeNull();
             });
         });
 
@@ -170,6 +201,45 @@ module Antares {
                 expect(controller.leadNegotiator).toBe(negotiatorToSwitch);
                 expect(controller.secondaryNegotiators.indexOf(oldLeadNegotiator)).not.toBe(-1);
             });
+
+            type TestCaseForCallDate = [Date, Date, Date, Date, string, string, string, string]; //[lead CallDate, secondary CallDate, expected lead CallDate, expected secondary CallDate, test description part 1 - 4]
+            runDescribe('and when call date ')
+                .data<TestCaseForCallDate>([
+                    [datesToTest.inTheFuture, null, datesToTest.inTheFuture, datesToTest.inTheFuture, 'in the future', 'not set', 'not be changed', 'be changed to the future'],
+                    [datesToTest.inTheFuture, datesToTest.inTheFuture, datesToTest.inTheFuture, datesToTest.inTheFuture, 'in the future', 'in the future', 'not be changed', 'not be changed'],
+                    [datesToTest.inTheFuture, datesToTest.inTheFutureOther, datesToTest.inTheFutureOther, datesToTest.inTheFuture, 'in the future', 'in other future', 'be changed to other future', 'be changed to the future'],
+                    [datesToTest.inTheFuture, datesToTest.today, datesToTest.today, datesToTest.inTheFuture, 'in the future', 'today', 'be changed to today', 'be changed to the future'],
+                    [datesToTest.inTheFuture, datesToTest.inThePast, datesToTest.today, datesToTest.inTheFuture, 'in the future', 'in the past', 'be changed to today', 'be changed to the future'],
+
+                    [datesToTest.today, null, datesToTest.today, datesToTest.today, 'today', 'not set', 'not be changed', 'be changed to today'],
+                    [datesToTest.today, datesToTest.today, datesToTest.today, datesToTest.today, 'today', 'today', 'not be changed', 'not be changed'],
+                    [datesToTest.today, datesToTest.inTheFuture, datesToTest.inTheFuture, datesToTest.today, 'today', 'in the future', 'be changed to the future', 'be changed to today'],
+                    [datesToTest.today, datesToTest.inThePast, datesToTest.today, datesToTest.today, 'today', 'in the past', 'be changed to today', 'be changed to today'],
+
+                    [datesToTest.inThePast, null, datesToTest.today, datesToTest.inThePast, 'in the past', 'not set', 'be changed to today', 'be changed to the past'],
+                    [datesToTest.inThePast, datesToTest.inThePast, datesToTest.today, datesToTest.inThePast, 'in the past', 'in the past', 'be changed to today', 'be changed to the past'],
+                    [datesToTest.inThePast, datesToTest.inTheFuture, datesToTest.inTheFuture, datesToTest.inThePast, 'in the past', 'in the future', 'be changed to the future', 'be changed to the past'],
+                    [datesToTest.inThePast, datesToTest.today, datesToTest.today, datesToTest.inThePast, 'in the past', 'in the past', 'be changed to today', 'be changed to the past']])
+                .dataIt((data: TestCaseForCallDate) =>
+                    `for lead is ${data[4]} and for secondary is ${data[5]} then call date for new lead should ${data[6]} and for new secondary should ${data[7]}`)
+                .run((data: TestCaseForCallDate) => {
+                    // arrange
+                    controller.today = datesToTest.today;
+                    controller.secondaryNegotiators = [];
+
+                    controller.changeLeadNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                    controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+
+                    controller.leadNegotiator.callDate = data[0];
+                    controller.secondaryNegotiators[0].callDate = data[1];
+
+                    //act
+                    controller.switchToLeadNegotiator(controller.secondaryNegotiators[0]);
+
+                    // assert
+                    expect(controller.leadNegotiator.callDate).toEqual(data[2]);
+                    expect(controller.secondaryNegotiators[0].callDate).toEqual(data[3]);
+                });
         });
 
         describe('when openNegotiatorCallDate is called', () => {
