@@ -24,7 +24,7 @@ module Antares.Providers {
                 .then(this.loadLatestData);
         }
 
-        public addViewing = (command: LatestViewCommand) => {
+        public addView = (command: LatestViewCommand) => {
             this.latestViewsService
                 .post(command)
                 .then(this.loadLatestData);

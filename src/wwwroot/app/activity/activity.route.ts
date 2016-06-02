@@ -14,15 +14,7 @@ module Antares.Activity {
             .state('app.activity-view', {
                 url: '/activity/view/:id',
                 template: "<activity-view activity='activity'></activity-view>",
-                controller: ($scope: ng.IScope, activity: Dto.IActivity, latestViewsProvider: LatestViewsProvider) => {
-                    var activityViewModel = new Business.Activity(<Dto.IActivity>activity);
-
-                    $scope['activity'] = activityViewModel;
-                    latestViewsProvider.addViewing({
-                        entityId: activity.id,
-                        entityType: EntityType.Activity
-                    });
-                },
+                controller: ($scope: ng.IScope, activity: Dto.IActivity, latestViewsProvider: LatestViewsProvider) => new ActivityRouteController($scope, <Dto.IActivity>activity, <LatestViewsProvider>latestViewsProvider),
                 resolve: {
                     activity: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) => {
                         var activityId: string = $stateParams['id'];
@@ -33,15 +25,7 @@ module Antares.Activity {
             .state('app.activity-edit', {
                 url: '/activity/edit/:id',
                 template: "<activity-edit activity='activity'></activity-edit>",
-                controller: ($scope: ng.IScope, activity: Dto.IActivity, latestViewsProvider: LatestViewsProvider) => {
-                    var activityViewModel = new Business.Activity(<Dto.IActivity>activity);
-
-                    $scope['activity'] = activityViewModel;
-                    latestViewsProvider.addViewing({
-                        entityId: activity.id,
-                        entityType: EntityType.Activity
-                    });
-                },
+                controller: ($scope: ng.IScope, activity: Dto.IActivity, latestViewsProvider: LatestViewsProvider) => new ActivityRouteController($scope, <Dto.IActivity>activity, <LatestViewsProvider>latestViewsProvider),
                 resolve: {
                     activity: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) => {
                         var activityId: string = $stateParams['id'];

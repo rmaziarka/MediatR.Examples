@@ -26,7 +26,7 @@ module Antares.Property {
 
                     $scope['property'] = propertyViewModel;
 
-                    latestViewsProvider.addViewing({
+                    latestViewsProvider.addView({
                         entityId: propertyViewModel.id,
                         entityType: EntityType.Property
                     });
@@ -47,7 +47,7 @@ module Antares.Property {
 
                     $scope['property'] = propertyViewModel;
 
-                    latestViewsProvider.addViewing({
+                    latestViewsProvider.addView({
                         entityId: propertyViewModel.id,
                         entityType: EntityType.Property
                     });
