@@ -79,6 +79,24 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Call date is required..
+        /// </summary>
+        internal static string ActivityUser_CallDate_Is_Required {
+            get {
+                return ResourceManager.GetString("ActivityUser_CallDate_Is_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Negotiator is assigned to other activity..
+        /// </summary>
+        internal static string ActivityUser_Is_Assigned_To_Other_Activity {
+            get {
+                return ResourceManager.GetString("ActivityUser_Is_Assigned_To_Other_Activity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to One or more {0}(s) with given ids does not exist in the database..
         /// </summary>
         internal static string Entity_List_Item_Not_Exists {

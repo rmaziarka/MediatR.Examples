@@ -13,15 +13,15 @@
 
     using Xunit;
 
-    [Collection("ActivityQueryValidator")]
+    [Collection("ActivityUserQueryValidator")]
     [Trait("FeatureTitle", "Activity")]
-    public class ActivityQueryValidatorTests
+    public class ActivityUserQueryValidatorTests
     {
         [Theory]
         [AutoData]
         public void Given_CorrectActivityQuery_When_Validating_Then_IsValid(
-            ActivityQueryValidator validator,
-            ActivityQuery query)
+            ActivityUserQueryValidator validator,
+            ActivityUserQuery query)
         {
             // Act
             ValidationResult validationResult = validator.Validate(query);
@@ -32,12 +32,10 @@
 
         [Theory]
         [AutoData]
-        public void Given_ActivityIdIsEmpty_When_Validating_Then_IsInvalid(
-            ActivityQueryValidator validator,
-            ActivityQuery query)
+        public void Given_IdIsEmpty_When_Validating_Then_IsInvalid(ActivityUserQueryValidator validator, ActivityUserQuery query)
         {
             // Arrange
-            query.Id = default(Guid);
+            query.Id = Guid.Empty;
 
             // Act
             ValidationResult validationResult = validator.Validate(query);
@@ -45,6 +43,24 @@
             // Assert
             validationResult.IsValid.Should().BeFalse();
             validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(query.Id));
+            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == nameof(Messages.notempty_error));
+        }
+
+        [Theory]
+        [AutoData]
+        public void Given_ActivityIdIsEmpty_When_Validating_Then_IsInvalid(
+            ActivityUserQueryValidator validator,
+            ActivityUserQuery query)
+        {
+            // Arrange
+            query.ActivityId = Guid.Empty;
+
+            // Act
+            ValidationResult validationResult = validator.Validate(query);
+
+            // Assert
+            validationResult.IsValid.Should().BeFalse();
+            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(query.ActivityId));
             validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == nameof(Messages.notempty_error));
         }
     }
