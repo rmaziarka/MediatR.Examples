@@ -122,6 +122,21 @@
   }
 }
 
+.card-menu {
+  .disabled {
+    cursor: not-allowed;
+
+    a {
+      color: $color-dusty-gray;
+      pointer-events: none;
+    }
+
+    .card-menu-icon {
+      color: $color-dusty-gray;
+    }
+  }
+}
+
 .open {
   .card-menu-button {
     background-color: $color-white;
