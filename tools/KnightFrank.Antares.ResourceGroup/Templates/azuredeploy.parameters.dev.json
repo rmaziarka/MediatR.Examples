@@ -61,6 +61,30 @@
     },
     "VmIISNameSuffix": {
       "value": ""
+    },
+    "JavaVersion": {
+      "value": "8u91"
+    },
+    "JavaFileName": {
+      "value": "jdk-8u91-windows-x64.exe"
+    },
+    "ElasticsearchVersion": {
+      "value": "2.3.2"
+    },
+    "ElasticsearchFileName": {
+      "value": "elasticsearch-2.3.2.zip"
+    },
+    "JdbcFileName": {
+      "value": "elasticsearch-jdbc-2.3.2.0.zip"
+    },
+    "JdbcVersion": {
+      "value": "2.3.2.0"
+    },
+    "ElasticsearchIp": {
+      "value": "localhost"
+    },
+    "ElasticsearchAdditionalConfigValues": {
+      "value": ""
     }
   }
 }

@@ -123,6 +123,30 @@
     "CommonShareKey": {
       "type": "securestring"
     },
+    "JavaVersion": {
+      "type": "string"
+    },
+    "JavaFileName": {
+      "type": "string"
+    },
+    "ElasticsearchVersion": {
+      "type": "string"
+    },
+    "ElasticsearchFileName": {
+      "type": "string"
+    },
+    "JdbcFileName": {
+      "type": "string"
+    },
+    "JdbcVersion": {
+      "type": "string"
+    },
+    "ElasticsearchIp": {
+      "type": "string"
+    },
+    "ElasticsearchAdditionalConfigValues": {
+      "type": "array"
+    },
     "IsoFileName": {
       "type": "string"
     },
@@ -510,12 +534,27 @@
                 "url": "[concat(parameters('_artifactsLocation'), '/', 'dsc.zip')]",
                 "script": "KnightFrank-Antares-Vm-Elasticsearch-DSCConfiguration.ps1",
                 "function": "SetupElasticsearchVm"
+              },
+              "configurationArguments": {
+                "CommonShareUrl": "[parameters('CommonShareUrl')]",
+                "JavaVersion": "[parameters('JavaVersion')]",
+                "JavaFileName": "[parameters('JavaFileName')]",
+                "ElasticsearchVersion": "[parameters('ElasticsearchVersion')]",
+                "ElasticsearchFileName": "[parameters('ElasticsearchFileName')]",
+                "JdbcFileName": "[parameters('JdbcFileName')]",
+                "JdbcVersion": "[parameters('JdbcVersion')]",
+                "ElasticsearchIp": "[parameters('ElasticsearchIp')]",
+                "ElasticsearchAdditionalConfigValues": "[parameters('ElasticsearchAdditionalConfigValues')]"
               }
             },
             "protectedSettings": {
               "configurationUrlSasToken": "[parameters('_artifactsLocationSasToken')]",
               "configurationArguments": {
-                "octopusThumbprint": "[parameters('OctopusThumbprint')]"
+                "OctopusThumbprint": "[parameters('OctopusThumbprint')]",
+                "CommonShareCredential": {
+                  "UserName": "[parameters('CommonShareUserName')]",
+                  "Password": "[parameters('CommonShareKey')]"
+                }
               }
             }
           }
