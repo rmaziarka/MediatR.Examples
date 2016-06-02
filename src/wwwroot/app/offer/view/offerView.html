@@ -2,6 +2,7 @@
     <div id="view-offer-header" class="col-md-12">
         <h2 class="page-header" translate="OFFER.VIEW.VIEW_OFFER"></h2>
         <div class="well">
+            <button type="button" class="btn btn-default pull-right" ng-click="vm.goToEdit()"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span></button>
             <div>
                 <span class="offer-status offer-status-{{vm.offer.statusId | dynamicTranslate | lowercase}}">{{vm.offer.statusId | dynamicTranslate}}</span>
                 <span class="offer-title">{{vm.offer.requirement.getContactNames()}}</span>

@@ -8,7 +8,7 @@ module Antares {
     type TestCaseForRequiredValidator = [string, string, boolean]; // [field_description, field_selector, is_not_required]
     type TestCaseForValidator = [string, any, string]; // [field_description, field_value, field_selector]
 
-    describe('Given offer component', () =>{
+    describe('Given offer component', () => {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
             assertValidator: TestHelpers.AssertValidators,
@@ -17,39 +17,39 @@ module Antares {
             controller: OfferAddEditController;
 
         var pageObjectSelectors: any = {
-            offerDate : '[name=offerDate]',
-            offer : '[name=price]',
-            exchangeDate : '[name=exchangeDate]',
-            completionDate : '[name=completionDate]',
-            specialConditions : '[name=specialConditions]',
-            status : '[name="selectedStatus"]',
-            activity : '#offer-add-activity-details',
-            negotiator : '#offer-edit-negotiator-details',
-            negotiatorSection : '#offer-edit-negotiator-section'
+            offerDate: '[name=offerDate]',
+            offer: '[name=price]',
+            exchangeDate: '[name=exchangeDate]',
+            completionDate: '[name=completionDate]',
+            specialConditions: '[name=specialConditions]',
+            status: '[name="selectedStatus"]',
+            activity: '#offer-add-activity-details',
+            negotiator: '#offer-edit-negotiator-details',
+            negotiatorSection: '#offer-edit-negotiator-section'
         };
 
         var format = (date: any) => date.format('DD-MM-YYYY');
         var datesToTest: any = {
-            today : format(moment()),
-            inThePast : format(moment().day(-7)),
-            inTheFuture : format(moment().day(7)),
-            longAgo : format(moment().year(1700)),
-            reallyLongAgo : format(moment().year(100))
+            today: format(moment()),
+            inThePast: format(moment().day(-7)),
+            inTheFuture: format(moment().day(7)),
+            longAgo: format(moment().year(1700)),
+            reallyLongAgo: format(moment().year(100))
         };
 
         var requirementMock: Business.Requirement = TestHelpers.RequirementGenerator.generate();
         var offerMock = TestHelpers.OfferGenerator.generate();
 
         var offerStatuses: any = [
-            { id : '1', code : 'New' },
-            { id : '2', code : 'Closed' }
+            { id: '1', code: 'New' },
+            { id: '2', code: 'Closed' }
         ];
 
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService,
             $httpBackend: ng.IHttpBackendService,
-            enumService: Mock.EnumServiceMock) =>{
+            enumService: Mock.EnumServiceMock) => {
 
             $http = $httpBackend;
             $compileService = $compile;
@@ -61,16 +61,16 @@ module Antares {
 
         }));
 
-        describe('is in add mode ', () =>{
+        describe('is in add mode ', () => {
             beforeEach(() => {
-                    element = $compileService('<offer-add requirement="requirement"></offer-add>')(scope);
-                    scope.$apply();
+                element = $compileService('<offer-add requirement="requirement"></offer-add>')(scope);
+                scope.$apply();
 
-                    controller = element.controller('offerAdd');
-                    assertValidator = new TestHelpers.AssertValidators(element, scope);
-                    controller.mode = "add";
-                    scope.$apply();
-                }
+                controller = element.controller('offerAdd');
+                assertValidator = new TestHelpers.AssertValidators(element, scope);
+                controller.mode = "add";
+                scope.$apply();
+            }
             );
 
             it('all form elements are rendered', () => {
@@ -82,7 +82,7 @@ module Antares {
                 }
             });
 
-            it('then New status is selected by default', () =>{
+            it('then New status is selected by default', () => {
                 var status = element.find(pageObjectSelectors.status);
                 var selectedStatus = status.val();
                 var newStatus = offerStatuses[0];
@@ -90,7 +90,7 @@ module Antares {
                 expect(selectedStatus).toEqual(newStatus.id);
             });
 
-            it('then negotiator is not displayed', () =>{
+            it('then negotiator is not displayed', () => {
                 var negotiatorSection = element.find(pageObjectSelectors.negotiatorSection);
                 expect(negotiatorSection.hasClass("ng-hide")).toBeTruthy();
             });
@@ -107,7 +107,7 @@ module Antares {
                 ])
                 .dataIt((data: TestCaseForRequiredValidator) =>
                     ` is "${data[0]}" then required message should ${data[2] ? 'not' : ''} be displayed`)
-                .run((data: TestCaseForRequiredValidator) =>{
+                .run((data: TestCaseForRequiredValidator) => {
                     assertValidator.assertRequiredValidator('', data[2], data[1]);
                 });
 
@@ -121,7 +121,7 @@ module Antares {
                 .dataIt((data: TestCaseForValidator) =>
                     `"${data[0]}" is "${data[1]}" then input should be invalid and invalid format message should be displayed`
                 )
-                .run((data: TestCaseForValidator) =>{
+                .run((data: TestCaseForValidator) => {
                     assertValidator.assertDateFormatValidator(data[1], false, data[2]);
                 });
 
@@ -134,7 +134,7 @@ module Antares {
                 .dataIt((data: TestCaseForValidator) =>
                     `"${data[0]}" is "${data[1]}" then input should be invalid and invalid format message should be displayed`
                 )
-                .run((data: TestCaseForValidator) =>{
+                .run((data: TestCaseForValidator) => {
                     /*
                         TODO:
                         during tests somehow 'required' validation message is displayed instead of 'invalid number' message
@@ -154,7 +154,7 @@ module Antares {
                 .dataIt((data: TestCaseForValidator) =>
                     `"${data[0]}" is "${data[1]}" then input should be invalid and greater than zero validation message should be displayed`
                 )
-                .run((data: TestCaseForValidator) =>{
+                .run((data: TestCaseForValidator) => {
                     assertValidator.assertNumberGreaterThenValidator(data[1], false, data[2]);
                 });
 
@@ -174,25 +174,25 @@ module Antares {
                 .dataIt((data: TestCaseForValidator) =>
                     `"${data[0]}" is "${data[1]}" then input should be valid and no validation message should be displayed`
                 )
-                .run((data: TestCaseForValidator) =>{
+                .run((data: TestCaseForValidator) => {
                     assertValidator.assertValidAndNoMessages(data[1], data[2]);
                 });
 
-            it('special conditions text length is too long then validation message should be displayed', () =>{
+            it('special conditions text length is too long then validation message should be displayed', () => {
                 var maxLength = 4000;
                 assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.specialConditions);
             });
         });
-        describe('is in edit mode', () =>{
+        describe('is in edit mode', () => {
             beforeEach(() => {
-                    element = $compileService('<offer-edit requirement="requirement"></offer-edit>')(scope);
-                    scope.$apply();
+                element = $compileService('<offer-details-edit requirement="requirement"></offer-details-edit>')(scope);
+                scope.$apply();
 
-                    controller = element.controller('offerEdit');
-                    assertValidator = new TestHelpers.AssertValidators(element, scope);
-                    controller.mode = "edit";
-                    scope.$apply();
-                }
+                controller = element.controller('offerDetailsEdit');
+                assertValidator = new TestHelpers.AssertValidators(element, scope);
+                controller.mode = "edit";
+                scope.$apply();
+            }
             );
 
             it('all form elements are rendered', () => {
@@ -204,12 +204,12 @@ module Antares {
                 }
             });
 
-            it('then negotiator is displayed', () =>{
+            it('then negotiator is displayed', () => {
                 var negotiatorSection = element.find(pageObjectSelectors.negotiatorSection);
                 expect(negotiatorSection.hasClass("ng-hide")).toBeFalsy();
             });
 
-            it('and offer is set then all form elements have proper values', () =>{
+            it('and offer is set then all form elements have proper values', () => {
                 offerMock.activity.property.address.propertyName = "West Forum";
                 offerMock.activity.property.address.propertyNumber = "142a";
                 offerMock.activity.property.address.line2 = "Strzegomska";

@@ -23,6 +23,10 @@ module Antares.Component {
             this.showPanel(this.components.activityPreview);
         }
 
+        goToEdit = () => {
+            this.$state.go('app.offer-edit', { id: this.$state.params['id'] });
+        }
+
         defineComponentIds() {
             this.componentIds = {
                 activityPreviewSidePanelId : 'viewOffer:activityPreviewSidePanelComponent'
