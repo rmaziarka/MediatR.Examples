@@ -77,3 +77,25 @@
         </ng-form>
     </card-list-item>
 </card-list>
+
+<section>
+    <card-list>
+        <card-list-header>
+            <h3 class="page-header" translate="DEPARTMENTS.COMMON.HEADER"></h3>
+        </card-list-header>
+        <card-list-item>
+            <card card-template-url="'app/activity/templates/departmentCard.html'" show-context-menu="true" display-new-control="true">
+                <card-context-menu>
+                    <context-menu-item type="remove"
+                                    item=""
+                                    action="">
+                    </context-menu-item>
+                    <context-menu-item type="setAsManaging"
+                                    item=""
+                                    action="">
+                    </context-menu-item>
+                </card-context-menu>
+            </card>
+        </card-list-item>
+    </card-list>
+</section>
