@@ -33,7 +33,7 @@ Configuration SetupElasticsearchVm
 		[string]
 		$JdbcVersion,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $false)]
 		[string]
 		$ElasticsearchIp,  
 
@@ -155,7 +155,14 @@ Configuration SetupElasticsearchVm
 		    {
 				$path = "$using:elasticsearchFolder\config\elasticsearch.yml" 
 				$parameters = @{}
-				$parameters."host.name" = $using:ElasticsearchIp
+                if($using:ElasticsearchIp)
+                {
+                    $parameters."host.name" = $using:ElasticsearchIp
+                }
+                else
+                {
+                    $parameters."host.name" = ((ipconfig | findstr [0-9].\.)[0]).Split()[-1]
+                }
 				if($using:ElasticsearchAdditionalConfigValues) {
 					$parameters | Add-Member -PassThru -NotePropertyMembers $using:ElasticsearchAdditionalConfigValues
 				}

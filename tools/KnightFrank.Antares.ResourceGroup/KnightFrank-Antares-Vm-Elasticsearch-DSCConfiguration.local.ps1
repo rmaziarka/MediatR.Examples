@@ -9,7 +9,7 @@ Configuration SetupElasticsearchVmLocal
 		[System.Management.Automation.PSCredential]
 		$CommonShareCredential,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $false)]
 		[string]
 		$ElasticsearchIp,
 
@@ -83,8 +83,7 @@ Configuration SetupElasticsearchVmLocal
 
 	$OctopusThumbprint = 'C478B5952045B390F15F0C444D4917E911713EF0'
 
-	$octopusDir = "$env:SystemDrive\octopus"
-    $azureDir = "$env:SystemDrive\WindowsAzure"
+	$octopusFolder = "$env:SystemDrive\octopus"
 
 	Import-DscResource -Module cGripDevDSC
 	Import-DscResource -Module xPSDesiredStateConfiguration
@@ -113,8 +112,8 @@ Configuration SetupElasticsearchVmLocal
         }
 
         File CopyJava {
-			DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $JavaFileName
-			SourcePath = Join-Path $CommonShareUrl -ChildPath $javaSource | Join-Path -ChildPath $JavaFileName
+			DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $javaFileName
+			SourcePath = Join-Path $CommonShareUrl -ChildPath $javaSource | Join-Path -ChildPath $javaFileName
 			Credential = $CommonShareCredential
             DependsOn = '[File]TempFolder'
 		}
@@ -173,7 +172,14 @@ Configuration SetupElasticsearchVmLocal
 		    {
 				$path = "$using:elasticsearchFolder\config\elasticsearch.yml" 
 				$parameters = @{}
-				$parameters."host.name" = $using:ElasticsearchIp
+				if($using:ElasticsearchIp)
+                {
+                    $parameters."host.name" = $using:ElasticsearchIp
+                }
+                else
+                {
+                    $parameters."host.name" = ((ipconfig | findstr [0-9].\.)[0]).Split()[-1]
+                }
 				if($using:ElasticsearchAdditionalConfigValues) {
 					$parameters | Add-Member -PassThru -NotePropertyMembers $using:ElasticsearchAdditionalConfigValues
 				}
@@ -266,24 +272,17 @@ Configuration SetupElasticsearchVmLocal
             ExeOrBatName = "execute.bat"
             NssmFolder = $nssmFolder
             ServiceName = "jdbc-$jdbcVersion-$BranchName"
-            DependsON = @('[xArchive]UnzipNssm', '[Script]ConfigureJdbc')
+            DependsOn = @('[xArchive]UnzipNssm', '[Script]ConfigureJdbc')
         }
-        
-		File AzureDir
-		{
-			DestinationPath = $azureDir
-			Ensure = "Present"
-			Type = "Directory"
-		}
 
 		Script DownloadOctopusTentacle
 		{
 			TestScript = {
-				Test-Path "$using:azureDir\Octopus.Tentacle.3.3.6-x64.msi"
+				Test-Path "$using:tempDownloadFolder\Octopus.Tentacle.3.3.6-x64.msi"
 			}
 			SetScript ={
 				$source = "https://download.octopusdeploy.com/octopus/Octopus.Tentacle.3.3.6-x64.msi"
-				$dest = "$using:azureDir\Octopus.Tentacle.3.3.6-x64.msi"
+				$dest = "$using:tempDownloadFolder\Octopus.Tentacle.3.3.6-x64.msi"
 				Invoke-WebRequest $source -OutFile $dest
 			}
 			GetScript = {@{Result = "DownloadOctopusTentacle"}}
@@ -292,22 +291,22 @@ Configuration SetupElasticsearchVmLocal
 		Package InstallOctopusTentacle
 		{
 			Ensure = "Present"  
-			Path  = "$azureDir\Octopus.Tentacle.3.3.6-x64.msi"
+			Path  = "$tempDownloadFolder\Octopus.Tentacle.3.3.6-x64.msi"
 			Name = "Octopus Deploy Tentacle"
 			ProductId = "{D2622F6E-1377-47A6-9F6D-ED9AF593205D}"
 			DependsOn = "[Script]DownloadOctopusTentacle"
 		}
 
-		File OctopusDir
+		File OctopusFolder
 		{
-			DestinationPath = $octopusDir
+			DestinationPath = $octopusFolder
 			Ensure = "Present"
 			Type = "Directory"
 		}
 
 		Script ConfigureOctopusTentacle
 		{
-			DependsOn = @("[Package]InstallOctopusTentacle", "[File]OctopusDir")
+			DependsOn = @("[Package]InstallOctopusTentacle", "[File]OctopusFolder")
 			TestScript = {
 				Test-Path "$using:octopusDir\Tentacle.config"
 			}
