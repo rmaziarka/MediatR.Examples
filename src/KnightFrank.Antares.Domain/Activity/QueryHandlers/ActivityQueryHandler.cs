@@ -34,6 +34,11 @@
                     .Include(a => a.Viewings.Select(v => v.Requirement.Contacts))
                     .Include(a => a.ActivityUsers)
                     .Include(a => a.ActivityUsers.Select(an => an.User))
+                    .Include(a => a.ActivityUsers.Select(an => an.UserType))
+                    .Include(a => a.Offers)
+                    .Include(a => a.Offers.Select(v => v.Requirement))
+                    .Include(a => a.Offers.Select(v => v.Negotiator))
+                    .Include(a => a.Offers.Select(v => v.Requirement.Contacts))
                     .SingleOrDefault(a => a.Id == query.Id);
 
             return result;

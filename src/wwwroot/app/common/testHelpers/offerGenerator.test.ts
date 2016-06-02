@@ -24,6 +24,8 @@ module Antares.TestHelpers {
                 negotiator: <Dto.IUser>{}
             };
 
+            offer.requirement.contacts = <Dto.IContact[]>[];
+            offer.requirement.requirementNotes = <Dto.IRequirementNote[]>[];
             return angular.extend(offer, specificData || {});
         }
 

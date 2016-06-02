@@ -18,13 +18,10 @@
 
                 <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.website.$dirty) && addCompanyForm.website.$invalid}">
                     <div class="row">
-                        <div class="col-md-11">
+                        <div class="col-md-12">
                             <label for="website">Website</label>
-                            <input type="text" class="form-control" id="website" name="website" ng-maxlength="1024" ng-model="vm.company.website" placeholder="http://">
-                        </div>
-                        <div class="col-md-1">
-                            <br/>
-                            <external-link url="vm.company.website" show-text="false"></external-link>
+                            <input type="text" class="form-control" id="website" name="website" ng-maxlength="2500" ng-model="vm.company.websiteUrl" placeholder="http://">
+                             <external-link url="vm.company.websiteUrl" show-text="false"></external-link>
                         </div>
                     </div>
                     <div ng-messages="addCompanyForm.website.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.website.$dirty">
@@ -32,27 +29,33 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="client-care-website">Client care website</label>
-                    <input type="text" class="form-control" id="client-care-website">
+                <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.clientcareurl.$dirty) && addCompanyForm.clientcareurl.$invalid}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="clientcareurl">Client care page website</label>
+                            <input type="text" class="form-control" id="clientcareurl" name="clientcareurl" ng-maxlength="2500" ng-model="vm.company.clientCarePageUrl" placeholder="http://">
+                            <external-link url="vm.company.clientCarePageUrl" show-text="false"></external-link>
+                        </div>
+                    </div>
+                    <div ng-messages="addCompanyForm.clientcareurl.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.clientcareurl.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
                 </div>
+       
 
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-6">
                             <label for="client-care-status">Client care status</label>
-                            <select id="client-care-status" class="form-control">
-                                <option>-- select --</option>
-                                <option>Option item</option>
-                                <option>Option item</option>
-                            </select>
-                        </div>
+                            <select class="form-control" id="client-care-status" name="selectedStatus" ng-options="item as (item.id | dynamicTranslate) for item in vm.clientCareStatuses track by item.id" 
+                                    ng-model="vm.selectedStatus">
+                                <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
+                            </select></div>
                     </div>
                 </div>
             </fieldset>
         </div>
         <div class="col-md-4">
-
                 <section>
                     <list id="list-contacts">
                         <list-header>

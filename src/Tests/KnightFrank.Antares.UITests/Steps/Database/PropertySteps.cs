@@ -7,7 +7,6 @@
     using KnightFrank.Antares.Dal;
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Attribute;
-    using KnightFrank.Antares.Dal.Model.Common;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
@@ -154,7 +153,8 @@
                     new ActivityUser
                     {
                         //TODO improve selecting lead negotiator
-                        UserId = this.dataContext.Users.First().Id, UserType = UserTypeEnum.LeadNegotiator
+                        UserId = this.dataContext.Users.First().Id,
+                        UserTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("LeadNegotiator")).Id
                     }
                 }
             };

@@ -7,10 +7,11 @@ Scenario Outline: Upload attachment for entity with ActivityDocumentType
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
 		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode         | enumTypeItemCode |
-			| ActivityStatus       | PreAppraisal     |
-			| Division             | Residential      |
-			| ActivityDocumentType | TermsOfBusiness  |
+			| enumTypeCode         | enumTypeItemCode    |
+			| ActivityStatus       | PreAppraisal        |
+			| Division             | Residential         |
+			| ActivityDocumentType | TermsOfBusiness     |
+			| ActivityUserType     | LeadNegotiator      |
 		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
@@ -31,10 +32,11 @@ Scenario Outline: Download attachment for entity with ActivityDocumentType
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
 		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode         | enumTypeItemCode |
-			| ActivityStatus       | PreAppraisal     |
-			| Division             | Residential      |
-			| ActivityDocumentType | TermsOfBusiness  |
+			| enumTypeCode         | enumTypeItemCode    |
+			| ActivityStatus       | PreAppraisal        |
+			| Division             | Residential         |
+			| ActivityDocumentType | TermsOfBusiness     |
+			| ActivityUserType     | LeadNegotiator      |
 		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |

@@ -1,0 +1,13 @@
+﻿<h5 translate="COMMON.REQUIREMENT"></h5>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="panel-item">
+            {{:: vm.requirement.getContactNames()}}
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-right" id="requirement-link">
+                <a ui-sref="app.requirement-view({id: vm.requirement.id})" translate="COMMON.VIEW"></a>
+            </div>
+        </div>
+    </div>
+</div>

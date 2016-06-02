@@ -13,10 +13,12 @@ module Antares.Requirement.View {
         saveViewingBusy: boolean = false;
         addEditOfferBusy: boolean = false;
         userData: Dto.IUserData;
+        selectedOffer: Dto.IOffer;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
-            private $scope: ng.IScope){
+            private $scope: ng.IScope,
+            private $state: ng.ui.IStateService) {
 
             super(componentRegistry, $scope);
         }
@@ -132,8 +134,7 @@ module Antares.Requirement.View {
         }
 
         showOfferPreview = (offer: Common.Models.Business.Offer) =>{
-            this.components.offerPreview().clearOfferPreview();
-            this.components.offerPreview().setOffer(offer);
+            this.selectedOffer = offer;
             this.showPanel(this.components.panels.offerPreview);
             this.offerPreviewPanelVisible = true;
         }
@@ -180,14 +181,17 @@ module Antares.Requirement.View {
         }
 
         showEditOfferPreviewPanel = () =>{
-            var offer = this.components.offerPreview().getOffer();
-            this.components.offerEditPreview().setOffer(offer);
+            this.components.offerEditPreview().setOffer(this.selectedOffer);
             this.offerPreviewPanelVisible = false;
         }
 
         showEditOfferPanel = (offer: Dto.IOffer) =>{
             this.components.offerEdit().setOffer(offer);
             this.showPanel(this.components.panels.offerEdit);
+        }
+
+        showOfferDetailsView = (offer: Dto.IOffer) =>{
+            this.$state.go('app.offer-view', { id: offer.id });
         }
 
         cancelSaveOffer = () =>{

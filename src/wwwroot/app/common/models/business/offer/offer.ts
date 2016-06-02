@@ -23,6 +23,7 @@ module Antares.Common.Models.Business {
             angular.extend(this, offer);
             if (offer) {
                 this.activity = new Activity(offer.activity);
+                this.requirement = new Requirement(offer.requirement);
                 this.negotiator = new User(offer.negotiator);
                 this.offerDate = moment(offer.offerDate).toDate();
                 if (offer.completionDate) {

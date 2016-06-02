@@ -9,6 +9,7 @@
 
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.UITests.Pages;
+    using KnightFrank.Antares.UITests.Pages.Panels;
 
     using Objectivity.Test.Automation.Common;
 
@@ -22,6 +23,7 @@
     {
         private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
+        private ViewActivityPage page;
 
         public ViewActivitySteps(ScenarioContext scenarioContext)
         {
@@ -32,75 +34,82 @@
 
             this.scenarioContext = scenarioContext;
             this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
+
+            if (this.page == null)
+            {
+                this.page = new ViewActivityPage(this.driverContext);
+            }
         }
 
         [When(@"User navigates to view activity page with id")]
         public void OpenViewActivityPageWithId()
         {
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
-            ViewActivityPage page = new ViewActivityPage(this.driverContext).OpenViewActivityPageWithId(activityId.ToString());
-            this.scenarioContext.Set(page, "ViewActivityPage");
+            this.page = new ViewActivityPage(this.driverContext).OpenViewActivityPageWithId(activityId.ToString());
         }
 
         [When(@"User clicks property details link on view activity page")]
         public void OpenPreviewPropertyPage()
         {
-            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").ClickDetailsLink().WaitForSidePanelToShow();
+            this.page.ClickDetailsLink().WaitForSidePanelToShow();
         }
 
         [When(@"User clicks view property link from property on view activity page")]
         public void OpenViewPropertyPage()
         {
-            var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
-            this.scenarioContext.Set(page.PropertyPreview.OpenViewPropertyPage(), "ViewPropertyPage");
+            this.page.PropertyPreview.OpenViewPropertyPage();
         }
 
         [When(@"User clicks edit button on view activity page")]
         public void EditActivity()
         {
-            EditActivityPage page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").EditActivity();
-            this.scenarioContext.Set(page, "EditActivityPage");
+            this.page.EditActivity();
         }
 
         [When(@"User clicks add attachment button on view activity page")]
         public void OpenAttachFilePanel()
         {
-            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").OpenAttachFilePanel().WaitForSidePanelToShow();
+            this.page.OpenAttachFilePanel().WaitForSidePanelToShow();
         }
 
         [When(@"User adds (.*) file with (.*) type on attach file page")]
         public void SelectAttachmentType(string file, string type)
         {
-            var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
-            page.AttachFile.SelectType(type)
+            this.page.AttachFile.SelectType(type)
                 .AddFiletoAttachment(file)
                 .SaveAttachment();
-            page.WaitForSidePanelToHide(BaseConfiguration.LongTimeout);
+            this.page.WaitForSidePanelToHide(BaseConfiguration.LongTimeout);
         }
 
         [When(@"User clicks attachment details link on view activity page")]
         public void OpenAttachmentPreview()
         {
-            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").OpenAttachmentPreview().WaitForSidePanelToShow();
+            this.page.OpenAttachmentPreview().WaitForSidePanelToShow();
         }
 
         [When(@"User clicks (.*) viewings details link on view activity page")]
         public void OpenViewingsDetails(int position)
         {
-            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").OpenViewingDetails(position);
+            this.page.OpenViewingDetails(position);
         }
 
         [When(@"User clicks view requirement from viewing on view activity page")]
         public void ClickViewActivity()
         {
-            this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").ViewingDetails.ClickViewLink();
+            this.page.ViewingDetails.ClickViewLink();
+        }
+
+        [When(@"User clicks (.*) offer details on view activity page")]
+        public void OpenOffersDetails(int position)
+        {
+            this.page.OpenOfferDetails(position)
+                .WaitForSidePanelToShow();
         }
 
         [Then(@"Attachment (.*) should be downloaded")]
         public void ThenAttachmentShouldBeDownloaded(string attachmentName)
         {
-            FileInfo fileInfo =
-                this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").PreviewAttachment.GetDownloadedAttachmentInfo();
+            FileInfo fileInfo = this.page.PreviewAttachment.GetDownloadedAttachmentInfo();
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(attachmentName.ToLower(), fileInfo.Name),
@@ -110,13 +119,11 @@
         [Then(@"Address details on view activity page are following")]
         public void CheckViewActivityAddressDetails(Table table)
         {
-            var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
-
             foreach (string field in table.Rows.SelectMany(row => row.Values))
             {
                 Assert.True(field.Equals(string.Empty)
-                    ? page.IsAddressDetailsNotVisible(field)
-                    : page.IsAddressDetailsVisible(field));
+                    ? this.page.IsAddressDetailsNotVisible(field)
+                    : this.page.IsAddressDetailsVisible(field));
             }
         }
 
@@ -124,20 +131,18 @@
         public void CheckActivityDetails(Table table)
         {
             var details = table.CreateInstance<EditActivityDetails>();
-            var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
 
             Verify.That(this.driverContext,
-                () => Assert.Equal(details.ActivityStatus, page.Status),
-                () => Assert.Equal(details.MarketAppraisalPrice.ToString("N2") + " GBP", page.MarketAppraisalPrice),
-                () => Assert.Equal(details.RecommendedPrice.ToString("N2") + " GBP", page.RecommendedPrice),
-                () => Assert.Equal(details.VendorEstimatedPrice.ToString("N2") + " GBP", page.VendorEstimatedPrice));
+                () => Assert.Equal(details.ActivityStatus, this.page.Status),
+                () => Assert.Equal(details.MarketAppraisalPrice.ToString("N2") + " GBP", this.page.MarketAppraisalPrice),
+                () => Assert.Equal(details.RecommendedPrice.ToString("N2") + " GBP", this.page.RecommendedPrice),
+                () => Assert.Equal(details.VendorEstimatedPrice.ToString("N2") + " GBP", this.page.VendorEstimatedPrice));
         }
 
         [Then(@"Attachment is displayed on view activity page")]
         public void CheckIfAttachmentIsDisplayed(Table table)
         {
-            Attachment actual =
-                this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").GetAttachmentDetails();
+            Attachment actual = this.page.GetAttachmentDetails();
             var expected = table.CreateInstance<Attachment>();
             expected.Date = DateTime.UtcNow.ToString("dd-MM-yyyy");
 
@@ -147,9 +152,8 @@
         [Then(@"Attachment details on attachment preview page are the same like on view activity page")]
         public void ChackAttachmentDetails()
         {
-            Attachment actual =
-                this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").PreviewAttachment.GetAttachmentDetails();
-            Attachment expected = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").GetAttachmentDetails();
+            Attachment actual = this.page.PreviewAttachment.GetAttachmentDetails();
+            Attachment expected = this.page.GetAttachmentDetails();
             expected.User = "John Smith";
 
             actual.ShouldBeEquivalentTo(expected);
@@ -158,19 +162,16 @@
         [Then(@"View activity page is displayed")]
         public void CheckIfViewActivityPresent()
         {
-            var page = new ViewActivityPage(this.driverContext);
-            Assert.True(page.IsViewActivityFormPresent());
-            this.scenarioContext.Set(page, "ViewActivityPage");
+            Assert.True(this.page.IsViewActivityFormPresent());
         }
 
         [Then(@"Viewing details on (.*) position on view activity page are same as the following")]
         public void CheckViewing(int position, Table table)
         {
-            var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
             var expectedDetails = table.CreateInstance<ViewingData>();
-            List<string> actualDetails = page.GetViewingDetails(position);
+            List<string> actualDetails = this.page.GetViewingDetails(position);
 
-            Verify.That(this.driverContext, () => Assert.Equal(page.ViewingsNumber, 1),
+            Verify.That(this.driverContext, () => Assert.Equal(this.page.ViewingsNumber, 1),
                 () => Assert.Equal(expectedDetails.Date, actualDetails[0]),
                 () => Assert.Equal(expectedDetails.Name, actualDetails[1]),
                 () => Assert.Equal(expectedDetails.Time, actualDetails[2]));
@@ -179,41 +180,79 @@
         [Then(@"Viewing details on view activity page are same as the following")]
         public void CheckViewingInDetailsPanel(Table table)
         {
-            var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
             var expectedDetails = table.CreateInstance<ViewingDetails>();
 
             List<string> attendees = expectedDetails.Attendees.Split(';').ToList();
 
             Verify.That(this.driverContext,
-                () => Assert.Equal(expectedDetails.Name, page.ViewingDetails.Details),
-                () => Assert.Equal(expectedDetails.Date + ", " + expectedDetails.StartTime + " - " + expectedDetails.EndTime, page.ViewingDetails.Date),
-                () => Assert.Equal(expectedDetails.Negotiator, page.ViewingDetails.Negotiator),
-                () => Assert.Equal(attendees, page.ViewingDetails.Attendees),
-                () => Assert.Equal(expectedDetails.InvitationText, page.ViewingDetails.InvitationText),
-                () => Assert.Equal(expectedDetails.PostViewingComment, page.ViewingDetails.PostViewingComment));
+                () => Assert.Equal(expectedDetails.Name, this.page.ViewingDetails.Details),
+                () => Assert.Equal(expectedDetails.Date + ", " + expectedDetails.StartTime + " - " + expectedDetails.EndTime, this.page.ViewingDetails.Date),
+                () => Assert.Equal(expectedDetails.Negotiator, this.page.ViewingDetails.Negotiator),
+                () => Assert.Equal(attendees, this.page.ViewingDetails.Attendees),
+                () => Assert.Equal(expectedDetails.InvitationText, this.page.ViewingDetails.InvitationText),
+                () => Assert.Equal(expectedDetails.PostViewingComment, this.page.ViewingDetails.PostViewingComment));
         }
 
         [Then(@"User closes attachment preview page on view activity page")]
         public void CloseAttachmentPreviewPanel()
         {
-            var page = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage");
-            page.PreviewAttachment.CloseAttachmentPreviewPage();
-            page.WaitForSidePanelToHide();
+            this.page.PreviewAttachment.CloseAttachmentPreviewPage();
+            this.page.WaitForSidePanelToHide();
         }
 
         [Then(@"(.*) is set as lead negotiator on view activity page")]
         public void CheckLeadNegotiator(string expectedLead)
         {
-            Assert.Equal(expectedLead, this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").LeadNegotiator);
+            Assert.Equal(expectedLead, this.page.LeadNegotiator);
         }
 
         [Then(@"Secondary users are set on view activity page")]
         public void CheckSecondaryUsers(Table table)
         {
             List<Negotiator> expectedSecondary = table.CreateSet<Negotiator>().ToList();
-            List<Negotiator> actualSecondary = this.scenarioContext.Get<ViewActivityPage>("ViewActivityPage").SecondaryNegotiators;
+            List<Negotiator> actualSecondary = this.page.SecondaryNegotiators;
             actualSecondary.Should().Equal(expectedSecondary, (c1, c2) =>
                 c1.Name.Equals(c2.Name));
+        }
+
+        [Then(@"Offer should be displayed on view activity page")]
+        public void CheckIfOfferDisplayed()
+        {
+            Assert.Equal(1, this.page.OffersNumber);
+        }
+
+        [Then(@"Offer details on (.*) position on view activity page are same as the following")]
+        public void CheckOffer(int position, Table table)
+        {
+            var expectedDetails = table.CreateInstance<OfferData>();
+            List<string> actualDetails = this.page.GetOfferDetails(position);
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Details, actualDetails[0]),
+                () => Assert.Equal(expectedDetails.Offer, actualDetails[1]),
+                () => Assert.Equal(expectedDetails.Status, actualDetails[2]));
+        }
+
+        [Then(@"Offer details on view activity page are same as the following")]
+        public void CheckOfferInDetailsPanel(Table table)
+        {
+            var expectedDetails = table.CreateInstance<OfferData>();
+
+            var offer = this.scenarioContext.Get<OfferData>("Offer");
+
+            expectedDetails.OfferDate = offer.OfferDate;
+            expectedDetails.ExchangeDate = offer.ExchangeDate;
+            expectedDetails.CompletionDate = offer.CompletionDate;
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Details, this.page.OfferPreview.Details),
+                () => Assert.Equal(expectedDetails.Status, this.page.OfferPreview.Status),
+                () => Assert.Equal(expectedDetails.Offer, this.page.OfferPreview.Offer),
+                () => Assert.Equal(expectedDetails.OfferDate, this.page.OfferPreview.Date),
+                () => Assert.Equal(expectedDetails.SpecialConditions, this.page.OfferPreview.SpecialConditions),
+                () => Assert.Equal(expectedDetails.Negotiator, this.page.OfferPreview.Negotiator),
+                () => Assert.Equal(expectedDetails.ExchangeDate, this.page.OfferPreview.ProposedexchangeDate),
+                () => Assert.Equal(expectedDetails.CompletionDate, this.page.OfferPreview.ProposedCompletionDate));
         }
     }
 }

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
 
     using FluentAssertions;
+    using FluentAssertions.Common;
 
     using FluentValidation.Resources;
     using FluentValidation.Results;
@@ -26,19 +27,7 @@
     [Collection("CreateCompanyValidator")]
     public class CreateCompanyValidatorTests : IClassFixture<BaseTestClassFixture>
     {
-        [Theory]
-        [AutoMoqData]
-        public void Given_ValidCreateCompanyCommand_When_Validating_Then_IsValid(
-            CreateCompanyCommandValidator validator,
-            CreateCompanyCommand cmd)
-        {
-            // Act
-            ValidationResult result = validator.Validate(cmd);
-
-            // Assert
-            result.IsValid.Should().BeTrue();
-        }
-
+  
         [Theory]
         [AutoMoqData]
         public void Given_EmptyName_When_Validating_Then_IsInvalidAndHasAppropriateErrorMsg(
@@ -99,7 +88,8 @@
             CreateCompanyCommand cmd)
         {
            // Arrange
-            cmd.WebsiteUrl = new string('a', 1001);
+           
+            cmd.WebsiteUrl = new string('a', 2501);
 
             // Act
             ValidationResult result = validator.Validate(cmd);
@@ -117,7 +107,7 @@
             CreateCompanyCommand cmd)
         {
             // Arrange
-            cmd.ClientCarePageUrl = new string('a', 1001);
+            cmd.ClientCarePageUrl = new string('a', 2501);
 
             // Act
             ValidationResult result = validator.Validate(cmd);

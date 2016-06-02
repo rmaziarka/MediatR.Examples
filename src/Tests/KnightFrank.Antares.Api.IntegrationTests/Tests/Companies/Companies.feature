@@ -47,6 +47,27 @@ Scenario Outline: Create company with invalid data
 	|              | ClientCareStatus | KeyClient        | BadRequest |
 
 @Company
+Scenario: Get non existant company
+Given Company does not exist
+When User gets company details
+Then User should get NotFound http status code
+
+@Company
+Scenario: Get company with invalid query
+When User gets company details with invalid query
+Then User should get BadRequest http status code
+
+@Company
+Scenario: Get company details
+Given User creates contacts in database with following data
+		| FirstName | Surname | Title |
+		| Michael   | Angel   | ceo | 
+	And Company exists in database
+When User gets company details
+Then User should get OK http status code
+And Company details should match those in database
+
+@Company
 Scenario: Update company with required fields
 	Given User creates contacts in database with following data
 		| FirstName | Surname | Title |

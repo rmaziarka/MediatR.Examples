@@ -37,14 +37,14 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"Attachment for (.*) with following data exists in data base")]
+        [Given(@"Attachment for (.*) with following data exists in database")]
         public void CreateAttachmentForActivityInDatabase(string documentType, Table table)
         {
             var attachment = table.CreateInstance<Attachment>();
             attachment.DocumentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[documentType];
             attachment.CreatedDate = DateTime.Now;
             attachment.LastModifiedDate = DateTime.Now;
-            attachment.UserId = this.scenarioContext.Get<Guid>("NegotiatorId");
+            attachment.UserId = this.fixture.DataContext.Users.First().Id;
 
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
             Activity activity = this.fixture.DataContext.Activities.Single(x => x.Id.Equals(activityId));
@@ -52,7 +52,7 @@
             this.fixture.DataContext.SaveChanges();
         }
 
-        [When(@"I upload attachment for (.*) activity id for (.*) with following data")]
+        [When(@"User uploads attachment for (.*) activity id for (.*) with following data")]
         public void UploadAttachmentForActivity(string activityId, string documentType, Table table)
         {
             if (activityId.Equals("latest"))
@@ -65,7 +65,7 @@
             var createAttachment = table.CreateInstance<CreateAttachment>();
 
             createAttachment.DocumentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[documentType];
-            createAttachment.UserId = this.scenarioContext.Get<Guid>("NegotiatorId");
+            createAttachment.UserId = this.fixture.DataContext.Users.First().Id;
 
             var createActivityAttachmentCommand = new CreateActivityAttachmentCommand
             {

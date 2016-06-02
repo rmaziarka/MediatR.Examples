@@ -3,6 +3,7 @@
     using System;
 
     using KnightFrank.Antares.Dal.Model.Common;
+    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.User;
 
     public class ActivityUser : BaseEntity
@@ -11,6 +12,8 @@
         public virtual Activity Activity { get; set; }
         public Guid UserId { get; set; }
         public virtual User User { get; set; }
-        public UserTypeEnum UserType { get; set; }
+        public Guid UserTypeId { get; set; }
+        public virtual EnumTypeItem UserType { get; set; }
+        public DateTime? CallDate { get; set; }
     }
 }

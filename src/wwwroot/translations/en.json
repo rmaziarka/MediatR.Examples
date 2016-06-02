@@ -7,12 +7,13 @@
     "DELETE": "Delete",
     "MIN": "Min",
     "MAX": "Max",
-    "DETAILS": "details",
+    "DETAILS": "Details",
     "CONFIGURE": "Configure",
     "BACK": "Back",
     "SELECTEMPTYVALUE": "- select -",
     "LOADINGDATA": "...loading data...",
     "FILEISUPLOADING": "File is uploading ...",
+    "REQUIREMENT": "Requirement",
     "MENU": {
       "CREATE": "Create",
       "CONTACTS": "Contacts",
@@ -21,6 +22,7 @@
       "PROPERTIES": "Properties"
     },
     "MAKEOFFER": "Make an offer",
+    "SETASLEAD": "Set as lead",
     "UNEXPECTED_SERVER_ERROR": "Unexpected error occured. Please try again or contact system administrator."
   },
   "OWNERSHIP": {
@@ -217,7 +219,9 @@
       "VIEWING_DETAILS": "Viewing details",
       "NO_VIEWINGS": "No viewings",
       "ATTACHMENTS": "Attachments",
-      "NO_ATTACHMENTS": "No attachments"
+      "NO_ATTACHMENTS": "No attachments",
+      "OFFERS": "Offers",
+      "OFFERPREVIEW": "Offer preview"
     }
   },
   "NEGOTIATORS": {
@@ -236,6 +240,9 @@
       "EMPTY": "No surveyor added yet",
       "ADD": "Add a surveyor",
       "FIND": "Find a surveyor"
+    },
+    "COMMON": {
+      "NEXTCALL": "Next call"
     }
   },
   "REQUIREMENT": {
@@ -329,14 +336,20 @@
       "SAVING_OFFER_IN_PROGRESS": "Saving offer ..."
     },
     "PREVIEW": {
-      "ACTIVITY": "Activity",
-      "STATUS": "Status",
-      "OFFER": "Offer",
-      "OFFER_DATE": "Offer date",
-      "SPECIAL_CONDITIONS": "Special conditions",
-      "NEGOTIATOR": "Negotiator",
-      "EXCHANGE_DATE": "Proposed exchange date",
-      "COMPLETION_DATE": "Proposed completion date"
+        "ACTIVITY": "Activity",
+        "STATUS": "Status",
+        "OFFER": "Offer",
+        "OFFER_DATE": "Offer date",
+        "SPECIAL_CONDITIONS": "Special conditions",
+        "NEGOTIATOR": "Negotiator",
+        "EXCHANGE_DATE": "Proposed exchange date",
+        "COMPLETION_DATE": "Proposed completion date"
+    },
+    "VIEW": {
+        "VIEW_OFFER": "View offer",
+        "VENDOR": "Vendor",
+        "APPLICANT": "Applicant",
+        "BASIC_INFORMATION": "Basic information"
     }
   }
 }

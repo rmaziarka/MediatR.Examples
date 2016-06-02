@@ -3,11 +3,12 @@
 namespace KnightFrank.Antares.Api.Controllers
 {
     using System;
-    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Http;
 
     using KnightFrank.Antares.Dal.Model.Company;
-    using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Domain.Company.Commands;
+    using KnightFrank.Antares.Domain.Company.Queries;
 
     using MediatR;
 
@@ -64,16 +65,17 @@ namespace KnightFrank.Antares.Api.Controllers
         [Route("{id}")]
         public Company GetCompany(Guid id)
         {
-            // TODO Implement.
-            return new Company
+            var query = new CompanyQuery() { Id = id };
+
+		    Company company = this.mediator.Send(query);
+
+            if (company == null)
             {
-                Name = "Company name",
-                Id = id,
-                Contacts = new List<Contact>
-                {
-                    new Contact { FirstName = "First name", Surname = "Surname", Title = "Title" }
-                }
-            };
+                throw new HttpResponseException(this.Request.CreateErrorResponse(HttpStatusCode.NotFound, "Company not found."));
+            }
+
+            return company;
+          
         }
     }
 }

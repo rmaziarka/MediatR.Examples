@@ -153,6 +153,7 @@
     <Compile Include="Common\Commands\CreateOrUpdateAddressValidator.cs" />
     <Compile Include="Common\Enums\DivisionEnum.cs" />
     <Compile Include="Common\Enums\EnumType.cs" />
+    <Compile Include="Common\Enums\EnumTypeItemCode.cs" />
     <Compile Include="Common\NinjectInstanceResolver.cs" />
     <Compile Include="Common\INinjectInstanceResolver.cs" />
     <Compile Include="Common\Specifications\EnumTypeItemWithEnumType.cs" />
@@ -169,6 +170,9 @@
     <Compile Include="Company\Commands\CreateCompanyCommand.cs" />
     <Compile Include="Company\Commands\CompanyCommandProfile.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommandValidator.cs" />
+    <Compile Include="Company\Queries\CompanyQuery.cs" />
+    <Compile Include="Company\Queries\CompanyQueryValidator.cs" />
+    <Compile Include="Company\QueryHandlers\CompanyQueryHandler.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandProfile.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidator.cs" />
     <Compile Include="Contact\Commands\UpdateContactCommand.cs" />
@@ -178,6 +182,18 @@
     <Compile Include="Contact\Commands\UpdateContactCommandValidator.cs" />
     <Compile Include="Contact\Queries\ContactQuery.cs" />
     <Compile Include="Contact\QueryHandlers\ContactQueryHandler.cs" />
+    <Compile Include="LatestView\CommandHandlers\CreateLatestViewCommandHandler.cs" />
+    <Compile Include="LatestView\Commands\CreateLatestViewCommand.cs" />
+    <Compile Include="LatestView\Commands\CreateLatestViewCommandValidator.cs" />
+    <Compile Include="LatestView\Commands\LatestViewCommandProfile.cs" />
+    <Compile Include="LatestView\DataProviders\BaseLatestViewDataProvider.cs" />
+    <Compile Include="LatestView\DataProviders\EntityLatestViews.cs" />
+    <Compile Include="LatestView\DataProviders\ILatestViewDataProvider.cs" />
+    <Compile Include="LatestView\DataProviders\PropertyLatestViewDataProvider.cs" />
+    <Compile Include="LatestView\Queries\LatestViewsQuery.cs" />
+    <Compile Include="LatestView\QueryHandlers\LatestViewQueryHandler.cs" />
+    <Compile Include="LatestView\QueryResults\LatestViewData.cs" />
+    <Compile Include="LatestView\QueryResults\LatestViewQueryResultItem.cs" />
     <Compile Include="Offer\CommandHandlers\UpdateOfferCommandHandler.cs" />
     <Compile Include="Offer\CommandHandlers\CreateOfferCommandHandler.cs" />
     <Compile Include="Offer\Commands\UpdateOfferCommandValidator.cs" />

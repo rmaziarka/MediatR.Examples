@@ -64,7 +64,7 @@
     <Compile Include="Model\Common\IAuditableEntity.cs" />
     <Compile Include="Model\Common\IBaseEntity.cs" />
     <Compile Include="Model\Common\ILocalised.cs" />
-    <Compile Include="Model\Common\UserTypeEnum.cs" />
+    <Compile Include="Model\Common\EntityTypeEnum.cs" />
     <Compile Include="Model\Company\Company.cs" />
     <Compile Include="Model\Configuration\Address\AddressConfiguration.cs" />
     <Compile Include="Model\Configuration\Address\AddressFieldConfiguration.cs" />
@@ -76,6 +76,7 @@
     <Compile Include="Model\Configuration\Attribute\AttributeValuesConfiguration.cs" />
     <Compile Include="Model\Configuration\Attribute\AttributeConfiguration.cs" />
     <Compile Include="Model\Configuration\BaseAuditableEntityConfiguration.cs" />
+    <Compile Include="Model\Configuration\LatestView\LatestViewConfiguration.cs" />
     <Compile Include="Model\Configuration\Offer\OfferConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Activities\ActivityTypeLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Activities\ActivityTypeConfiguration.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Model\Property\PropertyTypeDefinition.cs" />
     <Compile Include="Model\Property\PropertyTypeLocalised.cs" />
     <Compile Include="Model\Property\Requirement.cs" />
+    <Compile Include="Model\LatestView\LatestView.cs" />
     <Compile Include="Model\Resource\Country.cs" />
     <Compile Include="Model\Resource\CountryLocalised.cs" />
     <Compile Include="Model\Resource\Locale.cs" />

@@ -1,7 +1,6 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
-    using System.Collections.Generic;
 
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Attribute;
@@ -18,9 +17,9 @@
     public class CreatePropertySteps
     {
         private readonly DriverContext driverContext;
+        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
-
-        private CreatePropertyPage createPropertyPage;
+        private CreatePropertyPage page;
 
         public CreatePropertySteps(ScenarioContext scenarioContext)
         {
@@ -31,18 +30,23 @@
 
             this.scenarioContext = scenarioContext;
             this.driverContext = this.scenarioContext["DriverContext"] as DriverContext;
+
+            if (this.page == null)
+            {
+                this.page = new CreatePropertyPage(this.driverContext);
+            }
         }
 
         [Given(@"User navigates to create property page")]
         public void OpenCreatePropertyPage()
         {
-            this.createPropertyPage = new CreatePropertyPage(this.driverContext).OpenCreatePropertyPage();
+            this.page = new CreatePropertyPage(this.driverContext).OpenCreatePropertyPage();
         }
 
         [When(@"User selects (.*) country on create property page")]
         public void SelectCountryFromDropDownList(string country)
         {
-            this.createPropertyPage.AddressTemplate.SelectPropertyCountry(country);
+            this.page.AddressTemplate.SelectPropertyCountry(country);
         }
 
         [When(@"User fills in address details on create property page")]
@@ -51,7 +55,7 @@
         {
             var address = table.CreateInstance<Address>();
 
-            this.createPropertyPage
+            this.page
                 .AddressTemplate
                 .SetPropertyNumber(address.PropertyNumber)
                 .SetPropertyName(address.PropertyName)
@@ -69,7 +73,7 @@
         {
             var details = table.CreateInstance<AttributeValues>();
 
-            this.createPropertyPage
+            this.page
                 .SetMinBedrooms(details.MinBedrooms)
                 .SetMaxBedrooms(details.MaxBedrooms)
                 .SetMinReceptionRooms(details.MinReceptions)
@@ -92,16 +96,14 @@
         [When(@"User selects (.*) property and (.*) type on edit property page")]
         public void SelectPropertyTypes(string type, string propertyType)
         {
-            if (this.scenarioContext.ContainsKey("CreatePropertyPage"))
-                this.createPropertyPage = this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage");
-            this.createPropertyPage.SelectType(type).SelectPropertyType(propertyType);
+            this.page.SelectType(type).SelectPropertyType(propertyType);
         }
 
         [When(@"User clicks save property button on create property page")]
         [When(@"User clicks save property button on edit property page")]
         public void ClickSaveButton()
         {
-            this.scenarioContext.Set(this.createPropertyPage.SaveProperty(), "ViewPropertyPage");
+            this.page.SaveProperty();
         }
 
         [When(@"User selects property characteristics on edit property page")]
@@ -110,10 +112,10 @@
         {
             foreach (Characteristic characteristic in table.CreateSet<Characteristic>())
             {
-                this.createPropertyPage.SelectCharacteristic(characteristic.Name);
+                this.page.SelectCharacteristic(characteristic.Name);
                 if (characteristic.Comment != null)
                 {
-                    this.createPropertyPage.AddCommentToCharacteristic(characteristic.Name, characteristic.Comment);
+                    this.page.AddCommentToCharacteristic(characteristic.Name, characteristic.Comment);
                 }
             }
         }
@@ -121,7 +123,7 @@
         [Then(@"Property form on create property page should be displayed")]
         public void CheckIfPropertyTypeIsDisplayed()
         {
-            Assert.True(this.scenarioContext.Get<CreatePropertyPage>("CreatePropertyPage").IsPropertyFormPresent());
+            Assert.True(new CreatePropertyPage(this.driverContext).IsPropertyFormPresent());
         }
     }
 }

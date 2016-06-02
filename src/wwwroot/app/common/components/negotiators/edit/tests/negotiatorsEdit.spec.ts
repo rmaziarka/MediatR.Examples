@@ -15,8 +15,8 @@ module Antares {
 
     describe('Given negotiators edit component', () => {
         var pageObjectSelector = {
-            secondaryNegotiatorItems: '*[id^="SecondaryNegotiator"]',
-            leadNegotiatorItem: '*[id^="LeadNegotiator"]',
+            secondaryNegotiatorItems: '#card-list-negotiators [id^="negotiator-"]',
+            leadNegotiatorItem: '#card-lead-negotiator [id^="negotiator-"]',
             noSecondaryNegotiators: '*[id="empty-secondary-negotiators"]',
             componentSorveyorMainHeader: 'h3[translate*="COMMERCIAL"]',
             componentSorveyorSubHeaders: 'h4[translate*="COMMERCIAL"]',
@@ -105,7 +105,7 @@ module Antares {
             describe('when property division is set to \'Commercial\'', () => {
                 it('then all component\'s headers should contain \'Surveyor\'', () => {
                     var division = _.find(divisionCodes, (division) =>  division.id === 'commmercialId');
-                    controller.labelTranslationKey = division.code;                             
+                    controller.labelTranslationKey = division.code;
                     scope.$apply();
 
                     var mainHeader: ng.IAugmentedJQuery = element.find(pageObjectSelector.componentSorveyorMainHeader);
@@ -119,13 +119,13 @@ module Antares {
             describe('when property division is set to \'Residential\'', () => {
                 it('then all component\'s headers should contain \'Negotiator\'', () => {
                     var division = _.find(divisionCodes, (division) =>  division.id === 'residentialId');
-                    controller.labelTranslationKey = division.code;                    
+                    controller.labelTranslationKey = division.code;
                     scope.$apply();
 
                     var mainHeader: ng.IAugmentedJQuery = element.find(pageObjectSelector.componentNegotiatorMainHeader);
                     var subHeaders: ng.IAugmentedJQuery = element.find(pageObjectSelector.componentNegotiatorSubHeaders);
 
-                    expect(mainHeader.text()).toContain(division.code);                    
+                    expect(mainHeader.text()).toContain(division.code);
                     _.each(subHeaders, (header) => expect(header.innerText).toContain(division.code));
                 });
             });
@@ -134,38 +134,38 @@ module Antares {
                 it('to true then search component is displayed and an \'Add\' button is hidden', () => {
                     controller.isSecondaryNegotiatorsInEditMode = true;
                     scope.$apply();
-                    
+
                     assertValidator.assertElementHasHideClass(false, pageObjectSelector.secondarySearch);
-                    expect(element.find(pageObjectSelector.addSecondaryBtn).length).toBe(0);                    
+                    expect(element.find(pageObjectSelector.addSecondaryBtn).length).toBe(0);
                 });
 
                 it('to false then search component is hidden and an \'Add\' button is displayed', () => {
                     controller.isSecondaryNegotiatorsInEditMode = false;
                     scope.$apply();
-                    
+
                     assertValidator.assertElementHasHideClass(true, pageObjectSelector.secondarySearch);
                     expect(element.find(pageObjectSelector.addSecondaryBtn).length).toBe(1);
                 });
             });
-            
+
             describe('when lead negotiator edit mode is changed', () => {
                 it('to true then search component is displayed and an \'Edit\' button is hidden', () => {
                     controller.isLeadNegotiatorInEditMode = true;
                     scope.$apply();
-                                        
+
                     assertValidator.assertElementHasHideClass(false, pageObjectSelector.leadSearch);
-                    assertValidator.assertElementHasHideClass(true, pageObjectSelector.editLeadNegotiatorBtnWrapper);                
+                    assertValidator.assertElementHasHideClass(true, pageObjectSelector.editLeadNegotiatorBtnWrapper);
                 });
 
                 it('to false then lead negotiator search component is hidden and an \'Edit\' button is visible', () => {
                     controller.isLeadNegotiatorInEditMode = false;
                     scope.$apply();
-                    
+
                     assertValidator.assertElementHasHideClass(true, pageObjectSelector.leadSearch);
                     assertValidator.assertElementHasHideClass(false, pageObjectSelector.editLeadNegotiatorBtnWrapper);
                 });
             });
-            
+
             describe('when new negotiator is selected', () => {
                 it('as lead then current lead negotiator should be updated', () => {
                     var leadSearch = element.find(pageObjectSelector.leadSearch);
@@ -173,33 +173,33 @@ module Antares {
                     var newLeadNegotiatorUser = <Dto.IDepartmentUser>TestHelpers.UserGenerator.generateDto();
 
                     searchController.select(newLeadNegotiatorUser);
-                                        
-                    expect(controller.leadNegotiator.user).toBe(newLeadNegotiatorUser);
+
+                    expect(angular.equals(controller.leadNegotiator.user, newLeadNegotiatorUser)).toBeTruthy();
                 });
-                
+
                  it('as secondary then secondary negotiator should be added', () => {
                     var secodnarySearch = element.find(pageObjectSelector.secondarySearch);
                     var searchController = secodnarySearch.controller('search');
                     var newSecondarynegotiatorUser = <Dto.IDepartmentUser>TestHelpers.UserGenerator.generateDto();
 
                     searchController.select(newSecondarynegotiatorUser);
-                                        
+
                     expect(_.find(controller.secondaryNegotiators, (negotiator) => negotiator.user.id === newSecondarynegotiatorUser.id)).toBeDefined();
                 });
             });
 
             describe('when one of secondary negotiator is deleted', () => {
                 it('then list of secondary negotiators should contain one element less', () => {
-                    // arrange                    
+                    // arrange
                     var originalSecondaryNegotiatorsCount: number = secondaryNegotiators.length;
                     var expectedElementCount = --originalSecondaryNegotiatorsCount;
-                    
+
                     // act
                     controller.deleteSecondaryNegotiator(secondaryNegotiators[0]);
                     scope.$apply();
 
                     var result = element.find(pageObjectSelector.secondaryNegotiatorItems);
-                    
+
                     // arrange
                     expect(scope.secondaryNegotiator.length).toEqual(expectedElementCount);
                     expect(result.length).toEqual(expectedElementCount);

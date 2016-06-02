@@ -5,5 +5,6 @@ module Antares.Property {
         templateUrl: 'app/company/add/companyAdd.html',
         controllerAs: 'vm',
         controller: 'CompanyAddController'
+        
     });
 }
