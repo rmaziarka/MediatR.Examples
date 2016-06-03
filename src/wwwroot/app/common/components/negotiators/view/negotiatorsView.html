@@ -2,9 +2,7 @@
 <h4 translate="NEGOTIATORS.{{nvvm.labelTranslationKey}}.LEAD"></h4>
 <card id="card-lead-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'" item="nvvm.leadNegotiator">
 </card>
-<div class="negotiators-call-date form-group">
-    <editable-date selected-date="nvvm.leadNegotiator.callDate" on-save="nvvm.updateNegotiatorCallDate(nvvm.leadNegotiator)"></editable-date>
-</div>
+<editable-date selected-date="nvvm.leadNegotiator.callDate" is-required="true" on-save="nvvm.updateNegotiatorCallDate(nvvm.leadNegotiator)"></editable-date>
 
 <card-list id="card-list-negotiators">
     <card-list-header>
@@ -16,6 +14,7 @@
     <card-list-item ng-repeat="negotiator in nvvm.secondaryNegotiators | orderBy: ['user.firstName', 'user.lastName']">
         <card item="negotiator" id="card-secondary-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'">
         </card>
+        <editable-date selected-date="negotiator.callDate" on-save="nvvm.updateNegotiatorCallDate(negotiator)"></editable-date>
     </card-list-item>
 </card-list>
 
@@ -30,65 +29,3 @@
         </card-list-item>
     </card-list>
 </section>
-
-
-<!-- Call date template
-
-<div class="negotiators-call-date form-group">
-    <span class="section-title" translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:
-    <time>12-05-2016</time>
-    <button type="button" class="btn btn-no-style"><i class="fa fa-pencil" aria-hidden="true"></i></button>
-</div>
-
-<div class="negotiators-call-date form-group">
-    <span class="section-title" translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:
-    <time class="negotiators-call-date-old">12-05-2016</time>
-    <button type="button" class="btn btn-no-style"><i class="fa fa-pencil" aria-hidden="true"></i></button>
-</div>
-
-<div class="negotiators-call-date form-inline form-group has-error">
-    <div class="row">
-        <div class="col-md-12 col-lg-2">
-            <label class="required" for="next-call"><span translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:</label>
-        </div>
-        <div class="col-md-12 col-lg-10">
-            <div class="input-group">
-                <input id="next-call" type="text" class="form-control">
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                </span>
-            </div>
-            <div class="btn-group">
-                <button type="button" class="btn btn-no-style text-danger"><i class="fa fa-ban" aria-hidden="true"></i></button>
-                <button type="button" class="btn btn-no-style text-success"><i class="fa fa-check" aria-hidden="true"></i></button>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 col-lg-10 col-lg-offset-2">
-            <p class="help-block">Validate message</p>
-        </div>
-    </div>
-</div>
-
-<div class="negotiators-call-date form-inline form-group">
-    <div class="row">
-        <div class="col-md-12 col-lg-2">
-            <label for="next-call-1"><span translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:</label>
-        </div>
-        <div class="col-md-12 col-lg-10">
-            <div class="input-group">
-                <input id="next-call-1" type="text" class="form-control">
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                </span>
-            </div>
-            <div class="btn-group">
-                <button type="button" class="btn btn-no-style text-danger"><i class="fa fa-ban" aria-hidden="true"></i></button>
-                <button type="button" class="btn btn-no-style text-success"><i class="fa fa-check" aria-hidden="true"></i></button>
-            </div>
-        </div>
-    </div>
-</div>
-
--->

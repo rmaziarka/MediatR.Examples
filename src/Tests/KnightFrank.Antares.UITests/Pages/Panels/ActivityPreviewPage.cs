@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using KnightFrank.Antares.UITests.Extensions;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
@@ -24,7 +26,7 @@
 
         public ViewActivityPage ClickViewActivity()
         {
-            this.Driver.GetElement(this.viewActivityLink).Click();
+            this.Driver.Click(this.viewActivityLink);
             return new ViewActivityPage(this.DriverContext);
         }
 

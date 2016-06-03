@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using System.IO;
 
+    using KnightFrank.Antares.UITests.Extensions;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Helpers;
@@ -35,7 +37,7 @@
 
         public AttachmentPreviewPage CloseAttachmentPreviewPage()
         {
-            this.Driver.GetElement(this.closeButton).Click();
+            this.Driver.Click(this.closeButton);
             return this;
         }
 
@@ -48,7 +50,7 @@
             }
             
             int filesNumber = FilesHelper.CountFiles(this.DriverContext.DownloadFolder, FileType.Pdf);
-            this.Driver.GetElement(this.name).Click();
+            this.Driver.Click(this.name);
             FilesHelper.WaitForFileOfGivenType(FileType.Pdf, filesNumber, this.DriverContext.DownloadFolder);
             return FilesHelper.GetLastFile(this.DriverContext.DownloadFolder, FileType.Pdf);
         }

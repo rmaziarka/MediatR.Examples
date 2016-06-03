@@ -2,92 +2,146 @@
     <div class="col-md-12">
         <h2 class="page-header" translate="OFFER.EDIT.EDIT_OFFER"></h2>
     </div>
-    <form ng-submit="editActivityForm.$valid && aevm.save()" name="editActivityForm" method="post" novalidate>
+    <form ng-submit="vm.editOfferForm.$valid && vm.save()" name="vm.editOfferForm" id="editOfferForm" method="post" novalidate>
         <div class="col-md-4">
-            <section>
-                <h3 class="page-header" translate="OFFER.EDIT.VENDOR"></h3>
+            <section id="section-vendor">
+                <h3 class="page-header" translate="OFFER.VIEW.VENDOR"></h3>
+
+                <h5 translate="OFFER.PREVIEW.ACTIVITY"></h5>
+                <card-list-item class="requirement-view-offers">
+                    <card show-context-menu="true" show-item-details="vm.showActivityPreview" display-new-control="true"
+                          card-template-url="'app/offer/view/offerVendorCard.html'" item="vm.offer">
+                        <card-context-menu>
+                            <context-menu-item type="details" item="vm.offer.activity" action="vm.navigateToActivity"></context-menu-item>
+                        </card-context-menu>
+                    </card>
+                </card-list-item>
             </section>
-            <section>
-                <h3 class="page-header" translate="OFFER.EDIT.APPLICANT"></h3>
+            <section id="section-applicant">
+                <h3 class="page-header" translate="OFFER.VIEW.APPLICANT"></h3>
+
+                <h5 translate="VIEWING.ADD.REQUIREMENT"></h5>
+                <card-list-item class="requirement-view-offers">
+                    <card show-context-menu="true" display-new-control="true"
+                          card-template-url="'app/offer/view/offerRequirementCard.html'" item="vm.offer">
+                        <card-context-menu>
+                            <context-menu-item type="details" item="vm.offer.requirement" action="vm.navigateToRequirement"></context-menu-item>
+                        </card-context-menu>
+                    </card>
+                </card-list-item>
             </section>
         </div>
         <div class="col-md-4">
             <section>
                 <h3 class="page-header" translate="OFFER.EDIT.BASIC_INFORMATION"></h3>
-                <div class="form-group has-error">
-                    <label for="status" class="required" translate="OFFER.EDIT.STATUS"></label>
+                <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.selectedStatus.$dirty) && vm.editOfferForm.selectedStatus.$invalid}">
+                    <label class="required" for="offer-statusId" translate="OFFER.ADD.STATUS"></label>
                     <div class="row">
-                        <div class="col-md-4">
-                            <select name="" id="status" class="form-control">
-                                <option>- select -</option>
+                        <div class="col-md-6">
+                            <select class="form-control" required id="offer-status" name="selectedStatus" ng-options="item as (item.id | dynamicTranslate) for item in vm.statuses track by item.id" ng-model="vm.selectedStatus">
+                                <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
                             </select>
                         </div>
                     </div>
-                    <p class="help-block">Field is required</p>
+                    <div ng-messages="vm.editOfferForm.selectedStatus.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.selectedStatus.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
                 </div>
-                <div class="form-group has-error">
-                    <label for="offer-price" class="required" translate="OFFER.EDIT.OFFER"></label>
+
+                <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.price.$dirty) && vm.editOfferForm.price.$invalid}">
+                    <label for="offer-price" class="required" translate="OFFER.ADD.OFFER"></label>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="input-group">
-                                <input id="offer-price" class="form-control">
+                                <input id="offer-price" class="form-control" type="number" ng-model="vm.offer.price" name="price" required number-greater-than="0" number-precision="0">
                                 <div class="input-group-addon">GBP</div>
                             </div>
                         </div>
                     </div>
-                    <p class="help-block">Field is required</p>
+                    <div ng-messages="vm.editOfferForm.price.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.price.$dirty">
+                        <p name="numberGreaterThanValidationError" ng-message="numberGreaterThan" class="help-block with-errors" translate="FORM.NUMBER_HAS_TO_BE_GREATER_THAN" translate-value-value="0"></p>
+                        <p name="numberPrecisionValidationError" ng-message="numberPrecision" class="help-block with-errors" translate="FORM.NUMBER_HAS_TO_BE_INTEGER"></p>
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
                 </div>
-                <div class="form-group has-error">
-                    <label class="required" for="offer-date" translate="OFFER.EDIT.OFFER_DATE"></label>
+
+                <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.offerDate.$dirty) && vm.editOfferForm.offerDate.$invalid}">
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
+                            <label class="required" for="offer-date" translate="OFFER.ADD.OFFER_DATE"></label>
                             <div class="input-group">
-                                <input type="text" id="offer-date" class="form-control" placeholder="dd-mm-yyyy">
+                                <input type="text" id="offer-date" name="offerDate" class="form-control" ng-model="vm.offer.offerDate" uib-datepicker-popup="dd-MM-yyyy"
+                                       is-open="vm.offerDateOpen" close-text="Close" placeholder="dd-mm-yyyy" required date-lower-than="{{ vm.today }}" />
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="vm.openOfferDate()"><i class="fa fa-calendar"></i></button>
                                 </span>
                             </div>
                         </div>
                     </div>
-                    <p class="help-block">Field is required</p>
+                    <div ng-messages="vm.editOfferForm.offerDate.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.offerDate.$dirty">
+                        <p name="dateLowerThanValidationError" ng-message="dateLowerThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_FUTURE"></p>
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
                 </div>
-                <div class="form-group has-error">
-                    <label for="special-conditions" translate="OFFER.EDIT.SPECIAL_CONDITIONS"></label>
-                    <span class="pull-right character-limit">0/4000</span>
-                    <textarea id="special-conditions" class="form-control" rows="6"></textarea>
-                    <p class="help-block">Validation message</p>
-                </div>
-                <div class="form-group">
-                    <label for="proposed-exchange-date" translate="OFFER.EDIT.EXCHANGE_DATE"></label>
+
+                <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.specialConditions.$dirty) && vm.editOfferForm.specialConditions.$invalid}">
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
+                            <label for="invitation-text" translate="OFFER.ADD.SPECIAL_CONDITIONS"></label>
+                            <span class="pull-right character-limit">{{vm.editOfferForm.specialConditions.$viewValue.length || 0}}/4000</span>
+                            <textarea class="form-control" rows="6" ng-model="vm.offer.specialConditions" name="specialConditions" kf-max-count="4000"></textarea>
+                        </div>
+                    </div>
+                    <div ng-messages="vm.editOfferForm.specialConditions.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.specialConditions.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.exchangeDate.$dirty) && vm.editOfferForm.exchangeDate.$invalid}">
+                    <label for="offer-proposed-exchange-date" translate="OFFER.ADD.EXCHANGE_DATE"></label>
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="input-group">
-                                <input type="text" id="proposed-exchange-date" class="form-control" placeholder="dd-mm-yyyy">
+                                <input type="text" id="offer-proposed-exchange-date" class="form-control" placeholder="dd-mm-yyyy" uib-datepicker-popup="dd-MM-yyyy"
+                                       is-open="vm.exchangeDateOpen" close-text="Close" ng-model="vm.offer.exchangeDate" name="exchangeDate">
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="vm.openExchangeDate()">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </button>
                                 </span>
                             </div>
                         </div>
                     </div>
+                    <div ng-messages="vm.editOfferForm.exchangeDate.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.exchangeDate.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="proposed-completion-date" translate="OFFER.EDIT.COMPLETION_DATE"></label>
+
+                <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.completionDate.$dirty) && vm.editOfferForm.completionDate.$invalid}">
+                    <label for="proposed-completion-date" translate="OFFER.ADD.COMPLETION_DATE"></label>
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <div class="input-group">
-                                <input type="text" id="proposed-completion-date" class="form-control" placeholder="dd-mm-yyyy">
+                                <input type="text" id="proposed-completion-date" class="form-control" placeholder="dd-mm-yyyy" uib-datepicker-popup="dd-MM-yyyy"
+                                       is-open="vm.completionDateOpen" close-text="Close" ng-model="vm.offer.completionDate" name="completionDate">
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="vm.openCompletionDate()">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </button>
                                 </span>
                             </div>
                         </div>
                     </div>
+                    <div ng-messages="vm.editOfferForm.completionDate.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.completionDate.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <h5 translate="OFFER.EDIT.NEGOTIATOR"></h5>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="card-item">John Smith</div>
+
+                <div class="section-details" ng-show="vm.mode == 'edit'" id="offer-edit-negotiator-section">
+                    <h5 translate="OFFER.ADD.NEGOTIATOR"></h5>
+                    <div class="panel panel-default">
+                        <div class="panel-body" id="offer-edit-negotiator-details">
+                            {{vm.offer.negotiator.getName()}}
                         </div>
                     </div>
                 </div>
@@ -96,10 +150,54 @@
         <div class="col-md-12">
             <div class="form-group">
                 <div>
-                    <button id="activity-edit-cancel" type="button" class="btn btn-default" ng-click="aevm.cancel()"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
+                    <button id="activity-edit-cancel" type="button" class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
                     <button id="activity-edit-save" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
                 </div>
             </div>
         </div>
     </form>
 </div>
+
+<side-panel component-id="vm.componentIds.activityPreviewSidePanelId">
+    <side-panel-header>
+        <h3 translate="ACTIVITY.PREVIEW.ACTIVITYPREVIEW"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <div class="row section-row">
+            <div class="col-xs-5">
+                <a ui-sref="app.activity-view({id: vm.offer.activity.id})" translate="ACTIVITY.PREVIEW.ACTIVITY_VIEW_LINK"></a>
+            </div>
+        </div>
+        <div class="row section-row">
+            <div class="col-xs-12">
+                <h4 translate="OFFER.VIEW.BASIC_INFORMATION"></h4>
+            </div>
+        </div>
+        <div class="row section-row">
+            <div class="col-xs-5" translate="ACTIVITY.PREVIEW.STATUS"></div>
+            <div class="col-xs-7" id="activity-preview-status">{{vm.offer.activity.activityStatusId | dynamicTranslate}} </div>
+        </div>
+        <div class="row section-row">
+            <div class="col-xs-5" translate="OFFER.PREVIEW.NEGOTIATOR"></div>
+            <div class="col-xs-7" id="activity-preview-negotiator">{{vm.offer.negotiator.getName()}} </div>
+        </div>
+        <div class="row section-row">
+            <div class="col-xs-5" translate="ACTIVITY.PREVIEW.CREATION_DATE"></div>
+            <div class="col-xs-7" id="activity-preview-created-date">{{vm.offer.activity.createdDate | date : 'dd-MM-yyyy'}}</div>
+        </div>
+        <div class="row section-row">
+            <div class="col-xs-5" translate="ACTIVITY.PREVIEW.VENDORS"></div>
+            <div class="col-xs-7" id="activity-preview-vendors">
+                <div class="row">
+                    <div class="col-md-12" id="activity-preview-vendor-item-{{contact.id}}" ng-repeat="contact in vm.offer.activity.contacts track by $id(contact)">
+                        {{contact.getName()}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row section-row">
+            <div class="col-xs-5" translate="ACTIVITY.PREVIEW.TYPE"></div>
+            <div class="col-xs-7" id="activity-preview-type">{{vm.offer.activity.activityTypeId | dynamicTranslate}} </div>
+        </div>
+    </side-panel-content>
+</side-panel>

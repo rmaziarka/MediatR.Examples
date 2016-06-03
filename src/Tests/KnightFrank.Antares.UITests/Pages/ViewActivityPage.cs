@@ -43,7 +43,6 @@
         private readonly ElementLocator leadNegotiator = new ElementLocator(Locator.CssSelector, "#card-lead-negotiator .panel-item");
         private readonly ElementLocator secondaryNegotiator = new ElementLocator(Locator.CssSelector, "#card-list-negotiators card-list-item .panel-item");
 
-
         public ViewActivityPage(DriverContext driverContext) : base(driverContext)
         {
         }
@@ -82,7 +81,7 @@
 
         public ViewActivityPage ClickDetailsLink()
         {
-            this.Driver.GetElement(this.detailsLink).Click();
+            this.Driver.Click(this.detailsLink);
             return this;
         }
 
@@ -104,26 +103,26 @@
 
         public EditActivityPage EditActivity()
         {
-            this.Driver.GetElement(this.editButton).Click();
+            this.Driver.Click(this.editButton);
             this.Driver.WaitForAngularToFinish();
             return new EditActivityPage(this.DriverContext);
         }
 
         public ViewActivityPage OpenAttachFilePanel()
         {
-            this.Driver.GetElement(this.addAttachmentButton).Click();
+            this.Driver.Click(this.addAttachmentButton);
             return this;
         }
 
         public ViewActivityPage OpenAttachmentPreview()
         {
-            this.Driver.GetElement(this.attachmentDetailsLink).Click();
+            this.Driver.Click(this.attachmentDetailsLink);
             return this;
         }
 
         public ViewActivityPage OpenViewingDetails(int position)
         {
-            this.Driver.GetElement(this.viewingDetailsLink.Format(position)).Click();
+            this.Driver.Click(this.viewingDetailsLink.Format(position));
             return this;
         }
 
@@ -147,13 +146,13 @@
 
         public ViewActivityPage OpenOfferDetails(int position)
         {
-            this.Driver.GetElement(this.offer.Format(position)).Click();
+            this.Driver.Click(this.offer.Format(position));
             return this;
         }
 
         public ViewActivityPage OpenOfferActions(int position)
         {
-            this.Driver.GetElement(this.offerActions.Format(position)).Click();
+            this.Driver.Click(this.offerActions.Format(position));
             return this;
         }
 

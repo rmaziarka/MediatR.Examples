@@ -2,6 +2,8 @@
 {
     using System.Linq;
 
+    using KnightFrank.Antares.UITests.Extensions;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
@@ -19,7 +21,7 @@
         public ActivityListPage SelectActivity(string activity)
         {
             this.Driver.GetElements(this.activities).Last(el => el.Text.Equals(activity)).Click();
-            this.Driver.GetElement(this.configureButton).Click();
+            this.Driver.Click(this.configureButton);
             return this;
         }
 

@@ -65,6 +65,9 @@
 
         public Guid Handle(CreateActivityCommand message)
         {
+            this.entityValidator.EntityExists<ActivityType>(message.ActivityTypeId);
+            this.enumTypeItemValidator.ItemExists(EnumType.ActivityStatus, message.ActivityStatusId);
+
             Property property = this.propertyRepository.GetById(message.PropertyId);
             this.entityValidator.EntityExists(property, message.PropertyId);
 
@@ -72,10 +75,7 @@
                 message.ActivityTypeId,
                 property.Address.CountryId,
                 property.PropertyTypeId);
-
-            this.entityValidator.EntityExists<ActivityType>(message.ActivityTypeId);
-            this.enumTypeItemValidator.ItemExists(EnumType.ActivityStatus, message.ActivityStatusId);
-
+            
             var activity = Mapper.Map<Activity>(message);
 
             List<Contact> vendors = this.contactRepository.FindBy(x => message.ContactIds.Contains(x.Id)).ToList();
@@ -86,7 +86,8 @@
 
             activity.Contacts = vendors;
 
-            User negotiator = this.userRepository.FindBy(x => message.LeadNegotiatorId == x.Id).SingleOrDefault();
+            User negotiator =
+                this.userRepository.GetWithInclude(x => message.LeadNegotiatorId == x.Id, x => x.Department).SingleOrDefault();
             this.entityValidator.EntityExists(negotiator, message.LeadNegotiatorId);
 
             activity.ActivityUsers.Add(
@@ -97,6 +98,13 @@
                     CallDate = DateTime.UtcNow.AddDays(NextCallDateDays).Date
                 });
 
+            activity.ActivityDepartments.Add(
+                new ActivityDepartment
+                    {
+                        Department = negotiator.Department,
+                        DepartmentType = this.GetManagingDepartmentType()
+                    });
+
             this.activityRepository.Add(activity);
             this.activityRepository.Save();
 
@@ -106,6 +114,11 @@
         private EnumTypeItem GetLeadNegotiatorUserType()
         {
             return this.enumTypeItemRepository.FindBy(i => i.Code == EnumTypeItemCode.LeadNegotiator).Single();
+        }
+
+        private EnumTypeItem GetManagingDepartmentType()
+        {
+            return this.enumTypeItemRepository.FindBy(i => i.Code == EnumTypeItemCode.ManagingDepartment).Single();
         }
     }
 }

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.UITests.Pages;
     using KnightFrank.Antares.UITests.Pages.Panels;
@@ -19,8 +20,8 @@
     public class ViewOfferSteps
     {
         private readonly DriverContext driverContext;
-        private readonly ViewOfferPage page;
         private readonly ScenarioContext scenarioContext;
+        private ViewOfferPage page;
 
         public ViewOfferSteps(ScenarioContext scenarioContext)
         {
@@ -36,6 +37,13 @@
             {
                 this.page = new ViewOfferPage(this.driverContext);
             }
+        }
+
+        [When(@"User navigates to view offer page with id")]
+        public void OpenViewActivityPageWithId()
+        {
+            Guid offerId = this.scenarioContext.Get<Offer>("Offer").Id;
+            this.page = new ViewOfferPage(this.driverContext).OpenViewOfferPageWithId(offerId.ToString());
         }
 
         [When(@"User clicks activity details on view offer page")]

@@ -1,26 +1,41 @@
 ﻿<div ng-if="!vm.inEditMode" class="negotiators-call-date form-group">
     <span class="section-title" translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:
-    <time>{{vm.date | date : 'dd-MM-yyyy'}}</time>
+    <time ng-class="{'negotiators-call-date-old' : vm.isBeforeToday()}">{{(vm.date | date : 'dd-MM-yyyy') || '-'}}</time>
     <button type="button" class="btn btn-no-style" ng-click="vm.openEditMode()"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 </div>
-<div ng-if="vm.inEditMode"  class="negotiators-call-date form-inline form-group">
-    <div class="row">
-        <div class="col-md-12 col-lg-2">
-            <label for="next-call-1"><span translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:</label>
-        </div>
-        <div class="col-md-12 col-lg-10">
-            <div class="input-group">
-                <input id="next-call-1" type="text" class="form-control" placeholder="dd-mm-yyyy" uib-datepicker-popup="dd-MM-yyyy" 
-                       is-open="vm.isDatePickerOpen" close-text="Close" ng-model="vm.date">
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="vm.openDatePicker()"><i class="fa fa-calendar"></i></button>
-                </span>
-            </div>
+<div ng-if="vm.inEditMode">
+    <form ng-submit="editDateForm.$valid && vm.save()" novalidate>
+        <ng-form name="editDateForm">
+            <div class="negotiators-call-date form-inline form-group" ng-class="{'has-error': (editDateForm.$submitted || editDateForm.date.$dirty) && editDateForm.date.$invalid}">
+                <div class="row">
+                    <div class="col-md-12 col-lg-2">
+                        <label ng-class="{'required' : vm.isRequired}" for="next-call"><span translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:</label>
+                    </div>
+                    <div class="col-md-12 col-lg-10">
+                        <div class="input-group">
+                            <input id="next-call-1" type="text" class="form-control" placeholder="dd-mm-yyyy" uib-datepicker-popup="dd-MM-yyyy" name="date" 
+                                   is-open="vm.isDatePickerOpen" close-text="Close" ng-model="vm.date" ng-required="vm.isRequired" date-greater-than="{{vm.today}}">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="vm.openDatePicker()"><i class="fa fa-calendar"></i></button>
+                            </span>
+                        </div>
 
-            <div class="btn-group">
-                <button type="button" class="btn btn-no-style text-danger" ng-click="vm.cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>
-                <button type="button" class="btn btn-no-style text-success" ng-click="vm.save()"><i class="fa fa-check" aria-hidden="true"></i></button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-no-style text-danger" ng-click="vm.cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>
+                            <button type="submit" class="btn btn-no-style text-success"><i class="fa fa-check" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 col-lg-10 col-lg-offset-2">
+                        <div ng-messages="editDateForm.date.$error" ng-show="editDateForm.$submitted || editDateForm.date.$dirty">
+                            <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
+                            <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        </ng-form>
+    </form>
 </div>

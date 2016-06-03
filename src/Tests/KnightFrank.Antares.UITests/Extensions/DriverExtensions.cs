@@ -60,5 +60,11 @@
                 driver.GetElement(locator).SendKeys(text.ToString());
             }
         }
+
+        public static void Click(this IWebDriver driver, ElementLocator locator)
+        {
+            driver.ScrollIntoMiddle(locator);
+            driver.GetElement(locator).Click();
+        }
     }
 }

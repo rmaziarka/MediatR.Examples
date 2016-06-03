@@ -151,14 +151,14 @@
 
         public CreateRequirementPage SaveRequirement()
         {
-            this.Driver.GetElement(this.saveResidentialSalesRequirement).Click();
+            this.Driver.Click(this.saveResidentialSalesRequirement);
             this.Driver.WaitForAngularToFinish(BaseConfiguration.MediumTimeout);
             return this;
         }
 
         public CreateRequirementPage AddApplicants()
         {
-            this.Driver.GetElement(this.newApplicantButton).Click();
+            this.Driver.Click(this.newApplicantButton);
             return this;
         }
 

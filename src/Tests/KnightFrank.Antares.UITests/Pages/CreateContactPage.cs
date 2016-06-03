@@ -9,13 +9,12 @@
     public class CreateContactPage : ProjectPageBase
     {
         private readonly ElementLocator contactFirstName = new ElementLocator(Locator.Id, "first-name");
+        private readonly ElementLocator contactForm = new ElementLocator(Locator.Id, "addContactForm");
         private readonly ElementLocator contactSurname = new ElementLocator(Locator.Id, "surname");
         private readonly ElementLocator contactTitle = new ElementLocator(Locator.Id, "title");
-        private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "saveBtn");
-        private readonly ElementLocator contactForm = new ElementLocator(Locator.Id, "addContactForm");
+        private readonly ElementLocator saveButton = new ElementLocator(Locator.CssSelector, "#addContactForm button");
 
-        public CreateContactPage(DriverContext driverContext)
-            : base(driverContext)
+        public CreateContactPage(DriverContext driverContext) : base(driverContext)
         {
         }
 
@@ -45,7 +44,7 @@
 
         public CreateContactPage SaveContact()
         {
-            this.Driver.GetElement(this.saveButton).Click();
+            this.Driver.Click(this.saveButton);
             return this;
         }
 
