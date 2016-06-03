@@ -174,7 +174,7 @@ module Antares.Services {
 
         getStaticTranslationResource(): Resources.ITranslationResourceClass<any> {
             return <Resources.ITranslationResourceClass<any>>
-                this.$resource(this.appConfig.rootUrl + '/translations/:isoCode.json');
+                this.$resource('translations/:isoCode.json');
         }
 
         getActivityResource(): Resources.IActivityResourceClass {
