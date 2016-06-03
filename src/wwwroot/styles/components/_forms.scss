@@ -1,5 +1,18 @@
 // Forms Styles
 
+.form-control {
+  &::-ms-clear {
+    height: 0;
+    width: 0;
+  }
+}
+
+.form-control-feedback {
+  pointer-events: visible;
+  right: 16px;
+  top: 1px;
+}
+
 label,
 .help-block {
   font-size: 12px;
