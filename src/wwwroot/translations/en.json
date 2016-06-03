@@ -358,6 +358,19 @@
         "VENDOR": "Vendor",
         "APPLICANT": "Applicant",
         "BASIC_INFORMATION": "Basic information"
+    },
+    "EDIT": {
+      "EDIT_OFFER": "Edit offer",
+      "VENDOR": "Vendor",
+      "APPLICANT": "Applicant",
+      "BASIC_INFORMATION": "Basic information",
+      "STATUS": "Status",
+      "OFFER": "Offer",
+      "OFFER_DATE": "Offer date",
+      "SPECIAL_CONDITIONS": "Special conditions",
+      "NEGOTIATOR": "Negotiator",
+      "EXCHANGE_DATE": "Proposed exchange date",
+      "COMPLETION_DATE": "Proposed completion date"
     }
   },
   "DEPARTMENTS": {

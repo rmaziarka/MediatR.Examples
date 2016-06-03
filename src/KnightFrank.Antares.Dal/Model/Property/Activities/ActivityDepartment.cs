@@ -2,6 +2,7 @@
 {
     using System;
 
+    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.User;
 
     public class ActivityDepartment : BaseEntity
@@ -14,6 +15,8 @@
 
         public virtual Department Department { get; set; }
 
-        public bool IsManaging { get; set; }
+        public Guid DepartmentTypeId { get; set; }
+
+        public virtual EnumTypeItem DepartmentType { get; set; }
     }
 }
