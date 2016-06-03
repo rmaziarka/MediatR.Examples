@@ -23,12 +23,16 @@ try {
     . ".\Configure-Jdbc.ps1"
     . ".\Set-NssmService"
     . ".\Start-ExternalProcess"
+    . ".\Configure-Elasticsearch"
 
     $sqlDatabaseName = "KnightFrank.Antares"
     $sqlUser = "antares"
     $sqlPassword = "ant@res!1"	
 
     Deploy-Database -ProjectRootPath $ProjectRootPath -DropExistingDatabase:$DropExistingDatabase -DatabaseName $sqlDatabaseName -SqlUser $sqlUser -SqlPassword $sqlPassword
+    
+    Configure-Elasticsearch
+    
     Configure-Jdbc -PathToSettingsTemplate "$ProjectRootPath\tools\KnightFrank.Antares.ResourceGroup\Templates\settings.json"`
                 -PathToNssm "C:\nssm\nssm-2.24"`
                 -PathToJdbc "C:\jdbc\elasticsearch-jdbc-2.3.2.0"`
