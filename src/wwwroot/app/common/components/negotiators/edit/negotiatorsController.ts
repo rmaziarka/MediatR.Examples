@@ -92,7 +92,7 @@ module Antares.Common.Component {
 
                 promise.then(() => {
                     activityUser.callDate = date;
-                }); 
+                });
 
                 return promise;
             }
@@ -126,7 +126,7 @@ module Antares.Common.Component {
         };
 
         private fixLeadNegotiatorCallDate = () => {
-            if (this.leadNegotiator.callDate === null || moment(this.leadNegotiator.callDate).isBefore(this.today, 'day')) {
+            if (!this.leadNegotiator.callDate || moment(this.leadNegotiator.callDate).isBefore(this.today, 'day')) {
                 this.leadNegotiator.callDate = this.today;
             }
         }
