@@ -23,7 +23,7 @@
             this.Property(an => an.DepartmentId)
                 .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute(uniqueIndexName, 2) { IsUnique = true }));
 
-            this.Property(an => an.IsManaging).IsRequired();
+            this.HasRequired(a => a.DepartmentType).WithMany().WillCascadeOnDelete(false);
         }
     }
 }
