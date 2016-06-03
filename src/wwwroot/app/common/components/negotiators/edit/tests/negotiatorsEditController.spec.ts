@@ -28,8 +28,14 @@ module Antares {
             $scope = $rootScope.$new();
             $http = $httpBackend;
 
+            var scopeMock = {
+                negotiatorForm : {
+                    callDate : {}
+                }
+            }
+
             var bindings = { activityId: 'testId' };
-            controller = <NegotiatorsController>$controller('NegotiatorsController', {}, bindings);
+            controller = <NegotiatorsController>$controller('NegotiatorsController', { $scope: scopeMock}, bindings);
         }));
 
         describe('when editLeadNegotiator is called', () => {
