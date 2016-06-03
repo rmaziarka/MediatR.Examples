@@ -4,7 +4,6 @@ module Antares.Common.Component {
     export class EditableDateController {
         // component binding
         public selectedDate: Date;
-        //public onSave: (id: String, date: Date) => void;
         public onSave: () => (date: Date) => void;
 
         // component data
@@ -26,9 +25,7 @@ module Antares.Common.Component {
         }
 
         public save = () => {
-            //this.inEditMode = false;
-            //this.selectedDate = this.date;
-            //this.onSave(this.id, this.selectedDate);
+            this.inEditMode = false;
             this.onSave()(this.date);
         }
 

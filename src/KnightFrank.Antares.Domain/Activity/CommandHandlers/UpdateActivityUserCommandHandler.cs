@@ -32,10 +32,9 @@
         public Guid Handle(UpdateActivityUserCommand message)
         {
             ActivityUser activityUser =
-                this.activityUserRepository.GetWithInclude(x => x.Id == message.UserId, x => x.UserType).SingleOrDefault();
-               // this.activityUserRepository.GetWithInclude(x => x.UserId == message.UserId, x => x.UserType).SingleOrDefault();
+                this.activityUserRepository.GetWithInclude(x => x.Id == message.Id, x => x.UserType).SingleOrDefault();
 
-            this.entityValidator.EntityExists(activityUser, message.UserId);
+            this.entityValidator.EntityExists(activityUser, message.Id);
 
             Activity activity = this.activityRepository.GetById(message.ActivityId);
 

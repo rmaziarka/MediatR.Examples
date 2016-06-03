@@ -97,6 +97,9 @@ declare module Antares.Common.Models {
             getActivityTypes(params: any, ownership: any): ng.resource.IResource<Dto.IActivityType>;
         }
 
+        interface IActivityUserResourceClass extends Resources.IBaseResourceClass<Resources.IActivityUserResource> {
+        }
+
         interface IPropertyResourceClass extends Resources.IBaseResourceClass<Resources.IPropertyResource> {
             createOwnership(params: any, ownership: any): ng.resource.IResource<Dto.IOwnership>;
             getPropertyTypes(params: any, ownership: any): ng.resource.IResource<Dto.IOwnership>;

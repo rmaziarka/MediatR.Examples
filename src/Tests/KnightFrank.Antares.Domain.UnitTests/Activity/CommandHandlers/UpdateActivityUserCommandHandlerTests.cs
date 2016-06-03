@@ -56,7 +56,7 @@
             UpdateActivityUserCommand command = this.CreateUpdateActivityUserCommand(callDate, fixture);
             Activity activity = this.CreateActivity(command.ActivityId, fixture);
             activityRepository.Setup(r => r.GetById(command.ActivityId)).Returns(activity);
-            ActivityUser activityUser = this.CreateActivityUser(command.UserId, command.ActivityId, isLeadNegotiator, fixture);
+            ActivityUser activityUser = this.CreateActivityUser(command.Id, command.ActivityId, isLeadNegotiator, fixture);
             activityUserRepository.Setup(
                 r =>
                 r.GetWithInclude(
@@ -80,10 +80,10 @@
             Guid activityUserId = handler.Handle(command);
 
             // Assert
-            activityUserId.Should().Be(command.UserId);
+            activityUserId.Should().Be(command.Id);
 
             entityValidator.Verify(x => x.EntityExists(activity, command.ActivityId), Times.Once);
-            entityValidator.Verify(x => x.EntityExists(activityUser, command.UserId), Times.Once);
+            entityValidator.Verify(x => x.EntityExists(activityUser, command.Id), Times.Once);
 
             activityUserRepository.Verify(x => x.Save(), Times.Once);
             updatedCallDate.Should().Be(command.CallDate);
@@ -103,7 +103,7 @@
             UpdateActivityUserCommand command = this.CreateUpdateActivityUserCommand(callDate, fixture);
             Activity activity = this.CreateActivity(command.ActivityId, fixture);
             activityRepository.Setup(r => r.GetById(command.ActivityId)).Returns(activity);
-            ActivityUser activityUser = this.CreateActivityUser(command.UserId, Guid.NewGuid(), isLeadNegotiator, fixture);
+            ActivityUser activityUser = this.CreateActivityUser(command.Id, Guid.NewGuid(), isLeadNegotiator, fixture);
             activityUserRepository.Setup(
                 r =>
                 r.GetWithInclude(
@@ -133,7 +133,7 @@
             UpdateActivityUserCommand command = this.CreateUpdateActivityUserCommand(null, fixture);
             Activity activity = this.CreateActivity(command.ActivityId, fixture);
             activityRepository.Setup(r => r.GetById(command.ActivityId)).Returns(activity);
-            ActivityUser activityUser = this.CreateActivityUser(command.UserId, command.ActivityId, true, fixture);
+            ActivityUser activityUser = this.CreateActivityUser(command.Id, command.ActivityId, true, fixture);
             activityUserRepository.Setup(
                 r =>
                 r.GetWithInclude(

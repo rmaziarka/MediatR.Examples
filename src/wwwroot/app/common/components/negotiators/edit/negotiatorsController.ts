@@ -83,7 +83,7 @@ module Antares.Common.Component {
 
         public updateNegotiatorCallDate = (activityUser: Business.ActivityUser) => {
             return (date: Date) => {
-                var dto = new Business.UpdateActivityUserResource(activityUser);
+                var dto = new Business.UpdateSingleActivityUserResource(activityUser);
                 dto.callDate = date;
 
                 var promise = this.dataAccessService.getActivityUserResource()
