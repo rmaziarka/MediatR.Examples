@@ -3,7 +3,7 @@
 module Antares.Offer {
     angular.module('app').component('offerEdit', {
         templateUrl: 'app/offer/edit/offerEdit.html',
-        controllerAs : 'aevm',
+        controllerAs : 'vm',
         controller: 'OfferEditController',
         bindings: {
             offer: '='

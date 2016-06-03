@@ -12,12 +12,12 @@
 
     public class CreateCompanyPage : ProjectPageBase
     {
-        private readonly ElementLocator companyForm = new ElementLocator(Locator.CssSelector, "company-add");
         private readonly ElementLocator addContact = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
+        private readonly ElementLocator companyForm = new ElementLocator(Locator.CssSelector, "company-add");
         private readonly ElementLocator companyName = new ElementLocator(Locator.Id, "name");
         private readonly ElementLocator contactsList = new ElementLocator(Locator.CssSelector, "#list-contacts .ng-binding");
-        private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "company-save-btn");
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
+        private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "company-save-btn");
 
         public CreateCompanyPage(DriverContext driverContext) : base(driverContext)
         {
@@ -35,7 +35,7 @@
 
         public CreateCompanyPage AddContactToCompany()
         {
-            this.Driver.GetElement(this.addContact).Click();
+            this.Driver.Click(this.addContact);
             this.Driver.WaitForAngularToFinish();
             return this;
         }
@@ -48,7 +48,7 @@
 
         public CreateCompanyPage SaveCompany()
         {
-            this.Driver.GetElement(this.saveButton).Click();
+            this.Driver.Click(this.saveButton);
             return this;
         }
 

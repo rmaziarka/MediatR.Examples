@@ -67,13 +67,13 @@
                 case "residential":
                     if (!this.Driver.GetElement(this.propertyTypeLink).Text.ToLower().Contains("commercial"))
                     {
-                        this.Driver.GetElement(this.propertyTypeLink).Click();
+                        this.Driver.Click(this.propertyTypeLink);
                     }
                     break;
                 case "commercial":
                     if (!this.Driver.GetElement(this.propertyTypeLink).Text.ToLower().Contains("residential"))
                     {
-                        this.Driver.GetElement(this.propertyTypeLink).Click();
+                        this.Driver.Click(this.propertyTypeLink);
                     }
                     break;
             }
@@ -83,7 +83,7 @@
 
         public ViewPropertyPage SaveProperty()
         {
-            this.Driver.GetElement(this.saveButton).Click();
+            this.Driver.Click(this.saveButton);
             this.Driver.WaitForAngularToFinish();
             return new ViewPropertyPage(this.DriverContext);
         }
@@ -193,7 +193,7 @@
 
         public CreatePropertyPage AddCommentToCharacteristic(string name, string comment)
         {
-            this.Driver.GetElement(this.characteristicCommentIcon.Format(name)).Click();
+            this.Driver.Click(this.characteristicCommentIcon.Format(name));
             this.Driver.SendKeys(this.characteristicComment.Format(name), comment);
             return this;
         }

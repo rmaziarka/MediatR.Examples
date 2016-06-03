@@ -44,7 +44,7 @@
         {
             foreach (string el in attendeesList)
             {
-                this.Driver.GetElement(this.attendee.Format(el)).Click();
+                this.Driver.Click(this.attendee.Format(el));
             }
             return this;
         }
@@ -63,7 +63,7 @@
 
         public CreateViewingPage SaveViewing()
         {
-            this.Driver.GetElement(this.saveViewing).Click();
+            this.Driver.Click(this.saveViewing);
             this.Driver.WaitForAngularToFinish();
             return this;
         }

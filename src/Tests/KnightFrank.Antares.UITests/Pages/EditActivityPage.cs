@@ -55,41 +55,41 @@
 
         public ViewActivityPage SaveActivity()
         {
-            this.Driver.GetElement(this.saveButton).Click();
+            this.Driver.Click(this.saveButton);
             this.Driver.WaitForAngularToFinish();
             return new ViewActivityPage(this.DriverContext);
         }
 
         public EditActivityPage EditLeadNegotiator(string leadNegotiator)
         {
-            this.Driver.GetElement(this.editLeadNegotiator).Click();
+            this.Driver.Click(this.editLeadNegotiator);
             this.Driver.SendKeys(this.searchLeadNegotator, leadNegotiator);
             this.Driver.WaitForElementToBeDisplayed(this.negotiator.Format(leadNegotiator), BaseConfiguration.MediumTimeout);
-            this.Driver.GetElement(this.negotiator.Format(leadNegotiator)).Click();
+            this.Driver.Click(this.negotiator.Format(leadNegotiator));
             return this;
         }
 
         public EditActivityPage AddSecondaryNegotiator(Negotiator secondaryNegotiator)
         {
-            this.Driver.GetElement(this.addSecondaryNegotiator).Click();
+            this.Driver.Click(this.addSecondaryNegotiator);
             this.Driver.SendKeys(this.searchSecondaryNegotiator, secondaryNegotiator.Name);
             this.Driver.WaitForElementToBeDisplayed(this.negotiator.Format(secondaryNegotiator.Name), BaseConfiguration.MediumTimeout);
-            this.Driver.GetElement(this.negotiator.Format(secondaryNegotiator.Name)).Click();
-            this.Driver.GetElement(this.cancelSecondaryNegotiator).Click();
+            this.Driver.Click(this.negotiator.Format(secondaryNegotiator.Name));
+            this.Driver.Click(this.cancelSecondaryNegotiator);
             return this;
         }
 
         public EditActivityPage RemoveSecondaryNegotiator(int position)
         {
-            this.Driver.GetElement(this.secondaryNegotiatorActions.Format(position)).Click();
-            this.Driver.GetElement(this.deleteSecondaryNegotiator.Format(position)).Click();
+            this.Driver.Click(this.secondaryNegotiatorActions.Format(position));
+            this.Driver.Click(this.deleteSecondaryNegotiator.Format(position));
             return this;
         }
 
         public EditActivityPage SetSecondaryNegotiatorAsLeadNegotiator(int position)
         {
-            this.Driver.GetElement(this.secondaryNegotiatorActions.Format(position)).Click();
-            this.Driver.GetElement(this.setSecondaryNegotiatorAsLead.Format(position)).Click();
+            this.Driver.Click(this.secondaryNegotiatorActions.Format(position));
+            this.Driver.Click(this.setSecondaryNegotiatorAsLead.Format(position));
             return this;
         }
     }

@@ -370,7 +370,8 @@
       "SPECIAL_CONDITIONS": "Special conditions",
       "NEGOTIATOR": "Negotiator",
       "EXCHANGE_DATE": "Proposed exchange date",
-      "COMPLETION_DATE": "Proposed completion date"
+      "COMPLETION_DATE": "Proposed completion date",
+      "OFFER_EDIT_SUCCESS":  "Offer successfully saved"
     }
   },
   "DEPARTMENTS": {

@@ -2,6 +2,8 @@
 {
     using System;
 
+    using KnightFrank.Antares.UITests.Extensions;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
@@ -22,7 +24,7 @@
         {
             if (!this.Driver.IsElementPresent(this.openedDrawer, BaseConfiguration.ShortTimeout))
             {
-                this.Driver.GetElement(this.hamburgerBox).Click();
+                this.Driver.Click(this.hamburgerBox);
             }
             return this;
         }
@@ -31,7 +33,7 @@
         {
             if (this.Driver.IsElementPresent(this.openedDrawer, BaseConfiguration.ShortTimeout))
             {
-                this.Driver.GetElement(this.hamburgerBox).Click();
+                this.Driver.Click(this.hamburgerBox);
             }
             return this;
         }
@@ -53,7 +55,7 @@
 
         public void ClickDrawerMenuItem(string drawerMenuItem)
         {
-            this.Driver.GetElement(this.menuItem.Format(drawerMenuItem, string.Empty)).Click();
+            this.Driver.Click(this.menuItem.Format(drawerMenuItem, string.Empty));
         }
 
         public bool IsSubMenuVisible(string drawerMenuItem)
@@ -64,7 +66,7 @@
 
         public NavigationDrawerPage ClickCreateButton()
         {
-            this.Driver.GetElement(this.createButton).Click();
+            this.Driver.Click(this.createButton);
             return this;
         }
 
