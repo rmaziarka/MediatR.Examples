@@ -45,7 +45,7 @@ Scenario: Create viewing on requirement
 		| Name                           | Date       | StartTime | EndTime | Negotiator | Attendees                 | InvitationText | PostViewingComment |
 		| Knight Lancelot, 120 Baker Str | 12-05-2016 | 10:00     | 11:00   | John Smith | Amber Brooks;Kennedi Hyde | Text           |                    |
 	When User clicks view activity from viewing on view requirement page
-	Then View activity page is displayed
+	Then View activity page should be displayed
 		And Viewing details on 1 position on view activity page are same as the following
 			| Date       | Time          | Name                                     |
 			| 12-05-2016 | 10:00 - 11:00 | Amber Brooks, Sarah Knight, Kennedi Hyde |
@@ -54,7 +54,7 @@ Scenario: Create viewing on requirement
 		| Name                                     | Date       | StartTime | EndTime | Negotiator | Attendees                 | InvitationText | PostViewingComment |
 		| Amber Brooks, Sarah Knight, Kennedi Hyde | 12-05-2016 | 10:00     | 11:00   | John Smith | Amber Brooks;Kennedi Hyde | Text           |                    |
 	When User clicks view requirement from viewing on view activity page
-	Then View requirement page is displayed
+	Then View requirement page should be displayed
 
 @Requirement
 @Viewing

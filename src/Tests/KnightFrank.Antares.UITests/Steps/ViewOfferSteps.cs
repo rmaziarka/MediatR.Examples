@@ -64,7 +64,7 @@
             this.page.OpenRequirementActions().OpenRequirement();
         }
 
-        [Then(@"View offer page is displayed")]
+        [Then(@"View offer page should be displayed")]
         public void CheckIfViewOfferPresent()
         {
             Verify.That(this.driverContext,

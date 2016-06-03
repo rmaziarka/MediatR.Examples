@@ -32,6 +32,7 @@
         }
 
         [Given(@"Property in GB is created in database")]
+        [When(@"Property in GB is created in database")]
         public void CreatePropertyInDb(Table table)
         {
             var address = table.CreateInstance<Address>();
@@ -149,7 +150,7 @@
                 ActivityStatusId = activityStatusId,
                 CreatedDate = DateTime.UtcNow,
                 LastModifiedDate = DateTime.UtcNow,
-                Contacts = this.scenarioContext.Get<List<Contact>>("ContactsList"),
+                Contacts = this.scenarioContext.ContainsKey("ContactsList") ? this.scenarioContext.Get<List<Contact>>("ContactsList") : new List<Contact>(),
                 ActivityUsers = new List<ActivityUser>
                 {
                     new ActivityUser

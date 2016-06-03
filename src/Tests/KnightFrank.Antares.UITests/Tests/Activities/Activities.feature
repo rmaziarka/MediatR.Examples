@@ -59,7 +59,7 @@ Scenario: Edit activity
             | Edward Griffin  |
 		And User removes 3 secondary negotiator from edit activity page
 		And User clicks save button on edit activity page
-	Then View activity page is displayed
+	Then View activity page should be displayed
 		And Activity details on view activty page are following
 			| ActivityStatus   | MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |
 			| Market appraisal | 4000                 | 5000             | 6000                 |
@@ -72,7 +72,7 @@ Scenario: Edit activity
 	When User clicks edit button on view activity page
 		And User sets 3 secondary negotiator as lead negotiator on edit activity page
 		And User clicks save button on edit activity page
-	Then View activity page is displayed
+	Then View activity page should be displayed
 		And Martha Williams is set as lead negotiator on view activity page
         And Secondary users are set on view activity page
             | Name           |

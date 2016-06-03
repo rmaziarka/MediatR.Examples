@@ -51,6 +51,12 @@
             return this;
         }
 
+        public CreatePropertyPage OpenEditPropertyPage(string id)
+        {
+            new CommonPage(this.DriverContext).NavigateToPageWithId("edit property", id);
+            return this;
+        }
+
         public CreatePropertyPage SelectPropertyType(string type)
         {
             var select = this.Driver.GetElement<Select>(this.propertyType);
