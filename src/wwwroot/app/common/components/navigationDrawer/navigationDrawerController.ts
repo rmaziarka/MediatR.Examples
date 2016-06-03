@@ -4,7 +4,7 @@ module Antares {
     export module Common {
         export module Component {
             import LatestViewsProvider = Antares.Providers.LatestViewsProvider;
-            import ILatestViewData = Common.Models.Dto.ILatestViewData;
+            import LatestListEntry = Antares.Common.Models.Dto.ILatestListEntry;
 
             export class NavigationDrawerController {
                 private type: string;
@@ -30,8 +30,8 @@ module Antares {
                     this.fieldName = data.fieldName;
                 }
 
-                public getLatestViews = (): ILatestViewData[] =>{
-                    var views: ILatestViewData[] = this.latestViewsProvider[this.fieldName];
+                public getLatestViews = (): LatestListEntry[] =>{
+                    var views: LatestListEntry[] = this.latestViewsProvider[this.fieldName];
                     return views;
                 }
             }
