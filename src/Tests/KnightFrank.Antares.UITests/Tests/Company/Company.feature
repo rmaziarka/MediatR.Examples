@@ -21,4 +21,7 @@ Scenario: Create company
 	When User clicks on website url icon 
 	Then url opens in new tab
 	When User clicks save company button on create company page
-	Then  View company page is displayed
+	Then  View company page is displayed with following details
+	| Name         | WebsiteUrl                 | ClientCarePageUrl   |
+	| Knight Frank | http://www.knightfrank.com | http://www.test.com |
+	

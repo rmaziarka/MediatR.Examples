@@ -72,7 +72,7 @@ module Antares {
                 ["https://www.test.com/", "https://www.test.com/"]
             ])
             .dataIt((data: TestCaseProtocolCheck) =>
-                ` is set to "${data[0]}" then href of a tag should ${data[1]}`)
+                ` set to "${data[0]}" then href of a tag should ${data[1]}`)
             .run((data: TestCaseProtocolCheck) => {
                 var expectedUrl = data[1];
 

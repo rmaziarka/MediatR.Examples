@@ -90,7 +90,6 @@
            this.page.ClickOnWebsiteLink();
         }
 
-
         [Then(@"List of company contacts should contain following contacts")]
         public void CheckContactsList(Table table)
         {
@@ -109,13 +108,7 @@
             Assert.True(this.page.IsAddCompanyFormPresent());
         }
 
-        [Then(@"View company page is displayed")]
-        public void ThenViewCompanyPageIsDisplayed()
-        {
-            Assert.True(this.page.IsViewCompanyFormPresent()); 
-        }
-
-        [Then(@"url opens in new tab")]
+    [Then(@"url opens in new tab")]
         public void ThenUrlOpensInNewTab()
         {
             Assert.True(this.page.CheckNewTab(this.url));

@@ -110,6 +110,7 @@
     <Compile Include="Extensions\DriverExtensions.cs" />
     <Compile Include="Pages\AddressTemplatePage.cs" />
     <Compile Include="Pages\CommonPage.cs" />
+    <Compile Include="Pages\ViewCompanyPage.cs" />
     <Compile Include="Pages\NavigationDrawerPage.cs" />
     <Compile Include="Pages\Panels\ActivityListPage.cs" />
     <Compile Include="Pages\Panels\AttachmentPreviewPage.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="ProjectPageBase.cs" />
     <Compile Include="ProjectTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Steps\ViewCompanySteps.cs" />
     <Compile Include="Steps\CreateCompanySteps.cs" />
     <Compile Include="Steps\CreatePropertySteps.cs" />
     <Compile Include="Steps\CreateContactSteps.cs" />

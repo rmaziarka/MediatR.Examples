@@ -49,7 +49,7 @@ module Antares {
             });
         });
 
-        it('when displyed then should have correct details shown', () =>{
+        it('when displayed then should have correct details shown', () =>{
             // arrange
             var companyName = element.find(pageObjectSelectors.nameSelector);
           
