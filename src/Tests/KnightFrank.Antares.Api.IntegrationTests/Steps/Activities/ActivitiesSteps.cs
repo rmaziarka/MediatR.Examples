@@ -227,7 +227,8 @@
                 .Excluding(x => x.ActivityStatus)
                 .Excluding(x => x.ActivityType)
                 .Excluding(x => x.Attachments)
-                .Excluding(x => x.ActivityUsers));
+                .Excluding(x => x.ActivityUsers)
+                .Excluding(x=>x.ActivityDepartments));
 
             actualActivity.ActivityStatus.Code.ShouldBeEquivalentTo("PreAppraisal");
             actualActivity.ActivityUsers.Should().Equal(activity.ActivityUsers, (c1, c2) =>
