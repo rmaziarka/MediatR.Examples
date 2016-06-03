@@ -139,7 +139,7 @@
                 () => Assert.Equal(details.VendorEstimatedPrice.ToString("N2") + " GBP", this.page.VendorEstimatedPrice));
         }
 
-        [Then(@"Attachment is displayed on view activity page")]
+        [Then(@"Attachment should be displayed on view activity page")]
         public void CheckIfAttachmentIsDisplayed(Table table)
         {
             Attachment actual = this.page.GetAttachmentDetails();
@@ -159,7 +159,7 @@
             actual.ShouldBeEquivalentTo(expected);
         }
 
-        [Then(@"View activity page is displayed")]
+        [Then(@"View activity page should be displayed")]
         public void CheckIfViewActivityPresent()
         {
             Assert.True(this.page.IsViewActivityFormPresent());

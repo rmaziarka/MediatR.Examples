@@ -42,7 +42,7 @@ Scenario: Create residential sales offer on requirement
 		| Details                                     | Status | Offer      | SpecialConditions | Negotiator |
 		| John Soane’s house, 13 Lincoln’s Inn Fields | New    | 100000 GBP | Text              | John Smith |
 	When User clicks view activity from offer on view requirement page
-	Then View activity page is displayed
+	Then View activity page should be displayed
 		And Offer should be displayed on view activity page
 		And Offer details on 1 position on view activity page are same as the following
 			| Details                                    | Offer      | Status |
@@ -121,7 +121,7 @@ Scenario: View offer details page
 	Then New offer should be created and displayed on view requirement page
 	When User clicks 1 offer details on view requirement page
 		And User clicks details offer link on view requirement page
-	Then View offer page is displayed
+	Then View offer page should be displayed
 		And Offer header details on view offer page are same as the following
 			| Details                        | Status   |
 			| Judith Greciet, Julius Chaloff | Accepted |
@@ -139,7 +139,7 @@ Scenario: View offer details page
 		| Status        | Negotiator | Vendor                        | Type          |
 		| Pre-appraisal | John Smith | Judith Greciet;Julius Chaloff | Freehold Sale |
 	When User clicks view activity link from activity on view offer page
-	Then View activity page is displayed
+	Then View activity page should be displayed
 	When User goes back to previous page
 		And User clicks requirement details button on view offer page
-	Then View requirement page is displayed
+	Then View requirement page should be displayed

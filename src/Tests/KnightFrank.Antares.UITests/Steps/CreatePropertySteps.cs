@@ -4,6 +4,7 @@
 
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Attribute;
+    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;
@@ -38,9 +39,17 @@
         }
 
         [Given(@"User navigates to create property page")]
+        [When(@"User navigates to create property page")]
         public void OpenCreatePropertyPage()
         {
             this.page = new CreatePropertyPage(this.driverContext).OpenCreatePropertyPage();
+        }
+        
+        [When(@"User navigates to edit property page with id")]
+        public void OpenEditPropertyPage()
+        {
+            Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
+            this.page = new CreatePropertyPage(this.driverContext).OpenEditPropertyPage(propertyId.ToString());
         }
 
         [When(@"User selects (.*) country on create property page")]

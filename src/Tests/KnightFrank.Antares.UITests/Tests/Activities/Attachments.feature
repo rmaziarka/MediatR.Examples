@@ -20,7 +20,7 @@ Scenario: Upload attachment for activity
 	When User navigates to view activity page with id
 		And User clicks add attachment button on view activity page
 		And User adds PDF document.pdf file with Brochure type on attach file page
-	Then Attachment is displayed on view activity page
+	Then Attachment should be displayed on view activity page
 		| FileName         | Type     | Size   |
 		| PDF document.pdf | Brochure | 2.9 MB |
 	When User clicks attachment details link on view activity page

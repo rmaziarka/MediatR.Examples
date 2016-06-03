@@ -46,5 +46,5 @@ Scenario: Create note on requirement
 		And User adds note on view requirement page
 			| Description                                                            |
 			| This is an example text of note. Text was created for testing purposes |
-	Then Note is displayed in recent notes area on view requirement page
-		And Notes number increased on view requirement page
+	Then Note should be displayed in recent notes area on view requirement page
+		And Notes number should increase on view requirement page

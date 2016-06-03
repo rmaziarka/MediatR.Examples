@@ -229,13 +229,13 @@
             Assert.Equal(expectedApplicants, applicants);
         }
 
-        [Then(@"Note is displayed in recent notes area on view requirement page")]
+        [Then(@"Note should be displayed in recent notes area on view requirement page")]
         public void CheckIfNoteAdded()
         {
             Assert.Equal(1, this.page.Notes.GetNumberOfNotes());
         }
 
-        [Then(@"Notes number increased on view requirement page")]
+        [Then(@"Notes number should increase on view requirement page")]
         public void CheckIfNotesNumberIncreased()
         {
             string notesNumber = this.page.CheckNotesNumber();
@@ -304,7 +304,7 @@
                 () => Assert.Equal(expectedDetails.CompletionDate, this.page.OfferPreview.ProposedCompletionDate));
         }
 
-        [Then(@"View requirement page is displayed")]
+        [Then(@"View requirement page should be displayed")]
         public void CheckIfViewRequirementPresent()
         {
             Assert.True(this.page.IsViewRequirementFormPresent());

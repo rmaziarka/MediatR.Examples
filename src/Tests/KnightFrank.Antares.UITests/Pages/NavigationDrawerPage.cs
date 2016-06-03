@@ -1,8 +1,11 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using KnightFrank.Antares.UITests.Extensions;
+    using KnightFrank.Antares.UITests.Tests.LatestViews;
 
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
@@ -15,6 +18,8 @@
         private readonly ElementLocator menuItem = new ElementLocator(Locator.XPath, "//nav[@class='drawer']//span[normalize-space(text()) = '{0}']{1}");
         private readonly ElementLocator openedDrawer = new ElementLocator(Locator.CssSelector, "div.drawer-open");
         private readonly ElementLocator subMenuItem = new ElementLocator(Locator.XPath, "//ancestor::div[contains(@class, 'panel-open')]//div[@class = 'panel-body']");
+        private readonly ElementLocator latestEntities = new ElementLocator(Locator.CssSelector, "navigation-drawer[type = '{0}'] li");
+        private readonly ElementLocator latestEntity = new ElementLocator(Locator.CssSelector, "navigation-drawer[type = '{0}'] li:nth-of-type({1})");
 
         public NavigationDrawerPage(DriverContext driverContext) : base(driverContext)
         {
@@ -70,6 +75,19 @@
             return this;
         }
 
+        public List<string> GetLatestEntities(string entity)
+        {
+            this.Driver.WaitForAngularToFinish();
+            return this.Driver.GetElements(this.latestEntities.Format(entity)).Select(e => e.Text).ToList();
+        }
+
+        public NavigationDrawerPage ClickLatestEntity(string entity, string position)
+        {
+            this.Driver.WaitForAngularToFinish();
+            this.Driver.Click(this.latestEntity.Format(entity, position));
+            return this;
+        }
+
         // ReSharper disable UnusedMember.Local
         private enum DrawerMenu
         {
@@ -77,6 +95,11 @@
             Companies,
             Properties,
             Requirements
+        }
+
+        internal class LatestViews
+        {
+            public string LatestData { get; set; }
         }
     }
 }

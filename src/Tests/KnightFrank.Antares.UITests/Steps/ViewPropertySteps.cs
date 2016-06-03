@@ -195,6 +195,7 @@
         }
 
         [Then(@"Property should be updated with address details")]
+        [Then(@"Property should be displayed with address details")]
         [Then(@"New property should be created with address details")]
         public void CheckIfPropertyCreated(Table table)
         {
@@ -257,7 +258,7 @@
             }
         }
 
-        [Then(@"View property page is displayed")]
+        [Then(@"View property page should be displayed")]
         public void CheckIfViewPropertyPresent()
         {
             Assert.True(this.page.IsViewPropertyFormPresent());
