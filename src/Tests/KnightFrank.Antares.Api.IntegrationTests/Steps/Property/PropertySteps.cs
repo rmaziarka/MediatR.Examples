@@ -41,12 +41,6 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"Property does not exist in database")]
-        public void GivenPropertyDoesNotExistsInDataBase()
-        {
-            this.scenarioContext.Set(Guid.NewGuid(), "AddedPropertyId");
-        }
-
         [Given(@"Address for add/update property is defined")]
         public void AddressIsDefined(Table table)
         {
@@ -129,7 +123,7 @@
             this.fixture.DataContext.Properties.Add(property);
             this.fixture.DataContext.SaveChanges();
 
-            this.scenarioContext.Set(property.Id, "AddedPropertyId");
+            this.scenarioContext.Set(property, "AddedProperty");
         }
 
         [Given(@"User gets (.*) for PropertyType")]
@@ -163,7 +157,7 @@
         [Given(@"Property has following charactersitics")]
         public void GivenPropertyHasFollowingCharactersitics(Table table)
         {
-            var id = this.scenarioContext.Get<Guid>("AddedPropertyId");
+            Guid id = this.scenarioContext.Get<Property>("AddedProperty").Id;
             IEnumerable<RequiredCharacteristics> propertyCharacteristic = table.CreateSet<RequiredCharacteristics>();
 
             foreach (PropertyCharacteristic prop in propertyCharacteristic.Select(characteristic => new PropertyCharacteristic
@@ -241,7 +235,7 @@
                     ? this.scenarioContext.Get<List<CreateOrUpdatePropertyCharacteristic>>("PropertyCharacteristics")
                     : new List<CreateOrUpdatePropertyCharacteristic>();
 
-            Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
+            Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Property>("AddedProperty").Id : new Guid(id);
             Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
 
             var updatedProperty = new UpdatePropertyCommand
@@ -318,7 +312,9 @@
         [When(@"User retrieves property details")]
         public void GetProperty()
         {
-            var propertyId = this.scenarioContext.Get<Guid>("AddedPropertyId");
+            Guid propertyId = this.scenarioContext.ContainsKey("AddedProperty")
+                ? this.scenarioContext.Get<Property>("AddedProperty").Id
+                : Guid.NewGuid();
             string requestUrl = $"{ApiUrl}/{propertyId}";
 
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
@@ -385,7 +381,7 @@
         [Then(@"Characteristics list should be the same as in database")]
         public void ThenCharacteristicsListShouldBeTheSameAsInDatabase()
         {
-            var propertyTypeId = this.scenarioContext.Get<Guid>("AddedPropertyId");
+            Guid propertyTypeId = this.scenarioContext.Get<Property>("AddedProperty").Id;
             List<PropertyCharacteristic> expectedCharacteristics =
                 JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent()).PropertyCharacteristics.ToList();
             List<PropertyCharacteristic> actualCharacteristics =

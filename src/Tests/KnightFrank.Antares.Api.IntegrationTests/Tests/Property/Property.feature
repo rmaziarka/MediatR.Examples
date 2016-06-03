@@ -121,7 +121,6 @@ Scenario Outline: Update property with invalid data
 
 @Property
 Scenario: Get non existing property
-	Given Property does not exist in database
 	When User retrieves property details
 	Then User should get NotFound http status code
 

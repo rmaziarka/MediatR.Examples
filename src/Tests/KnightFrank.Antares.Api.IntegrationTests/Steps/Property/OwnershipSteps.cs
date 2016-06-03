@@ -42,7 +42,7 @@
             List<Ownership> ownerships = table.CreateSet<Ownership>().ToList();
             foreach (Ownership ownership in ownerships)
             {
-                ownership.PropertyId = this.scenarioContext.Get<Guid>("AddedPropertyId");
+                ownership.PropertyId = this.scenarioContext.Get<Property>("AddedProperty").Id;
                 ownership.OwnershipTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Freeholder"];
                 ownership.Contacts = this.scenarioContext.Get<ICollection<Contact>>("ContactList");
             }
@@ -92,7 +92,7 @@
         [Then(@"Created Ownership is saved in database")]
         public void ThenTheResultsShouldBeSameAsCreated()
         {
-            var propertyId = this.scenarioContext.Get<Guid>("AddedPropertyId");
+            Guid propertyId = this.scenarioContext.Get<Property>("AddedProperty").Id;
             var actualOwnership = this.scenarioContext.Get<CreateOwnershipCommand>("AddedOwnership");
 
             Ownership expectedOwnership = this.fixture.DataContext.Ownerships.Single(x => x.PropertyId.Equals(propertyId));
@@ -108,8 +108,7 @@
         [Then(@"Response contains property with ownership")]
         public void ThenResponseContainsPropertyWithOwnership()
         {
-            var propertyId = this.scenarioContext.Get<Guid>("AddedPropertyId");
-
+            Guid propertyId = this.scenarioContext.Get<Property>("AddedProperty").Id;
             var actualOwnership = JsonConvert.DeserializeObject<Ownership>(this.scenarioContext.GetResponseContent());
 
             Ownership expectedOwnership =
@@ -122,7 +121,7 @@
 
         private void CreateOwnership(CreateOwnershipCommand command)
         {
-            string requestUrl = string.Format($"{ApiUrl}", this.scenarioContext.Get<Guid>("AddedPropertyId"));
+            string requestUrl = string.Format($"{ApiUrl}", this.scenarioContext.Get<Property>("AddedProperty").Id);
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, command);
             this.scenarioContext.SetHttpResponseMessage(response);

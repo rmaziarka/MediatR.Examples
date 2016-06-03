@@ -75,7 +75,7 @@
         public void CreateActivityInDatabase(string id, string activityStatus)
         {
             Guid activityStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[activityStatus];
-            Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
+            Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Property>("AddedProperty").Id : new Guid(id);
             var activityTypeId = this.scenarioContext.Get<Guid>("ActivityTypeId");
 
             Guid leadNegotiatorTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["LeadNegotiator"];
@@ -110,7 +110,7 @@
             string requestUrl = $"{ApiUrl}";
 
             Guid activityStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["PreAppraisal"];
-            Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Guid>("AddedPropertyId") : new Guid(id);
+            Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Property>("AddedProperty").Id : new Guid(id);
             var activityTypeId = this.scenarioContext.Get<Guid>("ActivityTypeId");
 
             List<Guid> vendors =
