@@ -54,8 +54,8 @@ module Antares {
         var requirementMock = TestHelpers.RequirementGenerator.generateDto();
 
         var offerStatuses = [
-            { id : 1, code : 'New' },
-            { id : 2, code : 'Closed' }
+            { id : '1', code : 'New' },
+            { id : '2', code : 'Closed' }
         ];
 
         beforeEach(inject((

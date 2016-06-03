@@ -38,12 +38,13 @@ module Antares {
                 sidePanel: '#add-offer-panel',
                 makeOfferAction: 'context-menu-item[type=makeoffer]',
                 list: '.requirement-view-offers',
-                status:
+                offerStatus:'.offer-status',
+                statusText:
                 {
-                    New: '.offer-status-new',
-                    Accepted: '.offer-status-accepted',
-                    Rejected: '.offer-status-rejected',
-                    Withdrawn: '.offer-status-withdrawn'
+                    New: 'DYNAMICTRANSLATIONS.1',
+                    Accepted: 'DYNAMICTRANSLATIONS.4',
+                    Rejected: 'DYNAMICTRANSLATIONS.3',
+                    Withdrawn: 'DYNAMICTRANSLATIONS.2'
                 }
             }
         }
@@ -100,27 +101,27 @@ module Antares {
                     {
                         id: "1",
                         statusId: "1",
-                        offerDate: new Date(2016, 1, 1)
+                        createdDate: new Date(2016, 1, 1)
                     },
                     {
                         id: "2",
                         statusId: "2",
-                        offerDate: new Date(2014, 1, 1)
+                        createdDate: new Date(2014, 1, 1)
                     },
                     {
                         id: "3",
                         statusId: "3",
-                        offerDate: new Date(2015, 1, 1)
+                        createdDate: new Date(2015, 1, 1)
                     },
                     {
                         id: "4",
                         statusId: "3",
-                        offerDate: new Date(2011, 1, 1)
+                        createdDate: new Date(2011, 1, 1)
                     },
                     {
                         id: "5",
                         statusId: "4",
-                        offerDate: new Date(2012, 1, 1)
+                        createdDate: new Date(2012, 1, 1)
                     }
                 ]
             });
@@ -131,31 +132,17 @@ module Antares {
                     fileChunkSizeInBytes: 12,
                     enumOrder: {
                         "OfferStatus": {
+                            "Accepted": 1,
                             "New": 2,
-                            "Withdrawn": 4,
                             "Rejected": 3,
-                            "Accepted": 1
+                            "Withdrawn": 4
                         }
                     }
                 }
 
-            var mockDynamicTranslateFilter = (value: string) => {
-                switch (value) {
-                    case '1':
-                        return "New";
-                    case '2':
-                        return "Accepted";
-                    case '3':
-                        return "Rejected";
-                    case '4':
-                        return "Withdrawn";
-                }
-
-                return "";
-            };
-
+            
             beforeEach(angular.mock.module(($provide: angular.auto.IProvideService) => {
-                $provide.value('dynamicTranslateFilter', mockDynamicTranslateFilter);
+                $provide.service('enumService', Antares.Mock.EnumServiceMock);
                 $provide.constant('appConfig', appConfigMock);
             }));
 
@@ -163,11 +150,18 @@ module Antares {
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
                 $httpBackend: ng.IHttpBackendService,
-                $filter: ng.IFilterService) => {
+                $filter: ng.IFilterService,
+                enumService:Antares.Mock.EnumServiceMock) => {
 
                 filter = $filter;
                 $http = $httpBackend;
-
+                var enumItems = [
+                { id: '1', code: 'New' },
+                { id: '2', code: 'Withdrawn' },
+                { id: '3', code: 'Rejected' },
+                { id: '4', code: 'Accepted' }
+            ];
+                enumService.setEnum('OfferStatus',enumItems);
                 Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
                 scope = $rootScope.$new();
                 scope['requirement'] = requirementMock;
@@ -182,11 +176,11 @@ module Antares {
             it('offers are displayed and sorted proper way (first by status then by date descending)', () => {
                 var offersList = element.find(pageObjectSelectors.offers.list);
                 expect(offersList.length).toEqual(5);
-                expect($(<Element>offersList[0]).find(pageObjectSelectors.offers.status.Accepted).length).toEqual(1);
-                expect($(<Element>offersList[1]).find(pageObjectSelectors.offers.status.New).length).toEqual(1);
-                expect($(<Element>offersList[2]).find(pageObjectSelectors.offers.status.Rejected).length).toEqual(1);
-                expect($(<Element>offersList[3]).find(pageObjectSelectors.offers.status.Rejected).length).toEqual(1);
-                expect($(<Element>offersList[4]).find(pageObjectSelectors.offers.status.Withdrawn).length).toEqual(1);
+                expect($(<Element>offersList[0]).find(pageObjectSelectors.offers.offerStatus).text()).toEqual(pageObjectSelectors.offers.statusText.Accepted);
+                expect($(<Element>offersList[1]).find(pageObjectSelectors.offers.offerStatus).text()).toEqual(pageObjectSelectors.offers.statusText.New);
+                expect($(<Element>offersList[2]).find(pageObjectSelectors.offers.offerStatus).text()).toEqual(pageObjectSelectors.offers.statusText.Rejected);
+                expect($(<Element>offersList[3]).find(pageObjectSelectors.offers.offerStatus).text()).toEqual(pageObjectSelectors.offers.statusText.Rejected);
+                expect($(<Element>offersList[4]).find(pageObjectSelectors.offers.offerStatus).text()).toEqual(pageObjectSelectors.offers.statusText.Withdrawn);
             });
 
             it('requirement details are loaded', () => {

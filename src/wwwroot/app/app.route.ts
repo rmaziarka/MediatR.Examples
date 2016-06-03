@@ -21,6 +21,9 @@ module Antares {
                     },
                     'lastEntriesPromise': (latestViewsProvider: LatestViewsProvider) => {
                         return latestViewsProvider.refresh();
+                    },
+                    'enumsPromise': (enumService: Antares.Services.EnumService) => {
+                        return enumService.getEnumPromise();
                     }
                 }
             });
@@ -35,8 +38,8 @@ module Antares {
         $urlRouterProvider.otherwise('/app/contact/add');
     }
 
-    function onStart($rootScope: ng.IRootScopeService, growlMessages: angular.growl.IGrowlMessagesService){
-        $rootScope.$on('$stateChangeSuccess', () =>{
+    function onStart($rootScope: ng.IRootScopeService, growlMessages: angular.growl.IGrowlMessagesService) {
+        $rootScope.$on('$stateChangeSuccess', () => {
             growlMessages.destroyAllMessages();
         });
     }
