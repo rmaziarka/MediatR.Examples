@@ -5,5 +5,9 @@
         public const string LeadNegotiator = "LeadNegotiator";
 
         public const string SecondaryNegotiator = "SecondaryNegotiator";
+
+        public const string ManagingDepartment = "Managing";
+
+        public const string StandardDepartment = "Standard";
     }
 }
