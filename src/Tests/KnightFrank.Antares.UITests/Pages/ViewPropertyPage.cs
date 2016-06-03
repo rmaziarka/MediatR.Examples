@@ -114,7 +114,7 @@
 
         public ViewPropertyPage AddActivity()
         {
-            this.Driver.GetElement(this.addActivity).Click();
+            this.Driver.Click(this.addActivity);
             return this;
         }
 
@@ -125,13 +125,13 @@
 
         public CreatePropertyPage EditProperty()
         {
-            this.Driver.GetElement(this.editButton).Click();
+            this.Driver.Click(this.editButton);
             return new CreatePropertyPage(this.DriverContext);
         }
 
         public ViewPropertyPage SetOwnership()
         {
-            this.Driver.GetElement(this.addOwernship).Click();
+            this.Driver.Click(this.addOwernship);
             return this;
         }
 
@@ -147,7 +147,7 @@
 
         public ViewPropertyPage OpenActivityDetails()
         {
-            this.Driver.GetElement(this.activityDetailsLink).Click();
+            this.Driver.Click(this.activityDetailsLink);
             return this;
         }
 
@@ -186,7 +186,7 @@
 
         public ViewPropertyPage CreateAreaBreakdown()
         {
-            this.Driver.GetElement(this.addAreaBreakdown).Click();
+            this.Driver.Click(this.addAreaBreakdown);
             return this;
         }
 
@@ -209,14 +209,13 @@
 
         public ViewPropertyPage OpenAreaActions(int position)
         {
-            this.Driver.ScrollIntoMiddle(this.areaActions.Format(position));
-            this.Driver.GetElement(this.areaActions.Format(position)).Click();
+            this.Driver.Click(this.areaActions.Format(position));
             return this;
         }
 
         public ViewPropertyPage EditArea(int position)
         {
-            this.Driver.GetElement(this.areaEdit.Format(position)).Click();
+            this.Driver.Click(this.areaEdit.Format(position));
             return this;
         }
     }

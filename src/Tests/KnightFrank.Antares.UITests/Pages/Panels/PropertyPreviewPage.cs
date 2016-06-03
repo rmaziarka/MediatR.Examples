@@ -1,5 +1,7 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages.Panels
 {
+    using KnightFrank.Antares.UITests.Extensions;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
@@ -14,7 +16,7 @@
 
         public ViewPropertyPage OpenViewPropertyPage()
         {
-            this.Driver.GetElement(this.viewPropertyLink).Click();
+            this.Driver.Click(this.viewPropertyLink);
             return new ViewPropertyPage(this.DriverContext);
         }
     }

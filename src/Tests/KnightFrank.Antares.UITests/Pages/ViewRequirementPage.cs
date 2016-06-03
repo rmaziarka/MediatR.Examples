@@ -109,7 +109,7 @@
 
         public ViewRequirementPage OpenNotes()
         {
-            this.Driver.GetElement(this.notesButton).Click();
+            this.Driver.Click(this.notesButton);
             return this;
         }
 
@@ -121,19 +121,19 @@
 
         public ViewRequirementPage AddViewings()
         {
-            this.Driver.GetElement(this.addViewings).Click();
+            this.Driver.Click(this.addViewings);
             return this;
         }
 
         public ViewRequirementPage OpenViewingDetails(int position)
         {
-            this.Driver.GetElement(this.viewing.Format(position)).Click();
+            this.Driver.Click(this.viewing.Format(position));
             return this;
         }
 
         public ViewRequirementPage OpenOfferDetails(int position)
         {
-            this.Driver.GetElement(this.offer.Format(position)).Click();
+            this.Driver.Click(this.offer.Format(position));
             return this;
         }
 
@@ -151,26 +151,26 @@
 
         public ViewRequirementPage OpenViewingActions(int position)
         {
-            this.Driver.GetElement(this.viewingActions.Format(position)).Click();
+            this.Driver.Click(this.viewingActions.Format(position));
             return this;
         }
 
         public ViewRequirementPage OpenOfferActions(int position)
         {
-            this.Driver.GetElement(this.offerActions.Format(position)).Click();
+            this.Driver.Click(this.offerActions.Format(position));
             return this;
         }
 
         public ViewRequirementPage CreateOffer(int position)
         {
-            this.Driver.GetElement(this.createOffer.Format(position)).Click();
+            this.Driver.Click(this.createOffer.Format(position));
             return this;
         }
 
 
         public ViewRequirementPage EditOffer(int position)
         {
-            this.Driver.GetElement(this.editOffer.Format(position)).Click();
+            this.Driver.Click(this.editOffer.Format(position));
             return this;
         }
 

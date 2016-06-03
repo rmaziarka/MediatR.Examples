@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using KnightFrank.Antares.UITests.Extensions;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
@@ -36,13 +38,13 @@
 
         public ViewingDetailsPage EditViewing()
         {
-            this.Driver.GetElement(this.editViewing).Click();
+            this.Driver.Click(this.editViewing);
             return this;
         }
 
         public ViewingDetailsPage ClickViewLink()
         {
-            this.Driver.GetElement(this.viewLink).Click();
+            this.Driver.Click(this.viewLink);
             return this;
         }
     }

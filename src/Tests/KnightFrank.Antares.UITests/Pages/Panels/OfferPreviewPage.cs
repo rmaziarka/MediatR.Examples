@@ -1,5 +1,7 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages.Panels
 {
+    using KnightFrank.Antares.UITests.Extensions;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
@@ -39,13 +41,13 @@
 
         public OfferPreviewPage ClickViewLink()
         {
-            this.Driver.GetElement(this.viewLink).Click();
+            this.Driver.Click(this.viewLink);
             return this;
         }
 
         public OfferPreviewPage ClickDetailsLink()
         {
-            this.Driver.GetElement(this.detailsLink).Click();
+            this.Driver.Click(this.detailsLink);
             return this;
         }
     }

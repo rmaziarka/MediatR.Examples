@@ -17,6 +17,7 @@
         // Header
         private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, "#view-offer-header .offer-status");
         private readonly ElementLocator title = new ElementLocator(Locator.CssSelector, "#view-offer-header .offer-title");
+        private readonly ElementLocator editOffer = new ElementLocator(Locator.CssSelector, "#view-offer-header [ng-click *= 'goToEdit']");
         // Details
         private readonly ElementLocator details = new ElementLocator(Locator.CssSelector, "#section-basic-information .ng-binding");
         // Activity
@@ -44,6 +45,11 @@
 
         public string RequirementDetails => this.Driver.GetElement(this.requirementDetails).Text;
 
+        public ViewOfferPage OpenViewOfferPageWithId(string id)
+        {
+            new CommonPage(this.DriverContext).NavigateToPageWithId("view offer", id);
+            return this;
+        }
 
         public ViewOfferPage WaitForSidePanelToShow()
         {
@@ -63,19 +69,19 @@
 
         public ViewOfferPage OpenActivityPreview()
         {
-            this.Driver.GetElement(this.activity).Click();
+            this.Driver.Click(this.activity);
             return this;
         }
 
         public ViewOfferPage OpenRequirementActions()
         {
-            this.Driver.GetElement(this.requirementActions).Click();
+            this.Driver.Click(this.requirementActions);
             return this;
         }
 
         public ViewOfferPage OpenRequirement()
         {
-            this.Driver.GetElement(this.openRequirement).Click();
+            this.Driver.Click(this.openRequirement);
             return this;
         }
     }

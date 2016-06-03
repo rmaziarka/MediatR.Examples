@@ -63,14 +63,14 @@
 
         public CreateOfferPage SaveOffer()
         {
-            this.Driver.GetElement(this.saveOffer).Click();
+            this.Driver.Click(this.saveOffer);
             this.Driver.WaitForAngularToFinish();
             return this;
         }
 
         public CreateOfferPage ClickViewLink()
         {
-            this.Driver.GetElement(this.viewLink).Click();
+            this.Driver.Click(this.viewLink);
             return this;
         }
     }
