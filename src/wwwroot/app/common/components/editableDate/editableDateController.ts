@@ -11,13 +11,9 @@ module Antares.Common.Component {
         public isDatePickerOpen: boolean = false;
         public date: Date;
 
-        private activityUserResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityUserResource>;
-
-        constructor(private dataAccessService: Services.DataAccessService) {
+        constructor() {
             this.inEditMode = false;
             this.date = this.selectedDate;
-
-            this.activityUserResource = dataAccessService.getActivityUserResource();
         }
 
         public openEditMode = () => {
@@ -36,6 +32,10 @@ module Antares.Common.Component {
 
         public openDatePicker = () => {
             this.isDatePickerOpen = true;
+        }
+
+        public isBeforeToday = () => {
+            return moment(this.date).isBefore(new Date(), 'day');
         }
     }
 

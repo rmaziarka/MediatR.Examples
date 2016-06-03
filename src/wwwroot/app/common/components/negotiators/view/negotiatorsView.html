@@ -2,9 +2,7 @@
 <h4 translate="NEGOTIATORS.{{nvvm.labelTranslationKey}}.LEAD"></h4>
 <card id="card-lead-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'" item="nvvm.leadNegotiator">
 </card>
-<div class="negotiators-call-date form-group">
-    <editable-date selected-date="nvvm.leadNegotiator.callDate" on-save="nvvm.updateNegotiatorCallDate(nvvm.leadNegotiator)"></editable-date>
-</div>
+<editable-date selected-date="nvvm.leadNegotiator.callDate" on-save="nvvm.updateNegotiatorCallDate(nvvm.leadNegotiator)"></editable-date>
 
 <card-list id="card-list-negotiators">
     <card-list-header>
@@ -16,6 +14,7 @@
     <card-list-item ng-repeat="negotiator in nvvm.secondaryNegotiators | orderBy: ['user.firstName', 'user.lastName']">
         <card item="negotiator" id="card-secondary-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'">
         </card>
+        <editable-date selected-date="negotiator.callDate" on-save="nvvm.updateNegotiatorCallDate(negotiator)"></editable-date>
     </card-list-item>
 </card-list>
 
