@@ -19,7 +19,11 @@ function Get-TargetResource
     [parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
     [System.String]
-    $ServiceName
+    $ServiceName,
+    [parameter(Mandatory = $true)]
+    [ValidateNotNullOrEmpty()]
+    [System.String]
+    $ServiceDisplayName
   )
 
   Write-Verbose "Start Get-TargetResource"
@@ -31,6 +35,7 @@ function Get-TargetResource
     ExeOrBatName = $ExeOrBatName
     NssmFolder = $NssmFolder
     ServiceName = $ServiceName
+    ServiceDisplayName = $ServiceDisplayName
   }
 
   return $Configuration
@@ -56,7 +61,11 @@ function Set-TargetResource
     [parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
     [System.String]
-    $ServiceName
+    $ServiceName,
+    [parameter(Mandatory = $false)]
+    [ValidateNotNullOrEmpty()]
+    [System.String]
+    $ServiceDisplayName
   )
 
   Write-Verbose "Start Set-TargetResource"
@@ -118,7 +127,7 @@ function Set-TargetResource
     $serviceObject.Start()
   }
 
-  $serviceObject | Set-Service -StartupType Automatic
+  $serviceObject | Set-Service -StartupType Automatic -DisplayName $ServiceDisplayName
 }
 
 function Test-TargetResource
@@ -142,7 +151,11 @@ function Test-TargetResource
     [parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
     [System.String]
-    $ServiceName
+    $ServiceName,
+    [parameter(Mandatory = $true)]
+    [ValidateNotNullOrEmpty()]
+    [System.String]
+    $ServiceDisplayName
   )
 
   Write-Verbose "Start Test-TargetResource"

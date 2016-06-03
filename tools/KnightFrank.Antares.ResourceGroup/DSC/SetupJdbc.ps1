@@ -128,6 +128,7 @@ Configuration SetupJdbc
             ExeOrBatName = "execute.bat"
             NssmFolder = $nssmFolder
             ServiceName = "jdbc-$jdbcVersion-$BranchName"
+            ServiceDisplayName = "JDBC importer for Elasticsearch ($BranchName)"
             DependsOn = @('[Script]ConfigureJdbc')
         }
 	}
