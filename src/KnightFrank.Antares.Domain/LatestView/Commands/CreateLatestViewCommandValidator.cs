@@ -6,8 +6,9 @@
     {
         public CreateLatestViewCommandValidator()
         {
-            this.RuleFor(x => x.EntityType).NotEmpty();
             this.RuleFor(x => x.EntityId).NotEmpty();
+            this.RuleFor(x => x.EntityType)
+                .IsInEnum();
         }
     }
 }

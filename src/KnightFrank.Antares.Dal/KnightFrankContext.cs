@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Dal.Model.Configuration;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.LatestView;
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
@@ -83,6 +84,7 @@
         public DbSet<Viewing> Viewing { get; set; }
         public DbSet<Offer> Offer { get; set; }
         public DbSet<PropertyAreaBreakdown> PropertyAreaBreakdown { get; set; }
+        public DbSet<LatestView> LatestView { get; set; }
 
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {
