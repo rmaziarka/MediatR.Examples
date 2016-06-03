@@ -2,7 +2,7 @@
 <h4 translate="NEGOTIATORS.{{nvvm.labelTranslationKey}}.LEAD"></h4>
 <card id="card-lead-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'" item="nvvm.leadNegotiator">
 </card>
-<editable-date selected-date="nvvm.leadNegotiator.callDate" on-save="nvvm.updateNegotiatorCallDate(nvvm.leadNegotiator)"></editable-date>
+<editable-date selected-date="nvvm.leadNegotiator.callDate" is-required="true" on-save="nvvm.updateNegotiatorCallDate(nvvm.leadNegotiator)"></editable-date>
 
 <card-list id="card-list-negotiators">
     <card-list-header>

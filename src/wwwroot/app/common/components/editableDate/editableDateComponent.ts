@@ -7,6 +7,7 @@ module Antares.Common.Component {
         controller: 'EditableDateController',
         bindings: {
             selectedDate: '=',
+            isRequired: '<',
             onSave: '&'
         }
     });

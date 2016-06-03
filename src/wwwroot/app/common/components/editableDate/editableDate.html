@@ -9,12 +9,12 @@
             <div class="negotiators-call-date form-inline form-group" ng-class="{'has-error': (editDateForm.$submitted || editDateForm.date.$dirty) && editDateForm.date.$invalid}">
                 <div class="row">
                     <div class="col-md-12 col-lg-2">
-                        <label class="required" for="next-call"><span translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:</label>
+                        <label ng-class="{'required' : vm.isRequired}" for="next-call"><span translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:</label>
                     </div>
                     <div class="col-md-12 col-lg-10">
                         <div class="input-group">
                             <input id="next-call-1" type="text" class="form-control" placeholder="dd-mm-yyyy" uib-datepicker-popup="dd-MM-yyyy" name="date" 
-                                   is-open="vm.isDatePickerOpen" close-text="Close" ng-model="vm.date" ng-required="false" date-greater-than="{{vm.today}}">
+                                   is-open="vm.isDatePickerOpen" close-text="Close" ng-model="vm.date" ng-required="vm.isRequired" date-greater-than="{{vm.today}}">
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="vm.openDatePicker()"><i class="fa fa-calendar"></i></button>
                             </span>
