@@ -26,6 +26,9 @@ declare module Antares.Common.Models {
         interface IActivityResource extends ng.resource.IResource<Dto.IActivity> {
         }
 
+        interface IActivityUserResource extends ng.resource.IResource<Dto.IActivityUser> {
+        }
+
         interface ICompanyResource extends ng.resource.IResource<Dto.ICompany> {
         }
 
@@ -86,11 +89,15 @@ declare module Antares.Common.Models {
         interface IBaseResourceClass<T> extends ng.resource.IResourceClass<T> {
             get(): T;
             get(params: IBaseResourceParameters): T;
-            update(obj:any): T;
+            update(obj: any): T;
+            update(params: Object, data: Object): T;
         }
 
         interface IActivityResourceClass extends Resources.IBaseResourceClass<Resources.IActivityResource> {
             getActivityTypes(params: any, ownership: any): ng.resource.IResource<Dto.IActivityType>;
+        }
+
+        interface IActivityUserResourceClass extends Resources.IBaseResourceClass<Resources.IActivityUserResource> {
         }
 
         interface IPropertyResourceClass extends Resources.IBaseResourceClass<Resources.IPropertyResource> {
@@ -123,7 +130,7 @@ declare module Antares.Common.Models {
         interface IAddressFormResourceParameters {
             entityTypeCode?: string;
             countryCode?: string;
-            id?:string;
+            id?: string;
         }
         interface IAddressFormResourceClass extends ng.resource.IResourceClass<IAddressFormResource> {
             get(): IAddressFormResource;
@@ -147,7 +154,7 @@ declare module Antares.Common.Models {
         interface ICreatePropertyAreaBreakdownResourceClassData {
             areas: Dto.ICreatePropertyAreaBreakdownResource[];
         }
-        interface IPropertyAreaBreakdownResourceClass extends ng.resource.IResourceClass<IPropertyAreaBreakdownResource> {            
+        interface IPropertyAreaBreakdownResourceClass extends ng.resource.IResourceClass<IPropertyAreaBreakdownResource> {
             createPropertyAreaBreakdowns(params: IPropertyAreaBreakdownResourceClassParameters, data: ICreatePropertyAreaBreakdownResourceClassData): ng.resource.IResource<Dto.IPropertyAreaBreakdown[]>;
             updatePropertyAreaBreakdown(params: IPropertyAreaBreakdownResourceClassParameters, data: Dto.IUpdatePropertyAreaBreakdownResource): ng.resource.IResource<Dto.IPropertyAreaBreakdown>;
             updatePropertyAreaBreakdownOrder(params: IPropertyAreaBreakdownResourceClassParameters, data: Dto.IUpdatePropertyAreaBreakdownOrderResource): ng.resource.IResource<Dto.IPropertyAreaBreakdown[]>;

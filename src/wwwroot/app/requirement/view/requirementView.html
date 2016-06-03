@@ -103,7 +103,7 @@
                 <activity-card activity="vm.selectedOffer.activity" />
             </offer-preview-custom-item>
         </offer-preview>
-        <offer-edit component-id="vm.componentIds.offerEditPreviewId" ng-show="!vm.offerPreviewPanelVisible" mode="edit"></offer-edit>
+        <offer-details-edit component-id="vm.componentIds.offerEditPreviewId" ng-show="!vm.offerPreviewPanelVisible" mode="edit"></offer-details-edit>
         <busy is-busy="vm.addEditOfferBusy" label="{{'OFFER.ADD.SAVING_OFFER_IN_PROGRESS' | translate}}"></busy>
     </side-panel-content>
     <side-panel-footer>
@@ -124,7 +124,7 @@
         <h3 translate="REQUIREMENT.VIEW.OFFERDETAILS"></h3>
     </side-panel-header>
     <side-panel-content>
-        <offer-edit component-id="vm.componentIds.offerEditId" mode="edit"></offer-edit>
+        <offer-details-edit component-id="vm.componentIds.offerEditId" mode="edit"></offer-details-edit>
         <busy is-busy="vm.addEditOfferBusy" label="{{'OFFER.ADD.SAVING_OFFER_IN_PROGRESS' | translate}}"></busy>
     </side-panel-content>
     <side-panel-footer>

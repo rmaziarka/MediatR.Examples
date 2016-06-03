@@ -13,7 +13,7 @@ module Antares.Component {
         }
     });
 
-    angular.module('app').component('offerEdit', {
+    angular.module('app').component('offerDetailsEdit', {
         controller: 'offerAddEditController',
         controllerAs : 'vm',
         templateUrl: 'app/offer/addEdit/offerEdit.html',

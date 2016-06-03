@@ -40,7 +40,7 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_IdIsEmpty_When_Validating_Then_IsInvalid(
+        public void Given_UserIdIsEmpty_When_Validating_Then_IsInvalid(
             DateTime? callDate,
             UpdateActivityUserCommandValidator validator,
             IFixture fixture)

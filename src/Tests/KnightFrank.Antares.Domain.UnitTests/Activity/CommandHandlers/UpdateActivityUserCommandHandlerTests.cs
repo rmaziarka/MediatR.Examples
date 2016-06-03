@@ -174,6 +174,7 @@
             return
                 fixture.Build<ActivityUser>()
                        .With(a => a.Id, activityUserId)
+                       //.With(a => a.UserId, activityUserId)
                        .With(a => a.ActivityId, activityId)
                        .With(a => a.UserType, userType)
                        .Create();

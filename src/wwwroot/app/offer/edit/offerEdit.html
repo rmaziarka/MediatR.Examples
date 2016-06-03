@@ -1,0 +1,105 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <h2 class="page-header" translate="OFFER.EDIT.EDIT_OFFER"></h2>
+    </div>
+    <form ng-submit="editActivityForm.$valid && aevm.save()" name="editActivityForm" method="post" novalidate>
+        <div class="col-md-4">
+            <section>
+                <h3 class="page-header" translate="OFFER.EDIT.VENDOR"></h3>
+            </section>
+            <section>
+                <h3 class="page-header" translate="OFFER.EDIT.APPLICANT"></h3>
+            </section>
+        </div>
+        <div class="col-md-4">
+            <section>
+                <h3 class="page-header" translate="OFFER.EDIT.BASIC_INFORMATION"></h3>
+                <div class="form-group has-error">
+                    <label for="status" class="required" translate="OFFER.EDIT.STATUS"></label>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <select name="" id="status" class="form-control">
+                                <option>- select -</option>
+                            </select>
+                        </div>
+                    </div>
+                    <p class="help-block">Field is required</p>
+                </div>
+                <div class="form-group has-error">
+                    <label for="offer-price" class="required" translate="OFFER.EDIT.OFFER"></label>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input id="offer-price" class="form-control">
+                                <div class="input-group-addon">GBP</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="help-block">Field is required</p>
+                </div>
+                <div class="form-group has-error">
+                    <label class="required" for="offer-date" translate="OFFER.EDIT.OFFER_DATE"></label>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <input type="text" id="offer-date" class="form-control" placeholder="dd-mm-yyyy">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="help-block">Field is required</p>
+                </div>
+                <div class="form-group has-error">
+                    <label for="special-conditions" translate="OFFER.EDIT.SPECIAL_CONDITIONS"></label>
+                    <span class="pull-right character-limit">0/4000</span>
+                    <textarea id="special-conditions" class="form-control" rows="6"></textarea>
+                    <p class="help-block">Validation message</p>
+                </div>
+                <div class="form-group">
+                    <label for="proposed-exchange-date" translate="OFFER.EDIT.EXCHANGE_DATE"></label>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <input type="text" id="proposed-exchange-date" class="form-control" placeholder="dd-mm-yyyy">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="proposed-completion-date" translate="OFFER.EDIT.COMPLETION_DATE"></label>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <input type="text" id="proposed-completion-date" class="form-control" placeholder="dd-mm-yyyy">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h5 translate="OFFER.EDIT.NEGOTIATOR"></h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-item">John Smith</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <div>
+                    <button id="activity-edit-cancel" type="button" class="btn btn-default" ng-click="aevm.cancel()"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
+                    <button id="activity-edit-save" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -3,7 +3,7 @@
 <card id="card-lead-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'" item="nvvm.leadNegotiator">
 </card>
 <div class="negotiators-call-date form-group">
-    <editable-date selected-date="nvvm.leadNegotiator.callDate"></editable-date>
+    <editable-date selected-date="nvvm.leadNegotiator.callDate" on-save="nvvm.updateNegotiatorCallDate(nvvm.leadNegotiator)"></editable-date>
 </div>
 
 <card-list id="card-list-negotiators">

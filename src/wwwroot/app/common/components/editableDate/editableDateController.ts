@@ -4,15 +4,20 @@ module Antares.Common.Component {
     export class EditableDateController {
         // component binding
         public selectedDate: Date;
+        public onSave: () => (date: Date) => void;
 
         // component data
         public inEditMode: boolean;
         public isDatePickerOpen: boolean = false;
         public date: Date;
 
-        constructor() {
+        private activityUserResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityUserResource>;
+
+        constructor(private dataAccessService: Services.DataAccessService) {
             this.inEditMode = false;
             this.date = this.selectedDate;
+
+            this.activityUserResource = dataAccessService.getActivityUserResource();
         }
 
         public openEditMode = () => {
@@ -20,9 +25,8 @@ module Antares.Common.Component {
         }
 
         public save = () => {
-            // TODO: save data
             this.inEditMode = false;
-            this.selectedDate = this.date;
+            this.onSave()(this.date);
         }
 
         public cancel = () => {
