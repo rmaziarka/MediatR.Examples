@@ -88,7 +88,7 @@
         {
             // Arrange
             UpdateActivityUserCommand command =
-                fixture.Build<UpdateActivityUserCommand>().With(c => c.CallDate, DateTime.Now.AddDays(-1)).Create();
+                fixture.Build<UpdateActivityUserCommand>().With(c => c.CallDate, DateTime.UtcNow.Date.AddDays(-1)).Create();
 
             // Act
             ValidationResult validationResult = validator.Validate(command);
@@ -96,7 +96,7 @@
             // Assert
             validationResult.IsValid.Should().BeFalse();
             validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(command.CallDate));
-            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == nameof(Messages.greaterthan_error));
+            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == nameof(Messages.greaterthanorequal_error));
         }
     }
 }
