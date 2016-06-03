@@ -6,7 +6,7 @@ module Antares.Company {
         controllerAs: 'vm',
         controller: 'CompanyViewController',
         bindings: {
-            company: '='
+            company: '<'
         }
     });
 }
