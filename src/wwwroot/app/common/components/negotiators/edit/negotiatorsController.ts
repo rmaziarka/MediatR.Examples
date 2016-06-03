@@ -23,6 +23,7 @@ module Antares.Common.Component {
         private usersSearchMaxCount: number = 100;
 
         constructor(
+            private $scope: ng.IScope,
             private dataAccessService: Services.DataAccessService,
             private enumService: Services.EnumService) {
 
@@ -68,7 +69,12 @@ module Antares.Common.Component {
             this.isSecondaryNegotiatorsInEditMode = false;
         }
 
-        public switchToLeadNegotiator = (activityUser: Business.ActivityUser) =>{
+        public switchToLeadNegotiator = (activityUser: Business.ActivityUser) => {
+            var field = this.$scope['negotiatorForm']['callDate'];
+            if (field.$invalid && field.$dirty) {
+                this.leadNegotiator.callDate = null;
+            }
+
             _.remove(this.secondaryNegotiators, (itm) => itm.userId === activityUser.userId);
             this.secondaryNegotiators.push(this.leadNegotiator);
 
