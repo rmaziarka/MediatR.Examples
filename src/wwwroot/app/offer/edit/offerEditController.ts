@@ -4,7 +4,7 @@ module Antares.Offer {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
 
-    export class OfferEditController {
+    export class OfferEditController extends Core.WithPanelsBaseController {
         public offer: Business.Offer;
 
         selectedStatus: any;
@@ -16,12 +16,28 @@ module Antares.Offer {
         completionDateOpen: boolean = false;
 
         constructor(
+            componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
             private enumService: Services.EnumService,
             private $state: ng.ui.IStateService,
+            private $window: ng.IWindowService,
             private $q: ng.IQService,
+            private $scope: ng.IScope,
             private kfMessageService: Services.KfMessageService) {
+            super(componentRegistry, $scope);
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
+        }
+
+        navigateToActivity = (ativity: Business.Activity) => {
+            this.$window.open(this.$state.href('app.activity-view', { id: ativity.id }, { absolute: true }), '_blank');
+        }
+
+        navigateToRequirement = (requirement: Business.Requirement) => {
+            this.$window.open(this.$state.href('app.requirement-view', { id: requirement.id }, { absolute: true }), '_blank');
+        }
+
+        showActivityPreview = (offer: Common.Models.Business.Offer) => {
+            this.showPanel(this.components.activityPreview);
         }
 
         openOfferDate() {
@@ -47,7 +63,7 @@ module Antares.Offer {
             this.selectedStatus = _.find(this.statuses, (status: any) => status.id === this.offer.statusId);
         }
 
-        save(){
+        save() {
             if (!this.isDataValid()) {
                 return this.$q.reject();
             }
@@ -69,6 +85,18 @@ module Antares.Offer {
 
         cancel() {
             this.$state.go('app.offer-view', { id: this.offer.id });
+        }
+
+        defineComponentIds() {
+            this.componentIds = {
+                activityPreviewSidePanelId: 'editOffer:activityPreviewSidePanelComponent'
+            };
+        }
+
+        defineComponents() {
+            this.components = {
+                activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId); }
+            };
         }
     }
 
