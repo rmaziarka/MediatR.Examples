@@ -10,7 +10,7 @@
         {
             this.RuleFor(x => x.Id).NotEmpty();
             this.RuleFor(x => x.ActivityId).NotEmpty();
-            this.RuleFor(x => x.CallDate).GreaterThan(DateTime.Now).When(x => x.CallDate.HasValue);
+            this.RuleFor(x => x.CallDate).GreaterThanOrEqualTo(DateTime.UtcNow.Date).When(x => x.CallDate.HasValue);
         }
     }
 }
