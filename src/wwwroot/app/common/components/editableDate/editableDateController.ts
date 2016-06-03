@@ -11,6 +11,8 @@ module Antares.Common.Component {
         public isDatePickerOpen: boolean = false;
         public date: Date;
 
+        public today: Date = new Date();
+
         constructor() {
             this.inEditMode = false;
             this.date = this.selectedDate;
@@ -35,7 +37,7 @@ module Antares.Common.Component {
         }
 
         public isBeforeToday = () => {
-            return moment(this.date).isBefore(new Date(), 'day');
+            return moment(this.date).isBefore(this.today, 'day');
         }
     }
 
