@@ -26,10 +26,7 @@ module Antares.Property {
 
                     $scope['property'] = propertyViewModel;
 
-                    latestViewsProvider.addView({
-                        entityId: propertyViewModel.id,
-                        entityType: EntityType.Property
-                    });
+                    saveRecentViewdProperty(propertyViewModel.id, latestViewsProvider);
                 },
                 resolve: {
                     property: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Antares.Services.DataAccessService) => {
@@ -47,10 +44,7 @@ module Antares.Property {
 
                     $scope['property'] = propertyViewModel;
 
-                    latestViewsProvider.addView({
-                        entityId: propertyViewModel.id,
-                        entityType: EntityType.Property
-                    });
+                    saveRecentViewdProperty(propertyViewModel.id, latestViewsProvider);
                 },
                 resolve: {
                     property: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Antares.Services.DataAccessService) => {
@@ -59,5 +53,12 @@ module Antares.Property {
                     }
                 }
             });
+
+        function saveRecentViewdProperty(propertyId: string, latestViewsProvider: LatestViewsProvider){
+            latestViewsProvider.addView({
+                entityId: propertyId,
+                entityType: EntityType.Property
+            });
+        }
     }
 }
