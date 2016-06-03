@@ -36,6 +36,8 @@
 
         public virtual ICollection<ActivityUser> ActivityUsers { get; set; } = new List<ActivityUser>();
 
+        public virtual ICollection<ActivityDepartment> ActivityDepartments { get; set; } = new List<ActivityDepartment>();
+
         public virtual ICollection<Offer> Offers { get; set; } = new List<Offer>();
     }
 }
