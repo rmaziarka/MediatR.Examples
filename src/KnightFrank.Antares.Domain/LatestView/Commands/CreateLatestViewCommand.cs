@@ -2,7 +2,7 @@
 {
     using System;
 
-    using KnightFrank.Antares.Dal.Model.Common;
+    using Dal.Model.Common;
 
     using MediatR;
 
