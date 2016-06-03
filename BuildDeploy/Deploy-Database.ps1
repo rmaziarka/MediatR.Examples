@@ -6,7 +6,19 @@ function Deploy-Database {
 
         [Parameter(Mandatory=$false)]
         [switch]
-        $DropExistingDatabase
+        $DropExistingDatabase,
+
+        [Parameter(Mandatory=$true)]
+        [string] 
+        $DatabaseName,
+
+        [parameter(Mandatory=$true)]
+        [string]
+        $SqlUser,
+
+        [parameter(Mandatory=$true)]
+        [string]
+        $SqlPassword
     )	
 
 	$packageName = 'KnightFrank.Antares.Dal'
@@ -26,12 +38,9 @@ function Deploy-Database {
 		EntityFrameworkDir = Join-Path -Path $ProjectRootPath -ChildPath '\src\packages\EntityFramework.6.1.3' 
 		BuildConfiguration = $buildConfiguration
 	}
-	
-	$DatabaseName = 'KnightFrank.Antares'
-    $IntegrationTestsDatabaseName = 'KnightFrank.Antares.Api.IntegrationTests'
-    $Username = "antares"
-    $Password = "ant@res!1"	
-	$ConnectionString = "Server=localhost;Database=$DatabaseName;User Id=$Username;Password=$Password"
+		
+    $IntegrationTestsDatabaseName = 'KnightFrank.Antares.Api.IntegrationTests'    
+	$ConnectionString = "Server=localhost;Database=$DatabaseName;User Id=$SqlUser;Password=$SqlPassword"
 	$IntegrationTestsConnectionString = "Server=localhost;Database=$IntegrationTestsDatabaseName;Integrated Security=True;"
 	$MigrateAssembly = 'KnightFrank.Antares.Dal.dll'
 	
@@ -42,13 +51,13 @@ function Deploy-Database {
         Push-Location
 
 		Invoke-SqlQuery -InputFile 'sql/Update-SqlLogin.sql'`
-			    -SqlVariable "Username = $Username","Password = $Password"
+			    -SqlVariable "Username = $SqlUser","Password = $SqlPassword"
 
         Invoke-SqlQuery -InputFile 'sql/Update-SqlLoginRole.sql'`
-			    -SqlVariable "Username = $Username","Role = dbcreator"
+			    -SqlVariable "Username = $SqlUser","Role = dbcreator"
 
         Invoke-SqlQuery -InputFile 'sql/Update-SqlLoginRole.sql'`
-			    -SqlVariable "Username = $Username","Role = bulkadmin"
+			    -SqlVariable "Username = $SqlUser","Role = bulkadmin"
 		
         Pop-Location
 

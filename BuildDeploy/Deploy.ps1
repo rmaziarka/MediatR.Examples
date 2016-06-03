@@ -21,9 +21,21 @@ try {
     . ".\Deploy-SSDTDacpac.ps1"
     . ".\Drop-Database.ps1"
     . ".\Configure-Jdbc.ps1"
+    . ".\Set-NssmService"
+    . ".\Start-ExternalProcess"
 
-    Deploy-Database -ProjectRootPath $ProjectRootPath -DropExistingDatabase:$DropExistingDatabase
-    Configure-Jdbc -PathToSettingsTemplate ".\Templates\settings.json" -PathToNssm "C:\Program Files\nssm\nssm-2.24" -PathToJdbc "C:\jdbc\elasticsearch-jdbc-2.3.2.0"
+    $sqlDatabaseName = "KnightFrank.Antares"
+    $sqlUser = "antares"
+    $sqlPassword = "ant@res!1"	
+
+    Deploy-Database -ProjectRootPath $ProjectRootPath -DropExistingDatabase:$DropExistingDatabase -DatabaseName $sqlDatabaseName -SqlUser $sqlUser -SqlPassword $sqlPassword
+    Configure-Jdbc -PathToSettingsTemplate "$ProjectRootPath\tools\KnightFrank.Antares.ResourceGroup\Templates\settings.json"`
+                -PathToNssm "C:\nssm\nssm-2.24"`
+                -PathToJdbc "C:\jdbc\elasticsearch-jdbc-2.3.2.0"`
+                -SqlDatabaseName $sqlDatabaseName `
+                -Schedule "0 0/1 * 1/1 * ? *"`
+                -SqlUser $sqlUser `
+                -SqlPassword $sqlPassword
     
 } finally {
     Pop-Location

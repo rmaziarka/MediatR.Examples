@@ -10,8 +10,6 @@
       }
     ],
     "index": "",
-    "elasticsearch.host": "",
-    "elasticsearch.port": "",
     "detect_json": "true",
     "schedule": ""
   }
