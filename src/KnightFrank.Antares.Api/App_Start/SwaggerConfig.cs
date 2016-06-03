@@ -25,7 +25,7 @@ namespace KnightFrank.Antares.API
                         // By default, the service root url is inferred from the request used to access the docs.
                         // However, there may be situations (e.g. proxy and load-balanced environments) where this does not
                         // resolve correctly. You can workaround this by providing your own code to determine the root URL.
-                        // c.RootUrl(req => GetRootUrlFromAppConfig());
+                        c.RootUrl(req => config["Swagger.Root.Url"]);
 
                         // If schemes are not explicitly provided in a Swagger 2.0 document, then the scheme used to access
                         // the docs is taken as the default. If your API supports multiple schemes and you want to be explicit
@@ -192,7 +192,7 @@ namespace KnightFrank.Antares.API
                                 // c.EnableOAuth2Support("test-client-id", "test-realm", "Swagger UI");
                             });
         }
-
+        
         private static string GetXmlCommentsPath()
         {
             if (string.IsNullOrEmpty(config["ApiDocumentationPath"]))
