@@ -53,7 +53,7 @@ module Antares.Activity {
             this.vendors = vendors || [];
         }
 
-        saveActivity = (propertyId: string): ng.IPromise<void> => {
+        saveActivity = (propertyId: string): ng.IPromise<Dto.IActivity> => {
             if (!this.isDataValid()) {
                 return this.$q.reject();
             }
@@ -64,11 +64,14 @@ module Antares.Activity {
             activity.activityTypeId = this.selectedActivityType.id;
             activity.contacts = this.vendors;
 
-            return this.activityResource.save(new Business.CreateActivityResource(activity)).$promise.then((result: Dto.IActivity) => {
-                var addedActivity = new Business.Activity(result);
+            var promise = this.activityResource.save(new Business.CreateActivityResource(activity)).$promise;
 
+            promise.then((result: Dto.IActivity) => {
+                var addedActivity = new Business.Activity(result);
                 this.activities.push(addedActivity);
             });
+
+            return promise;
         }
 
         isDataValid = (): boolean => {

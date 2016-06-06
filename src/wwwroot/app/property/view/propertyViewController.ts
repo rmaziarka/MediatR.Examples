@@ -135,8 +135,13 @@ module Antares.Property.View {
         saveActivity() {
             this.savePropertyActivityBusy = true;
 
-            this.components.activityAdd().saveActivity(this.property.id).then(() => {
+            this.components.activityAdd().saveActivity(this.property.id).then((result: Dto.IActivity) => {
                 this.cancelAddActivity();
+
+                this.latestViewsProvider.addView({
+                    entityId: result.id,
+                    entityType: EntityType.Activity
+                });
             }).finally(() => {
                 this.savePropertyActivityBusy = false;
             });

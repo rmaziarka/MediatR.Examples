@@ -3,6 +3,8 @@
 module Antares.Offer {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
+    import LatestViewsProvider = Providers.LatestViewsProvider;
+    import EntityType = Common.Models.Enums.EntityTypeEnum;
 
     export class OfferEditController extends Core.WithPanelsBaseController {
         public offer: Business.Offer;
@@ -23,7 +25,8 @@ module Antares.Offer {
             private $window: ng.IWindowService,
             private $q: ng.IQService,
             private $scope: ng.IScope,
-            private kfMessageService: Services.KfMessageService) {
+            private kfMessageService: Services.KfMessageService,
+            private latestViewsProvider: LatestViewsProvider) {
             super(componentRegistry, $scope);
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
         }
@@ -38,6 +41,11 @@ module Antares.Offer {
 
         showActivityPreview = (offer: Common.Models.Business.Offer) => {
             this.showPanel(this.components.activityPreview);
+
+            this.latestViewsProvider.addView({
+                entityId: offer.activity.id,
+                entityType: EntityType.Activity
+            });
         }
 
         openOfferDate() {
