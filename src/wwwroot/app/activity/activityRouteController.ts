@@ -9,7 +9,7 @@ module Antares.Activity {
     export class ActivityRouteController {
 
         constructor(private $scope: ng.IScope, private activity: Dto.IActivity, private latestViewsProvider: LatestViewsProvider){
-            var activityViewModel = new Business.Activity(<Dto.IActivity>activity);
+            var activityViewModel = new Business.Activity(activity);
 
             $scope['activity'] = activityViewModel;
             latestViewsProvider.addView({
