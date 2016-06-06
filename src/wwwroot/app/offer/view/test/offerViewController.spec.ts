@@ -7,7 +7,8 @@ module Antares {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
             controller: OfferViewController,
-            state: ng.ui.IStateService;
+            state: ng.ui.IStateService,
+            $http: ng.IHttpBackendService;
 
         var pageObjectSelectors = {
             vendorSection: '#section-vendor',
@@ -22,8 +23,10 @@ module Antares {
 
         beforeEach(inject(($rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService,
-            $state: ng.ui.IStateService) => {
+            $state: ng.ui.IStateService,
+            $httpBackend: ng.IHttpBackendService) => {
 
+            $http = $httpBackend;
             state = $state;
             scope = $rootScope.$new();
             element = $compile('<offer-view offer="offer"></offer-view>')(scope);
@@ -95,7 +98,7 @@ module Antares {
 
                 expect(currentNegotiatorFullName).toEqual(expectedNegotiatorFullNameText);
             });
-        });
+        });        
 
         describe('when details button is clicked', () => {
             it('on context menu within vendor card then redirect to activity is performed', () => {
@@ -112,6 +115,8 @@ module Antares {
                 expect(state.go).toHaveBeenCalledWith('app.activity-view', { id: activityMock.id });
             });
 
+            
+
             it('on context menu within applicant card then redirect to requiremen is performed', () => {
                 var requirementMock = TestHelpers.RequirementGenerator.generate();
 
@@ -127,5 +132,21 @@ module Antares {
             });
         });
 
+        describe('when activity details is clicked', () => {
+            it('then activity should be added to property activity list', () => {
+                $http.expectPOST(/\/api\/latestviews/, () => {
+                    return true;
+                }).respond(200, []);
+
+                var activityMock = TestHelpers.ActivityGenerator.generate();
+                var offerMock = TestHelpers.OfferGenerator.generate();
+                offerMock.activity = activityMock;
+                scope.$apply();
+
+                controller.showActivityPreview(offerMock);
+
+                expect($http.flush).not.toThrow();
+            });
+        });
     });
 }

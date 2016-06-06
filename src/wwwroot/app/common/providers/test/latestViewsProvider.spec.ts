@@ -164,7 +164,7 @@ module Antares {
                 expect(listProperty.url).toBe(expectedUrl);
             });
 
-            it('if property address is empty then entry should has dash as title', () => {
+            it('if property address is empty then entry should have dash as title', () => {
                 //arrange
                 var propertyViews = LatestViewGenerator.generatePropertyList(1);
                 var propertyView = propertyViews.list[0];
@@ -179,6 +179,81 @@ module Antares {
                 //assert
                 var listProperty = provider.properties[0];
                 expect(listProperty.name).toBe('-');
+            });
+        });
+
+        describe('when loadActivities is called with latest views', () => {
+
+            beforeEach(inject(($state: angular.ui.IState) => {
+                // arrange 
+                spyOn($state, 'href')
+                    .and.callFake((state: string, obj: any) => {
+                        return state + obj.id;
+                    });
+            }));
+
+            it('if there is no activity views then activities field is undefined', () => {
+                //arrange
+                var views: LatestViewResultItem[] = [];
+
+                //act
+                provider.loadActivities(views);
+
+                //assert
+                expect(provider.activities).toBeUndefined();
+            });
+
+            it('if there are three activity views then activities field should contains three entries', () => {
+                //arrange
+                var activityViews = LatestViewGenerator.generateActivityList(3);
+                var views = [
+                    activityViews
+                ];
+
+                //act
+                provider.loadActivities(views);
+
+                //assert
+                expect(provider.activities.length).toBe(3);
+            });
+
+            it('if activity address is fulfiled then entry should contain all data', () => {
+                //arrange
+                var activityViews = LatestViewGenerator.generateActivityList(1);
+                var views = [
+                    activityViews
+                ];
+
+                //act
+                provider.loadActivities(views);
+
+                //assert
+                var activityView = activityViews.list[0];
+                var expectedId = activityView.id;
+                var expectedAddressLine = new Address(activityView.data).getAddressText();
+                var expectedUrl = "app.activity-view" + expectedId;
+
+                var listActivity = provider.activities[0];
+                expect(listActivity.id).toBe(expectedId);
+                expect(listActivity.name).toBe(expectedAddressLine);
+                expect(listActivity.url).toBe(expectedUrl);
+            });
+
+            it('if activity address is empty then entry should have dash as title', () => {
+                //arrange
+                var activityViews = LatestViewGenerator.generateActivityList(1);
+                var activityView = activityViews.list[0];
+                activityView.data = new Address({});
+                var views = [
+                    activityViews
+                ];
+
+                //act
+                provider.loadActivities(views);
+
+                //assert
+                var listActivity = provider.activities[0];
+                expect(listActivity.name).toBe('-');
             });
         });
     });

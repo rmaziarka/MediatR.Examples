@@ -5,6 +5,27 @@ module Antares.TestHelpers {
     declare var moment: any;
 
     export class LatestViewGenerator {
+        public static generateActivityList(listLength: number): Dto.ILatestViewResultItem {
+            var item: Dto.ILatestViewResultItem = {
+                entityTypeCode: 'Activity',
+                list: LatestViewGenerator.generateManyActivityListItems(listLength)
+            };
+
+            return item;
+        }
+
+        public static generateActivityListItem(): Dto.ILatestViewData {
+            return {
+                id: LatestViewGenerator.makeRandom('id'),
+                createDate: moment().days(1),
+                data: Mock.AddressForm.FullAddress
+            }
+        }
+
+        public static generateManyActivityListItems(n: number): Dto.ILatestViewData[] {
+            return _.times(n, LatestViewGenerator.generateActivityListItem);
+        }
+
         public static generatePropertyList(listLength: number): Dto.ILatestViewResultItem {
             var item: Dto.ILatestViewResultItem = {
                 entityTypeCode: 'Property',
