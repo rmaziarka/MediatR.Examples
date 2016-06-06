@@ -139,12 +139,16 @@
                     </div>
                 </div>
 
-                <div class="section-details" ng-show="vm.mode == 'edit'" id="offer-edit-negotiator-section">
-                    <h5 translate="OFFER.ADD.NEGOTIATOR"></h5>
-                    <div class="panel panel-default">
-                        <div class="panel-body" id="offer-edit-negotiator-details">
-                            {{vm.offer.negotiator.getName()}}
-                        </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="section-details" id="offer-edit-negotiator-section">
+                            <h5 translate="OFFER.ADD.NEGOTIATOR"></h5>
+                            <div class="panel panel-default">
+                                <div class="panel-body" id="offer-edit-negotiator-details">
+                                    {{vm.offer.negotiator.getName()}}
+                                </div>
+                            </div>
+                        </div>                        
                     </div>
                 </div>
             </section>
