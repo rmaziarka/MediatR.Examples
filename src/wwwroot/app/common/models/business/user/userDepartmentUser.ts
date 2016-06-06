@@ -2,6 +2,6 @@
 
 module Antares.Common.Models.Business {
     export class DepartmentUser extends User implements Dto.IDepartmentUser {
-        department: string;
+        department: Department;
     }
 }

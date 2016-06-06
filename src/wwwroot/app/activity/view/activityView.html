@@ -32,7 +32,19 @@
                     </list>
                 </section>
                 <section>
-                    <negotiators-view property-division-id="{{avvm.activity.property.divisionId}}" lead-negotiator="avvm.activity.leadNegotiator" secondary-negotiators="avvm.activity.secondaryNegotiator"></negotiators-view>
+                    <negotiators-view property-division-id="{{avvm.activity.property.divisionId}}" lead-negotiator="avvm.activity.leadNegotiator"
+                        secondary-negotiators="avvm.activity.secondaryNegotiator"></negotiators-view>
+                </section>
+                <section>
+                    <card-list>
+                        <card-list-header>
+                            <h3 class="page-header" translate="DEPARTMENTS.COMMON.HEADER"></h3>
+                        </card-list-header>
+                        <card-list-item ng-repeat="activityDepartment in avvm.activity.activityDepartments">
+                            <card card-template-url="'app/activity/templates/departmentCard.html'" display-new-control="true" item="activityDepartment">
+                            </card>
+                        </card-list-item>
+                    </card-list>
                 </section>
             </div>
             <div class="col-md-4">
@@ -60,7 +72,9 @@
                         <card-list-item ng-repeat="group in avvm.activity.viewingsByDay | orderBy: '-day'">
                             <card-list-group class="viewing-group">
                                 <card-list-group-header>
-                                    <h5><time>{{::group.viewings[0].startDate | date : 'dd-MM-yyyy'}}</time></h5>
+                                    <h5>
+                                        <time>{{::group.viewings[0].startDate | date : 'dd-MM-yyyy'}}</time>
+                                    </h5>
                                 </card-list-group-header>
                                 <card-list-group-item ng-repeat="viewing in group.viewings | orderBy: '-startDate' track by viewing.id">
                                     <card class="viewing-item" card-template-url="'app/activity/view/activityViewingsCard.html'" item="viewing" show-item-details="avvm.showViewingPreview">
@@ -79,7 +93,8 @@
                             <p class="help-block" translate="ACTIVITY.VIEW.NO_ATTACHMENTS"></p>
                         </card-list-no-items>
                         <card-list-item ng-repeat="attachment in avvm.activity.attachments | orderBy: avvm.attachmentsCartListOrder.name : avvm.attachmentsCartListOrder.descending track by attachment.id ">
-                            <card id="attachment-card-{{attachment.id}}" card-template-url="'app/activity/templates/activityAttachmentCard.html'" item="attachment" show-item-details="avvm.showActivityAttachmentPreview">
+                            <card id="attachment-card-{{::attachment.id}}" card-template-url="'app/activity/templates/activityAttachmentCard.html'" item="attachment"
+                                show-item-details="avvm.showActivityAttachmentPreview">
                             </card>
                         </card-list-item>
                     </card-list>
@@ -89,8 +104,8 @@
                 <section>
                     <h3 class="page-header" translate="ACTIVITY.VIEW.OFFERS"></h3>
                     <card-list-item class="activity-view-offers" ng-repeat="offer in avvm.activity.offers | orderBy: '-createdDate' | enumSorter: 'OfferStatus':'statusId' track by offer.id + offer.statusId + offer.offerDate">
-                        <card card-template-url="'app/activity/view/activityOffersCard.html'"
-                              item="offer" show-item-details="avvm.showOfferPreview" display-new-control="true" show-context-menu="true">
+                        <card card-template-url="'app/activity/view/activityOffersCard.html'" item="offer" show-item-details="avvm.showOfferPreview"
+                            display-new-control="true" show-context-menu="true">
                             <card-context-menu>
                                 <context-menu-item type="details" item="offer" action="avvm.navigateToOfferView"></context-menu-item>
                             </card-context-menu>

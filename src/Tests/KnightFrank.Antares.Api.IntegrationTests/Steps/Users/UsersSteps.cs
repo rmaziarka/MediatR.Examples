@@ -104,7 +104,7 @@
             Assert.All(returnedUserList, user =>
             {
                 IEnumerable<User> matchingUsers = userList.Where(actual => actual.Id == user.Id
-                                                                           && actual.Department.Name == user.Department);
+                                                                           && actual.Department.Name == user.Department.Name);
                 Assert.True(matchingUsers.Count() == 1);
             });
         }
