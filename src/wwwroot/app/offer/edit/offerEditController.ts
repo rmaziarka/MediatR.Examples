@@ -68,6 +68,10 @@ module Antares.Offer {
 
         onEnumLoaded = (result: any) => {
             this.statuses = result[Dto.EnumTypeCode.OfferStatus];
+            this.setSelectedStatus();
+        }
+
+        setSelectedStatus = () => {
             this.selectedStatus = _.find(this.statuses, (status: any) => status.id === this.offer.statusId);
         }
 
