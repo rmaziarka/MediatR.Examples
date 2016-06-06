@@ -5,7 +5,7 @@ module Antares.Common.Component {
         // component binding
         public selectedDate: Date;
         public isRequired: boolean = false;
-        public onSave: () => (date: Date) => void;
+        public onSave: () => (date: Date) => ng.IPromise<any>;
 
         // component data
         public inEditMode: boolean;
@@ -24,8 +24,9 @@ module Antares.Common.Component {
         }
 
         public save = () => {
-            this.inEditMode = false;
-            this.onSave()(this.date);
+            this.onSave()(this.date).then(() => {
+                this.inEditMode = false;
+            });
         }
 
         public cancel = () => {
