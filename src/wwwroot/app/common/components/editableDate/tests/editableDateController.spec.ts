@@ -11,6 +11,7 @@ module Antares {
     describe('Given editable date controller', () => {
         var $scope: ng.IScope,
             $http: ng.IHttpBackendService,
+            $q: ng.IQService,
             controller: EditableDateController;
 
         var datesToTest: any = {
@@ -22,11 +23,12 @@ module Antares {
 
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
+            _$q_: ng.IQService,
             $controller: ng.IControllerService) => {
 
             // init
             $scope = $rootScope.$new();
-
+            $q = _$q_;
             controller = <EditableDateController>$controller('EditableDateController', { $scope: $scope });
         }));
 
@@ -50,6 +52,54 @@ module Antares {
                 // assert
                 expect(isBeforeToday).toBe(data[1]);
             });
+
+        it('when `openEditMode` then edit mode should be turned on', () => {
+            // arrange
+            controller.inEditMode = false;
+
+            // act
+            controller.openEditMode();
+
+            // assert
+            expect(controller.inEditMode).toBe(true);
+        });
+
+        it('when `cancel` then edit mode should be turned off ', () => {
+            // arrange
+            var currentDate: Date = moment().add(1, 'days').toDate();
+            var newDate: Date = moment().add(10, 'days').toDate();
+
+            controller.selectedDate = currentDate;
+
+            controller.inEditMode = true;
+            controller.date = newDate;
+
+            // act
+            controller.cancel();
+
+            // assert
+            expect(controller.inEditMode).toBe(false);
+            expect(controller.date).toBe(currentDate);
+        });
+
+        it('when `save` then edit mode should be turned off', () => {
+            // arrange
+            var defered = $q.defer();
+            controller.inEditMode = true;
+            controller.onSave = () => {
+                return (date: Date) => {
+                    return defered.promise;
+                }
+            };
+
+            // act
+            controller.save();
+            defered.resolve({});
+            $scope.$apply();
+
+            // assert
+            expect(controller.inEditMode).toBe(false);
+        });
 
     });
 }
