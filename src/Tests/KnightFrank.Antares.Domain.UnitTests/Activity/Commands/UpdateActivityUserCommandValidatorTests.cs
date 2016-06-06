@@ -19,10 +19,10 @@
     [Collection("UpdateActivityUserCommandValidator")]
     public class UpdateActivityUserCommandValidatorTests
     {
-        public static IEnumerable<object[]> FixtureData = new[] { new object[] { DateTime.UtcNow.Date.AddDays(1) }, new object[] { null }, new object[] { DateTime.UtcNow.Date } };
+        public static IEnumerable<object[]> FixtureDataCorrectCallDate = new[] { new object[] { DateTime.UtcNow.Date.AddDays(1) }, new object[] { null }, new object[] { DateTime.UtcNow.Date } };
 
         [Theory]
-        [MemberAutoMoqData("FixtureData", MemberType = typeof(UpdateActivityUserCommandValidatorTests))]
+        [MemberAutoMoqData("FixtureDataCorrectCallDate", MemberType = typeof(UpdateActivityUserCommandValidatorTests))]
         public void Given_CorrectActivityUserCommand_When_Validating_Then_IsValid(
             DateTime? callDate,
             UpdateActivityUserCommandValidator validator,

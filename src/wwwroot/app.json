@@ -12,6 +12,10 @@
         "Withdrawn": 4,
         "Rejected": 3,
         "Accepted": 1
+      },
+      "ActivityDepartmentType":{
+        "Managing":1,
+        "Standard":2
       }
     }
   }

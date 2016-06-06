@@ -228,7 +228,7 @@
                 .Excluding(x => x.ActivityType)
                 .Excluding(x => x.Attachments)
                 .Excluding(x => x.ActivityUsers)
-                .Excluding(x=>x.ActivityDepartments));
+                .Excluding(x => x.ActivityDepartments));
 
             actualActivity.ActivityStatus.Code.ShouldBeEquivalentTo("PreAppraisal");
             actualActivity.ActivityUsers.Should().Equal(activity.ActivityUsers, (c1, c2) =>
@@ -236,6 +236,11 @@
                 c1.UserTypeId == c2.UserTypeId &&
                 c1.UserId == c2.UserId &&
                 c1.CallDate.Equals(c2.CallDate));
+
+            actualActivity.ActivityDepartments.ShouldAllBeEquivalentTo(activity.ActivityDepartments, opt => opt
+                .Excluding(x => x.Activity)
+                .Excluding(x => x.Department)
+                .Excluding(x => x.DepartmentType));
         }
 
         [Then(@"Retrieved activity should have expected viewing")]

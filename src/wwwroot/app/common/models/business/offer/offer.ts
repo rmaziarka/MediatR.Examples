@@ -26,6 +26,7 @@ module Antares.Common.Models.Business {
                 this.requirement = new Requirement(offer.requirement);
                 this.negotiator = new User(offer.negotiator);
                 this.offerDate = moment(offer.offerDate).toDate();
+                this.createdDate = moment(offer.createdDate).toDate();
                 if (offer.completionDate) {
                     this.completionDate = moment(offer.completionDate).toDate();
                 }

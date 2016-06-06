@@ -89,15 +89,18 @@ module Antares.Common.Component {
 
         public updateNegotiatorCallDate = (activityUser: Business.ActivityUser) => {
             return (date: Date) => {
-                var dto = new Business.UpdateSingleActivityUserResource(activityUser);
-                dto.callDate = date;
+
+                var activityUserToSend: Business.ActivityUser = angular.copy(activityUser);
+                activityUserToSend.callDate = date;
+
+                var dto = new Business.UpdateSingleActivityUserResource(activityUserToSend);
 
                 var promise = this.dataAccessService.getActivityUserResource()
                     .update({ id: activityUser.activityId }, dto)
                     .$promise;
 
                 promise.then(() => {
-                    activityUser.callDate = date;
+                    activityUser.callDate = moment(date).toDate();
                 });
 
                 return promise;
@@ -111,7 +114,7 @@ module Antares.Common.Component {
             return { partialName : searchValue, take : this.usersSearchMaxCount, 'excludedIds[]' : excludedIds };
         }
 
-        public getUsers = (searchValue: string) =>{
+        public getUsers = (searchValue: string) => {
             var query = this.getUsersQuery(searchValue);
 
             return this.dataAccessService

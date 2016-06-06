@@ -4,6 +4,7 @@
 module Antares.Providers {
     import LatestViewsService = Services.LatestViewsService;
     import Address = Common.Models.Business.Address;
+    import Contact = Common.Models.Business.Contact;
     import ILatestListEntry = Common.Models.Dto.ILatestListEntry;
     import ILatestViewResultItem = Common.Models.Dto.ILatestViewResultItem;
     import EntityTypeEnum = Common.Models.Enums.EntityTypeEnum;
@@ -14,6 +15,7 @@ module Antares.Providers {
 
         public properties: ILatestListEntry[];
         public activities: ILatestListEntry[];
+        public requirements: ILatestListEntry[];
 
         constructor(private latestViewsService: LatestViewsService, private $state: angular.ui.IStateService) {
         }
@@ -33,6 +35,7 @@ module Antares.Providers {
         public loadLatestData = (result: angular.IHttpPromiseCallbackArg<ILatestViewResultItem[]>) => {
             this.loadProperties(result.data);
             this.loadActivities(result.data);
+            this.loadRequirements(result.data);
         }
 
         public loadActivities = (latestViewsItems: ILatestViewResultItem[]) => {
@@ -71,6 +74,24 @@ module Antares.Providers {
                 });
 
             this.properties = properties;
+        }
+
+        public loadRequirements = (latestViewsItems: ILatestViewResultItem[]) =>{
+            var latestRequirements = latestViewsItems
+                .filter((item) => item.entityTypeCode === <any>EntityTypeEnum.Requirement)[0];
+
+            if (!latestRequirements)
+                return;
+
+            var latestRequirementViews = latestRequirements.list;
+            var requirements = latestRequirementViews.map(view =>
+                <ILatestListEntry>{
+                    id : view.id,
+                    name : view.data.map((c: Contact) => new Contact(c).getName()).join(", "),
+                    url : this.$state.href("app.requirement-view", { id : view.id })
+                });
+
+            this.requirements = requirements;
         }
     }
 

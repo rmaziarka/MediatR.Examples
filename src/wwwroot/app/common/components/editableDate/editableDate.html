@@ -1,5 +1,5 @@
 ﻿<div ng-if="!vm.inEditMode" class="negotiators-call-date form-group">
-    <span class="section-title" translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:
+    <span class="section-title"><span translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:</span>
     <time ng-class="{'negotiators-call-date-old' : vm.isBeforeToday()}">{{(vm.date | date : 'dd-MM-yyyy') || '-'}}</time>
     <button type="button" class="btn btn-no-style" ng-click="vm.openEditMode()"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 </div>
@@ -13,8 +13,8 @@
                     </div>
                     <div class="col-md-12 col-lg-10">
                         <div class="input-group">
-                            <input id="next-call-1" type="text" class="form-control" placeholder="dd-mm-yyyy" uib-datepicker-popup="dd-MM-yyyy" name="date" 
-                                   is-open="vm.isDatePickerOpen" close-text="Close" ng-model="vm.date" ng-required="vm.isRequired" date-greater-than="{{vm.today}}">
+                            <input id="next-call-1" type="text" class="form-control" placeholder="dd-mm-yyyy" uib-datepicker-popup="dd-MM-yyyy" name="date"
+                                   is-open="vm.isDatePickerOpen" close-text="Close" ng-model="vm.date" ng-required="vm.isRequired" date-greater-than="{{vm.today}}" autocomplete="off">
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="vm.openDatePicker()"><i class="fa fa-calendar"></i></button>
                             </span>

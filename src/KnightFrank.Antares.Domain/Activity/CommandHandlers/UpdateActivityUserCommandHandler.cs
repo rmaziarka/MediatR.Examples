@@ -43,7 +43,7 @@
             this.ValidateActivityUserAssignToActivity(activityUser, activity);
             this.ValidateActivityUserCallDate(activityUser, message.CallDate);
 
-            activityUser.CallDate = message.CallDate;
+            activityUser.CallDate = message.CallDate?.Date;
 
             this.activityUserRepository.Save();
 

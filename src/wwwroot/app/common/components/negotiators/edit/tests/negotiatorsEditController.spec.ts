@@ -298,7 +298,7 @@ module Antares {
         });
 
         describe('when getUsers is called', () => {
-            it('then proper Api GET request is called', () => {
+            it('then data is fetched from API', () => {
                 // arrange
                 controller.changeLeadNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
 
@@ -322,5 +322,51 @@ module Antares {
                 expect(result[0].id).toEqual(requestUser.id);
             });
         });
+
+        describe('when updateNegotiatorCallDate is executed for lead negotiator', () => {
+            var leadNegotiator: Business.ActivityUser;
+
+            beforeEach(() => {
+                leadNegotiator = Antares.TestHelpers.ActivityUserGenerator.generate(Common.Models.Enums.NegotiatorTypeEnum.LeadNegotiator);
+                controller.leadNegotiator = leadNegotiator;
+            });
+
+            it('then correct data should be sent to API', () => {
+                // arrange
+                var newCallDate : Date = moment().add(10, 'days').toDate();
+                var requestData: Dto.IUpdateSingleActivityUserResource;
+
+                $http.expectPUT(/\/api\/activities\/[0-9a-zA-Z]*\/negotiators/, (data: string) => {
+                    requestData = JSON.parse(data);
+                    requestData.callDate = moment(requestData.callDate).toDate();
+                    return true;
+                }).respond(201, {});
+                
+                // act
+                controller.updateNegotiatorCallDate(controller.leadNegotiator)(newCallDate);
+                $http.flush();
+
+                // assert
+                expect(requestData.id).toBe(leadNegotiator.id);
+                expect(requestData.callDate).toEqual(Core.DateTimeUtils.createDateAsUtc(newCallDate));
+            });
+
+            it('then call date should be set for correct negotiator', () => {
+                // arrange
+                var newCallDate : Date = moment().add(10, 'days').toDate();
+
+                $http.expectPUT(/\/api\/activities\/[0-9a-zA-Z]*\/negotiators/, (data: string) => {
+                    return true;
+                }).respond(201, {});
+                
+                // act
+                controller.updateNegotiatorCallDate(controller.leadNegotiator)(newCallDate);
+                $http.flush();
+
+                // assert
+                expect(controller.leadNegotiator.callDate).toEqual(newCallDate);
+            });
+
+        })
 	});
 }
