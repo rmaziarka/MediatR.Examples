@@ -86,7 +86,7 @@
             entityValidator.Verify(x => x.EntityExists(activityUser, command.Id), Times.Once);
 
             activityUserRepository.Verify(x => x.Save(), Times.Once);
-            updatedCallDate.Should().Be(command.CallDate);
+            updatedCallDate.Should().Be(command.CallDate?.Date);
         }
 
         [Theory]
