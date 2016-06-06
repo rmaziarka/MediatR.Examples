@@ -19,6 +19,11 @@ module Antares {
             inTheFutureOther: moment().day(10)
         };
 
+        var departmentTypes = [
+            { id: "managingId", code: "Managing" },
+            { id: "standardId", code: "Standard" }
+        ];
+
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $controller: any,
@@ -34,8 +39,10 @@ module Antares {
                 }
             }
 
-            var bindings = { activityId: 'testId' };
-            controller = <NegotiatorsController>$controller('NegotiatorsController', { $scope: scopeMock}, bindings);
+            var bindings = { activityId: 'testId', departments: <Business.ActivityDepartment[]>[] };
+            controller = <NegotiatorsController>$controller('NegotiatorsController', { $scope: scopeMock }, bindings);
+
+            controller.standardDepartmentType = <Dto.IEnumTypeItem>departmentTypes[1];
         }));
 
         describe('when editLeadNegotiator is called', () => {
@@ -70,7 +77,7 @@ module Antares {
                 controller.isLeadNegotiatorInEditMode = true;
 
                 //act
-                controller.changeLeadNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                controller.changeLeadNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
 
                 // assert
                 expect(controller.isLeadNegotiatorInEditMode).toBe(false);
@@ -81,7 +88,7 @@ module Antares {
                 controller.leadNegotiator = null;
 
                 //act
-                var user = new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto());
+                var user = new Business.User(TestHelpers.UserGenerator.generateDto());
                 controller.changeLeadNegotiator(user);
 
                 // assert
@@ -103,12 +110,12 @@ module Antares {
                 .run((data: TestCaseForCallDate) => {
                     // arrange
                     controller.today = datesToTest.today;
-                    controller.changeLeadNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                    controller.changeLeadNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
 
                     controller.leadNegotiator.callDate = data[0];
 
                     //act
-                    controller.changeLeadNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                    controller.changeLeadNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
 
                     // assert
                     expect(controller.leadNegotiator.callDate).toEqual(data[1]);
@@ -148,7 +155,7 @@ module Antares {
                 controller.isLeadNegotiatorInEditMode = true;
 
                 //act
-                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
 
                 // assert
                 expect(controller.isLeadNegotiatorInEditMode).toBe(true);
@@ -159,7 +166,7 @@ module Antares {
                 controller.secondaryNegotiators = [];
 
                 //act
-                var user = new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto());
+                var user = new Business.User(TestHelpers.UserGenerator.generateDto());
                 controller.addSecondaryNegotiator(user);
 
                 // assert
@@ -175,9 +182,9 @@ module Antares {
             it('then negotiator is removed from secondaryNegotiators', () => {
                 // arrange
                 controller.secondaryNegotiators = [];
-                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
-                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
-                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
 
                 //act
                 var negotiatroToRemove = controller.secondaryNegotiators[2];
@@ -192,13 +199,13 @@ module Antares {
         describe('when switchToLeadNegotiator is called', () => {
             it('then negotiators are changed properly', () => {
                 // arrange
-                controller.changeLeadNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                controller.changeLeadNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
 
                 controller.secondaryNegotiators = [];
-                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
-                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
-                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
-                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
 
                 //act
                 var oldLeadNegotiator = controller.leadNegotiator;
@@ -238,8 +245,8 @@ module Antares {
                     controller.today = datesToTest.today;
                     controller.secondaryNegotiators = [];
 
-                    controller.changeLeadNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
-                    controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                    controller.changeLeadNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
+                    controller.addSecondaryNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
 
                     controller.leadNegotiator.callDate = data[0];
                     controller.secondaryNegotiators[0].callDate = data[1];
@@ -256,11 +263,11 @@ module Antares {
         describe('when openNegotiatorCallDate is called', () => {
             it('then proper "open flag" for negotiator is set', () => {
                 // arrange
-                controller.changeLeadNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                controller.changeLeadNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
 
                 controller.secondaryNegotiators = [];
-                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
-                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
 
                 //act
                 controller.openNegotiatorCallDate(controller.leadNegotiator.userId);
@@ -276,12 +283,12 @@ module Antares {
         describe('when getUsersQuery is called', () => {
             it('then proper query is returned', () => {
                 // arrange
-                controller.changeLeadNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                controller.changeLeadNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
 
                 controller.secondaryNegotiators = [];
-                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
-                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
-                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
 
                 //act
                 var result = controller.getUsersQuery('searchText');
@@ -300,12 +307,12 @@ module Antares {
         describe('when getUsers is called', () => {
             it('then data is fetched from API', () => {
                 // arrange
-                controller.changeLeadNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                controller.changeLeadNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
 
                 controller.secondaryNegotiators = [];
-                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
-                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
-                controller.addSecondaryNegotiator(new Business.DepartmentUser(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
+                controller.addSecondaryNegotiator(new Business.User(TestHelpers.UserGenerator.generateDto()));
 
                 // act
                 var result: Dto.IUser[] = [];
@@ -341,7 +348,7 @@ module Antares {
                     requestData.callDate = moment(requestData.callDate).toDate();
                     return true;
                 }).respond(201, {});
-                
+
                 // act
                 controller.updateNegotiatorCallDate(controller.leadNegotiator)(newCallDate);
                 $http.flush();
@@ -358,7 +365,7 @@ module Antares {
                 $http.expectPUT(/\/api\/activities\/[0-9a-zA-Z]*\/negotiators/, (data: string) => {
                     return true;
                 }).respond(201, {});
-                
+
                 // act
                 controller.updateNegotiatorCallDate(controller.leadNegotiator)(newCallDate);
                 $http.flush();

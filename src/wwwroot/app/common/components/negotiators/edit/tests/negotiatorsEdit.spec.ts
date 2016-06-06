@@ -10,6 +10,7 @@ module Antares {
     interface IScope extends ng.IScope {
         leadNegotiator: Business.ActivityUser;
         secondaryNegotiator: Business.ActivityUser[];
+        activityDepartments: Business.Department[];
         activityId: string;
         propertyDivisionId: string;
     }
@@ -48,12 +49,17 @@ module Antares {
             assertValidator: TestHelpers.AssertValidators,
             searchController: SearchController;
 
-        var mockedComponentHtml = '<negotiators-edit property-division-id="{{propertyDivisionId}}" activity-id="activityId" lead-negotiator="leadNegotiator" secondary-negotiators="secondaryNegotiator">'
+        var mockedComponentHtml = '<negotiators-edit property-division-id="{{propertyDivisionId}}" activity-id="activityId" departments="activityDepartments" lead-negotiator="leadNegotiator" secondary-negotiators="secondaryNegotiator">'
             + '</negotiators-edit>';
 
         var divisionCodes = [
             { id: "residentialId", code: "RESIDENTIAL" },
             { id: "commmercialId", code: "COMMERCIAL" }
+        ];
+
+        var departmentTypes = [
+            { id: "managingId", code: "Managing" },
+            { id: "standardId", code: "Standard" }
         ];
 
         beforeEach(inject((
@@ -65,8 +71,10 @@ module Antares {
             scope = <IScope>$rootScope.$new();
             scope.leadNegotiator = new Business.ActivityUser();
             scope.secondaryNegotiator = [];
+            scope.activityDepartments = [];
 
             enumService.setEnum(Dto.EnumTypeCode.Division.toString(), divisionCodes);
+            enumService.setEnum(Dto.EnumTypeCode.ActivityDepartmentType.toString(), departmentTypes);
 
             compile = $compile;
             element = compile(mockedComponentHtml)(scope);
@@ -181,7 +189,7 @@ module Antares {
                 it('as lead then current lead negotiator should be updated', () => {
                     var leadSearch = element.find(pageObjectSelector.leadSearch);
                     var searchController = leadSearch.controller('search');
-                    var newLeadNegotiatorUser = <Dto.IDepartmentUser>TestHelpers.UserGenerator.generateDto();
+                    var newLeadNegotiatorUser = <Dto.IUser>TestHelpers.UserGenerator.generateDto();
 
                     searchController.select(newLeadNegotiatorUser);
 
@@ -191,7 +199,7 @@ module Antares {
                 it('as secondary then secondary negotiator should be added', () => {
                     var secodnarySearch = element.find(pageObjectSelector.secondarySearch);
                     var searchController = secodnarySearch.controller('search');
-                    var newSecondarynegotiatorUser = <Dto.IDepartmentUser>TestHelpers.UserGenerator.generateDto();
+                    var newSecondarynegotiatorUser = <Dto.IUser>TestHelpers.UserGenerator.generateDto();
 
                     searchController.select(newSecondarynegotiatorUser);
 

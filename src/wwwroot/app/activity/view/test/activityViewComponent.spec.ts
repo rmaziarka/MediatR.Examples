@@ -397,7 +397,7 @@ module Antares {
             it('when existing attachments then card components should have proper data', () => {
                 // arrange / act
                 var dateMock = new Date('2011-01-01');
-                var attachmentMock = TestHelpers.AttachmentGenerator.generate({ user: new Business.User({ id: 'us1', firstName: 'firstName1', lastName: 'lastName1' }) });
+                var attachmentMock = TestHelpers.AttachmentGenerator.generate({ user: new Business.User({ id: 'us1', firstName: 'firstName1', lastName: 'lastName1', departmentId: 'depId', department: null }) });
                 attachmentMock.createdDate = dateMock;
 
                 var sizeMock = '999.7 MB';
@@ -524,7 +524,7 @@ module Antares {
                 ];
                 var activityMock = TestHelpers.ActivityGenerator.generate({ viewings: viewingsMock });
                 scope['activity'] = activityMock;
-                
+
                 // act
                 element = compile('<activity-view activity="activity"></activity-view>')(scope);
                 scope.$apply();
@@ -542,7 +542,7 @@ module Antares {
                     expect(viewingGroupTitles[i].textContent).toBe(moment(g.day, 'YYYY-MM-DD').format('DD-MM-YYYY'));
                 });
             });
-            
+
             it('viewing list item contains all applicants', () => {
                 // arrange
                 var contactsMock = TestHelpers.ContactGenerator.generateMany(3);

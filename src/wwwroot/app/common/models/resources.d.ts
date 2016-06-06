@@ -77,7 +77,7 @@ declare module Antares.Common.Models {
         interface IAzureDownloadUrlResource extends ng.resource.IResource<Dto.IAzureDownloadUrlContainer> {
         }
 
-        interface IDepartmentUserResource extends ng.resource.IResource<Dto.IDepartmentUser> {
+        interface IDepartmentUserResource extends ng.resource.IResource<Dto.IUser> {
         }
 
         // *** IResourceClass extensions ***

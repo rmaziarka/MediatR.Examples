@@ -5,6 +5,8 @@ module Antares.Common.Models.Business {
         id: string;
         firstName: string;
         lastName: string;
+        departmentId: string;
+        department: Department;
 
         constructor(user?: Dto.IUser) {
             if (user) {

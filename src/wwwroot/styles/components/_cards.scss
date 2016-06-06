@@ -124,15 +124,17 @@
 
 .card-menu {
   .disabled {
-    cursor: not-allowed;
+    > li {
+      cursor: not-allowed;
 
-    a {
-      color: $color-dusty-gray;
-      pointer-events: none;
-    }
+      a {
+        color: $color-dusty-gray;
+        pointer-events: none;
+      }
 
-    .card-menu-icon {
-      color: $color-dusty-gray;
+      .card-menu-icon {
+        color: $color-dusty-gray;
+      }
     }
   }
 }

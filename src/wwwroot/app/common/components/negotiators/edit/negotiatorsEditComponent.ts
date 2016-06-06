@@ -8,6 +8,7 @@ module Antares.Common.Component {
         bindings: {
             activityId: '<',
             propertyDivisionId: '@',
+            departments: '=',
             leadNegotiator: '=' ,
             secondaryNegotiators: '='
         }
