@@ -72,6 +72,7 @@
   },
   "COMPANY": {
     "CREATE_COMPANY": "Create company",
+    "EDIT_COMPANY": "Edit company",
     "BASIC_INFORMATION": "Basic information",
     "NAME": "Name",
     "CONTACTS": "Contacts",
@@ -82,7 +83,6 @@
     "WEBSITE": "Website",
     "CLIENT_CARE_WEBSITE": "Client care page",
     "CLIENT_CARE_STATUS": "Client care status"
-
   },
   "CONTACT": {
     "TITLE": "Title",

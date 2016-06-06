@@ -68,13 +68,24 @@ Then User should get OK http status code
 And Company details should match those in database
 
 @Company
-Scenario: Update company with required fields
+Scenario: Update company with all fields
 	Given User creates contacts in database with following data
 		| FirstName | Surname | Title |
 		| Michael   | Angel   | cheef | 
 	And User creates company in database with following data
 	 	| Name         | WebsiteUrl  | ClientCarePageUrl  | ClientCareStatus    |
 	 	| Test Company | www.api.com | www.clientcare.com | MassiveActionClient |
-	When User updates company by API with maximum length fields
+	When User updates company by API
 	Then User should get OK http status code
 		And Company should be updated
+
+@Company
+Scenario: Update company with invalid data
+	Given User creates contacts in database with following data
+		| FirstName | Surname | Title |
+		| Michael   | Angel   | cheef | 
+	And User creates company in database with following data
+	 	| Name | WebsiteUrl  | ClientCarePageUrl  | ClientCareStatus    |
+	 	|      | www.api.com | www.clientcare.com | MassiveActionClient |
+	When User updates company by API
+	Then User should get BadRequest http status code

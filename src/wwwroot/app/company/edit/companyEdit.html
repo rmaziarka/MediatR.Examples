@@ -1,22 +1,22 @@
 <div class="row">
     <div class="col-md-12">
-        <h2 class="page-header" translate="COMPANY.CREATE_COMPANY"></h2>
+        <h2 class="page-header" translate="COMPANY.EDIT_COMPANY"></h2>
     </div>
 
-    <form ng-submit="addCompanyForm.$valid && vm.hasCompanyContacts() && vm.createCompany()" name="addCompanyForm" id="addCompanyForm" method="post" novalidate>
+    <form ng-submit="editCompanyForm.$valid && vm.hasCompanyContacts() && vm.updateCompany()" name="editCompanyForm" id="editCompanyForm" method="post" novalidate>
         <div class="col-md-4">
             <fieldset>
                 <h3 class="page-header" translate="COMPANY.BASIC_INFORMATION"></h3>
 
-                <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.name.$dirty) && addCompanyForm.name.$invalid}">
+                <div class="form-group" ng-class="{'has-error': (editCompanyForm.$submitted || editCompanyForm.name.$dirty) && editCompanyForm.name.$invalid}">
                     <label class="required" for="name" translate="COMPANY.NAME"></label>
                     <input type="text" class="form-control" id="name" name="name" required ng-maxlength="128" ng-model="vm.company.name" autocomplete="off">
-                    <div ng-messages="addCompanyForm.name.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.name.$dirty">
+                    <div ng-messages="editCompanyForm.name.$error" ng-show="editCompanyForm.$submitted || editCompanyForm.name.$dirty">
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
                 </div>
 
-                <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.website.$dirty) && addCompanyForm.website.$invalid}">
+                <div class="form-group" ng-class="{'has-error': (editCompanyForm.$submitted || editCompanyForm.website.$dirty) && editCompanyForm.website.$invalid}">
 
                     <div class="row">
                         <div class="col-md-12">
@@ -29,12 +29,12 @@
                             <external-link url="vm.company.websiteUrl" show-text="false"></external-link>
                         </div>
                     </div>
-                    <div ng-messages="addCompanyForm.website.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.website.$dirty">
+                    <div ng-messages="editCompanyForm.website.$error" ng-show="editCompanyForm.$submitted || editCompanyForm.website.$dirty">
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
                 </div>
 
-                <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.clientcareurl.$dirty) && addCompanyForm.clientcareurl.$invalid}">
+                <div class="form-group" ng-class="{'has-error': (editCompanyForm.$submitted || editCompanyForm.clientcareurl.$dirty) && editCompanyForm.clientcareurl.$invalid}">
                     <div class="row">
                         <div class="col-md-12">
                             <label for="clientcareurl" translate="COMPANY.CLIENT_CARE_WEBSITE"></label>
@@ -46,7 +46,7 @@
                             <external-link url="vm.company.clientCarePageUrl" show-text="false"></external-link>
                         </div>
                     </div>
-                    <div ng-messages="addCompanyForm.clientcareurl.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.clientcareurl.$dirty">
+                    <div ng-messages="editCompanyForm.clientcareurl.$error" ng-show="editCompanyForm.$submitted || editCompanyForm.clientcareurl.$dirty">
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
                 </div>
@@ -77,9 +77,9 @@
                                 </button>
                             </div>
                         </list-actions>
-                        <list-no-items ng-show="vm.hasCompanyContacts() === false" ng-class="{'has-error': addCompanyForm.$submitted}">
-                            <p class="help-block" id="no-contacts-help-block" ng-show="addCompanyForm.$submitted === false" translate="COMPANY.NO_CONTACTS"></p>
-                            <p class="help-block" id="contacts-are-required-help-block" ng-show="addCompanyForm.$submitted" translate="COMPANY.CONTACTS_ARE_REQUIRED"></p>
+                        <list-no-items ng-show="vm.hasCompanyContacts() === false" ng-class="{'has-error': editCompanyForm.$submitted}">
+                            <p class="help-block" id="no-contacts-help-block" ng-show="editCompanyForm.$submitted === false" translate="COMPANY.NO_CONTACTS"></p>
+                            <p class="help-block" id="contacts-are-required-help-block" ng-show="editCompanyForm.$submitted" translate="COMPANY.CONTACTS_ARE_REQUIRED"></p>
                         </list-no-items>
                         <list-item id="list-item-contact-{{contact.id}}" ng-repeat="contact in vm.company.contacts">
                             {{contact.getName()}}

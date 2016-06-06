@@ -53,7 +53,17 @@
             this.SetScenarioContextForAddedCompanyId(company.Id);
         }
 
-        [When(@"User creates company by API for contact")]
+		[Given(@"User creates company in database with following data")]
+		public void CreateCompanyInDb(Table table)
+		{
+			Company company = table.CreateSet<Company>().Single();
+			this.fixture.DataContext.Companies.Add(company);
+			this.fixture.DataContext.SaveChanges();
+
+			this.scenarioContext.Set(company, "Company");
+		}
+
+		[When(@"User creates company by API for contact")]
         public void WhenUserCreateCompanyByApiForContact(Table table)
         {
             string clientCareStatus =  this.GetClientCareStatus(table, "EnumTypeItemCode");
@@ -65,7 +75,6 @@
 
             this.CreateCompany(company);            
         }
-
     
         [When(@"User creates company by API with all fields")]
         public void WhenUserCreatesCompanyByApiWithAllFields(Table table)
@@ -88,7 +97,28 @@
             
         }
 
-        [When(@"User gets company details")]
+		[When(@"User updates company by API")]
+		public void UpdateCompany()
+		{
+			string requestUrl = $"{ApiUrl}";
+			var company = this.scenarioContext.Get<Company>("Company");
+			var contactList = this.scenarioContext.Get<List<Contact>>("ContactList");
+
+			var commandCompany = new UpdateCompanyCommand
+			{
+				Id = company.Id,
+				Name = company.Name,
+				ClientCarePageUrl = company.ClientCarePageUrl,
+				ClientCareStatusId = company.ClientCareStatusId,
+				WebsiteUrl = company.WebsiteUrl,
+				ContactIds = contactList.Select(x => x.Id).ToList() 
+			};
+
+			HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, commandCompany);
+			this.scenarioContext.SetHttpResponseMessage(response);
+		}
+
+		[When(@"User gets company details")]
         public void WhenUserGetsCompanyDetails()
         {
             var companyId = this.scenarioContext.Get<Guid>("AddedCompanyId");
@@ -119,7 +149,19 @@
             .Excluding(c=>c.ClientCareStatus));
         }
 
-        [Then(@"Company details should match those in database")]
+		[Then(@"Company should be updated")]
+		public void ThenCompanyShouldBeUpdatedInDataBase()
+		{
+			var company = JsonConvert.DeserializeObject<Company>(this.scenarioContext.GetResponseContent());
+			var expectedCompany = this.scenarioContext.Get<Company>("Company");
+
+			Company actualCompany = this.fixture.DataContext.Companies.Single(x => x.Id.Equals(company.Id));
+
+			actualCompany.ShouldBeEquivalentTo(expectedCompany, opt => opt
+						 .Excluding(c => c.ClientCareStatus));
+		}
+
+		[Then(@"Company details should match those in database")]
         public void ThenCompanyShouldMatchThoseInDatabase()
         {
             var actualCompany = JsonConvert.DeserializeObject<Company>(this.scenarioContext.GetResponseContent());
@@ -130,7 +172,6 @@
             actualCompany.ShouldBeEquivalentTo(expectedCompany, opt => opt
             .Excluding(c => c.ClientCareStatus));
         }
-
 
         private void CreateCompany(CreateCompanyCommand company)
         {
@@ -150,8 +191,7 @@
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, company);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
-
-        private string GetClientCareStatus(Table table, string columName)
+		private string GetClientCareStatus(Table table, string columName)
         {
             foreach (TableRow row in table.Rows)
             {
