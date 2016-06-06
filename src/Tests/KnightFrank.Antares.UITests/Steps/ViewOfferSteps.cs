@@ -64,6 +64,12 @@
             this.page.OpenRequirementActions().OpenRequirement();
         }
 
+        [When(@"User clicks edit offer button on view offer page")]
+        public void EditOffer()
+        {
+            this.page.EditOffer();
+        }
+
         [Then(@"View offer page should be displayed")]
         public void CheckIfViewOfferPresent()
         {
@@ -137,6 +143,15 @@
                 () => Assert.Equal(expectedDetails.CreationDate, details[2]),
                 () => Assert.Equal(expectedDetails.Type, details[3]),
                 () => Assert.Equal(expectedDetails.Vendor, vendors));
+        }
+
+        [Then(@"Offer updated success message should be displayed")]
+        public void CheckIfSuccessMessageDisplayed()
+        {
+            Verify.That(this.driverContext,
+                () => Assert.True(this.page.IsSuccessMessageDisplayed()),
+                () => Assert.Equal("Offer successfully saved", this.page.SuccessMessage));
+            this.page.WaitForSuccessMessageToHide();
         }
     }
 }

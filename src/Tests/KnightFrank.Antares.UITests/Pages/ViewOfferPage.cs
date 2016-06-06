@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -28,6 +29,9 @@
         private readonly ElementLocator requirement = new ElementLocator(Locator.CssSelector, "#section-applicant .requirement-view-offers .card");
         private readonly ElementLocator requirementActions = new ElementLocator(Locator.CssSelector, "#section-applicant .requirement-view-offers .card-menu-button");
         private readonly ElementLocator openRequirement = new ElementLocator(Locator.CssSelector, "#section-applicant .requirement-view-offers [action *= 'navigateToRequirement']");
+        // Messages
+        private readonly ElementLocator successMessage = new ElementLocator(Locator.CssSelector, ".alert-success {0}");
+        private readonly ElementLocator messageText = new ElementLocator(Locator.CssSelector, ".growl-message");
 
         public ViewOfferPage(DriverContext driverContext) : base(driverContext)
         {
@@ -44,6 +48,8 @@
         public string ActivityDetails => this.Driver.GetElement(this.activityDetails).Text;
 
         public string RequirementDetails => this.Driver.GetElement(this.requirementDetails).Text;
+
+        public string SuccessMessage => this.Driver.GetElement(this.successMessage.Format(this.messageText.Value)).Text;
 
         public ViewOfferPage OpenViewOfferPageWithId(string id)
         {
@@ -83,6 +89,23 @@
         {
             this.Driver.Click(this.openRequirement);
             return this;
+        }
+
+        public ViewOfferPage EditOffer()
+        {
+            this.Driver.Click(this.editOffer);
+            return this;
+        }
+
+        public ViewOfferPage WaitForSuccessMessageToHide()
+        {
+            this.Driver.WaitUntilElementIsNoLongerFound(this.successMessage.Format(string.Empty), TimeSpan.FromSeconds(6).TotalSeconds);
+            return this;
+        }
+
+        public bool IsSuccessMessageDisplayed()
+        {
+            return this.Driver.IsElementPresent(this.successMessage.Format(string.Empty), BaseConfiguration.MediumTimeout);
         }
     }
 }
