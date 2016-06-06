@@ -8,5 +8,7 @@
 
         leadNegotiator: IUpdateActivityUserResource;
         secondaryNegotiators: IUpdateActivityUserResource[];
+
+        departments: IUpdateActivityDepartmentResource[];
     }
 }

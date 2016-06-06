@@ -12,6 +12,8 @@ module Antares.Common.Models.Business {
         leadNegotiator: UpdateActivityUserResource = null;
         secondaryNegotiators: UpdateActivityUserResource[] = [];
 
+        departments: UpdateActivityDepartmentResource[];
+
         constructor(activity?: Business.Activity) {
             if (activity) {
                 this.id = activity.id;
@@ -22,6 +24,7 @@ module Antares.Common.Models.Business {
                 this.vendorEstimatedPrice = activity.vendorEstimatedPrice;
                 this.leadNegotiator = new UpdateActivityUserResource(activity.leadNegotiator);
                 this.secondaryNegotiators = _.map(activity.secondaryNegotiator, (activityUser: Business.ActivityUser) => new UpdateActivityUserResource(activityUser));
+                this.departments = _.map(activity.activityDepartments, (department: Business.ActivityDepartment) => new UpdateActivityDepartmentResource(department));
             }
         }
     }
