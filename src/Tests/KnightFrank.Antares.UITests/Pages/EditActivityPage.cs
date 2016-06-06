@@ -1,5 +1,9 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     using KnightFrank.Antares.UITests.Extensions;
 
     using Objectivity.Test.Automation.Common;
@@ -24,10 +28,15 @@
         private readonly ElementLocator deleteSecondaryNegotiator = new ElementLocator(Locator.CssSelector, "#activity-edit-negotiators card-list-item:nth-of-type({0}) [action *= 'deleteSecondaryNegotiator']");
         private readonly ElementLocator setSecondaryNegotiatorAsLead = new ElementLocator(Locator.CssSelector, "#activity-edit-negotiators card-list-item:nth-of-type({0}) [action *= 'switchToLeadNegotiator']");
         private readonly ElementLocator negotiator = new ElementLocator(Locator.XPath, "//section[@id = 'activity-edit-negotiators']//span[contains(., '{0}')]");
+        private readonly ElementLocator leadNegotiatorNextCall = new ElementLocator(Locator.Id, "lead-call-date");
+        private readonly ElementLocator secondaryNegotiatorNextCall = new ElementLocator(Locator.CssSelector, "#card-list-negotiators card-list-item{0} input");
+        private readonly ElementLocator nextCall = new ElementLocator(Locator.CssSelector, ":nth-of-type({0})");
 
         public EditActivityPage(DriverContext driverContext) : base(driverContext)
         {
         }
+
+        public List<string> SecondaryNegotiatorsNextCalls => this.Driver.GetElements(this.secondaryNegotiatorNextCall.Format(string.Empty)).Select(el => el.GetAttribute("value")).ToList();
 
         public EditActivityPage SelectActivityStatus(string newStatus)
         {
@@ -73,7 +82,8 @@
         {
             this.Driver.Click(this.addSecondaryNegotiator);
             this.Driver.SendKeys(this.searchSecondaryNegotiator, secondaryNegotiator.Name);
-            this.Driver.WaitForElementToBeDisplayed(this.negotiator.Format(secondaryNegotiator.Name), BaseConfiguration.MediumTimeout);
+            this.Driver.WaitForElementToBeDisplayed(this.negotiator.Format(secondaryNegotiator.Name),
+                BaseConfiguration.MediumTimeout);
             this.Driver.Click(this.negotiator.Format(secondaryNegotiator.Name));
             this.Driver.Click(this.cancelSecondaryNegotiator);
             return this;
@@ -92,6 +102,18 @@
             this.Driver.Click(this.setSecondaryNegotiatorAsLead.Format(position));
             return this;
         }
+
+        public string GetLeadNegotiatorNextCall()
+        {
+            return this.Driver.GetElement(this.leadNegotiatorNextCall).GetAttribute("value");
+        }
+
+        public EditActivityPage EditSecondaryNegotiatorsCallDate(int position, string date)
+        {
+            this.Driver.SendKeys(this.secondaryNegotiatorNextCall.Format(this.nextCall.Format(position).Value),
+                date != string.Empty ? DateTime.UtcNow.AddDays(int.Parse(date)).ToString("dd-MM-yyyy") : string.Empty);
+            return this;
+        }
     }
 
     internal class EditActivityDetails
@@ -108,5 +130,7 @@
     public class Negotiator
     {
         public string Name { get; set; }
+
+        public string NextCall { get; set; }
     }
 }

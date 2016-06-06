@@ -169,6 +169,56 @@
             this.scenarioContext.Set(activity, "Activity");
         }
 
+        [Given(@"Property (.*) activity with negotiators is defined")]
+        public void CreateActivityWithNegotiators(string activityType)
+        {
+            Guid activityTypeId = this.dataContext.ActivityTypes.Single(i => i.Code.Equals(activityType)).Id;
+            Guid activityStatusId = this.dataContext.EnumTypeItems.Single(
+                i => i.EnumType.Code.Equals("ActivityStatus") && i.Code.Equals("PreAppraisal")).Id;
+            Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
+
+            var activity = new Activity
+            {
+                PropertyId = propertyId,
+                ActivityTypeId = activityTypeId,
+                ActivityStatusId = activityStatusId,
+                CreatedDate = DateTime.UtcNow,
+                LastModifiedDate = DateTime.UtcNow,
+                Contacts = this.scenarioContext.Get<List<Contact>>("ContactsList"),
+                ActivityUsers = new List<ActivityUser>
+                {
+                    new ActivityUser
+                    {
+                        //TODO improve selecting lead negotiator
+                        UserId = this.dataContext.Users.First().Id,
+                        UserTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("LeadNegotiator")).Id,
+                        CallDate = DateTime.UtcNow.AddDays(14)
+                    },
+                    new ActivityUser
+                    {
+                        UserId = this.dataContext.Users.First(u => u.FirstName.Equals("Eva") && u.LastName.Equals("Sandler")).Id,
+                        UserTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("SecondaryNegotiator")).Id
+                    },
+                    new ActivityUser
+                    {
+                        UserId = this.dataContext.Users.First(u => u.FirstName.Equals("John") && u.LastName.Equals("Doe")).Id,
+                        UserTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("SecondaryNegotiator")).Id
+                    },
+                    new ActivityUser
+                    {
+                        UserId =
+                            this.dataContext.Users.First(u => u.FirstName.Equals("Martha") && u.LastName.Equals("Williams")).Id,
+                        UserTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("SecondaryNegotiator")).Id
+                    }
+                }
+            };
+
+            this.dataContext.Activities.Add(activity);
+            this.dataContext.SaveChanges();
+
+            this.scenarioContext.Set(activity, "Activity");
+        }
+
         [Given(@"Property area breakdown is defined")]
         public void CreateAreaBreakdown()
         {

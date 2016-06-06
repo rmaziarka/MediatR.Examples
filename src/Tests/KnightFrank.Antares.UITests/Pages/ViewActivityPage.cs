@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -38,10 +39,18 @@
         private readonly ElementLocator offerActions = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .card-menu-button");
         private readonly ElementLocator offerStatus = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .offer-status");
         private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .ng-binding");
-
         // negotiators locators
         private readonly ElementLocator leadNegotiator = new ElementLocator(Locator.CssSelector, "#card-lead-negotiator .panel-item");
-        private readonly ElementLocator secondaryNegotiator = new ElementLocator(Locator.CssSelector, "#card-list-negotiators card-list-item .panel-item");
+        private readonly ElementLocator secondaryNegotiatorData = new ElementLocator(Locator.CssSelector, "#card-list-negotiators card-list-item .ng-binding");
+        private readonly ElementLocator leadNegotiatorNextCallDate = new ElementLocator(Locator.CssSelector, "#card-lead-negotiator + editable-date time"); 
+        private readonly ElementLocator leadNegotiatorNextCallEditButton = new ElementLocator(Locator.CssSelector, "negotiators-view > editable-date button[ng-click *= 'openEditMode']");
+        private readonly ElementLocator leadNegotiatorNextCallDateField = new ElementLocator(Locator.CssSelector, "negotiators-view > editable-date #next-call-1");
+        private readonly ElementLocator leadNegotiatorNextCallSaveButton = new ElementLocator(Locator.CssSelector, "negotiators-view > editable-date button[type='submit']");
+        private readonly ElementLocator secondaryNegotiatorNextCallEditButton = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//button");
+        private readonly ElementLocator secondaryNegotiatorNextCallDateField = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//input");
+        private readonly ElementLocator secondaryNegotiatorNextCallSaveButton = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//button[@type='submit']");
+
+        private const string Format = "dd-MM-yyyy";
 
         public ViewActivityPage(DriverContext driverContext) : base(driverContext)
         {
@@ -67,11 +76,11 @@
 
         public string LeadNegotiator => this.Driver.GetElement(this.leadNegotiator).Text;
 
-        public List<Negotiator> SecondaryNegotiators => this.Driver.GetElements(this.secondaryNegotiator).Select(el => new Negotiator { Name = el.Text }).ToList();
-
         public int OffersNumber => this.Driver.GetElements(this.offers).Count;
 
         public OfferPreviewPage OfferPreview => new OfferPreviewPage(this.DriverContext);
+
+        public string LeadNegotiatorNextCall => this.Driver.GetElement(this.leadNegotiatorNextCallDate).Text;
 
         public ViewActivityPage OpenViewActivityPageWithId(string id)
         {
@@ -177,6 +186,40 @@
                 Size = this.Driver.GetElement(this.attachmentSize).Text,
                 Date = this.Driver.GetElement(this.attachmentDate).Text
             };
+        }
+
+        public ViewActivityPage EditLeadNegotiatorNextCall(int day)
+        {
+            this.Driver.GetElement(this.leadNegotiatorNextCallEditButton).Click();
+            this.Driver.SendKeys(this.leadNegotiatorNextCallDateField, DateTime.UtcNow.AddDays(day).ToString(Format));
+            this.Driver.GetElement(this.leadNegotiatorNextCallSaveButton).Click();
+            return this;
+        }
+
+        public ViewActivityPage EditSecondaryNegotiatorNextCall(string name, int day)
+        {
+            this.Driver.GetElement(this.secondaryNegotiatorNextCallEditButton.Format(name)).Click();
+            this.Driver.SendKeys(this.secondaryNegotiatorNextCallDateField.Format(name), DateTime.UtcNow.AddDays(day).ToString(Format));
+            this.Driver.GetElement(this.secondaryNegotiatorNextCallSaveButton.Format(name)).Click();
+            return this;
+        }
+
+        public List<Negotiator> GetSecondaryNegotiatorsData()
+        {
+            List<string> odds =
+                this.Driver.GetElements(this.secondaryNegotiatorData)
+                    .ToList()
+                    .Where((c, i) => i % 2 != 0)
+                    .Select(el => el.Text)
+                    .ToList();
+            List<string> evens =
+                this.Driver.GetElements(this.secondaryNegotiatorData)
+                    .ToList()
+                    .Where((c, i) => i % 2 == 0)
+                    .Select(el => el.Text)
+                    .ToList();
+
+            return evens.Zip(odds, (s, s1) => new Negotiator { Name = s, NextCall = s1 }).ToList();
         }
     }
 

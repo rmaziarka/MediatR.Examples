@@ -56,7 +56,7 @@ Scenario: Edit activity
             | Eva Sandler     |
             | John Doe        |
             | Martha Williams |
-            | Edward Griffin  |
+            | Edward Griffin  |          
 		And User removes 3 secondary negotiator from edit activity page
 		And User clicks save button on edit activity page
 	Then View activity page should be displayed
@@ -64,7 +64,7 @@ Scenario: Edit activity
 			| ActivityStatus   | MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |
 			| Market appraisal | 4000                 | 5000             | 6000                 |
 		And Adam Williams is set as lead negotiator on view activity page
-        And Secondary users are set on view activity page
+        And Secondary negotiators are set on view activity page
             | Name            |
             | Edward Griffin  |
             | Eva Sandler     |
@@ -74,8 +74,68 @@ Scenario: Edit activity
 		And User clicks save button on edit activity page
 	Then View activity page should be displayed
 		And Martha Williams is set as lead negotiator on view activity page
-        And Secondary users are set on view activity page
+        And Secondary negotiators are set on view activity page
             | Name           |
             | Adam Williams  |
             | Edward Griffin |
             | Eva Sandler    |
+
+@Activity
+Scenario: Edit negotiators next call dates 
+	Given Contacts are created in database
+		| Title | FirstName | Surname |
+		| Mr    | Michael   | Johnson |
+		And Property with Residential division and Flat type is defined
+		And Property attributes details are defined
+			| MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces | MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms |
+			| 450     | 1500    | 1500        | 32000       | 2                   | 3                   | 1           | 2           | 1             | 2             | 7            | 10           |
+		And Property in GB is created in database
+			| PropertyNumber | PropertyName | Line2        | Postcode | City   | County |
+			| 124            | Duke House   | Baker Street | NR5 2ZX  | London | London |
+		And Property ownership is defined
+			| PurchaseDate | BuyPrice |
+			| 01-03-2010   | 25000000 |
+		And Property Long Leasehold Sale activity with negotiators is defined
+	When User navigates to view activity page with id
+	Then Lead negotiator next call is set to 14 days from current day on view activity page
+		And Secondary negotiators are set on view activity page
+			| Name            | NextCall |
+			| Eva Sandler     | -        |
+			| John Doe        | -        |
+			| Martha Williams | -        |
+	When User edits lead negotiator next call to 0 days from current day on view activity page
+		And User edits secondary negotiator next call on view activity page
+			| Name            | NextCall |
+            | Eva Sandler     | 1        |
+            | John Doe        | 10       |
+		And User clicks edit button on view activity page
+	Then Lead negotiator next call is set to current date on edit activity page
+		And Secondary negotiators next calls are displayed on edit activity page
+			| Name            | NextCall |
+			| Eva Sandler     | 1        |
+			| John Doe        | 10       |
+			| Martha Williams |          |
+	When User changes lead negotiator to Adam Williams on edit activity page
+        And User edits secondary negotiators dates on edit activity page
+            | Name            | NextCall |
+            | Eva Sandler     | 20       |
+            | John Doe        |          |
+            | Martha Williams | 30       |
+		And User clicks save button on edit activity page
+	Then View activity page should be displayed
+		And Lead negotiator next call is set to 0 days from current day on view activity page
+        And Secondary negotiators are set on view activity page
+            | Name            | NextCall |
+            | Eva Sandler     | 20       |
+            | John Doe        | -        |
+            | Martha Williams | 30       |
+	When User clicks edit button on view activity page
+		And User sets 3 secondary negotiator as lead negotiator on edit activity page
+		And User clicks save button on edit activity page
+	Then View activity page should be displayed
+		And Lead negotiator next call is set to 30 days from current day on view activity page
+        And Secondary negotiators are set on view activity page
+            | Name          | NextCall |
+            | Adam Williams | 0        |
+            | Eva Sandler   | 20       |
+            | John Doe      | -        |

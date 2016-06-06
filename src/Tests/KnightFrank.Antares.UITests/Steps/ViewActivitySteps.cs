@@ -21,6 +21,7 @@
     [Binding]
     public class ViewActivitySteps
     {
+        private const string Format = "dd-MM-yyyy";
         private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
         private ViewActivityPage page;
@@ -106,6 +107,22 @@
                 .WaitForSidePanelToShow();
         }
 
+        [When(@"User edits lead negotiator next call to (.*) days from current day on view activity page")]
+        public void UpdateLeadNegotiatorNextCall(int days)
+        {
+            this.page.EditLeadNegotiatorNextCall(days);
+        }
+
+        [When(@"User edits secondary negotiator next call on view activity page")]
+        public void UpdateSecondaryNegotiatorsNextCall(Table table)
+        {
+            IEnumerable<Negotiator> secondaryNegotiatorsNextCall = table.CreateSet<Negotiator>();
+            foreach (Negotiator negotiator in secondaryNegotiatorsNextCall)
+            {
+                this.page.EditSecondaryNegotiatorNextCall(negotiator.Name, int.Parse(negotiator.NextCall));
+            }
+        }
+
         [Then(@"Attachment (.*) should be downloaded")]
         public void ThenAttachmentShouldBeDownloaded(string attachmentName)
         {
@@ -144,7 +161,7 @@
         {
             Attachment actual = this.page.GetAttachmentDetails();
             var expected = table.CreateInstance<Attachment>();
-            expected.Date = DateTime.UtcNow.ToString("dd-MM-yyyy");
+            expected.Date = DateTime.UtcNow.ToString(Format);
 
             actual.ShouldBeEquivalentTo(expected);
         }
@@ -206,13 +223,20 @@
             Assert.Equal(expectedLead, this.page.LeadNegotiator);
         }
 
-        [Then(@"Secondary users are set on view activity page")]
+        [Then(@"Secondary negotiators are set on view activity page")]
         public void CheckSecondaryUsers(Table table)
         {
             List<Negotiator> expectedSecondary = table.CreateSet<Negotiator>().ToList();
-            List<Negotiator> actualSecondary = this.page.SecondaryNegotiators;
-            actualSecondary.Should().Equal(expectedSecondary, (c1, c2) =>
-                c1.Name.Equals(c2.Name));
+            foreach (Negotiator secondaryNegotiator in expectedSecondary)
+            {
+                secondaryNegotiator.NextCall = secondaryNegotiator.NextCall != "-"
+                    ? DateTime.UtcNow.AddDays(int.Parse(secondaryNegotiator.NextCall)).ToString(Format)
+                    : "-";
+            }
+
+            List<Negotiator> actual = this.page.GetSecondaryNegotiatorsData();
+
+            expectedSecondary.Should().Equal(actual, (n1, n2) => n1.Name.Equals(n2.Name) && n1.NextCall.Equals(n2.NextCall));
         }
 
         [Then(@"Offer should be displayed on view activity page")]
@@ -253,6 +277,12 @@
                 () => Assert.Equal(expectedDetails.Negotiator, this.page.OfferPreview.Negotiator),
                 () => Assert.Equal(expectedDetails.ExchangeDate, this.page.OfferPreview.ProposedexchangeDate),
                 () => Assert.Equal(expectedDetails.CompletionDate, this.page.OfferPreview.ProposedCompletionDate));
+        }
+
+        [Then(@"Lead negotiator next call is set to (.*) days from current day on view activity page")]
+        public void GetDefaultNextCallDateForLeadNegotiator(int day)
+        {
+            Assert.Equal(DateTime.UtcNow.AddDays(day).ToString(Format), this.page.LeadNegotiatorNextCall);
         }
     }
 }
