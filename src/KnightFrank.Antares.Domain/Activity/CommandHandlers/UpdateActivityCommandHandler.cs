@@ -232,7 +232,7 @@
             this.entityValidator.EntitiesExist<Department>(updateActivityDepartments.Select(x => x.DepartmentId).ToList());
 
             Guid managingDepartmentTypeId = this.GetManagingDepartmentType().Id;
-            if (updateActivityDepartments.Select(x => x.DepartmentTypeId == managingDepartmentTypeId).Count() != 1)
+            if (updateActivityDepartments.Count(x => x.DepartmentTypeId == managingDepartmentTypeId) != 1)
             {
                 throw new BusinessValidationException(ErrorMessage.Activity_Should_Have_Only_One_Managing_Department);
             }
