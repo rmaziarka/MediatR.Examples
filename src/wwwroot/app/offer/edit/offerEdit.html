@@ -71,7 +71,7 @@
                             <label class="required" for="offer-date" translate="OFFER.ADD.OFFER_DATE"></label>
                             <div class="input-group">
                                 <input type="text" id="offer-date" name="offerDate" class="form-control" ng-model="vm.offer.offerDate" uib-datepicker-popup="dd-MM-yyyy"
-                                       is-open="vm.offerDateOpen" close-text="Close" placeholder="dd-mm-yyyy" required date-lower-than="{{ vm.today }}" />
+                                       is-open="vm.offerDateOpen" close-text="Close" placeholder="dd-mm-yyyy" required date-lower-than="{{vm.today}}" />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="vm.openOfferDate()"><i class="fa fa-calendar"></i></button>
                                 </span>
@@ -103,7 +103,7 @@
                         <div class="col-md-6">
                             <div class="input-group">
                                 <input type="text" id="offer-proposed-exchange-date" class="form-control" placeholder="dd-mm-yyyy" uib-datepicker-popup="dd-MM-yyyy"
-                                       is-open="vm.exchangeDateOpen" close-text="Close" ng-model="vm.offer.exchangeDate" name="exchangeDate">
+                                       is-open="vm.exchangeDateOpen" close-text="Close" ng-model="vm.offer.exchangeDate" name="exchangeDate" date-greater-than="{{ vm.offer.createdDate }}">
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="vm.openExchangeDate()">
                                         <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -113,6 +113,7 @@
                         </div>
                     </div>
                     <div ng-messages="vm.editOfferForm.exchangeDate.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.exchangeDate.$dirty">
+                        <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CAN_NOT_BE_LOWER_THEN_CREATE_DATE"></p>
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
                 </div>
@@ -123,7 +124,7 @@
                         <div class="col-md-6">
                             <div class="input-group">
                                 <input type="text" id="proposed-completion-date" class="form-control" placeholder="dd-mm-yyyy" uib-datepicker-popup="dd-MM-yyyy"
-                                       is-open="vm.completionDateOpen" close-text="Close" ng-model="vm.offer.completionDate" name="completionDate">
+                                       is-open="vm.completionDateOpen" close-text="Close" ng-model="vm.offer.completionDate" name="completionDate" date-greater-than="{{ vm.offer.createdDate }}">
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="vm.openCompletionDate()">
                                         <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -133,6 +134,7 @@
                         </div>
                     </div>
                     <div ng-messages="vm.editOfferForm.completionDate.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.completionDate.$dirty">
+                        <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CAN_NOT_BE_LOWER_THEN_CREATE_DATE"></p>
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
                 </div>
