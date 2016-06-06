@@ -140,5 +140,125 @@
             // Assert
             validationResult.IsInvalid(nameof(this.cmd.Price), nameof(Messages.greaterthan_error));
         }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_ExchangeDateLowerThanOfferDate_When_Validating_Then_IsInvalid(UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            this.cmd.OfferDate = DateTime.UtcNow.Date;
+            this.cmd.ExchangeDate = DateTime.UtcNow.Date.AddDays(-1);
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsInvalid(nameof(this.cmd.ExchangeDate), nameof(Messages.greaterthanorequal_error));
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_ExchangeDateEqualsToOfferDay_When_Validating_Then_IsValid(UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            this.cmd.OfferDate = DateTime.UtcNow;
+            this.cmd.ExchangeDate = DateTime.UtcNow.Date;
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeTrue();
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_ExchangeDateEqualsToOfferDate_When_Validating_Then_IsValid(UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            this.cmd.OfferDate = DateTime.UtcNow.Date;
+            this.cmd.ExchangeDate = DateTime.UtcNow.Date;
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeTrue();
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_ExchangeDateGreaterThanOfferDate_When_Validating_Then_IsValid(UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            this.cmd.OfferDate = DateTime.UtcNow.Date;
+            this.cmd.ExchangeDate = DateTime.UtcNow.Date.AddDays(1);
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeTrue();
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_CompletionDateLowerThanOfferDate_When_Validating_Then_IsInvalid(UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            this.cmd.OfferDate = DateTime.UtcNow.Date;
+            this.cmd.CompletionDate = DateTime.UtcNow.Date.AddDays(-1);
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsInvalid(nameof(this.cmd.CompletionDate), nameof(Messages.greaterthanorequal_error));
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_CompletionDateEqualsToOfferDate_When_Validating_Then_IsValid(UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            this.cmd.OfferDate = DateTime.UtcNow.Date;
+            this.cmd.CompletionDate = DateTime.UtcNow.Date;
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeTrue();
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_CompletionDateEqualsToOfferDay_When_Validating_Then_IsValid(UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            this.cmd.OfferDate = DateTime.UtcNow;
+            this.cmd.CompletionDate = DateTime.UtcNow.Date;
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeTrue();
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_CompletionDateGreaterThanOfferDate_When_Validating_Then_IsValid(UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            this.cmd.OfferDate = DateTime.UtcNow.Date;
+            this.cmd.CompletionDate = DateTime.UtcNow.Date.AddDays(1);
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeTrue();
+        }
     }
 }

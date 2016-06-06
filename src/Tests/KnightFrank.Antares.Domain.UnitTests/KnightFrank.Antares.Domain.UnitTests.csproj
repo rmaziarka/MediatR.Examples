@@ -216,10 +216,6 @@
       <Project>{5987d78c-856d-4315-8b8b-baf00c286aff}</Project>
       <Name>KnightFrank.Antares.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KnightFrank.Antares.Api.UnitTests\KnightFrank.Antares.Api.UnitTests.csproj">
-      <Project>{F9F91CF8-73E3-462C-A23F-25ABE7CF4D24}</Project>
-      <Name>KnightFrank.Antares.Api.UnitTests</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
