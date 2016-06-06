@@ -23,7 +23,7 @@
             <div class="col-md-12 col-lg-10">
                 <div class="input-group">
                     <input type="text" id="lead-call-date" name="callDate" class="form-control" ng-model="nevm.leadNegotiator.callDate" uib-datepicker-popup="dd-MM-yyyy"
-                        is-open="nevm.nagotiatorCallDateOpened[nevm.leadNegotiator.userId]" close-text="Close" placeholder="dd-mm-yyyy" required date-greater-than="{{ nevm.today }}" />
+                        is-open="nevm.nagotiatorCallDateOpened[nevm.leadNegotiator.userId]" close-text="Close" placeholder="dd-mm-yyyy" required date-greater-than="{{ nevm.today }}" autocomplete="off" />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="nevm.openNegotiatorCallDate(nevm.leadNegotiator.userId)"><i class="fa fa-calendar"></i></button>
                     </span>
@@ -78,7 +78,7 @@
                     <div class="col-md-12 col-lg-10">
                         <div class="input-group">
                             <input type="text" id="call-date-{{negotiator.userId}}" name="callDate" class="form-control" ng-model="negotiator.callDate" uib-datepicker-popup="dd-MM-yyyy"
-                                is-open="nevm.nagotiatorCallDateOpened[negotiator.userId]" close-text="Close" placeholder="dd-mm-yyyy" date-greater-than="{{ nevm.today }}" date-validate-when-changed=""/>
+                                is-open="nevm.nagotiatorCallDateOpened[negotiator.userId]" close-text="Close" placeholder="dd-mm-yyyy" date-greater-than="{{ nevm.today }}" date-validate-when-changed="" autocomplete="off"/>
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="nevm.openNegotiatorCallDate(negotiator.userId)"><i class="fa fa-calendar"></i></button>
                             </span>
