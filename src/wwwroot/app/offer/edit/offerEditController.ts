@@ -10,7 +10,6 @@ module Antares.Offer {
         selectedStatus: any;
         statuses: any;
         editOfferForm: any;
-        today: Date = new Date();
 
         offerDateOpen: boolean = false;
         exchangeDateOpen: boolean = false;

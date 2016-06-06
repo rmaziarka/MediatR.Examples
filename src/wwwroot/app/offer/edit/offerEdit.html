@@ -71,7 +71,7 @@
                             <label class="required" for="offer-date" translate="OFFER.ADD.OFFER_DATE"></label>
                             <div class="input-group">
                                 <input type="text" id="offer-date" name="offerDate" class="form-control" ng-model="vm.offer.offerDate" uib-datepicker-popup="dd-MM-yyyy"
-                                       is-open="vm.offerDateOpen" close-text="Close" placeholder="dd-mm-yyyy" required date-lower-than="{{vm.today}}" />
+                                       is-open="vm.offerDateOpen" close-text="Close" placeholder="dd-mm-yyyy" required date-lower-than="{{ vm.offer.createdDate }}" />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="vm.openOfferDate()"><i class="fa fa-calendar"></i></button>
                                 </span>
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                     <div ng-messages="vm.editOfferForm.offerDate.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.offerDate.$dirty">
-                        <p name="dateLowerThanValidationError" ng-message="dateLowerThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_FUTURE"></p>
+                        <p name="dateLowerThanValidationError" ng-message="dateLowerThan" class="help-block with-errors" translate="FORM.DATE_CAN_NOT_BE_GREATER_THEN_CREATE_DATE"></p>
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
                 </div>
@@ -148,7 +148,7 @@
                                     {{vm.offer.negotiator.getName()}}
                                 </div>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
             </section>
