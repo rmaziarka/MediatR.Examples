@@ -40,7 +40,7 @@
                         <card-list-header>
                             <h3 class="page-header" translate="DEPARTMENTS.COMMON.HEADER"></h3>
                         </card-list-header>
-                        <card-list-item ng-repeat="activityDepartment in avvm.activity.activityDepartments">
+                        <card-list-item ng-repeat="activityDepartment in avvm.activity.activityDepartments | orderBy: 'department.name' | enumSorter: 'ActivityDepartmentType':'departmentTypeId'">
                             <card card-template-url="'app/activity/templates/departmentCard.html'" display-new-control="true" item="activityDepartment">
                             </card>
                         </card-list-item>
