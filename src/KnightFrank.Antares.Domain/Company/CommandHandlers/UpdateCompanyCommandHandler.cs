@@ -41,9 +41,12 @@
 			Mapper.Map(message, company);
 
 			// Check that all supplied company contacts exist in the database
-			List<Contact> companyContacts = this.contactRepository.FindBy(x => message.ContactIds.Contains(x.Id)).ToList();
+            List<Guid> contactIds = message.Contacts.Select(c => c.Id).ToList();
 
-			if (!message.ContactIds.All(x => companyContacts.Select(c => c.Id).Contains(x)))
+            List<Contact> companyContacts = this.contactRepository.
+                FindBy(x => contactIds.Contains(x.Id)).ToList();
+
+			if (!message.Contacts.Select(c=>c.Id).All(x => companyContacts.Select(c => c.Id).Contains(x)))
 			{
 				throw new BusinessValidationException(ErrorMessage.Missing_Company_Contacts_Id);
 			}
@@ -53,14 +56,14 @@
 		        List<Contact> existingCompanyContacts = company.Contacts.ToList();
 
 		        existingCompanyContacts
-			        .Where(n => IsRemovedFromExistingList(n.Id, message.ContactIds))
+			        .Where(n => IsRemovedFromExistingList(n.Id, message.Contacts))
 			        .ToList()
 			        .ForEach(n => this.contactRepository.Delete(n));
 	        }
 
-			message.ContactIds
+			message.Contacts
 					.ToList()
-					.ForEach(n => company.Contacts.Add(this.contactRepository.GetById(n)));
+					.ForEach(n => company.Contacts.Add(this.contactRepository.GetById(n.Id)));
 
 			this.companyRepository.Save();
 
@@ -69,9 +72,9 @@
 
 		private static bool IsRemovedFromExistingList(
 				Guid existingCompanyContactId,
-				IList<Guid> commandContactIds)
+				IList<Contact> commandContacts)
 		{
-			return !commandContactIds.Select(x => x).Contains(existingCompanyContactId);
+			return !commandContacts.Select(x => x.Id).Contains(existingCompanyContactId);
 		}
 	}
 }

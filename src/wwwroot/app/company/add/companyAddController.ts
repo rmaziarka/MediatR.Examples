@@ -7,7 +7,7 @@ module Antares.Company {
 
     export class CompanyAddController extends Core.WithPanelsBaseController  {
         company: Business.Company;
-        private companyResource: Antares.Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.ICompanyResource>;
+        private companyResource: Common.Models.Resources.ICompanyResourceClass;
         clientCareStatuses: any;
         selectedStatus: any;
 

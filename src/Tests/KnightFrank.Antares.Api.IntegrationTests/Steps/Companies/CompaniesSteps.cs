@@ -111,7 +111,7 @@
 				ClientCarePageUrl = company.ClientCarePageUrl,
 				ClientCareStatusId = company.ClientCareStatusId,
 				WebsiteUrl = company.WebsiteUrl,
-				ContactIds = contactList.Select(x => x.Id).ToList() 
+				Contacts = contactList 
 			};
 
 			HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, commandCompany);

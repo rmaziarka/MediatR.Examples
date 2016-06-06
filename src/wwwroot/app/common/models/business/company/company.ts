@@ -17,6 +17,7 @@ module Antares.Common.Models.Business {
                 this.websiteUrl = company.websiteUrl;
                 this.clientCarePageUrl = company.clientCarePageUrl;
                 this.clientCareStatusId = company.clientCareStatusId;
+               // this.clientCareStatus = company.clientCareStatus;
                 this.contacts = company.contacts.map((contact: Dto.IContact) => { return new Contact(contact) });
             }
         }

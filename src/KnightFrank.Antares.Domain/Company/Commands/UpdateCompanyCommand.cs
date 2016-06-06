@@ -3,13 +3,15 @@ namespace KnightFrank.Antares.Domain.Company.Commands
     using System;
     using System.Collections.Generic;
 
+    using KnightFrank.Antares.Dal.Model.Contacts;
+
     using MediatR;
 
     public class UpdateCompanyCommand : IRequest<Guid>
     {
         public UpdateCompanyCommand()
         {
-            this.ContactIds = new List<Guid>();
+            this.Contacts = new List<Contact>();
         }
 
 		public Guid Id { get; set; }
@@ -21,7 +23,7 @@ namespace KnightFrank.Antares.Domain.Company.Commands
         public string ClientCarePageUrl { get; set; }
 
         public Guid? ClientCareStatusId { get; set; }
-
-        public IList<Guid> ContactIds { get; set; }
+        
+        public IList<Contact> Contacts { get; set; }
     }
 }

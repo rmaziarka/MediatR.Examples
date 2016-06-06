@@ -8,6 +8,7 @@
     using FluentValidation.Resources;
     using FluentValidation.Results;
 
+    using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
@@ -121,14 +122,14 @@
             UpdateCompanyCommand cmd)
         {
             // Arrange
-            cmd.ContactIds = new List<Guid>();
+            cmd.Contacts = new List<Contact>();
 
             // Act
             ValidationResult result = validator.Validate(cmd);
 
             // Assert
             result.IsValid.Should().BeFalse();
-            result.Errors.Should().Contain(e => e.PropertyName == nameof(cmd.ContactIds));
+            result.Errors.Should().Contain(e => e.PropertyName == nameof(cmd.Contacts));
             result.Errors.Should().Contain(e => e.ErrorCode == nameof(Messages.notempty_error));
         }
     }

@@ -7,9 +7,9 @@ module Antares.Company {
 
     export class CompanyEditController extends Core.WithPanelsBaseController  {
         company: Business.Company;
-        private companyResource: Antares.Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.ICompanyResource>;
+        private companyResource: Common.Models.Resources.ICompanyResourceClass;
         clientCareStatuses: any;
-        selectedStatus: any;
+      
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -24,9 +24,10 @@ module Antares.Company {
             this.company = new Business.Company();
             this.companyResource = dataAccessService.getCompanyResource();
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
+           
         }
-
-        onEnumLoaded = (result: any) =>{
+        
+        onEnumLoaded = (result: any) => {
             this.clientCareStatuses = result[Dto.EnumTypeCode.ClientCareStatus];
          }
 
@@ -66,12 +67,14 @@ module Antares.Company {
             return url;
         }
    
-        updateCompany = () => {
-            this.company.clientCareStatusId = this.selectedStatus != null? this.selectedStatus.id:"";
+        updateCompany = () =>{
+            this.company.clientCareStatusId = this.company.clientCareStatusId;
             this.company.websiteUrl = this.formatUrlWithProtocol(this.company.websiteUrl);
             this.company.clientCarePageUrl = this.formatUrlWithProtocol(this.company.clientCarePageUrl);
+
+            var updatedCompany: Dto.ICompany = angular.copy(this.company); 
             this.companyResource
-                .update(new Business.EditCompanyResource(this.company))
+                .update(updatedCompany)
                 .$promise
                 .then((company: Dto.ICompany) => {                
                    this.company = new Business.Company();

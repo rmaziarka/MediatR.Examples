@@ -41,7 +41,7 @@
 							 .Returns(new List<Company> { updatedCompany });
 
 			contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
-                             .Returns(command.ContactIds.Select(x => new Contact { Id = x }));
+                             .Returns(command.Contacts.Select(x => new Contact { Id = x.Id }));
 
             // Act
             handler.Handle(command);
@@ -68,13 +68,13 @@
 														  It.IsAny<Expression<Func<Company, object>>[]>()))
 							 .Returns(new List<Company> { updatedCompany });
 
-			command.ContactIds = fixture.CreateMany<Guid>(2).ToList();
+			command.Contacts = fixture.CreateMany<Contact>(2).ToList();
 
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
                              .Returns(
                                  new List<Contact>()
                                  {
-                                     fixture.Build<Contact>().With(x => x.Id, command.ContactIds.First()).Create()
+                                     fixture.Build<Contact>().With(x => x.Id, command.Contacts.Select(x=>x.Id).First()).Create()
                                  }
                 );
 

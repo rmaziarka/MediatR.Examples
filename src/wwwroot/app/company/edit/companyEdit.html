@@ -22,11 +22,11 @@
                         <div class="col-md-12">
                             <label for="website" translate="COMPANY.WEBSITE"></label>
                         </div>
-                        <div class="col-md-11">
+                        <div class="col-md-12">
                             <input type="text" class="form-control" id="website" name="website" ng-maxlength="2500" ng-model="vm.company.websiteUrl" placeholder="http://">
-                        </div>
-                        <div class="col-md-1">
-                            <external-link url="vm.company.websiteUrl" show-text="false"></external-link>
+                            <span class="form-control-feedback">
+                                <external-link url="vm.company.websiteUrl" show-text="false"></external-link>
+                            </span>
                         </div>
                     </div>
                     <div ng-messages="editCompanyForm.website.$error" ng-show="editCompanyForm.$submitted || editCompanyForm.website.$dirty">
@@ -39,53 +39,54 @@
                         <div class="col-md-12">
                             <label for="clientcareurl" translate="COMPANY.CLIENT_CARE_WEBSITE"></label>
                         </div>
-                        <div class="col-md-11">
+                        <div class="col-md-12">
                             <input type="text" class="form-control" id="clientcareurl" name="clientcareurl" ng-maxlength="2500" ng-model="vm.company.clientCarePageUrl" placeholder="http://">
-                        </div>
-                        <div class="col-md-1">
-                            <external-link url="vm.company.clientCarePageUrl" show-text="false"></external-link>
+                            <span class="form-control-feedback">
+                                <external-link url="vm.company.clientCarePageUrl" show-text="false"></external-link>
+                            </span>
                         </div>
                     </div>
                     <div ng-messages="editCompanyForm.clientcareurl.$error" ng-show="editCompanyForm.$submitted || editCompanyForm.clientcareurl.$dirty">
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
                 </div>
-       
+
 
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-6">
                             <label for="client-care-status" translate="COMPANY.CLIENT_CARE_STATUS"></label>
-                            <select class="form-control" id="client-care-status" name="selectedStatus" ng-options="item as (item.id | dynamicTranslate) for item in vm.clientCareStatuses track by item.id" 
-                                    ng-model="vm.selectedStatus">
+                            <select class="form-control" id="client-care-status" name="selectedStatus" ng-options="item as (item.id | dynamicTranslate) for item in vm.clientCareStatuses track by item.id"
+                                    ng-model="vm.company.clientCareStatus">
                                 <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
-                            </select></div>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </fieldset>
         </div>
         <div class="col-md-4">
-                <section>
-                    <list id="list-contacts">
-                        <list-header>
-                            <h3 class="page-header" translate="COMPANY.CONTACTS"></h3>
-                        </list-header>
-                        <list-actions>
-                            <div class="form-group">
-                                <button class="btn btn-default" type="button" ng-click="vm.showContactList()">
-                                    <i class="fa fa-plus-circle"></i>
-                                </button>
-                            </div>
-                        </list-actions>
-                        <list-no-items ng-show="vm.hasCompanyContacts() === false" ng-class="{'has-error': editCompanyForm.$submitted}">
-                            <p class="help-block" id="no-contacts-help-block" ng-show="editCompanyForm.$submitted === false" translate="COMPANY.NO_CONTACTS"></p>
-                            <p class="help-block" id="contacts-are-required-help-block" ng-show="editCompanyForm.$submitted" translate="COMPANY.CONTACTS_ARE_REQUIRED"></p>
-                        </list-no-items>
-                        <list-item id="list-item-contact-{{contact.id}}" ng-repeat="contact in vm.company.contacts">
-                            {{contact.getName()}}
-                        </list-item>
-                    </list>
-                </section>
+            <section>
+                <list id="list-contacts">
+                    <list-header>
+                        <h3 class="page-header" translate="COMPANY.CONTACTS"></h3>
+                    </list-header>
+                    <list-actions>
+                        <div class="form-group">
+                            <button class="btn btn-default" type="button" ng-click="vm.showContactList()">
+                                <i class="fa fa-plus-circle"></i>
+                            </button>
+                        </div>
+                    </list-actions>
+                    <list-no-items ng-show="vm.hasCompanyContacts() === false" ng-class="{'has-error': editCompanyForm.$submitted}">
+                        <p class="help-block" id="no-contacts-help-block" ng-show="editCompanyForm.$submitted === false" translate="COMPANY.NO_CONTACTS"></p>
+                        <p class="help-block" id="contacts-are-required-help-block" ng-show="editCompanyForm.$submitted" translate="COMPANY.CONTACTS_ARE_REQUIRED"></p>
+                    </list-no-items>
+                    <list-item id="list-item-contact-{{contact.id}}" ng-repeat="contact in vm.company.contacts">
+                        {{contact.getName()}}
+                    </list-item>
+                </list>
+            </section>
 
         </div>
 
