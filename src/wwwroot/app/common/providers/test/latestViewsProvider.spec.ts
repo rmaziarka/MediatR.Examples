@@ -8,6 +8,7 @@ module Antares {
     import LatestViewGenerator = TestHelpers.LatestViewGenerator;
     import LatestViewResultItem = Common.Models.Dto.ILatestViewResultItem;
     import Address = Common.Models.Business.Address;
+    import Contact = Common.Models.Business.Contact;
 
     describe('latestViewsProvider', () => {
         var
@@ -93,6 +94,7 @@ module Antares {
             beforeEach(() => {
                 spyOn(provider, 'loadProperties');
                 spyOn(provider, 'loadActivities');
+                spyOn(provider, 'loadRequirements');
 
                 // act 
                 provider.loadLatestData(result);
@@ -104,6 +106,68 @@ module Antares {
 
             it('then loadActivities method should be called with http result data', () =>{
                 expect(provider.loadActivities).toHaveBeenCalledWith(result.data);
+            });
+
+            it('then loadRequirements method should be called with http result data', () => {
+                expect(provider.loadRequirements).toHaveBeenCalledWith(result.data);
+            });
+        });
+
+        describe('when loadRequirements is called with latest views', () => {
+
+            beforeEach(inject(($state: angular.ui.IState) => {
+                // arrange 
+                spyOn($state, 'href')
+                    .and.callFake((state: string, obj: any) => {
+                        return state + obj.id;
+                    });
+            }));
+
+            it('when there are no requirement views then requirement field is undefined', () => {
+                //arrange
+                var views: LatestViewResultItem[] = [];
+
+                //act
+                provider.loadRequirements(views);
+
+                //assert
+                expect(provider.requirements).toBeUndefined();
+            });
+
+            it('when there are three requirement views then requirements field should contain three entries', () => {
+                //arrange
+                var requirementViews = LatestViewGenerator.generateRequirementList(3);
+                var views = [
+                    requirementViews
+                ];
+
+                //act
+                provider.loadRequirements(views);
+
+                //assert
+                expect(provider.requirements.length).toBe(3);
+            });
+
+            it('entry should contain all contact names', () => {
+                //arrange
+                var requirementViews = LatestViewGenerator.generateRequirementList(1);
+                var views = [
+                    requirementViews
+                ];
+
+                //act
+                provider.loadRequirements(views);
+
+                //assert
+                var requirementView = requirementViews.list[0];
+                var expectedId = requirementView.id;
+                var expectedContactNames = requirementView.data.map((c: Contact) => new Contact(c).getName()).join(", ");
+                var expectedUrl = "app.requirement-view" + expectedId;
+
+                var listRequirement = provider.requirements[0];
+                expect(listRequirement.id).toBe(expectedId);
+                expect(listRequirement.name).toBe(expectedContactNames);
+                expect(listRequirement.url).toBe(expectedUrl);
             });
         });
 
@@ -128,7 +192,7 @@ module Antares {
                 expect(provider.properties).toBeUndefined();
             });
 
-            it('if there are three property views then properties field should contains three entries', () => {
+            it('if there are three property views then properties field should contain three entries', () => {
                 //arrange
                 var propertyViews = LatestViewGenerator.generatePropertyList(3);
                 var views = [
@@ -142,7 +206,7 @@ module Antares {
                 expect(provider.properties.length).toBe(3);
             });
 
-            it('if property address is fulfiled then entry should contain all data', () => {
+            it('if property address is fully filled then entry should contain all data', () => {
                 //arrange
                 var propertyViews = LatestViewGenerator.generatePropertyList(1);
                 var views = [

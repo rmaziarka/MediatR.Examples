@@ -50,5 +50,26 @@ module Antares.TestHelpers {
         private static makeRandom(text: string): string {
             return text + _.random(1, 1000000);
         }
+
+        public static generateRequirementList(listLength: number): Dto.ILatestViewResultItem {
+            var item: Dto.ILatestViewResultItem = {
+                entityTypeCode: 'Requirement',
+                list: LatestViewGenerator.generateManyRequirementListItems(listLength)
+            };
+
+            return item;
+        }
+
+        public static generateRequirementListItem(): Dto.ILatestViewData {
+            return {
+                id: LatestViewGenerator.makeRandom('id'),
+                createDate: moment().days(1),
+                data: ContactGenerator.generateMany(3)
+            }
+        }
+
+        public static generateManyRequirementListItems(n: number): Dto.ILatestViewData[] {
+            return _.times(n, LatestViewGenerator.generateRequirementListItem);
+        }
     }
 }
