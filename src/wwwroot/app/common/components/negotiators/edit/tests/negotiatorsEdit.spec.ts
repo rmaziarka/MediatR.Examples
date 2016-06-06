@@ -31,7 +31,10 @@ module Antares {
             editLeadNegotiatorBtn: '#lead-edit-btn',
             editLeadNegotiatorBtnWrapper: '#lead-edit-btn-wrapper',
             addSecondaryBtn: '#card-list-negotiators button[data-type="addItem"]',
-            editSecondaryNegotiatorsBtn: 'card-list#card-list-negotiators button#addItemBtn:first'
+            editSecondaryNegotiatorsBtn: 'card-list#card-list-negotiators button#addItemBtn:first',
+            cardSecondaryNegotiator: 'card-list#card-list-negotiators card#card-secondary-negotiator-',
+            switchSecondaryNegotiatorBtn: 'context-menu-item[type="setAslead"] a',
+            secondaryCallDate: 'input#call-date-'
         };
 
         var format = (date: any) => date.format('DD-MM-YYYY');
@@ -84,7 +87,7 @@ module Antares {
             assertValidator = new TestHelpers.AssertValidators(element, scope);
         }));
 
-        describe('when activity is edited', () => {
+        describe('when negotiators are edited', () => {
             var leadNegotiator = TestHelpers.ActivityUserGenerator.generate(Common.Models.Enums.NegotiatorTypeEnum.LeadNegotiator);
             var secondaryNegotiators = TestHelpers.ActivityUserGenerator.generateMany(3, Common.Models.Enums.NegotiatorTypeEnum.SecondaryNegotiator);
 
@@ -204,6 +207,24 @@ module Antares {
                     searchController.select(newSecondarynegotiatorUser);
 
                     expect(_.find(controller.secondaryNegotiators, (negotiator) => negotiator.user.id === newSecondarynegotiatorUser.id)).toBeDefined();
+                });
+            });
+
+            describe('when secondary negotiator is switched to lead negotiator', () => {
+                it('and lead negotiator has invalid call date then call date for old lead negotiator call date should be set to null', () => {
+                    // arrange
+                    var callDate = element.find(pageObjectSelector.leadCallDate);
+                    callDate.val(datesToTest.inThePast).trigger('input').trigger('change').trigger('blur');
+                    scope.$apply();
+
+                    var oldLeadId = controller.leadNegotiator.userId;
+
+                    // act
+                    element.find(pageObjectSelector.cardSecondaryNegotiator + controller.secondaryNegotiators[0].userId).find(pageObjectSelector.switchSecondaryNegotiatorBtn).click();
+
+                    // assert
+                    var newCallDate = element.find(pageObjectSelector.secondaryCallDate + oldLeadId);
+                    expect(newCallDate.val()).toBe('');
                 });
             });
 

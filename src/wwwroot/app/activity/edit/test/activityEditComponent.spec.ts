@@ -336,6 +336,62 @@ module Antares {
             });
         });
 
+        describe('when negotiator call date is in the past', () => {
+            var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
+            activityMock.leadNegotiator.callDate = moment().day(-7).toDate();
+
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService,
+                $state: ng.ui.IStateService,
+                $httpBackend: ng.IHttpBackendService) => {
+
+                // init
+                scope = $rootScope.$new();
+                compile = $compile;
+                state = $state;
+                $http = $httpBackend;
+
+                // http backend
+                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
+
+                // compile
+                scope['activity'] = activityMock;
+                element = compile('<activity-edit activity="activity"></activity-edit>')(scope);
+
+                scope.$apply();
+                $httpBackend.flush();
+
+                controller = element.controller('activityEdit');
+            }));
+
+            it('and not changed then when save button is clicked save action should be called', () => {
+                // arrange
+                spyOn(controller, 'save');
+
+                // act
+                var button = element.find(pageObjectSelectors.actions.save);
+                button.click();
+
+                // assert
+                expect(controller.save).toHaveBeenCalled();
+            });
+
+            it('and changed also to past then when save button is clicked save action should not be called', () => {
+                // arrange
+                spyOn(controller, 'save');
+                activityMock.leadNegotiator.callDate = moment().day(-10).toDate();
+                scope.$apply();
+
+                // act
+                var button = element.find(pageObjectSelectors.actions.save);
+                button.click();
+
+                // assert
+                expect(controller.save).not.toHaveBeenCalled();
+            });
+        });
+
         describe('when form action is called', () => {
             var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
 
