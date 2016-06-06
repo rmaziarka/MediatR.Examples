@@ -25,14 +25,14 @@
 
         public ILatestViewDataProvider GetLatestViewDataProvider(EntityTypeEnum entityType)
         {
-            if (entityType == EntityTypeEnum.Property)
+            switch (entityType)
             {
-                return this.kernel.Get<PropertyLatestViewDataProvider>();
-            }
-
-            if (entityType == EntityTypeEnum.Activity)
-            {
-                return this.kernel.Get<ActivityLatestViewDataProvider>();
+                case EntityTypeEnum.Property:
+                    return this.kernel.Get<PropertyLatestViewDataProvider>();
+                case EntityTypeEnum.Activity:
+                    return this.kernel.Get<ActivityLatestViewDataProvider>();
+                case EntityTypeEnum.Requirement:
+                    return this.kernel.Get<RequirementLatestViewDataProvider>();
             }
 
             throw new NotImplementedException();

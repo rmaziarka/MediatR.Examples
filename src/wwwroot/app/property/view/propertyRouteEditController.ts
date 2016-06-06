@@ -13,10 +13,10 @@ module Antares.Property {
 
             $scope['property'] = propertyViewModel;
 
-            this.saveRecentViewdProperty(propertyViewModel.id);
+            this.saveRecentViewedProperty(propertyViewModel.id);
         }
 
-        private saveRecentViewdProperty(propertyId: string){
+        private saveRecentViewedProperty(propertyId: string){
             this.latestViewsProvider.addView({
                 entityId : propertyId,
                 entityType : EntityType.Property

@@ -4,7 +4,7 @@ module Antares {
     export module Common {
         export module Component {
             import LatestViewsProvider = Antares.Providers.LatestViewsProvider;
-            import LatestListEntry = Antares.Common.Models.Dto.ILatestListEntry;
+            import LatestListEntry = Common.Models.Dto.ILatestListEntry;
 
             export class NavigationDrawerController {
                 private type: string;
@@ -15,22 +15,26 @@ module Antares {
                 private navigationDrawerData: { [type: string]: INavigationDrawerData; } = {
                     "property": {
                         titleKey: "COMMON.NAVIGATIONDRAWER.RECENTPROPERTIES",
-                        fieldName:"properties"
+                        fieldName: "properties"
                     },
                     "activity": {
                         titleKey: "COMMON.NAVIGATIONDRAWER.RECENTACTIVITIES",
                         fieldName: "activities"
+                    },
+                    "requirement": {
+                        titleKey: "COMMON.NAVIGATIONDRAWER.RECENTREQUIREMENTS",
+                        fieldName: "requirements"
                     }
                 }
 
-                constructor(private latestViewsProvider: LatestViewsProvider){
+                constructor(private latestViewsProvider: LatestViewsProvider) {
                     var data = this.navigationDrawerData[this.type];
 
                     this.titleKey = data.titleKey;
                     this.fieldName = data.fieldName;
                 }
 
-                public getLatestViews = (): LatestListEntry[] =>{
+                public getLatestViews = (): LatestListEntry[] => {
                     var views: LatestListEntry[] = this.latestViewsProvider[this.fieldName];
                     return views;
                 }

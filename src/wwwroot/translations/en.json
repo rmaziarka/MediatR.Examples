@@ -26,7 +26,8 @@
     },
     "NAVIGATIONDRAWER": {
       "RECENTPROPERTIES": "Recent properties",
-      "RECENTACTIVITIES": "Recent activities"
+      "RECENTACTIVITIES": "Recent activities",
+      "RECENTREQUIREMENTS": "Recent requirements"
     },
     "MAKEOFFER": "Make an offer",
     "SETASLEAD": "Set as lead",
