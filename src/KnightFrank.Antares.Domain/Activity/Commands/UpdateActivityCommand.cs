@@ -27,5 +27,7 @@
         public UpdateActivityUser LeadNegotiator { get; set; }
 
         public IList<UpdateActivityUser> SecondaryNegotiators { get; set; }
+
+        public IList<UpdateActivityDepartment> Departments { get; set; }
     }
 }

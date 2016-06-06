@@ -18,6 +18,8 @@
             this.RuleFor(x => x.LeadNegotiator.CallDate).NotNull().When(x => x.LeadNegotiator != null);
 
             this.RuleFor(x => x.SecondaryNegotiators).NotNull().SetCollectionValidator(new UpdateActivityUserValidator());
+
+            this.RuleFor(x => x.Departments).NotNull().SetCollectionValidator(new UpdateActivityDepartmentValidator());
         }
     }
 }

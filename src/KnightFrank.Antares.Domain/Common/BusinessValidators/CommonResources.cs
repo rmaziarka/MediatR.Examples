@@ -101,7 +101,22 @@
         /// Key value : The '{0}' property value is required.
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        Property_Should_Not_Be_Empty
+        Property_Should_Not_Be_Empty,
+        /// <summary>
+        /// Key value : Value of ActivityDepartment is invalid.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ActivityDepartment_Invalid_Value,
+        /// <summary>
+        /// Key value : One or more departments are duplicated.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Activity_Departments_Not_Unique,
+        /// <summary>
+        /// Key value : Activity should hva only one managing department.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Activity_Should_Have_Only_One_Managing_Department
     }
 }
 

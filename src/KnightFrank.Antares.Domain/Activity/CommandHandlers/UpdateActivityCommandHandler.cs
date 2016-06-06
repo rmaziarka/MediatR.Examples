@@ -24,7 +24,11 @@
 
         private readonly IActivityTypeDefinitionValidator activityTypeDefinitionValidator;
 
+        private readonly IGenericRepository<User> userRepository;
+
         private readonly IGenericRepository<ActivityUser> activityUserRepository;
+
+        private readonly IGenericRepository<ActivityDepartment> activityDepartmentRepository;
 
         private readonly ICollectionValidator collectionValidator;
 
@@ -36,7 +40,9 @@
 
         public UpdateActivityCommandHandler(
             IGenericRepository<Activity> activityRepository,
+            IGenericRepository<User> userRepository,
             IGenericRepository<ActivityUser> activityUserRepository,
+            IGenericRepository<ActivityDepartment> activityDepartmentRepository,
             IEntityValidator entityValidator,
             ICollectionValidator collectionValidator,
             IEnumTypeItemValidator enumTypeItemValidator,
@@ -44,7 +50,9 @@
             IGenericRepository<EnumTypeItem> enumTypeItemRepository)
         {
             this.activityRepository = activityRepository;
+            this.userRepository = userRepository;
             this.activityUserRepository = activityUserRepository;
+            this.activityDepartmentRepository = activityDepartmentRepository;
             this.entityValidator = entityValidator;
             this.collectionValidator = collectionValidator;
             this.enumTypeItemValidator = enumTypeItemValidator;
@@ -54,7 +62,9 @@
 
         public Guid Handle(UpdateActivityCommand message)
         {
-            Activity activity = this.activityRepository.GetWithInclude(x => x.Id == message.Id, x => x.ActivityUsers).SingleOrDefault();
+            Activity activity =
+                this.activityRepository.GetWithInclude(x => x.Id == message.Id, x => x.ActivityUsers, x => x.ActivityDepartments)
+                    .SingleOrDefault();
 
             this.entityValidator.EntityExists(activity, message.Id);
 
@@ -68,6 +78,9 @@
 
             this.ValidateActivityNegotiators(commandNegotiators, activity);
             this.UpdateActivityNegotiators(commandNegotiators, activity);
+
+            this.ValidateActivityDepartments(message.Departments, activity);
+            this.UpdateActivityDepartments(message.Departments, activity);
 
             this.activityRepository.Save();
 
@@ -91,13 +104,15 @@
             // Lead negotiator
             this.entityValidator.EntityExists<User>(message.LeadNegotiator.UserId);
 
+            User leadNegotiator = this.GetUser(message.LeadNegotiator.UserId);
             var commandNegotiators = new List<ActivityUser>
                                          {
                                              new ActivityUser
                                                  {
-                                                     UserId = message.LeadNegotiator.UserId,
+                                                     UserId = leadNegotiator.Id,
+                                                     User = leadNegotiator,
                                                      UserType = this.GetLeadNegotiatorUserType(),
-                                                     CallDate =  message.LeadNegotiator.CallDate
+                                                     CallDate = message.LeadNegotiator.CallDate
                                                  }
                                          };
 
@@ -106,7 +121,17 @@
 
             commandNegotiators.AddRange(
                 message.SecondaryNegotiators.Select(
-                    n => new ActivityUser { UserId = n.UserId, UserType = this.GetSecondaryNegotiatorUserType(), CallDate = n.CallDate }));
+                    n =>
+                        {
+                            User user = this.GetUser(n.UserId);
+                            return new ActivityUser
+                                       {
+                                           UserId = user.Id,
+                                           User = user,
+                                           UserType = this.GetSecondaryNegotiatorUserType(),
+                                           CallDate = n.CallDate
+                                       };
+                        }));
 
             // All negotirators
             this.collectionValidator.CollectionIsUnique(
@@ -129,25 +154,6 @@
                               .ToList()
                               .ForEach(pair => ValidateNegotiatorCallDate(pair.newNegotiator.CallDate, pair.oldNegotiator.CallDate));
         }
-
-        private void UpdateActivityNegotiators(List<ActivityUser> commandNegotiators, Activity activity)
-        {
-            List<ActivityUser> existingNegotiators = activity.ActivityUsers.ToList();
-
-            existingNegotiators.Where(n => IsRemovedFromExistingList(n, commandNegotiators))
-                               .ToList()
-                               .ForEach(n => this.activityUserRepository.Delete(n));
-
-            commandNegotiators.Where(n => IsNewlyAddedToExistingList(n, existingNegotiators))
-                              .ToList()
-                              .ForEach(n => activity.ActivityUsers.Add(n));
-
-            commandNegotiators.Where(n => IsUpdated(n, existingNegotiators))
-                              .Select(n => new { newNagotiator = n, oldNegotiator = GetOldActivityUser(n, existingNegotiators) })
-                              .ToList()
-                              .ForEach(pair => UpdateNegotiator(pair.newNagotiator, pair.oldNegotiator));
-        }
-
         private static void ValidateNegotiatorCallDate(DateTime? newNegotiatorCallDate, DateTime? oldNegotiatorCallDate)
         {
             if (!newNegotiatorCallDate.HasValue)
@@ -166,10 +172,22 @@
             }
         }
 
-        private static void UpdateNegotiator(ActivityUser newNegotiator, ActivityUser oldNegotiator)
+        private void UpdateActivityNegotiators(List<ActivityUser> commandNegotiators, Activity activity)
         {
-            oldNegotiator.UserType = newNegotiator.UserType;
-            oldNegotiator.CallDate = newNegotiator.CallDate?.Date;
+            List<ActivityUser> existingNegotiators = activity.ActivityUsers.ToList();
+
+            existingNegotiators.Where(n => IsRemovedFromExistingList(n, commandNegotiators))
+                               .ToList()
+                               .ForEach(n => this.activityUserRepository.Delete(n));
+
+            commandNegotiators.Where(n => IsNewlyAddedToExistingList(n, existingNegotiators))
+                              .ToList()
+                              .ForEach(n => activity.ActivityUsers.Add(n));
+
+            commandNegotiators.Where(n => IsUpdated(n, existingNegotiators))
+                              .Select(n => new { newNagotiator = n, oldNegotiator = GetOldActivityUser(n, existingNegotiators) })
+                              .ToList()
+                              .ForEach(pair => UpdateNegotiator(pair.newNagotiator, pair.oldNegotiator));
         }
 
         private static bool IsRemovedFromExistingList(ActivityUser existingActivityUser, IEnumerable<ActivityUser> activityUsers)
@@ -192,6 +210,104 @@
             return existingActivityUsers.SingleOrDefault(x => x.UserId == activityUser.UserId);
         }
 
+        private static void UpdateNegotiator(ActivityUser newNegotiator, ActivityUser oldNegotiator)
+        {
+            oldNegotiator.UserType = newNegotiator.UserType;
+            oldNegotiator.CallDate = newNegotiator.CallDate?.Date;
+        }
+
+        private void ValidateActivityDepartments(
+            IList<UpdateActivityDepartment> updateActivityDepartments,
+            Activity activity)
+        {
+            this.collectionValidator.CollectionIsUnique(
+                updateActivityDepartments.Select(x => x.DepartmentId).ToList(),
+                ErrorMessage.Activity_Departments_Not_Unique);
+
+            updateActivityDepartments.ToList()
+                                     .ForEach(
+                                         x =>
+                                         this.enumTypeItemValidator.ItemExists(EnumType.ActivityDepartmentType, x.DepartmentTypeId));
+
+            this.entityValidator.EntitiesExist<Department>(updateActivityDepartments.Select(x => x.DepartmentId).ToList());
+
+            Guid managingDepartmentTypeId = this.GetManagingDepartmentType().Id;
+            if (updateActivityDepartments.Select(x => x.DepartmentTypeId == managingDepartmentTypeId).Count() != 1)
+            {
+                throw new BusinessValidationException(ErrorMessage.Activity_Should_Have_Only_One_Managing_Department);
+            }
+
+            List<Guid> activityUserDepartmentIds = activity.ActivityUsers.Select(x => x.User.DepartmentId).ToList();
+            List<ActivityDepartment> existingDepartments = activity.ActivityDepartments.ToList();
+            // find newly addded departments, which have no related users
+            bool hasInvalidDepartments =
+                updateActivityDepartments.Any(
+                    d => IsNewlyAddedToExistingList(d, existingDepartments) && !activityUserDepartmentIds.Contains(d.DepartmentId));
+            if (hasInvalidDepartments)
+            {
+                throw new BusinessValidationException(ErrorMessage.ActivityDepartment_Invalid_Value);
+            }
+        }
+
+        private void UpdateActivityDepartments(
+            IList<UpdateActivityDepartment> updateActivityDepartments,
+            Activity activity)
+        {
+            List<ActivityDepartment> existingDepartments = activity.ActivityDepartments.ToList();
+
+            existingDepartments.Where(d => IsRemovedFromExistingList(d, updateActivityDepartments))
+                               .ToList()
+                               .ForEach(d => this.activityDepartmentRepository.Delete(d));
+
+            updateActivityDepartments.Where(d => IsNewlyAddedToExistingList(d, existingDepartments))
+                                     .ToList()
+                                     .ForEach(d => activity.ActivityDepartments.Add(CreateActivityDepartament(d)));
+
+            updateActivityDepartments.Where(d => IsUpdated(d, existingDepartments))
+                              .Select(d => new { updateActivityDepartment = d, activityDepartment = GetOldActivityDepartment(d, existingDepartments) })
+                              .ToList()
+                              .ForEach(pair => UpdateActivityDepartament(pair.updateActivityDepartment, pair.activityDepartment));
+        }
+
+        private static bool IsRemovedFromExistingList(ActivityDepartment existingActivityDepartment, IList<UpdateActivityDepartment> updateActivityDepartments)
+        {
+            return !updateActivityDepartments.Select(x => x.DepartmentId).Contains(existingActivityDepartment.DepartmentId);
+        }
+
+        private static bool IsNewlyAddedToExistingList(UpdateActivityDepartment updateActivityDepartment, IEnumerable<ActivityDepartment> existingActivityDepartments)
+        {
+            return !existingActivityDepartments.Select(x => x.DepartmentId).Contains(updateActivityDepartment.DepartmentId);
+        }
+
+        private static bool IsUpdated(UpdateActivityDepartment updateActivityDepartment, IEnumerable<ActivityDepartment> existingActivityDepartments)
+        {
+            return !IsNewlyAddedToExistingList(updateActivityDepartment, existingActivityDepartments);
+        }
+
+        private static ActivityDepartment GetOldActivityDepartment(UpdateActivityDepartment updateActivityDepartment, IEnumerable<ActivityDepartment> existingActivityDepartments)
+        {
+            return existingActivityDepartments.SingleOrDefault(x => x.DepartmentId == updateActivityDepartment.DepartmentId);
+        }
+
+        private static ActivityDepartment CreateActivityDepartament(UpdateActivityDepartment updateActivityDepartment)
+        {
+            return new ActivityDepartment
+                       {
+                           DepartmentId = updateActivityDepartment.DepartmentId,
+                           DepartmentTypeId = updateActivityDepartment.DepartmentTypeId
+                       };
+        }
+
+        private static void UpdateActivityDepartament(UpdateActivityDepartment updateActivityDepartment, ActivityDepartment oldDepartament)
+        {
+            oldDepartament.DepartmentTypeId = updateActivityDepartment.DepartmentTypeId;
+        }
+
+        private User GetUser(Guid userId)
+        {
+            return this.userRepository.GetWithInclude(x => x.Id == userId, x => x.Department).Single();
+        }
+
         private EnumTypeItem GetLeadNegotiatorUserType()
         {
             return this.enumTypeItemRepository.FindBy(i => i.Code == EnumTypeItemCode.LeadNegotiator).Single();
@@ -200,6 +316,16 @@
         private EnumTypeItem GetSecondaryNegotiatorUserType()
         {
             return this.enumTypeItemRepository.FindBy(i => i.Code == EnumTypeItemCode.SecondaryNegotiator).Single();
+        }
+
+        private EnumTypeItem GetManagingDepartmentType()
+        {
+            return this.enumTypeItemRepository.FindBy(i => i.Code == EnumTypeItemCode.ManagingDepartment).Single();
+        }
+
+        private EnumTypeItem GetStandardDepartmentType()
+        {
+            return this.enumTypeItemRepository.FindBy(i => i.Code == EnumTypeItemCode.StandardDepartment).Single();
         }
     }
 }

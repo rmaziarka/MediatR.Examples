@@ -61,6 +61,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One or more departments are duplicated..
+        /// </summary>
+        internal static string Activity_Departments_Not_Unique {
+            get {
+                return ResourceManager.GetString("Activity_Departments_Not_Unique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Activity negotiator call date cannot be set in the past..
         /// </summary>
         internal static string Activity_Negotiator_CallDate_InPast {
@@ -75,6 +84,24 @@ namespace KnightFrank.Antares.Domain.Properties {
         internal static string Activity_Negotiators_Not_Unique {
             get {
                 return ResourceManager.GetString("Activity_Negotiators_Not_Unique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Activity should hva only one managing department..
+        /// </summary>
+        internal static string Activity_Should_Have_Only_One_Managing_Department {
+            get {
+                return ResourceManager.GetString("Activity_Should_Have_Only_One_Managing_Department", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value of ActivityDepartment is invalid..
+        /// </summary>
+        internal static string ActivityDepartment_Invalid_Value {
+            get {
+                return ResourceManager.GetString("ActivityDepartment_Invalid_Value", resourceCulture);
             }
         }
         

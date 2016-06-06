@@ -177,4 +177,13 @@
   <data name="Property_Should_Not_Be_Empty" xml:space="preserve">
     <value>The '{0}' property value is required.</value>
   </data>
+  <data name="ActivityDepartment_Invalid_Value" xml:space="preserve">
+    <value>Value of ActivityDepartment is invalid.</value>
+  </data>
+  <data name="Activity_Departments_Not_Unique" xml:space="preserve">
+    <value>One or more departments are duplicated.</value>
+  </data>
+  <data name="Activity_Should_Have_Only_One_Managing_Department" xml:space="preserve">
+    <value>Activity should hva only one managing department.</value>
+  </data>
 </root>

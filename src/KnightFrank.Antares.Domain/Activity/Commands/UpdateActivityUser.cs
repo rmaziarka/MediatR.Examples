@@ -2,9 +2,7 @@
 {
     using System;
 
-    using MediatR;
-
-    public class UpdateActivityUser : IRequest<Guid>
+    public class UpdateActivityUser
     {
         public Guid UserId { get; set; }
 

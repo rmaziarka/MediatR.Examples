@@ -18,6 +18,8 @@
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
 
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     using Moq;
 
     using Ploeh.AutoFixture;
@@ -25,27 +27,38 @@
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
+    using Xunit.Sdk;
+
+    using Assert = Xunit.Assert;
+    using ErrorMessage = KnightFrank.Antares.Domain.Common.BusinessValidators.ErrorMessage;
 
     [Trait("FeatureTitle", "Activity")]
     [Collection("UpdateActivityCommandHandler")]
     public class UpdateActivityCommandHandlerTests : IClassFixture<BaseTestClassFixture>
     {
+        private readonly Guid managingDepartmentTypeId = Guid.NewGuid();
+        private readonly Guid standardDepartmentTypeId = Guid.NewGuid();
+
         [Theory]
         [AutoMoqData]
         public void Given_ValidCommand_When_Handling_Then_ShouldUpdateActivity(
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
+            [Frozen] Mock<IGenericRepository<User>> userRepository,
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IEntityValidator> entityValidator,
             [Frozen] Mock<ICollectionValidator> collectionValidator,
+            Department department,
             UpdateActivityCommandHandler handler,
             IFixture fixture)
         {
             // Arrange
-            UpdateActivityCommand command = this.CreateUpdateActivityCommand(fixture, DateTime.Today);
+            UpdateActivityCommand command = this.CreateUpdateActivityCommand(fixture, department, DateTime.Today);
             Activity activity = this.GetActivity(fixture);
+            this.SetupActivity(activity, department, fixture);
 
             activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
             this.SetupEnumTypeItemRepository(enumTypeItemRepository, fixture);
+            this.SetupUserRepository(userRepository, command, activity, department, fixture);
 
             // Act
             handler.Handle(command);
@@ -67,6 +80,7 @@
         public void Given_ValidCommandWithCallDatesInThePastButNothingChanged_When_Handling_Then_ShouldUpdateActivity(
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
+            Department department,
             ActivityUser activityLeadNegotiator,
             List<ActivityUser> activitySecondaryNegotiators,
             UpdateActivityCommandHandler handler,
@@ -75,7 +89,7 @@
             // Arrange
             var dateInThePast = new DateTime(2000, 1, 1);
 
-            UpdateActivityCommand command = this.CreateUpdateActivityCommand(fixture, null);
+            UpdateActivityCommand command = this.CreateUpdateActivityCommand(fixture, department, null);
             Activity activity = this.GetActivity(fixture, activityLeadNegotiator, activitySecondaryNegotiators);
 
             var rnd = new Random();
@@ -113,7 +127,9 @@
             int invalidSecondaryNegotiatorIndex,
             bool areOtherDatesInFuture,
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
+            [Frozen] Mock<IGenericRepository<User>> userRepository,
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
+            Department department,
             ActivityUser activityLeadNegotiator,
             List<ActivityUser> activitySecondaryNegotiators,
             UpdateActivityCommandHandler handler,
@@ -124,7 +140,7 @@
             var dateInThePast = new DateTime(2000, 1, 1);
             var dateInThePastOther = new DateTime(1999, 1, 1);
 
-            UpdateActivityCommand command = this.CreateUpdateActivityCommand(fixture, areOtherDatesInFuture ? dateInTheFuture : dateInThePast);
+            UpdateActivityCommand command = this.CreateUpdateActivityCommand(fixture, department, areOtherDatesInFuture ? dateInTheFuture : dateInThePast);
             Activity activity = this.GetActivity(fixture, activityLeadNegotiator, activitySecondaryNegotiators);
 
             var rnd = new Random();
@@ -148,6 +164,7 @@
 
             activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
             this.SetupEnumTypeItemRepository(enumTypeItemRepository, fixture);
+            this.SetupUserRepository(userRepository, command, activity, department, fixture);
 
             // Act
             Assert.Throws<BusinessValidationException>(() => { handler.Handle(command); });
@@ -157,22 +174,26 @@
         [AutoMoqData]
         public void Given_ValidCommand_When_DeletingSecondaryNegotiator_Then_ShouldBeMarkedAsDeleted(
            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
+           [Frozen] Mock<IGenericRepository<User>> userRepository,
            [Frozen] Mock<IGenericRepository<ActivityUser>> activityUserRepository,
            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
+           Department department,
            ActivityUser activityLeadNegotiator,
            UpdateActivityCommandHandler handler,
            ActivityUser secondaryNegotiatorToDelete,
            IFixture fixture)
         {
             // Arrange
-            UpdateActivityCommand command = this.CreateUpdateActivityCommand(fixture, DateTime.Today);
+            UpdateActivityCommand command = this.CreateUpdateActivityCommand(fixture, department, DateTime.Today);
             Activity activity = this.GetActivity(fixture, activityLeadNegotiator);
 
             secondaryNegotiatorToDelete.UserType = this.GetSecondaryNegotiatorUserType(fixture);
             activity.ActivityUsers.Add(secondaryNegotiatorToDelete);
+            this.SetupActivity(activity, department, fixture);
 
             activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
             this.SetupEnumTypeItemRepository(enumTypeItemRepository, fixture);
+            this.SetupUserRepository(userRepository, command, activity, department, fixture);
 
             // Act
             handler.Handle(command);
@@ -185,21 +206,26 @@
         [AutoMoqData]
         public void Given_ValidCommand_When_AddingSecondaryNegotiator_Then_ShouldBeSaved(
            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
+           [Frozen] Mock<IGenericRepository<User>> userRepository,
            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
+           Department department,
            ActivityUser activityLeadNegotiator,
            UpdateActivityCommandHandler handler,
            Guid secondaryNegotiatorIdToAdd,
            IFixture fixture)
         {
+            
             // Arrange
-            UpdateActivityCommand command = this.CreateUpdateActivityCommand(fixture, DateTime.Today);
+            UpdateActivityCommand command = this.CreateUpdateActivityCommand(fixture, department, DateTime.Today);
             Activity activity = this.GetActivity(fixture, activityLeadNegotiator);
+            this.SetupActivity(activity, department, fixture);
 
             DateTime callDate = DateTime.Today.AddDays(1);
             command.SecondaryNegotiators.Add(new UpdateActivityUser { UserId = secondaryNegotiatorIdToAdd, CallDate = callDate });
 
             activityRepository.Setup(p => p.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
             this.SetupEnumTypeItemRepository(enumTypeItemRepository, fixture);
+            this.SetupUserRepository(userRepository, command, activity, department, fixture);
 
             // Act
             handler.Handle(command);
@@ -221,19 +247,23 @@
            bool isLeadNegotiatorToBeChanged,
            bool isNegotiatorTypeToChange,
            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
+           [Frozen] Mock<IGenericRepository<User>> userRepository,
            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
+           Department department,
            ActivityUser activityLeadNegotiator,
            List<ActivityUser> activitySecondaryNegotiators,
            UpdateActivityCommandHandler handler,
            Guid negotiatorIdToUpdate,
            IFixture fixture)
         {
+
             // Arrange
             bool isNegotiatorToBeChangedToLead = (isLeadNegotiatorToBeChanged && !isNegotiatorTypeToChange) ||
                                                  (!isLeadNegotiatorToBeChanged && isNegotiatorTypeToChange);
 
-            UpdateActivityCommand command = this.CreateUpdateActivityCommand(fixture, DateTime.Today);
+            UpdateActivityCommand command = this.CreateUpdateActivityCommand(fixture, department, DateTime.Today);
             Activity activity = this.GetActivity(fixture, activityLeadNegotiator, activitySecondaryNegotiators);
+            this.SetupActivity(activity, department, fixture);
 
             DateTime callDate = DateTime.Today.AddDays(1);
             if (isNegotiatorToBeChangedToLead)
@@ -256,6 +286,8 @@
 
             activityRepository.Setup(p => p.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
             this.SetupEnumTypeItemRepository(enumTypeItemRepository, fixture);
+
+            this.SetupUserRepository(userRepository, command, activity, department, fixture);
 
             // Act
             handler.Handle(command);
@@ -304,17 +336,39 @@
             return fixture.Build<EnumTypeItem>().With(i => i.Code, EnumTypeItemCode.SecondaryNegotiator).Create();
         }
 
+        private EnumTypeItem GetManagingDepartmentType(IFixture fixture)
+        {
+            return fixture.Build<EnumTypeItem>()
+                .With(i => i.Id, this.managingDepartmentTypeId)
+                .With(i => i.Code, EnumTypeItemCode.ManagingDepartment).Create();
+        }
+
+        private EnumTypeItem GetStandardDepartmentType(IFixture fixture)
+        {
+            return fixture.Build<EnumTypeItem>()
+                .With(i => i.Id, this.standardDepartmentTypeId)
+                .With(i => i.Code, EnumTypeItemCode.StandardDepartment).Create();
+        }
+
         private IPostprocessComposer<UpdateActivityUser> CreateUpdateActivityUser(IFixture fixture, Guid userId, DateTime? callDate)
         {
             return fixture.Build<UpdateActivityUser>().With(i => i.UserId, userId).With(i => i.CallDate, callDate);
         }
 
-        private UpdateActivityCommand CreateUpdateActivityCommand(IFixture fixture, DateTime? baseCallDate)
+        private UpdateActivityCommand CreateUpdateActivityCommand(IFixture fixture, Department department, DateTime? baseCallDate)
         {
             var rnd = new Random();
+
+            UpdateActivityDepartment updateActivityDepartment = fixture.Build<UpdateActivityDepartment>()
+                .With(x => x.DepartmentId, department.Id)
+                .With(x => x.DepartmentTypeId, this.managingDepartmentTypeId)
+                .Create();
+
+            
             return fixture.Build<UpdateActivityCommand>()
                           .With(i => i.LeadNegotiator, this.CreateUpdateActivityUser(fixture, fixture.Create<Guid>(), baseCallDate).Create())
                           .With(i => i.SecondaryNegotiators, this.CreateUpdateActivityUser(fixture, fixture.Create<Guid>(), baseCallDate?.AddDays(rnd.Next(1, 15))).CreateMany().ToList())
+                          .With(i => i.Departments, new List<UpdateActivityDepartment> { updateActivityDepartment })
                           .Create();
         }
 
@@ -325,7 +379,9 @@
                                       new[]
                                       {
                                           this.GetLeadNegotiatorUserType(fixture),
-                                          this.GetSecondaryNegotiatorUserType(fixture)
+                                          this.GetSecondaryNegotiatorUserType(fixture),
+                                          this.GetManagingDepartmentType(fixture),
+                                          this.GetStandardDepartmentType(fixture)
                                       }.Where(expr.Compile()));
         }
 
@@ -343,6 +399,58 @@
                         It.Is<ICollection<Guid>>(list => list.OrderBy(i => i).SequenceEqual(expectedNegotiators.OrderBy(i => i))),
                         ErrorMessage.Activity_Negotiators_Not_Unique), Times.Once);
 
+        }
+
+        private User CreateUser(Guid userId, Department department, IFixture fixture)
+        {
+            return fixture.Build<User>()
+                .With(x => x.Id, userId)
+                .With(x => x.DepartmentId, department.Id)
+                .With(x => x.Department, department)
+                .Create();
+        }
+
+        private void SetupUserRepository(Mock<IGenericRepository<User>> userRepository, List<Guid> userIds, Department department, IFixture fixture)
+            
+        {
+            var availableUsers = new List<User>();
+            userIds.ForEach(userId => availableUsers.Add(this.CreateUser(userId, department, fixture)));
+
+            userRepository.Setup(
+                x => x.GetWithInclude(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<Expression<Func<User, object>>[]>()))
+                          .Returns(
+                              (Expression<Func<User, bool>> expr, Expression<Func<User, object>>[] expr2) =>
+                              availableUsers.Where(expr.Compile()));
+        }
+
+        private void SetupUserRepository(
+            Mock<IGenericRepository<User>> userRepository,
+            UpdateActivityCommand command,
+            Activity activity,
+            Department department,
+            IFixture fixture)
+        {
+            var userIds = new List<Guid> { command.LeadNegotiator.UserId };
+            foreach (UpdateActivityUser updateActivityUser in command.SecondaryNegotiators)
+            {
+                userIds.Add(updateActivityUser.UserId);
+            }
+            foreach (ActivityUser activityUser in activity.ActivityUsers)
+            {
+                userIds.Add(activityUser.UserId);
+            }
+
+            this.SetupUserRepository(userRepository, userIds.Distinct().ToList(), department, fixture);
+        }
+
+        private void SetupActivity(Activity activity, Department department, IFixture fixture)
+        {
+            foreach (ActivityUser activityUser in activity.ActivityUsers)
+            {
+                activityUser.User = this.CreateUser(activityUser.UserId, department, fixture);
+            }
+
+            activity.ActivityDepartments = new List<ActivityDepartment>();
         }
     }
 }
