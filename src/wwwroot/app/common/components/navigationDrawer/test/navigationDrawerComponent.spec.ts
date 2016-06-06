@@ -13,7 +13,7 @@ module Antares {
             controller: NavigationDrawerController,
             latestViewsProvider: LatestViewsProvider;
 
-        var latestViews = [];
+        var latestViews: any[] = [];
 
         var mockedPropertyNagivationDrawerComponent = '<navigation-drawer type="property"></navigation-drawer>';
 
