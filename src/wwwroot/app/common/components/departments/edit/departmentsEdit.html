@@ -1,0 +1,23 @@
+﻿<card-list id="card-list-departments">
+    <card-list-header>
+        <h3 class="page-header" translate="DEPARTMENTS.COMMON.HEADER"></h3>
+    </card-list-header>
+    <card-list-no-items id="empty-departments" ng-show="!dvm.departments || dvm.departments.length === 0">
+        <p class="help-block" translate="DEPARTMENTS.COMMON.EMPTY"></p>
+    </card-list-no-items>
+    <card-list-item ng-repeat="department in dvm.departments | orderBy: ['department.name']">
+        <card id="card-department-{{department.userId}}" item="department"
+              card-template-url="'app/activity/templates/departmentCard.html'" show-context-menu="true" display-new-control="true">
+            <card-context-menu>
+                <context-menu-item type="remove"
+                                   item="department"
+                                   action="dvm.deleteDepartment">
+                </context-menu-item>
+                <context-menu-item type="setAsManaging"
+                                   item="department"
+                                   action="dvm.setAsManagingDepartment">
+                </context-menu-item>
+            </card-context-menu>
+        </card>
+    </card-list-item>
+</card-list>

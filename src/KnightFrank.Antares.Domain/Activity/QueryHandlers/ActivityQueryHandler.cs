@@ -37,6 +37,7 @@
                     .Include(a => a.ActivityUsers.Select(an => an.UserType))
                     .Include(a => a.ActivityDepartments)
                     .Include(a => a.ActivityDepartments.Select(an => an.Department))
+                    .Include(a => a.ActivityDepartments.Select(an => an.DepartmentType))
                     .Include(a => a.Offers)
                     .Include(a => a.Offers.Select(v => v.Requirement))
                     .Include(a => a.Offers.Select(v => v.Negotiator))

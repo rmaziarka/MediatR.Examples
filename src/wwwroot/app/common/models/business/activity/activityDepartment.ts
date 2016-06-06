@@ -13,5 +13,9 @@ module Antares.Common.Models.Business {
                 angular.extend(this, activityDepartment);
             }
         }
+
+        public isManaging(): boolean {
+            return this.departmentType.code === Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Managing];
+        }
     }
 }

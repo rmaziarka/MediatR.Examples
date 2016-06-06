@@ -376,7 +376,8 @@
   },
   "DEPARTMENTS": {
     "COMMON": {
-      "HEADER": "Departments"
+      "HEADER": "Departments",
+      "EMPTY": "No departments added yet"
     }
   }
 }
