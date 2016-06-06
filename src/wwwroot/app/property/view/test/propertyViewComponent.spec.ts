@@ -266,6 +266,10 @@ module Antares {
 
             describe('and "Save button" is clicked ', () => {
                 it('then new activity should be added to property activity list', () => {
+                    $http.expectPOST(/\/api\/latestviews/, () => {
+                        return true;
+                    }).respond(200, []);
+
                     var activityAddController: Activity.ActivityAddController = element.find('activity-add').controller('activityAdd');
                     activityAddController.activityStatuses = activityStatuses;
                     activityAddController.activityTypes = activityTypes;
