@@ -12,8 +12,8 @@ module Antares.Common.Component
         public leadNegotiator: Business.ActivityUser;
         public secondaryNegotiators: Business.ActivityUser[];
 
-        private managingDepartmentType: Dto.IEnumTypeItem;
-        private standardDepartmentType: Dto.IEnumTypeItem;
+        public managingDepartmentType: Dto.IEnumTypeItem;
+        public standardDepartmentType: Dto.IEnumTypeItem;
 
         constructor(
             private enumService: Services.EnumService) {
