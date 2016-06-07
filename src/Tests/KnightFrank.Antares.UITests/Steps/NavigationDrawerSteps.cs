@@ -100,5 +100,15 @@
 
             expected.Should().Equal(current);
         }
+
+        [Then(@"Latest (.*) requirement should contain following data")]
+        [Then(@"Latest (.*) requirements should contain following data")]
+        public void CheckLatestRequirementItems(int count, Table table)
+        {
+            List<string> expected = table.CreateSet<NavigationDrawerPage.LatestViews>().Select(el => el.LatestData).ToList();
+            List<string> current = this.page.GetLatestEntities("requirement").Take(count).ToList();
+
+            expected.Should().Equal(current);
+        }
     }
 }

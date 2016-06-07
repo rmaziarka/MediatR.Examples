@@ -17,8 +17,8 @@
         private readonly ElementLocator menuItem = new ElementLocator(Locator.XPath, "//nav[@class='drawer']//span[normalize-space(text()) = '{0}']{1}");
         private readonly ElementLocator openedDrawer = new ElementLocator(Locator.CssSelector, "div.drawer-open");
         private readonly ElementLocator subMenuItem = new ElementLocator(Locator.XPath, "//ancestor::div[contains(@class, 'panel-open')]//div[@class = 'panel-body']");
-        private readonly ElementLocator latestEntities = new ElementLocator(Locator.CssSelector, "navigation-drawer[type = '{0}'] li");
-        private readonly ElementLocator latestEntity = new ElementLocator(Locator.CssSelector, "navigation-drawer[type = '{0}'] li:nth-of-type({1})");
+        private readonly ElementLocator latestEntities = new ElementLocator(Locator.CssSelector, "navigation-drawer[type = '{0}'] li a");
+        private readonly ElementLocator latestEntity = new ElementLocator(Locator.CssSelector, "navigation-drawer[type = '{0}'] li:nth-of-type({1}) a");
 
         public NavigationDrawerPage(DriverContext driverContext) : base(driverContext)
         {

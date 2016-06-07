@@ -135,3 +135,47 @@ Scenario: Display latest viewed activities
 		| Duke Flat, 237 Margate Rd                 |
 		| St John Flat, 2 Walton St                 |
 		| The Alternative Tuck Shop, 24 Holywell St |
+
+@LatestViews
+Scenario: Display latest viewed requirements
+	Given Contacts are created in database
+		| Title | FirstName | Surname  |
+		| Miss  | Triss     | Merigold |
+	When User navigates to create requirement page
+		And User opens navigation drawer menu
+		And User selects Requirements menu item
+		And User selects contacts on create requirement page
+			| FirstName | Surname  |
+			| Triss     | Merigold |
+		And User fills in location details on create requirement page
+			| Country        | Line2    | Postcode | City   |
+			| United Kingdom | Gower St | WC1E 6BT | London |
+		And User clicks save requirement button on create requirement page
+	Then New requirement should be created
+		And Latest 1 requirement should contain following data
+			| LatestData             |
+			| Triss Merigold         |
+	When Contacts are created in database
+		| Title | FirstName | Surname |
+		| Dr    | Van       | Wilder  |
+		| Sir   | Van       | Wilder  |
+		And Requirement for GB is created in database
+			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
+			| 100000   | 500000   | 2           | 3           | 2                 | 4                 | 1            | 3            | 2                | 2                | 90000   | 150000  | 200000      | 300000      | Note        |
+	When User navigates to view requirement page with id
+	Then Latest 2 requirement should contain following data
+		| LatestData             |
+		| Van Wilder, Van Wilder |
+		| Triss Merigold         |
+	When User clicks latest requirement on 2 position in drawer menu
+	Then View requirement page should be displayed
+		And Requirement location details on view requirement page are same as the following
+			| Line2    | Postcode | City   |
+			| Gower St | WC1E 6BT | London |
+		And Requirement applicants on view requirement page are same as the following
+			| FirstName | Surname  |
+			| Triss     | Merigold |
+		And Latest 2 requirement should contain following data
+			| LatestData             |
+			| Triss Merigold         |
+			| Van Wilder, Van Wilder |
