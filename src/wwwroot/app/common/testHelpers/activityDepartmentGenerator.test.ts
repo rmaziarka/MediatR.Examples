@@ -7,18 +7,29 @@ module Antares.TestHelpers {
 
     export class ActivityDepartmentGenerator {
         public static generateDto(specificData?: any): Dto.IActivityDepartment {
+            var department = DepartmentGenerator.generateDto();
+            var departmentType =  EnumTypeItemGenerator.generateDto();
+
             var activityDepartment: Dto.IActivityDepartment = {
                 id: ActivityDepartmentGenerator.makeRandom("id"),
                 activityId: ActivityDepartmentGenerator.makeRandom('activityId'),
-                departmentId: ActivityDepartmentGenerator.makeRandom('departmentId'),
-                department: DepartmentGenerator.generateDto(),
-                departmentType: EnumTypeItemGenerator.generateDto()
+                departmentId: department.id,
+                department: department,
+                departmentType:departmentType
             };
             return activityDepartment;
         }
 
+        public static generateManyDtos(n: number): Dto.IActivityDepartment[] {
+            return _.times(n, ActivityDepartmentGenerator.generateDto);
+        }
+
         public static generate(specificData?: any) {
             return new Business.ActivityDepartment(ActivityDepartmentGenerator.generateDto(specificData));
+        }
+
+        public static generateMany(n: number): Business.ActivityDepartment[] {
+            return _.map<Dto.IActivityDepartment, Business.ActivityDepartment>(ActivityDepartmentGenerator.generateManyDtos(n), (activityDepartment: Dto.IActivityDepartment) => { return new Business.ActivityDepartment(activityDepartment); });
         }
 
         private static makeRandom(text: string): string {

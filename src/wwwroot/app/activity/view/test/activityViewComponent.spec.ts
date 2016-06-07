@@ -56,17 +56,34 @@ module Antares {
                 group: '#activity-view-viewings card-list-group.viewing-group',
                 groupTitle: '#activity-view-viewings card-list-group.viewing-group card-list-group-header h5 time',
                 item: '#activity-view-viewings card-list-group.viewing-group card-list-group-item card.viewing-item',
+            },
+            departments:{
+                departmentsSection:'#departments-section',
+                departmentItem:'.department-item'
             }
         };
 
         describe('when activity is loaded', () => {
             var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
 
+            activityMock.activityDepartments = TestHelpers.ActivityDepartmentGenerator.generateMany(3);
+            activityMock.activityDepartments.forEach((activityDepartment, index) => {
+                
+                switch (index) {
+                    case 1:
+                        activityDepartment.departmentType.code = 'Managing'
+                        return ;
+                    default:
+                        activityDepartment.departmentType.code = 'Standard'
+                }
+
+                activityDepartment
+            });
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
                 $filter: ng.IFilterService,
-                $httpBackend: ng.IHttpBackendService) =>{
+                $httpBackend: ng.IHttpBackendService) => {
 
                 $http = $httpBackend;
                 filter = $filter;
@@ -182,9 +199,17 @@ module Antares {
                 expect(vendorEstimatedPriceElement.length).toBe(1);
                 expect(vendorEstimatedPriceElement.text()).toBe('55.05 GBP');
             });
+            it('and activity departments list is displayed and sorted',()=>{
+                // assert
+                var departmentsSectionElement = element.find(pageObjectSelectors.departments.departmentsSection);
+                var departmentItems = departmentsSectionElement.find(pageObjectSelectors.departments.departmentItem);
+
+                expect(departmentItems.length).toBe(3);
+                //expect(departmentItems.first().find('.department-status').length).toBe(1);
+            });
         });
 
-        describe('and vendors are loaded', () =>{
+        describe('and vendors are loaded', () => {
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
@@ -266,12 +291,12 @@ module Antares {
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
-                $httpBackend: ng.IHttpBackendService) =>{
+                $httpBackend: ng.IHttpBackendService) => {
 
                 $http = $httpBackend;
 
                 Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
-                $http.whenGET(/\/api\/enums\/.*\/items/).respond(() =>{
+                $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
                     return [];
                 });
 
@@ -411,10 +436,10 @@ module Antares {
                     cardListItemElement = cardListElement.find('card-list-item'),
                     cardListItemCardElement = cardListItemElement.find('card[id="attachment-card-' + attachmentMock.id + '"]');
 
-                var attachmentDataElement = cardListItemCardElement.find('[id="attachment-data-'+attachmentMock.id+'"]');
-                var attachmentDateElement = cardListItemCardElement.find('[id="attachment-created-date-' + attachmentMock.id +'"]');
-                var attachmentTypeElement = cardListItemCardElement.find('[id="attachment-type-' + attachmentMock.id +'"]');
-                var attachmentFileSizeElement = cardListItemCardElement.find('[id="attachment-file-size-' + attachmentMock.id +'"]');
+                var attachmentDataElement = cardListItemCardElement.find('[id="attachment-data-' + attachmentMock.id + '"]');
+                var attachmentDateElement = cardListItemCardElement.find('[id="attachment-created-date-' + attachmentMock.id + '"]');
+                var attachmentTypeElement = cardListItemCardElement.find('[id="attachment-type-' + attachmentMock.id + '"]');
+                var attachmentFileSizeElement = cardListItemCardElement.find('[id="attachment-file-size-' + attachmentMock.id + '"]');
 
                 expect(attachmentDataElement.text()).toBe(attachmentMock.fileName);
                 var formattedDate = filter('date')(dateMock, 'dd-MM-yyyy');
@@ -423,8 +448,8 @@ module Antares {
                 expect(attachmentFileSizeElement.text()).toBe(sizeMock);
             });
 
-            describe('and attachment details is clicked', () =>{
-                it('then attachment details are set in attachment preview component', () =>{
+            describe('and attachment details is clicked', () => {
+                it('then attachment details are set in attachment preview component', () => {
                     // arrange
                     activityMock.attachments = TestHelpers.AttachmentGenerator.generateMany(4);
                     scope.$apply();
