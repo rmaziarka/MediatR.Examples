@@ -3,6 +3,11 @@
     <div class="panel-body">
         {{vm.activity.propertyName || ''}}<span ng-if="vm.activity.propertyName && (vm.activity.propertyNumber || vm.activity.line2)">, </span>
         {{(vm.activity.propertyNumber || '') + ' ' + (vm.activity.line2 || '')}}
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <a ui-sref="app.activity-view({id: vm.activity.id})" translate="COMMON.VIEW"></a>
+            </div>
+        </div>
     </div>
 </div>
 <form ng-submit="addViewingForm.$valid" name="addViewingForm" id="addViewingForm" method="post" novalidate>

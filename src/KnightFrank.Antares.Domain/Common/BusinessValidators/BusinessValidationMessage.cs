@@ -77,6 +77,27 @@
             return new BusinessValidationMessage(ErrorMessage.Inconsistent_Dynamic_Configuration, message);
         }
 
+        public static BusinessValidationMessage OfferDateLessOrEqualToCreateDateMessage(DateTime createDate)
+        {
+            string errorMessageTemplate = GetMessage(ErrorMessage.OfferDateLessOrEqualToCreateDate);
+            string message = string.Format(errorMessageTemplate, createDate.Date.ToShortDateString());
+            return new BusinessValidationMessage(ErrorMessage.OfferDateLessOrEqualToCreateDate, message);
+        }
+
+        public static BusinessValidationMessage ExchangeDateGreaterOrEqualToCreateDateMessage(DateTime createDate)
+        {
+            string errorMessageTemplate = GetMessage(ErrorMessage.ExchangeDateGreaterOrEqualToCreateDate);
+            string message = string.Format(errorMessageTemplate, createDate.Date.ToShortDateString());
+            return new BusinessValidationMessage(ErrorMessage.ExchangeDateGreaterOrEqualToCreateDate, message);
+        }
+
+        public static BusinessValidationMessage CompletionDateGreaterOrEqualToCreateDateMessage(DateTime createDate)
+        {
+            string errorMessageTemplate = GetMessage(ErrorMessage.CompletionDateGreaterOrEqualToCreateDate);
+            string message = string.Format(errorMessageTemplate, createDate.Date.ToShortDateString());
+            return new BusinessValidationMessage(ErrorMessage.CompletionDateGreaterOrEqualToCreateDate, message);
+        }
+
         private static string GetMessage(ErrorMessage errorCode)
         {
             return Properties.BusinessErrorMessages.ResourceManager.GetString(GetErrorName(errorCode), culture) ?? "";

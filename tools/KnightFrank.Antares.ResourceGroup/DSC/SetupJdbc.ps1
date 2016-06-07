@@ -7,7 +7,7 @@ Configuration SetupJdbc
 
 		[Parameter(Mandatory = $true)]
 		[string]
-		$ElasticsearchPort,
+		$ElasticsearchPort = "9300",
 
 		[Parameter(Mandatory = $true)]
 		[string]
@@ -58,7 +58,7 @@ Configuration SetupJdbc
 	$jdbcFolder = "$jdbcUnpack\elasticsearch-jdbc-$jdbcVersion"
 
     $nssmVersion = '2.24'
-    $nssmUnpack = "$env:SystemDrive\Program Files\nssm"
+    $nssmUnpack = "$env:SystemDrive\nssm"
     $nssmFolder = "$nssmUnpack\nssm-$nssmVersion"
 
 	Import-DscResource -Module cGripDevDSC
@@ -102,9 +102,9 @@ Configuration SetupJdbc
 				$settings = Get-Content -Path $using:PathToSettingsTemplate -Raw | ConvertFrom-Json				
 				$settings.jdbc.url = "jdbc:sqlserver://" + $using:SqlIp + ":" + $using:SqlPort+ ";databaseName=$using:SqlDatabaseName"
 				$settings.jdbc.user = $using:SqlUser
-				$settings.jdbc.password = $using:SqlPassword
-				#$settings.jdbc."elasticsearch.Host" = $using:ElasticsearchHost
-				#$settings.jdbc."elasticsearch.Port" = $using:ElasticsearchPort
+				$settings.jdbc.password = $using:SqlPassword				
+				$settings.jdbc."elasticsearch.host" = $using:ElasticsearchHost
+				$settings.jdbc."elasticsearch.port" = $using:ElasticsearchPort
 				if($using:ElasticsearchIndex)
 				{
 					$settings.jdbc.index = $using:ElasticsearchIndex

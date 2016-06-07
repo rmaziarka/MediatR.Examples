@@ -79,7 +79,7 @@
             this.page.AttachFile.SelectType(type)
                 .AddFiletoAttachment(file)
                 .SaveAttachment();
-            this.page.WaitForSidePanelToHide(BaseConfiguration.LongTimeout);
+            this.page.WaitForSidePanelToHide(60);
         }
 
         [When(@"User clicks attachment details link on view activity page")]

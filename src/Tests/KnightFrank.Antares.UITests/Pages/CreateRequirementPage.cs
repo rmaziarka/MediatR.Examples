@@ -49,7 +49,6 @@
         public CreateRequirementPage OpenCreateRequirementPage()
         {
             new CommonPage(this.DriverContext).NavigateToPage("create requirement");
-            this.Driver.WaitForAngularToFinish();
             return this;
         }
 

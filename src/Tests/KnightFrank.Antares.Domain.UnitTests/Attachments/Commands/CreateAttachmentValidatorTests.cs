@@ -70,7 +70,6 @@
         }
 
         [Theory]
-        [InlineData(0)]
         [InlineData(-1)]
         public void Given_InvalidCreateAttachment_When_SizeIsNegative_And_Validating_Then_IsNotValid(long size)
         {
@@ -82,7 +81,7 @@
             ValidationResult validationResult = this.validator.Validate(cmd);
 
             // Assert
-            validationResult.IsInvalid(nameof(cmd.Size), nameof(Messages.greaterthan_error));
+            validationResult.IsInvalid(nameof(cmd.Size), nameof(Messages.greaterthanorequal_error));
         }
     }
 }

@@ -25,7 +25,7 @@ module Antares {
                 
                 httpBackend = $httpBackend;
 
-                httpBackend.whenGET(/\/translations\/.*\.json/).respond(() => {                    
+                httpBackend.whenGET(/translations\/.*\.json/).respond(() => {                    
                     return [200, staticTranslationMock];
                 });
 

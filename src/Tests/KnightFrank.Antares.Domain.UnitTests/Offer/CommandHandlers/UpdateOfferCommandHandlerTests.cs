@@ -35,6 +35,11 @@ namespace KnightFrank.Antares.Domain.UnitTests.Offer.CommandHandlers
             UpdateOfferCommandHandler handler,
             Offer offer)
         {
+            offer.CreatedDate = DateTime.Now;
+            command.OfferDate = DateTime.Now.AddDays(-1);
+            command.ExchangeDate = DateTime.Now.AddDays(1);
+            command.CompletionDate = DateTime.Now.AddDays(1);
+
             offerRepository.Setup(r => r.GetById(command.Id)).Returns(offer);
 
             // Act
