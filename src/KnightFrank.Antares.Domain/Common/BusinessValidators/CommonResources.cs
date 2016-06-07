@@ -116,7 +116,22 @@
         /// Key value : Activity should hva only one managing department.
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        Activity_Should_Have_Only_One_Managing_Department
+        Activity_Should_Have_Only_One_Managing_Department,
+        /// <summary>
+        /// Key value : Offer Date must be less than or equal to create date.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        OfferDateLessOrEqualToCreateDate,
+        /// <summary>
+        /// Key value : Completion Date must be greater than or equal to create date.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        CompletionDateGreaterOrEqualToCreateDate,
+        /// <summary>
+        /// Key value : Exchange Date must be greater than or equal to create date.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ExchangeDateGreaterOrEqualToCreateDate
     }
 }
 

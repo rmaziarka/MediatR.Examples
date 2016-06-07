@@ -124,6 +124,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Completion Date must be greater than or equal to {0}..
+        /// </summary>
+        internal static string CompletionDateGreaterOrEqualToCreateDate {
+            get {
+                return ResourceManager.GetString("CompletionDateGreaterOrEqualToCreateDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to One or more {0}(s) with given ids does not exist in the database..
         /// </summary>
         internal static string Entity_List_Item_Not_Exists {
@@ -147,6 +156,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         internal static string EnumType_Item_Not_Exists {
             get {
                 return ResourceManager.GetString("EnumType_Item_Not_Exists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exchange Date must be greater than or equal to {0}..
+        /// </summary>
+        internal static string ExchangeDateGreaterOrEqualToCreateDate {
+            get {
+                return ResourceManager.GetString("ExchangeDateGreaterOrEqualToCreateDate", resourceCulture);
             }
         }
         
@@ -201,6 +219,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         internal static string Missing_Requirement_Attendees_Id {
             get {
                 return ResourceManager.GetString("Missing_Requirement_Attendees_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offer Date must be less than or equal to {0}..
+        /// </summary>
+        internal static string OfferDateLessOrEqualToCreateDate {
+            get {
+                return ResourceManager.GetString("OfferDateLessOrEqualToCreateDate", resourceCulture);
             }
         }
         
