@@ -6,6 +6,7 @@
 
     using FluentAssertions;
 
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;
@@ -22,7 +23,7 @@
         private readonly DriverContext driverContext;
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
-        private readonly EditActivityPage page;
+        private EditActivityPage page;
         private const string Format = "dd-MM-yyyy";
 
         public EditActivitySteps(ScenarioContext scenarioContext)
@@ -39,6 +40,13 @@
             {
                 this.page = new EditActivityPage(this.driverContext);
             }
+        }
+
+        [When(@"User navigates to edit activity page with id")]
+        public void OpenEditActivityPageWithId()
+        {
+            Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
+            this.page = new EditActivityPage(this.driverContext).OpenEditActivityPage(activityId.ToString());
         }
 
         [When(@"User edits activity details on edit activity page")]

@@ -27,6 +27,7 @@
         }
 
         [Given(@"Contacts are created in database")]
+        [When(@"Contacts are created in database")]
         public void CreateContactsInDb(Table table)
         {
             List<Contact> contacts = table.CreateSet<Contact>().ToList();

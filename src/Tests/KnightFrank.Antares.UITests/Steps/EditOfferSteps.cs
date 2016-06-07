@@ -18,7 +18,7 @@
         private readonly DriverContext driverContext;
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
-        private readonly EditOfferPage page;
+        private EditOfferPage page;
         private const string Format = "dd-MM-yyyy";
 
         public EditOfferSteps(ScenarioContext scenarioContext)
@@ -35,6 +35,13 @@
             {
                 this.page = new EditOfferPage(this.driverContext);
             }
+        }
+
+        [When(@"User navigates to edit offer page with id")]
+        public void OpenEditActivityPageWithId()
+        {
+            Guid offerId = this.scenarioContext.Get<Offer>("Offer").Id;
+            this.page = new EditOfferPage(this.driverContext).OpenEditOfferPageWithId(offerId.ToString());
         }
 
         [When(@"User fills in offer details on edit offer page")]
@@ -62,6 +69,12 @@
         public void SaveOffer()
         {
             this.page.SaveOffer();
+        }
+
+        [When(@"User clicks activity details on edit offer page")]
+        public void OpenActivityDetails()
+        {
+            this.page.OpenActivityPreview().WaitForSidePanelToShow();
         }
     }
 }

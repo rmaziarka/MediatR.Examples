@@ -9,6 +9,7 @@
 
     public class EditOfferPage : ProjectPageBase
     {
+        private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator offer = new ElementLocator(Locator.Id, "offer-price");
         private readonly ElementLocator offerDate = new ElementLocator(Locator.Id, "offer-date");
         private readonly ElementLocator proposedCompletionDate = new ElementLocator(Locator.Id, "proposed-completion-date");
@@ -16,9 +17,16 @@
         private readonly ElementLocator save = new ElementLocator(Locator.Id, "activity-edit-save");
         private readonly ElementLocator specialConditions = new ElementLocator(Locator.Name, "specialConditions");
         private readonly ElementLocator status = new ElementLocator(Locator.Id, "offer-status");
+        private readonly ElementLocator activity = new ElementLocator(Locator.CssSelector, "#section-vendor .requirement-view-offers .card-body");
 
         public EditOfferPage(DriverContext driverContext) : base(driverContext)
         {
+        }
+
+        public EditOfferPage OpenEditOfferPageWithId(string id)
+        {
+            new CommonPage(this.DriverContext).NavigateToPageWithId("edit offer", id);
+            return this;
         }
 
         public EditOfferPage SelectStatus(string offerStatus)
@@ -60,6 +68,18 @@
         public EditOfferPage SaveOffer()
         {
             this.Driver.Click(this.save);
+            return this;
+        }
+
+        public EditOfferPage OpenActivityPreview()
+        {
+            this.Driver.Click(this.activity);
+            return this;
+        }
+
+        public EditOfferPage WaitForSidePanelToShow()
+        {
+            this.Driver.WaitForElementToBeDisplayed(this.panel, BaseConfiguration.MediumTimeout);
             return this;
         }
     }

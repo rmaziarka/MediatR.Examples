@@ -38,6 +38,12 @@
 
         public List<string> SecondaryNegotiatorsNextCalls => this.Driver.GetElements(this.secondaryNegotiatorNextCall.Format(string.Empty)).Select(el => el.GetAttribute("value")).ToList();
 
+        public EditActivityPage OpenEditActivityPage(string id)
+        {
+            new CommonPage(this.DriverContext).NavigateToPageWithId("edit activity", id);
+            return this;
+        }
+
         public EditActivityPage SelectActivityStatus(string newStatus)
         {
             this.Driver.GetElement<Select>(this.status).SelectByText(newStatus);

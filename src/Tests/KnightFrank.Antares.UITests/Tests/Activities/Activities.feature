@@ -65,20 +65,20 @@ Scenario: Edit activity
 			| Market appraisal | 4000                 | 5000             | 6000                 |
 		And Adam Williams is set as lead negotiator on view activity page
         And Secondary negotiators are set on view activity page
-            | Name            |
-            | Edward Griffin  |
-            | Eva Sandler     |
-            | Martha Williams |
+            | Name            | NextCall |
+            | Edward Griffin  | -        |
+            | Eva Sandler     | -        |
+            | Martha Williams | -        |
 	When User clicks edit button on view activity page
 		And User sets 3 secondary negotiator as lead negotiator on edit activity page
 		And User clicks save button on edit activity page
 	Then View activity page should be displayed
 		And Martha Williams is set as lead negotiator on view activity page
         And Secondary negotiators are set on view activity page
-            | Name           |
-            | Adam Williams  |
-            | Edward Griffin |
-            | Eva Sandler    |
+            | Name           | NextCall |
+            | Adam Williams  | 14       |
+            | Edward Griffin | -        |
+            | Eva Sandler    | -        |
 
 @Activity
 Scenario: Edit negotiators next call dates 

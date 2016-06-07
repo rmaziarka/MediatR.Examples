@@ -90,5 +90,15 @@
 
             expected.Should().Equal(current);
         }
+
+        [Then(@"Latest (.*) activity should contain following data")]
+        [Then(@"Latest (.*) activities should contain following data")]
+        public void CheckLatestActivityItems(int count, Table table)
+        {
+            List<string> expected = table.CreateSet<NavigationDrawerPage.LatestViews>().Select(el => el.LatestData).ToList();
+            List<string> current = this.page.GetLatestEntities("activity").Take(count).ToList();
+
+            expected.Should().Equal(current);
+        }
     }
 }

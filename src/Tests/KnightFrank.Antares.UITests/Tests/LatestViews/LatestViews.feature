@@ -64,3 +64,74 @@ Scenario: Display latest viewed properties
 			| Cooper House, 98 High St                    |
 			| Tulketh Community Sports College, 10 Tag Ln |
 			| Condo, 70 Longford St                       |
+
+@LatestViews
+Scenario: Display latest viewed activities
+	Given Property with Residential division and Retail.Car Showroom type is defined
+		And Property in GB is created in database
+			| PropertyNumber | PropertyName              | Line2       | Postcode | City    | County      |
+			| 24             | The Alternative Tuck Shop | Holywell St | OX1 3SB  | Oksford | Oxfordshire |
+	When User navigates to view property page with id
+		And User clicks add activites button on view property page	
+		And User selects Long Leasehold Sale activity type on create activity page
+		And User clicks save button on create activity page
+		And User opens navigation drawer menu
+		And User selects Activities menu item
+	Then Latest 1 activity should contain following data
+		| LatestData                                |
+		| The Alternative Tuck Shop, 24 Holywell St |
+	When Property with Residential division and Flat type is defined
+		And Property in GB is created in database
+			| PropertyNumber | PropertyName | Line2     | Postcode | City    | County      |
+			| 2              | St John Flat | Walton St | OX1 2HD  | Oksford | Oxfordshire |
+		And Property Long Leasehold Sale activity is defined
+	When User navigates to edit activity page with id
+	Then Latest 2 activities should contain following data
+		| LatestData                                |
+		| St John Flat, 2 Walton St                 |
+		| The Alternative Tuck Shop, 24 Holywell St |
+	When User goes back to previous page
+		And User clicks activity details link on view property page
+	Then Latest 2 activities should contain following data
+		| LatestData                                |
+		| The Alternative Tuck Shop, 24 Holywell St |
+		| St John Flat, 2 Walton St                 |
+	When Contacts are created in database
+		| Title | FirstName | Surname   |
+		| Lady  | Joanna    | Thornhill |
+		And Property with Residential division and House type is defined
+		And Property in GB is created in database
+			| PropertyNumber | PropertyName | Line2      | Postcode | City     | County |
+			| 237            | Duke Flat    | Margate Rd | CT12 6TA | Ramsgate | Kent   |
+		And Property ownership is defined
+			| PurchaseDate | BuyPrice |
+			| 10-01-2015   | 10000000 |
+		And Property Freehold Sale activity is defined
+		And Requirement for GB is created in database
+			| MinPrice | MaxPrice |
+			| 100000   | 500000   |
+		And Viewing for requirement is defined
+		And Offer for requirement is defined
+	When User navigates to view offer page with id
+		And User clicks activity details on view offer page
+	Then Latest 3 activities should contain following data
+		| LatestData                                |
+		| Duke Flat, 237 Margate Rd                 |
+		| The Alternative Tuck Shop, 24 Holywell St |
+		| St John Flat, 2 Walton St                 |
+	When User clicks latest activity on 3 position in drawer menu
+	Then Latest 3 activities should contain following data
+		| LatestData                                |
+		| St John Flat, 2 Walton St                 | 
+		| Duke Flat, 237 Margate Rd                 |
+		| The Alternative Tuck Shop, 24 Holywell St |
+		And Address details on view activity page are following
+			| PropertyNumber | PropertyName | Line2     | Postcode | City    | County      |
+			| 2              | St John Flat | Walton St | OX1 2HD  | Oksford | Oxfordshire |
+	When User navigates to edit offer page with id
+		And User clicks activity details on edit offer page
+	Then Latest 3 activities should contain following data
+		| LatestData                                |
+		| Duke Flat, 237 Margate Rd                 |
+		| St John Flat, 2 Walton St                 |
+		| The Alternative Tuck Shop, 24 Holywell St |

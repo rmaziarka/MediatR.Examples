@@ -76,6 +76,7 @@
         }
 
         [Given(@"Property with (.*) division and (.*) type is defined")]
+        [When(@"Property with (.*) division and (.*) type is defined")]
         public void GetDivisionAndType(string division, string propertyType)
         {
             Guid propertyTypeId = this.dataContext.PropertyTypes.Single(i => i.Code.Equals(propertyType)).Id;
@@ -118,6 +119,7 @@
         }
 
         [Given(@"Property ownership is defined")]
+        [When(@"Property ownership is defined")]
         public void CreateOwnership(Table table)
         {
             List<Ownership> ownerships = table.CreateSet<Ownership>().ToList();
@@ -136,6 +138,7 @@
         }
 
         [Given(@"Property (.*) activity is defined")]
+        [When(@"Property (.*) activity is defined")]
         public void CreateActivity(string activityType)
         {
             Guid activityTypeId = this.dataContext.ActivityTypes.Single(i => i.Code.Equals(activityType)).Id;
@@ -159,6 +162,14 @@
                         UserId = this.dataContext.Users.First().Id,
                         UserTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("LeadNegotiator")).Id,
                         CallDate = DateTime.UtcNow.AddDays(14)
+                    }
+                },
+                ActivityDepartments = new List<ActivityDepartment>
+                {
+                    new ActivityDepartment
+                    {
+                        DepartmentId = this.dataContext.Users.First().DepartmentId,
+                        DepartmentTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("Managing")).Id
                     }
                 }
             };
@@ -206,9 +217,21 @@
                     },
                     new ActivityUser
                     {
-                        UserId =
-                            this.dataContext.Users.First(u => u.FirstName.Equals("Martha") && u.LastName.Equals("Williams")).Id,
+                        UserId = this.dataContext.Users.First(u => u.FirstName.Equals("Martha") && u.LastName.Equals("Williams")).Id,
                         UserTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("SecondaryNegotiator")).Id
+                    }
+                },
+                ActivityDepartments = new List<ActivityDepartment>
+                {
+                    new ActivityDepartment
+                    {
+                        DepartmentId = this.dataContext.Users.First().DepartmentId,
+                        DepartmentTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("Managing")).Id
+                    },
+                    new ActivityDepartment
+                    {
+                        DepartmentId = this.dataContext.Users.First(u => u.FirstName.Equals("Eva") && u.LastName.Equals("Sandler")).DepartmentId,
+                        DepartmentTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("Standard")).Id
                     }
                 }
             };

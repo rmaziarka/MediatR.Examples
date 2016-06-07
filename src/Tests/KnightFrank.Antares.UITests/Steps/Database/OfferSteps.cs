@@ -28,6 +28,7 @@
         }
 
         [Given(@"Offer for requirement is defined")]
+        [When(@"Offer for requirement is defined")]
         public void CreateViewing()
         {
             Guid statusId =
