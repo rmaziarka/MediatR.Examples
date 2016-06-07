@@ -4,12 +4,13 @@ Scenario: Update Activity with negotiators
 	Given Activity exists in database
 		And Lead negotiator with ActiveDirectoryLogin jsmith and today plus 1 next call date exists in database
 		And Following secondary negotiators exists in database
-		| ActiveDirectoryLogin |
-		| jdoe                 |
-		| jrambo               |
+		| ActiveDirectoryLogin | ActivityDepartmentType |
+		| egreen               | Managing               |
+		| awilliams            | Standard               |
 	When User updates activity with defined negotiators
 	Then User should get OK http status code
 		And Activity details should be the same as already added
+		And Departments should be the same as already added
 
 Scenario: Update Activity with lead negotiator and next call date
 	Given Activity exists in database
@@ -56,3 +57,12 @@ Scenario Outline: Update last call date for invalid data
 	 | null         | valid   |
 	 | -2           | valid   |
 	 | 2            | invalid |
+
+Scenario: Update Activity with dublicate department
+	Given Activity exists in database
+		And Lead negotiator with ActiveDirectoryLogin jsmith and today plus 1 next call date exists in database
+		And Following secondary negotiators exists in database
+		| ActiveDirectoryLogin |
+		| ejohnson             |
+	When User updates activity with defined negotiators
+	Then User should get BadRequest http status code

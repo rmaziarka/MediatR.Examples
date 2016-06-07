@@ -53,7 +53,9 @@
                 Price = 1000,
                 RequirementId = requirementId,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
-                StatusId = statusId
+                StatusId = statusId,
+                CreatedDate = DateTime.UtcNow,
+                LastModifiedDate = DateTime.UtcNow
             };
 
             this.fixture.DataContext.Offer.Add(offer);
@@ -151,7 +153,7 @@
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
                 CompletionDate = DateTime.UtcNow.AddDays(2),
                 ExchangeDate = DateTime.UtcNow.AddDays(2),
-                OfferDate = DateTime.UtcNow
+                OfferDate = DateTime.UtcNow.AddMinutes(-1)
             };
 
             this.UpdateOffer(details);
@@ -172,7 +174,7 @@
                 ExchangeDate = DateTime.UtcNow,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
                 Price = 1000,
-                OfferDate = DateTime.UtcNow
+                OfferDate = DateTime.UtcNow.AddMinutes(-1)
             };
 
             this.UpdateOffer(details);
@@ -218,6 +220,8 @@
             string requestUrl = $"{ApiUrl}";
             HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, command);
             this.scenarioContext.SetHttpResponseMessage(response);
+            var abc = this.scenarioContext.GetResponseContent();
+
         }
     }
 }

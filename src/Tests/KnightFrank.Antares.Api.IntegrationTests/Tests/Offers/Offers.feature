@@ -198,21 +198,7 @@ Scenario: Update residential sales offer
 
 @Offers
 Scenario Outline: Update residential sales offer with invalid data
-	Given User gets EnumTypeItemId and EnumTypeItem code
-		| enumTypeCode           | enumTypeItemCode |
-		| OfferStatus            | New              |
-		| ActivityStatus         | PreAppraisal     |
-		| Division               | Residential      |
-		| ActivityUserType       | LeadNegotiator   |
-		| ActivityDepartmentType | Managing         |
-		| ActivityDepartmentType | Standard         |
-		And User gets GB address form for Property and country details
-		And User gets House for PropertyType
-		And User gets Freehold Sale for ActivityType
-		And Property with Address and Residential division is in database
-        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
-        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Activity exists in database
 		And User gets GB address form for Requirement and country details
 		And User creates contacts in database with following data 
 			| FirstName | Surname | Title  |

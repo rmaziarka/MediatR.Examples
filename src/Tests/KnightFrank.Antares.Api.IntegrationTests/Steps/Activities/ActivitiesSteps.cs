@@ -303,6 +303,21 @@
             actualActivity.ShouldBeEquivalentTo(activity);
         }
 
+
+        [Then(@"Departments should be the same as already added")]
+        public void ThenDepartmentsShouldBeTheSameAsAlreadyAdded()
+        {
+            var activityFromdb = this.scenarioContext.Get<Activity>("Activity");
+            List<ActivityDepartment> addedActivityDepartments = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent()).ActivityDepartments.ToList();
+            List<ActivityDepartment> updatedActivityDepartments = this.fixture.DataContext.ActivityDepartment.Select(x => x).Where(x => x.ActivityId.Equals(activityFromdb.Id)).ToList();
+
+            updatedActivityDepartments.ShouldAllBeEquivalentTo(addedActivityDepartments, opt => opt
+                .Excluding(x => x.Activity)
+                .Excluding(x => x.Department)
+                .Excluding(x => x.DepartmentType));
+        }
+
+
         private void GetActivityResponse(string activityId)
         {
             string requestUrl = $"{ApiUrl}/{activityId}";
@@ -318,5 +333,7 @@
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
+
+
     }
 }
