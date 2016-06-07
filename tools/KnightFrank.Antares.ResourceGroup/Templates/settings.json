@@ -1,0 +1,16 @@
+﻿{
+  "type": "jdbc",
+  "jdbc": {
+    "url": "",
+    "user": "",
+    "password": "",
+    "sql": [
+      {
+        "statement": "select * from dbo.Contact"
+      }
+    ],
+    "index": "",
+    "detect_json": "true",
+    "schedule": ""
+  }
+}
