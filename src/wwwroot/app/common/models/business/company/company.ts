@@ -14,10 +14,7 @@ module Antares.Common.Models.Business {
 
             if (company) {
                 angular.extend(this, company);
-                this.websiteUrl = company.websiteUrl;
-                this.clientCarePageUrl = company.clientCarePageUrl;
-                this.clientCareStatusId = company.clientCareStatusId;
-               // this.clientCareStatus = company.clientCareStatus;
+              
                 this.contacts = company.contacts.map((contact: Dto.IContact) => { return new Contact(contact) });
             }
         }
