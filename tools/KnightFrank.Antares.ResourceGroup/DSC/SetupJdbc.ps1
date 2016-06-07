@@ -58,7 +58,7 @@ Configuration SetupJdbc
 	$jdbcFolder = "$jdbcUnpack\elasticsearch-jdbc-$jdbcVersion"
 
     $nssmVersion = '2.24'
-    $nssmUnpack = "$env:SystemDrive\Program Files\nssm"
+    $nssmUnpack = "$env:SystemDrive\nssm"
     $nssmFolder = "$nssmUnpack\nssm-$nssmVersion"
 
 	Import-DscResource -Module cGripDevDSC
