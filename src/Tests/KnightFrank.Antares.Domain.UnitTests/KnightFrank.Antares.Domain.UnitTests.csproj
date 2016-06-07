@@ -111,6 +111,7 @@
     <Compile Include="Activity\CommandHandlers\CreateActivityAttachmentCommandHandlerTests.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityUserCommandHandlerTests.cs" />
     <Compile Include="Activity\Commands\CreateActivityAttachmentCommandValidatorTests.cs" />
+    <Compile Include="Activity\Commands\UpdateActivityDepartmentValidatorTests.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUserCommandValidatorTests.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUserValidatorTests.cs" />
     <Compile Include="Activity\Queries\ActivityTypeQueryValidatorTests.cs" />
