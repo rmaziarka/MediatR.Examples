@@ -13,7 +13,7 @@
     "type": "contact",
     "detect_json": "true",
     "schedule": "",
-    "elasticsearch.Host": "localhost",
-    "elasticsearch.Port": "9300"
+    "elasticsearch.host": "localhost",
+    "elasticsearch.port": "9300"
   }
 }
