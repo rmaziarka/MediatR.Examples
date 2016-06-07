@@ -103,8 +103,8 @@ Configuration SetupJdbc
 				$settings.jdbc.url = "jdbc:sqlserver://" + $using:SqlIp + ":" + $using:SqlPort+ ";databaseName=$using:SqlDatabaseName"
 				$settings.jdbc.user = $using:SqlUser
 				$settings.jdbc.password = $using:SqlPassword				
-				$settings.jdbc."elasticsearch.Host" = $using:ElasticsearchHost
-				$settings.jdbc."elasticsearch.Port" = $using:ElasticsearchPort
+				$settings.jdbc."elasticsearch.host" = $using:ElasticsearchHost
+				$settings.jdbc."elasticsearch.port" = $using:ElasticsearchPort
 				if($using:ElasticsearchIndex)
 				{
 					$settings.jdbc.index = $using:ElasticsearchIndex
