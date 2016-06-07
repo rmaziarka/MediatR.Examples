@@ -12,6 +12,7 @@ module Antares.TestHelpers {
             dateFormatValidationError: '[name="dateValidationError"]',
             numberFormatValidationError: '[name="numberValidationError"]',
             dateGreaterThanValidationError: '[name="dateGreaterThanValidationError"]',
+            dateLowerThanValidationError: '[name="dateLowerThanValidationError"]',
             anyValidationMessageError: 'ng-message'
         };
 
@@ -44,6 +45,10 @@ module Antares.TestHelpers {
 
         public assertDateGreaterThenValidator = (inputValue: string, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
             this.assertValidator(inputValue, expectedResult, inputSelector, this.pageObjectSelectors.dateGreaterThanValidationError, parentSelector);
+        }
+
+        public assertDateLowerThenValidator = (inputValue: string, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
+            this.assertValidator(inputValue, expectedResult, inputSelector, this.pageObjectSelectors.dateLowerThanValidationError, parentSelector);
         }
 
         public assertPatternValidator = (inputValue: string, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
