@@ -104,6 +104,19 @@
             }
         }
 
+        [When(@"User removes (.*) department from edit activity page")]
+        public void RemoveDepartment(string department)
+        {
+            this.page.RemoveDepartment(department);
+        }
+
+        [When(@"User set (.*) department as managing department on edit activity page")]
+        public void DepartmentUpdate(string department)
+        {
+            this.page.SetDepartmentAsLead(department);
+        }
+
+
         [Then(@"Lead negotiator next call is set to current date on edit activity page")]
         public void CheckLedNegotiatorNextCall()
         {

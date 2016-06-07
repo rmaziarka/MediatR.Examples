@@ -284,5 +284,13 @@
         {
             Assert.Equal(DateTime.UtcNow.AddDays(day).ToString(Format), this.page.LeadNegotiatorNextCall);
         }
+
+        [Then(@"Departments are displayed on view activity page")]
+        public void CheckDepartment(Table table)
+        {
+            List<Departments> expectedDepartments = table.CreateSet<Departments>().ToList();
+            List<Departments> actualDepartments = this.page.GetDepartments();
+            expectedDepartments.Should().Equal(actualDepartments, (d1, d2) => d1.Department.Equals(d2.Department));
+        }
     }
 }

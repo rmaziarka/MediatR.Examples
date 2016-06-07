@@ -11,6 +11,8 @@
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
 
+    using OpenQA.Selenium;
+
     public class ViewActivityPage : ProjectPageBase
     {
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
@@ -49,6 +51,9 @@
         private readonly ElementLocator secondaryNegotiatorNextCallEditButton = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//button");
         private readonly ElementLocator secondaryNegotiatorNextCallDateField = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//input");
         private readonly ElementLocator secondaryNegotiatorNextCallSaveButton = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//button[@type='submit']");
+        //departments locators
+        private readonly ElementLocator departmentNumber = new ElementLocator(Locator.CssSelector, "#departments-section card-list-item .card-item .department-name");
+       // private readonly ElementLocator departmentName = new ElementLocator(Locator.CssSelector, "#departments-section card-list-item:nth-of-type({0}) .department-name");
 
         private const string Format = "dd-MM-yyyy";
 
@@ -221,6 +226,12 @@
 
             return evens.Zip(odds, (s, s1) => new Negotiator { Name = s, NextCall = s1 }).ToList();
         }
+
+        public List<Departments> GetDepartments()
+        {
+            List<IWebElement> list = this.Driver.GetElements(this.departmentNumber).ToList();
+            return list.Select(el => new Departments { Department = el.Text }).ToList();
+        } 
     }
 
     public class Attachment
@@ -234,5 +245,10 @@
         public string Date { get; set; }
 
         public string User { get; set; }
+    }
+
+    public class Departments
+    {
+        public string Department { get; set; }
     }
 }

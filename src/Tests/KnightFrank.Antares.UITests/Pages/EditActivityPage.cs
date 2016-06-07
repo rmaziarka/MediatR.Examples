@@ -31,6 +31,10 @@
         private readonly ElementLocator leadNegotiatorNextCall = new ElementLocator(Locator.Id, "lead-call-date");
         private readonly ElementLocator secondaryNegotiatorNextCall = new ElementLocator(Locator.CssSelector, "#card-list-negotiators card-list-item{0} input");
         private readonly ElementLocator nextCall = new ElementLocator(Locator.CssSelector, ":nth-of-type({0})");
+        //Locators for departments
+        private readonly ElementLocator departmentActions = new ElementLocator(Locator.XPath, "//span[text()='{0}']/ancestor::card//i[@class='fa fa-ellipsis-h']");
+        private readonly ElementLocator departmentRemove = new ElementLocator(Locator.XPath, "//span[text()='{0}']/ancestor::card//span[text()='Remove']");
+        private readonly ElementLocator departmentSetAsManaging = new ElementLocator(Locator.XPath, "//span[text()='{0}']/ancestor::card//span[text()='Set as managing']");
 
         public EditActivityPage(DriverContext driverContext) : base(driverContext)
         {
@@ -118,6 +122,20 @@
         {
             this.Driver.SendKeys(this.secondaryNegotiatorNextCall.Format(this.nextCall.Format(position).Value),
                 date != string.Empty ? DateTime.UtcNow.AddDays(int.Parse(date)).ToString("dd-MM-yyyy") : string.Empty);
+            return this;
+        }
+
+        public EditActivityPage RemoveDepartment(string department)
+        {
+            this.Driver.Click(this.departmentActions.Format(department));
+            this.Driver.Click(this.departmentRemove.Format(department));
+            return this;
+        }
+
+        public EditActivityPage SetDepartmentAsLead(string department)
+        {
+            this.Driver.Click(this.departmentActions.Format(department));
+            this.Driver.Click(this.departmentSetAsManaging.Format(department));
             return this;
         }
     }

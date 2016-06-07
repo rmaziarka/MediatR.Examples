@@ -139,3 +139,49 @@ Scenario: Edit negotiators next call dates
             | Adam Williams | 0        |
             | Eva Sandler   | 20       |
             | John Doe      | -        |
+
+@Activity
+Scenario: Edit negotiators departments 
+	Given Contacts are created in database
+		| Title | FirstName | Surname |
+		| Mr    | Michael   | Jordan |
+		And Property with Residential division and Flat type is defined
+		And Property attributes details are defined
+			| MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces | MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms |
+			| 250     | 1600    | 1500        | 32000       | 4                   | 5                   | 1           | 3           | 1             | 2             | 7            | 10           |
+		And Property in GB is created in database
+			| PropertyNumber | PropertyName | Line2       | Postcode | City   | County |
+			| 12             | Big House    | Bath Street | NR5 3ZX  | London | London |
+		And Property ownership is defined
+			| PurchaseDate | BuyPrice |
+			| 01-03-2010   | 25000000 |
+		And Property Long Leasehold Sale activity with negotiators is defined
+	When User navigates to view activity page with id
+	Then Departments are displayed on view activity page
+		| Department  |
+		| Aldgate     |
+		| Residential |
+	When User clicks edit button on view activity page
+		And User removes 1 secondary negotiator from edit activity page
+		And User removes Residential department from edit activity page
+		And User adds secondary negotiators on edit activity page
+            | Name           |
+            | Jeam Beam      |
+            | Helen Williams |
+            | Thomas Miller  | 
+		And User clicks save button on edit activity page 
+	Then Departments are displayed on view activity page
+		| Department |
+		| Aldgate    |
+		| Bath       |
+		| Bristol    |
+		| Chelsea    |
+	When User clicks edit button on view activity page
+		And User set Bath department as managing department on edit activity page
+		And User clicks save button on edit activity page
+	Then Departments are displayed on view activity page
+		| Department |
+		| Bath       |
+		| Aldgate    |
+		| Bristol    |
+		| Chelsea    |
