@@ -39,7 +39,7 @@
       "value": "en_sql_server_2014_developer_edition_with_service_pack_1_x64_dvd_6668542.iso"
     },
     "CommonShareUrl": {
-      "value": "\\\\kfaneiedevcommonst.file.core.windows.net\\iso"
+      "value": "\\\\kfaneiedevcommonst.file.core.windows.net"
     },
     "CommonShareUserName": {
       "value": "kfaneiedevcommonst"
@@ -54,6 +54,27 @@
       "value": "kfaneietestcommonst"
     },
     "VmIISNameSuffix": {
+      "value": ""
+    },
+    "JavaVersion": {
+      "value": "8u91"
+    },
+    "JavaFileName": {
+      "value": "jdk-8u91-windows-x64.exe"
+    },
+    "ElasticsearchVersion": {
+      "value": "2.3.2"
+    },
+    "ElasticsearchFileName": {
+      "value": "elasticsearch-2.3.2.zip"
+    },
+    "JdbcFileName": {
+      "value": "elasticsearch-jdbc-2.3.2.0.zip"
+    },
+    "JdbcVersion": {
+      "value": "2.3.2.0"
+    },
+    "ElasticsearchIp": {
       "value": ""
     }
   }

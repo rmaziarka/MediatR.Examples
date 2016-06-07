@@ -51,7 +51,7 @@ Node localhost
 		GetScript = {@{Result = "CopySqlIso"}}
 		SetScript =
 		{
-			New-PSDrive -Name P -PSProvider FileSystem -Root $using:commonShareUrl -Credential $using:commonShareCredential
+			New-PSDrive -Name P -PSProvider FileSystem -Root "$using:commonShareUrl\iso" -Credential $using:commonShareCredential
 			Copy-Item p:\$using:isoFileName "$using:downloadPath\\$using:isoFileName"
 			Remove-PSDrive -Name P
 		}
