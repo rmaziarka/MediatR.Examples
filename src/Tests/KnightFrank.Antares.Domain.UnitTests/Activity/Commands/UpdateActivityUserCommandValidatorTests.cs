@@ -9,6 +9,7 @@
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Domain.Activity.Commands;
+    using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
 
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit2;
@@ -53,9 +54,7 @@
             ValidationResult validationResult = validator.Validate(command);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(command.Id));
-            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == nameof(Messages.notempty_error));
+            validationResult.IsInvalid(nameof(command.Id), nameof(Messages.notempty_error));
         }
 
         [Theory]
@@ -75,9 +74,7 @@
             ValidationResult validationResult = validator.Validate(command);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(command.ActivityId));
-            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == nameof(Messages.notempty_error));
+            validationResult.IsInvalid(nameof(command.ActivityId), nameof(Messages.notempty_error));
         }
 
         [Theory]
@@ -94,9 +91,7 @@
             ValidationResult validationResult = validator.Validate(command);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(command.CallDate));
-            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == nameof(Messages.greaterthanorequal_error));
+            validationResult.IsInvalid(nameof(command.CallDate), nameof(Messages.greaterthanorequal_error));
         }
     }
 }
