@@ -186,6 +186,13 @@
             this.validator.ShouldHaveChildValidator(x => x.SecondaryNegotiators, typeof(UpdateActivityUserValidator));
         }
 
+
+        [Fact]
+        public void Given_UpdateActivityCommandValidator_When_Validating_Than_DepartmentsHaveConfiguredValidator()
+        {
+            this.validator.ShouldHaveChildValidator(x => x.Departments, typeof(UpdateActivityDepartmentValidator));
+        }
+
         [Theory]
         [AutoMoqData]
         public void Given_ExistingActivityIdInCommand_When_Validating_Then_ValidationPasses(
