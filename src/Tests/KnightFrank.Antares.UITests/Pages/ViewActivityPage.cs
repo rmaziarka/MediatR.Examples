@@ -190,17 +190,17 @@
 
         public ViewActivityPage EditLeadNegotiatorNextCall(int day)
         {
-            this.Driver.GetElement(this.leadNegotiatorNextCallEditButton).Click();
+            this.Driver.Click(this.leadNegotiatorNextCallEditButton);
             this.Driver.SendKeys(this.leadNegotiatorNextCallDateField, DateTime.UtcNow.AddDays(day).ToString(Format));
-            this.Driver.GetElement(this.leadNegotiatorNextCallSaveButton).Click();
+            this.Driver.Click(this.leadNegotiatorNextCallSaveButton);
             return this;
         }
 
         public ViewActivityPage EditSecondaryNegotiatorNextCall(string name, int day)
         {
-            this.Driver.GetElement(this.secondaryNegotiatorNextCallEditButton.Format(name)).Click();
+            this.Driver.Click(this.secondaryNegotiatorNextCallEditButton.Format(name));
             this.Driver.SendKeys(this.secondaryNegotiatorNextCallDateField.Format(name), DateTime.UtcNow.AddDays(day).ToString(Format));
-            this.Driver.GetElement(this.secondaryNegotiatorNextCallSaveButton.Format(name)).Click();
+            this.Driver.Click(this.secondaryNegotiatorNextCallSaveButton.Format(name));
             return this;
         }
 
