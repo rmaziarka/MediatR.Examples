@@ -144,9 +144,6 @@
     "ElasticsearchIp": {
       "type": "string"
     },
-    "ElasticsearchAdditionalConfigValues": {
-      "type": "array"
-    },
     "IsoFileName": {
       "type": "string"
     },
@@ -543,8 +540,7 @@
                 "ElasticsearchFileName": "[parameters('ElasticsearchFileName')]",
                 "JdbcFileName": "[parameters('JdbcFileName')]",
                 "JdbcVersion": "[parameters('JdbcVersion')]",
-                "ElasticsearchIp": "reference(resourceId([variables('VmElasticsearchNicName')]).ipConfigurations[0].properties.privateIPAddress",
-                "ElasticsearchAdditionalConfigValues": "[parameters('ElasticsearchAdditionalConfigValues')]"
+                "ElasticsearchIp": "[parameters('ElasticsearchIp')]"
               }
             },
             "protectedSettings": {
