@@ -57,9 +57,9 @@ module Antares {
                 groupTitle: '#activity-view-viewings card-list-group.viewing-group card-list-group-header h5 time',
                 item: '#activity-view-viewings card-list-group.viewing-group card-list-group-item card.viewing-item',
             },
-            departments:{
-                departmentsSection:'#departments-section',
-                departmentItem:'.department-item'
+            departments: {
+                departmentsSection: '#departments-section',
+                departmentItem: '.department-item'
             }
         };
 
@@ -68,25 +68,41 @@ module Antares {
 
             activityMock.activityDepartments = TestHelpers.ActivityDepartmentGenerator.generateMany(3);
             activityMock.activityDepartments.forEach((activityDepartment, index) => {
-                
+
                 switch (index) {
                     case 1:
-                        activityDepartment.departmentType.code = 'Managing'
-                        return ;
+                        activityDepartment.departmentTypeId = '1';
+                        activityDepartment.departmentType.id = '1';
+                        activityDepartment.departmentType.code = 'Managing';
+                        return;
                     default:
+                        activityDepartment.departmentTypeId = '2';
+                        activityDepartment.departmentType.id = '2';
                         activityDepartment.departmentType.code = 'Standard'
                 }
 
                 activityDepartment
             });
+            
+            beforeEach(angular.mock.module(($provide: angular.auto.IProvideService) => {
+                $provide.service('enumService', Antares.Mock.EnumServiceMock);
+            }));
+
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
                 $filter: ng.IFilterService,
-                $httpBackend: ng.IHttpBackendService) => {
+                $httpBackend: ng.IHttpBackendService,
+                enumService: Antares.Mock.EnumServiceMock) => {
 
                 $http = $httpBackend;
                 filter = $filter;
+                var enumItems = [
+                    { id: '1', code: 'Managing' },
+                    { id: '2', code: 'Standard' }
+                ];
+
+                enumService.setEnum('ActivityDepartmentType',enumItems);
 
                 Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
                 $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
@@ -199,13 +215,14 @@ module Antares {
                 expect(vendorEstimatedPriceElement.length).toBe(1);
                 expect(vendorEstimatedPriceElement.text()).toBe('55.05 GBP');
             });
-            it('and activity departments list is displayed and sorted',()=>{
+
+            it('and activity departments list is displayed and sorted', () => {
                 // assert
                 var departmentsSectionElement = element.find(pageObjectSelectors.departments.departmentsSection);
                 var departmentItems = departmentsSectionElement.find(pageObjectSelectors.departments.departmentItem);
 
                 expect(departmentItems.length).toBe(3);
-                //expect(departmentItems.first().find('.department-status').length).toBe(1);
+                expect(departmentItems.first().find('.department-status').length).toBe(1);
             });
         });
 
