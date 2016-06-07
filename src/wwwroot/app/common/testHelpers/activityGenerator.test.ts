@@ -18,7 +18,6 @@ module Antares.TestHelpers {
                 property: PropertyGenerator.generateDto(),
                 propertyId: ActivityGenerator.makeRandom('propertyId'),
                 activityUsers: [ActivityUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator)],
-                //TODO add generating managing department
                 activityDepartments: []
             }
 
