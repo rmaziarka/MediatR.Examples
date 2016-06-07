@@ -10,6 +10,7 @@
       }
     ],
     "index": "",
+    "type":  "contact",
     "detect_json": "true",
     "schedule": ""
   }
