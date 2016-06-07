@@ -440,6 +440,31 @@
               }
             }
           }
+        },
+        {
+          "apiVersion": "2015-06-15",
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(variables('VmIISName'),'/joindomain')]",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('VmIISName'))]",
+            "[concat('Microsoft.Compute/virtualMachines/', variables('VmIISName'), '/extensions/KnightFrank-Antares-Vm-IIS-DSC')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Compute",
+            "type": "JsonADDomainExtension",
+            "typeHandlerVersion": "1.0",
+            "settings": {
+              "Name": "[parameters('domainToJoin')]",
+              "OUPath": "[parameters('ouPath')]",
+              "User": "[concat(parameters('domainToJoin'), '\\', parameters('domainUsername'))]",
+              "Restart": "true",
+              "Options": "[parameters('domainJoinOptions')]"
+            },
+            "protectedsettings": {
+              "Password": "[parameters('domainPassword')]"
+            }
+          }
         }
       ]
     },
@@ -516,7 +541,9 @@
           "location": "[resourceGroup().location]",
           "apiVersion": "2015-06-15",
           "dependsOn": [
-            "[concat('Microsoft.Compute/virtualMachines/', variables('VmElasticsearchName'))]"
+            "[concat('Microsoft.Compute/virtualMachines/', variables('VmElasticsearchName'))]",
+            "[concat('Microsoft.Compute/virtualMachines/', variables('VmIISName'), '/extensions/KnightFrank-Antares-Vm-IIS-DSC')]",
+            "[concat('Microsoft.Compute/virtualMachines/', variables('VmSQLName'), '/extensions/KnightFrank-Antares-Vm-Sql-DSC')]"
           ],
           "tags": {
             "displayName": "KnightFrank-Antares-Vm-Elasticsearch-DSC"
@@ -554,58 +581,34 @@
               }
             }
           }
+        },
+        {
+          "apiVersion": "2015-06-15",
+          "type": "Microsoft.Compute/virtualMachines/extensions",
+          "name": "[concat(variables('VmElasticsearchName'),'/joindomain')]",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('VmElasticsearchName'))]",
+            "[concat('Microsoft.Compute/virtualMachines/', variables('VmElasticsearchName'), '/extensions/KnightFrank-Antares-Vm-Elasticsearch-DSC')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Compute",
+            "type": "JsonADDomainExtension",
+            "typeHandlerVersion": "1.0",
+            "settings": {
+              "Name": "[parameters('domainToJoin')]",
+              "OUPath": "[parameters('ouPath')]",
+              "User": "[concat(parameters('domainToJoin'), '\\', parameters('domainUsername'))]",
+              "Restart": "true",
+              "Options": "[parameters('domainJoinOptions')]"
+            },
+            "protectedsettings": {
+              "Password": "[parameters('domainPassword')]"
+            }
+          }
         }
       ]
-    },
-    {
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('VmIISName'),'/joindomain')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', variables('VmIISName'))]",
-        "[concat('Microsoft.Compute/virtualMachines/', variables('VmIISName'), '/extensions/KnightFrank-Antares-Vm-IIS-DSC')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "JsonADDomainExtension",
-        "typeHandlerVersion": "1.0",
-        "settings": {
-          "Name": "[parameters('domainToJoin')]",
-          "OUPath": "[parameters('ouPath')]",
-          "User": "[concat(parameters('domainToJoin'), '\\', parameters('domainUsername'))]",
-          "Restart": "true",
-          "Options": "[parameters('domainJoinOptions')]"
-        },
-        "protectedsettings": {
-          "Password": "[parameters('domainPassword')]"
-        }
-      }
-    },
-    {
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('VmElasticsearchName'),'/joindomain')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', variables('VmElasticsearchName'))]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "JsonADDomainExtension",
-        "typeHandlerVersion": "1.0",
-        "settings": {
-          "Name": "[parameters('domainToJoin')]",
-          "OUPath": "[parameters('ouPath')]",
-          "User": "[concat(parameters('domainToJoin'), '\\', parameters('domainUsername'))]",
-          "Restart": "true",
-          "Options": "[parameters('domainJoinOptions')]"
-        },
-        "protectedsettings": {
-          "Password": "[parameters('domainPassword')]"
-        }
-      }
-    }
+    }    
   ],
   "outputs": {
   }

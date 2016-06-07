@@ -54,6 +54,58 @@ Param (
 			RebootNodeIfNeeded = $true
 			ActionAfterReboot = "ContinueConfiguration"
 		}
+
+		#####
+		#Install Octopus Tentacle
+		#####
+
+        File OctopusDir
+		{
+			DestinationPath = "c:\Octopus"
+			Ensure = "Present"
+			Type = "Directory"
+		}
+
+		Script DownloadOctopusTentacle
+		{
+			TestScript = {
+				Test-Path "C:\WindowsAzure\Octopus.Tentacle.3.3.6-x64.msi"
+			}
+			SetScript ={
+				$source = "https://download.octopusdeploy.com/octopus/Octopus.Tentacle.3.3.6-x64.msi"
+				$dest = "C:\WindowsAzure\Octopus.Tentacle.3.3.6-x64.msi"
+				Invoke-WebRequest $source -OutFile $dest
+			}
+			GetScript = {@{Result = "DownloadOctopusTentacle"}}
+		}
+
+		Package InstallOctopusTentacle
+		{
+			Ensure = "Present"  
+			Path  = "C:\WindowsAzure\Octopus.Tentacle.3.3.6-x64.msi"
+			Name = "Octopus Deploy Tentacle"
+			ProductId = "{D2622F6E-1377-47A6-9F6D-ED9AF593205D}"
+			DependsOn = @("[Script]DownloadOctopusTentacle")
+		}
+
+		Script ConfigureOctopusTentacle
+		{
+			DependsOn = @("[Package]InstallOctopusTentacle", "[File]OctopusDir")
+			TestScript = {
+				Test-Path "C:\Octopus\Tentacle.config"
+			}
+			SetScript = {
+				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" create-instance --instance "Tentacle" --config "C:\Octopus\Tentacle.config" --console
+				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" new-certificate --instance "Tentacle" --if-blank --console
+				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --reset-trust --console
+				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --home "C:\Octopus" --app "C:\Octopus\Applications" --port "10933" --noListen "False" --console
+				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --trust "$using:OctopusThumbprint" --console
+				& "netsh" advfirewall firewall add rule "name=Octopus Deploy Tentacle" dir=in action=allow protocol=TCP localport=10933
+				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" service --instance "Tentacle" --install --start --console
+			}
+			GetScript = {@{Result = "ConfigureOctopusTentacle"}}
+		}
+
 		#####
 		#Download and set env variable for JDK
 		#####
@@ -76,6 +128,7 @@ Param (
 			    Copy-Item "P:\$using:jdbcSource\$using:jdbcFileName" "$using:tempDownloadFolder\$using:jdbcFileName"
 			    Remove-PSDrive -Name P
 		    }
+			DependsOn = "[File]TempFolder"
 	    }
 
 		xRemoteFile CopyElasticsearch {
@@ -84,19 +137,12 @@ Param (
             DependsOn = '[File]TempFolder'
 		}
 
-        xRemoteFile CopyNssm
-	    {
-		    DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $nssmFileName
-			Uri = "https://nssm.cc/release/nssm-2.24.zip"			
-            DependsOn = '[File]TempFolder'
-		}
-
-		xPackage InstallJava {
+        xPackage InstallJava {
 			Name = 'Java SE Development Kit 8 Update 91 (64-bit)'
 			Path =  Join-Path -Path $tempDownloadFolder -ChildPath $JavaFileName
 			Arguments = "/s INSTALLDIR=`"$javaFolder`" STATIC=1"
 			ProductId = ''
-			DependsOn = '[Script]CopyFiles'
+			DependsOn = @('[Script]CopyFiles', '[Script]ConfigureOctopusTentacle')
 		}
 		  
 		Environment SetJavaHome
@@ -121,7 +167,6 @@ Param (
 		#Download and install elasticsearch
 		#####
 
-		
 	    xArchive UnzipElasticsearch {
 			Path = Join-Path -Path $tempDownloadFolder -ChildPath $ElasticsearchFileName
 			Destination = Join-Path -Path $elasticsearchUnpack -ChildPath $ElasticsearchVersion
@@ -175,63 +220,19 @@ Param (
 		#####
 		#Download and install JDBC
 		#####
-				
+			
+		xRemoteFile CopyNssm
+	    {
+		    DestinationPath = Join-Path -Path $tempDownloadFolder -ChildPath $nssmFileName
+			Uri = "https://nssm.cc/release/nssm-2.24.zip"			
+            DependsOn = '[File]TempFolder'
+		}
+
         xArchive UnzipNssm {
 			Path = Join-Path -Path $tempDownloadFolder -ChildPath $nssmFileName
 			Destination = $nssmUnpack
 			DependsOn = @('[xRemoteFile]CopyNssm')
 			DestinationType = "Directory"
-		}
-
-		#####
-		#Install Octopus Tentacle
-		#####
-
-        File OctopusDir
-    {
-        DestinationPath = "c:\Octopus"
-        Ensure = "Present"
-        Type = "Directory"
-    }
-
-		Script DownloadOctopusTentacle
-		{
-			TestScript = {
-				Test-Path "C:\WindowsAzure\Octopus.Tentacle.3.3.6-x64.msi"
-			}
-			SetScript ={
-				$source = "https://download.octopusdeploy.com/octopus/Octopus.Tentacle.3.3.6-x64.msi"
-				$dest = "C:\WindowsAzure\Octopus.Tentacle.3.3.6-x64.msi"
-				Invoke-WebRequest $source -OutFile $dest
-			}
-			GetScript = {@{Result = "DownloadOctopusTentacle"}}
-		}
-
-		Package InstallOctopusTentacle
-		{
-			Ensure = "Present"  
-			Path  = "C:\WindowsAzure\Octopus.Tentacle.3.3.6-x64.msi"
-			Name = "Octopus Deploy Tentacle"
-			ProductId = "{D2622F6E-1377-47A6-9F6D-ED9AF593205D}"
-			DependsOn = "[Script]DownloadOctopusTentacle"
-		}
-
-		Script ConfigureOctopusTentacle
-		{
-			DependsOn = @("[Package]InstallOctopusTentacle", "[File]OctopusDir")
-			TestScript = {
-				Test-Path "C:\Octopus\Tentacle.config"
-			}
-			SetScript = {
-				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" create-instance --instance "Tentacle" --config "C:\Octopus\Tentacle.config" --console
-				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" new-certificate --instance "Tentacle" --if-blank --console
-				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --reset-trust --console
-				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --home "C:\Octopus" --app "C:\Octopus\Applications" --port "10933" --noListen "False" --console
-				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" configure --instance "Tentacle" --trust "$using:OctopusThumbprint" --console
-				& "netsh" advfirewall firewall add rule "name=Octopus Deploy Tentacle" dir=in action=allow protocol=TCP localport=10933
-				& "C:\Program Files\Octopus Deploy\Tentacle\Tentacle.exe" service --instance "Tentacle" --install --start --console
-			}
-			GetScript = {@{Result = "ConfigureOctopusTentacle"}}
-		}
+		}		
 	}
 }
