@@ -130,11 +130,13 @@ Scenario: Get property
         And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
         And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode     | enumTypeItemCode    |
-			| OwnershipType    | Freeholder          |
-			| ActivityStatus   | PreAppraisal        |
-			| Division         | Residential         |
-			| ActivityUserType | LeadNegotiator      |
+			| enumTypeCode           | enumTypeItemCode |
+			| OwnershipType          | Freeholder       |
+			| ActivityStatus         | PreAppraisal     |
+			| Division               | Residential      |
+			| ActivityUserType       | LeadNegotiator   |
+			| ActivityDepartmentType | Managing         |
+			| ActivityDepartmentType | Standard         |
 		And User sets attributes for property in database
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
 			| 1           | 3           | 1             | 3             | 2            | 3            | 1000.1  | 3000.1  | 500.1       | 4000.1      | 1                   | 3                   |

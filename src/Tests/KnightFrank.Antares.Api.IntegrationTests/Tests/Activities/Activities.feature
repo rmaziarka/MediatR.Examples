@@ -6,11 +6,13 @@ Scenario Outline: Create activity with invalid data
 		And User gets House for PropertyType
 		And User gets <activityTypeCode> for ActivityType
 		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode       | enumTypeItemCode |
-			| OwnershipType      | Freeholder       |
-			| <activityStatusId> | PreAppraisal     |
-			| Division           | Residential      |
-			| ActivityUserType   | LeadNegotiator   |
+			| enumTypeCode           | enumTypeItemCode |
+			| OwnershipType          | Freeholder       |
+			| <activityStatusId>     | PreAppraisal     |
+			| Division               | Residential      |
+			| ActivityUserType       | LeadNegotiator   |
+			| ActivityDepartmentType | Managing         |
+			| ActivityDepartmentType | Standard         |
 		And User sets attributes for property in database
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
 			| 1           | 3           | 1             | 3             | 2            | 3            | 1000    | 3000    | 500         | 4000        | 1                   | 3                   |
@@ -34,11 +36,13 @@ Scenario: Create Activity
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
 		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode     | enumTypeItemCode |
-			| OwnershipType    | Freeholder       |
-			| ActivityStatus   | PreAppraisal     |
-			| Division         | Residential      |
-			| ActivityUserType | LeadNegotiator   |
+			| enumTypeCode           | enumTypeItemCode |
+			| OwnershipType          | Freeholder       |
+			| ActivityStatus         | PreAppraisal     |
+			| Division               | Residential      |
+			| ActivityUserType       | LeadNegotiator   |
+			| ActivityDepartmentType | Managing         |
+			| ActivityDepartmentType | Standard         |
 		And User sets attributes for property in database
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
 			| 1           | 3           | 1             | 3             | 2            | 3            | 1000    | 3000    | 500         | 4000        | 1                   | 3                   |
@@ -74,10 +78,12 @@ Scenario: Get Activity
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
 		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode     | enumTypeItemCode |
-			| ActivityStatus   | PreAppraisal     |
-			| Division         | Residential      |
-			| ActivityUserType | LeadNegotiator   |
+			| enumTypeCode           | enumTypeItemCode |
+			| ActivityStatus         | PreAppraisal     |
+			| Division               | Residential      |
+			| ActivityUserType       | LeadNegotiator   |
+			| ActivityDepartmentType | Managing         |
+			| ActivityDepartmentType | Standard         |
 		And Property characteristics are set for given property type
 		And User sets attributes for property in database
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
@@ -96,10 +102,12 @@ Scenario: Record and update residential sale valuation
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
 		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode     | enumTypeItemCode |
-			| ActivityStatus   | PreAppraisal     |
-			| Division         | Residential      |
-			| ActivityUserType | LeadNegotiator   |
+			| enumTypeCode           | enumTypeItemCode |
+			| ActivityStatus         | PreAppraisal     |
+			| Division               | Residential      |
+			| ActivityUserType       | LeadNegotiator   |
+			| ActivityDepartmentType | Managing         |
+			| ActivityDepartmentType | Standard         |
 		And User sets attributes for property in database
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
 			| 1           | 3           | 1             | 3             | 2            | 3            | 1000    | 3000    | 500         | 4000        | 1                   | 3                   |
@@ -120,10 +128,12 @@ Scenario Outline: Record and update residential sale valuation using invalid dat
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
 		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode     | enumTypeItemCode |
-			| Division         | Residential      |
-			| ActivityStatus   | PreAppraisal     |
-			| ActivityUserType | LeadNegotiator   |
+			| enumTypeCode           | enumTypeItemCode |
+			| Division               | Residential      |
+			| ActivityStatus         | PreAppraisal     |
+			| ActivityUserType       | LeadNegotiator   |
+			| ActivityDepartmentType | Managing         |
+			| ActivityDepartmentType | Standard         |
 		And User sets attributes for property in database
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
 			| 1           | 3           | 1             | 3             | 2            | 3            | 1000    | 3000    | 500         | 4000        | 1                   | 3                   |
@@ -149,10 +159,12 @@ Scenario: Get all activities
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
 		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode     | enumTypeItemCode |
-			| Division         | Residential      |
-			| ActivityStatus   | NotSelling       |
-			| ActivityUserType | LeadNegotiator   |
+			| enumTypeCode           | enumTypeItemCode |
+			| Division               | Residential      |
+			| ActivityStatus         | NotSelling       |
+			| ActivityUserType       | LeadNegotiator   |
+			| ActivityDepartmentType | Managing         |
+			| ActivityDepartmentType | Standard         |
 		And User sets attributes for property in database
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions |
 			| 1           | 3           | 1             | 3             |
@@ -173,11 +185,13 @@ Scenario: Get Activity with viewing and offer
 		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
 		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode     | enumTypeItemCode |
-			| ActivityStatus   | PreAppraisal     |
-			| Division         | Residential      |
-			| ActivityUserType | LeadNegotiator   |
-			| OfferStatus    | New              |
+			| enumTypeCode           | enumTypeItemCode |
+			| ActivityStatus         | PreAppraisal     |
+			| Division               | Residential      |
+			| ActivityUserType       | LeadNegotiator   |
+			| OfferStatus            | New              |
+			| ActivityDepartmentType | Managing         |
+			| ActivityDepartmentType | Standard         |
 		And Property characteristics are set for given property type
 		And User sets attributes for property in database
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |

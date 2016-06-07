@@ -18,10 +18,12 @@ Scenario: Create latest viewed property
 Scenario: Create latest viewed activity
 	Given User gets GB address form for Property and country details
         And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode     | enumTypeItemCode |
-			| Division         | Residential      |
-			| ActivityStatus   | PreAppraisal     |
-			| ActivityUserType | LeadNegotiator   |
+			| enumTypeCode           | enumTypeItemCode |
+			| Division               | Residential      |
+			| ActivityStatus         | PreAppraisal     |
+			| ActivityUserType       | LeadNegotiator   |
+			| ActivityDepartmentType | Managing         |
+			| ActivityDepartmentType | Standard         |
         And User gets House for PropertyType
 		And Property with Address and Residential division is in database
 			| PropertyName | PropertyNumber | Line2 | Line3 | Postcode | City | County |
@@ -65,10 +67,12 @@ Scenario: Get latest viewed properties
 Scenario: Get latest viewed activities
 	Given User gets GB address form for Property and country details
         And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode     | enumTypeItemCode |
-			| Division         | Residential      |
-			| ActivityStatus   | PreAppraisal     |
-			| ActivityUserType | LeadNegotiator   |
+			| enumTypeCode           | enumTypeItemCode |
+			| Division               | Residential      |
+			| ActivityStatus         | PreAppraisal     |
+			| ActivityUserType       | LeadNegotiator   |
+			| ActivityDepartmentType | Managing         |
+			| ActivityDepartmentType | Standard         |
         And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
 		And Property with Address and Residential division is in database

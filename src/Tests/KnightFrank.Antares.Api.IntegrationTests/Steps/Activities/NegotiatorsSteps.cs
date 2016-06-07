@@ -29,7 +29,10 @@
         private ActivityUser activityUser;
 
         private List<Guid> secondaryNegotiatorsList;
+
         private UpdateActivityUser updateActivityUser;
+
+        private List<UpdateActivityDepartment> updateActivityDepartments;
 
         public NegotiatorsSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {
@@ -45,10 +48,16 @@
         public void GivenLeadNegotiatorWithActiveDirectoryLoginExistsInDatabase(string activeDirectoryLogin, double noOfDays)
         {
             User user = this.fixture.DataContext.Users.SingleOrDefault(x => x.ActiveDirectoryLogin.Equals(activeDirectoryLogin));
+            Guid departmentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Managing"];
             this.updateActivityUser = new UpdateActivityUser
             {
                 UserId = user?.Id ?? Guid.NewGuid(),
                 CallDate = DateTime.UtcNow.AddDays(noOfDays)
+            };
+
+            this.updateActivityDepartments = new List<UpdateActivityDepartment>
+            {
+                new UpdateActivityDepartment { DepartmentId = user?.DepartmentId ?? Guid.Empty, DepartmentTypeId = departmentTypeId }
             };
         }
 
@@ -83,7 +92,8 @@
                 LeadNegotiator = this.updateActivityUser,
                 SecondaryNegotiators =
                     this.secondaryNegotiatorsList.Select(
-                        n => new UpdateActivityUser { UserId = n, CallDate = DateTime.UtcNow.AddDays(10) }).ToList()
+                        n => new UpdateActivityUser { UserId = n, CallDate = DateTime.UtcNow.AddDays(10) }).ToList(),
+                Departments = this.updateActivityDepartments 
             };
 
             HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, updateActivityCommand);

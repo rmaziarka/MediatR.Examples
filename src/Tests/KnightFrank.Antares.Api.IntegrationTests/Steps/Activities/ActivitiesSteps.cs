@@ -16,6 +16,7 @@
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Activity.QueryResults;
 
@@ -31,6 +32,10 @@
         private readonly BaseTestClassFixture fixture;
 
         private readonly ScenarioContext scenarioContext;
+
+        private User leadNegotiator;
+
+        private List<ActivityDepartment> activityDepartments;
 
         public ActivitiesSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {
@@ -50,6 +55,9 @@
             enumTable.AddRow("Division", "Residential");
             enumTable.AddRow("ActivityDocumentType", "TermsOfBusiness");
             enumTable.AddRow("ActivityUserType", "LeadNegotiator");
+            enumTable.AddRow("ActivityDepartmentType", "Managing");
+            enumTable.AddRow("ActivityDepartmentType", "Standard");
+            enumTable.AddRow("OfferStatus", "New");
 
             var addressTable = new Table("Postcode");
             addressTable.AddRow("N1C");
@@ -79,11 +87,20 @@
             var activityTypeId = this.scenarioContext.Get<Guid>("ActivityTypeId");
 
             Guid leadNegotiatorTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["LeadNegotiator"];
-            Guid leadNegotiatorId = this.fixture.DataContext.Users.First().Id;
+            this.leadNegotiator = this.fixture.DataContext.Users.First();
 
             var activityNegotiatorList = new List<ActivityUser>
             {
-                new ActivityUser { UserId = leadNegotiatorId, UserTypeId = leadNegotiatorTypeId }
+                new ActivityUser { UserId = this.leadNegotiator.Id, UserTypeId = leadNegotiatorTypeId }
+            };
+
+            this.activityDepartments = new List<ActivityDepartment>
+            {
+                new ActivityDepartment
+                {
+                    DepartmentId = this.leadNegotiator.DepartmentId,
+                    DepartmentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Managing"]
+                }
             };
 
             var activity = new Activity
@@ -95,7 +112,8 @@
                 LastModifiedDate = DateTime.Now,
                 Contacts = new List<Contact>(),
                 Attachments = new List<Attachment>(),
-                ActivityUsers = activityNegotiatorList
+                ActivityUsers = activityNegotiatorList,
+                ActivityDepartments = this.activityDepartments
             };
 
             this.fixture.DataContext.Activities.Add(activity);
@@ -167,6 +185,12 @@
                 ? activityFromDatabase.ActivityStatusId
                 : new Guid(status);
 
+            updateActivityCommand.Departments = new List<UpdateActivityDepartment>
+            {
+                new UpdateActivityDepartment { DepartmentId = this.leadNegotiator.DepartmentId,
+                    DepartmentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Managing"]}
+            };
+
             activityFromDatabase = new Activity
             {
                 Id = updateActivityCommand.Id,
@@ -213,7 +237,8 @@
                 .Excluding(x => x.ActivityStatus)
                 .Excluding(x => x.ActivityType)
                 .Excluding(x => x.Attachments)
-                .Excluding(x => x.ActivityUsers));
+                .Excluding(x => x.ActivityUsers)
+                .Excluding(x => x.ActivityDepartments));
         }
 
         [Then(@"Activity details should be the same as already added")]
