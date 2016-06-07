@@ -10,8 +10,10 @@
       }
     ],
     "index": "",
-    "type":  "contact",
+    "type": "contact",
     "detect_json": "true",
-    "schedule": ""
+    "schedule": "",
+    "elasticsearch.Host": "localhost",
+    "elasticsearch.Port": "9300"
   }
 }
