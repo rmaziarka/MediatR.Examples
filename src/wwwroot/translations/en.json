@@ -380,7 +380,11 @@
   "DEPARTMENTS": {
     "COMMON": {
       "HEADER": "Departments",
-      "EMPTY": "No departments added yet"
+      "EMPTY": "No departments added yet",
+      "NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR": {
+        "TITLE": "No negotiator assigned to new department",
+        "MESSAGE": "You’re trying to add one or more new departments without negotiators assigned to them. Please select a negotiator for each of those departments or remove the departments" 
+      }
     }
   }
 }

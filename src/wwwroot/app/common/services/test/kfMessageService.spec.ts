@@ -10,7 +10,8 @@ module Antares {
             growlService: angular.growl.IGrowlService,
             growlMessageMock = <angular.growl.IGrowlMessage>{},
             message = 'message',
-            messageCode = 'MESSAGE.CODE';
+            messageCode = 'MESSAGE.CODE',
+            titleCode = 'TITLE.CODE';
 
         beforeEach(inject((
             growl: angular.growl.IGrowlService,
@@ -50,13 +51,23 @@ module Antares {
             expect(growlService.error).toHaveBeenCalledWith(message);
         });
 
-        it('when showErrorByCode() is called, growl.error is called', () => {
+        it('when showErrorByCode() is called with message, growl.error is called with message', () => {
             spyOn(growlService, 'error').and.returnValue(growlMessageMock);
 
             var result = messageService.showErrorByCode(messageCode);
 
             expect(result).toBe(growlMessageMock);
             expect(growlService.error).toHaveBeenCalledWith(messageCode);
+        });
+
+
+        it('when showErrorByCode() is called with message and title, growl.error is called with message and title', () => {
+            spyOn(growlService, 'error').and.returnValue(growlMessageMock);
+
+            var result = messageService.showErrorByCode(messageCode, titleCode);
+
+            expect(result).toBe(growlMessageMock);
+            expect(growlService.error).toHaveBeenCalledWith(messageCode, { title: titleCode });
         });
 
         runDescribe('when showErrors() is called with no errors ')

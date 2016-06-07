@@ -5,6 +5,7 @@ module Antares.Common.Component
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
     import Enums = Common.Models.Enums;
+    import ActivityEditController = Antares.Activity.ActivityEditController;
 
     export class DepartmentsController {
         public activityId: string;
@@ -14,6 +15,7 @@ module Antares.Common.Component
 
         private managingDepartmentType: Dto.IEnumTypeItem;
         private standardDepartmentType: Dto.IEnumTypeItem;
+        private activityEdit: ActivityEditController;
 
         constructor(
             private enumService: Services.EnumService) {
@@ -46,6 +48,15 @@ module Antares.Common.Component
         public departmentIsRelatedWithNegotiator = (department: Business.Department) =>{
             return this.leadNegotiator.user.departmentId === department.id ||
                 _.some(this.secondaryNegotiators, (item) => item.user.departmentId === department.id);
+        }
+
+        public anyNewDepartmentIsRelatedWithNegotiator = () => {
+            var newDepartments = this.departments.filter((item: Business.ActivityDepartment) => { return !item.id });
+            return _.all(newDepartments, (item) => this.departmentIsRelatedWithNegotiator(item.department));
+        }
+
+        $onInit = () =>{
+            this.activityEdit.setDepartmentsEdit(this);
         }
     }
 

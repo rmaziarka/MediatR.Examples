@@ -6,6 +6,9 @@ module Antares.Common.Component
         templateUrl: 'app/common/components/departments/edit/departmentsEdit.html',
         controllerAs : 'dvm',
         controller: 'DepartmentsController',
+        require: {
+            activityEdit: '^^activityEdit'  
+        },
         bindings: {
             activityId: '<',
             departments: '=',
