@@ -51,6 +51,8 @@
 
         public string SuccessMessage => this.Driver.GetElement(this.successMessage.Format(this.messageText.Value)).Text;
 
+        public List<string> OfferHeader => new List<string> { this.Driver.GetElement(this.status).Text, this.Driver.GetElement(this.title).Text };
+
         public ViewOfferPage OpenViewOfferPageWithId(string id)
         {
             new CommonPage(this.DriverContext).NavigateToPageWithId("view offer", id);
@@ -66,11 +68,6 @@
         public bool IsViewOfferFormPresent()
         {
             return this.Driver.IsElementPresent(this.viewOfferForm, BaseConfiguration.MediumTimeout);
-        }
-
-        public List<string> GetOfferHeader()
-        {
-            return new List<string> { this.Driver.GetElement(this.status).Text, this.Driver.GetElement(this.title).Text };
         }
 
         public ViewOfferPage OpenActivityPreview()

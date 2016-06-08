@@ -63,7 +63,7 @@
         [When(@"User selects contacts on create company page")]
         public void SelectContactsForCompany(Table table)
         {
-            this.page.AddContactToCompany().WaitForSidePanelToShow();
+            this.page.SelectContact().WaitForSidePanelToShow();
 
             IEnumerable<Contact> contacts = table.CreateSet<Contact>();
 

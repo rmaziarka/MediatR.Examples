@@ -73,6 +73,8 @@
 
         public string SuccessMessage => this.Driver.GetElement(this.successMessage.Format(this.messageText.Value)).Text;
 
+        public string ActivityDate => this.Driver.GetElement(this.activityDate).Text.Split(' ')[0].Trim();
+
         public ViewPropertyPage OpenViewPropertyPageWithId(string id)
         {
             new CommonPage(this.DriverContext).NavigateToPageWithId("view property", id);
@@ -116,11 +118,6 @@
         {
             this.Driver.Click(this.addActivity);
             return this;
-        }
-
-        public string GetActivityDate()
-        {
-            return this.Driver.GetElement(this.activityDate).Text.Split(' ')[0].Trim();
         }
 
         public CreatePropertyPage EditProperty()

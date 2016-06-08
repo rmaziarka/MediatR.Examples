@@ -33,7 +33,7 @@
             return this;
         }
 
-        public CreateCompanyPage AddContactToCompany()
+        public CreateCompanyPage SelectContact()
         {
             this.Driver.Click(this.addContact);
             this.Driver.WaitForAngularToFinish();

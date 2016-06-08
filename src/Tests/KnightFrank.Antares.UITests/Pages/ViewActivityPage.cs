@@ -11,8 +11,6 @@
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
 
-    using OpenQA.Selenium;
-
     public class ViewActivityPage : ProjectPageBase
     {
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
@@ -38,7 +36,6 @@
         // offer locators
         private readonly ElementLocator offers = new ElementLocator(Locator.CssSelector, ".activity-view-offers .card-body");
         private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .card-body");
-        private readonly ElementLocator offerActions = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .card-menu-button");
         private readonly ElementLocator offerStatus = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .offer-status");
         private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .ng-binding");
         // negotiators locators
@@ -51,9 +48,8 @@
         private readonly ElementLocator secondaryNegotiatorNextCallEditButton = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//button");
         private readonly ElementLocator secondaryNegotiatorNextCallDateField = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//input");
         private readonly ElementLocator secondaryNegotiatorNextCallSaveButton = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//button[@type='submit']");
-        //departments locators
-        private readonly ElementLocator departmentNumber = new ElementLocator(Locator.CssSelector, "#departments-section card-list-item .card-item .department-name");
-       // private readonly ElementLocator departmentName = new ElementLocator(Locator.CssSelector, "#departments-section card-list-item:nth-of-type({0}) .department-name");
+        // departments locators
+        private readonly ElementLocator departmentName = new ElementLocator(Locator.CssSelector, "#departments-section card-list-item .card-item .department-name");
 
         private const string Format = "dd-MM-yyyy";
 
@@ -86,6 +82,16 @@
         public OfferPreviewPage OfferPreview => new OfferPreviewPage(this.DriverContext);
 
         public string LeadNegotiatorNextCall => this.Driver.GetElement(this.leadNegotiatorNextCallDate).Text;
+
+        public List<Department> Departments => this.Driver.GetElements(this.departmentName).Select(el => new Department { Name = el.Text }).ToList();
+
+        public Attachment AttachmentDetails => new Attachment
+        {
+            FileName = this.Driver.GetElement(this.attachmentFileTitle).Text,
+            Type = this.Driver.GetElement(this.attachmentType).Text,
+            Size = this.Driver.GetElement(this.attachmentSize).Text,
+            Date = this.Driver.GetElement(this.attachmentDate).Text
+        };
 
         public ViewActivityPage OpenViewActivityPageWithId(string id)
         {
@@ -164,12 +170,6 @@
             return this;
         }
 
-        public ViewActivityPage OpenOfferActions(int position)
-        {
-            this.Driver.Click(this.offerActions.Format(position));
-            return this;
-        }
-
         public List<string> GetOfferDetails(int position)
         {
             List<string> details = this.Driver.GetElements(this.offerData.Format(position)).Select(el => el.Text).ToList();
@@ -180,17 +180,6 @@
         public List<string> GetViewingDetails(int position)
         {
             return this.Driver.GetElements(this.viewingDetails.Format(position)).Select(el => el.Text).ToList();
-        }
-
-        public Attachment GetAttachmentDetails()
-        {
-            return new Attachment
-            {
-                FileName = this.Driver.GetElement(this.attachmentFileTitle).Text,
-                Type = this.Driver.GetElement(this.attachmentType).Text,
-                Size = this.Driver.GetElement(this.attachmentSize).Text,
-                Date = this.Driver.GetElement(this.attachmentDate).Text
-            };
         }
 
         public ViewActivityPage EditLeadNegotiatorNextCall(int day)
@@ -226,12 +215,6 @@
 
             return evens.Zip(odds, (s, s1) => new Negotiator { Name = s, NextCall = s1 }).ToList();
         }
-
-        public List<Departments> GetDepartments()
-        {
-            List<IWebElement> list = this.Driver.GetElements(this.departmentNumber).ToList();
-            return list.Select(el => new Departments { Department = el.Text }).ToList();
-        } 
     }
 
     public class Attachment
@@ -247,8 +230,8 @@
         public string User { get; set; }
     }
 
-    public class Departments
+    public class Department
     {
-        public string Department { get; set; }
+        public string Name { get; set; }
     }
 }

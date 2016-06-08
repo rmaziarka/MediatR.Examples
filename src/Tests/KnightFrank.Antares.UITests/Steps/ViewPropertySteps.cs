@@ -191,7 +191,7 @@
                 () => Assert.Equal(details.Vendor, this.page.ActivityVendor),
                 () => Assert.Equal(details.Status, this.page.ActivityStatus),
                 () => Assert.Equal(details.Type, this.page.ActivityType),
-                () => Assert.Equal(DateTime.UtcNow.ToString("dd-MM-yyyy"), this.page.GetActivityDate()));
+                () => Assert.Equal(DateTime.UtcNow.ToString("dd-MM-yyyy"), this.page.ActivityDate));
         }
 
         [Then(@"Property should be updated with address details")]
