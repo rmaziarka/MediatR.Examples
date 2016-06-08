@@ -220,8 +220,6 @@
             string requestUrl = $"{ApiUrl}";
             HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, command);
             this.scenarioContext.SetHttpResponseMessage(response);
-            var abc = this.scenarioContext.GetResponseContent();
-
         }
     }
 }

@@ -52,17 +52,17 @@ Scenario Outline: Update last call date for invalid data
 	When User updates last call date by adding <nextCallDate> days for <user> user
 	Then User should get BadRequest http status code
 
-	Examples: 
-	 | nextCallDate | user    |
-	 | null         | valid   |
-	 | -2           | valid   |
-	 | 2            | invalid |
+	Examples:
+	| nextCallDate | user    |
+	| null         | valid   |
+	| -2           | valid   |
+	| 2            | invalid |
 
-Scenario: Update Activity with dublicate department
+Scenario: Update Activity with duplicate department
 	Given Activity exists in database
 		And Lead negotiator with ActiveDirectoryLogin jsmith and today plus 1 next call date exists in database
 		And Following secondary negotiators exists in database
-		| ActiveDirectoryLogin |
-		| ejohnson             |
+			| ActiveDirectoryLogin |
+			| ejohnson             |
 	When User updates activity with defined negotiators
 	Then User should get BadRequest http status code

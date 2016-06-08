@@ -317,7 +317,6 @@
                 .Excluding(x => x.DepartmentType));
         }
 
-
         private void GetActivityResponse(string activityId)
         {
             string requestUrl = $"{ApiUrl}/{activityId}";
@@ -333,7 +332,5 @@
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
-
-
     }
 }
