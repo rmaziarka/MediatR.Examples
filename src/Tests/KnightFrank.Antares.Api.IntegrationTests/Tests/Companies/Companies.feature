@@ -85,7 +85,7 @@ Scenario: Update company with invalid data
 		| FirstName | Surname | Title |
 		| Michael   | Angel   | cheef | 
 	And User creates company in database with following data
-	 	| Name | WebsiteUrl  | ClientCarePageUrl  | ClientCareStatus    |
-	 	|      | www.api.com | www.clientcare.com | MassiveActionClient |
-	When User updates company by API
+	 	| Name         | WebsiteUrl  | ClientCarePageUrl  | ClientCareStatus    |
+	 	| Test Company | www.api.com | www.clientcare.com | MassiveActionClient |
+	When User updates company by API with invalid data
 	Then User should get BadRequest http status code
