@@ -8,8 +8,6 @@ module Antares.Company {
     export class CompanyEditController extends Core.WithPanelsBaseController  {
         company: Business.Company;
         private companyResource: Common.Models.Resources.ICompanyResourceClass;
-        //clientCareStatuses: any;
-        //clientCareStatus:any;
         public enumTypeclientCareStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ClientCareStatus;
 
         constructor(
@@ -23,15 +21,10 @@ module Antares.Company {
             super(componentRegistry, $scope);
 
             this.companyResource = dataAccessService.getCompanyResource();
-          //  this.enumService.getEnumPromise().then(this.onEnumLoaded);
-           
+         
         }
         
-        //onEnumLoaded = (result: any) => {
-        //    this.clientCareStatuses = result[Dto.EnumTypeCode.ClientCareStatus];
-        // }
-
-        hasCompanyContacts = (): boolean => {
+       hasCompanyContacts = (): boolean => {
             return this.company.contacts != null && this.company.contacts.length > 0;
         }
 
@@ -71,11 +64,8 @@ module Antares.Company {
          
             this.company.websiteUrl = this.formatUrlWithProtocol(this.company.websiteUrl);
             this.company.clientCarePageUrl = this.formatUrlWithProtocol(this.company.clientCarePageUrl);
-            //this.company.clientCareStatus = _.find(this.clientCareStatuses, (status: any) => status.id === this.company.clientCareStatusId);
-           // this.company.clientCareStatusId = this.company.clientCareStatus.id;
-
+           
             var updatedCompany: Dto.ICompany = angular.copy(this.company); 
-          //  updatedCompany.clientCareStatusId = this.company.clientCareStatus.id;
             
             this.companyResource
                 .update(updatedCompany)
