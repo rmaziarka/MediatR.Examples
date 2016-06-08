@@ -14,7 +14,7 @@
         private readonly ElementLocator offerDate = new ElementLocator(Locator.Id, "offer-date");
         private readonly ElementLocator proposedCompletionDate = new ElementLocator(Locator.Id, "proposed-completion-date");
         private readonly ElementLocator proposedExchangeDate = new ElementLocator(Locator.Id, "offer-proposed-exchange-date");
-        private readonly ElementLocator save = new ElementLocator(Locator.Id, "activity-edit-save");
+        private readonly ElementLocator save = new ElementLocator(Locator.Id, "offer-edit-save");
         private readonly ElementLocator specialConditions = new ElementLocator(Locator.Name, "specialConditions");
         private readonly ElementLocator status = new ElementLocator(Locator.Id, "offer-status");
         private readonly ElementLocator activity = new ElementLocator(Locator.CssSelector, "#section-vendor .requirement-view-offers .card-body");
