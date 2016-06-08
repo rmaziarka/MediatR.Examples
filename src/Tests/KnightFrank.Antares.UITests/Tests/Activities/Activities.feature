@@ -157,10 +157,11 @@ Scenario: Edit negotiators departments
 			| 01-03-2010   | 25000000 |
 		And Property Long Leasehold Sale activity with negotiators is defined
 	When User navigates to view activity page with id
-	Then Departments are displayed on view activity page
-		| Name        |
-		| Aldgate     |
-		| Residential |
+	Then View activity page should be displayed
+		And Departments are displayed on view activity page
+			| Name        |
+			| Aldgate     |
+			| Residential |
 	When User clicks edit button on view activity page
 		And User removes 1 secondary negotiator on edit activity page
 		And User removes Residential department on edit activity page
