@@ -43,16 +43,16 @@
 
             <div class="section-details">
                 <div class="section-row row">
-                    <div class="section-title col-xs-6">Status</div>
-                    <div class="col-xs-6">{{vm.offer.statusId | dynamicTranslate}}</div>
+                    <div class="section-title col-xs-4">Status</div>
+                    <div class="col-xs-8">{{vm.offer.statusId | dynamicTranslate}}</div>
                 </div>
                 <div class="section-row row">
-                    <div class="section-title col-xs-6">Offer</div>
-                    <div class="col-xs-6">{{vm.offer.price | number : 2 }} GBP</div>
+                    <div class="section-title col-xs-4">Offer</div>
+                    <div class="col-xs-8">{{vm.offer.price | number : 2 }} GBP</div>
                 </div>
                 <div class="section-row row">
-                    <div class="section-title col-xs-6">Offer date</div>
-                    <div class="col-xs-6"><time>{{vm.offer.offerDate | date : 'dd-MM-yyyy'}}</time></div>
+                    <div class="section-title col-xs-4">Offer date</div>
+                    <div class="col-xs-8"><time>{{vm.offer.offerDate | date : 'dd-MM-yyyy'}}</time></div>
                 </div>
             </div>
             <div class="section-details">
@@ -67,12 +67,12 @@
             </div>
             <div class="section-details">
                 <div class="section-row row">
-                    <div class="section-title col-xs-6" translate="OFFER.PREVIEW.EXCHANGE_DATE"></div>
-                    <div class="col-xs-6"><time>{{vm.offer.exchangeDate | date : 'dd-MM-yyyy'}}</time></div>
+                    <div class="section-title col-xs-4" translate="OFFER.PREVIEW.EXCHANGE_DATE"></div>
+                    <div class="col-xs-8"><time>{{vm.offer.exchangeDate | date : 'dd-MM-yyyy'}}</time></div>
                 </div>
                 <div class="section-row row">
-                    <div class="section-title col-xs-6" translate="OFFER.PREVIEW.COMPLETION_DATE"></div>
-                    <div class="col-xs-6"><time>{{vm.offer.completionDate | date : 'dd-MM-yyyy'}}</time></div>
+                    <div class="section-title col-xs-4" translate="OFFER.PREVIEW.COMPLETION_DATE"></div>
+                    <div class="col-xs-8"><time>{{vm.offer.completionDate | date : 'dd-MM-yyyy'}}</time></div>
                 </div>
             </div>
             <div class="section-details">
@@ -88,6 +88,134 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+    </div>
+    <div class="col-md-4">
+        <section>
+            <h3 class="page-header" translate="OFFER.VIEW.PROGRESS_SUMMARY"></h3>
+            <div class="section-details">
+                <div class="section-row row">
+                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.MORTGAGE_STATUS"></div>
+                    <div class="col-xs-8"><span class="status status-unknown">Unknown</span></div>
+                </div>
+                <div class="section-row row">
+                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.MORTGAGE_SURVEY_STATUS"></div>
+                    <div class="col-xs-8"><span class="status status-in-progress">No</span></div>
+                </div>
+                <div class="section-row row">
+                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.ADDITIONAL_SURVEY_STATUS"></div>
+                    <div class="col-xs-8"><span class="status status-not-required">Not required</span></div>
+                </div>
+                <div class="section-row row">
+                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.SEARCH_STATUS"></div>
+                    <div class="col-xs-8"><span class="status status-completed">Completed</span></div>
+                </div>
+                <div class="section-row row">
+                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.ENQUIRIES"></div>
+                    <div class="col-xs-8"><span class="status status-not-started">No</span></div>
+                </div>
+                <div class="section-row row">
+                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.CONTRACT_APPROVED"></div>
+                    <div class="col-xs-8"><span class="status status-no">No</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3 class="page-header" translate="OFFER.VIEW.MORTGAGE_DETAILS"></h3>
+            <div class="section-details">
+                <div class="section-row row">
+                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.MORTGAGE_LOAN_TO_VALUE"></div>
+                    <div class="col-xs-8">20%</div>
+                </div>
+            </div>
+            <div class="section-details">
+                <div class="section-row row">
+                    <div class="col-xs-12">
+                        <h5 translate="OFFER.VIEW.BROKER"></h5>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="card card-no-menu">
+                            <div class="card-body">
+                                <div class="card-item">Janson Statham</div>
+                                <div class="card-info">BBB Company</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section-details">
+                <div class="section-row row">
+                    <div class="col-xs-12">
+                        <h5 translate="OFFER.VIEW.LENDER"></h5>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="card card-no-menu">
+                            <div class="card-body">
+                                <div class="card-item">Janson Mamoa</div>
+                                <div class="card-info">BBB Company</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-details">
+                <div class="section-row row">
+                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.MORTGAGE_SURVEY_DATE"></div>
+                    <div class="col-xs-8"><time>12-05-2016</time></div>
+                </div>
+            </div>
+
+            <div class="section-details">
+                <div class="section-row row">
+                    <div class="col-xs-12">
+                        <h5 translate="OFFER.VIEW.SURVEYOR"></h5>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="card card-no-menu">
+                            <div class="card-body">
+                                <div class="card-item">Janson Mamoa</div>
+                                <div class="card-info">ZZZ Company</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3 class="page-header" translate="OFFER.VIEW.ADDITIONAL_SURVEY"></h3>
+            <div class="section-details">
+                <div class="section-row row">
+                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.DATE"></div>
+                    <div class="col-xs-8"><time>12-05-2016</time></div>
+                </div>
+            </div>
+
+            <div class="section-details">
+                <div class="section-row row">
+                    <div class="col-xs-12">
+                        <h5 translate="OFFER.VIEW.SURVEYOR"></h5>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="card card-no-menu">
+                            <div class="card-body">
+                                <div class="card-item">Janson Deas</div>
+                                <div class="card-info">ZZZ Company</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3 class="page-header" translate="OFFER.VIEW.OTHER_DETAILS"></h3>
+            <div class="section-details">
+                <h5 translate="OFFER.VIEW.COMMENT"></h5>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit nisi esse aliquid officia earum, consequuntur ab cum quam voluptas eaque fugit temporibus eligendi maiores laborum doloremque eius labore sint doloribus.</p>
             </div>
         </section>
     </div>

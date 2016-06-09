@@ -360,7 +360,25 @@
         "VIEW_OFFER": "View offer",
         "VENDOR": "Vendor",
         "APPLICANT": "Applicant",
-        "BASIC_INFORMATION": "Basic information"
+        "BASIC_INFORMATION": "Basic information",
+        "PROGRESS_SUMMARY": "Progress summary",
+        "MORTGAGE_STATUS": "Mortgage status",
+        "MORTGAGE_SURVEY_STATUS": "Mortgage survey status",
+        "ADDITIONAL_SURVEY_STATUS": "Additional survey status",
+        "SEARCH_STATUS": "Search status",
+        "ENQUIRIES": "Enquiries",
+        "CONTRACT_APPROVED": "Contract approved",
+        "MORTGAGE_DETAILS": "Mortgage details",
+        "MORTGAGE_LOAN_TO_VALUE": "Mortgage loan to value",
+        "BROKER": "Broker",
+        "LENDER": "Lender",
+        "MORTGAGE_SURVEY_DATE": "Mortgage survey date",
+        "SURVEYOR": "Surveyor",
+        "ADDITIONAL_SURVEY": "Additional survey",
+        "ADDITIONAL_SURVEY_DATE": "Additional survey date",
+        "OTHER_DETAILS": "Other details",
+        "COMMENT": "Comment",
+        "DATE": "Date"
     },
     "EDIT": {
       "EDIT_OFFER": "Edit offer",
@@ -402,7 +420,7 @@
       "EMPTY": "No departments added yet",
       "NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR": {
         "TITLE": "No negotiator assigned to new department",
-        "MESSAGE": "You’re trying to add one or more new departments without negotiators assigned to them. Please select a negotiator for each of those departments or remove the departments" 
+        "MESSAGE": "You’re trying to add one or more new departments without negotiators assigned to them. Please select a negotiator for each of those departments or remove the departments"
       }
     }
   }
