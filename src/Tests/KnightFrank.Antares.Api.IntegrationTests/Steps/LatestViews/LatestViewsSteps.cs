@@ -29,9 +29,9 @@
     public class LatestViewsSteps : IClassFixture<BaseTestClassFixture>
     {
         private const string ApiUrl = "/api/latestviews";
+        private readonly DateTime date = DateTime.UtcNow;
         private readonly BaseTestClassFixture fixture;
         private readonly int maxLatestViews = int.Parse(ConfigurationManager.AppSettings["MaxLatestViews"]);
-
         private readonly ScenarioContext scenarioContext;
 
         // TODO factory refactor
@@ -57,7 +57,7 @@
 
             var details = new LatestView
             {
-                CreatedDate = DateTime.UtcNow,
+                CreatedDate = this.date,
                 UserId = this.fixture.DataContext.Users.First().Id,
                 EntityId = propertyId,
                 EntityType = EntityTypeEnum.Property
@@ -80,7 +80,7 @@
 
             var details = new LatestView
             {
-                CreatedDate = DateTime.UtcNow,
+                CreatedDate = this.date,
                 UserId = this.fixture.DataContext.Users.First().Id,
                 EntityId = activityId,
                 EntityType = EntityTypeEnum.Activity
@@ -103,7 +103,7 @@
 
             var details = new LatestView
             {
-                CreatedDate = DateTime.UtcNow,
+                CreatedDate = this.date,
                 UserId = this.fixture.DataContext.Users.First().Id,
                 EntityId = requirementId,
                 EntityType = EntityTypeEnum.Requirement
@@ -158,39 +158,17 @@
             this.GetLatestViews();
         }
 
-        [Then(@"Latest viewed details should match (.*) entities")]
-        public void CheckLatestsViewedProperties(string entity)
+        [Then(@"Latest viewed details should match Property entities")]
+        public void CheckLatestsViewedProperties()
         {
-            var entitiesIds = new List<Guid>();
-            var addressesIds = new List<Guid>();
-            string entityTypeCode = string.Empty;
+            const string entityTypeCode = "Property";
 
-            if (entity.ToLower().Equals("property"))
-            {
-                entitiesIds = this.scenarioContext.Get<List<Guid>>("PropertiesIds").ToList();
-                entitiesIds.Reverse();
-                entitiesIds = entitiesIds.Distinct().Take(this.maxLatestViews).ToList();
-                addressesIds =
-                    entitiesIds.Select(id => this.fixture.DataContext.Properties.Single(p => p.Id.Equals(id)).AddressId).ToList();
-                entityTypeCode = "Property";
-            }
-            else if (entity.ToLower().Equals("activity"))
-            {
-                entitiesIds = this.scenarioContext.Get<List<Guid>>("ActivitiesIds").ToList();
-                entitiesIds.Reverse();
-                entitiesIds = entitiesIds.Distinct().Take(this.maxLatestViews).ToList();
-                addressesIds =
-                    entitiesIds.Select(id => this.fixture.DataContext.Activities.Single(p => p.Id.Equals(id)).Property.AddressId)
-                               .ToList();
-                entityTypeCode = "Activity";
-            }
-            else if (entity.ToLower().Equals("requirement"))
-            {
-                entitiesIds = this.scenarioContext.Get<List<Guid>>("RequirementsId").ToList();
-                entitiesIds.Reverse();
-                entitiesIds = entitiesIds.Distinct().Take(this.maxLatestViews).ToList();
-                entityTypeCode = "Requirement";
-            }
+            List<Guid> entitiesIds = this.scenarioContext.Get<List<Guid>>("PropertiesIds").ToList();
+            entitiesIds.Reverse();
+            entitiesIds = entitiesIds.Distinct().Take(this.maxLatestViews).ToList();
+
+            List<Guid> addressesIds =
+                entitiesIds.Select(id => this.fixture.DataContext.Properties.Single(p => p.Id.Equals(id)).AddressId).ToList();
 
             LatestViewQueryResultItem response =
                 JsonConvert.DeserializeObject<List<LatestViewQueryResultItem>>(this.scenarioContext.GetResponseContent()).Single();
@@ -199,28 +177,13 @@
 
             List<LatestViewData> data = response.List.ToList();
 
-            if (entity.ToLower().Equals("property") || entity.ToLower().Equals("activity"))
-            {
-                List<Address> expectedAddresses =
-                    addressesIds.Select(id => this.fixture.DataContext.Addresses.Single(a => a.Id.Equals(id))).ToList();
-                List<Address> currentAddresses =
-                    data.Select(d => JsonConvert.DeserializeObject<Address>(d.Data.ToString())).ToList();
+            List<Address> expectedAddresses =
+                addressesIds.Select(id => this.fixture.DataContext.Addresses.Single(a => a.Id.Equals(id))).ToList();
+            List<Address> currentAddresses =
+                data.Select(d => JsonConvert.DeserializeObject<Address>(d.Data.ToString())).ToList();
 
-                expectedAddresses.ShouldAllBeEquivalentTo(currentAddresses, opt => opt
-                    .Excluding(a => a.Country));
-            }
-            else if (entity.ToLower().Equals("requirement"))
-            {
-                List<List<Contact>> currentContacts =
-                    data.Select(d => JsonConvert.DeserializeObject<List<Contact>>(d.Data.ToString())).ToList();
-
-                List<List<Contact>> expectedContacts =
-                    entitiesIds.Select(
-                        guid => this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(guid)).Contacts.ToList())
-                               .ToList();
-
-                expectedContacts.ShouldAllBeEquivalentTo(currentContacts);
-            }
+            expectedAddresses.ShouldAllBeEquivalentTo(currentAddresses, opt => opt
+                .Excluding(a => a.Country));
 
             List<LatestView> latestViews = this.fixture.DataContext.LatestView.Select(r => r).GroupBy(lv => lv.EntityId)
                                                .Select(gLv => gLv.OrderByDescending(lv => lv.CreatedDate).FirstOrDefault())
@@ -229,30 +192,80 @@
             latestViews.Should().Equal(data, (v1, v2) => v1.CreatedDate.Equals(v2.CreatedDate));
         }
 
-        [Then(@"Retrieved latest view should contain (.*) entity")]
-        public void CheckLatestsViewedEntity(string entity)
+        [Then(@"Latest viewed details should match Activity entities")]
+        public void CheckLatestsViewedActivities()
         {
-            Guid entityId = Guid.Empty;
-            Guid addressId = Guid.NewGuid();
-            string entityTypeCode = string.Empty;
+            const string entityTypeCode = "Activity";
 
-            if (entity.ToLower().Equals("property"))
-            {
-                entityId = this.scenarioContext.Get<Property>("AddedProperty").Id;
-                addressId = this.fixture.DataContext.Properties.Single(p => p.Id.Equals(entityId)).AddressId;
-                entityTypeCode = "Property";
-            }
-            else if (entity.ToLower().Equals("activity"))
-            {
-                entityId = this.scenarioContext.Get<Activity>("Activity").Id;
-                addressId = this.fixture.DataContext.Activities.Single(p => p.Id.Equals(entityId)).Property.AddressId;
-                entityTypeCode = "Activity";
-            }
-            else if (entity.ToLower().Equals("requirement"))
-            {
-                entityId = this.scenarioContext.Get<Requirement>("Requirement").Id;
-                entityTypeCode = "Requirement";
-            }
+            List<Guid> entitiesIds = this.scenarioContext.Get<List<Guid>>("ActivitiesIds").ToList();
+            entitiesIds.Reverse();
+            entitiesIds = entitiesIds.Distinct().Take(this.maxLatestViews).ToList();
+
+            List<Guid> addressesIds =
+                entitiesIds.Select(id => this.fixture.DataContext.Activities.Single(p => p.Id.Equals(id)).Property.AddressId)
+                           .ToList();
+
+            LatestViewQueryResultItem response =
+                JsonConvert.DeserializeObject<List<LatestViewQueryResultItem>>(this.scenarioContext.GetResponseContent()).Single();
+
+            response.EntityTypeCode.Should().Be(entityTypeCode);
+
+            List<LatestViewData> data = response.List.ToList();
+
+            List<Address> expectedAddresses =
+                addressesIds.Select(id => this.fixture.DataContext.Addresses.Single(a => a.Id.Equals(id))).ToList();
+            List<Address> currentAddresses =
+                data.Select(d => JsonConvert.DeserializeObject<Address>(d.Data.ToString())).ToList();
+
+            expectedAddresses.ShouldAllBeEquivalentTo(currentAddresses, opt => opt
+                .Excluding(a => a.Country));
+
+            List<LatestView> latestViews = this.fixture.DataContext.LatestView.Select(r => r).GroupBy(lv => lv.EntityId)
+                                               .Select(gLv => gLv.OrderByDescending(lv => lv.CreatedDate).FirstOrDefault())
+                                               .OrderByDescending(lv => lv.CreatedDate).Take(this.maxLatestViews).ToList();
+
+            latestViews.Should().Equal(data, (v1, v2) => v1.CreatedDate.Equals(v2.CreatedDate));
+        }
+
+        [Then(@"Latest viewed details should match Requirement entities")]
+        public void CheckLatestsViewedRequirements()
+        {
+            const string entityTypeCode = "Requirement";
+
+            List<Guid> entitiesIds = this.scenarioContext.Get<List<Guid>>("RequirementsId").ToList();
+            entitiesIds.Reverse();
+            entitiesIds = entitiesIds.Distinct().Take(this.maxLatestViews).ToList();
+
+            LatestViewQueryResultItem response =
+                JsonConvert.DeserializeObject<List<LatestViewQueryResultItem>>(this.scenarioContext.GetResponseContent()).Single();
+
+            response.EntityTypeCode.Should().Be(entityTypeCode);
+
+            List<LatestViewData> data = response.List.ToList();
+
+            List<List<Contact>> currentContacts =
+                data.Select(d => JsonConvert.DeserializeObject<List<Contact>>(d.Data.ToString())).ToList();
+
+            List<List<Contact>> expectedContacts =
+                entitiesIds.Select(
+                    guid => this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(guid)).Contacts.ToList())
+                           .ToList();
+
+            expectedContacts.ShouldAllBeEquivalentTo(currentContacts);
+
+            List<LatestView> latestViews = this.fixture.DataContext.LatestView.Select(r => r).GroupBy(lv => lv.EntityId)
+                                               .Select(gLv => gLv.OrderByDescending(lv => lv.CreatedDate).FirstOrDefault())
+                                               .OrderByDescending(lv => lv.CreatedDate).Take(this.maxLatestViews).ToList();
+
+            latestViews.Should().Equal(data, (v1, v2) => v1.CreatedDate.Equals(v2.CreatedDate));
+        }
+
+        [Then(@"Retrieved latest view should contain Property entity")]
+        public void CheckLatestsViewedProperty()
+        {
+            const string entityTypeCode = "Property";
+            Guid entityId = this.scenarioContext.Get<Property>("AddedProperty").Id;
+            Guid addressId = this.fixture.DataContext.Properties.Single(p => p.Id.Equals(entityId)).AddressId;
 
             LatestViewQueryResultItem response =
                 JsonConvert.DeserializeObject<List<LatestViewQueryResultItem>>(this.scenarioContext.GetResponseContent()).Single();
@@ -262,24 +275,66 @@
             List<LatestViewData> data = response.List.ToList();
             data.Should().HaveCount(1);
 
-            if (entity.ToLower().Equals("activity") || entity.ToLower().Equals("property"))
-            {
-                var currentAddress = JsonConvert.DeserializeObject<Address>(data.Single().Data.ToString());
-                Address expectedAddress = this.fixture.DataContext.Addresses.Single(a => a.Id.Equals(addressId));
+            var currentAddress = JsonConvert.DeserializeObject<Address>(data.Single().Data.ToString());
+            Address expectedAddress = this.fixture.DataContext.Addresses.Single(a => a.Id.Equals(addressId));
 
-                expectedAddress.ShouldBeEquivalentTo(currentAddress, opt => opt.Excluding(a => a.Country));
-            }
-            else if(entity.ToLower().Equals("requirement"))
-            {
-                var currentContacts = JsonConvert.DeserializeObject<List<Contact>>(data.Single().Data.ToString());
-                List<Contact> expectedContacts = this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(entityId)).Contacts.ToList();
+            expectedAddress.ShouldBeEquivalentTo(currentAddress, opt => opt.Excluding(a => a.Country));
 
-                expectedContacts.Should().Equal(currentContacts,
-                    (c1, c2) => c1.FirstName.Equals(c2.FirstName) &&
-                                c1.Surname.Equals(c2.Surname) &&
-                                c1.Title.Equals(c2.Title) &&
-                                c1.Id.Equals(c2.Id));
-            }
+            LatestView latestView = this.fixture.DataContext.LatestView.Single();
+
+            latestView.CreatedDate.Should().Be(data.Single().CreatedDate);
+            latestView.EntityTypeString.Should().Be(entityTypeCode);
+        }
+
+        [Then(@"Retrieved latest view should contain Activity entity")]
+        public void CheckLatestsViewedActivity()
+        {
+            const string entityTypeCode = "Activity";
+            Guid entityId = this.scenarioContext.Get<Activity>("Activity").Id;
+            Guid addressId = this.fixture.DataContext.Activities.Single(p => p.Id.Equals(entityId)).Property.AddressId;
+
+            LatestViewQueryResultItem response =
+                JsonConvert.DeserializeObject<List<LatestViewQueryResultItem>>(this.scenarioContext.GetResponseContent()).Single();
+
+            response.EntityTypeCode.Should().Be(entityTypeCode);
+
+            List<LatestViewData> data = response.List.ToList();
+            data.Should().HaveCount(1);
+
+            var currentAddress = JsonConvert.DeserializeObject<Address>(data.Single().Data.ToString());
+            Address expectedAddress = this.fixture.DataContext.Addresses.Single(a => a.Id.Equals(addressId));
+
+            expectedAddress.ShouldBeEquivalentTo(currentAddress, opt => opt.Excluding(a => a.Country));
+
+            LatestView latestView = this.fixture.DataContext.LatestView.Single();
+
+            latestView.CreatedDate.Should().Be(data.Single().CreatedDate);
+            latestView.EntityTypeString.Should().Be(entityTypeCode);
+        }
+
+        [Then(@"Retrieved latest view should contain Requirement entity")]
+        public void CheckLatestsViewedRequirement()
+        {
+            const string entityTypeCode = "Requirement";
+            Guid entityId = this.scenarioContext.Get<Requirement>("Requirement").Id;
+
+            LatestViewQueryResultItem response =
+                JsonConvert.DeserializeObject<List<LatestViewQueryResultItem>>(this.scenarioContext.GetResponseContent()).Single();
+
+            response.EntityTypeCode.Should().Be(entityTypeCode);
+
+            List<LatestViewData> data = response.List.ToList();
+            data.Should().HaveCount(1);
+
+            var currentContacts = JsonConvert.DeserializeObject<List<Contact>>(data.Single().Data.ToString());
+            List<Contact> expectedContacts =
+                this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(entityId)).Contacts.ToList();
+
+            expectedContacts.Should().Equal(currentContacts,
+                (c1, c2) => c1.FirstName.Equals(c2.FirstName) &&
+                            c1.Surname.Equals(c2.Surname) &&
+                            c1.Title.Equals(c2.Title) &&
+                            c1.Id.Equals(c2.Id));
 
             LatestView latestView = this.fixture.DataContext.LatestView.Single();
 

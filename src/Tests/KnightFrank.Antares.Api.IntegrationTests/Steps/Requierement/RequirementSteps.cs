@@ -27,7 +27,7 @@
     {
         private const string ApiUrl = "/api/requirements";
         private readonly BaseTestClassFixture fixture;
-
+        private readonly DateTime date = DateTime.UtcNow;
         private readonly ScenarioContext scenarioContext;
 
         public RequirementSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
@@ -63,7 +63,7 @@
 
             var requirement = new Requirement
             {
-                CreateDate = DateTime.UtcNow,
+                CreateDate = this.date,
                 Contacts = contacts,
                 Address = address,
                 MinArea = 1,
