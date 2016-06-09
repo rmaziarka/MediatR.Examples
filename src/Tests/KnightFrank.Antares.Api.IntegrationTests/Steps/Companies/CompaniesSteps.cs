@@ -118,6 +118,27 @@
 			this.scenarioContext.SetHttpResponseMessage(response);
 		}
 
+		[When(@"User updates company by API with invalid data")]
+		public void UpdateCompanyWithInvalidData()
+		{
+			string requestUrl = $"{ApiUrl}";
+			var company = this.scenarioContext.Get<Company>("Company");
+			var contactList = this.scenarioContext.Get<List<Contact>>("ContactList");
+
+			var commandCompany = new UpdateCompanyCommand
+			{
+				Id = company.Id,
+				Name = string.Empty,
+				ClientCarePageUrl = company.ClientCarePageUrl,
+				ClientCareStatusId = company.ClientCareStatusId,
+				WebsiteUrl = company.WebsiteUrl,
+				Contacts = contactList
+			};
+
+			HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, commandCompany);
+			this.scenarioContext.SetHttpResponseMessage(response);
+		}
+
 		[When(@"User gets company details")]
         public void WhenUserGetsCompanyDetails()
         {

@@ -24,5 +24,5 @@ OfferStatus;Accepted
 ActivityUserType;LeadNegotiator
 ActivityUserType;SecondaryNegotiator
 ClientCareStatus;MassiveActionClient
-ClientCareStatus;PrincipleClient
+ClientCareStatus;PrincipalClient
 ClientCareStatus;KeyClient
