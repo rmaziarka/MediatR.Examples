@@ -191,6 +191,7 @@
     <Compile Include="Contact\Commands\UpdateContactCommandValidator.cs" />
     <Compile Include="Contact\Queries\ContactQuery.cs" />
     <Compile Include="Contact\QueryHandlers\ContactQueryHandler.cs" />
+    <Compile Include="Fields\Field.cs" />
     <Compile Include="LatestView\CommandHandlers\CreateLatestViewCommandHandler.cs" />
     <Compile Include="LatestView\Commands\CreateLatestViewCommand.cs" />
     <Compile Include="LatestView\Commands\CreateLatestViewCommandValidator.cs" />
