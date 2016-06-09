@@ -7,3 +7,8 @@ ActivityDocumentType
 OfferStatus
 ActivityUserType
 ActivityDepartmentType
+MortgageStatus
+MortgageSurveyStatus
+AdditionalSurveyStatus
+SearchStatus
+Enquiries
