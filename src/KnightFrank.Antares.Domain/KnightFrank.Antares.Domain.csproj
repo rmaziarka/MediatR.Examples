@@ -215,10 +215,13 @@
     <Compile Include="Offer\Queries\OfferQuery.cs" />
     <Compile Include="Offer\Queries\OfferQueryValidator.cs" />
     <Compile Include="Offer\QueryHandlers\OfferQueryHandler.cs" />
+    <Compile Include="User\Queries\UserQuery.cs" />
     <Compile Include="User\Queries\UsersQuery.cs" />
     <Compile Include="Contact\Queries\ContactQueryValidator.cs" />
     <Compile Include="Contact\Queries\ContactsQuery.cs" />
+    <Compile Include="User\Queries\UserQueryValidator.cs" />
     <Compile Include="User\Queries\UsersQueryValidator.cs" />
+    <Compile Include="User\QueryHandlers\UserQueryHandler.cs" />
     <Compile Include="User\QueryHandlers\UsersQueryHandler.cs" />
     <Compile Include="Contact\QueryHandlers\ContactsQueryHandler.cs" />
     <Compile Include="DomainModule.cs" />

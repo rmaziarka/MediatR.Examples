@@ -25,3 +25,5 @@ ActivityUserType;LeadNegotiator
 ActivityUserType;SecondaryNegotiator
 ActivityDepartmentType;Managing
 ActivityDepartmentType;Standard
+SalutationFormat;MrJohnSmith
+SalutationFormat;JohnSmithEsq
