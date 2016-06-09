@@ -4,6 +4,7 @@
     using System.Collections.Generic;
 
     using KnightFrank.Antares.Dal.Model.Address;
+    using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Attribute;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
@@ -36,5 +37,7 @@
         public double? TotalAreaBreakdown { get; set; }
 
         public virtual ICollection<PropertyAreaBreakdown> PropertyAreaBreakdowns { get; set; } = new List<PropertyAreaBreakdown>();
+
+        public virtual ICollection<Attachment> Attachments { get; set; }
     }
 }

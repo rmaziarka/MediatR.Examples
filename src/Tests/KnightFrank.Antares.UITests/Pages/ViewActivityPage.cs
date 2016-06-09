@@ -22,24 +22,23 @@
         private readonly ElementLocator recommendedPrice = new ElementLocator(Locator.Id, "recommendedPrice");
         private readonly ElementLocator status = new ElementLocator(Locator.Id, "activityStatus");
         private readonly ElementLocator vendorEstimatedPrice = new ElementLocator(Locator.Id, "vendorEstimatedPrice");
-        // attachment locators
+        // Attachment locators
         private readonly ElementLocator addAttachmentButton = new ElementLocator(Locator.CssSelector, "#card-list-attachments button");
         private readonly ElementLocator attachmentFileTitle = new ElementLocator(Locator.CssSelector, "#card-list-attachments div[id *= 'attachment-data'");
         private readonly ElementLocator attachmentDate = new ElementLocator(Locator.CssSelector, "#card-list-attachments time[id *= 'attachment-created-date']");
         private readonly ElementLocator attachmentType = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-type']");
         private readonly ElementLocator attachmentSize = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-file-size']");
         private readonly ElementLocator attachmentDetailsLink = new ElementLocator(Locator.CssSelector, "#activity-view-attachments .detailsLink");
-        // viewing locators
+        // Viewing locators
         private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-group-item");
         private readonly ElementLocator viewingDetailsLink = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) a");
         private readonly ElementLocator viewingDetails = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .ng-binding");
-        // offer locators
+        // Offer locators
         private readonly ElementLocator offers = new ElementLocator(Locator.CssSelector, ".activity-view-offers .card-body");
         private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .card-body");
-        private readonly ElementLocator offerActions = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .card-menu-button");
         private readonly ElementLocator offerStatus = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .offer-status");
         private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .ng-binding");
-        // negotiators locators
+        // Negotiators locators
         private readonly ElementLocator leadNegotiator = new ElementLocator(Locator.CssSelector, "#card-lead-negotiator .panel-item");
         private readonly ElementLocator secondaryNegotiatorData = new ElementLocator(Locator.CssSelector, "#card-list-negotiators card-list-item .ng-binding");
         private readonly ElementLocator leadNegotiatorNextCallDate = new ElementLocator(Locator.CssSelector, "#card-lead-negotiator + editable-date time"); 
@@ -49,6 +48,8 @@
         private readonly ElementLocator secondaryNegotiatorNextCallEditButton = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//button");
         private readonly ElementLocator secondaryNegotiatorNextCallDateField = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//input");
         private readonly ElementLocator secondaryNegotiatorNextCallSaveButton = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//button[@type='submit']");
+        // Departments locators
+        private readonly ElementLocator departmentName = new ElementLocator(Locator.CssSelector, "#departments-section card-list-item .card-item .department-name");
 
         private const string Format = "dd-MM-yyyy";
 
@@ -81,6 +82,16 @@
         public OfferPreviewPage OfferPreview => new OfferPreviewPage(this.DriverContext);
 
         public string LeadNegotiatorNextCall => this.Driver.GetElement(this.leadNegotiatorNextCallDate).Text;
+
+        public List<Department> Departments => this.Driver.GetElements(this.departmentName).Select(el => new Department { Name = el.Text }).ToList();
+
+        public Attachment AttachmentDetails => new Attachment
+        {
+            FileName = this.Driver.GetElement(this.attachmentFileTitle).Text,
+            Type = this.Driver.GetElement(this.attachmentType).Text,
+            Size = this.Driver.GetElement(this.attachmentSize).Text,
+            Date = this.Driver.GetElement(this.attachmentDate).Text
+        };
 
         public ViewActivityPage OpenViewActivityPageWithId(string id)
         {
@@ -159,12 +170,6 @@
             return this;
         }
 
-        public ViewActivityPage OpenOfferActions(int position)
-        {
-            this.Driver.Click(this.offerActions.Format(position));
-            return this;
-        }
-
         public List<string> GetOfferDetails(int position)
         {
             List<string> details = this.Driver.GetElements(this.offerData.Format(position)).Select(el => el.Text).ToList();
@@ -175,17 +180,6 @@
         public List<string> GetViewingDetails(int position)
         {
             return this.Driver.GetElements(this.viewingDetails.Format(position)).Select(el => el.Text).ToList();
-        }
-
-        public Attachment GetAttachmentDetails()
-        {
-            return new Attachment
-            {
-                FileName = this.Driver.GetElement(this.attachmentFileTitle).Text,
-                Type = this.Driver.GetElement(this.attachmentType).Text,
-                Size = this.Driver.GetElement(this.attachmentSize).Text,
-                Date = this.Driver.GetElement(this.attachmentDate).Text
-            };
         }
 
         public ViewActivityPage EditLeadNegotiatorNextCall(int day)
@@ -234,5 +228,10 @@
         public string Date { get; set; }
 
         public string User { get; set; }
+    }
+
+    public class Department
+    {
+        public string Name { get; set; }
     }
 }

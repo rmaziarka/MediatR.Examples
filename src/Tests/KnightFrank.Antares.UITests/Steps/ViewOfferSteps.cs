@@ -104,7 +104,7 @@
         public void CheckOfferHeader(Table table)
         {
             var expectedDetails = table.CreateInstance<OfferData>();
-            List<string> details = this.page.GetOfferHeader();
+            List<string> details = this.page.OfferHeader;
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Details, details[1]),

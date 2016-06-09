@@ -29,6 +29,10 @@
         private ActivityUser activityUser;
 
         private List<Guid> secondaryNegotiatorsList;
+        private List<User> secondaryNegotiatorUsersList;
+
+        private List<UpdateActivityDepartment> updateActivityDepartments;
+
         private UpdateActivityUser updateActivityUser;
 
         public NegotiatorsSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
@@ -45,10 +49,20 @@
         public void GivenLeadNegotiatorWithActiveDirectoryLoginExistsInDatabase(string activeDirectoryLogin, double noOfDays)
         {
             User user = this.fixture.DataContext.Users.SingleOrDefault(x => x.ActiveDirectoryLogin.Equals(activeDirectoryLogin));
+            Guid departmentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Managing"];
             this.updateActivityUser = new UpdateActivityUser
             {
                 UserId = user?.Id ?? Guid.NewGuid(),
                 CallDate = DateTime.UtcNow.AddDays(noOfDays)
+            };
+
+            this.updateActivityDepartments = new List<UpdateActivityDepartment>
+            {
+                new UpdateActivityDepartment
+                {
+                    DepartmentId = user?.DepartmentId ?? Guid.Empty,
+                    DepartmentTypeId = departmentTypeId
+                }
             };
         }
 
@@ -61,10 +75,23 @@
         [Given(@"Following secondary negotiators exists in database")]
         public void GivenFollowingSecondaryNegotiatorsExistsInDatabase(Table table)
         {
-            this.secondaryNegotiatorsList =
+            this.secondaryNegotiatorUsersList =
                 table.Rows.Select(row => row["ActiveDirectoryLogin"])
-                     .Select(login => this.fixture.DataContext.Users.Single(x => x.ActiveDirectoryLogin.Equals(login)).Id)
+                     .Select(login => this.fixture.DataContext.Users.Single(x => x.ActiveDirectoryLogin.Equals(login)))
                      .ToList();
+
+            this.secondaryNegotiatorsList = this.secondaryNegotiatorUsersList.Select(x => x.Id).ToList();
+
+            Guid departmentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Standard"];
+
+            foreach (User secondaryNegotiator in this.secondaryNegotiatorUsersList)
+            {
+                this.updateActivityDepartments.Add(new UpdateActivityDepartment
+                {
+                    DepartmentId = secondaryNegotiator.DepartmentId,
+                    DepartmentTypeId = departmentTypeId
+                });
+            }
         }
 
         [When(@"User updates activity with defined negotiators")]
@@ -83,7 +110,8 @@
                 LeadNegotiator = this.updateActivityUser,
                 SecondaryNegotiators =
                     this.secondaryNegotiatorsList.Select(
-                        n => new UpdateActivityUser { UserId = n, CallDate = DateTime.UtcNow.AddDays(10) }).ToList()
+                        n => new UpdateActivityUser { UserId = n, CallDate = DateTime.UtcNow.AddDays(10) }).ToList(),
+                Departments = this.updateActivityDepartments
             };
 
             HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, updateActivityCommand);
@@ -117,10 +145,10 @@
         [Then(@"Last call date should be updated in data base")]
         public void ThenLastCallDateShouldBeUpdatedInDataBase()
         {
-            var abc = JsonConvert.DeserializeObject<ActivityUser>(this.scenarioContext.GetResponseContent());
+            var user = JsonConvert.DeserializeObject<ActivityUser>(this.scenarioContext.GetResponseContent());
             ActivityUser updatedActivityUser = this.fixture.DataContext.ActivityUsers.Single(x => x.Id.Equals(this.activityUser.Id));
 
-            updatedActivityUser.ShouldBeEquivalentTo(abc, options => options
+            updatedActivityUser.ShouldBeEquivalentTo(user, options => options
                 .Excluding(x => x.Activity)
                 .Excluding(x => x.User)
                 .Excluding(x => x.UserType));

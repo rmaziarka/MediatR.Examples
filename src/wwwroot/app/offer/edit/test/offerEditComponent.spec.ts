@@ -1,17 +1,22 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares {
+    import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
     import OfferEditController = Offer.OfferEditController;
+    import KfMessageService = Antares.Services.KfMessageService;
     type TestCaseForRequiredValidator = [string, string, boolean]; // [field_description, field_selector, is_not_required]
     type TestCaseForValidator = [string, any, string]; // [field_description, field_value, field_selector]
 
     describe('Given offer component', () => {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
+            state: ng.ui.IStateService,
             assertValidator: TestHelpers.AssertValidators,
+            q: ng.IQService,
             $http: ng.IHttpBackendService,
             $compileService: ng.ICompileService,
+            messageService: KfMessageService,
             controller: OfferEditController;
 
         var pageObjectSelectors: any = {
@@ -26,6 +31,13 @@ module Antares {
             negotiatorSection: '#offer-edit-negotiator-section'
         };
 
+        var format = (date: any) => date.format('DD-MM-YYYY');
+        var datesToTest: any = {
+            today: format(moment()),
+            inThePast: format(moment().day(-7)),
+            inTheFuture: format(moment().day(7))
+        };
+
         var offerMock = TestHelpers.OfferGenerator.generate();
         offerMock.activity.property.address.propertyName = "West Forum";
         offerMock.activity.property.address.propertyNumber = "142a";
@@ -33,6 +45,7 @@ module Antares {
         offerMock.negotiator.firstName = "John";
         offerMock.negotiator.lastName = "Smith";
         offerMock.statusId = "2";
+        offerMock.createdDate = moment().toDate();
 
         var offerStatuses: any = [
             { id: '1', code: 'New' },
@@ -43,8 +56,14 @@ module Antares {
             $rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService,
             $httpBackend: ng.IHttpBackendService,
+            $q: ng.IQService,
+            $state: ng.ui.IStateService,
+            kfMessageService: KfMessageService,
             enumService: Mock.EnumServiceMock) => {
 
+            state = $state;
+            q = $q;
+            messageService = kfMessageService;
             $http = $httpBackend;
             $compileService = $compile;
             scope = $rootScope.$new();
@@ -110,5 +129,63 @@ module Antares {
                 expect($http.flush).not.toThrow();
             });
         });
+
+        describe('when fields are', () => {
+
+            it('invalid then validation messages should appear', () => {
+                assertValidator.assertDateGreaterThenValidator(datesToTest.inThePast, false, pageObjectSelectors.exchangeDate);
+                assertValidator.assertDateGreaterThenValidator(datesToTest.inThePast, false, pageObjectSelectors.completionDate);
+                assertValidator.assertDateLowerThenValidator(datesToTest.inTheFuture, false, pageObjectSelectors.offerDate);
+                assertValidator.assertRequiredValidator(null, false, pageObjectSelectors.status);
+            });
+
+            it('valid then validation messages should not appear', () => {
+                assertValidator.assertDateGreaterThenValidator(datesToTest.inTheFuture, true, pageObjectSelectors.exchangeDate);
+                assertValidator.assertDateGreaterThenValidator(datesToTest.inTheFuture, true, pageObjectSelectors.completionDate);
+                assertValidator.assertDateLowerThenValidator(datesToTest.inThePast, true, pageObjectSelectors.offerDate);
+                assertValidator.assertRequiredValidator("2", true, pageObjectSelectors.status);
+            });
+        });
+
+        describe('when valid data and save button is clicked', () => {
+            it('then save method is called', () => {
+                spyOn(controller, 'save');
+                scope.$apply();
+
+                var button = element.find('button#offer-edit-save');
+                button.click();
+
+                expect(controller.save).toHaveBeenCalled();
+            });
+
+            it('then put request is called and redirect to view page with success message', () => {
+                var requestData: any;
+                $http.expectPUT(/\/api\/offers/, (data: string) => {
+                    requestData = JSON.parse(data);
+
+                    return true;
+                }).respond(() => {
+                    return [200, {}];
+                });
+
+                var stateDeffered = q.defer();
+                spyOn(state, 'go').and.callFake((routeName: string, property: Business.Property) => {
+                    return stateDeffered.promise;
+                });
+
+                spyOn(messageService, 'showSuccessByCode');
+
+                stateDeffered.resolve();
+                scope.$apply();
+
+                var button = element.find('button#offer-edit-save');
+                button.click();
+                $http.flush();
+
+                expect(state.go).toHaveBeenCalled();
+                expect(messageService.showSuccessByCode).toHaveBeenCalledWith('OFFER.EDIT.OFFER_EDIT_SUCCESS');
+            });
+        });
+
     });
 }

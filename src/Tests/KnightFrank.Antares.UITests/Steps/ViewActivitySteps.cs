@@ -159,7 +159,7 @@
         [Then(@"Attachment should be displayed on view activity page")]
         public void CheckIfAttachmentIsDisplayed(Table table)
         {
-            Attachment actual = this.page.GetAttachmentDetails();
+            Attachment actual = this.page.AttachmentDetails;
             var expected = table.CreateInstance<Attachment>();
             expected.Date = DateTime.UtcNow.ToString(Format);
 
@@ -170,7 +170,7 @@
         public void ChackAttachmentDetails()
         {
             Attachment actual = this.page.PreviewAttachment.GetAttachmentDetails();
-            Attachment expected = this.page.GetAttachmentDetails();
+            Attachment expected = this.page.AttachmentDetails;
             expected.User = "John Smith";
 
             actual.ShouldBeEquivalentTo(expected);
@@ -283,6 +283,14 @@
         public void GetDefaultNextCallDateForLeadNegotiator(int day)
         {
             Assert.Equal(DateTime.UtcNow.AddDays(day).ToString(Format), this.page.LeadNegotiatorNextCall);
+        }
+
+        [Then(@"Departments are displayed on view activity page")]
+        public void CheckDepartment(Table table)
+        {
+            List<Department> expectedDepartments = table.CreateSet<Department>().ToList();
+            List<Department> actualDepartments = this.page.Departments;
+            expectedDepartments.Should().Equal(actualDepartments, (d1, d2) => d1.Name.Equals(d2.Name));
         }
     }
 }
