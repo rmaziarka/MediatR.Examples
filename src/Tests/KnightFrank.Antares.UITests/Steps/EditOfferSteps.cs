@@ -14,9 +14,7 @@
     [Binding]
     public class EditOfferSteps
     {
-        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly DriverContext driverContext;
-        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
         private EditOfferPage page;
         private const string Format = "dd-MM-yyyy";
