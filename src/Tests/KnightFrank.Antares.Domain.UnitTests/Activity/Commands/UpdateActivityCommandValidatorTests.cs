@@ -1,122 +1,80 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Activity.Commands
 {
-    using System;
-
     using FluentAssertions;
 
     using FluentValidation.Resources;
     using FluentValidation.Results;
-    using FluentValidation.TestHelper;
 
     using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
 
-    using Ploeh.AutoFixture;
-
     using Xunit;
 
-    using System.Collections.Generic;
     using System.Linq;
 
+    using FluentValidation.Validators;
+
     using KnightFrank.Antares.Domain.Activity.Commands;
+    using KnightFrank.Antares.Tests.Common.Extension.Fluent.RulesVerifier;
 
     [Trait("FeatureTitle", "Property Activity")]
     [Collection("UpdateActivityCommandValidator")]
     public class UpdateActivityCommandValidatorTests
     {
-        private readonly UpdateActivityCommandValidator validator;
+        private readonly UpdateActivityCommandValidator commandValidator = new UpdateActivityCommandValidator();
 
-        public UpdateActivityCommandValidatorTests()
+        [Fact]
+        public void Given_When_CreateInstance_Then_ShouldHaveCorrectRules()
         {
-            IFixture fixture = new Fixture().Customize();
-            this.validator = fixture.Create<UpdateActivityCommandValidator>();
-        }
+            // Assert
+            this.commandValidator.ShouldHaveRulesCount(9);
 
-        [Theory]
-        [AutoMoqData]
-        [InlineAutoMoqData(0)]
-        [InlineAutoMoqData(10, 0)]
-        [InlineAutoMoqData(20, 10, 0)]
-        public void Given_ValidUpdateActivityCommand_When_Validating_Then_IsValid(
-            decimal marketAppraisalPrice,
-            decimal recommendedPrice,
-            decimal vendorEstimatedPrice,
-            UpdateActivityCommand command)
-        {
-            command.MarketAppraisalPrice = marketAppraisalPrice;
-            command.RecommendedPrice = recommendedPrice;
-            command.VendorEstimatedPrice = vendorEstimatedPrice;
+            this.commandValidator.ShouldHaveRules(x => x.MarketAppraisalPrice,
+                RuleVerifiersComposer.Build()
+                                     .AddPropertyValidatorVerifier<GreaterThanOrEqualValidator>(0)
+                                     .Create());
 
-            this.AssertIfValid(command);
-        }
+            this.commandValidator.ShouldHaveRules(x => x.RecommendedPrice,
+                RuleVerifiersComposer.Build()
+                                     .AddPropertyValidatorVerifier<GreaterThanOrEqualValidator>(0)
+                                     .Create());
 
-        [Theory]
-        [AutoMoqData]
-        public void Given_ValidUpdateActivityCommand_When_MarketAppraisalPriceIsNotSet_Validating_Then_IsValid(
-            UpdateActivityCommand command)
-        {
-            command.MarketAppraisalPrice = null;
+            this.commandValidator.ShouldHaveRules(x => x.VendorEstimatedPrice,
+                RuleVerifiersComposer.Build()
+                                     .AddPropertyValidatorVerifier<GreaterThanOrEqualValidator>(0)
+                                     .Create());
 
-            this.AssertIfValid(command);
-        }
+            this.commandValidator.ShouldHaveRules(x => x.ActivityStatusId,
+                RuleVerifiersComposer.Build()
+                                     .AddPropertyValidatorVerifier<NotEmptyValidator>()
+                                     .Create());
 
-        [Theory]
-        [AutoMoqData]
-        public void Given_ValidUpdateActivityCommand_When_RecommendedPriceIsNotSet_Validating_Then_IsValid(
-            UpdateActivityCommand command)
-        {
-            command.RecommendedPrice = null;
+            this.commandValidator.ShouldHaveRules(x => x.ActivityTypeId,
+                RuleVerifiersComposer.Build()
+                                     .AddPropertyValidatorVerifier<NotEmptyValidator>()
+                                     .Create());
 
-            this.AssertIfValid(command);
-        }
+            this.commandValidator.ShouldHaveRules(x => x.LeadNegotiator,
+                RuleVerifiersComposer.Build()
+                                     .AddPropertyValidatorVerifier<NotNullValidator>()
+                                     .AddChildValidatorVerifier<UpdateActivityUserValidator>()
+                                     .Create());
 
-        [Theory]
-        [AutoMoqData]
-        public void Given_ValidUpdateActivityCommand_When_VendorEstimatedPriceIsNotSet_Validating_Then_IsValid(
-            UpdateActivityCommand command)
-        {
-            command.VendorEstimatedPrice = null;
+            this.commandValidator.ShouldHaveRules(x => x.LeadNegotiator.CallDate,
+                RuleVerifiersComposer.Build()
+                                     .AddCustomVerifier()
+                                     .Create());
 
-            this.AssertIfValid(command);
-        }
+            this.commandValidator.ShouldHaveRules(x => x.SecondaryNegotiators,
+                RuleVerifiersComposer.Build()
+                                     .AddPropertyValidatorVerifier<NotNullValidator>()
+                                     .AddChildCollectionValidatorVerifier<UpdateActivityUserValidator>()
+                                     .Create());
 
-        [Theory]
-        [AutoMoqData]
-        public void Given_InvalidUpdateActivityCommand_When_MarketAppraisalPriceIsNegative_Then_IsNotValid(
-            UpdateActivityCommand command)
-        {
-            command.MarketAppraisalPrice = -1;
-
-            AssertIfNotNegativePriceValidation(command, this.validator, nameof(command.MarketAppraisalPrice));
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_InvalidUpdateActivityCommand_When_RecommendedPriceIsNegative_Then_IsNotValid(
-            UpdateActivityCommand command)
-        {
-            command.RecommendedPrice = -1;
-
-            AssertIfNotNegativePriceValidation(command, this.validator, nameof(command.RecommendedPrice));
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_InvalidUpdateActivityCommand_When_VendorEstimatedPriceIsNegative_Then_IsNotValid(
-            UpdateActivityCommand command)
-        {
-            command.VendorEstimatedPrice = -1;
-
-            AssertIfNotNegativePriceValidation(command, this.validator, nameof(command.VendorEstimatedPrice));
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_ValidUpdateActivityCommand_When_SecondaryNegotiatorsIsEmpty_Validating_Then_IsValid(
-            UpdateActivityCommand command)
-        {
-            command.SecondaryNegotiators = new List<UpdateActivityUser>();
-
-            this.AssertIfValid(command);
+            this.commandValidator.ShouldHaveRules(x => x.Departments,
+                    RuleVerifiersComposer.Build()
+                                     .AddPropertyValidatorVerifier<NotNullValidator>()
+                                     .AddChildCollectionValidatorVerifier<UpdateActivityDepartmentValidator>()
+                                     .Create());
         }
 
         [Theory]
@@ -124,24 +82,14 @@
         public void Given_ValidUpdateActivityCommand_When_SecondaryNegotiatorCallDateIsNull_Validating_Then_IsValid(
             UpdateActivityCommand command)
         {
+            // Arrange
             command.SecondaryNegotiators.First().CallDate = null;
 
-            this.AssertIfValid(command);
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_UpdateActivityCommand_When_LeadNegotiatorIsNotSet_Validating_Then_IsNotValid(
-            UpdateActivityCommand command)
-        {
-            // Arrange
-            command.LeadNegotiator = null;
-
             // Act
-            ValidationResult validationResult = this.validator.Validate(command);
+            ValidationResult validationResult = this.commandValidator.Validate(command);
 
             // Assert
-            validationResult.IsInvalid(nameof(command.LeadNegotiator), nameof(Messages.notnull_error));
+            validationResult.IsValid.Should().BeTrue();
         }
 
         [Theory]
@@ -153,76 +101,11 @@
             command.LeadNegotiator.CallDate = null;
 
             // Act
-            ValidationResult validationResult = this.validator.Validate(command);
+            ValidationResult validationResult = this.commandValidator.Validate(command);
 
             // Assert
-            validationResult.IsInvalid(nameof(command.LeadNegotiator) + "." + nameof(command.LeadNegotiator.CallDate), nameof(Messages.notnull_error));
-        }
-
-        [Fact]
-        public void Given_UpdateActivityCommandValidator_When_Validating_LeadNegotiatorHaveConfiguredValidator()
-        {
-            this.validator.ShouldHaveChildValidator(x => x.LeadNegotiator, typeof(UpdateActivityUserValidator));
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_ValidUpdateActivityCommand_When_SecondaryNegotiatorsIsNotSet_Validating_Then_IsValid(
-            UpdateActivityCommand command)
-        {
-            // Arrange
-            command.SecondaryNegotiators = null;
-
-            // Act
-            ValidationResult validationResult = this.validator.Validate(command);
-
-            // Assert
-            validationResult.IsInvalid(nameof(command.SecondaryNegotiators), nameof(Messages.notnull_error));
-        }
-
-        [Fact]
-        public void Given_UpdateActivityCommandValidator_When_Validating_SecondaryNegotiatorsHaveConfiguredValidator()
-        {
-            this.validator.ShouldHaveChildValidator(x => x.SecondaryNegotiators, typeof(UpdateActivityUserValidator));
-        }
-
-
-        [Fact]
-        public void Given_UpdateActivityCommandValidator_When_Validating_Than_DepartmentsHaveConfiguredValidator()
-        {
-            this.validator.ShouldHaveChildValidator(x => x.Departments, typeof(UpdateActivityDepartmentValidator));
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_ExistingActivityIdInCommand_When_Validating_Then_ValidationPasses(
-            UpdateActivityCommand command)
-        {
-            ValidationResult validationResult = this.validator.Validate(command);
-
-            validationResult.IsValid.Should().BeTrue();
-        }
-
-        private static void AssertIfNotNegativePriceValidation(UpdateActivityCommand command,
-            UpdateActivityCommandValidator validator,
-            string propertyName)
-        {
-            // Act
-            ValidationResult validationResult = validator.Validate(command);
-
-            // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == propertyName);
-            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == nameof(Messages.greaterthanorequal_error));
-        }
-
-        private void AssertIfValid(UpdateActivityCommand command)
-        {
-            // Act
-            ValidationResult validationResult = this.validator.Validate(command);
-
-            // Assert
-            validationResult.IsValid.Should().BeTrue();
+            validationResult.IsInvalid(nameof(command.LeadNegotiator) + "." + nameof(command.LeadNegotiator.CallDate),
+                nameof(Messages.notnull_error));
         }
     }
 }
