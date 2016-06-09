@@ -13,8 +13,8 @@ module Antares {
             createComponent = (url: string, showText: boolean) => { };
 
         var pageObjectSelector = {
-            iconAsLink: 'a .fa-external-link[style!="display:none"]',
-            iconNotAsLink: '.fa-external-link[style!="display:none"]',
+            iconAsLink: 'div a>i.fa-external-link',
+            iconNotAsLink: 'div>i.fa-external-link',
             url: '[name=url]'
         };
 
@@ -35,16 +35,29 @@ module Antares {
 
         it('the icon is displayed as a link when url is not displayed', () => {
             createComponent('www.test.com', false);
-            var iconElements = element.find(pageObjectSelector.iconAsLink);
+            var iconElementWithLink = element.find(pageObjectSelector.iconAsLink);
+            var iconElementNoLink = element.find(pageObjectSelector.iconNotAsLink);
 
-            expect(iconElements.length).toBe(1);
+            expect(iconElementWithLink.length).toBe(1);
+            expect(iconElementWithLink.css("display")).toBe('');
+
+            expect(iconElementNoLink.length).toBe(1);
+            expect(iconElementNoLink.css("display")).toBe('none');
+
         });
 
         it('the icon is not displayed as a link when url is displayed', () => {
             createComponent('www.test.com', true);
-            var iconElements = element.find(pageObjectSelector.iconNotAsLink);
 
-            expect(iconElements.length).toBe(1);
+            var iconElementWithLink = element.find(pageObjectSelector.iconAsLink);
+            var iconElementNoLink = element.find(pageObjectSelector.iconNotAsLink);
+
+            expect(iconElementWithLink.length).toBe(1);
+            expect(iconElementWithLink.css("display")).toBe('none');
+
+            expect(iconElementNoLink.length).toBe(1);
+            expect(iconElementNoLink.css("display")).toBe('');
+         
         });
 
         runDescribe('when showText')

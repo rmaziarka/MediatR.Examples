@@ -6,8 +6,7 @@ module Antares {
     import Dto = Antares.Common.Models.Dto;
 
     describe('Given company is being edited', () => {
-        var companyMock: Business.Company = TestHelpers.CompanyGenerator.generate();
-
+       
         var scope: ng.IScope,
             controller: CompanyEditController,
             element: ng.IAugmentedJQuery,
@@ -26,6 +25,8 @@ module Antares {
             clientCarePageSelector : "input#clientcareurl"
         };
 
+        var companyMock: Business.Company = TestHelpers.CompanyGenerator.generate();
+
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService,
@@ -35,8 +36,8 @@ module Antares {
             $http = $httpBackend;
             state = $state;
             scope = $rootScope.$new();
-            element = $compile('<company-edit></company-edit>')(scope);
-            scope['company'] = companyMock;
+            element = $compile('<company-edit company="company"></company-edit>')(scope);
+            scope["company"] = companyMock;
             scope.$apply();
 
             controller = element.controller("companyEdit");
@@ -88,64 +89,64 @@ module Antares {
             assertValidator.assertShowElement(true, pageObjectSelectors.contactsAreRequiredHelpBlockSelector);
         });
 
-        //it('when contacts are not selected and save button is clicked then only error message should be displayed', () =>{
-        //    // arrange
-        //    var button = element.find(pageObjectSelectors.companySaveBtnSelector);
+        it('when contacts are not selected and save button is clicked then only error message should be displayed', () =>{
+            // arrange
+            var button = element.find(pageObjectSelectors.companySaveBtnSelector);
 
-        //    // act
-        //    button.click();
+            // act
+            button.click();
 
-        //    // asserts
-        //    assertValidator.assertShowElement(true, pageObjectSelectors.noContactsHelpBlockSelector);
-        //    assertValidator.assertShowElement(false, pageObjectSelectors.contactsAreRequiredHelpBlockSelector);
-        //});
+            // asserts
+            assertValidator.assertShowElement(true, pageObjectSelectors.noContactsHelpBlockSelector);
+            assertValidator.assertShowElement(false, pageObjectSelectors.contactsAreRequiredHelpBlockSelector);
+        });
 
-        //it('when contacts exists then should be displayed', () =>{
-        //    // arrange                 
-        //    controller.company = TestHelpers.CompanyGenerator.generate();
+        it('when contacts exists then should be displayed', () =>{
+            // arrange                 
+            controller.company = TestHelpers.CompanyGenerator.generate();
 
-        //    // act
-        //    scope.$apply();
+            // act
+            scope.$apply();
 
-        //    // asserts
-        //    var listItems = element.find(pageObjectSelectors.listItemsSelector);
-        //    expect(listItems.length).toBe(controller.company.contacts.length);
+            // asserts
+            var listItems = element.find(pageObjectSelectors.listItemsSelector);
+            expect(listItems.length).toBe(controller.company.contacts.length);
 
-        //    _.forEach(controller.company.contacts, (contact: Business.Contact, key: any) =>{
-        //        var listItem = element.find(pageObjectSelectors.listItemSelector(contact.id));
-        //        expect(listItem.text()).toBe(contact.getName());
-        //    });
-        //});
+            _.forEach(controller.company.contacts, (contact: Business.Contact, key: any) =>{
+                var listItem = element.find(pageObjectSelectors.listItemSelector(contact.id));
+                expect(listItem.text()).toBe(contact.getName());
+            });
+        });
 
-        //it('when form filled and save then should be send data', () =>{
-        //    // arrange
-        //    var button = element.find(pageObjectSelectors.companySaveBtnSelector);
-        //    var requestData: Dto.ICreateCompanyResource;
-        //    var company = TestHelpers.CompanyGenerator.generate();
-        //    var expectedContactIds = company.contacts.map((contact: Dto.IContact) =>{ return contact.id });
+        it('when form filled and save then should be send data', () =>{
+            // arrange
+            var button = element.find(pageObjectSelectors.companySaveBtnSelector);
+            var requestData: Dto.ICompany;
+            var company = TestHelpers.CompanyGenerator.generate();
+            var expectedContacts = company.contacts.map((contact: Dto.IContact) =>{ return contact });
 
-        //    spyOn(state, 'go');
-        //    controller.company = company;
+            spyOn(state, 'go');
+            controller.company = company;
            
-        //    $http.expectPOST(/\/api\/companies/, (data: string) =>{
-        //        requestData = JSON.parse(data);
-        //        return true;
-        //    }).respond(200, new Business.Company());
+            $http.expectPUT(/\/api\/companies/, (data: string) =>{
+                requestData = JSON.parse(data);
+                return true;
+            }).respond(200, new Business.Company());
 
-        //    // act
-        //    scope.$apply();
-        //    button.click();
-        //    $http.flush();
+            // act
+            scope.$apply();
+            button.click();
+            $http.flush();
 
-        //    // asserts
-        //    expect(state.go).toHaveBeenCalled();
-        //    expect(requestData).toBeDefined();
-        //    expect(requestData.name).toEqual(company.name);
-        //    expect(requestData.websiteUrl).toEqual(company.websiteUrl);
-        //    expect(requestData.clientCarePageUrl).toEqual(company.clientCarePageUrl);
-        //    expect(requestData.clientCareStatusId).toEqual(company.clientCareStatusId);
-        //    expect(angular.equals(requestData.contactIds, expectedContactIds)).toBe(true);
-        //});
+            // asserts
+            expect(state.go).toHaveBeenCalled();
+            expect(requestData).toBeDefined();
+            expect(requestData.name).toEqual(company.name);
+            expect(requestData.websiteUrl).toEqual(company.websiteUrl);
+            expect(requestData.clientCarePageUrl).toEqual(company.clientCarePageUrl);
+            expect(requestData.clientCareStatusId).toEqual(company.clientCareStatusId);
+            expect(angular.equals(requestData.contacts, expectedContacts)).toBe(true);
+        });
 
     });
 }
