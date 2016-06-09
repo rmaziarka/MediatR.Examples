@@ -23,7 +23,6 @@
     {
         private const string ApiUrl = "/api/offers";
         private readonly BaseTestClassFixture fixture;
-
         private readonly ScenarioContext scenarioContext;
 
         public OffersSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
@@ -39,6 +38,7 @@
         [Given(@"User creates (.*) offer in database")]
         public void CreateOfferUsingInDatabase(string status)
         {
+            DateTime data = DateTime.UtcNow;
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
             Guid statusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[status];
@@ -46,16 +46,16 @@
             var offer = new Offer
             {
                 ActivityId = activityId,
-                CompletionDate = DateTime.UtcNow,
-                ExchangeDate = DateTime.UtcNow,
+                CompletionDate = data,
+                ExchangeDate = data,
                 NegotiatorId = this.fixture.DataContext.Users.First().Id,
-                OfferDate = DateTime.UtcNow,
+                OfferDate = data,
                 Price = 1000,
                 RequirementId = requirementId,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
                 StatusId = statusId,
-                CreatedDate = DateTime.UtcNow,
-                LastModifiedDate = DateTime.UtcNow
+                CreatedDate = data,
+                LastModifiedDate = data
             };
 
             this.fixture.DataContext.Offer.Add(offer);
@@ -67,6 +67,7 @@
         [When(@"User creates (.*) offer using api")]
         public void CreateOfferUsingApi(string status)
         {
+            DateTime data = DateTime.UtcNow;
             Guid statusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[status];
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
@@ -78,9 +79,9 @@
                 StatusId = statusId,
                 Price = 10,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(400),
-                OfferDate = DateTime.UtcNow,
-                CompletionDate = DateTime.UtcNow,
-                ExchangeDate = DateTime.UtcNow
+                OfferDate = data,
+                CompletionDate = data,
+                ExchangeDate = data
             };
 
             this.CreateOffer(details);

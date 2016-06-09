@@ -40,7 +40,55 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"User sets locations details for the requirement")]
+        [Given(@"Requirement exists in database")]
+        public void RequirementExistsInDatabase()
+        {
+            const string countryCode = "GB";
+            Guid countryId = this.fixture.DataContext.Countries.Single(x => x.IsoCode.Equals(countryCode)).Id;
+            Guid enumTypeItemId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals("Requirement")).Id;
+            Guid addressFormId =
+                this.fixture.DataContext.AddressFormEntityTypes.Single(
+                    afe => afe.AddressForm.CountryId == countryId && afe.EnumTypeItemId == enumTypeItemId).AddressFormId;
+
+            var contacts = this.scenarioContext.Get<List<Contact>>("Contacts");
+
+            var address = new Address
+            {
+                AddressFormId = addressFormId,
+                CountryId = countryId,
+                City = StringExtension.GenerateMaxAlphanumericString(128),
+                Line2 = StringExtension.GenerateMaxAlphanumericString(128),
+                Postcode = StringExtension.GenerateMaxAlphanumericString(10)
+            };
+
+            var requirement = new Requirement
+            {
+                CreateDate = DateTime.UtcNow,
+                Contacts = contacts,
+                Address = address,
+                MinArea = 1,
+                MaxArea = 2,
+                MinBathrooms = 1,
+                MaxBathrooms = 2,
+                MinBedrooms = 1,
+                MaxBedrooms = 2,
+                MinLandArea = 1,
+                MaxLandArea = 2,
+                MinPrice = 1,
+                MaxPrice = 2,
+                MinParkingSpaces = 1,
+                MaxParkingSpaces = 2,
+                MinReceptionRooms = 1,
+                MaxReceptionRooms = 2,
+                Description = StringExtension.GenerateMaxAlphanumericString(4000)
+            };
+
+            this.fixture.DataContext.Requirements.Add(requirement);
+            this.fixture.DataContext.SaveChanges();
+
+            this.scenarioContext.Set(requirement, "Requirement");
+        }
+
         [When(@"User sets locations details for the requirement")]
         public void SetRequirementLocationDetails(Table table)
         {
@@ -66,37 +114,12 @@
             this.scenarioContext.Set(details, "Location");
         }
 
-        [When(@"User creates following requirement in database")]
-        [Given(@"User creates following requirement in database")]
-        public void CreateRequirementWithInDb(Table table)
-        {
-            var requirement = table.CreateInstance<Requirement>();
-
-            requirement.CreateDate = DateTime.Now;
-            requirement.Contacts.AddRange(this.scenarioContext.Get<List<Contact>>("ContactList"));
-
-            var location = this.scenarioContext.Get<CreateOrUpdateAddress>("Location");
-            requirement.Address = new Address
-            {
-                Line2 = location.Line2,
-                Postcode = location.Postcode,
-                City = location.City,
-                CountryId = location.CountryId,
-                AddressFormId = location.AddressFormId
-            };
-
-            this.fixture.DataContext.Requirements.Add(requirement);
-            this.fixture.DataContext.SaveChanges();
-
-            this.scenarioContext.Set(requirement, "Requirement");
-        }
-
         [When(@"User creates following requirement using api")]
         public void CreateRequirementWithApi(Table table)
         {
             string requestUrl = $"{ApiUrl}";
 
-            var contacts = this.scenarioContext.Get<List<Contact>>("ContactList");
+            var contacts = this.scenarioContext.Get<List<Contact>>("Contacts");
             var requirement = table.CreateInstance<CreateRequirementCommand>();
 
             requirement.CreateDate = DateTime.Now;
@@ -117,7 +140,7 @@
         {
             string requestUrl = $"{ApiUrl}";
 
-            var contacts = this.scenarioContext.Get<List<Contact>>("ContactList");
+            var contacts = this.scenarioContext.Get<List<Contact>>("Contacts");
 
             var requirement = new CreateRequirementCommand
             {
@@ -141,7 +164,7 @@
         {
             string requestUrl = $"{ApiUrl}";
 
-            var contacts = this.scenarioContext.Get<List<Contact>>("ContactList");
+            var contacts = this.scenarioContext.Get<List<Contact>>("Contacts");
             var requirement = table.CreateInstance<CreateRequirementCommand>();
             var location = this.scenarioContext.Get<CreateOrUpdateAddress>("Location");
 
@@ -214,17 +237,15 @@
         [Then(@"Requirement should be the same as added")]
         public void CompareRequirements()
         {
-            var expectedRequirement = JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent());
-            Requirement requirement = this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(expectedRequirement.Id));
+            var currentRequirement = JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent());
+            Requirement expectedRequirement = this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(currentRequirement.Id));
 
             AssertionOptions.AssertEquivalencyUsing(options =>
                 options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>());
 
-            requirement.ShouldBeEquivalentTo(expectedRequirement,
-                opt =>
-                    opt.Excluding(req => req.Address.Country)
-                       .Excluding(req => req.Address.AddressForm)
-                       .Excluding(req => req.RequirementNotes));
+            expectedRequirement.ShouldBeEquivalentTo(currentRequirement, opt => opt.
+                Excluding(req => req.Address.Country).
+                Excluding(req => req.Address.AddressForm));
         }
     }
 }

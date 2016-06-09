@@ -1,9 +1,9 @@
 ﻿Feature: Requirement 
 
-@ResidentialSalesRequirements 
-Scenario: Create residential sales requirement
+@Requirements
+Scenario: Create requirement
 	Given User gets GB address form for Requirement and country details
-		And User creates contacts in database with following data 
+		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
 	When User sets locations details for the requirement with max length fields
@@ -13,41 +13,20 @@ Scenario: Create residential sales requirement
 	Then User should get OK http status code
 		And Requirement should be the same as added
 
-@ResidentialSalesRequirements 
-Scenario: Create residential sales requirement with mandatory fields
+@Requirements
+Scenario: Create requirement with mandatory fields
 	Given User gets GB address form for Requirement and country details
-		And User creates contacts in database with following data 
+		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
 	When User creates requirement with mandatory fields using api
 	Then User should get OK http status code
 		And Requirement should be the same as added
-
-@ResidentialSalesRequirements 
-Scenario: Get residential sales requirement
-	Given User gets GB address form for Requirement and country details
-		And User creates contacts in database with following data 
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
-	When User sets locations details for the requirement
-		| Postcode | City   | Line2   |
-		| 1234     | London | Big Ben |
-		And User creates following requirement in database
- 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
- 			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | Description |
-		And User creates notes for requirement in database
-			| description     |
-			| Description foo |
-			| Description bar |
-		And User retrieves requirement for latest id
-	Then User should get OK http status code
-		And Requirement should be the same as added
-		And Notes should be the same as added
 		
-@ResidentialSalesRequirements 
-Scenario Outline: Create residential sales requirement without data
+@Requirements
+Scenario Outline: Create requirement without data
 	Given User gets GB address form for Property and country details
-		And User creates contacts in database with following data 
+		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
 	When User sets locations details for the requirement
@@ -64,8 +43,8 @@ Scenario Outline: Create residential sales requirement without data
 	| country      |
 	| address form |
 
-@ResidentialSalesRequirements
-Scenario: Create residential sales requirement with invalid contact
+@Requirements
+Scenario: Create requirement with invalid contact
 	Given User gets GB address form for Requirement and country details
 	When User sets locations details for the requirement
 		| Postcode | City   | Line2   |
@@ -76,6 +55,44 @@ Scenario: Create residential sales requirement with invalid contact
 	Then User should get BadRequest http status code
 
 @Requirements
+Scenario: Get requirement
+	Given Contacts exists in database
+		| Title  | FirstName | Surname |
+		| Mister | Tomasz    | Bien    |
+		And Requirement exists in database
+	When User retrieves requirement for latest id
+	Then User should get OK http status code
+		And Requirement should be the same as added
+
+@Requirements
+Scenario: Get requirement with notes
+	Given Contacts exists in database
+		| Title  | FirstName | Surname |
+		| Mister | Tomasz    | Bien    |
+		And Requirement exists in database
+		And Requirement notes exists in database
+			| Description |
+			| Note1       |
+			| Note2       |
+	When User retrieves requirement for latest id
+	Then User should get OK http status code
+		And Notes should be the same as added
+
+@Requirements
+Scenario: Get requirement with offer and viewing
+	Given Activity exists in database 
+		And Contacts exists in database
+			| Title  | FirstName | Surname |
+			| Mister | Tomasz    | Bien    |
+		And Requirement exists in database
+		And User creates New offer in database
+		And User creates viewing in database
+	When User retrieves requirement for latest id
+	Then User should get OK http status code
+		And Offer details in requirement should be the same as added
+		And Viewing details in requirement should be the same as added
+
+@Requirements
 Scenario Outline: Get residential sales requirement with invalid data		
 	When User retrieves requirement for <id> id
 	Then User should get <statusCode> http status code
@@ -84,23 +101,3 @@ Scenario Outline: Get residential sales requirement with invalid data
 	| id                                   | statusCode |
 	| 00000000-0000-0000-0000-000000000000 | NotFound   |
 	| A                                    | BadRequest |
-
-@Offers
-Scenario: Get requirement with offer and viewing
-	Given Activity exists in database 
-		And User gets GB address form for Requirement and country details
-		And User creates contacts in database with following data 
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
-		And User sets locations details for the requirement
-			| Postcode | City   | Line2   |
-			| 1234     | London | Big Ben |
-		And User creates following requirement in database
- 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms |
- 			| 1000000  | 4000000  | 1           | 5           |
-		And User creates New offer in database
-		And User creates viewing in database
-	When User retrieves requirement for latest id
-	Then User should get OK http status code
-		And Offer details in requirement should be the same as added
-		And Viewing details in requirement should be the same as added

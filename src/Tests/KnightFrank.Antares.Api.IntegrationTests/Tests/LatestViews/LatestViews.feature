@@ -37,16 +37,11 @@ Scenario: Create latest viewed activity
 @LatestViews
 Scenario: Create latest viewed requirement
 	Given User gets GB address form for Requirement and country details
-		And User creates contacts in database with following data 
+		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
 			| Adam      | Malysz  | Mister |
-		And User sets locations details for the requirement
-			| Postcode | City   | Line2   |
-			| 1234     | London | Big Ben |
-		And User creates following requirement in database
- 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
- 			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | Description |
+		And Requirement exists in database
 	When User adds Requirement to latest viewed entities using api
 	Then User should get OK http status code
 		And Retrieved latest view should contain Requirement entity
@@ -115,30 +110,21 @@ Scenario: Get latest viewed activities
 @LatestViews
 Scenario: Get latest viewed requirements
 	Given User gets GB address form for Requirement and country details
-		And User creates contacts in database with following data 
+		And Contacts exists in database 
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
-		And User sets locations details for the requirement
-			| Postcode | City   | Line2   |
-			| 1234     | London | Big Ben |
-		And User creates following requirement in database
- 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
- 			| 1        | 1        | 1           | 1           | 1                 | 1                 | 1            | 1            | 1                | 1                | 1       | 1       | 1           | 1           | 1           |
+		And Requirement exists in database
 		And Requirement is added to latest views
-		And User creates contacts in database with following data 
+		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
-		And User creates following requirement in database
- 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
- 			| 2        | 2        | 2           | 2           | 2                 | 2                 | 2            | 2            | 2                | 2                | 2       | 2       | 2           | 2           | 2           |
+		And Requirement exists in database
 		And Requirement is added to latest views
 		And Requirement is added to latest views
-		And User creates contacts in database with following data 
+		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
-		And User creates following requirement in database
- 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
- 			| 3        | 3        | 3           | 3           | 3                 | 3                 | 3            | 3            | 3                | 3                | 3       | 3       | 3           | 3           | 3           |
+		And Requirement exists in database
 		And Requirement is added to latest views
 	When User gets latest viewed entities
 	Then User should get OK http status code

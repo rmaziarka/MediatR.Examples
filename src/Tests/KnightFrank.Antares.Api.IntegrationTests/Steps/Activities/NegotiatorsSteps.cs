@@ -66,12 +66,6 @@
             };
         }
 
-        [Given(@"Next call is set to date is today plus (.*)")]
-        public void GivenNextCallForDateIsSet(double todayPlusDays)
-        {
-            this.updateActivityUser.CallDate = DateTime.UtcNow.AddDays(todayPlusDays);
-        }
-
         [Given(@"Following secondary negotiators exists in database")]
         public void GivenFollowingSecondaryNegotiatorsExistsInDatabase(Table table)
         {
