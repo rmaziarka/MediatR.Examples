@@ -1,6 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.Enum.Types
 {
-    public enum ActivityDocumentType
+    public enum DocumentType
     {
         MarketingSignOff,
         TermsOfBusiness,

@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Enum.Types;
+    using KnightFrank.Foundation.Antares.Cloud.Storage.Blob;
     using KnightFrank.Foundation.Antares.Cloud.Storage.Blob.Interfaces;
 
     using Microsoft.WindowsAzure.Storage.Blob;
@@ -22,29 +23,31 @@
 
     using Xunit;
 
-    public class ActivityStorageProviderTests
+    using EnumType = KnightFrank.Antares.Domain.Common.Enums.EnumType;
+
+    public class DocumentStorageProviderTests
     {
         [Theory]
         [AutoMoqData]
-        public void Given_GetActivityUploadSasUri_Then_ShouldDelegateBehaviour(
+        public void Given_GetDocumentUploadSasUriForActivity_Then_ShouldDelegateBehaviour(
             [Frozen] Mock<IEnumTypeItemValidator> enumTypeItemValidator,
             [Frozen] Mock<IEntityValidator> entityValidator,
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IStorageClientWrapper> storageClient,
             [Frozen] Mock<IBlobResourceFactory> blobResourceFactory,
             [Frozen] Mock<ISharedAccessBlobPolicyFactory> sharedAccessBlobPolicyFactory,
-            ActivityDocumentType activityDocumentType,
+            DocumentType documentType,
             ICloudBlobResource resource,
             AttachmentUrlParameters parameters,
             SharedAccessBlobPolicy policy,
-            ActivityStorageProvider activityStorageProvider,
+            DocumentStorageProvider documentStorageProvider,
             Uri uri
             )
         {
             // Arrange
             var enumTypeItem = new EnumTypeItem
             {
-                Code = activityDocumentType.ToString()
+                Code = documentType.ToString()
             };
 
             var enumTypeItems = new List<EnumTypeItem> { enumTypeItem };
@@ -53,17 +56,17 @@
                 .Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<EnumTypeItem, bool>>>(), e => e.EnumType))
                 .Returns(enumTypeItems);
 
-            blobResourceFactory.Setup(x => x.Create(activityDocumentType, It.IsAny<Guid>(), parameters)).Returns(resource);
+            blobResourceFactory.Setup(x => x.Create(documentType, It.IsAny<Guid>(), parameters, CloudStorageContainerType.Activity)).Returns(resource);
             sharedAccessBlobPolicyFactory.Setup(x => x.Create()).Returns(policy);
 
             storageClient.Setup(x =>
                 x.GetSasUri(It.IsAny<ICloudBlobResource>(), It.IsAny<SharedAccessBlobPolicy>())).Returns(uri);
 
             // Act
-            activityStorageProvider.GetActivityUploadSasUri(parameters);
+            documentStorageProvider.GetUploadSasUri<Activity>(parameters, EnumType.ActivityDocumentType, CloudStorageContainerType.Activity);
 
             // Assert
-            blobResourceFactory.Verify(x => x.Create(activityDocumentType, It.IsAny<Guid>(), parameters), Times.Once);
+            blobResourceFactory.Verify(x => x.Create(documentType, It.IsAny<Guid>(), parameters, CloudStorageContainerType.Activity), Times.Once);
             storageClient.Verify(x => x.GetSasUri(resource, policy), Times.Once);
             enumTypeItemValidator.Verify(x => x.ItemExists(enumTypeItem, parameters.DocumentTypeId), Times.Once);
             entityValidator.Verify(x => x.EntityExists<Activity>(parameters.EntityReferenceId), Times.Once);
@@ -71,25 +74,25 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_GetActivityDownloadSasUri_Then_ShouldDelegateBehaviour(
+        public void Given_GetDocumentDownloadSasUriForActivity_Then_ShouldDelegateBehaviour(
             [Frozen] Mock<IEnumTypeItemValidator> enumTypeItemValidator,
             [Frozen] Mock<IEntityValidator> entityValidator,
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IStorageClientWrapper> storageClient,
             [Frozen] Mock<IBlobResourceFactory> blobResourceFactory,
             [Frozen] Mock<ISharedAccessBlobPolicyFactory> sharedAccessBlobPolicyFactory,
-            ActivityDocumentType activityDocumentType,
+            DocumentType documentType,
             ICloudBlobResource resource,
             AttachmentDownloadUrlParameters parameters,
             SharedAccessBlobPolicy policy,
-            ActivityStorageProvider activityStorageProvider,
+            DocumentStorageProvider documentStorageProvider,
             Uri uri
             )
         {
             // Arrange
             var enumTypeItem = new EnumTypeItem
             {
-                Code = activityDocumentType.ToString()
+                Code = documentType.ToString()
             };
 
             var enumTypeItems = new List<EnumTypeItem> { enumTypeItem };
@@ -98,17 +101,17 @@
                 .Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<EnumTypeItem, bool>>>(), e => e.EnumType))
                 .Returns(enumTypeItems);
 
-            blobResourceFactory.Setup(x => x.Create(activityDocumentType, It.IsAny<Guid>(), parameters)).Returns(resource);
+            blobResourceFactory.Setup(x => x.Create(documentType, It.IsAny<Guid>(), parameters, CloudStorageContainerType.Activity)).Returns(resource);
             sharedAccessBlobPolicyFactory.Setup(x => x.Create()).Returns(policy);
 
             storageClient.Setup(x =>
                 x.GetSasUri(It.IsAny<ICloudBlobResource>(), It.IsAny<SharedAccessBlobPolicy>())).Returns(uri);
 
             // Act
-            activityStorageProvider.GetActivityDownloadSasUri(parameters);
+            documentStorageProvider.GetDownloadSasUri<Activity>(parameters, EnumType.ActivityDocumentType, CloudStorageContainerType.Activity);
 
             // Assert
-            blobResourceFactory.Verify(x => x.Create(activityDocumentType, parameters.ExternalDocumentId, parameters), Times.Once);
+            blobResourceFactory.Verify(x => x.Create(documentType, parameters.ExternalDocumentId, parameters, CloudStorageContainerType.Activity), Times.Once);
             storageClient.Verify(x => x.GetSasUri(resource, policy), Times.Once);
             enumTypeItemValidator.Verify(x => x.ItemExists(enumTypeItem, parameters.DocumentTypeId), Times.Once);
             entityValidator.Verify(x => x.EntityExists<Activity>(parameters.EntityReferenceId), Times.Once);
@@ -116,23 +119,23 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_GetActivityUploadSasUri_Then_ShouldReturnCreatedUrl(
+        public void Given_GetDocumentUploadSasUri_Then_ShouldReturnCreatedUrl(
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IStorageClientWrapper> storageClient,
             [Frozen] Mock<IBlobResourceFactory> blobResourceFactory,
             [Frozen] Mock<ISharedAccessBlobPolicyFactory> sharedAccessBlobPolicyFactory,
-            ActivityDocumentType activityDocumentType,
+            DocumentType documentType,
             ICloudBlobResource resource,
             AttachmentUrlParameters parameters,
             SharedAccessBlobPolicy policy,
-            ActivityStorageProvider activityStorageProvider,
+            DocumentStorageProvider documentStorageProvider,
             Uri uri
             )
         {
             // Arrange
             var enumTypeItem = new EnumTypeItem
             {
-                Code = activityDocumentType.ToString()
+                Code = documentType.ToString()
             };
 
             var enumTypeItems = new List<EnumTypeItem> { enumTypeItem };
@@ -141,14 +144,14 @@
                 .Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<EnumTypeItem, bool>>>(), e => e.EnumType))
                 .Returns(enumTypeItems);
 
-            blobResourceFactory.Setup(x => x.Create(activityDocumentType, It.IsAny<Guid>(), parameters)).Returns(resource);
+            blobResourceFactory.Setup(x => x.Create(documentType, It.IsAny<Guid>(), parameters, CloudStorageContainerType.Activity)).Returns(resource);
             sharedAccessBlobPolicyFactory.Setup(x => x.Create()).Returns(policy);
 
             storageClient.Setup(x =>
                 x.GetSasUri(It.IsAny<ICloudBlobResource>(), It.IsAny<SharedAccessBlobPolicy>())).Returns(uri);
 
             // Act
-            AzureUploadUrlContainer azureUploadUrlContainer = activityStorageProvider.GetActivityUploadSasUri(parameters);
+            AzureUploadUrlContainer azureUploadUrlContainer = documentStorageProvider.GetUploadSasUri<Activity>(parameters, EnumType.ActivityDocumentType, CloudStorageContainerType.Activity);
 
             // Assert
             Assert.Equal(uri, azureUploadUrlContainer.Url);
@@ -156,23 +159,23 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_GetActivityDownloadSasUri_Then_ShouldReturnCreatedUrl(
+        public void Given_GetDocumentDownloadSasUri_Then_ShouldReturnCreatedUrl(
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IStorageClientWrapper> storageClient,
             [Frozen] Mock<IBlobResourceFactory> blobResourceFactory,
             [Frozen] Mock<ISharedAccessBlobPolicyFactory> sharedAccessBlobPolicyFactory,
-            ActivityDocumentType activityDocumentType,
+            DocumentType documentType,
             ICloudBlobResource resource,
             AttachmentDownloadUrlParameters parameters,
             SharedAccessBlobPolicy policy,
-            ActivityStorageProvider activityStorageProvider,
+            DocumentStorageProvider documentStorageProvider,
             Uri uri
             )
         {
             // Arrange
             var enumTypeItem = new EnumTypeItem
             {
-                Code = activityDocumentType.ToString()
+                Code = documentType.ToString()
             };
 
             var enumTypeItems = new List<EnumTypeItem> { enumTypeItem };
@@ -181,14 +184,14 @@
                 .Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<EnumTypeItem, bool>>>(), e => e.EnumType))
                 .Returns(enumTypeItems);
 
-            blobResourceFactory.Setup(x => x.Create(activityDocumentType, It.IsAny<Guid>(), parameters)).Returns(resource);
+            blobResourceFactory.Setup(x => x.Create(documentType, It.IsAny<Guid>(), parameters, CloudStorageContainerType.Activity)).Returns(resource);
             sharedAccessBlobPolicyFactory.Setup(x => x.Create()).Returns(policy);
 
             storageClient.Setup(x =>
                 x.GetSasUri(It.IsAny<ICloudBlobResource>(), It.IsAny<SharedAccessBlobPolicy>())).Returns(uri);
 
             // Act
-            AzureDownloadUrlContainer container = activityStorageProvider.GetActivityDownloadSasUri(parameters);
+            AzureDownloadUrlContainer container = documentStorageProvider.GetDownloadSasUri<Activity>(parameters, EnumType.ActivityDocumentType, CloudStorageContainerType.Activity);
 
             // Assert
             Assert.Equal(uri, container.Url);
@@ -196,23 +199,23 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_GetActivityUploadSasUri_Then_ShouldReturnCreatedExternalId(
+        public void Given_GetDocumentUploadSasUri_Then_ShouldReturnCreatedExternalId(
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IStorageClientWrapper> storageClient,
             [Frozen] Mock<IBlobResourceFactory> blobResourceFactory,
             [Frozen] Mock<ISharedAccessBlobPolicyFactory> sharedAccessBlobPolicyFactory,
-            ActivityDocumentType activityDocumentType,
+            DocumentType documentType,
             ICloudBlobResource resource,
             AttachmentUrlParameters parameters,
             SharedAccessBlobPolicy policy,
-            ActivityStorageProvider activityStorageProvider,
+            DocumentStorageProvider documentStorageProvider,
             Uri uri
             )
         {
             // Arrange
             var enumTypeItem = new EnumTypeItem
             {
-                Code = activityDocumentType.ToString()
+                Code = documentType.ToString()
             };
 
             var enumTypeItems = new List<EnumTypeItem> { enumTypeItem };
@@ -223,8 +226,8 @@
 
             Guid externalDocumentId = Guid.Empty;
 
-            blobResourceFactory.Setup(x => x.Create(activityDocumentType, It.IsAny<Guid>(), parameters))
-                .Callback((ActivityDocumentType documentType, Guid documentId, AttachmentUrlParameters param) =>
+            blobResourceFactory.Setup(x => x.Create(documentType, It.IsAny<Guid>(), parameters, CloudStorageContainerType.Activity))
+                .Callback((DocumentType docType, Guid documentId, AttachmentUrlParameters param, CloudStorageContainerType cloudStorageContainerType) =>
                 {
                     externalDocumentId = documentId;
                 })
@@ -235,11 +238,10 @@
                 x.GetSasUri(It.IsAny<ICloudBlobResource>(), It.IsAny<SharedAccessBlobPolicy>())).Returns(uri);
 
             // Act
-            AzureUploadUrlContainer azureUploadUrlContainer = activityStorageProvider.GetActivityUploadSasUri(parameters);
+            AzureUploadUrlContainer azureUploadUrlContainer = documentStorageProvider.GetUploadSasUri<Activity>(parameters, EnumType.ActivityDocumentType, CloudStorageContainerType.Activity);
 
             // Assert
             Assert.Equal(externalDocumentId, azureUploadUrlContainer.ExternalDocumentId);
         }
-
     }
 }

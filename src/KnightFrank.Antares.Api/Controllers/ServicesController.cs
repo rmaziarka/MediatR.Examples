@@ -1,21 +1,27 @@
 ﻿namespace KnightFrank.Antares.Api.Controllers
 {
+    using System;
+    using System.Collections.Generic;
     using System.Web.Http;
 
     using FluentValidation;
 
     using KnightFrank.Antares.Api.Models;
     using KnightFrank.Antares.Api.Services.AzureStorage;
+    using KnightFrank.Antares.Api.Services.AzureStorage.Configuration;
     using KnightFrank.Antares.Api.Validators.Services;
+    using KnightFrank.Foundation.Antares.Cloud.Storage.Blob;
 
     [RoutePrefix("api/services")]
     public class ServicesController : ApiController
     {
-        private readonly IStorageProvider storageProvider;
+        private readonly Dictionary<CloudStorageContainerType, StorageProviderConfigurator.GetUploadSasUri> uploadUrlContainersDictionary;
+        private readonly Dictionary<CloudStorageContainerType, StorageProviderConfigurator.GetDownloadSasUri> downloadUrlContainersDictionary;
 
-        public ServicesController(IStorageProvider storageProvider)
+        public ServicesController(IStorageProviderConfigurator storageProviderConfigurator)
         {
-            this.storageProvider = storageProvider;
+            this.uploadUrlContainersDictionary = storageProviderConfigurator.ConfigureUploadUrlContainers();
+            this.downloadUrlContainersDictionary = storageProviderConfigurator.ConfigureDownloadUrlContainers();
         }
 
         /// <summary>
@@ -29,7 +35,11 @@
             var validator = new AttachmentUrlParametersValidator();
             validator.ValidateAndThrow(parameters);
 
-            return this.storageProvider.GetActivityUploadSasUri(parameters);
+            //TODO: get entity name form uri
+            CloudStorageContainerType cloudStorageContainerType;
+            Enum.TryParse("Activity", out cloudStorageContainerType);
+
+            return this.uploadUrlContainersDictionary[cloudStorageContainerType](parameters);
         }
 
         /// <summary>
@@ -45,7 +55,11 @@
             var validator = new AttachmentDownloadUrlParametersValidator();
             validator.ValidateAndThrow(parameters);
 
-            return this.storageProvider.GetActivityDownloadSasUri(parameters);
+            //TODO: get entity name form uri
+            CloudStorageContainerType cloudStorageContainerType;
+            Enum.TryParse("Activity", out cloudStorageContainerType);
+
+            return this.downloadUrlContainersDictionary[cloudStorageContainerType](parameters);
         }
     }
 }

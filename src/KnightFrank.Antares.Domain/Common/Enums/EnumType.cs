@@ -3,6 +3,7 @@
     public enum EnumType
     {
         ActivityDocumentType,
+        PropertyDocumentType,
         ActivityStatus,
         Division,
         EntityType,

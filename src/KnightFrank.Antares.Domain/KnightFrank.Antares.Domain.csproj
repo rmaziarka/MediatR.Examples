@@ -223,7 +223,7 @@
     <Compile Include="Contact\QueryHandlers\ContactsQueryHandler.cs" />
     <Compile Include="DomainModule.cs" />
     <Compile Include="Common\Exceptions\DomainValidationException.cs" />
-    <Compile Include="Enum\Types\ActivityDocumentType.cs" />
+    <Compile Include="Enum\Types\DocumentType.cs" />
     <Compile Include="Enum\Queries\EnumItemQuery.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQuery.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQueryValidator.cs" />

@@ -5,18 +5,19 @@
 
     using KnightFrank.Antares.Api.Models;
     using KnightFrank.Antares.Api.Services.AzureStorage.Factories;
+    using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Model.Enum;
-    using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Enum.Types;
     using KnightFrank.Foundation.Antares.Cloud.Storage.Blob.Interfaces;
+    using KnightFrank.Foundation.Antares.Cloud.Storage.Blob;
 
     using Microsoft.WindowsAzure.Storage.Blob;
 
     using EnumType = KnightFrank.Antares.Domain.Common.Enums.EnumType;
 
-    public class ActivityStorageProvider : IStorageProvider
+    public class DocumentStorageProvider : IStorageProvider
     {
         private readonly IStorageClientWrapper storageClient;
         private readonly IBlobResourceFactory blobResourceFactory;
@@ -25,8 +26,8 @@
         private readonly IEntityValidator entityValidator;
         private readonly IGenericRepository<EnumTypeItem> enumTypeItemRepository;
 
-        public ActivityStorageProvider(
-            IStorageClientWrapper storageClient, 
+        public DocumentStorageProvider(
+            IStorageClientWrapper storageClient,
             IBlobResourceFactory blobResourceFactory,
             ISharedAccessBlobPolicyFactory sharedAccessBlobPolicyFactory,
             IEnumTypeItemValidator enumTypeItemValidator,
@@ -41,50 +42,50 @@
             this.enumTypeItemRepository = enumTypeItemRepository;
         }
 
-        public AzureUploadUrlContainer GetActivityUploadSasUri(AttachmentUrlParameters parameters)
+        public AzureUploadUrlContainer GetUploadSasUri<T>(AttachmentUrlParameters parameters, EnumType entityDocumentType, CloudStorageContainerType cloudStorageContainerType) where T : BaseEntity
         {
-            this.entityValidator.EntityExists<Activity>(parameters.EntityReferenceId);
+            this.entityValidator.EntityExists<T>(parameters.EntityReferenceId);
 
-            ActivityDocumentType activityDocumentType = this.GetActivityDocumentType(parameters.DocumentTypeId);
+            DocumentType documentType = this.GetDocumentType(parameters, entityDocumentType);
 
             Guid externalDocumentId = Guid.NewGuid();
 
             return new AzureUploadUrlContainer
             {
-                Url = this.GetSasUrl(parameters, externalDocumentId, activityDocumentType),
+                Url = this.GetSasUrl(parameters, externalDocumentId, documentType, cloudStorageContainerType),
                 ExternalDocumentId = externalDocumentId
             };
         }
 
-        public AzureDownloadUrlContainer GetActivityDownloadSasUri(AttachmentDownloadUrlParameters parameters)
+        public AzureDownloadUrlContainer GetDownloadSasUri<T>(AttachmentDownloadUrlParameters parameters, EnumType entityDocumentType, CloudStorageContainerType cloudStorageContainerType) where T : BaseEntity
         {
-            this.entityValidator.EntityExists<Activity>(parameters.EntityReferenceId);
+            this.entityValidator.EntityExists<T>(parameters.EntityReferenceId);
 
-            ActivityDocumentType activityDocumentType = this.GetActivityDocumentType(parameters.DocumentTypeId);
+            DocumentType documentType = this.GetDocumentType(parameters, entityDocumentType);
 
             return new AzureDownloadUrlContainer
             {
-                Url = this.GetSasUrl(parameters, parameters.ExternalDocumentId, activityDocumentType),
+                Url = this.GetSasUrl(parameters, parameters.ExternalDocumentId, documentType, cloudStorageContainerType),
             };
         }
 
-        private ActivityDocumentType GetActivityDocumentType(Guid documentTypeId)
+        private DocumentType GetDocumentType(AttachmentUrlParameters parameters, EnumType entityDocumentType)
         {
-            EnumTypeItem enumTypeItem = 
+            EnumTypeItem enumTypeItem =
                 this.enumTypeItemRepository
-                .GetWithInclude(x => x.Id == documentTypeId && x.EnumType.Code == EnumType.ActivityDocumentType.ToString(), x => x.EnumType)
+                .GetWithInclude(x => x.Id == parameters.DocumentTypeId && x.EnumType.Code == entityDocumentType.ToString(), x => x.EnumType)
                 .SingleOrDefault();
 
-            this.enumTypeItemValidator.ItemExists(enumTypeItem, documentTypeId);
+            this.enumTypeItemValidator.ItemExists(enumTypeItem, parameters.DocumentTypeId);
 
-            var activityDocumentType = (ActivityDocumentType)Enum.Parse(typeof(ActivityDocumentType), enumTypeItem.Code, true);
+            var documentType = (DocumentType)Enum.Parse(typeof(DocumentType), enumTypeItem.Code, true);
 
-            return activityDocumentType;
+            return documentType;
         }
 
-        private Uri GetSasUrl(AttachmentUrlParameters urlParameters, Guid externalDocumentId, ActivityDocumentType activityDocumentType)
+        private Uri GetSasUrl(AttachmentUrlParameters urlParameters, Guid externalDocumentId, DocumentType documentType, CloudStorageContainerType cloudStorageContainerType)
         {
-            ICloudBlobResource cloudBlobResource = this.blobResourceFactory.Create(activityDocumentType, externalDocumentId, urlParameters);
+            ICloudBlobResource cloudBlobResource = this.blobResourceFactory.Create(documentType, externalDocumentId, urlParameters, cloudStorageContainerType);
             SharedAccessBlobPolicy sharedAccessBlobPolicy = this.sharedAccessBlobPolicyFactory.Create();
 
             return this.storageClient.GetSasUri(cloudBlobResource, sharedAccessBlobPolicy);

@@ -216,11 +216,13 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Services\AzureStorage\Configuration\IStorageProviderConfigurator.cs" />
     <Compile Include="Controllers\LatestViewsController.cs" />
     <Compile Include="Controllers\OffersController.cs" />
     <Compile Include="Models\AttachmentDownloadUrlParameters.cs" />
     <Compile Include="Services\AzureStorage\AzureDownloadUrlContainer.cs" />
     <Compile Include="Services\AzureStorage\AzureUploadUrlContainer.cs" />
+    <Compile Include="Services\AzureStorage\Configuration\StorageProviderConfigurator.cs" />
     <Compile Include="Services\AzureStorage\Factories\IBlobResourceFactory.cs" />
     <Compile Include="Services\AzureStorage\Factories\ISharedAccessBlobPolicyFactory.cs" />
     <Compile Include="Services\AzureStorage\IStorageProvider.cs" />
@@ -248,7 +250,7 @@
     <Compile Include="Models\AttachmentUrlParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App_Start\Startup.cs" />
-    <Compile Include="Services\AzureStorage\ActivityStorageProvider.cs" />
+    <Compile Include="Services\AzureStorage\DocumentStorageProvider.cs" />
     <Compile Include="Validators\Services\AttachmentDownloadUrlParametersValidator.cs" />
     <Compile Include="Validators\Services\AttachmentUrlParametersValidator.cs" />
   </ItemGroup>
