@@ -26,7 +26,6 @@
         private readonly ScenarioContext scenarioContext;
         private ViewCompanyPage page;
 
-
         public ViewCompanySteps(ScenarioContext scenarioContext)
         {
             if (scenarioContext == null)
@@ -58,5 +57,11 @@
             websiteUrl.ShouldBeEquivalentTo(company.WebsiteUrl);
             clientCareUrl.ShouldBeEquivalentTo(company.ClientCarePageUrl);
         }
-    }
+
+		[When(@"User clicks edit company button on view company page")]
+		public void EditCompany()
+		{
+			this.page.EditCompany();
+		}
+	}
 }

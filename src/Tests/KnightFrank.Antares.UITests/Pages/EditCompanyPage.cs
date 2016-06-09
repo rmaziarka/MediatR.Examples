@@ -15,14 +15,14 @@
 
     using OpenQA.Selenium;
 
-    public class CreateCompanyPage : ProjectPageBase
+    public class EditCompanyPage : ProjectPageBase
     {
-        private readonly ElementLocator companyForm = new ElementLocator(Locator.CssSelector, "company-add");
+        private readonly ElementLocator companyForm = new ElementLocator(Locator.CssSelector, "company-edit");
         private readonly ElementLocator addContact = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
         private readonly ElementLocator companyName = new ElementLocator(Locator.Id, "name");
         private readonly ElementLocator website = new ElementLocator(Locator.Id, "website");
         private readonly ElementLocator clientCarePage = new ElementLocator(Locator.Id, "clientcareurl");
-        private readonly ElementLocator clientCareStatus = new ElementLocator(Locator.Id, "client-care-status");
+        private readonly ElementLocator clientCareStatus = new ElementLocator(Locator.CssSelector, "#client-care-status > select");
         private readonly ElementLocator contactsList = new ElementLocator(Locator.CssSelector, "#list-contacts .ng-binding");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "company-save-btn");
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
@@ -30,7 +30,7 @@
 
         private string currentWindowHandler;
         
-        public CreateCompanyPage(DriverContext driverContext) : base(driverContext)
+        public EditCompanyPage(DriverContext driverContext) : base(driverContext)
         {
         }
 
@@ -38,73 +38,88 @@
 
         public List<string> Contacts => this.Driver.GetElements(this.contactsList).Select(el => el.Text).ToList();
 
-        public CreateCompanyPage OpenCreateCompanyPage()
+		public bool IsEditCompanyFormPresent()
+		{
+			return this.Driver.IsElementPresent(this.companyForm, BaseConfiguration.MediumTimeout);
+		}
+
+		public string GetCompanyName()
+		{
+			return this.Driver.GetElement(this.companyName).GetAttribute("value");
+		}
+
+		public string GetWebsiteUrl()
+		{
+			return this.Driver.GetElement(this.website).GetAttribute("value");
+		}
+
+		public string GetClientCareUrl()
+		{
+			return this.Driver.GetElement(this.clientCarePage).GetAttribute("value");
+		}
+
+		public EditCompanyPage OpenEditCompanyPage()
         {
-            new CommonPage(this.DriverContext).NavigateToPage("create company");
+            new CommonPage(this.DriverContext).NavigateToPage("edit company");
             return this;
         }
-     
-        public CreateCompanyPage AddContactToCompany()
+    
+        public EditCompanyPage AddContactToCompany()
         {
             this.Driver.GetElement(this.addContact).Click();
             this.Driver.WaitForAngularToFinish();
             return this;
         }
 
-        public CreateCompanyPage SetCompanyName(string name)
+        public EditCompanyPage SetCompanyName(string name)
         {
             this.Driver.SendKeys(this.companyName, name);
             return this;
         }
 
-        public CreateCompanyPage SetWebsite(string websiteUrl)
+        public EditCompanyPage SetWebsite(string websiteUrl)
         {
             this.Driver.SendKeys(this.website, websiteUrl);
             return this;
         }
 
-        public CreateCompanyPage SetClientCareUrl(string clientCarePageUrl)
+        public EditCompanyPage SetClientCareUrl(string clientCarePageUrl)
         {
             this.Driver.SendKeys(this.clientCarePage, clientCarePageUrl);
             return this;
         }
 
-        public CreateCompanyPage SetClientCareStatus()
+        public EditCompanyPage SetClientCareStatus()
         {
             //select the first in the drop down.
             var select = this.Driver.GetElement<Select>(this.clientCareStatus);
 
 			// TODO:
 			//  IWebElement element = select.SelectElement().Options.Single(o => o.Text.Trim().Equals(clientCareStatus));
-            select.SelectByIndex(1);
+			select.SelectByIndex(2);
             this.Driver.WaitForAngularToFinish();
             return this;
         }
 
-        public CreateCompanyPage SaveCompany()
+        public EditCompanyPage SaveCompany()
         {
             this.Driver.GetElement(this.saveButton).Click();
             return this;
         }
 
-        public bool IsAddCompanyFormPresent()
-        {
-            return this.Driver.IsElementPresent(this.companyForm, BaseConfiguration.MediumTimeout);
-        }
-
-		public CreateCompanyPage WaitForSidePanelToShow()
+       public EditCompanyPage WaitForSidePanelToShow()
         {
             this.Driver.WaitForElementToBeDisplayed(this.panel, BaseConfiguration.MediumTimeout);
             return this;
         }
 
-        public CreateCompanyPage WaitForSidePanelToHide()
+        public EditCompanyPage WaitForSidePanelToHide()
         {
             this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.MediumTimeout);
             return this;
         }
 
-        public CreateCompanyPage ClickOnWebsiteLink()
+        public EditCompanyPage ClickOnWebsiteLink()
         {
             this.currentWindowHandler = this.Driver.CurrentWindowHandle;
             this.Driver.GetElement(this.websiteUrlIcon).Click();
@@ -128,7 +143,6 @@
             this.Driver.SwitchTo().Window(this.currentWindowHandler);
             var ah = $"http://{url}/";
             return ah.Equals(currentUrl);
-
         }    
     }
 }

@@ -18,14 +18,14 @@
     using Xunit;
 
     [Binding]
-    public class CreateCompanySteps
+    public class EditCompanySteps
     {
         private readonly DriverContext driverContext;
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
-        private CreateCompanyPage page;
+        private EditCompanyPage page;
 
-        public CreateCompanySteps(ScenarioContext scenarioContext)
+        public EditCompanySteps(ScenarioContext scenarioContext)
         {
             if (scenarioContext == null)
             {
@@ -37,17 +37,27 @@
 
             if (this.page == null)
             {
-                this.page = new CreateCompanyPage(this.driverContext);
+                this.page = new EditCompanyPage(this.driverContext);
             }
         }
 
-        [When(@"User navigates to create company page")]
-        public void OpenCreateCompanyPage()
-        {
-            this.page = new CreateCompanyPage(this.driverContext).OpenCreateCompanyPage();
-        }
+		[Then(@"Edit company page is displayed with following details")]
+		public void ThenEditCompanyPageIsDisplayedWithFollowingDetails(Table table)
+		{
+			List<Company> companies = table.CreateSet<Company>().ToList();
+			Assert.True(this.page.IsEditCompanyFormPresent());
 
-        [When(@"User fills in company details on create company page")]
+			string name = this.page.GetCompanyName();
+			string websiteUrl = this.page.GetWebsiteUrl();
+			string clientCareUrl = this.page.GetClientCareUrl();
+
+			Company company = companies.First();
+			name.ShouldBeEquivalentTo(company.Name);
+			websiteUrl.ShouldBeEquivalentTo(company.WebsiteUrl);
+			clientCareUrl.ShouldBeEquivalentTo(company.ClientCarePageUrl);
+		}
+
+		[When(@"User fills in company details on edit company page")]
         public void FillInCompanyData(Table table)
         {
             var details = table.CreateInstance<Company>();
@@ -58,9 +68,9 @@
             this.page.SetWebsite(details.WebsiteUrl);
             this.page.SetClientCareUrl(details.ClientCarePageUrl);
             this.page.SetClientCareStatus();
-        }
+		}
 
-		[When(@"User selects contacts on create company page")]
+		[When(@"User selects contacts on edit company page")]
 		public void SelectContactsForCompany(Table table)
 		{
 			this.page.AddContactToCompany().WaitForSidePanelToShow();
@@ -75,7 +85,7 @@
 			this.page.WaitForSidePanelToHide();
 		}
 
-		[Then(@"List of company contacts should contain following contacts")]
+		[Then(@"List of updated company contacts should contain following contacts")]
 		public void CheckContactsList(Table table)
 		{
 			List<string> contacts =
@@ -87,21 +97,7 @@
 			contacts.ShouldBeEquivalentTo(selectedContacts);
 		}
 
-		[When(@"User clicks on website url icon")]
-		public void WhenUserClicksOnWebsiteUrlIcon()
-		{
-			this.page.ClickOnWebsiteLink();
-		}
-
-		[Then(@"url opens in new tab")]
-		public void ThenUrlOpensInNewTab()
-		{
-			var scenarioUrl = this.scenarioContext.Get<string>("Url");
-
-			Assert.True(this.page.CheckNewTab(scenarioUrl));
-		}
-
-		[When(@"User clicks save company button on create company page")]
+		[When(@"User clicks save company button on edit company page")]
         public void SaveCompany()
         {
             this.page.SaveCompany();

@@ -22,15 +22,15 @@
         private readonly ElementLocator clientCareStatus = new ElementLocator(Locator.Id, "client-care-status");
         private readonly ElementLocator contactsList = new ElementLocator(Locator.CssSelector, "#list-contacts .ng-binding");
         private readonly ElementLocator websiteUrlIcon = new ElementLocator(Locator.CssSelector, "a[name='url'] > i");
+		private readonly ElementLocator editCompanyButton = new ElementLocator(Locator.Id, "company-edit-btn");
 
-       public ViewCompanyPage(DriverContext driverContext) : base(driverContext)
+		public ViewCompanyPage(DriverContext driverContext) : base(driverContext)
         {
         }
 
         public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
 
         public List<string> Contacts => this.Driver.GetElements(this.contactsList).Select(el => el.Text).ToList();
-
 
         public bool IsViewCompanyFormPresent()
         {
@@ -43,13 +43,20 @@
             return element.Text;
         }
     
-    public string GetWebsiteUrl()
+		public string GetWebsiteUrl()
         {
             return this.Driver.GetElement(this.website).Text;
         }
-        public string GetClientCareUrl()
+
+		public string GetClientCareUrl()
         {
             return this.Driver.GetElement(this.clientCarePage).Text;
         }
-    }
+
+	    public ViewCompanyPage EditCompany()
+	    {
+			this.Driver.GetElement(this.editCompanyButton).Click();
+			return this;
+		}
+	}
 }
