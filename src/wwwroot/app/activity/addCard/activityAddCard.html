@@ -1,12 +1,16 @@
-﻿<kf-side-panel-card>
-    <side-panel-header>
-        <h3 translate="ACTIVITY.ADD.CREATE_ACTIVITY"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <div class="panel panel-default">
-            Test
-        </div>
-    </side-panel-content>
-    <side-panel-footer>
-    </side-panel-footer>
-</kf-side-panel-card>
+﻿<form name="vm.activityAddCardForm" ng-submit="vm.activityAddCardForm.isFormValid() && vm.save()" novalidate>
+    <kf-side-panel-card>
+        <side-panel-header>
+            <h3 translate="ACTIVITY.ADD.CREATE_ACTIVITY"></h3>
+        </side-panel-header>
+        <side-panel-content>
+            <activity-type-edit-control property-type-id="vm.data.propertyTypeId" ng-model="vm.selectedActivityTypeId"></activity-type-edit-control>
+            <activity-status-control ng-model="vm.selectedActivityStatusId"></activity-status-control>
+        </side-panel-content>
+        <side-panel-footer>
+            <button class="btn btn-primary" id="activity-add-button" type="submit">
+                <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+            </button>
+        </side-panel-footer>
+    </kf-side-panel-card>
+</form>

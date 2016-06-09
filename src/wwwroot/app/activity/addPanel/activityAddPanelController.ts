@@ -5,6 +5,9 @@ module Antares.Activity {
     import Business = Common.Models.Business;
 
     export class ActivityAddPanelController extends Antares.Common.Component.BaseSidePanelController {
+        // binding
+        data: any;
+
         constructor() {
             super();
         }

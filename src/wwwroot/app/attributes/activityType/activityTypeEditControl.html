@@ -1,0 +1,15 @@
+﻿<ng-form name="activityTypeControlForm">
+    <div class="form-group" show-errors>
+        <div class="row">
+            <div class="col-md-9">
+                <label for="type" class="" translate="ACTIVITY.ADD.TYPE"></label>
+                <select class="form-control" required id="type" name="type" ng-options="item as (item.id | dynamicTranslate) for item in vm.activityTypes track by item.id" ng-model="vm.selectedActivityType" ng-change="vm.onActivityTypeChanged()">
+                    <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
+                </select>
+                <div ng-messages="activityTypeControlForm.type.$error" ng-show="activityTypeControlForm.$submitted || activityTypeControlForm.type.$dirty">
+                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-form>

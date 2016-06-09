@@ -6,7 +6,8 @@ module Antares.Property {
         controllerAs: 'vm',
         controller: 'ActivityAddPanelController',
         bindings: {
-            isVisible: '<'
+            isVisible: '<',
+            data: '<'
         }
     });
 }
