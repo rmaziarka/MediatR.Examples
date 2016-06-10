@@ -5,7 +5,6 @@
 
     using KnightFrank.Antares.Api.Core;
     using KnightFrank.Antares.Api.Services.AzureStorage;
-    using KnightFrank.Antares.Api.Services.AzureStorage.Configuration;
     using KnightFrank.Antares.Api.Services.AzureStorage.Factories;
     using KnightFrank.Antares.Dal;
     using KnightFrank.Antares.Domain;
@@ -63,8 +62,8 @@
             kernel.Bind<IStorageClientWrapper>().To<StorageClientWrapper>();
             kernel.Bind<IBlobResourceFactory>().To<BlobResourceFactory>();
             kernel.Bind<ISharedAccessBlobPolicyFactory>().To<SharedAccessBlobPolicyFactory>();
-            kernel.Bind<IStorageProvider>().To<DocumentStorageProvider>();
-            kernel.Bind<IStorageProviderConfigurator>().To<StorageProviderConfigurator>();
+            kernel.Bind<IEntityDocumentStorageProvider>().To<EntityDocumentStorageProvider>();
+            kernel.Bind<IDocumentStorageProvider>().To<DocumentStorageProvider>();
 
         }
     }

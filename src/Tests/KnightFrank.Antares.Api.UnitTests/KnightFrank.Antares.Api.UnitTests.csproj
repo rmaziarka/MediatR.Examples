@@ -134,8 +134,9 @@
     <Compile Include="AutoMoqDataAttribute.cs" />
     <Compile Include="FixtureExtension\ValidationResultExtensions.cs" />
     <Compile Include="InlineAutoMoqDataAttribute.cs" />
-    <Compile Include="Services\AzureStorage\Factories\BlobResourceFactoryTests.cs" />
     <Compile Include="Services\AzureStorage\DocumentStorageProviderTests.cs" />
+    <Compile Include="Services\AzureStorage\Factories\BlobResourceFactoryTests.cs" />
+    <Compile Include="Services\AzureStorage\EntityDocumentStorageProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\Services\AttachmentDownloadUrlParametersValidatorTests.cs" />
     <Compile Include="Validators\Services\AttachmentUrlParametersValidatorTests.cs" />
