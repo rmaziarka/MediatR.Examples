@@ -25,6 +25,9 @@ namespace KnightFrank.Antares.Domain.UnitTests.Offer.CommandHandlers
 
     using EnumType = KnightFrank.Antares.Domain.Common.Enums.EnumType;
     using FixtureExtension;
+
+    using KnightFrank.Antares.Domain.Common.Enums;
+
     [Collection("CreateOfferCommandHandler")]
     [Trait("FeatureTitle", "Offer")]
     public class CreateOfferCommandHandlerTests : IClassFixture<BaseTestClassFixture>
@@ -38,9 +41,8 @@ namespace KnightFrank.Antares.Domain.UnitTests.Offer.CommandHandlers
             this.acceptedEnumType = fixture.Create<Dal.Model.Enum.EnumType>();
             this.acceptedEnumType.EnumTypeItems = fixture.CreateMany<EnumTypeItem>().ToList();
 
-            this.acceptedEnumType.EnumTypeItems.First().Code = "Accepted";
-        
-            this.acceptedEnumType.Code = "OfferStatus";
+            this.acceptedEnumType.EnumTypeItems.First().Code = OfferStatus.Accepted.ToString();
+            this.acceptedEnumType.Code = EnumType.OfferStatus.ToString();
         }
 
         [Theory]

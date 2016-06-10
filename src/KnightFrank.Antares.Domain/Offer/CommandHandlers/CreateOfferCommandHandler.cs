@@ -11,9 +11,13 @@
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Offer.Commands;
 
     using MediatR;
+
+    using EnumType = KnightFrank.Antares.Dal.Model.Enum.EnumType;
+    using DomainEnumType = Common.Enums.EnumType;
 
     public class CreateOfferCommandHandler : IRequestHandler<CreateOfferCommand, Guid>
     {
@@ -41,7 +45,7 @@
         {
             this.entityValidator.EntityExists<Activity>(message.ActivityId);
             this.entityValidator.EntityExists<Requirement>(message.RequirementId);
-            this.enumTypeItemValidator.ItemExists(Common.Enums.EnumType.OfferStatus, message.StatusId);
+            this.enumTypeItemValidator.ItemExists(DomainEnumType.OfferStatus, message.StatusId);
 
             var offer = AutoMapper.Mapper.Map<Offer>(message);
 
@@ -58,30 +62,30 @@
 
         private Offer SetOfferProgressStatuses(Guid offerStatusId, Offer offer)
         {
-            EnumType offerStatus = this.enumTypeRepository.GetWithInclude(x => x.Code == "OfferStatus", x => x.EnumTypeItems).Single();
-            EnumTypeItem acceptedStatus = offerStatus.EnumTypeItems.Single(x => x.Code == "Accepted");
+            EnumType offerStatus = this.enumTypeRepository.GetWithInclude(x => x.Code == DomainEnumType.OfferStatus.ToString(), x => x.EnumTypeItems).Single();
+            EnumTypeItem acceptedStatus = offerStatus.EnumTypeItems.Single(x => x.Code == OfferStatus.Accepted.ToString());
 
             if (offerStatusId == acceptedStatus.Id)
             {
                 var progressStatusesEnumTypes = new List<string>
                 {
-                    "MortgageStatus",
-                    "MortgageSurveyStatus",
-                    "AdditionalSurveyStatus",
-                    "SearchStatus",
-                    "Enquiries"
+                    DomainEnumType.MortgageStatus.ToString(),
+                    DomainEnumType.MortgageSurveyStatus.ToString(),
+                    DomainEnumType.AdditionalSurveyStatus.ToString(),
+                    DomainEnumType.SearchStatus.ToString(),
+                    DomainEnumType.Enquiries.ToString()
                 };
-
+                
                 List<EnumType> offerProgressStatusesItems =
                     this.enumTypeRepository
                     .GetWithInclude(x => progressStatusesEnumTypes.Contains(x.Code), x => x.EnumTypeItems)
                     .ToList();
 
-                offer.MortgageStatusId = this.GetStatusId("MortgageStatus", "Unknown", offerProgressStatusesItems);
-                offer.MortgageSurveyStatusId = this.GetStatusId("MortgageSurveyStatus", "Unknown", offerProgressStatusesItems);
-                offer.AdditionalSurveyStatusId = this.GetStatusId("AdditionalSurveyStatus", "Unknown", offerProgressStatusesItems);
-                offer.SearchStatusId = this.GetStatusId("SearchStatus", "NotStarted", offerProgressStatusesItems);
-                offer.EnquiriesId = this.GetStatusId("Enquiries", "NotStarted", offerProgressStatusesItems);
+                offer.MortgageStatusId = this.GetStatusId(DomainEnumType.MortgageStatus, MortgageStatus.Unknown.ToString(), offerProgressStatusesItems);
+                offer.MortgageSurveyStatusId = this.GetStatusId(DomainEnumType.MortgageSurveyStatus, MortgageStatus.Unknown.ToString(), offerProgressStatusesItems);
+                offer.AdditionalSurveyStatusId = this.GetStatusId(DomainEnumType.AdditionalSurveyStatus, MortgageStatus.Unknown.ToString(), offerProgressStatusesItems);
+                offer.SearchStatusId = this.GetStatusId(DomainEnumType.SearchStatus, SearchStatus.NotStarted.ToString(), offerProgressStatusesItems);
+                offer.EnquiriesId = this.GetStatusId(DomainEnumType.Enquiries, Enquiries.NotStarted.ToString(), offerProgressStatusesItems);
             }
             else
             {
@@ -95,9 +99,9 @@
             return offer;
         }
 
-        private Guid GetStatusId(string enumTypeName, string enumTypeItemName, List<EnumType> offerProgressStatusesItems)
+        private Guid GetStatusId(DomainEnumType enumType, string enumTypeItemName, List<EnumType> offerProgressStatusesItems)
         {
-            return offerProgressStatusesItems.Single(x => x.Code == enumTypeName).EnumTypeItems.Single(x => x.Code == enumTypeItemName).Id;
+            return offerProgressStatusesItems.Single(x => x.Code == enumType.ToString()).EnumTypeItems.Single(x => x.Code == enumTypeItemName).Id;
         }
     }
 }
