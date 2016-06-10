@@ -22,7 +22,30 @@ module Antares.TestHelpers {
                 requirement: <Dto.IRequirement>{},
                 activity: <Dto.IActivity>{},
                 negotiator: <Dto.IUser>{},
-                createdDate:new Date()
+                createdDate: new Date(),
+                mortgageStatus: <Dto.IEnumTypeItem>{},
+                mortgageStatusId: OfferGenerator.makeRandom('mortgageStatusId'),
+                mortgageSurveyStatus: <Dto.IEnumTypeItem>{},
+                mortgageSurveyStatusId: OfferGenerator.makeRandom('mortgageSurveyStatusId'),
+                searchStatus: <Dto.IEnumTypeItem>{},
+                searchStatusId: OfferGenerator.makeRandom('searchStatusId'),
+                enquiries: <Dto.IEnumTypeItem>{},
+                enquiriesId: OfferGenerator.makeRandom('enquiriesId'),
+                contractApproved: false,
+                mortgageLoanToValue: null,
+                broker: <Dto.IContact>{},
+                brokerId: OfferGenerator.makeRandom('brokerId'),
+                lender: <Dto.IContact>{},
+                lenderId: OfferGenerator.makeRandom('lenderId'),
+                mortgageSurveyDate: null,
+                surveyor: <Dto.IContact>{},
+                surveyorId: OfferGenerator.makeRandom('surveyorId'),
+                additionalSurveyor: <Dto.IContact> {},
+                additionalSurveyorId: OfferGenerator.makeRandom('additionalSurveyorId'),
+                additionalSurveyStatus: <Dto.IEnumTypeItem>{},
+                additionalSurveyStatusId: OfferGenerator.makeRandom('additionalSurveyStatusId'),
+                additionalSurveyDate: null,
+                progressComment: null
             };
 
             offer.requirement.contacts = <Dto.IContact[]>[];

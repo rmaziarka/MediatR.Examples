@@ -96,7 +96,7 @@ module Antares {
         });
 
         it('and offer is set then all form elements have proper values', () => {
-            controller.setSelectedStatus();
+            controller.setSelectedStatuses();
             scope.$apply();
 
             var activity = element.find(pageObjectSelectors.activity);

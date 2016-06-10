@@ -153,16 +153,15 @@
                 </div>
             </section>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" ng-if="vm.offerAccepted()">
             <section>
                 <h3 class="page-header" translate="OFFER.EDIT.PROGRESS_SUMMARY"></h3>
                 <fieldset>
                     <div class="form-group">
-                        <label for="mortgage-status" translate="OFFER.EDIT.MORTGAGE_STATUS"></label>
+                        <label class="required" for="offer-statusId" translate="OFFER.EDIT.MORTGAGE_STATUS"></label>
                         <div class="row">
                             <div class="col-md-6">
-                                <select id="mortgage-status" class="form-control">
-                                    <option>- select -</option>
+                                <select id="offer-mortgage-status" class="form-control" required name="selectedMortgageStatus" ng-options="item as (item.id | dynamicTranslate) for item in vm.mortgageStatuses track by item.id" ng-model="vm.selectedMortgageStatus">
                                 </select>
                             </div>
                         </div>
@@ -171,8 +170,7 @@
                         <label for="mortgage-survey-status" translate="OFFER.EDIT.MORTGAGE_SURVEY_STATUS"></label>
                         <div class="row">
                             <div class="col-md-6">
-                                <select id="mortgage-survey-status" class="form-control">
-                                    <option>- select -</option>
+                                <select id="mortgage-survey-status" class="form-control" required name="selectedMortgageSurveyStatus" ng-options="item as (item.id | dynamicTranslate) for item in vm.mortgageSurveyStatuses track by item.id" ng-model="vm.selectedMortgageSurveyStatus">
                                 </select>
                             </div>
                         </div>
@@ -181,8 +179,7 @@
                         <label for="additional-survey-status" translate="OFFER.EDIT.ADDITIONAL_SURVEY_STATUS"></label>
                         <div class="row">
                             <div class="col-md-6">
-                                <select id="additional-survey-status" class="form-control">
-                                    <option>- select -</option>
+                                <select id="additional-survey-status" class="form-control" required name="additionalSurveyStatus" ng-options="item as (item.id | dynamicTranslate) for item in vm.additionalSurveyStatuses track by item.id" ng-model="vm.selectedAdditionalSurveyStatus">
                                 </select>
                             </div>
                         </div>
@@ -226,7 +223,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="input-group">
-                                <input type="number" id="mortgage-loan-to-value" class="form-control">
+                                <input type="number" id="mortgage-loan-to-value" class="form-control" ng-model="vm.offer.mortgageLoanToValue" min="0" max="200">
                                 <div class="input-group-addon">%</div>
                             </div>
                         </div>

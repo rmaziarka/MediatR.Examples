@@ -10,7 +10,17 @@ module Antares.Offer {
         public offer: Business.Offer;
 
         selectedStatus: any;
+        selectedMortgageStatus: any;
+        selectedMortgageSurveyStatus: any;
+        selectedAdditionalSurveyStatus: any;
+        selectedSearchStatus: any;
+
         statuses: any;
+        mortgageStatuses: any;
+        mortgageSurveyStatuses: any;
+        additionalSurveyStatuses: any;
+        searchStatuses: any;
+
         editOfferForm: any;
 
         offerDateOpen: boolean = false;
@@ -68,11 +78,38 @@ module Antares.Offer {
 
         onEnumLoaded = (result: any) => {
             this.statuses = result[Dto.EnumTypeCode.OfferStatus];
-            this.setSelectedStatus();
+            this.mortgageStatuses = result[Dto.EnumTypeCode.MortgageStatus];
+            this.mortgageSurveyStatuses = result[Dto.EnumTypeCode.MortgageSurveyStatus];
+            this.additionalSurveyStatuses = result[Dto.EnumTypeCode.AdditionalSurveyStatus];
+            this.searchStatuses = result[Dto.EnumTypeCode.SearchStatus];
+            this.setSelectedStatuses();
         }
 
-        setSelectedStatus = () => {
+        offerAccepted = (): boolean => {
+            if (this.selectedStatus) {
+                return this.selectedStatus.code === "Accepted";
+            }
+
+            return false;
+        }
+
+        setSelectedStatuses = () => {
             this.selectedStatus = _.find(this.statuses, (status: any) => status.id === this.offer.statusId);
+
+            this.selectedMortgageStatus = _.find(this.mortgageStatuses, (status: any) => status.id === this.offer.mortgageStatusId);
+            if (!this.selectedMortgageStatus) {
+                this.selectedMortgageStatus = _.find(this.mortgageStatuses, (status: any) => status.code === "Unknown");
+            }
+
+            this.selectedMortgageSurveyStatus = _.find(this.mortgageSurveyStatuses, (status: any) => status.id === this.offer.mortgageSurveyStatusId);
+            if (!this.selectedMortgageSurveyStatus) {
+                this.selectedMortgageSurveyStatus = _.find(this.mortgageSurveyStatuses, (status: any) => status.code === "Unknown");
+            }
+
+            this.selectedAdditionalSurveyStatus = _.find(this.additionalSurveyStatuses, (status: any) => status.id === this.offer.additionalSurveyStatusId);
+            if (!this.selectedAdditionalSurveyStatus) {
+                this.selectedAdditionalSurveyStatus = _.find(this.additionalSurveyStatuses, (status: any) => status.code === "Unknown");
+            }
         }
 
         save() {
