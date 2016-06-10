@@ -76,6 +76,7 @@
     <Compile Include="Model\Configuration\Attribute\AttributeValuesConfiguration.cs" />
     <Compile Include="Model\Configuration\Attribute\AttributeConfiguration.cs" />
     <Compile Include="Model\Configuration\BaseAuditableEntityConfiguration.cs" />
+    <Compile Include="Model\Configuration\Company\CompanyContactConfiguration.cs" />
     <Compile Include="Model\Configuration\LatestView\LatestViewConfiguration.cs" />
     <Compile Include="Model\Configuration\Offer\OfferConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Activities\ActivityTypeLocalisedConfiguration.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Model\Configuration\User\UserConfiguration.cs" />
     <Compile Include="KnightFrankContext.cs" />
     <Compile Include="Model\BaseEntity.cs" />
+    <Compile Include="Model\Company\CompanyContact.cs" />
     <Compile Include="Model\Contacts\Contact.cs" />
     <Compile Include="Model\Enum\EnumLocalised.cs" />
     <Compile Include="Model\Enum\EnumType.cs" />

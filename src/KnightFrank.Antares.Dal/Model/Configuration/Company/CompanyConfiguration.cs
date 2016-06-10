@@ -7,14 +7,6 @@
         public CompanyConfiguration()
         {
             this.Property(p => p.Name).HasMaxLength(128).IsRequired();
-
-            this.HasMany(p => p.Contacts)
-                .WithMany()
-                .Map(cs =>
-                {
-                    cs.MapLeftKey("CompanyId");
-                    cs.MapRightKey("ContactId");
-                });
         }
     }
 }

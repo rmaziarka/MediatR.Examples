@@ -59,7 +59,7 @@
             expectedCompany.Id = company.Id;
             Company actualCompany = this.fixture.DataContext.Companies.Single(x => x.Id.Equals(company.Id));
 
-            actualCompany.ShouldBeEquivalentTo(expectedCompany);
+            actualCompany.ShouldBeEquivalentTo(expectedCompany, opt => opt.Excluding(c => c.CompaniesContacts));
         }
 
         private void CreateCompany(CreateCompanyCommand company)
@@ -68,7 +68,7 @@
             var contactList = this.scenarioContext.Get<List<Contact>>("Contacts");
             company.ContactIds = contactList.Select(x => x.Id).ToList();
 
-            this.scenarioContext.Set(new Company { Name = company.Name, Contacts = contactList }, "Company");
+            this.scenarioContext.Set(new Company {Name = company.Name}, "Company");
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, company);
             this.scenarioContext.SetHttpResponseMessage(response);
         }

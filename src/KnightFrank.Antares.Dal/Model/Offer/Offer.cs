@@ -65,9 +65,9 @@
 
         public virtual Contact AdditionalSurveyor { get; set; }
 
-        public bool ContactApproved { get; set; }
+        public bool ContractApproved { get; set; }
 
-        public int MortgageLoanToValue { get; set; }
+        public int? MortgageLoanToValue { get; set; }
 
         public decimal Price { get; set; }
 
