@@ -44,7 +44,7 @@
             {
                 ownership.PropertyId = this.scenarioContext.Get<Property>("AddedProperty").Id;
                 ownership.OwnershipTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Freeholder"];
-                ownership.Contacts = this.scenarioContext.Get<ICollection<Contact>>("ContactList");
+                ownership.Contacts = this.scenarioContext.Get<ICollection<Contact>>("Contacts");
             }
 
             this.fixture.DataContext.Ownerships.AddRange(ownerships);
@@ -57,7 +57,7 @@
             var ownership = table.CreateInstance<CreateOwnershipCommand>();
 
             ownership.OwnershipTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Freeholder"];
-            ownership.ContactIds = this.scenarioContext.Get<ICollection<Contact>>("ContactList").Select(x => x.Id).ToList();
+            ownership.ContactIds = this.scenarioContext.Get<ICollection<Contact>>("Contacts").Select(x => x.Id).ToList();
 
             this.CreateOwnership(ownership);
             this.scenarioContext.Set(ownership, "AddedOwnership");
@@ -69,7 +69,7 @@
             var ownership = new CreateOwnershipCommand
             {
                 OwnershipTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Freeholder"],
-                ContactIds = this.scenarioContext.Get<ICollection<Contact>>("ContactList").Select(x => x.Id).ToList()
+                ContactIds = this.scenarioContext.Get<ICollection<Contact>>("Contacts").Select(x => x.Id).ToList()
             };
 
             this.CreateOwnership(ownership);

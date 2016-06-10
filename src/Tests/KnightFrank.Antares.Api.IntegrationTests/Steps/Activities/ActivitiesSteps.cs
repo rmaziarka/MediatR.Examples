@@ -30,7 +30,7 @@
     {
         private const string ApiUrl = "/api/activities";
         private readonly BaseTestClassFixture fixture;
-
+        private readonly DateTime date = DateTime.UtcNow;
         private readonly ScenarioContext scenarioContext;
 
         private User leadNegotiator;
@@ -178,7 +178,7 @@
             updateActivityCommand.LeadNegotiator = new UpdateActivityUser
             {
                 UserId = activityFromDatabase.ActivityUsers.First().UserId,
-                CallDate = DateTime.UtcNow.AddDays(1)
+                CallDate = this.date.AddDays(1)
             };
 
             updateActivityCommand.ActivityStatusId = status.Equals("latest")

@@ -50,7 +50,7 @@ Scenario: Create Activity
 		And Property with Address and Residential division is in database
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
-		And User creates contacts in database with following data
+		And Contacts exists in database
 			| FirstName | Surname | Title |
 			| Michael   | Angel   | cheef |
 			| Michael   | Angel   | cook  |
@@ -200,15 +200,10 @@ Scenario: Get Activity with viewing and offer
         	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Activity for latest property and PreAppraisal activity status exists in database
-		And User creates contacts in database with following data 
+		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
-		And User sets locations details for the requirement
-			| Postcode | City   | Line2   |
-			| 1234     | London | Big Ben |
-		And User creates following requirement in database
- 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
- 			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | Description |
+		And Requirement exists in database
 		And User creates viewing in database
 		And User creates New offer in database
 	When User gets activity with latest id

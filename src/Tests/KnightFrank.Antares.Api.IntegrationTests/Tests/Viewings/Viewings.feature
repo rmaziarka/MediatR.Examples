@@ -17,15 +17,10 @@ Scenario: Create viewing
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Activity for latest property and PreAppraisal activity status exists in database
 		And User gets GB address form for Requirement and country details
-		And User creates contacts in database with following data 
+		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
-		And User sets locations details for the requirement
-			| Postcode | City   | Line2   |
-			| 1234     | London | Big Ben |
-		And User creates following requirement in database
- 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms |
- 			| 1000000  | 4000000  | 1           | 5           |
+		And Requirement exists in database
 	When User creates viewing using api
 	Then User should get OK http status code
 		And Viewing details should be the same as already added
@@ -47,15 +42,10 @@ Scenario: Create viewing with mandatory fields
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Activity for latest property and PreAppraisal activity status exists in database
 		And User gets GB address form for Requirement and country details
-		And User creates contacts in database with following data 
+		And Contacts exists in database 
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
-		And User sets locations details for the requirement
-			| Postcode | City   | Line2   |
-			| 1234     | London | Big Ben |
-		And User creates following requirement in database
- 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms |
- 			| 1000000  | 4000000  | 1           | 5           |
+		And Requirement exists in database
 	When User creates viewing with mandatory fields using api
 	Then User should get OK http status code
 		And Viewing details should be the same as already added
@@ -77,15 +67,10 @@ Scenario Outline: Create viewing with invalid data
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Activity for latest property and PreAppraisal activity status exists in database
 		And User gets GB address form for Requirement and country details
-		And User creates contacts in database with following data 
+		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
-		And User sets locations details for the requirement
-			| Postcode | City   | Line2   |
-			| 1234     | London | Big Ben |
-		And User creates following requirement in database
- 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms |
- 			| 1000000  | 4000000  | 1           | 5           |
+		And Requirement exists in database
 	When User creates viewing with invalid <data> using api
 	Then User should get BadRequest http status code
 
@@ -112,16 +97,11 @@ Scenario: Update viewing
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Activity for latest property and PreAppraisal activity status exists in database
 		And User gets GB address form for Requirement and country details
-		And User creates contacts in database with following data 
+		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
 			| Tom       | Jones   | Sir    |
-		And User sets locations details for the requirement
-			| Postcode | City   | Line2   |
-			| 1234     | London | Big Ben |
-		And User creates following requirement in database
- 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms |
- 			| 1000000  | 4000000  | 1           | 5           |
+		And Requirement exists in database
 		And User creates viewing in database
 	When User updates viewing 
 	Then User should get OK http status code
@@ -144,16 +124,11 @@ Scenario Outline: Update viewing with invalid data
         	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
 		And Activity for latest property and PreAppraisal activity status exists in database
 		And User gets GB address form for Requirement and country details
-		And User creates contacts in database with following data 
+		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
 			| Tom       | Jones   | Sir    |
-		And User sets locations details for the requirement
-			| Postcode | City   | Line2   |
-			| 1234     | London | Big Ben |
-		And User creates following requirement in database
- 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms |
- 			| 1000000  | 4000000  | 1           | 5           |
+		And Requirement exists in database
 		And User creates viewing in database
 	When User updates viewing with invalid <data> data
 	Then User should get BadRequest http status code
