@@ -3,7 +3,7 @@
 
     export class ActivityAddedSidePanelMessage extends BaseMessage {
 
-        constructor(public activityAdded: Antares.Common.Models.Dto.IActivity) {
+        constructor(public activityAdded?: Antares.Common.Models.Dto.IActivity) {
             super();
         } 
 

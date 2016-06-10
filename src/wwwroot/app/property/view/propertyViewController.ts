@@ -35,8 +35,14 @@ module Antares.Property.View {
             this.propertyId = $state.params['id'];
             this.fixOwnershipDates();
 
-            this.pubSub.with(this).subscribe(CloseSidePanelMessage, (msg: CloseSidePanelMessage) => { });
-            this.pubSub.with(this).subscribe(CloseSidePanelMessage, () => { });
+            this.pubSub.with(this).subscribe(Antares.Common.Component.CloseSidePanelMessage, () => {
+                // TODO iteration?
+                this.isAddResidentialActivityVisible = false;
+            });
+
+            this.pubSub.with(this).subscribe(Activity.ActivityAddedSidePanelMessage, (msg: Activity.ActivityAddedSidePanelMessage) => {
+                this.property.activities.push(new Business.Activity(msg.activityAdded));
+            });
         }
 
         fixOwnershipDates = () => {
