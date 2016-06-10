@@ -4,6 +4,7 @@ OwnershipType
 ActivityStatus
 Division
 ActivityDocumentType
+PropertyDocumentType
 OfferStatus
 ActivityUserType
 ActivityDepartmentType
