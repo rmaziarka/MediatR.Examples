@@ -1,7 +1,7 @@
 ﻿Feature: Address form
 
 @AddressForm
-Scenario Outline: Retrieve error messages for improper EntityType and CountryCode
+Scenario Outline: Get address template for invalid country
 	When User retrieves address template for <entityType> entity type and <countryCode> contry code
 	Then User should get <statusCode> http status code
 
@@ -11,7 +11,7 @@ Scenario Outline: Retrieve error messages for improper EntityType and CountryCod
 	| bla         | bla         | BadRequest |
 
 @AddressForm
-Scenario: Get proper address template for Great Britain
+Scenario: Get address template for Great Britain
 	Given There is an AddressForm for GB country code		  	  
 	When User retrieves address template for Property entity type and GB contry code
 	Then User should get OK http status code

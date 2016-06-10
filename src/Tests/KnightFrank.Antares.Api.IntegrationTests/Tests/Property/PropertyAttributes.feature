@@ -66,12 +66,12 @@ Scenario Outline: Update property with attributes and characteristics
 			| Division     | Commercial       |
         And User gets <propertyType1> for PropertyType
 		And Property characteristics are set for given property type
-		And User sets attributes for property in database
+		And Property attributes exists in database
 			| MinBedrooms   | MaxReceptions   | MaxArea   | MinGuestRooms   | MaxFunctionRooms   |
 			| <MinBedrooms> | <MaxReceptions> | <MaxArea> | <MinGuestRooms> | <MaxFunctionRooms> |
-		And Property with Address and <divisionCode1> division is in database
-			| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
-			| abc          | 1              | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+		And Property exists in database
+			| PropertyType    | Division        |
+			| <propertyType1> | <divisionCode1> |
 		And Address for add/update property is defined with max length fields
 		And User gets <propertyType2> for PropertyType
 		And User sets attributes for property in Api
@@ -98,13 +98,12 @@ Scenario Outline: Update property with invalid attributes data
 			| Division     | Commercial       |
         And User gets House for PropertyType
 		And Property characteristics are set for given property type
-		And User sets attributes for property in database
+		And Property attributes exists in database
 			| MinBedrooms   | MaxReceptions   | MaxArea   | MinGuestRooms   | MaxFunctionRooms   |
 			| <MinBedrooms> | <MaxReceptions> | <MaxArea> | <MinGuestRooms> | <MaxFunctionRooms> |
-		And Property with Address and <divisionCode1> division is in database
-			| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
-			| abc          | 1              | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
-		And User gets <country> address form for <itemType> and country details
+		And Property exists in database
+			| PropertyType | Division        |
+			| House        | <divisionCode1> |
 		And User gets <propertyType> for PropertyType
 		And Address for add/update property is defined
 			| PropertyName | PropertyNumber | Line2 | Line3 | Postcode   | City | County |

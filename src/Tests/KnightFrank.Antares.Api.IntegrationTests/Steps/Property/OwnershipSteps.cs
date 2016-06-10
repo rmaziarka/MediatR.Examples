@@ -36,14 +36,14 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"Ownership exists in database")]
-        public void GivenFollowingOwnershipExistsInDataBase(Table table)
+        [Given(@"Ownership (.*) exists in database")]
+        public void CreateOwnershipInDatabase(string ownershipType, Table table)
         {
             List<Ownership> ownerships = table.CreateSet<Ownership>().ToList();
             foreach (Ownership ownership in ownerships)
             {
-                ownership.PropertyId = this.scenarioContext.Get<Property>("AddedProperty").Id;
-                ownership.OwnershipTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Freeholder"];
+                ownership.PropertyId = this.scenarioContext.Get<Property>("Property").Id;
+                ownership.OwnershipTypeId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals(ownershipType)).Id;
                 ownership.Contacts = this.scenarioContext.Get<ICollection<Contact>>("Contacts");
             }
 
@@ -51,24 +51,24 @@
             this.fixture.DataContext.SaveChanges();
         }
 
-        [When(@"User creates an ownership using api")]
-        public void CreateOwnership(Table table)
+        [When(@"User creates (.*) ownership using api")]
+        public void CreateOwnership(string ownershipType, Table table)
         {
             var ownership = table.CreateInstance<CreateOwnershipCommand>();
 
-            ownership.OwnershipTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Freeholder"];
+            ownership.OwnershipTypeId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals(ownershipType)).Id;
             ownership.ContactIds = this.scenarioContext.Get<ICollection<Contact>>("Contacts").Select(x => x.Id).ToList();
 
             this.CreateOwnership(ownership);
             this.scenarioContext.Set(ownership, "AddedOwnership");
         }
 
-        [When(@"User creates an ownership with mandatory fields using api")]
-        public void CreateOwnershipWithMandatoryFields()
+        [When(@"User creates (.*) ownership with mandatory fields using api")]
+        public void CreateOwnershipWithMandatoryFields(string ownershipType)
         {
             var ownership = new CreateOwnershipCommand
             {
-                OwnershipTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Freeholder"],
+                OwnershipTypeId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals(ownershipType)).Id,
                 ContactIds = this.scenarioContext.Get<ICollection<Contact>>("Contacts").Select(x => x.Id).ToList()
             };
 
@@ -92,7 +92,7 @@
         [Then(@"Created Ownership is saved in database")]
         public void ThenTheResultsShouldBeSameAsCreated()
         {
-            Guid propertyId = this.scenarioContext.Get<Property>("AddedProperty").Id;
+            Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
             var actualOwnership = this.scenarioContext.Get<CreateOwnershipCommand>("AddedOwnership");
 
             Ownership expectedOwnership = this.fixture.DataContext.Ownerships.Single(x => x.PropertyId.Equals(propertyId));
@@ -108,7 +108,7 @@
         [Then(@"Response contains property with ownership")]
         public void ThenResponseContainsPropertyWithOwnership()
         {
-            Guid propertyId = this.scenarioContext.Get<Property>("AddedProperty").Id;
+            Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
             var actualOwnership = JsonConvert.DeserializeObject<Ownership>(this.scenarioContext.GetResponseContent());
 
             Ownership expectedOwnership =
@@ -121,7 +121,7 @@
 
         private void CreateOwnership(CreateOwnershipCommand command)
         {
-            string requestUrl = string.Format($"{ApiUrl}", this.scenarioContext.Get<Property>("AddedProperty").Id);
+            string requestUrl = string.Format($"{ApiUrl}", this.scenarioContext.Get<Property>("Property").Id);
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, command);
             this.scenarioContext.SetHttpResponseMessage(response);
