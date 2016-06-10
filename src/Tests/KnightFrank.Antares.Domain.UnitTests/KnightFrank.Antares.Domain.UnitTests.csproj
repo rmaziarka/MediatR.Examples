@@ -160,6 +160,8 @@
     <Compile Include="Offer\CommandHandlers\CreateOfferCommandHandlerTests.cs" />
     <Compile Include="Offer\Commands\UpdateOfferCommandValidatorTests.cs" />
     <Compile Include="Offer\Commands\CreateOfferCommandValidatorTests.cs" />
+    <Compile Include="User\Queries\UserQueryValidatorTests.cs" />
+    <Compile Include="User\QueryHandlers\UserQueryHandlerTests.cs" />
     <Compile Include="Viewing\CommandHandlers\CreateViewingCommandHandlerTests.cs" />
     <Compile Include="Viewing\CommandHandlers\UpdateViewingCommandHandlerTests.cs" />
     <Compile Include="Viewing\Commands\UpdateViewingCommandValidatorTests.cs" />
