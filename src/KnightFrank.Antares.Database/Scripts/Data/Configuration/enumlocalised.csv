@@ -26,7 +26,7 @@ ActivityUserType;SecondaryNegotiator;en;Secondary negotiator
 ActivityDepartmentType;Managing;en;Managing
 ActivityDepartmentType;Standard;en;Standard
 MortgageStatus;Unknown;en;Unknown
-MortgageStatus;NotRequiredCashFromSale;en;Not required - cash from
+MortgageStatus;NotRequiredCashFromSale;en;Not required - cash from sale
 MortgageStatus;NotRequiredCashInBank;en;Not required - cash in bank
 MortgageStatus;InProgress;en;In progress
 MortgageStatus;Agreed;en;Agreed

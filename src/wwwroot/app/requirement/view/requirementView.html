@@ -44,7 +44,7 @@
 
                     <div class="panel panel-default applicant" ng-repeat="contact in vm.requirement.contacts">
                         <div class="panel-body">
-                            {{ contact.firstName + " " + contact.surname }}
+                            {{::contact.getName()}}
                         </div>
                     </div>
                 </section>

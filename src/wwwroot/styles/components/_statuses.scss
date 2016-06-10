@@ -15,7 +15,9 @@
     }
   }
 
-  &-not-required {
+  &-not-required,
+  &-not-required-cash-from-sale,
+  &-not-required-cash-in-bank {
     &::before {
       color: $color-mine-shaft;
       content: '\f068';
