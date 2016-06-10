@@ -10,13 +10,13 @@ module Antares.Common.Component {
         visible: boolean = false;
         stateChanged: boolean = false;
 
-        constructor($transclude: any, private pubSub: Core.PubSub) {
+        constructor($transclude: any, private eventAggregator: Core.EventAggregator) {
             this.isFooterVisible = $transclude.isSlotFilled('footer');
             this.isHeaderVisible = $transclude.isSlotFilled('header');
         }
 
         close = () =>{
-            this.pubSub.publish(new CloseSidePanelMessage());
+            this.eventAggregator.publish(new CloseSidePanelEvent());
         }
     }
 
