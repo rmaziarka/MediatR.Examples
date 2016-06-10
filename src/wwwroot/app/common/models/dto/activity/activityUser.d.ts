@@ -5,5 +5,6 @@ declare module Antares.Common.Models.Dto {
         userId: string;
         user: IUser;
         userType: Dto.IEnumTypeItem;
+        callDate?: Date;
     }
 }

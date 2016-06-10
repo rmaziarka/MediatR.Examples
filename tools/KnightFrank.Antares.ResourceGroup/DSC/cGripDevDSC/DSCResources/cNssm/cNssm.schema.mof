@@ -1,0 +1,9 @@
+[ClassVersion("1.0.1"), FriendlyName("cNssm")]
+class cNssm : OMI_BaseResource
+{
+  [Key] string ExeFolder;
+  [required] string NssmFolder;
+  [write] string ServiceName;
+  [write] string ExeOrBatName;
+  [write] string ServiceDisplayName;
+};

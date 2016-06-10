@@ -2,39 +2,8 @@
 <h4 translate="NEGOTIATORS.{{nvvm.labelTranslationKey}}.LEAD"></h4>
 <card id="card-lead-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'" item="nvvm.leadNegotiator">
 </card>
+<editable-date selected-date="nvvm.leadNegotiator.callDate" is-required="true" on-save="nvvm.updateNegotiatorCallDate(nvvm.leadNegotiator)"></editable-date>
 
-<!--<div class="negotiators-call-date form-inline form-group">
-    <span translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:
-    <span>12-05-2016</span>
-    <button type="button" class="btn btn-no-style"><i class="fa fa-pencil" aria-hidden="true"></i></button>
-</div>
-
-<div class="negotiators-call-date form-inline form-group">
-    <label for="next-call"><span translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:</label>
-    <div class="input-group">
-        <input id="next-call" type="text" class="form-control">
-        <span class="input-group-btn">
-            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-        </span>
-    </div>
-    <button type="button" class="btn btn-no-style text-danger"><i class="fa fa-ban" aria-hidden="true"></i></button>
-    <button type="button" class="btn btn-no-style text-success"><i class="fa fa-check" aria-hidden="true"></i></button>
-</div>
-
-<div class="negotiators-call-date form-inline form-group has-error">
-    <label for="next-call" class="required"><span translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:</label>
-    <div class="input-group">
-        <input id="next-call" type="text" class="form-control">
-        <span class="input-group-btn">
-            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-        </span>
-    </div>
-    <button type="button" class="btn btn-no-style text-danger"><i class="fa fa-ban" aria-hidden="true"></i></button>
-    <button type="button" class="btn btn-no-style text-success"><i class="fa fa-check" aria-hidden="true"></i></button>
-
-    <p class="help-block">Field is required</p>
-</div>
-    -->
 <card-list id="card-list-negotiators">
     <card-list-header>
         <h4 translate="NEGOTIATORS.{{nvvm.labelTranslationKey}}.SECONDARY"></h4>
@@ -45,5 +14,6 @@
     <card-list-item ng-repeat="negotiator in nvvm.secondaryNegotiators | orderBy: ['user.firstName', 'user.lastName']">
         <card item="negotiator" id="card-secondary-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'">
         </card>
+        <editable-date selected-date="negotiator.callDate" on-save="nvvm.updateNegotiatorCallDate(negotiator)"></editable-date>
     </card-list-item>
 </card-list>

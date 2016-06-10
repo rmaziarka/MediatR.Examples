@@ -19,6 +19,7 @@ module Antares.Common.Models.Business {
         leadNegotiator: ActivityUser = null;
         secondaryNegotiator: ActivityUser[] = [];
         activityUsers: ActivityUser[] = [];
+        activityDepartments: ActivityDepartment[] = [];
         offers: Offer[];
 
         constructor(activity?: Dto.IActivity) {
@@ -37,6 +38,10 @@ module Antares.Common.Models.Business {
                 this.secondaryNegotiator = _.filter(activity.activityUsers,
                     (user: Dto.IActivityUser) => user.userType.code === Enums.NegotiatorTypeEnum[Enums.NegotiatorTypeEnum.SecondaryNegotiator])
                     .map((user: Dto.IActivityUser) => new ActivityUser(user));
+
+                if (activity.activityDepartments) {
+                    this.activityDepartments = activity.activityDepartments.map((department: Dto.IActivityDepartment) => { return new Business.ActivityDepartment(department) });
+                }
 
                 if (activity.attachments) {
                     this.attachments = activity.attachments.map((attachment: Dto.IAttachment) => { return new Business.Attachment(attachment) });

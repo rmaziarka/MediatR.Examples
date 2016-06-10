@@ -6,12 +6,41 @@
         focus-on="nevm.isLeadNegotiatorInEditMode"
         blur-on="!nevm.isLeadNegotiatorInEditMode"
         on-select-item="nevm.changeLeadNegotiator" on-cancel="nevm.cancelChangeLeadNegotiator" load-items="nevm.getUsers"
-    item-template-url="app/common/components/negotiators/edit/userSearchTemplate.html" search-placeholder="NEGOTIATORS.{{nevm.labelTranslationKey}}.FIND"></search>
+        item-template-url="app/common/components/negotiators/edit/userSearchTemplate.html" search-placeholder="NEGOTIATORS.{{nevm.labelTranslationKey}}.FIND"></search>
 <div id="lead-edit-btn-wrapper" ng-hide="nevm.isLeadNegotiatorInEditMode" class="form-group">
     <button class="btn btn-default" id="lead-edit-btn" type="button" ng-click="nevm.editLeadNegotiator()"><i class="fa fa-pencil"></i></button>
 </div>
-<card id="card-lead-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'" item="nevm.leadNegotiator">
+
+<card id="card-lead-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'" display-new-control="true" item="nevm.leadNegotiator">
 </card>
+
+<ng-form name="negotiatorForm">
+    <div class="negotiators-call-date form-inline form-group" ng-class="{'has-error': (nevm.isSubmitted(negotiatorForm) || negotiatorForm.callDate.$dirty) && negotiatorForm.callDate.$invalid}">
+        <div class="row">
+            <div class="col-md-12 col-lg-2">
+                <label class="required" for="lead-call-date"><span translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:</label>
+            </div>
+            <div class="col-md-12 col-lg-10">
+                <div class="input-group">
+                    <input type="text" id="lead-call-date" name="callDate" class="form-control" ng-model="nevm.leadNegotiator.callDate" uib-datepicker-popup="dd-MM-yyyy"
+                        is-open="nevm.nagotiatorCallDateOpened[nevm.leadNegotiator.userId]" close-text="Close" placeholder="dd-mm-yyyy" required date-greater-than="{{ nevm.today }}" autocomplete="off" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="nevm.openNegotiatorCallDate(nevm.leadNegotiator.userId)"><i class="fa fa-calendar"></i></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-10 col-lg-offset-2">
+                <div ng-messages="negotiatorForm.callDate.$error" ng-show="nevm.isSubmitted(negotiatorForm) || negotiatorForm.callDate.$dirty">
+                    <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
+                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-form>
+
 <card-list id="card-list-negotiators" show-item-add="nevm.isSecondaryNegotiatorsInEditMode ? null : nevm.editSecondaryNegotiators">
     <card-list-header>
         <h4 translate="NEGOTIATORS.{{nevm.labelTranslationKey}}.SECONDARY"></h4>
@@ -20,16 +49,17 @@
                 focus-on="nevm.isSecondaryNegotiatorsInEditMode"
                 blur-on="!nevm.isSecondaryNegotiatorsInEditMode"
                 on-select-item="nevm.addSecondaryNegotiator" on-cancel="nevm.cancelAddSecondaryNegotiator" load-items="nevm.getUsers"
-            item-template-url="app/common/components/negotiators/edit/userSearchTemplate.html" search-placeholder="NEGOTIATORS.{{nevm.labelTranslationKey}}.ADD"></search>
+                item-template-url="app/common/components/negotiators/edit/userSearchTemplate.html" search-placeholder="NEGOTIATORS.{{nevm.labelTranslationKey}}.ADD"></search>
     </card-list-header>
     <card-list-no-items id="empty-secondary-negotiators" ng-show="!nevm.secondaryNegotiators || nevm.secondaryNegotiators.length === 0">
         <p class="help-block" translate="NEGOTIATORS.{{nevm.labelTranslationKey}}.EMPTY"></p>
     </card-list-no-items>
     <card-list-item ng-repeat="negotiator in nevm.secondaryNegotiators | orderBy: ['user.firstName', 'user.lastName']">
-        <card id="card-secondary-negotiator" show-context-menu="true" display-new-control="true" card-template-url="'app/activity/templates/negotiatorCard.html'"
-            item="negotiator">
+
+        <card id="card-secondary-negotiator-{{negotiator.userId}}" show-context-menu="true" display-new-control="true" card-template-url="'app/activity/templates/negotiatorCard.html'"
+              item="negotiator">
             <card-context-menu>
-                <context-menu-item type="delete"
+                <context-menu-item type="remove"
                                    item="negotiator"
                                    action="nevm.deleteSecondaryNegotiator">
                 </context-menu-item>
@@ -39,5 +69,31 @@
                 </context-menu-item>
             </card-context-menu>
         </card>
+        <ng-form name="negotiatorForm">
+            <div class="negotiators-call-date form-inline form-group" ng-class="{'has-error': (nevm.isSubmitted(negotiatorForm) || negotiatorForm.callDate.$dirty) && negotiatorForm.callDate.$invalid}">
+                <div class="row">
+                    <div class="col-md-12 col-lg-2">
+                        <label for="call-date-{{negotiator.userId}}"><span translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:</label>
+                    </div>
+                    <div class="col-md-12 col-lg-10">
+                        <div class="input-group">
+                            <input type="text" id="call-date-{{negotiator.userId}}" name="callDate" class="form-control" ng-model="negotiator.callDate" uib-datepicker-popup="dd-MM-yyyy"
+                                is-open="nevm.nagotiatorCallDateOpened[negotiator.userId]" close-text="Close" placeholder="dd-mm-yyyy" date-greater-than="{{ nevm.today }}" date-validate-when-changed="" autocomplete="off"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="nevm.openNegotiatorCallDate(negotiator.userId)"><i class="fa fa-calendar"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-10 col-lg-offset-2">
+                        <div ng-messages="negotiatorForm.callDate.$error" ng-show="nevm.isSubmitted(negotiatorForm) || negotiatorForm.callDate.$dirty">
+                            <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
+                            <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-form>
     </card-list-item>
 </card-list>

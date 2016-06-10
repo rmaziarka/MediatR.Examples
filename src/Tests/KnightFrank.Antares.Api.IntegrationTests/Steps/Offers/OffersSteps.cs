@@ -23,8 +23,8 @@
     {
         private const string ApiUrl = "/api/offers";
         private readonly BaseTestClassFixture fixture;
-
         private readonly ScenarioContext scenarioContext;
+        private readonly DateTime date = DateTime.UtcNow;
 
         public OffersSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {
@@ -46,14 +46,16 @@
             var offer = new Offer
             {
                 ActivityId = activityId,
-                CompletionDate = DateTime.UtcNow,
-                ExchangeDate = DateTime.UtcNow,
+                CompletionDate = this.date,
+                ExchangeDate = this.date,
                 NegotiatorId = this.fixture.DataContext.Users.First().Id,
-                OfferDate = DateTime.UtcNow,
+                OfferDate = this.date,
                 Price = 1000,
                 RequirementId = requirementId,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
-                StatusId = statusId
+                StatusId = statusId,
+                CreatedDate = this.date,
+                LastModifiedDate = this.date
             };
 
             this.fixture.DataContext.Offer.Add(offer);
@@ -76,9 +78,9 @@
                 StatusId = statusId,
                 Price = 10,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(400),
-                OfferDate = DateTime.UtcNow,
-                CompletionDate = DateTime.UtcNow,
-                ExchangeDate = DateTime.UtcNow
+                OfferDate = this.date,
+                CompletionDate = this.date,
+                ExchangeDate = this.date
             };
 
             this.CreateOffer(details);
@@ -97,7 +99,7 @@
                 RequirementId = requirementId,
                 StatusId = statusId,
                 Price = 10,
-                OfferDate = DateTime.UtcNow
+                OfferDate = this.date
             };
 
             this.CreateOffer(details);
@@ -121,9 +123,9 @@
                 StatusId = statusId,
                 Price = 10,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(400),
-                OfferDate = DateTime.UtcNow,
-                CompletionDate = DateTime.UtcNow,
-                ExchangeDate = DateTime.UtcNow
+                OfferDate = this.date,
+                CompletionDate = this.date,
+                ExchangeDate = this.date
             };
 
             this.CreateOffer(details);
@@ -149,9 +151,9 @@
                 StatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Accepted"],
                 Price = 2000,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
-                CompletionDate = DateTime.UtcNow.AddDays(2),
-                ExchangeDate = DateTime.UtcNow.AddDays(2),
-                OfferDate = DateTime.UtcNow
+                CompletionDate = this.date.AddDays(2),
+                ExchangeDate = this.date.AddDays(2),
+                OfferDate = this.date.AddMinutes(-1)
             };
 
             this.UpdateOffer(details);
@@ -168,11 +170,11 @@
                     data.Equals("status")
                         ? Guid.NewGuid()
                         : this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["New"],
-                CompletionDate = DateTime.UtcNow,
-                ExchangeDate = DateTime.UtcNow,
+                CompletionDate = this.date,
+                ExchangeDate = this.date,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
                 Price = 1000,
-                OfferDate = DateTime.UtcNow
+                OfferDate = this.date.AddMinutes(-1)
             };
 
             this.UpdateOffer(details);

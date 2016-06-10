@@ -1,0 +1,9 @@
+[ClassVersion("1.0.1"), FriendlyName("cSimpleDownloader")]
+class cSimpleDownloader : OMI_BaseResource
+{
+  [Key] string RemoteFileLocation;
+  [required] string DestinationPath;
+  [write] string CookieName;
+  [write] string CookieValue;
+  [write] string CookieDomain;
+};

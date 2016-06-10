@@ -1,0 +1,19 @@
+﻿{
+  "type": "jdbc",
+  "jdbc": {
+    "url": "",
+    "user": "",
+    "password": "",
+    "sql": [
+      {
+        "statement": "select * from dbo.Contact"
+      }
+    ],
+    "index": "",
+    "type": "contact",
+    "detect_json": "true",
+    "schedule": "",
+    "elasticsearch.host": "localhost",
+    "elasticsearch.port": "9300"
+  }
+}

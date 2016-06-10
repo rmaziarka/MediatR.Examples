@@ -64,13 +64,30 @@
                 case "view property":
                     this.Driver.NavigateTo(GetUrl("ViewPropertyPage", id));
                     break;
+                case "edit property":
+                    this.Driver.NavigateTo(GetUrl("EditPropertyPage", id));
+                    break;
                 case "view activity":
                     this.Driver.NavigateTo(GetUrl("ViewActivityPage", id));
+                    break;
+                case "edit activity":
+                    this.Driver.NavigateTo(GetUrl("EditActivityPage", id));
+                    break;
+                case "view offer":
+                    this.Driver.NavigateTo(GetUrl("ViewOfferPage", id));
+                    break;
+                case "edit offer":
+                    this.Driver.NavigateTo(GetUrl("EditOfferPage", id));
                     break;
                 default:
                     Assert.True(false, "Page does not exist");
                     break;
             }
+        }
+
+        public void GoBack()
+        {
+            this.Driver.Navigate().Back();
         }
     }
 }

@@ -6,6 +6,7 @@
 
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.UITests.Pages;
     using KnightFrank.Antares.UITests.Pages.Panels;
@@ -153,11 +154,13 @@
         }
 
         [When(@"User fills in offer details on view requirement page")]
-        public void FIllOfferDetails(Table table)
+        public void FillOfferDetails(Table table)
         {
             var details = table.CreateInstance<OfferData>();
 
-            details.OfferDate = DateTime.UtcNow.ToString(Format);
+            details.OfferDate = this.scenarioContext.ContainsKey("Offer")
+                ? this.scenarioContext.Get<Offer>("Offer").OfferDate.AddDays(-1).ToString(Format)
+                : DateTime.UtcNow.ToString(Format);
             details.ExchangeDate = DateTime.UtcNow.AddDays(1).ToString(Format);
             details.CompletionDate = DateTime.UtcNow.AddDays(2).ToString(Format);
 
@@ -176,6 +179,12 @@
         {
             this.page.Offer.SaveOffer();
             this.page.WaitForSidePanelToHide();
+        }
+
+        [When(@"User clicks details offer link on view requirement page")]
+        public void OpenViewOfferPage()
+        {
+            this.page.OfferPreview.ClickDetailsLink();
         }
 
         [Then(@"Side panel should not be displayed on view requirement page")]
@@ -223,13 +232,13 @@
             Assert.Equal(expectedApplicants, applicants);
         }
 
-        [Then(@"Note is displayed in recent notes area on view requirement page")]
+        [Then(@"Note should be displayed in recent notes area on view requirement page")]
         public void CheckIfNoteAdded()
         {
             Assert.Equal(1, this.page.Notes.GetNumberOfNotes());
         }
 
-        [Then(@"Notes number increased on view requirement page")]
+        [Then(@"Notes number should increase on view requirement page")]
         public void CheckIfNotesNumberIncreased()
         {
             string notesNumber = this.page.CheckNotesNumber();
@@ -298,7 +307,7 @@
                 () => Assert.Equal(expectedDetails.CompletionDate, this.page.OfferPreview.ProposedCompletionDate));
         }
 
-        [Then(@"View requirement page is displayed")]
+        [Then(@"View requirement page should be displayed")]
         public void CheckIfViewRequirementPresent()
         {
             Assert.True(this.page.IsViewRequirementFormPresent());

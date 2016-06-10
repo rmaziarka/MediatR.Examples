@@ -1,11 +1,14 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages.Panels
 {
+    using KnightFrank.Antares.UITests.Extensions;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
 
     public class OfferPreviewPage : ProjectPageBase
     {
+        private readonly ElementLocator detailsLink = new ElementLocator(Locator.CssSelector, ".slide-in .section-details:nth-of-type(1) a");
         private readonly ElementLocator details = new ElementLocator(Locator.CssSelector, "offer-preview-custom-item .ng-binding");
         private readonly ElementLocator status = new ElementLocator(Locator.Id, "offer-preview-status");
         private readonly ElementLocator offer = new ElementLocator(Locator.Id, "offer-preview-price");
@@ -14,7 +17,6 @@
         private readonly ElementLocator offerNegotiator = new ElementLocator(Locator.Id, "offer-preview-negotiator");
         private readonly ElementLocator offerProposedexchangeDate = new ElementLocator(Locator.Id, "offer-preview-exchange-date");
         private readonly ElementLocator offerProposedCompletionDate = new ElementLocator(Locator.Id, "offer-preview-completion-date");
-        private readonly ElementLocator editOffer = new ElementLocator(Locator.CssSelector, ".slide-in button[ng-click *= 'showEditOfferPreviewPanel']");
         private readonly ElementLocator viewLink = new ElementLocator(Locator.CssSelector, ".slide-in #activity-link > a");
         
         public OfferPreviewPage(DriverContext driverContext) : base(driverContext)
@@ -37,15 +39,15 @@
 
         public string ProposedCompletionDate => this.Driver.GetElement(this.offerProposedCompletionDate).Text;
 
-        public OfferPreviewPage EditOffer()
+        public OfferPreviewPage ClickViewLink()
         {
-            this.Driver.GetElement(this.editOffer).Click();
+            this.Driver.Click(this.viewLink);
             return this;
         }
 
-        public OfferPreviewPage ClickViewLink()
+        public OfferPreviewPage ClickDetailsLink()
         {
-            this.Driver.GetElement(this.viewLink).Click();
+            this.Driver.Click(this.detailsLink);
             return this;
         }
     }

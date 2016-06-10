@@ -9,6 +9,7 @@ module Antares.Common.Component {
     export class NegotiatorsController {
         public activityId: string;
         public propertyDivisionId: string;
+        public departments: Business.ActivityDepartment[];
         public leadNegotiator: Business.ActivityUser;
         public secondaryNegotiators: Business.ActivityUser[];
 
@@ -16,12 +17,15 @@ module Antares.Common.Component {
         public isSecondaryNegotiatorsInEditMode: boolean = false;
 
         public negotiatorsSearchOptions: SearchOptions = new SearchOptions();
-
         public labelTranslationKey: string;
+        public nagotiatorCallDateOpened: { [id: string]: boolean; } = {};
 
-        private usersSearchMaxCount: number = 100;
+        public today: Date = new Date();
+        public standardDepartmentType: Dto.IEnumTypeItem;
+        public usersSearchMaxCount: number = 100;
 
         constructor(
+            private $scope: ng.IScope,
             private dataAccessService: Services.DataAccessService,
             private enumService: Services.EnumService) {
 
@@ -34,14 +38,20 @@ module Antares.Common.Component {
             if (division){
                 this.labelTranslationKey = division.code.toUpperCase();
             }
+
+            var departmentTypes: any = result[Dto.EnumTypeCode.ActivityDepartmentType];
+            this.standardDepartmentType = <Dto.IEnumTypeItem>_.find(departmentTypes, { 'code': Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Standard] });
         }
 
         public editLeadNegotiator = () => {
             this.isLeadNegotiatorInEditMode = true;
         }
 
-        public changeLeadNegotiator = (user: Dto.IDepartmentUser) => {
-            this.leadNegotiator = this.createActivityUser(user, Enums.NegotiatorTypeEnum.LeadNegotiator);
+        public changeLeadNegotiator = (user: Dto.IUser) => {
+            this.leadNegotiator = this.createActivityUser(user, this.leadNegotiator ? this.leadNegotiator.callDate : null);
+            this.fixLeadNegotiatorCallDate();
+
+            this.addDepartment(user.department);
 
             this.isLeadNegotiatorInEditMode = false;
         }
@@ -54,8 +64,10 @@ module Antares.Common.Component {
             this.isSecondaryNegotiatorsInEditMode = true;
         }
 
-        public addSecondaryNegotiator = (user: Dto.IDepartmentUser) => {
-            this.secondaryNegotiators.push(this.createActivityUser(user, Enums.NegotiatorTypeEnum.SecondaryNegotiator));
+        public addSecondaryNegotiator = (user: Dto.IUser) => {
+            this.secondaryNegotiators.push(this.createActivityUser(user, null));
+
+            this.addDepartment(user.department);
         }
 
         public deleteSecondaryNegotiator = (activityUser: Business.ActivityUser) => {
@@ -66,11 +78,48 @@ module Antares.Common.Component {
             this.isSecondaryNegotiatorsInEditMode = false;
         }
 
-        public switchToLeadNegotiator = (activityUser: Business.ActivityUser) =>{
+        public switchToLeadNegotiator = (activityUser: Business.ActivityUser) => {
+            var field = this.$scope['negotiatorForm']['callDate'];
+            if (field.$invalid && field.$dirty) {
+                this.leadNegotiator.callDate = null;
+            }
+
             _.remove(this.secondaryNegotiators, (itm) => itm.userId === activityUser.userId);
             this.secondaryNegotiators.push(this.leadNegotiator);
 
+            activityUser.callDate = activityUser.callDate || this.leadNegotiator.callDate;
             this.leadNegotiator = activityUser;
+            this.fixLeadNegotiatorCallDate();
+        }
+
+        public openNegotiatorCallDate = (negotiatorUserId: string) => {
+            this.nagotiatorCallDateOpened[negotiatorUserId] = true;
+        }
+
+        public updateNegotiatorCallDate = (activityUser: Business.ActivityUser) => {
+            return (date: Date) => {
+
+                var activityUserToSend: Business.ActivityUser = angular.copy(activityUser);
+                activityUserToSend.callDate = date;
+
+                var dto = new Business.UpdateSingleActivityUserResource(activityUserToSend);
+
+                var promise = this.dataAccessService.getActivityUserResource()
+                    .update({ id: activityUser.activityId }, dto)
+                    .$promise;
+
+                promise.then(() => {
+                    activityUser.callDate = moment(date).toDate();
+                });
+
+                return promise;
+            }
+        }
+
+        public addDepartment(department: Business.Department) {
+            if (!_.some(this.departments, { 'departmentId' : department.id })) {
+                this.departments.push(this.createActivityDepartment(department));
+            }
         }
 
         public getUsersQuery = (searchValue: string): DepartmentUserResourceParameters => {
@@ -80,7 +129,7 @@ module Antares.Common.Component {
             return { partialName : searchValue, take : this.usersSearchMaxCount, 'excludedIds[]' : excludedIds };
         }
 
-        public getUsers = (searchValue: string) =>{
+        public getUsers = (searchValue: string) => {
             var query = this.getUsersQuery(searchValue);
 
             return this.dataAccessService
@@ -88,17 +137,44 @@ module Antares.Common.Component {
                 .query(query)
                 .$promise
                 .then((users: any) => {
-                    return users.map((user: Common.Models.Dto.IDepartmentUser) => { return new Common.Models.Business.DepartmentUser(<Common.Models.Dto.IDepartmentUser>user); });
+                    return users.map((user: Common.Models.Dto.IUser) => { return new Common.Models.Business.User(<Common.Models.Dto.IUser>user); });
                 });
         }
 
-        private createActivityUser = (user: Dto.IDepartmentUser, negotiatorType: Enums.NegotiatorTypeEnum) =>{
+        public isSubmitted = (form: any) => {
+            while (!!form) {
+                if (form.$submitted) return true;
+                form = form.$$parentForm;
+            }
+            return false;
+        };
+
+        private fixLeadNegotiatorCallDate = () => {
+            if (!this.leadNegotiator.callDate || moment(this.leadNegotiator.callDate).isBefore(this.today, 'day')) {
+                this.leadNegotiator.callDate = this.today;
+            }
+        }
+
+        private createActivityUser = (user: Dto.IUser, callDate: Date) =>{
             var activityUser = new Business.ActivityUser();
             activityUser.activityId = this.activityId;
             activityUser.userId = user.id;
-            activityUser.user = new Business.DepartmentUser(<Dto.IUser>user);
+            activityUser.user = new Business.User(<Dto.IUser>user);
+            activityUser.user.departmentId = user.department.id;
+            activityUser.callDate = callDate;
 
             return activityUser;
+        }
+
+        private createActivityDepartment = (department: Dto.IDepartment) => {
+            var activityDepartment = new Business.ActivityDepartment();
+            activityDepartment.activityId = this.activityId;
+            activityDepartment.departmentId = department.id;
+            activityDepartment.department = new Business.Department(<Dto.IDepartment>department);
+            activityDepartment.departmentType = this.standardDepartmentType;
+            activityDepartment.departmentTypeId = this.standardDepartmentType.id;
+
+            return activityDepartment;
         }
     }
 

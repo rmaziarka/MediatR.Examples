@@ -5,7 +5,10 @@
         marketAppraisalPrice?: number;
         recommendedPrice?: number;
         vendorEstimatedPrice?: number;
-        leadNegotiatorId: string;
-        secondaryNegotiatorIds: string[];
+
+        leadNegotiator: IUpdateActivityUserResource;
+        secondaryNegotiators: IUpdateActivityUserResource[];
+
+        departments: IUpdateActivityDepartmentResource[];
     }
 }

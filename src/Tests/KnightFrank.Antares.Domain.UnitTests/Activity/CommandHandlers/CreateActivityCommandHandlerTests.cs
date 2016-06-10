@@ -1,7 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Activity.CommandHandlers
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
 
@@ -25,6 +24,7 @@
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
+
     [Trait("FeatureTitle", "Activity")]
     [Collection("CreateActivityCommandHandler")]
     public class CreateActivityCommandHandlerTests : IClassFixture<BaseTestClassFixture>
@@ -35,103 +35,84 @@
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             [Frozen] Mock<IGenericRepository<User>> userRepository,
+            [Frozen] Mock<IEntityValidator> entityValidator,
+            [Frozen] Mock<IEnumTypeItemValidator> enumTypeItemValidator,
             [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IActivityTypeDefinitionValidator> activityTypeDefinitionValidator,
-            User user,
             CreateActivityCommandHandler handler,
             CreateActivityCommand command,
             Guid expectedActivityId,
             IFixture fixture)
         {
             // Arrange
+            User user = this.CreateUser(command.LeadNegotiatorId, fixture);
             Activity activity = null;
             var property = fixture.Create<Property>();
             property.Address = fixture.Create<Address>();
             propertyRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(property);
 
             enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
-                                  .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
+                                  .Returns(
+                                      (Expression<Func<EnumTypeItem, bool>> expr) =>
                                       new[]
                                           {
                                               this.CreateEnumTypeItem(EnumTypeItemCode.LeadNegotiator, fixture),
-                                              this.CreateEnumTypeItem(EnumTypeItemCode.SecondaryNegotiator, fixture)
-                                          }.Where(expr.Compile()));
+                                              this.CreateEnumTypeItem(EnumTypeItemCode.ManagingDepartment, fixture)
+                                          }.Where(
+                                              expr.Compile()));
 
-            userRepository.Setup(p => p.FindBy(It.IsAny<Expression<Func<User, bool>>>()))
-                          .Returns(new List<User> { user });
+            userRepository.Setup(
+                p => p.GetWithInclude(It.IsAny<Expression<Func<User, bool>>>(), It.IsAny<Expression<Func<User, object>>[]>()))
+                          .Returns(
+                              (Expression<Func<User, bool>> conditionExpression, Expression<Func<User, object>>[] includeExpression) =>
+                              new[] { user }.Where(conditionExpression.Compile()));
 
-            activityRepository.Setup(r => r.Add(It.IsAny<Activity>()))
-                              .Returns((Activity a) =>
-                              {
-                                  activity = a;
-                                  return activity;
-                              });
-            activityRepository.Setup(r => r.Save()).Callback(() => { activity.Id = expectedActivityId; });
+            activityRepository.Setup(r => r.Add(It.IsAny<Activity>())).Callback((Activity a) => { activity = a; });
+            activityRepository.Setup(r => r.Save()).Callback(() => { activity.Id = Guid.NewGuid(); });
 
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
                              .Returns(command.ContactIds.Select(id => new Contact { Id = id }));
 
-
             // Act
-            handler.Handle(command);
+            Guid activityId = handler.Handle(command);
 
             // Assert
-            activityTypeDefinitionValidator.Verify(x=>x.Validate(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>()),Times.Once);
-            activity.Should().NotBeNull();
+            activityId.Should().Be(activity.Id);
+
             activity.ShouldBeEquivalentTo(command, opt => opt.IncludingProperties().ExcludingMissingMembers());
-            activity.Id.ShouldBeEquivalentTo(expectedActivityId);
+
+            activity.ActivityUsers.Should().HaveCount(1);
+            ActivityUser leadNegotiator = activity.ActivityUsers.SingleOrDefault();
+            leadNegotiator.User.Should().Be(user);
+            leadNegotiator.UserType.Code.Should().Be(EnumTypeItemCode.LeadNegotiator);
+            leadNegotiator.CallDate.Should().Be(DateTime.UtcNow.AddDays(14).Date);
+
+            activity.ActivityDepartments.Should().HaveCount(1);
+            ActivityDepartment managingDepartment = activity.ActivityDepartments.SingleOrDefault();
+            managingDepartment.Department.Should().Be(user.Department);
+            managingDepartment.DepartmentType.Code.Should().Be(EnumTypeItemCode.ManagingDepartment);
+
+            entityValidator.Verify(x => x.EntityExists<ActivityType>(command.ActivityTypeId), Times.Once);
+            entityValidator.Verify(x => x.EntityExists(property, command.PropertyId), Times.Once);
+            entityValidator.Verify(x => x.EntityExists(user, command.LeadNegotiatorId), Times.Once);
+            activityTypeDefinitionValidator.Verify(
+                x => x.Validate(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>()),
+                Times.Once);
+
             activityRepository.Verify(r => r.Add(It.IsAny<Activity>()), Times.Once());
             activityRepository.Verify(r => r.Save(), Times.Once());
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_Command_When_Handling_Then_EntityExistsValidation_ShouldBeCalledForNegotiator(
-            [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
-            [Frozen] Mock<IGenericRepository<User>> userRepository,
-            [Frozen] Mock<IEntityValidator> entityValidator,
-            [Frozen] Mock<IGenericRepository<ActivityTypeDefinition>> activityDefinitionRepository,
-            [Frozen] Mock<IActivityTypeDefinitionValidator> activityTypeValidator,
-            [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            User user,
-            CreateActivityCommandHandler handler,
-            CreateActivityCommand command,
-            IFixture fixture
-            )
-        {
-            // Arrange
-            user.Id = command.LeadNegotiatorId;
-            var property = fixture.Create<Property>();
-            property.Address = fixture.Create<Address>();
-            propertyRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(property);
-            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
-                                  .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
-                                      new[]
-                                          {
-                                              this.CreateEnumTypeItem(EnumTypeItemCode.LeadNegotiator, fixture),
-                                              this.CreateEnumTypeItem(EnumTypeItemCode.SecondaryNegotiator, fixture)
-                                          }.Where(expr.Compile()));
-
-            activityDefinitionRepository.Setup(x => x.Any(It.IsAny<Expression<Func<ActivityTypeDefinition, bool>>>()))
-                                        .Returns(true);
-            userRepository.Setup(p => p.FindBy(It.IsAny<Expression<Func<User, bool>>>()))
-                          .Returns(new List<User> { user });
-
-            contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
-                 .Returns(command.ContactIds.Select(id => new Contact { Id = id }));
-            entityValidator.Setup(x => x.EntityExists(user, user.Id));
-            // Act
-            handler.Handle(command);
-
-            // Assert
-            entityValidator.Verify(x => x.EntityExists(user, user.Id), Times.Once);
         }
 
         private EnumTypeItem CreateEnumTypeItem(string code, IFixture fixture)
         {
             return fixture.Build<EnumTypeItem>().With(i => i.Code, code).Create();
+        }
+
+        private User CreateUser(Guid userId, IFixture fixture)
+        {
+            var department = fixture.Create<Department>();
+            return fixture.Build<User>().With(i => i.Id, userId).With(i => i.Department, department).Create();
         }
     }
 }

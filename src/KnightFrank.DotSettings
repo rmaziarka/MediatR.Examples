@@ -7,7 +7,9 @@
 	<s:Boolean x:Key="/Default/CodeInspection/ExcludedFiles/FileMasksToSkip/=_002A_002Emin_002Ejs/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=2525AF42_002DF89C_002D48D8_002D89A7_002D74449702C627_002Fd_003AMigrations/@EntryIndexedValue">ExplicitlyExcluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=8B5A8ADC_002D3F97_002D4D0D_002DA7D2_002DC32CCEDB429F_002Fd_003Abuild/@EntryIndexedValue">ExplicitlyExcluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=8B5A8ADC_002D3F97_002D4D0D_002DA7D2_002DC32CCEDB429F_002Fd_003Alibs/@EntryIndexedValue">ExplicitlyExcluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=8B5A8ADC_002D3F97_002D4D0D_002DA7D2_002DC32CCEDB429F_002Fd_003Anode_005Fmodules/@EntryIndexedValue">ExplicitlyExcluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=8B5A8ADC_002D3F97_002D4D0D_002DA7D2_002DC32CCEDB429F_002Fd_003Atypings/@EntryIndexedValue">ExplicitlyExcluded</s:String>
 	
 	
 	

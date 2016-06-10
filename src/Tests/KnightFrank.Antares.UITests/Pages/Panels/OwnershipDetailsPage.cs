@@ -31,7 +31,7 @@
         {
             if (!this.Driver.GetElement(this.ownershipState).Selected)
             {
-                this.Driver.GetElement(this.ownershipState).Click();
+                this.Driver.Click(this.ownershipState);
             }
             return this;
         }
@@ -40,7 +40,7 @@
         {
             if (this.Driver.GetElement(this.ownershipState).Selected)
             {
-                this.Driver.GetElement(this.ownershipState).Click();
+                this.Driver.Click(this.ownershipState);
             }
             return this;
         }
@@ -71,7 +71,7 @@
 
         public OwnershipDetailsPage SaveOwnership()
         {
-            this.Driver.GetElement(this.saveButton).Click();
+            this.Driver.Click(this.saveButton);
             return this;
         }
     }

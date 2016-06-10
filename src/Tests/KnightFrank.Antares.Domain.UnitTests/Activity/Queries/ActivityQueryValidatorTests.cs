@@ -4,6 +4,7 @@
 
     using FluentAssertions;
 
+    using FluentValidation.Resources;
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Domain.Activity.Queries;
@@ -16,8 +17,6 @@
     [Trait("FeatureTitle", "Activity")]
     public class ActivityQueryValidatorTests
     {
-        private const string NotEmptyError = "notempty_error";
-
         [Theory]
         [AutoData]
         public void Given_CorrectActivityQuery_When_Validating_Then_IsValid(
@@ -46,7 +45,7 @@
             // Assert
             validationResult.IsValid.Should().BeFalse();
             validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(query.Id));
-            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == NotEmptyError);
+            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == nameof(Messages.notempty_error));
         }
     }
 }

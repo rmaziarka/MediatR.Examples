@@ -7,8 +7,8 @@ ActiveDirectoryDomain;ActiveDirectoryLogin;FirstName;LastName;Business;CountryCo
 ;nsandler;Nick;Sandler;Abode;PL;Residential;en
 ;nsandler2;Nick;Sandler;Abode;PL;Beaconsfield;en
 ;jbeam;Jeam;Beam;Abode;DE;Bristol;en
-;tmiller;Thomas;Miller;Abode;FR;Bristol;en
-;kryan;Kate;Ryan;Abode;IT;Residential;en
+;tmiller;Thomas;Miller;Abode;FR;Bath;en
+;kryan;Kate;Ryan;Abode;IT;Bath;en
 ;skovalsky;Sabine;Kovalsky;Abode;LT;Residential;en
 ;jwilliams;John;Williams;Abode;GB;Aldgate;en
 ;jwilliams2;Johny;Williams;Abode;GB;Aldgate;en
@@ -25,7 +25,7 @@ ActiveDirectoryDomain;ActiveDirectoryLogin;FirstName;LastName;Business;CountryCo
 ;mwilliams2;Martha;Williams;Abode;GB;Aldgate;en
 ;awilliams2;Alice;Williams;Abode;GB;Residential;en
 ;awilliams3;Amanda;Williams;Abode;PL;Residential;en
-;hwilliams;Helen;Williams;Abode;PL;Aldgate;en
+;hwilliams;Helen;Williams;Abode;PL;Chelsea;en
 ;kwilliams2;Karen;Williams;Abode;PL;Residential;en
 ;lwilliams;Lena;Williams;Abode;PL;Beaconsfield;en
 ;lwilliams2;Lisa;Williams;Abode;DE;Bristol;en
@@ -45,5 +45,5 @@ ActiveDirectoryDomain;ActiveDirectoryLogin;FirstName;LastName;Business;CountryCo
 ;egreen;Edward;Green;Abode;LT;Bristol;en
 ;ewood;Edward;Wood;Abode;GB;Residential;en
 ;egriffin;Edward;Griffin;Abode;LT;Residential;en
-;ethompson;Edward;Thompson;Abode;GB;Aldgate;en
-;ewalker;Edward;Walker;Abode;LT;Residential;en
+;ethompson;Edward;Thompson;Abode;GB;Chelsea;en
+;ewalker;Edward;Walker;Abode;LT;Chelsea;en

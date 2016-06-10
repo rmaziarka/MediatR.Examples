@@ -22,7 +22,7 @@ module Antares {
 
         describe('and proper attachment is set', () =>{
             var activityIdMock = 'testActivityId';
-            var attachmentMock = TestHelpers.AttachmentGenerator.generate({ user: new Business.User({ id: 'us1', firstName: 'firstName1', lastName: 'lastName1' })});
+            var attachmentMock = TestHelpers.AttachmentGenerator.generate({ user: new Business.User({ id: 'us1', firstName: 'firstName1', lastName: 'lastName1', departmentId: 'depId', department: null })});
 
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,

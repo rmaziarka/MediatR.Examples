@@ -17,7 +17,8 @@ module Antares.TestHelpers {
                 id: ActivityGenerator.makeRandom('id'),
                 property: PropertyGenerator.generateDto(),
                 propertyId: ActivityGenerator.makeRandom('propertyId'),
-                activityUsers: [ActivityUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator)]
+                activityUsers: [ActivityUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator)],
+                activityDepartments: []
             }
 
             return angular.extend(activity, specificData || {});

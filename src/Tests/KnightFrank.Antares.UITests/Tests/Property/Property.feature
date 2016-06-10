@@ -18,6 +18,8 @@ Scenario: Update residential property
 			| 01-05-2014   | 1000000  |
 		And Property Freehold Sale activity is defined
 	When User navigates to view property page with id
+		And User opens navigation drawer menu
+		And User selects Properties menu item
 		And User clicks edit property button on view property page
 		And User selects Commercial property and Hotel type on edit property page
 		And User fills in property details on edit property page
@@ -36,6 +38,9 @@ Scenario: Update residential property
 	Then Property should be updated with address details 
 		| PropertyNumber | PropertyName | Line2 | Line3          | Postcode | City | County |
 		|                |              |       | Address line 3 | W2U 8AN  |      |        |
+		And Latest 1 property should contain following data
+			| LatestData |
+			| -          |
 		And Property should be updated with Hotel property type and following attributes
 			| PropertyArea           | LandArea                   | CarParkingSpaces | GuestRooms | FunctionRooms |
 			| 4,000.5 - 5,500 sq. ft | 6,000.13 - 10,000.1 sq. ft | 3 - 5            | 120 - 200  | 10 - 20       |
@@ -54,6 +59,11 @@ Scenario: Update residential property
 		And Activity details are set on view property page
 			| Vendor       | Status        | Type          |
 			| Alex Johnson | Pre-appraisal | Freehold Sale |
+	When User clicks activity details link on view property page
+		And User selects Activities menu item
+	Then Latest 1 activity should contain following data
+		| LatestData |
+		| -          |
 
 @Property
 Scenario: Create residential property
@@ -122,10 +132,10 @@ Scenario: Create residential property
 			| ActivityStatus   | MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |
 			| Market appraisal | 3000                 | 4000             | 5000                 |
 		And User clicks save button on edit activity page
-	Then View activity page is displayed
+	Then View activity page should be displayed
 	When User clicks property details link on view activity page
 		And User clicks view property link from property on view activity page
-	Then View property page is displayed
+	Then View property page should be displayed
 
 @Property
 Scenario: Create commercial property

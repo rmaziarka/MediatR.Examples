@@ -4,6 +4,8 @@ module Antares.Activity.View {
     import Business = Common.Models.Business;
     import CartListOrder = Common.Component.ListOrder;
     import Dto = Common.Models.Dto;
+    import LatestViewsProvider = Providers.LatestViewsProvider;
+    import EntityType = Common.Models.Enums.EntityTypeEnum;
 
     export class ActivityViewController extends Core.WithPanelsBaseController {
         activity: Business.Activity;
@@ -12,12 +14,14 @@ module Antares.Activity.View {
         activityAttachmentResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityAttachmentResource>;
         saveActivityAttachmentBusy: boolean = false;
         selectedOffer: Dto.IOffer;
+        selectedViewing: Dto.IViewing;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService,
-            private dataAccessService: Services.DataAccessService) {
+            private dataAccessService: Services.DataAccessService,
+            private latestViewsProvider: LatestViewsProvider) {
 
             super(componentRegistry, $scope);
 
@@ -27,6 +31,11 @@ module Antares.Activity.View {
         showPropertyPreview = (property: Business.PreviewProperty) => {
             this.components.propertyPreview().setProperty(property);
             this.showPanel(this.components.panels.propertyPreview);
+
+            this.latestViewsProvider.addView({
+                entityId: property.id,
+                entityType: EntityType.Property
+            });
         }
 
         showActivityAttachmentAdd = () => {
@@ -67,9 +76,8 @@ module Antares.Activity.View {
                 });
         };
 
-        showViewingPreview = (viewing: Common.Models.Dto.IViewing) => {
-            this.components.viewingPreview().clearViewingPreview();
-            this.components.viewingPreview().setViewing(viewing);
+        showViewingPreview = (viewing: Common.Models.Dto.IViewing) =>{
+            this.selectedViewing = viewing;
             this.showPanel(this.components.panels.previewViewingsSidePanel);
         }
 

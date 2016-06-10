@@ -9,6 +9,7 @@
         OwnershipType,
         OfferStatus,
         ActivityUserType,
-        ClientCareStatus
-    }
+        ActivityDepartmentType,
+		ClientCareStatus
+	}
 }

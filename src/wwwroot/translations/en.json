@@ -5,6 +5,7 @@
     "EDIT": "Edit",
     "CANCEL": "Cancel",
     "DELETE": "Delete",
+    "REMOVE": "Remove",
     "MIN": "Min",
     "MAX": "Max",
     "DETAILS": "Details",
@@ -14,16 +15,24 @@
     "LOADINGDATA": "...loading data...",
     "FILEISUPLOADING": "File is uploading ...",
     "REQUIREMENT": "Requirement",
+    "ACTIVITY": "Activity",
     "MENU": {
       "CREATE": "Create",
       "CONTACTS": "Contacts",
       "COMPANIES": "Companies",
       "REQUIREMENTS": "Requirements",
-      "PROPERTIES": "Properties"
+      "PROPERTIES": "Properties",
+      "ACTIVITIES": "Activities"
+    },
+    "NAVIGATIONDRAWER": {
+      "RECENTPROPERTIES": "Recent properties",
+      "RECENTACTIVITIES": "Recent activities",
+      "RECENTREQUIREMENTS": "Recent requirements"
     },
     "MAKEOFFER": "Make an offer",
     "SETASLEAD": "Set as lead",
-    "UNEXPECTED_SERVER_ERROR": "Unexpected error occured. Please try again or contact system administrator."
+    "UNEXPECTED_SERVER_ERROR": "Unexpected error occured. Please try again or contact system administrator.",
+    "SETASMANAGING": "Set as managing"
   },
   "OWNERSHIP": {
     "ADD": {
@@ -109,7 +118,9 @@
     "NUMBER_HAS_TO_BE_GREATER_THAN": "Value must be greater than {{value}}",
     "DATE_CANNOT_BE_IN_PAST": "Date cannot be in the past",
     "DATE_CANNOT_BE_IN_FUTURE": "Date cannot be in the future",
-    "NUMBER_HAS_TO_BE_INTEGER": "Only integer values are allowed"
+    "NUMBER_HAS_TO_BE_INTEGER": "Only integer values are allowed",
+    "DATE_CAN_NOT_BE_LOWER_THEN_CREATE_DATE": "Given date can not be earlier then create date",
+    "DATE_CAN_NOT_BE_GREATER_THEN_CREATE_DATE": "Given date can not be greater then create date"
   },
   "PROPERTY": {
     "AREA": "Property area",
@@ -353,6 +364,30 @@
         "VENDOR": "Vendor",
         "APPLICANT": "Applicant",
         "BASIC_INFORMATION": "Basic information"
+    },
+    "EDIT": {
+      "EDIT_OFFER": "Edit offer",
+      "VENDOR": "Vendor",
+      "APPLICANT": "Applicant",
+      "BASIC_INFORMATION": "Basic information",
+      "STATUS": "Status",
+      "OFFER": "Offer",
+      "OFFER_DATE": "Offer date",
+      "SPECIAL_CONDITIONS": "Special conditions",
+      "NEGOTIATOR": "Negotiator",
+      "EXCHANGE_DATE": "Proposed exchange date",
+      "COMPLETION_DATE": "Proposed completion date",
+      "OFFER_EDIT_SUCCESS":  "Offer successfully saved"
+    }
+  },
+  "DEPARTMENTS": {
+    "COMMON": {
+      "HEADER": "Departments",
+      "EMPTY": "No departments added yet",
+      "NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR": {
+        "TITLE": "No negotiator assigned to new department",
+        "MESSAGE": "You’re trying to add one or more new departments without negotiators assigned to them. Please select a negotiator for each of those departments or remove the departments" 
+      }
     }
   }
 }

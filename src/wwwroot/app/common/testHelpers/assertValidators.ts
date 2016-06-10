@@ -11,6 +11,8 @@ module Antares.TestHelpers {
             formatValidationError: '[name="formatValidationError"]',
             dateFormatValidationError: '[name="dateValidationError"]',
             numberFormatValidationError: '[name="numberValidationError"]',
+            dateGreaterThanValidationError: '[name="dateGreaterThanValidationError"]',
+            dateLowerThanValidationError: '[name="dateLowerThanValidationError"]',
             anyValidationMessageError: 'ng-message'
         };
 
@@ -39,6 +41,14 @@ module Antares.TestHelpers {
 
         public assertNumberGreaterThenValidator = (inputMaxValue: number, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
             this.assertValidator(inputMaxValue, expectedResult, inputSelector, this.pageObjectSelectors.numberGreaterThanValidationError, parentSelector);
+        }
+
+        public assertDateGreaterThenValidator = (inputValue: string, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
+            this.assertValidator(inputValue, expectedResult, inputSelector, this.pageObjectSelectors.dateGreaterThanValidationError, parentSelector);
+        }
+
+        public assertDateLowerThenValidator = (inputValue: string, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
+            this.assertValidator(inputValue, expectedResult, inputSelector, this.pageObjectSelectors.dateLowerThanValidationError, parentSelector);
         }
 
         public assertPatternValidator = (inputValue: string, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
@@ -83,12 +93,12 @@ module Antares.TestHelpers {
             var selectedElement = this.element.find(elementSelector);
             expect(selectedElement.hasClass("ng-hide")).toBe(expectedResult);
         }
-        
+
         public assertElementHasHideClass = (expectedResult: boolean, elementSelector: string) => {
             var selectedElement = this.element.find(elementSelector);
             expect(selectedElement.hasClass("ng-hide")).toBe(expectedResult);
-        }        
-        
+        }
+
         private generateString = (length: number): string =>{
             return new Array(length + 1).join('x');
         }

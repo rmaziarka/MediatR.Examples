@@ -21,9 +21,16 @@ module Antares.Services {
             return this.growl.error(message);
         }
 
-        showErrorByCode(messageCode: string): angular.growl.IGrowlMessage {
+        showErrorByCode(messageCode: string, titleCode?: string): angular.growl.IGrowlMessage {
             var message: string = this.$filter('translate')(messageCode);
-            return this.growl.error(message);
+
+            if (titleCode) {
+                var title: string = this.$filter('translate')(titleCode);
+                return this.growl.error(message, {title: title });
+            }
+            else {
+                return this.growl.error(message);
+            }
         }
 
         showErrors(response: any): Array<angular.growl.IGrowlMessage> {

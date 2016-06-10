@@ -21,7 +21,8 @@ module Antares.TestHelpers {
                 status: <Dto.IEnumTypeItem>{},
                 requirement: <Dto.IRequirement>{},
                 activity: <Dto.IActivity>{},
-                negotiator: <Dto.IUser>{}
+                negotiator: <Dto.IUser>{},
+                createdDate:new Date()
             };
 
             offer.requirement.contacts = <Dto.IContact[]>[];

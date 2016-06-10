@@ -77,7 +77,7 @@
             <div class="col-md-4">
                 <section>
                     <h3 class="page-header" translate="REQUIREMENT.VIEW.OFFERS"></h3>
-                    <card-list-item class="requirement-view-offers" ng-repeat="offer in vm.requirement.offers | orderBy: '-offerDate' | enumSorter: 'OfferStatus':'statusId' track by offer.id + offer.statusId + offer.offerDate">
+                    <card-list-item class="requirement-view-offers" ng-repeat="offer in vm.requirement.offers | orderBy: '-createdDate' | enumSorter: 'OfferStatus':'statusId' track by offer.id + offer.statusId + offer.offerDate">
                         <card show-context-menu="true" show-item-details="vm.showOfferPreview" display-new-control="true"
                               card-template-url="'app/requirement/view/requirementOffersCard.html'" item="offer">
                             <card-context-menu>
@@ -103,7 +103,7 @@
                 <activity-card activity="vm.selectedOffer.activity" />
             </offer-preview-custom-item>
         </offer-preview>
-        <offer-edit component-id="vm.componentIds.offerEditPreviewId" ng-show="!vm.offerPreviewPanelVisible" mode="edit"></offer-edit>
+        <offer-details-edit component-id="vm.componentIds.offerEditPreviewId" ng-show="!vm.offerPreviewPanelVisible" mode="edit"></offer-details-edit>
         <busy is-busy="vm.addEditOfferBusy" label="{{'OFFER.ADD.SAVING_OFFER_IN_PROGRESS' | translate}}"></busy>
     </side-panel-content>
     <side-panel-footer>
@@ -124,7 +124,7 @@
         <h3 translate="REQUIREMENT.VIEW.OFFERDETAILS"></h3>
     </side-panel-header>
     <side-panel-content>
-        <offer-edit component-id="vm.componentIds.offerEditId" mode="edit"></offer-edit>
+        <offer-details-edit component-id="vm.componentIds.offerEditId" mode="edit"></offer-details-edit>
         <busy is-busy="vm.addEditOfferBusy" label="{{'OFFER.ADD.SAVING_OFFER_IN_PROGRESS' | translate}}"></busy>
     </side-panel-content>
     <side-panel-footer>
@@ -183,7 +183,10 @@
         <h3 translate="REQUIREMENT.VIEW.VIEWINGADD"></h3>
     </side-panel-header>
     <side-panel-content>
-        <viewing-preview component-id="vm.componentIds.viewingPreviewId" ng-show="vm.viewingPreviewPanelVisible" page-context="requirement">
+        <viewing-preview component-id="vm.componentIds.viewingPreviewId" viewing="vm.selectedViewing" ng-show="vm.viewingPreviewPanelVisible">
+            <viewing-preview-custom-item>
+                <activity-card activity="vm.selectedViewing.activity" />
+            </viewing-preview-custom-item>
         </viewing-preview>
         <viewing-add component-id="vm.componentIds.viewingEditId" requirement="vm.requirement" attendees="vm.requirement.contacts"
                      ng-show="!vm.viewingPreviewPanelVisible" mode="edit">

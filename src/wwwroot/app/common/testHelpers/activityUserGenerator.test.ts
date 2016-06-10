@@ -13,12 +13,16 @@ module Antares.TestHelpers {
                 enumTypeId: ActivityUserGenerator.makeRandom('enumTypeId')
             };
 
+            var callDate = new Date();
+            callDate.setDate(callDate.getDate() + _.random(1, 100));
+
             var activityUser: Dto.IActivityUser = {
                 id: ActivityUserGenerator.makeRandom('id'),
                 user: UserGenerator.generateDto(),
                 activityId: ActivityUserGenerator.makeRandom('activityId'),
                 userId: ActivityUserGenerator.makeRandom('userId'),
-                userType: enumUserTypeItem
+                userType: enumUserTypeItem,
+                callDate: callDate
             }
 
             return activityUser;

@@ -1,5 +1,9 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     using KnightFrank.Antares.UITests.Extensions;
 
     using Objectivity.Test.Automation.Common;
@@ -24,9 +28,26 @@
         private readonly ElementLocator deleteSecondaryNegotiator = new ElementLocator(Locator.CssSelector, "#activity-edit-negotiators card-list-item:nth-of-type({0}) [action *= 'deleteSecondaryNegotiator']");
         private readonly ElementLocator setSecondaryNegotiatorAsLead = new ElementLocator(Locator.CssSelector, "#activity-edit-negotiators card-list-item:nth-of-type({0}) [action *= 'switchToLeadNegotiator']");
         private readonly ElementLocator negotiator = new ElementLocator(Locator.XPath, "//section[@id = 'activity-edit-negotiators']//span[contains(., '{0}')]");
+        private readonly ElementLocator leadNegotiatorNextCall = new ElementLocator(Locator.Id, "lead-call-date");
+        private readonly ElementLocator secondaryNegotiatorNextCall = new ElementLocator(Locator.CssSelector, "#card-list-negotiators card-list-item{0} input");
+        private readonly ElementLocator nextCall = new ElementLocator(Locator.CssSelector, ":nth-of-type({0})");
+        // Locators for departments
+        private readonly ElementLocator departmentActions = new ElementLocator(Locator.XPath, "//span[text()='{0}']/ancestor::card//a[@class = 'card-menu-button']");
+        private readonly ElementLocator departmentRemove = new ElementLocator(Locator.XPath, "//span[text()='{0}']/ancestor::card//context-menu-item[@type ='remove']/li");
+        private readonly ElementLocator departmentSetAsManaging = new ElementLocator(Locator.XPath, "//span[text()='{0}']/ancestor::card//context-menu-item[@type ='setAsManaging']/li");
 
         public EditActivityPage(DriverContext driverContext) : base(driverContext)
         {
+        }
+
+        public List<string> SecondaryNegotiatorsNextCalls => this.Driver.GetElements(this.secondaryNegotiatorNextCall.Format(string.Empty)).Select(el => el.GetAttribute("value")).ToList();
+
+        public string LeadNegotiatorNextCall => this.Driver.GetElement(this.leadNegotiatorNextCall).GetAttribute("value");
+
+        public EditActivityPage OpenEditActivityPage(string id)
+        {
+            new CommonPage(this.DriverContext).NavigateToPageWithId("edit activity", id);
+            return this;
         }
 
         public EditActivityPage SelectActivityStatus(string newStatus)
@@ -55,41 +76,63 @@
 
         public ViewActivityPage SaveActivity()
         {
-            this.Driver.GetElement(this.saveButton).Click();
+            this.Driver.Click(this.saveButton);
             this.Driver.WaitForAngularToFinish();
             return new ViewActivityPage(this.DriverContext);
         }
 
-        public EditActivityPage EditLeadNegotiator(string leadNegotiator)
+        public EditActivityPage SetLeadNegotiator(string leadNegotiator)
         {
-            this.Driver.GetElement(this.editLeadNegotiator).Click();
+            this.Driver.Click(this.editLeadNegotiator);
             this.Driver.SendKeys(this.searchLeadNegotator, leadNegotiator);
             this.Driver.WaitForElementToBeDisplayed(this.negotiator.Format(leadNegotiator), BaseConfiguration.MediumTimeout);
-            this.Driver.GetElement(this.negotiator.Format(leadNegotiator)).Click();
+            this.Driver.Click(this.negotiator.Format(leadNegotiator));
             return this;
         }
 
-        public EditActivityPage AddSecondaryNegotiator(Negotiator secondaryNegotiator)
+        public EditActivityPage SetSecondaryNegotiator(Negotiator secondaryNegotiator)
         {
-            this.Driver.GetElement(this.addSecondaryNegotiator).Click();
+            this.Driver.Click(this.addSecondaryNegotiator);
             this.Driver.SendKeys(this.searchSecondaryNegotiator, secondaryNegotiator.Name);
-            this.Driver.WaitForElementToBeDisplayed(this.negotiator.Format(secondaryNegotiator.Name), BaseConfiguration.MediumTimeout);
-            this.Driver.GetElement(this.negotiator.Format(secondaryNegotiator.Name)).Click();
-            this.Driver.GetElement(this.cancelSecondaryNegotiator).Click();
+            this.Driver.WaitForElementToBeDisplayed(this.negotiator.Format(secondaryNegotiator.Name),
+                BaseConfiguration.MediumTimeout);
+            this.Driver.Click(this.negotiator.Format(secondaryNegotiator.Name));
+            this.Driver.Click(this.cancelSecondaryNegotiator);
             return this;
         }
 
         public EditActivityPage RemoveSecondaryNegotiator(int position)
         {
-            this.Driver.GetElement(this.secondaryNegotiatorActions.Format(position)).Click();
-            this.Driver.GetElement(this.deleteSecondaryNegotiator.Format(position)).Click();
+            this.Driver.Click(this.secondaryNegotiatorActions.Format(position));
+            this.Driver.Click(this.deleteSecondaryNegotiator.Format(position));
             return this;
         }
 
         public EditActivityPage SetSecondaryNegotiatorAsLeadNegotiator(int position)
         {
-            this.Driver.GetElement(this.secondaryNegotiatorActions.Format(position)).Click();
-            this.Driver.GetElement(this.setSecondaryNegotiatorAsLead.Format(position)).Click();
+            this.Driver.Click(this.secondaryNegotiatorActions.Format(position));
+            this.Driver.Click(this.setSecondaryNegotiatorAsLead.Format(position));
+            return this;
+        }
+
+        public EditActivityPage SetSecondaryNegotiatorsCallDate(int position, string date)
+        {
+            this.Driver.SendKeys(this.secondaryNegotiatorNextCall.Format(this.nextCall.Format(position).Value),
+                date != string.Empty ? DateTime.UtcNow.AddDays(int.Parse(date)).ToString("dd-MM-yyyy") : string.Empty);
+            return this;
+        }
+
+        public EditActivityPage RemoveDepartment(string departmentName)
+        {
+            this.Driver.Click(this.departmentActions.Format(departmentName));
+            this.Driver.Click(this.departmentRemove.Format(departmentName));
+            return this;
+        }
+
+        public EditActivityPage SetDepartmentAsManaging(string departmentName)
+        {
+            this.Driver.Click(this.departmentActions.Format(departmentName));
+            this.Driver.Click(this.departmentSetAsManaging.Format(departmentName));
             return this;
         }
     }
@@ -108,5 +151,7 @@
     public class Negotiator
     {
         public string Name { get; set; }
+
+        public string NextCall { get; set; }
     }
 }

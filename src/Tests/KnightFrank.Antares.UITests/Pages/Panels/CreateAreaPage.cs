@@ -3,7 +3,6 @@
     using KnightFrank.Antares.UITests.Extensions;
 
     using Objectivity.Test.Automation.Common;
-    using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
 
     public class CreateAreaPage: ProjectPageBase
@@ -26,7 +25,7 @@
             }
             else
             {
-                this.Driver.GetElement(this.addArea).Click();
+                this.Driver.Click(this.addArea);
                 this.Driver.SendKeys(this.name.Format(place), areaName);
                 this.Driver.SendKeys(this.size.Format(place), areaSize);
             }
@@ -35,7 +34,7 @@
 
         public CreateAreaPage SaveArea()
         {
-            this.Driver.GetElement(this.saveArea).Click();
+            this.Driver.Click(this.saveArea);
             this.Driver.WaitForAngularToFinish();
             return this;
         }

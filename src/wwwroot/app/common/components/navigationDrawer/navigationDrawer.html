@@ -1,0 +1,9 @@
+<div>
+    <h5 class="accordion-title">{{vm.titleKey | translate}}</h5>
+
+    <ul class="recent">
+        <li class="recent-item" ng-repeat="view in vm.getLatestViews()">
+            <a ng-href="{{:: view.url}}" title="{{:: view.name}}">{{:: view.name}}</a>
+        </li>
+    </ul>
+</div>

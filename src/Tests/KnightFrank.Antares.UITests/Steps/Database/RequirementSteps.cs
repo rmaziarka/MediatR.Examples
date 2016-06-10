@@ -30,6 +30,7 @@
         }
 
         [Given(@"Requirement for GB is created in database")]
+        [When(@"Requirement for GB is created in database")]
         public void CreateRequirementInDb(Table table)
         {
             var requirement = table.CreateInstance<Requirement>();

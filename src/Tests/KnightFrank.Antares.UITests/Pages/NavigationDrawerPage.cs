@@ -1,6 +1,10 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using KnightFrank.Antares.UITests.Extensions;
 
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
@@ -13,6 +17,8 @@
         private readonly ElementLocator menuItem = new ElementLocator(Locator.XPath, "//nav[@class='drawer']//span[normalize-space(text()) = '{0}']{1}");
         private readonly ElementLocator openedDrawer = new ElementLocator(Locator.CssSelector, "div.drawer-open");
         private readonly ElementLocator subMenuItem = new ElementLocator(Locator.XPath, "//ancestor::div[contains(@class, 'panel-open')]//div[@class = 'panel-body']");
+        private readonly ElementLocator latestEntities = new ElementLocator(Locator.CssSelector, "navigation-drawer[type = '{0}'] li a");
+        private readonly ElementLocator latestEntity = new ElementLocator(Locator.CssSelector, "navigation-drawer[type = '{0}'] li:nth-of-type({1}) a");
 
         public NavigationDrawerPage(DriverContext driverContext) : base(driverContext)
         {
@@ -22,7 +28,7 @@
         {
             if (!this.Driver.IsElementPresent(this.openedDrawer, BaseConfiguration.ShortTimeout))
             {
-                this.Driver.GetElement(this.hamburgerBox).Click();
+                this.Driver.Click(this.hamburgerBox);
             }
             return this;
         }
@@ -31,7 +37,7 @@
         {
             if (this.Driver.IsElementPresent(this.openedDrawer, BaseConfiguration.ShortTimeout))
             {
-                this.Driver.GetElement(this.hamburgerBox).Click();
+                this.Driver.Click(this.hamburgerBox);
             }
             return this;
         }
@@ -53,7 +59,7 @@
 
         public void ClickDrawerMenuItem(string drawerMenuItem)
         {
-            this.Driver.GetElement(this.menuItem.Format(drawerMenuItem, string.Empty)).Click();
+            this.Driver.Click(this.menuItem.Format(drawerMenuItem, string.Empty));
         }
 
         public bool IsSubMenuVisible(string drawerMenuItem)
@@ -64,7 +70,20 @@
 
         public NavigationDrawerPage ClickCreateButton()
         {
-            this.Driver.GetElement(this.createButton).Click();
+            this.Driver.Click(this.createButton);
+            return this;
+        }
+
+        public List<string> GetLatestEntities(string entity)
+        {
+            this.Driver.WaitForAngularToFinish();
+            return this.Driver.GetElements(this.latestEntities.Format(entity)).Select(e => e.Text).ToList();
+        }
+
+        public NavigationDrawerPage ClickLatestEntity(string entity, string position)
+        {
+            this.Driver.WaitForAngularToFinish();
+            this.Driver.Click(this.latestEntity.Format(entity, position));
             return this;
         }
 
@@ -75,6 +94,11 @@
             Companies,
             Properties,
             Requirements
+        }
+
+        internal class LatestViews
+        {
+            public string LatestData { get; set; }
         }
     }
 }

@@ -101,20 +101,6 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_OfferDateInFuture_When_Validating_Then_IsInvalid(UpdateOfferCommandValidator validator)
-        {
-            // Arrange
-            this.cmd.OfferDate = DateTime.UtcNow.Date.AddDays(1);
-
-            // Act
-            ValidationResult validationResult = validator.Validate(this.cmd);
-
-            // Assert
-            validationResult.IsInvalid(nameof(this.cmd.OfferDate), nameof(Messages.lessthanorequal_error));
-        }
-
-        [Theory]
-        [AutoMoqData]
         public void Given_EmptyPrice_When_Validating_Then_IsInvalid(UpdateOfferCommandValidator validator)
         {
             // Arrange

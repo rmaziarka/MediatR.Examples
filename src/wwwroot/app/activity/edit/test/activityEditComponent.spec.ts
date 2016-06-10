@@ -38,8 +38,8 @@ module Antares {
                 item: '#activity-edit-vendors list#list-vendors list-item#list-item-'
             },
             negotiators: {
-                component: "#activity-edit-negotiators negotiators-edit",
-                items: "#activity-edit-negotiators #card-secondary-negotiator"
+                component: '#activity-edit-negotiators negotiators-edit',
+                items: '#activity-edit-negotiators card[id^="card-secondary-negotiator"]'
             },
             actions: {
                 save: 'button#activity-edit-save',
@@ -336,6 +336,62 @@ module Antares {
             });
         });
 
+        describe('when negotiator call date is in the past', () => {
+            var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
+            activityMock.leadNegotiator.callDate = moment().day(-7).toDate();
+
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService,
+                $state: ng.ui.IStateService,
+                $httpBackend: ng.IHttpBackendService) => {
+
+                // init
+                scope = $rootScope.$new();
+                compile = $compile;
+                state = $state;
+                $http = $httpBackend;
+
+                // http backend
+                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
+
+                // compile
+                scope['activity'] = activityMock;
+                element = compile('<activity-edit activity="activity"></activity-edit>')(scope);
+
+                scope.$apply();
+                $httpBackend.flush();
+
+                controller = element.controller('activityEdit');
+            }));
+
+            it('and not changed then when save button is clicked save action should be called', () => {
+                // arrange
+                spyOn(controller, 'save');
+
+                // act
+                var button = element.find(pageObjectSelectors.actions.save);
+                button.click();
+
+                // assert
+                expect(controller.save).toHaveBeenCalled();
+            });
+
+            it('and changed also to past then when save button is clicked save action should not be called', () => {
+                // arrange
+                spyOn(controller, 'save');
+                activityMock.leadNegotiator.callDate = moment().day(-10).toDate();
+                scope.$apply();
+
+                // act
+                var button = element.find(pageObjectSelectors.actions.save);
+                button.click();
+
+                // assert
+                expect(controller.save).not.toHaveBeenCalled();
+            });
+        });
+
         describe('when form action is called', () => {
             var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
 
@@ -406,8 +462,8 @@ module Antares {
                     expect(requestData.marketAppraisalPrice).toEqual(activityMock.marketAppraisalPrice);
                     expect(requestData.recommendedPrice).toEqual(activityMock.recommendedPrice);
                     expect(requestData.vendorEstimatedPrice).toEqual(activityMock.vendorEstimatedPrice);
-                    expect(requestData.leadNegotiatorId).toEqual(activityMock.leadNegotiator.userId);
-                    expect(requestData.secondaryNegotiatorIds).toEqual(activityMock.secondaryNegotiator.map((negotiator) => negotiator.userId));
+                    expect(requestData.leadNegotiator.userId).toEqual(activityMock.leadNegotiator.userId);
+                    expect(requestData.secondaryNegotiators.map((negotiator) => negotiator.userId)).toEqual(activityMock.secondaryNegotiator.map((negotiator) => negotiator.userId));
 
                     expect(activityId).toEqual(activityFromServerMock.id);
                 });

@@ -3,10 +3,25 @@
     public enum ErrorMessage
     {
         /// <summary>
+        /// Key value : Call date is required.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ActivityUser_CallDate_Is_Required,
+        /// <summary>
+        /// Key value : Negotiator is assigned to other activity.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ActivityUser_Is_Assigned_To_Other_Activity,
+        /// <summary>
         /// Key value : One or more negotiators are duplicated.
         /// </summary>
         // ReSharper disable once InconsistentNaming
         Activity_Negotiators_Not_Unique,
+        /// <summary>
+        /// Key value : Activity negotiator call date cannot be set in the past.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Activity_Negotiator_CallDate_InPast,
         /// <summary>
         /// Key value : One or more {0}(s) with given ids does not exist in the database.
         /// </summary>
@@ -91,7 +106,37 @@
         /// Key value : The '{0}' property value is required.
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        Property_Should_Not_Be_Empty
+        Property_Should_Not_Be_Empty,
+        /// <summary>
+        /// Key value : Value of ActivityDepartment is invalid.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ActivityDepartment_Invalid_Value,
+        /// <summary>
+        /// Key value : One or more departments are duplicated.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Activity_Departments_Not_Unique,
+        /// <summary>
+        /// Key value : Activity should hva only one managing department.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Activity_Should_Have_Only_One_Managing_Department,
+        /// <summary>
+        /// Key value : Offer Date must be less than or equal to create date.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        OfferDateLessOrEqualToCreateDate,
+        /// <summary>
+        /// Key value : Completion Date must be greater than or equal to create date.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        CompletionDateGreaterOrEqualToCreateDate,
+        /// <summary>
+        /// Key value : Exchange Date must be greater than or equal to create date.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ExchangeDateGreaterOrEqualToCreateDate
     }
 }
 

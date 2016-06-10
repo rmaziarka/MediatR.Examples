@@ -32,6 +32,7 @@
         }
 
         [Given(@"Property in GB is created in database")]
+        [When(@"Property in GB is created in database")]
         public void CreatePropertyInDb(Table table)
         {
             var address = table.CreateInstance<Address>();
@@ -50,6 +51,8 @@
             // Set property details
             address.AddressFormId = addressFormId;
             address.CountryId = countryId;
+            address.Line1 = string.Empty;
+            address.Line3 = string.Empty;
 
             var property = new Property
             {
@@ -73,6 +76,7 @@
         }
 
         [Given(@"Property with (.*) division and (.*) type is defined")]
+        [When(@"Property with (.*) division and (.*) type is defined")]
         public void GetDivisionAndType(string division, string propertyType)
         {
             Guid propertyTypeId = this.dataContext.PropertyTypes.Single(i => i.Code.Equals(propertyType)).Id;
@@ -115,6 +119,7 @@
         }
 
         [Given(@"Property ownership is defined")]
+        [When(@"Property ownership is defined")]
         public void CreateOwnership(Table table)
         {
             List<Ownership> ownerships = table.CreateSet<Ownership>().ToList();
@@ -133,7 +138,50 @@
         }
 
         [Given(@"Property (.*) activity is defined")]
+        [When(@"Property (.*) activity is defined")]
         public void CreateActivity(string activityType)
+        {
+            Guid activityTypeId = this.dataContext.ActivityTypes.Single(i => i.Code.Equals(activityType)).Id;
+            Guid activityStatusId = this.dataContext.EnumTypeItems.Single(
+                i => i.EnumType.Code.Equals("ActivityStatus") && i.Code.Equals("PreAppraisal")).Id;
+            Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
+
+            var activity = new Activity
+            {
+                PropertyId = propertyId,
+                ActivityTypeId = activityTypeId,
+                ActivityStatusId = activityStatusId,
+                CreatedDate = DateTime.UtcNow,
+                LastModifiedDate = DateTime.UtcNow,
+                Contacts = this.scenarioContext.ContainsKey("ContactsList") ? this.scenarioContext.Get<List<Contact>>("ContactsList") : new List<Contact>(),
+                ActivityUsers = new List<ActivityUser>
+                {
+                    new ActivityUser
+                    {
+                        //TODO improve selecting lead negotiator
+                        UserId = this.dataContext.Users.First().Id,
+                        UserTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("LeadNegotiator")).Id,
+                        CallDate = DateTime.UtcNow.AddDays(14)
+                    }
+                },
+                ActivityDepartments = new List<ActivityDepartment>
+                {
+                    new ActivityDepartment
+                    {
+                        DepartmentId = this.dataContext.Users.First().DepartmentId,
+                        DepartmentTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("Managing")).Id
+                    }
+                }
+            };
+
+            this.dataContext.Activities.Add(activity);
+            this.dataContext.SaveChanges();
+
+            this.scenarioContext.Set(activity, "Activity");
+        }
+
+        [Given(@"Property (.*) activity with negotiators is defined")]
+        public void CreateActivityWithNegotiators(string activityType)
         {
             Guid activityTypeId = this.dataContext.ActivityTypes.Single(i => i.Code.Equals(activityType)).Id;
             Guid activityStatusId = this.dataContext.EnumTypeItems.Single(
@@ -154,7 +202,36 @@
                     {
                         //TODO improve selecting lead negotiator
                         UserId = this.dataContext.Users.First().Id,
-                        UserTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("LeadNegotiator")).Id
+                        UserTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("LeadNegotiator")).Id,
+                        CallDate = DateTime.UtcNow.AddDays(14)
+                    },
+                    new ActivityUser
+                    {
+                        UserId = this.dataContext.Users.First(u => u.FirstName.Equals("Eva") && u.LastName.Equals("Sandler")).Id,
+                        UserTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("SecondaryNegotiator")).Id
+                    },
+                    new ActivityUser
+                    {
+                        UserId = this.dataContext.Users.First(u => u.FirstName.Equals("John") && u.LastName.Equals("Doe")).Id,
+                        UserTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("SecondaryNegotiator")).Id
+                    },
+                    new ActivityUser
+                    {
+                        UserId = this.dataContext.Users.First(u => u.FirstName.Equals("Martha") && u.LastName.Equals("Williams")).Id,
+                        UserTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("SecondaryNegotiator")).Id
+                    }
+                },
+                ActivityDepartments = new List<ActivityDepartment>
+                {
+                    new ActivityDepartment
+                    {
+                        DepartmentId = this.dataContext.Users.First().DepartmentId,
+                        DepartmentTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("Managing")).Id
+                    },
+                    new ActivityDepartment
+                    {
+                        DepartmentId = this.dataContext.Users.First(u => u.FirstName.Equals("Eva") && u.LastName.Equals("Sandler")).DepartmentId,
+                        DepartmentTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code.Equals("Standard")).Id
                     }
                 }
             };

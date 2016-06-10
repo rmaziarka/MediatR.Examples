@@ -28,9 +28,11 @@
         }
 
         [Given(@"Offer for requirement is defined")]
+        [When(@"Offer for requirement is defined")]
         public void CreateViewing()
         {
-            Guid statusId = this.dataContext.EnumTypeItems.Single(i => i.EnumType.Code.Equals("OfferStatus") && i.Code.Equals("New")).Id;
+            Guid statusId =
+                this.dataContext.EnumTypeItems.Single(i => i.EnumType.Code.Equals("OfferStatus") && i.Code.Equals("New")).Id;
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
 
@@ -43,6 +45,8 @@
                 CompletionDate = DateTime.UtcNow,
                 ExchangeDate = DateTime.UtcNow,
                 OfferDate = DateTime.UtcNow,
+                CreatedDate = DateTime.UtcNow,
+                LastModifiedDate = DateTime.UtcNow,
                 RequirementId = requirementId,
                 SpecialConditions = "Text",
                 StatusId = statusId
@@ -50,6 +54,8 @@
 
             this.dataContext.Offer.Add(offer);
             this.dataContext.SaveChanges();
+
+            this.scenarioContext.Set(offer, "Offer");
         }
     }
 }

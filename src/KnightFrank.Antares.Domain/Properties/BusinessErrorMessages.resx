@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActivityUser_CallDate_Is_Required" xml:space="preserve">
+    <value>Call date is required.</value>
+  </data>
+  <data name="ActivityUser_Is_Assigned_To_Other_Activity" xml:space="preserve">
+    <value>Negotiator is assigned to other activity.</value>
+  </data>
   <data name="Activity_Negotiators_Not_Unique" xml:space="preserve">
     <value>One or more negotiators are duplicated.</value>
+  </data>
+  <data name="Activity_Negotiator_CallDate_InPast" xml:space="preserve">
+    <value>Activity negotiator call date cannot be set in the past.</value>
   </data>
   <data name="Entity_List_Item_Not_Exists" xml:space="preserve">
     <value>One or more {0}(s) with given ids does not exist in the database.</value>
@@ -144,6 +153,15 @@
   <data name="Missing_Requirement_Applicants_Id" xml:space="preserve">
     <value>One or more attendees are not on the applicant list.</value>
   </data>
+  <data name="OfferDateLessOrEqualToCreateDate" xml:space="preserve">
+    <value>Offer Date must be less than or equal to {0}.</value>
+  </data>
+  <data name="CompletionDateGreaterOrEqualToCreateDate" xml:space="preserve">
+    <value>Completion Date must be greater than or equal to {0}.</value>
+  </data>
+  <data name="ExchangeDateGreaterOrEqualToCreateDate" xml:space="preserve">
+    <value>Exchange Date must be greater than or equal to {0}.</value>
+  </data>
   <data name="Missing_Requirement_Attendees_Id" xml:space="preserve">
     <value>One or more attendees are not on the applicant list.</value>
   </data>
@@ -167,5 +185,14 @@
   </data>
   <data name="Property_Should_Not_Be_Empty" xml:space="preserve">
     <value>The '{0}' property value is required.</value>
+  </data>
+  <data name="ActivityDepartment_Invalid_Value" xml:space="preserve">
+    <value>Value of ActivityDepartment is invalid.</value>
+  </data>
+  <data name="Activity_Departments_Not_Unique" xml:space="preserve">
+    <value>One or more departments are duplicated.</value>
+  </data>
+  <data name="Activity_Should_Have_Only_One_Managing_Department" xml:space="preserve">
+    <value>Activity should hva only one managing department.</value>
   </data>
 </root>

@@ -29,10 +29,22 @@
         public Guid Handle(UpdateOfferCommand message)
         {
             Offer offer = this.offerRepository.GetById(message.Id);
-
             this.entityValidator.EntityExists(offer, message.Id);
             this.enumTypeItemValidator.ItemExists(EnumType.OfferStatus, message.StatusId);
 
+            if (message.OfferDate > offer.CreatedDate)
+            {
+                throw new BusinessValidationException(BusinessValidationMessage.OfferDateLessOrEqualToCreateDateMessage(offer.CreatedDate));
+            }
+            if (message.ExchangeDate < offer.CreatedDate)
+            {
+                throw new BusinessValidationException(BusinessValidationMessage.ExchangeDateGreaterOrEqualToCreateDateMessage(offer.CreatedDate));
+            }
+            if (message.CompletionDate < offer.CreatedDate)
+            {
+                throw new BusinessValidationException(BusinessValidationMessage.CompletionDateGreaterOrEqualToCreateDateMessage(offer.CreatedDate));
+            }
+            
             AutoMapper.Mapper.Map(message, offer);
 
             this.offerRepository.Save();

@@ -83,7 +83,7 @@
         [When(@"User clicks view activity link from activity on view property page")]
         public void OpenViewActivityPage()
         {
-            this.page.PreviewDetails.ClickViewActivity();
+            this.page.ActivityPreview.ClickViewActivity();
         }
 
         [When(@"User selects (.*) activity type on create activity page")]
@@ -191,10 +191,11 @@
                 () => Assert.Equal(details.Vendor, this.page.ActivityVendor),
                 () => Assert.Equal(details.Status, this.page.ActivityStatus),
                 () => Assert.Equal(details.Type, this.page.ActivityType),
-                () => Assert.Equal(DateTime.UtcNow.ToString("dd-MM-yyyy"), this.page.GetActivityDate()));
+                () => Assert.Equal(DateTime.UtcNow.ToString("dd-MM-yyyy"), this.page.ActivityDate));
         }
 
         [Then(@"Property should be updated with address details")]
+        [Then(@"Property should be displayed with address details")]
         [Then(@"New property should be created with address details")]
         public void CheckIfPropertyCreated(Table table)
         {
@@ -257,7 +258,7 @@
             }
         }
 
-        [Then(@"View property page is displayed")]
+        [Then(@"View property page should be displayed")]
         public void CheckIfViewPropertyPresent()
         {
             Assert.True(this.page.IsViewPropertyFormPresent());

@@ -1,0 +1,5 @@
+[ClassVersion("1.0.1"), FriendlyName("cElasticsearch")]
+class cElasticsearch : OMI_BaseResource
+{
+  [Key] string UnzipFolder;
+};

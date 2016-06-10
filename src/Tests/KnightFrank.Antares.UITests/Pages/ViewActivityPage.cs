@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -21,28 +22,36 @@
         private readonly ElementLocator recommendedPrice = new ElementLocator(Locator.Id, "recommendedPrice");
         private readonly ElementLocator status = new ElementLocator(Locator.Id, "activityStatus");
         private readonly ElementLocator vendorEstimatedPrice = new ElementLocator(Locator.Id, "vendorEstimatedPrice");
-        // attachment locators
+        // Attachment locators
         private readonly ElementLocator addAttachmentButton = new ElementLocator(Locator.CssSelector, "#card-list-attachments button");
         private readonly ElementLocator attachmentFileTitle = new ElementLocator(Locator.CssSelector, "#card-list-attachments div[id *= 'attachment-data'");
         private readonly ElementLocator attachmentDate = new ElementLocator(Locator.CssSelector, "#card-list-attachments time[id *= 'attachment-created-date']");
         private readonly ElementLocator attachmentType = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-type']");
         private readonly ElementLocator attachmentSize = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-file-size']");
         private readonly ElementLocator attachmentDetailsLink = new ElementLocator(Locator.CssSelector, "#activity-view-attachments .detailsLink");
-        // viewing locators
+        // Viewing locators
         private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-group-item");
         private readonly ElementLocator viewingDetailsLink = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) a");
         private readonly ElementLocator viewingDetails = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .ng-binding");
-        // offer locators
+        // Offer locators
         private readonly ElementLocator offers = new ElementLocator(Locator.CssSelector, ".activity-view-offers .card-body");
         private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .card-body");
-        private readonly ElementLocator offerActions = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .card-menu-button");
         private readonly ElementLocator offerStatus = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .offer-status");
         private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".activity-view-offers:nth-of-type({0}) .ng-binding");
-
-        // negotiators locators
+        // Negotiators locators
         private readonly ElementLocator leadNegotiator = new ElementLocator(Locator.CssSelector, "#card-lead-negotiator .panel-item");
-        private readonly ElementLocator secondaryNegotiator = new ElementLocator(Locator.CssSelector, "#card-list-negotiators card-list-item .panel-item");
+        private readonly ElementLocator secondaryNegotiatorData = new ElementLocator(Locator.CssSelector, "#card-list-negotiators card-list-item .ng-binding");
+        private readonly ElementLocator leadNegotiatorNextCallDate = new ElementLocator(Locator.CssSelector, "#card-lead-negotiator + editable-date time"); 
+        private readonly ElementLocator leadNegotiatorNextCallEditButton = new ElementLocator(Locator.CssSelector, "negotiators-view > editable-date button[ng-click *= 'openEditMode']");
+        private readonly ElementLocator leadNegotiatorNextCallDateField = new ElementLocator(Locator.CssSelector, "negotiators-view > editable-date #next-call-1");
+        private readonly ElementLocator leadNegotiatorNextCallSaveButton = new ElementLocator(Locator.CssSelector, "negotiators-view > editable-date button[type='submit']");
+        private readonly ElementLocator secondaryNegotiatorNextCallEditButton = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//button");
+        private readonly ElementLocator secondaryNegotiatorNextCallDateField = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//input");
+        private readonly ElementLocator secondaryNegotiatorNextCallSaveButton = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//button[@type='submit']");
+        // Departments locators
+        private readonly ElementLocator departmentName = new ElementLocator(Locator.CssSelector, "#departments-section card-list-item .card-item .department-name");
 
+        private const string Format = "dd-MM-yyyy";
 
         public ViewActivityPage(DriverContext driverContext) : base(driverContext)
         {
@@ -68,11 +77,21 @@
 
         public string LeadNegotiator => this.Driver.GetElement(this.leadNegotiator).Text;
 
-        public List<Negotiator> SecondaryNegotiators => this.Driver.GetElements(this.secondaryNegotiator).Select(el => new Negotiator { Name = el.Text }).ToList();
-
         public int OffersNumber => this.Driver.GetElements(this.offers).Count;
 
         public OfferPreviewPage OfferPreview => new OfferPreviewPage(this.DriverContext);
+
+        public string LeadNegotiatorNextCall => this.Driver.GetElement(this.leadNegotiatorNextCallDate).Text;
+
+        public List<Department> Departments => this.Driver.GetElements(this.departmentName).Select(el => new Department { Name = el.Text }).ToList();
+
+        public Attachment AttachmentDetails => new Attachment
+        {
+            FileName = this.Driver.GetElement(this.attachmentFileTitle).Text,
+            Type = this.Driver.GetElement(this.attachmentType).Text,
+            Size = this.Driver.GetElement(this.attachmentSize).Text,
+            Date = this.Driver.GetElement(this.attachmentDate).Text
+        };
 
         public ViewActivityPage OpenViewActivityPageWithId(string id)
         {
@@ -82,7 +101,7 @@
 
         public ViewActivityPage ClickDetailsLink()
         {
-            this.Driver.GetElement(this.detailsLink).Click();
+            this.Driver.Click(this.detailsLink);
             return this;
         }
 
@@ -104,26 +123,26 @@
 
         public EditActivityPage EditActivity()
         {
-            this.Driver.GetElement(this.editButton).Click();
+            this.Driver.Click(this.editButton);
             this.Driver.WaitForAngularToFinish();
             return new EditActivityPage(this.DriverContext);
         }
 
         public ViewActivityPage OpenAttachFilePanel()
         {
-            this.Driver.GetElement(this.addAttachmentButton).Click();
+            this.Driver.Click(this.addAttachmentButton);
             return this;
         }
 
         public ViewActivityPage OpenAttachmentPreview()
         {
-            this.Driver.GetElement(this.attachmentDetailsLink).Click();
+            this.Driver.Click(this.attachmentDetailsLink);
             return this;
         }
 
         public ViewActivityPage OpenViewingDetails(int position)
         {
-            this.Driver.GetElement(this.viewingDetailsLink.Format(position)).Click();
+            this.Driver.Click(this.viewingDetailsLink.Format(position));
             return this;
         }
 
@@ -147,13 +166,7 @@
 
         public ViewActivityPage OpenOfferDetails(int position)
         {
-            this.Driver.GetElement(this.offer.Format(position)).Click();
-            return this;
-        }
-
-        public ViewActivityPage OpenOfferActions(int position)
-        {
-            this.Driver.GetElement(this.offerActions.Format(position)).Click();
+            this.Driver.Click(this.offer.Format(position));
             return this;
         }
 
@@ -169,15 +182,38 @@
             return this.Driver.GetElements(this.viewingDetails.Format(position)).Select(el => el.Text).ToList();
         }
 
-        public Attachment GetAttachmentDetails()
+        public ViewActivityPage EditLeadNegotiatorNextCall(int day)
         {
-            return new Attachment
-            {
-                FileName = this.Driver.GetElement(this.attachmentFileTitle).Text,
-                Type = this.Driver.GetElement(this.attachmentType).Text,
-                Size = this.Driver.GetElement(this.attachmentSize).Text,
-                Date = this.Driver.GetElement(this.attachmentDate).Text
-            };
+            this.Driver.Click(this.leadNegotiatorNextCallEditButton);
+            this.Driver.SendKeys(this.leadNegotiatorNextCallDateField, DateTime.UtcNow.AddDays(day).ToString(Format));
+            this.Driver.Click(this.leadNegotiatorNextCallSaveButton);
+            return this;
+        }
+
+        public ViewActivityPage EditSecondaryNegotiatorNextCall(string name, int day)
+        {
+            this.Driver.Click(this.secondaryNegotiatorNextCallEditButton.Format(name));
+            this.Driver.SendKeys(this.secondaryNegotiatorNextCallDateField.Format(name), DateTime.UtcNow.AddDays(day).ToString(Format));
+            this.Driver.Click(this.secondaryNegotiatorNextCallSaveButton.Format(name));
+            return this;
+        }
+
+        public List<Negotiator> GetSecondaryNegotiatorsData()
+        {
+            List<string> odds =
+                this.Driver.GetElements(this.secondaryNegotiatorData)
+                    .ToList()
+                    .Where((c, i) => i % 2 != 0)
+                    .Select(el => el.Text)
+                    .ToList();
+            List<string> evens =
+                this.Driver.GetElements(this.secondaryNegotiatorData)
+                    .ToList()
+                    .Where((c, i) => i % 2 == 0)
+                    .Select(el => el.Text)
+                    .ToList();
+
+            return evens.Zip(odds, (s, s1) => new Negotiator { Name = s, NextCall = s1 }).ToList();
         }
     }
 
@@ -192,5 +228,10 @@
         public string Date { get; set; }
 
         public string User { get; set; }
+    }
+
+    public class Department
+    {
+        public string Name { get; set; }
     }
 }

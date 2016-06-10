@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Dal.Model.Configuration;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.LatestView;
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
@@ -67,6 +68,7 @@
         public DbSet<ActivityTypeDefinition> ActivityTypeDefinitions { get; set; }
         public DbSet<ActivityType> ActivityTypes { get; set; }
         public DbSet<ActivityTypeLocalised> ActivityTypeLocaliseds { get; set; }
+        public DbSet<ActivityDepartment> ActivityDepartment { get; set; }
         public DbSet<PropertyType> PropertyTypes { get; set; }
         public DbSet<PropertyTypeLocalised> PropertyTypeLocaliseds { get; set; }
         public DbSet<PropertyTypeDefinition> PropertyTypeDefinitions { get; set; }
@@ -83,6 +85,7 @@
         public DbSet<Viewing> Viewing { get; set; }
         public DbSet<Offer> Offer { get; set; }
         public DbSet<PropertyAreaBreakdown> PropertyAreaBreakdown { get; set; }
+        public DbSet<LatestView> LatestView { get; set; }
 
         private void LoadConfigurations(DbModelBuilder modelBuilder)
         {

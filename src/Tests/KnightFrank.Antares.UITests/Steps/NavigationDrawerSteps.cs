@@ -1,12 +1,17 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using FluentAssertions;
 
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;
 
     using TechTalk.SpecFlow;
+    using TechTalk.SpecFlow.Assist;
 
     using Xunit;
 
@@ -58,6 +63,12 @@
             this.page.CloseNavigationDrawer();
         }
 
+        [When(@"User clicks latest (.*) on (.*) position in drawer menu")]
+        public void OpenLatestEnityt(string entity, string position)
+        {
+            this.page.ClickLatestEntity(entity, position);
+        }
+
         [Then(@"Drawer menu should be displayed")]
         public void CheckIfDrawerMenuPresent()
         {
@@ -68,6 +79,36 @@
         public void CheckIfDrawerSubMenuPresent(string drawerMenu)
         {
             Assert.True(this.page.IsSubMenuVisible(drawerMenu));
+        }
+
+        [Then(@"Latest (.*) property should contain following data")]
+        [Then(@"Latest (.*) properties should contain following data")]
+        public void CheckLatestPropertyItems(int count, Table table)
+        {
+            List<string> expected = table.CreateSet<NavigationDrawerPage.LatestViews>().Select(el => el.LatestData).ToList();
+            List<string> current = this.page.GetLatestEntities("property").Take(count).ToList();
+
+            expected.Should().Equal(current);
+        }
+
+        [Then(@"Latest (.*) activity should contain following data")]
+        [Then(@"Latest (.*) activities should contain following data")]
+        public void CheckLatestActivityItems(int count, Table table)
+        {
+            List<string> expected = table.CreateSet<NavigationDrawerPage.LatestViews>().Select(el => el.LatestData).ToList();
+            List<string> current = this.page.GetLatestEntities("activity").Take(count).ToList();
+
+            expected.Should().Equal(current);
+        }
+
+        [Then(@"Latest (.*) requirement should contain following data")]
+        [Then(@"Latest (.*) requirements should contain following data")]
+        public void CheckLatestRequirementItems(int count, Table table)
+        {
+            List<string> expected = table.CreateSet<NavigationDrawerPage.LatestViews>().Select(el => el.LatestData).ToList();
+            List<string> current = this.page.GetLatestEntities("requirement").Take(count).ToList();
+
+            expected.Should().Equal(current);
         }
     }
 }

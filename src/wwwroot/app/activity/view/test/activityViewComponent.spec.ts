@@ -56,20 +56,53 @@ module Antares {
                 group: '#activity-view-viewings card-list-group.viewing-group',
                 groupTitle: '#activity-view-viewings card-list-group.viewing-group card-list-group-header h5 time',
                 item: '#activity-view-viewings card-list-group.viewing-group card-list-group-item card.viewing-item',
+            },
+            departments: {
+                departmentsSection: '#departments-section',
+                departmentItem: '.department-item'
             }
         };
 
         describe('when activity is loaded', () => {
             var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
 
+            activityMock.activityDepartments = TestHelpers.ActivityDepartmentGenerator.generateMany(3);
+            activityMock.activityDepartments.forEach((activityDepartment, index) => {
+
+                switch (index) {
+                    case 1:
+                        activityDepartment.departmentTypeId = '1';
+                        activityDepartment.departmentType.id = '1';
+                        activityDepartment.departmentType.code = 'Managing';
+                        return;
+                    default:
+                        activityDepartment.departmentTypeId = '2';
+                        activityDepartment.departmentType.id = '2';
+                        activityDepartment.departmentType.code = 'Standard'
+                }
+
+                activityDepartment
+            });
+            
+            beforeEach(angular.mock.module(($provide: angular.auto.IProvideService) => {
+                $provide.service('enumService', Antares.Mock.EnumServiceMock);
+            }));
+
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
                 $filter: ng.IFilterService,
-                $httpBackend: ng.IHttpBackendService) =>{
+                $httpBackend: ng.IHttpBackendService,
+                enumService: Antares.Mock.EnumServiceMock) => {
 
                 $http = $httpBackend;
                 filter = $filter;
+                var enumItems = [
+                    { id: '1', code: 'Managing' },
+                    { id: '2', code: 'Standard' }
+                ];
+
+                enumService.setEnum('ActivityDepartmentType',enumItems);
 
                 Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
                 $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
@@ -182,9 +215,18 @@ module Antares {
                 expect(vendorEstimatedPriceElement.length).toBe(1);
                 expect(vendorEstimatedPriceElement.text()).toBe('55.05 GBP');
             });
+
+            it('and activity departments list is displayed and sorted', () => {
+                // assert
+                var departmentsSectionElement = element.find(pageObjectSelectors.departments.departmentsSection);
+                var departmentItems = departmentsSectionElement.find(pageObjectSelectors.departments.departmentItem);
+
+                expect(departmentItems.length).toBe(3);
+                expect(departmentItems.first().find('.department-status').length).toBe(1);
+            });
         });
 
-        describe('and vendors are loaded', () =>{
+        describe('and vendors are loaded', () => {
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
@@ -266,12 +308,12 @@ module Antares {
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
-                $httpBackend: ng.IHttpBackendService) =>{
+                $httpBackend: ng.IHttpBackendService) => {
 
                 $http = $httpBackend;
 
                 Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
-                $http.whenGET(/\/api\/enums\/.*\/items/).respond(() =>{
+                $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
                     return [];
                 });
 
@@ -303,6 +345,10 @@ module Antares {
                     var propertyPreviewController: PropertyPreviewController = element.find('property-preview').controller('propertyPreview');
 
                     spyOn(propertyPreviewController, 'setProperty');
+
+                    $http.expectPOST(/\/api\/latestviews/, () => {
+                        return true;
+                    }).respond(200, []);
 
                     // act
                     var cardElement = element.find(pageObjectSelectors.property.card);
@@ -393,7 +439,7 @@ module Antares {
             it('when existing attachments then card components should have proper data', () => {
                 // arrange / act
                 var dateMock = new Date('2011-01-01');
-                var attachmentMock = TestHelpers.AttachmentGenerator.generate({ user: new Business.User({ id: 'us1', firstName: 'firstName1', lastName: 'lastName1' }) });
+                var attachmentMock = TestHelpers.AttachmentGenerator.generate({ user: new Business.User({ id: 'us1', firstName: 'firstName1', lastName: 'lastName1', departmentId: 'depId', department: null }) });
                 attachmentMock.createdDate = dateMock;
 
                 var sizeMock = '999.7 MB';
@@ -407,10 +453,10 @@ module Antares {
                     cardListItemElement = cardListElement.find('card-list-item'),
                     cardListItemCardElement = cardListItemElement.find('card[id="attachment-card-' + attachmentMock.id + '"]');
 
-                var attachmentDataElement = cardListItemCardElement.find('[id="attachment-data-'+attachmentMock.id+'"]');
-                var attachmentDateElement = cardListItemCardElement.find('[id="attachment-created-date-' + attachmentMock.id +'"]');
-                var attachmentTypeElement = cardListItemCardElement.find('[id="attachment-type-' + attachmentMock.id +'"]');
-                var attachmentFileSizeElement = cardListItemCardElement.find('[id="attachment-file-size-' + attachmentMock.id +'"]');
+                var attachmentDataElement = cardListItemCardElement.find('[id="attachment-data-' + attachmentMock.id + '"]');
+                var attachmentDateElement = cardListItemCardElement.find('[id="attachment-created-date-' + attachmentMock.id + '"]');
+                var attachmentTypeElement = cardListItemCardElement.find('[id="attachment-type-' + attachmentMock.id + '"]');
+                var attachmentFileSizeElement = cardListItemCardElement.find('[id="attachment-file-size-' + attachmentMock.id + '"]');
 
                 expect(attachmentDataElement.text()).toBe(attachmentMock.fileName);
                 var formattedDate = filter('date')(dateMock, 'dd-MM-yyyy');
@@ -419,8 +465,8 @@ module Antares {
                 expect(attachmentFileSizeElement.text()).toBe(sizeMock);
             });
 
-            describe('and attachment details is clicked', () =>{
-                it('then attachment details are set in attachment preview component', () =>{
+            describe('and attachment details is clicked', () => {
+                it('then attachment details are set in attachment preview component', () => {
                     // arrange
                     activityMock.attachments = TestHelpers.AttachmentGenerator.generateMany(4);
                     scope.$apply();
@@ -520,7 +566,7 @@ module Antares {
                 ];
                 var activityMock = TestHelpers.ActivityGenerator.generate({ viewings: viewingsMock });
                 scope['activity'] = activityMock;
-                
+
                 // act
                 element = compile('<activity-view activity="activity"></activity-view>')(scope);
                 scope.$apply();
@@ -538,7 +584,7 @@ module Antares {
                     expect(viewingGroupTitles[i].textContent).toBe(moment(g.day, 'YYYY-MM-DD').format('DD-MM-YYYY'));
                 });
             });
-            
+
             it('viewing list item contains all applicants', () => {
                 // arrange
                 var contactsMock = TestHelpers.ContactGenerator.generateMany(3);

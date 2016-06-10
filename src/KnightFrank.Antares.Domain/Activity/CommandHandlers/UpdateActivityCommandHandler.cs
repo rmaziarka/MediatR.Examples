@@ -24,7 +24,11 @@
 
         private readonly IActivityTypeDefinitionValidator activityTypeDefinitionValidator;
 
+        private readonly IGenericRepository<User> userRepository;
+
         private readonly IGenericRepository<ActivityUser> activityUserRepository;
+
+        private readonly IGenericRepository<ActivityDepartment> activityDepartmentRepository;
 
         private readonly ICollectionValidator collectionValidator;
 
@@ -36,8 +40,9 @@
 
         public UpdateActivityCommandHandler(
             IGenericRepository<Activity> activityRepository,
+            IGenericRepository<User> userRepository,
             IGenericRepository<ActivityUser> activityUserRepository,
-            IGenericRepository<ActivityTypeDefinition> activityTypeDefinitionRepository,
+            IGenericRepository<ActivityDepartment> activityDepartmentRepository,
             IEntityValidator entityValidator,
             ICollectionValidator collectionValidator,
             IEnumTypeItemValidator enumTypeItemValidator,
@@ -45,7 +50,9 @@
             IGenericRepository<EnumTypeItem> enumTypeItemRepository)
         {
             this.activityRepository = activityRepository;
+            this.userRepository = userRepository;
             this.activityUserRepository = activityUserRepository;
+            this.activityDepartmentRepository = activityDepartmentRepository;
             this.entityValidator = entityValidator;
             this.collectionValidator = collectionValidator;
             this.enumTypeItemValidator = enumTypeItemValidator;
@@ -56,42 +63,117 @@
         public Guid Handle(UpdateActivityCommand message)
         {
             Activity activity =
-                this.activityRepository.GetWithInclude(x => x.Id == message.Id, x => x.ActivityUsers).SingleOrDefault();
+                this.activityRepository.GetWithInclude(x => x.Id == message.Id, x => x.ActivityUsers, x => x.ActivityDepartments)
+                    .SingleOrDefault();
 
             this.entityValidator.EntityExists(activity, message.Id);
-            this.entityValidator.EntityExists<ActivityType>(message.ActivityTypeId);
+
             this.enumTypeItemValidator.ItemExists(EnumType.ActivityStatus, message.ActivityStatusId);
+
+            this.ValidateActivityTypeFromCommand(message, activity);
+
+            List<ActivityUser> commandNegotiators = this.ValidateAndRetrieveNegotiatorsFromCommand(message);
+
+            Mapper.Map(message, activity);
+
+            this.ValidateActivityNegotiators(commandNegotiators, activity);
+            this.UpdateActivityNegotiators(commandNegotiators, activity);
+
+            this.ValidateActivityDepartments(message.Departments, activity);
+            this.UpdateActivityDepartments(message.Departments, activity);
+
+            this.activityRepository.Save();
+
+            // ReSharper disable once PossibleNullReferenceException
+            return activity.Id;
+        }
+
+        private void ValidateActivityTypeFromCommand(UpdateActivityCommand message, Activity activity)
+        {
+            this.entityValidator.EntityExists<ActivityType>(message.ActivityTypeId);
 
             // ReSharper disable once PossibleNullReferenceException
             this.activityTypeDefinitionValidator.Validate(
                 message.ActivityTypeId,
                 activity.Property.Address.CountryId,
                 activity.Property.PropertyTypeId);
+        }
 
-            this.entityValidator.EntityExists<User>(message.LeadNegotiatorId);
+        private List<ActivityUser> ValidateAndRetrieveNegotiatorsFromCommand(UpdateActivityCommand message)
+        {
+            // Lead negotiator
+            this.entityValidator.EntityExists<User>(message.LeadNegotiator.UserId);
 
-            this.entityValidator.EntitiesExist<User>(message.SecondaryNegotiatorIds);
-
+            User leadNegotiator = this.GetUser(message.LeadNegotiator.UserId);
             var commandNegotiators = new List<ActivityUser>
                                          {
                                              new ActivityUser
                                                  {
-                                                     UserId = message.LeadNegotiatorId,
-                                                     UserType = this.GetLeadNegotiatorUserType()
+                                                     UserId = leadNegotiator.Id,
+                                                     User = leadNegotiator,
+                                                     UserType = this.GetLeadNegotiatorUserType(),
+                                                     CallDate = message.LeadNegotiator.CallDate
                                                  }
                                          };
 
-            commandNegotiators.AddRange(
-                message.SecondaryNegotiatorIds.Select(
-                    n => new ActivityUser { UserId = n, UserType = this.GetSecondaryNegotiatorUserType() }));
+            //Secondary negotiators
+            this.entityValidator.EntitiesExist<User>(message.SecondaryNegotiators.Select(n => n.UserId).ToList());
 
+            commandNegotiators.AddRange(
+                message.SecondaryNegotiators.Select(
+                    n =>
+                        {
+                            User user = this.GetUser(n.UserId);
+                            return new ActivityUser
+                                       {
+                                           UserId = user.Id,
+                                           User = user,
+                                           UserType = this.GetSecondaryNegotiatorUserType(),
+                                           CallDate = n.CallDate
+                                       };
+                        }));
+
+            // All negotirators
             this.collectionValidator.CollectionIsUnique(
                 commandNegotiators.Select(n => n.UserId).ToList(),
                 ErrorMessage.Activity_Negotiators_Not_Unique);
 
-            Mapper.Map(message, activity);
+            return commandNegotiators;
+        }
 
-            // ReSharper disable once PossibleNullReferenceException
+        private void ValidateActivityNegotiators(List<ActivityUser> commandNegotiators, Activity activity)
+        {
+            List<ActivityUser> existingNegotiators = activity.ActivityUsers.ToList();
+
+            commandNegotiators.Where(n => IsNewlyAddedToExistingList(n, existingNegotiators))
+                              .ToList()
+                              .ForEach(n => ValidateNegotiatorCallDate(n.CallDate, null));
+
+            commandNegotiators.Where(n => IsUpdated(n, existingNegotiators))
+                              .Select(n => new { newNegotiator = n, oldNegotiator = GetOldActivityUser(n, existingNegotiators) })
+                              .ToList()
+                              .ForEach(pair => ValidateNegotiatorCallDate(pair.newNegotiator.CallDate, pair.oldNegotiator.CallDate));
+        }
+        private static void ValidateNegotiatorCallDate(DateTime? newNegotiatorCallDate, DateTime? oldNegotiatorCallDate)
+        {
+            if (!newNegotiatorCallDate.HasValue)
+            {
+                return;
+            }
+
+            if (oldNegotiatorCallDate.HasValue && (newNegotiatorCallDate.Value.Date == oldNegotiatorCallDate.Value.Date))
+            {
+                return;
+            }
+
+            if (newNegotiatorCallDate.Value.Date < DateTime.UtcNow.Date)
+            {
+                throw new BusinessValidationException(ErrorMessage.Activity_Negotiator_CallDate_InPast);
+            }
+        }
+
+        private void UpdateActivityNegotiators(List<ActivityUser> commandNegotiators, Activity activity)
+        {
             List<ActivityUser> existingNegotiators = activity.ActivityUsers.ToList();
 
             existingNegotiators.Where(n => IsRemovedFromExistingList(n, commandNegotiators))
@@ -106,15 +188,6 @@
                               .Select(n => new { newNagotiator = n, oldNegotiator = GetOldActivityUser(n, existingNegotiators) })
                               .ToList()
                               .ForEach(pair => UpdateNegotiator(pair.newNagotiator, pair.oldNegotiator));
-
-            this.activityRepository.Save();
-
-            return activity.Id;
-        }
-
-        private static void UpdateNegotiator(ActivityUser newNagotiator, ActivityUser oldNegotiator)
-        {
-            oldNegotiator.UserType = newNagotiator.UserType;
         }
 
         private static bool IsRemovedFromExistingList(ActivityUser existingActivityUser, IEnumerable<ActivityUser> activityUsers)
@@ -137,6 +210,104 @@
             return existingActivityUsers.SingleOrDefault(x => x.UserId == activityUser.UserId);
         }
 
+        private static void UpdateNegotiator(ActivityUser newNegotiator, ActivityUser oldNegotiator)
+        {
+            oldNegotiator.UserType = newNegotiator.UserType;
+            oldNegotiator.CallDate = newNegotiator.CallDate?.Date;
+        }
+
+        private void ValidateActivityDepartments(
+            IList<UpdateActivityDepartment> updateActivityDepartments,
+            Activity activity)
+        {
+            this.collectionValidator.CollectionIsUnique(
+                updateActivityDepartments.Select(x => x.DepartmentId).ToList(),
+                ErrorMessage.Activity_Departments_Not_Unique);
+
+            updateActivityDepartments.ToList()
+                                     .ForEach(
+                                         x =>
+                                         this.enumTypeItemValidator.ItemExists(EnumType.ActivityDepartmentType, x.DepartmentTypeId));
+
+            this.entityValidator.EntitiesExist<Department>(updateActivityDepartments.Select(x => x.DepartmentId).ToList());
+
+            Guid managingDepartmentTypeId = this.GetManagingDepartmentType().Id;
+            if (updateActivityDepartments.Count(x => x.DepartmentTypeId == managingDepartmentTypeId) != 1)
+            {
+                throw new BusinessValidationException(ErrorMessage.Activity_Should_Have_Only_One_Managing_Department);
+            }
+
+            List<Guid> activityUserDepartmentIds = activity.ActivityUsers.Select(x => x.User.DepartmentId).ToList();
+            List<ActivityDepartment> existingDepartments = activity.ActivityDepartments.ToList();
+            // find newly addded departments, which have no related users
+            bool hasInvalidDepartments =
+                updateActivityDepartments.Any(
+                    d => IsNewlyAddedToExistingList(d, existingDepartments) && !activityUserDepartmentIds.Contains(d.DepartmentId));
+            if (hasInvalidDepartments)
+            {
+                throw new BusinessValidationException(ErrorMessage.ActivityDepartment_Invalid_Value);
+            }
+        }
+
+        private void UpdateActivityDepartments(
+            IList<UpdateActivityDepartment> updateActivityDepartments,
+            Activity activity)
+        {
+            List<ActivityDepartment> existingDepartments = activity.ActivityDepartments.ToList();
+
+            existingDepartments.Where(d => IsRemovedFromExistingList(d, updateActivityDepartments))
+                               .ToList()
+                               .ForEach(d => this.activityDepartmentRepository.Delete(d));
+
+            updateActivityDepartments.Where(d => IsNewlyAddedToExistingList(d, existingDepartments))
+                                     .ToList()
+                                     .ForEach(d => activity.ActivityDepartments.Add(CreateActivityDepartament(d)));
+
+            updateActivityDepartments.Where(d => IsUpdated(d, existingDepartments))
+                              .Select(d => new { updateActivityDepartment = d, activityDepartment = GetOldActivityDepartment(d, existingDepartments) })
+                              .ToList()
+                              .ForEach(pair => UpdateActivityDepartament(pair.updateActivityDepartment, pair.activityDepartment));
+        }
+
+        private static bool IsRemovedFromExistingList(ActivityDepartment existingActivityDepartment, IList<UpdateActivityDepartment> updateActivityDepartments)
+        {
+            return !updateActivityDepartments.Select(x => x.DepartmentId).Contains(existingActivityDepartment.DepartmentId);
+        }
+
+        private static bool IsNewlyAddedToExistingList(UpdateActivityDepartment updateActivityDepartment, IEnumerable<ActivityDepartment> existingActivityDepartments)
+        {
+            return !existingActivityDepartments.Select(x => x.DepartmentId).Contains(updateActivityDepartment.DepartmentId);
+        }
+
+        private static bool IsUpdated(UpdateActivityDepartment updateActivityDepartment, IEnumerable<ActivityDepartment> existingActivityDepartments)
+        {
+            return !IsNewlyAddedToExistingList(updateActivityDepartment, existingActivityDepartments);
+        }
+
+        private static ActivityDepartment GetOldActivityDepartment(UpdateActivityDepartment updateActivityDepartment, IEnumerable<ActivityDepartment> existingActivityDepartments)
+        {
+            return existingActivityDepartments.SingleOrDefault(x => x.DepartmentId == updateActivityDepartment.DepartmentId);
+        }
+
+        private static ActivityDepartment CreateActivityDepartament(UpdateActivityDepartment updateActivityDepartment)
+        {
+            return new ActivityDepartment
+                       {
+                           DepartmentId = updateActivityDepartment.DepartmentId,
+                           DepartmentTypeId = updateActivityDepartment.DepartmentTypeId
+                       };
+        }
+
+        private static void UpdateActivityDepartament(UpdateActivityDepartment updateActivityDepartment, ActivityDepartment oldDepartament)
+        {
+            oldDepartament.DepartmentTypeId = updateActivityDepartment.DepartmentTypeId;
+        }
+
+        private User GetUser(Guid userId)
+        {
+            return this.userRepository.GetWithInclude(x => x.Id == userId, x => x.Department).Single();
+        }
+
         private EnumTypeItem GetLeadNegotiatorUserType()
         {
             return this.enumTypeItemRepository.FindBy(i => i.Code == EnumTypeItemCode.LeadNegotiator).Single();
@@ -145,6 +316,16 @@
         private EnumTypeItem GetSecondaryNegotiatorUserType()
         {
             return this.enumTypeItemRepository.FindBy(i => i.Code == EnumTypeItemCode.SecondaryNegotiator).Single();
+        }
+
+        private EnumTypeItem GetManagingDepartmentType()
+        {
+            return this.enumTypeItemRepository.FindBy(i => i.Code == EnumTypeItemCode.ManagingDepartment).Single();
+        }
+
+        private EnumTypeItem GetStandardDepartmentType()
+        {
+            return this.enumTypeItemRepository.FindBy(i => i.Code == EnumTypeItemCode.StandardDepartment).Single();
         }
     }
 }

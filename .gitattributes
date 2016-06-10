@@ -63,6 +63,7 @@
 *.sql text
 *.sh text
 *.bat text
+*.mof text
 
 # templates
 *.ejs text

@@ -1,6 +1,7 @@
 ﻿/// <reference path="typings/_all.d.ts" />
 
 module Antares {
+    import LatestViewsProvider = Antares.Providers.LatestViewsProvider;
     var app: ng.IModule = angular.module('app');
 
     app.config(['$stateProvider', '$urlRouterProvider', initRoute]);
@@ -17,6 +18,12 @@ module Antares {
                 resolve: {
                     'userData': (userService: Services.UserService) => {
                         return userService.getUserData();
+                    },
+                    'lastEntriesPromise': (latestViewsProvider: LatestViewsProvider) => {
+                        return latestViewsProvider.refresh();
+                    },
+                    'enumsPromise': (enumService: Antares.Services.EnumService) => {
+                        return enumService.getEnumPromise();
                     }
                 }
             });
@@ -31,8 +38,8 @@ module Antares {
         $urlRouterProvider.otherwise('/app/contact/add');
     }
 
-    function onStart($rootScope: ng.IRootScopeService, growlMessages: angular.growl.IGrowlMessagesService){
-        $rootScope.$on('$stateChangeSuccess', () =>{
+    function onStart($rootScope: ng.IRootScopeService, growlMessages: angular.growl.IGrowlMessagesService) {
+        $rootScope.$on('$stateChangeSuccess', () => {
             growlMessages.destroyAllMessages();
         });
     }

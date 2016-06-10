@@ -39,13 +39,13 @@
 
         public ContactsListPage SaveContact()
         {
-            this.Driver.GetElement(this.saveButton).Click();
+            this.Driver.Click(this.saveButton);
             return this;
         }
 
         public void ConfigureOwnership()
         {
-            this.Driver.GetElement(this.configureButton).Click();
+            this.Driver.Click(this.configureButton);
         }
     }
 }

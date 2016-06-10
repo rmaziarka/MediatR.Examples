@@ -9,7 +9,6 @@
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
-    using Objectivity.Test.Automation.Common.WebElements;
 
     public class CreateRequirementPage : ProjectPageBase
     {
@@ -18,7 +17,6 @@
         private readonly ElementLocator newApplicantButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
         private readonly ElementLocator applicantsList = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'requirement.contacts']");
         // Property requirements locators
-        private readonly ElementLocator propertyType = new ElementLocator(Locator.Id, string.Empty);
         private readonly ElementLocator propertyPriceMin = new ElementLocator(Locator.Id, "price-min");
         private readonly ElementLocator propertyPriceMax = new ElementLocator(Locator.Id, "price-max");
         private readonly ElementLocator propertyBedroomsMin = new ElementLocator(Locator.Id, "bedrooms-min");
@@ -46,16 +44,11 @@
 
         public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
 
+        public List<string> Applicants => this.Driver.GetElements(this.applicantsList).Select(el => el.Text).ToList();
+
         public CreateRequirementPage OpenCreateRequirementPage()
         {
             new CommonPage(this.DriverContext).NavigateToPage("create requirement");
-            this.Driver.WaitForAngularToFinish();
-            return this;
-        }
-
-        public CreateRequirementPage SelectPropertyType(string type)
-        {
-            this.Driver.GetElement<Select>(this.propertyType).SelectByValue(type);
             return this;
         }
 
@@ -151,20 +144,15 @@
 
         public CreateRequirementPage SaveRequirement()
         {
-            this.Driver.GetElement(this.saveResidentialSalesRequirement).Click();
+            this.Driver.Click(this.saveResidentialSalesRequirement);
             this.Driver.WaitForAngularToFinish(BaseConfiguration.MediumTimeout);
             return this;
         }
 
-        public CreateRequirementPage AddApplicants()
+        public CreateRequirementPage SelectApplicants()
         {
-            this.Driver.GetElement(this.newApplicantButton).Click();
+            this.Driver.Click(this.newApplicantButton);
             return this;
-        }
-
-        public List<string> GetApplicants()
-        {
-            return this.Driver.GetElements(this.applicantsList).Select(el => el.Text).ToList();
         }
 
         public bool IsRequirementFormPresent()

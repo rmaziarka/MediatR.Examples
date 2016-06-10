@@ -2,8 +2,10 @@
     <div id="view-offer-header" class="col-md-12">
         <h2 class="page-header" translate="OFFER.VIEW.VIEW_OFFER"></h2>
         <div class="well">
+            <button type="button" class="btn btn-default pull-right" ng-click="vm.goToEdit()"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span></button>
             <div>
-                <span class="offer-status offer-status-{{vm.offer.statusId | dynamicTranslate | lowercase}}">{{vm.offer.statusId | dynamicTranslate}}</span> {{vm.offer.requirement.getContactNames()}}
+                <span class="offer-status offer-status-{{vm.offer.statusId | dynamicTranslate | lowercase}}">{{vm.offer.statusId | dynamicTranslate}}</span>
+                <span class="offer-title">{{vm.offer.requirement.getContactNames()}}</span>
             </div>
         </div>
     </div>
@@ -72,6 +74,8 @@
                     <div class="section-title col-xs-6" translate="OFFER.PREVIEW.COMPLETION_DATE"></div>
                     <div class="col-xs-6"><time>{{vm.offer.completionDate | date : 'dd-MM-yyyy'}}</time></div>
                 </div>
+            </div>
+            <div class="section-details">
                 <div class="section-row row">
                     <div class="col-xs-12">
                         <h5 translate="OFFER.PREVIEW.NEGOTIATOR"></h5>
@@ -99,16 +103,18 @@
                 <a ui-sref="app.activity-view({id: vm.offer.activity.id})" translate="ACTIVITY.PREVIEW.ACTIVITY_VIEW_LINK"></a>
             </div>
         </div>
-        <dv class="row section-row">
-            <h3 class="page-header" translate="OFFER.VIEW.BASIC_INFORMATION"></h3>
-        </dv>
+        <div class="row section-row">
+            <div class="col-xs-12">
+                <h4 translate="OFFER.VIEW.BASIC_INFORMATION"></h4>
+            </div>
+        </div>
         <div class="row section-row">
             <div class="col-xs-5" translate="ACTIVITY.PREVIEW.STATUS"></div>
             <div class="col-xs-7" id="activity-preview-status">{{vm.offer.activity.activityStatusId | dynamicTranslate}} </div>
         </div>
         <div class="row section-row">
             <div class="col-xs-5" translate="OFFER.PREVIEW.NEGOTIATOR"></div>
-            <div class="col-xs-7" id="activity-preview-status">{{vm.offer.negotiator.getName()}} </div>
+            <div class="col-xs-7" id="activity-preview-negotiator">{{vm.offer.negotiator.getName()}} </div>
         </div>
         <div class="row section-row">
             <div class="col-xs-5" translate="ACTIVITY.PREVIEW.CREATION_DATE"></div>

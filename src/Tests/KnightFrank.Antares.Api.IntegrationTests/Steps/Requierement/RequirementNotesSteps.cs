@@ -38,7 +38,10 @@
         [When(@"User creates note for requirement using api")]
         public void CreateNoteUsingApi()
         {
-            Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
+            Guid requirementId = this.scenarioContext.ContainsKey("Requirement")
+                ? this.scenarioContext.Get<Requirement>("Requirement").Id
+                : Guid.NewGuid();
+
             string requestUrl = string.Format($"{ApiUrl}", requirementId);
 
             var note = new CreateRequirementNoteCommand
@@ -51,28 +54,11 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [When(@"User creates note for non existing requirement using api")]
-        public void CreateNoteForNonExistingRequirementUsingApi()
-        {
-            string requestUrl = string.Format($"{ApiUrl}", Guid.NewGuid());
-
-            var note = new CreateRequirementNoteCommand
-            {
-                Description = StringExtension.GenerateMaxAlphanumericString(4000),
-                RequirementId = Guid.NewGuid() 
-            };
-
-            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, note);
-            this.scenarioContext.SetHttpResponseMessage(response);
-        }
-        
-        [When(@"User creates notes for requirement in database")]
+        [Given(@"Requirement notes exists in database")]
         public void CretaeNoteInDatabase(Table notesTable)
         {
-            Guid reqId = this.scenarioContext.Get<Requirement>("Requirement").Id;
-
-            Requirement requirement =
-                this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(reqId));
+            Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
+            Requirement requirement = this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(requirementId));
 
             List<RequirementNote> notes = notesTable.CreateSet<RequirementNote>().ToList();
             notes.ForEach(x => x.RequirementId = requirement.Id);
@@ -82,7 +68,7 @@
             this.fixture.DataContext.SaveChanges();
             this.scenarioContext.Set(requirement, "Requirement");
         }
-        
+
         [Then(@"Note is saved in database")]
         public void CheckIfNoteSavedInDatabase()
         {
@@ -103,7 +89,7 @@
 
             IList<RequirementNote> expectedNotes =
                 this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(requirementId)).RequirementNotes.ToList();
-            
+
             expectedNotes.Should()
                          .Equal(resultNotes, (n1, n2) => n1.Description == n2.Description && n1.RequirementId == n2.RequirementId);
         }

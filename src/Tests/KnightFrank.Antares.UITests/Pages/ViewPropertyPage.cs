@@ -59,7 +59,7 @@
 
         public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
 
-        public ActivityPreviewPage PreviewDetails => new ActivityPreviewPage(this.DriverContext);
+        public ActivityPreviewPage ActivityPreview => new ActivityPreviewPage(this.DriverContext);
 
         public CreateAreaPage Area => new CreateAreaPage(this.DriverContext);
 
@@ -72,6 +72,8 @@
         public string ActivityType => this.Driver.GetElement(this.activityType).Text;
 
         public string SuccessMessage => this.Driver.GetElement(this.successMessage.Format(this.messageText.Value)).Text;
+
+        public string ActivityDate => this.Driver.GetElement(this.activityDate).Text.Split(' ')[0].Trim();
 
         public ViewPropertyPage OpenViewPropertyPageWithId(string id)
         {
@@ -114,24 +116,19 @@
 
         public ViewPropertyPage AddActivity()
         {
-            this.Driver.GetElement(this.addActivity).Click();
+            this.Driver.Click(this.addActivity);
             return this;
-        }
-
-        public string GetActivityDate()
-        {
-            return this.Driver.GetElement(this.activityDate).Text.Split(' ')[0].Trim();
         }
 
         public CreatePropertyPage EditProperty()
         {
-            this.Driver.GetElement(this.editButton).Click();
+            this.Driver.Click(this.editButton);
             return new CreatePropertyPage(this.DriverContext);
         }
 
         public ViewPropertyPage SetOwnership()
         {
-            this.Driver.GetElement(this.addOwernship).Click();
+            this.Driver.Click(this.addOwernship);
             return this;
         }
 
@@ -147,7 +144,7 @@
 
         public ViewPropertyPage OpenActivityDetails()
         {
-            this.Driver.GetElement(this.activityDetailsLink).Click();
+            this.Driver.Click(this.activityDetailsLink);
             return this;
         }
 
@@ -186,7 +183,7 @@
 
         public ViewPropertyPage CreateAreaBreakdown()
         {
-            this.Driver.GetElement(this.addAreaBreakdown).Click();
+            this.Driver.Click(this.addAreaBreakdown);
             return this;
         }
 
@@ -209,14 +206,13 @@
 
         public ViewPropertyPage OpenAreaActions(int position)
         {
-            this.Driver.ScrollIntoMiddle(this.areaActions.Format(position));
-            this.Driver.GetElement(this.areaActions.Format(position)).Click();
+            this.Driver.Click(this.areaActions.Format(position));
             return this;
         }
 
         public ViewPropertyPage EditArea(int position)
         {
-            this.Driver.GetElement(this.areaEdit.Format(position)).Click();
+            this.Driver.Click(this.areaEdit.Format(position));
             return this;
         }
     }

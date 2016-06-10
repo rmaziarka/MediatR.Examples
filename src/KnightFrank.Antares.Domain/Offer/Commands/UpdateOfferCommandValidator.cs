@@ -13,10 +13,6 @@
             this.RuleFor(x => x.Price).GreaterThan(0);
             this.RuleFor(x => x.SpecialConditions).Length(0, 4000);
             this.RuleFor(x => x.OfferDate).NotEmpty();
-
-            this.RuleFor(x => x.OfferDate.Date)
-                .LessThanOrEqualTo(x => DateTime.UtcNow.Date)
-                .OverridePropertyName(nameof(CreateOfferCommand.OfferDate));
         }
     }
 }

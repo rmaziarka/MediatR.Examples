@@ -61,11 +61,74 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One or more departments are duplicated..
+        /// </summary>
+        internal static string Activity_Departments_Not_Unique {
+            get {
+                return ResourceManager.GetString("Activity_Departments_Not_Unique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Activity negotiator call date cannot be set in the past..
+        /// </summary>
+        internal static string Activity_Negotiator_CallDate_InPast {
+            get {
+                return ResourceManager.GetString("Activity_Negotiator_CallDate_InPast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to One or more negotiators are duplicated..
         /// </summary>
         internal static string Activity_Negotiators_Not_Unique {
             get {
                 return ResourceManager.GetString("Activity_Negotiators_Not_Unique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Activity should hva only one managing department..
+        /// </summary>
+        internal static string Activity_Should_Have_Only_One_Managing_Department {
+            get {
+                return ResourceManager.GetString("Activity_Should_Have_Only_One_Managing_Department", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value of ActivityDepartment is invalid..
+        /// </summary>
+        internal static string ActivityDepartment_Invalid_Value {
+            get {
+                return ResourceManager.GetString("ActivityDepartment_Invalid_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Call date is required..
+        /// </summary>
+        internal static string ActivityUser_CallDate_Is_Required {
+            get {
+                return ResourceManager.GetString("ActivityUser_CallDate_Is_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Negotiator is assigned to other activity..
+        /// </summary>
+        internal static string ActivityUser_Is_Assigned_To_Other_Activity {
+            get {
+                return ResourceManager.GetString("ActivityUser_Is_Assigned_To_Other_Activity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Completion Date must be greater than or equal to {0}..
+        /// </summary>
+        internal static string CompletionDateGreaterOrEqualToCreateDate {
+            get {
+                return ResourceManager.GetString("CompletionDateGreaterOrEqualToCreateDate", resourceCulture);
             }
         }
         
@@ -93,6 +156,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         internal static string EnumType_Item_Not_Exists {
             get {
                 return ResourceManager.GetString("EnumType_Item_Not_Exists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exchange Date must be greater than or equal to {0}..
+        /// </summary>
+        internal static string ExchangeDateGreaterOrEqualToCreateDate {
+            get {
+                return ResourceManager.GetString("ExchangeDateGreaterOrEqualToCreateDate", resourceCulture);
             }
         }
         
@@ -147,6 +219,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         internal static string Missing_Requirement_Attendees_Id {
             get {
                 return ResourceManager.GetString("Missing_Requirement_Attendees_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offer Date must be less than or equal to {0}..
+        /// </summary>
+        internal static string OfferDateLessOrEqualToCreateDate {
+            get {
+                return ResourceManager.GetString("OfferDateLessOrEqualToCreateDate", resourceCulture);
             }
         }
         

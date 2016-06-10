@@ -42,7 +42,7 @@ Scenario: Create residential sales offer on requirement
 		| Details                                     | Status | Offer      | SpecialConditions | Negotiator |
 		| John Soane’s house, 13 Lincoln’s Inn Fields | New    | 100000 GBP | Text              | John Smith |
 	When User clicks view activity from offer on view requirement page
-	Then View activity page is displayed
+	Then View activity page should be displayed
 		And Offer should be displayed on view activity page
 		And Offer details on 1 position on view activity page are same as the following
 			| Details                                    | Offer      | Status |
@@ -88,3 +88,99 @@ Scenario: Update residential sales offer on requirement
 	Then Offer details on view requirement page are same as the following
 		| Details             | Status   | Offer    | SpecialConditions  | Negotiator |
 		| House, 22 Eltham Dr | Accepted | 2000 GBP | Special conditions | John Smith |
+
+@Offer
+Scenario: View offer details page
+	Given Contacts are created in database
+		| Title  | FirstName | Surname |
+		| Madame | Judith    | Greciet |
+		| Chef   | Julius    | Chaloff |
+		And Property with Residential division and House type is defined
+		And Property attributes details are defined
+			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
+			| 4           | 5           | 2             | 4             | 1            | 2            | 2000    | 2500    | 3000        | 5000        | 1                   | 1                   |
+		And Property characteristics are defined
+		And Property in GB is created in database
+			| PropertyNumber | PropertyName    | Line2   | Postcode | City      | County     |
+			| 34             | Greciet’s house | Bixteth | L3 9BA   | Liverpool | Merseyside |
+		And Property ownership is defined
+			| PurchaseDate | BuyPrice |
+			| 10-01-2015   | 100000   |
+		And Property Freehold Sale activity is defined
+		And Requirement for GB is created in database
+			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
+			| 90000    | 120000   | 3           | 4           | 2                 | 4                 | 2            | 2            | 1                | 2                | 2000    | 2500    | 3000        | 5000        | Note        |
+		And Viewing for requirement is defined
+	When User navigates to view requirement page with id
+		And User clicks make an offer button for 1 activity on view requirement page
+		And User fills in offer details on view requirement page
+			| Status   | Offer | SpecialConditions     |
+			| Accepted | 95000 | My special conditions |
+		And User clicks save offer button on view requirement page
+	Then New offer should be created and displayed on view requirement page
+	When User clicks 1 offer details on view requirement page
+		And User clicks details offer link on view requirement page
+	Then View offer page should be displayed
+		And Offer header details on view offer page are same as the following
+			| Details                        | Status   |
+			| Judith Greciet, Julius Chaloff | Accepted |
+		And Offer activity details on view offer page are same as the following
+			| Details                     |
+			| Greciet’s house, 34 Bixteth |
+		And Offer requirement details on view offer page are same as the following
+			| Details                        |
+			| Judith Greciet, Julius Chaloff |
+		And Offer details on view offer page are same as the following
+			| Status   | Offer     | SpecialConditions     | Negotiator |
+			| Accepted | 95,000.00 | My special conditions | John Smith |
+	When User clicks activity details on view offer page
+	Then Activity details on view offer page are same as the following 
+		| Status        | Negotiator | Vendor                        | Type          |
+		| Pre-appraisal | John Smith | Judith Greciet;Julius Chaloff | Freehold Sale |
+	When User clicks view activity link from activity on view offer page
+	Then View activity page should be displayed
+	When User goes back to previous page
+		And User clicks requirement details button on view offer page
+	Then View requirement page should be displayed
+
+@Offer
+Scenario: Update residential sales offer
+	Given Contacts are created in database
+		| Title | FirstName | Surname      |
+		| Lady  | Sarah     | McCorquodale |
+		And Property with Residential division and House type is defined
+		And Property attributes details are defined
+			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
+			| 4           | 6           | 2             | 3             | 3            | 5            | 10000   | 31000   | 14000       | 51000       | 3                   | 4                   |
+		And Property characteristics are defined
+		And Property in GB is created in database
+			| PropertyNumber | PropertyName       | Line2        | Postcode | City     | County  |
+			| 84             | Sarah McCorquodale | Granville Rd | CA2 7BA  | Carlisle | Cumbria |
+		And Property ownership is defined
+			| PurchaseDate | BuyPrice  |
+			| 10-12-2000   | 100000000 |
+		And Property Freehold Sale activity is defined
+		And Requirement for GB is created in database
+			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
+			| 100000   | 500000   | 3           | 6           | 2                 | 4                 | 2            | 6            | 1                | 6                | 9000    | 32000   | 12000       | 60000       | Note        |
+		And Viewing for requirement is defined
+		And Offer for requirement is defined
+	When User navigates to view offer page with id
+		And User clicks edit offer button on view offer page
+		And User fills in offer details on edit offer page
+			| Status   | Offer  | SpecialConditions     |
+			| Accepted | 450000 | My special conditions |
+		And User clicks save offer on edit offer page
+	Then Offer updated success message should be displayed
+		And Offer details on view offer page are same as the following
+			| Status   | Offer      | SpecialConditions     | Negotiator |
+			| Accepted | 450,000.00 | My special conditions | John Smith |
+		And Offer header details on view offer page are same as the following
+			| Details            | Status   |
+			| Sarah McCorquodale | Accepted |
+		And Offer activity details on view offer page are same as the following
+			| Details                             |
+			| Sarah McCorquodale, 84 Granville Rd |
+		And Offer requirement details on view offer page are same as the following
+			| Details            |
+			| Sarah McCorquodale |

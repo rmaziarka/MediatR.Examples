@@ -5,10 +5,12 @@ module Antares {
     import Dto = Common.Models.Dto;
     import NegotiatorsController = Antares.Common.Component.NegotiatorsController;
     import SearchController = Common.Component.SearchController;
+    import runDescribe = TestHelpers.runDescribe;
 
     interface IScope extends ng.IScope {
         leadNegotiator: Business.ActivityUser;
         secondaryNegotiator: Business.ActivityUser[];
+        activityDepartments: Business.Department[];
         activityId: string;
         propertyDivisionId: string;
     }
@@ -23,11 +25,24 @@ module Antares {
             componentNegotiatorMainHeader: 'h3[translate*="RESIDENTIAL"]',
             componentNegotiatorSubHeaders: 'h4[translate*="RESIDENTIAL"]',
             leadSearch: 'search#lead-search',
+            leadCallDate: 'input#lead-call-date',
             secondarySearch: 'search#secondary-search',
+            secondaryCallDatePrefix: 'input#call-date-',
             editLeadNegotiatorBtn: '#lead-edit-btn',
             editLeadNegotiatorBtnWrapper: '#lead-edit-btn-wrapper',
             addSecondaryBtn: '#card-list-negotiators button[data-type="addItem"]',
-            editSecondaryNegotiatorsBtn: 'card-list#card-list-negotiators button#addItemBtn:first'
+            editSecondaryNegotiatorsBtn: 'card-list#card-list-negotiators button#addItemBtn:first',
+            cardSecondaryNegotiator: 'card-list#card-list-negotiators card#card-secondary-negotiator-',
+            switchSecondaryNegotiatorBtn: 'context-menu-item[type="setAslead"] a',
+            secondaryCallDate: 'input#call-date-'
+        };
+
+        var format = (date: any) => date.format('DD-MM-YYYY');
+        var datesToTest: any = {
+            today: format(moment()),
+            inThePast: format(moment().day(-7)),
+            longAgo: format(moment().year(1700)),
+            inTheFuture: format(moment().day(7))
         };
 
         var scope: IScope,
@@ -37,12 +52,17 @@ module Antares {
             assertValidator: TestHelpers.AssertValidators,
             searchController: SearchController;
 
-        var mockedComponentHtml = '<negotiators-edit property-division-id="{{propertyDivisionId}}" activity-id="activityId" lead-negotiator="leadNegotiator" secondary-negotiators="secondaryNegotiator">'
+        var mockedComponentHtml = '<negotiators-edit property-division-id="{{propertyDivisionId}}" activity-id="activityId" departments="activityDepartments" lead-negotiator="leadNegotiator" secondary-negotiators="secondaryNegotiator">'
             + '</negotiators-edit>';
 
         var divisionCodes = [
             { id: "residentialId", code: "RESIDENTIAL" },
             { id: "commmercialId", code: "COMMERCIAL" }
+        ];
+
+        var departmentTypes = [
+            { id: "managingId", code: "Managing" },
+            { id: "standardId", code: "Standard" }
         ];
 
         beforeEach(inject((
@@ -54,8 +74,10 @@ module Antares {
             scope = <IScope>$rootScope.$new();
             scope.leadNegotiator = new Business.ActivityUser();
             scope.secondaryNegotiator = [];
+            scope.activityDepartments = [];
 
             enumService.setEnum(Dto.EnumTypeCode.Division.toString(), divisionCodes);
+            enumService.setEnum(Dto.EnumTypeCode.ActivityDepartmentType.toString(), departmentTypes);
 
             compile = $compile;
             element = compile(mockedComponentHtml)(scope);
@@ -65,7 +87,7 @@ module Antares {
             assertValidator = new TestHelpers.AssertValidators(element, scope);
         }));
 
-        describe('when activity is edited', () => {
+        describe('when negotiators are edited', () => {
             var leadNegotiator = TestHelpers.ActivityUserGenerator.generate(Common.Models.Enums.NegotiatorTypeEnum.LeadNegotiator);
             var secondaryNegotiators = TestHelpers.ActivityUserGenerator.generateMany(3, Common.Models.Enums.NegotiatorTypeEnum.SecondaryNegotiator);
 
@@ -104,7 +126,7 @@ module Antares {
 
             describe('when property division is set to \'Commercial\'', () => {
                 it('then all component\'s headers should contain \'Surveyor\'', () => {
-                    var division = _.find(divisionCodes, (division) =>  division.id === 'commmercialId');
+                    var division = _.find(divisionCodes, (division) => division.id === 'commmercialId');
                     controller.labelTranslationKey = division.code;
                     scope.$apply();
 
@@ -118,7 +140,7 @@ module Antares {
 
             describe('when property division is set to \'Residential\'', () => {
                 it('then all component\'s headers should contain \'Negotiator\'', () => {
-                    var division = _.find(divisionCodes, (division) =>  division.id === 'residentialId');
+                    var division = _.find(divisionCodes, (division) => division.id === 'residentialId');
                     controller.labelTranslationKey = division.code;
                     scope.$apply();
 
@@ -170,21 +192,39 @@ module Antares {
                 it('as lead then current lead negotiator should be updated', () => {
                     var leadSearch = element.find(pageObjectSelector.leadSearch);
                     var searchController = leadSearch.controller('search');
-                    var newLeadNegotiatorUser = <Dto.IDepartmentUser>TestHelpers.UserGenerator.generateDto();
+                    var newLeadNegotiatorUser = <Dto.IUser>TestHelpers.UserGenerator.generateDto();
 
                     searchController.select(newLeadNegotiatorUser);
 
                     expect(angular.equals(controller.leadNegotiator.user, newLeadNegotiatorUser)).toBeTruthy();
                 });
 
-                 it('as secondary then secondary negotiator should be added', () => {
+                it('as secondary then secondary negotiator should be added', () => {
                     var secodnarySearch = element.find(pageObjectSelector.secondarySearch);
                     var searchController = secodnarySearch.controller('search');
-                    var newSecondarynegotiatorUser = <Dto.IDepartmentUser>TestHelpers.UserGenerator.generateDto();
+                    var newSecondarynegotiatorUser = <Dto.IUser>TestHelpers.UserGenerator.generateDto();
 
                     searchController.select(newSecondarynegotiatorUser);
 
                     expect(_.find(controller.secondaryNegotiators, (negotiator) => negotiator.user.id === newSecondarynegotiatorUser.id)).toBeDefined();
+                });
+            });
+
+            describe('when secondary negotiator is switched to lead negotiator', () => {
+                it('and lead negotiator has invalid call date then call date for old lead negotiator call date should be set to null', () => {
+                    // arrange
+                    var callDate = element.find(pageObjectSelector.leadCallDate);
+                    callDate.val(datesToTest.inThePast).trigger('input').trigger('change').trigger('blur');
+                    scope.$apply();
+
+                    var oldLeadId = controller.leadNegotiator.userId;
+
+                    // act
+                    element.find(pageObjectSelector.cardSecondaryNegotiator + controller.secondaryNegotiators[0].userId).find(pageObjectSelector.switchSecondaryNegotiatorBtn).click();
+
+                    // assert
+                    var newCallDate = element.find(pageObjectSelector.secondaryCallDate + oldLeadId);
+                    expect(newCallDate.val()).toBe('');
                 });
             });
 
@@ -205,6 +245,47 @@ module Antares {
                     expect(result.length).toEqual(expectedElementCount);
                 });
             });
+
+            // RequiredValidator for call date
+            type TestCaseForValidator = [string, boolean];
+            runDescribe('when lead negotiator call date is filled and ')
+                .data<TestCaseForValidator>([
+                    [datesToTest.inTheFuture, true],
+                    [null, false],
+                    ['', false]])
+                .dataIt((data: TestCaseForValidator) =>
+                    `value is "${data[0]}" then required message should ${data[1] ? 'not' : ''} be displayed`)
+                .run((data: TestCaseForValidator) => {
+                    // arrange / act / assert
+                    assertValidator.assertRequiredValidator(data[0], data[1], pageObjectSelector.leadCallDate);
+                });
+
+            runDescribe('when secondary negotiator call date is filled and ')
+                .data<TestCaseForValidator>([
+                    [datesToTest.inTheFuture, true],
+                    [null, true],
+                    ['', true]])
+                .dataIt((data: TestCaseForValidator) =>
+                    `value is "${data[0]}" then required message should ${data[1] ? 'not' : ''} be displayed`)
+                .run((data: TestCaseForValidator) => {
+                    // arrange / act / assert
+                    assertValidator.assertRequiredValidator(data[0], data[1], pageObjectSelector.secondaryCallDatePrefix + secondaryNegotiators[0].userId);
+                });
+
+            runDescribe('when lead negotiator call date is filled and ')
+                .data<TestCaseForValidator>([
+                    [datesToTest.inTheFuture, true],
+                    [datesToTest.today, true],
+                    [datesToTest.inThePast, false],
+                    [datesToTest.longAgo, false]])
+                .dataIt((data: TestCaseForValidator) =>
+                    `value is "${data[0]}" then date greater then message should ${data[1] ? 'not' : ''} be displayed`)
+                .run((data: TestCaseForValidator) => {
+                    // arrange / act / assert
+                    assertValidator.assertDateGreaterThenValidator(data[0], data[1], pageObjectSelector.leadCallDate);
+                });
+
+
         });
     });
 }

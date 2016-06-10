@@ -12,7 +12,7 @@ module Antares.TestHelpers {
                 endDate: new Date(),
                 id: ViewingGenerator.makeRandom('id'),
                 negotiatorId: ViewingGenerator.makeRandom('negotiatorId'),
-                negotiator: new Business.User({ id: ViewingGenerator.makeRandom('id'), firstName: ViewingGenerator.makeRandom('firstName'), lastName: ViewingGenerator.makeRandom('lastName') }),
+                negotiator: UserGenerator.generate(),
                 requirementId: ViewingGenerator.makeRandom('requirementId'),
                 activityId: ViewingGenerator.makeRandom('activityId'),
                 invitationText: ViewingGenerator.makeRandom('invitationText'),

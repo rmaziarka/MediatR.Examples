@@ -27,6 +27,7 @@
         }
 
         [Given(@"Viewing for requirement is defined")]
+        [When(@"Viewing for requirement is defined")]
         public void CreateViewing()
         {
             var requirement = this.scenarioContext.Get<Requirement>("Requirement");

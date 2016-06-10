@@ -16,6 +16,14 @@
 
             this.Property(x => x.TotalAreaBreakdown)
                 .IsOptional();
+
+            this.HasMany(p => p.Attachments)
+                .WithMany()
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("PropertyId");
+                    cs.MapRightKey("AttachmentId");
+                });
         }
     }
 }

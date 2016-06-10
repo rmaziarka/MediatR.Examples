@@ -6,6 +6,8 @@ module Antares.Property.View {
     import Dto = Common.Models.Dto;
     import CartListOrder = Common.Component.ListOrder;
     import Resources = Common.Models.Resources;
+    import LatestViewsProvider = Providers.LatestViewsProvider;
+    import EntityType = Common.Models.Enums.EntityTypeEnum;
 
     export class PropertyViewController extends Core.WithPanelsBaseController {
         ownershipAddPanelVisible: boolean = false;
@@ -23,7 +25,8 @@ module Antares.Property.View {
             componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
             private $scope: ng.IScope,
-            private $state: ng.ui.IStateService) {
+            private $state: ng.ui.IStateService,
+            private latestViewsProvider: LatestViewsProvider) {
 
             super(componentRegistry, $scope);
             this.propertyId = $state.params['id'];
@@ -77,6 +80,11 @@ module Antares.Property.View {
         showActivityPreview = (activity: Common.Models.Business.Activity) => {
             this.components.activityPreview().setActivity(activity);
             this.showPanel(this.components.panels.activityPreview);
+
+            this.latestViewsProvider.addView({
+                entityId: activity.id,
+                entityType: EntityType.Activity
+            });
         }
 
         showContactList = () => {
@@ -127,8 +135,13 @@ module Antares.Property.View {
         saveActivity() {
             this.savePropertyActivityBusy = true;
 
-            this.components.activityAdd().saveActivity(this.property.id).then(() => {
+            this.components.activityAdd().saveActivity(this.property.id).then((result: Dto.IActivity) => {
                 this.cancelAddActivity();
+
+                this.latestViewsProvider.addView({
+                    entityId: result.id,
+                    entityType: EntityType.Activity
+                });
             }).finally(() => {
                 this.savePropertyActivityBusy = false;
             });

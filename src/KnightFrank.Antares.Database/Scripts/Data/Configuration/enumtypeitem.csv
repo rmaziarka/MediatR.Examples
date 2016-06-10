@@ -23,6 +23,8 @@ OfferStatus;Rejected
 OfferStatus;Accepted
 ActivityUserType;LeadNegotiator
 ActivityUserType;SecondaryNegotiator
+ActivityDepartmentType;Managing
+ActivityDepartmentType;Standard
 ClientCareStatus;MassiveActionClient
 ClientCareStatus;PrincipalClient
 ClientCareStatus;KeyClient

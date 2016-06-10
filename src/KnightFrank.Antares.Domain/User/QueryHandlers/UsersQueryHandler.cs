@@ -38,7 +38,7 @@
                     Id = x.Id,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
-                    Department = x.Department.Name.ToString()
+                    Department = x.Department
                 })
                 .OrderBy(x => x.FirstName).ThenBy(x => x.LastName);
 

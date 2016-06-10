@@ -7,30 +7,31 @@ module Antares {
         export module Filters {
 
             export class EnumSorterFilter {
-                private filter: any;
-
-                constructor(public $filter: ng.IFilterService, public appConfig: Common.Models.IAppConfig) {
-                    this.filter = this.$filter('dynamicTranslate');
+                constructor(private enumService: Antares.Services.EnumService, public appConfig: Common.Models.IAppConfig) {
                 }
 
-                sort = (items: any, enumType: string, field: string): any => {
-                    var filtered: any[] = [];
-                    angular.forEach(items, (item) => {
-                        filtered.push(item);
-                    });
+                getEnumValue = (enumItemId: string) => {
+                    return this.enumService.getEnumCodeById(enumItemId);
+                }
+
+                sort = (items: any[], enumType: string, field: string): any => {
+                    if (!!items === false) {
+                        return items;
+                    }
+                    var filtered: any[] = items.slice();
 
                     filtered.sort((nextOffer: any, previousOffer: any) => {
-                        var nextOfferEnumValue = this.filter(nextOffer[field]);
-                        var previousOfferEnumValue = this.filter(previousOffer[field]);
-                        return this.appConfig.enumOrder[enumType][nextOfferEnumValue] > this.appConfig.enumOrder[enumType][previousOfferEnumValue] ? 1 : -1;
+                        var nextOfferEnumValue = this.getEnumValue(nextOffer[field]);
+                        var previousOfferEnumValue = this.getEnumValue(previousOffer[field]);
+                        return this.appConfig.enumOrder[enumType][nextOfferEnumValue] - this.appConfig.enumOrder[enumType][previousOfferEnumValue];
                     });
 
                     return filtered;
                 };
 
-                static getInstance($filter: ng.IFilterService, appConfig: Common.Models.IAppConfig) {
+                static getInstance(enumService: Antares.Services.EnumService, appConfig: Common.Models.IAppConfig) {
                     var filterFunc: any = (items: any, enumType: string, field: string) => {
-                        var filter = new EnumSorterFilter($filter, appConfig);
+                        var filter = new EnumSorterFilter(enumService, appConfig);
                         return filter.sort(items, enumType, field);
                     };
                     filterFunc.$stateful = true;
