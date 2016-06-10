@@ -7,7 +7,7 @@
 
     public interface ISetupOfferProgressStatusStep
     {
-        Offer SetOfferProgressStatuses(Offer offer, List<EnumType> enumTypeItems);
+        Offer SetOfferProgressStatuses(Offer offer, List<EnumType> enumOfferStatusTypes);
         List<string> OfferProgressStatusesEnumTypes { get; }
     }
 }
