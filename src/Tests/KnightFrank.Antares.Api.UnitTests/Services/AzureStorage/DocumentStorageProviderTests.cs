@@ -9,6 +9,7 @@
 
     using KnightFrank.Antares.Api.Models;
     using KnightFrank.Antares.Api.Services.AzureStorage;
+    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Foundation.Antares.Cloud.Storage.Blob;
@@ -30,11 +31,15 @@
         public DocumentStorageProviderTests()
         {
             this.uploadUrlFuncDict.Add(CloudStorageContainerType.Activity, parameters => (x => x.GetUploadSasUri<Activity>(parameters, EnumType.ActivityDocumentType)));
+            this.uploadUrlFuncDict.Add(CloudStorageContainerType.Property, parameters => (x => x.GetUploadSasUri<Property>(parameters, EnumType.PropertyDocumentType)));
+
             this.downloadUrlFuncDict.Add(CloudStorageContainerType.Activity, parameters => (x => x.GetDownloadSasUri<Activity>(parameters, EnumType.ActivityDocumentType)));
+            this.downloadUrlFuncDict.Add(CloudStorageContainerType.Property, parameters => (x => x.GetDownloadSasUri<Property>(parameters, EnumType.PropertyDocumentType)));
         }
 
         [Theory]
         [InlineAutoMoqData(CloudStorageContainerType.Activity)]
+        [InlineAutoMoqData(CloudStorageContainerType.Property)]
         public void Given_ConfigureUploadUrl_When_Called_Then_ProperUploadUrlMethodIsSetForEntity(
             CloudStorageContainerType cloudStorageContainerType,
             [Frozen] Mock<IEntityDocumentStorageProvider> entityDocumentStorageProvider,
@@ -54,6 +59,7 @@
 
         [Theory]
         [InlineAutoMoqData(CloudStorageContainerType.Activity)]
+        [InlineAutoMoqData(CloudStorageContainerType.Property)]
         public void Given_ConfigureDownloadUrl_When_Called_Then_ProperUploadUrlMethodsAreSetForEntity(
             CloudStorageContainerType cloudStorageContainerType,
             [Frozen] Mock<IEntityDocumentStorageProvider> entityDocumentStorageProvider,
@@ -68,11 +74,12 @@
             DocumentStorageProvider.GetDownloadSasUri method = documentStorageProvider.GetDownloadUrlMethod(cloudStorageContainerType);
             method(parameters);
 
-            entityDocumentStorageProvider.Verify(x => x.GetDownloadSasUri<Activity>(parameters, EnumType.ActivityDocumentType), Times.Once);
+            entityDocumentStorageProvider.Verify(this.downloadUrlFuncDict[cloudStorageContainerType](parameters), Times.Once);
         }
 
         [Theory]
         [InlineAutoMoqData(CloudStorageContainerType.Activity)]
+        [InlineAutoMoqData(CloudStorageContainerType.Property)]
         public void Given_GetUploadUrlMethod_When_CalledWithConfiguredType_Then_ProperUploadUrlMethodIsSetForEntity(
             CloudStorageContainerType cloudStorageContainerType,
             DocumentStorageProvider documentStorageProvider,
@@ -90,6 +97,7 @@
 
         [Theory]
         [InlineAutoMoqData(CloudStorageContainerType.Activity)]
+        [InlineAutoMoqData(CloudStorageContainerType.Property)]
         public void Given_GetUploadUrlMethod_When_CalledWithNotConfiguredType_Then_ShoulThrowException(
             CloudStorageContainerType cloudStorageContainerType,
             DocumentStorageProvider documentStorageProvider,
@@ -105,6 +113,7 @@
 
         [Theory]
         [InlineAutoMoqData(CloudStorageContainerType.Activity)]
+        [InlineAutoMoqData(CloudStorageContainerType.Property)]
         public void Given_GetDownloadUrlMethod_When_CalledWithConfiguredType_Then_ProperDownloadUrlMethodIsSetForEntity(
            CloudStorageContainerType cloudStorageContainerType,
            DocumentStorageProvider documentStorageProvider,
@@ -122,6 +131,7 @@
 
         [Theory]
         [InlineAutoMoqData(CloudStorageContainerType.Activity)]
+        [InlineAutoMoqData(CloudStorageContainerType.Property)]
         public void Given_GettDownloadUrlMethod_When_CalledWithNotConfiguredType_Then_ShoulThrowException(
             CloudStorageContainerType cloudStorageContainerType,
             DocumentStorageProvider documentStorageProvider,
