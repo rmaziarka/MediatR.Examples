@@ -6,9 +6,6 @@
 
     using Fields.Enums;
     using Fields.Extensions;
-    using Fields.Validators;
-
-    using FluentValidation;
 
     class Program
     {
@@ -22,31 +19,34 @@
 
             var createCommand = new CreateCommand();
             createCommand.BuyPrice = 10m;
-            createCommand.StatusId = 1;
+            createCommand.StatusId = 2;
 
 
             var xyz = new ActivityControlsConfiguration();
 
             foreach (Control item in xyz.ControlsDictionary[PageType.Create])
             {
+                Console.WriteLine("IsReadonly: " + item.IsReadonly(createCommand));
+                Console.WriteLine("IsHidden: " + item.IsHidden(createCommand));
                 foreach (InnerField innerField in item.Fields)
                 {
                     innerField.Validate(createCommand);
                 }
             }
+
             Console.ReadLine();
         }
     }
 
     public class ActivityControlsConfiguration
     {
-        List<Control> controls = new List<Control>();
         public IDictionary<PageType, IList<Control>> ControlsDictionary = new Dictionary<PageType, IList<Control>>();
+        public IDictionary<Tuple<PropertyType, ActivityType, PageType>, Control> ControlsConfig = new Dictionary<Tuple<PropertyType, ActivityType, PageType>, Control>();
 
         public ActivityControlsConfiguration()
         {
             this.DefineControls();
-            //this.DefineMapping();
+            this.DefineMapping();
         }
 
         private void AddControl(PageType pageType, ControlCode controlCode, InnerField field)
@@ -65,7 +65,7 @@
             this.ControlsDictionary.Add(PageType.Update, new List<Control>());
             this.ControlsDictionary.Add(PageType.Details, new List<Control>());
 
-            AddControl(PageType.Create, ControlCode.Status, Field<CreateCommand>.CreateDictionary(x => x.StatusId, "StatusTypes").InnerField);
+            //AddControl(PageType.Create, ControlCode.Status, Field<CreateCommand>.CreateDictionary(x => x.StatusId, "StatusTypes").InnerField);
 
             AddControl(PageType.Create, ControlCode.BuyPrice, Field<CreateCommand>.Create(x => x.BuyPrice).GreaterThan(100).InnerField);
 
@@ -98,8 +98,45 @@
 
         public void DefineMapping()
         {
-            var dictionary = new Dictionary<Tuple<PropertyType, ActivityType>, Control>();
-            dictionary.Add(new Tuple<PropertyType, ActivityType>(PropertyType.Flat, ActivityType.Sales), this.controls.First());
+            Use(ControlCode.BuyPrice, When(PropertyType.Flat, ActivityType.Lettings, PageType.Create)).IsReadonlyWhen<CreateCommand>(x => x.StatusId == 1);
+            //Use(ControlCode.BuyPrice, When(PropertyType.Flat, ActivityType.Lettings, PageType.Create)).IsReadonlyWhen<CreateCommand>(x => x.StatusId == 2);
+        }
+
+        private IList<Control> Use(ControlCode controlCode, IList<Tuple<PropertyType, ActivityType, PageType>> list)
+        {
+            var result = new List<Control>();
+            foreach (var item in list)
+            {
+                PropertyType propertyType = item.Item1;
+                ActivityType activityType = item.Item2;
+                PageType pagetType = item.Item3;
+
+                if (!this.ControlsDictionary.ContainsKey(pagetType))
+                {
+                    throw new Exception();
+                }
+
+                var control = this.ControlsDictionary[pagetType].FirstOrDefault(x => x.ControlCode == controlCode);
+                if (control == null)
+                {
+                    throw new Exception();
+                }
+
+                // TODO: deep clone - don't use serialization, it does not work here
+                //Control controlClone = control.Clone();
+                //Control controlCopy = AutoMapper.Mapper.Map<Control>(control);
+
+                this.ControlsConfig.Add(item, control);
+                result.Add(control);
+            }
+
+            return result;
+        }
+
+        private IList<Tuple<PropertyType, ActivityType, PageType>> When(PropertyType propertyType, ActivityType activityType, params PageType[] pages)
+        {
+            return pages.Select(
+                page => new Tuple<PropertyType, ActivityType, PageType>(propertyType, activityType, page)).ToList();
         }
     }
 

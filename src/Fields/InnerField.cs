@@ -7,7 +7,6 @@ namespace Fields
 
     using FluentValidation;
 
-
     public class InnerField
     {
         private readonly MemberInfo member;
@@ -16,6 +15,7 @@ namespace Fields
         private readonly Type containerType;
         private readonly Type propertyType;
         private readonly IList<IValidator> validators;
+
         public InnerField(MemberInfo member, Func<object, object> compiled, LambdaExpression expression, Type containerType, Type propertyType)
         {
             this.member = member;
@@ -24,8 +24,6 @@ namespace Fields
             this.containerType = containerType;
             this.propertyType = propertyType;
             this.validators = new List<IValidator>();
-
-            
         }
 
         public InnerField AddValidator(IValidator validator)
@@ -38,7 +36,7 @@ namespace Fields
         {
             foreach (IValidator validator in this.validators)
             {
-                var result =validator.Validate(obj);
+                var result = validator.Validate(obj);
                 if (!result.IsValid)
                 {
                     Console.WriteLine("Validator: " + validator.ToString());
