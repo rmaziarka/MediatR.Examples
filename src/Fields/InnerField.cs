@@ -36,14 +36,12 @@ namespace Fields
 
         public void Validate<T>(T obj)
         {
-            var value = this.compiled(obj);
-            
             foreach (IValidator validator in this.validators)
             {
                 var result =validator.Validate(obj);
                 if (!result.IsValid)
                 {
-                    throw new Exception();
+                    Console.WriteLine("Validator: " + validator.ToString());
                 }
 
             }

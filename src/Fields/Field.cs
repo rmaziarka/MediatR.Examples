@@ -3,8 +3,10 @@ namespace Fields
     using System;
     using System.Linq.Expressions;
 
-    using Fields.Extensions;
     using Fields.Validators;
+
+    using FluentValidation;
+    using FluentValidation.Internal;
 
     public class Field<TEntity>
     {
@@ -13,18 +15,15 @@ namespace Fields
             return CreateInnerField(expression);
         }
 
-        public static InnerField CreateText<TProperty>(Expression<Func<TEntity, TProperty>> expression, int length)
+        public static InnerField CreateText(Expression<Func<TEntity, string>> expression, int length)
         {
             var innerField = CreateInnerField(expression);
-            //innerField.AddValidator(new StringLengthValidator<TEntity>(length));
-            return innerField;
+            return innerField.AddValidator(new EntityValidator<TEntity>(x => x.RuleFor(expression).Length(length)));
         }
 
-        public static InnerField CreateDictionary<TProperty>(Expression<Func<TEntity, TProperty>> expression, string dictionaryCode)
+        public static InnerField CreateDictionary(Expression<Func<TEntity, int?>> expression, string dictionaryCode)
         {
-            var innerField = CreateInnerField(expression);
-            //innerField.AddValidator(new DictionaryValidator<TEntity>(dictionaryCode));
-            return innerField;
+            return CreateInnerField(expression);
         }
 
         private static InnerField CreateInnerField<TProperty>(Expression<Func<TEntity, TProperty>> expression)

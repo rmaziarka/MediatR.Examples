@@ -33,17 +33,5 @@
 
             return nameSelector(memberSelector.Body);
         }
-        public static MemberInfo GetMember<T, TProperty>(this Expression<Func<T, TProperty>> expression)
-        {
-            var memberExp = expression.Body as MemberExpression;
-
-            return memberExp?.Member;
-        }
-
-        public static Func<object, object> CoerceToNonGeneric<T, TProperty>(this Func<T, TProperty> func)
-        {
-            return x => func((T)x);
-        }
-
     }
 }
