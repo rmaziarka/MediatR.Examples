@@ -8,22 +8,6 @@ namespace Fields.Validators
 {
     using FluentValidation;
 
-    public class DecimalValidator:InlineValidator<decimal?>
-    {
-        public DecimalValidator()
-        {
-            
-        }
-        public DecimalValidator(params Action<InlineValidator<decimal?>>[] actions)
-        {
-            foreach (var action in actions)
-            {
-                action(this);
-            }
-
-        }
-    }
-
     public class EntityValidator<T> : InlineValidator<T>
     {
         public EntityValidator()
@@ -33,7 +17,7 @@ namespace Fields.Validators
 
         public EntityValidator(params Action<InlineValidator<T>>[] actions)
         {
-            foreach (var action in actions)
+            foreach (Action<InlineValidator<T>> action in actions)
             {
                 action(this);
             }

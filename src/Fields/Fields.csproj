@@ -63,11 +63,7 @@
     <Compile Include="InnerField.cs" />
     <Compile Include="Extensions\LambdaExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Validators\DecimalValidator.cs" />
-    <Compile Include="Validators\DictionaryValidator.cs" />
-    <Compile Include="Validators\GreatherThan.cs" />
-    <Compile Include="Validators\IValidator.cs" />
-    <Compile Include="Validators\StringLengthValidator.cs" />
+    <Compile Include="Validators\EntityValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

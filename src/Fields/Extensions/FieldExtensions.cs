@@ -1,13 +1,18 @@
 ﻿namespace Fields.Extensions
 {
+    using System;
+    using System.Linq.Expressions;
+
+    using FluentValidation;
+
     using Validators;
 
     public static class FieldExtensions
     {
-        public static InnerField GreaterThan(this InnerField field, decimal value)
+        public static Field<TEntity,TProperty> GreaterThan<TEntity, TProperty>(this Field<TEntity,TProperty> field, TProperty limit) 
+            where TProperty : IComparable, IComparable<TProperty>
         {
-            /*var validator = new GreatherThan(value, "greater than - error message");
-            return field.AddValidator(validator);*/
+            field.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(field.Selector).GreaterThan(limit)));
             return field;
         }
     }
