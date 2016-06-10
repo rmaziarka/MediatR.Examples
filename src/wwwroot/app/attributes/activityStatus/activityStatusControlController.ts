@@ -7,6 +7,8 @@ module Antares.Attributes {
     export class ActivityStatusControlController {
         // TODO set correct status code for type
         private defaultActivityStatusCode: string = 'PreAppraisal';
+
+        public activityStatuses: Dto.IEnumItem[] = [];
         public enumTypeActivityStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityStatus;
 
         public ngModel: string;
@@ -17,10 +19,10 @@ module Antares.Attributes {
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
         }
 
-        onEnumLoaded = (result: any) => {
-            var activityStatuses = result[Dto.EnumTypeCode.ActivityStatus];
+        onEnumLoaded = (result: Dto.IEnumDictionary) => {
+            this.activityStatuses = result[Dto.EnumTypeCode.ActivityStatus];
 
-            var defaultActivityStatus: any = _.find(activityStatuses, { 'code': this.defaultActivityStatusCode });
+            var defaultActivityStatus: any = _.find(this.activityStatuses, { 'code': this.defaultActivityStatusCode });
 
             if (defaultActivityStatus) {
                 this.ngModel = defaultActivityStatus.id;

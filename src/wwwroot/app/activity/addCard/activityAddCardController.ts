@@ -6,8 +6,7 @@ module Antares.Activity {
 
     export class ActivityAddCardController {
         // bindings
-        data: any;
-        activityAddCardForm: Antares.Common.Decorators.IKfFormController;
+        propertyTypeId: string;
 
         // controller
         selectedActivityTypeId: string;
@@ -17,6 +16,9 @@ module Antares.Activity {
 
         save = () => {
             console.log('save');
+            console.log('selectedActivityTypeId ' + this.selectedActivityTypeId);
+            console.log('selectedActivityStatusId ' + this.selectedActivityStatusId);
+
         }
     }
 

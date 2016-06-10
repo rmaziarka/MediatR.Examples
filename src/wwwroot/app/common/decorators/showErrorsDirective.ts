@@ -5,30 +5,33 @@ module Antares.Common.Directive {
     export class FormShowErrorsDirective implements ng.IDirective {
         restrict = 'A';
         require = '^form';
-        link: any = {};
+        compile: any = {}; 
 
-        constructor(private $interpolate: ng.IInterpolateService) {
-            this.link = this.unboundLink.bind(this);
-        }
+        constructor() {
+            this.compile = (tElement: any, tAttrs: any, transclude: any) => {
+                return {
+                    pre: function preLink(scope: any, iElement: any, iAttrs: any, controller: any) {
+                    },
+                    post: function postLink(scope: ng.IScope, el: any, iAttrs: any, formCtrl: ng.IFormController) {
+                        var formControlElement = el[0].querySelector('.form-control[name]');
+                        var ngFormControlElement = angular.element(formControlElement);
+                        var formControlName = ngFormControlElement.attr('name');
 
-        unboundLink(scope: ng.IScope, el: any, attrs: ng.IAttributes[], formCtrl: ng.IFormController) {
-            var formControlElement = el[0].querySelector('.form-control[name]');
-            var ngFormControlElement = angular.element(formControlElement);
-            var formControlName = this.$interpolate(ngFormControlElement.attr('name') || '')(scope);
-
-            scope.$watch(() => {
-                return (formCtrl.$submitted || formCtrl[formControlName].$dirty) && formCtrl[formControlName].$invalid;
-            }, (hasErrors: string) => {
-                el.toggleClass('has-error', hasErrors);
-            });
+                        scope.$watch(() => {
+                            return (formCtrl.$submitted || formCtrl[formControlName].$dirty) && formCtrl[formControlName].$invalid;
+                        }, (hasErrors: string) => {
+                            el.toggleClass('has-error', hasErrors);
+                        });
+                    }
+                }
+            }
         }
 
         static factory() {
-            var directive = ($interpolate: ng.IInterpolateService) => {
-                return new FormShowErrorsDirective($interpolate);
+            var directive = () => {
+                return new FormShowErrorsDirective();
             };
 
-            directive['$inject'] = ['$interpolate']
             return directive;
         }
     }

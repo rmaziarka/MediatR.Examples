@@ -6,7 +6,7 @@ module Antares.Activity {
 
     export class ActivityAddPanelController extends Antares.Common.Component.BaseSidePanelController {
         // binding
-        data: any;
+        propertyTypeId: string;
 
         constructor() {
             super();

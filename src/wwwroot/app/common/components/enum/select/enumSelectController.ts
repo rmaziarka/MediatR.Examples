@@ -26,7 +26,6 @@ module Antares.Common.Component {
         private onEnumLoaded = (result: any) => {
             this.items = result[this.enumTypeCode];
         }
-
     }
 
     angular.module('app').controller('EnumSelectController', EnumSelectController);

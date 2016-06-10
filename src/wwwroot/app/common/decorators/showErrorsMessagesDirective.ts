@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Common.Directive {
+    // TODO implement
     export class FormShowErrorsMessagesDirective implements ng.IDirective {
         restrict = 'A';
         require = '^form';

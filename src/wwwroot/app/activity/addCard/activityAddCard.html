@@ -1,10 +1,10 @@
-﻿<form name="vm.activityAddCardForm" ng-submit="vm.activityAddCardForm.isFormValid() && vm.save()" novalidate>
+﻿<form name="activityAddCardForm" ng-submit="activityAddCardForm.isFormValid() && vm.save()" novalidate>
     <kf-side-panel-card>
         <side-panel-header>
             <h3 translate="ACTIVITY.ADD.CREATE_ACTIVITY"></h3>
         </side-panel-header>
         <side-panel-content>
-            <activity-type-edit-control property-type-id="vm.data.propertyTypeId" ng-model="vm.selectedActivityTypeId"></activity-type-edit-control>
+            <activity-type-edit-control property-type-id="vm.propertyTypeId" ng-model="vm.selectedActivityTypeId"></activity-type-edit-control>
             <activity-status-control ng-model="vm.selectedActivityStatusId"></activity-status-control>
         </side-panel-content>
         <side-panel-footer>
