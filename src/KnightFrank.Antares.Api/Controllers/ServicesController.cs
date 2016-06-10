@@ -32,12 +32,12 @@
         /// <returns></returns>
         [HttpGet]
         [Route("attachment/upload/{entity}/")]
-        public AzureUploadUrlContainer GetUrlForUploadFile(string entity, [FromUri(Name = "")] AttachmentUrlParameters parameters)
+        public AzureUploadUrlContainer GetUrlForUploadFile(CloudStorageContainerType entity, [FromUri(Name = "")] AttachmentUrlParameters parameters)
         {
             var validator = new AttachmentUrlParametersValidator();
             validator.ValidateAndThrow(parameters);
 
-            parameters.cloudStorageContainerType = this.GetCloudStorageContainerType(entity);
+            parameters.cloudStorageContainerType = entity;
 
             return this.documentStorageProvider.GetUploadUrlMethod(parameters.cloudStorageContainerType)(parameters);
         }
@@ -50,25 +50,14 @@
         /// <returns></returns>
         [HttpGet]
         [Route("attachment/download/{entity}/")]
-        public AzureDownloadUrlContainer GetUrlForDownloadFile(string entity, [FromUri(Name = "")] AttachmentDownloadUrlParameters parameters)
+        public AzureDownloadUrlContainer GetUrlForDownloadFile(CloudStorageContainerType entity, [FromUri(Name = "")] AttachmentDownloadUrlParameters parameters)
         {
             var validator = new AttachmentDownloadUrlParametersValidator();
             validator.ValidateAndThrow(parameters);
 
-            parameters.cloudStorageContainerType = this.GetCloudStorageContainerType(entity);
+            parameters.cloudStorageContainerType = entity;
 
             return this.documentStorageProvider.GetDownloadUrlMethod(parameters.cloudStorageContainerType)(parameters);
-        }
-
-        private CloudStorageContainerType GetCloudStorageContainerType(string entity)
-        {
-            CloudStorageContainerType cloudStorageContainerType;
-            if (!Enum.TryParse(entity, true, out cloudStorageContainerType))
-            {
-                throw new DomainValidationException("entity", "Entity is not supported");
-            }
-
-            return cloudStorageContainerType;
         }
     }
 }

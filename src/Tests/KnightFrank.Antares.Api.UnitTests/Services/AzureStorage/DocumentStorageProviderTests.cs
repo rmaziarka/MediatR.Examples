@@ -1,7 +1,9 @@
 ﻿namespace KnightFrank.Antares.Api.UnitTests.Services.AzureStorage
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
 
     using FluentAssertions;
 
@@ -20,6 +22,16 @@
 
     public class DocumentStorageProviderTests
     {
+        private readonly Dictionary<CloudStorageContainerType, Func<AttachmentUrlParameters, Expression<Func<IEntityDocumentStorageProvider, AzureUploadUrlContainer>>>> uploadUrlFuncDict =
+                new Dictionary<CloudStorageContainerType, Func<AttachmentUrlParameters, Expression<Func<IEntityDocumentStorageProvider, AzureUploadUrlContainer>>>>();
+        private readonly Dictionary<CloudStorageContainerType, Func<AttachmentDownloadUrlParameters, Expression<Func<IEntityDocumentStorageProvider, AzureDownloadUrlContainer>>>> downloadUrlFuncDict =
+                new Dictionary<CloudStorageContainerType, Func<AttachmentDownloadUrlParameters, Expression<Func<IEntityDocumentStorageProvider, AzureDownloadUrlContainer>>>>();
+
+        public DocumentStorageProviderTests()
+        {
+            this.uploadUrlFuncDict.Add(CloudStorageContainerType.Activity, parameters => (x => x.GetUploadSasUri<Activity>(parameters, EnumType.ActivityDocumentType)));
+            this.downloadUrlFuncDict.Add(CloudStorageContainerType.Activity, parameters => (x => x.GetDownloadSasUri<Activity>(parameters, EnumType.ActivityDocumentType)));
+        }
 
         [Theory]
         [InlineAutoMoqData(CloudStorageContainerType.Activity)]
@@ -34,10 +46,10 @@
             documentStorageProvider.ConfigureUploadUrl();
 
             // Assert
-            DocumentStorageProvider.GetUploadSasUri method = documentStorageProvider.GetUploadUrlMethod(CloudStorageContainerType.Activity);
+            DocumentStorageProvider.GetUploadSasUri method = documentStorageProvider.GetUploadUrlMethod(cloudStorageContainerType);
             method(parameters);
 
-            entityDocumentStorageProvider.Verify(x => x.GetUploadSasUri<Activity>(parameters, EnumType.ActivityDocumentType), Times.Once);
+            entityDocumentStorageProvider.Verify(this.uploadUrlFuncDict[cloudStorageContainerType](parameters), Times.Once);
         }
 
         [Theory]
