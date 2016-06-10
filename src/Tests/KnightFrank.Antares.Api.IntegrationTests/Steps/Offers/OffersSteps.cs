@@ -190,7 +190,13 @@
                 .Excluding(o => o.Negotiator)
                 .Excluding(o => o.Status)
                 .Excluding(o => o.Requirement)
-                .Excluding(o => o.Activity));
+                .Excluding(o => o.Activity)
+                .Excluding(o => o.MortgageStatus)
+                .Excluding(o => o.SearchStatus)
+                .Excluding(o => o.MortgageSurveyStatus)
+                .Excluding(o => o.AdditionalSurveyStatus)
+                .Excluding(o => o.Enquiries));
+
 
             expectedOffer.NegotiatorId.Should().NotBeEmpty();
         }
