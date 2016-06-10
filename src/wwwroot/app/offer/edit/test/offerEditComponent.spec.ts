@@ -4,7 +4,7 @@ module Antares {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
     import OfferEditController = Offer.OfferEditController;
-    import KfMessageService = Antares.Services.KfMessageService;
+    import KfMessageService = Services.KfMessageService;
     type TestCaseForRequiredValidator = [string, string, boolean]; // [field_description, field_selector, is_not_required]
     type TestCaseForValidator = [string, any, string]; // [field_description, field_value, field_selector]
 
@@ -25,7 +25,7 @@ module Antares {
             exchangeDate: '[name=exchangeDate]',
             completionDate: '[name=completionDate]',
             specialConditions: '[name=specialConditions]',
-            status: '[name="selectedStatus"]',
+            status: 'select[name=selectedStatus]',
             activity: '#offer-edit-activity-details .card-item',
             negotiator: '#offer-edit-negotiator-details',
             negotiatorSection: '#offer-edit-negotiator-section'

@@ -38,9 +38,11 @@
                     <label class="required" for="offer-statusId" translate="OFFER.ADD.STATUS"></label>
                     <div class="row">
                         <div class="col-md-6">
-                            <select class="form-control" required id="offer-status" name="selectedStatus" ng-options="item as (item.id | dynamicTranslate) for item in vm.statuses track by item.id" ng-model="vm.selectedStatus">
-                                <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
-                            </select>
+                            <enum-select id="offer-status" 
+                                         required="true"
+                                         name="selectedStatus"
+                                         ng-model="vm.offer.statusId"
+                                         enum-type-code="{{vm.enumTypeOfferStatus}}"></enum-select>
                         </div>
                     </div>
                     <div ng-messages="vm.editOfferForm.selectedStatus.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.selectedStatus.$dirty">
@@ -161,56 +163,59 @@
                         <label class="required" for="offer-statusId" translate="OFFER.EDIT.MORTGAGE_STATUS"></label>
                         <div class="row">
                             <div class="col-md-6">
-                                <select id="offer-mortgage-status" class="form-control" required name="selectedMortgageStatus" ng-options="item as (item.id | dynamicTranslate) for item in vm.mortgageStatuses track by item.id" ng-model="vm.selectedMortgageStatus">
-                                </select>
+                                <enum-select id="offer-mortgage-status" required="true"
+                                             ng-model="vm.offer.mortgageStatusId"
+                                             enum-type-code="{{vm.enumTypeMortgageStatus}}"></enum-select>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="mortgage-survey-status" translate="OFFER.EDIT.MORTGAGE_SURVEY_STATUS"></label>
+                        <label class="required" for="mortgage-survey-status" translate="OFFER.EDIT.MORTGAGE_SURVEY_STATUS"></label>
                         <div class="row">
                             <div class="col-md-6">
-                                <select id="mortgage-survey-status" class="form-control" required name="selectedMortgageSurveyStatus" ng-options="item as (item.id | dynamicTranslate) for item in vm.mortgageSurveyStatuses track by item.id" ng-model="vm.selectedMortgageSurveyStatus">
-                                </select>
+                                <enum-select id="mortgage-survey-status" required="true"
+                                             ng-model="vm.offer.mortgageSurveyStatusId"
+                                             enum-type-code="{{vm.enumTypeMortgageSurveyStatus}}"></enum-select>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="additional-survey-status" translate="OFFER.EDIT.ADDITIONAL_SURVEY_STATUS"></label>
+                        <label class="required" for="additional-survey-status" translate="OFFER.EDIT.ADDITIONAL_SURVEY_STATUS"></label>
                         <div class="row">
                             <div class="col-md-6">
-                                <select id="additional-survey-status" class="form-control" required name="additionalSurveyStatus" ng-options="item as (item.id | dynamicTranslate) for item in vm.additionalSurveyStatuses track by item.id" ng-model="vm.selectedAdditionalSurveyStatus">
-                                </select>
+                                <enum-select id="additional-survey-status" required="true"
+                                             ng-model="vm.offer.additionalSurveyStatusId"
+                                             enum-type-code="{{vm.enumTypeAdditionalSurveyStatus}}"></enum-select>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="search-status" translate="OFFER.EDIT.SEARCH_STATUS"></label>
+                        <label class="required" for="search-status" translate="OFFER.EDIT.SEARCH_STATUS"></label>
                         <div class="row">
                             <div class="col-md-6">
-                                <select id="search-status" class="form-control">
-                                    <option>- select -</option>
-                                </select>
+                                <enum-select id="search-status" required="true"
+                                             ng-model="vm.offer.searchStatusId"
+                                             enum-type-code="{{vm.enumTypeSearchStatus}}"></enum-select>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="enquiries" translate="OFFER.EDIT.ENQUIRIES"></label>
+                        <label class="required" for="enquiries" translate="OFFER.EDIT.ENQUIRIES"></label>
                         <div class="row">
                             <div class="col-md-6">
-                                <select id="enquiries" class="form-control">
-                                    <option>- select -</option>
-                                </select>
+                                <enum-select id="enquiries" required="true"
+                                             ng-model="vm.offer.enquiriesId"
+                                             enum-type-code="{{vm.enumTypeEnquiriesStatus}}"></enum-select>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <h5 translate="OFFER.EDIT.CONTRACT_APPROVED"></h5>
                         <label class="radio-inline">
-                            <input type="radio"> <span translate="OFFER.EDIT.YES"></span>
+                            <input type="radio" ng-model="vm.offer.contractApproved" ng-value="true"><span translate="OFFER.EDIT.YES"></span>
                         </label>
                         <label class="radio-inline">
-                            <input type="radio"> <span translate="OFFER.EDIT.NO"></span>
+                            <input type="radio" ng-model="vm.offer.contractApproved" ng-value="false"><span translate="OFFER.EDIT.NO"></span>
                         </label>
                     </div>
                 </fieldset>
@@ -262,9 +267,10 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="input-group">
-                                <input type="text" id="mortgage-survey-date" class="form-control" placeholder="dd-mm-yyyy">
+                                <input type="text" id="mortgage-survey-date" class="form-control" placeholder="dd-mm-yyyy" ng-model="vm.offer.mortgageSurveyDate" uib-datepicker-popup="dd-MM-yyyy"
+                                       is-open="vm.mortgageSurveyDateOpen" close-text="Close"/>
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default">
+                                    <button type="button" class="btn btn-default" ng-click="vm.openMortgageSurveyDate()">
                                         <i class="fa fa-calendar" aria-hidden="true"></i>
                                     </button>
                                 </span>
@@ -295,12 +301,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="input-group">
-                                <input type="text" id="additional-survey-date" class="form-control" placeholder="dd-mm-yyyy">
+                                <input type="text" id="additional-survey-date" class="form-control" placeholder="dd-mm-yyyy" ng-model="vm.offer.additionalSurveyDate" uib-datepicker-popup="dd-MM-yyyy"
+                                       is-open="vm.additionalSurveyDateOpen" close-text="Close"/>
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default">
-                                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                                    </button>
-                                </span>
+                                        <button type="button" class="btn btn-default" ng-click="vm.openAdditionalSurveyDate()">
+                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        </button>
+                                    </span>
                             </div>
                         </div>
                     </div>
@@ -327,8 +334,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="comment" translate="OFFER.EDIT.COMMENT"></label>
-                            <span class="pull-right character-limit">0/4000</span>
-                            <textarea id="comment" class="form-control" rows="6"></textarea>
+                            <span class="pull-right character-limit">{{vm.editOfferForm.progressComment.$viewValue.length || 0}}/4000</span>
+                            <textarea id="comment" class="form-control" rows="6" ng-model="vm.offer.progressComment" kf-max-count="4000" name="progressComment"></textarea>
+                            <div ng-messages="vm.editOfferForm.progressComment.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.progressComment.$dirty">
+                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

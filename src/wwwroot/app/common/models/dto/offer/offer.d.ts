@@ -24,7 +24,7 @@
         enquiries: Dto.IEnumTypeItem; 
         enquiriesId: string;
         contractApproved: boolean;
-        mortgageLoanToValue: number;
+        mortgageLoanToValue?: number;
         broker?: Dto.IContact;
         brokerId: string;
         lender?: Dto.IContact;

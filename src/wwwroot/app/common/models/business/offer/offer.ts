@@ -28,7 +28,7 @@ module Antares.Common.Models.Business {
         enquiries: Business.EnumTypeItem = null;
         enquiriesId: string = null;
         contractApproved: boolean = false;
-        mortgageLoanToValue: number;
+        mortgageLoanToValue: number = null;
         broker: Business.Contact = null;
         brokerId: string = null;
         lender: Business.Contact = null;

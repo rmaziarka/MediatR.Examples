@@ -9,21 +9,25 @@ module Antares.Offer {
     export class OfferEditController extends Core.WithPanelsBaseController {
         public offer: Business.Offer;
 
-        selectedStatus: any;
-        selectedMortgageStatus: any;
-        selectedMortgageSurveyStatus: any;
-        selectedAdditionalSurveyStatus: any;
-        selectedSearchStatus: any;
+        public enumTypeMortgageStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.MortgageStatus;
+        public enumTypeMortgageSurveyStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.MortgageSurveyStatus;
+        public enumTypeAdditionalSurveyStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.AdditionalSurveyStatus;
+        public enumTypeSearchStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.SearchStatus;
+        public enumTypeEnquiriesStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.Enquiries;
+        public enumTypeOfferStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.OfferStatus;
 
-        statuses: any;
+        offerStatuses: any;
         mortgageStatuses: any;
         mortgageSurveyStatuses: any;
         additionalSurveyStatuses: any;
         searchStatuses: any;
+        enquiriesStatuses: any;
 
         editOfferForm: any;
 
         offerDateOpen: boolean = false;
+        mortgageSurveyDateOpen: boolean = false;
+        additionalSurveyDateOpen: boolean = false;
         exchangeDateOpen: boolean = false;
         completionDateOpen: boolean = false;
 
@@ -42,7 +46,7 @@ module Antares.Offer {
         }
 
         navigateToActivity = (ativity: Business.Activity) => {
-            this.$window.open(this.$state.href('app.activity-view', { id: ativity.id }, { absolute: true }), '_blank');
+            this.$window.open(this.$state.href('app.activity-view', { id: ativity.id }, { absolute: true }), '_blank');            
         }
 
         navigateToRequirement = (requirement: Business.Requirement) => {
@@ -62,6 +66,14 @@ module Antares.Offer {
             this.offerDateOpen = true;
         }
 
+        openMortgageSurveyDate() {
+            this.mortgageSurveyDateOpen = true;
+        }
+
+        openAdditionalSurveyDate() {
+            this.additionalSurveyDateOpen = true;
+        }
+
         openExchangeDate() {
             this.exchangeDateOpen = true;
         }
@@ -77,38 +89,48 @@ module Antares.Offer {
         }
 
         onEnumLoaded = (result: any) => {
-            this.statuses = result[Dto.EnumTypeCode.OfferStatus];
+            this.offerStatuses = result[Dto.EnumTypeCode.OfferStatus];
             this.mortgageStatuses = result[Dto.EnumTypeCode.MortgageStatus];
             this.mortgageSurveyStatuses = result[Dto.EnumTypeCode.MortgageSurveyStatus];
             this.additionalSurveyStatuses = result[Dto.EnumTypeCode.AdditionalSurveyStatus];
             this.searchStatuses = result[Dto.EnumTypeCode.SearchStatus];
+            this.enquiriesStatuses = result[Dto.EnumTypeCode.Enquiries];
             this.setSelectedStatuses();
         }
 
         offerAccepted = (): boolean => {
-            if (this.selectedStatus) {
-                return this.selectedStatus.code === "Accepted";
+            var selectedOfferStatus: any = _.find(this.offerStatuses, (status: any) => status.id === this.offer.statusId);
+            if (selectedOfferStatus) {
+                return selectedOfferStatus.code === "Accepted";
             }
 
             return false;
         }
 
         setSelectedStatuses = () => {
-            this.selectedStatus = _.find(this.statuses, (status: any) => status.id === this.offer.statusId);
-
-            this.selectedMortgageStatus = _.find(this.mortgageStatuses, (status: any) => status.id === this.offer.mortgageStatusId);
-            if (!this.selectedMortgageStatus) {
-                this.selectedMortgageStatus = _.find(this.mortgageStatuses, (status: any) => status.code === "Unknown");
+            var defaultMortgageStatus: any = _.find(this.mortgageStatuses, (status: any) => status.code === "Unknown");
+            if (!this.offer.mortgageStatusId && defaultMortgageStatus) {
+                this.offer.mortgageStatusId = defaultMortgageStatus.id;
             }
 
-            this.selectedMortgageSurveyStatus = _.find(this.mortgageSurveyStatuses, (status: any) => status.id === this.offer.mortgageSurveyStatusId);
-            if (!this.selectedMortgageSurveyStatus) {
-                this.selectedMortgageSurveyStatus = _.find(this.mortgageSurveyStatuses, (status: any) => status.code === "Unknown");
+            var defaultMortgageSurveyStatus: any = _.find(this.mortgageSurveyStatuses, (status: any) => status.code === "Unknown");
+            if (!this.offer.mortgageSurveyStatusId && defaultMortgageSurveyStatus) {
+                this.offer.mortgageSurveyStatusId = defaultMortgageSurveyStatus.id;
             }
 
-            this.selectedAdditionalSurveyStatus = _.find(this.additionalSurveyStatuses, (status: any) => status.id === this.offer.additionalSurveyStatusId);
-            if (!this.selectedAdditionalSurveyStatus) {
-                this.selectedAdditionalSurveyStatus = _.find(this.additionalSurveyStatuses, (status: any) => status.code === "Unknown");
+            var defaultAdditionalSurveyStatus: any = _.find(this.additionalSurveyStatuses, (status: any) => status.code === "Unknown");
+            if (!this.offer.additionalSurveyStatusId && defaultAdditionalSurveyStatus) {
+                this.offer.additionalSurveyStatusId = defaultAdditionalSurveyStatus.id;
+            }
+
+            var defaultSearchStatus: any = _.find(this.searchStatuses, (status: any) => status.code === "NotStarted");
+            if (!this.offer.searchStatusId && defaultSearchStatus) {
+                this.offer.searchStatusId = defaultSearchStatus.id;
+            }
+
+            var defaultEnquiriesStatus: any = _.find(this.enquiriesStatuses, (status: any) => status.code === "NotStarted");
+            if (!this.offer.enquiriesId && defaultEnquiriesStatus) {
+                this.offer.enquiriesId = defaultEnquiriesStatus.id;
             }
         }
 
@@ -118,7 +140,6 @@ module Antares.Offer {
             }
 
             var offerResource = this.dataAccessService.getOfferResource();
-            this.offer.statusId = this.selectedStatus.id;
             var updateOffer: Dto.IOffer = angular.copy(this.offer);
             return offerResource
                 .update(updateOffer)
