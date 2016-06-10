@@ -216,6 +216,8 @@
     <Compile Include="Offer\Commands\CreateOfferCommand.cs" />
     <Compile Include="Offer\Commands\OfferCommandProfile.cs" />
     <Compile Include="Offer\Commands\CreateOfferCommandValidator.cs" />
+    <Compile Include="Offer\OfferHelpers\ISetupOfferProgressStatusStep.cs" />
+    <Compile Include="Offer\OfferHelpers\SetupOfferProgressStatusStep.cs" />
     <Compile Include="Offer\Queries\OfferQuery.cs" />
     <Compile Include="Offer\Queries\OfferQueryValidator.cs" />
     <Compile Include="Offer\QueryHandlers\OfferQueryHandler.cs" />
