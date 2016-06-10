@@ -6,7 +6,9 @@ module Antares.Property {
         controllerAs: 'vm',
         controller: 'ActivityAddCardController',
         bindings: {
-            propertyTypeId: '<'
+            propertyTypeId: '<',
+            ownerships: '<',
+            onSave: '&'
         }
     });
 }

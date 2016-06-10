@@ -7,7 +7,9 @@ module Antares.Property {
         controller: 'ActivityAddPanelController',
         bindings: {
             isVisible: '<',
-            propertyTypeId:'<'
+            propertyTypeId: '<',
+            propertyId: '<',
+            ownerships: '<'
         }
     });
 }

@@ -7,18 +7,29 @@ module Antares.Activity {
     export class ActivityAddCardController {
         // bindings
         propertyTypeId: string;
+        ownerships: Business.Ownership[];
+        onSave: (obj: { activity: AddCard.ActivityAddCardModel }) => void;
 
         // controller
-        selectedActivityTypeId: string;
-        selectedActivityStatusId: string;
+        activity: AddCard.ActivityAddCardModel = new AddCard.ActivityAddCardModel();
 
-        constructor() { }
+        constructor(private dataAccessService: Antares.Services.DataAccessService) {
+            this.dataAccessService.getContactResource();
+        }
+
+        $onInit = () => {
+            this.dataAccessService.getContactResource().get
+        }
+
+        setVendors = (vendors: Business.Contact[]): void => {
+            this.activity.contacts = [];
+            this.activity.contacts.push.apply(this.activity.contacts, vendors);
+        }
 
         save = () => {
-            console.log('save');
-            console.log('selectedActivityTypeId ' + this.selectedActivityTypeId);
-            console.log('selectedActivityStatusId ' + this.selectedActivityStatusId);
-
+            this.onSave({
+                activity: this.activity
+            });
         }
     }
 

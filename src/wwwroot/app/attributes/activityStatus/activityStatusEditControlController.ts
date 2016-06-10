@@ -4,9 +4,10 @@ module Antares.Attributes {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
 
-    export class ActivityStatusControlController {
+    export class ActivityStatusEditControlController {
         // TODO set correct status code for type
         private defaultActivityStatusCode: string = 'PreAppraisal';
+
 
         public activityStatuses: Dto.IEnumItem[] = [];
         public enumTypeActivityStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityStatus;
@@ -30,5 +31,5 @@ module Antares.Attributes {
         }
     }
 
-    angular.module('app').controller('ActivityStatusControlController', ActivityStatusControlController);
+    angular.module('app').controller('ActivityStatusEditControlController', ActivityStatusEditControlController);
 };

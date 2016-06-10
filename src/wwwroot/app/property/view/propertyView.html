@@ -279,5 +279,5 @@
     </side-panel-footer>
 </side-panel>
 
-<!--TODO complex data? -->
-<activity-add-panel is-visible="vm.alwaysTrue" property-type-Id="vm.property.propertyTypeId"></activity-add-panel>
+<button ng-click="vm.isAddResidentialActivityVisible = !vm.isAddResidentialActivityVisible">Toggle add residential activity</button>
+<activity-add-panel is-visible="vm.isAddResidentialActivityVisible" property-type-Id="vm.property.propertyTypeId" property-id="vm.property.id" ownerships="vm.property.ownerships"></activity-add-panel>

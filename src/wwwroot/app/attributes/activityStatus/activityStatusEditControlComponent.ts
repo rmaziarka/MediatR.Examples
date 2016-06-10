@@ -2,9 +2,9 @@
 
 module Antares.Attribues {
     angular.module('app').component('activityStatusControl', {
-        templateUrl: 'app/attributes/activityStatus/activityStatusControl.html',
+        templateUrl: 'app/attributes/activityStatus/activityStatusEditControl.html',
         controllerAs: 'vm',
-        controller: 'ActivityStatusControlController',
+        controller: 'ActivityStatusEditControlController',
         bindings: {
             ngModel: '='
         }

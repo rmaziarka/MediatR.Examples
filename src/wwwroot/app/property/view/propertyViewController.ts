@@ -10,7 +10,7 @@ module Antares.Property.View {
     import EntityType = Common.Models.Enums.EntityTypeEnum;
 
     export class PropertyViewController extends Core.WithPanelsBaseController {
-        alwaysTrue: boolean = true;
+        isAddResidentialActivityVisible: boolean = false;
 
         ownershipAddPanelVisible: boolean = false;
         propertyId: string;
@@ -28,11 +28,15 @@ module Antares.Property.View {
             private dataAccessService: Services.DataAccessService,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService,
-            private latestViewsProvider: LatestViewsProvider) {
+            private latestViewsProvider: LatestViewsProvider,
+            private pubSub: Antares.Core.PubSub) {
 
             super(componentRegistry, $scope);
             this.propertyId = $state.params['id'];
             this.fixOwnershipDates();
+
+            this.pubSub.with(this).subscribe(CloseSidePanelMessage, (msg: CloseSidePanelMessage) => { });
+            this.pubSub.with(this).subscribe(CloseSidePanelMessage, () => { });
         }
 
         fixOwnershipDates = () => {
