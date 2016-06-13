@@ -19,7 +19,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
             this.DefineMappings();
         }
 
-        public IList<InnerFieldState> GetInnerFieldState(PageType pageType, TKey1 key1, TKey2 key2, object entity)
+        public IList<InnerFieldState> GetInnerFieldsState(PageType pageType, TKey1 key1, TKey2 key2, object entity)
         {
             Console.WriteLine("*** GetState {0} {1} {2}", pageType, key1, key2);
             var innerFieldStates = new List<InnerFieldState>();

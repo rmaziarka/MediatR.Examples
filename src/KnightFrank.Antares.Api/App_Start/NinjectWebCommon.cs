@@ -8,6 +8,8 @@
     using KnightFrank.Antares.Api.Services.AzureStorage.Factories;
     using KnightFrank.Antares.Dal;
     using KnightFrank.Antares.Domain;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
 
     using MediatR;
 
@@ -33,6 +35,7 @@
 
                 ConfigureDependenciesInHttpRequestScope(kernel);
                 ConfigureMediator(kernel);
+                ConfigureAttributeConfigurations(kernel);
 
                 RebindAction?.Invoke(kernel);
 
@@ -63,6 +66,11 @@
             kernel.Bind<IBlobResourceFactory>().To<BlobResourceFactory>();
             kernel.Bind<ISharedAccessBlobPolicyFactory>().To<SharedAccessBlobPolicyFactory>();
             kernel.Bind<IStorageProvider>().To<ActivityStorageProvider>();
+        }
+
+        private static void ConfigureAttributeConfigurations(StandardKernel kernel)
+        {
+            kernel.Bind<IControlsConfiguration<PropertyType, ActivityType>>().To<ActivityControlsConfiguration>();
         }
     }
 }

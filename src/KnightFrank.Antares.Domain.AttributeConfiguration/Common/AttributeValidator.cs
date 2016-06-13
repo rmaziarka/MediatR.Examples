@@ -16,7 +16,7 @@
         public void Validate(object entity)
         {
             IControlsConfiguration<PropertyType, ActivityType> configuration = new ActivityControlsConfiguration();
-            IList<InnerFieldState> innerFieldStates = configuration.GetInnerFieldState(PageType.Create, PropertyType.Flat, ActivityType.Lettings, entity);
+            IList<InnerFieldState> innerFieldStates = configuration.GetInnerFieldsState(PageType.Create, PropertyType.Flat, ActivityType.Lettings, entity);
             foreach (InnerFieldState innerFieldState in innerFieldStates)
             {
                 foreach (IValidator validator in innerFieldState.Validators)

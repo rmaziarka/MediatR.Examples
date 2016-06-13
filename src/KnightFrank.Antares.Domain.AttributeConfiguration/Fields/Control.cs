@@ -45,7 +45,7 @@
 
         public void SetFieldHiddenRule(LambdaExpression fieldExpression, LambdaExpression expression)
         {
-            this.SetFieldExpression(fieldExpression, expression,false);
+            this.SetFieldExpression(fieldExpression, expression, false);
         }
 
         public void SetFieldReadonlyRule(LambdaExpression fieldExpression, LambdaExpression expression)
@@ -73,8 +73,8 @@
 
         public IList<InnerFieldState> GetFieldStates(object entity)
         {
-            IList<InnerFieldState> states = new List<InnerFieldState>();
-            foreach (var field in this.Fields)
+            IList<InnerFieldState> fieldStates = new List<InnerFieldState>();
+            foreach (InnerField field in this.Fields)
             {
                 var state = new InnerFieldState
                 {
@@ -83,14 +83,16 @@
                     Compiled = field.compiled,
                     Validators = field.validators,
                     Expression = field.expression,
-                    IsReadonly = this.IsReadonly(entity) || field.IsReadonly(entity),
-                    IsHidden = this.IsHidden(entity) || field.IsHidden(entity),
-                    Name = field.expression.GetMemberName()
+                    Readonly = this.IsReadonly(entity) || field.IsReadonly(entity),
+                    Hidden = this.IsHidden(entity) || field.IsHidden(entity),
+                    Name = field.expression.GetMemberName(),
+                    ControlCode = this.ControlCode
                 };
 
-                states.Add(state);
+                fieldStates.Add(state);
             }
-            return states;
+
+            return fieldStates;
         }
     }
 }
