@@ -1,4 +1,4 @@
-/// <reference path="../../../typings/_all.d.ts" />
+/// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares {
     export module Common {
@@ -10,7 +10,7 @@ module Antares {
                 isBusy: boolean;
 
                 protected panelShown = () => {
-                    
+
                 };
 
                 show = () => {
