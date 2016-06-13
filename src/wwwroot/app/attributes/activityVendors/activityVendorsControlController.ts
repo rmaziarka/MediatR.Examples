@@ -5,21 +5,12 @@ module Antares.Attributes {
 
     export class ActivityVendorsControlController {
         // binding
-        ownerships: Business.Ownership[];
-        setVendors: (obj: { vendors: Business.Contact[] }) => void;
+        vendorContacts: Business.Contact[];
+        activityTypeId: string;
 
-        // controller
-        vendorContacts: Business.Contact[] = [];
-
-        $onChanges = () => {
-            var vendor: Business.Ownership = _.find(this.ownerships, (ownership: Business.Ownership) => {
-                return ownership.isVendor();
-            });
-
-            if (vendor) {
-                this.vendorContacts = vendor.contacts;
-                this.setVendors({ vendors: vendor.contacts });
-            }
+        $onChanges = (obj: any) => {
+            // TODO check code
+            console.log(obj.activityTypeId);
         }
     }
 

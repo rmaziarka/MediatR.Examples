@@ -5,14 +5,15 @@ module Antares.Attributes {
     import Business = Common.Models.Business;
 
     export class ActivityStatusEditControlController {
+        // bindings 
+        public ngModel: string;
+
         // TODO set correct status code for type
         private defaultActivityStatusCode: string = 'PreAppraisal';
 
-
         public activityStatuses: Dto.IEnumItem[] = [];
         public enumTypeActivityStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityStatus;
-
-        public ngModel: string;
+        public selectedStatus: Dto.IEnumItem = null;
 
         constructor(private enumService: Services.EnumService) { }
 
@@ -27,7 +28,12 @@ module Antares.Attributes {
 
             if (defaultActivityStatus) {
                 this.ngModel = defaultActivityStatus.id;
+                this.selectedStatus = defaultActivityStatus;
             }
+        }
+
+        changeStatus = () => {
+            this.ngModel = this.selectedStatus ? this.selectedStatus.id : null;
         }
     }
 
