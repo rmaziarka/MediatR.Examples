@@ -25,9 +25,9 @@
       "ACTIVITIES": "Activities"
     },
     "NAVIGATIONDRAWER": {
-      "RECENTPROPERTIES": "Recent properties",
-      "RECENTACTIVITIES": "Recent activities",
-      "RECENTREQUIREMENTS": "Recent requirements"
+      "RECENTPROPERTIES": "Recent",
+      "RECENTACTIVITIES": "Recent",
+      "RECENTREQUIREMENTS": "Recent"
     },
     "MAKEOFFER": "Make an offer",
     "SETASLEAD": "Set as lead",
@@ -159,6 +159,9 @@
       "TYPE": "Type",
       "ADDRESS": "Address",
       "PROPERTY_VIEW_LINK": "View property"
+    },
+    "SEARCH": {
+      "PROPERTIES": "Properties"
     }
   },
   "COMMERCIAL_PROPERTY": {
@@ -383,7 +386,7 @@
       "EMPTY": "No departments added yet",
       "NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR": {
         "TITLE": "No negotiator assigned to new department",
-        "MESSAGE": "You’re trying to add one or more new departments without negotiators assigned to them. Please select a negotiator for each of those departments or remove the departments" 
+        "MESSAGE": "You’re trying to add one or more new departments without negotiators assigned to them. Please select a negotiator for each of those departments or remove the departments"
       }
     }
   }

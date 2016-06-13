@@ -12,6 +12,11 @@ module Antares.Property {
 
     function initRoute($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
         $stateProvider
+            .state('app.property-search', {
+                url: '/property/search',
+                params: {},
+                template: '<property-search></property-search>'
+            })
             .state('app.property-add', {
                 url: '/property/add',
                 params: {},

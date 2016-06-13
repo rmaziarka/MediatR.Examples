@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="page-header" translate="PROPERTY.SEARCH.PROPERTIES"></h2>
+
+        <div class="row">
+            <div class="col-md-6 col-lg-4">
+                <form action="">
+                    <div class="form-group">
+                        <div class="search-property input-group">
+                            <input type="search" class="form-control" placeholder="Search for a property">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group has-error">
+                        <div class="search-property input-group">
+                            <input type="search" class="form-control" placeholder="Search for a property">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                        <p class="help-block">Field is required</p>
+                    </div>
+                    <div class="form-group form-inline">
+                        <div class="row">
+                            <div class="col-xs-5 search-property-label"><span class="text-uppercase">Results:</span> <span class="search-property-count">1576</span></div>
+                            <div class="col-xs-7 text-right">
+                                <label for="results-on-page">results / page:</label>
+                                <select id="results-on-page" class="form-control search-property-select">
+                                    <option>25</option>
+                                    <option>50</option>
+                                    <option>75</option>
+                                    <option>100</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <p class="help-block">Sorry, no properties matched your search. Please try again.</p>
+                    </div>
+                </form>
+
+                <div class="search-property-results">
+                    <card show-context-menu="false" display-new-control="true"
+                          card-template-url="'app/property/templates/propertySearchCard.html'">
+                    </card>
+
+                    <card show-context-menu="false" display-new-control="true"
+                          card-template-url="'app/property/templates/propertySearchCard.html'">
+                    </card>
+
+                    <card show-context-menu="false" display-new-control="true"
+                          card-template-url="'app/property/templates/propertySearchCard.html'">
+                    </card>
+
+                    <card show-context-menu="false" display-new-control="true"
+                          card-template-url="'app/property/templates/propertySearchCard.html'">
+                    </card>
+
+                    <card show-context-menu="false" display-new-control="true"
+                          card-template-url="'app/property/templates/propertySearchCard.html'">
+                    </card>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <uib-pagination boundary-links="true" max-size="5" total-items="1000" rotate="true" force-ellipses="true" ng-model="currentPage" class="pagination-md" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
