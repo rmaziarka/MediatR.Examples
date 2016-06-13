@@ -49,6 +49,7 @@
     <Compile Include="Common\Extensions\DictionaryExtensions.cs" />
     <Compile Include="Common\Extensions\FieldExtensions.cs" />
     <Compile Include="Common\Extensions\LambdaExtension.cs" />
+    <Compile Include="Common\Extensions\ListExtensions.cs" />
     <Compile Include="EntityConfigurations\ActivityControlsConfiguration.cs" />
     <Compile Include="EntityConfigurations\BaseControlsConfiguration.cs" />
     <Compile Include="EntityConfigurations\IControlsConfiguration.cs" />

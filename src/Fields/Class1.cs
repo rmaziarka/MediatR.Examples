@@ -43,16 +43,16 @@
                 }
             }
 
-            var states = xyz.GetInnerFieldState(PageType.Create, PropertyType.Flat, ActivityType.Lettings, createCommand);
+            var states = xyz.GetInnerFieldsState(PageType.Create, PropertyType.Flat, ActivityType.Lettings, createCommand);
             foreach (var state in states)
             {
-                Console.WriteLine("[{0}] -- hidden: {1}, readonly: {2}, no. of validators: {3}", state.Name, state.IsHidden, state.IsReadonly, state.Validators.Count);
+                Console.WriteLine("[{0}] -- hidden: {1}, readonly: {2}, no. of validators: {3}", state.Name, state.Hidden, state.Readonly, state.Validators.Count);
             }
 
-            states = xyz.GetInnerFieldState(PageType.Create, PropertyType.Flat, ActivityType.Lettings, createCommand2);
+            states = xyz.GetInnerFieldsState(PageType.Create, PropertyType.Flat, ActivityType.Lettings, createCommand2);
             foreach (var state in states)
             {
-                Console.WriteLine("[{0}] -- hidden: {1}, readonly: {2}, no. of validators: {3}", state.Name, state.IsHidden, state.IsReadonly, state.Validators.Count);
+                Console.WriteLine("[{0}] -- hidden: {1}, readonly: {2}, no. of validators: {3}", state.Name, state.Hidden, state.Readonly, state.Validators.Count);
             }
             
             

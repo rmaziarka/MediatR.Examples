@@ -7,6 +7,6 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
 
     public interface IControlsConfiguration<in TKey1, in TKey2>
     {
-        IList<InnerFieldState> GetInnerFieldState(PageType pageType, TKey1 key1, TKey2 key2, object entity);
+        IList<InnerFieldState> GetInnerFieldsState(PageType pageType, TKey1 key1, TKey2 key2, object entity);
     }
 }
