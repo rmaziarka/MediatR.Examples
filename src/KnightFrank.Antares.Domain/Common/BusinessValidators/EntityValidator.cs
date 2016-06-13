@@ -34,6 +34,21 @@
         }
 
         /// <summary>
+        /// Check if entity with given id exist in database and if not throw exception.
+        /// To check method is used Any() therefore entity is not retrieved from the database.
+        /// </summary>
+        /// <typeparam name="T">Database entity.</typeparam>
+        /// <param name="entityId">The entity identifier.</param>
+        /// <exception cref="BusinessValidationException"></exception>
+        public void EntityExists<T>(Guid? entityId) where T : BaseEntity
+        {
+            if (entityId.HasValue)
+            {
+                this.EntityExists<T>(entityId.Value);
+            }
+        }
+
+        /// <summary>
         /// Check if entities with given ids exis in database and if not throw exception.
         /// To check method is used Any() therefore entities are not retrieved from the database.
         /// </summary>

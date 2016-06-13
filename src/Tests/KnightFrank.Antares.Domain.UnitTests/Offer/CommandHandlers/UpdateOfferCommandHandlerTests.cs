@@ -39,6 +39,8 @@ namespace KnightFrank.Antares.Domain.UnitTests.Offer.CommandHandlers
             command.OfferDate = DateTime.Now.AddDays(-1);
             command.ExchangeDate = DateTime.Now.AddDays(1);
             command.CompletionDate = DateTime.Now.AddDays(1);
+            command.MortgageSurveyDate = DateTime.Now.AddDays(1);
+            command.AdditionalSurveyDate = DateTime.Now.AddDays(1);
 
             offerRepository.Setup(r => r.GetById(command.Id)).Returns(offer);
 

@@ -6,7 +6,6 @@
 
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Offer;
-    using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.Enums;
 
     using EnumType = KnightFrank.Antares.Dal.Model.Enum.EnumType;

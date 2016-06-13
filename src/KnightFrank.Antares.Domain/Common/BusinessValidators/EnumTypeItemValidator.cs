@@ -26,6 +26,14 @@
             }
         }
 
+        public void ItemExists(Enums.EnumType enumType, Guid? enumTypeItemId)
+        {
+            if (enumTypeItemId.HasValue)
+            {
+                this.ItemExists(enumType, enumTypeItemId.Value);
+            }
+        }
+
         public void ItemExists<T>(T enumTypeItem, Guid enumTypeItemId)
         {
             if (enumTypeItem == null)
