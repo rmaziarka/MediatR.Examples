@@ -1,12 +1,12 @@
-namespace Fields
+namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
 {
     using System;
     using System.Linq.Expressions;
 
-    using Fields.Validators;
-
     using FluentValidation;
     using FluentValidation.Internal;
+
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
 
     public class Field<TEntity, TProperty>
     {

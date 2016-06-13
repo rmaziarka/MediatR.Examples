@@ -1,11 +1,11 @@
-﻿namespace Fields
+﻿namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
 {
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
 
-    using Fields.Enums;
-    using Fields.Extensions;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
 
     public class Control
     {

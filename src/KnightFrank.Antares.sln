@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.Api.Uni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fields", "Fields\Fields.csproj", "{F709326B-37DF-4342-875C-66A406DEAE33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.Domain.AttributeConfiguration", "KnightFrank.Antares.Domain.AttributeConfiguration\KnightFrank.Antares.Domain.AttributeConfiguration.csproj", "{979DBF93-8535-4089-B80B-7F7BB0793C8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,10 @@ Global
 		{F709326B-37DF-4342-875C-66A406DEAE33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F709326B-37DF-4342-875C-66A406DEAE33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F709326B-37DF-4342-875C-66A406DEAE33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{979DBF93-8535-4089-B80B-7F7BB0793C8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{979DBF93-8535-4089-B80B-7F7BB0793C8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{979DBF93-8535-4089-B80B-7F7BB0793C8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{979DBF93-8535-4089-B80B-7F7BB0793C8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

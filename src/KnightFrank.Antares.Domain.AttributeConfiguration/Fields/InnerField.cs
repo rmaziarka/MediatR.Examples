@@ -1,4 +1,4 @@
-namespace Fields
+namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
 {
     using System;
     using System.Collections.Generic;
