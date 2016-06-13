@@ -59,7 +59,11 @@ module Antares.Company {
              }
             return url;
         }
-   
+
+        cancelEditCompany= () =>{
+            this.$state.go('app.company-view', this.company);
+        }
+
         updateCompany = () =>{
          
             this.company.websiteUrl = this.formatUrlWithProtocol(this.company.websiteUrl);
