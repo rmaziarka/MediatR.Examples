@@ -82,7 +82,7 @@
                         Field<UpdateCommand>.Create(x => x.To).InnerField
                     });
 
-            AddControl(PageType.Details, ControlCode.Status, Field<CreateCommand>.CreateDictionary(x => x.StatusId, "StatusTypes").InnerField);
+            AddControl(PageType.Details, ControlCode.Status, Field<IActivity>.CreateDictionary(x => x.StatusId, "StatusTypes").InnerField);
 
             AddControl(PageType.Details, ControlCode.BuyPrice, Field<IActivity>.Create(x => x.BuyPrice).InnerField);
 
@@ -98,7 +98,10 @@
 
         public void DefineMapping()
         {
-            Use(ControlCode.BuyPrice, When(PropertyType.Flat, ActivityType.Lettings, PageType.Create)).IsReadonlyWhen<CreateCommand>(x => x.StatusId == 1);
+            Use(ControlCode.BuyPrice, When(PropertyType.Flat, ActivityType.Lettings, PageType.Create))
+                .IsReadonlyWhen<CreateCommand>(x => x.StatusId == 1)
+                .FieldIsReadonlyWhen<CreateCommand>(x => x.BuyPrice, x => x.BuyPrice > 10);
+
             //Use(ControlCode.BuyPrice, When(PropertyType.Flat, ActivityType.Lettings, PageType.Create)).IsReadonlyWhen<CreateCommand>(x => x.StatusId == 2);
         }
 
