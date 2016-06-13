@@ -3,12 +3,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Http;
+    using System.Web.Http.ModelBinding;
 
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
-    using KnightFrank.Antares.Domain.AttributeConfiguration.ToRemove;
 
     /// <summary>
     /// Metadata controller.
@@ -38,7 +39,7 @@
         /// <returns></returns>
         [HttpPost]
         [Route("attributes/activity")]
-        public dynamic GetActivityConfiguration(PageType pageType, PropertyType propertyType, ActivityType activityType, CreateCommand entity)
+        public dynamic GetActivityConfiguration(PageType pageType, PropertyType propertyType, ActivityType activityType, [ModelBinder(typeof(ConfigurableActivityModelBinder))]object entity)
         {
             IList<InnerFieldState> fieldStates = this.activityConfiguration.GetInnerFieldsState(pageType, propertyType, activityType, entity);
             return fieldStates.MapToResponse();
