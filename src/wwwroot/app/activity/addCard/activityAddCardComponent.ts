@@ -11,7 +11,7 @@ module Antares.Property {
             config:'<',
             onSave: '&',
             onCancel: '&',
-            isPristine: '<'
+            pristineFlag: '<'
         }
     });
 }

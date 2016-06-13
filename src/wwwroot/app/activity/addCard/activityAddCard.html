@@ -7,7 +7,7 @@
             <activity-type-edit-control property-type-id="vm.propertyTypeId" ng-model="vm.activity.activityTypeId" config="vm.config.activityType"></activity-type-edit-control>
             <activity-status-control ng-model="vm.activity.activityStatusId" config="vm.config.activityStatus"></activity-status-control>
  
-            <activity-vendors-control vendor-contacts="vm.vendorContacts" activity-type-id="vm.activity.activityTypeId" config="vm.config.vendors"></activity-vendors-control>
+            <activity-vendors-control vendor-contacts="vm.getVendorContacts()" activity-type-id="vm.activity.activityTypeId" config="vm.config.vendors"></activity-vendors-control>
         </side-panel-content>
         <side-panel-footer>
             <button class="btn btn-default" type="button" ng-click="vm.cancel()">

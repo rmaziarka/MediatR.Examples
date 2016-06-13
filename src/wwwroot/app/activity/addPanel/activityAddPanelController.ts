@@ -14,7 +14,7 @@ module Antares.Activity {
         // properties
         activityTypeId: string;
         activityStatusId: string;
-        isAddActivityCardPristine: boolean;
+        cardPristine: any;
 
         constructor(private activityService: Activity.ActivityService, private configService: Services.ConfigService, private eventAggregator: Antares.Core.EventAggregator) {
             super();
@@ -39,14 +39,14 @@ module Antares.Activity {
             var command = new AddPanel.ActivityAddPanelCommand(activity, this.propertyId);
 
             this.activityService.addActivityPanel(command).then((activityDto: Dto.IActivity) => {
-                this.isAddActivityCardPristine = true;
+                this.cardPristine = new Object();
                 this.eventAggregator.publish(new Antares.Activity.ActivityAddedSidePanelEvent(activityDto));
                 this.eventAggregator.publish(new Antares.Common.Component.CloseSidePanelEvent());
             });
         }
 
         cancel = () => {
-           this.isAddActivityCardPristine = true;
+            this.cardPristine = new Object();
            this.eventAggregator.publish(new Antares.Common.Component.CloseSidePanelEvent());
         }
     }

@@ -11,7 +11,7 @@ module Antares.Activity {
         config: IActivityAddPanelConfig;
         onSave: (obj: { activity: AddCard.ActivityAddCardModel }) => void;
         onCancel: () => void;
-        isPristine: boolean;
+        pristineFlag: any;
 
         // controller
         activity: AddCard.ActivityAddCardModel = new AddCard.ActivityAddCardModel();
@@ -24,27 +24,19 @@ module Antares.Activity {
             this.dataAccessService.getContactResource();
         }
 
-        $onInit = () => {
-            this.setVendors();
-        }
-
         $onChanges = (obj: any) => {
-            if (obj.ownerships.currentValue !== obj.ownerships.previousValue) {
-                this.setVendors();
-            }
-
-            if (obj.isPristine && obj.isPristine.currentValue) {
+            if (obj.pristineFlag && obj.pristineFlag.currentValue !== obj.previousValue) {
                 this.setPristine();
             }
         }
 
-        setVendors = (): void => {
+        getVendorContacts = (): Business.Contact[] => {
             var vendor: Business.Ownership = _.find(this.ownerships, (ownership: Business.Ownership) => {
                 return ownership.isVendor();
             });
 
             if (vendor) {
-                this.vendorContacts = vendor.contacts;
+                return vendor.contacts;
             }
         }
 
