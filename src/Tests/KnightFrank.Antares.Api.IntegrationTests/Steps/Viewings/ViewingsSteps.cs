@@ -108,7 +108,7 @@
             this.CreateViewing(details);
         }
 
-        [Given(@"User creates viewing in database")]
+        [Given(@"Viewing exists in database")]
         public void CreateViewingInDatabase()
         {
             var requirement = this.scenarioContext.Get<Requirement>("Requirement");

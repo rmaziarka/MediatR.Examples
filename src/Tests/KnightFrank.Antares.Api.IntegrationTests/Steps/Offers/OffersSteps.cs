@@ -1,7 +1,6 @@
 ﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.Offers
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
 
@@ -36,12 +35,12 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"User creates (.*) offer in database")]
+        [Given(@"Offer with (.*) status exists in database")]
         public void CreateOfferUsingInDatabase(string status)
         {
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
-            Guid statusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[status];
+            Guid statusId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals(status)).Id;
 
             var offer = new Offer
             {
@@ -67,7 +66,7 @@
         [When(@"User creates (.*) offer using api")]
         public void CreateOfferUsingApi(string status)
         {
-            Guid statusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[status];
+            Guid statusId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals(status)).Id;
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
 
@@ -89,7 +88,7 @@
         [When(@"User creates (.*) offer with mandatory fields using api")]
         public void CreateOfferWithMandatoryFieldsUsingApi(string status)
         {
-            Guid statusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[status];
+            Guid statusId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals(status)).Id;
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
 
@@ -110,7 +109,7 @@
         {
             Guid statusId = data.Equals("status")
                 ? Guid.NewGuid()
-                : this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["New"];
+                : this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals("New")).Id;
             Guid activityId = data.Equals("activity") ? Guid.NewGuid() : this.scenarioContext.Get<Activity>("Activity").Id;
             Guid requirementId = data.Equals("requirement")
                 ? Guid.NewGuid()
@@ -141,14 +140,14 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [When(@"User updates offer")]
-        public void UpdateOffer()
+        [When(@"User updates offer with (.*) status")]
+        public void UpdateOffer(string status)
         {
             var offer = this.scenarioContext.Get<Offer>("Offer");
             var details = new UpdateOfferCommand
             {
                 Id = offer.Id,
-                StatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Accepted"],
+                StatusId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals(status)).Id,
                 Price = 2000,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
                 CompletionDate = this.date.AddDays(2),
@@ -169,7 +168,7 @@
                 StatusId =
                     data.Equals("status")
                         ? Guid.NewGuid()
-                        : this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["New"],
+                        : this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals("New")).Id,
                 CompletionDate = this.date,
                 ExchangeDate = this.date,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),

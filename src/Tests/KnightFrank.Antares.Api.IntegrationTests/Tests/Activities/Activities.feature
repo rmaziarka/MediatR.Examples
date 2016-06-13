@@ -2,24 +2,15 @@
 
 @Activity
 Scenario Outline: Create activity with invalid data
-	Given User gets GB address form for Property and country details
-		And User gets House for PropertyType
-		And User gets <activityTypeCode> for ActivityType
+	Given User gets <activityTypeCode> for ActivityType
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
-			| OwnershipType          | Freeholder       |
 			| <activityStatusId>     | PreAppraisal     |
-			| Division               | Residential      |
 			| ActivityUserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
-			| ActivityDepartmentType | Standard         |
-		And User sets attributes for property in database
-			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
-			| 1           | 3           | 1             | 3             | 2            | 3            | 1000    | 3000    | 500         | 4000        | 1                   | 3                   |
-		And Property characteristics are set for given property type
-		And Property with Address and Residential division is in database
-        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
-        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+		And Property exists in database
+			| PropertyType | Division    |
+			| House        | Residential |
 	When User creates activity for given <propertyId> property id using api 
 	Then User should get <statusCode> http status code
 
@@ -32,29 +23,20 @@ Scenario Outline: Create activity with invalid data
 
 @Activity
 Scenario: Create Activity
-	Given User gets GB address form for Property and country details
-		And User gets House for PropertyType
-		And User gets Freehold Sale for ActivityType
+	Given User gets Freehold Sale for ActivityType
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
-			| OwnershipType          | Freeholder       |
 			| ActivityStatus         | PreAppraisal     |
-			| Division               | Residential      |
 			| ActivityUserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
-			| ActivityDepartmentType | Standard         |
-		And User sets attributes for property in database
-			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
-			| 1           | 3           | 1             | 3             | 2            | 3            | 1000    | 3000    | 500         | 4000        | 1                   | 3                   |
-		And Property characteristics are set for given property type
-		And Property with Address and Residential division is in database
-        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
-        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+		And Property exists in database
+			| PropertyType | Division    |
+			| House        | Residential |
 		And Contacts exists in database
 			| FirstName | Surname | Title |
 			| Michael   | Angel   | cheef |
 			| Michael   | Angel   | cook  |
-		And Ownership exists in database
+		And Ownership Freeholder exists in database
 			| PurchaseDate | SellDate   | BuyPrice | SellPrice |
 			| 01-05-2011   | 01-04-2013 | 1000000  |           |
 			| 01-05-2014   |            | 1000000  |           |
@@ -74,23 +56,15 @@ Scenario Outline: Get Activity using invalid data
 
 @Activity
 Scenario: Get Activity
-	Given User gets GB address form for Property and country details
-		And User gets House for PropertyType
-		And User gets Freehold Sale for ActivityType
+	Given User gets Freehold Sale for ActivityType
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
 			| ActivityStatus         | PreAppraisal     |
-			| Division               | Residential      |
 			| ActivityUserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
-			| ActivityDepartmentType | Standard         |
-		And Property characteristics are set for given property type
-		And User sets attributes for property in database
-			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
-			| 1           | 3           | 1             | 3             | 2            | 3            | 1000    | 3000    | 500         | 4000        | 1                   | 3                   |
-		And Property with Address and Residential division is in database
-        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
-        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+		And Property exists in database
+			| PropertyType | Division    |
+			| House        | Residential |
 		And Activity for latest property and PreAppraisal activity status exists in database
 	When User gets activity with latest id
 	Then User should get OK http status code
@@ -98,23 +72,15 @@ Scenario: Get Activity
 
 @Activity
 Scenario: Record and update residential sale valuation
-	Given User gets GB address form for Property and country details
-		And User gets House for PropertyType
-		And User gets Freehold Sale for ActivityType
+	Given User gets Freehold Sale for ActivityType
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
 			| ActivityStatus         | PreAppraisal     |
-			| Division               | Residential      |
 			| ActivityUserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
-			| ActivityDepartmentType | Standard         |
-		And User sets attributes for property in database
-			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
-			| 1           | 3           | 1             | 3             | 2            | 3            | 1000    | 3000    | 500         | 4000        | 1                   | 3                   |
-		And Property characteristics are set for given property type
-		And Property with Address and Residential division is in database
-        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
-        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+		And Property exists in database
+			| PropertyType | Division    |
+			| House        | Residential |
 		And Activity for latest property and PreAppraisal activity status exists in database
 	When User updates activity latest id and latest status with following sale valuation
 		| MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |
@@ -124,23 +90,16 @@ Scenario: Record and update residential sale valuation
 
 @Activity
 Scenario Outline: Record and update residential sale valuation using invalid data
-	Given User gets GB address form for Property and country details
-		And User gets House for PropertyType
-		And User gets Freehold Sale for ActivityType
+	Given User gets Freehold Sale for ActivityType
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
 			| Division               | Residential      |
 			| ActivityStatus         | PreAppraisal     |
 			| ActivityUserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
-			| ActivityDepartmentType | Standard         |
-		And User sets attributes for property in database
-			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
-			| 1           | 3           | 1             | 3             | 2            | 3            | 1000    | 3000    | 500         | 4000        | 1                   | 3                   |
-		And Property characteristics are set for given property type
-		And Property with Address and Residential division is in database
-        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
-        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+		And Property exists in database
+			| PropertyType | Division    |
+			| House        | Residential |
 		And Activity for latest property and PreAppraisal activity status exists in database
 	When User updates activity <activityId> id and <activityStatusID> status with following sale valuation
 		| MarketAppraisalPrice   | RecommendedPrice | VendorEstimatedPrice |
@@ -155,57 +114,38 @@ Scenario Outline: Record and update residential sale valuation using invalid dat
 @Activity
 Scenario: Get all activities
 	Given All activities have been deleted from database
-		And User gets GB address form for Property and country details
-		And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
-			| Division               | Residential      |
 			| ActivityStatus         | NotSelling       |
 			| ActivityUserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
-			| ActivityDepartmentType | Standard         |
-		And User sets attributes for property in database
-			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions |
-			| 1           | 3           | 1             | 3             |
-		And Property characteristics are set for given property type
-		And Property with Address and Residential division is in database
-        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
-        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+		And Property exists in database
+			| PropertyType | Division    |
+			| House        | Residential |
 		And Activity for latest property and NotSelling activity status exists in database
 	When User gets activities
 	Then User should get OK http status code
 		And Retrieved activities should be the same as in database
-			| PropertyName | PropertyNumber | Line2              |
-			| abc          | 1              | Lewis Cubit Square |
 
 @Activity
 Scenario: Get Activity with viewing and offer
-	Given User gets GB address form for Property and country details
-		And User gets House for PropertyType
-		And User gets Freehold Sale for ActivityType
+	Given User gets Freehold Sale for ActivityType
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
 			| ActivityStatus         | PreAppraisal     |
-			| Division               | Residential      |
 			| ActivityUserType       | LeadNegotiator   |
-			| OfferStatus            | New              |
 			| ActivityDepartmentType | Managing         |
-			| ActivityDepartmentType | Standard         |
-		And Property characteristics are set for given property type
-		And User sets attributes for property in database
-			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
-			| 1           | 3           | 1             | 3             | 2            | 3            | 1000    | 3000    | 500         | 4000        | 1                   | 3                   |
-		And Property with Address and Residential division is in database
-        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
-        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+		And Property exists in database
+			| PropertyType | Division    |
+			| House        | Residential |
 		And Activity for latest property and PreAppraisal activity status exists in database
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Requirement exists in database
-		And User creates viewing in database
-		And User creates New offer in database
+		And Viewing exists in database
+		And Offer with New status exists in database
 	When User gets activity with latest id
 	Then User should get OK http status code
 		And Retrieved activity should have expected viewing

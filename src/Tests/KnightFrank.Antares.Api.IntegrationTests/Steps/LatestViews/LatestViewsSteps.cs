@@ -48,7 +48,7 @@
         [Given(@"Property is added to latest views")]
         public void AddPropertyToLatestViews()
         {
-            Guid propertyId = this.scenarioContext.Get<Property>("AddedProperty").Id;
+            Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
             List<Guid> propertiesIds = this.scenarioContext.ContainsKey("PropertiesIds")
                 ? this.scenarioContext.Get<List<Guid>>("PropertiesIds")
                 : new List<Guid>();
@@ -120,7 +120,7 @@
             var details = new CreateLatestViewCommand();
             if (entity.ToLower().Equals("property"))
             {
-                Guid propertyId = this.scenarioContext.Get<Property>("AddedProperty").Id;
+                Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
                 details.EntityId = propertyId;
                 details.EntityType = EntityTypeEnum.Property;
             }
@@ -264,7 +264,7 @@
         public void CheckLatestsViewedProperty()
         {
             const string entityTypeCode = "Property";
-            Guid entityId = this.scenarioContext.Get<Property>("AddedProperty").Id;
+            Guid entityId = this.scenarioContext.Get<Property>("Property").Id;
             Guid addressId = this.fixture.DataContext.Properties.Single(p => p.Id.Equals(entityId)).AddressId;
 
             LatestViewQueryResultItem response =

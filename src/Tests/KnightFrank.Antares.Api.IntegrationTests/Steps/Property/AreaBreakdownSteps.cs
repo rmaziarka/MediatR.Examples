@@ -53,7 +53,7 @@
 
             foreach (PropertyAreaBreakdown area in this.propertyAreaBreakdownList)
             {
-                area.PropertyId = this.scenarioContext.Get<Property>("AddedProperty").Id;
+                area.PropertyId = this.scenarioContext.Get<Property>("Property").Id;
             }
 
             this.fixture.DataContext.PropertyAreaBreakdown.AddRange(this.propertyAreaBreakdownList);
@@ -63,7 +63,7 @@
         [When(@"User creates defined property area breakdown for (.*) property")]
         public void CreateAreaBreakdown(string property)
         {
-            this.propertyId = property.Equals("latest") ? this.scenarioContext.Get<Property>("AddedProperty").Id : new Guid(property);
+            this.propertyId = property.Equals("latest") ? this.scenarioContext.Get<Property>("Property").Id : new Guid(property);
 
             string url = $"{ApiUrl}/{this.propertyId}/areabreakdown";
 
@@ -156,7 +156,7 @@
         private PropertyAreaBreakdown GetPropertyAreaBreakdown(string property, string name)
         {
             this.propertyId = property.Equals("latest")
-                ? this.scenarioContext.Get<Property>("AddedProperty").Id
+                ? this.scenarioContext.Get<Property>("Property").Id
                 : new Guid(property);
 
             Property areaBreakdownProperty = this.fixture.DataContext.Properties.SingleOrDefault(x => x.Id.Equals(this.propertyId));
