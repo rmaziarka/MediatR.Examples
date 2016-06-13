@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Control.cs" />
+    <Compile Include="InnerFieldState.cs" />
     <Compile Include="Enums\ActivityType.cs" />
     <Compile Include="Enums\ControlCode.cs" />
     <Compile Include="Enums\PageType.cs" />

@@ -51,17 +51,17 @@
             return controls;
         }
 
-        public static IList<Control> FieldIsReadonlyWhen<TEntity>(this IList<Control> controls, Expression<Func<TEntity, object>> field, Expression<Func<TEntity, bool>> expression)
+        public static IList<Control> FieldIsReadonlyWhen<TEntity, TProperty>(this IList<Control> controls, Expression<Func<TEntity, TProperty>> field, Expression<Func<TEntity, bool>> expression)
         {
             return SetFieldExpression(controls, field, expression, true);
         }
 
-        public static IList<Control> FieldIsHiddenWhen<TEntity>(this IList<Control> controls, Expression<Func<TEntity, object>> field, Expression<Func<TEntity, bool>> expression)
+        public static IList<Control> FieldIsHiddenWhen<TEntity, TProperty>(this IList<Control> controls, Expression<Func<TEntity, TProperty>> field, Expression<Func<TEntity, bool>> expression)
         {
             return SetFieldExpression(controls, field, expression, false);
         }
 
-        private static IList<Control> SetFieldExpression<TEntity>(IList<Control> controls, Expression<Func<TEntity, object>> field, Expression<Func<TEntity, bool>> expression, bool readonlyExpression)
+        private static IList<Control> SetFieldExpression<TEntity, TProperty>(IList<Control> controls, Expression<Func<TEntity, TProperty>> field, Expression<Func<TEntity, bool>> expression, bool readonlyExpression)
         {
             if (controls.Count > 1)
             {
@@ -78,7 +78,7 @@
                 }
                 else
                 {
-                    control.SetFieldReadonlyRule(field, expression);
+                    control.SetFieldHiddenRule(field, expression);
                 }
             }
 

@@ -5,6 +5,7 @@
     using System.Linq.Expressions;
 
     using Fields.Enums;
+    using Fields.Extensions;
 
     public class Control
     {
@@ -68,6 +69,28 @@
                     }
                 }
             }
+        }
+
+        public IList<InnerFieldState> GetFieldStates(object entity)
+        {
+            IList<InnerFieldState> states = new List<InnerFieldState>();
+            foreach (var field in this.Fields)
+            {
+                var state = new InnerFieldState
+                {
+                    PropertyType = field.propertyType,
+                    ContainerType = field.containerType,
+                    Compiled = field.compiled,
+                    Validators = field.validators,
+                    Expression = field.expression,
+                    IsReadonly = this.IsReadonly(entity) || field.IsReadonly(entity),
+                    IsHidden = this.IsHidden(entity) || field.IsHidden(entity),
+                    Name = field.expression.GetMemberName()
+                };
+
+                states.Add(state);
+            }
+            return states;
         }
     }
 }
