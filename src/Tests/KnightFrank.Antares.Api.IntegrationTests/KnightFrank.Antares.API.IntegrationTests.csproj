@@ -309,10 +309,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Translations.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Users\UsersController.feature.cs">
+    <Compile Include="Tests\Users\Users.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>UsersController.feature</DependentUpon>
+      <DependentUpon>Users.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Viewings\Viewings.feature.cs">
       <AutoGen>True</AutoGen>
@@ -355,9 +355,9 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>PropertyAreaBreakdown.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\Users\UsersController.feature">
+    <None Include="Tests\Users\Users.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>UsersController.feature.cs</LastGenOutput>
+      <LastGenOutput>Users.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Activities\Activities.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
