@@ -2,6 +2,7 @@
 
 module Antares.Services {
     import Resources = Common.Models.Resources;
+    import Enums = Common.Models.Enums;
 
     export class DataAccessService {
         private rootUrl: string = "";
@@ -104,7 +105,7 @@ module Antares.Services {
             return <Resources.IBaseResourceClass<Resources.ICompanyResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/companies/:id');
         }
-        
+
         getContactResource(): Resources.IBaseResourceClass<Resources.IContactResource> {
             return <Resources.IBaseResourceClass<Resources.IContactResource>>
                 this.$resource(this.appConfig.rootUrl + '/api/contacts/:id');
@@ -209,12 +210,12 @@ module Antares.Services {
                 this.$resource(this.appConfig.rootUrl + '/api/activities/:id/attachments');
         }
 
-        getAzureUploadUrlResource(): ng.resource.IResourceClass<Common.Models.Resources.IAzureUploadUrlResource> {
-            return this.$resource(this.appConfig.rootUrl + '/api/services/attachment/upload/activity?documentTypeId=:documentTypeId&localeIsoCode=:localeIsoCode&entityReferenceId=:entityReferenceId&filename=:filename');
+        getAzureUploadUrlResource(entityType: Enums.EntityTypeEnum): ng.resource.IResourceClass<Common.Models.Resources.IAzureUploadUrlResource> {
+            return this.$resource(this.appConfig.rootUrl + '/api/services/attachment/upload/' + Enums.EntityTypeEnum[entityType] +'?documentTypeId=:documentTypeId&localeIsoCode=:localeIsoCode&entityReferenceId=:entityReferenceId&filename=:filename');
         }
 
-        getAzureDownloadUrlResource(): ng.resource.IResourceClass<Common.Models.Resources.IAzureDownloadUrlResource> {
-            return this.$resource(this.appConfig.rootUrl + '/api/services/attachment/download/activity?documentTypeId=:documentTypeId&localeIsoCode=:localeIsoCode&externalDocumentId=:externalDocumentId&entityReferenceId=:entityReferenceId&filename=:filename');
+        getAzureDownloadUrlResource(entityType: Enums.EntityTypeEnum): ng.resource.IResourceClass<Common.Models.Resources.IAzureDownloadUrlResource> {
+            return this.$resource(this.appConfig.rootUrl + '/api/services/attachment/download/' + Enums.EntityTypeEnum[entityType] +'?documentTypeId=:documentTypeId&localeIsoCode=:localeIsoCode&externalDocumentId=:externalDocumentId&entityReferenceId=:entityReferenceId&filename=:filename');
         }
 
         getDepartmentUserResource(): Antares.Common.Models.Resources.IDepartmentUserResourceClass {

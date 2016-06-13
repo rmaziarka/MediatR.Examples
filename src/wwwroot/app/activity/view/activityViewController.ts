@@ -4,6 +4,7 @@ module Antares.Activity.View {
     import Business = Common.Models.Business;
     import CartListOrder = Common.Component.ListOrder;
     import Dto = Common.Models.Dto;
+    import Enums = Common.Models.Enums;
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
 
@@ -11,6 +12,8 @@ module Antares.Activity.View {
         activity: Business.Activity;
         attachmentsCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
         enumTypeActivityDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityDocumentType;
+        entityType: Enums.EntityTypeEnum = Enums.EntityTypeEnum.Activity;
+
         activityAttachmentResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityAttachmentResource>;
         saveActivityAttachmentBusy: boolean = false;
         selectedOffer: Dto.IOffer;
