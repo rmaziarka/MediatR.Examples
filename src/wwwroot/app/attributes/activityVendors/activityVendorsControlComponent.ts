@@ -7,6 +7,7 @@ module Antares.Attributes {
         controller: 'ActivityVendorsControlController',
         bindings: {
             ownerships: '<',
+            propertyType: '<',
             setVendors: '&'
         }
     });

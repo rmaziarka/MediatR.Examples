@@ -27,13 +27,10 @@ module Antares.Services {
                         allowedCodes: ['Freehold Sale'], required: true, active: true
                     },
                     active: true
-                }
+                },
+                vendors:{ vendors: { required: true, active: true }, active: true }
             };
-
-            if (activityTypeId) {
-                result.vendors = { vendors : {required: true, active: true}, active: true };
-            }
-
+            
             defer.resolve(result);
             return defer.promise;
 

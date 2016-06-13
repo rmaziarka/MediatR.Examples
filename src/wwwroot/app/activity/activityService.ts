@@ -13,7 +13,8 @@ module Antares.Activity {
         { }
 
         addActivityPanel = (activity: AddPanel.ActivityAddPanelCommand): ng.IHttpPromise<Dto.IActivity> => {
-            return this.$http.post(this.appConfig.rootUrl + this.url, activity);
+            return this.$http.post(this.appConfig.rootUrl + this.url, activity)
+                .then<Dto.IActivity>((result: ng.IHttpPromiseCallbackArg<Dto.IActivity>) => result.data);
         }
     }
 
