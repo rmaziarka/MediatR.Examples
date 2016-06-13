@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\AttributeValidator.cs" />
     <Compile Include="Common\EntityValidator.cs" />
     <Compile Include="Common\Extensions\DictionaryExtensions.cs" />
     <Compile Include="Common\Extensions\FieldExtensions.cs" />

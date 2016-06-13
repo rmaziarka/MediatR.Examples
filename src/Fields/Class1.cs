@@ -2,6 +2,7 @@
 {
     using System;
 
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
     using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
@@ -53,6 +54,10 @@
             {
                 Console.WriteLine("[{0}] -- hidden: {1}, readonly: {2}, no. of validators: {3}", state.Name, state.IsHidden, state.IsReadonly, state.Validators.Count);
             }
+            
+            
+            var attributeValidator = new AttributeValidator();
+            attributeValidator.Validate(createCommand);
 
             Console.ReadLine();
         }
