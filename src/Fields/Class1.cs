@@ -58,20 +58,25 @@
         }
     }
 
-    public class ActivityControlsConfiguration
+    public interface IControlsConfiguration<in TKey1, in TKey2>
+    {
+        IList<InnerFieldState> GetInnerFieldState(PageType pageType, TKey1 key1, TKey2 key2, object entity);
+    }
+
+    public abstract class BaseControlsConfiguration<TKey1, TKey2> : IControlsConfiguration<TKey1, TKey2>
     {
         public IDictionary<PageType, IList<Control>> ControlsDictionary = new Dictionary<PageType, IList<Control>>();
-        public IDictionary<Tuple<PropertyType, ActivityType, PageType>, Control> ControlsConfig = new Dictionary<Tuple<PropertyType, ActivityType, PageType>, Control>();
+        public IDictionary<Tuple<TKey1, TKey2, PageType>, Control> ControlsConfig = new Dictionary<Tuple<TKey1, TKey2, PageType>, Control>();
 
-        public ActivityControlsConfiguration()
+        protected BaseControlsConfiguration()
         {
             this.DefineControls();
-            this.DefineMapping();
+            this.DefineMappings();
         }
 
-        public IList<InnerFieldState> GetInnerFieldState(PageType pageType, PropertyType propertyType, ActivityType activityType, object entity)
+        public IList<InnerFieldState> GetInnerFieldState(PageType pageType, TKey1 key1, TKey2 key2, object entity)
         {
-            Console.WriteLine("*** GetState {0} {1} {2}", pageType, propertyType, activityType);
+            Console.WriteLine("*** GetState {0} {1} {2}", pageType, key1, key2);
             var innerFieldStates = new List<InnerFieldState>();
             IList<Control> controls;
             if (this.ControlsDictionary.TryGetValue(pageType, out controls))
@@ -89,24 +94,64 @@
             }
         }
 
-        private void AddControl(PageType pageType, ControlCode controlCode, InnerField field)
+        public abstract void DefineControls();
+
+        public abstract void DefineMappings();
+
+
+        protected void AddControl(PageType pageType, ControlCode controlCode, InnerField field)
         {
             this.ControlsDictionary[pageType].AddControl(pageType, controlCode, field);
         }
 
-        private void AddControl(PageType pageType, ControlCode controlCode, IList<InnerField> field)
+        protected void AddControl(PageType pageType, ControlCode controlCode, IList<InnerField> field)
         {
             this.ControlsDictionary[pageType].AddControl(pageType, controlCode, field);
         }
 
-        public void DefineControls()
+        protected IList<Control> Use(ControlCode controlCode, IList<Tuple<TKey1, TKey2, PageType>> list)
+        {
+            var result = new List<Control>();
+            foreach (Tuple<TKey1, TKey2, PageType> item in list)
+            {
+                PageType pageType = item.Item3;
+                if (!this.ControlsDictionary.ContainsKey(pageType))
+                {
+                    throw new Exception();
+                }
+
+                var control = this.ControlsDictionary[pageType].FirstOrDefault(x => x.ControlCode == controlCode);
+                if (control == null)
+                {
+                    throw new Exception();
+                }
+
+                // TODO: deep clone - don't use serialization, it does not work here
+                //Control controlClone = control.Clone();
+                //Control controlCopy = AutoMapper.Mapper.Map<Control>(control);
+
+                this.ControlsConfig.Add(item, control);
+                result.Add(control);
+            }
+
+            return result;
+        }
+        protected IList<Tuple<PropertyType, ActivityType, PageType>> When(PropertyType propertyType, ActivityType activityType, params PageType[] pages)
+        {
+            return pages.Select(
+                page => new Tuple<PropertyType, ActivityType, PageType>(propertyType, activityType, page)).ToList();
+        }
+    }
+
+    public class ActivityControlsConfiguration : BaseControlsConfiguration<PropertyType, ActivityType>
+    {
+        public override void DefineControls()
         {
             this.ControlsDictionary.Add(PageType.Create, new List<Control>());
             this.ControlsDictionary.Add(PageType.Update, new List<Control>());
             this.ControlsDictionary.Add(PageType.Details, new List<Control>());
 
             //AddControl(PageType.Create, ControlCode.Status, Field<CreateCommand>.CreateDictionary(x => x.StatusId, "StatusTypes").InnerField);
-
 
             // TODO: verify if page type has field for one entity type
 
@@ -139,50 +184,13 @@
                     });
         }
 
-        public void DefineMapping()
+        public override void DefineMappings()
         {
             Use(ControlCode.BuyPrice, When(PropertyType.Flat, ActivityType.Lettings, PageType.Create))
                 .IsReadonlyWhen<CreateCommand>(x => x.StatusId == 1)
                 .FieldIsReadonlyWhen<CreateCommand, decimal>(x => x.BuyPrice, x => x.BuyPrice > 10);
 
             //Use(ControlCode.BuyPrice, When(PropertyType.Flat, ActivityType.Lettings, PageType.Create)).IsReadonlyWhen<CreateCommand>(x => x.StatusId == 2);
-        }
-
-        private IList<Control> Use(ControlCode controlCode, IList<Tuple<PropertyType, ActivityType, PageType>> list)
-        {
-            var result = new List<Control>();
-            foreach (var item in list)
-            {
-                PropertyType propertyType = item.Item1;
-                ActivityType activityType = item.Item2;
-                PageType pagetType = item.Item3;
-
-                if (!this.ControlsDictionary.ContainsKey(pagetType))
-                {
-                    throw new Exception();
-                }
-
-                var control = this.ControlsDictionary[pagetType].FirstOrDefault(x => x.ControlCode == controlCode);
-                if (control == null)
-                {
-                    throw new Exception();
-                }
-
-                // TODO: deep clone - don't use serialization, it does not work here
-                //Control controlClone = control.Clone();
-                //Control controlCopy = AutoMapper.Mapper.Map<Control>(control);
-
-                this.ControlsConfig.Add(item, control);
-                result.Add(control);
-            }
-
-            return result;
-        }
-
-        private IList<Tuple<PropertyType, ActivityType, PageType>> When(PropertyType propertyType, ActivityType activityType, params PageType[] pages)
-        {
-            return pages.Select(
-                page => new Tuple<PropertyType, ActivityType, PageType>(propertyType, activityType, page)).ToList();
         }
     }
 
