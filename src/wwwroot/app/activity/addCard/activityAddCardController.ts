@@ -8,6 +8,7 @@ module Antares.Activity {
         // bindings
         propertyTypeId: string;
         ownerships: Business.Ownership[];
+        config: IActivityAddPanelConfig;
         onSave: (obj: { activity: AddCard.ActivityAddCardModel }) => void;
 
         // controller
@@ -19,6 +20,10 @@ module Antares.Activity {
 
         $onInit = () => {
             this.dataAccessService.getContactResource().get
+        }
+
+        $onChanges = (obj: any) => {
+        
         }
 
         setVendors = (vendors: Business.Contact[]): void => {

@@ -1,7 +1,7 @@
 ﻿module Antares.Activity {
-    import BaseMessage = Antares.Core.BaseMessage;
+    import BaseMessage = Antares.Core.Event;
 
-    export class ActivityAddedSidePanelMessage extends BaseMessage {
+    export class ActivityAddedSidePanelEvent extends Core.Event {
 
         constructor(public activityAdded?: Antares.Common.Models.Dto.IActivity) {
             super();

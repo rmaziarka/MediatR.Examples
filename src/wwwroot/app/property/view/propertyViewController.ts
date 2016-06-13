@@ -21,6 +21,7 @@ module Antares.Property.View {
         activitiesCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
         userData: Dto.IUserData;
         property: Business.PropertyView;
+        config: Activity.IActivityAddPanelConfig;
         savePropertyActivityBusy: boolean = false;
 
         constructor(
@@ -29,18 +30,18 @@ module Antares.Property.View {
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService,
             private latestViewsProvider: LatestViewsProvider,
-            private pubSub: Antares.Core.PubSub) {
+            private eventAggregator: Antares.Core.EventAggregator) {
 
             super(componentRegistry, $scope);
             this.propertyId = $state.params['id'];
             this.fixOwnershipDates();
 
-            this.pubSub.with(this).subscribe(Antares.Common.Component.CloseSidePanelMessage, () => {
+            this.eventAggregator.with(this).subscribe(Antares.Common.Component.CloseSidePanelEvent, () => {
                 // TODO iteration?
                 this.isAddResidentialActivityVisible = false;
             });
 
-            this.pubSub.with(this).subscribe(Activity.ActivityAddedSidePanelMessage, (msg: Activity.ActivityAddedSidePanelMessage) => {
+            this.eventAggregator.with(this).subscribe(Activity.ActivityAddedSidePanelEvent, (msg: Activity.ActivityAddedSidePanelEvent) => {
                 this.property.activities.push(new Business.Activity(msg.activityAdded));
             });
         }

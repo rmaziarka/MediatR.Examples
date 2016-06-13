@@ -5,7 +5,8 @@ module Antares.Property {
     import Business = Common.Models.Business;
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
-
+    import ConfigService = Antares.Services.ConfigService;
+    import IProperty = Antares.Common.Models.Dto.IProperty;
     var app: ng.IModule = angular.module('app');
 
     app.config(initRoute);

@@ -8,6 +8,7 @@ module Antares.Property {
         bindings: {
             propertyTypeId: '<',
             ownerships: '<',
+            config:'<',
             onSave: '&'
         }
     });
