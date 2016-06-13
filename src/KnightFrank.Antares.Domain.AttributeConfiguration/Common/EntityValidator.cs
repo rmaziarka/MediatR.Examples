@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fields.Validators
+﻿namespace KnightFrank.Antares.Domain.AttributeConfiguration.Common
 {
+    using System;
+
     using FluentValidation;
 
     public class EntityValidator<T> : InlineValidator<T>

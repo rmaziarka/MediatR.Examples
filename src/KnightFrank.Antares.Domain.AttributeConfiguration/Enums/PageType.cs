@@ -1,4 +1,4 @@
-namespace Fields.Enums
+namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
 {
     public enum PageType
     {

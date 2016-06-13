@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Fields
+﻿namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq.Expressions;
 
     using FluentValidation;

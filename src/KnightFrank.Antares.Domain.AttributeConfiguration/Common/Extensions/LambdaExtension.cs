@@ -1,4 +1,4 @@
-﻿namespace Fields.Extensions
+﻿namespace KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions
 {
     using System;
     using System.Linq.Expressions;

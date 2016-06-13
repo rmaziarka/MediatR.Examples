@@ -1,4 +1,4 @@
-﻿namespace Fields.Extensions
+﻿namespace KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,7 @@
 
     using FluentValidation;
 
-    using Validators;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
 
     public static class FieldExtensions
     {

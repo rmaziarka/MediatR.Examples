@@ -1,9 +1,10 @@
 ﻿
-namespace Fields.Extensions
+namespace KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions
 {
     using System.Collections.Generic;
 
-    using Fields.Enums;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
 
     public static class DictionaryExtensions
     {
