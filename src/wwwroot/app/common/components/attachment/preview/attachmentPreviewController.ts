@@ -2,9 +2,12 @@
 
 module Antares.Common.Component {
     import Dto = Common.Models.Dto;
+    import Enums = Common.Models.Enums;
 
     export class AttachmentPreviewController {
         public componentId: string;
+        public entityType: Enums.EntityTypeEnum;
+
         public attachment: Common.Models.Business.Attachment = <Common.Models.Business.Attachment>{};
         public attachmentUrl: string;
 
@@ -14,12 +17,12 @@ module Antares.Common.Component {
             private componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService) {
 
-            this.urlResource = dataAccessService.getAzureDownloadUrlResource();
+            this.urlResource = dataAccessService.getAzureDownloadUrlResource(this.entityType);
 
             componentRegistry.register(this, this.componentId);
         }
 
-        setAttachment = (attachment: Common.Models.Business.Attachment, activityId: string) => {
+        setAttachment = (attachment: Common.Models.Business.Attachment, entityId: string) => {
             this.attachmentUrl = '';
             this.attachment = attachment;
 
@@ -27,7 +30,7 @@ module Antares.Common.Component {
                     documentTypeId : this.attachment.documentTypeId,
                     localeIsoCode: 'en',
                     externalDocumentId: this.attachment.externalDocumentId,
-                    entityReferenceId: activityId,
+                    entityReferenceId: entityId,
                     filename : this.attachment.fileName
                 }).$promise
                 .then((url: Antares.Common.Models.Dto.IAzureDownloadUrlContainer) =>{

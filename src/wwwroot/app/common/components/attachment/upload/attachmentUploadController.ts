@@ -4,15 +4,19 @@ module Antares.Common.Component {
     import AzureBlobUploadFactory = Antares.Factories.AzureBlobUploadFactory;
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
+    import Enums = Common.Models.Enums;
 
     export class AttachmentUploadController {
+        public componentId: string;
+        public entityType: Enums.EntityTypeEnum;
+        public enumDocumentType: Dto.EnumTypeCode;
+
         public attachmentTypes: any[];
         public file: File = null;
         public isFileCleared: boolean = false;
         public documentTypeId: string;
+
         private urlResource: ng.resource.IResourceClass<Common.Models.Resources.IAzureUploadUrlResource>;
-        componentId: string;
-        enumDocumentType: Dto.EnumTypeCode;
 
         constructor(
             private $scope: ng.IScope,
@@ -20,7 +24,8 @@ module Antares.Common.Component {
             private componentRegistry: Core.Service.ComponentRegistry,
             private azureBlobUploadFactory: AzureBlobUploadFactory,
             private dataAccessService: Services.DataAccessService) {
-            this.urlResource = dataAccessService.getAzureUploadUrlResource();
+
+            this.urlResource = dataAccessService.getAzureUploadUrlResource(this.entityType);
 
             componentRegistry.register(this, this.componentId);
         }
@@ -89,7 +94,7 @@ module Antares.Common.Component {
             if (this.file === null) {
                 this.isFileCleared = true;
             }
-            
+
             if (!this.isDataValid() || this.file === null) {
                 return this.reject();
             }

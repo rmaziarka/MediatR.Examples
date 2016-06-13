@@ -7,7 +7,8 @@ module Antares.Common.Component {
         controller: 'AttachmentUploadController',
         bindings: {
             componentId: '<',
-            enumDocumentType: '@'
+            enumDocumentType: '@',
+            entityType: '@'
         }
     });
 }

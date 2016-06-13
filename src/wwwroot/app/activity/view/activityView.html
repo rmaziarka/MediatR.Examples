@@ -132,7 +132,7 @@
         <h3 translate="ATTACHMENT.ADD.ATTACH_FILE"></h3>
     </side-panel-header>
     <side-panel-content>
-        <attachment-upload component-id="avvm.componentIds.activityAttachmentAddId" enum-document-type="{{avvm.enumTypeActivityDocumentType}}"></attachment-upload>
+        <attachment-upload component-id="avvm.componentIds.activityAttachmentAddId" enum-document-type="{{avvm.enumTypeActivityDocumentType}}" entity-type="{{avvm.entityType}}"></attachment-upload>
         <busy is-busy="avvm.saveActivityAttachmentBusy" label="{{'COMMON.FILEISUPLOADING' | translate}}"></busy>
     </side-panel-content>
     <side-panel-footer>
@@ -150,7 +150,7 @@
         <h3 translate="ATTACHMENT.PREVIEW.ATTACHMENT_PREVIEW"></h3>
     </side-panel-header>
     <side-panel-content>
-        <attachment-preview component-id="avvm.componentIds.activityAttachmentPreviewId">
+        <attachment-preview component-id="avvm.componentIds.activityAttachmentPreviewId" entity-type="{{avvm.entityType}}">
         </attachment-preview>
     </side-panel-content>
 </side-panel>
