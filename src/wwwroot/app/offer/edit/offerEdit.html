@@ -38,15 +38,15 @@
                     <label class="required" for="offer-statusId" translate="OFFER.ADD.STATUS"></label>
                     <div class="row">
                         <div class="col-md-6">
-                            <enum-select id="offer-status" 
+                            <enum-select id="offer-status"
                                          required="true"
                                          name="selectedStatus"
                                          ng-model="vm.offer.statusId"
                                          enum-type-code="{{vm.enumTypeOfferStatus}}"></enum-select>
+                            <div ng-messages="vm.editOfferForm.selectedStatus.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.selectedStatus.$dirty">
+                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div ng-messages="vm.editOfferForm.selectedStatus.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.selectedStatus.$dirty">
-                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
                 </div>
 
@@ -159,53 +159,73 @@
             <section>
                 <h3 class="page-header" translate="OFFER.EDIT.PROGRESS_SUMMARY"></h3>
                 <fieldset>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.mortgageStatus.$dirty) && vm.editOfferForm.mortgageStatus.$invalid}">
                         <label class="required" for="offer-statusId" translate="OFFER.EDIT.MORTGAGE_STATUS"></label>
                         <div class="row">
                             <div class="col-md-6">
                                 <enum-select id="offer-mortgage-status" required="true"
+                                             name="mortgageStatus"
                                              ng-model="vm.offer.mortgageStatusId"
                                              enum-type-code="{{vm.enumTypeMortgageStatus}}"></enum-select>
+                                <div ng-messages="vm.editOfferForm.mortgageStatus.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.mortgageStatus.$dirty">
+                                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.mortgageSurveyStatus.$dirty) && vm.editOfferForm.mortgageSurveyStatus.$invalid}">
                         <label class="required" for="mortgage-survey-status" translate="OFFER.EDIT.MORTGAGE_SURVEY_STATUS"></label>
                         <div class="row">
                             <div class="col-md-6">
                                 <enum-select id="mortgage-survey-status" required="true"
+                                             name="mortgageSurveyStatus"
                                              ng-model="vm.offer.mortgageSurveyStatusId"
                                              enum-type-code="{{vm.enumTypeMortgageSurveyStatus}}"></enum-select>
+                                <div ng-messages="vm.editOfferForm.mortgageSurveyStatus.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.mortgageSurveyStatus.$dirty">
+                                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.additionalSurveyStatus.$dirty) && vm.editOfferForm.additionalSurveyStatus.$invalid}">
                         <label class="required" for="additional-survey-status" translate="OFFER.EDIT.ADDITIONAL_SURVEY_STATUS"></label>
                         <div class="row">
                             <div class="col-md-6">
                                 <enum-select id="additional-survey-status" required="true"
+                                             name="additionalSurveyStatus"
                                              ng-model="vm.offer.additionalSurveyStatusId"
                                              enum-type-code="{{vm.enumTypeAdditionalSurveyStatus}}"></enum-select>
+                                <div ng-messages="vm.editOfferForm.additionalSurveyStatus.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.additionalSurveyStatus.$dirty">
+                                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.searchStatus.$dirty) && vm.editOfferForm.searchStatus.$invalid}">
                         <label class="required" for="search-status" translate="OFFER.EDIT.SEARCH_STATUS"></label>
                         <div class="row">
                             <div class="col-md-6">
                                 <enum-select id="search-status" required="true"
+                                             name="searchStatus"
                                              ng-model="vm.offer.searchStatusId"
                                              enum-type-code="{{vm.enumTypeSearchStatus}}"></enum-select>
+                                <div ng-messages="vm.editOfferForm.searchStatus.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.searchStatus.$dirty">
+                                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.enquiries.$dirty) && vm.editOfferForm.enquiries.$invalid}">
                         <label class="required" for="enquiries" translate="OFFER.EDIT.ENQUIRIES"></label>
                         <div class="row">
                             <div class="col-md-6">
                                 <enum-select id="enquiries" required="true"
+                                             name="enquiries"
                                              ng-model="vm.offer.enquiriesId"
                                              enum-type-code="{{vm.enumTypeEnquiriesStatus}}"></enum-select>
+                                <div ng-messages="vm.editOfferForm.enquiries.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.enquiries.$dirty">
+                                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -223,13 +243,17 @@
 
             <section>
                 <h3 class="page-header" translate="OFFER.EDIT.MORTGAGE_DETAILS"></h3>
-                <div class="form-group">
+                <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.mortgageLoanToValue.$dirty) && vm.editOfferForm.mortgageLoanToValue.$invalid}">
                     <label for="mortgage-loan-to-value" translate="OFFER.EDIT.MORTGAGE_LOAN_TO_VALUE"></label>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="input-group">
-                                <input type="number" id="mortgage-loan-to-value" class="form-control" ng-model="vm.offer.mortgageLoanToValue" min="0" max="200">
+                                <input type="number" id="mortgage-loan-to-value" name="mortgageLoanToValue" class="form-control" ng-model="vm.offer.mortgageLoanToValue" min="0" max="200">
                                 <div class="input-group-addon">%</div>
+                            </div>
+                            <div ng-messages="vm.editOfferForm.mortgageLoanToValue.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.mortgageLoanToValue.$dirty">
+                                <p name="minNumberValidationError" ng-message="max" class="help-block with-errors" translate="OFFER.EDIT.LOAN_TO_VALUE_MUST_BE_LESS_OR_EQUAL_200"></p>
+                                <p name="maxNumberValidationError" ng-message="min" class="help-block with-errors" translate="OFFER.EDIT.LOAN_TO_VALUE_MUST_BE_GREATER_THAN_ZERO"></p>
                             </div>
                         </div>
                     </div>
@@ -238,6 +262,9 @@
                     <h5 translate="OFFER.EDIT.BROKER"></h5>
                     <button id="edit-broker" type="button" class="btn btn-default"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                 </div>
+                <list-no-items ng-show="vm.hasBrokerContact() === false">
+                    <p class="help-block" id="no-contacts-help-block" ng-show="vm.editOfferForm.$submitted === false" translate="OFFER.EDIT.NO_BROKER"></p>
+                </list-no-items>
                 <div id="broker" class="row">
                     <div class="col-md-6">
                         <div class="card">
@@ -252,6 +279,9 @@
                     <h5 translate="OFFER.EDIT.LENDER"></h5>
                     <button id="edit-lender" type="button" class="btn btn-default"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                 </div>
+                <list-no-items ng-show="vm.hasLenderContact() === false">
+                    <p class="help-block" id="no-contacts-help-block" ng-show="vm.editOfferForm.$submitted === false" translate="OFFER.EDIT.NO_LENDER"></p>
+                </list-no-items>
                 <div id="lender" class="row">
                     <div class="col-md-6">
                         <div class="card">
@@ -282,6 +312,9 @@
                     <h5 translate="OFFER.EDIT.SURVEYOR"></h5>
                     <button id="edit-surveyor" type="button" class="btn btn-default"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                 </div>
+                <list-no-items ng-show="vm.hasSurveyorContact() === false">
+                    <p class="help-block" id="no-contacts-help-block" ng-show="vm.editOfferForm.$submitted === false" translate="OFFER.EDIT.NO_SURVEYOR"></p>
+                </list-no-items>
                 <div id="surveyor" class="row">
                     <div class="col-md-6">
                         <div class="card">
@@ -293,7 +326,6 @@
                     </div>
                 </div>
             </section>
-
             <section>
                 <h3 class="page-header" translate="OFFER.EDIT.ADDITIONAL_SURVEY"></h3>
                 <div class="form-group">
@@ -316,6 +348,9 @@
                     <h5 translate="OFFER.EDIT.SURVEYOR"></h5>
                     <button id="edit-additional-surveyor" type="button" class="btn btn-default"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                 </div>
+                <list-no-items ng-show="vm.hasAdditionalSurveyorContact() === false">
+                    <p class="help-block" id="no-contacts-help-block" ng-show="vm.editOfferForm.$submitted === false" translate="OFFER.EDIT.NO_SURVEYOR"></p>
+                </list-no-items>
                 <div id="additional-surveyor" class="row">
                     <div class="col-md-6">
                         <div class="card">
@@ -330,7 +365,7 @@
 
             <section>
                 <h3 class="page-header" translate="OFFER.EDIT.OTHER_DETAILS"></h3>
-                <div class="form-group">
+                <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.progressComment.$dirty) && vm.editOfferForm.progressComment.$invalid}">
                     <div class="row">
                         <div class="col-md-6">
                             <label for="comment" translate="OFFER.EDIT.COMMENT"></label>

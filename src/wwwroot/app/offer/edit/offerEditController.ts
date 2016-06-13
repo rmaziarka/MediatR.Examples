@@ -95,7 +95,7 @@ module Antares.Offer {
             this.additionalSurveyStatuses = result[Dto.EnumTypeCode.AdditionalSurveyStatus];
             this.searchStatuses = result[Dto.EnumTypeCode.SearchStatus];
             this.enquiriesStatuses = result[Dto.EnumTypeCode.Enquiries];
-            this.setSelectedStatuses();
+            this.setDefaultStatuses();
         }
 
         offerAccepted = (): boolean => {
@@ -107,7 +107,18 @@ module Antares.Offer {
             return false;
         }
 
-        setSelectedStatuses = () => {
+        clear = () => {
+            // TODO
+            this.offer.mortgageStatusId = null;
+            this.offer.mortgageSurveyStatusId = null;
+            this.offer.additionalSurveyStatusId = null;
+            this.offer.searchStatusId = null;
+            this.offer.enquiriesId = null;
+            this.offer.contractApproved = null;
+            this.offer.mortgageLoanToValue = null;
+        }
+        
+        setDefaultStatuses = () => {
             var defaultMortgageStatus: any = _.find(this.mortgageStatuses, (status: any) => status.code === "Unknown");
             if (!this.offer.mortgageStatusId && defaultMortgageStatus) {
                 this.offer.mortgageStatusId = defaultMortgageStatus.id;
@@ -139,6 +150,10 @@ module Antares.Offer {
                 return this.$q.reject();
             }
 
+            if (this.offerAccepted() === false) {
+                this.clear();
+            }
+
             var offerResource = this.dataAccessService.getOfferResource();
             var updateOffer: Dto.IOffer = angular.copy(this.offer);
             return offerResource
@@ -167,6 +182,26 @@ module Antares.Offer {
             this.components = {
                 activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId); }
             };
+        }
+
+        hasBrokerContact = (): boolean => {
+            // TODO
+            return false;
+        }
+
+        hasLenderContact = (): boolean => {
+            // TODO
+            return false;
+        }
+
+        hasSurveyorContact = (): boolean => {
+            // TODO
+            return false;
+        }
+
+        hasAdditionalSurveyorContact = (): boolean => {
+            // TODO
+            return false;
         }
     }
 
