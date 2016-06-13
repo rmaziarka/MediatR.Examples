@@ -9,6 +9,7 @@
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Resource;
+    using KnightFrank.Antares.Domain.Common.Enums;
 
     using TechTalk.SpecFlow;
 
@@ -63,7 +64,9 @@
         [Given(@"AddressForm exists for (.*) EnumTypeItem")]
         public void GivenThereExistsAddressFormForPropertyEnumTypeItem(string enumTypeItemCode)
         {
-            EnumTypeItem enumTypeItem = this.fixture.DataContext.EnumTypeItems.FirstOrDefault(x => x.Code == enumTypeItemCode);
+            EnumTypeItem enumTypeItem =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    e => e.EnumType.Code.Equals(nameof(EntityType)) && e.Code.Equals(enumTypeItemCode));
 
             var addressFormEntityType = new AddressFormEntityType { EnumTypeItem = enumTypeItem, AddressForm = this.AddressForm };
 

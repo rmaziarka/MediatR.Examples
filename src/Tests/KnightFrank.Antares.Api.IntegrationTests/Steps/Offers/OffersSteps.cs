@@ -11,6 +11,7 @@
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Offer.Commands;
 
     using Newtonsoft.Json;
@@ -40,7 +41,9 @@
         {
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
-            Guid statusId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals(status)).Id;
+            Guid statusId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(status)).Id;
 
             var offer = new Offer
             {
@@ -66,7 +69,9 @@
         [When(@"User creates (.*) offer using api")]
         public void CreateOfferUsingApi(string status)
         {
-            Guid statusId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals(status)).Id;
+            Guid statusId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(status)).Id;
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
 
@@ -88,7 +93,9 @@
         [When(@"User creates (.*) offer with mandatory fields using api")]
         public void CreateOfferWithMandatoryFieldsUsingApi(string status)
         {
-            Guid statusId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals(status)).Id;
+            Guid statusId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(status)).Id;
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
 
@@ -109,7 +116,8 @@
         {
             Guid statusId = data.Equals("status")
                 ? Guid.NewGuid()
-                : this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals("New")).Id;
+                : this.fixture.DataContext.EnumTypeItems.Single(
+                    e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(nameof(OfferStatus.New))).Id;
             Guid activityId = data.Equals("activity") ? Guid.NewGuid() : this.scenarioContext.Get<Activity>("Activity").Id;
             Guid requirementId = data.Equals("requirement")
                 ? Guid.NewGuid()
@@ -147,7 +155,9 @@
             var details = new UpdateOfferCommand
             {
                 Id = offer.Id,
-                StatusId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals(status)).Id,
+                StatusId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(status)).Id,
                 Price = 2000,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
                 CompletionDate = this.date.AddDays(2),
@@ -168,7 +178,8 @@
                 StatusId =
                     data.Equals("status")
                         ? Guid.NewGuid()
-                        : this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals("New")).Id,
+                        : this.fixture.DataContext.EnumTypeItems.Single(
+                            e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(nameof(OfferStatus.New))).Id,
                 CompletionDate = this.date,
                 ExchangeDate = this.date,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),

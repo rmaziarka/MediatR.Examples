@@ -13,6 +13,7 @@
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.Common.Commands;
+    using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Requirement.Commands;
 
     using Newtonsoft.Json;
@@ -45,7 +46,9 @@
         {
             const string countryCode = "GB";
             Guid countryId = this.fixture.DataContext.Countries.Single(x => x.IsoCode.Equals(countryCode)).Id;
-            Guid enumTypeItemId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals("Requirement")).Id;
+            Guid enumTypeItemId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    e => e.EnumType.Code.Equals(nameof(EntityType)) && e.Code.Equals(nameof(EntityType.Requirement))).Id;
             Guid addressFormId =
                 this.fixture.DataContext.AddressFormEntityTypes.Single(
                     afe => afe.AddressForm.CountryId == countryId && afe.EnumTypeItemId == enumTypeItemId).AddressFormId;

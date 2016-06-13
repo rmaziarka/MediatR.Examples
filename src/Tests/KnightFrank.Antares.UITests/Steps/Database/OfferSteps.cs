@@ -7,6 +7,7 @@
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.UITests.Pages.Panels;
 
     using TechTalk.SpecFlow;
@@ -35,7 +36,8 @@
         {
             var details = table.CreateInstance<OfferData>();
             Guid statusId =
-                this.dataContext.EnumTypeItems.Single(i => i.EnumType.Code.Equals("OfferStatus") && i.Code.Equals(details.Status)).Id;
+                this.dataContext.EnumTypeItems.Single(
+                    i => i.EnumType.Code.Equals(nameof(OfferStatus)) && i.Code.Equals(details.Status)).Id;
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
 

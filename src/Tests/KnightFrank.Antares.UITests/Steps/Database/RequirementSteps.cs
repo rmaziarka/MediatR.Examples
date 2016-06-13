@@ -8,6 +8,7 @@
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Domain.Common.Enums;
 
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
@@ -37,9 +38,11 @@
 
             // Get country and address form id
             Guid countryId = this.dataContext.Countries.Single(x => x.IsoCode == "GB").Id;
-            Guid enumTypeId = this.dataContext.EnumTypeItems.Single(e => e.Code == "Requirement").Id;
+            Guid enumTypeId =
+                this.dataContext.EnumTypeItems.Single(
+                    e => e.EnumType.Code.Equals(nameof(EntityType)) && e.Code.Equals(nameof(EntityType.Requirement))).Id;
             Guid addressFormId = this.dataContext.AddressFormEntityTypes.Single(
-                afe => afe.AddressForm.CountryId == countryId && afe.EnumTypeItemId == enumTypeId).AddressFormId;
+                afe => afe.AddressForm.CountryId.Equals(countryId) && afe.EnumTypeItemId.Equals(enumTypeId)).AddressFormId;
 
             // Set requirement details
             requirement.CreateDate = DateTime.UtcNow;
