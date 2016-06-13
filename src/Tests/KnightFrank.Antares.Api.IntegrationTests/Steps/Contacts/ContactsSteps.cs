@@ -42,14 +42,14 @@
             this.fixture.DataContext.Contacts.RemoveRange(this.fixture.DataContext.Contacts.ToList());
         }
 
-        [Given(@"User creates contacts in database with following data")]
+        [Given(@"Contacts exists in database")]
         public void CreateUsersInDb(Table table)
         {
-            IEnumerable<Contact> contacts = table.CreateSet<Contact>().ToList();
+            List<Contact> contacts = table.CreateSet<Contact>().ToList();
             this.fixture.DataContext.Contacts.AddRange(contacts);
             this.fixture.DataContext.SaveChanges();
 
-            this.scenarioContext.Set(contacts, "ContactList");
+            this.scenarioContext.Set(contacts, "Contacts");
         }
 
         [When(@"User creates contact using api with max length fields")]
@@ -88,7 +88,7 @@
         {
             if (contactId.Equals("latest"))
             {
-                contactId = this.scenarioContext.Get<List<Contact>>("ContactList")[0].Id.ToString();
+                contactId = this.scenarioContext.Get<List<Contact>>("Contacts")[0].Id.ToString();
             }
             else if (contactId.Equals("invalid"))
             {
@@ -124,7 +124,7 @@
         [Then(@"Contacts details should have expected values")]
         public void CheckContactDetailsHaveExpectedValues()
         {
-            var contactList = this.scenarioContext.Get<List<Contact>>("ContactList");
+            var contactList = this.scenarioContext.Get<List<Contact>>("Contacts");
 
             var currentContactsDetails =
                 JsonConvert.DeserializeObject<List<Contact>>(this.scenarioContext.GetResponseContent());

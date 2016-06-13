@@ -22,7 +22,7 @@
     {
         private const string ApiUrl = "/api/activities";
         private readonly BaseTestClassFixture fixture;
-
+        private readonly DateTime date = DateTime.UtcNow;
         private readonly ScenarioContext scenarioContext;
 
         private Activity activity;
@@ -53,7 +53,7 @@
             this.updateActivityUser = new UpdateActivityUser
             {
                 UserId = user?.Id ?? Guid.NewGuid(),
-                CallDate = DateTime.UtcNow.AddDays(noOfDays)
+                CallDate = this.date.AddDays(noOfDays)
             };
 
             this.updateActivityDepartments = new List<UpdateActivityDepartment>
@@ -64,12 +64,6 @@
                     DepartmentTypeId = departmentTypeId
                 }
             };
-        }
-
-        [Given(@"Next call is set to date is today plus (.*)")]
-        public void GivenNextCallForDateIsSet(double todayPlusDays)
-        {
-            this.updateActivityUser.CallDate = DateTime.UtcNow.AddDays(todayPlusDays);
         }
 
         [Given(@"Following secondary negotiators exists in database")]
@@ -110,7 +104,7 @@
                 LeadNegotiator = this.updateActivityUser,
                 SecondaryNegotiators =
                     this.secondaryNegotiatorsList.Select(
-                        n => new UpdateActivityUser { UserId = n, CallDate = DateTime.UtcNow.AddDays(10) }).ToList(),
+                        n => new UpdateActivityUser { UserId = n, CallDate = this.date.AddDays(10) }).ToList(),
                 Departments = this.updateActivityDepartments
             };
 
@@ -129,7 +123,7 @@
 
             DateTime? callDate = noOfDaysToAdd.Equals("null")
                 ? (DateTime?)null
-                : DateTime.UtcNow.AddDays(double.Parse(noOfDaysToAdd));
+                : this.date.AddDays(double.Parse(noOfDaysToAdd));
 
             var updateActivityUserCommand = new UpdateActivityUserCommand
             {

@@ -23,7 +23,7 @@ Scenario Outline: Create contact using invalid data
 @Contacts
 Scenario: Get all contacts
 	Given All contacts have been deleted
-		And User creates contacts in database with following data
+		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
 			| David     | Dummy   | Mister |
@@ -34,7 +34,7 @@ Scenario: Get all contacts
 @Contacts
 Scenario: Get contact
 	Given All contacts have been deleted
-		And User creates contacts in database with following data
+		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
 	When User retrieves contact details for latest id
