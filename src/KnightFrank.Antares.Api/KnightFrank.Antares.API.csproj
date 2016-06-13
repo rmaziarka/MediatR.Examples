@@ -216,6 +216,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CompanyContactsController.cs" />
     <Compile Include="Controllers\LatestViewsController.cs" />
     <Compile Include="Controllers\OffersController.cs" />
     <Compile Include="Models\AttachmentDownloadUrlParameters.cs" />
