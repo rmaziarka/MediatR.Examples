@@ -7,6 +7,8 @@
 
     using Contacts;
 
+    using KnightFrank.Antares.Dal.Model.Company;
+
     using Property;
     using Property.Activities;
     using User;
@@ -51,19 +53,19 @@
 
         public Guid? BrokerId { get; set; }
 
-        public virtual Contact Broker { get; set; }
+        public virtual CompanyContact Broker { get; set; }
 
         public Guid? LenderId { get; set; }
 
-        public virtual Contact Lender { get; set; }
+        public virtual CompanyContact Lender { get; set; }
 
         public Guid? SurveyorId { get; set; }
 
-        public virtual Contact Surveyor { get; set; }
+        public virtual CompanyContact Surveyor { get; set; }
 
         public Guid? AdditionalSurveyorId { get; set; }
 
-        public virtual Contact AdditionalSurveyor { get; set; }
+        public virtual CompanyContact AdditionalSurveyor { get; set; }
 
         public bool ContractApproved { get; set; }
 
