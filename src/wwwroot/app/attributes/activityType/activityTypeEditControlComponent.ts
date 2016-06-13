@@ -7,6 +7,7 @@ module Antares.Attributes {
         controller: 'ActivityTypeEditControlController',
         bindings: {
             propertyTypeId: '<',
+            config: '<',
             ngModel: '='
         }
     });

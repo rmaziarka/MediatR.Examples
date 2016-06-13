@@ -4,9 +4,9 @@
             <h3 translate="ACTIVITY.ADD.CREATE_ACTIVITY"></h3>
         </side-panel-header>
         <side-panel-content>
-            <activity-type-edit-control property-type-id="vm.propertyTypeId" ng-model="vm.activity.activityTypeId" ng-if="vm.config.activityType"></activity-type-edit-control>
-            <activity-status-control ng-model="vm.activity.activityStatusId" ng-if="vm.config.activityStatus"></activity-status-control>
-            <activity-vendors-control ownerships="vm.ownerships" property-type="vm.activity.activityTypeId" set-vendors="vm.setVendors(vendors)" ng-if="vm.config.vendors"></activity-vendors-control>
+            <activity-type-edit-control property-type-id="vm.propertyTypeId" ng-model="vm.activity.activityTypeId" config="vm.config.activityType"></activity-type-edit-control>
+            <activity-status-control ng-model="vm.activity.activityStatusId" config="vm.config.activityStatus"></activity-status-control>
+            <activity-vendors-control ownerships="vm.ownerships" property-type="vm.activity.activityTypeId" set-vendors="vm.setVendors(vendors)" config="vm.config.vendors"></activity-vendors-control>
         </side-panel-content>
         <side-panel-footer>
             <button class="btn btn-primary" id="activity-add-button" type="submit">

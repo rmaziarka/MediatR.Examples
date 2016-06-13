@@ -8,6 +8,7 @@ module Antares.Attributes {
         bindings: {
             ownerships: '<',
             propertyType: '<',
+            config: '<',
             setVendors: '&'
         }
     });

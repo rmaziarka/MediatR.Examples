@@ -6,6 +6,7 @@ module Antares.Attribues {
         controllerAs: 'vm',
         controller: 'ActivityStatusEditControlController',
         bindings: {
+            config: '<',
             ngModel: '='
         }
     });
