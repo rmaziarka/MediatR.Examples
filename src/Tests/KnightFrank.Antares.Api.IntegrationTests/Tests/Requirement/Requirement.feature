@@ -85,8 +85,8 @@ Scenario: Get requirement with offer and viewing
 			| Title  | FirstName | Surname |
 			| Mister | Tomasz    | Bien    |
 		And Requirement exists in database
-		And User creates New offer in database
-		And User creates viewing in database
+		And Offer with New status exists in database
+		And Viewing exists in database
 	When User retrieves requirement for latest id
 	Then User should get OK http status code
 		And Offer details in requirement should be the same as added
