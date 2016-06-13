@@ -46,6 +46,10 @@ module Antares.Property.View {
             });
         }
 
+        onPanelsHidden = () =>{
+            this.isAddResidentialActivityVisible = false;
+        }
+
         fixOwnershipDates = () => {
             this.property.ownerships.forEach((ownership: Dto.IOwnership) => {
                 ownership.purchaseDate = Core.DateTimeUtils.convertDateToUtc(ownership.purchaseDate);
