@@ -10,11 +10,11 @@ namespace Fields
     public class InnerField
     {
         private readonly MemberInfo member;
-        private readonly Func<object, object> compiled;
+        public readonly Func<object, object> compiled;
         public readonly LambdaExpression expression;
-        private readonly Type containerType;
-        private readonly Type propertyType;
-        private readonly IList<IValidator> validators;
+        public readonly Type containerType;
+        public readonly Type propertyType;
+        public readonly IList<IValidator> validators;
 
         private Delegate isHiddenExpression;
         private Delegate isReadonlyExpression;

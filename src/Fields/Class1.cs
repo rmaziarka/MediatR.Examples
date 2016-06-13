@@ -17,9 +17,17 @@
 
             //date range validator
 
-            var createCommand = new CreateCommand();
-            createCommand.BuyPrice = 10m;
-            createCommand.StatusId = 2;
+            var createCommand = new CreateCommand
+            {
+                BuyPrice = 200m,
+                StatusId = 2
+            };
+
+            var createCommand2 = new CreateCommand
+            {
+                BuyPrice = 10m,
+                StatusId = 1
+            };
 
 
             var xyz = new ActivityControlsConfiguration();
@@ -32,6 +40,18 @@
                 {
                     innerField.Validate(createCommand);
                 }
+            }
+
+            var states = xyz.GetInnerFieldState(PageType.Create, PropertyType.Flat, ActivityType.Lettings, createCommand);
+            foreach (var state in states)
+            {
+                Console.WriteLine("[{0}] -- hidden: {1}, readonly: {2}, no. of validators: {3}", state.Name, state.IsHidden, state.IsReadonly, state.Validators.Count);
+            }
+
+            states = xyz.GetInnerFieldState(PageType.Create, PropertyType.Flat, ActivityType.Lettings, createCommand2);
+            foreach (var state in states)
+            {
+                Console.WriteLine("[{0}] -- hidden: {1}, readonly: {2}, no. of validators: {3}", state.Name, state.IsHidden, state.IsReadonly, state.Validators.Count);
             }
 
             Console.ReadLine();
@@ -47,6 +67,26 @@
         {
             this.DefineControls();
             this.DefineMapping();
+        }
+
+        public IList<InnerFieldState> GetInnerFieldState(PageType pageType, PropertyType propertyType, ActivityType activityType, object entity)
+        {
+            Console.WriteLine("*** GetState {0} {1} {2}", pageType, propertyType, activityType);
+            var innerFieldStates = new List<InnerFieldState>();
+            IList<Control> controls;
+            if (this.ControlsDictionary.TryGetValue(pageType, out controls))
+            {
+                foreach (Control control in controls)
+                {
+                    innerFieldStates.AddRange(control.GetFieldStates(entity));
+                }
+
+                return innerFieldStates;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         private void AddControl(PageType pageType, ControlCode controlCode, InnerField field)
@@ -66,6 +106,9 @@
             this.ControlsDictionary.Add(PageType.Details, new List<Control>());
 
             //AddControl(PageType.Create, ControlCode.Status, Field<CreateCommand>.CreateDictionary(x => x.StatusId, "StatusTypes").InnerField);
+
+
+            // TODO: verify if page type has field for one entity type
 
             AddControl(PageType.Create, ControlCode.BuyPrice, Field<CreateCommand>.Create(x => x.BuyPrice).GreaterThan(100).InnerField);
 
@@ -100,7 +143,7 @@
         {
             Use(ControlCode.BuyPrice, When(PropertyType.Flat, ActivityType.Lettings, PageType.Create))
                 .IsReadonlyWhen<CreateCommand>(x => x.StatusId == 1)
-                .FieldIsReadonlyWhen<CreateCommand>(x => x.BuyPrice, x => x.BuyPrice > 10);
+                .FieldIsReadonlyWhen<CreateCommand, decimal>(x => x.BuyPrice, x => x.BuyPrice > 10);
 
             //Use(ControlCode.BuyPrice, When(PropertyType.Flat, ActivityType.Lettings, PageType.Create)).IsReadonlyWhen<CreateCommand>(x => x.StatusId == 2);
         }
