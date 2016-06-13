@@ -9,7 +9,9 @@ module Antares.Property {
             propertyTypeId: '<',
             ownerships: '<',
             config:'<',
-            onSave: '&'
+            onSave: '&',
+            onCancel: '&',
+            isPristine: '<'
         }
     });
 }

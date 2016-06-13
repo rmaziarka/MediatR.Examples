@@ -10,10 +10,13 @@ module Antares.Activity {
         ownerships: Business.Ownership[];
         config: IActivityAddPanelConfig;
         onSave: (obj: { activity: AddCard.ActivityAddCardModel }) => void;
+        onCancel: () => void;
+        isPristine: boolean;
 
         // controller
         activity: AddCard.ActivityAddCardModel = new AddCard.ActivityAddCardModel();
         vendorContacts: Business.Contact[];
+        activityAddCardForm: ng.IFormController;
 
         constructor(
             private dataAccessService: Antares.Services.DataAccessService,
@@ -26,9 +29,12 @@ module Antares.Activity {
         }
 
         $onChanges = (obj: any) => {
-            // TODO change ownerships to immutable list
             if (obj.ownerships.currentValue !== obj.ownerships.previousValue) {
                 this.setVendors();
+            }
+
+            if (obj.isPristine && obj.isPristine.currentValue) {
+                this.setPristine();
             }
         }
 
@@ -46,6 +52,14 @@ module Antares.Activity {
             this.onSave({
                 activity: this.activity
             });
+        }
+
+        cancel = () => {
+            this.onCancel();
+        }
+
+        private setPristine = () => {
+            this.activityAddCardForm.$setPristine();
         }
     }
 

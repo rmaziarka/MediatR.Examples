@@ -1,4 +1,4 @@
-﻿<form name="activityAddCardForm" ng-submit="activityAddCardForm.isFormValid() && vm.save()" novalidate>
+﻿<form name="vm.activityAddCardForm" ng-submit="vm.activityAddCardForm.isFormValid() && vm.save()" novalidate>
     <kf-side-panel-card>
         <side-panel-header>
             <h3 translate="ACTIVITY.ADD.CREATE_ACTIVITY"></h3>
@@ -10,6 +10,9 @@
             <activity-vendors-control vendor-contacts="vm.vendorContacts" activity-type-id="vm.activity.activityTypeId" config="vm.config.vendors"></activity-vendors-control>
         </side-panel-content>
         <side-panel-footer>
+            <button class="btn btn-default" type="button" ng-click="vm.cancel()">
+                <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+            </button>            
             <button class="btn btn-primary" id="activity-add-button" type="submit">
                 <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
             </button>

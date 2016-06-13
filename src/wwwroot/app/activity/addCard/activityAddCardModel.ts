@@ -9,5 +9,4 @@ module Antares.Activity.AddCard {
         activityTypeId: string = '';
         contacts: Business.Contact[] = [];
     }
-
 }
