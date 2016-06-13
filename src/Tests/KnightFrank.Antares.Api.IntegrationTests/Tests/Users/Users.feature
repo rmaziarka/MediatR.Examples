@@ -41,3 +41,15 @@ Given All users have been deleted
 When User gets user with latest Id
 Then User should get OK http status code
 	And User details should be same as in database
+
+	
+@Users
+Scenario Outline: Get users with invalid Id
+Given All users have been deleted
+	When Users gets user by <selected> id
+	Then User should get <statusCode> http status code
+
+Examples:
+| selected                             | statusCode |
+| 2AC24202-4831-E611-8344-501AC503CAF5 | NotFound |
+| 00000000-0000-0000-0000-00000000     | BadRequest |

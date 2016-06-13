@@ -101,8 +101,17 @@
 
             this.scenarioContext.SetHttpResponseMessage(response);
         }
+        [When(@"Users gets user by (.*) id")]
+        public void WhenUsersGetsUserById(string query)
+        {
+            string requestUrl = $"{ApiUrl}{query}";
+            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
 
-       [Then(@"User should get (.*) number of results returned")]
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+
+        [Then(@"User should get (.*) number of results returned")]
         public void CheckCorrectNumberOfResultsReturned(int matchCount)
         {
             string response = this.scenarioContext.GetResponseContent();
