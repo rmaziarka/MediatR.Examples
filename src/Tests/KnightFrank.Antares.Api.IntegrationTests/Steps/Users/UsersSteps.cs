@@ -11,6 +11,7 @@
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal.Model.Resource;
     using KnightFrank.Antares.Dal.Model.User;
+    using KnightFrank.Antares.Domain.User.Commands;
     using KnightFrank.Antares.Domain.User.QueryResults;
 
     using Newtonsoft.Json;
@@ -93,7 +94,7 @@
             
             if (userId.Equals("latest"))
             {
-                selecteduserId = this.GetUserFromContext();
+                selecteduserId = this.GetUserIdFromContext();
             }
 
             string requestUrl = $"{ApiUrl}{selecteduserId}";
@@ -101,6 +102,7 @@
 
             this.scenarioContext.SetHttpResponseMessage(response);
         }
+
         [When(@"Users gets user by (.*) id")]
         public void WhenUsersGetsUserById(string query)
         {
@@ -110,6 +112,27 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
+        [When(@"User updates user")]
+        public void WhenUserUpdatesUser(Table table)
+        {
+            Guid selectedUserId = this.GetUserIdFromContext();
+            string salutationFormat = this.GetValueFromTable(table, "preferredFormat");
+
+            Guid? salutaionFormatId = null;
+            if (!string.IsNullOrWhiteSpace(salutationFormat))
+             salutaionFormatId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[salutationFormat];
+
+            var command = new UpdateUserCommand
+            {
+                Id = selectedUserId,
+                SalutationFormatId = salutaionFormatId
+            };
+
+            string requestUrl = $"{ApiUrl}";
+            HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl,command);
+
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
 
         [Then(@"User should get (.*) number of results returned")]
         public void CheckCorrectNumberOfResultsReturned(int matchCount)
@@ -141,7 +164,7 @@
             string response = this.scenarioContext.GetResponseContent();
             var returnedUser = JsonConvert.DeserializeObject<User>(response);
 
-            Guid selectedUserId = this.GetUserFromContext();
+            Guid selectedUserId = this.GetUserIdFromContext();
             User userFromDatabase = this.fixture.DataContext.Users.Single(u => u.Id==selectedUserId);
 
             returnedUser.ShouldBeEquivalentTo(userFromDatabase, options => options
@@ -152,11 +175,21 @@
 
         }
 
-        private Guid GetUserFromContext()
+        private Guid GetUserIdFromContext()
         {
             //get any in context
             var userList = this.scenarioContext.Get<List<User>>("User List");
             return userList?.First().Id ?? Guid.Empty;
+        }
+
+        //ToDo: put in a helper class somewhere
+        private string GetValueFromTable(Table table, string columName)
+        {
+            foreach (TableRow row in table.Rows)
+            {
+                return row[columName];
+            }
+            return string.Empty;
         }
     }
 }
