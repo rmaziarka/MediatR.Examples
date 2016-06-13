@@ -102,7 +102,7 @@
 		{
 			string requestUrl = $"{ApiUrl}";
 			var company = this.scenarioContext.Get<Company>("Company");
-			var contactList = this.scenarioContext.Get<List<Contact>>("ContactList");
+			var contactList = this.scenarioContext.Get<List<Contact>>("Contacts");
 
 			var commandCompany = new UpdateCompanyCommand
 			{
@@ -123,7 +123,7 @@
 		{
 			string requestUrl = $"{ApiUrl}";
 			var company = this.scenarioContext.Get<Company>("Company");
-			var contactList = this.scenarioContext.Get<List<Contact>>("ContactList");
+			var contactList = this.scenarioContext.Get<List<Contact>>("Contacts");
 
 			var commandCompany = new UpdateCompanyCommand
 			{
@@ -197,7 +197,7 @@
         private void CreateCompany(CreateCompanyCommand company)
         {
             string requestUrl = $"{ApiUrl}";
-            var contactList = this.scenarioContext.Get<List<Contact>>("ContactList");
+            var contactList = this.scenarioContext.Get<List<Contact>>("Contacts");
            
             company.ContactIds = contactList.Select(x => x.Id).ToList();
             this.scenarioContext.Set(new Company

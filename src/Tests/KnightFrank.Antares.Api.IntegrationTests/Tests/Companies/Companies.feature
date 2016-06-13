@@ -2,7 +2,7 @@
 
 @Company
 Scenario: Create new company with required fields
-	Given User creates contacts in database with following data
+	Given Contacts exists in database
 		| FirstName | Surname | Title |
 		| Michael   | Angel   | cheef | 
 	When User creates company by API for contact for maximum name length
@@ -12,7 +12,7 @@ Scenario: Create new company with required fields
 
 @Company
 Scenario Outline: Create new company with all fields
-	Given User creates contacts in database with following data
+	Given Contacts exists in database
 		| FirstName | Surname | Title |
 		| Michael   | Angel   | Mr |
 	And User gets EnumTypeItemId and EnumTypeItem code
@@ -30,7 +30,7 @@ Examples:
 
 @Company
 Scenario Outline: Create company with invalid data
-	Given User creates contacts in database with following data
+	Given Contacts exists in database
 		| FirstName | Surname | Title |
 		| Michael   | Angel   | ceo | 
 	And User gets EnumTypeItemId and EnumTypeItem code
@@ -59,7 +59,7 @@ Then User should get BadRequest http status code
 
 @Company
 Scenario: Get company details
-Given User creates contacts in database with following data
+Given Contacts exists in database
 		| FirstName | Surname | Title |
 		| Michael   | Angel   | ceo | 
 	And Company exists in database
@@ -69,7 +69,7 @@ And Company details should match those in database
 
 @Company
 Scenario: Update company with all fields
-	Given User creates contacts in database with following data
+	Given Contacts exists in database
 		| FirstName | Surname | Title |
 		| Michael   | Angel   | cheef | 
 	And User creates company in database with following data
@@ -81,7 +81,7 @@ Scenario: Update company with all fields
 
 @Company
 Scenario: Update company with invalid data
-	Given User creates contacts in database with following data
+	Given Contacts exists in database
 		| FirstName | Surname | Title |
 		| Michael   | Angel   | cheef | 
 	And User creates company in database with following data
