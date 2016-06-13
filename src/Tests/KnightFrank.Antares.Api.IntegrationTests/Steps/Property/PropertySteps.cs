@@ -87,11 +87,23 @@
             this.scenarioContext["AddressFormId"] = addressFormId;
         }
 
-        [Given(@"Property with Address and (.*) division is in database")]
-        public void GivenFollowingPropertyExistsInDataBase(string divisionCode, Table table)
+        [Given(@"Property exists in database")]
+        public void CreatePropertyInDatabase(Table table)
         {
-            var address = table.CreateInstance<Address>();
-            var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
+            string propertyType = table.Rows[0]["PropertyType"];
+            string division = table.Rows[0]["Division"];
+
+            const string countryCode = "GB";
+            Guid countryId = this.fixture.DataContext.Countries.Single(x => x.IsoCode.Equals(countryCode)).Id;
+            Guid enumTypeItemId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals("Property")).Id;
+            Guid addressFormId =
+                this.fixture.DataContext.AddressFormEntityTypes.Single(
+                    afe => afe.AddressForm.CountryId == countryId && afe.EnumTypeItemId == enumTypeItemId).AddressFormId;
+
+            Guid propertyTypeId = this.fixture.DataContext.PropertyTypes.Single(i => i.Code.Equals(propertyType)).Id;
+            Guid divisionId =
+                this.fixture.DataContext.EnumTypeItems.Single(i => i.EnumType.Code.Equals("Division") && i.Code.Equals(division))
+                    .Id;
 
             AttributeValues attributeValues = this.scenarioContext.Keys.Contains("AttributeValues")
                 ? this.scenarioContext.Get<AttributeValues>("AttributeValues")
@@ -106,10 +118,19 @@
                 createOrUpdatePropertyCharacteristic.Select(
                     prop => new PropertyCharacteristic { CharacteristicId = prop.CharacteristicId, Text = prop.Text }).ToList();
 
-            Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
-
-            address.AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId");
-            address.CountryId = this.scenarioContext.Get<Guid>("CountryId");
+            var address = new Address
+            {
+                PropertyName = StringExtension.GenerateMaxAlphanumericString(128),
+                PropertyNumber = StringExtension.GenerateMaxAlphanumericString(8),
+                Line1 = StringExtension.GenerateMaxAlphanumericString(128),
+                Line2 = StringExtension.GenerateMaxAlphanumericString(128),
+                Line3 = StringExtension.GenerateMaxAlphanumericString(128),
+                Postcode = StringExtension.GenerateMaxAlphanumericString(10),
+                City = StringExtension.GenerateMaxAlphanumericString(128),
+                County = StringExtension.GenerateMaxAlphanumericString(128),
+                AddressFormId = addressFormId,
+                CountryId = countryId
+            };
 
             var property = new Property
             {
@@ -123,7 +144,7 @@
             this.fixture.DataContext.Properties.Add(property);
             this.fixture.DataContext.SaveChanges();
 
-            this.scenarioContext.Set(property, "AddedProperty");
+            this.scenarioContext.Set(property, "Property");
         }
 
         [Given(@"User gets (.*) for PropertyType")]
@@ -140,7 +161,7 @@
             }
         }
 
-        [Given(@"User sets attributes for property in database")]
+        [Given(@"Property attributes exists in database")]
         public void SetAttributesForPropertyForDb(Table table)
         {
             var attributeValues = table.CreateInstance<AttributeValues>();
@@ -157,7 +178,7 @@
         [Given(@"Property has following charactersitics")]
         public void GivenPropertyHasFollowingCharactersitics(Table table)
         {
-            Guid id = this.scenarioContext.Get<Property>("AddedProperty").Id;
+            Guid id = this.scenarioContext.Get<Property>("Property").Id;
             IEnumerable<RequiredCharacteristics> propertyCharacteristic = table.CreateSet<RequiredCharacteristics>();
 
             foreach (PropertyCharacteristic prop in propertyCharacteristic.Select(characteristic => new PropertyCharacteristic
@@ -235,7 +256,7 @@
                     ? this.scenarioContext.Get<List<CreateOrUpdatePropertyCharacteristic>>("PropertyCharacteristics")
                     : new List<CreateOrUpdatePropertyCharacteristic>();
 
-            Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Property>("AddedProperty").Id : new Guid(id);
+            Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Property>("Property").Id : new Guid(id);
             Guid divisionId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[divisionCode];
 
             var updatedProperty = new UpdatePropertyCommand
@@ -312,8 +333,8 @@
         [When(@"User retrieves property details")]
         public void GetProperty()
         {
-            Guid propertyId = this.scenarioContext.ContainsKey("AddedProperty")
-                ? this.scenarioContext.Get<Property>("AddedProperty").Id
+            Guid propertyId = this.scenarioContext.ContainsKey("Property")
+                ? this.scenarioContext.Get<Property>("Property").Id
                 : Guid.NewGuid();
             string requestUrl = $"{ApiUrl}/{propertyId}";
 
@@ -381,7 +402,7 @@
         [Then(@"Characteristics list should be the same as in database")]
         public void ThenCharacteristicsListShouldBeTheSameAsInDatabase()
         {
-            Guid propertyTypeId = this.scenarioContext.Get<Property>("AddedProperty").Id;
+            Guid propertyTypeId = this.scenarioContext.Get<Property>("Property").Id;
             List<PropertyCharacteristic> expectedCharacteristics =
                 JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent()).PropertyCharacteristics.ToList();
             List<PropertyCharacteristic> actualCharacteristics =

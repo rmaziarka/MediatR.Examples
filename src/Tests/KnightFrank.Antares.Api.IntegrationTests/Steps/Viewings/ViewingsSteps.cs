@@ -25,7 +25,7 @@
     {
         private const string ApiUrl = "/api/viewings";
         private readonly BaseTestClassFixture fixture;
-
+        private readonly DateTime date = DateTime.UtcNow;
         private readonly ScenarioContext scenarioContext;
 
         public ViewingsSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
@@ -51,8 +51,8 @@
             {
                 ActivityId = activityId,
                 AttendeesIds = attendeesIds,
-                StartDate = DateTime.UtcNow,
-                EndDate = DateTime.UtcNow.AddHours(1),
+                StartDate = this.date,
+                EndDate = this.date.AddHours(1),
                 InvitationText = StringExtension.GenerateMaxAlphanumericString(4000),
                 NegotiatorId = negotiatorId,
                 RequirementId = requirementId
@@ -73,8 +73,8 @@
             {
                 ActivityId = activityId,
                 AttendeesIds = attendeesIds,
-                StartDate = DateTime.UtcNow,
-                EndDate = DateTime.UtcNow.AddHours(1),
+                StartDate = this.date,
+                EndDate = this.date.AddHours(1),
                 RequirementId = requirementId
             };
 
@@ -97,8 +97,8 @@
             {
                 ActivityId = activityId,
                 AttendeesIds = attendeesIds,
-                StartDate = DateTime.UtcNow,
-                EndDate = DateTime.UtcNow.AddHours(1),
+                StartDate = this.date,
+                EndDate = this.date.AddHours(1),
                 InvitationText = StringExtension.GenerateMaxAlphanumericString(4000),
                 PostViewingComment = StringExtension.GenerateMaxAlphanumericString(4000),
                 NegotiatorId = negotiatorId,
@@ -108,15 +108,15 @@
             this.CreateViewing(details);
         }
 
-        [Given(@"User creates viewing in database")]
+        [Given(@"Viewing exists in database")]
         public void CreateViewingInDatabase()
         {
             var requirement = this.scenarioContext.Get<Requirement>("Requirement");
 
             var viewing = new Viewing
             {
-                StartDate = DateTime.UtcNow,
-                EndDate = DateTime.UtcNow.AddHours(1),
+                StartDate = this.date,
+                EndDate = this.date.AddHours(1),
                 InvitationText = StringExtension.GenerateMaxAlphanumericString(4000),
                 Attendees = new List<Contact>
                 {
@@ -152,8 +152,8 @@
                 },
                 PostViewingComment = StringExtension.GenerateMaxAlphanumericString(4000),
                 InvitationText = StringExtension.GenerateMaxAlphanumericString(4000),
-                StartDate = DateTime.UtcNow.AddHours(1),
-                EndDate = DateTime.UtcNow.AddHours(2)
+                StartDate = this.date.AddHours(1),
+                EndDate = this.date.AddHours(2)
             };
 
             this.UpdateViewing(details);
@@ -172,8 +172,8 @@
                 },
                 PostViewingComment = StringExtension.GenerateMaxAlphanumericString(4000),
                 InvitationText = StringExtension.GenerateMaxAlphanumericString(4000),
-                StartDate = DateTime.UtcNow.AddHours(1),
-                EndDate = DateTime.UtcNow.AddHours(2)
+                StartDate = this.date.AddHours(1),
+                EndDate = this.date.AddHours(2)
             };
 
             this.UpdateViewing(details);
