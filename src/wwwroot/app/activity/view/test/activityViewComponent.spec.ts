@@ -363,6 +363,8 @@ module Antares {
         describe('and attachments are loaded', () => {
             var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
 
+            var fileSizeFilter = Mock.FileSize.generate();
+
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
@@ -442,9 +444,6 @@ module Antares {
                 var attachmentMock = TestHelpers.AttachmentGenerator.generate({ user: new Business.User({ id: 'us1', firstName: 'firstName1', lastName: 'lastName1', departmentId: 'depId', department: null }) });
                 attachmentMock.createdDate = dateMock;
 
-                var sizeMock = '999.7 MB';
-                spyOn(attachmentMock, 'humanizedSize').and.returnValue(sizeMock);
-
                 activityMock.attachments = [attachmentMock];
                 scope.$apply();
 
@@ -462,7 +461,7 @@ module Antares {
                 var formattedDate = filter('date')(dateMock, 'dd-MM-yyyy');
                 expect(attachmentDateElement.text()).toBe(formattedDate);
                 expect(attachmentTypeElement.text()).toBe('DYNAMICTRANSLATIONS.' + attachmentMock.documentTypeId);
-                expect(attachmentFileSizeElement.text()).toBe(sizeMock);
+                expect(fileSizeFilter).toHaveBeenCalledWith(attachmentMock.size);
             });
 
             describe('and attachment details is clicked', () => {

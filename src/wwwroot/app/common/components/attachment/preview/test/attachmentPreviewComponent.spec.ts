@@ -24,6 +24,8 @@ module Antares {
             var activityIdMock = 'testActivityId';
             var attachmentMock = TestHelpers.AttachmentGenerator.generate({ user: new Business.User({ id: 'us1', firstName: 'firstName1', lastName: 'lastName1', departmentId: 'depId', department: null })});
 
+            var fileSizeFilter = Mock.FileSize.generate();
+
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
@@ -75,15 +77,11 @@ module Antares {
 
             it('then attachment file size value should be displayed', () => {
                 // arrange
-                var sizeMock = '999.5 MB';
-                spyOn(attachmentMock, 'humanizedSize').and.returnValue(sizeMock);
-
                 // act
                 scope.$apply();
 
                 // assert
-                var sizeElement = element.find(pageObjectSelectors.size);
-                expect(sizeElement.text()).toBe(sizeMock);
+                expect(fileSizeFilter).toHaveBeenCalledWith(attachmentMock.size);
             });
 
             it('then attachment creation date value should be displayed in proper format', () => {

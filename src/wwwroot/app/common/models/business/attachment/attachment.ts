@@ -20,9 +20,5 @@ module Antares.Common.Models.Business {
                 this.user = new User(attachment.user);
             }
         }
-
-        public humanizedSize = () => {
-            return filesize(this.size, { round: 1 });
-        }
     }
 }
