@@ -30,3 +30,14 @@ Scenario Outline: Get users with invalid data
 	Examples:
 	| query | statusCode |
 	|       | BadRequest |
+
+	
+@Users
+Scenario: Get user
+Given All users have been deleted
+	And User creates users in database with the following data
+         | activeDirectoryDomain | activeDirectoryLogin | firstName | lastName |
+         | AD                    | jsmith               | John      | Smith    |
+When User gets user with latest Id
+Then User should get OK http status code
+	And User details should be same as in database

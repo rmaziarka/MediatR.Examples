@@ -23,7 +23,7 @@
     [Binding]
     public class UsersSteps : IClassFixture<BaseTestClassFixture>
     {
-        private const string ApiUrl = "/api/users";
+        private const string ApiUrl = "/api/users/";
         private readonly BaseTestClassFixture fixture;
         private readonly ScenarioContext scenarioContext;
 
@@ -76,6 +76,7 @@
             this.scenarioContext.Set(users, "User List");
         }
 
+       
         [When(@"User inputs (.*) query")]
         public void GetContactDetailsUsingId(string query)
         {
@@ -85,7 +86,23 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [Then(@"User should get (.*) number of results returned")]
+        [When(@"User gets user with (.*) Id")]
+        public void WhenUserGetsUserWithLatestId(string userId)
+        {
+            Guid selecteduserId = Guid.Empty;
+            
+            if (userId.Equals("latest"))
+            {
+                selecteduserId = this.GetUserFromContext();
+            }
+
+            string requestUrl = $"{ApiUrl}{selecteduserId}";
+            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+       [Then(@"User should get (.*) number of results returned")]
         public void CheckCorrectNumberOfResultsReturned(int matchCount)
         {
             string response = this.scenarioContext.GetResponseContent();
@@ -107,6 +124,30 @@
                                                                            && actual.Department.Name == user.Department.Name);
                 Assert.True(matchingUsers.Count() == 1);
             });
+        }
+
+        [Then(@"User details should be same as in database")]
+        public void ThenUserDetailsShouldBeSameAsInDatabase()
+        {
+            string response = this.scenarioContext.GetResponseContent();
+            var returnedUser = JsonConvert.DeserializeObject<User>(response);
+
+            Guid selectedUserId = this.GetUserFromContext();
+            User userFromDatabase = this.fixture.DataContext.Users.Single(u => u.Id==selectedUserId);
+
+            returnedUser.ShouldBeEquivalentTo(userFromDatabase, options => options
+            .Excluding(x=>x.Business)
+            .Excluding(x=>x.Country)
+            .Excluding(x => x.Department)
+            .Excluding(x => x.Locale));
+
+        }
+
+        private Guid GetUserFromContext()
+        {
+            //get any in context
+            var userList = this.scenarioContext.Get<List<User>>("User List");
+            return userList?.First().Id ?? Guid.Empty;
         }
     }
 }

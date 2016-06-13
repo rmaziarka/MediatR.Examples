@@ -223,11 +223,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PropertyAreaBreakdown.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Users\UsersController.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UsersController.feature</DependentUpon>
-    </Compile>
     <Compile Include="Steps\Viewings\ViewingsSteps.cs" />
     <Compile Include="Tests\Activities\Activities.feature.cs">
       <AutoGen>True</AutoGen>
@@ -313,6 +308,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Translations.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Users\UsersController.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UsersController.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Viewings\Viewings.feature.cs">
       <AutoGen>True</AutoGen>
