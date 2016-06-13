@@ -5,7 +5,7 @@ module Antares.Common.Component {
     export function kfSidePanel(): ng.IDirective {
         return {
             scope: false,
-            templateUrl: 'app/common/components/kfSidePanel/kfSidePanel.html',
+            templateUrl: 'app/common/components/base/kfSidePanel/kfSidePanel.html',
             transclude: {
                 'cards': '?sidePanelCards'
             },
