@@ -1,94 +1,64 @@
-﻿namespace KnightFrank.Antares.Api.Services.AzureStorage
+namespace KnightFrank.Antares.Api.Services.AzureStorage
 {
-    using System;
-    using System.Linq;
+    using System.Collections.Generic;
 
     using KnightFrank.Antares.Api.Models;
-    using KnightFrank.Antares.Api.Services.AzureStorage.Factories;
-    using KnightFrank.Antares.Dal.Model;
-    using KnightFrank.Antares.Dal.Model.Enum;
-    using KnightFrank.Antares.Dal.Repository;
-    using KnightFrank.Antares.Domain.Common.BusinessValidators;
-    using KnightFrank.Antares.Domain.Enum.Types;
-    using KnightFrank.Foundation.Antares.Cloud.Storage.Blob.Interfaces;
+    using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Domain.Common.Enums;
+    using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Foundation.Antares.Cloud.Storage.Blob;
 
-    using Microsoft.WindowsAzure.Storage.Blob;
-
-    using EnumType = KnightFrank.Antares.Domain.Common.Enums.EnumType;
-
-    public class DocumentStorageProvider : IStorageProvider
+    public class DocumentStorageProvider : IDocumentStorageProvider
     {
-        private readonly IStorageClientWrapper storageClient;
-        private readonly IBlobResourceFactory blobResourceFactory;
-        private readonly ISharedAccessBlobPolicyFactory sharedAccessBlobPolicyFactory;
-        private readonly IEnumTypeItemValidator enumTypeItemValidator;
-        private readonly IEntityValidator entityValidator;
-        private readonly IGenericRepository<EnumTypeItem> enumTypeItemRepository;
+        private IEntityDocumentStorageProvider entityDocumentStorageProvider;
 
-        public DocumentStorageProvider(
-            IStorageClientWrapper storageClient,
-            IBlobResourceFactory blobResourceFactory,
-            ISharedAccessBlobPolicyFactory sharedAccessBlobPolicyFactory,
-            IEnumTypeItemValidator enumTypeItemValidator,
-            IEntityValidator entityValidator,
-            IGenericRepository<EnumTypeItem> enumTypeItemRepository)
+        public delegate AzureUploadUrlContainer GetUploadSasUri(AttachmentUrlParameters parameters);
+        public delegate AzureDownloadUrlContainer GetDownloadSasUri(AttachmentDownloadUrlParameters parameters);
+
+        private readonly Dictionary<CloudStorageContainerType, GetUploadSasUri> uploadUrlDictionary;
+        private readonly Dictionary<CloudStorageContainerType, GetDownloadSasUri> downloadUrlDictionary;
+
+        public DocumentStorageProvider(IEntityDocumentStorageProvider entityDocumentStorageProvider)
         {
-            this.storageClient = storageClient;
-            this.blobResourceFactory = blobResourceFactory;
-            this.sharedAccessBlobPolicyFactory = sharedAccessBlobPolicyFactory;
-            this.enumTypeItemValidator = enumTypeItemValidator;
-            this.entityValidator = entityValidator;
-            this.enumTypeItemRepository = enumTypeItemRepository;
+            this.entityDocumentStorageProvider = entityDocumentStorageProvider;
+
+            this.uploadUrlDictionary = new Dictionary<CloudStorageContainerType, GetUploadSasUri>();
+            this.downloadUrlDictionary = new Dictionary<CloudStorageContainerType, GetDownloadSasUri>();
         }
 
-        public AzureUploadUrlContainer GetUploadSasUri<T>(AttachmentUrlParameters parameters, EnumType entityDocumentType, CloudStorageContainerType cloudStorageContainerType) where T : BaseEntity
+        public void ConfigureUploadUrl()
         {
-            this.entityValidator.EntityExists<T>(parameters.EntityReferenceId);
+            this.uploadUrlDictionary.Add(CloudStorageContainerType.Activity, (x) => this.entityDocumentStorageProvider.GetUploadSasUri<Activity>(x, EnumType.ActivityDocumentType));
+            this.uploadUrlDictionary.Add(CloudStorageContainerType.Property, (x) => this.entityDocumentStorageProvider.GetUploadSasUri<Property>(x, EnumType.PropertyDocumentType));
+        }
 
-            DocumentType documentType = this.GetDocumentType(parameters, entityDocumentType);
+        public void ConfigureDownloadUrl()
+        {
+            this.downloadUrlDictionary.Add(CloudStorageContainerType.Activity, (x) => this.entityDocumentStorageProvider.GetDownloadSasUri<Activity>(x, EnumType.ActivityDocumentType));
+            this.downloadUrlDictionary.Add(CloudStorageContainerType.Property, (x) => this.entityDocumentStorageProvider.GetDownloadSasUri<Property>(x, EnumType.PropertyDocumentType));
+        }
 
-            Guid externalDocumentId = Guid.NewGuid();
-
-            return new AzureUploadUrlContainer
+        public GetUploadSasUri GetUploadUrlMethod(CloudStorageContainerType cloudStorageContainerType)
+        {
+            GetUploadSasUri method;
+            if (!this.uploadUrlDictionary.TryGetValue(cloudStorageContainerType, out method))
             {
-                Url = this.GetSasUrl(parameters, externalDocumentId, documentType, cloudStorageContainerType),
-                ExternalDocumentId = externalDocumentId
+                throw new DomainValidationException("entity", "Entity is not supported");
             };
+
+            return method;
         }
 
-        public AzureDownloadUrlContainer GetDownloadSasUri<T>(AttachmentDownloadUrlParameters parameters, EnumType entityDocumentType, CloudStorageContainerType cloudStorageContainerType) where T : BaseEntity
+        public GetDownloadSasUri GetDownloadUrlMethod(CloudStorageContainerType cloudStorageContainerType)
         {
-            this.entityValidator.EntityExists<T>(parameters.EntityReferenceId);
-
-            DocumentType documentType = this.GetDocumentType(parameters, entityDocumentType);
-
-            return new AzureDownloadUrlContainer
+            GetDownloadSasUri method;
+            if (!this.downloadUrlDictionary.TryGetValue(cloudStorageContainerType, out method))
             {
-                Url = this.GetSasUrl(parameters, parameters.ExternalDocumentId, documentType, cloudStorageContainerType),
+                throw new DomainValidationException("entity", "Entity is not supported");
             };
-        }
 
-        private DocumentType GetDocumentType(AttachmentUrlParameters parameters, EnumType entityDocumentType)
-        {
-            EnumTypeItem enumTypeItem =
-                this.enumTypeItemRepository
-                .GetWithInclude(x => x.Id == parameters.DocumentTypeId && x.EnumType.Code == entityDocumentType.ToString(), x => x.EnumType)
-                .SingleOrDefault();
-
-            this.enumTypeItemValidator.ItemExists(enumTypeItem, parameters.DocumentTypeId);
-
-            var documentType = (DocumentType)Enum.Parse(typeof(DocumentType), enumTypeItem.Code, true);
-
-            return documentType;
-        }
-
-        private Uri GetSasUrl(AttachmentUrlParameters urlParameters, Guid externalDocumentId, DocumentType documentType, CloudStorageContainerType cloudStorageContainerType)
-        {
-            ICloudBlobResource cloudBlobResource = this.blobResourceFactory.Create(documentType, externalDocumentId, urlParameters, cloudStorageContainerType);
-            SharedAccessBlobPolicy sharedAccessBlobPolicy = this.sharedAccessBlobPolicyFactory.Create();
-
-            return this.storageClient.GetSasUri(cloudBlobResource, sharedAccessBlobPolicy);
+            return method;
         }
     }
 }

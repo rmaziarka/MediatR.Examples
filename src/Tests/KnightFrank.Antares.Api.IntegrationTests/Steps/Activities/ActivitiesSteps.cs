@@ -11,6 +11,7 @@
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Api.IntegrationTests.Steps.Enums;
     using KnightFrank.Antares.Api.IntegrationTests.Steps.Property;
+    using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Offer;
@@ -30,7 +31,7 @@
     {
         private const string ApiUrl = "/api/activities";
         private readonly BaseTestClassFixture fixture;
-
+        private readonly DateTime date = DateTime.UtcNow;
         private readonly ScenarioContext scenarioContext;
 
         private User leadNegotiator;
@@ -59,17 +60,14 @@
             enumTable.AddRow("ActivityDepartmentType", "Standard");
             enumTable.AddRow("OfferStatus", "New");
 
-            var addressTable = new Table("Postcode");
-            addressTable.AddRow("N1C");
-
-            var properstySteps = new PropertySteps(this.fixture, this.scenarioContext);
-            properstySteps.GetCountryAddressData("GB", "Property");
-            properstySteps.GetPropertyTypeId("House");
             this.GetActivityTypeId("Freehold Sale");
 
             new EnumsSteps(this.fixture, this.scenarioContext).GetEnumTypeItemId(enumTable);
 
-            properstySteps.GivenFollowingPropertyExistsInDataBase("Residential", addressTable);
+            var property = new Table("PropertyType", "Division");
+            property.AddRow("House", "Residential");
+
+            new PropertySteps(this.fixture, this.scenarioContext).CreatePropertyInDatabase(property);
             this.CreateActivityInDatabase("latest", "PreAppraisal");
         }
 
@@ -83,7 +81,7 @@
         public void CreateActivityInDatabase(string id, string activityStatus)
         {
             Guid activityStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[activityStatus];
-            Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Property>("AddedProperty").Id : new Guid(id);
+            Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Property>("Property").Id : new Guid(id);
             var activityTypeId = this.scenarioContext.Get<Guid>("ActivityTypeId");
 
             Guid leadNegotiatorTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["LeadNegotiator"];
@@ -128,7 +126,7 @@
             string requestUrl = $"{ApiUrl}";
 
             Guid activityStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["PreAppraisal"];
-            Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Property>("AddedProperty").Id : new Guid(id);
+            Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Property>("Property").Id : new Guid(id);
             var activityTypeId = this.scenarioContext.Get<Guid>("ActivityTypeId");
 
             List<Guid> vendors =
@@ -178,7 +176,7 @@
             updateActivityCommand.LeadNegotiator = new UpdateActivityUser
             {
                 UserId = activityFromDatabase.ActivityUsers.First().UserId,
-                CallDate = DateTime.UtcNow.AddDays(1)
+                CallDate = this.date.AddDays(1)
             };
 
             updateActivityCommand.ActivityStatusId = status.Equals("latest")
@@ -294,13 +292,20 @@
         }
 
         [Then(@"Retrieved activities should be the same as in database")]
-        public void CheckActivities(Table table)
+        public void CheckActivities()
         {
             var activity = JsonConvert.DeserializeObject<List<ActivitiesQueryResult>>(this.scenarioContext.GetResponseContent());
-            List<ActivitiesQueryResult> actualActivity = table.CreateSet<ActivitiesQueryResult>().ToList();
-            actualActivity.First().Id = this.scenarioContext.Get<Activity>("Activity").Id;
+            Address addressDetails = this.scenarioContext.Get<Property>("Property").Address;
 
-            actualActivity.ShouldBeEquivalentTo(activity);
+            var actualActivity = new ActivitiesQueryResult
+            {
+                Line2 = addressDetails.Line2,
+                PropertyName = addressDetails.PropertyName,
+                PropertyNumber = addressDetails.PropertyNumber,
+                Id = this.scenarioContext.Get<Activity>("Activity").Id
+            };
+
+            actualActivity.ShouldBeEquivalentTo(activity.Single());
         }
 
 

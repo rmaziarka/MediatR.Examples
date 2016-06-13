@@ -167,8 +167,12 @@
     <Compile Include="Common\Commands\CreateOrUpdateAddress.cs" />
     <Compile Include="Common\Commands\CreateOrUpdateAddressValidator.cs" />
     <Compile Include="Common\Enums\DivisionEnum.cs" />
-    <Compile Include="Common\Enums\EnumType.cs" />
     <Compile Include="Common\Enums\EnumTypeItemCode.cs" />
+    <Compile Include="Common\Enums\GenerateEnumTypeItems.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GenerateEnumTypeItems.tt</DependentUpon>
+    </Compile>
     <Compile Include="Common\NinjectInstanceResolver.cs" />
     <Compile Include="Common\INinjectInstanceResolver.cs" />
     <Compile Include="Common\Specifications\EnumTypeItemWithEnumType.cs" />
@@ -337,8 +341,12 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CommonResources.cs</LastGenOutput>
     </Content>
+    <Content Include="Common\Enums\GenerateEnumTypeItems.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastOutputs>.\GenerateEnumTypeItems.cs</LastOutputs>
+      <LastGenOutput>GenerateEnumTypeItems.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

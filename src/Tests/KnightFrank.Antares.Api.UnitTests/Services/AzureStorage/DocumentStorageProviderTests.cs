@@ -2,23 +2,19 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Linq.Expressions;
+
+    using FluentAssertions;
 
     using KnightFrank.Antares.Api.Models;
     using KnightFrank.Antares.Api.Services.AzureStorage;
-    using KnightFrank.Antares.Api.Services.AzureStorage.Factories;
-    using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
-    using KnightFrank.Antares.Dal.Repository;
-    using KnightFrank.Antares.Domain.Common.BusinessValidators;
-    using KnightFrank.Antares.Domain.Enum.Types;
+    using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Foundation.Antares.Cloud.Storage.Blob;
-    using KnightFrank.Foundation.Antares.Cloud.Storage.Blob.Interfaces;
-
-    using Microsoft.WindowsAzure.Storage.Blob;
 
     using Moq;
-
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
@@ -27,221 +23,126 @@
 
     public class DocumentStorageProviderTests
     {
-        [Theory]
-        [AutoMoqData]
-        public void Given_GetDocumentUploadSasUriForActivity_Then_ShouldDelegateBehaviour(
-            [Frozen] Mock<IEnumTypeItemValidator> enumTypeItemValidator,
-            [Frozen] Mock<IEntityValidator> entityValidator,
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            [Frozen] Mock<IStorageClientWrapper> storageClient,
-            [Frozen] Mock<IBlobResourceFactory> blobResourceFactory,
-            [Frozen] Mock<ISharedAccessBlobPolicyFactory> sharedAccessBlobPolicyFactory,
-            DocumentType documentType,
-            ICloudBlobResource resource,
-            AttachmentUrlParameters parameters,
-            SharedAccessBlobPolicy policy,
-            DocumentStorageProvider documentStorageProvider,
-            Uri uri
-            )
+        private readonly Dictionary<CloudStorageContainerType, Func<AttachmentUrlParameters, Expression<Func<IEntityDocumentStorageProvider, AzureUploadUrlContainer>>>> uploadUrlFuncDict =
+                new Dictionary<CloudStorageContainerType, Func<AttachmentUrlParameters, Expression<Func<IEntityDocumentStorageProvider, AzureUploadUrlContainer>>>>();
+        private readonly Dictionary<CloudStorageContainerType, Func<AttachmentDownloadUrlParameters, Expression<Func<IEntityDocumentStorageProvider, AzureDownloadUrlContainer>>>> downloadUrlFuncDict =
+                new Dictionary<CloudStorageContainerType, Func<AttachmentDownloadUrlParameters, Expression<Func<IEntityDocumentStorageProvider, AzureDownloadUrlContainer>>>>();
+
+        public DocumentStorageProviderTests()
         {
-            // Arrange
-            var enumTypeItem = new EnumTypeItem
-            {
-                Code = documentType.ToString()
-            };
+            this.uploadUrlFuncDict.Add(CloudStorageContainerType.Activity, parameters => (x => x.GetUploadSasUri<Activity>(parameters, EnumType.ActivityDocumentType)));
+            this.uploadUrlFuncDict.Add(CloudStorageContainerType.Property, parameters => (x => x.GetUploadSasUri<Property>(parameters, EnumType.PropertyDocumentType)));
 
-            var enumTypeItems = new List<EnumTypeItem> { enumTypeItem };
-
-            enumTypeItemRepository
-                .Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<EnumTypeItem, bool>>>(), e => e.EnumType))
-                .Returns(enumTypeItems);
-
-            blobResourceFactory.Setup(x => x.Create(documentType, It.IsAny<Guid>(), parameters, CloudStorageContainerType.Activity)).Returns(resource);
-            sharedAccessBlobPolicyFactory.Setup(x => x.Create()).Returns(policy);
-
-            storageClient.Setup(x =>
-                x.GetSasUri(It.IsAny<ICloudBlobResource>(), It.IsAny<SharedAccessBlobPolicy>())).Returns(uri);
-
-            // Act
-            documentStorageProvider.GetUploadSasUri<Activity>(parameters, EnumType.ActivityDocumentType, CloudStorageContainerType.Activity);
-
-            // Assert
-            blobResourceFactory.Verify(x => x.Create(documentType, It.IsAny<Guid>(), parameters, CloudStorageContainerType.Activity), Times.Once);
-            storageClient.Verify(x => x.GetSasUri(resource, policy), Times.Once);
-            enumTypeItemValidator.Verify(x => x.ItemExists(enumTypeItem, parameters.DocumentTypeId), Times.Once);
-            entityValidator.Verify(x => x.EntityExists<Activity>(parameters.EntityReferenceId), Times.Once);
+            this.downloadUrlFuncDict.Add(CloudStorageContainerType.Activity, parameters => (x => x.GetDownloadSasUri<Activity>(parameters, EnumType.ActivityDocumentType)));
+            this.downloadUrlFuncDict.Add(CloudStorageContainerType.Property, parameters => (x => x.GetDownloadSasUri<Property>(parameters, EnumType.PropertyDocumentType)));
         }
 
         [Theory]
-        [AutoMoqData]
-        public void Given_GetDocumentDownloadSasUriForActivity_Then_ShouldDelegateBehaviour(
-            [Frozen] Mock<IEnumTypeItemValidator> enumTypeItemValidator,
-            [Frozen] Mock<IEntityValidator> entityValidator,
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            [Frozen] Mock<IStorageClientWrapper> storageClient,
-            [Frozen] Mock<IBlobResourceFactory> blobResourceFactory,
-            [Frozen] Mock<ISharedAccessBlobPolicyFactory> sharedAccessBlobPolicyFactory,
-            DocumentType documentType,
-            ICloudBlobResource resource,
-            AttachmentDownloadUrlParameters parameters,
-            SharedAccessBlobPolicy policy,
+        [InlineAutoMoqData(CloudStorageContainerType.Activity)]
+        [InlineAutoMoqData(CloudStorageContainerType.Property)]
+        public void Given_ConfigureUploadUrl_When_Called_Then_ProperUploadUrlMethodIsSetForEntity(
+            CloudStorageContainerType cloudStorageContainerType,
+            [Frozen] Mock<IEntityDocumentStorageProvider> entityDocumentStorageProvider,
             DocumentStorageProvider documentStorageProvider,
-            Uri uri
-            )
+            AttachmentUrlParameters parameters)
         {
             // Arrange
-            var enumTypeItem = new EnumTypeItem
-            {
-                Code = documentType.ToString()
-            };
-
-            var enumTypeItems = new List<EnumTypeItem> { enumTypeItem };
-
-            enumTypeItemRepository
-                .Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<EnumTypeItem, bool>>>(), e => e.EnumType))
-                .Returns(enumTypeItems);
-
-            blobResourceFactory.Setup(x => x.Create(documentType, It.IsAny<Guid>(), parameters, CloudStorageContainerType.Activity)).Returns(resource);
-            sharedAccessBlobPolicyFactory.Setup(x => x.Create()).Returns(policy);
-
-            storageClient.Setup(x =>
-                x.GetSasUri(It.IsAny<ICloudBlobResource>(), It.IsAny<SharedAccessBlobPolicy>())).Returns(uri);
-
             // Act
-            documentStorageProvider.GetDownloadSasUri<Activity>(parameters, EnumType.ActivityDocumentType, CloudStorageContainerType.Activity);
+            documentStorageProvider.ConfigureUploadUrl();
 
             // Assert
-            blobResourceFactory.Verify(x => x.Create(documentType, parameters.ExternalDocumentId, parameters, CloudStorageContainerType.Activity), Times.Once);
-            storageClient.Verify(x => x.GetSasUri(resource, policy), Times.Once);
-            enumTypeItemValidator.Verify(x => x.ItemExists(enumTypeItem, parameters.DocumentTypeId), Times.Once);
-            entityValidator.Verify(x => x.EntityExists<Activity>(parameters.EntityReferenceId), Times.Once);
+            DocumentStorageProvider.GetUploadSasUri method = documentStorageProvider.GetUploadUrlMethod(cloudStorageContainerType);
+            method(parameters);
+
+            entityDocumentStorageProvider.Verify(this.uploadUrlFuncDict[cloudStorageContainerType](parameters), Times.Once);
         }
 
         [Theory]
-        [AutoMoqData]
-        public void Given_GetDocumentUploadSasUri_Then_ShouldReturnCreatedUrl(
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            [Frozen] Mock<IStorageClientWrapper> storageClient,
-            [Frozen] Mock<IBlobResourceFactory> blobResourceFactory,
-            [Frozen] Mock<ISharedAccessBlobPolicyFactory> sharedAccessBlobPolicyFactory,
-            DocumentType documentType,
-            ICloudBlobResource resource,
-            AttachmentUrlParameters parameters,
-            SharedAccessBlobPolicy policy,
+        [InlineAutoMoqData(CloudStorageContainerType.Activity)]
+        [InlineAutoMoqData(CloudStorageContainerType.Property)]
+        public void Given_ConfigureDownloadUrl_When_Called_Then_ProperUploadUrlMethodsAreSetForEntity(
+            CloudStorageContainerType cloudStorageContainerType,
+            [Frozen] Mock<IEntityDocumentStorageProvider> entityDocumentStorageProvider,
             DocumentStorageProvider documentStorageProvider,
-            Uri uri
-            )
+            AttachmentDownloadUrlParameters parameters)
         {
             // Arrange
-            var enumTypeItem = new EnumTypeItem
-            {
-                Code = documentType.ToString()
-            };
-
-            var enumTypeItems = new List<EnumTypeItem> { enumTypeItem };
-
-            enumTypeItemRepository
-                .Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<EnumTypeItem, bool>>>(), e => e.EnumType))
-                .Returns(enumTypeItems);
-
-            blobResourceFactory.Setup(x => x.Create(documentType, It.IsAny<Guid>(), parameters, CloudStorageContainerType.Activity)).Returns(resource);
-            sharedAccessBlobPolicyFactory.Setup(x => x.Create()).Returns(policy);
-
-            storageClient.Setup(x =>
-                x.GetSasUri(It.IsAny<ICloudBlobResource>(), It.IsAny<SharedAccessBlobPolicy>())).Returns(uri);
-
             // Act
-            AzureUploadUrlContainer azureUploadUrlContainer = documentStorageProvider.GetUploadSasUri<Activity>(parameters, EnumType.ActivityDocumentType, CloudStorageContainerType.Activity);
+            documentStorageProvider.ConfigureDownloadUrl();
 
             // Assert
-            Assert.Equal(uri, azureUploadUrlContainer.Url);
+            DocumentStorageProvider.GetDownloadSasUri method = documentStorageProvider.GetDownloadUrlMethod(cloudStorageContainerType);
+            method(parameters);
+
+            entityDocumentStorageProvider.Verify(this.downloadUrlFuncDict[cloudStorageContainerType](parameters), Times.Once);
         }
 
         [Theory]
-        [AutoMoqData]
-        public void Given_GetDocumentDownloadSasUri_Then_ShouldReturnCreatedUrl(
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            [Frozen] Mock<IStorageClientWrapper> storageClient,
-            [Frozen] Mock<IBlobResourceFactory> blobResourceFactory,
-            [Frozen] Mock<ISharedAccessBlobPolicyFactory> sharedAccessBlobPolicyFactory,
-            DocumentType documentType,
-            ICloudBlobResource resource,
-            AttachmentDownloadUrlParameters parameters,
-            SharedAccessBlobPolicy policy,
+        [InlineAutoMoqData(CloudStorageContainerType.Activity)]
+        [InlineAutoMoqData(CloudStorageContainerType.Property)]
+        public void Given_GetUploadUrlMethod_When_CalledWithConfiguredType_Then_ProperUploadUrlMethodIsSetForEntity(
+            CloudStorageContainerType cloudStorageContainerType,
             DocumentStorageProvider documentStorageProvider,
-            Uri uri
-            )
+            AttachmentUrlParameters parameters)
         {
             // Arrange
-            var enumTypeItem = new EnumTypeItem
-            {
-                Code = documentType.ToString()
-            };
-
-            var enumTypeItems = new List<EnumTypeItem> { enumTypeItem };
-
-            enumTypeItemRepository
-                .Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<EnumTypeItem, bool>>>(), e => e.EnumType))
-                .Returns(enumTypeItems);
-
-            blobResourceFactory.Setup(x => x.Create(documentType, It.IsAny<Guid>(), parameters, CloudStorageContainerType.Activity)).Returns(resource);
-            sharedAccessBlobPolicyFactory.Setup(x => x.Create()).Returns(policy);
-
-            storageClient.Setup(x =>
-                x.GetSasUri(It.IsAny<ICloudBlobResource>(), It.IsAny<SharedAccessBlobPolicy>())).Returns(uri);
+            documentStorageProvider.ConfigureUploadUrl();
 
             // Act
-            AzureDownloadUrlContainer container = documentStorageProvider.GetDownloadSasUri<Activity>(parameters, EnumType.ActivityDocumentType, CloudStorageContainerType.Activity);
+            DocumentStorageProvider.GetUploadSasUri method = documentStorageProvider.GetUploadUrlMethod(cloudStorageContainerType);
 
             // Assert
-            Assert.Equal(uri, container.Url);
+            method.Should().NotBeNull();
         }
 
         [Theory]
-        [AutoMoqData]
-        public void Given_GetDocumentUploadSasUri_Then_ShouldReturnCreatedExternalId(
-            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-            [Frozen] Mock<IStorageClientWrapper> storageClient,
-            [Frozen] Mock<IBlobResourceFactory> blobResourceFactory,
-            [Frozen] Mock<ISharedAccessBlobPolicyFactory> sharedAccessBlobPolicyFactory,
-            DocumentType documentType,
-            ICloudBlobResource resource,
-            AttachmentUrlParameters parameters,
-            SharedAccessBlobPolicy policy,
+        [InlineAutoMoqData(CloudStorageContainerType.Activity)]
+        [InlineAutoMoqData(CloudStorageContainerType.Property)]
+        public void Given_GetUploadUrlMethod_When_CalledWithNotConfiguredType_Then_ShoulThrowException(
+            CloudStorageContainerType cloudStorageContainerType,
             DocumentStorageProvider documentStorageProvider,
-            Uri uri
-            )
+            AttachmentUrlParameters parameters)
         {
             // Arrange
-            var enumTypeItem = new EnumTypeItem
-            {
-                Code = documentType.ToString()
-            };
+            // Act
+            Action act = () => documentStorageProvider.GetUploadUrlMethod(cloudStorageContainerType);
 
-            var enumTypeItems = new List<EnumTypeItem> { enumTypeItem };
+            // Asset
+            act.ShouldThrow<DomainValidationException>().Which.Errors.Single(x => x.ErrorMessage == "Entity is not supported");
+        }
 
-            enumTypeItemRepository
-                .Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<EnumTypeItem, bool>>>(), e => e.EnumType))
-                .Returns(enumTypeItems);
-
-            Guid externalDocumentId = Guid.Empty;
-
-            blobResourceFactory.Setup(x => x.Create(documentType, It.IsAny<Guid>(), parameters, CloudStorageContainerType.Activity))
-                .Callback((DocumentType docType, Guid documentId, AttachmentUrlParameters param, CloudStorageContainerType cloudStorageContainerType) =>
-                {
-                    externalDocumentId = documentId;
-                })
-                .Returns(resource);
-            sharedAccessBlobPolicyFactory.Setup(x => x.Create()).Returns(policy);
-
-            storageClient.Setup(x =>
-                x.GetSasUri(It.IsAny<ICloudBlobResource>(), It.IsAny<SharedAccessBlobPolicy>())).Returns(uri);
+        [Theory]
+        [InlineAutoMoqData(CloudStorageContainerType.Activity)]
+        [InlineAutoMoqData(CloudStorageContainerType.Property)]
+        public void Given_GetDownloadUrlMethod_When_CalledWithConfiguredType_Then_ProperDownloadUrlMethodIsSetForEntity(
+           CloudStorageContainerType cloudStorageContainerType,
+           DocumentStorageProvider documentStorageProvider,
+           AttachmentDownloadUrlParameters parameters)
+        {
+            // Arrange
+            documentStorageProvider.ConfigureDownloadUrl();
 
             // Act
-            AzureUploadUrlContainer azureUploadUrlContainer = documentStorageProvider.GetUploadSasUri<Activity>(parameters, EnumType.ActivityDocumentType, CloudStorageContainerType.Activity);
+            DocumentStorageProvider.GetDownloadSasUri method = documentStorageProvider.GetDownloadUrlMethod(cloudStorageContainerType);
 
             // Assert
-            Assert.Equal(externalDocumentId, azureUploadUrlContainer.ExternalDocumentId);
+            method.Should().NotBeNull();
+        }
+
+        [Theory]
+        [InlineAutoMoqData(CloudStorageContainerType.Activity)]
+        [InlineAutoMoqData(CloudStorageContainerType.Property)]
+        public void Given_GettDownloadUrlMethod_When_CalledWithNotConfiguredType_Then_ShoulThrowException(
+            CloudStorageContainerType cloudStorageContainerType,
+            DocumentStorageProvider documentStorageProvider,
+            AttachmentDownloadUrlParameters parameters)
+        {
+            // Arrange
+            // Act
+            Action act = () => documentStorageProvider.GetDownloadUrlMethod(cloudStorageContainerType);
+
+            // Asset
+            act.ShouldThrow<DomainValidationException>().Which.Errors.Single(x => x.ErrorMessage == "Entity is not supported");
         }
     }
 }
