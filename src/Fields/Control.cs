@@ -41,5 +41,33 @@
         {
             this.isHiddenExpression = expression.Compile();
         }
+
+        public void SetFieldHiddenRule(LambdaExpression fieldExpression, LambdaExpression expression)
+        {
+            this.SetFieldExpression(fieldExpression, expression,false);
+        }
+
+        public void SetFieldReadonlyRule(LambdaExpression fieldExpression, LambdaExpression expression)
+        {
+            this.SetFieldExpression(fieldExpression, expression, true);
+        }
+
+        private void SetFieldExpression(LambdaExpression fieldExpression, LambdaExpression expression, bool readonlyExpression)
+        {
+            foreach (InnerField innerField in this.Fields)
+            {
+                if (innerField.expression.ToString() == fieldExpression.ToString())
+                {
+                    if (readonlyExpression)
+                    {
+                        innerField.SetReadonlyRule(expression);
+                    }
+                    else
+                    {
+                        innerField.SetHiddenRule(expression);
+                    }
+                }
+            }
+        }
     }
 }

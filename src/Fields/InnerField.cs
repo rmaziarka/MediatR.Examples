@@ -11,10 +11,17 @@ namespace Fields
     {
         private readonly MemberInfo member;
         private readonly Func<object, object> compiled;
-        private readonly LambdaExpression expression;
+        public readonly LambdaExpression expression;
         private readonly Type containerType;
         private readonly Type propertyType;
         private readonly IList<IValidator> validators;
+
+        private Delegate isHiddenExpression;
+        private Delegate isReadonlyExpression;
+
+        public bool IsReadonly(object entity) => entity != null && ((bool?)this.isReadonlyExpression?.DynamicInvoke(entity) ?? false);
+        public bool IsHidden(object entity) => entity != null && ((bool?)this.isHiddenExpression?.DynamicInvoke(entity) ?? false);
+
 
         public InnerField(MemberInfo member, Func<object, object> compiled, LambdaExpression expression, Type containerType, Type propertyType)
         {
@@ -43,6 +50,16 @@ namespace Fields
                 }
 
             }
+        }
+
+        public void SetReadonlyRule(LambdaExpression readonlyExpression)
+        {
+            this.isReadonlyExpression = readonlyExpression.Compile();
+        }
+
+        public void SetHiddenRule(LambdaExpression hiddenExpression)
+        {
+            this.isHiddenExpression = hiddenExpression.Compile();
         }
     }
 }
