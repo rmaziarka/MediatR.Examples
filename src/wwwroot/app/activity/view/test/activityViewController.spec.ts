@@ -5,7 +5,7 @@ module Antares {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
 
-    describe('Given activity view controller', () => {
+    xdescribe('Given activity view controller', () => {
         var $scope: ng.IScope,
             q: ng.IQService,
             controller: ActivityViewController;
