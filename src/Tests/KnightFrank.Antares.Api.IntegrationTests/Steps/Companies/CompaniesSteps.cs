@@ -36,15 +36,29 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [When(@"User creates company by API for contact")]
-        public void WhenUserCreateCompanyByApiForContact(Table table)
+        [Given(@"Company exists in database")]
+        public void CreateCompanyInDatabase(Table table)
         {
-            var company = table.CreateInstance<CreateCompanyCommand>();
-            this.CreateCompany(company);
+            var company = table.CreateInstance<Company>();
+            List<Guid> contactsIds = this.scenarioContext.Get<List<Contact>>("Contacts").Select(c => c.Id).ToList();
+
+            company.CompaniesContacts = contactsIds.Select(id => new CompanyContact { ContactId = id }).ToList();
+
+            this.fixture.DataContext.Companies.Add(company);
+            this.fixture.DataContext.SaveChanges();
+
+            this.scenarioContext.Set(company, "Company");
         }
 
-        [When(@"User creates company by API for contact for maximum name length")]
-        public void CreateUsersWithMaxFields()
+        [When(@"User creates company using api")]
+        public void CreateCompany(Table table)
+        {
+            var details = table.CreateInstance<CreateCompanyCommand>();
+            this.CreateCompany(details);
+        }
+
+        [When(@"User creates company with mandatory fields using api")]
+        public void CreateCompanyWithMandatoryFields()
         {
             const int max = 128;
             var company = new CreateCompanyCommand { Name = StringExtension.GenerateMaxAlphanumericString(max) };

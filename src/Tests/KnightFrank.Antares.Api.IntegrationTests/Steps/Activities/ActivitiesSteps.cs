@@ -120,6 +120,20 @@
             this.scenarioContext.Set(activity, "Activity");
         }
 
+        [Given(@"User gets (.*) for ActivityType")]
+        public void GetActivityTypeId(string activityTypeCode)
+        {
+            if (activityTypeCode.Equals("invalid"))
+            {
+                this.scenarioContext.Set(Guid.NewGuid(), "ActivityTypeId");
+            }
+            else
+            {
+                Guid activityTypeId = this.fixture.DataContext.ActivityTypes.Single(i => i.Code.Equals(activityTypeCode)).Id;
+                this.scenarioContext.Set(activityTypeId, "ActivityTypeId");
+            }
+        }
+
         [When(@"User creates activity for given (.*) property id using api")]
         public void CreateActivityUsingApi(string id)
         {
@@ -147,20 +161,6 @@
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, activityCommand);
             this.scenarioContext.SetHttpResponseMessage(response);
-        }
-
-        [Given(@"User gets (.*) for ActivityType")]
-        public void GetActivityTypeId(string activityTypeCode)
-        {
-            if (activityTypeCode.Equals("invalid"))
-            {
-                this.scenarioContext.Set(Guid.NewGuid(), "ActivityTypeId");
-            }
-            else
-            {
-                Guid activityTypeId = this.fixture.DataContext.ActivityTypes.Single(i => i.Code.Equals(activityTypeCode)).Id;
-                this.scenarioContext.Set(activityTypeId, "ActivityTypeId");
-            }
         }
 
         [When(@"User updates activity (.*) id and (.*) status with following sale valuation")]

@@ -38,6 +38,37 @@
             this.scenarioContext = scenarioContext;
         }
 
+        [Given(@"Viewing exists in database")]
+        public void CreateViewingInDatabase()
+        {
+            var requirement = this.scenarioContext.Get<Requirement>("Requirement");
+
+            var viewing = new Viewing
+            {
+                StartDate = this.date,
+                EndDate = this.date.AddHours(1),
+                InvitationText = StringExtension.GenerateMaxAlphanumericString(4000),
+                Attendees = new List<Contact>
+                {
+                    new Contact
+                    {
+                        Id = requirement.Contacts[0].Id,
+                        FirstName = requirement.Contacts[0].FirstName,
+                        Surname = requirement.Contacts[0].Surname,
+                        Title = requirement.Contacts[0].Title
+                    }
+                },
+                RequirementId = requirement.Id,
+                ActivityId = this.scenarioContext.Get<Activity>("Activity").Id,
+                NegotiatorId = this.fixture.DataContext.Users.First().Id
+            };
+
+            this.fixture.DataContext.Viewing.Add(viewing);
+            this.fixture.DataContext.SaveChanges();
+
+            this.scenarioContext.Set(viewing, "Viewing");
+        }
+
         [When(@"User creates viewing using api")]
         public void CreateViewingUsingApi()
         {
@@ -106,37 +137,6 @@
             };
 
             this.CreateViewing(details);
-        }
-
-        [Given(@"Viewing exists in database")]
-        public void CreateViewingInDatabase()
-        {
-            var requirement = this.scenarioContext.Get<Requirement>("Requirement");
-
-            var viewing = new Viewing
-            {
-                StartDate = this.date,
-                EndDate = this.date.AddHours(1),
-                InvitationText = StringExtension.GenerateMaxAlphanumericString(4000),
-                Attendees = new List<Contact>
-                {
-                    new Contact
-                    {
-                        Id = requirement.Contacts[0].Id,
-                        FirstName = requirement.Contacts[0].FirstName,
-                        Surname = requirement.Contacts[0].Surname,
-                        Title = requirement.Contacts[0].Title
-                    }
-                },
-                RequirementId = requirement.Id,
-                ActivityId = this.scenarioContext.Get<Activity>("Activity").Id,
-                NegotiatorId = this.fixture.DataContext.Users.First().Id
-            };
-
-            this.fixture.DataContext.Viewing.Add(viewing);
-            this.fixture.DataContext.SaveChanges();
-
-            this.scenarioContext.Set(viewing, "Viewing");
         }
 
         [When(@"User updates viewing")]
