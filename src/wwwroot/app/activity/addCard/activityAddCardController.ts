@@ -29,7 +29,7 @@ module Antares.Activity {
         }
 
         $onChanges = (obj: any) => {
-            if (obj.ownerships.currentValue !== obj.ownerships.previousValue) {
+            if (obj.ownerships && obj.ownerships.currentValue !== obj.ownerships.previousValue) {
                 this.setVendors();
             }
 
