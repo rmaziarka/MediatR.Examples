@@ -43,7 +43,7 @@
             this.fixture.DataContext.Users.RemoveRange(this.fixture.DataContext.Users.ToList());
         }
 
-        [Given(@"User creates users in database with the following data")]
+        [Given(@"Users exists in database")]
         public void CreateUsersInDb(Table table)
         {
             var country = new Country { IsoCode = "xx" };

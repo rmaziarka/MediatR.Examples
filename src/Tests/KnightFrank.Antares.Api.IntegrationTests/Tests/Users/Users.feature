@@ -3,7 +3,7 @@
 @Users
 Scenario Outline: Get users
 	Given All users have been deleted
-		And User creates users in database with the following data
+		And Users exists in database
 			| activeDirectoryDomain | activeDirectoryLogin | firstName | lastName |
 			| AD                    | jsmith               | John      | Smith    |
 			| AD                    | jjohns               | John      | Johns    |
@@ -35,7 +35,7 @@ Scenario Outline: Get users with invalid data
 @Users
 Scenario: Get user
 Given All users have been deleted
-	And User creates users in database with the following data
+	And Users exists in database
          | activeDirectoryDomain | activeDirectoryLogin | firstName | lastName |
          | AD                    | jsmith               | John      | Smith    |
 When User gets user with latest Id
