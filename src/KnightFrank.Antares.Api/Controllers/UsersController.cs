@@ -11,6 +11,7 @@
     using Domain.User.Queries;
 
     using KnightFrank.Antares.Dal.Model.User;
+    using KnightFrank.Antares.Domain.User.Commands;
 
     using MediatR;
 
@@ -67,6 +68,19 @@
             }
 
             return this.mediator.Send(query);
+        }
+
+        /// <summary>
+        /// Updates the User.
+        /// </summary>
+        /// <param name="command">The command.</param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("")]
+        public User UpdateOffer(UpdateUserCommand command)
+        {
+            Guid userId = this.mediator.Send(command);
+            return this.GetUserById(userId);
         }
     }
 }

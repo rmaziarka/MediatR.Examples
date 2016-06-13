@@ -219,6 +219,10 @@
     <Compile Include="Offer\Queries\OfferQuery.cs" />
     <Compile Include="Offer\Queries\OfferQueryValidator.cs" />
     <Compile Include="Offer\QueryHandlers\OfferQueryHandler.cs" />
+    <Compile Include="User\CommandHandlers\UpdateUserCommandHandler.cs" />
+    <Compile Include="User\Commands\UserCommandProfile.cs" />
+    <Compile Include="User\Commands\UpdateUserCommand.cs" />
+    <Compile Include="User\Commands\UpdateUserCommandValidator.cs" />
     <Compile Include="User\Queries\UserQuery.cs" />
     <Compile Include="User\Queries\UsersQuery.cs" />
     <Compile Include="Contact\Queries\ContactQueryValidator.cs" />
@@ -350,6 +354,7 @@
       <LastGenOutput>GenerateEnumTypeItems.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
