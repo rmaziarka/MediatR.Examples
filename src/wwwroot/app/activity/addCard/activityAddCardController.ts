@@ -13,22 +13,33 @@ module Antares.Activity {
 
         // controller
         activity: AddCard.ActivityAddCardModel = new AddCard.ActivityAddCardModel();
+        vendorContacts: Business.Contact[];
 
-        constructor(private dataAccessService: Antares.Services.DataAccessService) {
+        constructor(
+            private dataAccessService: Antares.Services.DataAccessService,
+            private enumService: Services.EnumService) {
             this.dataAccessService.getContactResource();
         }
 
         $onInit = () => {
-            this.dataAccessService.getContactResource().get
+            this.setVendors();
         }
 
         $onChanges = (obj: any) => {
-        
+            // TODO change ownerships to immutable list
+            if (obj.ownerships.currentValue !== obj.ownerships.previousValue) {
+                this.setVendors();
+            }
         }
 
-        setVendors = (vendors: Business.Contact[]): void => {
-            this.activity.contacts = [];
-            this.activity.contacts.push.apply(this.activity.contacts, vendors);
+        setVendors = (): void => {
+            var vendor: Business.Ownership = _.find(this.ownerships, (ownership: Business.Ownership) => {
+                return ownership.isVendor();
+            });
+
+            if (vendor) {
+                this.vendorContacts = vendor.contacts;
+            }
         }
 
         save = () => {

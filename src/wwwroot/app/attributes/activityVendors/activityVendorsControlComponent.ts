@@ -6,10 +6,9 @@ module Antares.Attributes {
         controllerAs: 'vm',
         controller: 'ActivityVendorsControlController',
         bindings: {
-            ownerships: '<',
-            propertyType: '<',
-            config: '<',
-            setVendors: '&'
+            vendorContacts: '<',
+            activityTypeId: '<',
+            config: '<'
         }
     });
 }

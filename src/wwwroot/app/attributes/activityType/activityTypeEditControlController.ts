@@ -33,8 +33,8 @@ module Antares.Attributes {
                 });
         }
 
-        onActivityTypeChanged = () => {
-            this.ngModel = this.selectedActivityType && this.selectedActivityType.id;
+        changeActivityType = () => {
+            this.ngModel = this.selectedActivityType ? this.selectedActivityType.id : null;
         }
 
     }

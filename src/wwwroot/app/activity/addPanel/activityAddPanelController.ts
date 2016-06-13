@@ -19,11 +19,11 @@ module Antares.Activity {
             super();
         }
 
-        $onInit = () =>{
+        $onInit = () => {
             this.loadConfig();
         }
 
-        loadConfig = () =>{
+        loadConfig = () => {
             this.configService
                 .getActivity(this.propertyTypeId, this.activityTypeId, this.activityStatusId)
                 .then(this.configLoaded);
