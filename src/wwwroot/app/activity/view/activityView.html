@@ -117,6 +117,8 @@
     </div>
 </div>
 
+<attachment-upload-panel is-visible="avvm.isAttachmentsPanelVisible" entity-id="avvm.activity.id" enum-document-type="{{avvm.enumTypeActivityDocumentType}}" entity-type="{{avvm.entityType}}" save-attachment-for-entity="avvm.saveAttachment"></attachment-upload-panel>
+
 <side-panel component-id="avvm.componentIds.propertyPreviewSidePanelId">
     <side-panel-header>
         <h3 translate="PROPERTY.PREVIEW.PROPERTY_PREVIEW"></h3>
@@ -125,24 +127,6 @@
         <property-preview component-id="avvm.componentIds.propertyPreviewId">
         </property-preview>
     </side-panel-content>
-</side-panel>
-
-<side-panel component-id="avvm.componentIds.activityAttachmentAddSidePanelId" is-busy="avvm.saveActivityAttachmentBusy">
-    <side-panel-header>
-        <h3 translate="ATTACHMENT.ADD.ATTACH_FILE"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <attachment-upload component-id="avvm.componentIds.activityAttachmentAddId" enum-document-type="{{avvm.enumTypeActivityDocumentType}}" entity-type="{{avvm.entityType}}"></attachment-upload>
-        <busy is-busy="avvm.saveActivityAttachmentBusy" label="{{'COMMON.FILEISUPLOADING' | translate}}"></busy>
-    </side-panel-content>
-    <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="avvm.cancelActivityAttachmentAdd()">
-            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
-        </button>
-        <button class="btn btn-primary" type="button" id="attachment-add-button" ng-click="avvm.saveActivityAttachment()">
-            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
-        </button>
-    </side-panel-footer>
 </side-panel>
 
 <side-panel component-id="avvm.componentIds.activityAttachmentPreviewSidePanelId">

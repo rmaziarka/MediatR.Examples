@@ -205,8 +205,8 @@ module Antares.Services {
                 });
         }
 
-        getAttachmentResource(): Resources.IBaseResourceClass<Common.Models.Resources.IActivityAttachmentResource> {
-            return <Resources.IBaseResourceClass<Common.Models.Resources.IActivityAttachmentResource>>
+        getAttachmentResource(): Resources.IBaseResourceClass<Common.Models.Resources.IActivityAttachmentSaveCommand> {
+            return <Resources.IBaseResourceClass<Common.Models.Resources.IActivityAttachmentSaveCommand>>
                 this.$resource(this.appConfig.rootUrl + '/api/activities/:id/attachments');
         }
 

@@ -9,12 +9,14 @@ module Antares.Activity.View {
     import EntityType = Common.Models.Enums.EntityTypeEnum;
 
     export class ActivityViewController extends Core.WithPanelsBaseController {
+        isAttachmentsPanelVisible: boolean;
+
         activity: Business.Activity;
         attachmentsCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
         enumTypeActivityDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityDocumentType;
         entityType: Enums.EntityTypeEnum = Enums.EntityTypeEnum.Activity;
 
-        activityAttachmentResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityAttachmentResource>;
+        activityAttachmentResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityAttachmentSaveCommand>;
         saveActivityAttachmentBusy: boolean = false;
         selectedOffer: Dto.IOffer;
         selectedViewing: Dto.IViewing;
@@ -24,11 +26,24 @@ module Antares.Activity.View {
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService,
             private dataAccessService: Services.DataAccessService,
-            private latestViewsProvider: LatestViewsProvider) {
+            private latestViewsProvider: LatestViewsProvider,
+            private eventAggregator: Antares.Core.EventAggregator) {
 
             super(componentRegistry, $scope);
 
             this.activityAttachmentResource = dataAccessService.getAttachmentResource();
+
+            eventAggregator
+                .with(this)
+                .subscribe(Common.Component.CloseSidePanelEvent, () => {
+                    this.isAttachmentsPanelVisible = false;
+                });
+
+            eventAggregator
+                .with(this)
+                .subscribe(Common.Component.Attachment.AttachmentSavedEvent, (event: Common.Component.Attachment.AttachmentSavedEvent) => {
+                    this.addSavedAttachmentToList(event.attachmentSaved);
+                });
         }
 
         showPropertyPreview = (property: Business.PreviewProperty) => {
@@ -42,8 +57,7 @@ module Antares.Activity.View {
         }
 
         showActivityAttachmentAdd = () => {
-            this.components.activityAttachmentAdd().clearAttachmentForm();
-            this.showPanel(this.components.panels.activityAttachmentAdd);
+            this.isAttachmentsPanelVisible = true;
         }
 
         showActivityAttachmentPreview = (attachment: Common.Models.Business.Attachment) => {
@@ -51,33 +65,19 @@ module Antares.Activity.View {
             this.showPanel(this.components.panels.activityAttachmentPreview);
         }
 
-        cancelActivityAttachmentAdd = () => {
-            this.components.panels.activityAttachmentAdd().hide();
-        };
-
-        saveAttachment = (attachment: Common.Models.Business.Attachment) =>{
-            return this.activityAttachmentResource.save({ id : this.activity.id }, new Business.CreateActivityAttachmentResource(this.activity.id, attachment))
-                .$promise;
-        }
-
         addSavedAttachmentToList = (result: Dto.IAttachment) => {
             var savedAttachment = new Business.Attachment(result);
             this.activity.attachments.push(savedAttachment);
 
-            this.hidePanels(true);
+            this.isAttachmentsPanelVisible = false;
         }
 
-        saveActivityAttachment = () => {
-            this.saveActivityAttachmentBusy = true;
+        saveAttachment = (attachment: Antares.Common.Component.Attachment.AttachmentUploadCardModel) => {
+            return this.activityAttachmentResource.save({ id: this.activity.id }, new Antares.Common.Component.Attachment.ActivityAttachmentSaveCommand(this.activity.id, attachment))
+                .$promise;
 
-            this.components.activityAttachmentAdd()
-                .uploadAttachment(this.activity.id)
-                .then(this.saveAttachment)
-                .then(this.addSavedAttachmentToList)
-                .finally(() =>{
-                     this.saveActivityAttachmentBusy = false;
-                });
-        };
+            // TODO KC: handle saveActivityAttachmentBusy flag
+        }
 
         showViewingPreview = (viewing: Common.Models.Dto.IViewing) =>{
             this.selectedViewing = viewing;

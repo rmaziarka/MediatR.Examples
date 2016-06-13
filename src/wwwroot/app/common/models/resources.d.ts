@@ -68,7 +68,7 @@ declare module Antares.Common.Models {
         interface IPropertyAreaBreakdownResource extends ng.resource.IResource<Dto.IPropertyAreaBreakdown> {
         }
 
-        interface IActivityAttachmentResource extends ng.resource.IResource<Dto.IAttachment> {
+        interface IActivityAttachmentSaveCommand extends ng.resource.IResource<Antares.Common.Component.Attachment.ActivityAttachmentSaveCommand> {
         }
 
         interface IAzureUploadUrlResource extends ng.resource.IResource<Dto.IAzureUploadUrlContainer> {
