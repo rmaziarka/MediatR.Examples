@@ -53,19 +53,35 @@
 
         public Guid? BrokerId { get; set; }
 
-        public virtual CompanyContact Broker { get; set; }
+        public virtual Contact Broker { get; set; }
+
+        public Guid? BrokerCompanyId { get; set; }
+
+        public virtual Company BrokerCompany { get; set; }
 
         public Guid? LenderId { get; set; }
 
-        public virtual CompanyContact Lender { get; set; }
+        public virtual Contact Lender { get; set; }
+
+        public Guid? LenderCompanyId { get; set; }
+
+        public virtual Company LenderCompany { get; set; }
 
         public Guid? SurveyorId { get; set; }
 
-        public virtual CompanyContact Surveyor { get; set; }
+        public virtual Contact Surveyor { get; set; }
+
+        public Guid? SurveyorCompanyId { get; set; }
+
+        public virtual Contact SurveyorCompany { get; set; }
 
         public Guid? AdditionalSurveyorId { get; set; }
 
-        public virtual CompanyContact AdditionalSurveyor { get; set; }
+        public virtual Contact AdditionalSurveyor { get; set; }
+
+        public Guid? AdditionalSurveyorCompanyId { get; set; }
+
+        public virtual Contact AdditionalSurveyorCompany { get; set; }
 
         public bool ContractApproved { get; set; }
 
