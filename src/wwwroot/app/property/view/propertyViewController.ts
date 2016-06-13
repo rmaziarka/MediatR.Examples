@@ -10,7 +10,7 @@ module Antares.Property.View {
     import EntityType = Common.Models.Enums.EntityTypeEnum;
 
     export class PropertyViewController extends Core.WithPanelsBaseController {
-        isAddResidentialActivityVisible: boolean;
+        isActivityAddPanelVisible: boolean;
 
         ownershipAddPanelVisible: boolean = false;
         propertyId: string;
@@ -38,12 +38,16 @@ module Antares.Property.View {
 
             this.eventAggregator.with(this).subscribe(Antares.Common.Component.CloseSidePanelEvent, () => {
                 // TODO iteration?
-                this.isAddResidentialActivityVisible = false;
+                this.isActivityAddPanelVisible = false;
             });
 
             this.eventAggregator.with(this).subscribe(Activity.ActivityAddedSidePanelEvent, (msg: Activity.ActivityAddedSidePanelEvent) => {
                 this.property.activities.push(new Business.Activity(msg.activityAdded));
             });
+        }
+
+        onPanelsHidden = () =>{
+            this.isActivityAddPanelVisible = false;
         }
 
         fixOwnershipDates = () => {
@@ -68,7 +72,7 @@ module Antares.Property.View {
 
         showActivityAdd = () =>{
             this.hidePanels();
-            this.isAddResidentialActivityVisible = true;
+            this.isActivityAddPanelVisible = true;
         }
 
         showAreaAdd = () => {
