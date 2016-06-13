@@ -1,0 +1,72 @@
+﻿<#@ template language="C#" debug="True" hostSpecific="true" #>
+<#@ output extension="ts" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Collections.Generic" #>
+// <copyright file="enumTypeItems.tt">
+// </copyright>
+// ReSharper disable InconsistentNaming
+module Antares.Common.Models.Enums
+{
+<#
+	string fileName = this.Host.ResolvePath("..\\..\\KnightFrank.Antares.Database\\Scripts\\Data\\Configuration\\enumtypeitem.csv");
+	var enumDict = ParseFile(fileName);
+#>
+	export enum EnumType
+	{
+	 <#foreach(var enumType in enumDict.Keys){#>
+	<#=enumType#>,
+	 <#}#>
+}
+
+	<#foreach (var enumTypeName in enumDict.Keys) {#>
+
+	export enum <#= enumTypeName #>
+	{
+	<#foreach (var enumTypeItemName in enumDict[enumTypeName]) { #>
+	<#=enumTypeItemName#>,
+	<#  } #>
+}
+<# } #>
+}
+<#+
+	public Dictionary<string,List<string>> ParseFile( string path) {
+		Dictionary<string,List<string>> enumDictionary = new Dictionary<string,List<string>> ();
+		using (StreamReader reader = new StreamReader(path))
+            {
+                bool firstLine = true;
+                int enumType = 0;
+                int enumItem = 1;
+
+                string line;
+
+                while ((line = reader.ReadLine()) != null)
+                {
+                    // skip first line
+                    if (firstLine)
+                    {
+                        firstLine = !firstLine;
+                        continue;
+                    }
+
+                    //Define pattern
+                    Regex CSVParser = new Regex(";(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+
+                    //Separating columns to array
+                    string[] csvCollection = CSVParser.Split(line);
+                    string enumTypeName = csvCollection[enumType];
+
+                    if (enumDictionary.ContainsKey(enumTypeName))
+                    {
+                        enumDictionary[enumTypeName].Add(csvCollection[enumItem]);
+                    }
+                    else
+                    {
+                        enumDictionary.Add(enumTypeName, new List<string> { csvCollection[enumItem] });
+                    }
+                }
+            }
+			return enumDictionary;
+    }
+#>
