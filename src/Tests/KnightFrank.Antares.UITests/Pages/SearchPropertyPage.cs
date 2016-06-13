@@ -18,7 +18,7 @@
         {
         }
 
-        public SearchPropertyPage SearchForProperty(string property)
+        public SearchPropertyPage SearchProperty(string property)
         {
             this.Driver.SendKeys(this.searchField, property);
             this.Driver.SendKeys(this.searchField, Keys.Enter);
