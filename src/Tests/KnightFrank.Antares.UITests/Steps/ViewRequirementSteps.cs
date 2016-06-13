@@ -153,6 +153,12 @@
                 .WaitForSidePanelToShow();
         }
 
+        [When(@"User clicks details offer button for (.*) offer on view requirement page")]
+        public void DetailsOffer(int position)
+        {
+            this.page.OpenOfferActions(position).DetailsOffer(1);
+        }
+
         [When(@"User fills in offer details on view requirement page")]
         public void FillOfferDetails(Table table)
         {

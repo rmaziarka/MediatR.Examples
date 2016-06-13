@@ -112,6 +112,8 @@ Scenario: Display latest viewed activities
 			| 100000   | 500000   |
 		And Viewing for requirement is defined
 		And Offer for requirement is defined
+			| Status |
+			| New    |
 	When User navigates to view offer page with id
 		And User clicks activity details on view offer page
 	Then Latest 3 activities should contain following data

@@ -37,7 +37,8 @@
         private readonly ElementLocator offerActions = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .card-menu-button");
         private readonly ElementLocator offerStatus = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .offer-status");
         private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .ng-binding");
-        private readonly ElementLocator editOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showEditOfferPanel']");
+        private readonly ElementLocator editOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showEditOfferPanel'] li");
+        private readonly ElementLocator detailsOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showOfferDetailsView'] li");
 
         public ViewRequirementPage(DriverContext driverContext) : base(driverContext)
         {
@@ -171,6 +172,12 @@
         public ViewRequirementPage EditOffer(int position)
         {
             this.Driver.Click(this.editOffer.Format(position));
+            return this;
+        }
+
+        public ViewRequirementPage DetailsOffer(int position)
+        {
+            this.Driver.Click(this.detailsOffer.Format(position));
             return this;
         }
 
