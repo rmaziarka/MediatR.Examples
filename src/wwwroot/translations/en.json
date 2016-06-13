@@ -1,5 +1,6 @@
 ﻿{
   "COMMON": {
+    "PREFERENCES": "Preferences",
     "VIEW": "View",
     "SAVE": "Save",
     "EDIT": "Edit",
@@ -383,8 +384,12 @@
       "EMPTY": "No departments added yet",
       "NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR": {
         "TITLE": "No negotiator assigned to new department",
-        "MESSAGE": "You’re trying to add one or more new departments without negotiators assigned to them. Please select a negotiator for each of those departments or remove the departments" 
+        "MESSAGE": "You’re trying to add one or more new departments without negotiators assigned to them. Please select a negotiator for each of those departments or remove the departments"
       }
     }
+  },
+  "PREFERENCES": {
+    "HEADER": "Preferences",
+    "PREFERRED_SALUTATION": "Preferred salutation (envelope)"
   }
 }
