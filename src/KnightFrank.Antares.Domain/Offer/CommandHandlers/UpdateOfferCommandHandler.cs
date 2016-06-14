@@ -78,30 +78,36 @@
                 throw new ArgumentNullException(nameof(message));
             }
 
-            if (message.OfferDate > offer.CreatedDate)
+            if (message.OfferDate.Date > offer.CreatedDate.Date)
             {
-                throw new BusinessValidationException(BusinessValidationMessage.OfferDateLessOrEqualToCreateDateMessage(offer.CreatedDate));
+                throw new BusinessValidationException(BusinessValidationMessage.OfferDateLessOrEqualToCreateDateMessage(offer.CreatedDate.Date));
             }
-            if (message.ExchangeDate < offer.CreatedDate)
+            if (message.ExchangeDate.HasValue)
             {
-                throw new BusinessValidationException(BusinessValidationMessage.ExchangeDateGreaterOrEqualToCreateDateMessage(offer.CreatedDate));
+                if (message.ExchangeDate.Value.Date < offer.CreatedDate.Date)
+                {
+                    throw new BusinessValidationException(BusinessValidationMessage.ExchangeDateGreaterOrEqualToCreateDateMessage(offer.CreatedDate.Date));
+                }
             }
-            if (message.CompletionDate < offer.CreatedDate)
+            if (message.CompletionDate.HasValue)
             {
-                throw new BusinessValidationException(BusinessValidationMessage.CompletionDateGreaterOrEqualToCreateDateMessage(offer.CreatedDate));
+                if (message.CompletionDate.Value.Date < offer.CreatedDate.Date)
+                {
+                    throw new BusinessValidationException(BusinessValidationMessage.CompletionDateGreaterOrEqualToCreateDateMessage(offer.CreatedDate.Date));
+                }
             }
             if (offer.MortgageSurveyDate != null && message.MortgageSurveyDate.HasValue)
             {
-                if (message.MortgageSurveyDate.Value < message.OfferDate)
+                if (message.MortgageSurveyDate.Value.Date < message.OfferDate.Date)
                 {
-                    throw new BusinessValidationException(BusinessValidationMessage.CompletionDateGreaterOrEqualToCreateDateMessage(offer.MortgageSurveyDate.Value));
+                    throw new BusinessValidationException(BusinessValidationMessage.CompletionDateGreaterOrEqualToCreateDateMessage(offer.MortgageSurveyDate.Value.Date));
                 }
             }
             if (offer.AdditionalSurveyDate != null && message.AdditionalSurveyDate.HasValue)
             {
-                if (message.AdditionalSurveyDate.Value < message.OfferDate)
+                if (message.AdditionalSurveyDate.Value.Date < message.OfferDate.Date)
                 {
-                    throw new BusinessValidationException(BusinessValidationMessage.CompletionDateGreaterOrEqualToCreateDateMessage(offer.AdditionalSurveyDate.Value));
+                    throw new BusinessValidationException(BusinessValidationMessage.CompletionDateGreaterOrEqualToCreateDateMessage(offer.AdditionalSurveyDate.Value.Date));
                 }
             }
         }
