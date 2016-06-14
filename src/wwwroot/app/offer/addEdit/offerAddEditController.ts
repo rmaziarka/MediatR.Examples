@@ -95,7 +95,7 @@ module Antares {
                 return this.addOfferForm.$valid;
             }
 
-            saveOffer() {
+            saveOffer = () => {
                 if (!this.isDataValid()) {
                     return this.$q.reject();
                 }

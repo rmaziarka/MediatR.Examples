@@ -210,12 +210,7 @@ module Antares.Requirement.View {
                 .saveOffer()
                 .then((offerModel: Dto.IOffer) =>{
                     var offer = new Business.Offer(offerModel);
-
-                    offer.offerDate = Core.DateTimeUtils.convertDateToUtc(offer.offerDate);
-                    offer.exchangeDate = Core.DateTimeUtils.convertDateToUtc(offer.exchangeDate);
-                    offer.completionDate = Core.DateTimeUtils.convertDateToUtc(offer.completionDate);
-
-                    this.requirement.offers.push(offer);
+					this.requirement.offers.push(offer);
                     this.hidePanels();
                 })
                 .finally(() =>{
