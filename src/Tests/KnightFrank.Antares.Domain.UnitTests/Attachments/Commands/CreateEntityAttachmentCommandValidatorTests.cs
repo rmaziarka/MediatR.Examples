@@ -22,6 +22,10 @@
         private readonly Fixture fixture;
         private readonly CreateEntityAttachmentCommandValidator validator;
 
+        private class TestCommand : CreateEntityAttachmentCommand
+        {
+        }
+
         public CreateEntityAttachmentCommandValidatorTests()
         {
             this.fixture = new Fixture().Customize();
@@ -31,8 +35,8 @@
         [Fact]
         public void Given_ValidCreateEntityAttachmentCommand_When_Validating_Then_IsValid()
         {
-            // Arrange 
-            CreateEntityAttachmentCommand cmd = this.fixture.Create<CreateEntityAttachmentCommand>();
+            // Arrange
+            var cmd = this.fixture.Create<TestCommand>();
 
             // Act
             ValidationResult validationResult = this.validator.Validate(cmd);
@@ -44,9 +48,9 @@
         [Fact]
         public void Given_InvalidCreateAttachment_When_DocumentTypeIdIsSetToEmptyGuid_And_Validating_Then_IsNotValid()
         {
-            // Arrange 
-            CreateEntityAttachmentCommand cmd =
-                this.fixture.Build<CreateEntityAttachmentCommand>().With(c => c.EntityId, default(Guid)).Create();
+            // Arrange
+            TestCommand cmd =
+                this.fixture.Build<TestCommand>().With(c => c.EntityId, default(Guid)).Create();
 
             // Act
             ValidationResult validationResult = this.validator.Validate(cmd);
@@ -58,9 +62,9 @@
         [Fact]
         public void Given_InvalidCreateAttachment_When_AttachmentIsNotSet_And_Validating_Then_IsNotValid()
         {
-            // Arrange 
-            CreateEntityAttachmentCommand cmd =
-                this.fixture.Build<CreateEntityAttachmentCommand>().With(c => c.Attachment, null).Create();
+            // Arrange
+            TestCommand cmd =
+                this.fixture.Build<TestCommand>().With(c => c.Attachment, null).Create();
 
             // Act
             ValidationResult validationResult = this.validator.Validate(cmd);
