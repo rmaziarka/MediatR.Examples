@@ -77,6 +77,7 @@
     <Compile Include="Enums\PageType.cs" />
     <Compile Include="Fields\Control.cs" />
     <Compile Include="Fields\Field.cs" />
+    <Compile Include="Fields\InnerDictionaryField.cs" />
     <Compile Include="Fields\InnerField.cs" />
     <Compile Include="Fields\InnerFieldState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

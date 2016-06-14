@@ -18,8 +18,20 @@
                     .GroupBy(x => x.ControlCode)
                     .ToDictionary(x => x.Key, x =>
                     {
-                        dynamic r = x.ToDictionary(f => f.Name, f => (object)new { active = !f.Readonly });
-                        r["Active"] = !x.All(f => f.Readonly);
+                        dynamic r = x.ToDictionary(
+                            f => f.Name,
+                            f =>
+                            {
+                                IDictionary<string, dynamic> a = new ExpandoObject();
+                                a["Active"] = (object)!f.Readonly;
+                                a["Required"] = (object)f.Required;
+                                if (f.AllowedCodes != null)
+                                {
+                                    a["AllowedCodes"] = f.AllowedCodes;
+                                }
+                                return a;
+                            });
+
                         return r;
                     });
 

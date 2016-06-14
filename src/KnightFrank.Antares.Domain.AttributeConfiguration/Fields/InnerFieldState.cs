@@ -10,6 +10,7 @@
 
     public class InnerFieldState
     {
+        public bool Required { get; set; }
         public bool Readonly { get; set; }
         public bool Hidden { get; set; }
         public IList<IValidator> Validators { get; set; }
@@ -19,5 +20,7 @@
         public Type PropertyType { get; set; }
         public string Name { get; set; }
         public ControlCode ControlCode { get; set; }
+        public string DictionaryCode { get; set; }
+        public IList<string> AllowedCodes { get; set; } 
     }
 }
