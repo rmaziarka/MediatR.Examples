@@ -7,6 +7,7 @@ module Antares.Attributes {
     export class ActivityStatusEditControlController {
         // bindings 
         public ngModel: string;
+        public config: IActivityStatusEditControlConfig;
 
         // TODO set correct status code for type
         private defaultActivityStatusCode: string = 'PreAppraisal';
