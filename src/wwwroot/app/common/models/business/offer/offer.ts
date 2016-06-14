@@ -33,7 +33,7 @@ module Antares.Common.Models.Business {
         brokerId: string = null;
         brokerCompany: Business.Company = null;
         brokerCompanyId: string = null;
-	lender: Business.Contact = null;
+		lender: Business.Contact = null;
         lenderId: string = null;
         lenderCompany: Business.Company = null;
         lenderCompanyId: string = null;
@@ -42,11 +42,11 @@ module Antares.Common.Models.Business {
         surveyorId: string = null;
         surveyorCompany: Business.Company = null;
         surveyorCompanyId: string = null;
-	additionalSurveyor: Business.Contact = null;
+		additionalSurveyor: Business.Contact = null;
         additionalSurveyorId: string = null;
         additionalSurveyorCompany: Business.Company = null;
         additionalSurveyorCompanyId: string = null;
-	additionalSurveyStatus: Business.EnumTypeItem = null;
+		additionalSurveyStatus: Business.EnumTypeItem = null;
         additionalSurveyStatusId: string = null;
         additionalSurveyDate: Date | string = null;
         progressComment: string =  null;

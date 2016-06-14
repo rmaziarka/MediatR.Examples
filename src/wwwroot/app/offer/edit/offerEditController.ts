@@ -172,38 +172,6 @@ module Antares.Offer {
                 activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId); }
             };
         }
-
-        hasBrokerContact = (): boolean => {
-            if (this.offer.broker) {
-                return true;
-            }
-
-            return false;
-        }
-
-        hasLenderContact = (): boolean => {
-            if (this.offer.lender) {
-                return true;
-            }
-
-            return false;
-        }
-
-        hasSurveyorContact = (): boolean => {
-            if (this.offer.surveyor) {
-                return true;
-            }
-
-            return false;
-        }
-
-        hasAdditionalSurveyorContact = (): boolean => {
-            if (this.offer.additionalSurveyor) {
-                return true;
-            }
-
-            return false;
-        }
     }
 
     angular.module('app').controller('OfferEditController', OfferEditController);
