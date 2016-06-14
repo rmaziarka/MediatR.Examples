@@ -70,6 +70,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -145,6 +146,25 @@
     <Compile Include="Attachment\Queries\AttachmentQuery.cs" />
     <Compile Include="Attachment\Queries\AttachmentQueryValidator.cs" />
     <Compile Include="Attachment\QueryHandlers\AttachmentQueryHandler.cs" />
+    <Compile Include="AttributeConfiguration\Common\AttributeValidator.cs" />
+    <Compile Include="AttributeConfiguration\Common\ConfigurableEntityModelBinder.cs" />
+    <Compile Include="AttributeConfiguration\Common\EntityValidator.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\DictionaryExtensions.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\EnumExtensions.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\FieldExtensions.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\LambdaExtension.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\ListExtensions.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\ActivityControlsConfiguration.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\BaseControlsConfiguration.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\IControlsConfiguration.cs" />
+    <Compile Include="AttributeConfiguration\Enums\ControlCode.cs" />
+    <Compile Include="AttributeConfiguration\Enums\ControlType.cs" />
+    <Compile Include="AttributeConfiguration\Enums\PageType.cs" />
+    <Compile Include="AttributeConfiguration\Fields\Control.cs" />
+    <Compile Include="AttributeConfiguration\Fields\Field.cs" />
+    <Compile Include="AttributeConfiguration\Fields\InnerDictionaryField.cs" />
+    <Compile Include="AttributeConfiguration\Fields\InnerField.cs" />
+    <Compile Include="AttributeConfiguration\Fields\InnerFieldState.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQuery.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidator.cs" />
     <Compile Include="Characteristic\QueryHandlers\CharacteristicGroupsQueryHandler.cs" />
