@@ -5,41 +5,27 @@ module Antares.Services {
     import IActivityConfig = Antares.Activity.IActivityConfig;
     import IActivityAddPanelConfig = Antares.Activity.IActivityAddPanelConfig;
     import Attributes = Antares.Attributes;
+    import PageTypeEnum = Antares.Common.Models.Enums.PageTypeEnum;
 
     export class ConfigService {
 
-        private apiUrl: string = '/api/config';
+        private apiUrl: string = '/api/metadata';
 
         constructor(private $http: ng.IHttpService, private appConfig: Common.Models.IAppConfig, private $q: ng.IQService) {
         }
 
-        public getActivity = (propertyTypeId: string, activityTypeId: string, activityStatusId: string): ng.IHttpPromise<IActivityConfig> =>{
-            var defer = this.$q.defer();
-            var result = <IActivityAddPanelConfig>{
-                activityStatus: {
-                    status: {
-                        allowedCodes: ['PreAppraisal'], required: false, active: true
-                    },
-                    active: true
-                },
-                activityType: {
-                    type: {
-                        allowedCodes: ['Freehold Sale'], required: true, active: true
-                    },
-                    active: true
-                },
-                vendors:{ vendors: { required: true, active: true }, active: true },
-                landlords: { landlords: { required: true, active: true }, active: true },
-            };
-            
-            defer.resolve(result);
-            return defer.promise;
+        public getActivity = (pageType: PageTypeEnum, propertyTypeId: string, activityTypeId: string, entity: any): ng.IHttpPromise<IActivityConfig> =>{
+            var routeUrl = '/attributes/activity';
+            var postUrl = this.appConfig.rootUrl + this.apiUrl + routeUrl;
 
-
-            var routeUrl = '/activity';
+            var params = {
+                pageType: pageType,
+                propertyTypeId: propertyTypeId,
+                activityTypeId: activityTypeId
+            }
 
             return this.$http
-                .get<IActivityConfig>(this.appConfig.rootUrl + this.apiUrl + routeUrl)
+                .post<IActivityConfig>(postUrl, entity, { params: params})
                 .then<IActivityConfig>((result: ng.IHttpPromiseCallbackArg<IActivityConfig>) => result.data);
         }
     }

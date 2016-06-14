@@ -7,7 +7,8 @@ module Antares.Attribues {
         controller: 'ActivityStatusEditControlController',
         bindings: {
             config: '<',
-            ngModel: '='
+            ngModel: '=',
+            onActivityStatusChanged: '&'
         }
     });
 }

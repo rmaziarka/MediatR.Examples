@@ -8,7 +8,8 @@ module Antares.Attributes {
         bindings: {
             propertyTypeId: '<',
             config: '<',
-            ngModel: '='
+            ngModel: '=',
+            onActivityTypeChanged: '&'
         }
     });
 }
