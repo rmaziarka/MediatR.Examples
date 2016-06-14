@@ -24,19 +24,28 @@ module Antares.Activity {
             this.dataAccessService.getContactResource();
         }
 
+        $onInit = () => {
+            this.setVendorContacts();
+        }
+
         $onChanges = (obj: any) => {
+            if (obj.ownerships.currentValue !== obj.ownerships.previousValue) {
+                this.setVendorContacts();
+            }
+
             if (obj.pristineFlag && obj.pristineFlag.currentValue !== obj.previousValue) {
                 this.setPristine();
             }
         }
 
-        getVendorContacts = (): Business.Contact[] => {
+        setVendorContacts = (): void => {
             var vendor: Business.Ownership = _.find(this.ownerships, (ownership: Business.Ownership) => {
                 return ownership.isVendor();
             });
 
             if (vendor) {
-                return vendor.contacts;
+                this.vendorContacts = vendor.contacts;
+                this.activity.contacts = vendor.contacts;
             }
         }
 
