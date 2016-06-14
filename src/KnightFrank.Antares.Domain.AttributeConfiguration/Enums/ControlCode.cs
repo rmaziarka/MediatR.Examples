@@ -6,6 +6,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         ActivityStatus,
         Vendors,
         Property,
-        LeadNegotiator
+        LeadNegotiator,
+        Landlords
     }
 }

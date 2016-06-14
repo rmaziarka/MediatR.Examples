@@ -57,7 +57,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
 
             if (!this.ControlsConfig.ContainsKey(configurationKey))
             {
-                throw new NotImplementedException();
+                return innerFieldStates;
             }
 
             foreach (Control control in this.ControlsConfig[configurationKey])
@@ -104,7 +104,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
                     throw new Exception();
                 }
 
-                var control = this.AvailableControls[pageType].FirstOrDefault(x => x.ControlCode == controlCode);
+                Control control = this.AvailableControls[pageType].FirstOrDefault(x => x.ControlCode == controlCode);
                 if (control == null)
                 {
                     throw new Exception();
