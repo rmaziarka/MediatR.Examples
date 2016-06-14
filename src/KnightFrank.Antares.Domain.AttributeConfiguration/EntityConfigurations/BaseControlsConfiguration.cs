@@ -7,6 +7,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
+    using KnightFrank.Antares.Domain.Common.Enums;
 
     public abstract class BaseControlsConfiguration<TKey1, TKey2> : IControlsConfiguration<TKey1, TKey2>
     {

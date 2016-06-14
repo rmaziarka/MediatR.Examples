@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KnightFrank.Antares.Domain.AttributeConfiguration</RootNamespace>
     <AssemblyName>KnightFrank.Antares.Domain.AttributeConfiguration</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -66,10 +67,8 @@
     <Compile Include="EntityConfigurations\ActivityControlsConfiguration.cs" />
     <Compile Include="EntityConfigurations\BaseControlsConfiguration.cs" />
     <Compile Include="EntityConfigurations\IControlsConfiguration.cs" />
-    <Compile Include="Enums\ActivityType.cs" />
     <Compile Include="Enums\ControlCode.cs" />
     <Compile Include="Enums\PageType.cs" />
-    <Compile Include="Enums\PropertyType.cs" />
     <Compile Include="Fields\Control.cs" />
     <Compile Include="Fields\Field.cs" />
     <Compile Include="Fields\InnerField.cs" />
@@ -80,7 +79,12 @@
     <Compile Include="ToRemove\IActivity.cs" />
     <Compile Include="ToRemove\UpdateCommand.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\KnightFrank.Antares.Domain\KnightFrank.Antares.Domain.csproj">
+      <Project>{5987d78c-856d-4315-8b8b-baf00c286aff}</Project>
+      <Name>KnightFrank.Antares.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />

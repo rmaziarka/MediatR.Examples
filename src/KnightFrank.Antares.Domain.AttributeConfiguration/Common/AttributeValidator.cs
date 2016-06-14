@@ -9,6 +9,7 @@
     using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
+    using KnightFrank.Antares.Domain.Common.Enums;
 
     //TODO: do it more generic
     public class AttributeValidator
@@ -16,7 +17,7 @@
         public void Validate(object entity)
         {
             IControlsConfiguration<PropertyType, ActivityType> configuration = new ActivityControlsConfiguration();
-            IList<InnerFieldState> innerFieldStates = configuration.GetInnerFieldsState(PageType.Create, PropertyType.Flat, ActivityType.Lettings, entity);
+            IList<InnerFieldState> innerFieldStates = configuration.GetInnerFieldsState(PageType.Create, PropertyType.Flat, ActivityType.Assignment, entity);
             foreach (InnerFieldState innerFieldState in innerFieldStates)
             {
                 foreach (IValidator validator in innerFieldState.Validators)

@@ -6,6 +6,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
     using KnightFrank.Antares.Domain.AttributeConfiguration.ToRemove;
+    using KnightFrank.Antares.Domain.Common.Enums;
 
     public class ActivityControlsConfiguration : BaseControlsConfiguration<PropertyType, ActivityType>
     {
@@ -50,7 +51,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
 
         public override void DefineMappings()
         {
-            this.Use(ControlCode.BuyPrice, this.When(PropertyType.Flat, ActivityType.Lettings, PageType.Create))
+            this.Use(ControlCode.BuyPrice, this.When(PropertyType.Flat, ActivityType.Assignment, PageType.Create))
                 .IsReadonlyWhen<CreateCommand>(x => x.StatusId == 1)
                 .FieldIsReadonlyWhen<CreateCommand, decimal>(x => x.BuyPrice, x => x.BuyPrice > 10);
 

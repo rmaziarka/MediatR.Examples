@@ -10,6 +10,7 @@
     using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
+    using KnightFrank.Antares.Domain.Common.Enums;
 
     /// <summary>
     /// Metadata controller.
