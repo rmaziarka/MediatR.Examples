@@ -416,7 +416,8 @@
       "NO_LENDER": "Lender contact not specified yet",
       "NO_SURVEYOR": "Surveyor contact not specified yet",
       "LOAN_TO_VALUE_MUST_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
-      "LOAN_TO_VALUE_MUST_BE_LESS_OR_EQUAL_200": "Value must be less or equal 200"
+      "LOAN_TO_VALUE_MUST_BE_LESS_OR_EQUAL_200": "Value must be less or equal 200",
+      "DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE": "Given date can not be earlier than offer date"
     }
   },
   "DEPARTMENTS": {

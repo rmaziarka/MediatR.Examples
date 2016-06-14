@@ -27,16 +27,24 @@
         mortgageLoanToValue?: number;
         broker?: Dto.IContact;
         brokerId: string;
+        brokerCompany?: Dto.ICompany;
+        brokerCompanyId: string;
         lender?: Dto.IContact;
         lenderId: string;
-        mortgageSurveyDate?: Date;
+        lenderCompany?: Dto.ICompany;
+        lenderCompanyId: string;
+        mortgageSurveyDate?: Date | string;
         surveyor?: Dto.IContact;
         surveyorId: string;
+        surveyorCompany?: Dto.ICompany;
+        surveyorCompanyId: string;
         additionalSurveyor?: Dto.IContact;
         additionalSurveyorId: string;
+        additionalSurveyorCompany?: Dto.ICompany;
+        additionalSurveyorCompanyId: string;
         additionalSurveyStatus: Dto.IEnumTypeItem;
         additionalSurveyStatusId: string;
-        additionalSurveyDate?: Date;
+        additionalSurveyDate?: Date | string;
         progressComment: string;
     }
 }

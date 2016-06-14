@@ -106,17 +106,6 @@ module Antares.Offer {
 
             return false;
         }
-
-        clear = () => {
-            // TODO
-            this.offer.mortgageStatusId = null;
-            this.offer.mortgageSurveyStatusId = null;
-            this.offer.additionalSurveyStatusId = null;
-            this.offer.searchStatusId = null;
-            this.offer.enquiriesId = null;
-            this.offer.contractApproved = null;
-            this.offer.mortgageLoanToValue = null;
-        }
         
         setDefaultStatuses = () => {
             var defaultMortgageStatus: any = _.find(this.mortgageStatuses, (status: any) => status.code === "Unknown");
@@ -151,7 +140,7 @@ module Antares.Offer {
             }
 
             if (this.offerAccepted() === false) {
-                this.clear();
+                this.offer.clearProgressData();
             }
 
             var offerResource = this.dataAccessService.getOfferResource();
@@ -185,22 +174,34 @@ module Antares.Offer {
         }
 
         hasBrokerContact = (): boolean => {
-            // TODO
+            if (this.offer.broker) {
+                return true;
+            }
+
             return false;
         }
 
         hasLenderContact = (): boolean => {
-            // TODO
+            if (this.offer.lender) {
+                return true;
+            }
+
             return false;
         }
 
         hasSurveyorContact = (): boolean => {
-            // TODO
+            if (this.offer.surveyor) {
+                return true;
+            }
+
             return false;
         }
 
         hasAdditionalSurveyorContact = (): boolean => {
-            // TODO
+            if (this.offer.additionalSurveyor) {
+                return true;
+            }
+
             return false;
         }
     }

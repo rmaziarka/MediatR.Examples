@@ -9,8 +9,10 @@ module Antares.Common.Models.Business {
         constructor(company?: Dto.ICompany) {
             if (company) {
                 angular.extend(this, company);
-                
-                this.contacts = company.contacts.map((contact: Dto.IContact) => { return new Contact(contact) });
+
+                if (company.contacts) {
+                    this.contacts = company.contacts.map((contact: Dto.IContact) =>{ return new Contact(contact) });
+                }
             }
         }
     }

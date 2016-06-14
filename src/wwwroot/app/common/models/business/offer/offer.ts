@@ -31,18 +31,25 @@ module Antares.Common.Models.Business {
         mortgageLoanToValue: number = null;
         broker: Business.Contact = null;
         brokerId: string = null;
+        brokerCompany: Business.Company = null;
+        brokerCompanyId: string = null;
         lender: Business.Contact = null;
         lenderId: string = null;
-        mortgageSurveyDate: Date = null;
+        lenderCompany: Business.Company = null;
+        lenderCompanyId: string = null;
+        mortgageSurveyDate: Date | string = null;
         surveyor: Business.Contact = null;
         surveyorId: string = null;
+        surveyorCompany: Business.Company = null;
+        surveyorCompanyId: string = null;
         additionalSurveyor: Business.Contact = null;
         additionalSurveyorId: string = null;
+        additionalSurveyorCompany: Business.Company = null;
+        additionalSurveyorCompanyId: string = null;
         additionalSurveyStatus: Business.EnumTypeItem = null;
         additionalSurveyStatusId: string = null;
-        additionalSurveyDate: Date = null;
+        additionalSurveyDate: Date | string = null;
         progressComment: string =  null;
-
 
         constructor(offer?: Dto.IOffer) {
             angular.extend(this, offer);
@@ -61,22 +68,68 @@ module Antares.Common.Models.Business {
                     this.exchangeDate = moment(offer.exchangeDate).toDate();
                 }
 
-                if (this.broker) {
+                if (offer.broker) {
                     this.broker = new Contact(offer.broker);
                 }
 
-                if (this.lender) {
+                if (offer.lender) {
                     this.lender = new Contact(offer.lender);
                 }
                 
-                if (this.surveyor) {
+                if (offer.surveyor) {
                     this.surveyor = new Contact(offer.surveyor);
                 }
 
-                if (this.additionalSurveyor) {
+                if (offer.additionalSurveyor) {
                     this.additionalSurveyor = new Contact(offer.additionalSurveyor);
                 }
+
+                if (offer.brokerCompany) {
+                    this.brokerCompany = new Company(offer.brokerCompany);
+                }
+
+                if (offer.lenderCompany) {
+                    this.lenderCompany = new Company(offer.lenderCompany);
+                }
+
+                if (offer.surveyorCompany) {
+                    this.surveyorCompany = new Company(offer.surveyorCompany);
+                }
+
+                if (offer.additionalSurveyorCompany) {
+                    this.additionalSurveyorCompany = new Company(offer.additionalSurveyorCompany);
+                }
+
+                if (offer.mortgageSurveyDate) {
+                    this.mortgageSurveyDate = new Date(<string>offer.mortgageSurveyDate);
+                }
+
+                if (offer.additionalSurveyDate) {
+                    this.additionalSurveyDate = new Date(<string>offer.additionalSurveyDate);
+                }
             }
+        }
+
+        clearProgressData() {
+            this.mortgageStatusId = null;
+            this.mortgageSurveyStatusId = null;
+            this.additionalSurveyStatusId = null;
+            this.searchStatusId = null;
+            this.enquiriesId = null;
+            this.contractApproved = null;
+            this.contractApproved = null;
+            this.mortgageLoanToValue = null;
+            this.brokerId = null;
+            this.brokerCompanyId = null;
+            this.lenderId = null;
+            this.lenderCompanyId = null;
+            this.mortgageSurveyDate = null;
+            this.surveyorId = null;
+            this.surveyorCompanyId = null;
+            this.additionalSurveyDate = null;
+            this.additionalSurveyorId = null;
+            this.additionalSurveyorCompanyId = null;
+            this.progressComment = null;
         }
     }
 }
