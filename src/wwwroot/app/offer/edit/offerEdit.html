@@ -156,7 +156,7 @@
             </section>
         </div>
         <div class="col-md-4" ng-if="vm.offerAccepted()">
-            <section>
+            <section id="progress-section">
                 <h3 class="page-header" translate="OFFER.EDIT.PROGRESS_SUMMARY"></h3>
                 <fieldset>
                     <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.mortgageStatus.$dirty) && vm.editOfferForm.mortgageStatus.$invalid}">
@@ -252,8 +252,8 @@
                                 <div class="input-group-addon">%</div>
                             </div>
                             <div ng-messages="vm.editOfferForm.mortgageLoanToValue.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.mortgageLoanToValue.$dirty">
-                                <p name="minNumberValidationError" ng-message="max" class="help-block with-errors" translate="OFFER.EDIT.LOAN_TO_VALUE_MUST_BE_LESS_OR_EQUAL_200"></p>
-                                <p name="maxNumberValidationError" ng-message="min" class="help-block with-errors" translate="OFFER.EDIT.LOAN_TO_VALUE_MUST_BE_GREATER_THAN_ZERO"></p>
+                                <p name="maxNumberValidationError" ng-message="max" class="help-block with-errors" translate="OFFER.EDIT.LOAN_TO_VALUE_MUST_BE_LESS_OR_EQUAL_200"></p>
+                                <p name="minNumberValidationError" ng-message="min" class="help-block with-errors" translate="OFFER.EDIT.LOAN_TO_VALUE_MUST_BE_GREATER_THAN_ZERO"></p>
                             </div>
                         </div>
                     </div>

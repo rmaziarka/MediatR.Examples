@@ -4,9 +4,7 @@ module Antares {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
     import OfferEditController = Offer.OfferEditController;
-    import KfMessageService = Services.KfMessageService;
-    type TestCaseForRequiredValidator = [string, string, boolean]; // [field_description, field_selector, is_not_required]
-    type TestCaseForValidator = [string, any, string]; // [field_description, field_value, field_selector]
+    import KfMessageService = Services.KfMessageService;    
 
     describe('Given offer component', () => {
         var scope: ng.IScope,
@@ -28,7 +26,15 @@ module Antares {
             status: 'select[name=selectedStatus]',
             activity: '#offer-edit-activity-details .card-item',
             negotiator: '#offer-edit-negotiator-details',
-            negotiatorSection: '#offer-edit-negotiator-section'
+            negotiatorSection: '#offer-edit-negotiator-section',
+        };
+
+        var pageObjectOfferProgressSelectors: any = {
+            progressSection: '#progress-section',
+            mortgageLoanToValue: '[name=mortgageLoanToValue]',
+            progressComment: '[name=progressComment]',
+            additionalSurveyDate: '[name=additionalSurveyDate]',
+            mortgageSurveyDate: '[name=mortgageSurveyDate]'
         };
 
         var format = (date: any) => date.format('DD-MM-YYYY');
@@ -49,7 +55,8 @@ module Antares {
 
         var offerStatuses: any = [
             { id: '1', code: 'New' },
-            { id: '2', code: 'Closed' }
+            { id: '2', code: 'Closed' },
+            { id: '3', code: 'Accepted' }
         ];
 
         beforeEach(inject((
@@ -118,6 +125,57 @@ module Antares {
             expect(completionDate.val()).toEqual(moment(offerMock.completionDate).format("DD-MM-YYYY"));
         });
 
+        it('and offer status is not accepted then progress section is hidden', () => {
+            controller.offer.statusId = "1";
+            scope.$apply();
+
+            var progressSection = element.find(pageObjectOfferProgressSelectors.progressSection);
+
+            expect(progressSection.length).toBe(0);
+        });
+
+        describe('when offer status is accepted', () =>{
+            beforeEach(() =>{
+                controller.offer.statusId = "3";
+                scope.$apply();
+            });
+
+            it('then progress section is rendered', () => {
+                var progressHeader = element.find(pageObjectOfferProgressSelectors.progressSection);
+
+                expect(progressHeader.length).toBe(1);
+            });
+
+            it('and mortgage loan to value is invalid then validation message should be displayed', () =>{
+                assertValidator.assertMinValueValidator(-1, false, pageObjectOfferProgressSelectors.mortgageLoanToValue);
+                assertValidator.assertMaxValueValidator(201, false, pageObjectOfferProgressSelectors.mortgageLoanToValue);
+            });
+
+            it('and progress comment is longer than 4000 chars then validation message should be displayed', () => {
+                assertValidator.assertMaxLengthValidator(4001, false, pageObjectOfferProgressSelectors.progressComment);
+            });
+
+            it('and mortgage survey date is earlier than offer date then validation message should be displayed', () =>{
+                var dateNow = new Date();
+                var dateYesterday = moment().add(-1, 'days');
+
+                controller.offer.offerDate = dateNow;
+                scope.$apply();
+                
+                assertValidator.assertDateGreaterThenValidator(format(dateYesterday), false, pageObjectOfferProgressSelectors.mortgageSurveyDate);
+            });
+
+            it('and additional survey date is earlier than offer date then validation message should be displayed', () => {
+                var dateNow = new Date();
+                var dateYesterday = moment().add(-1, 'days');
+
+                controller.offer.offerDate = dateNow;
+                scope.$apply();
+
+                assertValidator.assertDateGreaterThenValidator(format(dateYesterday), false, pageObjectOfferProgressSelectors.additionalSurveyDate);
+            });
+        });
+
         describe('when activity details is clicked', () => {
             it('then activity should be added to property activity list', () => {
                 $http.expectPOST(/\/api\/latestviews/, () => {
@@ -131,7 +189,6 @@ module Antares {
         });
 
         describe('when fields are', () => {
-
             it('invalid then validation messages should appear', () => {
                 assertValidator.assertDateGreaterThenValidator(datesToTest.inThePast, false, pageObjectSelectors.exchangeDate);
                 assertValidator.assertDateGreaterThenValidator(datesToTest.inThePast, false, pageObjectSelectors.completionDate);
