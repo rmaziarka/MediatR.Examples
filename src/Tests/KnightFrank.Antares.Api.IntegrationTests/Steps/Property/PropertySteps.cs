@@ -364,7 +364,8 @@
                 .Excluding(x => x.PropertyType)
                 .Excluding(x => x.Address.AddressForm)
                 .Excluding(x => x.Address.Country)
-                .Excluding(x => x.PropertyCharacteristics));
+                .Excluding(x => x.PropertyCharacteristics)
+                .Excluding(x => x.Attachments));
 
             updatedProperty.PropertyCharacteristics.Should()
                            .Equal(actualProperty?.PropertyCharacteristics,
@@ -388,7 +389,8 @@
                 .Excluding(x => x.Address.AddressForm)
                 .Excluding(x => x.Address.Country)
                 .Excluding(x => x.PropertyType)
-                .Excluding(x => x.PropertyCharacteristics));
+                .Excluding(x => x.PropertyCharacteristics)
+                .Excluding(x => x.Attachments));
 
             expectedProperty.PropertyCharacteristics.Should()
                             .Equal(actualProperty?.PropertyCharacteristics,

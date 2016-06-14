@@ -12,7 +12,6 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.CommandHandlers;
     using KnightFrank.Antares.Domain.Activity.Commands;
-    using KnightFrank.Antares.Domain.Attachment.Commands;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
 
@@ -29,91 +28,11 @@
         [Theory]
         [AutoMoqData]
         public void Given_ValidCommand_When_Handling_Then_ShouldSaveAttachment(
-            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
-            CreateActivityAttachmentCommandHandler handler,
-            CreateEntityAttachmentCommand cmd,
-            Activity activity)
-        {
-            // Arrange
-            activity.Attachments = new List<Attachment>();
-            activityRepository.Setup(r => r.GetById(cmd.EntityId)).Returns(activity);
-
-            // Act
-            handler.Handle(cmd);
-            Attachment attachment = activity.Attachments.SingleOrDefault();
-
-            // Assert
-            Assert.NotNull(attachment);
-            cmd.Attachment.ShouldBeEquivalentTo(attachment, opt => opt.IncludingProperties());
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_ValidCommand_When_Handling_Then_ShouldValidateActivityDocumentTypeItem(
             [Frozen] Mock<IEnumTypeItemValidator> enumTypeItemValidator,
-            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
-            CreateActivityAttachmentCommandHandler handler,
-            CreateEntityAttachmentCommand cmd,
-            Activity activity)
-        {
-            // Arrange
-            activity.Attachments = new List<Attachment>();
-            activityRepository.Setup(r => r.GetById(cmd.EntityId)).Returns(activity);
-
-            // Act
-            handler.Handle(cmd);
-
-            // Assert
-            enumTypeItemValidator.Verify(x => x.ItemExists(EnumType.ActivityDocumentType, cmd.Attachment.DocumentTypeId));
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_ValidCommand_When_Handling_Then_ShouldValidateUserId(
             [Frozen] Mock<IEntityValidator> entityValidator,
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             CreateActivityAttachmentCommandHandler handler,
-            CreateEntityAttachmentCommand cmd,
-            Activity activity)
-        {
-            // Arrange
-            activity.Attachments = new List<Attachment>();
-            activityRepository.Setup(r => r.GetById(cmd.EntityId)).Returns(activity);
-
-            // Act
-            handler.Handle(cmd);
-
-            // Assert
-            entityValidator.Verify(x => x.EntityExists<User>(cmd.Attachment.UserId));
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_ValidCommand_When_Handling_Then_ShouldValidateActivityId(
-            [Frozen] Mock<IEntityValidator> entityValidator,
-            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
-            CreateActivityAttachmentCommandHandler handler,
-            CreateEntityAttachmentCommand cmd,
-            Activity activity)
-        {
-            // Arrange
-            activity.Attachments = new List<Attachment>();
-            activityRepository.Setup(r => r.GetById(cmd.EntityId)).Returns(activity);
-
-            // Act
-            handler.Handle(cmd);
-
-            // Assert
-            entityValidator.Verify(x => x.EntityExists(activity, cmd.EntityId));
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_ValidCommand_When_Handling_Then_ShouldReturnCreatedAttachmentId(
-            [Frozen] Mock<IEntityValidator> entityValidator,
-            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
-            CreateActivityAttachmentCommandHandler handler,
-            CreateEntityAttachmentCommand cmd,
+            CreateActivityAttachmentCommand cmd,
             Activity activity,
             Guid expectedAttachmentId)
         {
@@ -123,11 +42,7 @@
 
             activityRepository.Setup(x => x.Save()).Callback(() =>
             {
-                Attachment attachment = activity.Attachments.SingleOrDefault();
-                if (attachment != null)
-                {
-                    attachment.Id = expectedAttachmentId;
-                }
+                activity.Attachments.Single(x => x.FileName == cmd.Attachment.FileName).Id = expectedAttachmentId;
             });
 
             // Act
@@ -135,6 +50,15 @@
 
             // Assert
             Assert.Equal(expectedAttachmentId, attachmentId);
+
+            entityValidator.Verify(x => x.EntityExists(activity, cmd.EntityId));
+            entityValidator.Verify(x => x.EntityExists<User>(cmd.Attachment.UserId));
+
+            enumTypeItemValidator.Verify(x => x.ItemExists(EnumType.ActivityDocumentType, cmd.Attachment.DocumentTypeId));
+
+            Attachment attachment = activity.Attachments.SingleOrDefault();
+            Assert.NotNull(attachment);
+            cmd.Attachment.ShouldBeEquivalentTo(attachment, opt => opt.IncludingProperties());
         }
     }
 }

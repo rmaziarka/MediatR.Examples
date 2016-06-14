@@ -67,7 +67,7 @@
             createAttachment.DocumentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[documentType];
             createAttachment.UserId = this.fixture.DataContext.Users.First().Id;
 
-            var createActivityAttachmentCommand = new CreateEntityAttachmentCommand
+            var createActivityAttachmentCommand = new CreateActivityAttachmentCommand
             {
                 EntityId = activityId.Equals(string.Empty) ? new Guid() : new Guid(activityId),
                 Attachment = createAttachment

@@ -120,7 +120,7 @@
         /// <returns>Created attachment</returns>
         [HttpPost]
         [Route("{id}/attachments")]
-        public Attachment CreateAttachment(Guid id, CreateEntityAttachmentCommand command)
+        public Attachment CreateAttachment(Guid id, CreateActivityAttachmentCommand command)
         {
             // User id is mocked.
             // TODO Set correct user id from header.

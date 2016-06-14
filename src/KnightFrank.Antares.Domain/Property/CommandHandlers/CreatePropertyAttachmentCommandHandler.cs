@@ -6,14 +6,14 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
-    using KnightFrank.Antares.Domain.Attachment.Commands;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Property.Commands;
 
     using MediatR;
 
     using EnumType = KnightFrank.Antares.Domain.Common.Enums.EnumType;
 
-    public class CreatePropertyAttachmentCommandHandler : IRequestHandler<CreateEntityAttachmentCommand, Guid>
+    public class CreatePropertyAttachmentCommandHandler : IRequestHandler<CreatePropertyAttachmentCommand, Guid>
     {
         private readonly IEntityValidator entityValidator;
         private readonly IEnumTypeItemValidator enumTypeItemValidator;
@@ -29,7 +29,7 @@
             this.propertyRepository = propertyRepository;
         }
 
-        public Guid Handle(CreateEntityAttachmentCommand message)
+        public Guid Handle(CreatePropertyAttachmentCommand message)
         {
             this.entityValidator.EntityExists<User>(message.Attachment.UserId);
             this.enumTypeItemValidator.ItemExists(EnumType.PropertyDocumentType, message.Attachment.DocumentTypeId);

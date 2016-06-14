@@ -14,6 +14,7 @@
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Property.CommandHandlers;
+    using KnightFrank.Antares.Domain.Property.Commands;
 
     using Moq;
 
@@ -32,7 +33,7 @@
             [Frozen] Mock<IEntityValidator> entityValidator,
             [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
             CreatePropertyAttachmentCommandHandler handler,
-            CreateEntityAttachmentCommand cmd,
+            CreatePropertyAttachmentCommand cmd,
             Property property,
             Guid expectedAttachmentId)
         {

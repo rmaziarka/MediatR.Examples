@@ -82,6 +82,7 @@
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityUserCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandler.cs" />
+    <Compile Include="Activity\Commands\CreateActivityAttachmentCommand.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\ActivityProfile.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandValidator.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="Offer\Queries\OfferQueryValidator.cs" />
     <Compile Include="Offer\QueryHandlers\OfferQueryHandler.cs" />
     <Compile Include="Property\CommandHandlers\CreatePropertyAttachmentCommandHandler.cs" />
+    <Compile Include="Property\Commands\CreatePropertyAttachmentCommand.cs" />
     <Compile Include="User\Queries\UsersQuery.cs" />
     <Compile Include="Contact\Queries\ContactQueryValidator.cs" />
     <Compile Include="Contact\Queries\ContactsQuery.cs" />
