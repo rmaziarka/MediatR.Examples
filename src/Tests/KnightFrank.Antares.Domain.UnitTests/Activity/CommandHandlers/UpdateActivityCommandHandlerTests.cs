@@ -214,7 +214,7 @@
            Guid secondaryNegotiatorIdToAdd,
            IFixture fixture)
         {
-            
+
             // Arrange
             UpdateActivityCommand command = this.CreateUpdateActivityCommand(fixture, department, DateTime.Today);
             Activity activity = this.GetActivity(fixture, activityLeadNegotiator);
@@ -234,7 +234,7 @@
             ActivityUser negotiator = activity.ActivityUsers.SingleOrDefault(u => u.UserId == secondaryNegotiatorIdToAdd);
             negotiator.Should().NotBeNull();
             // ReSharper disable once PossibleNullReferenceException
-            negotiator.UserType.Code.Should().Be(EnumTypeItemCode.SecondaryNegotiator);
+            negotiator.UserType.Code.Should().Be(ActivityUserType.SecondaryNegotiator.ToString());
             negotiator.CallDate.Should().Be(callDate);
         }
 
@@ -296,7 +296,7 @@
             ActivityUser negotiator = activity.ActivityUsers.SingleOrDefault(u => u.UserId == negotiatorIdToUpdate);
             negotiator.Should().NotBeNull();
             // ReSharper disable once PossibleNullReferenceException
-            negotiator.UserType.Code.Should().Be(isNegotiatorToBeChangedToLead ? EnumTypeItemCode.LeadNegotiator: EnumTypeItemCode.SecondaryNegotiator);
+            negotiator.UserType.Code.Should().Be(isNegotiatorToBeChangedToLead ? ActivityUserType.LeadNegotiator.ToString(): ActivityUserType.SecondaryNegotiator.ToString());
             negotiator.CallDate.Should().Be(callDate);
         }
 
@@ -328,26 +328,26 @@
 
         private EnumTypeItem GetLeadNegotiatorUserType(IFixture fixture)
         {
-            return fixture.Build<EnumTypeItem>().With(i => i.Code, EnumTypeItemCode.LeadNegotiator).Create();
+            return fixture.Build<EnumTypeItem>().With(i => i.Code, ActivityUserType.LeadNegotiator.ToString()).Create();
         }
 
         private EnumTypeItem GetSecondaryNegotiatorUserType(IFixture fixture)
         {
-            return fixture.Build<EnumTypeItem>().With(i => i.Code, EnumTypeItemCode.SecondaryNegotiator).Create();
+            return fixture.Build<EnumTypeItem>().With(i => i.Code, ActivityUserType.SecondaryNegotiator.ToString()).Create();
         }
 
         private EnumTypeItem GetManagingDepartmentType(IFixture fixture)
         {
             return fixture.Build<EnumTypeItem>()
                 .With(i => i.Id, this.managingDepartmentTypeId)
-                .With(i => i.Code, EnumTypeItemCode.ManagingDepartment).Create();
+                .With(i => i.Code, ActivityDepartmentType.Managing.ToString()).Create();
         }
 
         private EnumTypeItem GetStandardDepartmentType(IFixture fixture)
         {
             return fixture.Build<EnumTypeItem>()
                 .With(i => i.Id, this.standardDepartmentTypeId)
-                .With(i => i.Code, EnumTypeItemCode.StandardDepartment).Create();
+                .With(i => i.Code, ActivityDepartmentType.Standard.ToString()).Create();
         }
 
         private IPostprocessComposer<UpdateActivityUser> CreateUpdateActivityUser(IFixture fixture, Guid userId, DateTime? callDate)
@@ -364,7 +364,7 @@
                 .With(x => x.DepartmentTypeId, this.managingDepartmentTypeId)
                 .Create();
 
-            
+
             return fixture.Build<UpdateActivityCommand>()
                           .With(i => i.LeadNegotiator, this.CreateUpdateActivityUser(fixture, fixture.Create<Guid>(), baseCallDate).Create())
                           .With(i => i.SecondaryNegotiators, this.CreateUpdateActivityUser(fixture, fixture.Create<Guid>(), baseCallDate?.AddDays(rnd.Next(1, 15))).CreateMany().ToList())
@@ -411,7 +411,7 @@
         }
 
         private void SetupUserRepository(Mock<IGenericRepository<User>> userRepository, List<Guid> userIds, Department department, IFixture fixture)
-            
+
         {
             var availableUsers = new List<User>();
             userIds.ForEach(userId => availableUsers.Add(this.CreateUser(userId, department, fixture)));

@@ -9,6 +9,11 @@
             this.Property(x => x.Code)
                 .HasMaxLength(50)
                 .IsRequired();
+
+            this.Property(x => x.EnumCode)
+                .HasMaxLength(250)
+                .IsRequired()
+                .IsUnique();
         }
     }
 }

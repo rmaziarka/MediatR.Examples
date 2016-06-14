@@ -90,7 +90,7 @@
 
         private void ValidateActivityTypeFromCommand(UpdateActivityCommand message, Activity activity)
         {
-            this.entityValidator.EntityExists<ActivityType>(message.ActivityTypeId);
+            this.entityValidator.EntityExists<Dal.Model.Property.Activities.ActivityType>(message.ActivityTypeId);
 
             // ReSharper disable once PossibleNullReferenceException
             this.activityTypeDefinitionValidator.Validate(
@@ -310,22 +310,22 @@
 
         private EnumTypeItem GetLeadNegotiatorUserType()
         {
-            return this.enumTypeItemRepository.FindBy(i => i.Code == EnumTypeItemCode.LeadNegotiator).Single();
+            return this.enumTypeItemRepository.FindBy(i => i.Code == ActivityUserType.LeadNegotiator.ToString()).Single();
         }
 
         private EnumTypeItem GetSecondaryNegotiatorUserType()
         {
-            return this.enumTypeItemRepository.FindBy(i => i.Code == EnumTypeItemCode.SecondaryNegotiator).Single();
+            return this.enumTypeItemRepository.FindBy(i => i.Code == ActivityUserType.SecondaryNegotiator.ToString()).Single();
         }
 
         private EnumTypeItem GetManagingDepartmentType()
         {
-            return this.enumTypeItemRepository.FindBy(i => i.Code == EnumTypeItemCode.ManagingDepartment).Single();
+            return this.enumTypeItemRepository.FindBy(i => i.Code == ActivityDepartmentType.Managing.ToString()).Single();
         }
 
         private EnumTypeItem GetStandardDepartmentType()
         {
-            return this.enumTypeItemRepository.FindBy(i => i.Code == EnumTypeItemCode.StandardDepartment).Single();
+            return this.enumTypeItemRepository.FindBy(i => i.Code == ActivityDepartmentType.Standard.ToString()).Single();
         }
     }
 }
