@@ -62,5 +62,22 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
         {
             this.isHiddenExpression = hiddenExpression.Compile();
         }
+
+        public virtual InnerField Copy()
+        {
+            var fieldCopy = new InnerField(this.member, this.compiled, this.expression, this.containerType, this.propertyType)
+            {
+                isHiddenExpression = this.isHiddenExpression,
+                isReadonlyExpression = this.isReadonlyExpression,
+                Required = this.Required
+            };
+
+            foreach (IValidator validator in this.validators)
+            {
+                fieldCopy.AddValidator(validator);
+            }
+
+            return fieldCopy;
+        }
     }
 }

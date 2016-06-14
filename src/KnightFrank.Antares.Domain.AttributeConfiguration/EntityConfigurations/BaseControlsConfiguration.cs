@@ -38,8 +38,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
                     {
                         if (configurationKey.Item3 == pageType)
                         {
-                            //TODO: deep copy
-                            baseControls.ForEach(c => this.ControlsConfig[configurationKey].Add(c));
+                            baseControls.ForEach(c => this.ControlsConfig[configurationKey].Add(c.Copy()));
                         }
                     }
                 }
@@ -109,20 +108,18 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
                     throw new Exception();
                 }
 
-                // TODO: deep clone - don't use serialization, it does not work here
-                //Control controlClone = control.Clone();
-                //Control controlCopy = AutoMapper.Mapper.Map<Control>(control);
+                Control controlCopy = control.Copy();
 
                 if (this.ControlsConfig.ContainsKey(item))
                 {
-                    this.ControlsConfig[item].Add(control);
+                    this.ControlsConfig[item].Add(controlCopy);
                 }
                 else
                 {
-                    this.ControlsConfig.Add(item, new List<Control> { control });
+                    this.ControlsConfig.Add(item, new List<Control> { controlCopy });
                 }
 
-                result.Add(control);
+                result.Add(controlCopy);
             }
 
             return result;

@@ -111,5 +111,17 @@
 
             return fieldStates;
         }
+
+        public Control Copy()
+        {
+            List<InnerField> fieldCopies = this.Fields.Select(x => x.Copy()).ToList();
+            var newControl = new Control(this.ControlType, this.PageType, this.ControlCode, fieldCopies)
+            {
+                isHiddenExpression = this.isHiddenExpression,
+                isReadonlyExpression = this.isReadonlyExpression
+            };
+
+            return newControl;
+        }
     }
 }
