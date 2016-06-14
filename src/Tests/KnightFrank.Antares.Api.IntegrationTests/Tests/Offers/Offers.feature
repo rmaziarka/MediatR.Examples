@@ -111,9 +111,44 @@ Scenario: Update residential sales offer
 			| Tomasz    | Bien    | Mister |
 		And Requirement exists in database
 		And Offer with New status exists in database
-	When User updates offer with Accepted status
+	When User updates offer with New status
 	Then User should get OK http status code
-		And Offer details should be the same as already added
+		And Offer details should be updated
+
+@Offers
+Scenario Outline: Update accepted residential sales offer
+	Given Contacts exists in database
+		| FirstName | Surname | Title |
+		| Jon       | Lajoie  | Dude  |
+		And Company exists in database
+			| Name    |
+			| Company |
+		And Property exists in database
+			| PropertyType | Division    |
+			| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
+		And Contacts exists in database
+			| FirstName | Surname | Title  |
+			| Tomasz    | Bien    | Mister |
+		And Requirement exists in database
+		And Offer with <offerStatus> status exists in database
+		And Contacts exists in database
+			| FirstName | Surname | Title |
+			| Adam      | Lajoie  | Sir   |
+		And Company exists in database
+			| Name |
+			| New  |
+	When User updates offer with <newOfferStatus> status
+	Then User should get OK http status code
+		And Offer details should be updated
+
+	Examples:
+	| offerStatus | newOfferStatus |
+	| New         | Accepted       |
+	| Accepted    | Accepted       |
+	| Accepted    | New            |
 
 @Offers
 Scenario Outline: Update residential sales offer with invalid data

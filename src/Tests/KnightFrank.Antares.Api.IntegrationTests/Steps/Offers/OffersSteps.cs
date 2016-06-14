@@ -61,7 +61,7 @@
                 LastModifiedDate = this.date
             };
 
-            if (status.ToLower().Equals("accepted"))
+            if (status.ToLower().Equals(nameof(OfferStatus.Accepted).ToLower()))
             {
                 CompanyContact companyContact = this.scenarioContext.Get<Company>("Company").CompaniesContacts.First();
 
@@ -217,6 +217,57 @@
                 OfferDate = this.date.AddMinutes(-1)
             };
 
+            if (status.ToLower().Equals(nameof(OfferStatus.Accepted).ToLower()))
+            {
+                CompanyContact companyContact = this.scenarioContext.Get<Company>("Company").CompaniesContacts.First();
+
+                details.MortgageStatusId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e => e.EnumType.Code.Equals(nameof(MortgageStatus)) && e.Code.Equals(nameof(MortgageStatus.Agreed))).Id;
+
+                details.MortgageSurveyStatusId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e =>
+                            e.EnumType.Code.Equals(nameof(MortgageSurveyStatus)) &&
+                            e.Code.Equals(nameof(MortgageSurveyStatus.Complete))).Id;
+
+                details.AdditionalSurveyStatusId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e =>
+                            e.EnumType.Code.Equals(nameof(AdditionalSurveyStatus)) &&
+                            e.Code.Equals(nameof(AdditionalSurveyStatus.Complete))).Id;
+
+                details.SearchStatusId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e => e.EnumType.Code.Equals(nameof(SearchStatus)) && e.Code.Equals(nameof(SearchStatus.Complete))).Id;
+
+                details.EnquiriesId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e => e.EnumType.Code.Equals(nameof(Enquiries)) && e.Code.Equals(nameof(Enquiries.Complete))).Id;
+
+                details.ContractApproved = false;
+
+                details.MortgageLoanToValue = 0;
+
+                details.BrokerId = companyContact.ContactId;
+                details.BrokerCompanyId = companyContact.CompanyId;
+
+                details.LenderId = companyContact.ContactId;
+                details.LenderCompanyId = companyContact.CompanyId;
+
+                details.MortgageSurveyDate = DateTime.UtcNow;
+
+                details.SurveyorId = companyContact.ContactId;
+                details.SurveyorCompanyId = companyContact.CompanyId;
+
+                details.AdditionalSurveyDate = DateTime.UtcNow;
+
+                details.AdditionalSurveyorId = companyContact.ContactId;
+                details.AdditionalSurveyorCompanyId = companyContact.CompanyId;
+
+                details.ProgressComment = StringExtension.GenerateMaxAlphanumericString(4000);
+            }
+
             this.UpdateOffer(details);
         }
 
@@ -243,6 +294,7 @@
         }
 
         [Then(@"Offer details should be the same as already added")]
+        [Then(@"Offer details should be updated")]
         public void CheckOfferDetails()
         {
             var offer = JsonConvert.DeserializeObject<Offer>(this.scenarioContext.GetResponseContent());
