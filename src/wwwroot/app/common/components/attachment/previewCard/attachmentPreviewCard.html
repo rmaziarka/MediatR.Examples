@@ -1,0 +1,31 @@
+<kf-side-panel-card>
+    <side-panel-header>
+        <h3 translate="ATTACHMENT.PREVIEW.ATTACHMENT_PREVIEW"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <div class="row section-row">
+            <div class="col-xs-5" translate="ATTACHMENT.PREVIEW.NAME"></div>
+            <div class="col-xs-7 text-truncate" id="attachment-preview-fileName">
+                <i class="fa fa-download pull-right" aria-hidden="true"></i>
+                <a ng-if="!!vm.attachmentUrl" href="{{vm.attachmentUrl}}">{{vm.attachment.fileName}}</a>
+                <span ng-if="!vm.attachmentUrl">{{vm.attachment.fileName}}</span>
+            </div>
+        </div>
+        <div class="row section-row">
+            <div class="col-xs-5" translate="ATTACHMENT.PREVIEW.TYPE"></div>
+            <div class="col-xs-7" id="attachment-preview-type">{{vm.attachment.documentTypeId | dynamicTranslate}}</div>
+        </div>
+        <div class="row section-row">
+            <div class="col-xs-5" translate="ATTACHMENT.PREVIEW.SIZE"></div>
+            <div class="col-xs-7" id="attachment-preview-size">{{vm.attachment.size | fileSize}}</div>
+        </div>
+        <div class="row section-row">
+            <div class="col-xs-5" translate="ATTACHMENT.PREVIEW.ADDED"></div>
+            <div class="col-xs-7" id="attachment-preview-created-date">{{vm.attachment.createdDate | date : 'dd-MM-yyyy'}}</div>
+        </div>
+        <div class="row section-row">
+            <div class="col-xs-5" translate="ATTACHMENT.PREVIEW.BY"></div>
+            <div class="col-xs-7" id="attachment-preview-user">{{vm.attachment.user.getName()}}</div>
+        </div>
+    </side-panel-content>
+</kf-side-panel-card>

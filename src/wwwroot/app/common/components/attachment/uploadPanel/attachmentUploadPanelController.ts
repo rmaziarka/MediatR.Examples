@@ -7,20 +7,41 @@ module Antares.Common.Component.Attachment {
 
     export class AttachmentUploadPanelController extends Common.Component.BaseSidePanelController {
         // bindings
+        entityId: string;
         entityType: Enums.EntityTypeEnum;
         enumDocumentType: Dto.EnumTypeCode;
-        entityId: string;
-        saveAttachmentForEntity: Function;
+        onSaveAttachment: (obj: { attachment: AttachmentUploadCardModel }) => ng.IPromise<Dto.IAttachment>;
+
+        attachmentClear: boolean = false;
 
         constructor(private eventAggregator: Antares.Core.EventAggregator) {
             super();
         }
 
-        save = (attachment: AttachmentUploadCardModel) => {
-            this.saveAttachmentForEntity(attachment).then((attachmentDto: Dto.IAttachment) => {
-                this.eventAggregator.publish(new AttachmentSavedEvent(attachmentDto));
-                this.eventAggregator.publish(new Antares.Common.Component.CloseSidePanelEvent());
-            });
+        panelShown = () => {
+            this.attachmentClear = true;
+        };
+
+        panelHidden = () => {
+            this.attachmentClear = false;
+        };
+
+        startUpload = () => {
+            this.eventAggregator.publish(new BusySidePanelEvent(true));
+        }
+
+        endUpload = () => {
+            this.eventAggregator.publish(new BusySidePanelEvent(false));
+        }
+
+        endUploadAndSave = (attachment: AttachmentUploadCardModel) => {
+            this.onSaveAttachment({ attachment: attachment })
+                .then((attachmentDto: Dto.IAttachment) => {
+                    this.eventAggregator.publish(new AttachmentSavedEvent(attachmentDto));
+                    this.eventAggregator.publish(new Antares.Common.Component.CloseSidePanelEvent());
+                }).finally(() => {
+                    this.eventAggregator.publish(new BusySidePanelEvent(false));
+                });
         }
     }
 

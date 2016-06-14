@@ -1,0 +1,17 @@
+<section>
+    <card-list id="card-list-attachments" show-item-add="vm.showAttachmentAdd" is-item-add-disabled="vm.isAttachmentUploadPanelBusy">
+        <card-list-header>
+            <h3 class="page-header" translate="ATTACHMENT.LIST.ATTACHMENTS"></h3>
+        </card-list-header>
+        <card-list-no-items ng-show="vm.activity.attachments.length === 0">
+            <p class="help-block" translate="ATTACHMENT.LIST.NO_ATTACHMENTS"></p>
+        </card-list-no-items>
+        <card-list-item ng-repeat="attachment in vm.attachments | orderBy: vm.attachmentsCartListOrder.name : vm.attachmentsCartListOrder.descending track by attachment.id ">
+            <card id="attachment-card-{{::attachment.id}}" card-template-url="'app/common/components/attachment/templates/attachmentCard.html'" item="attachment"
+                  show-item-details="vm.showAttachmentPreview">
+            </card>
+        </card-list-item>
+    </card-list>
+</section>
+<attachment-upload-panel is-visible="vm.isAttachmentUploadPanelVisible" is-busy="vm.isAttachmentUploadPanelBusy" entity-id="vm.entityId" enum-document-type="{{vm.enumDocumentType}}" entity-type="{{vm.entityType}}" on-save-attachment="vm.saveAttachment(attachment)"></attachment-upload-panel>
+<attachment-preview-panel is-visible="vm.isAttachmentPreviewPanelVisible" entity-id="vm.entityId" entity-type="{{vm.entityType}}" attachment="vm.selectedAttachment"></attachment-preview-panel>

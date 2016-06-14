@@ -9,12 +9,10 @@ module Antares.Activity.View {
     import EntityType = Common.Models.Enums.EntityTypeEnum;
 
     export class ActivityViewController extends Core.WithPanelsBaseController {
-        isAttachmentsPanelVisible: boolean;
-
         activity: Business.Activity;
-        attachmentsCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
+
         enumTypeActivityDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityDocumentType;
-        entityType: Enums.EntityTypeEnum = Enums.EntityTypeEnum.Activity;
+        entityType: EntityType = EntityType.Activity;
 
         activityAttachmentResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityAttachmentSaveCommand>;
         saveActivityAttachmentBusy: boolean = false;
@@ -35,12 +33,6 @@ module Antares.Activity.View {
 
             eventAggregator
                 .with(this)
-                .subscribe(Common.Component.CloseSidePanelEvent, () => {
-                    this.isAttachmentsPanelVisible = false;
-                });
-
-            eventAggregator
-                .with(this)
                 .subscribe(Common.Component.Attachment.AttachmentSavedEvent, (event: Common.Component.Attachment.AttachmentSavedEvent) => {
                     this.addSavedAttachmentToList(event.attachmentSaved);
                 });
@@ -56,27 +48,14 @@ module Antares.Activity.View {
             });
         }
 
-        showActivityAttachmentAdd = () => {
-            this.isAttachmentsPanelVisible = true;
-        }
-
-        showActivityAttachmentPreview = (attachment: Common.Models.Business.Attachment) => {
-            this.components.activityAttachmentPreview().setAttachment(attachment, this.activity.id);
-            this.showPanel(this.components.panels.activityAttachmentPreview);
-        }
-
         addSavedAttachmentToList = (result: Dto.IAttachment) => {
             var savedAttachment = new Business.Attachment(result);
             this.activity.attachments.push(savedAttachment);
-
-            this.isAttachmentsPanelVisible = false;
         }
 
         saveAttachment = (attachment: Antares.Common.Component.Attachment.AttachmentUploadCardModel) => {
             return this.activityAttachmentResource.save({ id: this.activity.id }, new Antares.Common.Component.Attachment.ActivityAttachmentSaveCommand(this.activity.id, attachment))
                 .$promise;
-
-            // TODO KC: handle saveActivityAttachmentBusy flag
         }
 
         showViewingPreview = (viewing: Common.Models.Dto.IViewing) =>{
@@ -105,10 +84,6 @@ module Antares.Activity.View {
             this.componentIds = {
                 propertyPreviewId: 'viewActivity:propertyPreviewComponent',
                 propertyPreviewSidePanelId: 'viewActivity:propertyPreviewSidePanelComponent',
-                activityAttachmentAddSidePanelId: 'viewActivity:activityAttachmentAddSidePanelComponent',
-                activityAttachmentAddId: 'viewActivity:activityAttachmentAddComponent',
-                activityAttachmentPreviewId: 'viewActivity:activityyAttachmentPreviewComponent',
-                activityAttachmentPreviewSidePanelId: 'viewActivity:activityyAttachmentPreviewSidePanelComponent',
                 previewViewingSidePanelId: 'viewActivity:previewViewingSidePanelComponent',
                 viewingPreviewId: 'viewActivity:viewingPreviewComponent',
                 offerPreviewId: 'viewActivity:offerPreviewComponent',
@@ -119,14 +94,10 @@ module Antares.Activity.View {
         defineComponents() {
             this.components = {
                 propertyPreview: () => { return this.componentRegistry.get(this.componentIds.propertyPreviewId); },
-                activityAttachmentAdd: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentAddId); },
-                activityAttachmentPreview: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentPreviewId); },
                 viewingPreview: () => { return this.componentRegistry.get(this.componentIds.viewingPreviewId); },
                 offerPreview: () => { return this.componentRegistry.get(this.componentIds.offerPreviewId);  },
                 panels: {
                     propertyPreview: () => { return this.componentRegistry.get(this.componentIds.propertyPreviewSidePanelId); },
-                    activityAttachmentAdd: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentAddSidePanelId) },
-                    activityAttachmentPreview: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentPreviewSidePanelId); },
                     previewViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.previewViewingSidePanelId); },
                     offerPreview: () =>{ return this.componentRegistry.get(this.componentIds.offerPreviewSidePanelId); }
                 }

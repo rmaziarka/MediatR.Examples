@@ -84,21 +84,7 @@
                         </card-list-item>
                     </card-list>
                 </section>
-                <section id="activity-view-attachments">
-                    <card-list id="card-list-attachments" show-item-add="avvm.showActivityAttachmentAdd" is-item-add-disabled="avvm.saveActivityAttachmentBusy">
-                        <card-list-header>
-                            <h3 class="page-header" translate="ACTIVITY.VIEW.ATTACHMENTS"></h3>
-                        </card-list-header>
-                        <card-list-no-items ng-show="avvm.activity.attachments.length === 0">
-                            <p class="help-block" translate="ACTIVITY.VIEW.NO_ATTACHMENTS"></p>
-                        </card-list-no-items>
-                        <card-list-item ng-repeat="attachment in avvm.activity.attachments | orderBy: avvm.attachmentsCartListOrder.name : avvm.attachmentsCartListOrder.descending track by attachment.id ">
-                            <card id="attachment-card-{{::attachment.id}}" card-template-url="'app/activity/templates/activityAttachmentCard.html'" item="attachment"
-                                show-item-details="avvm.showActivityAttachmentPreview">
-                            </card>
-                        </card-list-item>
-                    </card-list>
-                </section>
+                <attachments-manager entity-id="avvm.activity.id" enum-document-type="{{avvm.enumTypeActivityDocumentType}}" entity-type="{{avvm.entityType}}" attachments="avvm.activity.attachments" on-save-attachment-for-entity="avvm.saveAttachment(attachment)"></attachments-manager>
             </div>
             <div class="col-md-4">
                 <section>
@@ -117,8 +103,6 @@
     </div>
 </div>
 
-<attachment-upload-panel is-visible="avvm.isAttachmentsPanelVisible" entity-id="avvm.activity.id" enum-document-type="{{avvm.enumTypeActivityDocumentType}}" entity-type="{{avvm.entityType}}" save-attachment-for-entity="avvm.saveAttachment"></attachment-upload-panel>
-
 <side-panel component-id="avvm.componentIds.propertyPreviewSidePanelId">
     <side-panel-header>
         <h3 translate="PROPERTY.PREVIEW.PROPERTY_PREVIEW"></h3>
@@ -126,16 +110,6 @@
     <side-panel-content>
         <property-preview component-id="avvm.componentIds.propertyPreviewId">
         </property-preview>
-    </side-panel-content>
-</side-panel>
-
-<side-panel component-id="avvm.componentIds.activityAttachmentPreviewSidePanelId">
-    <side-panel-header>
-        <h3 translate="ATTACHMENT.PREVIEW.ATTACHMENT_PREVIEW"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <attachment-preview component-id="avvm.componentIds.activityAttachmentPreviewId" entity-type="{{avvm.entityType}}">
-        </attachment-preview>
     </side-panel-content>
 </side-panel>
 

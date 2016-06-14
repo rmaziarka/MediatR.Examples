@@ -1,10 +1,10 @@
-﻿<form name="attachmentUploadForm" ng-submit="attachmentUploadForm.$valid && vm.uploadAttachment()" id="file-upload-form" novalidate>
+﻿<form name="vm.attachmentUploadForm" ng-submit="vm.attachmentUploadForm.$valid && vm.uploadAttachment()" id="file-upload-form" novalidate>
     <kf-side-panel-card>
         <side-panel-header>
-            <h3 translate="ACTIVITY.ADD.CREATE_ACTIVITY"></h3>
+            <h3 translate="ATTACHMENT.ADD.ATTACH_FILE"></h3>
         </side-panel-header>
         <side-panel-content>
-            <div class="form-group" ng-class="{'has-error': (attachmentUploadForm.$submitted || attachmentUploadForm.attachment.$dirty) && attachmentUploadForm.attachment.$invalid}">
+            <div class="form-group" ng-class="{'has-error': (vm.attachmentUploadForm.$submitted || vm.attachmentUploadForm.attachment.$dirty) && vm.attachmentUploadForm.attachment.$invalid}">
                 <div class="row">
                     <div class="col-md-12">
                         <label for="file" class="required">{{"ATTACHMENT.ADD.FILE" | translate}}</label>
@@ -20,20 +20,20 @@
                             {{"ATTACHMENT.ADD.BROWSE" | translate}}
                             <input id="attachment" name="attachment" type="file" ngf-select ng-model="vm.file" is-file-cleared="{{vm.isFileCleared}}">
                         </span>
-                        <div ng-class="{'has-error': attachmentUploadForm.$submitted || attachmentUploadForm.attachment.$dirty}" ng-messages="attachmentUploadForm.attachment.$error"
-                             ng-show="attachmentUploadForm.$submitted || attachmentUploadForm.attachment.$dirty">
+                        <div ng-class="{'has-error': vm.attachmentUploadForm.$submitted || vm.attachmentUploadForm.attachment.$dirty}" ng-messages="vm.attachmentUploadForm.attachment.$error"
+                             ng-show="vm.attachmentUploadForm.$submitted || vm.attachmentUploadForm.attachment.$dirty">
                             <div ng-messages-include="app/common/views/errorMessages.html"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': (attachmentUploadForm.$submitted || attachmentUploadForm.documentType.$dirty) && attachmentUploadForm.documentType.$invalid}">
+            <div class="form-group" ng-class="{'has-error': (vm.attachmentUploadForm.$submitted || vm.attachmentUploadForm.documentType.$dirty) && vm.attachmentUploadForm.documentType.$invalid}">
                 <div class="row">
                     <div class="col-md-9">
                         <label for="type" class="required">{{"ATTACHMENT.ADD.TYPE" | translate}}</label>
                         <enum-select id="document-type" name="documentType" required="true" ng-model="vm.documentTypeId" enum-type-code="{{vm.enumDocumentType}}">
                         </enum-select>
-                        <div ng-messages="attachmentUploadForm.documentType.$error" ng-show="attachmentUploadForm.$submitted || attachmentUploadForm.documentType.$dirty">
+                        <div ng-messages="vm.attachmentUploadForm.documentType.$error" ng-show="vm.attachmentUploadForm.$submitted || vm.attachmentUploadForm.documentType.$dirty">
                             <div ng-messages-include="app/common/views/errorMessages.html"></div>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
             <button class="btn btn-default" type="button" ng-click="vm.cancel()">
                 <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
             </button>
-            <button class="btn btn-primary" id="activity-add-button" type="submit">
+            <button class="btn btn-primary" id="attachment-save-button" type="submit">
                 <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
             </button>
         </side-panel-footer>

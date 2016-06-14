@@ -6,10 +6,13 @@ module Antares.Common.Component.Attachment {
         controllerAs: 'vm',
         controller: 'AttachmentUploadCardController',
         bindings: {
-            onUpload: '&',
-            enumDocumentType: '@',
+            entityId: '<',
             entityType: '@',
-            entityId: '<'
+            enumDocumentType: '@',
+            onUploadStarted: '&',
+            onUploadFinished: '&',
+            onUploadFailed: '&',
+            attachmentClear: '<'
         }
     });
 }
