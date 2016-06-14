@@ -1,5 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
 {
+    using System;
     using System.Collections.Generic;
 
     using KnightFrank.Antares.Domain.Activity.Commands;
@@ -13,7 +14,7 @@
         {
             this.AddBaseControl(PageType.Create, ControlCode.Property, Field<CreateActivityCommand>.Create(x => x.PropertyId).Required().InnerField);
             this.AddBaseControl(PageType.Create, ControlCode.LeadNegotiator, Field<CreateActivityCommand>.Create(x => x.LeadNegotiatorId).Required().InnerField);
-            
+
             this.AddControl(PageType.Create, ControlCode.ActivityStatus, Field<CreateActivityCommand>.CreateDictionary(x => x.ActivityStatusId, nameof(ActivityStatus)).Required().InnerField);
             this.AddControl(PageType.Create, ControlCode.Vendors, Field<CreateActivityCommand>.Create(x => x.ContactIds).InnerField);
             this.AddControl(PageType.Create, ControlCode.Landlords, Field<CreateActivityCommand>.Create(x => x.ContactIds).InnerField);
@@ -34,10 +35,22 @@
                 PropertyType.GarageOnly,PropertyType.ParkingSpace, PropertyType.Land, PropertyType.Houseboat
             }, ActivityType.FreeholdSale, PageType.Create));
 
-            this.Use(new List<ControlCode> { ControlCode.ActivityStatus, ControlCode.Vendors, ControlCode.ActivityType }, this.When(new List<PropertyType>
+            this.Use(new List<ControlCode> { ControlCode.Vendors, ControlCode.ActivityType }, this.When(new List<PropertyType>
             {
                 PropertyType.Flat, PropertyType.Maisonette, PropertyType.DevelopmentPlot, PropertyType.Land
             }, ActivityType.LongLeaseholdSale, PageType.Create));
+
+            this.Use(ControlCode.ActivityStatus, this.When(new List<PropertyType>
+            {
+                PropertyType.Flat, PropertyType.Maisonette, PropertyType.DevelopmentPlot, PropertyType.Land
+            }, ActivityType.LongLeaseholdSale, PageType.Create))
+                .FieldHasAllowed<CreateActivityCommand, Guid, ActivityStatus>(
+                    x => x.ActivityStatusId,
+                    new List<ActivityStatus>
+                        {
+                            ActivityStatus.MarketAppraisal,
+                            ActivityStatus.PreAppraisal
+                        });
         }
     }
 }

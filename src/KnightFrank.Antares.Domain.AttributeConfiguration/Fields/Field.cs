@@ -35,19 +35,32 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
             return new Field<TEntity, string>(expression, innerField);
         }
 
+        public static Field<TEntity, Guid> CreateDictionary(Expression<Func<TEntity, Guid>> expression, string dictionaryCode)
+        {
+            //TODO: support validation
+            return new Field<TEntity, Guid>(expression, CreateInnerDictionaryField(expression, dictionaryCode));
+        }
+
         public static Field<TEntity, Guid?> CreateDictionary(Expression<Func<TEntity, Guid?>> expression, string dictionaryCode)
         {
-            //TODO: support dictionary + validation
-            return new Field<TEntity, Guid?>(expression, CreateInnerField(expression));
+            //TODO: support validation
+            return new Field<TEntity, Guid?>(expression, CreateInnerDictionaryField(expression, dictionaryCode));
         }
 
         private static InnerField CreateInnerField<TProperty>(Expression<Func<TEntity, TProperty>> expression)
         {
             var member = expression.GetMember();
             var compiled = expression.Compile();
-            var innerField = new InnerField(member, compiled.CoerceToNonGeneric(), expression, typeof(TEntity),
-                typeof(TProperty));
+            var innerField = new InnerField(member, compiled.CoerceToNonGeneric(), expression, typeof(TEntity), typeof(TProperty));
             return innerField;
         }
+
+        private static InnerField CreateInnerDictionaryField<TProperty>(Expression<Func<TEntity, TProperty>> expression, string dictionaryCode)
+        {
+            var member = expression.GetMember();
+            var compiled = expression.Compile();
+            var innerField = new InnerDictionaryField(member, compiled.CoerceToNonGeneric(), expression, typeof(TEntity), typeof(TProperty), dictionaryCode);
+            return innerField;
+    }
     }
 }

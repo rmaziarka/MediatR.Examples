@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Linq.Expressions;
 
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
@@ -56,6 +57,17 @@
             this.SetFieldExpression(fieldExpression, expression, true);
         }
 
+        public void SetFieldAllowedValues(LambdaExpression fieldExpression, IList<string> allowedCodes)
+        {
+            foreach (InnerDictionaryField innerField in this.Fields.OfType<InnerDictionaryField>())
+            {
+                if (innerField.expression.ToString() == fieldExpression.ToString())
+                {
+                    innerField.AllowedCodes = allowedCodes;
+                }
+            }
+        }
+
         private void SetFieldExpression(LambdaExpression fieldExpression, LambdaExpression expression, bool readonlyExpression)
         {
             foreach (InnerField innerField in this.Fields)
@@ -86,10 +98,12 @@
                     Compiled = field.compiled,
                     Validators = field.validators,
                     Expression = field.expression,
+                    Required = field.Required,
                     Readonly = this.IsReadonly(entity) || field.IsReadonly(entity),
                     Hidden = this.IsHidden(entity) || field.IsHidden(entity),
                     Name = field.expression.GetMemberName(),
-                    ControlCode = this.ControlCode
+                    ControlCode = this.ControlCode,
+                    AllowedCodes = (field as InnerDictionaryField)?.AllowedCodes
                 };
 
                 fieldStates.Add(state);

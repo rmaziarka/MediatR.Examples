@@ -68,6 +68,11 @@
             return SetFieldExpression(controls, field, expression, false);
         }
 
+        public static IList<Control> FieldHasAllowed<TEntity, TProperty, TEnum>(this IList<Control> controls, Expression<Func<TEntity, TProperty>> field, IEnumerable<TEnum> allowedValues) where TEnum:struct
+        {
+            return SetAllowedValues(controls, field, allowedValues);
+;        }
+
         private static IList<Control> SetFieldExpression<TEntity, TProperty>(IList<Control> controls, Expression<Func<TEntity, TProperty>> field, Expression<Func<TEntity, bool>> expression, bool readonlyExpression)
         {
             if (controls.Count > 1)
@@ -92,5 +97,15 @@
             return controls;
         }
 
+        private static IList<Control> SetAllowedValues<TEntity, TProperty, TEnum>(IList<Control> controls, Expression<Func<TEntity, TProperty>> field, IEnumerable<TEnum> allowedValues)
+            where TEnum : struct
+        {
+            List<string> allowedCodes = allowedValues.Select(x => x.ToString()).ToList();
+            foreach (Control control in controls) { 
+                control.SetFieldAllowedValues(field, allowedCodes);
+            }
+
+            return controls;
+        }
     }
 }
