@@ -11,7 +11,7 @@ module Antares.Attributes {
         onActivityStatusChanged: (obj: { activityStatusId: string }) => void;
 
         // controller
-        public activityStatuses: Dto.IEnumItem[] = [];
+        private allActivityStatuses: Dto.IEnumItem[] = [];
 
         constructor(private enumService: Services.EnumService) { }
 
@@ -19,12 +19,20 @@ module Antares.Attributes {
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
         }
 
-        onEnumLoaded = (result: Dto.IEnumDictionary) => {
-            this.activityStatuses = result[Dto.EnumTypeCode.ActivityStatus];
+        public getActivityStatuses = () => {
+            if (!(this.config && this.config.activityStatusId)) {
+                return [];
+            }
+
+            return <Dto.IEnumItem[]>_(this.allActivityStatuses).indexBy('code').at(this.config.activityStatusId.allowedCodes).value();
         }
 
-        changeActivityStatus = () => {
+        public changeActivityStatus = () => {
             this.onActivityStatusChanged({ activityStatusId: this.ngModel });
+        }
+
+        private onEnumLoaded = (result: Dto.IEnumDictionary) => {
+            this.allActivityStatuses = result[Dto.EnumTypeCode.ActivityStatus];
         }
     }
 
