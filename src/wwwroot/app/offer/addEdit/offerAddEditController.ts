@@ -40,18 +40,18 @@ module Antares {
                 this.requirement = <Dto.IRequirement>{};
             }
 
-            getOriginalOffer = (): Business.Offer =>{
+            getOriginalOffer = (): Business.Offer => {
                 return this.originalOffer;
             }
 
-            setOffer = (offer: Business.Offer) =>{
+            setOffer = (offer: Business.Offer) => {
                 this.originalOffer = offer;
                 this.offer = angular.copy(offer);
                 this.activity = offer.activity;
                 this.selectedStatus = _.find(this.statuses, (status: any) => status.id === this.offer.statusId);
             }
 
-            reset = () =>{
+            reset = () => {
                 this.offer = new Business.Offer(<Dto.IOffer>{
                     offerDate: new Date(),
                     activityId: this.activity.id,
@@ -78,7 +78,7 @@ module Antares {
                 }
             }
 
-            openOfferDate(){
+            openOfferDate() {
                 this.offerDateOpen = true;
             }
 
@@ -106,16 +106,10 @@ module Antares {
                 if (this.mode === "add") {
                     this.offer.statusId = this.selectedStatus.id;
 
-                    this.offer.offerDate = moment.utc(this.offer.offerDate);
+                    this.offer.offerDate = Core.DateTimeUtils.createDateAsUtc(this.offer.offerDate);
+                    this.offer.exchangeDate = Core.DateTimeUtils.createDateAsUtc(this.offer.exchangeDate);
+                    this.offer.completionDate = Core.DateTimeUtils.createDateAsUtc(this.offer.completionDate);
 
-                    if(this.offer.exchangeDate){
-                        this.offer.exchangeDate = moment.utc(this.offer.exchangeDate);
-                    }
-                    
-                    if(this.offer.completionDate){
-                        this.offer.completionDate = moment.utc(this.offer.completionDate);
-                    }
-                    
                     return offerResource
                         .save(this.offer)
                         .$promise;
