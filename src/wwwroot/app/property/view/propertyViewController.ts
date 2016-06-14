@@ -8,9 +8,11 @@ module Antares.Property.View {
     import Resources = Common.Models.Resources;
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
+    import PubSub = Core.PubSub;
 
     export class PropertyViewController extends Core.WithPanelsBaseController {
         ownershipAddPanelVisible: boolean = false;
+        isOwnershipAddPanelVisible: boolean = false;
         propertyId: string;
 
         loadingContacts: boolean = false;
@@ -26,11 +28,21 @@ module Antares.Property.View {
             private dataAccessService: Services.DataAccessService,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService,
-            private latestViewsProvider: LatestViewsProvider) {
+            private latestViewsProvider: LatestViewsProvider,
+            private pubSub: PubSub) {
 
             super(componentRegistry, $scope);
             this.propertyId = $state.params['id'];
             this.fixOwnershipDates();
+
+            pubSub.with(this)
+                .subscribe(Common.Component.CloseSidePanelMessage, () => {
+                    this.isOwnershipAddPanelVisible = false;
+                });
+        }
+
+        onOwnershipSave = (contacts: any[]) => {
+            alert();
         }
 
         fixOwnershipDates = () => {
@@ -88,18 +100,19 @@ module Antares.Property.View {
         }
 
         showContactList = () => {
-            this.ownershipAddPanelVisible = false;
-            this.loadingContacts = true;
-            this.components.contactList()
-                .loadContacts()
-                .then(() => {
-                    var selectedIds: string[] = [];
-                    this.components.contactList().setSelected(selectedIds);
-                })
-                .finally(() => { this.loadingContacts = false; });
+            this.isOwnershipAddPanelVisible = true;
+            //this.ownershipAddPanelVisible = false;
+            //this.loadingContacts = true;
+            //this.components.contactList()
+            //    .loadContacts()
+            //    .then(() => {
+            //        var selectedIds: string[] = [];
+            //        this.components.contactList().setSelected(selectedIds);
+            //    })
+            //    .finally(() => { this.loadingContacts = false; });
 
-            this.components.ownershipAdd().clearOwnership();
-            this.showPanel(this.components.panels.contact);
+            //this.components.ownershipAdd().clearOwnership();
+            //this.showPanel(this.components.panels.contact);
         }
 
         goToEdit() {

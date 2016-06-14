@@ -207,6 +207,10 @@
     </side-panel-footer>
 </side-panel>
 
+<company-contacts-add-panel is-visible="vm.isOwnershipAddPanelVisible" property-id="vm.property.id" ownerships="vm.property.ownerships" on-save="vm.onOwnershipSave" allow-multiple-select="true">
+
+</company-contacts-add-panel>
+
 <side-panel component-id="vm.componentIds.activityAddSidePanelId" is-busy="vm.savePropertyActivityBusy">
     <side-panel-header>
         <h3 translate="ACTIVITY.ADD.CREATE_ACTIVITY"></h3>

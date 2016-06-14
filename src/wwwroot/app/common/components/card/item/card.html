@@ -10,7 +10,7 @@
     </div>
 </div>
 
-<div class="card" ng-class="{'card-no-menu': !cvm.showContextMenu, 'card-details': cvm.showItemDetails}" ng-if="cvm.displayNewControl">
+<div class="card" ng-class="{'card-no-menu': !cvm.showContextMenu, 'card-details': cvm.showItemDetails, 'card-selected': cvm.selected}" ng-if="cvm.displayNewControl" ng-click="cvm.clicked()">
     <div class="card-body" ng-click="cvm.showItemDetails(cvm.item)">
         <div ng-include src="cvm.cardTemplateUrl"></div>
     </div>
