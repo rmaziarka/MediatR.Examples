@@ -1,11 +1,9 @@
-﻿<ng-form name="activityTypeControlForm" ng-if="vm.config">
+﻿<ng-form name="activityTypeControlForm">
     <div class="form-group" show-errors>
         <div class="row">
             <div class="col-md-9">
                 <label for="type" class="" translate="ACTIVITY.ADD.TYPE"></label>
                 <select class="form-control"
-                        ng-disabled="!vm.config.status.active"
-                        ng-required="vm.config.type.required"
                         id="type" name="type"
                         ng-options="item as (item.id | dynamicTranslate) for item in vm.activityTypes track by item.id"
                         ng-model="vm.selectedActivityType" 

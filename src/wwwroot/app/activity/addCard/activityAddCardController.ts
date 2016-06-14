@@ -11,6 +11,7 @@ module Antares.Activity {
         config: IActivityAddPanelConfig;
         onSave: (obj: { activity: AddCard.ActivityAddCardModel }) => void;
         onCancel: () => void;
+        onReloadConfig: (obj: { activity: AddCard.ActivityAddCardModel }) => void;
         pristineFlag: any;
 
         // controller
@@ -47,6 +48,12 @@ module Antares.Activity {
                 this.vendorContacts = vendor.contacts;
                 this.activity.contacts = vendor.contacts;
             }
+        }
+
+        reloadConfig = () => {
+            this.onReloadConfig({
+                activity: this.activity
+            });
         }
 
         save = () => {

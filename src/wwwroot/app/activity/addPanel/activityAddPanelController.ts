@@ -3,6 +3,7 @@
 module Antares.Activity {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
+    import PageTypeEnum = Antares.Common.Models.Enums.PageTypeEnum;
 
     export class ActivityAddPanelController extends Antares.Common.Component.BaseSidePanelController {
         // binding
@@ -20,14 +21,10 @@ module Antares.Activity {
             super();
         }
 
-        $onInit = () => {
-            this.loadConfig();
-        }
 
-
-        loadConfig = () => {
+        loadConfig = (command: AddPanel.ActivityAddPanelCommand) => {
             this.configService
-                .getActivity(this.propertyTypeId, this.activityTypeId, this.activityStatusId)
+                .getActivity(PageTypeEnum.Create, this.propertyTypeId, command.activityTypeId, command)
                 .then(this.configLoaded);
         }
 
@@ -43,6 +40,12 @@ module Antares.Activity {
                 this.eventAggregator.publish(new Antares.Activity.ActivityAddedSidePanelEvent(activityDto));
                 this.eventAggregator.publish(new Antares.Common.Component.CloseSidePanelEvent());
             });
+        }
+
+        reloadConfig = (activity: AddCard.ActivityAddCardModel) => {
+            var command = new AddPanel.ActivityAddPanelCommand(activity, this.propertyId);
+
+            this.loadConfig(command);
         }
 
         cancel = () => {

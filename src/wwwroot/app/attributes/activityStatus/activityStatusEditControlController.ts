@@ -8,6 +8,7 @@ module Antares.Attributes {
         // bindings 
         public ngModel: string;
         public config: IActivityStatusEditControlConfig;
+        public onActivityStatusChanged: Function;
 
         // TODO set correct status code for type
         private defaultActivityStatusCode: string = 'PreAppraisal';
@@ -35,6 +36,7 @@ module Antares.Attributes {
 
         changeStatus = () => {
             this.ngModel = this.selectedStatus ? this.selectedStatus.id : null;
+            this.onActivityStatusChanged();
         }
     }
 
