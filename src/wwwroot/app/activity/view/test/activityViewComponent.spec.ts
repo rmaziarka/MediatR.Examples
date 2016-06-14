@@ -143,7 +143,7 @@ module Antares {
                 expect(listNoItemsElementContent.length).toBe(1);
             });
 
-            it('card-list component for attachments is set up', () => {
+            xit('card-list component for attachments is set up', () => {
                 // assert
                 var cardListElement = element.find(pageObjectSelectors.attachments.list),
                     cardListHeaderElement = cardListElement.find('card-list-header'),
@@ -360,7 +360,7 @@ module Antares {
             });
         });
 
-        describe('and attachments are loaded', () => {
+        xdescribe('and attachments are loaded', () => {
             var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
 
             var fileSizeFilter = Mock.FileSize.generate();
