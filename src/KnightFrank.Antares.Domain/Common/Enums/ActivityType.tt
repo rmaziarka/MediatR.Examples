@@ -1,0 +1,61 @@
+﻿<#@ template  debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="System.Windows.Forms" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+// <copyright file="ActivityType.tt">
+// </copyright>
+// ReSharper disable InconsistentNaming
+namespace KnightFrank.Antares.Domain.Common.Enums
+{
+	public enum ActivityType {
+	<#
+	string fileName = this.Host.ResolvePath("..\\..\\..\\KnightFrank.Antares.Database\\Scripts\\Data\\Configuration\\ActivityType.csv");
+	List<string> activityTypeEnumCodeList = new List<string>();
+	activityTypeEnumCodeList = GetActivityTypeCollection(fileName);
+    foreach (var item in activityTypeEnumCodeList){ #>
+	<#=item#>,
+    <# } #>
+}
+}
+<#+
+
+List<string> GetActivityTypeCollection(string fileName){
+var result = new List<string>();
+	using (StreamReader reader = new StreamReader(fileName))
+            {
+                bool firstLine = true;
+                int codeIndex = 0;
+                int enumCodeIndex = 1;
+
+                string line;
+
+                while ((line = reader.ReadLine()) != null)
+                {
+                    // skip first line
+                    if (firstLine)
+                    {
+                        firstLine = false;
+                        continue;
+                    }
+
+                    //Define pattern
+                    Regex CSVParser = new Regex(";(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+
+                    //Separating columns to array
+                    string[] csvItemCollection = CSVParser.Split(line);
+
+                    result.Add(csvItemCollection[enumCodeIndex]);
+                }
+            }
+			return result;
+}
+
+
+#>

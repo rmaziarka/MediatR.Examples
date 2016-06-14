@@ -170,6 +170,7 @@ Scenario: Create commercial property
 		| Third floor area B | 30   |
 		| Third floor area C | 50   |
 
+@Property
 Scenario: Update commercial property area breakdown
 	Given Property with Commercial division and Leisure.Hotel type is defined
 		And Property attributes details are defined
