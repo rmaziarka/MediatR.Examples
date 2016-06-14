@@ -4,14 +4,14 @@
             <div class="col-md-9">
                 <label for="status" class="" translate="ACTIVITY.ADD.STATUS"></label>
                 <select class="form-control"
-                        ng-required="vm.config.status.required"
-                        ng-disabled="!vm.config.status.active"
                         id="status"
                         name="status"
-                        ng-options="item as (item.id | dynamicTranslate) for item in vm.activityStatuses track by item.id"
-                        ng-model="vm.selectedStatus"
-                        ng-change="vm.changeStatus()">
+                        ng-required="vm.config.status.required"
+                        ng-disabled="!vm.config.status.active"
+                        ng-model="vm.ngModel"
+                        ng-change="vm.changeActivityStatus()">
                     <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
+                    <option ng-repeat="item in vm.activityStatuses track by item.id" value="{{item.id}}">{{item.id | dynamicTranslate}}</option>
                 </select>
                 <div ng-messages="activityStatusControlForm.status.$error" ng-show="activityStatusControlForm.$submitted || activityStatusControlForm.status.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>

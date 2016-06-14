@@ -10,12 +10,8 @@ module Antares.Attributes {
         public config: IActivityStatusEditControlConfig;
         public onActivityStatusChanged: Function;
 
-        // TODO set correct status code for type
-        private defaultActivityStatusCode: string = 'PreAppraisal';
-
+        // controller
         public activityStatuses: Dto.IEnumItem[] = [];
-        public enumTypeActivityStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityStatus;
-        public selectedStatus: Dto.IEnumItem = null;
 
         constructor(private enumService: Services.EnumService) { }
 
@@ -25,17 +21,9 @@ module Antares.Attributes {
 
         onEnumLoaded = (result: Dto.IEnumDictionary) => {
             this.activityStatuses = result[Dto.EnumTypeCode.ActivityStatus];
-
-            var defaultActivityStatus: any = _.find(this.activityStatuses, { 'code': this.defaultActivityStatusCode });
-
-            if (defaultActivityStatus) {
-                this.ngModel = defaultActivityStatus.id;
-                this.selectedStatus = defaultActivityStatus;
-            }
         }
 
-        changeStatus = () => {
-            this.ngModel = this.selectedStatus ? this.selectedStatus.id : null;
+        changeActivityStatus = () => {
             this.onActivityStatusChanged();
         }
     }

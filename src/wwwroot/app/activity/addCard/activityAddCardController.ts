@@ -16,8 +16,8 @@ module Antares.Activity {
 
         // controller
         activity: AddCard.ActivityAddCardModel = new AddCard.ActivityAddCardModel();
-        vendorContacts: Business.Contact[];
         activityAddCardForm: ng.IFormController;
+        private defaultActivityStatusCode: string = 'PreAppraisal';
 
         constructor(
             private dataAccessService: Antares.Services.DataAccessService,
@@ -26,26 +26,36 @@ module Antares.Activity {
         }
 
         $onInit = () => {
-            this.setVendorContacts();
+            this.resetCardData();
         }
 
         $onChanges = (obj: any) => {
-            if (obj.ownerships.currentValue !== obj.ownerships.previousValue) {
+            if (obj.ownerships && obj.ownerships.currentValue !== obj.ownerships.previousValue) {
                 this.setVendorContacts();
             }
 
             if (obj.pristineFlag && obj.pristineFlag.currentValue !== obj.previousValue) {
-                this.setPristine();
+                this.resetCardData();
+                this.activityAddCardForm.$setPristine();
             }
         }
 
-        setVendorContacts = (): void => {
+        public save = () => {
+            this.onSave({
+                activity: this.activity
+            });
+        }
+
+        public cancel = () => {
+            this.onCancel();
+        }
+
+        private setVendorContacts = (): void => {
             var vendor: Business.Ownership = _.find(this.ownerships, (ownership: Business.Ownership) => {
                 return ownership.isVendor();
             });
 
             if (vendor) {
-                this.vendorContacts = vendor.contacts;
                 this.activity.contacts = vendor.contacts;
             }
         }
@@ -56,19 +66,22 @@ module Antares.Activity {
             });
         }
 
-        save = () => {
-            this.onSave({
-                activity: this.activity
+        private setDefaultActivityStatus = (): void => {
+            this.enumService.getEnumPromise().then((enumStatuses: Dto.IEnumDictionary) => {
+                var activityStatuses = enumStatuses[Dto.EnumTypeCode.ActivityStatus];
+                var defaultActivityStatus: any = _.find(activityStatuses, { 'code': this.defaultActivityStatusCode });
+
+                if (defaultActivityStatus) {
+                    this.activity.activityStatusId = defaultActivityStatus.id;
+                }
             });
         }
 
-        cancel = () => {
-            this.onCancel();
-        }
-
-        private setPristine = () => {
+        private resetCardData = () => {
             this.activity = new AddCard.ActivityAddCardModel();
-            this.activityAddCardForm.$setPristine();
+
+            this.setVendorContacts();
+            this.setDefaultActivityStatus();
         }
     }
 

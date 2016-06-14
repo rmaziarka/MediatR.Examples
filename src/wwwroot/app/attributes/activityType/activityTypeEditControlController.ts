@@ -14,7 +14,6 @@ module Antares.Attributes {
         // controller
         private activityResource: Common.Models.Resources.IActivityResourceClass;
         public activityTypes: Dto.IActivityTypeQueryResult[];
-        public selectedActivityType: Dto.IActivityTypeQueryResult;
 
         constructor(private dataAccessService: Antares.Services.DataAccessService) {
         }
@@ -36,10 +35,8 @@ module Antares.Attributes {
         }
 
         changeActivityType = () => {
-            this.ngModel = this.selectedActivityType ? this.selectedActivityType.id : null;
             this.onActivityTypeChanged();
         }
-
     }
 
     angular.module('app').controller('ActivityTypeEditControlController', ActivityTypeEditControlController);
