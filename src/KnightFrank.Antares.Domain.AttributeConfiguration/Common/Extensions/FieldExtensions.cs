@@ -20,6 +20,7 @@
 
         public static Field<TEntity, TProperty> Required<TEntity, TProperty>(this Field<TEntity, TProperty> field)
         {
+            field.InnerField.Required = true;
             field.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(field.Selector).NotEmpty().NotNull()));
             return field;
         }

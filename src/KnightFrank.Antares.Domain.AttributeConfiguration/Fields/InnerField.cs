@@ -22,6 +22,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
         public bool IsReadonly(object entity) => entity != null && ((bool?)this.isReadonlyExpression?.DynamicInvoke(entity) ?? false);
         public bool IsHidden(object entity) => entity != null && ((bool?)this.isHiddenExpression?.DynamicInvoke(entity) ?? false);
 
+        public bool Required { get; set; }
 
         public InnerField(MemberInfo member, Func<object, object> compiled, LambdaExpression expression, Type containerType, Type propertyType)
         {

@@ -71,8 +71,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
         public abstract void DefineControls();
 
         public abstract void DefineMappings();
-
-
+        
         protected void AddControl(PageType pageType, ControlCode controlCode, InnerField field)
         {
             this.AvailableControls[pageType].AddControl(ControlType.Extended, pageType, controlCode, field);
