@@ -4,6 +4,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
     {
         Create,
         Update,
-        Details
+        Details,
+        Preview
     }
 }

@@ -12,6 +12,8 @@
     {
         static void Main(string[] args)
         {
+            var activityControlsConfiguration1 = new ActivityControlsConfiguration1();
+
             // pobierz czysta konfiguracje
             // pobierz konfiguracje dla obietku
             // Waliduj
@@ -21,19 +23,19 @@
             var createCommand = new CreateCommand
             {
                 BuyPrice = 200m,
-                StatusId = 2
+                StatusId = Guid.NewGuid()
             };
 
             var createCommand2 = new CreateCommand
             {
                 BuyPrice = 10m,
-                StatusId = 1
+                StatusId = Guid.NewGuid()
             };
 
 
             var xyz = new ActivityControlsConfiguration();
 
-            foreach (Control item in xyz.ControlsDictionary[PageType.Create])
+            foreach (Control item in xyz.AvailableControls[PageType.Create])
             {
                 Console.WriteLine("IsReadonly: " + item.IsReadonly(createCommand));
                 Console.WriteLine("IsHidden: " + item.IsHidden(createCommand));

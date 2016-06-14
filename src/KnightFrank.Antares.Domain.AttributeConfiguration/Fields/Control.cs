@@ -9,6 +9,7 @@
 
     public class Control
     {
+        public readonly ControlType ControlType;
         public readonly ControlCode ControlCode;
         public readonly IList<InnerField> Fields;
         public readonly PageType PageType;
@@ -19,16 +20,18 @@
         private Delegate isHiddenExpression;
         private Delegate isReadonlyExpression;
 
-        public Control(PageType pageType, ControlCode controlCode, IList<InnerField> fields)
+        public Control(ControlType controlType, PageType pageType, ControlCode controlCode, IList<InnerField> fields)
         {
+            this.ControlType = controlType;
             this.ControlCode = controlCode;
             this.Fields = fields;
             this.PageType = pageType;
         }
 
-        public Control(PageType pageType, ControlCode controlCode, InnerField create)
+        public Control(ControlType controlType, PageType pageType, ControlCode controlCode, InnerField create)
         {
             this.Fields = new List<InnerField> { create };
+            this.ControlType = controlType;
             this.ControlCode = controlCode;
             this.PageType = pageType;
         }

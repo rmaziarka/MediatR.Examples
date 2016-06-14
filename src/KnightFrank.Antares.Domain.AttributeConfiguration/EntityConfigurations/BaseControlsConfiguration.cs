@@ -11,33 +11,61 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
 
     public abstract class BaseControlsConfiguration<TKey1, TKey2> : IControlsConfiguration<TKey1, TKey2>
     {
-        public IDictionary<PageType, IList<Control>> ControlsDictionary = new Dictionary<PageType, IList<Control>>();
-        public IDictionary<Tuple<TKey1, TKey2, PageType>, Control> ControlsConfig = new Dictionary<Tuple<TKey1, TKey2, PageType>, Control>();
+        public IDictionary<PageType, IList<Control>> AvailableControls = new Dictionary<PageType, IList<Control>>();
+        public IDictionary<Tuple<TKey1, TKey2, PageType>, IList<Control>> ControlsConfig = new Dictionary<Tuple<TKey1, TKey2, PageType>, IList<Control>>();
 
         protected BaseControlsConfiguration()
         {
+            foreach (PageType pageType in EnumExtensions.GetValues<PageType>())
+            {
+                this.AvailableControls.Add(pageType, new List<Control>());
+            }
+
             this.DefineControls();
             this.DefineMappings();
+            this.ProcessBaseControls();
+        }
+
+        private void ProcessBaseControls()
+        {
+            foreach (PageType pageType in EnumExtensions.GetValues<PageType>())
+            {
+                List<Control> baseControls = this.AvailableControls[pageType].Where(x => x.ControlType == ControlType.Base).ToList();
+
+                if (baseControls.Count > 1)
+                {
+                    foreach (Tuple<TKey1, TKey2, PageType> configurationKey in this.ControlsConfig.Keys)
+                    {
+                        if (configurationKey.Item3 == pageType)
+                        {
+                            //TODO: deep copy
+                            baseControls.ForEach(c => this.ControlsConfig[configurationKey].Add(c));
+                        }
+                    }
+                }
+            }
         }
 
         public IList<InnerFieldState> GetInnerFieldsState(PageType pageType, TKey1 key1, TKey2 key2, object entity)
         {
+            //TODO: Controls config
             Console.WriteLine("*** GetState {0} {1} {2}", pageType, key1, key2);
-            var innerFieldStates = new List<InnerFieldState>();
-            IList<Control> controls;
-            if (this.ControlsDictionary.TryGetValue(pageType, out controls))
-            {
-                foreach (Control control in controls)
-                {
-                    innerFieldStates.AddRange(control.GetFieldStates(entity));
-                }
 
-                return innerFieldStates;
-            }
-            else
+            var configurationKey = new Tuple<TKey1, TKey2, PageType>(key1, key2, pageType);
+
+            var innerFieldStates = new List<InnerFieldState>();
+
+            if (!this.ControlsConfig.ContainsKey(configurationKey))
             {
                 throw new NotImplementedException();
             }
+
+            foreach (Control control in this.ControlsConfig[configurationKey])
+            {
+                innerFieldStates.AddRange(control.GetFieldStates(entity));
+            }
+
+            return innerFieldStates;
         }
 
         public abstract void DefineControls();
@@ -47,12 +75,22 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
 
         protected void AddControl(PageType pageType, ControlCode controlCode, InnerField field)
         {
-            this.ControlsDictionary[pageType].AddControl(pageType, controlCode, field);
+            this.AvailableControls[pageType].AddControl(ControlType.Extended, pageType, controlCode, field);
         }
 
         protected void AddControl(PageType pageType, ControlCode controlCode, IList<InnerField> field)
         {
-            this.ControlsDictionary[pageType].AddControl(pageType, controlCode, field);
+            this.AvailableControls[pageType].AddControl(ControlType.Extended, pageType, controlCode, field);
+        }
+
+        protected void AddBaseControl(PageType pageType, ControlCode controlCode, InnerField field)
+        {
+            this.AvailableControls[pageType].AddControl(ControlType.Base, pageType, controlCode, field);
+        }
+
+        protected void AddBaseControl(PageType pageType, ControlCode controlCode, IList<InnerField> field)
+        {
+            this.AvailableControls[pageType].AddControl(ControlType.Base, pageType, controlCode, field);
         }
 
         protected IList<Control> Use(ControlCode controlCode, IList<Tuple<TKey1, TKey2, PageType>> list)
@@ -61,12 +99,12 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
             foreach (Tuple<TKey1, TKey2, PageType> item in list)
             {
                 PageType pageType = item.Item3;
-                if (!this.ControlsDictionary.ContainsKey(pageType))
+                if (!this.AvailableControls.ContainsKey(pageType))
                 {
                     throw new Exception();
                 }
 
-                var control = this.ControlsDictionary[pageType].FirstOrDefault(x => x.ControlCode == controlCode);
+                var control = this.AvailableControls[pageType].FirstOrDefault(x => x.ControlCode == controlCode);
                 if (control == null)
                 {
                     throw new Exception();
@@ -76,16 +114,46 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
                 //Control controlClone = control.Clone();
                 //Control controlCopy = AutoMapper.Mapper.Map<Control>(control);
 
-                this.ControlsConfig.Add(item, control);
+                if (this.ControlsConfig.ContainsKey(item))
+                {
+                    this.ControlsConfig[item].Add(control);
+                }
+                else
+                {
+                    this.ControlsConfig.Add(item, new List<Control> { control });
+                }
+
                 result.Add(control);
             }
 
             return result;
         }
+
+        protected IList<Control> Use(IEnumerable<ControlCode> controlCodes, IList<Tuple<TKey1, TKey2, PageType>> list)
+        {
+            var result = new List<Control>();
+            foreach (ControlCode controlCode in controlCodes)
+            {
+                result.AddRange(this.Use(controlCode, list));
+            }
+
+            return result;
+        }
+
         protected IList<Tuple<PropertyType, ActivityType, PageType>> When(PropertyType propertyType, ActivityType activityType, params PageType[] pages)
         {
             return pages.Select(
                 page => new Tuple<PropertyType, ActivityType, PageType>(propertyType, activityType, page)).ToList();
+        }
+
+        protected IList<Tuple<PropertyType, ActivityType, PageType>> When(IList<PropertyType> propertyType, ActivityType activityType, params PageType[] pages)
+        {
+            return pages.SelectMany(page => propertyType.Select(pt => new Tuple<PropertyType, ActivityType, PageType>(pt, activityType, page))).ToList();
+        }
+
+        protected IList<Tuple<PropertyType, ActivityType, PageType>> When(PropertyType propertyType, IList<ActivityType> activityType, params PageType[] pages)
+        {
+            return pages.SelectMany(page => activityType.Select(at => new Tuple<PropertyType, ActivityType, PageType>(propertyType, at, page))).ToList();
         }
     }
 }

@@ -35,6 +35,10 @@
       <HintPath>..\packages\FluentValidation.6.2.1.0\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MediatR, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MediatR.2.0.2\lib\net45\MediatR.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -61,6 +65,7 @@
     <Compile Include="Common\ConfigurableEntityModelBinder.cs" />
     <Compile Include="Common\EntityValidator.cs" />
     <Compile Include="Common\Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Common\Extensions\EnumExtensions.cs" />
     <Compile Include="Common\Extensions\FieldExtensions.cs" />
     <Compile Include="Common\Extensions\LambdaExtension.cs" />
     <Compile Include="Common\Extensions\ListExtensions.cs" />
@@ -68,18 +73,19 @@
     <Compile Include="EntityConfigurations\BaseControlsConfiguration.cs" />
     <Compile Include="EntityConfigurations\IControlsConfiguration.cs" />
     <Compile Include="Enums\ControlCode.cs" />
+    <Compile Include="Enums\ControlType.cs" />
     <Compile Include="Enums\PageType.cs" />
     <Compile Include="Fields\Control.cs" />
     <Compile Include="Fields\Field.cs" />
     <Compile Include="Fields\InnerField.cs" />
     <Compile Include="Fields\InnerFieldState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ToRemove\Activity.cs" />
-    <Compile Include="ToRemove\CreateCommand.cs" />
-    <Compile Include="ToRemove\IActivity.cs" />
-    <Compile Include="ToRemove\UpdateCommand.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj">
+      <Project>{2525af42-f89c-48d8-89a7-74449702c627}</Project>
+      <Name>KnightFrank.Antares.Dal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KnightFrank.Antares.Domain\KnightFrank.Antares.Domain.csproj">
       <Project>{5987d78c-856d-4315-8b8b-baf00c286aff}</Project>
       <Name>KnightFrank.Antares.Domain</Name>

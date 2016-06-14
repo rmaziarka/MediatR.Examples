@@ -3,8 +3,9 @@
     using System.Web.Http.Controllers;
     using System.Web.Http.ModelBinding;
 
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
-    using KnightFrank.Antares.Domain.AttributeConfiguration.ToRemove;
 
     using Newtonsoft.Json;
 
@@ -17,13 +18,13 @@
             switch (pageType)
             {
                 case PageType.Create:
-                    bindingContext.Model = JsonConvert.DeserializeObject<CreateCommand>(requestContent);
+                    bindingContext.Model = JsonConvert.DeserializeObject<CreateActivityCommand>(requestContent);
                     break;
                 case PageType.Update:
-                    bindingContext.Model = JsonConvert.DeserializeObject<UpdateCommand>(requestContent);
+                    bindingContext.Model = JsonConvert.DeserializeObject<UpdateActivityCommand>(requestContent);
                     break;
                 case PageType.Details:
-                    bindingContext.Model = JsonConvert.DeserializeObject<IActivity>(requestContent);
+                    bindingContext.Model = JsonConvert.DeserializeObject<Activity>(requestContent);
                     break;
             }
             return true;

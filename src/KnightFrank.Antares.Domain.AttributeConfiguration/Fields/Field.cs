@@ -35,9 +35,10 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
             return new Field<TEntity, string>(expression, innerField);
         }
 
-        public static Field<TEntity, int?> CreateDictionary(Expression<Func<TEntity, int?>> expression, string dictionaryCode)
+        public static Field<TEntity, Guid?> CreateDictionary(Expression<Func<TEntity, Guid?>> expression, string dictionaryCode)
         {
-            return new Field<TEntity, int?>(expression, CreateInnerField(expression));
+            //TODO: support dictionary + validation
+            return new Field<TEntity, Guid?>(expression, CreateInnerField(expression));
         }
 
         private static InnerField CreateInnerField<TProperty>(Expression<Func<TEntity, TProperty>> expression)
