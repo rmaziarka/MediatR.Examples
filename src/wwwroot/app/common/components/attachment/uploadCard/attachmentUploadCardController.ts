@@ -21,8 +21,7 @@ module Antares.Common.Component.Attachment {
 
         // controller
         public attachmentUploadForm: ng.IFormController;
-        public file: File = null;
-        public isFileCleared: boolean = false;
+        public file: File;
         public documentTypeId: string;
 
         private urlResource: ng.resource.IResourceClass<Common.Models.Resources.IAzureUploadUrlResource>;
@@ -45,12 +44,10 @@ module Antares.Common.Component.Attachment {
 
         clearSelectedFile = () => {
             this.file = null;
-            this.isFileCleared = true;
         };
 
         clearAttachmentForm = () => {
-            this.file = null;
-            this.isFileCleared = false;
+            this.file = undefined;
             this.documentTypeId = null;
 
             this.attachmentUploadForm.$setPristine();
@@ -61,11 +58,6 @@ module Antares.Common.Component.Attachment {
         }
 
         uploadAttachment = () => {
-            if (this.file === null) {
-                this.isFileCleared = true;
-                return this.reject();
-            }
-
             this.onUploadStarted();
 
             var getAzureUploadUrl = this.getAzureUploadUrl();

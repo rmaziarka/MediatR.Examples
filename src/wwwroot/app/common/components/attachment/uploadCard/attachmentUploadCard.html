@@ -18,7 +18,7 @@
                     <div class="col-md-12" ng-hide="vm.file">
                         <span class="btn btn-default btn-file">
                             {{"ATTACHMENT.ADD.BROWSE" | translate}}
-                            <input id="attachment" name="attachment" type="file" ngf-select ng-model="vm.file" is-file-cleared="{{vm.isFileCleared}}">
+                            <input id="attachment" name="attachment" type="file" kf-file-model="vm.file" ng-model="vm.file" file-required>
                         </span>
                         <div ng-class="{'has-error': vm.attachmentUploadForm.$submitted || vm.attachmentUploadForm.attachment.$dirty}" ng-messages="vm.attachmentUploadForm.attachment.$error"
                              ng-show="vm.attachmentUploadForm.$submitted || vm.attachmentUploadForm.attachment.$dirty">

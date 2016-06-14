@@ -13,6 +13,7 @@ module Antares.TestHelpers {
                 address: Mock.AddressForm.FullAddress,
                 ownerships: [],
                 activities: [],
+                attachments: [],
                 divisionId: PropertyGenerator.makeRandom('divisionId'),
                 division: null,
                 attributeValues: {},

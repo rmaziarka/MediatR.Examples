@@ -4,32 +4,19 @@ module Antares.Common.Directive {
     export class FileRequiredDirective implements ng.IDirective {
         restrict = "A";
         require = 'ngModel';
-        scope = {
-            ngModel: '=ngModel'
-        };
-        link(scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ngModel: ng.INgModelController) {    
-            
+
+        link(scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ngModel: ng.INgModelController) {
             var validateFileRequired =(inputValue: any) => {
-                var isFileCleared = JSON.parse(String(attrs['isFileCleared']));
-                var isValid = !isFileCleared || !!inputValue;     
-                
+                var isValid = !!inputValue;
+
                 ngModel.$setValidity('fileRequired', isValid);
+
                 return isValid;
-            }   
-                 
-            ngModel.$validators['fileRequired'] = (modelValue, scope) => {
+            }
+
+            ngModel.$validators['fileRequired'] = (modelValue) => {
                 return validateFileRequired(modelValue);
             };
-         
-            attrs.$observe('isFileCleared', function () {
-                validateFileRequired(ngModel.$viewValue);
-            });            
-                      
-            scope.$watch('ngModel', (newValue, oldValue) => {
-                if ((newValue !== undefined || oldValue !== undefined) && newValue !== oldValue) {
-                    ngModel.$setDirty();
-                }
-            });
         };
 
         static factory() {
