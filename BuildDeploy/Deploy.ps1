@@ -31,7 +31,7 @@ try {
 
     Deploy-Database -ProjectRootPath $ProjectRootPath -DropExistingDatabase:$DropExistingDatabase -DatabaseName $sqlDatabaseName -SqlUser $sqlUser -SqlPassword $sqlPassword
     
-    Configure-Elasticsearch
+    Configure-Elasticsearch -PathToMappingsFile "$ProjectRootPath\tools\KnightFrank.Antares.ResourceGroup\Templates\elasticsearch.mappings.json"
     
     Configure-Jdbc -PathToSettingsTemplate "$ProjectRootPath\tools\KnightFrank.Antares.ResourceGroup\Templates\settings.json"`
                -PathToNssm "C:\nssm\nssm-2.24"`
