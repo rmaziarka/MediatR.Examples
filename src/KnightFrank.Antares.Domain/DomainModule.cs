@@ -9,6 +9,7 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Common.Enums;
 
     using MediatR;
 
@@ -36,6 +37,7 @@
 
             this.Bind(typeof(IReadGenericRepository<>)).To(typeof(ReadGenericRepository<>));
             this.Bind<IEntityValidator>().To(typeof(EntityValidator));
+            this.Bind<IEnumParser>().To<EnumParser>();
             this.Bind<ICollectionValidator>().To(typeof(CollectionValidator));
             this.Bind<IEnumTypeItemValidator>().To(typeof(EnumTypeItemValidator));
             this.Bind<IAddressValidator>().To(typeof(AddressValidator));
