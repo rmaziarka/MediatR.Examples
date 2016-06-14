@@ -167,6 +167,7 @@
     <Compile Include="Common\Commands\CreateOrUpdateAddress.cs" />
     <Compile Include="Common\Commands\CreateOrUpdateAddressValidator.cs" />
     <Compile Include="Common\Enums\DivisionEnum.cs" />
+    <Compile Include="Common\Enums\EnumParser.cs" />
     <Compile Include="Common\Enums\GenerateEnumTypeItems.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -177,6 +178,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Common\Enums\IEnumParser.cs" />
     <Compile Include="Common\Enums\PropertyType.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

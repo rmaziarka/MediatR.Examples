@@ -8,6 +8,7 @@ module Antares.Attributes {
         // bindings
         propertyTypeId: string;
         ngModel: string;
+        config: IActivityTypeEditControlConfig;
 
         // controller
         private activityResource: Common.Models.Resources.IActivityResourceClass;

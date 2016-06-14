@@ -18,7 +18,7 @@ module Antares.Services {
             var result = <IActivityAddPanelConfig>{
                 activityStatus: {
                     status: {
-                        allowedCodes: ['PreAppraisal'], required: true, active: true
+                        allowedCodes: ['PreAppraisal'], required: false, active: true
                     },
                     active: true
                 },
