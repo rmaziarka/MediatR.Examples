@@ -21,6 +21,10 @@ module Antares.Activity {
             super();
         }
 
+        panelShown = () =>{
+            this.cardPristine = new Object();
+            this.config = null;
+        }
 
         loadConfig = (command: AddPanel.ActivityAddPanelCommand) => {
             this.configService
@@ -36,7 +40,6 @@ module Antares.Activity {
             var command = new AddPanel.ActivityAddPanelCommand(activity, this.propertyId);
 
             this.activityService.addActivityPanel(command).then((activityDto: Dto.IActivity) => {
-                this.cardPristine = new Object();
                 this.eventAggregator.publish(new Antares.Activity.ActivityAddedSidePanelEvent(activityDto));
                 this.eventAggregator.publish(new Antares.Common.Component.CloseSidePanelEvent());
             });
@@ -49,7 +52,6 @@ module Antares.Activity {
         }
 
         cancel = () => {
-            this.cardPristine = new Object();
            this.eventAggregator.publish(new Antares.Common.Component.CloseSidePanelEvent());
         }
     }
