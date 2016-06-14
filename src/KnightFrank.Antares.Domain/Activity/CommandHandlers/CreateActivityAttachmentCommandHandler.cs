@@ -1,21 +1,19 @@
 ﻿namespace KnightFrank.Antares.Domain.Activity.CommandHandlers
 {
     using System;
-    using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
-    using KnightFrank.Antares.Domain.Activity.Commands;
+    using KnightFrank.Antares.Domain.Attachment.Commands;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
-    using KnightFrank.Antares.Domain.Common.Specifications;
 
     using MediatR;
 
     using EnumType = KnightFrank.Antares.Domain.Common.Enums.EnumType;
 
-    public class CreateActivityAttachmentCommandHandler : IRequestHandler<CreateActivityAttachmentCommand, Guid>
+    public class CreateActivityAttachmentCommandHandler : IRequestHandler<CreateEntityAttachmentCommand, Guid>
     {
         private readonly IEntityValidator entityValidator;
         private readonly IEnumTypeItemValidator enumTypeItemValidator;
@@ -31,13 +29,13 @@
             this.activityRepository = activityRepository;
         }
 
-        public Guid Handle(CreateActivityAttachmentCommand message)
+        public Guid Handle(CreateEntityAttachmentCommand message)
         {
             this.entityValidator.EntityExists<User>(message.Attachment.UserId);
             this.enumTypeItemValidator.ItemExists(EnumType.ActivityDocumentType, message.Attachment.DocumentTypeId);
 
-            Activity activity = this.activityRepository.GetById(message.ActivityId);
-            this.entityValidator.EntityExists(activity, message.ActivityId);
+            Activity activity = this.activityRepository.GetById(message.EntityId);
+            this.entityValidator.EntityExists(activity, message.EntityId);
 
             var attachment = AutoMapper.Mapper.Map<Attachment>(message.Attachment);
 

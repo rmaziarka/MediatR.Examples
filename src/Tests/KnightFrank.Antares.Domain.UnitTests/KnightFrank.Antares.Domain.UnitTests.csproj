@@ -110,7 +110,6 @@
   <ItemGroup>
     <Compile Include="Activity\CommandHandlers\CreateActivityAttachmentCommandHandlerTests.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityUserCommandHandlerTests.cs" />
-    <Compile Include="Activity\Commands\CreateActivityAttachmentCommandValidatorTests.cs" />
     <Compile Include="Activity\Commands\UpdateActivityDepartmentValidatorTests.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUserCommandValidatorTests.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUserValidatorTests.cs" />
@@ -136,6 +135,7 @@
     <Compile Include="AreaBreakdown\Commands\UpdateAreaBreakdownCommandValidatorTests.cs" />
     <Compile Include="AreaBreakdown\Queries\AreaBreakdownQueryValidatorTests.cs" />
     <Compile Include="AreaBreakdown\QueryHandlers\AreaBreakdownQueryHandlerTests.cs" />
+    <Compile Include="Attachments\Commands\CreateEntityAttachmentCommandValidatorTests.cs" />
     <Compile Include="Attachments\Queries\AttachmentQueryValidatorTests.cs" />
     <Compile Include="Attachments\QueryHandlers\AttachmentQueryHandlerTests.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidatorTests.cs" />

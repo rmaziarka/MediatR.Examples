@@ -82,8 +82,6 @@
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityUserCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandler.cs" />
-    <Compile Include="Activity\Commands\CreateActivityAttachmentCommand.cs" />
-    <Compile Include="Activity\Commands\CreateActivityAttachmentCommandValidator.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\ActivityProfile.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandValidator.cs" />
@@ -142,6 +140,8 @@
     <Compile Include="AreaBreakdown\Queries\AreaBreakdownQuery.cs" />
     <Compile Include="AreaBreakdown\Queries\AreaBreakdownQueryValidator.cs" />
     <Compile Include="AreaBreakdown\QueryHandlers\AreaBreakdownQueryHandler.cs" />
+    <Compile Include="Attachment\Commands\CreateEntityAttachmentCommand.cs" />
+    <Compile Include="Attachment\Commands\CreateEntityAttachmentCommandValidator.cs" />
     <Compile Include="Attachment\Queries\AttachmentQuery.cs" />
     <Compile Include="Attachment\Queries\AttachmentQueryValidator.cs" />
     <Compile Include="Attachment\QueryHandlers\AttachmentQueryHandler.cs" />

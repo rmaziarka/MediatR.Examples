@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.UnitTests.Activity.Commands
+﻿namespace KnightFrank.Antares.Domain.UnitTests.Attachments.Commands
 {
     using System;
 
@@ -8,7 +8,6 @@
     using FluentValidation.Results;
     using FluentValidation.TestHelper;
 
-    using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Attachment.Commands;
     using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
 
@@ -16,24 +15,24 @@
 
     using Xunit;
 
-    [Trait("FeatureTitle", "Property Activity")]
-    [Collection("CreateActivityAttachment")]
-    public class CreateActivityAttachmentCommandValidatorTests
+    [Trait("FeatureTitle", "Property Entity")]
+    [Collection("CreateEntityAttachment")]
+    public class CreateEntityAttachmentCommandValidatorTests
     {
         private readonly Fixture fixture;
-        private readonly CreateActivityAttachmentCommandValidator validator;
+        private readonly CreateEntityAttachmentCommandValidator validator;
 
-        public CreateActivityAttachmentCommandValidatorTests()
+        public CreateEntityAttachmentCommandValidatorTests()
         {
             this.fixture = new Fixture().Customize();
-            this.validator = this.fixture.Create<CreateActivityAttachmentCommandValidator>();
+            this.validator = this.fixture.Create<CreateEntityAttachmentCommandValidator>();
         }
 
         [Fact]
-        public void Given_ValidCreateActivityAttachmentCommand_When_Validating_Then_IsValid()
+        public void Given_ValidCreateEntityAttachmentCommand_When_Validating_Then_IsValid()
         {
             // Arrange 
-            CreateActivityAttachmentCommand cmd = this.fixture.Create<CreateActivityAttachmentCommand>();
+            CreateEntityAttachmentCommand cmd = this.fixture.Create<CreateEntityAttachmentCommand>();
 
             // Act
             ValidationResult validationResult = this.validator.Validate(cmd);
@@ -46,22 +45,22 @@
         public void Given_InvalidCreateAttachment_When_DocumentTypeIdIsSetToEmptyGuid_And_Validating_Then_IsNotValid()
         {
             // Arrange 
-            CreateActivityAttachmentCommand cmd =
-                this.fixture.Build<CreateActivityAttachmentCommand>().With(c => c.ActivityId, default(Guid)).Create();
+            CreateEntityAttachmentCommand cmd =
+                this.fixture.Build<CreateEntityAttachmentCommand>().With(c => c.EntityId, default(Guid)).Create();
 
             // Act
             ValidationResult validationResult = this.validator.Validate(cmd);
 
             // Assert
-            validationResult.IsInvalid(nameof(cmd.ActivityId), nameof(Messages.notequal_error));
+            validationResult.IsInvalid(nameof(cmd.EntityId), nameof(Messages.notequal_error));
         }
 
         [Fact]
         public void Given_InvalidCreateAttachment_When_AttachmentIsNotSet_And_Validating_Then_IsNotValid()
         {
             // Arrange 
-            CreateActivityAttachmentCommand cmd =
-                this.fixture.Build<CreateActivityAttachmentCommand>().With(c => c.Attachment, null).Create();
+            CreateEntityAttachmentCommand cmd =
+                this.fixture.Build<CreateEntityAttachmentCommand>().With(c => c.Attachment, null).Create();
 
             // Act
             ValidationResult validationResult = this.validator.Validate(cmd);

@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.CommandHandlers;
     using KnightFrank.Antares.Domain.Activity.Commands;
+    using KnightFrank.Antares.Domain.Attachment.Commands;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
 
@@ -30,12 +31,12 @@
         public void Given_ValidCommand_When_Handling_Then_ShouldSaveAttachment(
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             CreateActivityAttachmentCommandHandler handler,
-            CreateActivityAttachmentCommand cmd,
+            CreateEntityAttachmentCommand cmd,
             Activity activity)
         {
             // Arrange
             activity.Attachments = new List<Attachment>();
-            activityRepository.Setup(r => r.GetById(cmd.ActivityId)).Returns(activity);
+            activityRepository.Setup(r => r.GetById(cmd.EntityId)).Returns(activity);
 
             // Act
             handler.Handle(cmd);
@@ -52,12 +53,12 @@
             [Frozen] Mock<IEnumTypeItemValidator> enumTypeItemValidator,
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             CreateActivityAttachmentCommandHandler handler,
-            CreateActivityAttachmentCommand cmd,
+            CreateEntityAttachmentCommand cmd,
             Activity activity)
         {
             // Arrange
             activity.Attachments = new List<Attachment>();
-            activityRepository.Setup(r => r.GetById(cmd.ActivityId)).Returns(activity);
+            activityRepository.Setup(r => r.GetById(cmd.EntityId)).Returns(activity);
 
             // Act
             handler.Handle(cmd);
@@ -72,12 +73,12 @@
             [Frozen] Mock<IEntityValidator> entityValidator,
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             CreateActivityAttachmentCommandHandler handler,
-            CreateActivityAttachmentCommand cmd,
+            CreateEntityAttachmentCommand cmd,
             Activity activity)
         {
             // Arrange
             activity.Attachments = new List<Attachment>();
-            activityRepository.Setup(r => r.GetById(cmd.ActivityId)).Returns(activity);
+            activityRepository.Setup(r => r.GetById(cmd.EntityId)).Returns(activity);
 
             // Act
             handler.Handle(cmd);
@@ -92,18 +93,18 @@
             [Frozen] Mock<IEntityValidator> entityValidator,
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             CreateActivityAttachmentCommandHandler handler,
-            CreateActivityAttachmentCommand cmd,
+            CreateEntityAttachmentCommand cmd,
             Activity activity)
         {
             // Arrange
             activity.Attachments = new List<Attachment>();
-            activityRepository.Setup(r => r.GetById(cmd.ActivityId)).Returns(activity);
+            activityRepository.Setup(r => r.GetById(cmd.EntityId)).Returns(activity);
 
             // Act
             handler.Handle(cmd);
 
             // Assert
-            entityValidator.Verify(x => x.EntityExists(activity, cmd.ActivityId));
+            entityValidator.Verify(x => x.EntityExists(activity, cmd.EntityId));
         }
 
         [Theory]
@@ -112,13 +113,13 @@
             [Frozen] Mock<IEntityValidator> entityValidator,
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
             CreateActivityAttachmentCommandHandler handler,
-            CreateActivityAttachmentCommand cmd,
+            CreateEntityAttachmentCommand cmd,
             Activity activity,
             Guid expectedAttachmentId)
         {
             // Arrange
             activity.Attachments = new List<Attachment>();
-            activityRepository.Setup(r => r.GetById(cmd.ActivityId)).Returns(activity);
+            activityRepository.Setup(r => r.GetById(cmd.EntityId)).Returns(activity);
 
             activityRepository.Setup(x => x.Save()).Callback(() =>
             {
