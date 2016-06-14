@@ -60,7 +60,17 @@ module Antares.Activity {
             }
         }
 
-        reloadConfig = () => {
+        activityTypeChanged = (activityTypeId: string) =>{
+            this.activity.activityTypeId = activityTypeId;
+
+            this.onReloadConfig({
+                activity: this.activity
+            });
+        }
+
+        activityStatusChanged = (activityStatusId: string) =>{
+            this.activity.activityStatusId = activityStatusId;
+
             this.onReloadConfig({
                 activity: this.activity
             });

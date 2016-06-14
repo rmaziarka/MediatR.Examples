@@ -10,7 +10,7 @@ module Antares.Property.View {
     import EntityType = Common.Models.Enums.EntityTypeEnum;
 
     export class PropertyViewController extends Core.WithPanelsBaseController {
-        isActivityAddPanelVisible: boolean;
+        isActivityAddPanelVisible: boolean = false;
 
         ownershipAddPanelVisible: boolean = false;
         propertyId: string;

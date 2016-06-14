@@ -46,6 +46,9 @@
         [Route("attributes/activity")]
         public dynamic GetActivityConfiguration(PageType pageType, Guid propertyTypeId, Guid activityTypeId, [ModelBinder(typeof(ConfigurableActivityModelBinder))]object entity)
         {
+            if (propertyTypeId == Guid.Empty || activityTypeId == Guid.Empty)
+                return null;
+
             PropertyType propertyType = this.enumParser.Parse<Dal.Model.Property.PropertyType, PropertyType>(propertyTypeId);
             ActivityType activityType = this.enumParser.Parse<Dal.Model.Property.Activities.ActivityType, ActivityType>(activityTypeId);
             IList<InnerFieldState> fieldStates = this.activityConfiguration.GetInnerFieldsState(pageType, propertyType, activityType, entity);

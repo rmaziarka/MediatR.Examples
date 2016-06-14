@@ -25,7 +25,7 @@ module Antares.Common.Component {
                 if (changesObj.isVisible.currentValue === true) {
                     this.show();
                 }
-                else if (changesObj.isVisible.currentValue === false) {
+                else if (changesObj.isVisible.currentValue === false && !changesObj.isVisible.isFirstChange()) {
                     this.hide();
                 }
             }
@@ -33,6 +33,6 @@ module Antares.Common.Component {
     }
 
     interface IBaseSidePanelChange {
-        isVisible: { currentValue: any, previousValue: any }
+        isVisible: { currentValue: any, previousValue: any, isFirstChange: () => boolean }
     }
 }

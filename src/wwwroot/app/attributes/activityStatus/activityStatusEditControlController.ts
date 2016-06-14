@@ -8,7 +8,7 @@ module Antares.Attributes {
         // bindings 
         public ngModel: string;
         public config: IActivityStatusEditControlConfig;
-        public onActivityStatusChanged: Function;
+        onActivityStatusChanged: (obj: { activityStatusId: string }) => void;
 
         // controller
         public activityStatuses: Dto.IEnumItem[] = [];
@@ -24,7 +24,7 @@ module Antares.Attributes {
         }
 
         changeActivityStatus = () => {
-            this.onActivityStatusChanged();
+            this.onActivityStatusChanged({ activityStatusId: this.ngModel });
         }
     }
 

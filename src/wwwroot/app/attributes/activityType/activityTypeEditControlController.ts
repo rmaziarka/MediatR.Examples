@@ -9,7 +9,7 @@ module Antares.Attributes {
         propertyTypeId: string;
         ngModel: string;
         config: IActivityTypeEditControlConfig;
-        onActivityTypeChanged: Function;
+        onActivityTypeChanged: (obj: { activityTypeId: string }) => void;
 
         // controller
         private activityResource: Common.Models.Resources.IActivityResourceClass;
@@ -35,7 +35,7 @@ module Antares.Attributes {
         }
 
         changeActivityType = () => {
-            this.onActivityTypeChanged();
+            this.onActivityTypeChanged({ activityTypeId: this.ngModel });
         }
     }
 

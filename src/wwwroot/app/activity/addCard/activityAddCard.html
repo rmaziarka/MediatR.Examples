@@ -4,10 +4,13 @@
             <h3 translate="ACTIVITY.ADD.CREATE_ACTIVITY"></h3>
         </side-panel-header>
         <side-panel-content>
-            <activity-type-edit-control property-type-id="vm.propertyTypeId" ng-model="vm.activity.activityTypeId" config="vm.config.activityType" on-activity-type-changed="vm.reloadConfig()">
-                
+            <activity-type-edit-control property-type-id="vm.propertyTypeId" ng-model="vm.activity.activityTypeId" config="vm.config.activityType"
+                                        on-activity-type-changed="vm.activityTypeChanged(activityTypeId)">
             </activity-type-edit-control>
-            <activity-status-control ng-model="vm.activity.activityStatusId" config="vm.config.activityStatus"></activity-status-control>
+
+            <activity-status-control ng-model="vm.activity.activityStatusId" config="vm.config.activityStatus" 
+                                     on-activity-status-changed="vm.activityStatusChanged(activityStatusId)">
+            </activity-status-control>
  
             <activity-vendors-control vendor-contacts="vm.activity.contacts" config="vm.config.vendors"></activity-vendors-control>
             <activity-landlords-control landlords-contacts="vm.activity.contacts" config="vm.config.landlords"></activity-landlords-control>

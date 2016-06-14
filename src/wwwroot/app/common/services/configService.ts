@@ -20,8 +20,8 @@ module Antares.Services {
 
             var params = {
                 pageType: pageType,
-                propertyTypeId: propertyTypeId,
-                activityTypeId: activityTypeId
+                propertyTypeId: propertyTypeId || '00000000-0000-0000-0000-000000000000',
+                activityTypeId: activityTypeId || '00000000-0000-0000-0000-000000000000'
             }
 
             return this.$http
