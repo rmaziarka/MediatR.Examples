@@ -6,8 +6,8 @@
                 <select class="form-control"
                         id="status"
                         name="status"
-                        ng-required="vm.config.status.required"
-                        ng-disabled="!vm.config.status.active"
+                        ng-required="vm.config.activityStatusId.required"
+                        ng-disabled="!vm.config.activityStatusId.active"
                         ng-model="vm.ngModel"
                         ng-change="vm.changeActivityStatus()">
                     <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>

@@ -2,6 +2,6 @@
 
 declare module Antares.Attributes {
     interface IActivityStatusEditControlConfig extends Antares.Common.Models.Dto.IControlConfig  {
-        status: IActivityStatusEditFieldConfig;
+        activityStatusId: IActivityStatusEditFieldConfig;
     }
 }
