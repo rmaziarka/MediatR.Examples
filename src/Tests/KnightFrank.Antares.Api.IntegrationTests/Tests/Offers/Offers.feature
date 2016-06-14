@@ -2,16 +2,12 @@
 
 @Offers
 Scenario: Create residential sales offer
-	Given User gets EnumTypeItemId and EnumTypeItem code
-		| enumTypeCode           | enumTypeItemCode |
-		| ActivityStatus         | PreAppraisal     |
-		| ActivityUserType       | LeadNegotiator   |
-		| ActivityDepartmentType | Managing         |
-		And User gets Freehold Sale for ActivityType
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
@@ -22,16 +18,12 @@ Scenario: Create residential sales offer
 
 @Offers
 Scenario: Create residential sales offer with mandatory fields
-	Given User gets EnumTypeItemId and EnumTypeItem code
-		| enumTypeCode           | enumTypeItemCode |
-		| ActivityStatus         | PreAppraisal     |
-		| ActivityUserType       | LeadNegotiator   |
-		| ActivityDepartmentType | Managing         |
-		And User gets Freehold Sale for ActivityType
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database 
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
@@ -42,16 +34,12 @@ Scenario: Create residential sales offer with mandatory fields
 
 @Offers
 Scenario Outline: Create residential sales offer with invalid data
-	Given User gets EnumTypeItemId and EnumTypeItem code
-		| enumTypeCode           | enumTypeItemCode |
-		| ActivityStatus         | PreAppraisal     |
-		| ActivityUserType       | LeadNegotiator   |
-		| ActivityDepartmentType | Managing         |
-		And User gets Freehold Sale for ActivityType
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
@@ -67,21 +55,40 @@ Scenario Outline: Create residential sales offer with invalid data
 
 @Offers
 Scenario: Get residential sales offer
-	Given User gets EnumTypeItemId and EnumTypeItem code
-		| enumTypeCode           | enumTypeItemCode |
-		| ActivityStatus         | PreAppraisal     |
-		| ActivityUserType       | LeadNegotiator   |
-		| ActivityDepartmentType | Managing         |
-		And User gets Freehold Sale for ActivityType
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Requirement exists in database
 		And Offer with New status exists in database
+	When User gets offer for latest id
+	Then User should get OK http status code
+		And Offer details should be the same as already added
+
+@Offers
+Scenario: Get Accepted residential sales offer
+	Given Contacts exists in database
+		| FirstName | Surname | Title |
+		| Jon       | Lajoie  | Dude  |
+		And Company exists in database
+			| Name    |
+			| Company |
+		And Property exists in database
+			| PropertyType | Division    |
+			| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
+		And Contacts exists in database
+			| FirstName | Surname | Title  |
+			| Tomasz    | Bien    | Mister |
+		And Requirement exists in database
+		And Offer with Accepted status exists in database
 	When User gets offer for latest id
 	Then User should get OK http status code
 		And Offer details should be the same as already added
@@ -93,16 +100,12 @@ Scenario: Get residential sales offer with invalid data
 
 @Offers
 Scenario: Update residential sales offer
-	Given User gets EnumTypeItemId and EnumTypeItem code
-		| enumTypeCode           | enumTypeItemCode |
-		| ActivityStatus         | PreAppraisal     |
-		| ActivityUserType       | LeadNegotiator   |
-		| ActivityDepartmentType | Managing         |
-		And User gets Freehold Sale for ActivityType
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
@@ -114,7 +117,12 @@ Scenario: Update residential sales offer
 
 @Offers
 Scenario Outline: Update residential sales offer with invalid data
-	Given Activity exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |

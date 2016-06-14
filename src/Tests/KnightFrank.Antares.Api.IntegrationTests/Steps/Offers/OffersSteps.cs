@@ -8,6 +8,7 @@
 
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
+    using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
@@ -59,6 +60,57 @@
                 CreatedDate = this.date,
                 LastModifiedDate = this.date
             };
+
+            if (status.ToLower().Equals("accepted"))
+            {
+                CompanyContact companyContact = this.scenarioContext.Get<Company>("Company").CompaniesContacts.First();
+
+                offer.MortgageStatusId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e => e.EnumType.Code.Equals(nameof(MortgageStatus)) && e.Code.Equals(nameof(MortgageStatus.Unknown))).Id;
+
+                offer.MortgageSurveyStatusId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e =>
+                            e.EnumType.Code.Equals(nameof(MortgageSurveyStatus)) &&
+                            e.Code.Equals(nameof(MortgageSurveyStatus.Unknown))).Id;
+
+                offer.AdditionalSurveyStatusId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e =>
+                            e.EnumType.Code.Equals(nameof(AdditionalSurveyStatus)) &&
+                            e.Code.Equals(nameof(AdditionalSurveyStatus.Unknown))).Id;
+
+                offer.SearchStatusId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e => e.EnumType.Code.Equals(nameof(SearchStatus)) && e.Code.Equals(nameof(SearchStatus.NotStarted))).Id;
+
+                offer.EnquiriesId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e => e.EnumType.Code.Equals(nameof(Enquiries)) && e.Code.Equals(nameof(Enquiries.NotStarted))).Id;
+
+                offer.ContractApproved = true;
+
+                offer.MortgageLoanToValue = 100;
+
+                offer.BrokerId = companyContact.ContactId;
+                offer.BrokerCompanyId = companyContact.CompanyId;
+                
+                offer.LenderId = companyContact.ContactId;
+                offer.LenderCompanyId = companyContact.CompanyId;
+
+                offer.MortgageSurveyDate = DateTime.UtcNow;
+
+                offer.SurveyorId = companyContact.ContactId;
+                offer.SurveyorCompanyId = companyContact.CompanyId;
+
+                offer.AdditionalSurveyDate = DateTime.UtcNow;
+
+                offer.AdditionalSurveyorId = companyContact.ContactId;
+                offer.AdditionalSurveyorCompanyId = companyContact.CompanyId;
+
+                offer.ProgressComment = StringExtension.GenerateMaxAlphanumericString(4000);
+            }
 
             this.fixture.DataContext.Offer.Add(offer);
             this.fixture.DataContext.SaveChanges();
@@ -205,8 +257,15 @@
                 .Excluding(o => o.SearchStatus)
                 .Excluding(o => o.MortgageSurveyStatus)
                 .Excluding(o => o.AdditionalSurveyStatus)
-                .Excluding(o => o.Enquiries));
-
+                .Excluding(o => o.Enquiries)
+                .Excluding(o => o.Broker)
+                .Excluding(o => o.BrokerCompany)
+                .Excluding(o => o.Lender)
+                .Excluding(o => o.LenderCompany)
+                .Excluding(o => o.Surveyor)
+                .Excluding(o => o.SurveyorCompany)
+                .Excluding(o => o.AdditionalSurveyor)
+                .Excluding(o => o.AdditionalSurveyorCompany));
 
             expectedOffer.NegotiatorId.Should().NotBeEmpty();
         }

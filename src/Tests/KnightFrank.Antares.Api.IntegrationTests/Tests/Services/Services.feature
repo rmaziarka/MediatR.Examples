@@ -2,17 +2,15 @@
 
 @Attachment
 Scenario Outline: Upload attachment for entity with ActivityDocumentType
-	Given User gets Freehold Sale for ActivityType
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| ActivityStatus         | PreAppraisal     |
-			| ActivityDocumentType   | TermsOfBusiness  |
-			| ActivityUserType       | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
+	Given User gets EnumTypeItemId and EnumTypeItem code
+		| enumTypeCode           | enumTypeItemCode |
+		| ActivityDocumentType   | TermsOfBusiness  |
 		And Property exists in database
 			| PropertyType | Division    |
 			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 	When User retrieves url for activity attachment upload for <filename> and <activityDocumentTypeCode> code
 	Then User should get <statusCode> http status code
 
@@ -23,17 +21,15 @@ Scenario Outline: Upload attachment for entity with ActivityDocumentType
 
 @Attachment
 Scenario Outline: Download attachment for entity with ActivityDocumentType
-	Given User gets Freehold Sale for ActivityType
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| ActivityStatus         | PreAppraisal     |
-			| ActivityDocumentType   | TermsOfBusiness  |
-			| ActivityUserType       | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
+	Given User gets EnumTypeItemId and EnumTypeItem code
+		| enumTypeCode           | enumTypeItemCode |
+		| ActivityDocumentType   | TermsOfBusiness  |
 		And Property exists in database
 			| PropertyType | Division    |
 			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 	When User retrieves url for activity attachment download for <filename> and <activityDocumentTypeCode> code
 	Then User should get <statusCode> http status code
 
