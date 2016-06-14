@@ -15,7 +15,7 @@ module Antares.Activity.View {
         entityType: EntityType = EntityType.Activity;
 
         activityAttachmentResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityAttachmentSaveCommand>;
-        saveActivityAttachmentBusy: boolean = false;
+
         selectedOffer: Dto.IOffer;
         selectedViewing: Dto.IViewing;
 
@@ -54,7 +54,7 @@ module Antares.Activity.View {
         }
 
         saveAttachment = (attachment: Antares.Common.Component.Attachment.AttachmentUploadCardModel) => {
-            return this.activityAttachmentResource.save({ id: this.activity.id }, new Antares.Common.Component.Attachment.ActivityAttachmentSaveCommand(this.activity.id, attachment))
+            return this.activityAttachmentResource.save({ id: this.activity.id }, new Antares.Activity.Command.ActivityAttachmentSaveCommand(this.activity.id, attachment))
                 .$promise;
         }
 

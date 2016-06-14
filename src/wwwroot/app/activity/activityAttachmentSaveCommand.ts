@@ -1,6 +1,6 @@
 /// <reference path="../typings/_all.d.ts" />
 
-module Antares.Common.Component.Attachment {
+module Antares.Activity.Command {
     export class ActivityAttachmentSaveCommand {
         attachment: Antares.Common.Component.Attachment.AttachmentSaveCommand;
 		activityId : string;
