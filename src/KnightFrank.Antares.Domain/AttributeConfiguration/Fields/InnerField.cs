@@ -9,40 +9,40 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
 
     public class InnerField
     {
-        private readonly MemberInfo member;
-        public readonly Func<object, object> compiled;
-        public readonly LambdaExpression expression;
-        public readonly Type containerType;
-        public readonly Type propertyType;
-        public readonly IList<IValidator> validators;
+        protected readonly MemberInfo Member;
+        public readonly Func<object, object> Compiled;
+        public readonly LambdaExpression Expression;
+        public readonly Type ContainerType;
+        public readonly Type PropertyType;
+        public readonly IList<IValidator> Validators;
 
-        private Delegate isHiddenExpression;
-        private Delegate isReadonlyExpression;
+        protected Delegate IsHiddenExpression;
+        protected Delegate IsReadonlyExpression;
 
-        public bool IsReadonly(object entity) => entity != null && ((bool?)this.isReadonlyExpression?.DynamicInvoke(entity) ?? false);
-        public bool IsHidden(object entity) => entity != null && ((bool?)this.isHiddenExpression?.DynamicInvoke(entity) ?? false);
+        public bool IsReadonly(object entity) => entity != null && ((bool?)this.IsReadonlyExpression?.DynamicInvoke(entity) ?? false);
+        public bool IsHidden(object entity) => entity != null && ((bool?)this.IsHiddenExpression?.DynamicInvoke(entity) ?? false);
 
         public bool Required { get; set; }
 
         public InnerField(MemberInfo member, Func<object, object> compiled, LambdaExpression expression, Type containerType, Type propertyType)
         {
-            this.member = member;
-            this.compiled = compiled;
-            this.expression = expression;
-            this.containerType = containerType;
-            this.propertyType = propertyType;
-            this.validators = new List<IValidator>();
+            this.Member = member;
+            this.Compiled = compiled;
+            this.Expression = expression;
+            this.ContainerType = containerType;
+            this.PropertyType = propertyType;
+            this.Validators = new List<IValidator>();
         }
 
         public InnerField AddValidator(IValidator validator)
         {
-            this.validators.Add(validator);
+            this.Validators.Add(validator);
             return this;
         }
 
         public void Validate<T>(T obj)
         {
-            foreach (IValidator validator in this.validators)
+            foreach (IValidator validator in this.Validators)
             {
                 var result = validator.Validate(obj);
                 if (!result.IsValid)
@@ -55,24 +55,24 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
 
         public void SetReadonlyRule(LambdaExpression readonlyExpression)
         {
-            this.isReadonlyExpression = readonlyExpression.Compile();
+            this.IsReadonlyExpression = readonlyExpression.Compile();
         }
 
         public void SetHiddenRule(LambdaExpression hiddenExpression)
         {
-            this.isHiddenExpression = hiddenExpression.Compile();
+            this.IsHiddenExpression = hiddenExpression.Compile();
         }
 
         public virtual InnerField Copy()
         {
-            var fieldCopy = new InnerField(this.member, this.compiled, this.expression, this.containerType, this.propertyType)
+            var fieldCopy = new InnerField(this.Member, this.Compiled, this.Expression, this.ContainerType, this.PropertyType)
             {
-                isHiddenExpression = this.isHiddenExpression,
-                isReadonlyExpression = this.isReadonlyExpression,
+                IsHiddenExpression = this.IsHiddenExpression,
+                IsReadonlyExpression = this.IsReadonlyExpression,
                 Required = this.Required
             };
 
-            foreach (IValidator validator in this.validators)
+            foreach (IValidator validator in this.Validators)
             {
                 fieldCopy.AddValidator(validator);
             }
