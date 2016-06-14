@@ -110,6 +110,11 @@ module Antares.Services {
                 this.$resource(this.appConfig.rootUrl + '/api/contacts/:id');
         }
 
+        getCompanyContactResource(): Resources.IBaseResourceClass<Resources.ICompanyContactResource> {
+            return <Resources.IBaseResourceClass<Resources.ICompanyContactResource>>
+                this.$resource(this.appConfig.rootUrl + '/api/companycontacts/:id');
+        }
+
         getRequirementResource(): Resources.IRequirementResourceClass {
             return <Resources.IRequirementResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/requirements/:id');

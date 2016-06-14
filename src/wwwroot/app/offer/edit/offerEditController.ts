@@ -5,6 +5,7 @@ module Antares.Offer {
     import Business = Common.Models.Business;
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
+    import PubSub = Core.PubSub;
 
     export class OfferEditController extends Core.WithPanelsBaseController {
         public offer: Business.Offer;
@@ -30,6 +31,8 @@ module Antares.Offer {
         additionalSurveyDateOpen: boolean = false;
         exchangeDateOpen: boolean = false;
         completionDateOpen: boolean = false;
+        isCompanyContactAddPanelVisible: boolean = false;
+        contactToSelect: string = ''
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -40,9 +43,61 @@ module Antares.Offer {
             private $q: ng.IQService,
             private $scope: ng.IScope,
             private kfMessageService: Services.KfMessageService,
-            private latestViewsProvider: LatestViewsProvider) {
+            private latestViewsProvider: LatestViewsProvider,
+            private pubSub: PubSub) {
             super(componentRegistry, $scope);
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
+            pubSub.with(this)
+                .subscribe(Common.Component.CloseSidePanelMessage, () => {
+                    this.isCompanyContactAddPanelVisible = false;
+                });
+        }
+
+        showBrokerSelectPanel = () =>{
+            this.contactToSelect = 'Broker';
+            this.isCompanyContactAddPanelVisible = true;
+        }
+
+        showLenderSelectPanel = () => {
+            this.contactToSelect = 'Lender';
+            this.isCompanyContactAddPanelVisible = true;
+        }
+
+        showSurveyorSelectPanel = () => {
+            this.contactToSelect = 'Surveyor';
+            this.isCompanyContactAddPanelVisible = true;
+        }
+
+        showAdditionalSurveyorSelectPanel = () => {
+            this.contactToSelect = 'AadditionalSurveyor';
+            this.isCompanyContactAddPanelVisible = true;
+        }
+
+        onContactSelected = (companyContact: Business.CompanyContact[]) => {
+            switch (this.contactToSelect) {
+                case 'Broker':
+                    this.offer.broker = new Business.Contact(companyContact[0].contact, companyContact[0].company);
+                    this.offer.brokerId = companyContact[0].contact.id;
+                    this.offer.brokerCompanyId = companyContact[0].company.id;
+                    break;
+                case 'Lender':
+                    this.offer.lender = new Business.Contact(companyContact[0].contact, companyContact[0].company);
+                    this.offer.lenderId = companyContact[0].contact.id;
+                    this.offer.lenderCompanyId = companyContact[0].company.id;
+                    break;
+                case 'Surveyor':
+                    this.offer.surveyor = new Business.Contact(companyContact[0].contact, companyContact[0].company);
+                    this.offer.surveyorId = companyContact[0].contact.id;
+                    this.offer.surveyorCompanyId = companyContact[0].company.id;
+                    break;
+                case 'AadditionalSurveyor':
+                    this.offer.additionalSurveyor = new Business.Contact(companyContact[0].contact, companyContact[0].company);
+                    this.offer.additionalSurveyorId = companyContact[0].contact.id;
+                    this.offer.additionalSurveyorCompanyId = companyContact[0].company.id;
+                    break;
+            }
+
+            this.isCompanyContactAddPanelVisible = false;
         }
 
         navigateToActivity = (ativity: Business.Activity) => {

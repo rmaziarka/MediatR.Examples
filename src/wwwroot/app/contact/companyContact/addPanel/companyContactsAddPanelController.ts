@@ -9,60 +9,34 @@ module Antares.Ownership {
             super();
         }
 
-        contacts: Business.Contact[] = [];
-        ownerships: Business.Ownership[];
+        companyContacts: Business.CompanyContact[] = [];
         onSave: (obj: { ownership: Dto.IOwnership; }) => void;
         allowMultipleSelect: boolean;
 
         isOwnershipAddVisible: boolean = false;
-        propertyId: string;
         selectedContacts: Business.ContactWithSelection[];
-        ownershipClear: boolean;
 
         panelShown = () => {
-            this.loadContacts();
+            this.loadCompanyContacts();
             this.isOwnershipAddVisible = false;
-            this.ownershipClear = false;
         }
-
-        configure: (contacts: Dto.IContact[]) => void = (contacts: Dto.IContact[]) => {
-            this.selectedContacts = contacts.map((c: Dto.IContact) => new Business.ContactWithSelection(c));
-            this.ownershipClear = true;
-            this.isOwnershipAddVisible = true;
-        }
-
+        
         backOwnership = () => {
             this.isOwnershipAddVisible = false;
         }
 
-        onSavexx = () => {
-            this.isOwnershipAddVisible = false;
-        }
-
-        saveOwnership = (command: any) => {
-            var propertyResource = this.dataAccessService.getPropertyResource();
-
-            return propertyResource
-                .createOwnership({ propertyId: this.propertyId }, command)
-                .$promise
-                .then((ownership: Common.Models.Dto.IOwnership) => {
-                    this.ownershipClear = false;
-                    this.onSave({ ownership: ownership });
-                });
-        }
-
-        loadContacts = () => {
+        loadCompanyContacts = () => {
             this.isBusy = true;
             this.dataAccessService
-                .getContactResource()
+                .getCompanyContactResource()
                 .query()
                 .$promise.then((data: any) => {
-                    this.contacts = data.map((dataItem: Dto.IContact) => new Business.Contact(dataItem));
+                    this.companyContacts = data.map((dataItem: Dto.ICompanyContact) => new Business.CompanyContact(dataItem));
                 }).finally(() => {
                     this.isBusy = false;
                 });
         }
     }
 
-    angular.module('app').controller('CompanyContactsAddPanelController', Antares.Ownership.CompanyContactsAddPanelController);
+    angular.module('app').controller('CompanyContactsAddPanelController', CompanyContactsAddPanelController);
 }

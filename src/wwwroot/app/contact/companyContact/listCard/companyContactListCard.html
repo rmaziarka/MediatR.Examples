@@ -4,32 +4,16 @@
     </side-panel-header>
     <side-panel-content>
         <div ng-show="vm.isLoading">...loading data...</div>
-
         <card-list-item class="requirement-view-offers" ng-repeat="contact in vm.contacts track by contact.id">
             <card show-context-menu="false" show-item-details="" display-new-control="true" card-selected="vm.cardSelected"
-                  card-template-url="'app/contact/listCard/contactCard.html'" item="contact" selected="contact.selected">
+                  card-template-url="'app/contact/companyContact/listCard/companyContactCard.html'" item="contact" selected="contact.selected" allow-selection="true">
             </card>
         </card-list-item>
-
-        <!--<div class="panel panel-default" ng-repeat="contact in vm.contacts">
-            <div class="panel-body">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" ng-model="contact.selected"> {{:: contact.getName() }}
-                    </label>
-                </div>
-            </div>
-        </div>-->
     </side-panel-content>
     <side-panel-footer>
         <button class="btn btn-default" type="button" ng-click="vm.close()">
             <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
         </button>
-
-        <!--<button ng-if="vm.onConfigure" class="btn btn-primary" type="button" ng-click="vm.resolve()" id="ownership-configure-button">
-            <span translate="COMMON.CONFIGURE"></span> <i class="fa fa-angle-double-right"></i>
-        </button>-->
-
         <button class="btn btn-primary" type="button" ng-click="vm.save()" id="ownership-save-button">
             <span translate="COMMON.SAVE"></span> <i class="fa fa-floppy-o"></i>
         </button>

@@ -260,7 +260,7 @@
                 </div>
                 <div class="form-group">
                     <h5 translate="OFFER.EDIT.BROKER"></h5>
-                    <button id="edit-broker" type="button" class="btn btn-default">
+                    <button id="edit-broker" type="button" class="btn btn-default" ng-click="vm.showBrokerSelectPanel()">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -277,7 +277,7 @@
                 </div>
                 <div class="form-group">
                     <h5 translate="OFFER.EDIT.LENDER"></h5>
-                    <button id="edit-lender" type="button" class="btn btn-default">
+                    <button id="edit-lender" type="button" class="btn btn-default" ng-click="vm.showLenderSelectPanel()">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -313,7 +313,7 @@
                 </div>
                 <div class="form-group">
                     <h5 translate="OFFER.EDIT.SURVEYOR"></h5>
-                    <button id="edit-surveyor" type="button" class="btn btn-default">
+                    <button id="edit-surveyor" type="button" class="btn btn-default" ng-click="vm.showSurveyorSelectPanel()">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -354,7 +354,7 @@
                 </div>
                 <div class="form-group">
                     <h5 translate="OFFER.EDIT.SURVEYOR"></h5>
-                    <button id="edit-additional-surveyor" type="button" class="btn btn-default">
+                    <button id="edit-additional-surveyor" type="button" class="btn btn-default" ng-click="vm.showAdditionalSurveyorSelectPanel()">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -445,3 +445,6 @@
         </div>
     </side-panel-content>
 </side-panel>
+
+<company-contacts-add-panel is-visible="vm.isCompanyContactAddPanelVisible" on-save="vm.onContactSelected" allow-multiple-select="false">
+</company-contacts-add-panel>

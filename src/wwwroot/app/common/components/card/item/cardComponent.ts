@@ -14,6 +14,7 @@ module Antares.Common.Component {
             showItemDetails: '<',
             showContextMenu: '<',
             displayNewControl: '<',
+            allowSelection: '<',
             cardSelected: '<',
             selected: '<'
         }

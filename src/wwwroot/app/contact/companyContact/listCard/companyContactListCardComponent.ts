@@ -1,10 +1,10 @@
-﻿/// <reference path="../../typings/_all.d.ts" />
+﻿/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares.Component {
-    angular.module('app').component('contactListCard', {
-        controller: 'contactListCardController',
+    angular.module('app').component('companyContactListCard', {
+        controller: 'companyContactListCardController',
         controllerAs: 'vm',
-        templateUrl: 'app/contact/listCard/contactListCard.html',
+        templateUrl: 'app/contact/companyContact/listCard/companyContactListCard.html',
         transclude: true,
         bindings: {
             contacts: '=',

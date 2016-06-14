@@ -7,8 +7,6 @@ module Antares.Ownership {
         controller: 'CompanyContactsAddPanelController',
         transclude: true,
         bindings: {
-            ownerships: '<',
-            propertyId: '<',
             isVisible: '<',
             onSave: '<',
             allowMultipleSelect: '<'

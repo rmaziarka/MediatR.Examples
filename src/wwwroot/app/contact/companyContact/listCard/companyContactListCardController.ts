@@ -1,38 +1,37 @@
-﻿///<reference path="../../typings/_all.d.ts"/>
+﻿///<reference path="../../../typings/_all.d.ts"/>
 
 module Antares {
     export module Component {
         import Business = Common.Models.Business;
         import IContact = Antares.Common.Models.Dto.IContact;
+        import ICompanyContact = Antares.Common.Models.Dto.ICompanyContact;
         import CloseSidePanelMessage = Antares.Common.Component.CloseSidePanelMessage;
 
-        export class ContactListCardController {
+        export class CompanyContactListCardController {
             constructor(private pubSub: Core.PubSub) { }
             allowMultipleSelect: boolean;
-            contacts: Business.ContactWithSelection[];
-            onSave: (contacts: IContact[]) => void;
+            contacts: Business.CompanyContactWithSelection[];
+            onSave: (contacts: ICompanyContact[]) => void;
             onConfigure: (contacts: { contacts: IContact[]; }) => void;
 
             close = () => {
                 this.pubSub.publish(new CloseSidePanelMessage());
             }
 
-            cardSelected = (contact: any, selected: boolean) => {
-                var selectedContact = this.contacts.filter((c: any) => {
-                    return c.id === contact.id;
-                })[0];
-                selectedContact.selected = selected;
-
+            cardSelected = (companyContact: any, selected: boolean) => {
                 if (!this.allowMultipleSelect && selected) {
                     this.contacts.forEach((c: any) => {
-                        if (c.selected && c.id !== contact.id) {
-                            c.selected = false;
-                        }
+                        c.selected = false;
                     });
                 }
+
+                var selectedContact = this.contacts.filter((c: any) => {
+                    return c.contact.id === companyContact.contact.id && c.company.id === companyContact.company.id;
+                })[0];
+                selectedContact.selected = selected;
             }
 
-            save = () =>{
+            save = () => {
                 var selectedContacts = this.contacts
                     .filter((c: any) => c.selected);
 
@@ -40,7 +39,7 @@ module Antares {
             }
         }
 
-        angular.module('app').controller('contactListCardController', ContactListCardController);
+        angular.module('app').controller('companyContactListCardController', CompanyContactListCardController);
 
     }
 }
