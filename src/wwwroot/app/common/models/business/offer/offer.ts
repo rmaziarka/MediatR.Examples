@@ -33,7 +33,7 @@ module Antares.Common.Models.Business {
         brokerId: string = null;
         brokerCompany: Business.Company = null;
         brokerCompanyId: string = null;
-        lender: Business.Contact = null;
+	lender: Business.Contact = null;
         lenderId: string = null;
         lenderCompany: Business.Company = null;
         lenderCompanyId: string = null;
@@ -42,11 +42,11 @@ module Antares.Common.Models.Business {
         surveyorId: string = null;
         surveyorCompany: Business.Company = null;
         surveyorCompanyId: string = null;
-        additionalSurveyor: Business.Contact = null;
+	additionalSurveyor: Business.Contact = null;
         additionalSurveyorId: string = null;
         additionalSurveyorCompany: Business.Company = null;
         additionalSurveyorCompanyId: string = null;
-        additionalSurveyStatus: Business.EnumTypeItem = null;
+	additionalSurveyStatus: Business.EnumTypeItem = null;
         additionalSurveyStatusId: string = null;
         additionalSurveyDate: Date | string = null;
         progressComment: string =  null;
@@ -69,19 +69,19 @@ module Antares.Common.Models.Business {
                 }
 
                 if (offer.broker) {
-                    this.broker = new Contact(offer.broker);
+                    this.broker = new Contact(offer.broker, offer.brokerCompany);
                 }
 
                 if (offer.lender) {
-                    this.lender = new Contact(offer.lender);
+                    this.lender = new Contact(offer.lender, offer.lenderCompany);
                 }
                 
                 if (offer.surveyor) {
-                    this.surveyor = new Contact(offer.surveyor);
+                    this.surveyor = new Contact(offer.surveyor, offer.surveyorCompany);
                 }
 
                 if (offer.additionalSurveyor) {
-                    this.additionalSurveyor = new Contact(offer.additionalSurveyor);
+                    this.additionalSurveyor = new Contact(offer.additionalSurveyor, offer.additionalSurveyorCompany);
                 }
 
                 if (offer.brokerCompany) {

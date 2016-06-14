@@ -7,9 +7,13 @@ module Antares.Common.Models.Business {
         firstName: string;
         surname: string;
         title: string;
+		company: Business.Company = null;
 
-        constructor(contact?: Dto.IContact) {
+        constructor(contact?: Dto.IContact, company?: Dto.ICompany) {
             angular.extend(this, contact);
+			if (company) {
+				this.company = new Business.Company(company);
+			}
         }
 
         public getName() {
