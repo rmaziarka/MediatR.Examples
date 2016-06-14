@@ -61,7 +61,7 @@
         {
             foreach (InnerDictionaryField innerField in this.Fields.OfType<InnerDictionaryField>())
             {
-                if (innerField.expression.ToString() == fieldExpression.ToString())
+                if (innerField.Expression.ToString() == fieldExpression.ToString())
                 {
                     innerField.AllowedCodes = allowedCodes;
                 }
@@ -72,7 +72,7 @@
         {
             foreach (InnerField innerField in this.Fields)
             {
-                if (innerField.expression.ToString() == fieldExpression.ToString())
+                if (innerField.Expression.ToString() == fieldExpression.ToString())
                 {
                     if (readonlyExpression)
                     {
@@ -93,15 +93,15 @@
             {
                 var state = new InnerFieldState
                 {
-                    PropertyType = field.propertyType,
-                    ContainerType = field.containerType,
-                    Compiled = field.compiled,
-                    Validators = field.validators,
-                    Expression = field.expression,
+                    PropertyType = field.PropertyType,
+                    ContainerType = field.ContainerType,
+                    Compiled = field.Compiled,
+                    Validators = field.Validators,
+                    Expression = field.Expression,
                     Required = field.Required,
                     Readonly = this.IsReadonly(entity) || field.IsReadonly(entity),
                     Hidden = this.IsHidden(entity) || field.IsHidden(entity),
-                    Name = field.expression.GetMemberName(),
+                    Name = field.Expression.GetMemberName(),
                     ControlCode = this.ControlCode,
                     AllowedCodes = (field as InnerDictionaryField)?.AllowedCodes
                 };

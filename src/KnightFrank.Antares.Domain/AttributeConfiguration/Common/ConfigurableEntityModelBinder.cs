@@ -9,7 +9,7 @@
 
     using Newtonsoft.Json;
 
-    public class ConfigurableActivityModelBinder:IModelBinder
+    public class ConfigurableActivityModelBinder : IModelBinder
     {
         public bool BindModel(HttpActionContext actionContext, ModelBindingContext bindingContext)
         {

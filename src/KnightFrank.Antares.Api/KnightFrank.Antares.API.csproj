@@ -271,10 +271,6 @@
       <Project>{2525af42-f89c-48d8-89a7-74449702c627}</Project>
       <Name>KnightFrank.Antares.Dal</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KnightFrank.Antares.Domain.AttributeConfiguration\KnightFrank.Antares.Domain.AttributeConfiguration.csproj">
-      <Project>{979dbf93-8535-4089-b80b-7f7bb0793c8b}</Project>
-      <Name>KnightFrank.Antares.Domain.AttributeConfiguration</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KnightFrank.Antares.Domain\KnightFrank.Antares.Domain.csproj">
       <Project>{5987d78c-856d-4315-8b8b-baf00c286aff}</Project>
       <Name>KnightFrank.Antares.Domain</Name>
