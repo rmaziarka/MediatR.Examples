@@ -5,7 +5,7 @@ module Antares.Property {
     import Business = Common.Models.Business;
 
     export class PropertyService {
-        private baseUrl: string = '/api/properties/';
+        private apiUrl: string = '/api/properties';
 
         constructor(
             private $http: ng.IHttpService,
@@ -13,7 +13,7 @@ module Antares.Property {
         { }
 
         createPropertyAttachment = (propertyAttachment: Antares.Property.Command.PropertyAttachmentSaveCommand): ng.IHttpPromise<Dto.IAttachment> => {
-            var url = `${propertyAttachment.propertyId}/attachments/`;
+            var url = `${this.apiUrl}/${propertyAttachment.propertyId}/attachments/`;
 
             return this.$http.post(this.appConfig.rootUrl + url, propertyAttachment);
         }

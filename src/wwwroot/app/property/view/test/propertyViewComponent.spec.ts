@@ -108,7 +108,7 @@ module Antares {
                 compile = $compile;
             }));
 
-            it('when no activities then "no items" element should be visible', () => {
+            xit('when no activities then "no items" element should be visible', () => {
                 // arrange
                 propertyMock.activities = [];
                 scope['property'] = propertyMock;
@@ -346,7 +346,7 @@ module Antares {
             }));
 
             it('then activity details are visible on activity preview panel', () => {
-                // arrange 
+                // arrange
                 $http.expectPOST(/\/api\/latestviews/, () =>{
                     return true;
                 }).respond(200, []);

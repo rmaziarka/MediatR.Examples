@@ -83,8 +83,8 @@
         /// <param name="command">Attachment data</param>
         /// <returns>Created attachment</returns>
         [HttpPost]
-        [Route("{id}/a")]
-        public Attachment CreateAttachment(Guid id, CreateEntityAttachmentCommand command)
+        [Route("{id}/attachments")]
+        public Attachment CreateAttachment(Guid id, CreatePropertyAttachmentCommand command)
         {
             // User id is mocked.
             // TODO Set correct user id from header.
@@ -206,6 +206,6 @@
             this.mediator.Send(command);
 
             return this.mediator.Send(new AreaBreakdownQuery { PropertyId = command.PropertyId});
-        } 
+        }
     }
 }

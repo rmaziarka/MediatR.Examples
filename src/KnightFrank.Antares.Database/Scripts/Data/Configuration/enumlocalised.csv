@@ -17,6 +17,10 @@ ActivityDocumentType;Brochure;en;Brochure
 ActivityDocumentType;VideoTour;en;Video Tour
 ActivityDocumentType;EPC;en;EPC
 ActivityDocumentType;GasCertificate;en;Gas Certificate
+PropertyDocumentType;Photograph;en;Photograph
+PropertyDocumentType;FloorPlan;en;Floor Plan
+PropertyDocumentType;Brochure;en;Brochure
+PropertyDocumentType;VideoTour;en;Video Tour
 OfferStatus;New;en;New
 OfferStatus;Withdrawn;en;Withdrawn
 OfferStatus;Rejected;en;Rejected

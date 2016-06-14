@@ -51,7 +51,8 @@ module Antares.Property.View {
 
         saveAttachment = (attachment: Antares.Common.Component.Attachment.AttachmentUploadCardModel) => {
             var command = new Antares.Property.Command.PropertyAttachmentSaveCommand(this.property.id, attachment);
-            return this.propertyService.createPropertyAttachment(command);
+            return this.propertyService.createPropertyAttachment(command)
+                .then((result: angular.IHttpPromiseCallbackArg<Dto.IAttachment>) => { return result.data; });
         }
 
         fixOwnershipDates = () => {
