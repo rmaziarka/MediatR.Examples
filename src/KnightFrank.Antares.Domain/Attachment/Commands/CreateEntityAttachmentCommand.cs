@@ -4,7 +4,7 @@
 
     using MediatR;
 
-    public class CreateEntityAttachmentCommand : IRequest<Guid>
+    public abstract class CreateEntityAttachmentCommand : IRequest<Guid>
     {
         public Guid EntityId { get; set; }
 
