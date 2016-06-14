@@ -31,12 +31,8 @@
         {
             User user = this.userRepository.GetById(message.Id);
             this.entityValidator.EntityExists(user, message.Id);
-
-            if (message.SalutationFormatId != null)
-            {
-                this.enumTypeItemValidator.ItemExists(EnumType.SalutationFormat,(Guid) message.SalutationFormatId);
-            }
-
+            this.enumTypeItemValidator.ItemExists(EnumType.SalutationFormat,(Guid) message.SalutationFormatId);
+           
             AutoMapper.Mapper.Map(message, user);
 
             this.userRepository.Save();

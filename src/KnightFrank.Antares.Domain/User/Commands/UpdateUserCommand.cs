@@ -8,7 +8,7 @@
     {
         public Guid Id { get; set; }
 
-        public Guid? SalutationFormatId { get; set; }
+        public Guid SalutationFormatId { get; set; }
 
      }
 }

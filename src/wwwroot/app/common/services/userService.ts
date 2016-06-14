@@ -9,7 +9,7 @@ module Antares.Services {
         }
 
         getUserData(): ng.IPromise<Dto.IUserData> {
-            return this.$http.get<Dto.IUserData>(this.appConfig.rootUrl + "/api/users/data")
+            return this.$http.get<Dto.IUserData>(this.appConfig.rootUrl + "/api/users/current")
                 .then<Dto.IUserData>((result: ng.IHttpPromiseCallbackArg<Dto.IUserData>) => result.data);
         }
     }

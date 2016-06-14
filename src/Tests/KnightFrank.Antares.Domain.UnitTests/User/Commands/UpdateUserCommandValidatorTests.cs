@@ -10,15 +10,15 @@
     using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
     using KnightFrank.Antares.Domain.User.Commands;
 
-   
+
 
     [Collection("UpdateUserCommand")]
     [Trait("FeatureTitle", "User")]
     public class UpdateUserCommandValidatorTests : IClassFixture<BaseTestClassFixture>
     {
-      [Theory]
+        [Theory]
         [AutoMoqData]
-        public void Given_ValidUpdateOfferCommand_When_Validating_Then_IsValid(UpdateUserCommandValidator validator
+        public void Given_ValidUpdateUserCommand_When_Validating_Then_IsValid(UpdateUserCommandValidator validator
             , UpdateUserCommand command)
         {
             // Act
@@ -28,10 +28,11 @@
             validationResult.IsValid.Should().BeTrue();
         }
 
+
         [Theory]
         [AutoMoqData]
         public void Given_EmptyId_When_Validating_Then_IsInvalid(UpdateUserCommandValidator validator
-             , UpdateUserCommand command)
+            , UpdateUserCommand command)
         {
             // Arrange
             command.Id = Guid.Empty;
@@ -41,6 +42,21 @@
 
             // Assert
             validationResult.IsInvalid(nameof(command.Id), nameof(Messages.notempty_error));
-        }     
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_NullSaltationFormat_When_Validating_Then_IsInvalid(UpdateUserCommandValidator validator
+         , UpdateUserCommand command)
+        {
+            // Arrange
+            command.SalutationFormatId = Guid.Empty;
+
+            // Act
+            ValidationResult validationResult = validator.Validate(command);
+
+            // Assert
+            validationResult.IsInvalid(nameof(command.SalutationFormatId), nameof(Messages.notempty_error));
+        }
     }
 }

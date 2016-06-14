@@ -52,7 +52,7 @@ Scenario Outline: Get users with invalid Id
 Examples:
 | selected                             | statusCode |
 | 2AC24202-4831-E611-8344-501AC503CAF5 | NotFound   |
-| 00000000-0000-0000-0000-00000000     | BadRequest |
+| 00000000-0000-0000-0000-000000000000 | BadRequest |
 
 @Users
 Scenario Outline: Update User
@@ -72,5 +72,5 @@ Scenario Outline: Update User
 	| enumTypeCode     | enumTypeItemCode | statusCode |
 	| SalutationFormat | JohnSmithEsq     | OK         |
 	| ActivityStatus   | PreAppraisal     | BadRequest |
-	|                  |                  | OK         |
+	|                  |                  | BadRequest |
 

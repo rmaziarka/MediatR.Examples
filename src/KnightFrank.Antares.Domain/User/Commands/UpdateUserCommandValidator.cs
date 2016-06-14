@@ -7,6 +7,7 @@
         public UpdateUserCommandValidator()
         {
             this.RuleFor(v => v.Id).NotEmpty();
+            this.RuleFor(v => v.SalutationFormatId).NotEmpty();
         }
     }
 }

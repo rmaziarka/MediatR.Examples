@@ -118,16 +118,14 @@
             Guid selectedUserId = this.GetUserIdFromContext();
             string salutationFormat = this.GetValueFromTable(table, "preferredFormat");
 
-            Guid? salutaionFormatId = null;
-            if (!string.IsNullOrWhiteSpace(salutationFormat))
-             salutaionFormatId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[salutationFormat];
+            var command = new UpdateUserCommand { Id = selectedUserId };
 
-            var command = new UpdateUserCommand
+           if (!string.IsNullOrWhiteSpace(salutationFormat))
             {
-                Id = selectedUserId,
-                SalutationFormatId = salutaionFormatId
-            };
-
+                Guid salutaionFormatId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[salutationFormat];
+                command.SalutationFormatId = salutaionFormatId;
+            }
+           
             string requestUrl = $"{ApiUrl}";
             HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl,command);
 
