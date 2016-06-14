@@ -1,0 +1,8 @@
+﻿<list id="activity-add-vendors" ng-if="vm.config">
+    <list-header>
+        <h4 class="page-header" translate="ACTIVITY.ADD.LANDLORDS"></h4>
+    </list-header>
+    <list-item id="list-item-{{landlord.id}}" ng-repeat="landlord in vm.landlordsContacts">
+        {{landlord.getName()}}
+    </list-item>
+</list>

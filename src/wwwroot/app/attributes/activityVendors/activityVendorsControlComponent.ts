@@ -7,7 +7,6 @@ module Antares.Attributes {
         controller: 'ActivityVendorsControlController',
         bindings: {
             vendorContacts: '<',
-            activityTypeId: '<',
             config: '<'
         }
     });

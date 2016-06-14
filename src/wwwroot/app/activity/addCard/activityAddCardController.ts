@@ -51,6 +51,7 @@ module Antares.Activity {
         }
 
         private setPristine = () => {
+            this.activity = new AddCard.ActivityAddCardModel();
             this.activityAddCardForm.$setPristine();
         }
     }

@@ -28,7 +28,8 @@ module Antares.Services {
                     },
                     active: true
                 },
-                vendors:{ vendors: { required: true, active: true }, active: true }
+                vendors:{ vendors: { required: true, active: true }, active: true },
+                landlords: { landlords: { required: true, active: true }, active: true },
             };
             
             defer.resolve(result);
