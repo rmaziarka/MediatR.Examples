@@ -4,7 +4,7 @@
 
 	using KnightFrank.Antares.Dal.Model.Enum;
 
-	public class Contact : BaseAuditableEntity
+	public class Contact : BaseEntity
     {
 		public string Title { get; set; }
 
