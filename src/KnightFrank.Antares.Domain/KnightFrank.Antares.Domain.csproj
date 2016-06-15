@@ -232,6 +232,8 @@
     <Compile Include="Offer\QueryHandlers\OfferQueryHandler.cs" />
     <Compile Include="Property\CommandHandlers\CreatePropertyAttachmentCommandHandler.cs" />
     <Compile Include="Property\Commands\CreatePropertyAttachmentCommand.cs" />
+    <Compile Include="Requirement\CommandHandlers\CreateRequirementAttachmentCommandHandler.cs" />
+    <Compile Include="Requirement\Commands\CreateRequirementAttachmentCommand.cs" />
     <Compile Include="User\Queries\UsersQuery.cs" />
     <Compile Include="Contact\Queries\ContactQueryValidator.cs" />
     <Compile Include="Contact\Queries\ContactsQuery.cs" />

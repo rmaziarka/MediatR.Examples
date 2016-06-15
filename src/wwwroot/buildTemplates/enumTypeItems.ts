@@ -1,16 +1,15 @@
-// <copyright file="GenerateEnumTypeItems.tt">
+﻿// <copyright file="enumTypeItems.tt">
 // </copyright>
 // ReSharper disable InconsistentNaming
-namespace KnightFrank.Antares.Domain.Common.Enums
+module Antares.Common.Models.Enums
 {
-	public enum EnumType
+	export enum EnumType
 	{
 	 	EntityType,
 	 	OwnershipType,
 	 	ActivityStatus,
 	 	Division,
 	 	ActivityDocumentType,
-	 	RequirementDocumentType,
 	 	PropertyDocumentType,
 	 	OfferStatus,
 	 	ActivityUserType,
@@ -18,32 +17,32 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 }
 
 	
-	public enum EntityType
+	export enum EntityType
 	{
 		Property,
 		Requirement,
 	}
 
-	public enum OwnershipType
+	export enum OwnershipType
 	{
 		Freeholder,
 		Leaseholder,
 	}
 
-	public enum ActivityStatus
+	export enum ActivityStatus
 	{
 		PreAppraisal,
 		MarketAppraisal,
 		NotSelling,
 	}
 
-	public enum Division
+	export enum Division
 	{
 		Residential,
 		Commercial,
 	}
 
-	public enum ActivityDocumentType
+	export enum ActivityDocumentType
 	{
 		TermsOfBusiness,
 		MarketingSignOff,
@@ -56,20 +55,7 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		GasCertificate,
 	}
 
-	public enum RequirementDocumentType
-	{
-		TermsOfBusiness,
-		MarketingSignOff,
-		CDDDocument,
-		Photograph,
-		FloorPlan,
-		Brochure,
-		VideoTour,
-		EPC,
-		GasCertificate,
-	}
-
-	public enum PropertyDocumentType
+	export enum PropertyDocumentType
 	{
 		Photograph,
 		FloorPlan,
@@ -77,7 +63,7 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		VideoTour,
 	}
 
-	public enum OfferStatus
+	export enum OfferStatus
 	{
 		New,
 		Withdrawn,
@@ -85,13 +71,13 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		Accepted,
 	}
 
-	public enum ActivityUserType
+	export enum ActivityUserType
 	{
 		LeadNegotiator,
 		SecondaryNegotiator,
 	}
 
-	public enum ActivityDepartmentType
+	export enum ActivityDepartmentType
 	{
 		Managing,
 		Standard,

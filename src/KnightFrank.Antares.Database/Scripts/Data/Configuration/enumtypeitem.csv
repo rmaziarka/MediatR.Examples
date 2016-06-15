@@ -17,6 +17,15 @@ ActivityDocumentType;Brochure
 ActivityDocumentType;VideoTour
 ActivityDocumentType;EPC
 ActivityDocumentType;GasCertificate
+RequirementDocumentType;TermsOfBusiness
+RequirementDocumentType;MarketingSignOff
+RequirementDocumentType;CDDDocument
+RequirementDocumentType;Photograph
+RequirementDocumentType;FloorPlan
+RequirementDocumentType;Brochure
+RequirementDocumentType;VideoTour
+RequirementDocumentType;EPC
+RequirementDocumentType;GasCertificate
 PropertyDocumentType;Photograph
 PropertyDocumentType;FloorPlan
 PropertyDocumentType;Brochure

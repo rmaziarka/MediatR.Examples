@@ -27,6 +27,14 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property
 
             this.Property(r => r.MaxPrice)
                 .IsMoney();
+
+            this.HasMany(p => p.Attachments)
+                .WithMany()
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("RequirementId");
+                    cs.MapRightKey("AttachmentId");
+                });
         }
     }
 }
