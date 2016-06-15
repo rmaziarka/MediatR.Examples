@@ -11,73 +11,63 @@
     using KnightFrank.Antares.Domain.Attachment.Commands;
     using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
 
-    using Ploeh.AutoFixture;
-
     using Xunit;
 
     [Trait("FeatureTitle", "Property Entity")]
     [Collection("CreateEntityAttachment")]
     public class CreateEntityAttachmentCommandValidatorTests
     {
-        private readonly Fixture fixture;
-        private readonly CreateEntityAttachmentCommandValidator validator;
-
-        private class TestCommand : CreateEntityAttachmentCommand
-        {
-        }
-
-        public CreateEntityAttachmentCommandValidatorTests()
-        {
-            this.fixture = new Fixture().Customize();
-            this.validator = this.fixture.Create<CreateEntityAttachmentCommandValidator>();
-        }
-
-        [Fact]
-        public void Given_ValidCreateEntityAttachmentCommand_When_Validating_Then_IsValid()
+        [Theory]
+        [AutoConfiguredMoqData]
+        public void Given_ValidCreateEntityAttachmentCommand_When_Validating_Then_IsValid(
+            CreateEntityAttachmentCommandValidator validator, CreateEntityAttachmentCommand command)
         {
             // Arrange
-            var cmd = this.fixture.Create<TestCommand>();
 
             // Act
-            ValidationResult validationResult = this.validator.Validate(cmd);
+            ValidationResult validationResult = validator.Validate(command);
 
             // Assert
             validationResult.IsValid.Should().BeTrue();
         }
 
-        [Fact]
-        public void Given_InvalidCreateAttachment_When_DocumentTypeIdIsSetToEmptyGuid_And_Validating_Then_IsNotValid()
+        [Theory]
+        [AutoConfiguredMoqData]
+        public void Given_InvalidCreateAttachment_When_DocumentTypeIdIsSetToEmptyGuid_And_Validating_Then_IsNotValid(
+            CreateEntityAttachmentCommandValidator validator, CreateEntityAttachmentCommand command)
         {
             // Arrange
-            TestCommand cmd =
-                this.fixture.Build<TestCommand>().With(c => c.EntityId, default(Guid)).Create();
+            command.EntityId = default(Guid);
 
             // Act
-            ValidationResult validationResult = this.validator.Validate(cmd);
+            ValidationResult validationResult = validator.Validate(command);
 
             // Assert
-            validationResult.IsInvalid(nameof(cmd.EntityId), nameof(Messages.notequal_error));
+            validationResult.IsInvalid(nameof(command.EntityId), nameof(Messages.notequal_error));
         }
 
-        [Fact]
-        public void Given_InvalidCreateAttachment_When_AttachmentIsNotSet_And_Validating_Then_IsNotValid()
+        [Theory]
+        [AutoConfiguredMoqData]
+        public void Given_InvalidCreateAttachment_When_AttachmentIsNotSet_And_Validating_Then_IsNotValid(
+            CreateEntityAttachmentCommandValidator validator, CreateEntityAttachmentCommand command)
         {
             // Arrange
-            TestCommand cmd =
-                this.fixture.Build<TestCommand>().With(c => c.Attachment, null).Create();
+            command.Attachment = null;
 
             // Act
-            ValidationResult validationResult = this.validator.Validate(cmd);
+            ValidationResult validationResult = validator.Validate(command);
 
             // Assert
-            validationResult.IsInvalid(nameof(cmd.Attachment), nameof(Messages.notnull_error));
+            validationResult.IsInvalid(nameof(command.Attachment), nameof(Messages.notnull_error));
         }
 
-        [Fact]
-        public void Given_CreateAttachment_When_Validating_Then_AttachmentShouldHaveSetValidator()
+        [Theory]
+        [AutoConfiguredMoqData]
+        public void Given_CreateAttachment_When_Validating_Then_AttachmentShouldHaveSetValidator(
+            CreateEntityAttachmentCommandValidator validator)
         {
             // Assert
-           this.validator.ShouldHaveChildValidator(x => x.Attachment, typeof(CreateAttachmentValidator));
+            validator.ShouldHaveChildValidator(x => x.Attachment, typeof(CreateAttachmentValidator));
         }
     }
 }
