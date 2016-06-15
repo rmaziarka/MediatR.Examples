@@ -17,6 +17,9 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         CreationDate,
         MarketAppraisalPrice,
         RecommendedPrice,
-        VendorEstimatedPrice
+        VendorEstimatedPrice,
+        Offers,
+        Viewings,
+        Attachments
     }
 }

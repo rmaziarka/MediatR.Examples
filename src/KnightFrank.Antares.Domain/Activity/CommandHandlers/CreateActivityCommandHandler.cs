@@ -101,6 +101,7 @@
             activity.ActivityDepartments.Add(
                 new ActivityDepartment
                     {
+                        // ReSharper disable once PossibleNullReferenceException
                         Department = negotiator.Department,
                         DepartmentType = this.GetManagingDepartmentType()
                     });

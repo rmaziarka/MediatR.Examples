@@ -60,11 +60,27 @@
             this.AddControl(PageType.Details, ControlCode.MarketAppraisalPrice, Field<Activity>.Create(x => x.MarketAppraisalPrice).InnerField);
             this.AddControl(PageType.Details, ControlCode.RecommendedPrice, Field<Activity>.Create(x => x.RecommendedPrice).InnerField);
             this.AddControl(PageType.Details, ControlCode.VendorEstimatedPrice, Field<Activity>.Create(x => x.VendorEstimatedPrice).InnerField);
+            this.AddControl(PageType.Details, ControlCode.Offers, Field<Activity>.Create(x => x.Offers).InnerField);
+            this.AddControl(PageType.Details, ControlCode.Viewings, Field<Activity>.Create(x => x.Viewings).InnerField);
+            this.AddControl(PageType.Details, ControlCode.Attachments, Field<Activity>.Create(x => x.Attachments).InnerField);
         }
 
         private void DefineControlsForEdit()
         {
-            
+            this.AddControl(PageType.Update, ControlCode.ActivityStatus, Field<Activity>.Create(x => x.ActivityStatusId).Required().InnerField);
+            this.AddControl(PageType.Update, ControlCode.Vendors, Field<Activity>.Create(x => x.Contacts).InnerField);
+            this.AddControl(PageType.Update, ControlCode.Property, Field<Activity>.Create(x => x.PropertyId).InnerField);
+            this.AddControl(PageType.Update, ControlCode.LeadNegotiator, Field<Activity>.Create(x => x.ActivityUsers).Required().InnerField);
+            this.AddControl(PageType.Update, ControlCode.Landlords, Field<Activity>.Create(x => x.Contacts).InnerField);
+            // next call date?
+            this.AddControl(PageType.Update, ControlCode.SecondaryNegotiators, Field<Activity>.Create(x => x.ActivityUsers).InnerField);
+            this.AddControl(PageType.Update, ControlCode.ManagingDepartment, Field<Activity>.Create(x => x.ActivityDepartments).InnerField);
+            this.AddControl(PageType.Update, ControlCode.SecondaryDepartments, Field<Activity>.Create(x => x.ActivityDepartments).InnerField);
+            this.AddControl(PageType.Update, ControlCode.AskingPrice, Field<Activity>.Create(x => x.AskingPrice).InnerField);
+            this.AddControl(PageType.Update, ControlCode.ShortLetPricePerWeek, Field<Activity>.Create(x => x.ShortLetPricePerWeek).InnerField);
+            this.AddControl(PageType.Update, ControlCode.MarketAppraisalPrice, Field<Activity>.Create(x => x.MarketAppraisalPrice).InnerField);
+            this.AddControl(PageType.Update, ControlCode.RecommendedPrice, Field<Activity>.Create(x => x.RecommendedPrice).InnerField);
+            this.AddControl(PageType.Update, ControlCode.VendorEstimatedPrice, Field<Activity>.Create(x => x.VendorEstimatedPrice).InnerField);
         }
 
         public override void DefineMappings()
@@ -100,9 +116,10 @@
 
             this.Use(ControlCode.CreationDate, this.ForAll(PageType.Preview, PageType.Details));
 
+            this.Use(new List<ControlCode> {ControlCode.Offers, ControlCode.Viewings, ControlCode.Attachments, ControlCode.Property}, this.ForAll(PageType.Details));
+
             this.Use(new List<ControlCode>
             {
-                ControlCode.Property,
                 ControlCode.Landlords,
                 ControlCode.ActivityStatus,
                 ControlCode.ActivityType,
@@ -111,7 +128,7 @@
                 ControlCode.ManagingDepartment,
                 ControlCode.SecondaryDepartments,
                 //ControlCode.NextCallDate,
-                ControlCode.ShortLetPricePerWeek
+                ControlCode.ShortLetPricePerWeek,
             }, this.When(new List<PropertyType>
             {
                 PropertyType.House, PropertyType.Flat, PropertyType.Bungalow, PropertyType.Maisonette, PropertyType.GarageOnly, PropertyType.ParkingSpace, PropertyType.Houseboat
@@ -119,7 +136,6 @@
 
             this.Use(new List<ControlCode>
             {
-                ControlCode.Property,
                 ControlCode.Vendors,
                 ControlCode.ActivityStatus,
                 ControlCode.ActivityType,
@@ -137,7 +153,6 @@
 
             this.Use(new List<ControlCode>
             {
-                ControlCode.Property,
                 ControlCode.Vendors,
                 ControlCode.ActivityStatus,
                 ControlCode.ActivityType,
@@ -151,6 +166,52 @@
             {
                 PropertyType.Flat, PropertyType.Maisonette, PropertyType.DevelopmentPlot, PropertyType.Land
             }, ActivityType.LongLeaseholdSale, PageType.Details));
+
+            this.Use(new List<ControlCode>
+            {
+                ControlCode.Landlords,
+                ControlCode.ActivityStatus,
+                ControlCode.LeadNegotiator,
+                ControlCode.SecondaryNegotiators,
+                ControlCode.ManagingDepartment,
+                ControlCode.SecondaryDepartments,
+                //ControlCode.NextCallDate,
+                ControlCode.ShortLetPricePerWeek
+            }, this.When(new List<PropertyType>
+            {
+                PropertyType.House, PropertyType.Flat, PropertyType.Bungalow, PropertyType.Maisonette, PropertyType.GarageOnly, PropertyType.ParkingSpace, PropertyType.Houseboat
+            }, ActivityType.OpenMarketLetting, PageType.Update));
+
+            this.Use(new List<ControlCode>
+            {
+                ControlCode.Vendors,
+                ControlCode.ActivityStatus,
+                ControlCode.LeadNegotiator,
+                ControlCode.SecondaryNegotiators,
+                ControlCode.ManagingDepartment,
+                ControlCode.SecondaryDepartments,
+                //ControlCode.NextCallDate,
+                ControlCode.AskingPrice
+            }, this.When(new List<PropertyType>
+            {
+                PropertyType.House, PropertyType.Flat, PropertyType.Bungalow, PropertyType.Maisonette, PropertyType.DevelopmentPlot, PropertyType.FarmEstate,
+                PropertyType.GarageOnly, PropertyType.ParkingSpace, PropertyType.Land, PropertyType.Houseboat
+            }, ActivityType.FreeholdSale, PageType.Update));
+
+            this.Use(new List<ControlCode>
+            {
+                ControlCode.Vendors,
+                ControlCode.ActivityStatus,
+                ControlCode.LeadNegotiator,
+                ControlCode.SecondaryNegotiators,
+                ControlCode.ManagingDepartment,
+                ControlCode.SecondaryDepartments,
+                //ControlCode.NextCallDate,
+                ControlCode.AskingPrice
+            }, this.When(new List<PropertyType>
+            {
+                PropertyType.Flat, PropertyType.Maisonette, PropertyType.DevelopmentPlot, PropertyType.Land
+            }, ActivityType.LongLeaseholdSale, PageType.Update));
         }
     }
 }
