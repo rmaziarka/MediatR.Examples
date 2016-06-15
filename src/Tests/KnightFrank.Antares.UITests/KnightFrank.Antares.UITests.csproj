@@ -192,6 +192,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Offer.feature</DependentUpon>
     </Compile>
+    <Compile Include="Tests\Property\PropertyAttachments.feature.cs">
+      <DependentUpon>PropertyAttachments.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Tests\Property\Property.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -217,6 +222,9 @@
     </None>
     <None Include="packages.config" />
     <Content Include="Resources\PDF document.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Floor Plan.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Tests\Activities\Activities.feature">
@@ -246,6 +254,10 @@
     <None Include="Tests\Offer\Offer.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Offer.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Property\PropertyAttachments.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>PropertyAttachments.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Property\Property.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

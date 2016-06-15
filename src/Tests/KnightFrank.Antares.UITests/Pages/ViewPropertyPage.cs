@@ -48,6 +48,13 @@
         // Locators for messages
         private readonly ElementLocator successMessage = new ElementLocator(Locator.CssSelector, ".alert-success {0}");
         private readonly ElementLocator messageText = new ElementLocator(Locator.CssSelector, ".growl-message");
+        //Locators for attachment
+        private readonly ElementLocator addAttachmentButton = new ElementLocator(Locator.CssSelector, "#card-list-attachments button");
+        private readonly ElementLocator attachmentFileTitle = new ElementLocator(Locator.CssSelector, "#card-list-attachments div[id *= 'attachment-data'");
+        private readonly ElementLocator attachmentDate = new ElementLocator(Locator.CssSelector, "#card-list-attachments time[id *= 'attachment-created-date']");
+        private readonly ElementLocator attachmentType = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-type']");
+        private readonly ElementLocator attachmentSize = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-file-size']");
+        private readonly ElementLocator attachmentDetailsLink = new ElementLocator(Locator.CssSelector, "#card-list-attachments .detailsLink");
 
         public ViewPropertyPage(DriverContext driverContext) : base(driverContext)
         {
@@ -75,6 +82,18 @@
 
         public string ActivityDate => this.Driver.GetElement(this.activityDate).Text.Split(' ')[0].Trim();
 
+        public AttachmentPreviewPage PreviewAttachment => new AttachmentPreviewPage(this.DriverContext);
+
+        public Attachment AttachmentDetails => new Attachment
+        {
+            FileName = this.Driver.GetElement(this.attachmentFileTitle).Text,
+            Type = this.Driver.GetElement(this.attachmentType).Text,
+            Size = this.Driver.GetElement(this.attachmentSize).Text,
+            Date = this.Driver.GetElement(this.attachmentDate).Text
+        };
+
+        public AttachFilePage AttachFile => new AttachFilePage(this.DriverContext);
+
         public ViewPropertyPage OpenViewPropertyPageWithId(string id)
         {
             new CommonPage(this.DriverContext).NavigateToPageWithId("view property", id);
@@ -90,6 +109,12 @@
         public ViewPropertyPage WaitForSidePanelToHide()
         {
             this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.MediumTimeout);
+            return this;
+        }
+        
+        public ViewPropertyPage WaitForSidePanelToHide(double timeout)
+        {
+            this.Driver.WaitUntilElementIsNoLongerFound(this.panel, timeout);
             return this;
         }
 
@@ -213,6 +238,18 @@
         public ViewPropertyPage EditArea(int position)
         {
             this.Driver.Click(this.areaEdit.Format(position));
+            return this;
+        }
+
+        public ViewPropertyPage OpenAttachFilePanel()
+        {
+            this.Driver.Click(this.addAttachmentButton);
+            return this;
+        }
+
+        public ViewPropertyPage OpenAttachmentPreview()
+        {
+            this.Driver.Click(this.attachmentDetailsLink);
             return this;
         }
     }
