@@ -1,46 +1,125 @@
 ﻿<div class="row">
-    <div class="col-md-6">
-        <h2 class="page-header">Create contact</h2>
-        <form ng-submit="addContactForm.$valid && vm.save()" name="addContactForm" id="addContactForm" method="post" novalidate>
-            <fieldset>
-                <h3 class="page-header">Basic information</h3>
-                <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.title.$dirty) && addContactForm.title.$invalid}">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label class="required" for="title" translate="CONTACT.TITLE"></label>
-                            <input type="text" class="form-control" id="title" name="title" required ng-maxlength="128" ng-model="vm.contact.title" autocomplete="off">
-                            <div ng-messages="addContactForm.title.$error" ng-show="addContactForm.$submitted || addContactForm.title.$dirty">
-                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+    <div class="col-md-12">
+        <h2 class="page-header" translate="CONTACT.CREATE_CONTACT"></h2>
+
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <form ng-submit="addContactForm.$valid && vm.save()" name="addContactForm" id="addContactForm" method="post" novalidate>
+                    <fieldset>
+                        <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.title.$dirty) && addContactForm.title.$invalid}">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <label class="required" for="title" translate="CONTACT.TITLE"></label>
+                                    <input type="text" class="form-control" id="title" name="title" required ng-maxlength="128" ng-model="vm.contact.title" autocomplete="off">
+                                    <div ng-messages="addContactForm.title.$error" ng-show="addContactForm.$submitted || addContactForm.title.$dirty">
+                                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.firstName.$dirty) && addContactForm.firstName.$invalid}">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label class="required" for="first-name" translate="CONTACT.FIRSTNAME"></label>
-                            <input type="text" class="form-control" id="first-name" name="firstName" required ng-maxlength="128" ng-model="vm.contact.firstName" autocomplete="off">
-                            <div ng-messages="addContactForm.firstName.$error" ng-show="addContactForm.$submitted || addContactForm.firstName.$dirty">
-                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                        <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.firstName.$dirty) && addContactForm.firstName.$invalid}">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="required" for="first-name" translate="CONTACT.FIRSTNAME"></label>
+                                    <input type="text" class="form-control" id="first-name" name="firstName" required ng-maxlength="128" ng-model="vm.contact.firstName" autocomplete="off">
+                                    <div ng-messages="addContactForm.firstName.$error" ng-show="addContactForm.$submitted || addContactForm.firstName.$dirty">
+                                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.surname.$dirty) && addContactForm.surname.$invalid}">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label class="required" for="surname" translate="CONTACT.SURNAME"></label>
-                            <input type="text" class="form-control" id="surname" name="surname" required ng-maxlength="128" ng-model="vm.contact.surname" autocomplete="off">
-                            <div ng-messages="addContactForm.surname.$error" ng-show="addContactForm.$submitted || addContactForm.surname.$dirty">
-                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                        <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.surname.$dirty) && addContactForm.surname.$invalid}">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="required" for="surname" translate="CONTACT.SURNAME"></label>
+                                    <input type="text" class="form-control" id="surname" name="surname" required ng-maxlength="128" ng-model="vm.contact.surname" autocomplete="off">
+                                    <div ng-messages="addContactForm.surname.$error" ng-show="addContactForm.$submitted || addContactForm.surname.$dirty">
+                                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </fieldset>
+
+                    <h3 translate="CONTACT.SALUTATION.TITLE"></h3>
+
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="page-header" translate="CONTACT.SALUTATION.MAILINGS"></h4>
+
+                                <div class="form-group">
+                                    <label for="mailings-use-salutation" translate="CONTACT.SALUTATION.USE_SALUTATION"></label>
+                                    <select id="mailings-use-salutation" class="form-control">
+                                        <option value="#">Formal</option>
+                                        <option value="#">Semiformal</option>
+                                        <option value="#">Informal</option>
+                                        <option value="#">Personal</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formal" translate="CONTACT.SALUTATION.FORMAL"></label>
+                                    <input id="formal" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mailings-semiformal" translate="CONTACT.SALUTATION.SEMIFORMAL"></label>
+                                    <input id="mailings-semiformal" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mailings-informal" translate="CONTACT.SALUTATION.INFORMAL"></label>
+                                    <input id="mailings-informal" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mailings-personal" translate="CONTACT.SALUTATION.PERSONAL"></label>
+                                    <input id="mailings-personal" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mailings-envelope" translate="CONTACT.SALUTATION.ENVELOPE"></label>
+                                    <input id="mailings-envelope" type="text" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="page-header" translate="CONTACT.SALUTATION.EVENTS"></h4>
+
+                                <div class="form-group">
+                                    <label for="events-use-salutation" translate="CONTACT.SALUTATION.USE_SALUTATION"></label>
+                                    <select id="events-use-salutation" class="form-control">
+                                        <option value="#">Formal</option>
+                                        <option value="#">Semiformal</option>
+                                        <option value="#">Informal</option>
+                                        <option value="#">Personal</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="invite" translate="CONTACT.SALUTATION.INVITE"></label>
+                                    <input id="invite" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="events-semiformal" translate="CONTACT.SALUTATION.SEMIFORMAL"></label>
+                                    <input id="events-semiformal" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="events-informal" translate="CONTACT.SALUTATION.INFORMAL"></label>
+                                    <input id="events-informal" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="events-personal" translate="CONTACT.SALUTATION.PERSONAL"></label>
+                                    <input id="events-personal" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="events-envelope" translate="CONTACT.SALUTATION.ENVELOPE"></label>
+                                    <input id="events-envelope" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-default"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
+                        <button type="submit" class="btn btn-primary" id="saveBtn"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
                     </div>
-                </div>
-            </fieldset>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="saveBtn"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE">Save</span></button>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 </div>

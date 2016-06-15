@@ -91,9 +91,22 @@
     }
   },
   "CONTACT": {
+    "CREATE_CONTACT": "Create contact",
     "TITLE": "Title",
     "FIRSTNAME": "First name",
-    "SURNAME": "Surname"
+    "SURNAME": "Surname",
+    "SALUTATION": {
+      "TITLE": "Salutation",
+      "MAILINGS": "Mailings",
+      "EVENTS": "Events",
+      "USE_SALUTATION": "Use salutation",
+      "FORMAL": "Formal",
+      "SEMIFORMAL": "Semiformal",
+      "INFORMAL": "Informal",
+      "PERSONAL": "Personal",
+      "ENVELOPE": "Envelope",
+      "INVITE": "Invite"
+    }
   },
   "FORM": {
     "FIELD_IS_REQUIRED": "Field is required",
