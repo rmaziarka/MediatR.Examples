@@ -3,7 +3,19 @@ CREATE TABLE #TempContact (
 	[Id] UNIQUEIDENTIFIER  NOT NULL DEFAULT (newsequentialid()),
 	[FirstName] NVARCHAR (MAX) NULL,
 	[Surname] NVARCHAR (MAX) NULL,
-	[Title] NVARCHAR (MAX) NULL
+	[Title] NVARCHAR (MAX) NULL,
+	[MailingFormalSalutation] NVARCHAR (MAX) NULL,
+	[MailingSemiformalSalutation] NVARCHAR (MAX) NULL,
+	[MailingInformalSalutation] NVARCHAR (MAX) NULL,
+	[MailingPersonalSalutation] NVARCHAR (MAX) NULL,
+	[MailingEnvelopeSalutation] NVARCHAR (MAX) NULL,
+	[DefaultMailingSalutationId] UNIQUEIDENTIFIER NULL,
+	[EventInviteSalutation] NVARCHAR (MAX) NULL,
+	[EventSemiformalSalutation] NVARCHAR (MAX) NULL,
+	[EventInformalSalutation] NVARCHAR (MAX) NULL,
+	[EventPersonalSalutation] NVARCHAR (MAX) NULL,
+	[EventEnvelopeSalutation] NVARCHAR (MAX) NULL,
+	[DefaultEventSalutationId] UNIQUEIDENTIFIER NULL
 );
 
 ALTER TABLE Contact NOCHECK CONSTRAINT ALL
@@ -28,11 +40,33 @@ MERGE dbo.Contact AS T
 		UPDATE SET 
 		T.[FirstName] = S.[FirstName],
 		T.[Surname] = S.[Surname],
-		T.[Title] = S.[Title]
+		T.[Title] = S.[Title],
+		T.[MailingFormalSalutation] = S.[MailingFormalSalutation],
+		T.[MailingSemiformalSalutation] = S.[MailingSemiformalSalutation],
+		T.[MailingInformalSalutation] = S.[MailingInformalSalutation],
+		T.[MailingPersonalSalutation] = S.[MailingPersonalSalutation],
+		T.[MailingEnvelopeSalutation] = S.[MailingEnvelopeSalutation],
+		T.[DefaultMailingSalutationId] = S.[DefaultMailingSalutationId],
+		T.[EventInviteSalutation] = S.[EventInviteSalutation],
+		T.[EventSemiformalSalutation] = S.[EventSemiformalSalutation],
+		T.[EventInformalSalutation] = S.[EventInformalSalutation],
+		T.[EventPersonalSalutation] = S.[EventPersonalSalutation],
+		T.[EventEnvelopeSalutation] = S.[EventEnvelopeSalutation],
+		T.[DefaultEventSalutationId] = S.[DefaultEventSalutationId]
 
 	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([Id], [FirstName], [Surname], [Title])
-		VALUES ([Id], [FirstName], [Surname], [Title])
+		INSERT ([Id], [FirstName], [Surname], [Title], 
+			[MailingFormalSalutation], [MailingSemiformalSalutation], [MailingInformalSalutation],
+			[MailingPersonalSalutation], [MailingEnvelopeSalutation], [DefaultMailingSalutationId],
+			[EventInviteSalutation], [EventSemiformalSalutation], [EventInformalSalutation],
+			[EventPersonalSalutation], [EventEnvelopeSalutation], [DefaultEventSalutationId],
+			[CreatedDate],[LastModifiedDate],[UserId])
+		VALUES ([Id], [FirstName], [Surname], [Title], 
+			[MailingFormalSalutation], [MailingSemiformalSalutation], [MailingInformalSalutation],
+			[MailingPersonalSalutation], [MailingEnvelopeSalutation], [DefaultMailingSalutationId],
+			[EventInviteSalutation], [EventSemiformalSalutation], [EventInformalSalutation],
+			[EventPersonalSalutation], [EventEnvelopeSalutation], [DefaultEventSalutationId],
+			GETDATE(), GETDATE(), NULL)
 
     WHEN NOT MATCHED BY SOURCE THEN DELETE;
     
