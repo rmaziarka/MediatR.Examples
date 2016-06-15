@@ -102,19 +102,19 @@ module Antares {
 
                 var offerResource = this.dataAccessService.getOfferResource();
                 this.offer.statusId = this.selectedStatus.id;
+                this.offer.offerDate = Core.DateTimeUtils.createDateAsUtc(this.offer.offerDate);
+                this.offer.exchangeDate = Core.DateTimeUtils.createDateAsUtc(this.offer.exchangeDate);
+                this.offer.completionDate = Core.DateTimeUtils.createDateAsUtc(this.offer.completionDate);
 
                 if (this.mode === "add") {
                     this.offer.statusId = this.selectedStatus.id;
-
-                    this.offer.offerDate = Core.DateTimeUtils.createDateAsUtc(this.offer.offerDate);
-                    this.offer.exchangeDate = Core.DateTimeUtils.createDateAsUtc(this.offer.exchangeDate);
-                    this.offer.completionDate = Core.DateTimeUtils.createDateAsUtc(this.offer.completionDate);
 
                     return offerResource
                         .save(this.offer)
                         .$promise;
                 }
                 else if (this.mode === "edit") {
+
                     var updateOffer: Dto.IOffer = angular.copy(this.offer);
                     return offerResource
                         .update(updateOffer)
