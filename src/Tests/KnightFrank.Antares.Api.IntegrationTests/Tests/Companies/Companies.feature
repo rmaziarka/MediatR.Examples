@@ -2,7 +2,7 @@
 
 @Company
 Scenario: Create new company
-	Given User creates contacts in database with following data
+	Given Contacts exists in database
 		| FirstName | Surname | Title |
 		| Michael   | Angel   | cheef | 
 	When User creates company by API for contact for maximum name length
@@ -11,7 +11,7 @@ Scenario: Create new company
 
 @Company
 Scenario Outline: Create company with invalid data
-	Given User creates contacts in database with following data
+	Given Contacts exists in database
 		| FirstName | Surname | Title |
 		| Michael   | Angel   | cheef | 
 	When User creates company by API for contact

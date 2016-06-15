@@ -29,6 +29,8 @@
         public Guid Handle(UpdateOfferCommand message)
         {
             Offer offer = this.offerRepository.GetById(message.Id);
+            this.entityValidator.EntityExists(offer, message.Id);
+            this.enumTypeItemValidator.ItemExists(EnumType.OfferStatus, message.StatusId);
 
             if (message.OfferDate > offer.CreatedDate)
             {
@@ -42,10 +44,7 @@
             {
                 throw new BusinessValidationException(BusinessValidationMessage.CompletionDateGreaterOrEqualToCreateDateMessage(offer.CreatedDate));
             }
-
-            this.entityValidator.EntityExists(offer, message.Id);
-            this.enumTypeItemValidator.ItemExists(EnumType.OfferStatus, message.StatusId);
-
+            
             AutoMapper.Mapper.Map(message, offer);
 
             this.offerRepository.Save();

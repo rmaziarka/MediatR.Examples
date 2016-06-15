@@ -62,11 +62,9 @@ Scenario Outline: Update property
 			| enumTypeCode | enumTypeItemCode |
 			| Division     | Residential      |
 			| Division     | Commercial       |
-        And User gets <propertyType1> for PropertyType
-		And Property characteristics are set for given property type
-		And Property with Address and <divisionCode1> division is in database
-			| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
-			| abc          | 1              | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+		And Property exists in database
+			| PropertyType    | Division        |
+			| <propertyType1> | <divisionCode1> |
 		And Address for add/update property is defined with max length fields
 		And User gets <propertyType2> for PropertyType
 		And Property characteristics are set for given property type
@@ -87,16 +85,13 @@ Scenario Outline: Update property
 
 @Property
 Scenario Outline: Update property with invalid data
-	Given User gets GB address form for Property and country details
-        And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode | enumTypeItemCode |
-			| Division     | Residential      |
-			| Division     | Commercial       |
-        And User gets House for PropertyType
-		And Property characteristics are set for given property type
-		And Property with Address and <divisionCode1> division is in database
-			| PropertyName | PropertyNumber | Line2              | Line3      | Postcode | City   | County         |
-			| abc          | 1              | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
+    Given User gets EnumTypeItemId and EnumTypeItem code
+		| enumTypeCode | enumTypeItemCode |
+		| Division     | Residential      |
+		| Division     | Commercial       |
+		And Property exists in database
+			| PropertyType | Division        |
+			| House        | <divisionCode1> |
 		And User gets <country> address form for <itemType> and country details
 		And User gets <propertyType> for PropertyType
 		And Address for add/update property is defined
@@ -127,27 +122,24 @@ Scenario: Get non existing property
 @Property
 Scenario: Get property
 	Given User gets GB address form for Property and country details
-        And User gets House for PropertyType
 		And User gets Freehold Sale for ActivityType
+		And User gets House for PropertyType
         And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
-			| OwnershipType          | Freeholder       |
 			| ActivityStatus         | PreAppraisal     |
-			| Division               | Residential      |
 			| ActivityUserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
-			| ActivityDepartmentType | Standard         |
-		And User sets attributes for property in database
+		And Property attributes exists in database
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
 			| 1           | 3           | 1             | 3             | 2            | 3            | 1000.1  | 3000.1  | 500.1       | 4000.1      | 1                   | 3                   |
         And Property characteristics are set for given property type
-		And Property with Address and Residential division is in database
-        	| PropertyName | PropertyNumber | Line1           | Line2              | Line3      | Postcode | City   | County         |
-        	| abc          | 1              | Beautifull Flat | Lewis Cubit Square | King Cross | N1C      | London | Greater London |
-        And User creates contacts in database with following data
+		And Property exists in database
+			| PropertyType | Division    |
+			| House        | Residential |
+        And Contacts exists in database
 		    | FirstName | Surname | Title |
 		    | Michael   | Angel   | cheef |
-		And Ownership exists in database
+		And Ownership Freeholder exists in database
 			| PurchaseDate | SellDate   | BuyPrice | SellPrice |
 			| 01-05-2011   | 01-04-2013 | 1000000  | 1200000   |
 			| 01-05-2014   | 01-04-2015 | 1000000  | 1200000   |
@@ -180,4 +172,4 @@ Scenario Outline: Create property with invalid characteristics data
 	Examples:
 	| code     | statusCode |
 	| Offices  | BadRequest | 
-	| invalid  | BadRequest | 	
+	| invalid  | BadRequest |

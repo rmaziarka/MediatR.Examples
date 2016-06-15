@@ -29,7 +29,6 @@
         [Then(@"User should get (.*) http status code")]
         public void ThenStatusCodeShouldBe(HttpStatusCode statusCode)
         {
-            var abc = this.scenarioContext.GetResponseContent();
             this.scenarioContext.GetResponseHttpStatusCode().Should().Be(statusCode);
         }
     }

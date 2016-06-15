@@ -1,6 +1,7 @@
 ﻿CREATE TABLE #TempPropertyType (
 	[ParentCode] NVARCHAR (50) NULL,
-	[Code] NVARCHAR (50) NOT NULL
+	[Code] NVARCHAR (50) NOT NULL,
+	[EnumCode] NVARCHAR (250) NOT NULL
 );
 
 BULK INSERT #TempPropertyType
@@ -14,55 +15,57 @@ BULK INSERT #TempPropertyType
     )
 
 ALTER TABLE PropertyType NOCHECK CONSTRAINT ALL
-	    	
+
 MERGE PropertyType AS T
-	USING 
+	USING
 	(
-		SELECT Temp.Code
+		SELECT Temp.Code,Temp.EnumCode
 		FROM #TempPropertyType Temp
 		WHERE Temp.ParentCode IS NULL
 	)
-	AS S	
-	ON 
+	AS S
+	ON
 	(
         (T.Code = S.Code AND T.ParentId IS NULL)
 	)
 	WHEN MATCHED THEN
-		UPDATE SET 
+		UPDATE SET
 		T.[ParentId] = NULL,
-		T.[Code] = S.[Code]
+		T.[Code] = S.[Code],
+		T.[EnumCode] = S.[EnumCode]
 
-	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([ParentId], [Code])
-		VALUES (NULL, [Code])
+	WHEN NOT MATCHED BY TARGET THEN
+		INSERT ([ParentId], [Code], [EnumCode])
+		VALUES (NULL, [Code], [EnumCode])
 
     WHEN NOT MATCHED BY SOURCE AND T.[ParentId] IS NULL THEN
 		DELETE;
 
 MERGE dbo.PropertyType AS T
-	USING 
+	USING
 	(
-		SELECT P.Id as ParentId, Temp.Code as Code
+		SELECT P.Id as ParentId, Temp.Code as Code, Temp.EnumCode as EnumCode
 		FROM #TempPropertyType Temp
-		JOIN PropertyType P ON P.Code = Temp.ParentCode		
+		JOIN PropertyType P ON P.Code = Temp.ParentCode
 		WHERE Temp.ParentCode IS NOT NULL
 	)
-	AS S	
-	ON 
+	AS S
+	ON
 	(
         (T.Code = S.Code AND T.ParentId = S.ParentId)
 	)
 	WHEN MATCHED THEN
-		UPDATE SET 
+		UPDATE SET
 		T.[ParentId] = S.[ParentId],
-		T.[Code] = S.[Code]
+		T.[Code] = S.[Code],
+		T.[EnumCode] = S.[EnumCode]
 
-	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([ParentId], [Code])
-		VALUES ([ParentId], [Code])
+	WHEN NOT MATCHED BY TARGET THEN
+		INSERT ([ParentId], [Code],[EnumCode])
+		VALUES ([ParentId], [Code],[EnumCode])
 
 	WHEN NOT MATCHED BY SOURCE AND T.[ParentId] IS NOT NULL THEN
 		DELETE;
-    
+
 ALTER TABLE PropertyType WITH CHECK CHECK CONSTRAINT ALL
 DROP TABLE #TempPropertyType

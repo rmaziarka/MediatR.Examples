@@ -83,7 +83,7 @@
         [When(@"User selects contacts on create requirement page")]
         public void SelectContactsForRequirement(Table table)
         {
-            this.page.AddApplicants().WaitForSidePanelToShow();
+            this.page.SelectApplicants().WaitForSidePanelToShow();
 
             IEnumerable<Contact> contacts = table.CreateSet<Contact>();
 
@@ -108,7 +108,7 @@
             List<string> applicants =
                 table.CreateSet<Contact>().Select(contact => contact.FirstName + " " + contact.Surname).ToList();
 
-            List<string> selectedApplicants = this.page.GetApplicants();
+            List<string> selectedApplicants = this.page.Applicants;
 
             Assert.Equal(applicants.Count, selectedApplicants.Count);
             applicants.ShouldBeEquivalentTo(selectedApplicants);
