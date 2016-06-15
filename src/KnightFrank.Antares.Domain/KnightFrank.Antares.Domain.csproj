@@ -142,6 +142,7 @@
     <Compile Include="AreaBreakdown\Queries\AreaBreakdownQueryValidator.cs" />
     <Compile Include="AreaBreakdown\QueryHandlers\AreaBreakdownQueryHandler.cs" />
     <Compile Include="Attachment\Commands\CreateEntityAttachmentCommand.cs" />
+    <Compile Include="Attachment\Commands\CreateEntityAttachmentCommandHandler.cs" />
     <Compile Include="Attachment\Commands\CreateEntityAttachmentCommandValidator.cs" />
     <Compile Include="Attachment\Queries\AttachmentQuery.cs" />
     <Compile Include="Attachment\Queries\AttachmentQueryValidator.cs" />
