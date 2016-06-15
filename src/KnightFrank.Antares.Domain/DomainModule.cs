@@ -41,7 +41,7 @@
             this.Bind<IEnumTypeItemValidator>().To(typeof(EnumTypeItemValidator));
             this.Bind<IAddressValidator>().To(typeof(AddressValidator));
             this.Bind<IActivityTypeDefinitionValidator>().To(typeof(ActivityTypeDefinitionValidator));
-            this.Bind<ISetupOfferProgressStatusStep>().To(typeof(SetupOfferProgressStatusStep));
+            this.Bind<IOfferProgressStatusHelper>().To<OfferProgressStatusHelper>();
             AssemblyScanner.FindValidatorsInAssembly(Assembly.GetExecutingAssembly()).ForEach(
                 assemblyScanResult =>
                     {

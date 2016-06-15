@@ -124,6 +124,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Additional Survey Date must be greater than or equal to {0}..
+        /// </summary>
+        internal static string AdditionalSurveyDateGreaterOrEqualToCreateDate {
+            get {
+                return ResourceManager.GetString("AdditionalSurveyDateGreaterOrEqualToCreateDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Completion Date must be greater than or equal to {0}..
         /// </summary>
         internal static string CompletionDateGreaterOrEqualToCreateDate {
@@ -219,6 +228,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         internal static string Missing_Requirement_Attendees_Id {
             get {
                 return ResourceManager.GetString("Missing_Requirement_Attendees_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mortgage Survey Date must be greater than or equal to {0}..
+        /// </summary>
+        internal static string MortgageSurveyDateGreaterOrEqualToCreateDate {
+            get {
+                return ResourceManager.GetString("MortgageSurveyDateGreaterOrEqualToCreateDate", resourceCulture);
             }
         }
         

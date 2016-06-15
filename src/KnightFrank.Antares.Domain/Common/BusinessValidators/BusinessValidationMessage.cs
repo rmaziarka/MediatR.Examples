@@ -98,6 +98,20 @@
             return new BusinessValidationMessage(ErrorMessage.CompletionDateGreaterOrEqualToCreateDate, message);
         }
 
+        public static BusinessValidationMessage MortgageSurveyDateGreaterOrEqualToCreateDateMessage(DateTime createDate)
+        {
+            string errorMessageTemplate = GetMessage(ErrorMessage.MortgageSurveyDateGreaterOrEqualToCreateDate);
+            string message = string.Format(errorMessageTemplate, createDate.Date.ToShortDateString());
+            return new BusinessValidationMessage(ErrorMessage.MortgageSurveyDateGreaterOrEqualToCreateDate, message);
+        }
+
+        public static BusinessValidationMessage AdditionalSurveyDateGreaterOrEqualToCreateDateMessage(DateTime createDate)
+        {
+            string errorMessageTemplate = GetMessage(ErrorMessage.AdditionalSurveyDateGreaterOrEqualToCreateDate);
+            string message = string.Format(errorMessageTemplate, createDate.Date.ToShortDateString());
+            return new BusinessValidationMessage(ErrorMessage.AdditionalSurveyDateGreaterOrEqualToCreateDate, message);
+        }
+
         private static string GetMessage(ErrorMessage errorCode)
         {
             return Properties.BusinessErrorMessages.ResourceManager.GetString(GetErrorName(errorCode), culture) ?? "";

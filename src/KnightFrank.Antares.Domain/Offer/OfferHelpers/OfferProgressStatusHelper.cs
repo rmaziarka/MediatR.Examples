@@ -11,9 +11,9 @@
     using EnumType = KnightFrank.Antares.Dal.Model.Enum.EnumType;
     using DomainEnumType = KnightFrank.Antares.Domain.Common.Enums.EnumType;
 
-    public class SetupOfferProgressStatusStep : ISetupOfferProgressStatusStep
+    public class OfferProgressStatusHelper : IOfferProgressStatusHelper
     {
-        public List<string> OfferProgressStatusesEnumTypes => new List<string>
+        public static List<string> OfferProgressStatusesEnumTypes => new List<string>
         {
             DomainEnumType.MortgageStatus.ToString(),
             DomainEnumType.MortgageSurveyStatus.ToString(),
@@ -25,11 +25,7 @@
 
         public Offer SetOfferProgressStatuses(Offer offer, List<EnumType> enumOfferStatusTypes)
         {
-            Guid currentOfferStatusId = offer.StatusId;
-            Guid acceptedOfferStatusId = this.GetAcceptedOfferStatusId(enumOfferStatusTypes);
-
-            bool isOfferStatusAccepted = currentOfferStatusId == acceptedOfferStatusId;
-            if (isOfferStatusAccepted)
+            if (this.IsOfferInAcceptedStatus(enumOfferStatusTypes, offer.StatusId))
             {
                 offer = this.SetDefaultOfferProgressStatuses(offer, enumOfferStatusTypes);
             }
@@ -39,14 +35,6 @@
             }
 
             return offer;
-        }
-
-        private Guid GetAcceptedOfferStatusId(List<EnumType> enumOfferStatusTypes)
-        {
-            EnumType offerStatus = enumOfferStatusTypes.Single(x => x.Code == DomainEnumType.OfferStatus.ToString());
-            EnumTypeItem acceptedStatus = offerStatus.EnumTypeItems.Single(x => x.Code == OfferStatus.Accepted.ToString());
-
-            return acceptedStatus.Id;
         }
 
         private Offer SetDefaultOfferProgressStatuses(Offer offer, List<EnumType> enumStatusOfferTypes)
@@ -65,13 +53,59 @@
             return enumOfferStatusTypes.Single(x => x.Code == enumType.ToString()).EnumTypeItems.Single(x => x.Code == enumTypeItemName).Id;
         }
 
-        private Offer SetEmptyOfferProgressStatuses(Offer offer)
+        public bool IsOfferInAcceptedStatus(List<EnumType> enumOfferStatusTypes, Guid offerStatusId)
+        {
+            EnumType offerStatus = enumOfferStatusTypes.Single(x => x.Code == Common.Enums.EnumType.OfferStatus.ToString());
+            EnumTypeItem acceptedStatus = offerStatus.EnumTypeItems.Single(x => x.Code == OfferStatus.Accepted.ToString());
+
+            return offerStatusId == acceptedStatus.Id;
+        }
+
+        public Offer SetEmptyOfferProgressStatuses(Offer offer)
         {
             offer.MortgageStatusId = null;
             offer.MortgageSurveyStatusId = null;
             offer.AdditionalSurveyStatusId = null;
             offer.SearchStatusId = null;
             offer.EnquiriesId = null;
+
+            offer.ContractApproved = false;
+
+            return offer;
+        }
+
+        public Offer SetEmptyOfferMortgageDetails(Offer offer)
+        {
+            offer.MortgageLoanToValue = null;
+
+            offer.BrokerId = null;
+            offer.BrokerCompanyId = null;
+
+            offer.LenderId = null;
+            offer.LenderCompanyId = null;
+
+            offer.MortgageSurveyDate = null;
+
+            offer.SurveyorId = null;
+            offer.SurveyorCompanyId = null;
+
+            return offer;
+        }
+
+        public Offer SetEmptyOfferAdditionalSurvey(Offer offer)
+        {
+            offer.AdditionalSurveyDate = null;
+
+            offer.AdditionalSurveyorId = null;
+
+            offer.AdditionalSurveyorCompanyId = null;
+
+            return offer;
+        }
+
+        public Offer SetEmptyOfferOtherDetails(Offer offer)
+        {
+            offer.ProgressComment = null;
 
             return offer;
         }

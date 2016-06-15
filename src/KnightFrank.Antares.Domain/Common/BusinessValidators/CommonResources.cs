@@ -63,6 +63,31 @@
         // ReSharper disable once InconsistentNaming
         Missing_Requirement_Applicants_Id,
         /// <summary>
+        /// Key value : Offer Date must be less than or equal to {0}.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        OfferDateLessOrEqualToCreateDate,
+        /// <summary>
+        /// Key value : Completion Date must be greater than or equal to {0}.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        CompletionDateGreaterOrEqualToCreateDate,
+        /// <summary>
+        /// Key value : Exchange Date must be greater than or equal to {0}.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        ExchangeDateGreaterOrEqualToCreateDate,
+        /// <summary>
+        /// Key value : Mortgage Survey Date must be greater than or equal to {0}.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        MortgageSurveyDateGreaterOrEqualToCreateDate,
+        /// <summary>
+        /// Key value : Additional Survey Date must be greater than or equal to {0}.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        AdditionalSurveyDateGreaterOrEqualToCreateDate,
+        /// <summary>
         /// Key value : One or more attendees are not on the applicant list.
         /// </summary>
         // ReSharper disable once InconsistentNaming
@@ -116,22 +141,7 @@
         /// Key value : Activity should hva only one managing department.
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        Activity_Should_Have_Only_One_Managing_Department,
-        /// <summary>
-        /// Key value : Offer Date must be less than or equal to create date.
-        /// </summary>
-        // ReSharper disable once InconsistentNaming
-        OfferDateLessOrEqualToCreateDate,
-        /// <summary>
-        /// Key value : Completion Date must be greater than or equal to create date.
-        /// </summary>
-        // ReSharper disable once InconsistentNaming
-        CompletionDateGreaterOrEqualToCreateDate,
-        /// <summary>
-        /// Key value : Exchange Date must be greater than or equal to create date.
-        /// </summary>
-        // ReSharper disable once InconsistentNaming
-        ExchangeDateGreaterOrEqualToCreateDate
+        Activity_Should_Have_Only_One_Managing_Department
     }
 }
 

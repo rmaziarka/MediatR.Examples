@@ -4,14 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
-    using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Offer.Commands;
     using KnightFrank.Antares.Domain.Offer.OfferHelpers;
 
@@ -24,7 +22,7 @@
     {
         private readonly IGenericRepository<Offer> offerRepository;
         private readonly IReadGenericRepository<User> userRepository;
-        private readonly ISetupOfferProgressStatusStep setupOfferProgressStatusStep;
+        private readonly IOfferProgressStatusHelper offerProgressStatusHelper;
         private readonly IEntityValidator entityValidator;
         private readonly IEnumTypeItemValidator enumTypeItemValidator;
         private readonly IGenericRepository<EnumType> enumTypeRepository;
@@ -35,14 +33,14 @@
             IReadGenericRepository<User> userRepository,
             IEntityValidator entityValidator,
             IEnumTypeItemValidator enumTypeItemValidator,
-            ISetupOfferProgressStatusStep setupOfferProgressStatusStep, 
+            IOfferProgressStatusHelper offerProgressStatusHelper, 
             IGenericRepository<EnumType> enumTypeRepository)
         {
             this.offerRepository = offerRepository;
             this.userRepository = userRepository;
             this.entityValidator = entityValidator;
             this.enumTypeItemValidator = enumTypeItemValidator;
-            this.setupOfferProgressStatusStep = setupOfferProgressStatusStep;
+            this.offerProgressStatusHelper = offerProgressStatusHelper;
             this.enumTypeRepository = enumTypeRepository;
         }
 
@@ -51,13 +49,11 @@
             this.entityValidator.EntityExists<Activity>(message.ActivityId);
             this.entityValidator.EntityExists<Requirement>(message.RequirementId);
             this.enumTypeItemValidator.ItemExists(DomainEnumType.OfferStatus, message.StatusId);
-            List<EnumType> enumTypeItems = this.enumTypeRepository
-                .GetWithInclude(x => this.setupOfferProgressStatusStep.OfferProgressStatusesEnumTypes.Contains(x.Code), x => x.EnumTypeItems)
-                .ToList();
-
+            
             var offer = AutoMapper.Mapper.Map<Offer>(message);
 
-            offer = this.setupOfferProgressStatusStep.SetOfferProgressStatuses(offer, enumTypeItems);
+            List<EnumType> enumTypeItems = this.GetEnumTypeItems();
+            offer = this.offerProgressStatusHelper.SetOfferProgressStatuses(offer, enumTypeItems);
 
             Guid negotiatorId = this.userRepository.Get().First().Id;
             offer.NegotiatorId = negotiatorId;
@@ -66,6 +62,13 @@
             this.offerRepository.Save();
 
             return offer.Id;
-        }        
+        }
+
+        private List<EnumType> GetEnumTypeItems()
+        {
+            return this.enumTypeRepository
+                .GetWithInclude(x => OfferProgressStatusHelper.OfferProgressStatusesEnumTypes.Contains(x.Code), x => x.EnumTypeItems)
+                .ToList();
+        }
     }
 }
