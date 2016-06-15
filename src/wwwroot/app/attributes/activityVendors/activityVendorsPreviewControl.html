@@ -1,0 +1,10 @@
+<div>
+    <div class="col-xs-5" translate="ACTIVITY.PREVIEW.VENDORS"></div>
+    <div class="col-xs-7" id="activity-preview-vendors">
+        <div class="row">
+            <div class="col-md-12" id="activity-preview-vendor-item-{{contact.id}}" ng-repeat="contact in vm.contacts track by $id(contact)">
+                {{contact.getName()}}
+            </div>
+        </div>
+    </div>
+</div>

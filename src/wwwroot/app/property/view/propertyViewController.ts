@@ -23,6 +23,7 @@ module Antares.Property.View {
         property: Business.PropertyView;
         config: Activity.IActivityAddPanelConfig;
         savePropertyActivityBusy: boolean = false;
+        selectedActivity: Common.Models.Business.Activity;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -86,7 +87,7 @@ module Antares.Property.View {
         }
 
         showActivityPreview = (activity: Common.Models.Business.Activity) => {
-            this.components.activityPreview().setActivity(activity);
+            this.selectedActivity = activity;
             this.showPanel(this.components.panels.activityPreview);
 
             this.latestViewsProvider.addView({
@@ -204,7 +205,6 @@ module Antares.Property.View {
                 ownershipViewSidePanelId: 'viewProperty:ownershipViewSidePanelComponent',
                 activityAddId: 'viewProperty:activityAddComponent',
                 activityAddSidePanelId: 'viewProperty:activityAddSidePanelComponent',
-                activityPreviewId: 'viewProperty:activityPreviewComponent',
                 activityPreviewSidePanelId: 'viewProperty:activityPreviewSidePanelComponent',
                 areaAddSidePanelId: 'viewProperty:areaAddSidePanelComponent',
                 areaEditSidePanelId: 'viewProperty:areaEditSidePanelComponent',
@@ -217,7 +217,6 @@ module Antares.Property.View {
             this.components = {
                 contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
                 activityAdd: () => { return this.componentRegistry.get(this.componentIds.activityAddId); },
-                activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewId); },
                 ownershipAdd: () => { return this.componentRegistry.get(this.componentIds.ownershipAddId); },
                 ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewId); },
                 areaAdd: () => { return this.componentRegistry.get(this.componentIds.areaAddId); },

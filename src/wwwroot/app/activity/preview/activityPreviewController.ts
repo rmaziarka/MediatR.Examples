@@ -7,20 +7,8 @@ module Antares.Activity.Preview {
         componentId: string;
         activity: Business.Activity = <Business.Activity>{};
 
-        constructor(
-            private componentRegistry: Core.Service.ComponentRegistry,
-            private $state: ng.ui.IStateService) {
-
-            componentRegistry.register(this, this.componentId);
-        }
-
-        setActivity = (activity: Business.Activity) => {
-            this.activity = activity;
-        }
-
-        goToActivityView = () => {
-            this.$state.go('app.activity-view', { id: this.activity.id });
-        }
+        constructor() {
+        }  
     }
 
     angular.module('app').controller('ActivityPreviewController', ActivityPreviewController);

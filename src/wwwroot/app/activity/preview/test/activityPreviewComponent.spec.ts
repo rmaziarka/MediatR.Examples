@@ -20,7 +20,10 @@ module Antares {
 
         describe('and proper property id is provided', () => {
             var activityMock = TestHelpers.ActivityGenerator.generate();
+            var contact1Mock = TestHelpers.ContactGenerator.generate();
+            var contact2Mock = TestHelpers.ContactGenerator.generate();
 
+            activityMock.contacts = [contact1Mock, contact2Mock];
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
@@ -30,26 +33,22 @@ module Antares {
                 $http = $httpBackend;
                 filter = $filter;
                 scope = $rootScope.$new();
-                element = $compile('<activity-preview></activity-preview>')(scope);
+                scope['activity'] = activityMock;
+                element = $compile('<activity-preview activity="activity"></activity-preview>')(scope);
                 scope.$apply();
 
                 controller = element.controller('activityPreview');
             }));
 
             it('when activity is set then activity status value should be displayed', () => {
-                // arrange + act
-                controller.setActivity(activityMock);
-                scope.$apply();
-
+                
                 // assert
                 var statusElement = element.find(pageObjectSelectors.status);
                 expect(statusElement.text()).toBe('DYNAMICTRANSLATIONS.' + activityMock.activityStatusId);
             });
-            
+
             it('when activity is set then activity type value should be displayed', () => {
-                // arrange + act
-                controller.setActivity(activityMock);
-                scope.$apply();
+                
 
                 // assert
                 var statusElement = element.find(pageObjectSelectors.type);
@@ -57,10 +56,7 @@ module Antares {
             });
 
             it('when activity is set then activity creation date value should be displayed in proper format', () => {
-                // arrange + act
-                controller.setActivity(activityMock);
-                scope.$apply();
-
+                
                 // assert
                 var formattedDate = filter('date')(activityMock.createdDate, 'dd-MM-yyyy');
                 var dateElement = element.find(pageObjectSelectors.createdDate);
@@ -68,15 +64,7 @@ module Antares {
             });
 
             it('when activity is set then activity vendors should be displayed', () => {
-                // arrange
-                var contact1Mock = TestHelpers.ContactGenerator.generate();
-                var contact2Mock = TestHelpers.ContactGenerator.generate();
-
-                activityMock.contacts = [contact1Mock, contact2Mock];
-
-                // act
-                controller.setActivity(activityMock);
-                scope.$apply();
+                
 
                 // assert
                 var vendorsItemsElement1 = element.find(pageObjectSelectors.vendor + contact1Mock.id);
