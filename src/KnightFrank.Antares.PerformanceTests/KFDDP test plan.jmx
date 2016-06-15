@@ -352,7 +352,7 @@
               <stringProp name="-1227702913">WorkBench</stringProp>
               <stringProp name="1119890476">KFDDP test plan</stringProp>
               <stringProp name="170071582">Test Fragment</stringProp>
-              <stringProp name="1800274976">Get property type id</stringProp>
+              <stringProp name="1887073980">Get residential property type id</stringProp>
             </collectionProp>
           </ModuleController>
           <hashTree/>
@@ -765,7 +765,7 @@
               <stringProp name="-1227702913">WorkBench</stringProp>
               <stringProp name="1119890476">KFDDP test plan</stringProp>
               <stringProp name="170071582">Test Fragment</stringProp>
-              <stringProp name="1800274976">Get property type id</stringProp>
+              <stringProp name="1887073980">Get residential property type id</stringProp>
             </collectionProp>
           </ModuleController>
           <hashTree/>
@@ -882,7 +882,7 @@
               <stringProp name="-1227702913">WorkBench</stringProp>
               <stringProp name="1119890476">KFDDP test plan</stringProp>
               <stringProp name="170071582">Test Fragment</stringProp>
-              <stringProp name="1800274976">Get property type id</stringProp>
+              <stringProp name="1887073980">Get residential property type id</stringProp>
             </collectionProp>
           </ModuleController>
           <hashTree/>

@@ -69,6 +69,12 @@
             this.page.ClickLatestEntity(entity, position);
         }
 
+        [When(@"User clicks search link in drawer submenu")]
+        public void ClickSearchLink()
+        {
+            this.page.ClickSearchLink();
+        }
+
         [Then(@"Drawer menu should be displayed")]
         public void CheckIfDrawerMenuPresent()
         {

@@ -1,0 +1,62 @@
+﻿<#@ template  debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="System.Windows.Forms" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+// <copyright file="PropertyType.tt">
+// </copyright>
+// ReSharper disable InconsistentNaming
+namespace KnightFrank.Antares.Domain.Common.Enums
+{
+	public enum PropertType {
+	<#
+	string fileName = this.Host.ResolvePath("..\\..\\..\\KnightFrank.Antares.Database\\Scripts\\Data\\Configuration\\PropertyType.csv");
+	List<string> propertyTypeEnumCodeList = new List<string>();
+	propertyTypeEnumCodeList = GetPropertyTypeCollection(fileName);
+    foreach (var item in propertyTypeEnumCodeList){ #>
+	<#=item#>,
+    <# } #>
+}
+}
+<#+
+
+List<string> GetPropertyTypeCollection(string fileName){
+var result = new List<string>();
+	using (StreamReader reader = new StreamReader(fileName))
+            {
+                bool firstLine = true;
+                int parentCodeIndex = 0;
+                int codeIndex = 1;
+                int enumCodeIndex = 2;
+
+                string line;
+
+                while ((line = reader.ReadLine()) != null)
+                {
+                    // skip first line
+                    if (firstLine)
+                    {
+                        firstLine = false;
+                        continue;
+                    }
+
+                    //Define pattern
+                    Regex CSVParser = new Regex(";(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+
+                    //Separating columns to array
+                    string[] csvItemCollection = CSVParser.Split(line);
+
+                    result.Add(csvItemCollection[enumCodeIndex]);
+                }
+            }
+			return result;
+}
+
+
+#>

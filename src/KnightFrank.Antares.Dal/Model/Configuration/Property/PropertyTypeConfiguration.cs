@@ -15,6 +15,11 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property
                 .HasMaxLength(50)
                 .IsRequired()
                 .IsUnique();
+
+            this.Property(x => x.EnumCode)
+                .HasMaxLength(250)
+                .IsRequired()
+                .IsUnique();
         }
     }
 }

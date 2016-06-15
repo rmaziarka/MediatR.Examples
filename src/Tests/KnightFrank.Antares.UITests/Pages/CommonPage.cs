@@ -48,6 +48,9 @@
                 case "create company":
                     this.Driver.NavigateTo(GetUrl("CreateCompanyPage"));
                     break;
+                case "search property":
+                    this.Driver.NavigateTo(GetUrl("SearchPropertyPage"));
+                    break;
                 default:
                     Assert.True(false, "Page does not exist");
                     break;

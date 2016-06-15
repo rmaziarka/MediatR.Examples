@@ -60,7 +60,7 @@
 
         private void ValidateActivityUserCallDate(ActivityUser activityUser, DateTime? callDate)
         {
-            if (activityUser.UserType.Code == EnumTypeItemCode.LeadNegotiator && callDate == null)
+            if (activityUser.UserType.Code == ActivityUserType.LeadNegotiator.ToString() && callDate == null)
             {
                 throw new BusinessValidationException(ErrorMessage.ActivityUser_CallDate_Is_Required);
             }
