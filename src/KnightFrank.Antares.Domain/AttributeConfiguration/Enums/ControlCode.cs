@@ -7,6 +7,16 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         Vendors,
         Property,
         LeadNegotiator,
-        Landlords
+        Landlords,
+        NextCallDate,
+        SecondaryNegotiators,
+        ManagingDepartment,
+        SecondaryDepartments,
+        AskingPrice,
+        ShortLetPricePerWeek,
+        CreationDate,
+        MarketAppraisalPrice,
+        RecommendedPrice,
+        VendorEstimatedPrice
     }
 }

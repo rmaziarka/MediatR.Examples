@@ -3,6 +3,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Cryptography.X509Certificates;
 
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
@@ -150,6 +151,23 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
         protected IList<Tuple<PropertyType, ActivityType, PageType>> When(PropertyType propertyType, IList<ActivityType> activityType, params PageType[] pages)
         {
             return pages.SelectMany(page => activityType.Select(at => new Tuple<PropertyType, ActivityType, PageType>(propertyType, at, page))).ToList();
+        }
+
+        /// <summary>
+        /// Produces a set of all possible combinations of property types and activity types.
+        /// </summary>
+        /// <param name="pages">The pages.</param>
+        /// <returns></returns>
+        protected IList<Tuple<PropertyType, ActivityType, PageType>> ForAll(params PageType[] pages)
+        {
+            List<ActivityType> allActivityTypes = EnumExtensions.GetValues<ActivityType>().ToList();
+            List<PropertyType> allPropertyTypes = EnumExtensions.GetValues<PropertyType>().ToList();
+            return
+                pages.SelectMany(
+                    page =>
+                        allActivityTypes.SelectMany(
+                            at => allPropertyTypes.Select(pt => new Tuple<PropertyType, ActivityType, PageType>(pt, at, page))))
+                     .ToList();
         }
     }
 }
