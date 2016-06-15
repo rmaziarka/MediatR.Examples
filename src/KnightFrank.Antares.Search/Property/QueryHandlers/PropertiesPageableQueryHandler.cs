@@ -19,18 +19,18 @@
     {
         private readonly ISearchDescriptor<Contact, ContactsSearchDescriptorQuery> contactSearchDescriptor;
 
-        private readonly IElasticClient elasticClient;
-
         private readonly ISearchDescriptor<Property, PropertiesPageableQuery> propertySearchDescriptor;
 
+        private readonly IElasticClient elasticClient;
+
         public PropertiesPageableQueryHandler(
-            IElasticClient elasticClient,
             ISearchDescriptor<Property, PropertiesPageableQuery> propertySearchDescriptor,
-            ISearchDescriptor<Contact, ContactsSearchDescriptorQuery> contactSearchDescriptor)
+            ISearchDescriptor<Contact, ContactsSearchDescriptorQuery> contactSearchDescriptor,
+            IElasticClient elasticClient)
         {
-            this.elasticClient = elasticClient;
             this.propertySearchDescriptor = propertySearchDescriptor;
             this.contactSearchDescriptor = contactSearchDescriptor;
+            this.elasticClient = elasticClient;
         }
 
         public PageableResult<PropertyResult> Handle(PropertiesPageableQuery pageableQuery)

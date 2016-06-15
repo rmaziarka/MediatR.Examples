@@ -6,7 +6,7 @@
 
     using Nest;
 
-    internal class ContactsSearchDescriptor : ISearchDescriptor<Contact, ContactsSearchDescriptorQuery>
+    public class ContactsSearchDescriptor : ISearchDescriptor<Contact, ContactsSearchDescriptorQuery>
     {
         public SearchDescriptor<Contact> Create(ContactsSearchDescriptorQuery pageableQuery)
         {

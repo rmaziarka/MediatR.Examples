@@ -6,7 +6,7 @@
 
     using Nest;
 
-    internal class PropertiesSearchDescriptor : ISearchDescriptor<Property, PropertiesPageableQuery>
+    public class PropertiesSearchDescriptor : ISearchDescriptor<Property, PropertiesPageableQuery>
     {
         public SearchDescriptor<Property> Create(PropertiesPageableQuery pageableQuery)
         {
