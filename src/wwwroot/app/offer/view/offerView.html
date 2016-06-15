@@ -97,27 +97,27 @@
             <div class="section-details">
                 <div class="section-row row">
                     <div class="col-xs-4 section-title" translate="OFFER.VIEW.MORTGAGE_STATUS"></div>
-                    <div class="col-xs-8"><span class="status status-{{::vm.offer.mortgageStatusId | enumClass}}">{{::vm.offer.mortgageStatusId | dynamicTranslate}}</span></div>
+                    <div class="col-xs-8"><span id="offer-mortgage-status" class="status status-{{::vm.offer.mortgageStatusId | enumClass}}">{{::vm.offer.mortgageStatusId | dynamicTranslate}}</span></div>
                 </div>
                 <div class="section-row row">
                     <div class="col-xs-4 section-title" translate="OFFER.VIEW.MORTGAGE_SURVEY_STATUS"></div>
-                    <div class="col-xs-8"><span class="status status-{{::vm.offer.mortgageSurveyStatusId | enumClass}}">{{::vm.offer.mortgageSurveyStatusId | dynamicTranslate}}</span></div>
+                    <div class="col-xs-8"><span id="mortgage-survey-status" class="status status-{{::vm.offer.mortgageSurveyStatusId | enumClass}}">{{::vm.offer.mortgageSurveyStatusId | dynamicTranslate}}</span></div>
                 </div>
                 <div class="section-row row">
                     <div class="col-xs-4 section-title" translate="OFFER.VIEW.ADDITIONAL_SURVEY_STATUS"></div>
-                    <div class="col-xs-8"><span class="status status-{{::vm.offer.additionalSurveyStatusId | enumClass}}">{{::vm.offer.additionalSurveyStatusId | dynamicTranslate}}</span></div>
+                    <div class="col-xs-8"><span id="additional-survey-status" class="status status-{{::vm.offer.additionalSurveyStatusId | enumClass}}">{{::vm.offer.additionalSurveyStatusId | dynamicTranslate}}</span></div>
                 </div>
                 <div class="section-row row">
                     <div class="col-xs-4 section-title" translate="OFFER.VIEW.SEARCH_STATUS"></div>
-                    <div class="col-xs-8"><span class="status status-{{::vm.offer.searchStatusId | enumClass}}">{{::vm.offer.searchStatusId | dynamicTranslate}}</span></div>
+                    <div class="col-xs-8"><span id="search-status" class="status status-{{::vm.offer.searchStatusId | enumClass}}">{{::vm.offer.searchStatusId | dynamicTranslate}}</span></div>
                 </div>
                 <div class="section-row row">
                     <div class="col-xs-4 section-title" translate="OFFER.VIEW.ENQUIRIES"></div>
-                    <div class="col-xs-8"><span class="status status-{{::vm.offer.enquiriesId | enumClass}}">{{::vm.offer.enquiriesId | dynamicTranslate}}</span></div>
+                    <div class="col-xs-8"><span id="enquiries" class="status status-{{::vm.offer.enquiriesId | enumClass}}">{{::vm.offer.enquiriesId | dynamicTranslate}}</span></div>
                 </div>
                 <div class="section-row row">
                     <div class="col-xs-4 section-title" translate="OFFER.VIEW.CONTRACT_APPROVED"></div>
-                    <div class="col-xs-8"><span class="status" ng-class="{'status-no': !vm.offer.contractApproved, 'status-yes': vm.offer.contractApproved}"></span></div>
+                    <div class="col-xs-8"><span id="contract-approved" class="status" ng-class="{'status-no': !vm.offer.contractApproved, 'status-yes': vm.offer.contractApproved}"></span></div>
                 </div>
             </div>
         </section>
@@ -128,10 +128,10 @@
                 <div class="section-row row">
                     <div class="col-xs-4 section-title" translate="OFFER.VIEW.MORTGAGE_LOAN_TO_VALUE"></div>
                     <div ng-if="vm.offer.mortgageLoanToValue">
-                        <div class="col-xs-8">{{::vm.offer.mortgageLoanToValue}}%</div>
+                        <div class="col-xs-8 mortgage-loan-to-value">{{::vm.offer.mortgageLoanToValue}}%</div>
                     </div>
                     <div ng-if="vm.offer.mortgageLoanToValue === null">
-                        <div class="col-xs-8">-</div>
+                        <div class="col-xs-8 mortgage-loan-to-value">-</div>
                     </div>
 
                 </div>
@@ -165,10 +165,10 @@
                 <div class="section-row row">
                     <div class="col-xs-4 section-title" translate="OFFER.VIEW.MORTGAGE_SURVEY_DATE"></div>
                     <div ng-if="vm.offer.mortgageSurveyDate">
-                        <div class="col-xs-8"><time>{{::vm.offer.mortgageSurveyDate | date : 'dd-MM-yyyy'}}</time></div>
+                        <div class="col-xs-8 mortgage-survey-date"><time>{{::vm.offer.mortgageSurveyDate | date : 'dd-MM-yyyy'}}</time></div>
                     </div>
                     <div ng-if="!vm.offer.mortgageSurveyDate">
-                        <div class="col-xs-8">-</div>
+                        <div class="col-xs-8 mortgage-survey-date">-</div>
                     </div>
                 </div>
             </div>
@@ -193,12 +193,12 @@
                 <div class="section-row row">
                     <div class="col-xs-4 section-title" translate="OFFER.VIEW.DATE"></div>
                     <div ng-if="vm.offer.additionalSurveyDate">
-                        <div class="col-xs-8">
+                        <div class="col-xs-8 additional-survey-date">
                             <time>{{::vm.offer.additionalSurveyDate | date : 'dd-MM-yyyy'}}</time>
                         </div>
                     </div>
                     <div ng-if="!vm.offer.additionalSurveyDate">
-                        <div class="col-xs-8">-</div>
+                        <div class="col-xs-8 additional-survey-date">-</div>
                     </div>
                 </div>
             </div>
@@ -219,7 +219,7 @@
 
         <section>
             <h3 class="page-header" translate="OFFER.VIEW.OTHER_DETAILS"></h3>
-            <div class="section-details">
+            <div id="comment" class="section-details">
                 <h5 translate="OFFER.VIEW.COMMENT"></h5>
                 <div ng-if="vm.offer.progressComment">
                     <p>{{::vm.offer.progressComment}}</p>
