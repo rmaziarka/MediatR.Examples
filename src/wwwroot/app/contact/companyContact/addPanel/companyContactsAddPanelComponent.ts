@@ -9,7 +9,8 @@ module Antares.Ownership {
         bindings: {
             isVisible: '<',
             onSave: '<',
-            allowMultipleSelect: '<'
+            allowMultipleSelect: '<',
+            initialySelectedCompanyContacts: '<'
         }
     });
 }

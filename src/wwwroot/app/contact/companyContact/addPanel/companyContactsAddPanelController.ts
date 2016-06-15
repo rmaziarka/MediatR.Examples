@@ -10,18 +10,13 @@ module Antares.Ownership {
         }
 
         companyContacts: Business.CompanyContact[] = [];
-        onSave: (obj: { ownership: Dto.IOwnership; }) => void;
+        initialySelectedCompanyContacts: Business.CompanyContactWithSelection[] = [];
+        onSave: (contactCompanies: Business.CompanyContact[]) => void;
         allowMultipleSelect: boolean;
-
         isOwnershipAddVisible: boolean = false;
-        selectedContacts: Business.ContactWithSelection[];
 
         panelShown = () => {
             this.loadCompanyContacts();
-            this.isOwnershipAddVisible = false;
-        }
-        
-        backOwnership = () => {
             this.isOwnershipAddVisible = false;
         }
 
@@ -32,6 +27,13 @@ module Antares.Ownership {
                 .query()
                 .$promise.then((data: any) => {
                     this.companyContacts = data.map((dataItem: Dto.ICompanyContact) => new Business.CompanyContact(dataItem));
+
+                    this.companyContacts.forEach((current: any) => {
+                        var shouldContactBeInitialySelected = _.findIndex(this.initialySelectedCompanyContacts, (initial: Business.CompanyContactWithSelection) => {
+                            return current.companyId === initial.companyId && current.contactId === initial.contactId;
+                        }) !== -1;
+                        current.selected = shouldContactBeInitialySelected;
+                    });
                 }).finally(() => {
                     this.isBusy = false;
                 });

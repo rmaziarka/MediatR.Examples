@@ -10,7 +10,6 @@ module Antares.Component {
             contacts: '=',
             isLoading: '<',
             onCancel: '&',
-            onConfigure: '&?',
             onSave: '<',
             allowMultipleSelect: '<'
         }
