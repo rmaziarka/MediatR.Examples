@@ -2,6 +2,7 @@
 
 module Antares {
     import OfferViewController = Component.OfferViewController;
+	import Dto = Common.Models.Dto;
 
     describe('Given offer view component is loaded', () => {
         var scope: ng.IScope,
@@ -18,28 +19,41 @@ module Antares {
             pageHeaderTitle: '.offer-title',
             sectionBasicInformation: '#section-basic-information',
             applicant: '.applicant',
-            panelBody: '.panel-body'
+            panelBody: '.panel-body',
+			progressSection: '#offer-progress-section'
         }
+
+		var offerStatuses: Common.Models.Dto.IEnumItem[] = [
+            { id: '1', code: 'New' },
+            { id: '2', code: 'Closed' },
+            { id: '3', code: 'Accepted' }
+        ];
+
+		var offerMock = TestHelpers.OfferGenerator.generate();
 
         beforeEach(inject(($rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService,
             $state: ng.ui.IStateService,
-            $httpBackend: ng.IHttpBackendService) => {
+            $httpBackend: ng.IHttpBackendService,
+			enumService: Mock.EnumServiceMock) => {
 
             $http = $httpBackend;
             state = $state;
             scope = $rootScope.$new();
+            scope["offer"] = offerMock;
+
+            enumService.setEnum(Dto.EnumTypeCode.OfferStatus.toString(), offerStatuses);
+
             element = $compile('<offer-view offer="offer"></offer-view>')(scope);
             scope.$apply();
-
+			
             controller = element.controller('offerView');
+			scope.$apply();
         }));
 
         describe('when data are retrived form the server', () => {
             it('page header displays applicant names seppareted by comma', () => {
-                var offerMock = TestHelpers.OfferGenerator.generate();
-
-                //Add two contacts
+			    //Add two contacts
                 offerMock.requirement.contacts.push(TestHelpers.ContactGenerator.generate());
                 offerMock.requirement.contacts.push(TestHelpers.ContactGenerator.generate());
 
@@ -52,8 +66,7 @@ module Antares {
                 expect(currentHeaderNames).toEqual(expectedHeaderNamesText);
             });
 
-            it('vendor address is displayed within vendor card', () => {
-                var offerMock = TestHelpers.OfferGenerator.generate();
+            xit('vendor address is displayed within vendor card', () => {
                 offerMock.activity.property.address.propertyNumber = "test property number";
                 offerMock.activity.property.address.propertyName = "test property name";
                 offerMock.activity.property.address.line2 = "test line2 address";
@@ -67,9 +80,7 @@ module Antares {
                 expect(currentVendorAddressText).toEqual(expectedAddressText);
             });
 
-            it('applicant names are displayed within applicant card seppareted by comma', () => {
-                var offerMock = TestHelpers.OfferGenerator.generate();
-
+            xit('applicant names are displayed within applicant card seppareted by comma', () => {
                 //Add two contacts
                 offerMock.requirement.contacts.push(TestHelpers.ContactGenerator.generate());
                 offerMock.requirement.contacts.push(TestHelpers.ContactGenerator.generate());
@@ -84,11 +95,6 @@ module Antares {
             });
             
             it('negotiator name is displayed within negotiator card', () => {
-                var offerMock = TestHelpers.OfferGenerator.generate();
-
-                scope['offer'] = offerMock;
-                scope.$apply();
-
                 var expectedNegotiatorFullNameText = offerMock.negotiator.getName();
                 var currentNegotiatorFullName = element
                     .find(pageObjectSelectors.sectionBasicInformation)
@@ -139,7 +145,7 @@ module Antares {
                 }).respond(200, []);
 
                 var activityMock = TestHelpers.ActivityGenerator.generate();
-                var offerMock = TestHelpers.OfferGenerator.generate();
+                
                 offerMock.activity = activityMock;
                 scope.$apply();
 
@@ -148,5 +154,31 @@ module Antares {
                 expect($http.flush).not.toThrow();
             });
         });
+
+		describe('when offer status is other than New', () =>{
+            beforeEach(() =>{
+				offerMock.statusId = _.find(offerStatuses, (status:  Common.Models.Dto.IEnumItem) => status.code === "Accepted").id;
+                scope['offer'] = offerMock;
+                scope.$apply();
+            });
+
+            it('then progress section is rendered', () => {
+                var progressSection = element.find(pageObjectSelectors.progressSection);
+                expect(progressSection.length).toBe(1);
+            });
+		});
+
+		describe('when offer status is New', () =>{
+            beforeEach(() =>{
+				offerMock.statusId = _.find(offerStatuses, (status:  Common.Models.Dto.IEnumItem) => status.code === "New").id;
+                scope['offer'] = offerMock;
+                scope.$apply();
+            });
+
+            it('then progress section is not rendered', () => {
+                var progressSection = element.find(pageObjectSelectors.progressSection);
+                expect(progressSection.length).toBe(0);
+            });
+		});
     });
 }
