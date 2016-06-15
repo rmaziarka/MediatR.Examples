@@ -5,7 +5,7 @@ module Antares {
         export module Component {
             export abstract class BaseSidePanelController{
 
-                isVisible: boolean;
+                isVisible: boolean = false;
                 stateChanged: boolean = false;
                 isBusy: boolean;
 
@@ -23,7 +23,7 @@ module Antares {
                 }
 
                 $onChanges = (changesObj: IBaseSidePanelChange) => {
-                    if (changesObj.isVisible && changesObj.isVisible.currentValue !== changesObj.isVisible.previousValue) {
+                    if (changesObj.isVisible && changesObj.isVisible.currentValue !== changesObj.isVisible.previousValue && typeof (changesObj.isVisible.previousValue) === "boolean") {
                         if (changesObj.isVisible.currentValue === true) {
                             this.show();
                         }

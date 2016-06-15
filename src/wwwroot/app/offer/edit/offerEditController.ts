@@ -18,6 +18,8 @@ module Antares.Offer {
         public enumTypeEnquiriesStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.Enquiries;
         public enumTypeOfferStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.OfferStatus;
 
+        sidePanelSelectedCompanyContacts: Business.CompanyContact[];
+
         offerStatuses: any;
         mortgageStatuses: any;
         mortgageSurveyStatuses: any;
@@ -33,7 +35,7 @@ module Antares.Offer {
         exchangeDateOpen: boolean = false;
         completionDateOpen: boolean = false;
         isCompanyContactAddPanelVisible: boolean = false;
-        contactToSelect: string = ''
+        contactToSelect: string = '';
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -54,25 +56,33 @@ module Antares.Offer {
                 })
 
             this.offerOriginal = angular.copy(this.offer);
+            pubSub.with(this)
+                .subscribe(Common.Component.CloseSidePanelEvent, () => {
+                    this.isCompanyContactAddPanelVisible = false;
+                });
         }
 
         showBrokerSelectPanel = () => {
             this.contactToSelect = 'Broker';
+            this.sidePanelSelectedCompanyContacts = [new Business.CompanyContact(null, this.offer.broker, this.offer.brokerCompany)];
             this.isCompanyContactAddPanelVisible = true;
         }
 
         showLenderSelectPanel = () => {
             this.contactToSelect = 'Lender';
+            this.sidePanelSelectedCompanyContacts = [new Business.CompanyContact(null, this.offer.lender, this.offer.lenderCompany)];
             this.isCompanyContactAddPanelVisible = true;
         }
 
         showSurveyorSelectPanel = () => {
             this.contactToSelect = 'Surveyor';
+            this.sidePanelSelectedCompanyContacts = [new Business.CompanyContact(null, this.offer.surveyor, this.offer.surveyorCompany)];
             this.isCompanyContactAddPanelVisible = true;
         }
 
         showAdditionalSurveyorSelectPanel = () => {
             this.contactToSelect = 'AadditionalSurveyor';
+            this.sidePanelSelectedCompanyContacts = [new Business.CompanyContact(null, this.offer.additionalSurveyor, this.offer.additionalSurveyorCompany)];
             this.isCompanyContactAddPanelVisible = true;
         }
 
