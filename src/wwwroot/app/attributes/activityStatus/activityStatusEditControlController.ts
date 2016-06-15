@@ -24,6 +24,10 @@ module Antares.Attributes {
                 return [];
             }
 
+            if (!this.config.activityStatusId.allowedCodes) {
+                return this.allActivityStatuses;
+            }
+
             return <Dto.IEnumItem[]>_(this.allActivityStatuses).indexBy('code').at(this.config.activityStatusId.allowedCodes).value();
         }
 
