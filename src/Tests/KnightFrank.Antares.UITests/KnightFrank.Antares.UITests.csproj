@@ -129,6 +129,7 @@
     <Compile Include="Pages\Panels\OwnershipDetailsPage.cs" />
     <Compile Include="Pages\Panels\PropertyPreviewPage.cs" />
     <Compile Include="Pages\Panels\CreateViewingPage.cs" />
+    <Compile Include="Pages\Panels\SelectableContactsListPage.cs" />
     <Compile Include="Pages\Panels\ViewingDetailsPage.cs" />
     <Compile Include="Pages\ViewActivityPage.cs" />
     <Compile Include="Pages\ViewOfferPage.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Steps\CreatePropertySteps.cs" />
     <Compile Include="Steps\CreateContactSteps.cs" />
     <Compile Include="Steps\CreateRequirementSteps.cs" />
+    <Compile Include="Steps\Database\CompanySteps.cs" />
     <Compile Include="Steps\Database\ContactSteps.cs" />
     <Compile Include="Steps\Database\OfferSteps.cs" />
     <Compile Include="Steps\Database\PropertySteps.cs" />

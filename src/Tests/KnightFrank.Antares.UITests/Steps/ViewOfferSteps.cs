@@ -153,5 +153,19 @@
                 () => Assert.Equal("Offer successfully saved", this.page.SuccessMessage));
             this.page.WaitForSuccessMessageToHide();
         }
+
+        [Then(@"Offer progress summary details on view offer page are same as the following")]
+        public void CheckProgressSummary(Table table)
+        {
+            var details = table.CreateInstance<OfferProgressSummary>();
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(details.MortgageStatus, this.page.MortgageStatus),
+                () => Assert.Equal(details.MortgageSurveyStatus, this.page.MortgageSurveyStatus),
+                () => Assert.Equal(details.AdditionalSurveyStatus, this.page.AdditionalSurveyStatus),
+                () => Assert.Equal(details.SearchStatus, this.page.SearchStatus),
+                () => Assert.Equal(details.Enquiries, this.page.Enquiries),
+                () => Assert.Equal(details.ContractApproved ,this.page.IsContractApproved()));
+        }
     }
 }

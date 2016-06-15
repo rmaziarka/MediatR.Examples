@@ -81,8 +81,6 @@
 
         public string Enquiries => this.Driver.GetElement(this.enquiries).Text;
 
-        public string ContractApproved => this.Driver.GetElement(this.contractApproved).Text;
-
         public string MortgageLoanToValue => this.Driver.GetElement(this.mortgageLoanToValue).Text;
 
         public List<string> Brokers => this.Driver.GetElements(this.broker).Select(el => el.Text).ToList();
@@ -150,5 +148,55 @@
         {
             return this.Driver.IsElementPresent(this.successMessage.Format(string.Empty), BaseConfiguration.MediumTimeout);
         }
+
+        public bool IsContractApproved()
+        {
+            return this.Driver.IsElementPresent(this.contractApproved, BaseConfiguration.ShortTimeout);
+        }
+    }
+
+    internal class OfferProgressSummary
+    {
+        public string MortgageStatus { get; set; }
+
+        public string MortgageSurveyStatus { get; set; }
+
+        public string AdditionalSurveyStatus { get; set; }
+
+        public string SearchStatus { get; set; }
+
+        public string Enquiries { get; set; }
+
+        public bool ContractApproved { get; set; }
+    }
+
+    internal class OfferMortgageDetails
+    {
+        public string MortgageLoanToValue { get; set; }
+
+        public string Broker { get; set; }
+
+        public string BrokerCompany { get; set; }
+
+        public string Lender { get; set; }
+
+        public string LenderCompany { get; set; }
+
+        public string Surveyor { get; set; }
+
+        public string SurveyorCompany { get; set; }
+
+        public string MortgageSurveyDate { get; set; }
+    }
+
+    internal class OfferAdditional
+    {
+        public string AdditionalSurveyDate { get; set; }
+
+        public string AdditionalSurveyor { get; set; }
+
+        public string AdditionalSurveyorCompany { get; set; }
+
+        public string Comment { get; set; }
     }
 }

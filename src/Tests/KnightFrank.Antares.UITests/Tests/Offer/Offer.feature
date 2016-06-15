@@ -192,8 +192,17 @@ Scenario: Update new residential sales offer
 @Offer
 Scenario: Create and update accepted residential sales offer
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Sir   | Mark      | Walport |
+		| Title | FirstName | Surname   |
+		| Sir   | Steve     | Harris    |
+		| Sir   | Dave      | Murray    |
+		| Sir   | Adrian    | Smith     |
+		| Sir   | Bruce     | Dickinson |
+		And Company is created in database
+			| Name        |
+			| Objectivity |
+		And Contacts are created in database
+			| Title | FirstName | Surname |
+			| Sir   | Mark      | Walport |
 		And Property with Residential division and House type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
@@ -213,10 +222,36 @@ Scenario: Create and update accepted residential sales offer
 	When User navigates to view requirement page with id
 		And User clicks make an offer button for 1 activity on view requirement page
 		And User fills in offer details on view requirement page
-			| Status | Offer  | SpecialConditions     |
-			| New    | 110000 | My special conditions |
+			| Status   | Offer  | SpecialConditions     |
+			| Accepted | 110000 | My special conditions |
 		And User clicks save offer button on view requirement page
 	Then New offer should be created and displayed on view requirement page
 	When User clicks details offer button for 1 offer on view requirement page
 	Then View offer page should be displayed
-	# TEST NOT DONE
+		And Offer progress summary details on view offer page are same as the following
+			| MortgageStatus | MortgageSurveyStatus | AdditionalSurveyStatus | SearchStatus | Enquiries   | ContractApproved |
+			| Unknown        | Unknown              | Unknown                | Not started  | Not started | false            |
+	When User clicks edit offer button on view offer page
+		And User fills in offer details on edit offer page
+			| Status   | Offer  | SpecialConditions |
+			| Accepted | 120000 | Text              |
+		And User fills in offer progress summary on edit offer page
+			| MortgageStatus | MortgageSurveyStatus | AdditionalSurveyStatus | SearchStatus | Enquiries | ContractApproved |
+			| Agreed         | Complete             | Complete               | Complete     | Complete  | true             |
+		And User fills in offer mortgage details on edit offer page
+			| MortgageLoanToValue | Broker       | BrokerCompany | Lender      | LenderCompany | Surveyor     | SurveyorCompany |
+			| 100                 | Steve Harris | Objectivity   | Dave Murray | Objectivity   | Adrian Smith | Objectivity     |
+		And User fills in offer additional details on edit offer page
+			| AdditionalSurveyor | AdditionalSurveyorCompany | Comment  |
+			| Bruce Dickinson    | Objectivity               | Approved |
+	Then Following company contacts should be displayed on edit offer page
+		| Broker       | BrokerCompany | Lender      | LenderCompany | Surveyor     | SurveyorCompany | AdditionalSurveyor | AdditionalSurveyorCompany |
+		| Steve Harris | Objectivity   | Dave Murray | Objectivity   | Adrian Smith | Objectivity     | Bruce Dickinson    | Objectivity               |
+	When User clicks save offer on edit offer page
+	Then Offer updated success message should be displayed
+		And Offer details on view offer page are same as the following
+			| Status   | Offer      | SpecialConditions | Negotiator |
+			| Accepted | 120,000.00 | Text              | John Smith |
+		And Offer progress summary details on view offer page are same as the following
+			| MortgageStatus | MortgageSurveyStatus | AdditionalSurveyStatus | SearchStatus | Enquiries | ContractApproved |
+			| Agreed         | Complete             | Complete               | Complete     | Complete  | true             |
