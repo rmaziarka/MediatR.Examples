@@ -58,13 +58,6 @@
                 this.ValidateOfferProgressEnums(offer);
                 this.ValidateOfferProgressDates(offer);
             }
-            else
-            {
-                this.offerProgressStatusHelper.SetEmptyOfferProgressStatuses(offer);
-                this.offerProgressStatusHelper.SetEmptyOfferMortgageDetails(offer);
-                this.offerProgressStatusHelper.SetEmptyOfferAdditionalSurvey(offer);
-                this.offerProgressStatusHelper.SetEmptyOfferOtherDetails(offer);
-            }
 
             this.offerRepository.Save();
 
@@ -116,7 +109,6 @@
 
         private void ValidateOfferProgressEnums(Offer offer)
         {
-
             this.enumTypeItemValidator.ItemExists(DomainEnumType.MortgageStatus, offer.MortgageStatusId);
             this.enumTypeItemValidator.ItemExists(DomainEnumType.MortgageSurveyStatus, offer.MortgageSurveyStatusId);
             this.enumTypeItemValidator.ItemExists(DomainEnumType.AdditionalSurveyStatus, offer.AdditionalSurveyStatusId);

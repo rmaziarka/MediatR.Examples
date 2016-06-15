@@ -29,10 +29,6 @@
             {
                 offer = this.SetDefaultOfferProgressStatuses(offer, enumOfferStatusTypes);
             }
-            else
-            {
-                offer = this.SetEmptyOfferProgressStatuses(offer);
-            }
 
             return offer;
         }
@@ -59,55 +55,6 @@
             EnumTypeItem acceptedStatus = offerStatus.EnumTypeItems.Single(x => x.Code == OfferStatus.Accepted.ToString());
 
             return offerStatusId == acceptedStatus.Id;
-        }
-
-        public Offer SetEmptyOfferProgressStatuses(Offer offer)
-        {
-            offer.MortgageStatusId = null;
-            offer.MortgageSurveyStatusId = null;
-            offer.AdditionalSurveyStatusId = null;
-            offer.SearchStatusId = null;
-            offer.EnquiriesId = null;
-
-            offer.ContractApproved = false;
-
-            return offer;
-        }
-
-        public Offer SetEmptyOfferMortgageDetails(Offer offer)
-        {
-            offer.MortgageLoanToValue = null;
-
-            offer.BrokerId = null;
-            offer.BrokerCompanyId = null;
-
-            offer.LenderId = null;
-            offer.LenderCompanyId = null;
-
-            offer.MortgageSurveyDate = null;
-
-            offer.SurveyorId = null;
-            offer.SurveyorCompanyId = null;
-
-            return offer;
-        }
-
-        public Offer SetEmptyOfferAdditionalSurvey(Offer offer)
-        {
-            offer.AdditionalSurveyDate = null;
-
-            offer.AdditionalSurveyorId = null;
-
-            offer.AdditionalSurveyorCompanyId = null;
-
-            return offer;
-        }
-
-        public Offer SetEmptyOfferOtherDetails(Offer offer)
-        {
-            offer.ProgressComment = null;
-
-            return offer;
         }
     }
 }
