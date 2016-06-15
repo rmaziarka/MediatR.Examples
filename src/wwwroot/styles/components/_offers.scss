@@ -1,5 +1,18 @@
 // Offers
 
+.chain-list {
+  display: block;
+  position: relative;
+
+  &::before {
+    border-left: 2px solid $color-dusty-gray;
+    content: '';
+    height: 100%;
+    left: 50%;
+    position: absolute;
+  }
+}
+
 // Offers cards
 
 .offer-status {
