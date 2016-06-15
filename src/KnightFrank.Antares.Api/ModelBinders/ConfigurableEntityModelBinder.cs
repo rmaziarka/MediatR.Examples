@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.AttributeConfiguration.Common
+﻿namespace KnightFrank.Antares.Api.ModelBinders
 {
     using System.Web.Http.Controllers;
     using System.Web.Http.ModelBinding;

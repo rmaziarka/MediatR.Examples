@@ -106,25 +106,6 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_CommandActivityStatusIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode()
-        {
-            // Arrange
-            CreateActivityCommand cmd =
-                this.fixture.Build<CreateActivityCommand>().With(c => c.ActivityStatusId, default(Guid)).Create();
-
-            this.enumTypeItemRepository.Setup(r => r.Any(It.IsAny<Expression<Func<EnumTypeItem, bool>>>())).Returns(false);
-
-            // Act
-            ValidationResult validationResult = this.validator.Validate(cmd);
-
-            // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.ActivityStatusId));
-            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == NotEmptyError);
-        }
-
-        [Theory]
-        [AutoMoqData]
         public void Given_CommandActivityTypeIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode()
         {
             // Arrange
@@ -138,20 +119,6 @@
             validationResult.IsValid.Should().BeFalse();
             validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.ActivityTypeId));
             validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == NotEmptyError);
-        }
-
-        [Theory]
-        [AutoMoqData]
-        public void Given_CommandNegotiatorIdIsEmpty_When_Validating_Then_IsInvalidAndHasAppropriateErrorCode(Guid leadNegotiatorId)
-        {
-            // Arrange
-            CreateActivityCommand cmd = this.fixture.Build<CreateActivityCommand>().With(c => c.LeadNegotiatorId, default(Guid)).Create();
-
-            // Act
-            ValidationResult validationResult = this.validator.Validate(cmd);
-
-            // Assert
-            validationResult.IsInvalid(nameof(cmd.LeadNegotiatorId), nameof(Messages.notempty_error));
         }
     }
 }

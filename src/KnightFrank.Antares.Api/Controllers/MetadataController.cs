@@ -2,16 +2,16 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Http;
     using System.Web.Http.ModelBinding;
 
-    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
     using KnightFrank.Antares.Domain.Common.Enums;
+
+    using ConfigurableActivityModelBinder = KnightFrank.Antares.Api.ModelBinders.ConfigurableActivityModelBinder;
 
     /// <summary>
     /// Metadata controller.
