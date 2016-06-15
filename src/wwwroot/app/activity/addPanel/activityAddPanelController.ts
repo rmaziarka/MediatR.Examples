@@ -13,8 +13,6 @@ module Antares.Activity {
         config: IActivityAddPanelConfig;
 
         // properties
-        activityTypeId: string;
-        activityStatusId: string;
         cardPristine: any;
         isBusy: boolean;
 
@@ -47,9 +45,7 @@ module Antares.Activity {
             this.activityService.addActivityPanel(command).then((activityDto: Dto.IActivity) => {
                 this.eventAggregator.publish(new Antares.Activity.ActivityAddedSidePanelEvent(activityDto));
                 this.eventAggregator.publish(new Antares.Common.Component.CloseSidePanelEvent());
-            }).finally(() => {
-                this.isBusy = false;
-            });
+            }).finally(() => { this.isBusy = false; });
         }
 
         reloadConfig = (activity: AddCard.ActivityAddCardModel) => {

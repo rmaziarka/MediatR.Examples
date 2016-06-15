@@ -3,7 +3,7 @@
 module Antares.Activity.AddPanel {
     import Business = Antares.Common.Models.Business;
 
-    export class ActivityAddPanelCommand {
+    export class ActivityAddPanelCommand implements IActivityAddPanelCommand {
         propertyId: string = '';
         activityStatusId: string = '';
         activityTypeId: string = '';
@@ -17,4 +17,10 @@ module Antares.Activity.AddPanel {
         }
     }
 
+    export interface IActivityAddPanelCommand {
+        propertyId: string;
+        activityStatusId: string;
+        activityTypeId: string;
+        contactIds: string[];
+    }
 }
