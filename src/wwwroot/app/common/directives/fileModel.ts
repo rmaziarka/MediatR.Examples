@@ -18,7 +18,19 @@ module Antares.Common.Directive {
             });
 
             scope.$watch(attrs['kfFileModel'], (newValue: any, oldValue: any) => {
-                if ((newValue !== undefined) && (newValue !== oldValue)) {
+                if (newValue === null && oldValue === undefined) {
+                    return;
+                }
+
+                var valueChanged = newValue !== oldValue;
+
+                if (valueChanged && (newValue === undefined)) {
+                    var el: any = element[0];
+                    el.value = '';
+                    el.files = null;
+                }
+
+                if (valueChanged && (newValue !== undefined)) {
                     ngModel.$setDirty();
                 }
             });
