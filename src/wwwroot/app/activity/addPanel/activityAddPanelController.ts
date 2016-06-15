@@ -16,6 +16,7 @@ module Antares.Activity {
         activityTypeId: string;
         activityStatusId: string;
         cardPristine: any;
+        isBusy: boolean;
 
         constructor(private activityService: Activity.ActivityService, private configService: Services.ConfigService, private eventAggregator: Antares.Core.EventAggregator) {
             super();
@@ -27,9 +28,12 @@ module Antares.Activity {
         }
 
         loadConfig = (command: AddPanel.ActivityAddPanelCommand) => {
+            this.isBusy = true;
+
             this.configService
                 .getActivity(PageTypeEnum.Create, this.propertyTypeId, command.activityTypeId, command)
-                .then(this.configLoaded);
+                .then(this.configLoaded)
+                .finally(() => { this.isBusy = false; });
         }
 
         configLoaded = (newConfig: IActivityAddPanelConfig) => {
@@ -38,10 +42,13 @@ module Antares.Activity {
 
         save = (activity: AddCard.ActivityAddCardModel) => {
             var command = new AddPanel.ActivityAddPanelCommand(activity, this.propertyId);
+            this.isBusy = true;
 
             this.activityService.addActivityPanel(command).then((activityDto: Dto.IActivity) => {
                 this.eventAggregator.publish(new Antares.Activity.ActivityAddedSidePanelEvent(activityDto));
                 this.eventAggregator.publish(new Antares.Common.Component.CloseSidePanelEvent());
+            }).finally(() => {
+                this.isBusy = false;
             });
         }
 
@@ -52,7 +59,7 @@ module Antares.Activity {
         }
 
         cancel = () => {
-           this.eventAggregator.publish(new Antares.Common.Component.CloseSidePanelEvent());
+            this.eventAggregator.publish(new Antares.Common.Component.CloseSidePanelEvent());
         }
     }
 
