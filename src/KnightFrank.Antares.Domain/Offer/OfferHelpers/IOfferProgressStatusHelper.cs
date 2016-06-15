@@ -4,6 +4,7 @@
     using System.Collections.Generic;
 
     using KnightFrank.Antares.Dal.Model.Offer;
+    using KnightFrank.Antares.Domain.Offer.Commands;
 
     using EnumType = KnightFrank.Antares.Dal.Model.Enum.EnumType;
 
@@ -12,5 +13,13 @@
         Offer SetOfferProgressStatuses(Offer offer, List<EnumType> enumOfferStatusTypes);
 
         bool IsOfferInAcceptedStatus(List<EnumType> enumOfferStatusTypes, Guid offerStatusId);
+
+        void KeepOfferProgressStatusesInMessage(Offer offer, UpdateOfferCommand message);
+
+        void KeepOfferMortgageDetailsInMessage(Offer offer, UpdateOfferCommand message);
+
+        void KeepOfferAdditionalSurveyInMessage(Offer offer, UpdateOfferCommand message);
+
+        void KeepOfferOtherDetailsInMessage(Offer offer, UpdateOfferCommand message);
     }
 }

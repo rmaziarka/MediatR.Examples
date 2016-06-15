@@ -49,15 +49,22 @@
 
             this.ValidateOfferDates(message, offer);
 
-            AutoMapper.Mapper.Map(message, offer);
-
             List<EnumType> enumTypeItems = this.GetEnumTypeItems();
-            if (this.offerProgressStatusHelper.IsOfferInAcceptedStatus(enumTypeItems, offer.StatusId))
+            if (this.offerProgressStatusHelper.IsOfferInAcceptedStatus(enumTypeItems, message.StatusId))
             {
-                this.ValidateOfferProgressEntities(offer);
-                this.ValidateOfferProgressEnums(offer);
-                this.ValidateOfferProgressDates(offer);
+                this.ValidateOfferProgressEntities(message);
+                this.ValidateOfferProgressEnums(message);
+                this.ValidateOfferProgressDates(message);
             }
+            else
+            {
+                this.offerProgressStatusHelper.KeepOfferProgressStatusesInMessage(offer, message);
+                this.offerProgressStatusHelper.KeepOfferMortgageDetailsInMessage(offer, message);
+                this.offerProgressStatusHelper.KeepOfferAdditionalSurveyInMessage(offer, message);
+                this.offerProgressStatusHelper.KeepOfferOtherDetailsInMessage(offer, message);
+            }
+
+            AutoMapper.Mapper.Map(message, offer);
 
             this.offerRepository.Save();
 
@@ -92,39 +99,39 @@
             }
         }
 
-        private void ValidateOfferProgressEntities(Offer offer)
+        private void ValidateOfferProgressEntities(UpdateOfferCommand message)
         {
-            this.entityValidator.EntityExists<Contact>(offer.BrokerId);
-            this.entityValidator.EntityExists<Company>(offer.BrokerCompanyId);
+            this.entityValidator.EntityExists<Contact>(message.BrokerId);
+            this.entityValidator.EntityExists<Company>(message.BrokerCompanyId);
 
-            this.entityValidator.EntityExists<Contact>(offer.LenderId);
-            this.entityValidator.EntityExists<Company>(offer.LenderCompanyId);
+            this.entityValidator.EntityExists<Contact>(message.LenderId);
+            this.entityValidator.EntityExists<Company>(message.LenderCompanyId);
 
-            this.entityValidator.EntityExists<Contact>(offer.SurveyorId);
-            this.entityValidator.EntityExists<Company>(offer.SurveyorCompanyId);
+            this.entityValidator.EntityExists<Contact>(message.SurveyorId);
+            this.entityValidator.EntityExists<Company>(message.SurveyorCompanyId);
 
-            this.entityValidator.EntityExists<Contact>(offer.AdditionalSurveyorId);
-            this.entityValidator.EntityExists<Company>(offer.AdditionalSurveyorCompanyId);
+            this.entityValidator.EntityExists<Contact>(message.AdditionalSurveyorId);
+            this.entityValidator.EntityExists<Company>(message.AdditionalSurveyorCompanyId);
         }
 
-        private void ValidateOfferProgressEnums(Offer offer)
+        private void ValidateOfferProgressEnums(UpdateOfferCommand message)
         {
-            this.enumTypeItemValidator.ItemExists(DomainEnumType.MortgageStatus, offer.MortgageStatusId);
-            this.enumTypeItemValidator.ItemExists(DomainEnumType.MortgageSurveyStatus, offer.MortgageSurveyStatusId);
-            this.enumTypeItemValidator.ItemExists(DomainEnumType.AdditionalSurveyStatus, offer.AdditionalSurveyStatusId);
-            this.enumTypeItemValidator.ItemExists(DomainEnumType.SearchStatus, offer.SearchStatusId);
-            this.enumTypeItemValidator.ItemExists(DomainEnumType.Enquiries, offer.EnquiriesId);
+            this.enumTypeItemValidator.ItemExists(DomainEnumType.MortgageStatus, message.MortgageStatusId);
+            this.enumTypeItemValidator.ItemExists(DomainEnumType.MortgageSurveyStatus, message.MortgageSurveyStatusId);
+            this.enumTypeItemValidator.ItemExists(DomainEnumType.AdditionalSurveyStatus, message.AdditionalSurveyStatusId);
+            this.enumTypeItemValidator.ItemExists(DomainEnumType.SearchStatus, message.SearchStatusId);
+            this.enumTypeItemValidator.ItemExists(DomainEnumType.Enquiries, message.EnquiriesId);
         }
 
-        private void ValidateOfferProgressDates(Offer offer)
+        private void ValidateOfferProgressDates(UpdateOfferCommand message)
         {
-            if (offer.MortgageSurveyDate != null && (offer.MortgageSurveyDate.Value.Date < offer.OfferDate.Date))
+            if (message.MortgageSurveyDate != null && (message.MortgageSurveyDate.Value.Date < message.OfferDate.Date))
             {
-                throw new BusinessValidationException(BusinessValidationMessage.MortgageSurveyDateGreaterOrEqualToCreateDateMessage(offer.MortgageSurveyDate.Value.Date));
+                throw new BusinessValidationException(BusinessValidationMessage.MortgageSurveyDateGreaterOrEqualToCreateDateMessage(message.MortgageSurveyDate.Value.Date));
             }
-            if (offer.AdditionalSurveyDate != null && (offer.AdditionalSurveyDate.Value.Date < offer.OfferDate.Date))
+            if (message.AdditionalSurveyDate != null && (message.AdditionalSurveyDate.Value.Date < message.OfferDate.Date))
             {
-                throw new BusinessValidationException(BusinessValidationMessage.AdditionalSurveyDateGreaterOrEqualToCreateDateMessage(offer.AdditionalSurveyDate.Value.Date));
+                throw new BusinessValidationException(BusinessValidationMessage.AdditionalSurveyDateGreaterOrEqualToCreateDateMessage(message.AdditionalSurveyDate.Value.Date));
             }
         }
     }

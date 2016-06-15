@@ -7,6 +7,7 @@
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Domain.Common.Enums;
+    using KnightFrank.Antares.Domain.Offer.Commands;
 
     using EnumType = KnightFrank.Antares.Dal.Model.Enum.EnumType;
     using DomainEnumType = KnightFrank.Antares.Domain.Common.Enums.EnumType;
@@ -55,6 +56,45 @@
             EnumTypeItem acceptedStatus = offerStatus.EnumTypeItems.Single(x => x.Code == OfferStatus.Accepted.ToString());
 
             return offerStatusId == acceptedStatus.Id;
+        }
+
+        public void KeepOfferProgressStatusesInMessage(Offer offer, UpdateOfferCommand message)
+        {
+            message.MortgageStatusId = offer.MortgageStatusId;
+            message.MortgageSurveyStatusId = offer.MortgageSurveyStatusId;
+            message.AdditionalSurveyStatusId = offer.AdditionalSurveyStatusId;
+            message.SearchStatusId = offer.SearchStatusId;
+            message.EnquiriesId = offer.EnquiriesId;
+            message.ContractApproved = offer.ContractApproved;
+        }
+
+        public void KeepOfferMortgageDetailsInMessage(Offer offer, UpdateOfferCommand message)
+        {
+            message.MortgageLoanToValue = offer.MortgageLoanToValue;
+
+            message.BrokerId = offer.BrokerId;
+            message.BrokerCompanyId = offer.BrokerCompanyId;
+
+            message.LenderId = offer.LenderId;
+            message.LenderCompanyId = offer.LenderCompanyId;
+
+            message.MortgageSurveyDate = offer.MortgageSurveyDate;
+
+            message.SurveyorId = offer.SurveyorId;
+            message.SurveyorCompanyId = offer.SurveyorCompanyId;
+        }
+
+        public void KeepOfferAdditionalSurveyInMessage(Offer offer, UpdateOfferCommand message)
+        {
+            message.AdditionalSurveyDate = offer.AdditionalSurveyDate;
+
+            message.AdditionalSurveyorId = offer.AdditionalSurveyorId;
+            message.AdditionalSurveyorCompanyId = offer.AdditionalSurveyorCompanyId;
+        }
+
+        public void KeepOfferOtherDetailsInMessage(Offer offer, UpdateOfferCommand message)
+        {
+            message.ProgressComment = offer.ProgressComment;
         }
     }
 }

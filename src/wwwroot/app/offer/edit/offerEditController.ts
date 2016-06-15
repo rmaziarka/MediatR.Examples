@@ -9,6 +9,7 @@ module Antares.Offer {
 
     export class OfferEditController extends Core.WithPanelsBaseController {
         public offer: Business.Offer;
+        public offerOriginal: Business.Offer;
 
         public enumTypeMortgageStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.MortgageStatus;
         public enumTypeMortgageSurveyStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.MortgageSurveyStatus;
@@ -50,10 +51,12 @@ module Antares.Offer {
             pubSub.with(this)
                 .subscribe(Common.Component.CloseSidePanelMessage, () => {
                     this.isCompanyContactAddPanelVisible = false;
-                });
+                })
+
+            this.offerOriginal = angular.copy(this.offer);
         }
 
-        showBrokerSelectPanel = () =>{
+        showBrokerSelectPanel = () => {
             this.contactToSelect = 'Broker';
             this.isCompanyContactAddPanelVisible = true;
         }
@@ -101,7 +104,7 @@ module Antares.Offer {
         }
 
         navigateToActivity = (ativity: Business.Activity) => {
-            this.$window.open(this.$state.href('app.activity-view', { id: ativity.id }, { absolute: true }), '_blank');            
+            this.$window.open(this.$state.href('app.activity-view', { id: ativity.id }, { absolute: true }), '_blank');
         }
 
         navigateToRequirement = (requirement: Business.Requirement) => {
@@ -161,7 +164,7 @@ module Antares.Offer {
 
             return false;
         }
-        
+
         setDefaultStatuses = () => {
             var defaultMortgageStatus: any = _.find(this.mortgageStatuses, (status: any) => status.code === "Unknown");
             if (!this.offer.mortgageStatusId && defaultMortgageStatus) {
@@ -189,13 +192,42 @@ module Antares.Offer {
             }
         }
 
+        restoreOfferProgressSummary = () => {
+            this.offer.mortgageStatusId = this.offerOriginal.mortgageStatusId;
+            this.offer.mortgageSurveyStatusId = this.offerOriginal.mortgageSurveyStatusId;
+            this.offer.additionalSurveyStatusId = this.offerOriginal.additionalSurveyStatusId;
+            this.offer.searchStatusId = this.offerOriginal.searchStatusId;
+            this.offer.enquiriesId = this.offerOriginal.enquiriesId;
+            this.offer.contractApproved = this.offerOriginal.contractApproved;  
+
+            this.offer.mortgageLoanToValue = this.offerOriginal.mortgageLoanToValue;
+
+            this.offer.brokerId = this.offerOriginal.brokerId;
+            this.offer.brokerCompanyId = this.offerOriginal.brokerCompanyId;
+
+            this.offer.lenderId = this.offerOriginal.lenderId;
+            this.offer.lenderCompanyId = this.offerOriginal.lenderCompanyId;
+
+            this.offer.mortgageSurveyDate = this.offerOriginal.mortgageSurveyDate;
+
+            this.offer.surveyorId = this.offerOriginal.surveyorId;
+            this.offer.surveyorCompanyId = this.offerOriginal.surveyorCompanyId;
+
+            this.offer.additionalSurveyDate = this.offerOriginal.additionalSurveyDate;
+
+            this.offer.additionalSurveyorId = this.offerOriginal.additionalSurveyorId;
+            this.offer.additionalSurveyorCompanyId = this.offerOriginal.additionalSurveyorCompanyId;
+
+            this.offer.progressComment = this.offerOriginal.progressComment;
+        }
+
         save() {
             if (!this.isDataValid()) {
                 return this.$q.reject();
             }
 
-            if (this.offerAccepted() === false) {
-                this.offer.clearProgressData();
+            if(this.offerAccepted() === false) {
+                this.restoreOfferProgressSummary();
             }
 
             var offerResource = this.dataAccessService.getOfferResource();
