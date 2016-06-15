@@ -16,7 +16,7 @@ module Antares.Common.Models.Business {
             if (attachment) {
                 angular.extend(this, attachment);
 
-                this.createdDate = Core.DateTimeUtils.convertDateToUtc(attachment.createdDate);
+                this.createdDate = new Date(<string>attachment.createdDate);
                 this.user = new User(attachment.user);
             }
         }

@@ -18,14 +18,6 @@ ActivityDocumentType;VideoTour;en;Video Tour
 ActivityDocumentType;EPC;en;EPC
 ActivityDocumentType;GasCertificate;en;Gas Certificate
 RequirementDocumentType;TermsOfBusiness;en;Terms of Business
-RequirementDocumentType;MarketingSignOff;en;Marketing Sign Off
-RequirementDocumentType;CDDDocument;en;CDD Document
-RequirementDocumentType;Photograph;en;Photograph
-RequirementDocumentType;FloorPlan;en;Floor Plan
-RequirementDocumentType;Brochure;en;Brochure
-RequirementDocumentType;VideoTour;en;Video Tour
-RequirementDocumentType;EPC;en;EPC
-RequirementDocumentType;GasCertificate;en;Gas Certificate
 PropertyDocumentType;Photograph;en;Photograph
 PropertyDocumentType;FloorPlan;en;Floor Plan
 PropertyDocumentType;Brochure;en;Brochure

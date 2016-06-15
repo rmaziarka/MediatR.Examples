@@ -162,6 +162,7 @@
     <Compile Include="Offer\Commands\UpdateOfferCommandValidatorTests.cs" />
     <Compile Include="Offer\Commands\CreateOfferCommandValidatorTests.cs" />
     <Compile Include="Property\CommandHandlers\CreatePropertyAttachmentCommandHandlerTests.cs" />
+    <Compile Include="Requirement\Commands\CreateRequirementAttachmentCommandHandlerTests.cs" />
     <Compile Include="Viewing\CommandHandlers\CreateViewingCommandHandlerTests.cs" />
     <Compile Include="Viewing\CommandHandlers\UpdateViewingCommandHandlerTests.cs" />
     <Compile Include="Viewing\Commands\UpdateViewingCommandValidatorTests.cs" />

@@ -112,7 +112,7 @@ module Antares {
 
             it('then attachment creation date value should be displayed in proper format', () => {
                 // arrange / act / assert
-                var formattedDate = filter('date')(attachment.createdDate, 'dd-MM-yyyy');
+                var formattedDate = filter('date')(attachment.createdDate, 'dd-MM-yyyy, HH:mm:ss');
                 var dateElement = element.find(pageObjectSelectors.createdDate);
                 expect(dateElement.text()).toBe(formattedDate);
             });
