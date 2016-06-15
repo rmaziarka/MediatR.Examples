@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Api.UnitTests.FixtureExtension
+﻿namespace KnightFrank.Antares.Tests.Common.Extensions.Fluent.ValidationResult
 {
     using FluentAssertions;
 

@@ -15,6 +15,7 @@
 
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
+    using KnightFrank.Antares.Tests.Common.Extensions.Fluent.ValidationResult;
 
     [Trait("FeatureTitle", "Property Activity")]
     [Collection("UpdateActivityUserValidator")]

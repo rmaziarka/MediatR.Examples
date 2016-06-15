@@ -9,6 +9,7 @@
 
     using KnightFrank.Antares.Domain.AreaBreakdown.Commands;
     using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
+    using KnightFrank.Antares.Tests.Common.Extensions.Fluent.ValidationResult;
 
     using Ploeh.AutoFixture;
 

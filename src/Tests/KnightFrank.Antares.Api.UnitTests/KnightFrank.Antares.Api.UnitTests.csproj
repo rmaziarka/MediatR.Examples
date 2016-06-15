@@ -131,7 +131,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FixtureExtension\ValidationResultExtensions.cs" />
     <Compile Include="Services\AzureStorage\Factories\BlobResourceFactoryTests.cs" />
     <Compile Include="Services\AzureStorage\ActivityStorageProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

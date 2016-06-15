@@ -9,6 +9,7 @@
 
     using KnightFrank.Antares.Domain.RequirementNote.Commands;
     using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
+    using KnightFrank.Antares.Tests.Common.Extensions.Fluent.ValidationResult;
 
     using Ploeh.AutoFixture;
 
@@ -67,9 +68,7 @@
             ValidationResult validationResult = validator.Validate(cmd);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.Description));
-            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == nameof(Messages.length_error));
+            validationResult.IsInvalid(nameof(cmd.Description), nameof(Messages.length_error));
         }
 
         [Theory]
@@ -85,9 +84,7 @@
             ValidationResult validationResult = validator.Validate(cmd);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(cmd.RequirementId));
-            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == nameof(Messages.notempty_error));
+            validationResult.IsInvalid(nameof(cmd.RequirementId), nameof(Messages.notempty_error));
         }
     }
 }

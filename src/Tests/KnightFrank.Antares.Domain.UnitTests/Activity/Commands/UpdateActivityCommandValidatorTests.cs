@@ -5,8 +5,6 @@
     using FluentValidation.Resources;
     using FluentValidation.Results;
 
-    using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
-
     using Xunit;
 
     using System.Linq;
@@ -16,6 +14,7 @@
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
     using KnightFrank.Antares.Tests.Common.Extensions.Fluent.RulesVerifier;
+    using KnightFrank.Antares.Tests.Common.Extensions.Fluent.ValidationResult;
 
     [Trait("FeatureTitle", "Property Activity")]
     [Collection("UpdateActivityCommandValidator")]

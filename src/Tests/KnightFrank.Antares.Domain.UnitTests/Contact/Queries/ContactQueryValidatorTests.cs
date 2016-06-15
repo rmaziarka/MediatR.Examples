@@ -2,13 +2,12 @@
 {
     using System;
 
-    using FluentAssertions;
-
     using FluentValidation.Resources;
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Domain.Contact.Queries;
     using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
+    using KnightFrank.Antares.Tests.Common.Extensions.Fluent.ValidationResult;
 
     using Xunit;
 
@@ -26,8 +25,7 @@
 
             ValidationResult validationResult = validator.Validate(query);
 
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(x => x.ErrorCode == nameof(Messages.notequal_error));
+            validationResult.IsInvalid(nameof(query.Id), nameof(Messages.notequal_error));
         }
     }
 }
