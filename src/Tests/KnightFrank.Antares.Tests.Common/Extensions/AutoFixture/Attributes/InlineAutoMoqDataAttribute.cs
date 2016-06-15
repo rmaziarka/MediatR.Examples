@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.UnitTests
+﻿namespace KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes
 {
     using Ploeh.AutoFixture.Xunit2;
 

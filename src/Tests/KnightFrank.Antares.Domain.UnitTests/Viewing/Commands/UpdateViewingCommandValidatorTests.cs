@@ -14,6 +14,8 @@
     using Xunit;
     using FixtureExtension;
 
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
+
     [Collection("UpdateViewingCommand")]
     [Trait("FeatureTitle", "Viewing ")]
     public class UpdateViewingCommandValidatorTests

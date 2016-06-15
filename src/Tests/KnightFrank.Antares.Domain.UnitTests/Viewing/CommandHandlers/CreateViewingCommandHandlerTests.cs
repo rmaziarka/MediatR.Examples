@@ -13,6 +13,7 @@
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Viewing.CommandHandlers;
     using KnightFrank.Antares.Domain.Viewing.Commands;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 

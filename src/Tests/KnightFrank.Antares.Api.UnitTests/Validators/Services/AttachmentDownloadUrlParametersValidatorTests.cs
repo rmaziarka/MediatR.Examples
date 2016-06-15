@@ -10,6 +10,7 @@
     using KnightFrank.Antares.Api.Models;
     using KnightFrank.Antares.Api.UnitTests.FixtureExtension;
     using KnightFrank.Antares.Api.Validators.Services;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Ploeh.AutoFixture.Xunit2;
 

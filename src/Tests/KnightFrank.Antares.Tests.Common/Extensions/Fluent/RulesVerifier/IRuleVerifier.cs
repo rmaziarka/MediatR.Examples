@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Tests.Common.Extension.Fluent.RulesVerifier
+﻿namespace KnightFrank.Antares.Tests.Common.Extensions.Fluent.RulesVerifier
 {
     public interface IRuleVerifier
     {

@@ -26,6 +26,8 @@
 
     using FluentValidation.Resources;
 
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
+
     [Trait("FeatureTitle", "Property Activity")]
     [Collection("CreateActivityCommandValidator")]
     public class CreateActivityCommandValidatorTests : IClassFixture<CreateActivityCommand>
