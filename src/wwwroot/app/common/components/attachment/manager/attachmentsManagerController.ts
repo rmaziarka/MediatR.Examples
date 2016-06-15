@@ -2,6 +2,7 @@
 
 module Antares.Common.Component.Attachment {
     import Dto = Common.Models.Dto;
+    import Business = Common.Models.Business;
     import Enums = Common.Models.Enums;
     import CartListOrder = Common.Component.ListOrder;
 
@@ -10,6 +11,7 @@ module Antares.Common.Component.Attachment {
         entityId: string;
         entityType: Enums.EntityTypeEnum;
         enumDocumentType: Dto.EnumTypeCode;
+        attachments: Business.Attachment[];
         onSaveAttachmentForEntity: (obj: { attachment: AttachmentUploadCardModel }) => ng.IPromise<Dto.IAttachment>;
 
         // controller
