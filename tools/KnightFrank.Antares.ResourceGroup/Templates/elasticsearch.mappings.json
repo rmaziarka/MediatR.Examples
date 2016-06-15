@@ -2,27 +2,6 @@
   "mappings": {
     "contact": {
       "properties": {
-        "CompanyContacts": {
-          "type": "nested",
-          "properties": {
-            "Company": {
-              "properties": {
-                "Id": {
-                  "type": "string"
-                },
-                "Name": {
-                  "type": "string"
-                }
-              }
-            },
-            "CompanyId": {
-              "type": "string"
-            },
-            "ContactId": {
-              "type": "string"
-            }
-          }
-        },
         "FirstName": {
           "type": "string"
         },

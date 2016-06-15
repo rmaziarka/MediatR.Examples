@@ -18,9 +18,9 @@
 
     public class SearchModule : NinjectModule
     {
-        private static readonly string AppSettingsElasticSearchIndex = "Search.Settings.ElasticSearchIndex";
+        private static readonly string ApiSettingsElasticSearchIndex = "Api.Settings.ElasticSearchIndex";
 
-        private static readonly string AppSettingsElasticSearchUrl = "Search.Settings.ElasticSearchUrl";
+        private static readonly string ApiSettingsElasticSearchUrl = "Api.Settings.ElasticSearchUrl";
 
         public override void Load()
         {
@@ -43,8 +43,8 @@
         {
             NameValueCollection config = ConfigurationManager.AppSettings;
 
-            var uri = new Uri(config[AppSettingsElasticSearchUrl]);
-            string defaultIndex = config[AppSettingsElasticSearchIndex];
+            var uri = new Uri(config[ApiSettingsElasticSearchUrl]);
+            string defaultIndex = config[ApiSettingsElasticSearchIndex];
 
             return
                 new ConnectionSettings(uri).DefaultIndex(defaultIndex)
