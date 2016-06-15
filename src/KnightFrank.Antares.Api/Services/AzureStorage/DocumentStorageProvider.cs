@@ -31,12 +31,14 @@ namespace KnightFrank.Antares.Api.Services.AzureStorage
         {
             this.uploadUrlDictionary.Add(CloudStorageContainerType.Activity, (x) => this.entityDocumentStorageProvider.GetUploadSasUri<Activity>(x, EnumType.ActivityDocumentType));
             this.uploadUrlDictionary.Add(CloudStorageContainerType.Property, (x) => this.entityDocumentStorageProvider.GetUploadSasUri<Property>(x, EnumType.PropertyDocumentType));
+            this.uploadUrlDictionary.Add(CloudStorageContainerType.Requirement, (x) => this.entityDocumentStorageProvider.GetUploadSasUri<Requirement>(x, EnumType.RequirementDocumentType));
         }
 
         public void ConfigureDownloadUrl()
         {
             this.downloadUrlDictionary.Add(CloudStorageContainerType.Activity, (x) => this.entityDocumentStorageProvider.GetDownloadSasUri<Activity>(x, EnumType.ActivityDocumentType));
             this.downloadUrlDictionary.Add(CloudStorageContainerType.Property, (x) => this.entityDocumentStorageProvider.GetDownloadSasUri<Property>(x, EnumType.PropertyDocumentType));
+            this.downloadUrlDictionary.Add(CloudStorageContainerType.Requirement, (x) => this.entityDocumentStorageProvider.GetDownloadSasUri<Requirement>(x, EnumType.RequirementDocumentType));
         }
 
         public GetUploadSasUri GetUploadUrlMethod(CloudStorageContainerType cloudStorageContainerType)

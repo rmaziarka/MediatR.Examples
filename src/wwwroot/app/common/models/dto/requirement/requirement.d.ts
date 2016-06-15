@@ -34,5 +34,7 @@
 
         viewings?: IViewing[];
         offers?: IOffer[];
+
+        attachments: IAttachment[];
     }
 }
