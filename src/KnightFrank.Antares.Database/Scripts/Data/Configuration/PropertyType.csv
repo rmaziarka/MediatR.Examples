@@ -1,54 +1,54 @@
-﻿ParentCode;Code
-;Leisure
-;Retail
-;Industrial
-;Other
-;Office
-Office;Office.Office
-Office;Office.Office (Bus. Park)
-Office;Office.Office (Portfolio)
-Leisure;Leisure.Hotel
-Leisure;Leisure.Leisure
-Leisure;Leisure.Leisure (Portfolio)
-Retail;Retail.Car Showroom
-Retail;Retail.Department/Variety Store
-Retail;Retail.Department Stores
-Retail;Retail.Garden Centre
-Retail;Retail.Retail
-Retail;Retail.Retail (Portfolio)
-Retail;Retail.Shopping Centre
-Retail;Retail.Shopping Centre (Portfolio)
-Retail;Retail.Retail Unit A1
-Retail;Retail.Retail Unit A2
-Retail;Retail.Retail Unit A3
-Retail;Retail.Retail Unit A4
-Retail;Retail.Retail Unit A5
-Retail;Retail.Retail Warehouse (Portfolio)
-Retail;Retail.Retail Wh (Bulky Parks)
-Retail;Retail.Retail Wh (Bulky Solus)
-Retail;Retail.Retail Wh (Open A1 Solus)
-Retail;Retail.Supermarket
-Industrial;Industrial.Industrial Estate
-Industrial;Industrial.Industrial Distribution
-Industrial;Industrial.Industrial (Portfolio)
-Industrial;Industrial.Trade Park
-Other;Other.Agricultural
-Other;Other.Car Park
-Other;Other.Institutional
-Other;Other.Institutional (Portfolio)
-Other;Other.Land/Site/Dev
-Other;Other.Mixed (Portfolio)
-Other;Other.Mixed Use
-Other;Other.Other
-Other;Other.Student Accomodation
-;House
-;Flat
-;Bungalow
-;Maisonette
-;Studio Flat
-;Development Plot
-;Farm/Estate
-;Garage Only
-;Parking Space
-;Land
-;Houseboat
+﻿ParentCode;Code;EnumCode
+;Leisure;Leisure
+;Retail;Retail
+;Industrial;Industrial
+;Other;Other
+;Office;Office
+Office;Office.Office;OfficeOffice
+Office;Office.Office (Bus. Park);OfficeOfficeBusPark
+Office;Office.Office (Portfolio);OfficeOfficePortfolio
+Leisure;Leisure.Hotel;LeisureHotel
+Leisure;Leisure.Leisure;LeisureLeisure
+Leisure;Leisure.Leisure (Portfolio);LeisureLeisurePortfolio
+Retail;Retail.Car Showroom;RetailCarShowroom
+Retail;Retail.Department/Variety Store;RetailDepartmentVarietyStore
+Retail;Retail.Department Stores;RetailDepartmentStores
+Retail;Retail.Garden Centre;RetailGardenCentre
+Retail;Retail.Retail;RetailRetail
+Retail;Retail.Retail (Portfolio);RetailRetailPortfolio
+Retail;Retail.Shopping Centre;RetailShoppingCentre
+Retail;Retail.Shopping Centre (Portfolio);RetailShoppingCentrePortfolio
+Retail;Retail.Retail Unit A1;RetailRetailUnitA1
+Retail;Retail.Retail Unit A2;RetailRetailUnitA2
+Retail;Retail.Retail Unit A3;RetailRetailUnitA3
+Retail;Retail.Retail Unit A4;RetailRetailUnitA4
+Retail;Retail.Retail Unit A5;RetailRetailUnitA5
+Retail;Retail.Retail Warehouse (Portfolio);RetailRetailWarehousePortfolio
+Retail;Retail.Retail Wh (Bulky Parks);RetailRetailWhBulkyParks
+Retail;Retail.Retail Wh (Bulky Solus);RetailRetailWhBulkySolus
+Retail;Retail.Retail Wh (Open A1 Solus);RetailRetailWhOpenA1Solus
+Retail;Retail.Supermarket;RetailSupermarket
+Industrial;Industrial.Industrial Estate;IndustrialIndustrialEstate
+Industrial;Industrial.Industrial Distribution;IndustrialIndustrialDistribution
+Industrial;Industrial.Industrial (Portfolio);IndustrialIndustrialPortfolio
+Industrial;Industrial.Trade Park;IndustrialTradePark
+Other;Other.Agricultural;OtherAgricultural
+Other;Other.Car Park;OtherCarPark
+Other;Other.Institutional;OtherInstitutional
+Other;Other.Institutional (Portfolio);OtherInstitutionalPortfolio
+Other;Other.Land/Site/Dev;OtherLandSiteDev
+Other;Other.Mixed (Portfolio);OtherMixedPortfolio
+Other;Other.Mixed Use;OtherMixedUse
+Other;Other.Other;OtherOther
+Other;Other.Student Accomodation;OtherStudentAccomodation
+;House;House
+;Flat;Flat
+;Bungalow;Bungalow
+;Maisonette;Maisonette
+;Studio Flat;StudioFlat
+;Development Plot;DevelopmentPlot
+;Farm/Estate;FarmEstate
+;Garage Only;GarageOnly
+;Parking Space;ParkingSpace
+;Land;Land
+;Houseboat;Houseboat

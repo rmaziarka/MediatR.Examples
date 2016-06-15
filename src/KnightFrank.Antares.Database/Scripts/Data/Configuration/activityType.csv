@@ -1,17 +1,17 @@
-﻿Code
-Assignment
-Open Market Letting
-Open Market Sub-Letting
-Pre-Letting
-Leasehold
-Freehold (Vacant Possession)
-Freehold Sale
-Feuhold Sale
-Long Leasehold Sale
-Lease Regear
-Lease Renewal
-Rent Review
-By Arrangement
-Long Leasehold (Vacant Possession)
-Feuhold (Vacant Possession)
-Lease Surrender
+﻿Code;EnumCode
+Assignment;Assignment
+Open Market Letting;OpenMarketLetting
+Open Market Sub-Letting;OpenMarketSubLetting
+Pre-Letting;PreLetting
+Leasehold;Leasehold
+Freehold (Vacant Possession);FreeholdVacantPossession
+Freehold Sale;FreeholdSale
+Feuhold Sale;FeuholdSale
+Long Leasehold Sale;LongLeaseholdSale
+Lease Regear;LeaseRegear
+Lease Renewal;LeaseRenewal
+Rent Review;RentReview
+By Arrangement;ByArrangement
+Long Leasehold (Vacant Possession);LongLeaseholdVacantPossession
+Feuhold (Vacant Possession);FeuholdVacantPossession
+Lease Surrender;LeaseSurrender

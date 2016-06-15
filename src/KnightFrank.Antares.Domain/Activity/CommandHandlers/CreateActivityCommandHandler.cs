@@ -65,7 +65,7 @@
 
         public Guid Handle(CreateActivityCommand message)
         {
-            this.entityValidator.EntityExists<ActivityType>(message.ActivityTypeId);
+            this.entityValidator.EntityExists<Dal.Model.Property.Activities.ActivityType>(message.ActivityTypeId);
             this.enumTypeItemValidator.ItemExists(EnumType.ActivityStatus, message.ActivityStatusId);
 
             Property property = this.propertyRepository.GetById(message.PropertyId);
@@ -75,7 +75,7 @@
                 message.ActivityTypeId,
                 property.Address.CountryId,
                 property.PropertyTypeId);
-            
+
             var activity = Mapper.Map<Activity>(message);
 
             List<Contact> vendors = this.contactRepository.FindBy(x => message.ContactIds.Contains(x.Id)).ToList();
@@ -113,12 +113,12 @@
 
         private EnumTypeItem GetLeadNegotiatorUserType()
         {
-            return this.enumTypeItemRepository.FindBy(i => i.Code == EnumTypeItemCode.LeadNegotiator).Single();
+            return this.enumTypeItemRepository.FindBy(i => i.Code == ActivityUserType.LeadNegotiator.ToString()).Single();
         }
 
         private EnumTypeItem GetManagingDepartmentType()
         {
-            return this.enumTypeItemRepository.FindBy(i => i.Code == EnumTypeItemCode.ManagingDepartment).Single();
+            return this.enumTypeItemRepository.FindBy(i => i.Code == ActivityDepartmentType.Managing.ToString()).Single();
         }
     }
 }
