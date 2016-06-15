@@ -8,7 +8,11 @@ module Antares.Activity.View {
     import EntityType = Common.Models.Enums.EntityTypeEnum;
 
     export class ActivityViewController extends Core.WithPanelsBaseController {
+        // bindings
         activity: Business.Activity;
+        config: IActivityViewConfig;
+
+        // fields
         attachmentsCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
         enumTypeActivityDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityDocumentType;
         activityAttachmentResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityAttachmentResource>;

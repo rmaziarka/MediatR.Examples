@@ -19,17 +19,10 @@
                     </card>
                 </section>
                 <section id="activity-view-vendors">
-                    <list id="list-vendors">
-                        <list-header>
-                            <h3 class="page-header" translate="ACTIVITY.VIEW.VENDORS"></h3>
-                        </list-header>
-                        <list-no-items ng-show="avvm.activity.contacts.length === 0">
-                            <p class="help-block" translate="ACTIVITY.VIEW.NO_VENDORS"></p>
-                        </list-no-items>
-                        <list-item id="list-item-{{contact.id}}" ng-repeat="contact in avvm.activity.contacts">
-                            {{contact.getName()}}
-                        </list-item>
-                    </list>
+                    <activity-vendors-view-control contacts="avvm.activity.contacts" config="avvm.config.vendors"></activity-vendors-view-control>
+                </section>
+                <section id="activity-view-landlords">
+                    <activity-landlords-view-control contacts="avvm.activity.contacts" config="avvm.config.landlords"></activity-landlords-view-control>
                 </section>
                 <section>
                     <negotiators-view property-division-id="{{avvm.activity.property.divisionId}}" lead-negotiator="avvm.activity.leadNegotiator"

@@ -221,6 +221,8 @@
       "PROPERTY": "Property",
       "VENDORS": "Vendors",
       "NO_VENDORS": "No vendors defined",
+      "LANDLORDS": "Landlords",
+      "NO_LANDLORDS": "No landlords defined",
       "PRICES": {
         "PRICES": "Valuation prices",
         "MARKET_APPRAISAL_PRICE": "Market appraisal price",
