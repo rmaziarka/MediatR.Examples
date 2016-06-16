@@ -333,22 +333,20 @@
             <section>
                 <h3 class="page-header" translate="OFFER.EDIT.ADDITIONAL_SURVEY"></h3>
                 <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.additionalSurveyDate.$dirty) && vm.editOfferForm.additionalSurveyDate.$invalid}">
-                    <div class="input-group">
-                        <label for="additional-survey-date" translate="OFFER.EDIT.ADDITIONAL_SURVEY_DATE"></label>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <input type="text" id="additional-survey-date" name="additionalSurveyDate" class="form-control" placeholder="dd-mm-yyyy" ng-model="vm.offer.additionalSurveyDate" uib-datepicker-popup="dd-MM-yyyy"
-                                           is-open="vm.additionalSurveyDateOpen" close-text="Close" date-greater-than="{{vm.offer.offerDate}}" />
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="vm.openAdditionalSurveyDate()">
-                                            <i class="fa fa-calendar" aria-hidden="true"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                                <div ng-messages="vm.editOfferForm.additionalSurveyDate.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.additionalSurveyDate.$dirty">
-                                    <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="OFFER.EDIT.DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE"></p>
-                                </div>
+                    <label for="additional-survey-date" translate="OFFER.EDIT.ADDITIONAL_SURVEY_DATE"></label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="text" id="additional-survey-date" name="additionalSurveyDate" class="form-control" placeholder="dd-mm-yyyy" ng-model="vm.offer.additionalSurveyDate" uib-datepicker-popup="dd-MM-yyyy"
+                                        is-open="vm.additionalSurveyDateOpen" close-text="Close" date-greater-than="{{vm.offer.offerDate}}" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="vm.openAdditionalSurveyDate()">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <div ng-messages="vm.editOfferForm.additionalSurveyDate.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.additionalSurveyDate.$dirty">
+                                <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="OFFER.EDIT.DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE"></p>
                             </div>
                         </div>
                     </div>
