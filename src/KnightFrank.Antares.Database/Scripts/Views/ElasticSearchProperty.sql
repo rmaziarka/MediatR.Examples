@@ -84,8 +84,8 @@ AS
 						oc.[OwnershipId] AS 'OwnershipId',
 						oc.[ContactId] AS 'ContactId'
 					FROM [dbo].[OwnershipContact] oc
-					WHERE oc.[OwnershipId] = o.[Id] FOR XML PATH, ROOT	
-				 )) AS 'Ownerships[OwnershipContacts]'
+					WHERE oc.[OwnershipId] = o.[Id] FOR XML PATH, ROOT
+				 ), 1) AS 'Ownerships[OwnershipContacts]'
 
 	FROM [dbo].[Property] p
 	JOIN [dbo].[Address] a ON p.[AddressId] = a.[Id]

@@ -1,4 +1,4 @@
-﻿CREATE FUNCTION [dbo].FlattenedJSON (@XMLResult XML)
+﻿CREATE FUNCTION [dbo].FlattenedJSON (@XMLResult XML, @IsArrayResponse bit)
 RETURNS NVARCHAR(MAX)
 WITH EXECUTE AS CALLER
 AS
@@ -30,8 +30,9 @@ BEGIN
                 1,
                 1,
                 '')
-    IF @Rowcount>1 
-        RETURN '['+@JSONVersion+']'
+      IF @Rowcount>1 OR @IsArrayResponse = 1
+          RETURN '['+@JSONVersion+']'
+
     RETURN @JSONVersion
 END
 GO
