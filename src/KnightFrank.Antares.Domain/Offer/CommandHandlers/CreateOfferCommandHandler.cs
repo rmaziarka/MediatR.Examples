@@ -50,6 +50,8 @@
             this.entityValidator.EntityExists<Requirement>(message.RequirementId);
             this.enumTypeItemValidator.ItemExists(DomainEnumType.OfferStatus, message.StatusId);
             
+            this.RemoveHoursFromDates(message);
+
             var offer = AutoMapper.Mapper.Map<Offer>(message);
 
             List<EnumType> enumTypeItems = this.GetEnumTypeItems();
@@ -62,6 +64,20 @@
             this.offerRepository.Save();
 
             return offer.Id;
+        }
+
+        private void RemoveHoursFromDates(CreateOfferCommand message)
+        {
+            message.OfferDate = message.OfferDate.Date;
+
+            if (message.CompletionDate != null)
+            {
+                message.CompletionDate = message.CompletionDate.Value.Date;
+            }
+            if (message.ExchangeDate != null)
+            {
+                message.ExchangeDate = message.ExchangeDate.Value.Date;
+            }
         }
 
         private List<EnumType> GetEnumTypeItems()

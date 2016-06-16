@@ -208,7 +208,7 @@ module Antares.Offer {
             this.offer.additionalSurveyStatusId = this.offerOriginal.additionalSurveyStatusId;
             this.offer.searchStatusId = this.offerOriginal.searchStatusId;
             this.offer.enquiriesId = this.offerOriginal.enquiriesId;
-            this.offer.contractApproved = this.offerOriginal.contractApproved;  
+            this.offer.contractApproved = this.offerOriginal.contractApproved;
 
             this.offer.mortgageLoanToValue = this.offerOriginal.mortgageLoanToValue;
 
@@ -236,12 +236,19 @@ module Antares.Offer {
                 return this.$q.reject();
             }
 
-            if(this.offerAccepted() === false) {
+            if (this.offerAccepted() === false) {
                 this.restoreOfferProgressSummary();
             }
 
+            this.offer.offerDate = Core.DateTimeUtils.createDateAsUtc(this.offer.offerDate);
+            this.offer.exchangeDate = Core.DateTimeUtils.createDateAsUtc(this.offer.exchangeDate);
+            this.offer.completionDate = Core.DateTimeUtils.createDateAsUtc(this.offer.completionDate);
+            this.offer.mortgageSurveyDate = Core.DateTimeUtils.createDateAsUtc(this.offer.mortgageSurveyDate);
+            this.offer.additionalSurveyDate = Core.DateTimeUtils.createDateAsUtc(this.offer.additionalSurveyDate);
+
             var offerResource = this.dataAccessService.getOfferResource();
             var updateOffer: Dto.IOffer = angular.copy(this.offer);
+
             return offerResource
                 .update(updateOffer)
                 .$promise
