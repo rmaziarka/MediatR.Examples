@@ -11,6 +11,7 @@
 
     using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Offer.OfferHelpers;
 
     using MediatR;
@@ -54,6 +55,7 @@
             List<EnumType> enumTypeItems = this.GetEnumTypeItems();
             if (this.offerProgressStatusHelper.IsOfferInAcceptedStatus(enumTypeItems, message.StatusId))
             {
+                this.SetDefaultOfferProgressStatuses(message, enumTypeItems);
                 this.ValidateOfferProgressEntities(message);
                 this.ValidateOfferProgressEnums(message);
                 this.ValidateOfferProgressDates(message);
@@ -93,6 +95,17 @@
             {
                 message.AdditionalSurveyDate = message.AdditionalSurveyDate.Value.Date;
             }
+        }
+
+        private UpdateOfferCommand SetDefaultOfferProgressStatuses(UpdateOfferCommand message, List<EnumType> enumStatusOfferTypes)
+        {
+            message.MortgageStatusId = message.MortgageStatusId ?? this.offerProgressStatusHelper.GetStatusId(DomainEnumType.MortgageStatus, MortgageStatus.Unknown.ToString(), enumStatusOfferTypes);
+            message.MortgageSurveyStatusId = message.MortgageSurveyStatusId ?? this.offerProgressStatusHelper.GetStatusId(DomainEnumType.MortgageSurveyStatus, MortgageStatus.Unknown.ToString(), enumStatusOfferTypes);
+            message.AdditionalSurveyStatusId = message.AdditionalSurveyStatusId ?? this.offerProgressStatusHelper.GetStatusId(DomainEnumType.AdditionalSurveyStatus, MortgageStatus.Unknown.ToString(), enumStatusOfferTypes);
+            message.SearchStatusId = message.SearchStatusId ?? this.offerProgressStatusHelper.GetStatusId(DomainEnumType.SearchStatus, SearchStatus.NotStarted.ToString(), enumStatusOfferTypes);
+            message.EnquiriesId = message.EnquiriesId ?? this.offerProgressStatusHelper.GetStatusId(DomainEnumType.Enquiries, Enquiries.NotStarted.ToString(), enumStatusOfferTypes);
+
+            return message;
         }
 
         private List<EnumType> GetEnumTypeItems()

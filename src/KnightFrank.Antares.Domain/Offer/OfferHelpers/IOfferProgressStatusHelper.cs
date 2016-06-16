@@ -7,10 +7,13 @@
     using KnightFrank.Antares.Domain.Offer.Commands;
 
     using EnumType = KnightFrank.Antares.Dal.Model.Enum.EnumType;
+    using DomainEnumType = KnightFrank.Antares.Domain.Common.Enums.EnumType;
 
     public interface IOfferProgressStatusHelper
     {
         Offer SetOfferProgressStatuses(Offer offer, List<EnumType> enumOfferStatusTypes);
+
+        Guid GetStatusId(DomainEnumType enumType, string enumTypeItemName, List<EnumType> enumOfferStatusTypes);
 
         bool IsOfferInAcceptedStatus(List<EnumType> enumOfferStatusTypes, Guid offerStatusId);
 
