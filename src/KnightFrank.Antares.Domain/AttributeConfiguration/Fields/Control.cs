@@ -7,10 +7,10 @@
 
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
 
     public class Control
     {
-        public readonly ControlType ControlType;
         public readonly ControlCode ControlCode;
         public readonly IList<InnerField> Fields;
         public readonly PageType PageType;
@@ -21,18 +21,16 @@
         private Delegate isHiddenExpression;
         private Delegate isReadonlyExpression;
 
-        public Control(ControlType controlType, PageType pageType, ControlCode controlCode, IList<InnerField> fields)
+        public Control(PageType pageType, ControlCode controlCode, IList<InnerField> fields)
         {
-            this.ControlType = controlType;
             this.ControlCode = controlCode;
             this.Fields = fields;
             this.PageType = pageType;
         }
 
-        public Control(ControlType controlType, PageType pageType, ControlCode controlCode, InnerField create)
+        public Control(PageType pageType, ControlCode controlCode, InnerField create)
         {
             this.Fields = new List<InnerField> { create };
-            this.ControlType = controlType;
             this.ControlCode = controlCode;
             this.PageType = pageType;
         }
@@ -115,7 +113,7 @@
         public Control Copy()
         {
             List<InnerField> fieldCopies = this.Fields.Select(x => x.Copy()).ToList();
-            var newControl = new Control(this.ControlType, this.PageType, this.ControlCode, fieldCopies)
+            var newControl = new Control(this.PageType, this.ControlCode, fieldCopies)
             {
                 isHiddenExpression = this.isHiddenExpression,
                 isReadonlyExpression = this.isReadonlyExpression

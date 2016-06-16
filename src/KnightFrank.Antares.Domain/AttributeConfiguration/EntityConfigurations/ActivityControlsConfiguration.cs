@@ -3,8 +3,11 @@
     using System;
     using System.Collections.Generic;
 
+    using FluentValidation;
+
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.Activity.Commands;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
@@ -24,9 +27,6 @@
 
         private void DefineControlsForCreate()
         {
-            this.AddBaseControl(PageType.Create, ControlCode.Property, Field<CreateActivityCommand>.Create(x => x.PropertyId).Required().InnerField);
-            this.AddBaseControl(PageType.Create, ControlCode.Negotiators, Field<CreateActivityCommand>.Create(x => x.LeadNegotiatorId).Required().InnerField);
-
             this.AddControl(PageType.Create, ControlCode.ActivityStatus, Field<CreateActivityCommand>.CreateDictionary(x => x.ActivityStatusId, nameof(ActivityStatus)).Required().InnerField);
             this.AddControl(PageType.Create, ControlCode.Vendors, Field<CreateActivityCommand>.Create(x => x.ContactIds).InnerField);
             this.AddControl(PageType.Create, ControlCode.Landlords, Field<CreateActivityCommand>.Create(x => x.ContactIds).InnerField);
@@ -65,13 +65,18 @@
         private void DefineControlsForEdit()
         {
             this.AddControl(PageType.Update, ControlCode.ActivityStatus, Field<UpdateActivityCommand>.Create(x => x.ActivityStatusId).Required().InnerField);
-            this.AddControl(PageType.Update, ControlCode.Negotiators, Field<UpdateActivityCommand>.Create(x => x.LeadNegotiator).Required().InnerField);
-            this.AddControl(PageType.Update, ControlCode.Departments, Field<UpdateActivityCommand>.Create(x => x.Departments).InnerField);
+            this.AddControl(PageType.Update, ControlCode.Departments, Field<UpdateActivityCommand>.Create(x => x.Departments).Required().ExternalCollectionValidator(new UpdateActivityDepartmentValidator()).InnerField);
             this.AddControl(PageType.Update, ControlCode.AskingPrice, Field<UpdateActivityCommand>.Create(x => x.AskingPrice).InnerField);
             this.AddControl(PageType.Update, ControlCode.ShortLetPricePerWeek, Field<UpdateActivityCommand>.Create(x => x.ShortLetPricePerWeek).InnerField);
-            this.AddControl(PageType.Update, ControlCode.MarketAppraisalPrice, Field<UpdateActivityCommand>.Create(x => x.MarketAppraisalPrice).InnerField);
-            this.AddControl(PageType.Update, ControlCode.RecommendedPrice, Field<UpdateActivityCommand>.Create(x => x.RecommendedPrice).InnerField);
-            this.AddControl(PageType.Update, ControlCode.VendorEstimatedPrice, Field<UpdateActivityCommand>.Create(x => x.VendorEstimatedPrice).InnerField);
+            this.AddControl(PageType.Update, ControlCode.MarketAppraisalPrice, Field<UpdateActivityCommand>.Create(x => x.MarketAppraisalPrice).GreaterThanOrEqualTo(0).InnerField);
+            this.AddControl(PageType.Update, ControlCode.RecommendedPrice, Field<UpdateActivityCommand>.Create(x => x.RecommendedPrice).GreaterThanOrEqualTo(0).InnerField);
+            this.AddControl(PageType.Update, ControlCode.VendorEstimatedPrice, Field<UpdateActivityCommand>.Create(x => x.VendorEstimatedPrice).GreaterThanOrEqualTo(0).InnerField);
+            this.AddControl(PageType.Update, ControlCode.Negotiators,
+                new List<InnerField>
+                {
+                    Field<UpdateActivityCommand>.Create(x => x.LeadNegotiator).Required().ExternalValidator(new UpdateActivityUserValidator(true)).InnerField,
+                    Field<UpdateActivityCommand>.Create(x => x.SecondaryNegotiators).Required().ExternalCollectionValidator(new UpdateActivityUserValidator(false)).InnerField
+                });
         }
 
         public override void DefineMappings()
@@ -94,7 +99,7 @@
 
             this.Use(ControlCode.CreationDate, this.ForAll(PageType.Preview, PageType.Details));
 
-            this.Use(new List<ControlCode> {ControlCode.Offers, ControlCode.Viewings, ControlCode.Attachments, ControlCode.Property}, this.ForAll(PageType.Details));
+            this.Use(new List<ControlCode> { ControlCode.Offers, ControlCode.Viewings, ControlCode.Attachments, ControlCode.Property }, this.ForAll(PageType.Details));
 
             this.Use(new List<ControlCode>
             {

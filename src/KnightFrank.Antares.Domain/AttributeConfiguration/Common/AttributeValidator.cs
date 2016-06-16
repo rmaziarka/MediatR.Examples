@@ -21,7 +21,7 @@
 
         public void Validate(PageType pageType, TKey1 key1, TKey2 key2, object entity)
         {
-            IList<InnerFieldState> innerFieldStates = this.configuration.GetInnerFieldsState(PageType.Create, key1, key2, entity);
+            IList<InnerFieldState> innerFieldStates = this.configuration.GetInnerFieldsState(pageType, key1, key2, entity);
 
             if (!innerFieldStates.Any())
             {

@@ -24,26 +24,6 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
 
             this.DefineControls();
             this.DefineMappings();
-            this.ProcessBaseControls();
-        }
-
-        private void ProcessBaseControls()
-        {
-            foreach (PageType pageType in EnumExtensions.GetValues<PageType>())
-            {
-                List<Control> baseControls = this.AvailableControls[pageType].Where(x => x.ControlType == ControlType.Base).ToList();
-
-                if (baseControls.Count > 1)
-                {
-                    foreach (Tuple<TKey1, TKey2, PageType> configurationKey in this.ControlsConfig.Keys)
-                    {
-                        if (configurationKey.Item3 == pageType)
-                        {
-                            baseControls.ForEach(c => this.ControlsConfig[configurationKey].Add(c.Copy()));
-                        }
-                    }
-                }
-            }
         }
 
         public IList<InnerFieldState> GetInnerFieldsState(PageType pageType, TKey1 key1, TKey2 key2, object entity)
@@ -71,25 +51,15 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
         public abstract void DefineControls();
 
         public abstract void DefineMappings();
-        
+
         protected void AddControl(PageType pageType, ControlCode controlCode, InnerField field)
         {
-            this.AvailableControls[pageType].AddControl(ControlType.Extended, pageType, controlCode, field);
+            this.AvailableControls[pageType].AddControl(pageType, controlCode, field);
         }
 
         protected void AddControl(PageType pageType, ControlCode controlCode, IList<InnerField> field)
         {
-            this.AvailableControls[pageType].AddControl(ControlType.Extended, pageType, controlCode, field);
-        }
-
-        protected void AddBaseControl(PageType pageType, ControlCode controlCode, InnerField field)
-        {
-            this.AvailableControls[pageType].AddControl(ControlType.Base, pageType, controlCode, field);
-        }
-
-        protected void AddBaseControl(PageType pageType, ControlCode controlCode, IList<InnerField> field)
-        {
-            this.AvailableControls[pageType].AddControl(ControlType.Base, pageType, controlCode, field);
+            this.AvailableControls[pageType].AddControl(pageType, controlCode, field);
         }
 
         protected IList<Control> Use(ControlCode controlCode, IList<Tuple<TKey1, TKey2, PageType>> list)

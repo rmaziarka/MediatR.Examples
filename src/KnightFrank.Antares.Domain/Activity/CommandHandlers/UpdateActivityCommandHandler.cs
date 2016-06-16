@@ -44,6 +44,7 @@
         private readonly IControlsConfiguration<PropertyType, ActivityType> activityConfiguration;
 
         private readonly IEntityMapper entityMapper;
+        private readonly IAttributeValidator<PropertyType, ActivityType> attributeValidator;
 
         public UpdateActivityCommandHandler(
             IGenericRepository<Activity> activityRepository,
@@ -56,7 +57,9 @@
             IActivityTypeDefinitionValidator activityTypeDefinitionValidator,
             IGenericRepository<EnumTypeItem> enumTypeItemRepository, 
             IControlsConfiguration<PropertyType, ActivityType> activityConfiguration, 
-            IEntityMapper entityMapper)
+            IEntityMapper entityMapper,
+            IAttributeValidator<PropertyType, ActivityType> attributeValidator)
+
         {
             this.activityRepository = activityRepository;
             this.userRepository = userRepository;
@@ -69,6 +72,7 @@
             this.enumTypeItemRepository = enumTypeItemRepository;
             this.activityConfiguration = activityConfiguration;
             this.entityMapper = entityMapper;
+            this.attributeValidator = attributeValidator;
         }
 
         public Guid Handle(UpdateActivityCommand message)
@@ -84,15 +88,18 @@
 
             this.entityValidator.EntityExists(activity, message.Id);
 
+            // ReSharper disable once PossibleNullReferenceException
+            var activityType = EnumExtensions.ParseEnum<ActivityType>(activity.ActivityType.EnumCode);
+            var propertyType = EnumExtensions.ParseEnum<PropertyType>(activity.Property.PropertyType.EnumCode);
+            
+            this.attributeValidator.Validate(PageType.Update, propertyType, activityType, message);
+
             this.enumTypeItemValidator.ItemExists(EnumType.ActivityStatus, message.ActivityStatusId);
 
             this.ValidateActivityTypeFromCommand(message, activity);
 
             List<ActivityUser> commandNegotiators = this.ValidateAndRetrieveNegotiatorsFromCommand(message);
 
-            // ReSharper disable once PossibleNullReferenceException
-            var propertyType = (PropertyType)Enum.Parse(typeof(PropertyType), activity.Property.PropertyType.EnumCode);
-            var activityType = (ActivityType)Enum.Parse(typeof(ActivityType), activity.ActivityType.EnumCode);
             activity = this.entityMapper.MapAllowedValues(message, activity, this.activityConfiguration, PageType.Update, propertyType, activityType);
 
             this.ValidateActivityNegotiators(commandNegotiators, activity);
@@ -340,11 +347,6 @@
         private EnumTypeItem GetManagingDepartmentType()
         {
             return this.enumTypeItemRepository.FindBy(i => i.Code == ActivityDepartmentType.Managing.ToString()).Single();
-        }
-
-        private EnumTypeItem GetStandardDepartmentType()
-        {
-            return this.enumTypeItemRepository.FindBy(i => i.Code == ActivityDepartmentType.Standard.ToString()).Single();
         }
     }
 }

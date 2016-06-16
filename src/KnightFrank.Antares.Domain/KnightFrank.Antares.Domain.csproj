@@ -85,7 +85,6 @@
     <Compile Include="Activity\Commands\CreateActivityAttachmentCommandValidator.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\ActivityProfile.cs" />
-    <Compile Include="Activity\Commands\CreateActivityCommandValidator.cs" />
     <Compile Include="Activity\Commands\UpdateActivityDepartment.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUserCommand.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUserCommandValidator.cs" />
@@ -93,7 +92,6 @@
     <Compile Include="Activity\Commands\UpdateActivityUserValidator.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUser.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommand.cs" />
-    <Compile Include="Activity\Commands\UpdateActivityCommandValidator.cs" />
     <Compile Include="Activity\Queries\ActivitiesQuery.cs" />
     <Compile Include="Activity\Queries\ActivityQuery.cs" />
     <Compile Include="Activity\Queries\ActivityTypeQueryValidator.cs" />
@@ -158,7 +156,6 @@
     <Compile Include="AttributeConfiguration\EntityConfigurations\BaseControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\IControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\Enums\ControlCode.cs" />
-    <Compile Include="AttributeConfiguration\Enums\ControlType.cs" />
     <Compile Include="AttributeConfiguration\Enums\PageType.cs" />
     <Compile Include="AttributeConfiguration\Fields\Control.cs" />
     <Compile Include="AttributeConfiguration\Fields\Field.cs" />

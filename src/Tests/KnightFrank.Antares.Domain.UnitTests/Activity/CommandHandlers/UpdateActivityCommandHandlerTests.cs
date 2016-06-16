@@ -50,6 +50,7 @@
             [Frozen] Mock<IEntityValidator> entityValidator,
             [Frozen] Mock<ICollectionValidator> collectionValidator,
             [Frozen] Mock<IEntityMapper> entityMapper,
+            [Frozen] Mock<IAttributeValidator<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>> attributeValidator,
             Department department,
             UpdateActivityCommandHandler handler,
             IFixture fixture)
@@ -85,13 +86,18 @@
                         It.IsAny<IControlsConfiguration<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>>(),
                         PageType.Update, Domain.Common.Enums.PropertyType.Flat, Domain.Common.Enums.ActivityType.FreeholdSale), Times.Once);
 
-           /* activity.ShouldBeEquivalentTo(
-                command,
-                options =>
-                options.Including(x => x.ActivityStatusId)
-                       .Including(x => x.MarketAppraisalPrice)
-                       .Including(x => x.RecommendedPrice)
-                       .Including(x => x.VendorEstimatedPrice));*/
+            attributeValidator.Verify(
+              x =>
+                  x.Validate(PageType.Update, Domain.Common.Enums.PropertyType.Flat,
+                      Domain.Common.Enums.ActivityType.FreeholdSale, command));
+
+            /* activity.ShouldBeEquivalentTo(
+                 command,
+                 options =>
+                 options.Including(x => x.ActivityStatusId)
+                        .Including(x => x.MarketAppraisalPrice)
+                        .Including(x => x.RecommendedPrice)
+                        .Including(x => x.VendorEstimatedPrice));*/
         }
 
         [Theory]

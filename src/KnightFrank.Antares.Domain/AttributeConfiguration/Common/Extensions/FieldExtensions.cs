@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
@@ -17,11 +18,29 @@
             field.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(field.Selector).GreaterThan(limit)));
             return field;
         }
+        public static Field<TEntity, TProperty?> GreaterThanOrEqualTo<TEntity, TProperty>(this Field<TEntity, TProperty?> field, TProperty limit)
+          where TProperty : struct, IComparable, IComparable<TProperty>
+        {
+            field.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(field.Selector).GreaterThanOrEqualTo(limit)));
+            return field;
+        }
 
         public static Field<TEntity, TProperty> Required<TEntity, TProperty>(this Field<TEntity, TProperty> field)
         {
             field.InnerField.Required = true;
             field.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(field.Selector).NotEmpty().NotNull()));
+            return field;
+        }
+
+        public static Field<TEntity, TProperty> ExternalValidator<TEntity, TProperty>(this Field<TEntity, TProperty> field, AbstractValidator<TProperty> externalValidator)
+        {
+            field.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(field.Selector).SetValidator(externalValidator)));
+            return field;
+        }
+
+        public static Field<TEntity, IList<TProperty>> ExternalCollectionValidator<TEntity, TProperty>(this Field<TEntity, IList<TProperty>> field, AbstractValidator<TProperty> externalValidator)
+        {
+            field.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(field.Selector).SetCollectionValidator(externalValidator)));
             return field;
         }
 
@@ -62,10 +81,10 @@
             return SetFieldExpression(controls, field, expression, false);
         }
 
-        public static IList<Control> FieldHasAllowed<TEntity, TProperty, TEnum>(this IList<Control> controls, Expression<Func<TEntity, TProperty>> field, IEnumerable<TEnum> allowedValues) where TEnum:struct
+        public static IList<Control> FieldHasAllowed<TEntity, TProperty, TEnum>(this IList<Control> controls, Expression<Func<TEntity, TProperty>> field, IEnumerable<TEnum> allowedValues) where TEnum : struct
         {
             return SetAllowedValues(controls, field, allowedValues);
-;        }
+        }
 
         private static IList<Control> SetFieldExpression<TEntity, TProperty>(IList<Control> controls, Expression<Func<TEntity, TProperty>> field, Expression<Func<TEntity, bool>> expression, bool readonlyExpression)
         {
@@ -95,7 +114,8 @@
             where TEnum : struct
         {
             List<string> allowedCodes = allowedValues.Select(x => x.ToString()).ToList();
-            foreach (Control control in controls) { 
+            foreach (Control control in controls)
+            {
                 control.SetFieldAllowedValues(field, allowedCodes);
             }
 
