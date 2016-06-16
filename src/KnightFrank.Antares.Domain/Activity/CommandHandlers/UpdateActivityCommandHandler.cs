@@ -4,18 +4,20 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoMapper;
-
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
 
     using MediatR;
 
+    using ActivityType = KnightFrank.Antares.Domain.Common.Enums.ActivityType;
     using EnumType = KnightFrank.Antares.Domain.Common.Enums.EnumType;
 
     public class UpdateActivityCommandHandler : IRequestHandler<UpdateActivityCommand, Guid>
@@ -38,6 +40,8 @@
 
         private readonly IEnumTypeItemValidator enumTypeItemValidator;
 
+        private readonly IControlsConfiguration<PropertyType, ActivityType> activityConfiguration;
+
         public UpdateActivityCommandHandler(
             IGenericRepository<Activity> activityRepository,
             IGenericRepository<User> userRepository,
@@ -47,7 +51,8 @@
             ICollectionValidator collectionValidator,
             IEnumTypeItemValidator enumTypeItemValidator,
             IActivityTypeDefinitionValidator activityTypeDefinitionValidator,
-            IGenericRepository<EnumTypeItem> enumTypeItemRepository)
+            IGenericRepository<EnumTypeItem> enumTypeItemRepository, 
+            IControlsConfiguration<PropertyType, ActivityType> activityConfiguration)
         {
             this.activityRepository = activityRepository;
             this.userRepository = userRepository;
@@ -58,12 +63,13 @@
             this.enumTypeItemValidator = enumTypeItemValidator;
             this.activityTypeDefinitionValidator = activityTypeDefinitionValidator;
             this.enumTypeItemRepository = enumTypeItemRepository;
+            this.activityConfiguration = activityConfiguration;
         }
 
         public Guid Handle(UpdateActivityCommand message)
         {
             Activity activity =
-                this.activityRepository.GetWithInclude(x => x.Id == message.Id, x => x.ActivityUsers, x => x.ActivityDepartments)
+                this.activityRepository.GetWithInclude(x => x.Id == message.Id, x => x.ActivityUsers, x => x.ActivityDepartments,x=>x.Property.PropertyType,x=>x.ActivityType)
                     .SingleOrDefault();
 
             this.entityValidator.EntityExists(activity, message.Id);
@@ -74,8 +80,11 @@
 
             List<ActivityUser> commandNegotiators = this.ValidateAndRetrieveNegotiatorsFromCommand(message);
 
-            Mapper.Map(message, activity);
-
+            // ReSharper disable once PossibleNullReferenceException
+            var propertyType = (PropertyType)Enum.Parse(typeof(PropertyType), activity.Property.PropertyType.EnumCode);
+            var activityType = (ActivityType)Enum.Parse(typeof(ActivityType), activity.ActivityType.EnumCode);
+            message.MapAllowedValues(activity, this.activityConfiguration, PageType.Update, propertyType, activityType);
+            
             this.ValidateActivityNegotiators(commandNegotiators, activity);
             this.UpdateActivityNegotiators(commandNegotiators, activity);
 

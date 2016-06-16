@@ -74,13 +74,13 @@
         {
             this.AddControl(PageType.Update, ControlCode.ActivityStatus, Field<UpdateActivityCommand>.Create(x => x.ActivityStatusId).Required().InnerField);
             this.AddControl(PageType.Update, ControlCode.LeadNegotiator, Field<UpdateActivityCommand>.Create(x => x.LeadNegotiator).Required().InnerField);
-            this.AddControl(PageType.Update, ControlCode.SecondaryNegotiators, Field<Activity>.Create(x => x.ActivityUsers).InnerField);
-            this.AddControl(PageType.Update, ControlCode.Departments, Field<Activity>.Create(x => x.ActivityDepartments).InnerField);
-            this.AddControl(PageType.Update, ControlCode.AskingPrice, Field<Activity>.Create(x => x.AskingPrice).InnerField);
-            this.AddControl(PageType.Update, ControlCode.ShortLetPricePerWeek, Field<Activity>.Create(x => x.ShortLetPricePerWeek).InnerField);
-            this.AddControl(PageType.Update, ControlCode.MarketAppraisalPrice, Field<Activity>.Create(x => x.MarketAppraisalPrice).InnerField);
-            this.AddControl(PageType.Update, ControlCode.RecommendedPrice, Field<Activity>.Create(x => x.RecommendedPrice).InnerField);
-            this.AddControl(PageType.Update, ControlCode.VendorEstimatedPrice, Field<Activity>.Create(x => x.VendorEstimatedPrice).InnerField);
+            this.AddControl(PageType.Update, ControlCode.SecondaryNegotiators, Field<UpdateActivityCommand>.Create(x => x.SecondaryNegotiators).InnerField);
+            this.AddControl(PageType.Update, ControlCode.Departments, Field<UpdateActivityCommand>.Create(x => x.Departments).InnerField);
+            this.AddControl(PageType.Update, ControlCode.AskingPrice, Field<UpdateActivityCommand>.Create(x => x.AskingPrice).InnerField);
+            this.AddControl(PageType.Update, ControlCode.ShortLetPricePerWeek, Field<UpdateActivityCommand>.Create(x => x.ShortLetPricePerWeek).InnerField);
+            this.AddControl(PageType.Update, ControlCode.MarketAppraisalPrice, Field<UpdateActivityCommand>.Create(x => x.MarketAppraisalPrice).InnerField);
+            this.AddControl(PageType.Update, ControlCode.RecommendedPrice, Field<UpdateActivityCommand>.Create(x => x.RecommendedPrice).InnerField);
+            this.AddControl(PageType.Update, ControlCode.VendorEstimatedPrice, Field<UpdateActivityCommand>.Create(x => x.VendorEstimatedPrice).InnerField);
         }
 
         public override void DefineMappings()
@@ -90,29 +90,16 @@
                 PropertyType.House, PropertyType.Flat, PropertyType.Bungalow, PropertyType.Maisonette, PropertyType.GarageOnly,PropertyType.ParkingSpace, PropertyType.Houseboat
             }, ActivityType.OpenMarketLetting, PageType.Create, PageType.Preview));
 
-
             this.Use(new List<ControlCode> { ControlCode.ActivityStatus, ControlCode.Vendors, ControlCode.ActivityType }, this.When(new List<PropertyType>
             {
                 PropertyType.House, PropertyType.Flat, PropertyType.Bungalow, PropertyType.Maisonette, PropertyType.DevelopmentPlot, PropertyType.FarmEstate,
                 PropertyType.GarageOnly,PropertyType.ParkingSpace, PropertyType.Land, PropertyType.Houseboat
             }, ActivityType.FreeholdSale, PageType.Create, PageType.Preview));
 
-            this.Use(new List<ControlCode> { ControlCode.Vendors, ControlCode.ActivityType }, this.When(new List<PropertyType>
+            this.Use(new List<ControlCode> { ControlCode.ActivityStatus, ControlCode.Vendors, ControlCode.ActivityType }, this.When(new List<PropertyType>
             {
                 PropertyType.Flat, PropertyType.Maisonette, PropertyType.DevelopmentPlot, PropertyType.Land
             }, ActivityType.LongLeaseholdSale, PageType.Create, PageType.Preview));
-
-            this.Use(ControlCode.ActivityStatus, this.When(new List<PropertyType>
-            {
-                PropertyType.Flat, PropertyType.Maisonette, PropertyType.DevelopmentPlot, PropertyType.Land
-            }, ActivityType.LongLeaseholdSale, PageType.Create, PageType.Preview))
-                .FieldHasAllowed<CreateActivityCommand, Guid, ActivityStatus>(
-                    x => x.ActivityStatusId,
-                    new List<ActivityStatus>
-                        {
-                            ActivityStatus.MarketAppraisal,
-                            ActivityStatus.PreAppraisal
-                        });
 
             this.Use(ControlCode.CreationDate, this.ForAll(PageType.Preview, PageType.Details));
 
@@ -167,7 +154,10 @@
                 ControlCode.LeadNegotiator,
                 ControlCode.SecondaryNegotiators,
                 ControlCode.Departments,
-                ControlCode.ShortLetPricePerWeek
+                ControlCode.ShortLetPricePerWeek,
+                ControlCode.MarketAppraisalPrice,
+                ControlCode.RecommendedPrice,
+                ControlCode.VendorEstimatedPrice
             }, this.When(new List<PropertyType>
             {
                 PropertyType.House, PropertyType.Flat, PropertyType.Bungalow, PropertyType.Maisonette, PropertyType.GarageOnly, PropertyType.ParkingSpace, PropertyType.Houseboat
@@ -179,7 +169,10 @@
                 ControlCode.LeadNegotiator,
                 ControlCode.SecondaryNegotiators,
                 ControlCode.Departments,
-                ControlCode.AskingPrice
+                ControlCode.AskingPrice,
+                ControlCode.MarketAppraisalPrice,
+                ControlCode.RecommendedPrice,
+                ControlCode.VendorEstimatedPrice
             }, this.When(new List<PropertyType>
             {
                 PropertyType.House, PropertyType.Flat, PropertyType.Bungalow, PropertyType.Maisonette, PropertyType.DevelopmentPlot, PropertyType.FarmEstate,
@@ -192,7 +185,10 @@
                 ControlCode.LeadNegotiator,
                 ControlCode.SecondaryNegotiators,
                 ControlCode.Departments,
-                ControlCode.AskingPrice
+                ControlCode.AskingPrice,
+                ControlCode.MarketAppraisalPrice,
+                ControlCode.RecommendedPrice,
+                ControlCode.VendorEstimatedPrice
             }, this.When(new List<PropertyType>
             {
                 PropertyType.Flat, PropertyType.Maisonette, PropertyType.DevelopmentPlot, PropertyType.Land

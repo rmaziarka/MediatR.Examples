@@ -145,6 +145,7 @@
     <Compile Include="Attachment\Queries\AttachmentQueryValidator.cs" />
     <Compile Include="Attachment\QueryHandlers\AttachmentQueryHandler.cs" />
     <Compile Include="AttributeConfiguration\Common\AttributeValidator.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\EntityExtensions.cs" />
     <Compile Include="AttributeConfiguration\Common\EntityValidator.cs" />
     <Compile Include="AttributeConfiguration\Common\Extensions\DictionaryExtensions.cs" />
     <Compile Include="AttributeConfiguration\Common\Extensions\EnumExtensions.cs" />

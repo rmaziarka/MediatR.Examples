@@ -37,12 +37,6 @@
 
         private static IList<Control> SetControlExpression<TEntity>(IList<Control> controls, Expression<Func<TEntity, bool>> expression, bool readonlyExpression)
         {
-            if (controls.Count > 1)
-            {
-                // epxression is stronly typed so it cannot be set for multiple controls but only for one control from specyfic mode.
-                throw new NotSupportedException();
-            }
-
             foreach (Control control in controls)
             {
                 if (readonlyExpression)
