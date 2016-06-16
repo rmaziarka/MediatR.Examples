@@ -43,12 +43,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Domain.Seedwork.Specification.1.0.0\lib\Domain.Seedwork.Specification.dll</HintPath>
     </Reference>
-    <Reference Include="FluentAssertions, Version=4.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FluentAssertions.4.2.2\lib\net45\FluentAssertions.dll</HintPath>
+    <Reference Include="FluentAssertions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentAssertions.4.5.0\lib\net45\FluentAssertions.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FluentAssertions.Core, Version=4.2.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FluentAssertions.4.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
+    <Reference Include="FluentAssertions.Core, Version=4.5.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentAssertions.4.5.0\lib\net45\FluentAssertions.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FluentValidation, Version=6.2.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -216,6 +216,10 @@
     <ProjectReference Include="..\..\KnightFrank.Antares.Domain\KnightFrank.Antares.Domain.csproj">
       <Project>{5987d78c-856d-4315-8b8b-baf00c286aff}</Project>
       <Name>KnightFrank.Antares.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KnightFrank.Antares.Tests.Common\KnightFrank.Antares.Tests.Common.csproj">
+      <Project>{28a06047-69af-4192-8cb0-d6fd21073f3b}</Project>
+      <Name>KnightFrank.Antares.Tests.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
