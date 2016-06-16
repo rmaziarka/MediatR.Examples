@@ -5,7 +5,7 @@ module Antares {
     import AttachmentPreviewController = Common.Component.AttachmentPreviewController;
     import PropertyPreviewController = Property.Preview.PropertyPreviewController;
     import Business = Common.Models.Business;
-
+    import IActivityViewConfig = Activity.IActivityViewConfig;
     declare var moment: any;
 
     describe('Given view activity page is loaded', () => {
@@ -65,6 +65,7 @@ module Antares {
 
         describe('when activity is loaded', () => {
             var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
+            var configMock = { vendors: {}, departments: {} } as IActivityViewConfig;
 
             activityMock.activityDepartments = TestHelpers.ActivityDepartmentGenerator.generateMany(3);
             activityMock.activityDepartments.forEach((activityDepartment, index) => {
@@ -111,7 +112,8 @@ module Antares {
 
                 scope = $rootScope.$new();
                 scope['activity'] = activityMock;
-                element = $compile('<activity-view activity="activity"></activity-view>')(scope);
+                scope['config'] = configMock;
+                element = $compile('<activity-view activity="activity" config="config"></activity-view>')(scope);
 
                 scope.$apply();
                 $http.flush();
@@ -246,10 +248,13 @@ module Antares {
             it('when no vendors then "no items" element should be visible', () => {
                 // arrange
                 var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate({ contacts: [] });
+                var configMock = { vendors: {}, departments: {} } as IActivityViewConfig;
+
                 scope['activity'] = activityMock;
+                scope['config'] = configMock;
 
                 // act
-                element = compile('<activity-view activity="activity"></activity-view>')(scope);
+                element = compile('<activity-view activity="activity" config="config"></activity-view>')(scope);
                 scope.$apply();
                 $http.flush();
 
@@ -266,10 +271,12 @@ module Antares {
                 var contact1Mock = TestHelpers.ContactGenerator.generate();
                 var contact2Mock = TestHelpers.ContactGenerator.generate();
                 var activityMock = TestHelpers.ActivityGenerator.generate({ contacts: [contact1Mock, contact2Mock] });
+                var configMock = { vendors: {}, departments: {} } as IActivityViewConfig;
                 scope['activity'] = activityMock;
+                scope['config'] = configMock;
 
                 // act
-                element = compile('<activity-view activity="activity"></activity-view>')(scope);
+                element = compile('<activity-view activity="activity" config="config"></activity-view>')(scope);
                 scope.$apply();
                 $http.flush();
 
@@ -286,10 +293,12 @@ module Antares {
                 var contact1Mock = TestHelpers.ContactGenerator.generate();
                 var contact2Mock = TestHelpers.ContactGenerator.generate();
                 var activityMock = TestHelpers.ActivityGenerator.generate({ contacts: [contact1Mock, contact2Mock] });
+                var configMock = { vendors: {}, departments: {} } as IActivityViewConfig;
                 scope['activity'] = activityMock;
+                scope['config'] = configMock;
 
                 // act
-                element = compile('<activity-view activity="activity"></activity-view>')(scope);
+                element = compile('<activity-view activity="activity" config="config"></activity-view>')(scope);
                 scope.$apply();
                 $http.flush();
 
