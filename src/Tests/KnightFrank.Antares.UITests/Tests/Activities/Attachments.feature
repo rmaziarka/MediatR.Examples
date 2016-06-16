@@ -23,7 +23,7 @@ Scenario: Upload attachment for activity
 	Then Attachment should be displayed on view activity page
 		| FileName         | Type     | Size   |
 		| PDF document.pdf | Brochure | 2.9 MB |
-	When User clicks attachment details link on view activity page
+	When User clicks attachment card on view activity page
 	Then Attachment details on attachment preview page are the same like on view activity page
 		And Attachment PDF document.pdf should be downloaded
 		And User closes attachment preview page on view activity page

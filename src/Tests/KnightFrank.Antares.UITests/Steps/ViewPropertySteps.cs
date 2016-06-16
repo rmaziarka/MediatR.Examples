@@ -190,7 +190,7 @@
             this.page.OpenAttachFilePanel().WaitForSidePanelToShow();
         }
 
-        [When(@"User clicks attachment details link on view property page")]
+        [When(@"User clicks attachment card on view property page")]
         public void OpenAttachmentPreview()
         {
             this.page.OpenAttachmentPreview().WaitForSidePanelToShow();
