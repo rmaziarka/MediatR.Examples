@@ -15,6 +15,8 @@
 
             this.CreateMap<Address, AddressResult>();
 
+            this.CreateMap<EnumTypeItem, EnumTypeItemResult>();
+
             this.CreateMap<Ownership, OwnershipResult>();
 
             this.CreateMap<Contact, ContactResult>();

@@ -97,6 +97,7 @@
     <Compile Include="Property\QueryHandlers\PropertiesPageableQueryHandler.cs" />
     <Compile Include="Property\QueryResults\AddressResult.cs" />
     <Compile Include="Property\QueryResults\ContactResult.cs" />
+    <Compile Include="Property\QueryResults\EnumTypeItemResult.cs" />
     <Compile Include="Property\QueryResults\OwnershipResult.cs" />
     <Compile Include="Property\QueryResults\PropertyResult.cs" />
     <Compile Include="Property\QueryResults\QueryResultsProfile.cs" />
