@@ -21,9 +21,9 @@
     public class OffersSteps
     {
         private const string ApiUrl = "/api/offers";
+        private readonly DateTime date = DateTime.UtcNow;
         private readonly BaseTestClassFixture fixture;
         private readonly ScenarioContext scenarioContext;
-        private readonly DateTime date = DateTime.UtcNow;
 
         public OffersSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {

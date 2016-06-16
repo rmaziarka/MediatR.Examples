@@ -10,6 +10,7 @@
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal.Model.Address;
+    using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Attribute;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
@@ -138,7 +139,8 @@
                 PropertyTypeId = propertyTypeId,
                 DivisionId = divisionId,
                 AttributeValues = attributeValues,
-                PropertyCharacteristics = propertyCharacteristic
+                PropertyCharacteristics = propertyCharacteristic,
+                Attachments = new List<Attachment>()
             };
 
             this.fixture.DataContext.Properties.Add(property);
