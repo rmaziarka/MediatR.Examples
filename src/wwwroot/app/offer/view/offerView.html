@@ -127,13 +127,12 @@
             <div class="section-details">
                 <div class="section-row row">
                     <div class="col-xs-4 section-title" translate="OFFER.VIEW.MORTGAGE_LOAN_TO_VALUE"></div>
-                    <div ng-if="vm.offer.mortgageLoanToValue">
+                    <div ng-if="vm.offer.mortgageLoanToValue !== null">
                         <div class="col-xs-8 mortgage-loan-to-value">{{::vm.offer.mortgageLoanToValue}}%</div>
                     </div>
                     <div ng-if="vm.offer.mortgageLoanToValue === null">
                         <div class="col-xs-8 mortgage-loan-to-value">-</div>
                     </div>
-
                 </div>
             </div>
             <div class="section-details">
