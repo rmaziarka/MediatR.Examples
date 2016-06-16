@@ -16,6 +16,8 @@
     using KnightFrank.Antares.Domain.Activity.CommandHandlers;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
@@ -47,6 +49,7 @@
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IActivityTypeDefinitionValidator> activityTypeDefinitionValidator,
             [Frozen] Mock<IAttributeValidator<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>> attributeValidator,
+            [Frozen] Mock<IEntityMapper> entityMapper,
             CreateActivityCommandHandler handler,
             CreateActivityCommand command,
             Guid expectedActivityId,
@@ -88,13 +91,27 @@
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
                              .Returns(command.ContactIds.Select(id => new Contact { Id = id }));
 
+            var mappedActivity = new Activity { PropertyId = property.Id, ActivityTypeId = command.ActivityTypeId };
+            entityMapper
+                .Setup(
+                    x =>
+                        x.MapAllowedValues(command, It.Is<Activity>(a => a.PropertyId == command.PropertyId && a.ActivityTypeId == command.ActivityTypeId),
+                            It.IsAny<IControlsConfiguration<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>>(),
+                            PageType.Create, Domain.Common.Enums.PropertyType.Flat, Domain.Common.Enums.ActivityType.FreeholdSale))
+                .Returns(mappedActivity);
+
             // Act
             Guid activityId = handler.Handle(command);
 
             // Assert
             activityId.Should().Be(activity.Id);
 
-            activity.ShouldBeEquivalentTo(command, opt => opt.IncludingProperties().ExcludingMissingMembers());
+            entityMapper
+                .Verify(
+                    x =>
+                        x.MapAllowedValues(command, It.Is<Activity>(a => a.PropertyId == command.PropertyId && a.ActivityTypeId == command.ActivityTypeId),
+                            It.IsAny<IControlsConfiguration<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>>(),
+                            PageType.Create, Domain.Common.Enums.PropertyType.Flat, Domain.Common.Enums.ActivityType.FreeholdSale), Times.Once);
 
             activity.ActivityUsers.Should().HaveCount(1);
             ActivityUser leadNegotiator = activity.ActivityUsers.SingleOrDefault();

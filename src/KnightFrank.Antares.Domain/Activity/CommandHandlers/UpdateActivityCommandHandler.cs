@@ -9,6 +9,7 @@
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
@@ -42,6 +43,8 @@
 
         private readonly IControlsConfiguration<PropertyType, ActivityType> activityConfiguration;
 
+        private readonly IEntityMapper entityMapper;
+
         public UpdateActivityCommandHandler(
             IGenericRepository<Activity> activityRepository,
             IGenericRepository<User> userRepository,
@@ -52,7 +55,8 @@
             IEnumTypeItemValidator enumTypeItemValidator,
             IActivityTypeDefinitionValidator activityTypeDefinitionValidator,
             IGenericRepository<EnumTypeItem> enumTypeItemRepository, 
-            IControlsConfiguration<PropertyType, ActivityType> activityConfiguration)
+            IControlsConfiguration<PropertyType, ActivityType> activityConfiguration, 
+            IEntityMapper entityMapper)
         {
             this.activityRepository = activityRepository;
             this.userRepository = userRepository;
@@ -64,12 +68,18 @@
             this.activityTypeDefinitionValidator = activityTypeDefinitionValidator;
             this.enumTypeItemRepository = enumTypeItemRepository;
             this.activityConfiguration = activityConfiguration;
+            this.entityMapper = entityMapper;
         }
 
         public Guid Handle(UpdateActivityCommand message)
         {
             Activity activity =
-                this.activityRepository.GetWithInclude(x => x.Id == message.Id, x => x.ActivityUsers, x => x.ActivityDepartments,x=>x.Property.PropertyType,x=>x.ActivityType)
+                this.activityRepository.GetWithInclude(
+                    x => x.Id == message.Id,
+                    x => x.ActivityUsers,
+                    x => x.ActivityDepartments,
+                    x => x.Property.PropertyType,
+                    x => x.ActivityType)
                     .SingleOrDefault();
 
             this.entityValidator.EntityExists(activity, message.Id);
@@ -83,8 +93,8 @@
             // ReSharper disable once PossibleNullReferenceException
             var propertyType = (PropertyType)Enum.Parse(typeof(PropertyType), activity.Property.PropertyType.EnumCode);
             var activityType = (ActivityType)Enum.Parse(typeof(ActivityType), activity.ActivityType.EnumCode);
-            message.MapAllowedValues(activity, this.activityConfiguration, PageType.Update, propertyType, activityType);
-            
+            activity = this.entityMapper.MapAllowedValues(message, activity, this.activityConfiguration, PageType.Update, propertyType, activityType);
+
             this.ValidateActivityNegotiators(commandNegotiators, activity);
             this.UpdateActivityNegotiators(commandNegotiators, activity);
 

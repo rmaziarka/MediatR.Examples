@@ -10,6 +10,8 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
 
     using MediatR;
@@ -72,6 +74,7 @@
         private static void ConfigureAttributeConfigurations(StandardKernel kernel)
         {
             kernel.Bind<IControlsConfiguration<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>>().To<ActivityControlsConfiguration>();
+            kernel.Bind<IEntityMapper>().To<EntityMapper>();
         }
     }
 }

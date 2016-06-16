@@ -145,7 +145,7 @@
     <Compile Include="Attachment\Queries\AttachmentQueryValidator.cs" />
     <Compile Include="Attachment\QueryHandlers\AttachmentQueryHandler.cs" />
     <Compile Include="AttributeConfiguration\Common\AttributeValidator.cs" />
-    <Compile Include="AttributeConfiguration\Common\Extensions\EntityExtensions.cs" />
+    <Compile Include="AttributeConfiguration\Common\EntityMapper.cs" />
     <Compile Include="AttributeConfiguration\Common\EntityValidator.cs" />
     <Compile Include="AttributeConfiguration\Common\Extensions\DictionaryExtensions.cs" />
     <Compile Include="AttributeConfiguration\Common\Extensions\EnumExtensions.cs" />
@@ -153,6 +153,7 @@
     <Compile Include="AttributeConfiguration\Common\Extensions\LambdaExtension.cs" />
     <Compile Include="AttributeConfiguration\Common\Extensions\ListExtensions.cs" />
     <Compile Include="AttributeConfiguration\Common\IAttributeValidator.cs" />
+    <Compile Include="AttributeConfiguration\Common\IEntityMapper.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ActivityControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\BaseControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\IControlsConfiguration.cs" />
