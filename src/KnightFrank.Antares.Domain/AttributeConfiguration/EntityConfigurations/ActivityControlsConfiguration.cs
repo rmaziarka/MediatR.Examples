@@ -25,7 +25,7 @@
         private void DefineControlsForCreate()
         {
             this.AddBaseControl(PageType.Create, ControlCode.Property, Field<CreateActivityCommand>.Create(x => x.PropertyId).Required().InnerField);
-            this.AddBaseControl(PageType.Create, ControlCode.LeadNegotiator, Field<CreateActivityCommand>.Create(x => x.LeadNegotiatorId).Required().InnerField);
+            this.AddBaseControl(PageType.Create, ControlCode.Negotiators, Field<CreateActivityCommand>.Create(x => x.LeadNegotiatorId).Required().InnerField);
 
             this.AddControl(PageType.Create, ControlCode.ActivityStatus, Field<CreateActivityCommand>.CreateDictionary(x => x.ActivityStatusId, nameof(ActivityStatus)).Required().InnerField);
             this.AddControl(PageType.Create, ControlCode.Vendors, Field<CreateActivityCommand>.Create(x => x.ContactIds).InnerField);
@@ -48,9 +48,8 @@
             this.AddControl(PageType.Details, ControlCode.ActivityStatus, Field<Activity>.Create(x => x.ActivityStatusId).InnerField);
             this.AddControl(PageType.Details, ControlCode.Vendors, Field<Activity>.Create(x => x.Contacts).InnerField);
             this.AddControl(PageType.Details, ControlCode.Property, Field<Activity>.Create(x => x.PropertyId).InnerField);
-            this.AddControl(PageType.Details, ControlCode.LeadNegotiator, Field<Activity>.Create(x => x.ActivityUsers).InnerField);
+            this.AddControl(PageType.Details, ControlCode.Negotiators, Field<Activity>.Create(x => x.ActivityUsers).InnerField);
             this.AddControl(PageType.Details, ControlCode.Landlords, Field<Activity>.Create(x => x.Contacts).InnerField);
-            this.AddControl(PageType.Details, ControlCode.SecondaryNegotiators, Field<Activity>.Create(x => x.ActivityUsers).InnerField);
             this.AddControl(PageType.Details, ControlCode.Departments, Field<Activity>.Create(x => x.ActivityDepartments).InnerField);
             this.AddControl(PageType.Details, ControlCode.AskingPrice, Field<Activity>.Create(x => x.AskingPrice).InnerField);
             this.AddControl(PageType.Details, ControlCode.ShortLetPricePerWeek, Field<Activity>.Create(x => x.ShortLetPricePerWeek).InnerField);
@@ -66,8 +65,7 @@
         private void DefineControlsForEdit()
         {
             this.AddControl(PageType.Update, ControlCode.ActivityStatus, Field<UpdateActivityCommand>.Create(x => x.ActivityStatusId).Required().InnerField);
-            this.AddControl(PageType.Update, ControlCode.LeadNegotiator, Field<UpdateActivityCommand>.Create(x => x.LeadNegotiator).Required().InnerField);
-            this.AddControl(PageType.Update, ControlCode.SecondaryNegotiators, Field<UpdateActivityCommand>.Create(x => x.SecondaryNegotiators).InnerField);
+            this.AddControl(PageType.Update, ControlCode.Negotiators, Field<UpdateActivityCommand>.Create(x => x.LeadNegotiator).Required().InnerField);
             this.AddControl(PageType.Update, ControlCode.Departments, Field<UpdateActivityCommand>.Create(x => x.Departments).InnerField);
             this.AddControl(PageType.Update, ControlCode.AskingPrice, Field<UpdateActivityCommand>.Create(x => x.AskingPrice).InnerField);
             this.AddControl(PageType.Update, ControlCode.ShortLetPricePerWeek, Field<UpdateActivityCommand>.Create(x => x.ShortLetPricePerWeek).InnerField);
@@ -103,8 +101,7 @@
                 ControlCode.Landlords,
                 ControlCode.ActivityStatus,
                 ControlCode.ActivityType,
-                ControlCode.LeadNegotiator,
-                ControlCode.SecondaryNegotiators,
+                ControlCode.Negotiators,
                 ControlCode.Departments,
                 ControlCode.ShortLetPricePerWeek,
             }, this.When(new List<PropertyType>
@@ -117,8 +114,7 @@
                 ControlCode.Vendors,
                 ControlCode.ActivityStatus,
                 ControlCode.ActivityType,
-                ControlCode.LeadNegotiator,
-                ControlCode.SecondaryNegotiators,
+                ControlCode.Negotiators,
                 ControlCode.Departments,
                 ControlCode.AskingPrice
             }, this.When(new List<PropertyType>
@@ -132,8 +128,7 @@
                 ControlCode.Vendors,
                 ControlCode.ActivityStatus,
                 ControlCode.ActivityType,
-                ControlCode.LeadNegotiator,
-                ControlCode.SecondaryNegotiators,
+                ControlCode.Negotiators,
                 ControlCode.Departments,
                 ControlCode.AskingPrice
             }, this.When(new List<PropertyType>
@@ -144,8 +139,7 @@
             this.Use(new List<ControlCode>
             {
                 ControlCode.ActivityStatus,
-                ControlCode.LeadNegotiator,
-                ControlCode.SecondaryNegotiators,
+                ControlCode.Negotiators,
                 ControlCode.Departments,
                 ControlCode.ShortLetPricePerWeek,
                 ControlCode.MarketAppraisalPrice,
@@ -159,8 +153,7 @@
             this.Use(new List<ControlCode>
             {
                 ControlCode.ActivityStatus,
-                ControlCode.LeadNegotiator,
-                ControlCode.SecondaryNegotiators,
+                ControlCode.Negotiators,
                 ControlCode.Departments,
                 ControlCode.AskingPrice,
                 ControlCode.MarketAppraisalPrice,
@@ -175,8 +168,7 @@
             this.Use(new List<ControlCode>
             {
                 ControlCode.ActivityStatus,
-                ControlCode.LeadNegotiator,
-                ControlCode.SecondaryNegotiators,
+                ControlCode.Negotiators,
                 ControlCode.Departments,
                 ControlCode.AskingPrice,
                 ControlCode.MarketAppraisalPrice,

@@ -5,5 +5,8 @@ declare module Antares.Activity {
 
     interface IActivityViewConfig extends IActivityConfig {
         departments: Attributes.IActivityDepartmentsViewControlConfig;
+        vendors: Attributes.IActivityVendorsControlConfig;
+        landlords: Attributes.IActivityLandlordsControlConfig;
+        negotiators: Attributes.IActivityNegotiatorsControlConfig;
     }
 }

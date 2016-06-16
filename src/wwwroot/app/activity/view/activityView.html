@@ -25,8 +25,11 @@
                     <activity-landlords-view-control contacts="avvm.activity.contacts" config="avvm.config.landlords"></activity-landlords-view-control>
                 </section>
                 <section>
-                    <negotiators-view property-division-id="{{avvm.activity.property.divisionId}}" lead-negotiator="avvm.activity.leadNegotiator"
-                        secondary-negotiators="avvm.activity.secondaryNegotiator"></negotiators-view>
+                    <activity-negotiators-view-control config="avvm.config.negotiators"
+                                                       property-division-id="{{avvm.activity.property.divisionId}}"
+                                                       lead-negotiator="avvm.activity.leadNegotiator"
+                                                       secondary-negotiators="avvm.activity.secondaryNegotiator">
+                    </activity-negotiators-view-control>
                 </section>
                 <section id='departments-section'>
                     <activity-departments-view-control config="avvm.config.departments" activity-departments="avvm.activity.activityDepartments">
@@ -81,7 +84,7 @@
                         </card-list-no-items>
                         <card-list-item ng-repeat="attachment in avvm.activity.attachments | orderBy: avvm.attachmentsCartListOrder.name : avvm.attachmentsCartListOrder.descending track by attachment.id ">
                             <card id="attachment-card-{{::attachment.id}}" card-template-url="'app/activity/templates/activityAttachmentCard.html'" item="attachment"
-                                show-item-details="avvm.showActivityAttachmentPreview">
+                                  show-item-details="avvm.showActivityAttachmentPreview">
                             </card>
                         </card-list-item>
                     </card-list>
@@ -92,7 +95,7 @@
                     <h3 class="page-header" translate="ACTIVITY.VIEW.OFFERS"></h3>
                     <card-list-item class="activity-view-offers" ng-repeat="offer in avvm.activity.offers | orderBy: '-createdDate' | enumSorter: 'OfferStatus':'statusId' track by offer.id + offer.statusId + offer.offerDate">
                         <card card-template-url="'app/activity/view/activityOffersCard.html'" item="offer" show-item-details="avvm.showOfferPreview"
-                            display-new-control="true" show-context-menu="true">
+                              display-new-control="true" show-context-menu="true">
                             <card-context-menu>
                                 <context-menu-item type="details" item="offer" action="avvm.navigateToOfferView"></context-menu-item>
                             </card-context-menu>

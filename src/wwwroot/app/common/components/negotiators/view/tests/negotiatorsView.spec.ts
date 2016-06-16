@@ -11,7 +11,7 @@ module Antares {
         propertyDivisionId: string;
     }
 
-    describe('Given negotiators view component', () => {
+    xdescribe('Given negotiators view component', () => {
         var scope: IScope,
             compile: ng.ICompileService,
             element: ng.IAugmentedJQuery,
