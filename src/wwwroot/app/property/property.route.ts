@@ -1,16 +1,11 @@
 /// <reference path="../typings/_all.d.ts" />
 
 module Antares.Property {
-    import Dto = Common.Models.Dto;
-    import Business = Common.Models.Business;
-    import LatestViewsProvider = Providers.LatestViewsProvider;
-    import EntityType = Common.Models.Enums.EntityTypeEnum;
-
     var app: ng.IModule = angular.module('app');
 
     app.config(initRoute);
 
-    function initRoute($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
+    function initRoute($stateProvider: ng.ui.IStateProvider) {
         $stateProvider
             .state('app.property-search', {
                 url: '/property/search',
@@ -28,7 +23,7 @@ module Antares.Property {
                 template: '<property-view user-data="appVm.userData" property="property"></property-view>',
                 controller: 'PropertyRouteViewController',
                 resolve: {
-                    property: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Antares.Services.DataAccessService) => {
+                    property: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) => {
                         var propertyId: string = $stateParams['id'];
                         return dataAccessService.getPropertyResource().get({ id: propertyId }).$promise;
                     }
@@ -40,7 +35,7 @@ module Antares.Property {
                 template: '<property-edit user-data="appVm.userData" property="property"></property-edit>',
                 controller: 'PropertyRouteEditController',
                 resolve: {
-                    property: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Antares.Services.DataAccessService) => {
+                    property: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) => {
                         var propertyId: string = $stateParams['id'];
                         return dataAccessService.getPropertyResource().get({ id: propertyId }).$promise;
                     }

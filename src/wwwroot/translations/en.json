@@ -162,7 +162,11 @@
       "PROPERTY_VIEW_LINK": "View property"
     },
     "SEARCH": {
-      "PROPERTIES": "Properties"
+      "PROPERTIES": "Properties",
+      "NO_ITEMS": "Sorry, no properties matched your search. Please try again.",
+      "QUERY_PLACEHOLDER": "Search for a property",
+      "RESULTS_COUNT": "Results:",
+      "RESULTS_PER_PAGE": "results / page:"
     }
   },
   "COMMERCIAL_PROPERTY": {
