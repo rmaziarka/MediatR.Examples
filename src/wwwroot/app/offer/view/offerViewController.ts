@@ -60,7 +60,8 @@ module Antares.Component {
 		isOfferNew = (): boolean => {
             var selectedOfferStatus: Common.Models.Dto.IEnumItem = _.find(this.offerStatuses, (status:  Common.Models.Dto.IEnumItem) => status.id === this.offer.statusId);
             if (selectedOfferStatus) {
-                return selectedOfferStatus.code === "New";
+	            return selectedOfferStatus.code ===
+		            Common.Models.Enums.OfferStatus[Common.Models.Enums.OfferStatus.New];
             }
 
             return false;

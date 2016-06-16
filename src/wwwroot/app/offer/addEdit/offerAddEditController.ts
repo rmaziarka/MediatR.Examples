@@ -14,7 +14,7 @@ module Antares {
             completionDateOpen: boolean = false;
             today: Date = new Date();
 
-            defaultStatusCode: string = 'New';
+            defaultStatusCode: string = Common.Models.Enums.OfferStatus[Common.Models.Enums.OfferStatus.New];
             statuses: any;
             selectedStatus: any;
 

@@ -169,7 +169,7 @@ module Antares.Offer {
         offerAccepted = (): boolean => {
             var selectedOfferStatus: any = _.find(this.offerStatuses, (status: any) => status.id === this.offer.statusId);
             if (selectedOfferStatus) {
-                return selectedOfferStatus.code === "Accepted";
+                return selectedOfferStatus.code === Common.Models.Enums.OfferStatus[Common.Models.Enums.OfferStatus.Accepted];
             }
 
             return false;
