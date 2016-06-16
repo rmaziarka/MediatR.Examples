@@ -66,7 +66,6 @@ module Antares.Common.Component.Attachment {
             }
 
             if (!this.isDataValid() || this.file === null) {
-                this.onUploadFailed();
                 return;
             }
 

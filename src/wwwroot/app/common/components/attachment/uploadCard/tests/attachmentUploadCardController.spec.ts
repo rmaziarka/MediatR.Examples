@@ -52,8 +52,32 @@ module Antares {
         });
 
         describe('when uploadAttachment is called', () => {
+            it('and isDataValid returns false then onUploadStarted & onUploadFinished & onUploadFailed are not called', () => {
+                // arrange
+                spyOn(controller, 'isDataValid').and.returnValue(false);
+                spyOn(controller, 'getAzureUploadUrl').and.returnValue(getAzureUploadUrlDefferedMock.promise);
+                spyOn(controller, 'uploadFile').and.returnValue(uploadFileDefferedMock.promise);
+                spyOn(controller, 'onUploadStarted');
+                spyOn(controller, 'onUploadFinished');
+                spyOn(controller, 'onUploadFailed');
+
+                //act
+                controller.uploadAttachment();
+
+                getAzureUploadUrlDefferedMock.resolve(<Dto.IAzureUploadUrlContainer>{});
+                uploadFileDefferedMock.resolve();
+
+                $scope.$apply();
+
+                // assert
+                expect(controller.onUploadStarted).not.toHaveBeenCalled();
+                expect(controller.onUploadFailed).not.toHaveBeenCalled();
+                expect(controller.onUploadFinished).not.toHaveBeenCalled();
+            });
+
             it('and getAzureUploadUrl fails then onUploadFinished is not called and onUploadFailed is called', () => {
                 // arrange
+                spyOn(controller, 'isDataValid').and.returnValue(true);
                 spyOn(controller, 'getAzureUploadUrl').and.returnValue(getAzureUploadUrlDefferedMock.promise);
                 spyOn(controller, 'uploadFile').and.returnValue(uploadFileDefferedMock.promise);
                 spyOn(controller, 'onUploadStarted');
@@ -76,6 +100,7 @@ module Antares {
 
             it('and uploadFile fails then onUploadFinished is not called and onUploadFailed is called', () => {
                 // arrange
+                spyOn(controller, 'isDataValid').and.returnValue(true);
                 spyOn(controller, 'getAzureUploadUrl').and.returnValue(getAzureUploadUrlDefferedMock.promise);
                 spyOn(controller, 'uploadFile').and.returnValue(uploadFileDefferedMock.promise);
                 spyOn(controller, 'onUploadStarted');
@@ -106,6 +131,7 @@ module Antares {
                 controller.file = <File>fileMock;
                 controller.documentTypeId = documentTypeIdMock;
 
+                spyOn(controller, 'isDataValid').and.returnValue(true);
                 spyOn(controller, 'getAzureUploadUrl').and.returnValue(getAzureUploadUrlDefferedMock.promise);
                 spyOn(controller, 'uploadFile').and.returnValue(uploadFileDefferedMock.promise);
                 spyOn(controller, 'onUploadStarted');
