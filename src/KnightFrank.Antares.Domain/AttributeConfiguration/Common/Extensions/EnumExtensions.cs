@@ -9,5 +9,10 @@
         {
             return System.Enum.GetValues(typeof(T)).Cast<T>();
         }
+
+        public static T ParseEnum<T>(string value)
+        {
+            return (T)System.Enum.Parse(typeof(T), value, true);
+        }
     }
 }

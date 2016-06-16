@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.AttributeConfiguration.Common
+﻿namespace KnightFrank.Antares.Api.ModelBinders
 {
     using System.Web.Http.Controllers;
     using System.Web.Http.ModelBinding;
@@ -24,6 +24,7 @@
                     bindingContext.Model = JsonConvert.DeserializeObject<UpdateActivityCommand>(requestContent);
                     break;
                 case PageType.Details:
+                case PageType.Preview:
                     bindingContext.Model = JsonConvert.DeserializeObject<Activity>(requestContent);
                     break;
             }

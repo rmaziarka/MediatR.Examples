@@ -5,7 +5,8 @@ module Antares.Attributes {
         templateUrl:'app/attributes/activityType/activityTypePreviewControl.html',
             controllerAs: 'vm',
             bindings: {
-                typeId: '<'
+                typeId: '<',
+                config: '<'
             }
     });
 }

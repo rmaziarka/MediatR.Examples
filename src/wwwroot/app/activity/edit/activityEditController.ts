@@ -6,6 +6,7 @@ module Antares.Activity {
     import DepartmentsController = Antares.Common.Component.DepartmentsController;
 
     export class ActivityEditController {
+        public config: IActivityEditConfig;
         public activity: Business.Activity;
         public enumTypeActivityStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityStatus;
         private departmentsController: DepartmentsController;
@@ -32,6 +33,9 @@ module Antares.Activity {
                 .then((activity: Dto.IActivity) =>{
                     this.$state.go('app.activity-view', activity);
                 });
+        }
+
+        activityStatusChanged = (activityStatusId: string) => {
         }
         
         cancel() {

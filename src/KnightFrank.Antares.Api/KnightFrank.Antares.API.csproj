@@ -219,6 +219,7 @@
     <Compile Include="Controllers\LatestViewsController.cs" />
     <Compile Include="Controllers\MetadataController.cs" />
     <Compile Include="Controllers\OffersController.cs" />
+    <Compile Include="ModelBinders\ConfigurableEntityModelBinder.cs" />
     <Compile Include="Models\AttachmentDownloadUrlParameters.cs" />
     <Compile Include="Services\AzureStorage\AzureDownloadUrlContainer.cs" />
     <Compile Include="Services\AzureStorage\AzureUploadUrlContainer.cs" />

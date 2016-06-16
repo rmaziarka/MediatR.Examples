@@ -27,7 +27,7 @@ module Antares.Activity {
             })
             .state('app.activity-edit', {
                 url: '/activity/edit/:id',
-                template: "<activity-edit activity='activity'></activity-edit>",
+                template: "<activity-edit activity='activity' config='config'></activity-edit>",
                 controller: "ActivityRouteController",
                 resolve: {
                     activity: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) => {

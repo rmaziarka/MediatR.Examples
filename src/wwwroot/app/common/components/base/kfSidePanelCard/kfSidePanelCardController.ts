@@ -15,7 +15,7 @@ module Antares.Common.Component {
             this.isHeaderVisible = $transclude.isSlotFilled('header');
         }
 
-        close = () =>{
+        close = () => {
             this.eventAggregator.publish(new CloseSidePanelEvent());
         }
     }

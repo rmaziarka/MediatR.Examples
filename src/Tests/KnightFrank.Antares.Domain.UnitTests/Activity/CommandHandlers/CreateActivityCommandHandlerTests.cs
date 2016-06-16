@@ -15,6 +15,8 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.CommandHandlers;
     using KnightFrank.Antares.Domain.Activity.Commands;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
 
@@ -25,6 +27,9 @@
 
     using Xunit;
 
+    using ActivityType = KnightFrank.Antares.Dal.Model.Property.Activities.ActivityType;
+    using PropertyType = KnightFrank.Antares.Dal.Model.Property.PropertyType;
+
     [Trait("FeatureTitle", "Activity")]
     [Collection("CreateActivityCommandHandler")]
     public class CreateActivityCommandHandlerTests : IClassFixture<BaseTestClassFixture>
@@ -33,6 +38,7 @@
         [AutoMoqData]
         public void Given_ValidCommand_When_Handling_Then_ShouldSaveActivity(
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
+            [Frozen] Mock<IGenericRepository<Dal.Model.Property.Activities.ActivityType>> activityTypeRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             [Frozen] Mock<IGenericRepository<User>> userRepository,
             [Frozen] Mock<IEntityValidator> entityValidator,
@@ -40,6 +46,7 @@
             [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IActivityTypeDefinitionValidator> activityTypeDefinitionValidator,
+            [Frozen] Mock<IAttributeValidator<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>> attributeValidator,
             CreateActivityCommandHandler handler,
             CreateActivityCommand command,
             Guid expectedActivityId,
@@ -50,7 +57,14 @@
             Activity activity = null;
             var property = fixture.Create<Property>();
             property.Address = fixture.Create<Address>();
+            property.PropertyType =
+                fixture.Build<PropertyType>().With(x => x.EnumCode, Domain.Common.Enums.PropertyType.Flat.ToString()).Create();
             propertyRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(property);
+            var activityType =
+                fixture.Build<ActivityType>()
+                       .With(x => x.EnumCode, Domain.Common.Enums.ActivityType.FreeholdSale.ToString())
+                       .Create();
+            activityTypeRepository.Setup(x => x.GetById(command.ActivityTypeId)).Returns(activityType);
 
             enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
                                   .Returns(
@@ -93,9 +107,13 @@
             managingDepartment.Department.Should().Be(user.Department);
             managingDepartment.DepartmentType.Code.Should().Be(ActivityDepartmentType.Managing.ToString());
 
-            entityValidator.Verify(x => x.EntityExists<Dal.Model.Property.Activities.ActivityType>(command.ActivityTypeId), Times.Once);
             entityValidator.Verify(x => x.EntityExists(property, command.PropertyId), Times.Once);
             entityValidator.Verify(x => x.EntityExists(user, command.LeadNegotiatorId), Times.Once);
+            entityValidator.Verify(x => x.EntityExists(activityType, command.ActivityTypeId), Times.Once);
+            attributeValidator.Verify(
+                x =>
+                    x.Validate(PageType.Create, Domain.Common.Enums.PropertyType.Flat,
+                        Domain.Common.Enums.ActivityType.FreeholdSale, command));
             activityTypeDefinitionValidator.Verify(
                 x => x.Validate(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>()),
                 Times.Once);

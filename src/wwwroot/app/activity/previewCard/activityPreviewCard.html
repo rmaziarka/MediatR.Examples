@@ -1,0 +1,25 @@
+<kf-side-panel-card>
+    <side-panel-header>
+        <h3 translate="ACTIVITY.PREVIEW.ACTIVITYPREVIEW"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <div class="row section-row">
+            <div class="col-xs-5">
+                <a ui-sref="app.activity-view({id:vm.activity.id})" translate="ACTIVITY.PREVIEW.ACTIVITY_VIEW_LINK"></a>
+            </div>
+        </div>
+
+        <activity-type-preview-control config="vm.config.activityType" type-id="vm.activity.activityTypeId"></activity-type-preview-control>
+
+        <activity-status-preview-control config="vm.config.activityStatus" status-id='vm.activity.activityStatusId'></activity-status-preview-control>
+
+        <div class="row section-row">
+            <div class="col-xs-5" translate="ACTIVITY.PREVIEW.CREATION_DATE"></div>
+            <div class="col-xs-7" id="activity-preview-created-date">{{vm.activity.createdDate | date : 'dd-MM-yyyy'}}</div>
+        </div>
+
+        <activity-vendors-preview-control contacts='vm.activity.contacts' config="vm.config.vendors"></activity-vendors-preview-control>
+        <activity-landlords-preview-control contacts='vm.activity.contacts' config="vm.config.landlords"></activity-landlords-preview-control>
+
+        <side-panel-content>
+</kf-side-panel-card>

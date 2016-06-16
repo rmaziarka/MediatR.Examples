@@ -3,6 +3,7 @@
 declare module Antares.Activity {
     import Attributes = Antares.Attributes;
 
-    interface IActivityAddPanelConfig extends IActivityConfig {
+    interface IActivityEditConfig extends IActivityConfig {
+        activityStatus: Attributes.IActivityStatusEditControlConfig;
     }
 }

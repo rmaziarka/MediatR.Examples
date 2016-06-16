@@ -1,2 +1,4 @@
-<div class="col-xs-5" translate="ACTIVITY.PREVIEW.STATUS"></div>
-<div class="col-xs-7" id="activity-preview-status">{{vm.statusId | dynamicTranslate}} </div>
+<div class="row section-row" ng-if="vm.config">
+    <div class="col-xs-5" translate="ACTIVITY.PREVIEW.STATUS"></div>
+    <div class="col-xs-7" id="activity-preview-status">{{vm.statusId | dynamicTranslate}} </div>
+</div>

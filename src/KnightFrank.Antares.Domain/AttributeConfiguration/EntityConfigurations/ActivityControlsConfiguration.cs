@@ -31,6 +31,13 @@
             this.AddControl(PageType.Create, ControlCode.Vendors, Field<CreateActivityCommand>.Create(x => x.ContactIds).InnerField);
             this.AddControl(PageType.Create, ControlCode.Landlords, Field<CreateActivityCommand>.Create(x => x.ContactIds).InnerField);
             this.AddControl(PageType.Create, ControlCode.ActivityType, Field<CreateActivityCommand>.Create(x => x.ActivityTypeId).Required().InnerField);
+
+            this.AddBaseControl(PageType.Preview, ControlCode.Property, Field<Activity>.Create(x => x.PropertyId).Required().InnerField);
+
+            this.AddControl(PageType.Preview, ControlCode.ActivityStatus, Field<Activity>.CreateDictionary(x => x.ActivityStatusId, nameof(ActivityStatus)).Required().InnerField);
+            this.AddControl(PageType.Preview, ControlCode.Vendors, Field<Activity>.Create(x => x.Contacts).InnerField);
+            this.AddControl(PageType.Preview, ControlCode.Landlords, Field<Activity>.Create(x => x.Contacts).InnerField);
+            this.AddControl(PageType.Preview, ControlCode.ActivityType, Field<Activity>.Create(x => x.ActivityTypeId).Required().InnerField);
         }
 
         private void DefineControlsForPreview()
@@ -65,11 +72,8 @@
 
         private void DefineControlsForEdit()
         {
-            this.AddControl(PageType.Update, ControlCode.ActivityStatus, Field<Activity>.Create(x => x.ActivityStatusId).Required().InnerField);
-            this.AddControl(PageType.Update, ControlCode.Vendors, Field<Activity>.Create(x => x.Contacts).InnerField);
-            this.AddControl(PageType.Update, ControlCode.Property, Field<Activity>.Create(x => x.PropertyId).InnerField);
-            this.AddControl(PageType.Update, ControlCode.LeadNegotiator, Field<Activity>.Create(x => x.ActivityUsers).Required().InnerField);
-            this.AddControl(PageType.Update, ControlCode.Landlords, Field<Activity>.Create(x => x.Contacts).InnerField);
+            this.AddControl(PageType.Update, ControlCode.ActivityStatus, Field<UpdateActivityCommand>.Create(x => x.ActivityStatusId).Required().InnerField);
+            this.AddControl(PageType.Update, ControlCode.LeadNegotiator, Field<UpdateActivityCommand>.Create(x => x.LeadNegotiator).Required().InnerField);
             this.AddControl(PageType.Update, ControlCode.SecondaryNegotiators, Field<Activity>.Create(x => x.ActivityUsers).InnerField);
             this.AddControl(PageType.Update, ControlCode.ActivityDepartments, Field<Activity>.Create(x => x.ActivityDepartments).InnerField);
             this.AddControl(PageType.Update, ControlCode.AskingPrice, Field<Activity>.Create(x => x.AskingPrice).InnerField);
@@ -162,7 +166,6 @@
 
             this.Use(new List<ControlCode>
             {
-                ControlCode.Landlords,
                 ControlCode.ActivityStatus,
                 ControlCode.LeadNegotiator,
                 ControlCode.SecondaryNegotiators,
@@ -176,7 +179,6 @@
 
             this.Use(new List<ControlCode>
             {
-                ControlCode.Vendors,
                 ControlCode.ActivityStatus,
                 ControlCode.LeadNegotiator,
                 ControlCode.SecondaryNegotiators,
@@ -191,7 +193,6 @@
 
             this.Use(new List<ControlCode>
             {
-                ControlCode.Vendors,
                 ControlCode.ActivityStatus,
                 ControlCode.LeadNegotiator,
                 ControlCode.SecondaryNegotiators,

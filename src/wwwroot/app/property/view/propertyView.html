@@ -33,8 +33,8 @@
                         <card-list-items as-sortable="vm.areaBreakdownDndOptions" ng-model="vm.property.propertyAreaBreakdowns">
                             <div ng-repeat="propertyAreaBreakdown in vm.property.propertyAreaBreakdowns track by propertyAreaBreakdown.id" as-sortable-item>
                                 <div as-sortable-item-handle>
-                                    <card id="area-card-{{propertyAreaBreakdown.id}}" show-context-menu="true" display-new-control="true"
-                                          card-template-url="'app/property/view/areaBreakdown/list/areaBreakdownCard.html'" item="propertyAreaBreakdown">
+                                    <card id="area-card-{{propertyAreaBreakdown.id}}" show-context-menu="true" display-new-control="true" card-template-url="'app/property/view/areaBreakdown/list/areaBreakdownCard.html'"
+                                        item="propertyAreaBreakdown">
                                         <card-context-menu>
                                             <context-menu-item type="edit" item="propertyAreaBreakdown" action="vm.showAreaEdit"></context-menu-item>
                                         </card-context-menu>
@@ -48,7 +48,8 @@
             <div class="col-md-4">
                 <section>
                     <h3 class="page-header" translate="PROPERTY.VIEW.CHARACTERISTICS"></h3>
-                    <characteristic-list-view componentId="characteristicListView" property-type-id="vm.property.propertyTypeId" country-id="vm.property.address.countryId" characteristics-map="vm.property.propertyCharacteristicsMap"></characteristic-list-view>
+                    <characteristic-list-view componentId="characteristicListView" property-type-id="vm.property.propertyTypeId" country-id="vm.property.address.countryId"
+                        characteristics-map="vm.property.propertyCharacteristicsMap"></characteristic-list-view>
                 </section>
             </div>
             <div class="col-md-4">
@@ -118,7 +119,9 @@
         </div>
         <div class="row section-row">
             <div class="col-xs-5">Added</div>
-            <div class="col-xs-7"><time>19-03-2016</time></div>
+            <div class="col-xs-7">
+                <time>19-03-2016</time>
+            </div>
         </div>
         <div class="row section-row">
             <div class="col-xs-5">By</div>
@@ -235,16 +238,6 @@
     </side-panel-content>
 </side-panel>
 
-<side-panel component-id="vm.componentIds.activityPreviewSidePanelId">
-    <side-panel-header>
-        <h3 translate="ACTIVITY.PREVIEW.ACTIVITYPREVIEW"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <activity-preview activity='vm.selectedActivity' component-id="vm.componentIds.activityPreviewId">
-        </activity-preview>
-    </side-panel-content>
-</side-panel>
-
 <side-panel component-id="vm.componentIds.areaAddSidePanelId">
     <side-panel-header>
         <h3 translate="COMMERCIAL_PROPERTY.AREA_BREAKDOWN.ADD.CREATE_AREA"></h3>
@@ -279,6 +272,14 @@
     </side-panel-footer>
 </side-panel>
 
-<activity-add-panel is-visible="vm.isActivityAddPanelVisible" property-type-Id="vm.property.propertyTypeId"
-                    property-id="vm.property.id" ownerships="vm.property.ownerships">
+<activity-add-panel is-visible="vm.isActivityAddPanelVisible" 
+property-type-Id="vm.property.propertyTypeId" property-id="vm.property.id"
+    ownerships="vm.property.ownerships">
 </activity-add-panel>
+
+<activity-preview-panel 
+is-visible="vm.isActivityPreviewPanelVisible" 
+property-type-id="vm.property.propertyTypeId" 
+activity='vm.selectedActivity'>
+
+</activity-preview-panel>

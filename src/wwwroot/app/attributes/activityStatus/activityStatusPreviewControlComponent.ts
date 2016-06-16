@@ -5,7 +5,8 @@ module Antares.Attributes {
         templateUrl:'app/attributes/activityStatus/activityStatusPreviewControl.html',
             controllerAs: 'vm',
             bindings: {
-                statusId: '<'
+                statusId: '<',
+                config:'<'
             }
     });
 }
