@@ -4,12 +4,13 @@ module Antares {
     import OfferViewController = Component.OfferViewController;
 	import Dto = Common.Models.Dto;
 
-    describe('Given offer view component is loaded', () => {
-        var scope: ng.IScope,
-            element: ng.IAugmentedJQuery,
-            controller: OfferViewController,
-            state: ng.ui.IStateService,
-            $http: ng.IHttpBackendService;
+    describe('Given offer view component is loaded', () =>{
+	    var scope: ng.IScope,
+	        element: ng.IAugmentedJQuery,
+	        controller: OfferViewController,
+	        state: ng.ui.IStateService,
+	        $http: ng.IHttpBackendService,
+	        compile: ng.ICompileService;
 
         var pageObjectSelectors = {
             vendorSection: '#section-vendor',
@@ -38,17 +39,17 @@ module Antares {
 			enumService: Mock.EnumServiceMock) => {
 
             $http = $httpBackend;
-            state = $state;
+            compile = $compile;
+			state = $state;
             scope = $rootScope.$new();
             scope["offer"] = offerMock;
 
             enumService.setEnum(Dto.EnumTypeCode.OfferStatus.toString(), offerStatuses);
 
-            element = $compile('<offer-view offer="offer"></offer-view>')(scope);
+            element = compile('<offer-view offer="offer"></offer-view>')(scope);
             scope.$apply();
 			
-            controller = element.controller('offerView');
-			scope.$apply();
+			controller = element.controller('offerView');
         }));
 
         describe('when data are retrived form the server', () => {
@@ -66,12 +67,13 @@ module Antares {
                 expect(currentHeaderNames).toEqual(expectedHeaderNamesText);
             });
 
-            xit('vendor address is displayed within vendor card', () => {
+            it('vendor address is displayed within vendor card', () => {
                 offerMock.activity.property.address.propertyNumber = "test property number";
                 offerMock.activity.property.address.propertyName = "test property name";
                 offerMock.activity.property.address.line2 = "test line2 address";
 
                 scope['offer'] = offerMock;
+				element = compile('<offer-view offer="offer"></offer-view>')(scope);
                 scope.$apply();
 
                 var expectedAddressText = offerMock.activity.property.address.getAddressText();
@@ -80,12 +82,13 @@ module Antares {
                 expect(currentVendorAddressText).toEqual(expectedAddressText);
             });
 
-            xit('applicant names are displayed within applicant card seppareted by comma', () => {
+            it('applicant names are displayed within applicant card seppareted by comma', () => {
                 //Add two contacts
                 offerMock.requirement.contacts.push(TestHelpers.ContactGenerator.generate());
                 offerMock.requirement.contacts.push(TestHelpers.ContactGenerator.generate());
 
                 scope['offer'] = offerMock;
+				element = compile('<offer-view offer="offer"></offer-view>')(scope);
                 scope.$apply();
 
                 var expectedApplicantNamesText = offerMock.requirement.getContactNames();
