@@ -146,6 +146,8 @@
                 .SelectContact(details.Surveyor, details.SurveyorCompany)
                 .ApplyContact();
             this.page.WaitForSidePanelToHide();
+
+            this.scenarioContext.Set(details, "OfferMortgageDetails");
         }
 
         [When(@"User fills in offer additional details on edit offer page")]
@@ -162,6 +164,9 @@
                 .SelectContact(details.AdditionalSurveyor, details.AdditionalSurveyorCompany)
                 .ApplyContact();
             this.page.WaitForSidePanelToHide();
+
+
+            this.scenarioContext.Set(details, "OfferAdditional");
         }
 
         [Then(@"Following company contacts should be displayed on edit offer page")]

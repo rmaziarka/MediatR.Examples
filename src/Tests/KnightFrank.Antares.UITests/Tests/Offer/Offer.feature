@@ -255,3 +255,9 @@ Scenario: Create and update accepted residential sales offer
 		And Offer progress summary details on view offer page are same as the following
 			| MortgageStatus | MortgageSurveyStatus | AdditionalSurveyStatus | SearchStatus | Enquiries | ContractApproved |
 			| Agreed         | Complete             | Complete               | Complete     | Complete  | true             |
+		And Offer mortgage details details on view offer page are same as the following
+			| MortgageLoanToValue | Broker       | BrokerCompany | Lender      | LenderCompany | Surveyor     | SurveyorCompany |
+			| 100                 | Steve Harris | Objectivity   | Dave Murray | Objectivity   | Adrian Smith | Objectivity     |
+		And Offer additional details on view offer page are same as the following
+			| AdditionalSurveyor | AdditionalSurveyorCompany | Comment  |
+			| Bruce Dickinson    | Objectivity               | Approved |

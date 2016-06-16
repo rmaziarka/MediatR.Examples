@@ -83,17 +83,17 @@
 
         public string MortgageLoanToValue => this.Driver.GetElement(this.mortgageLoanToValue).Text;
 
-        public List<string> Brokers => this.Driver.GetElements(this.broker).Select(el => el.Text).ToList();
+        public List<string> Broker => this.Driver.GetElements(this.broker).Select(el => el.Text).ToList();
 
-        public List<string> Lenders => this.Driver.GetElements(this.lender).Select(el => el.Text).ToList();
+        public List<string> Lender => this.Driver.GetElements(this.lender).Select(el => el.Text).ToList();
 
         public string MortgageSurveyDate => this.Driver.GetElement(this.mortgageSurveyDate).Text;
 
-        public List<string> MortgageSurveyors => this.Driver.GetElements(this.mortgageSurveyor).Select(el => el.Text).ToList();
+        public List<string> MortgageSurveyor => this.Driver.GetElements(this.mortgageSurveyor).Select(el => el.Text).ToList();
 
         public string AdditionalSurveyDate => this.Driver.GetElement(this.additionalSurveyDate).Text;
 
-        public List<string> AdditionalSurveyors => this.Driver.GetElements(this.additionalSurveyor).Select(el => el.Text).ToList();
+        public List<string> AdditionalSurveyor => this.Driver.GetElements(this.additionalSurveyor).Select(el => el.Text).ToList();
 
         public string Comment => this.Driver.GetElement(this.comment).Text;
 
