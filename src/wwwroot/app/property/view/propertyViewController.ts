@@ -11,8 +11,9 @@ module Antares.Property.View {
 
     export class PropertyViewController extends Core.WithPanelsBaseController {
         isActivityAddPanelVisible: boolean = false;
-
+        isActivityPreviewPanelVisible:boolean = false;
         ownershipAddPanelVisible: boolean = false;
+        
         propertyId: string;
 
         loadingContacts: boolean = false;
@@ -40,6 +41,7 @@ module Antares.Property.View {
             this.eventAggregator.with(this).subscribe(Antares.Common.Component.CloseSidePanelEvent, () => {
                 // TODO iteration?
                 this.isActivityAddPanelVisible = false;
+                this.isActivityPreviewPanelVisible = false;
             });
 
             this.eventAggregator.with(this).subscribe(Activity.ActivityAddedSidePanelEvent, (msg: Activity.ActivityAddedSidePanelEvent) => {
@@ -87,8 +89,9 @@ module Antares.Property.View {
         }
 
         showActivityPreview = (activity: Common.Models.Business.Activity) => {
+            this.hidePanels();
             this.selectedActivity = activity;
-            this.showPanel(this.components.panels.activityPreview);
+            this.isActivityPreviewPanelVisible = true;
 
             this.latestViewsProvider.addView({
                 entityId: activity.id,
@@ -205,7 +208,6 @@ module Antares.Property.View {
                 ownershipViewSidePanelId: 'viewProperty:ownershipViewSidePanelComponent',
                 activityAddId: 'viewProperty:activityAddComponent',
                 activityAddSidePanelId: 'viewProperty:activityAddSidePanelComponent',
-                activityPreviewSidePanelId: 'viewProperty:activityPreviewSidePanelComponent',
                 areaAddSidePanelId: 'viewProperty:areaAddSidePanelComponent',
                 areaEditSidePanelId: 'viewProperty:areaEditSidePanelComponent',
                 areaAddId: 'viewProperty:areaAddComponent',
@@ -225,7 +227,6 @@ module Antares.Property.View {
                     contact: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
                     ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); },
                     activityAdd: () => { return this.componentRegistry.get(this.componentIds.activityAddSidePanelId); },
-                    activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId); },
                     areaAdd: () => { return this.componentRegistry.get(this.componentIds.areaAddSidePanelId); },
                     areaEdit: () => { return this.componentRegistry.get(this.componentIds.areaEditSidePanelId); }
                 }

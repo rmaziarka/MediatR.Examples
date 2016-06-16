@@ -24,6 +24,7 @@
                     bindingContext.Model = JsonConvert.DeserializeObject<UpdateActivityCommand>(requestContent);
                     break;
                 case PageType.Details:
+                case PageType.Preview:
                     bindingContext.Model = JsonConvert.DeserializeObject<Activity>(requestContent);
                     break;
             }

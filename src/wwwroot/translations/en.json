@@ -213,6 +213,7 @@
       "STATUS": "Status",
       "CREATION_DATE": "Creation date",
       "VENDORS": "Vendor(s)",
+      "LANDLORDS": "Landlord(s)",
       "ACTIVITY_VIEW_LINK": "View activity",
       "ACTIVITY_DETAILS": "Activity details"
     },

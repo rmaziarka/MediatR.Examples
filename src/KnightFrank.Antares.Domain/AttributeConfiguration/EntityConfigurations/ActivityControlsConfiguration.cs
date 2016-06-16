@@ -31,6 +31,13 @@
             this.AddControl(PageType.Create, ControlCode.Vendors, Field<CreateActivityCommand>.Create(x => x.ContactIds).InnerField);
             this.AddControl(PageType.Create, ControlCode.Landlords, Field<CreateActivityCommand>.Create(x => x.ContactIds).InnerField);
             this.AddControl(PageType.Create, ControlCode.ActivityType, Field<CreateActivityCommand>.Create(x => x.ActivityTypeId).Required().InnerField);
+
+            this.AddBaseControl(PageType.Preview, ControlCode.Property, Field<Activity>.Create(x => x.PropertyId).Required().InnerField);
+
+            this.AddControl(PageType.Preview, ControlCode.ActivityStatus, Field<Activity>.CreateDictionary(x => x.ActivityStatusId, nameof(ActivityStatus)).Required().InnerField);
+            this.AddControl(PageType.Preview, ControlCode.Vendors, Field<Activity>.Create(x => x.Contacts).InnerField);
+            this.AddControl(PageType.Preview, ControlCode.Landlords, Field<Activity>.Create(x => x.Contacts).InnerField);
+            this.AddControl(PageType.Preview, ControlCode.ActivityType, Field<Activity>.Create(x => x.ActivityTypeId).Required().InnerField);
         }
 
         private void DefineControlsForPreview()
