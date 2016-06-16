@@ -1,4 +1,4 @@
-﻿<form name="vm.attachmentUploadForm" ng-submit="vm.attachmentUploadForm.$valid && vm.uploadAttachment()" id="file-upload-form" novalidate>
+﻿<form name="vm.attachmentUploadForm" ng-submit="vm.attachmentUploadForm.$valid" id="file-upload-form" novalidate>
     <kf-side-panel-card>
         <side-panel-header>
             <h3 translate="ATTACHMENT.ADD.ATTACH_FILE"></h3>
@@ -18,7 +18,7 @@
                     <div class="col-md-12" ng-hide="vm.file">
                         <span class="btn btn-default btn-file">
                             {{"ATTACHMENT.ADD.BROWSE" | translate}}
-                            <input id="attachment" name="attachment" type="file" kf-file-model="vm.file" ng-model="vm.file" file-required>
+                            <input id="attachment" name="attachment" type="file" ngf-select ng-model="vm.file" file-required is-file-cleared="{{vm.isFileCleared}}">
                         </span>
                         <div ng-class="{'has-error': vm.attachmentUploadForm.$submitted || vm.attachmentUploadForm.attachment.$dirty}" ng-messages="vm.attachmentUploadForm.attachment.$error"
                              ng-show="vm.attachmentUploadForm.$submitted || vm.attachmentUploadForm.attachment.$dirty">
@@ -44,7 +44,7 @@
             <button class="btn btn-default" type="button" ng-click="vm.cancel()">
                 <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
             </button>
-            <button class="btn btn-primary" id="attachment-save-button" type="submit">
+            <button class="btn btn-primary" id="attachment-save-button" type="submit" ng-click="vm.uploadAttachment()">
                 <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
             </button>
         </side-panel-footer>
