@@ -6,7 +6,7 @@ namespace KnightFrank.Antares.Domain.Common.BusinessValidators
     {
         void ItemExists(Enums.EnumType enumType, Guid enumTypeItemId);
 
-        void ItemExists(Enums.EnumType enumType, Guid? enumTypeItemId);
+        void ValidateMandatoryIfItemExists(Enums.EnumType enumType, Guid? enumTypeItemId);
 
         void ItemExists<T>(T enumTypeItem, Guid enumTypeItemId);
     }

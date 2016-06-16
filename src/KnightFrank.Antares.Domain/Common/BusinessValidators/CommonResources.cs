@@ -141,7 +141,13 @@
         /// Key value : Activity should hva only one managing department.
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        Activity_Should_Have_Only_One_Managing_Department
+        Activity_Should_Have_Only_One_Managing_Department,
+
+        /// <summary>
+        /// Key value : Enum value not passed.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        Enum_Value_Not_Passed
     }
 }
 

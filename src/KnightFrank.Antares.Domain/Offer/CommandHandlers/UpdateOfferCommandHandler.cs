@@ -140,11 +140,11 @@
 
         private void ValidateOfferProgressEnums(UpdateOfferCommand message)
         {
-            this.enumTypeItemValidator.ItemExists(DomainEnumType.MortgageStatus, message.MortgageStatusId);
-            this.enumTypeItemValidator.ItemExists(DomainEnumType.MortgageSurveyStatus, message.MortgageSurveyStatusId);
-            this.enumTypeItemValidator.ItemExists(DomainEnumType.AdditionalSurveyStatus, message.AdditionalSurveyStatusId);
-            this.enumTypeItemValidator.ItemExists(DomainEnumType.SearchStatus, message.SearchStatusId);
-            this.enumTypeItemValidator.ItemExists(DomainEnumType.Enquiries, message.EnquiriesId);
+            this.enumTypeItemValidator.ValidateMandatoryIfItemExists(DomainEnumType.MortgageStatus, message.MortgageStatusId);
+            this.enumTypeItemValidator.ValidateMandatoryIfItemExists(DomainEnumType.MortgageSurveyStatus, message.MortgageSurveyStatusId);
+            this.enumTypeItemValidator.ValidateMandatoryIfItemExists(DomainEnumType.AdditionalSurveyStatus, message.AdditionalSurveyStatusId);
+            this.enumTypeItemValidator.ValidateMandatoryIfItemExists(DomainEnumType.SearchStatus, message.SearchStatusId);
+            this.enumTypeItemValidator.ValidateMandatoryIfItemExists(DomainEnumType.Enquiries, message.EnquiriesId);
         }
 
         private void ValidateOfferProgressDates(UpdateOfferCommand message)

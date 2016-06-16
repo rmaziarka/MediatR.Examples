@@ -160,6 +160,15 @@ namespace KnightFrank.Antares.Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enum value of the field {0} not passed.
+        /// </summary>
+        internal static string Enum_Value_Not_Passed {
+            get {
+                return ResourceManager.GetString("Enum_Value_Not_Passed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enum type {0} with given item id &apos;{1}&apos; does not exist in the database..
         /// </summary>
         internal static string EnumType_Item_Not_Exists {

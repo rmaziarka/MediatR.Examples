@@ -20,6 +20,13 @@
             this.Message = GetMessage(errorCode);
         }
 
+        public BusinessValidationMessage(ErrorMessage errorCode, params string[] messageParameters)
+        {
+            this.ErrorCode = errorCode;
+            string messageTemplate = GetMessage(errorCode);
+            this.Message = string.Format(messageTemplate, messageParameters);
+        }
+
         public static BusinessValidationMessage CreateEntityNotExistMessage(string entityType, Guid id)
         {
             string errorMessageTemplate = GetMessage(ErrorMessage.Entity_Not_Exists);
