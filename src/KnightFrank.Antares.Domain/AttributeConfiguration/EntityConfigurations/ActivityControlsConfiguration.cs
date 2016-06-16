@@ -50,10 +50,8 @@
             this.AddControl(PageType.Details, ControlCode.Property, Field<Activity>.Create(x => x.PropertyId).InnerField);
             this.AddControl(PageType.Details, ControlCode.LeadNegotiator, Field<Activity>.Create(x => x.ActivityUsers).InnerField);
             this.AddControl(PageType.Details, ControlCode.Landlords, Field<Activity>.Create(x => x.Contacts).InnerField);
-            // next call date?
             this.AddControl(PageType.Details, ControlCode.SecondaryNegotiators, Field<Activity>.Create(x => x.ActivityUsers).InnerField);
-            this.AddControl(PageType.Details, ControlCode.ManagingDepartment, Field<Activity>.Create(x => x.ActivityDepartments).InnerField);
-            this.AddControl(PageType.Details, ControlCode.SecondaryDepartments, Field<Activity>.Create(x => x.ActivityDepartments).InnerField);
+            this.AddControl(PageType.Details, ControlCode.ActivityDepartments, Field<Activity>.Create(x => x.ActivityDepartments).InnerField);
             this.AddControl(PageType.Details, ControlCode.AskingPrice, Field<Activity>.Create(x => x.AskingPrice).InnerField);
             this.AddControl(PageType.Details, ControlCode.ShortLetPricePerWeek, Field<Activity>.Create(x => x.ShortLetPricePerWeek).InnerField);
             this.AddControl(PageType.Details, ControlCode.CreationDate, Field<Activity>.Create(x => x.CreatedDate).InnerField);
@@ -72,10 +70,8 @@
             this.AddControl(PageType.Update, ControlCode.Property, Field<Activity>.Create(x => x.PropertyId).InnerField);
             this.AddControl(PageType.Update, ControlCode.LeadNegotiator, Field<Activity>.Create(x => x.ActivityUsers).Required().InnerField);
             this.AddControl(PageType.Update, ControlCode.Landlords, Field<Activity>.Create(x => x.Contacts).InnerField);
-            // next call date?
             this.AddControl(PageType.Update, ControlCode.SecondaryNegotiators, Field<Activity>.Create(x => x.ActivityUsers).InnerField);
-            this.AddControl(PageType.Update, ControlCode.ManagingDepartment, Field<Activity>.Create(x => x.ActivityDepartments).InnerField);
-            this.AddControl(PageType.Update, ControlCode.SecondaryDepartments, Field<Activity>.Create(x => x.ActivityDepartments).InnerField);
+            this.AddControl(PageType.Update, ControlCode.ActivityDepartments, Field<Activity>.Create(x => x.ActivityDepartments).InnerField);
             this.AddControl(PageType.Update, ControlCode.AskingPrice, Field<Activity>.Create(x => x.AskingPrice).InnerField);
             this.AddControl(PageType.Update, ControlCode.ShortLetPricePerWeek, Field<Activity>.Create(x => x.ShortLetPricePerWeek).InnerField);
             this.AddControl(PageType.Update, ControlCode.MarketAppraisalPrice, Field<Activity>.Create(x => x.MarketAppraisalPrice).InnerField);
@@ -125,8 +121,7 @@
                 ControlCode.ActivityType,
                 ControlCode.LeadNegotiator,
                 ControlCode.SecondaryNegotiators,
-                ControlCode.ManagingDepartment,
-                ControlCode.SecondaryDepartments,
+                ControlCode.ActivityDepartments,
                 //ControlCode.NextCallDate,
                 ControlCode.ShortLetPricePerWeek,
             }, this.When(new List<PropertyType>
@@ -141,8 +136,7 @@
                 ControlCode.ActivityType,
                 ControlCode.LeadNegotiator,
                 ControlCode.SecondaryNegotiators,
-                ControlCode.ManagingDepartment,
-                ControlCode.SecondaryDepartments,
+                ControlCode.ActivityDepartments,
                 //ControlCode.NextCallDate,
                 ControlCode.AskingPrice
             }, this.When(new List<PropertyType>
@@ -158,8 +152,7 @@
                 ControlCode.ActivityType,
                 ControlCode.LeadNegotiator,
                 ControlCode.SecondaryNegotiators,
-                ControlCode.ManagingDepartment,
-                ControlCode.SecondaryDepartments,
+                ControlCode.ActivityDepartments,
                 //ControlCode.NextCallDate,
                 ControlCode.AskingPrice
             }, this.When(new List<PropertyType>
@@ -173,8 +166,7 @@
                 ControlCode.ActivityStatus,
                 ControlCode.LeadNegotiator,
                 ControlCode.SecondaryNegotiators,
-                ControlCode.ManagingDepartment,
-                ControlCode.SecondaryDepartments,
+                ControlCode.ActivityDepartments,
                 //ControlCode.NextCallDate,
                 ControlCode.ShortLetPricePerWeek
             }, this.When(new List<PropertyType>
@@ -188,8 +180,7 @@
                 ControlCode.ActivityStatus,
                 ControlCode.LeadNegotiator,
                 ControlCode.SecondaryNegotiators,
-                ControlCode.ManagingDepartment,
-                ControlCode.SecondaryDepartments,
+                ControlCode.ActivityDepartments,
                 //ControlCode.NextCallDate,
                 ControlCode.AskingPrice
             }, this.When(new List<PropertyType>
@@ -204,8 +195,7 @@
                 ControlCode.ActivityStatus,
                 ControlCode.LeadNegotiator,
                 ControlCode.SecondaryNegotiators,
-                ControlCode.ManagingDepartment,
-                ControlCode.SecondaryDepartments,
+                ControlCode.ActivityDepartments,
                 //ControlCode.NextCallDate,
                 ControlCode.AskingPrice
             }, this.When(new List<PropertyType>

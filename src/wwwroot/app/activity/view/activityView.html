@@ -29,15 +29,9 @@
                         secondary-negotiators="avvm.activity.secondaryNegotiator"></negotiators-view>
                 </section>
                 <section id='departments-section'>
-                    <card-list>
-                        <card-list-header>
-                            <h3 class="page-header" translate="DEPARTMENTS.COMMON.HEADER"></h3>
-                        </card-list-header>
-                        <card-list-item ng-repeat="activityDepartment in avvm.activity.activityDepartments | orderBy: 'department.name' | enumSorter: 'ActivityDepartmentType':'departmentTypeId'">
-                            <card card-template-url="'app/activity/templates/departmentCard.html'" display-new-control="true" item="activityDepartment">
-                            </card>
-                        </card-list-item>
-                    </card-list>
+                    <activity-departments-view-control config="avvm.config.departments" activity-departments="avvm.activity.activityDepartments">
+                        
+                    </activity-departments-view-control>
                 </section>
             </div>
             <div class="col-md-4">
