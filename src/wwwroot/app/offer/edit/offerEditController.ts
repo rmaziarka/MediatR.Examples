@@ -89,24 +89,52 @@ module Antares.Offer {
         onContactSelected = (companyContact: Business.CompanyContact[]) => {
             switch (this.contactToSelect) {
                 case 'Broker':
-                    this.offer.broker = new Business.Contact(companyContact[0].contact, companyContact[0].company);
-                    this.offer.brokerId = companyContact[0].contact.id;
-                    this.offer.brokerCompanyId = companyContact[0].company.id;
+                    if (companyContact.length > 0) {
+                        this.offer.broker = new Business.Contact(companyContact[0].contact, companyContact[0].company);
+                        this.offer.brokerId = companyContact[0].contact.id;
+                        this.offer.brokerCompanyId = companyContact[0].company.id;
+                    }
+                    else {
+                        this.offer.broker = null;
+                        this.offer.brokerId = null;
+                        this.offer.brokerCompanyId = null;
+                    }
                     break;
                 case 'Lender':
-                    this.offer.lender = new Business.Contact(companyContact[0].contact, companyContact[0].company);
-                    this.offer.lenderId = companyContact[0].contact.id;
-                    this.offer.lenderCompanyId = companyContact[0].company.id;
+                    if (companyContact.length > 0) {
+                        this.offer.lender = new Business.Contact(companyContact[0].contact, companyContact[0].company);
+                        this.offer.lenderId = companyContact[0].contact.id;
+                        this.offer.lenderCompanyId = companyContact[0].company.id;
+                    }
+                    else {
+                        this.offer.lender = null;
+                        this.offer.lenderId = null;
+                        this.offer.lenderCompanyId = null;
+                    }
                     break;
                 case 'Surveyor':
-                    this.offer.surveyor = new Business.Contact(companyContact[0].contact, companyContact[0].company);
-                    this.offer.surveyorId = companyContact[0].contact.id;
-                    this.offer.surveyorCompanyId = companyContact[0].company.id;
+                    if (companyContact.length > 0) {
+                        this.offer.surveyor = new Business.Contact(companyContact[0].contact, companyContact[0].company);
+                        this.offer.surveyorId = companyContact[0].contact.id;
+                        this.offer.surveyorCompanyId = companyContact[0].company.id;
+                    }
+                    else {
+                        this.offer.surveyor = null;
+                        this.offer.surveyorId = null;
+                        this.offer.surveyorCompanyId = null;
+                    }
                     break;
                 case 'AadditionalSurveyor':
-                    this.offer.additionalSurveyor = new Business.Contact(companyContact[0].contact, companyContact[0].company);
-                    this.offer.additionalSurveyorId = companyContact[0].contact.id;
-                    this.offer.additionalSurveyorCompanyId = companyContact[0].company.id;
+                    if (companyContact.length > 0) {
+                        this.offer.additionalSurveyor = new Business.Contact(companyContact[0].contact, companyContact[0].company);
+                        this.offer.additionalSurveyorId = companyContact[0].contact.id;
+                        this.offer.additionalSurveyorCompanyId = companyContact[0].company.id;
+                    }
+                    else {
+                        this.offer.additionalSurveyor = null;
+                        this.offer.additionalSurveyorId = null;
+                        this.offer.additionalSurveyorCompanyId = null;
+                    }
                     break;
             }
 
