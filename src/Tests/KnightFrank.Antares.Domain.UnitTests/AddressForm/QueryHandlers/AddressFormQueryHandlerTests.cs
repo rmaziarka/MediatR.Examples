@@ -1,12 +1,9 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.AddressForm.QueryHandlers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
     using FluentAssertions;
-
-    using FluentValidation.Results;
 
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Enum;
@@ -17,12 +14,12 @@
     using KnightFrank.Antares.Domain.AddressForm.QueryResults;
     using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture;
     using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 
     using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.AutoMoq;
 
     using Xunit;
 

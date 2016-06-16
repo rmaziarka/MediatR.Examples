@@ -22,10 +22,10 @@
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
-    using FixtureExtension;
 
     using FluentValidation.Resources;
 
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture;
     using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
     using KnightFrank.Antares.Tests.Common.Extensions.Fluent.ValidationResult;
 

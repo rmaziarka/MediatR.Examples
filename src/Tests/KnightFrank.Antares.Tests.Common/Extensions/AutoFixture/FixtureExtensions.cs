@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.UnitTests.FixtureExtension
+﻿namespace KnightFrank.Antares.Tests.Common.Extensions.AutoFixture
 {
     using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Builders;
 

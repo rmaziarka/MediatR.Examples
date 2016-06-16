@@ -91,6 +91,7 @@
     <Compile Include="Extensions\AutoFixture\Attributes\InlineAutoMoqDataAttribute.cs" />
     <Compile Include="Extensions\AutoFixture\Attributes\MemberAutoMoqDataAttribute.cs" />
     <Compile Include="Extensions\AutoFixture\Builders\IgnoreVirtualMembers.cs" />
+    <Compile Include="Extensions\AutoFixture\FixtureExtensions.cs" />
     <Compile Include="Extensions\Fluent\RulesVerifier\AbstractValidatorFluentExtension.cs" />
     <Compile Include="Extensions\Fluent\RulesVerifier\ChildCollectionValidatorRuleVerifier.cs" />
     <Compile Include="Extensions\Fluent\RulesVerifier\ChildValidatorRuleVerifier.cs" />
