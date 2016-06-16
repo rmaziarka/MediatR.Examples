@@ -163,10 +163,48 @@ Scenario Outline: Update residential sales offer with invalid data
 			| Tomasz    | Bien    | Mister |
 		And Requirement exists in database
 		And Offer with New status exists in database
-	When User updates offer with invalid <data> data
+	When User updates New offer with invalid <data> data
 	Then User should get BadRequest http status code
 
 	Examples: 
 	| data   |
 	| status |
 	| offer  |
+
+@Offers
+Scenario Outline: Update accepted residential sales offer with invalid data
+	Given Contacts exists in database
+		| FirstName | Surname | Title |
+		| Jon       | Lajoie  | Dude  |
+		And Company exists in database
+			| Name    |
+			| Company |
+		And Property exists in database
+			| PropertyType | Division    |
+			| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
+		And Contacts exists in database
+			| FirstName | Surname | Title  |
+			| Tomasz    | Bien    | Mister |
+		And Requirement exists in database
+		And Offer with Accepted status exists in database
+	When User updates Accepted offer with invalid <data> data
+	Then User should get BadRequest http status code
+
+	Examples: 
+	| data                      |
+	| broker                    |
+	| brokerCompany             |
+	| lender                    |
+	| lenderCompany             |
+	| surveyor                  |
+	| surveyorCompany           |
+	| additionalSurveyor        |
+	| additionalSurveyorCompany |
+	| mortgageStatus            |
+	| mortgageSurveyStatus      |
+	| additionalSurveyStatus    |
+	| searchStatus              |
+	| enquiries                 |

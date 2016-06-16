@@ -23,9 +23,9 @@
     public class OffersSteps
     {
         private const string ApiUrl = "/api/offers";
+        private readonly DateTime date = DateTime.UtcNow;
         private readonly BaseTestClassFixture fixture;
         private readonly ScenarioContext scenarioContext;
-        private readonly DateTime date = DateTime.UtcNow;
 
         public OffersSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {
@@ -95,7 +95,7 @@
 
                 offer.BrokerId = companyContact.ContactId;
                 offer.BrokerCompanyId = companyContact.CompanyId;
-                
+
                 offer.LenderId = companyContact.ContactId;
                 offer.LenderCompanyId = companyContact.CompanyId;
 
@@ -249,8 +249,8 @@
 
                 details.MortgageLoanToValue = 0;
 
-                details.BrokerId = companyContact.ContactId;
-                details.BrokerCompanyId = companyContact.CompanyId;
+                details.BrokerId = null;
+                details.BrokerCompanyId = null;
 
                 details.LenderId = companyContact.ContactId;
                 details.LenderCompanyId = companyContact.CompanyId;
@@ -271,8 +271,8 @@
             this.UpdateOffer(details);
         }
 
-        [When(@"User updates offer with invalid (.*) data")]
-        public void UpdateOfferWithInvalidData(string data)
+        [When(@"User updates (.*) offer with invalid (.*) data")]
+        public void UpdateOfferWithInvalidData(string status, string data)
         {
             var offer = this.scenarioContext.Get<Offer>("Offer");
             var details = new UpdateOfferCommand
@@ -282,13 +282,40 @@
                     data.Equals("status")
                         ? Guid.NewGuid()
                         : this.fixture.DataContext.EnumTypeItems.Single(
-                            e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(nameof(OfferStatus.New))).Id,
+                            e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(status)).Id,
                 CompletionDate = this.date,
                 ExchangeDate = this.date,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
                 Price = 1000,
                 OfferDate = this.date.AddMinutes(-1)
             };
+
+            if (status.ToLower().Equals(nameof(OfferStatus.Accepted).ToLower()))
+            {
+                details.BrokerId = data.Equals("broker") ? Guid.NewGuid() : offer.BrokerId;
+                details.BrokerCompanyId = data.Equals("brokerCompany") ? Guid.NewGuid() : offer.BrokerCompanyId;
+
+                details.LenderId = data.Equals("lender") ? Guid.NewGuid() : offer.LenderId;
+                details.LenderCompanyId = data.Equals("lenderCompany") ? Guid.NewGuid() : offer.LenderCompanyId;
+
+                details.SurveyorId = data.Equals("surveyor") ? Guid.NewGuid() : offer.SurveyorId;
+                details.SurveyorCompanyId = data.Equals("surveyorCompany") ? Guid.NewGuid() : offer.SurveyorCompanyId;
+
+                details.AdditionalSurveyorId = data.Equals("additionalSurveyor") ? Guid.NewGuid() : offer.AdditionalSurveyorId;
+                details.AdditionalSurveyorCompanyId = data.Equals("additionalSurveyorCompany")
+                    ? Guid.NewGuid()
+                    : offer.AdditionalSurveyorCompanyId;
+
+                details.MortgageStatusId = data.Equals("mortgageStatus") ? Guid.NewGuid() : offer.MortgageStatusId;
+                details.MortgageSurveyStatusId = data.Equals("mortgageSurveyStatus")
+                    ? Guid.NewGuid()
+                    : offer.MortgageSurveyStatusId;
+                details.AdditionalSurveyStatusId = data.Equals("additionalSurveyStatus")
+                    ? Guid.NewGuid()
+                    : offer.AdditionalSurveyStatusId;
+                details.SearchStatusId = data.Equals("searchStatus") ? Guid.NewGuid() : offer.SearchStatusId;
+                details.EnquiriesId = data.Equals("enquiries") ? Guid.NewGuid() : offer.EnquiriesId;
+            }
 
             this.UpdateOffer(details);
         }
