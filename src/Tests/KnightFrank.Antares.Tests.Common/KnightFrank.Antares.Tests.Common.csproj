@@ -86,6 +86,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\AutoFixture\Attributes\AutoConfiguredMoqDataAttribute.cs" />
     <Compile Include="Extensions\AutoFixture\Attributes\AutoMoqDataAttribute.cs" />
     <Compile Include="Extensions\AutoFixture\Attributes\InlineAutoMoqDataAttribute.cs" />
     <Compile Include="Extensions\AutoFixture\Attributes\MemberAutoMoqDataAttribute.cs" />
