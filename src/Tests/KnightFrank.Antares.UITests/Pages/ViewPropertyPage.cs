@@ -54,7 +54,7 @@
         private readonly ElementLocator attachmentDate = new ElementLocator(Locator.CssSelector, "#card-list-attachments time[id *= 'attachment-created-date']");
         private readonly ElementLocator attachmentType = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-type']");
         private readonly ElementLocator attachmentSize = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-file-size']");
-        private readonly ElementLocator attachmentDetailsLink = new ElementLocator(Locator.CssSelector, "#card-list-attachments .detailsLink");
+        private readonly ElementLocator attachmentCard = new ElementLocator(Locator.CssSelector, "#card-list-attachments .card-body");
 
         public ViewPropertyPage(DriverContext driverContext) : base(driverContext)
         {
@@ -249,7 +249,7 @@
 
         public ViewPropertyPage OpenAttachmentPreview()
         {
-            this.Driver.Click(this.attachmentDetailsLink);
+            this.Driver.Click(this.attachmentCard);
             return this;
         }
     }
