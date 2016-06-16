@@ -21,8 +21,8 @@
     public class NegotiatorsSteps
     {
         private const string ApiUrl = "/api/activities";
-        private readonly BaseTestClassFixture fixture;
         private readonly DateTime date = DateTime.UtcNow;
+        private readonly BaseTestClassFixture fixture;
         private readonly ScenarioContext scenarioContext;
 
         private Activity activity;
