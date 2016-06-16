@@ -19,7 +19,7 @@ module Antares {
 
         var pageObjectSelectors = {
             common: {
-                detailsLink: 'a'
+                detailsElement: '.card-body'
             },
             attachments: {
                 list: 'card-list#card-list-attachments'
@@ -146,7 +146,7 @@ module Antares {
 
                     // act
                     var cardElement = element.find('card[id="attachment-card-' + attachmentForDetailsClick.id + '"]');
-                    cardElement.find(pageObjectSelectors.common.detailsLink).click();
+                    cardElement.find(pageObjectSelectors.common.detailsElement).click();
 
                     // assert
                     expect(controller.selectedAttachment).toBe(attachmentForDetailsClick);

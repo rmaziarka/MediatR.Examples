@@ -8,7 +8,7 @@
         </card-list-no-items>
         <card-list-item ng-repeat="attachment in vm.attachments | orderBy: vm.attachmentsCartListOrder.name : vm.attachmentsCartListOrder.descending track by attachment.id ">
             <card id="attachment-card-{{::attachment.id}}" card-template-url="'app/common/components/attachment/templates/attachmentCard.html'" item="attachment"
-                  show-item-details="vm.showAttachmentPreview">
+                  show-item-details="vm.showAttachmentPreview" display-new-control="true">
             </card>
         </card-list-item>
     </card-list>
