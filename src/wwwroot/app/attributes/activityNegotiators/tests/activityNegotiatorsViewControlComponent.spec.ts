@@ -1,9 +1,10 @@
-/// <reference path="../../../../../typings/_all.d.ts" />
+/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
-    import NegotiatorsController = Antares.Common.Component.NegotiatorsController;
+    import NegotiatorsController = Common.Component.NegotiatorsController;
+	import IActivityViewConfig = Activity.IActivityViewConfig;
 
     interface IScope extends ng.IScope {
         leadNegotiator: Business.ActivityUser;
@@ -11,7 +12,7 @@ module Antares {
         propertyDivisionId: string;
     }
 
-    xdescribe('Given negotiators view component', () => {
+    describe('Given activity negotiators view component', () => {
         var scope: IScope,
             compile: ng.ICompileService,
             element: ng.IAugmentedJQuery,
@@ -28,13 +29,15 @@ module Antares {
             componentNegotiatorSubHeaders: 'h4[translate*="RESIDENTIAL"]'
         };
 
-        var mockedComponentHtml = '<negotiators-view property-division-id="{{propertyDivisionId}}" lead-negotiator="leadNegotiator" secondary-negotiators="secondaryNegotiators">'
+        var mockedComponentHtml = '<activity-negotiators-view-control config="config" property-division-id="{{propertyDivisionId}}" lead-negotiator="leadNegotiator" secondary-negotiators="secondaryNegotiators">'
             + '</negotiators-view>';
-
+			
         var divisionCodes = [
             { id: "residentialId", code: "RESIDENTIAL" },
             { id: "commmercialId", code: "COMMERCIAL" }
         ];
+
+		var configMock = { negotiators: {} } as IActivityViewConfig;
 
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
@@ -45,18 +48,18 @@ module Antares {
             scope = <IScope>$rootScope.$new();
             scope.leadNegotiator = new Business.ActivityUser();
             scope.secondaryNegotiators = [];
-
+	        scope['config'] = configMock;
             enumService.setEnum(Dto.EnumTypeCode.Division.toString(), divisionCodes);
 
             compile = $compile;
             element = compile(mockedComponentHtml)(scope);
             scope.$apply();
-            controller = element.controller('negotiatorsView');
+            controller = element.controller('activityNegotiatorsViewControl');
 
             assertValidator = new TestHelpers.AssertValidators(element, scope);
         }));
 
-        describe('when activity is edited', () => {
+        describe('when is rendered', () => {
             var leadNegotiator = TestHelpers.ActivityUserGenerator.generate(Common.Models.Enums.NegotiatorTypeEnum.LeadNegotiator);
             var secondaryNegotiators = TestHelpers.ActivityUserGenerator.generateMany(3, Common.Models.Enums.NegotiatorTypeEnum.SecondaryNegotiator);
 
