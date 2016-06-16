@@ -200,7 +200,6 @@
     <Compile Include="Resource\QueryHandlers\ResourceLocalisedQueryHandlerTests.cs" />
     <Compile Include="User\Queries\UsersQueryValidatorTests.cs" />
     <Compile Include="User\QueryHandlers\UsersQueryHandlerTests.cs" />
-    <Compile Include="ValidationResultBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj">
