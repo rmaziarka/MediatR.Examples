@@ -67,20 +67,17 @@
 
         private void DefineControlsForEdit()
         {
-            this.AddControl(PageType.Update, ControlCode.ActivityStatus, Field<Activity>.Create(x => x.ActivityStatusId).Required().InnerField);
-            this.AddControl(PageType.Update, ControlCode.Vendors, Field<Activity>.Create(x => x.Contacts).InnerField);
-            this.AddControl(PageType.Update, ControlCode.Property, Field<Activity>.Create(x => x.PropertyId).InnerField);
-            this.AddControl(PageType.Update, ControlCode.LeadNegotiator, Field<Activity>.Create(x => x.ActivityUsers).Required().InnerField);
-            this.AddControl(PageType.Update, ControlCode.Landlords, Field<Activity>.Create(x => x.Contacts).InnerField);
+            this.AddControl(PageType.Update, ControlCode.ActivityStatus, Field<UpdateActivityCommand>.Create(x => x.ActivityStatusId).Required().InnerField);
+            this.AddControl(PageType.Update, ControlCode.LeadNegotiator, Field<UpdateActivityCommand>.Create(x => x.LeadNegotiator).Required().InnerField);
             // next call date?
-            this.AddControl(PageType.Update, ControlCode.SecondaryNegotiators, Field<Activity>.Create(x => x.ActivityUsers).InnerField);
-            this.AddControl(PageType.Update, ControlCode.ManagingDepartment, Field<Activity>.Create(x => x.ActivityDepartments).InnerField);
-            this.AddControl(PageType.Update, ControlCode.SecondaryDepartments, Field<Activity>.Create(x => x.ActivityDepartments).InnerField);
-            this.AddControl(PageType.Update, ControlCode.AskingPrice, Field<Activity>.Create(x => x.AskingPrice).InnerField);
-            this.AddControl(PageType.Update, ControlCode.ShortLetPricePerWeek, Field<Activity>.Create(x => x.ShortLetPricePerWeek).InnerField);
-            this.AddControl(PageType.Update, ControlCode.MarketAppraisalPrice, Field<Activity>.Create(x => x.MarketAppraisalPrice).InnerField);
-            this.AddControl(PageType.Update, ControlCode.RecommendedPrice, Field<Activity>.Create(x => x.RecommendedPrice).InnerField);
-            this.AddControl(PageType.Update, ControlCode.VendorEstimatedPrice, Field<Activity>.Create(x => x.VendorEstimatedPrice).InnerField);
+            this.AddControl(PageType.Update, ControlCode.SecondaryNegotiators, Field<UpdateActivityCommand>.Create(x => x.SecondaryNegotiators).InnerField);
+            this.AddControl(PageType.Update, ControlCode.ManagingDepartment, Field<UpdateActivityCommand>.Create(x => x.Departments).InnerField);
+            this.AddControl(PageType.Update, ControlCode.SecondaryDepartments, Field<UpdateActivityCommand>.Create(x => x.Departments).InnerField);
+            this.AddControl(PageType.Update, ControlCode.AskingPrice, Field<UpdateActivityCommand>.Create(x => x.AskingPrice).InnerField);
+            this.AddControl(PageType.Update, ControlCode.ShortLetPricePerWeek, Field<UpdateActivityCommand>.Create(x => x.ShortLetPricePerWeek).InnerField);
+            this.AddControl(PageType.Update, ControlCode.MarketAppraisalPrice, Field<UpdateActivityCommand>.Create(x => x.MarketAppraisalPrice).InnerField);
+            this.AddControl(PageType.Update, ControlCode.RecommendedPrice, Field<UpdateActivityCommand>.Create(x => x.RecommendedPrice).InnerField);
+            this.AddControl(PageType.Update, ControlCode.VendorEstimatedPrice, Field<UpdateActivityCommand>.Create(x => x.VendorEstimatedPrice).InnerField);
         }
 
         public override void DefineMappings()
