@@ -138,6 +138,7 @@
     <Compile Include="AreaBreakdown\QueryHandlers\AreaBreakdownQueryHandlerTests.cs" />
     <Compile Include="Attachments\Queries\AttachmentQueryValidatorTests.cs" />
     <Compile Include="Attachments\QueryHandlers\AttachmentQueryHandlerTests.cs" />
+    <Compile Include="BaseTestClassFixture.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidatorTests.cs" />
     <Compile Include="Characteristic\QueryHandlers\CharacteristicGroupsQueryHandlerTests.cs" />
     <Compile Include="Common\BusinessValidators\ActivityTypeDefinitionValidatorTest.cs" />
@@ -171,7 +172,6 @@
     <Compile Include="AddressForm\QueryResults\AddressFormProfileTests.cs" />
     <Compile Include="AddressForm\QueryResults\AddressFormQueryResultTests.cs" />
     <Compile Include="AddressForm\QueryHandlers\GetCountriesForAddressFormQueryHandlerTests.cs" />
-    <Compile Include="BaseTestClassFixture.cs" />
     <Compile Include="Contact\CommandHandlers\CreateContactCommandHandlerTests.cs" />
     <Compile Include="FixtureExtension\OwnershipExtensions.cs" />
     <Compile Include="Ownership\Commands\CreateOwnershipCommandHandlerTests.cs" />
