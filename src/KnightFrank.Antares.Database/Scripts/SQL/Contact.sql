@@ -2,7 +2,7 @@
 CREATE TABLE #TempContact (
 	[Id] UNIQUEIDENTIFIER  NOT NULL DEFAULT (newsequentialid()),
 	[FirstName] NVARCHAR (MAX) NULL,
-	[Surname] NVARCHAR (MAX) NULL,
+	[LastName] NVARCHAR (MAX) NULL,
 	[Title] NVARCHAR (MAX) NULL,
 	[MailingFormalSalutation] NVARCHAR (MAX) NULL,
 	[MailingSemiformalSalutation] NVARCHAR (MAX) NULL,
@@ -39,7 +39,7 @@ MERGE dbo.Contact AS T
 	WHEN MATCHED THEN
 		UPDATE SET 
 		T.[FirstName] = S.[FirstName],
-		T.[Surname] = S.[Surname],
+		T.[LastName] = S.[LastName],
 		T.[Title] = S.[Title],
 		T.[MailingFormalSalutation] = S.[MailingFormalSalutation],
 		T.[MailingSemiformalSalutation] = S.[MailingSemiformalSalutation],
@@ -55,13 +55,13 @@ MERGE dbo.Contact AS T
 		T.[DefaultEventSalutationId] = S.[DefaultEventSalutationId]
 
 	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([Id], [FirstName], [Surname], [Title], 
+		INSERT ([Id], [FirstName], [LastName], [Title], 
 			[MailingFormalSalutation], [MailingSemiformalSalutation], [MailingInformalSalutation],
 			[MailingPersonalSalutation], [MailingEnvelopeSalutation], [DefaultMailingSalutationId],
 			[EventInviteSalutation], [EventSemiformalSalutation], [EventInformalSalutation],
 			[EventPersonalSalutation], [EventEnvelopeSalutation], [DefaultEventSalutationId],
 			[CreatedDate],[LastModifiedDate],[UserId])
-		VALUES ([Id], [FirstName], [Surname], [Title], 
+		VALUES ([Id], [FirstName], [LastName], [Title], 
 			[MailingFormalSalutation], [MailingSemiformalSalutation], [MailingInformalSalutation],
 			[MailingPersonalSalutation], [MailingEnvelopeSalutation], [DefaultMailingSalutationId],
 			[EventInviteSalutation], [EventSemiformalSalutation], [EventInformalSalutation],

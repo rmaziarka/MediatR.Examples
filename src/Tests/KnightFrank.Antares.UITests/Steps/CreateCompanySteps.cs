@@ -69,7 +69,7 @@
 
             foreach (Contact contact in contacts)
             {
-                this.page.ContactsList.WaitForContactsListToLoad().SelectContact(contact.FirstName, contact.Surname);
+                this.page.ContactsList.WaitForContactsListToLoad().SelectContact(contact.FirstName, contact.LastName);
             }
             this.page.ContactsList.SaveContact();
             this.page.WaitForSidePanelToHide();
@@ -79,7 +79,7 @@
         public void CheckContactsList(Table table)
         {
             List<string> contacts =
-                table.CreateSet<Contact>().Select(contact => contact.FirstName + " " + contact.Surname).ToList();
+                table.CreateSet<Contact>().Select(contact => contact.FirstName + " " + contact.LastName).ToList();
 
             List<string> selectedContacts = this.page.Contacts;
 

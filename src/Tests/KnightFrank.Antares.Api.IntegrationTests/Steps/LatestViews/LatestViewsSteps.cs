@@ -332,7 +332,7 @@
 
             expectedContacts.Should().Equal(currentContacts,
                 (c1, c2) => c1.FirstName.Equals(c2.FirstName) &&
-                            c1.Surname.Equals(c2.Surname) &&
+                            c1.LastName.Equals(c2.LastName) &&
                             c1.Title.Equals(c2.Title) &&
                             c1.Id.Equals(c2.Id));
 

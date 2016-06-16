@@ -69,7 +69,7 @@
 
             foreach (Contact contact in contacts)
             {
-                this.page.ContactsList.WaitForContactsListToLoad().SelectContact(contact.FirstName, contact.Surname);
+                this.page.ContactsList.WaitForContactsListToLoad().SelectContact(contact.FirstName, contact.LastName);
             }
             this.page.ContactsList.ConfigureOwnership();
         }

@@ -7,8 +7,8 @@
 	    public ContactConfiguration()
 	    {
 			this.Property(p => p.Title).HasMaxLength(128).IsRequired();
-			this.Property(p => p.FirstName).HasMaxLength(128).IsRequired();
-			this.Property(p => p.Surname).HasMaxLength(128).IsRequired();
+			this.Property(p => p.FirstName).HasMaxLength(128);
+			this.Property(p => p.LastName).HasMaxLength(128).IsRequired();
 
 			this.Property(p => p.MailingFormalSalutation).HasMaxLength(128);
 			this.Property(p => p.MailingSemiformalSalutation).HasMaxLength(128);

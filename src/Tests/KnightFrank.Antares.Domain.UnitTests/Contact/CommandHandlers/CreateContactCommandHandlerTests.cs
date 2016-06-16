@@ -44,11 +44,26 @@
             // Asserts
             guid.Should().Be(expectedGuid);
             addedContact.Should().NotBeNull();
-            addedContact.FirstName.Should().Be(createContactCommand.FirstName);
-            addedContact.Surname.Should().Be(createContactCommand.Surname);
-            addedContact.Title.Should().Be(createContactCommand.Title);
-            contactRepository.Verify(r => r.Add(It.IsAny<Contact>()), Times.Once());
+			addedContact.Title.Should().Be(createContactCommand.Title);
+			addedContact.FirstName.Should().Be(createContactCommand.FirstName);
+            addedContact.LastName.Should().Be(createContactCommand.LastName);
+
+			addedContact.MailingFormalSalutation.Should().Be(createContactCommand.MailingFormalSalutation);
+			addedContact.MailingSemiformalSalutation.Should().Be(createContactCommand.MailingSemiformalSalutation);
+			addedContact.MailingInformalSalutation.Should().Be(createContactCommand.MailingInformalSalutation);
+			addedContact.MailingPersonalSalutation.Should().Be(createContactCommand.MailingPersonalSalutation);
+			addedContact.MailingEnvelopeSalutation.Should().Be(createContactCommand.MailingEnvelopeSalutation);
+			addedContact.DefaultMailingSalutationId.Should().Be(createContactCommand.DefaultMailingSalutationId);
+
+			addedContact.EventInviteSalutation.Should().Be(createContactCommand.EventInviteSalutation);
+			addedContact.EventSemiformalSalutation.Should().Be(createContactCommand.EventSemiformalSalutation);
+			addedContact.EventInformalSalutation.Should().Be(createContactCommand.EventInformalSalutation);
+			addedContact.EventPersonalSalutation.Should().Be(createContactCommand.EventPersonalSalutation);
+			addedContact.EventEnvelopeSalutation.Should().Be(createContactCommand.EventEnvelopeSalutation);
+			addedContact.DefaultEventSalutationId.Should().Be(createContactCommand.DefaultEventSalutationId);
+
+			contactRepository.Verify(r => r.Add(It.IsAny<Contact>()), Times.Once());
             contactRepository.Verify(r => r.Save(), Times.Once());
         }
-    }
+	}
 }
