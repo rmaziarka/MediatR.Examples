@@ -173,7 +173,6 @@
 
             this.Use(new List<ControlCode>
             {
-                ControlCode.Landlords,
                 ControlCode.ActivityStatus,
                 ControlCode.LeadNegotiator,
                 ControlCode.SecondaryNegotiators,
@@ -188,7 +187,6 @@
 
             this.Use(new List<ControlCode>
             {
-                ControlCode.Vendors,
                 ControlCode.ActivityStatus,
                 ControlCode.LeadNegotiator,
                 ControlCode.SecondaryNegotiators,
@@ -204,7 +202,6 @@
 
             this.Use(new List<ControlCode>
             {
-                ControlCode.Vendors,
                 ControlCode.ActivityStatus,
                 ControlCode.LeadNegotiator,
                 ControlCode.SecondaryNegotiators,
