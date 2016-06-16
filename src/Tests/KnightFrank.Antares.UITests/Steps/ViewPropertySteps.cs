@@ -196,7 +196,7 @@
             this.page.OpenAttachmentPreview().WaitForSidePanelToShow();
         }
 
-        [When(@"User adds (.*) file with (.*) type to property on attach file page")]
+        [When(@"User adds (.*) file with (.*) type on view property page")]
         public void SelectAttachmentType(string file, string type)
         {
             this.page.AttachFile.SelectType(type)
@@ -341,6 +341,7 @@
         public void ChackAttachmentDetails()
         {
             Attachment actual = this.page.PreviewAttachment.GetAttachmentDetails();
+            actual.Date = actual.Date.Split(',')[0];
             Attachment expected = this.page.AttachmentDetails;
             expected.User = "John Smith";
 

@@ -126,7 +126,7 @@ Scenario: Create residential property
 		| PropertyNumber | PropertyName      | Line2    | Postcode | City   | County      |
 		| 20             | Westminster Abbey | Deans Yd | SW1P 3PA | London | Westminster |
 	When User clicks add attachment button on view activity page
-		And User adds PDF document.pdf file with Brochure type on attach file page
+		And User adds PDF document.pdf file with Brochure type on view activity page
 		And User clicks edit button on view activity page
 		And User edits activity details on edit activity page
 			| ActivityStatus   | MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |

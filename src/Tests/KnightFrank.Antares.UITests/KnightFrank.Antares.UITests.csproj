@@ -192,8 +192,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Offer.feature</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Property\PropertyAttachments.feature.cs">
-      <DependentUpon>PropertyAttachments.feature</DependentUpon>
+    <Compile Include="Tests\Property\Attachments.feature.cs">
+      <DependentUpon>Attachments.feature</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -201,6 +201,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Property.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Requirement\Attachments.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Attachments.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Requirement\Requirement.feature.cs">
       <AutoGen>True</AutoGen>
@@ -255,13 +260,17 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Offer.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\Property\PropertyAttachments.feature">
+    <None Include="Tests\Property\Attachments.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>PropertyAttachments.feature.cs</LastGenOutput>
+      <LastGenOutput>Attachments.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Property\Property.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Property.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Requirement\Attachments.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Attachments.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Requirement\Requirement.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

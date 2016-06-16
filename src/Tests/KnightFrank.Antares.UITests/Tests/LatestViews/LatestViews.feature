@@ -1,4 +1,4 @@
-﻿Feature: Latest views
+﻿Feature: Latest views UI tests
 
 @LatestViews
 Scenario: Display latest viewed properties
