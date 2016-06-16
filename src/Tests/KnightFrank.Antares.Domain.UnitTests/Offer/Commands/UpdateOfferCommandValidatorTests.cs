@@ -29,6 +29,7 @@
                               .With(x => x.OfferDate, DateTime.UtcNow.Date)
                               .With(x => x.CompletionDate, DateTime.UtcNow.Date)
                               .With(x => x.ExchangeDate, DateTime.UtcNow.Date)
+                              .With(x => x.MortgageLoanToValue, 1)
                               .Create();
         }
 
