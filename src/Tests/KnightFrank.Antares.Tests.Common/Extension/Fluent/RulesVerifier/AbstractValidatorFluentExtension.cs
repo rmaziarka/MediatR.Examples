@@ -15,10 +15,10 @@
 
     public static class AbstractValidatorFluentExtension
     {
-        public static void ShouldHaveRules<T, TProperty>(
-            this AbstractValidator<T> validator,
-            Expression<Func<T, TProperty>> expression,
-            params IRuleVerifier[] validatorRuleVerifieres) where T : IRequest<Guid>
+        public static void ShouldHaveRules<TRequest, TProperty>(
+            this AbstractValidator<TRequest> validator,
+            Expression<Func<TRequest, TProperty>> expression,
+            params IRuleVerifier[] validatorRuleVerifieres)
         {
             List<IPropertyValidator> validators = validator.Select(x => (PropertyRule)x).Where(r => r.Member == expression.GetMember()).SelectMany(x => x.Validators).ToList();
 
