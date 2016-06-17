@@ -94,7 +94,7 @@
     "CREATE_CONTACT": "Create contact",
     "TITLE": "Title",
     "FIRSTNAME": "First name",
-    "SURNAME": "Surname",
+    "LASTNAME": "Last name",
     "SALUTATION": {
       "TITLE": "Salutation",
       "MAILINGS": "Mailings",

@@ -17,23 +17,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.firstName.$dirty) && addContactForm.firstName.$invalid}">
+                        <div class="form-group">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label class="required" for="first-name" translate="CONTACT.FIRSTNAME"></label>
-                                    <input type="text" class="form-control" id="first-name" name="firstName" required ng-maxlength="128" ng-model="vm.contact.firstName" autocomplete="off">
-                                    <div ng-messages="addContactForm.firstName.$error" ng-show="addContactForm.$submitted || addContactForm.firstName.$dirty">
-                                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
-                                    </div>
+                                    <label for="first-name" translate="CONTACT.FIRSTNAME"></label>
+                                    <input type="text" class="form-control" id="first-name" name="firstName" ng-maxlength="128" ng-model="vm.contact.firstName" autocomplete="off">
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.surname.$dirty) && addContactForm.surname.$invalid}">
+                        <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.lastName.$dirty) && addContactForm.lastName.$invalid}">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label class="required" for="surname" translate="CONTACT.SURNAME"></label>
-                                    <input type="text" class="form-control" id="last-name" name="surname" required ng-maxlength="128" ng-model="vm.contact.surname" autocomplete="off">
-                                    <div ng-messages="addContactForm.surname.$error" ng-show="addContactForm.$submitted || addContactForm.surname.$dirty">
+                                    <label class="required" for="last-name" translate="CONTACT.LASTNAME"></label>
+                                    <input type="text" class="form-control" id="last-name" name="lastName" required ng-maxlength="128" ng-model="vm.contact.lastName" autocomplete="off">
+                                    <div ng-messages="addContactForm.lastName.$error" ng-show="addContactForm.$submitted || addContactForm.lastName.$dirty">
                                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                                     </div>
                                 </div>
@@ -49,8 +46,8 @@
                                 <h4 class="page-header" translate="CONTACT.SALUTATION.MAILINGS"></h4>
 
                                 <div class="form-group">
-                                    <label for="mailings-use-salutation" translate="CONTACT.SALUTATION.USE_SALUTATION"></label>
-                                    <select id="mailings-use-salutation" class="form-control">
+                                    <label for="default-mailing-salutation-id" translate="CONTACT.SALUTATION.USE_SALUTATION"></label>
+                                    <select id="default-mailing-salutation-id" name="defaultMailingSalutationId" class="form-control">
                                         <option value="#">Formal</option>
                                         <option value="#">Semiformal</option>
                                         <option value="#">Informal</option>
@@ -58,58 +55,57 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="formal" translate="CONTACT.SALUTATION.FORMAL"></label>
-                                    <input id="mailing-formal-salutation" name="mailingFormalSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.firstName" autocomplete="off">
+                                    <label for="mailing-formal-salutation" translate="CONTACT.SALUTATION.FORMAL"></label>
+                                    <input id="mailing-formal-salutation" name="mailingFormalSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.mailingFormalSalutation" autocomplete="off">
                                 </div>
                                 <div class="form-group">
-                                    <label for="mailings-semiformal" translate="CONTACT.SALUTATION.SEMIFORMAL"></label>
-                                    <input id="mailings-semiformal" type="text" class="form-control" ng-maxlength="128">
+                                    <label for="mailing-semiformal-salutation" translate="CONTACT.SALUTATION.SEMIFORMAL"></label>
+                                    <input id="mailing-semiformal-salutation" name="mailingSemiformalSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.mailingSemiformalSalutation" autocomplete="off">
                                 </div>
                                 <div class="form-group">
-                                    <label for="mailings-informal" translate="CONTACT.SALUTATION.INFORMAL"></label>
-                                    <input id="mailings-informal" type="text" class="form-control" ng-maxlength="128">
+                                    <label for="mailing-informal-salutation" translate="CONTACT.SALUTATION.INFORMAL"></label>
+                                    <input id="mailing-informal-salutation" name="mailingInformalSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.mailingInformalSalutation" autocomplete="off">
                                 </div>
                                 <div class="form-group">
-                                    <label for="mailings-personal" translate="CONTACT.SALUTATION.PERSONAL"></label>
-                                    <input id="mailings-personal" type="text" class="form-control" ng-maxlength="128">
+                                    <label for="mailing-personal-salutation" translate="CONTACT.SALUTATION.PERSONAL"></label>
+                                    <input id="mailing-personal-salutation" name="mailingPersonalSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.mailingPersonalSalutation" autocomplete="off">
                                 </div>
                                 <div class="form-group">
-                                    <label for="mailings-envelope" translate="CONTACT.SALUTATION.ENVELOPE"></label>
-                                    <input id="mailings-envelope" type="text" class="form-control" ng-maxlength="128">
+                                    <label for="mailing-envelope-salutation" translate="CONTACT.SALUTATION.ENVELOPE"></label>
+                                    <input id="mailing-envelope-salutation" name="mailingEnvelopeSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.mailingEnvelopeSalutation" autocomplete="off">
                                 </div>
-
                             </div>
                             <div class="col-md-6">
                                 <h4 class="page-header" translate="CONTACT.SALUTATION.EVENTS"></h4>
 
                                 <div class="form-group">
-                                    <label for="events-use-salutation" translate="CONTACT.SALUTATION.USE_SALUTATION"></label>
-                                    <select id="events-use-salutation" class="form-control">
-                                        <option value="#">Formal</option>
+                                    <label for="default-event-salutation-id" translate="CONTACT.SALUTATION.USE_SALUTATION"></label>
+                                    <select id="default-event-salutation-id" name="defaultEventSalutationId" class="form-control">
+                                        <option value="#">Invite</option>
                                         <option value="#">Semiformal</option>
                                         <option value="#">Informal</option>
                                         <option value="#">Personal</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="invite" translate="CONTACT.SALUTATION.INVITE"></label>
-                                    <input id="invite" type="text" class="form-control" ng-maxlength="128">
+                                    <label for="event-invite-salutation" translate="CONTACT.SALUTATION.INVITE"></label>
+                                    <input id="event-invite-salutation" name="eventInviteSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.eventInviteSalutation" autocomplete="off">
                                 </div>
                                 <div class="form-group">
-                                    <label for="events-semiformal" translate="CONTACT.SALUTATION.SEMIFORMAL"></label>
-                                    <input id="events-semiformal" type="text" class="form-control" ng-maxlength="128">
+                                    <label for="event-semiformal-salutation" translate="CONTACT.SALUTATION.SEMIFORMAL"></label>
+                                    <input id="event-semiformal-salutation" name="eventSemiformalSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.eventSemiformalSalutation" autocomplete="off">
                                 </div>
                                 <div class="form-group">
-                                    <label for="events-informal" translate="CONTACT.SALUTATION.INFORMAL"></label>
-                                    <input id="events-informal" type="text" class="form-control" ng-maxlength="128">
+                                    <label for="event-informal-salutation" translate="CONTACT.SALUTATION.INFORMAL"></label>
+                                    <input id="event-informal-salutation" name="eventInformalSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.eventInformalSalutation" autocomplete="off">
                                 </div>
                                 <div class="form-group">
-                                    <label for="events-personal" translate="CONTACT.SALUTATION.PERSONAL"></label>
-                                    <input id="events-personal" type="text" class="form-control" ng-maxlength="128">
+                                    <label for="event-personal-salutation" translate="CONTACT.SALUTATION.PERSONAL"></label>
+                                    <input id="event-personal-salutation" name="eventPersonalSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.eventPersonalSalutation" autocomplete="off">
                                 </div>
                                 <div class="form-group">
-                                    <label for="events-envelope" translate="CONTACT.SALUTATION.ENVELOPE"></label>
-                                    <input id="events-envelope" type="text" class="form-control" ng-maxlength="128">
+                                    <label for="event-envelope-salutation" translate="CONTACT.SALUTATION.ENVELOPE"></label>
+                                    <input id="event-envelope-salutation" name="eventEnvelopeSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.eventEnvelopeSalutation" autocomplete="off">
                                 </div>
                             </div>
                         </div>

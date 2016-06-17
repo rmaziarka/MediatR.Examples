@@ -1,8 +1,5 @@
-/// <reference path="../../../../typings/_all.d.ts" />
-
-module Antares.Common.Models.Business {
-    export class Contact {
-
+﻿declare module Antares.Common.Models.Dto {
+    interface IContact {
         id: string;
         title: string;
         firstName: string;
@@ -19,13 +16,5 @@ module Antares.Common.Models.Business {
         eventPersonalSalutation: string;
         eventEnvelopeSalutation: string;
         defaultEventSalutationId: string;
-
-        constructor(contact?: Dto.IContact) {
-            angular.extend(this, contact);
-        }
-
-        public getName() {
-            return this.firstName + ' ' + this.lastName;
-        }
     }
 }
