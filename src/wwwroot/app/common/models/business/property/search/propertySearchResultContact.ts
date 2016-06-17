@@ -13,5 +13,9 @@
                 this.title = propertySearchResultContact.title;
             }
         }
+
+        public getName() {
+            return this.firstName + ' ' + this.surname;
+        }
     }
 }

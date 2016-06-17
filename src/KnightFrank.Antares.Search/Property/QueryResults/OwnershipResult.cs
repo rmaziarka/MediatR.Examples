@@ -11,8 +11,6 @@
 
         public string OwnershipTypeId { get; set; }
 
-        private EnumTypeItemResult OwnershipType { get; set; }
-
         public IList<ContactResult> Contacts { get; set; }
     }
 }
