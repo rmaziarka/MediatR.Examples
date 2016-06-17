@@ -1,7 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Offer.Commands
 {
     using System;
-    using System.Text;
 
     using FluentAssertions;
 
@@ -135,10 +134,10 @@
         [InlineAutoData(-1, nameof(Messages.greaterthanorequal_error))]
         [InlineAutoData(201, nameof(Messages.lessthanorequal_error))]
         [InlineAutoData(501, nameof(Messages.lessthanorequal_error))]
-        public void Given_InvalidMortgageLoadToValueICommand_When_Validating_Then_CorrectErrorCodeIsReturned(int mortgageLoadToValue, string errorCode, UpdateOfferCommandValidator validator)
+        public void Given_InvalidMortgageLoanToValueICommand_When_Validating_Then_CorrectErrorCodeIsReturned(int mortgageLoanToValue, string errorCode, UpdateOfferCommandValidator validator)
         {
             // Arrange
-            this.cmd.MortgageLoanToValue = mortgageLoadToValue;
+            this.cmd.MortgageLoanToValue = mortgageLoanToValue;
 
             // Act
             ValidationResult validationResult = validator.Validate(this.cmd);
@@ -149,7 +148,7 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_NullMortgageLoadToValueICommand_When_Validating_Then_IsValid(UpdateOfferCommandValidator validator)
+        public void Given_NullMortgageLoanToValueInCommand_When_Validating_Then_IsValid(UpdateOfferCommandValidator validator)
         {
             // Arrange
             this.cmd.MortgageLoanToValue = null;
@@ -163,14 +162,12 @@
 
         [Theory]
         [InlineAutoData(0)]
-        [InlineAutoData(1)]
         [InlineAutoData(55)]
-        [InlineAutoData(199)]
         [InlineAutoData(200)]
-        public void Given_ValidMortgageLoadToValueInCommand_When_Validating_Then_IsValid(int mortgageLoadToValue, UpdateOfferCommandValidator validator)
+        public void Given_ValidMortgageLoanToValueInCommand_When_Validating_Then_IsValid(int mortgageLoanToValue, UpdateOfferCommandValidator validator)
         {
             // Arrange
-            this.cmd.MortgageLoanToValue = mortgageLoadToValue;
+            this.cmd.MortgageLoanToValue = mortgageLoanToValue;
 
             // Act
             ValidationResult validationResult = validator.Validate(this.cmd);
@@ -181,11 +178,11 @@
 
         [Theory]
         [InlineAutoData("")]
-        [InlineAutoData("aaaaaaa")]
-        public void Given_EmptyProgressCommentInCommand_When_Validating_Then_IsValid(string progresssCommnet, UpdateOfferCommandValidator validator)
+        [InlineAutoData("example comment")]
+        public void Given_EmptyProgressCommentInCommand_When_Validating_Then_IsValid(string progressComment, UpdateOfferCommandValidator validator)
         {
             // Arrange
-            this.cmd.ProgressComment = progresssCommnet;
+            this.cmd.ProgressComment = progressComment;
 
             // Act
             ValidationResult validationResult = validator.Validate(this.cmd);
@@ -196,16 +193,11 @@
 
         [Theory]
         [AutoMoqData]
-        public void Given_4000CharInProgressCommentInCommand_When_Validating_Then_IsValid(UpdateOfferCommandValidator validator)
+        public void Given_MaxAllowedCharInProgressCommentInCommand_When_Validating_Then_IsValid(UpdateOfferCommandValidator validator)
         {
             // Arrange
-            var sb = new StringBuilder();
-            for (var i = 0; i < 4000; i++)
-            {
-                sb.Append("a");
-            }
-
-            this.cmd.ProgressComment = sb.ToString();
+            int maxAllowed = 4000;
+            this.cmd.ProgressComment = string.Join(string.Empty, new Fixture().CreateMany<char>(maxAllowed));
 
             // Act
             ValidationResult validationResult = validator.Validate(this.cmd);
@@ -219,13 +211,8 @@
         public void Given_TooLongProgressCommentInCommand_When_Validating_Then_IsInvalid(UpdateOfferCommandValidator validator)
         {
             // Arrange
-            var sb = new StringBuilder();
-            for (var i = 0; i < 4001; i++)
-            {
-                sb.Append("a");
-            }
-
-            this.cmd.ProgressComment = sb.ToString();
+            int maxAllowed = 4000;
+            this.cmd.ProgressComment = string.Join(string.Empty, new Fixture().CreateMany<char>(maxAllowed + 1));
 
             // Act
             ValidationResult validationResult = validator.Validate(this.cmd);
