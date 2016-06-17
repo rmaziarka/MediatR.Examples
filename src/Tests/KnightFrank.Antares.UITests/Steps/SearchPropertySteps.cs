@@ -46,16 +46,28 @@
             this.page.SearchProperty(property);
         }
 
-        [When(@"User clicks on first found property on search property page")]
-        public void SelectSearchResult()
+        [When(@"User clicks on first property on search property page")]
+        public void ClickSearchResult()
         {
-            this.page.SelectPropertySearchResult();
+            this.page.ClickSearchResult();
         }
 
         [Then(@"Search form on search property page should be displayed")]
         public void CheckIfSearchPropertyPresent()
         {
             Assert.True(this.page.IsViewSearchFormPresent());
+        }
+
+        [Then(@"Address details (.*) are displayed on first property on search property page")]
+        public void CheckAddressDetails(string address)
+        {
+            Assert.Equal(this.page.AddressDetails, address);
+        }
+
+        [Then(@"Ownership details (.*) are displayed on first property on search property page")]
+        public void CheckOwnershipDetails(string ownership)
+        {
+            Assert.Equal(this.page.AddressOwnership, ownership);
         }
     }
 }

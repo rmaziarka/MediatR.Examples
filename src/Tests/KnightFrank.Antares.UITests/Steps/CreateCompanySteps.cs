@@ -88,7 +88,7 @@
         }
 
         [Then(@"Company form on create company page should be diaplyed")]
-        public void CheckIfCreateContactIsDisplayed()
+        public void CheckIfCompanyFormDisplayed()
         {
             Assert.True(this.page.IsCompanyFormPresent());
         }

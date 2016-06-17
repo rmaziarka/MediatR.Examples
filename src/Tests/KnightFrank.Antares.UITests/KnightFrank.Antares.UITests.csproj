@@ -202,6 +202,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Requirement.feature</DependentUpon>
     </Compile>
+    <Compile Include="Tests\Search\Search.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Search.feature</DependentUpon>
+    </Compile>
     <Compile Include="Tests\Viewing\Viewing.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -254,6 +259,10 @@
     <None Include="Tests\Requirement\Requirement.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Requirement.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Search\Search.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Search.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Viewing\Viewing.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

@@ -130,7 +130,7 @@
         }
 
         [Then(@"Property form on create property page should be displayed")]
-        public void CheckIfPropertyTypeIsDisplayed()
+        public void CheckIfPropertyFormDisplayed()
         {
             Assert.True(new CreatePropertyPage(this.driverContext).IsPropertyFormPresent());
         }
