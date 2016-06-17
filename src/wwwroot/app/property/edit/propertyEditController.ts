@@ -8,7 +8,7 @@ module Antares.Property {
     export class PropertyEditController extends Core.WithPanelsBaseController {
         public entityTypeCode: string = 'Property';
         public property: Business.Property;
-        public userData: Dto.IUserData;
+        public userData: Dto.ICurrentUser;
 
         components: any;
         componentIds: any;

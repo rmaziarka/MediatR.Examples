@@ -5,5 +5,8 @@ module Antares.Preferences {
         templateUrl: 'app/preferences/preferences.html',
         controllerAs: 'vm',
         controller: 'PreferencesController',
+        bindings: {
+            userData: '<'
+        }
     });
 }

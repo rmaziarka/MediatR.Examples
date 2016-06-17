@@ -8,7 +8,7 @@ module Antares {
         beforeEach(inject(($rootScope: ng.IRootScopeService, dataAccessService: Services.DataAccessService, enumService: Mock.EnumServiceMock, componentRegistry: Core.Service.ComponentRegistry) => {
             var controllerFunction = Property.PropertyAddController;
             controller = Object.create(controllerFunction.prototype);
-            controller.userData = <Dto.IUserData>{
+            controller.userData = <Dto.ICurrentUser>{
                 division: <Dto.IEnumTypeItem>{id: 'enumId', code: 'code'}
             };
             var scope: ng.IScope = $rootScope.$new();

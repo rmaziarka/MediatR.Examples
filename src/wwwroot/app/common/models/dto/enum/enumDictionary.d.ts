@@ -5,5 +5,6 @@
         ownershipType: IEnumItem[];
         activityStatus: IEnumItem[];
         division: IEnumItem[];
+        salutationFormat: IEnumItem[];
     }
 }
