@@ -18,6 +18,7 @@
                 }
             });
             $provide.service('enumService', Antares.Mock.EnumServiceMock);
+            $provide.service('addressFormsProvider', Antares.Mock.AddressFormsProviderMock);
         });
     });
 } ())

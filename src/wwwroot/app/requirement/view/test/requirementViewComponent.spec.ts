@@ -168,7 +168,6 @@ module Antares {
                 element = $compile('<requirement-view requirement="requirement"></requirement-view>')(scope);
 
                 scope.$apply();
-                $http.flush();
 
                 controller = element.controller('requirementView');
             }));

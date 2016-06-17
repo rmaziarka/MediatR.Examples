@@ -8,16 +8,18 @@ module Antares.Common.Component {
     export class AddressFormViewController {
         addressForm: any;
         address: Business.Address;
+        templateUrl: string;
+        addressType: string;
 
-        constructor(private dataAccessService: Services.DataAccessService, $scope: ng.IScope) {
-            this.dataAccessService.getAddressFormResource().get({ id: this.address.addressFormId }).$promise.then((result)=>{
-                var addressForm = new Business.AddressForm();
-                angular.extend(addressForm, result);
-                addressForm.updateAddressFieldRows();
-                this.addressForm = addressForm;
-            });
+        constructor(private addressFormsProvider: Providers.AddressFormsProvider) {
+            var addressDefinitions = addressFormsProvider[this.addressType][this.address.countryId.toLowerCase()];
+
+            var addressForm = new Business.AddressForm();
+            angular.extend(addressForm, addressDefinitions);
+            addressForm.updateAddressFieldRows();
+            this.addressForm = addressForm;
         }
-
+        
         isRowEmpty(row: Array<Business.AddressFormFieldDefinition>): boolean {
             return !_.any(row, (field: Business.AddressFormFieldDefinition) => {
                 return !!this.address[field.name];

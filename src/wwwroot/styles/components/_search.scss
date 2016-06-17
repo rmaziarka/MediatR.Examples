@@ -71,6 +71,28 @@
   }
 }
 
+.search-property-results {
+  .address-view {
+    float: left;
+
+    .address-view-item {
+      float: left;
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+
+    .space {
+      margin-right: 3px;
+    }
+  }
+
+  .card-item {
+    white-space: normal;
+  }
+}
+
 .has-error {
   .search-property {
     .btn,

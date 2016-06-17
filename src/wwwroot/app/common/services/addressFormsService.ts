@@ -9,10 +9,10 @@ module Antares.Services {
         }
 
         getAllDefinitons(entityType: string) {
-            //var getParams: ng.IRequestShortcutConfig = { params: { entityType: entityType } };
+            var getParams: ng.IRequestShortcutConfig = { params: { entityType: entityType } };
 
-            //return this.$http.get<Dto.IAddressFormList>(this.appConfig.rootUrl + "/api/addressforms/list", getParams)
-            //    .then<Dto.IAddressFormList>((result: ng.IHttpPromiseCallbackArg<Dto.IAddressFormList>) => result.data);
+            return this.$http.get<Dto.IAddressFormList>(this.appConfig.rootUrl + "/api/addressforms/list", getParams)
+                .then<Dto.IAddressFormList>((result: ng.IHttpPromiseCallbackArg<Dto.IAddressFormList>) => result.data);
         }
     }
 

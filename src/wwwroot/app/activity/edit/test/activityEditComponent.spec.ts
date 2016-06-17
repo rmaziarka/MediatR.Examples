@@ -74,10 +74,7 @@ module Antares {
                 compile = $compile;
                 state = $state;
                 $http = $httpBackend;
-
-                // http backend
-                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
-
+                
                 // enums
                 enumService.setEnum(Dto.EnumTypeCode.ActivityStatus.toString(), activityStatuses);
 
@@ -86,7 +83,6 @@ module Antares {
                 element = compile('<activity-edit activity="activity"></activity-edit>')(scope);
 
                 scope.$apply();
-                $httpBackend.flush();
             }));
 
             describe('and has data', () => {
@@ -160,9 +156,6 @@ module Antares {
                 compile = $compile;
                 state = $state;
                 $http = $httpBackend;
-
-                // http backend
-                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
             }));
 
             it('when no vendors then "no items" element should be visible', () => {
@@ -173,7 +166,6 @@ module Antares {
                 // act
                 element = compile('<activity-edit activity="activity"></activity-edit>')(scope);
                 scope.$apply();
-                $http.flush();
 
                 // assert
                 var noItemsElement = element.find(pageObjectSelectors.vendorList.noItems);
@@ -193,7 +185,6 @@ module Antares {
                 // act
                 element = compile('<activity-edit activity="activity"></activity-edit>')(scope);
                 scope.$apply();
-                $http.flush();
 
                 // assert
                 var noItemsElement = element.find(pageObjectSelectors.vendorList.noItems);
@@ -213,7 +204,6 @@ module Antares {
                 // act
                 element = compile('<activity-edit activity="activity"></activity-edit>')(scope);
                 scope.$apply();
-                $http.flush();
 
                 // assert
                 var vendorsItemsElement1 = element.find(pageObjectSelectors.vendorList.item + contact1Mock.id);
@@ -237,15 +227,11 @@ module Antares {
                 state = $state;
                 $http = $httpBackend;
 
-                // http backend
-                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
-
                 // compile
                 scope['activity'] = TestHelpers.ActivityGenerator.generate();
                 element = compile('<activity-edit activity="activity"></activity-edit>')(scope);
 
                 scope.$apply();
-                $httpBackend.flush();
             }));
 
             it('then card component should have address data', () => {
@@ -270,15 +256,11 @@ module Antares {
                 state = $state;
                 $http = $httpBackend;
 
-                // http backend
-                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
-
                 // compile
                 scope['activity'] = TestHelpers.ActivityGenerator.generate();
                 element = compile('<activity-edit activity="activity"></activity-edit>')(scope);
 
                 scope.$apply();
-                $httpBackend.flush();
 
                 assertValidator = new TestHelpers.AssertValidators(element, scope);
             }));
@@ -352,15 +334,11 @@ module Antares {
                 state = $state;
                 $http = $httpBackend;
 
-                // http backend
-                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
-
                 // compile
                 scope['activity'] = activityMock;
                 element = compile('<activity-edit activity="activity"></activity-edit>')(scope);
 
                 scope.$apply();
-                $httpBackend.flush();
 
                 controller = element.controller('activityEdit');
             }));
@@ -407,15 +385,11 @@ module Antares {
                 state = $state;
                 $http = $httpBackend;
 
-                // http backend
-                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
-
                 // compile
                 scope['activity'] = activityMock;
                 element = compile('<activity-edit activity="activity"></activity-edit>')(scope);
 
                 scope.$apply();
-                $httpBackend.flush();
 
                 controller = element.controller('activityEdit');
             }));

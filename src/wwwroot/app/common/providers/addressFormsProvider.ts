@@ -4,18 +4,21 @@ module Antares.Providers {
     import Dto = Common.Models.Dto;
 
     export class AddressFormsProvider {
-        constructor(private addressFormsService: Services.AddressFormsService) {
+        [index: string]: any;
+
+        public property: Dto.IAddressFormList;
+        public requirement: Dto.IAddressFormList;
+
+        constructor(private addressFormsService: Services.AddressFormsService, private $q: ng.IQService) {
         }
 
-        public propertyDefinitons: Dto.IAddressFormList;
-        public requirementDefinitons: Dto.IAddressFormList;
-
         public loadDefinitions = () => {
-            //this.addressFormsService.getAllDefinitons("Property")
-            //    .then((result: Dto.IAddressFormList) => this.propertyDefinitons = result);
-
-            //this.addressFormsService.getAllDefinitons("Requirement")
-            //    .then((result: Dto.IAddressFormList) => this.requirementDefinitons = result);
+            return this.$q.all([
+                this.addressFormsService.getAllDefinitons("Property")
+                    .then((result: Dto.IAddressFormList) => this.property = result),
+                this.addressFormsService.getAllDefinitons("Requirement")
+                    .then((result: Dto.IAddressFormList) => this.requirement = result)
+            ]);
         }
     }
 

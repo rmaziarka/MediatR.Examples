@@ -26,11 +26,6 @@ module Antares.Mock.AddressForm {
             ]);
 
     export function mockHttpResponce($httpBackend: ng.IHttpBackendService, addressFormId: string = '', respond: any): ng.IHttpBackendService {
-
-        $httpBackend.whenGET(new RegExp(`\/api\/addressForms\/${addressFormId}`)).respond(() => {
-            return respond;
-        });
-
         return $httpBackend;
     }
 }

@@ -6,7 +6,7 @@ module Antares.Property {
     export class PropertySearchController {
         showSearchOptions: boolean;
         searchQuery: string;
-        resultsPerPageOptions = [1, 2, 25, 50, 100];
+        resultsPerPageOptions = [25, 50, 100];
         resultsPerPage: number = this.resultsPerPageOptions[0];
         currentPage: number = 1;
         totalResults: number = 0;
