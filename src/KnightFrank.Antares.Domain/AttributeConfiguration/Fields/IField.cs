@@ -5,5 +5,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
         void SetRequired();
 
         InnerField InnerField { get; }
+
+        IField Copy();
     }
 }

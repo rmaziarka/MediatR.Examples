@@ -2,6 +2,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
@@ -14,6 +15,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
         public Dictionary<Tuple<PageType, ControlCode>, Tuple<Control, IList<IField>>> AvailableControls { get; }
         public Dictionary<Tuple<TKey1, TKey2, PageType>, IList<Tuple<Control, IList<IField>>>> ControlPageConfiguration { get; }
 
+        [SuppressMessage("ReSharper", "VirtualMemberCallInContructor")]
         protected BaseControlsConfiguration()
         {
             this.AvailableControls = new Dictionary<Tuple<PageType, ControlCode>, Tuple<Control, IList<IField>>>();
@@ -40,11 +42,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
 
         public IList<InnerFieldState> GetInnerFieldsState(PageType pageType, TKey1 key1, TKey2 key2, object entity)
         {
-            //TODO: Controls config
-            Console.WriteLine("*** GetState {0} {1} {2}", pageType, key1, key2);
-
             var configurationKey = new Tuple<TKey1, TKey2, PageType>(key1, key2, pageType);
-
             var innerFieldStates = new List<InnerFieldState>();
 
             if (!this.ControlPageConfiguration.ContainsKey(configurationKey))
@@ -110,8 +108,9 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
                 Control control = this.AvailableControls[avialableControlsKey].Item1;
                 IList<IField> fields = this.AvailableControls[avialableControlsKey].Item2;
                 Control controlCopy = control.Copy();
-                // TODO: deep copy fields
-                var controlDefinition = new Tuple<Control, IList<IField>>(controlCopy, fields);
+                IList<IField> fieldsCopy = fields.Select(x => x.Copy()).ToList();
+
+                var controlDefinition = new Tuple<Control, IList<IField>>(controlCopy, fieldsCopy);
 
                 if (this.ControlPageConfiguration.ContainsKey(configuration))
                 {
