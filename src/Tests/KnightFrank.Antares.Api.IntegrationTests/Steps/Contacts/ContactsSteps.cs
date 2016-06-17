@@ -1,130 +1,173 @@
 ﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.Contacts
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Net.Http;
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Net.Http;
 
-    using FluentAssertions;
+	using FluentAssertions;
 
-    using KnightFrank.Antares.Api.IntegrationTests.Extensions;
-    using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
-    using KnightFrank.Antares.Dal.Model.Contacts;
+	using KnightFrank.Antares.Api.IntegrationTests.Extensions;
+	using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
+	using KnightFrank.Antares.Dal.Model.Contacts;
 
-    using Newtonsoft.Json;
+	using Newtonsoft.Json;
 
-    using TechTalk.SpecFlow;
-    using TechTalk.SpecFlow.Assist;
+	using TechTalk.SpecFlow;
+	using TechTalk.SpecFlow.Assist;
 
-    using Xunit;
+	using Xunit;
 
-    [Binding]
-    public class ContactsSteps : IClassFixture<BaseTestClassFixture>
-    {
-        private const string ApiUrl = "/api/contacts";
-        private readonly BaseTestClassFixture fixture;
+	[Binding]
+	public class ContactsSteps : IClassFixture<BaseTestClassFixture>
+	{
+		private const string ApiUrl = "/api/contacts";
+		private readonly BaseTestClassFixture fixture;
 
-        private readonly ScenarioContext scenarioContext;
+		private readonly ScenarioContext scenarioContext;
 
-        public ContactsSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
-        {
-            this.fixture = fixture;
-            if (scenarioContext == null)
-            {
-                throw new ArgumentNullException(nameof(scenarioContext));
-            }
-            this.scenarioContext = scenarioContext;
-        }
+		public ContactsSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
+		{
+			this.fixture = fixture;
+			if (scenarioContext == null)
+			{
+				throw new ArgumentNullException(nameof(scenarioContext));
+			}
+			this.scenarioContext = scenarioContext;
+		}
 
-        [Given(@"All contacts have been deleted")]
-        public void DeleteContacts()
-        {
-            this.fixture.DataContext.Contacts.RemoveRange(this.fixture.DataContext.Contacts.ToList());
-        }
+		[Given(@"All contacts have been deleted")]
+		public void DeleteContacts()
+		{
+			this.fixture.DataContext.Contacts.RemoveRange(this.fixture.DataContext.Contacts.ToList());
+		}
 
-        [Given(@"Contacts exists in database")]
-        public void CreateUsersInDb(Table table)
-        {
-            List<Contact> contacts = table.CreateSet<Contact>().ToList();
+		[Given(@"Contacts exists in database")]
+		public void CreateContactsInDb(Table table)
+		{
+			List<Contact> contacts = table.CreateSet<Contact>().ToList();
+			this.fixture.DataContext.Contacts.AddRange(contacts);
+			this.fixture.DataContext.SaveChanges();
 
-            this.fixture.DataContext.Contacts.AddRange(contacts);
-            this.fixture.DataContext.SaveChanges();
+			this.scenarioContext.Set(contacts, "Contacts");
+		}
 
-            this.scenarioContext.Set(contacts, "Contacts");
-        }
+		[When(@"User creates contact using api with max length required fields")]
+		public void CreateContactsWithMaxRequiredFields()
+		{
+			const int max = 128;
 
-        [When(@"User creates contact using api with max length fields")]
-        public void CreateUsersWithMaxFields()
-        {
-            const int max = 128;
+			var contact = new Contact
+			{
+				LastName = StringExtension.GenerateMaxAlphanumericString(max),
+				Title = StringExtension.GenerateMaxAlphanumericString(max)
+			};
 
-            var contact = new Contact
-            {
+			this.CreateContact(contact);
+		}
+
+		[Given(@"User creates contact using api with max length all fields")]
+		public void CreateContactsWithMaxAllFields(Table table)
+		{
+			const int max = 128;
+
+			string defaultMailingSalutation = table.Rows[0]["MailingSalutation"];
+			Guid defaultMailingSalutationId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[defaultMailingSalutation];
+
+			string defaultEventSalutation = table.Rows[0]["EventSalutation"];
+			Guid defaultEventSalutationId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[defaultEventSalutation];
+
+			var contact = new Contact
+			{
 				Title = StringExtension.GenerateMaxAlphanumericString(max),
 				FirstName = StringExtension.GenerateMaxAlphanumericString(max),
-                LastName = StringExtension.GenerateMaxAlphanumericString(max),
+				LastName = StringExtension.GenerateMaxAlphanumericString(max),
 				MailingFormalSalutation = StringExtension.GenerateMaxAlphanumericString(max),
 				MailingSemiformalSalutation = StringExtension.GenerateMaxAlphanumericString(max),
 				MailingInformalSalutation = StringExtension.GenerateMaxAlphanumericString(max),
 				MailingPersonalSalutation = StringExtension.GenerateMaxAlphanumericString(max),
 				MailingEnvelopeSalutation = StringExtension.GenerateMaxAlphanumericString(max),
-				DefaultMailingSalutationId = null,
+				DefaultMailingSalutationId = defaultMailingSalutationId,
 				EventInviteSalutation = StringExtension.GenerateMaxAlphanumericString(max),
 				EventSemiformalSalutation = StringExtension.GenerateMaxAlphanumericString(max),
 				EventInformalSalutation = StringExtension.GenerateMaxAlphanumericString(max),
 				EventPersonalSalutation = StringExtension.GenerateMaxAlphanumericString(max),
 				EventEnvelopeSalutation = StringExtension.GenerateMaxAlphanumericString(max),
-				DefaultEventSalutationId = null,
+				DefaultEventSalutationId = defaultEventSalutationId,
 				CreatedDate = DateTime.Now,
 				LastModifiedDate = DateTime.Now,
 				UserId = null
 			};
 
-            this.CreateContact(contact);
-        }
+			this.CreateContact(contact);
+		}
 
-        [When(@"User creates contact using api with following data")]
-        public void CreateContact(Table table)
-        {
-            var contact = table.CreateInstance<Contact>();
-            this.CreateContact(contact);
-        }
+		[When(@"User creates contact using api with following data")]
+		public void CreateContact(Table table)
+		{
+			var contact = table.CreateInstance<Contact>();
+			this.CreateContact(contact);
+		}
 
-        [When(@"User retrieves all contact details")]
-        public void GetAllContactsDetails()
-        {
-            string requestUrl = $"{ApiUrl}";
-            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+		[When(@"User retrieves all contact details")]
+		public void GetAllContactsDetails()
+		{
+			string requestUrl = $"{ApiUrl}";
+			HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
 
-            this.scenarioContext.SetHttpResponseMessage(response);
-        }
+			this.scenarioContext.SetHttpResponseMessage(response);
+		}
 
-        [When(@"User retrieves contact details for (.*) id")]
-        public void GetContactDetailsUsingId(string contactId)
-        {
-            if (contactId.Equals("latest"))
-            {
-                contactId = this.scenarioContext.Get<List<Contact>>("Contacts")[0].Id.ToString();
-            }
-            else if (contactId.Equals("invalid"))
-            {
-                contactId = Guid.NewGuid().ToString();
-            }
+		[When(@"User retrieves contact details for (.*) id")]
+		public void GetContactDetailsUsingId(string contactId)
+		{
+			if (contactId.Equals("latest"))
+			{
+				contactId = this.scenarioContext.Get<List<Contact>>("Contacts")[0].Id.ToString();
+			}
+			else if (contactId.Equals("invalid"))
+			{
+				contactId = Guid.NewGuid().ToString();
+			}
 
-            string requestUrl = $"{ApiUrl}/{contactId}";
-            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+			string requestUrl = $"{ApiUrl}/{contactId}";
+			HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
 
-            this.scenarioContext.SetHttpResponseMessage(response);
-        }
+			this.scenarioContext.SetHttpResponseMessage(response);
+		}
 
-        [Then(@"Contact details should be the same as already added")]
-        public void CheckContactDetailsFromPost()
-        {
-            var contactId = JsonConvert.DeserializeObject<Guid>(this.scenarioContext.GetResponseContent());
-            var contact = this.scenarioContext.Get<Contact>("Contact");
-            contact.Id = contactId;
+		[Then(@"Contact details should be the same as already added")]
+		public void CheckContactDetailsFromPost()
+		{
+			var contactId = JsonConvert.DeserializeObject<Guid>(this.scenarioContext.GetResponseContent());
+			var contact = this.scenarioContext.Get<Contact>("Contact");
+			contact.Id = contactId;
 
-            Contact expectedContact = this.fixture.DataContext.Contacts.Single(x => x.Id.Equals(contactId));
+			Contact expectedContact = this.fixture.DataContext.Contacts.Single(x => x.Id.Equals(contactId));
+			contact.ShouldBeEquivalentTo(expectedContact);
+		}
+
+		[Then(@"Contact details required fields should be the same as already added")]
+		public void CheckContactDetailsRequiredFieldsFromPost()
+		{
+			var contactId = JsonConvert.DeserializeObject<Guid>(this.scenarioContext.GetResponseContent());
+			var contact = this.scenarioContext.Get<Contact>("Contact");
+			contact.Id = contactId;
+
+			Contact expectedContact = this.fixture.DataContext.Contacts.Single(x => x.Id.Equals(contactId));
+
+			contact.Title.ShouldBeEquivalentTo(expectedContact.Title);
+			contact.LastName.ShouldBeEquivalentTo(expectedContact.LastName);
+		}
+
+		[Then(@"Contact details all fields should be the same as already added")]
+		public void CheckContactDetailsAllFieldsFromPost()
+		{
+			var contactId = JsonConvert.DeserializeObject<Guid>(this.scenarioContext.GetResponseContent());
+			var contact = this.scenarioContext.Get<Contact>("Contact");
+			contact.Id = contactId;
+
+			Contact expectedContact = this.fixture.DataContext.Contacts.Single(x => x.Id.Equals(contactId));
 
 			contact.Title.ShouldBeEquivalentTo(expectedContact.Title);
 			contact.FirstName.ShouldBeEquivalentTo(expectedContact.FirstName);
@@ -144,22 +187,38 @@
 		}
 
 		[Then(@"Get contact details should be the same as already added")]
-        public void CheckContactDetailsFromGet()
-        {
-            var contact = JsonConvert.DeserializeObject<Contact>(this.scenarioContext.GetResponseContent());
+		public void CheckContactDetailsFromGet()
+		{
+			var contact = JsonConvert.DeserializeObject<Contact>(this.scenarioContext.GetResponseContent());
 
-            Contact expectedContact = this.fixture.DataContext.Contacts.Single(x => x.Id.Equals(contact.Id));
-            contact.ShouldBeEquivalentTo(expectedContact);
-        }
+			Contact expectedContact = this.fixture.DataContext.Contacts.Single(x => x.Id.Equals(contact.Id));
+			contact.ShouldBeEquivalentTo(expectedContact);
+		}
 
-        [Then(@"Contacts details should have expected values")]
-        public void CheckContactDetailsHaveExpectedValues()
-        {
-            var contactList = this.scenarioContext.Get<List<Contact>>("Contacts");
+		[Then(@"Contact details required fields should have expected values")]
+		public void CheckContactDetailsRequiredFieldsHaveExpectedValues()
+		{
+			var contactList = this.scenarioContext.Get<List<Contact>>("Contacts");
 
-            var currentContactsDetails =
-                JsonConvert.DeserializeObject<List<Contact>>(this.scenarioContext.GetResponseContent());
-            currentContactsDetails.ShouldBeEquivalentTo(contactList);
+			var currentContactsDetails =
+				JsonConvert.DeserializeObject<List<Contact>>(this.scenarioContext.GetResponseContent());
+			currentContactsDetails.ShouldBeEquivalentTo(contactList);
+
+			contactList.Should()
+						 .Equal(currentContactsDetails,
+							 (c1, c2) =>
+										c1.Title == c2.Title &&
+										c1.LastName == c2.LastName);
+		}
+
+		[Then(@"Contact details all fields should have expected values")]
+		public void CheckContactDetailsAllFieldsHaveExpectedValues()
+		{
+			var contactList = this.scenarioContext.Get<List<Contact>>("Contacts");
+
+			var currentContactsDetails =
+				JsonConvert.DeserializeObject<List<Contact>>(this.scenarioContext.GetResponseContent());
+			currentContactsDetails.ShouldBeEquivalentTo(contactList);
 
 			contactList.Should()
 						 .Equal(currentContactsDetails,
@@ -178,15 +237,16 @@
 										c1.EventInformalSalutation == c2.EventInformalSalutation &&
 										c1.EventPersonalSalutation == c2.EventPersonalSalutation &&
 										c1.EventEnvelopeSalutation == c2.EventEnvelopeSalutation &&
-										c1.DefaultEventSalutationId == c2.DefaultEventSalutationId);
+										c1.DefaultEventSalutationId == c2.DefaultEventSalutationId &&
+										c1.UserId == c2.UserId);
 		}
 
 		private void CreateContact(Contact contact)
-        {
-            string requestUrl = $"{ApiUrl}";
-            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, contact);
-            this.scenarioContext.SetHttpResponseMessage(response);
-            this.scenarioContext.Set(contact, "Contact");
-        }
-    }
+		{
+			string requestUrl = $"{ApiUrl}";
+			HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, contact);
+			this.scenarioContext.SetHttpResponseMessage(response);
+			this.scenarioContext.Set(contact, "Contact");
+		}
+	}
 }

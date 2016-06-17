@@ -25,3 +25,13 @@ ActivityUserType;LeadNegotiator
 ActivityUserType;SecondaryNegotiator
 ActivityDepartmentType;Managing
 ActivityDepartmentType;Standard
+MailingSalutation;MailingFormal
+MailingSalutation;MailingSemiformal
+MailingSalutation;MailingInformal
+MailingSalutation;MailingPersonal
+MailingSalutation;MailingEnvelope
+EventSalutation;EventInvite
+EventSalutation;EventSemiformal
+EventSalutation;EventInformal
+EventSalutation;EventPersonal
+EventSalutation;EventEnvelope

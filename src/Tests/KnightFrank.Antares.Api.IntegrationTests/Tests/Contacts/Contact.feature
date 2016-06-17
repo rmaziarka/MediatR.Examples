@@ -1,11 +1,24 @@
 ﻿Feature: Contacts
 
 @Contacts
-Scenario: Create contact
+Scenario: Create contact with required fields
 	Given All contacts have been deleted
-	When User creates contact using api with max length fields
+	When User creates contact using api with max length required fields
 	Then User should get OK http status code
-		And Contact details should be the same as already added
+		And Contact details required fields should be the same as already added
+
+@Contacts
+Scenario: Create contact with all fields
+	Given All contacts have been deleted
+		And User gets EnumTypeItemId and EnumTypeItem code
+			| enumTypeCode      | enumTypeItemCode  |
+			| MailingSalutation | MailingSemiformal |
+			| EventSalutation   | EventSemiformal   |
+		And User creates contact using api with max length all fields
+	 		| MailingSalutation | EventSalutation |
+	 		| MailingSemiformal | EventSemiformal |
+	Then User should get OK http status code
+		And Contact details all fields should be the same as already added
 
 @Contacts
 Scenario Outline: Create contact using invalid data
@@ -23,19 +36,19 @@ Scenario Outline: Create contact using invalid data
 Scenario: Get all contacts
 	Given All contacts have been deleted
 		And Contacts exists in database
-			| FirstName | LastName | Title  | MailingFormalSalutation | MailingSemiformalSalutation | MailingInformalSalutation | MailingPersonalSalutation | MailingEnvelopeSalutation | EventInviteSalutation | EventSemiformalSalutation | EventInformalSalutation | EventPersonalSalutation | EventEnvelopeSalutation |
-			| Tomasz    | Bien     | Mister | A                       | B                           | C                         | D                         | E                         | G                     | H                         | I                       | J                       | K                       |
-			| David     | Dummy    | Mister | A                       | B                           | C                         | D                         | E                         | G                     | H                         | I                       | J                       | K                       |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
+			| David     | Dummy    | Mister |
 	When User retrieves all contact details
 	Then User should get OK http status code
-		And Contacts details should have expected values
+		And Contact details required fields should have expected values
 
 @Contacts
 Scenario: Get contact
 	Given All contacts have been deleted
 		And Contacts exists in database
-			| FirstName | LastName | Title  | MailingFormalSalutation | MailingSemiformalSalutation | MailingInformalSalutation | MailingPersonalSalutation | MailingEnvelopeSalutation | EventInviteSalutation | EventSemiformalSalutation | EventInformalSalutation | EventPersonalSalutation | EventEnvelopeSalutation |
-			| Tomasz    | Bien     | Mister | A                       | B                           | C                         | D                         | E                         | G                     | H                         | I                       | J                       | K                       |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
 	When User retrieves contact details for latest id
 	Then User should get OK http status code
 		And Get contact details should be the same as already added
