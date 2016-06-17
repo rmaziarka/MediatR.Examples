@@ -99,12 +99,12 @@
                 offer.LenderId = companyContact.ContactId;
                 offer.LenderCompanyId = companyContact.CompanyId;
 
-                offer.MortgageSurveyDate = DateTime.UtcNow;
+                offer.MortgageSurveyDate = this.date;
 
                 offer.SurveyorId = companyContact.ContactId;
                 offer.SurveyorCompanyId = companyContact.CompanyId;
 
-                offer.AdditionalSurveyDate = DateTime.UtcNow;
+                offer.AdditionalSurveyDate = this.date;
 
                 offer.AdditionalSurveyorId = companyContact.ContactId;
                 offer.AdditionalSurveyorCompanyId = companyContact.CompanyId;
@@ -255,12 +255,12 @@
                 details.LenderId = companyContact.ContactId;
                 details.LenderCompanyId = companyContact.CompanyId;
 
-                details.MortgageSurveyDate = DateTime.UtcNow;
+                details.MortgageSurveyDate = this.date;
 
                 details.SurveyorId = companyContact.ContactId;
                 details.SurveyorCompanyId = companyContact.CompanyId;
 
-                details.AdditionalSurveyDate = DateTime.UtcNow;
+                details.AdditionalSurveyDate = this.date;
 
                 details.AdditionalSurveyorId = companyContact.ContactId;
                 details.AdditionalSurveyorCompanyId = companyContact.CompanyId;
