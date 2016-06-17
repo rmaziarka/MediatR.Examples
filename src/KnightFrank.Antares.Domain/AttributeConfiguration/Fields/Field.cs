@@ -13,6 +13,14 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
         public Expression<Func<TEntity, TProperty>> Selector;
         public InnerField InnerField { get; }
 
+        public IField Copy()
+        {
+            InnerField innerFieldCopy = this.InnerField.Copy();
+            var copyField = new Field<TEntity, TProperty>(this.Selector, innerFieldCopy);
+            
+            return copyField;
+        }
+
         public Field(Expression<Func<TEntity, TProperty>> selector, InnerField field)
         {
             this.Selector = selector;
@@ -26,7 +34,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
         }
     }
 
-    public class Field<TEntity>
+    public static class Field<TEntity>
     {
         public static Field<TEntity, TProperty> Create<TProperty>(Expression<Func<TEntity, TProperty>> expression)
         {
