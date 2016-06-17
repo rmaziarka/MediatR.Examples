@@ -35,8 +35,8 @@ module Antares.Attributes {
             $scope = $rootScope.$new();
             $http = $httpBackend;
 
-            var bindings = { activityId: 'testId', departments: <Business.ActivityDepartment[]>[] };
-            controller = <ActivityDepartmentsEditControlController>$controller('DepartmentsController', {}, bindings);
+            var bindings = { activityId: 'testId', departments: <Business.ActivityDepartment[]>[], departmentIsRelatedWithNegotiator : () => { return true; } };
+            controller = <ActivityDepartmentsEditControlController>$controller('ActivityDepartmentsEditControlController', {}, bindings);
 
             controller.managingDepartmentType = <Dto.IEnumTypeItem>departmentTypes.managing;
             controller.standardDepartmentType = <Dto.IEnumTypeItem>departmentTypes.standard;
