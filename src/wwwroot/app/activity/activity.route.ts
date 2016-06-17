@@ -34,11 +34,35 @@ module Antares.Activity {
                         var activityId: string = $stateParams['id'];
                         return dataAccessService.getActivityResource().get({ id: activityId }).$promise;
                     },
-                    config: (activity: IActivity, configService: Services.ConfigService) => {
+                    editConfig: (activity: IActivity, configService: Services.ConfigService) => {
                         return configService.getActivity(PageTypeEnum.Update,
                             activity.property.propertyTypeId,
                             activity.activityTypeId,
                             activity);
+                    },
+                    viewConfig: (activity: IActivity, configService: Services.ConfigService) => {
+                        return configService.getActivity(PageTypeEnum.Details,
+                            activity.property.propertyTypeId,
+                            activity.activityTypeId,
+                            activity);
+                    },
+                    config: (editConfig: IActivityEditConfig, viewConfig: IActivityViewConfig) =>{
+                        var config: IActivityEditConfig = <IActivityEditConfig> ({});
+
+                        Object.keys(editConfig)
+                                .forEach((key: string) => {
+                                    config[key] = editConfig[key];
+                            });
+
+                        Object.keys(viewConfig)
+                                .forEach((key: string) => {
+                                    if (config[key]) {
+                                        return;
+                                    }
+
+                                    config[key] = viewConfig[key];
+                            });
+                        return config;
                     }
                 }
             });

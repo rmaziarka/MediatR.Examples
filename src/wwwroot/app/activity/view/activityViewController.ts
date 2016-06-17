@@ -38,9 +38,14 @@ module Antares.Activity.View {
                 this.isPropertyPreviewPanelVisible = false;
             });
 
-            this.eventAggregator.with(this).subscribe(Attributes.OpenPropertyPrewiewPanelEvent, (event: Attributes.OpenPropertyPrewiewPanelEvent) => {
+            this.eventAggregator.with(this).subscribe(Attributes.OpenPropertyPrewiewPanelEvent, (event: Antares.Attributes.OpenPropertyPrewiewPanelEvent) => {
+                this.hidePanels();
                 this.isPropertyPreviewPanelVisible = true;
             });
+        }
+
+        onPanelsHidden = () => {
+            this.isPropertyPreviewPanelVisible = true;
         }
 
         showPropertyPreview = (property: Business.PreviewProperty) => {
@@ -130,13 +135,11 @@ module Antares.Activity.View {
 
         defineComponents() {
             this.components = {
-                propertyPreview: () => { return this.componentRegistry.get(this.componentIds.propertyPreviewId); },
                 activityAttachmentAdd: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentAddId); },
                 activityAttachmentPreview: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentPreviewId); },
                 viewingPreview: () => { return this.componentRegistry.get(this.componentIds.viewingPreviewId); },
                 offerPreview: () => { return this.componentRegistry.get(this.componentIds.offerPreviewId);  },
                 panels: {
-                    propertyPreview: () => { return this.componentRegistry.get(this.componentIds.propertyPreviewSidePanelId); },
                     activityAttachmentAdd: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentAddSidePanelId) },
                     activityAttachmentPreview: () => { return this.componentRegistry.get(this.componentIds.activityAttachmentPreviewSidePanelId); },
                     previewViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.previewViewingSidePanelId); },

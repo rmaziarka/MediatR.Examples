@@ -38,9 +38,7 @@
 
         <div class="col-md-4">
             <section id="activity-edit-property">
-                <h3 class="page-header" translate="ACTIVITY.EDIT.PROPERTY"></h3>
-                <card id="card-property" card-template-url="'app/property/templates/propertyCard.html'" item="aevm.activity.property">
-                </card>
+                <property-view-control property="aevm.activity.property" is-panel-visible="aevm.isPropertyPreviewPanelVisible" config="aevm.config.property"></property-view-control>
             </section>
             <section id="activity-edit-vendors">
                 <list id="list-vendors">

@@ -2,6 +2,7 @@
 
 declare module Antares.Activity {
     interface IActivityConfig {
+        [key: string]: any;
         activityStatus: Attributes.IActivityStatusEditControlConfig;
         activityType: Attributes.IActivityTypeEditControlConfig;
         vendors: Attributes.IActivityVendorsControlConfig;

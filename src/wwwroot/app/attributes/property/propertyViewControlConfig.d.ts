@@ -2,6 +2,6 @@
 
 declare module Antares.Attributes {
     interface IPropertyViewControlConfig extends Antares.Common.Models.Dto.IControlConfig  {
-        property: Antares.Common.Models.Dto.IFieldConfig;
+        propertyId: Antares.Common.Models.Dto.IFieldConfig;
     }
 }
