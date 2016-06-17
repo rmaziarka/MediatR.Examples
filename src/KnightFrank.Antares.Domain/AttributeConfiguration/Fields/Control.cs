@@ -12,8 +12,8 @@
     public class Control
     {
         public readonly ControlCode ControlCode;
-        public readonly IList<InnerField> Fields;
         public readonly PageType PageType;
+        private IList<InnerField> fields;
 
         public bool IsReadonly(object entity) => entity != null && ((bool?)this.isReadonlyExpression?.DynamicInvoke(entity) ?? false);
         public bool IsHidden(object entity) => entity != null && ((bool?)this.isHiddenExpression?.DynamicInvoke(entity) ?? false);
@@ -21,18 +21,16 @@
         private Delegate isHiddenExpression;
         private Delegate isReadonlyExpression;
 
-        public Control(PageType pageType, ControlCode controlCode, IList<InnerField> fields)
+        public Control(PageType pageType, ControlCode controlCode)
         {
             this.ControlCode = controlCode;
-            this.Fields = fields;
             this.PageType = pageType;
+            this.fields = new List<InnerField>();
         }
 
-        public Control(PageType pageType, ControlCode controlCode, InnerField create)
+        public void AddField(InnerField field)
         {
-            this.Fields = new List<InnerField> { create };
-            this.ControlCode = controlCode;
-            this.PageType = pageType;
+            this.fields.Add(field);
         }
 
         public void SetReadonlyRule(LambdaExpression expression)
@@ -54,10 +52,10 @@
         {
             this.SetFieldExpression(fieldExpression, expression, true);
         }
-
+        
         public void SetFieldAllowedValues(LambdaExpression fieldExpression, IList<string> allowedCodes)
         {
-            foreach (InnerDictionaryField innerField in this.Fields.OfType<InnerDictionaryField>())
+            foreach (InnerDictionaryField innerField in this.fields.OfType<InnerDictionaryField>())
             {
                 if (innerField.Expression.ToString() == fieldExpression.ToString())
                 {
@@ -68,7 +66,7 @@
 
         private void SetFieldExpression(LambdaExpression fieldExpression, LambdaExpression expression, bool readonlyExpression)
         {
-            foreach (InnerField innerField in this.Fields)
+            foreach (InnerField innerField in this.fields)
             {
                 if (innerField.Expression.ToString() == fieldExpression.ToString())
                 {
@@ -87,7 +85,7 @@
         public IList<InnerFieldState> GetFieldStates(object entity)
         {
             IList<InnerFieldState> fieldStates = new List<InnerFieldState>();
-            foreach (InnerField field in this.Fields)
+            foreach (InnerField field in this.fields)
             {
                 var state = new InnerFieldState
                 {
@@ -112,12 +110,16 @@
 
         public Control Copy()
         {
-            List<InnerField> fieldCopies = this.Fields.Select(x => x.Copy()).ToList();
-            var newControl = new Control(this.PageType, this.ControlCode, fieldCopies)
+            var newControl = new Control(this.PageType, this.ControlCode)
             {
                 isHiddenExpression = this.isHiddenExpression,
                 isReadonlyExpression = this.isReadonlyExpression
             };
+
+            if (this.fields.Any())
+            {
+                newControl.fields = this.fields.Select(x => x.Copy()).ToList();
+            }
 
             return newControl;
         }

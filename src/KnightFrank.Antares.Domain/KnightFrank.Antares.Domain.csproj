@@ -159,6 +159,7 @@
     <Compile Include="AttributeConfiguration\Enums\PageType.cs" />
     <Compile Include="AttributeConfiguration\Fields\Control.cs" />
     <Compile Include="AttributeConfiguration\Fields\Field.cs" />
+    <Compile Include="AttributeConfiguration\Fields\IField.cs" />
     <Compile Include="AttributeConfiguration\Fields\InnerDictionaryField.cs" />
     <Compile Include="AttributeConfiguration\Fields\InnerField.cs" />
     <Compile Include="AttributeConfiguration\Fields\InnerFieldState.cs" />

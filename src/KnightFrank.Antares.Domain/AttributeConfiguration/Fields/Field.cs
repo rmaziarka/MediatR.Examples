@@ -8,15 +8,21 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
 
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
 
-    public class Field<TEntity, TProperty>
+    public class Field<TEntity, TProperty> : IField
     {
         public Expression<Func<TEntity, TProperty>> Selector;
-        public InnerField InnerField;
+        public InnerField InnerField { get; }
 
         public Field(Expression<Func<TEntity, TProperty>> selector, InnerField field)
         {
             this.Selector = selector;
             this.InnerField = field;
+        }
+
+        public void SetRequired()
+        {
+            this.InnerField.Required = true;
+            this.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(this.Selector).NotEmpty().NotNull()));
         }
     }
 
@@ -61,6 +67,6 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
             var compiled = expression.Compile();
             var innerField = new InnerDictionaryField(member, compiled.CoerceToNonGeneric(), expression, typeof(TEntity), typeof(TProperty), dictionaryCode);
             return innerField;
-    }
+        }
     }
 }

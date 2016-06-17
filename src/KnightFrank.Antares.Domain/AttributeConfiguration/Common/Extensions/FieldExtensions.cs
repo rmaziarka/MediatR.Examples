@@ -18,6 +18,15 @@
             field.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(field.Selector).GreaterThan(limit)));
             return field;
         }
+
+        public static Field<TEntity, TProperty?> GreaterThan<TEntity, TProperty>(this Field<TEntity, TProperty?> field, TProperty limit)
+           where TProperty : struct, IComparable, IComparable<TProperty>
+        {
+            field.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(field.Selector).GreaterThan(limit)));
+            return field;
+        }
+
+
         public static Field<TEntity, TProperty?> GreaterThanOrEqualTo<TEntity, TProperty>(this Field<TEntity, TProperty?> field, TProperty limit)
           where TProperty : struct, IComparable, IComparable<TProperty>
         {
@@ -84,6 +93,35 @@
         public static IList<Control> FieldHasAllowed<TEntity, TProperty, TEnum>(this IList<Control> controls, Expression<Func<TEntity, TProperty>> field, IEnumerable<TEnum> allowedValues) where TEnum : struct
         {
             return SetAllowedValues(controls, field, allowedValues);
+        }
+
+        public static Field<TEntity, TProperty> Field<TEntity, TProperty>(this IList<Tuple<Control, IList<IField>>> controlFields, Expression<Func<TEntity, TProperty>> field)
+        {
+            foreach (Tuple<Control, IList<IField>> controlField in controlFields)
+            {
+                foreach (IField fieldp in controlField.Item2)
+                {
+                    if (fieldp.InnerField.Expression.ToString() == field.ToString())
+                    {
+                        return fieldp as Field<TEntity, TProperty>;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public static IList<Tuple<Control, IList<IField>>> Required(this IList<Tuple<Control, IList<IField>>> controlFields)
+        {
+            foreach (Tuple<Control, IList<IField>> tuple in controlFields)
+            {
+                foreach (IField field in tuple.Item2)
+                {
+                    field.SetRequired();
+                }
+            }
+
+            return controlFields;
         }
 
         private static IList<Control> SetFieldExpression<TEntity, TProperty>(IList<Control> controls, Expression<Func<TEntity, TProperty>> field, Expression<Func<TEntity, bool>> expression, bool readonlyExpression)
