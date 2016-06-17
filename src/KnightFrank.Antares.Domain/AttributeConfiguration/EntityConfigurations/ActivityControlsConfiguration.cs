@@ -71,7 +71,7 @@
                 new List<IField>
                 {
                     Field<UpdateActivityCommand>.Create(x => x.LeadNegotiator).Required().ExternalValidator(new UpdateActivityUserValidator(true)),
-                    Field<UpdateActivityCommand>.Create(x => x.SecondaryNegotiators).Required().ExternalCollectionValidator(new UpdateActivityUserValidator(false))
+                    Field<UpdateActivityCommand>.Create(x => x.SecondaryNegotiators).ExternalCollectionValidator(new UpdateActivityUserValidator(false))
                 });
         }
 
