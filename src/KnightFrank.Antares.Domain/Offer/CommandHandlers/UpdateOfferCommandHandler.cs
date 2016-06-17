@@ -97,15 +97,13 @@
             }
         }
 
-        private UpdateOfferCommand SetDefaultOfferProgressStatuses(UpdateOfferCommand message, List<EnumType> enumStatusOfferTypes)
+        private void SetDefaultOfferProgressStatuses(UpdateOfferCommand message, List<EnumType> enumStatusOfferTypes)
         {
             message.MortgageStatusId = message.MortgageStatusId ?? this.offerProgressStatusHelper.GetStatusId(DomainEnumType.MortgageStatus, MortgageStatus.Unknown.ToString(), enumStatusOfferTypes);
             message.MortgageSurveyStatusId = message.MortgageSurveyStatusId ?? this.offerProgressStatusHelper.GetStatusId(DomainEnumType.MortgageSurveyStatus, MortgageStatus.Unknown.ToString(), enumStatusOfferTypes);
             message.AdditionalSurveyStatusId = message.AdditionalSurveyStatusId ?? this.offerProgressStatusHelper.GetStatusId(DomainEnumType.AdditionalSurveyStatus, MortgageStatus.Unknown.ToString(), enumStatusOfferTypes);
             message.SearchStatusId = message.SearchStatusId ?? this.offerProgressStatusHelper.GetStatusId(DomainEnumType.SearchStatus, SearchStatus.NotStarted.ToString(), enumStatusOfferTypes);
             message.EnquiriesId = message.EnquiriesId ?? this.offerProgressStatusHelper.GetStatusId(DomainEnumType.Enquiries, Enquiries.NotStarted.ToString(), enumStatusOfferTypes);
-
-            return message;
         }
 
         private List<EnumType> GetEnumTypeItems()
