@@ -6,18 +6,23 @@ module Antares.Property {
     export class PropertySearchController {
         showSearchOptions: boolean;
         searchQuery: string;
-        resultsPerPageOptions = [25, 50, 100];
-        resultsPerPage: number = 25;
+        resultsPerPageOptions = [1, 2, 25, 50, 100];
+        resultsPerPage: number = this.resultsPerPageOptions[0];
+        currentPage: number = 1;
         totalResults: number = 0;
-        
+
         searchResult: Business.PropertySearchResultItem[] = [];
 
         constructor(private propertyService: Services.PropertyService) {
-
         }
 
         search = () => {
-            this.propertyService.getSearchResult(this.searchQuery, 0, this.resultsPerPage)
+            this.currentPage = 1;
+            this.onPageChanged();
+        }
+
+        onPageChanged = () => {
+            this.propertyService.getSearchResult(this.searchQuery, this.currentPage - 1, this.resultsPerPage)
                 .then((result: Business.PropertySearchResult) => {
                     this.showSearchOptions = true;
                     this.searchResult = [];

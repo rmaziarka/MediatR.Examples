@@ -30,7 +30,6 @@ module Antares.Common.Component {
             ownershipType = this.selectEnumItem(ownershipTypes, Enums.OwnershipTypeEnum.Leaseholder);
             ownershipContacts = this.selectCurrentOwnershipContacts(this.ownerships, ownershipType);
 
-
             if (ownershipContacts.length == 0) {
                 ownershipType = this.selectEnumItem(ownershipTypes, Enums.OwnershipTypeEnum.Freeholder);
                 ownershipContacts = this.selectCurrentOwnershipContacts(this.ownerships, ownershipType);
