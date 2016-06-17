@@ -6,6 +6,7 @@ module Antares.Offer {
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
     import PubSub = Core.PubSub;
+    import CloseSidePanelEvent = Antares.Common.Component.CloseSidePanelEvent;
 
     export class OfferEditController extends Core.WithPanelsBaseController {
         public offer: Business.Offer;
@@ -47,19 +48,16 @@ module Antares.Offer {
             private $scope: ng.IScope,
             private kfMessageService: Services.KfMessageService,
             private latestViewsProvider: LatestViewsProvider,
-            private pubSub: PubSub) {
+            private pubSub: PubSub,
+            private eventAggregator: Core.EventAggregator) {
             super(componentRegistry, $scope);
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
-            pubSub.with(this)
-                .subscribe(Common.Component.CloseSidePanelMessage, () => {
-                    this.isCompanyContactAddPanelVisible = false;
-                })
-
+            eventAggregator.with(this).subscribe(CloseSidePanelEvent, this.companyContactPanelClosed);
             this.offerOriginal = angular.copy(this.offer);
-            pubSub.with(this)
-                .subscribe(Common.Component.CloseSidePanelEvent, () => {
-                    this.isCompanyContactAddPanelVisible = false;
-                });
+        }
+
+        companyContactPanelClosed = () => {
+            this.isCompanyContactAddPanelVisible = false;
         }
 
         showBrokerSelectPanel = () => {

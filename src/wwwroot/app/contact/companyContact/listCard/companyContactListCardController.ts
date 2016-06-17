@@ -8,14 +8,14 @@ module Antares {
         import CloseSidePanelMessage = Antares.Common.Component.CloseSidePanelMessage;
 
         export class CompanyContactListCardController {
-            constructor(private pubSub: Core.PubSub) { }
+            constructor(private eventAggregator: Core.EventAggregator) { }
             allowMultipleSelect: boolean;
             contacts: Business.CompanyContactWithSelection[];
             onSave: (contacts: ICompanyContact[]) => void;
             onConfigure: (contacts: { contacts: IContact[]; }) => void;
 
             close = () => {
-                this.pubSub.publish(new CloseSidePanelMessage());
+                this.eventAggregator.publish(new Common.Component.CloseSidePanelEvent());
             }
 
             cardSelected = (companyContact: any, selected: boolean) => {
