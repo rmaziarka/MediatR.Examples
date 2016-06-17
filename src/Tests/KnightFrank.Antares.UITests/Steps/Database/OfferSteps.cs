@@ -7,6 +7,7 @@
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Domain.Common.Enums;
 
     using TechTalk.SpecFlow;
 
@@ -32,15 +33,16 @@
         public void CreateViewing()
         {
             Guid statusId =
-                this.dataContext.EnumTypeItems.Single(i => i.EnumType.Code.Equals("OfferStatus") && i.Code.Equals("New")).Id;
+                this.dataContext.EnumTypeItems.Single(
+                    e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(nameof(OfferStatus.New))).Id;
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
 
             var offer = new Offer
             {
-                ActivityId = activityId,
                 //TODO improve selecting negotiator
                 NegotiatorId = this.dataContext.Users.First().Id,
+                ActivityId = activityId,
                 Price = 1000,
                 CompletionDate = DateTime.UtcNow,
                 ExchangeDate = DateTime.UtcNow,

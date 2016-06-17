@@ -82,7 +82,7 @@
 
         public string ActivityDate => this.Driver.GetElement(this.activityDate).Text.Split(' ')[0].Trim();
 
-        public AttachmentPreviewPage PreviewAttachment => new AttachmentPreviewPage(this.DriverContext);
+        public AttachmentPreviewPage AttachmentPreview => new AttachmentPreviewPage(this.DriverContext);
 
         public Attachment AttachmentDetails => new Attachment
         {

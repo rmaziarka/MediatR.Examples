@@ -197,7 +197,7 @@
         }
 
         [When(@"User adds (.*) file with (.*) type on view property page")]
-        public void SelectAttachmentType(string file, string type)
+        public void AddAttachment(string file, string type)
         {
             this.page.AttachFile.SelectType(type)
                 .AddFiletoAttachment(file)
@@ -340,7 +340,7 @@
         [Then(@"Attachment details on attachment preview page are the same like on view property page")]
         public void ChackAttachmentDetails()
         {
-            Attachment actual = this.page.PreviewAttachment.GetAttachmentDetails();
+            Attachment actual = this.page.AttachmentPreview.GetAttachmentDetails();
             actual.Date = actual.Date.Split(',')[0];
             Attachment expected = this.page.AttachmentDetails;
             expected.User = "John Smith";
@@ -351,14 +351,14 @@
         [Then(@"User closes attachment preview page on view property page")]
         public void CloseAttachmentPreviewPanel()
         {
-            this.page.PreviewAttachment.CloseAttachmentPreviewPage();
+            this.page.AttachmentPreview.CloseAttachmentPreviewPage();
             this.page.WaitForSidePanelToHide();
         }
 
         [Then(@"Property attachment (.*) should be downloaded")]
         public void ThenAttachmentShouldBeDownloaded(string attachmentName)
         {
-            FileInfo fileInfo = this.page.PreviewAttachment.GetDownloadedAttachmentInfo();
+            FileInfo fileInfo = this.page.AttachmentPreview.GetDownloadedAttachmentInfo();
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(attachmentName.ToLower(), fileInfo.Name),

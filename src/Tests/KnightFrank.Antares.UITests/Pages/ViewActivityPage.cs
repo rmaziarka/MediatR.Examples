@@ -69,7 +69,7 @@
 
         public AttachFilePage AttachFile => new AttachFilePage(this.DriverContext);
 
-        public AttachmentPreviewPage PreviewAttachment => new AttachmentPreviewPage(this.DriverContext);
+        public AttachmentPreviewPage AttachmentPreview => new AttachmentPreviewPage(this.DriverContext);
 
         public ViewingDetailsPage ViewingDetails => new ViewingDetailsPage(this.DriverContext);
 
