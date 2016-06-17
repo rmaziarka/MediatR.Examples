@@ -22,7 +22,7 @@ module Antares {
                     this.stateChanged = true;
                 }
 
-                $onChanges = (changesObj: IBaseSidePanelChange) => {
+                protected $onChanges(changesObj: IBaseSidePanelChange) {
                     if (changesObj.isVisible && changesObj.isVisible.currentValue !== changesObj.isVisible.previousValue && typeof (changesObj.isVisible.previousValue) === "boolean") {
                         if (changesObj.isVisible.currentValue === true) {
                             this.show();

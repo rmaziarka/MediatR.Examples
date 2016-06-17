@@ -13,11 +13,9 @@ module Antares.Ownership {
         initialySelectedCompanyContacts: Business.CompanyContactWithSelection[] = [];
         onSave: (contactCompanies: Business.CompanyContact[]) => void;
         allowMultipleSelect: boolean;
-        isOwnershipAddVisible: boolean = false;
 
         panelShown = () => {
             this.loadCompanyContacts();
-            this.isOwnershipAddVisible = false;
         }
 
         loadCompanyContacts = () => {
@@ -37,6 +35,13 @@ module Antares.Ownership {
                 }).finally(() => {
                     this.isBusy = false;
                 });
+        }
+
+        $onChanges(changesObj: any) {
+            super.$onChanges(changesObj);
+            if (changesObj.initialySelectedCompanyContacts && changesObj.initialySelectedCompanyContacts.currentValue && changesObj.initialySelectedCompanyContacts.currentValue !== changesObj.initialySelectedCompanyContacts.previousValue) {
+                this.loadCompanyContacts();
+            }
         }
     }
 
