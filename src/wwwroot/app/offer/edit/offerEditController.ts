@@ -90,11 +90,13 @@ module Antares.Offer {
                     if (companyContact.length > 0) {
                         this.offer.broker = new Business.Contact(companyContact[0].contact, companyContact[0].company);
                         this.offer.brokerId = companyContact[0].contact.id;
+                        this.offer.brokerCompany = companyContact[0].company;
                         this.offer.brokerCompanyId = companyContact[0].company.id;
                     }
                     else {
                         this.offer.broker = null;
                         this.offer.brokerId = null;
+                        this.offer.brokerCompany = null;
                         this.offer.brokerCompanyId = null;
                     }
                     break;
@@ -102,11 +104,13 @@ module Antares.Offer {
                     if (companyContact.length > 0) {
                         this.offer.lender = new Business.Contact(companyContact[0].contact, companyContact[0].company);
                         this.offer.lenderId = companyContact[0].contact.id;
+                        this.offer.lenderCompany = companyContact[0].company;
                         this.offer.lenderCompanyId = companyContact[0].company.id;
                     }
                     else {
                         this.offer.lender = null;
                         this.offer.lenderId = null;
+                        this.offer.lenderCompany = null;
                         this.offer.lenderCompanyId = null;
                     }
                     break;
@@ -114,11 +118,13 @@ module Antares.Offer {
                     if (companyContact.length > 0) {
                         this.offer.surveyor = new Business.Contact(companyContact[0].contact, companyContact[0].company);
                         this.offer.surveyorId = companyContact[0].contact.id;
+                        this.offer.surveyorCompany = companyContact[0].company;
                         this.offer.surveyorCompanyId = companyContact[0].company.id;
                     }
                     else {
                         this.offer.surveyor = null;
                         this.offer.surveyorId = null;
+                        this.offer.surveyorCompany = null;
                         this.offer.surveyorCompanyId = null;
                     }
                     break;
@@ -126,11 +132,13 @@ module Antares.Offer {
                     if (companyContact.length > 0) {
                         this.offer.additionalSurveyor = new Business.Contact(companyContact[0].contact, companyContact[0].company);
                         this.offer.additionalSurveyorId = companyContact[0].contact.id;
+                        this.offer.additionalSurveyorCompany = companyContact[0].company;
                         this.offer.additionalSurveyorCompanyId = companyContact[0].company.id;
                     }
                     else {
                         this.offer.additionalSurveyor = null;
                         this.offer.additionalSurveyorId = null;
+                        this.offer.additionalSurveyorCompany = null;
                         this.offer.additionalSurveyorCompanyId = null;
                     }
                     break;
