@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.Domain.AttributeConfiguration.Common
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -11,22 +12,22 @@
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
 
-    public class AttributeValidator<TKey1, TKey2> : IAttributeValidator<TKey1, TKey2>
+    public class AttributeValidator<TKey> : IAttributeValidator<TKey> where TKey : IStructuralEquatable, IStructuralComparable, IComparable
     {
-        private readonly IControlsConfiguration<TKey1, TKey2> configuration;
-        public AttributeValidator(IControlsConfiguration<TKey1, TKey2> configuration)
+        private readonly IControlsConfiguration<TKey> configuration;
+        public AttributeValidator(IControlsConfiguration<TKey> configuration)
         {
             this.configuration = configuration;
         }
 
-        public void Validate(PageType pageType, TKey1 key1, TKey2 key2, object entity)
+        public void Validate(PageType pageType, TKey key, object entity)
         {
-            IList<InnerFieldState> innerFieldStates = this.configuration.GetInnerFieldsState(pageType, key1, key2, entity);
+            IList<InnerFieldState> innerFieldStates = this.configuration.GetInnerFieldsState(pageType, key, entity);
 
             if (!innerFieldStates.Any())
             {
                 throw new NotSupportedException(
-                    $"There is no attribute {pageType} configuration for the followign pair: {key1} {key2}");
+                    $"There is no attribute {pageType} configuration for the followign pair: {key}");
             }
 
             foreach (InnerFieldState innerFieldState in innerFieldStates.Where(x => !x.Hidden || !x.Readonly))

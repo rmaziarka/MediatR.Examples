@@ -1,5 +1,7 @@
 ﻿namespace KnightFrank.Antares.Domain.AttributeConfiguration.Common
 {
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
@@ -11,9 +13,10 @@
 
     public class EntityMapper : IEntityMapper
     {
-        public TEntity MapAllowedValues<TEntity, TKey1, TKey2, TSource>(TSource source, TEntity entity, IControlsConfiguration<TKey1, TKey2> config, PageType pageType, TKey1 key1, TKey2 key2)
+        public TEntity MapAllowedValues<TEntity, TKey, TSource>(TSource source, TEntity entity, IControlsConfiguration<TKey> config, PageType pageType,
+            TKey key) where TKey : IStructuralEquatable, IStructuralComparable, IComparable
         {
-            IList<InnerFieldState> fieldStates = config.GetInnerFieldsState(pageType, key1, key2, source);
+            IList<InnerFieldState> fieldStates = config.GetInnerFieldsState(pageType, key, source);
             foreach (InnerFieldState field in fieldStates.Where(x => !x.Readonly && !x.Hidden))
             {
                 var memberSelectorExpression = field.Expression.Body as MemberExpression;
@@ -24,7 +27,7 @@
                     targetProperty?.SetValue(entity, field.Compiled(source), null);
                 }
             }
-            
+
             return entity;
         }
     }

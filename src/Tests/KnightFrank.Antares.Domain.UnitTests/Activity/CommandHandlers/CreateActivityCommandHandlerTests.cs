@@ -48,7 +48,7 @@
             [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IActivityTypeDefinitionValidator> activityTypeDefinitionValidator,
-            [Frozen] Mock<IAttributeValidator<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>> attributeValidator,
+            [Frozen] Mock<IAttributeValidator<Tuple<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>>> attributeValidator,
             [Frozen] Mock<IEntityMapper> entityMapper,
             CreateActivityCommandHandler handler,
             CreateActivityCommand command,
@@ -96,8 +96,8 @@
                 .Setup(
                     x =>
                         x.MapAllowedValues(command, It.Is<Activity>(a => a.PropertyId == command.PropertyId && a.ActivityTypeId == command.ActivityTypeId),
-                            It.IsAny<IControlsConfiguration<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>>(),
-                            PageType.Create, Domain.Common.Enums.PropertyType.Flat, Domain.Common.Enums.ActivityType.FreeholdSale))
+                            It.IsAny<IControlsConfiguration<Tuple<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>>>(),
+                            PageType.Create, new Tuple<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>(Domain.Common.Enums.PropertyType.Flat, Domain.Common.Enums.ActivityType.FreeholdSale)))
                 .Returns(mappedActivity);
 
             // Act
@@ -110,8 +110,8 @@
                 .Verify(
                     x =>
                         x.MapAllowedValues(command, It.Is<Activity>(a => a.PropertyId == command.PropertyId && a.ActivityTypeId == command.ActivityTypeId),
-                            It.IsAny<IControlsConfiguration<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>>(),
-                            PageType.Create, Domain.Common.Enums.PropertyType.Flat, Domain.Common.Enums.ActivityType.FreeholdSale), Times.Once);
+                            It.IsAny<IControlsConfiguration<Tuple<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>>>(),
+                            PageType.Create, new Tuple<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>(Domain.Common.Enums.PropertyType.Flat, Domain.Common.Enums.ActivityType.FreeholdSale)), Times.Once);
 
             activity.ActivityUsers.Should().HaveCount(1);
             ActivityUser leadNegotiator = activity.ActivityUsers.SingleOrDefault();
@@ -129,8 +129,8 @@
             entityValidator.Verify(x => x.EntityExists(activityType, command.ActivityTypeId), Times.Once);
             attributeValidator.Verify(
                 x =>
-                    x.Validate(PageType.Create, Domain.Common.Enums.PropertyType.Flat,
-                        Domain.Common.Enums.ActivityType.FreeholdSale, command));
+                    x.Validate(PageType.Create, new Tuple<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>(Domain.Common.Enums.PropertyType.Flat,
+                        Domain.Common.Enums.ActivityType.FreeholdSale), command));
             activityTypeDefinitionValidator.Verify(
                 x => x.Validate(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>()),
                 Times.Once);

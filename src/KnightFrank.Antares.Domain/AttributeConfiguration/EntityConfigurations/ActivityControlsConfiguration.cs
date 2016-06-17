@@ -11,7 +11,7 @@
 
     using ActivityType = KnightFrank.Antares.Domain.Common.Enums.ActivityType;
 
-    public class ActivityControlsConfiguration : BaseControlsConfiguration<PropertyType, ActivityType>
+    public class ActivityControlsConfiguration : ControlsConfigurationPerTwoTypes<PropertyType, ActivityType>
     {
         public override void DefineControls()
         {

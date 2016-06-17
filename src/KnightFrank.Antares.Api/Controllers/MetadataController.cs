@@ -20,7 +20,7 @@
     [RoutePrefix("api/metadata")]
     public class MetadataController : ApiController
     {
-        private readonly IControlsConfiguration<PropertyType, ActivityType> activityConfiguration;
+        private readonly IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityConfiguration;
         private readonly IEnumParser enumParser;
 
         /// <summary>
@@ -28,7 +28,7 @@
         /// </summary>
         /// <param name="activityConfiguration">The activity configuration.</param>
         /// <param name="enumParser">The enum parser.</param>
-        public MetadataController(IControlsConfiguration<PropertyType, ActivityType> activityConfiguration, IEnumParser enumParser)
+        public MetadataController(IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityConfiguration, IEnumParser enumParser)
         {
             this.activityConfiguration = activityConfiguration;
             this.enumParser = enumParser;
@@ -51,7 +51,7 @@
 
             PropertyType propertyType = this.enumParser.Parse<Dal.Model.Property.PropertyType, PropertyType>(propertyTypeId);
             ActivityType activityType = this.enumParser.Parse<Dal.Model.Property.Activities.ActivityType, ActivityType>(activityTypeId);
-            IList<InnerFieldState> fieldStates = this.activityConfiguration.GetInnerFieldsState(pageType, propertyType, activityType, entity);
+            IList<InnerFieldState> fieldStates = this.activityConfiguration.GetInnerFieldsState(pageType, new Tuple<PropertyType, ActivityType>(propertyType, activityType), entity);
             return fieldStates.MapToResponse();
         }
     }

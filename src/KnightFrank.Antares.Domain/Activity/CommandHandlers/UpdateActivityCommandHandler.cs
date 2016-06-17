@@ -41,10 +41,11 @@
 
         private readonly IEnumTypeItemValidator enumTypeItemValidator;
 
-        private readonly IControlsConfiguration<PropertyType, ActivityType> activityConfiguration;
+        private readonly IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityConfiguration;
 
         private readonly IEntityMapper entityMapper;
-        private readonly IAttributeValidator<PropertyType, ActivityType> attributeValidator;
+
+        private readonly IAttributeValidator<Tuple<PropertyType, ActivityType>> attributeValidator;
 
         public UpdateActivityCommandHandler(
             IGenericRepository<Activity> activityRepository,
@@ -55,10 +56,10 @@
             ICollectionValidator collectionValidator,
             IEnumTypeItemValidator enumTypeItemValidator,
             IActivityTypeDefinitionValidator activityTypeDefinitionValidator,
-            IGenericRepository<EnumTypeItem> enumTypeItemRepository, 
-            IControlsConfiguration<PropertyType, ActivityType> activityConfiguration, 
+            IGenericRepository<EnumTypeItem> enumTypeItemRepository,
+            IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityConfiguration,
             IEntityMapper entityMapper,
-            IAttributeValidator<PropertyType, ActivityType> attributeValidator)
+            IAttributeValidator<Tuple<PropertyType, ActivityType>> attributeValidator)
 
         {
             this.activityRepository = activityRepository;
@@ -91,8 +92,8 @@
             // ReSharper disable once PossibleNullReferenceException
             var activityType = EnumExtensions.ParseEnum<ActivityType>(activity.ActivityType.EnumCode);
             var propertyType = EnumExtensions.ParseEnum<PropertyType>(activity.Property.PropertyType.EnumCode);
-            
-            this.attributeValidator.Validate(PageType.Update, propertyType, activityType, message);
+
+            this.attributeValidator.Validate(PageType.Update, new Tuple<PropertyType, ActivityType>(propertyType, activityType), message);
 
             this.enumTypeItemValidator.ItemExists(EnumType.ActivityStatus, message.ActivityStatusId);
 
@@ -100,7 +101,7 @@
 
             List<ActivityUser> commandNegotiators = this.ValidateAndRetrieveNegotiatorsFromCommand(message);
 
-            activity = this.entityMapper.MapAllowedValues(message, activity, this.activityConfiguration, PageType.Update, propertyType, activityType);
+            activity = this.entityMapper.MapAllowedValues(message, activity, this.activityConfiguration, PageType.Update, new Tuple<PropertyType, ActivityType>(propertyType, activityType));
 
             this.ValidateActivityNegotiators(commandNegotiators, activity);
             this.UpdateActivityNegotiators(commandNegotiators, activity);
@@ -151,12 +152,12 @@
                         {
                             User user = this.GetUser(n.UserId);
                             return new ActivityUser
-                                       {
-                                           UserId = user.Id,
-                                           User = user,
-                                           UserType = this.GetSecondaryNegotiatorUserType(),
-                                           CallDate = n.CallDate
-                                       };
+                            {
+                                UserId = user.Id,
+                                User = user,
+                                UserType = this.GetSecondaryNegotiatorUserType(),
+                                CallDate = n.CallDate
+                            };
                         }));
 
             // All negotirators
@@ -318,10 +319,10 @@
         private static ActivityDepartment CreateActivityDepartament(UpdateActivityDepartment updateActivityDepartment)
         {
             return new ActivityDepartment
-                       {
-                           DepartmentId = updateActivityDepartment.DepartmentId,
-                           DepartmentTypeId = updateActivityDepartment.DepartmentTypeId
-                       };
+            {
+                DepartmentId = updateActivityDepartment.DepartmentId,
+                DepartmentTypeId = updateActivityDepartment.DepartmentTypeId
+            };
         }
 
         private static void UpdateActivityDepartament(UpdateActivityDepartment updateActivityDepartment, ActivityDepartment oldDepartament)

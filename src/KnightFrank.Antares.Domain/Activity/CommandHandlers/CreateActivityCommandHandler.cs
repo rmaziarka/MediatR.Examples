@@ -31,7 +31,8 @@
         private readonly IGenericRepository<Dal.Model.Property.Activities.ActivityType> activityTypeRepository;
 
         private readonly IActivityTypeDefinitionValidator activityTypeDefinitionValidator;
-        private readonly IAttributeValidator<PropertyType, ActivityType> attributeValidator;
+
+        private readonly IAttributeValidator<Tuple<PropertyType, ActivityType>> attributeValidator;
 
         private readonly ICollectionValidator collectionValidator;
 
@@ -47,7 +48,7 @@
 
         private readonly IGenericRepository<User> userRepository;
 
-        private readonly IControlsConfiguration<PropertyType, ActivityType> activityConfiguration;
+        private readonly IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityConfiguration;
 
         private readonly IEntityMapper entityMapper;
 
@@ -62,9 +63,10 @@
             IGenericRepository<Property> propertyRepository,
             IGenericRepository<EnumTypeItem> enumTypeItemRepository,
             IActivityTypeDefinitionValidator activityTypeDefinitionValidator,
-            IAttributeValidator<PropertyType, ActivityType> attributeValidator, 
-            IControlsConfiguration<PropertyType, ActivityType> activityConfiguration, 
-            IEntityMapper entityMapper)
+            IAttributeValidator<Tuple<PropertyType, ActivityType>> attributeValidator,
+            IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityConfiguration,
+            IEntityMapper entityMapper
+            )
         {
             this.activityRepository = activityRepository;
             this.activityTypeRepository = activityTypeRepository;
@@ -105,7 +107,7 @@
                 ActivityTypeId = message.ActivityTypeId
             };
 
-            activity = this.entityMapper.MapAllowedValues(message, activity, this.activityConfiguration, PageType.Create, propertyType, activityTypeEnum);
+            activity = this.entityMapper.MapAllowedValues(message, activity, this.activityConfiguration, PageType.Create, new Tuple<PropertyType, ActivityType>(propertyType, activityTypeEnum));
 
             List<Contact> vendors = this.contactRepository.FindBy(x => message.ContactIds.Contains(x.Id)).ToList();
             this.collectionValidator.CollectionContainsAll(
@@ -150,7 +152,7 @@
 
             var activityTypeEnum = EnumExtensions.ParseEnum<ActivityType>(activityType.EnumCode);
 
-            this.attributeValidator.Validate(PageType.Create, propertyType, activityTypeEnum, message);
+            this.attributeValidator.Validate(PageType.Create, new Tuple<PropertyType, ActivityType>(propertyType, activityTypeEnum), message);
         }
 
         private EnumTypeItem GetLeadNegotiatorUserType()

@@ -79,8 +79,8 @@
   <ItemGroup>
     <Compile Include="Activity\CommandHandlers\CreateActivityAttachmentCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandler.cs" />
-    <Compile Include="Activity\CommandHandlers\UpdateActivityUserCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandler.cs" />
+    <Compile Include="Activity\CommandHandlers\UpdateActivityUserCommandHandler.cs" />
     <Compile Include="Activity\Commands\CreateActivityAttachmentCommand.cs" />
     <Compile Include="Activity\Commands\CreateActivityAttachmentCommandValidator.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
@@ -154,6 +154,8 @@
     <Compile Include="AttributeConfiguration\Common\IEntityMapper.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ActivityControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\BaseControlsConfiguration.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerThreeTypes.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerTwoTypes.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\IControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\Enums\ControlCode.cs" />
     <Compile Include="AttributeConfiguration\Enums\PageType.cs" />
