@@ -1,0 +1,18 @@
+<ng-form name='askingPriceControlForm' ng-if="vm.config">
+    <div class="form-group" show-errors>
+        <div class="row">
+            <div class="col-md-7">
+                <label for="asking-price" translate="ACTIVITY.EDIT.PRICES.ASKING_PRICE"></label>
+                <div class="input-group">
+                    <input ng-model="vm.ngModel"
+                           id="asking-price"
+                           name="askingPrice" class="form-control" type="number" min="0" />
+                    <div class="input-group-addon">GBP</div>
+                </div>
+                <div ng-messages="askingPriceControlForm.askingPrice.$error" ng-show="askingPriceControlForm.$submitted || askingPriceControlForm.askingPrice.$dirty">
+                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-form>
