@@ -50,9 +50,6 @@
             this.AddControl(PageType.Details, ControlCode.AskingPrice, Field<Activity>.Create(x => x.AskingPrice));
             this.AddControl(PageType.Details, ControlCode.ShortLetPricePerWeek, Field<Activity>.Create(x => x.ShortLetPricePerWeek));
             this.AddControl(PageType.Details, ControlCode.CreationDate, Field<Activity>.Create(x => x.CreatedDate));
-            this.AddControl(PageType.Details, ControlCode.MarketAppraisalPrice, Field<Activity>.Create(x => x.MarketAppraisalPrice));
-            this.AddControl(PageType.Details, ControlCode.RecommendedPrice, Field<Activity>.Create(x => x.RecommendedPrice));
-            this.AddControl(PageType.Details, ControlCode.VendorEstimatedPrice, Field<Activity>.Create(x => x.VendorEstimatedPrice));
             this.AddControl(PageType.Details, ControlCode.Offers, Field<Activity>.Create(x => x.Offers));
             this.AddControl(PageType.Details, ControlCode.Viewings, Field<Activity>.Create(x => x.Viewings));
             this.AddControl(PageType.Details, ControlCode.Attachments, Field<Activity>.Create(x => x.Attachments));
@@ -64,9 +61,6 @@
             this.AddControl(PageType.Update, ControlCode.Departments, Field<UpdateActivityCommand>.Create(x => x.Departments).Required().ExternalCollectionValidator(new UpdateActivityDepartmentValidator()));
             this.AddControl(PageType.Update, ControlCode.AskingPrice, Field<UpdateActivityCommand>.Create(x => x.AskingPrice));
             this.AddControl(PageType.Update, ControlCode.ShortLetPricePerWeek, Field<UpdateActivityCommand>.Create(x => x.ShortLetPricePerWeek));
-            this.AddControl(PageType.Update, ControlCode.MarketAppraisalPrice, Field<UpdateActivityCommand>.Create(x => x.MarketAppraisalPrice).GreaterThanOrEqualTo(0));
-            this.AddControl(PageType.Update, ControlCode.RecommendedPrice, Field<UpdateActivityCommand>.Create(x => x.RecommendedPrice).GreaterThanOrEqualTo(0));
-            this.AddControl(PageType.Update, ControlCode.VendorEstimatedPrice, Field<UpdateActivityCommand>.Create(x => x.VendorEstimatedPrice).GreaterThanOrEqualTo(0));
             this.AddControl(PageType.Update, ControlCode.Negotiators,
                 new List<IField>
                 {
@@ -104,10 +98,7 @@
                 ControlCode.ActivityType,
                 ControlCode.Negotiators,
                 ControlCode.Departments,
-                ControlCode.ShortLetPricePerWeek,
-                ControlCode.MarketAppraisalPrice,
-                ControlCode.RecommendedPrice,
-                ControlCode.VendorEstimatedPrice
+                ControlCode.ShortLetPricePerWeek
             }, this.When(new List<PropertyType>
             {
                 PropertyType.House, PropertyType.Flat, PropertyType.Bungalow, PropertyType.Maisonette, PropertyType.GarageOnly, PropertyType.ParkingSpace, PropertyType.Houseboat
@@ -120,10 +111,7 @@
                 ControlCode.ActivityType,
                 ControlCode.Negotiators,
                 ControlCode.Departments,
-                ControlCode.AskingPrice,
-                ControlCode.MarketAppraisalPrice,
-                ControlCode.RecommendedPrice,
-                ControlCode.VendorEstimatedPrice
+                ControlCode.AskingPrice
             }, this.When(new List<PropertyType>
             {
                 PropertyType.House, PropertyType.Flat, PropertyType.Bungalow, PropertyType.Maisonette, PropertyType.DevelopmentPlot, PropertyType.FarmEstate,
@@ -137,10 +125,7 @@
                 ControlCode.ActivityType,
                 ControlCode.Negotiators,
                 ControlCode.Departments,
-                ControlCode.AskingPrice,
-                ControlCode.MarketAppraisalPrice,
-                ControlCode.RecommendedPrice,
-                ControlCode.VendorEstimatedPrice
+                ControlCode.AskingPrice
             }, this.When(new List<PropertyType>
             {
                 PropertyType.Flat, PropertyType.Maisonette, PropertyType.DevelopmentPlot, PropertyType.Land
@@ -151,10 +136,7 @@
                 ControlCode.ActivityStatus,
                 ControlCode.Negotiators,
                 ControlCode.Departments,
-                ControlCode.ShortLetPricePerWeek,
-                ControlCode.MarketAppraisalPrice,
-                ControlCode.RecommendedPrice,
-                ControlCode.VendorEstimatedPrice
+                ControlCode.ShortLetPricePerWeek
             }, this.When(new List<PropertyType>
             {
                 PropertyType.House, PropertyType.Flat, PropertyType.Bungalow, PropertyType.Maisonette, PropertyType.GarageOnly, PropertyType.ParkingSpace, PropertyType.Houseboat
@@ -165,10 +147,7 @@
                 ControlCode.ActivityStatus,
                 ControlCode.Negotiators,
                 ControlCode.Departments,
-                ControlCode.AskingPrice,
-                ControlCode.MarketAppraisalPrice,
-                ControlCode.RecommendedPrice,
-                ControlCode.VendorEstimatedPrice
+                ControlCode.AskingPrice
             }, this.When(new List<PropertyType>
             {
                 PropertyType.House, PropertyType.Flat, PropertyType.Bungalow, PropertyType.Maisonette, PropertyType.DevelopmentPlot, PropertyType.FarmEstate,
@@ -180,10 +159,7 @@
                 ControlCode.ActivityStatus,
                 ControlCode.Negotiators,
                 ControlCode.Departments,
-                ControlCode.AskingPrice,
-                ControlCode.MarketAppraisalPrice,
-                ControlCode.RecommendedPrice,
-                ControlCode.VendorEstimatedPrice
+                ControlCode.AskingPrice
             }, this.When(new List<PropertyType>
             {
                 PropertyType.Flat, PropertyType.Maisonette, PropertyType.DevelopmentPlot, PropertyType.Land
