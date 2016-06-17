@@ -8,5 +8,6 @@ declare module Antares.Activity {
         vendors: Attributes.IActivityVendorsControlConfig;
         landlords: Attributes.IActivityLandlordsControlConfig;
         negotiators: Attributes.IActivityNegotiatorsControlConfig;
+        property: Attributes.IPropertyViewControlConfig
     }
 }

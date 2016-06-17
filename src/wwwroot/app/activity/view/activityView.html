@@ -14,9 +14,7 @@
         <div class="row">
             <div class="col-md-4">
                 <section id="activity-view-property">
-                    <h3 class="page-header" translate="ACTIVITY.VIEW.PROPERTY"></h3>
-                    <card id="card-property" card-template-url="'app/property/templates/propertyCard.html'" item="avvm.activity.property" show-item-details="avvm.showPropertyPreview">
-                    </card>
+                    <property-view-control property="avvm.activity.property" is-panel-visible="avvm.isPropertyPreviewPanelVisible" config="avvm.config.property"></property-view-control>
                 </section>
                 <section id="activity-view-vendors">
                     <activity-vendors-view-control contacts="avvm.activity.contacts" config="avvm.config.vendors"></activity-vendors-view-control>
@@ -97,16 +95,6 @@
         </div>
     </div>
 </div>
-
-<side-panel component-id="avvm.componentIds.propertyPreviewSidePanelId">
-    <side-panel-header>
-        <h3 translate="PROPERTY.PREVIEW.PROPERTY_PREVIEW"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <property-preview component-id="avvm.componentIds.propertyPreviewId">
-        </property-preview>
-    </side-panel-content>
-</side-panel>
 
 <side-panel component-id="avvm.componentIds.activityAttachmentAddSidePanelId" is-busy="avvm.saveActivityAttachmentBusy">
     <side-panel-header>

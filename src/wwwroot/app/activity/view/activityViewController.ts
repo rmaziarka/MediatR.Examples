@@ -20,16 +20,27 @@ module Antares.Activity.View {
         selectedOffer: Dto.IOffer;
         selectedViewing: Dto.IViewing;
 
+        isPropertyPreviewPanelVisible: boolean = false;
+
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService,
             private dataAccessService: Services.DataAccessService,
-            private latestViewsProvider: LatestViewsProvider) {
+            private latestViewsProvider: LatestViewsProvider,
+            private eventAggregator: Core.EventAggregator) {
 
             super(componentRegistry, $scope);
 
             this.activityAttachmentResource = dataAccessService.getAttachmentResource();
+            
+            this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
+                this.isPropertyPreviewPanelVisible = false;
+            });
+
+            this.eventAggregator.with(this).subscribe(Attributes.OpenPropertyPrewiewPanelEvent, (event: Attributes.OpenPropertyPrewiewPanelEvent) => {
+                this.isPropertyPreviewPanelVisible = true;
+            });
         }
 
         showPropertyPreview = (property: Business.PreviewProperty) => {

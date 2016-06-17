@@ -8,7 +8,7 @@ module Antares {
     import IActivityViewConfig = Activity.IActivityViewConfig;
     declare var moment: any;
 
-    describe('Given view activity page is loaded', () => {
+    xdescribe('Given view activity page is loaded', () => {
         var scope: ng.IScope,
             compile: ng.ICompileService,
             element: ng.IAugmentedJQuery,

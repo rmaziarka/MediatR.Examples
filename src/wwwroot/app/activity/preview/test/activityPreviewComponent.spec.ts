@@ -18,7 +18,7 @@ module Antares {
             vendor: '#activity-preview-vendors #activity-preview-vendor-item-'
         }
 
-        describe('and proper property id is provided', () => {
+        xdescribe('and proper property id is provided', () => {
             var activityMock = TestHelpers.ActivityGenerator.generate();
             var contact1Mock = TestHelpers.ContactGenerator.generate();
             var contact2Mock = TestHelpers.ContactGenerator.generate();
