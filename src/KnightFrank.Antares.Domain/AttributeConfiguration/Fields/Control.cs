@@ -7,7 +7,6 @@
 
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
-    using KnightFrank.Antares.Domain.Common.BusinessValidators;
 
     public class Control
     {
@@ -15,11 +14,14 @@
         public readonly PageType PageType;
         private IList<InnerField> fields;
 
-        public bool IsReadonly(object entity) => entity != null && ((bool?)this.isReadonlyExpression?.DynamicInvoke(entity) ?? false);
-        public bool IsHidden(object entity) => entity != null && ((bool?)this.isHiddenExpression?.DynamicInvoke(entity) ?? false);
+        public bool IsReadonly(object entity) => entity != null && ((bool?)this.isReadonlyDelegate?.DynamicInvoke(entity) ?? false);
+        public bool IsHidden(object entity) => entity != null && ((bool?)this.isHiddenDelegate?.DynamicInvoke(entity) ?? false);
 
-        private Delegate isHiddenExpression;
-        private Delegate isReadonlyExpression;
+        private Delegate isHiddenDelegate;
+        private Delegate isReadonlyDelegate;
+
+        public LambdaExpression IsHiddenExpression { get; private set; }
+        public LambdaExpression IsReadonlyExpression { get; private set; }
 
         public Control(PageType pageType, ControlCode controlCode)
         {
@@ -35,12 +37,14 @@
 
         public void SetReadonlyRule(LambdaExpression expression)
         {
-            this.isReadonlyExpression = expression.Compile();
+            this.IsReadonlyExpression = expression;
+            this.isReadonlyDelegate = expression.Compile();
         }
 
         public void SetHiddenRule(LambdaExpression expression)
         {
-            this.isHiddenExpression = expression.Compile();
+            this.IsHiddenExpression = expression;
+            this.isHiddenDelegate = expression.Compile();
         }
 
         public void SetFieldHiddenRule(LambdaExpression fieldExpression, LambdaExpression expression)
@@ -112,8 +116,8 @@
         {
             var newControl = new Control(this.PageType, this.ControlCode)
             {
-                isHiddenExpression = this.isHiddenExpression,
-                isReadonlyExpression = this.isReadonlyExpression
+                isHiddenDelegate = this.isHiddenDelegate,
+                isReadonlyDelegate = this.isReadonlyDelegate
             };
 
             if (this.fields.Any())
