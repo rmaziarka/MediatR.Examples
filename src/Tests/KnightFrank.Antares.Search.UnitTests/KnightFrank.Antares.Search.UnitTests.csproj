@@ -120,10 +120,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Autofixture\IgnoreVirtualMembers.cs" />
-    <Compile Include="AutoMoqDataAttribute.cs" />
     <Compile Include="BaseTestClassFixture.cs" />
-    <Compile Include="FixtureExtension\FixtureExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property\Queries\PropertiesPageableQueryValidatorTests.cs" />
     <Compile Include="Property\QueryHandlers\PropertiesPageableQueryHandlerTests.cs" />

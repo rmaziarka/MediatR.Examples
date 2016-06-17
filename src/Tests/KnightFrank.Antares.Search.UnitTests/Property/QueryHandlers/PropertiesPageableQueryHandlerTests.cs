@@ -10,6 +10,7 @@
     using KnightFrank.Antares.Search.Property.Queries;
     using KnightFrank.Antares.Search.Property.QueryHandlers;
     using KnightFrank.Antares.Search.Property.QueryResults;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 
