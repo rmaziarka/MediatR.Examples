@@ -5,7 +5,8 @@ module Antares.Attributes {
         templateUrl:'app/attributes/activityRecommendedPrice/activityRecommendedPriceEditControl.html',
             controllerAs: 'vm',
             bindings: {
-                ngModel: '='
+                ngModel: '=',
+				config:'<'
             }
     });
 }

@@ -40,18 +40,9 @@
             <div class="col-md-4">
                 <section id="activity-view-prices">
                     <h3 class="page-header" translate="ACTIVITY.VIEW.PRICES.PRICES"></h3>
-                    <div class="section-row row">
-                        <div class="col-xs-6" translate="ACTIVITY.VIEW.PRICES.MARKET_APPRAISAL_PRICE"></div>
-                        <div id="marketAppraisalPrice" class="col-xs-6" ng-if="avvm.activity.marketAppraisalPrice !== null">{{avvm.activity.marketAppraisalPrice | number : 2 }} GBP</div>
-                    </div>
-                    <div class="section-row row">
-                        <div class="col-xs-6" translate="ACTIVITY.VIEW.PRICES.RECOMMENDED_PRICE"></div>
-                        <div id="recommendedPrice" class="col-xs-6" ng-if="avvm.activity.recommendedPrice !== null">{{avvm.activity.recommendedPrice | number : 2 }} GBP</div>
-                    </div>
-                    <div class="section-row row">
-                        <div class="col-xs-6" translate="ACTIVITY.VIEW.PRICES.VENDOR_ESIMATED_PRICE"></div>
-                        <div id="vendorEstimatedPrice" class="col-xs-6" ng-if="avvm.activity.vendorEstimatedPrice !== null">{{avvm.activity.vendorEstimatedPrice | number : 2 }} GBP</div>
-                    </div>
+                    <activity-market-appraisal-price-view-control config="avvm.config.marketAppraisalPrice" price='avvm.activity.marketAppraisalPrice'></activity-market-appraisal-price-view-control>
+                    <activity-recommended-price-view-control config="avvm.config.recommendedPrice" price='avvm.activity.recommendedPrice'></activity-recommended-price-view-control>
+                    <activity-vendor-estimated-price-view-control config="avvm.config.vendorEstimatedPrice" price='avvm.activity.vendorEstimatedPrice'></activity-vendor-estimated-price-view-control>
                 </section>
                 <section id="activity-view-viewings">
                     <h3 class="page-header" translate="ACTIVITY.VIEW.VIEWINGS"></h3>
