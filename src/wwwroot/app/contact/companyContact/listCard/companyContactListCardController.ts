@@ -5,7 +5,6 @@ module Antares {
         import Business = Common.Models.Business;
         import IContact = Antares.Common.Models.Dto.IContact;
         import ICompanyContact = Antares.Common.Models.Dto.ICompanyContact;
-        import CloseSidePanelMessage = Antares.Common.Component.CloseSidePanelMessage;
 
         export class CompanyContactListCardController {
             constructor(private eventAggregator: Core.EventAggregator) { }
