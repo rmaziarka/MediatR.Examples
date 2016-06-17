@@ -8,6 +8,7 @@
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Domain.Activity.Queries;
+    using KnightFrank.Antares.Tests.Common.Extensions.Fluent.ValidationResult;
 
     using Ploeh.AutoFixture.Xunit2;
 
@@ -43,9 +44,7 @@
             ValidationResult validationResult = validator.Validate(query);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(query.CountryCode));
-            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == nameof(Messages.notempty_error));
+            validationResult.IsInvalid(nameof(query.CountryCode), nameof(Messages.notempty_error));
         }
 
         [Theory]
@@ -61,9 +60,7 @@
             ValidationResult validationResult = validator.Validate(query);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(query.PropertyTypeId));
-            validationResult.Errors.Should().ContainSingle(e => e.ErrorCode == nameof(Messages.notempty_error));
+            validationResult.IsInvalid(nameof(query.PropertyTypeId), nameof(Messages.notempty_error));
         }
     }
 }

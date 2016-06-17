@@ -3,7 +3,7 @@
     using FluentValidation.Validators;
 
     using KnightFrank.Antares.Domain.Contact.Commands;
-    using KnightFrank.Antares.Tests.Common.Extension.Fluent.RulesVerifier;
+    using KnightFrank.Antares.Tests.Common.Extensions.Fluent.RulesVerifier;
 
     using Xunit;
 

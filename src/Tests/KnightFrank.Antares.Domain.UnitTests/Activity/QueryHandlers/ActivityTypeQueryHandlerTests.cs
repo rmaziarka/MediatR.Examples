@@ -16,6 +16,7 @@
     using KnightFrank.Antares.Domain.Activity.QueryHandlers;
     using KnightFrank.Antares.Domain.Activity.QueryResults;
     using KnightFrank.Antares.Domain.Common.Exceptions;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 

@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Tests.Common.Extension.Fluent.RulesVerifier
+﻿namespace KnightFrank.Antares.Tests.Common.Extensions.Fluent.RulesVerifier
 {
     using System;
     using System.Collections.Generic;

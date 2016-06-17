@@ -5,6 +5,7 @@
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Domain.Characteristic.Queries;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.AutoMoq;

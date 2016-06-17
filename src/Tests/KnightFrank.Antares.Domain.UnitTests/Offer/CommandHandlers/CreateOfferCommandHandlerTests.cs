@@ -13,6 +13,7 @@ namespace KnightFrank.Antares.Domain.UnitTests.Offer.CommandHandlers
     using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Offer.CommandHandlers;
     using KnightFrank.Antares.Domain.Offer.Commands;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 
