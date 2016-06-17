@@ -9,7 +9,7 @@
 
         <div class="topbar-menu btn-group pull-right" uib-dropdown>
             <button id="topbar-menu-button" type="button" class="topbar-menu-button btn" uib-dropdown-toggle ng-disabled="disabled">
-                <i class="user-icon fa fa-user" aria-hidden="true"></i> <span class="username">John Smith</span> <i class="arrow-icon fa fa-chevron-down"></i>
+                <i class="user-icon fa fa-user" aria-hidden="true"></i> <span class="username">{vm.userData.firstName} :{vm.userData.lastName}</span> <i class="arrow-icon fa fa-chevron-down"></i>
             </button>
             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="topbar-menu-button">
                 <li role="menuitem"><a ui-sref="app.preferences"><i class="dropdown-menu-icon fa fa-cog" aria-hidden="true"></i> <span translate="COMMON.PREFERENCES"></span></a></li>
