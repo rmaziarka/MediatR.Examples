@@ -13,6 +13,8 @@ module Antares.Activity {
 
         private standardDepartmentType: Dto.IEnumTypeItem;
 
+        private isPropertyPreviewPanelVisible: boolean = false;
+
         private departmentErrorMessageCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.MESSAGE';
         private departmentErrorTitleCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.TITLE';
 
@@ -20,9 +22,19 @@ module Antares.Activity {
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService,
             private enumService: Services.EnumService,
-            private kfMessageService: Services.KfMessageService) {
+            private kfMessageService: Services.KfMessageService,
+            private eventAggregator: Core.EventAggregator) {
 
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
+
+
+            this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
+                this.isPropertyPreviewPanelVisible = false;
+            });
+
+            this.eventAggregator.with(this).subscribe(Attributes.OpenPropertyPrewiewPanelEvent, (event: Antares.Attributes.OpenPropertyPrewiewPanelEvent) => {
+                this.isPropertyPreviewPanelVisible = true;
+            });
         }
 
         private onEnumLoaded = (result: any) => {
