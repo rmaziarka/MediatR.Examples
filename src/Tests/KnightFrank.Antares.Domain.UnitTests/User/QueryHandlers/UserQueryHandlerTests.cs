@@ -11,6 +11,7 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.User.Queries;
     using KnightFrank.Antares.Domain.User.QueryHandlers;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit2;

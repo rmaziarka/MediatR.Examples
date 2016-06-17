@@ -8,6 +8,7 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Attachment.Queries;
     using KnightFrank.Antares.Domain.Attachment.QueryHandlers;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 

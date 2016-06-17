@@ -9,8 +9,8 @@
 
     using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
     using KnightFrank.Antares.Domain.User.Commands;
-
-
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
+    using KnightFrank.Antares.Tests.Common.Extensions.Fluent.ValidationResult;
 
     [Collection("UpdateUserCommand")]
     [Trait("FeatureTitle", "User")]

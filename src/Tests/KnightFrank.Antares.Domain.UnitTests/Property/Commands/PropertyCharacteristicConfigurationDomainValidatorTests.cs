@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Dal.Model.Property.Characteristics;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Property.Commands;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 

@@ -8,6 +8,7 @@
     using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.User.CommandHandlers;
     using KnightFrank.Antares.Domain.User.Commands;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 

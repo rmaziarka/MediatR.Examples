@@ -19,6 +19,7 @@
         private readonly ElementLocator subMenuItem = new ElementLocator(Locator.XPath, "//ancestor::div[contains(@class, 'panel-open')]//div[@class = 'panel-body']");
         private readonly ElementLocator latestEntities = new ElementLocator(Locator.CssSelector, "navigation-drawer[type = '{0}'] li a");
         private readonly ElementLocator latestEntity = new ElementLocator(Locator.CssSelector, "navigation-drawer[type = '{0}'] li:nth-of-type({1}) a");
+        private readonly ElementLocator searchLink = new ElementLocator(Locator.Id, string.Empty);
 
         public NavigationDrawerPage(DriverContext driverContext) : base(driverContext)
         {
@@ -84,6 +85,12 @@
         {
             this.Driver.WaitForAngularToFinish();
             this.Driver.Click(this.latestEntity.Format(entity, position));
+            return this;
+        }
+
+        public NavigationDrawerPage ClickSearchLink()
+        {
+            this.Driver.Click(this.searchLink);
             return this;
         }
 
