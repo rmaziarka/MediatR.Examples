@@ -5,7 +5,8 @@ module Antares.Attributes {
         templateUrl:'app/attributes/activityMarketAppraisalPrice/activityMarketAppraisalPriceEditControl.html',
             controllerAs: 'vm',
             bindings: {
-                ngModel: '='
+                ngModel: '=',
+				config:'<'
             }
     });
 }

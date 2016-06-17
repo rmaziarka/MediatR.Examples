@@ -20,9 +20,9 @@
         <div class="col-md-4">
             <fieldset id="activity-edit-prices">
                 <h3 class="page-header" translate="ACTIVITY.EDIT.PRICES.PRICES"></h3>
-                <activity-market-appraisal-price-edit-control ng-model='aevm.activity.marketAppraisalPrice'></activity-market-appraisal-price-edit-control>
-                <activity-recommended-price-edit-control  ng-model='aevm.activity.recommendedPrice'></activity-recommended-price-edit-control>
-                <activity-vendor-estimated-price-edit-control ng-model='aevm.activity.vendorEstimatedPrice'></activity-vendor-estimated-price-edit-control>
+                <activity-market-appraisal-price-edit-control config="aevm.config.marketAppraisalPrice" ng-model='aevm.activity.marketAppraisalPrice'></activity-market-appraisal-price-edit-control>
+                <activity-recommended-price-edit-control config="aevm.config.recommendedPrice" ng-model='aevm.activity.recommendedPrice'></activity-recommended-price-edit-control>
+                <activity-vendor-estimated-price-edit-control config="aevm.config.vendorEstimatedPrice" ng-model='aevm.activity.vendorEstimatedPrice'></activity-vendor-estimated-price-edit-control>
             </fieldset>
         </div>
 

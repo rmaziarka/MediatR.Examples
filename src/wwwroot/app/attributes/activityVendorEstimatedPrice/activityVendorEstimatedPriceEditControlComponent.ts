@@ -2,10 +2,11 @@
 
 module Antares.Attributes {
     angular.module('app').component('activityVendorEstimatedPriceEditControl', {
-        templateUrl:'app/attributes/activityVendorEstimatedPrice/activityVendorEstimatedPriceControl.html',
+        templateUrl:'app/attributes/activityVendorEstimatedPrice/activityVendorEstimatedPriceEditControl.html',
             controllerAs: 'vm',
             bindings: {
-                ngModel: '='
+                ngModel: '=',
+				config:'<'
             }
     });
 }
