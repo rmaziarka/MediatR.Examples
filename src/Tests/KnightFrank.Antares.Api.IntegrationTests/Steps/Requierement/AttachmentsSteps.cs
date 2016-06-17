@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.Property
+﻿namespace KnightFrank.Antares.Api.IntegrationTests.Steps.Requierement
 {
     using System;
     using System.Collections.Generic;
@@ -12,7 +12,7 @@
     using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.Attachment.Commands;
-    using KnightFrank.Antares.Domain.Property.Commands;
+    using KnightFrank.Antares.Domain.Requirement.Commands;
 
     using Newtonsoft.Json;
 
@@ -22,7 +22,7 @@
     [Binding]
     public class AttachmentsSteps
     {
-        private const string ApiUrl = "/api/properties/{0}/attachments";
+        private const string ApiUrl = "/api/requirements/{0}/attachments";
         private readonly BaseTestClassFixture fixture;
 
         private readonly ScenarioContext scenarioContext;
@@ -37,7 +37,7 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"Property attachment for (.*) with following data exists in database")]
+        [Given(@"Requirement attachment for (.*) with following data exists in database")]
         public void AddAttachment(string documentType, Table table)
         {
             var attachment = table.CreateInstance<Attachment>();
@@ -47,31 +47,31 @@
             attachment.LastModifiedDate = DateTime.Now;
             attachment.UserId = this.fixture.DataContext.Users.First().Id;
 
-            Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
-            Property property = this.fixture.DataContext.Properties.Single(x => x.Id.Equals(propertyId));
+            Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
+            Requirement requirement = this.fixture.DataContext.Requirements.Single(x => x.Id.Equals(requirementId));
 
-            property.Attachments.Add(attachment);
+            requirement.Attachments.Add(attachment);
             this.fixture.DataContext.SaveChanges();
         }
 
-        [When(@"User uploads property attachment for (.*) property id for (.*) with following data")]
-        public void UploadAttachment(string propertyId, string documentType, Table table)
+        [When(@"User uploads requirement attachment for (.*) requirement id for (.*) with following data")]
+        public void UploadAttachment(string requirementId, string documentType, Table table)
         {
-            if (propertyId.Equals("latest"))
+            if (requirementId.Equals("latest"))
             {
-                propertyId = this.scenarioContext.Get<Property>("Property").Id.ToString();
+                requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id.ToString();
             }
 
-            string requestUrl = string.Format($"{ApiUrl}", propertyId);
+            string requestUrl = string.Format($"{ApiUrl}", requirementId);
 
             var createAttachment = table.CreateInstance<CreateAttachment>();
 
             createAttachment.DocumentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[documentType];
             createAttachment.UserId = this.fixture.DataContext.Users.First().Id;
 
-            var details = new CreatePropertyAttachmentCommand
+            var details = new CreateRequirementAttachmentCommand
             {
-                EntityId = propertyId.Equals(string.Empty) ? Guid.NewGuid() : new Guid(propertyId),
+                EntityId = requirementId.Equals(string.Empty) ? Guid.NewGuid() : new Guid(requirementId),
                 Attachment = createAttachment
             };
 
@@ -79,13 +79,13 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [Then(@"Retrieved property should have expected attachments")]
+        [Then(@"Retrieved requirement should have expected attachments")]
         public void CheckAttachment()
         {
-            var property = JsonConvert.DeserializeObject<Property>(this.scenarioContext.GetResponseContent());
-            Property actualProperty = this.fixture.DataContext.Properties.Single(x => x.Id.Equals(property.Id));
+            var requirement = JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent());
+            Requirement actualRequirement = this.fixture.DataContext.Requirements.Single(x => x.Id.Equals(requirement.Id));
 
-            actualProperty.Attachments.Should().Equal(property.Attachments, (c1, c2) =>
+            actualRequirement.Attachments.Should().Equal(requirement.Attachments, (c1, c2) =>
                 c1.DocumentTypeId.Equals(c2.DocumentTypeId) &&
                 c1.ExternalDocumentId.Equals(c2.ExternalDocumentId) &&
                 c1.FileName.Equals(c2.FileName) &&

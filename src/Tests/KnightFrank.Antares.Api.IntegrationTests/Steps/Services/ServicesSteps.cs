@@ -11,6 +11,8 @@
 
     using TechTalk.SpecFlow;
 
+    using Xunit;
+
     [Binding]
     public class ServicesSteps
     {
@@ -33,9 +35,8 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [When(@"User retrieves url for (Activity|Property) attachment upload for (.*) and (.*) code")]
-        public void WhenUserRetrievesUrlForActivityAttachmentUploadForEntityReferenceId(string entity, string filename,
-            string activityDocumentTypeCode)
+        [When(@"User retrieves url for (Activity|Property|Requirement) attachment upload for (.*) and (.*) code")]
+        public void GetUrlUpload(string entity, string filename, string activityDocumentTypeCode)
         {
             this.GetEntity(entity, activityDocumentTypeCode);
 
@@ -46,9 +47,8 @@
             this.scenarioContext.SetHttpResponseMessage(httpResponseMessage);
         }
 
-        [When(@"User retrieves url for (Activity|Property) attachment download for (.*) and (.*) code")]
-        public void WhenUserRetrievesUrlForActivityAttachmentDownloadForEntityReferenceId(string entity, string filename,
-            string activityDocumentTypeCode)
+        [When(@"User retrieves url for (Activity|Property|Requirement) attachment download for (.*) and (.*) code")]
+        public void GetUrlDownload(string entity, string filename, string activityDocumentTypeCode)
         {
             this.GetEntity(entity, activityDocumentTypeCode);
 
@@ -63,15 +63,25 @@
 
         private void GetEntity(string entity, string activityDocumentTypeCode)
         {
-            this.documentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[activityDocumentTypeCode];
-
             switch (entity)
             {
                 case "Activity":
                     this.entityReferenceId = this.scenarioContext.Get<Activity>("Activity").Id;
+                    this.documentTypeId =
+                        this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[activityDocumentTypeCode];
                     break;
                 case "Property":
                     this.entityReferenceId = this.scenarioContext.Get<Property>("Property").Id;
+                    this.documentTypeId =
+                        this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[activityDocumentTypeCode];
+                    break;
+                case "Requirement":
+                    this.entityReferenceId = this.scenarioContext.Get<Requirement>("Requirement").Id;
+                    this.documentTypeId =
+                        this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[activityDocumentTypeCode];
+                    break;
+                default:
+                    Assert.False(true);
                     break;
             }
         }
