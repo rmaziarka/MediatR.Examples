@@ -3,7 +3,7 @@
 module Antares {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
-    import NegotiatorsController = Common.Component.NegotiatorsController;
+    import NegotiatorsController = Common.Component.ActivityNegotiatorsViewControlController;
 	import IActivityViewConfig = Activity.IActivityViewConfig;
 
     interface IScope extends ng.IScope {
