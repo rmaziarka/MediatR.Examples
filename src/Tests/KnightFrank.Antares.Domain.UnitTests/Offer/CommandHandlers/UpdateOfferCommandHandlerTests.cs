@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Linq.Expressions;
 
+    using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Repository;
@@ -12,6 +13,7 @@
     using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Offer.CommandHandlers;
     using KnightFrank.Antares.Domain.Offer.Commands;
+    using KnightFrank.Antares.Domain.Offer.OfferHelpers;
     using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
 
     using Moq;
@@ -69,8 +71,101 @@
 
             // Assert
             Assert.Equal(command.Id, offerId);
-            entityValidator.Verify(x => x.EntityExists(offer,command.Id), Times.Once);
+            entityValidator.Verify(x => x.EntityExists(offer, command.Id), Times.Once);
             enumTypeValidator.Verify(x => x.ItemExists(EnumType.OfferStatus, command.StatusId), Times.Once);
+            offerRepository.Verify(r => r.Save(), Times.Once());
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_UpdateOfferCommandWithAcceptedStatus_When_Handle_Then_ShouldUpdateOffer(
+            [Frozen] Mock<IEntityValidator> entityValidator,
+            [Frozen] Mock<IEnumTypeItemValidator> enumTypeValidator,
+            [Frozen] Mock<IGenericRepository<Offer>> offerRepository,
+            [Frozen] Mock<IOfferProgressStatusHelper> offerProgressStatusHelper,
+            UpdateOfferCommand command,
+            UpdateOfferCommandHandler handler,
+            Offer offer)
+        {
+            offer.CreatedDate = DateTime.Now;
+            command.OfferDate = DateTime.Now.AddDays(-1);
+            command.ExchangeDate = DateTime.Now.AddDays(1);
+            command.CompletionDate = DateTime.Now.AddDays(1);
+            command.MortgageSurveyDate = DateTime.Now.AddDays(1);
+            command.AdditionalSurveyDate = DateTime.Now.AddDays(1);
+
+            offerProgressStatusHelper.Setup(x => x.IsOfferInAcceptedStatus(It.IsAny<List<Dal.Model.Enum.EnumType>>(), It.IsAny<Guid>())).Returns(true);
+
+            offerRepository.Setup(r => r.GetById(command.Id)).Returns(offer);
+
+            // Act
+            Guid offerId = handler.Handle(command);
+
+            // Assert
+            Assert.Equal(command.Id, offerId);
+
+            enumTypeValidator.Verify(x => x.ItemExists(EnumType.OfferStatus, command.StatusId), Times.Once);
+
+            offerProgressStatusHelper.Verify(x => x.IsOfferInAcceptedStatus(It.IsAny<List<Dal.Model.Enum.EnumType>>(), It.IsAny<Guid>()), Times.Once);
+
+            enumTypeValidator.Verify(x => x.ValidateMandatoryIfItemExists(EnumType.MortgageStatus, command.MortgageStatusId), Times.Once);
+            enumTypeValidator.Verify(x => x.ValidateMandatoryIfItemExists(EnumType.MortgageSurveyStatus, command.MortgageSurveyStatusId), Times.Once);
+            enumTypeValidator.Verify(x => x.ValidateMandatoryIfItemExists(EnumType.AdditionalSurveyStatus, command.AdditionalSurveyStatusId), Times.Once);
+            enumTypeValidator.Verify(x => x.ValidateMandatoryIfItemExists(EnumType.SearchStatus, command.SearchStatusId), Times.Once);
+            enumTypeValidator.Verify(x => x.ValidateMandatoryIfItemExists(EnumType.Enquiries, command.EnquiriesId), Times.Once);
+
+            entityValidator.Verify(x => x.EntityExists<Contact>(command.BrokerId));
+            entityValidator.Verify(x => x.EntityExists<Dal.Model.Company.Company>(command.BrokerCompanyId));
+
+            entityValidator.Verify(x => x.EntityExists<Contact>(command.LenderId));
+            entityValidator.Verify(x => x.EntityExists<Dal.Model.Company.Company>(command.LenderCompanyId));
+
+            entityValidator.Verify(x => x.EntityExists<Contact>(command.SurveyorId));
+            entityValidator.Verify(x => x.EntityExists<Dal.Model.Company.Company>(command.SurveyorCompanyId));
+
+            entityValidator.Verify(x => x.EntityExists<Contact>(command.AdditionalSurveyorId));
+            entityValidator.Verify(x => x.EntityExists<Dal.Model.Company.Company>(command.AdditionalSurveyorCompanyId));
+
+            offerRepository.Verify(r => r.Save(), Times.Once());
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_UpdateOfferCommandWithOtherThanAcceptedStatus_When_Handle_Then_ShouldUpdateOffer(
+            [Frozen] Mock<IEntityValidator> entityValidator,
+            [Frozen] Mock<IEnumTypeItemValidator> enumTypeValidator,
+            [Frozen] Mock<IGenericRepository<Offer>> offerRepository,
+            [Frozen] Mock<IOfferProgressStatusHelper> offerProgressStatusHelper,
+            UpdateOfferCommand command,
+            UpdateOfferCommandHandler handler,
+            Offer offer)
+        {
+            offer.CreatedDate = DateTime.Now;
+            command.OfferDate = DateTime.Now.AddDays(-1);
+            command.ExchangeDate = DateTime.Now.AddDays(1);
+            command.CompletionDate = DateTime.Now.AddDays(1);
+            command.MortgageSurveyDate = DateTime.Now.AddDays(1);
+            command.AdditionalSurveyDate = DateTime.Now.AddDays(1);
+
+            offerProgressStatusHelper.Setup(x => x.IsOfferInAcceptedStatus(It.IsAny<List<Dal.Model.Enum.EnumType>>(), It.IsAny<Guid>())).Returns(false);
+
+            offerRepository.Setup(r => r.GetById(command.Id)).Returns(offer);
+
+            // Act
+            Guid offerId = handler.Handle(command);
+
+            // Assert
+            Assert.Equal(command.Id, offerId);
+            entityValidator.Verify(x => x.EntityExists(offer, command.Id), Times.Once);
+            enumTypeValidator.Verify(x => x.ItemExists(EnumType.OfferStatus, command.StatusId), Times.Once);
+
+            offerProgressStatusHelper.Verify(x => x.IsOfferInAcceptedStatus(It.IsAny<List<Dal.Model.Enum.EnumType>>(), It.IsAny<Guid>()), Times.Once);
+
+            offerProgressStatusHelper.Verify(x => x.KeepOfferProgressStatusesInMessage(offer,command), Times.Once);
+            offerProgressStatusHelper.Verify(x => x.KeepOfferMortgageDetailsInMessage(offer,command), Times.Once);
+            offerProgressStatusHelper.Verify(x => x.KeepOfferAdditionalSurveyInMessage(offer,command), Times.Once);
+            offerProgressStatusHelper.Verify(x => x.KeepOfferOtherDetailsInMessage(offer,command), Times.Once);
+
             offerRepository.Verify(r => r.Save(), Times.Once());
         }
     }

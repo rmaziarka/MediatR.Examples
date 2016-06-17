@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Offer.Commands
 {
     using System;
+    using System.Text;
 
     using FluentAssertions;
 
@@ -11,6 +12,7 @@
     using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
 
     using Ploeh.AutoFixture;
+    using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
 
@@ -22,7 +24,7 @@
 
         public UpdateOfferCommandValidatorTests()
         {
-            IFixture fixture = new Fixture().Customize();   
+            IFixture fixture = new Fixture().Customize();
 
             this.cmd = fixture.Build<UpdateOfferCommand>()
                               .With(x => x.Price, 1)
@@ -126,6 +128,110 @@
 
             // Assert
             validationResult.IsInvalid(nameof(this.cmd.Price), nameof(Messages.greaterthan_error));
+        }
+
+        [Theory]
+        [InlineAutoData(-200, nameof(Messages.greaterthanorequal_error))]
+        [InlineAutoData(-1, nameof(Messages.greaterthanorequal_error))]
+        [InlineAutoData(201, nameof(Messages.lessthanorequal_error))]
+        [InlineAutoData(501, nameof(Messages.lessthanorequal_error))]
+        public void Given_InvalidMortgageLoadToValueICommand_When_Validating_Then_CorrectErrorCodeIsReturned(int mortgageLoadToValue, string errorCode, UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            this.cmd.MortgageLoanToValue = mortgageLoadToValue;
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsInvalid(nameof(this.cmd.MortgageLoanToValue), errorCode);
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_NullMortgageLoadToValueICommand_When_Validating_Then_IsValid(UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            this.cmd.MortgageLoanToValue = null;
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeTrue();
+        }
+
+        [Theory]
+        [InlineAutoData(0)]
+        [InlineAutoData(1)]
+        [InlineAutoData(55)]
+        [InlineAutoData(199)]
+        [InlineAutoData(200)]
+        public void Given_ValidMortgageLoadToValueInCommand_When_Validating_Then_IsValid(int mortgageLoadToValue, UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            this.cmd.MortgageLoanToValue = mortgageLoadToValue;
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeTrue();
+        }
+
+        [Theory]
+        [InlineAutoData("")]
+        [InlineAutoData("aaaaaaa")]
+        public void Given_EmptyProgressCommentInCommand_When_Validating_Then_IsValid(string progresssCommnet, UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            this.cmd.ProgressComment = progresssCommnet;
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeTrue();
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_4000CharInProgressCommentInCommand_When_Validating_Then_IsValid(UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            var sb = new StringBuilder();
+            for (var i = 0; i < 4000; i++)
+            {
+                sb.Append("a");
+            }
+
+            this.cmd.ProgressComment = sb.ToString();
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeTrue();
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_TooLongProgressCommentInCommand_When_Validating_Then_IsInvalid(UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            var sb = new StringBuilder();
+            for (var i = 0; i < 4001; i++)
+            {
+                sb.Append("a");
+            }
+
+            this.cmd.ProgressComment = sb.ToString();
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsInvalid(nameof(this.cmd.ProgressComment), nameof(Messages.length_error));
         }
     }
 }
