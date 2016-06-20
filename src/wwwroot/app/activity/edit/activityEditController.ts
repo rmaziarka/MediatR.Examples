@@ -22,7 +22,7 @@ module Antares.Activity {
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService,
             private enumService: Services.EnumService,
-            private kfMessageService: Services.KfMessageService,
+            public kfMessageService: Services.KfMessageService,
             private eventAggregator: Core.EventAggregator) {
 
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
@@ -54,8 +54,8 @@ module Antares.Activity {
             this.dataAccessService.getActivityResource()
                 .update(new Business.UpdateActivityResource(this.activity))
                 .$promise
-                .then((activity: Dto.IActivity) =>{
-                    this.$state.go('app.activity-view', activity);
+                .then((activity: Dto.IActivity) => {
+                    this.$state.go('app.activity-view', { id: activity.id });
                 });
         }
 
@@ -74,7 +74,7 @@ module Antares.Activity {
             this.addDepartment(user.department);
         }
 
-        public anyNewDepartmentIsRelatedWithNegotiator = () => {
+        private anyNewDepartmentIsRelatedWithNegotiator = () => {
             var newDepartments = this.activity.activityDepartments.filter((item: Business.ActivityDepartment) => { return !item.id });
             return _.all(newDepartments, (item) => this.departmentIsRelatedWithNegotiator(item.department));
         }
@@ -83,8 +83,7 @@ module Antares.Activity {
             return this.activity.leadNegotiator.user.departmentId === department.id ||
                 _.some(this.activity.secondaryNegotiator, (item) => item.user.departmentId === department.id);
         }
-
-
+        
         private addDepartment(department: Business.Department) {
             if (!_.some(this.activity.activityDepartments, { 'departmentId': department.id })) {
                 this.activity.activityDepartments.push(this.createActivityDepartment(department));

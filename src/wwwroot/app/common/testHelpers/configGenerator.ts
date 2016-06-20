@@ -72,7 +72,6 @@ module Antares.TestHelpers {
             };
 
             return angular.extend(config, specificData || {});
-            return config;
         }
     }
 }

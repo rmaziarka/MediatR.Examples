@@ -11,28 +11,23 @@ module Antares {
             compile: ng.ICompileService,
             element: ng.IAugmentedJQuery,
             $http: ng.IHttpBackendService,
-            state: ng.ui.IStateService,
+            $state: ng.ui.IStateService,
             assertValidator: TestHelpers.AssertValidators,
             controller: ActivityEditController;
 
         var leadNegotiatorMock = TestHelpers.ActivityUserGenerator.generate(Enums.NegotiatorTypeEnum.LeadNegotiator);
         var secondaryNegotiatorsMock = TestHelpers.ActivityUserGenerator.generateMany(3, Enums.NegotiatorTypeEnum.SecondaryNegotiator);
 
-        var activityStatuses = [
-            { id: "111", code: "PreAppraisal" },
-            { id: "testStatus222", code: "MarketAppraisal" },
-            { id: "333", code: "NotSelling" }
-        ];
-
-
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $controller: ng.IControllerService,
+            _$state_: ng.ui.IStateService,
             $httpBackend: ng.IHttpBackendService) => {
 
             // init
             scope = $rootScope.$new();
             $http = $httpBackend;
+            $state = _$state_;
 
             controller = <ActivityEditController>$controller('ActivityEditController');
             controller.activity = new Business.Activity();
@@ -65,6 +60,105 @@ module Antares {
                     // act / assert
                     expect(controller.departmentIsRelatedWithNegotiator(departmentToCheck.department)).toBe(data[4]);
                 });
+        });
+
+        describe('when cancel', () => {
+            it('then redrection to activity view page should be triggered', () => {
+                // arrange
+                controller.activity.id = TestHelpers.StringGenerator.generate();
+
+                spyOn($state, 'go');
+
+                // act
+                controller.cancel();
+
+                // assert
+                expect($state.go).toHaveBeenCalledWith('app.activity-view', { id: controller.activity.id });
+            });
+        });
+
+        describe('when save', () => {
+            describe('and one new department is related with negotiator', () => {
+                var newActivityDepartment1: Business.ActivityDepartment;
+                var newActivityDepartment2: Business.ActivityDepartment;
+                var newDepartment1 = TestHelpers.DepartmentGenerator.generate();
+                var newDepartment2 = TestHelpers.DepartmentGenerator.generate();
+
+                beforeEach(() => {
+                    newActivityDepartment1 = TestHelpers.ActivityDepartmentGenerator.generate({ id: null, department: newDepartment1 });
+                    newActivityDepartment2 = TestHelpers.ActivityDepartmentGenerator.generate({ id: null, department: newDepartment2 });
+
+                    controller.activity.activityDepartments.push(newActivityDepartment1);
+                    controller.activity.activityDepartments.push(newActivityDepartment2);
+
+                });
+
+                it('then error message should be displayed', () => {
+                    spyOn(controller, 'departmentIsRelatedWithNegotiator').and.callFake((department: Business.Department) => {
+                        if (department === newDepartment1) {
+                            return true;
+                        }
+
+                        return false;
+                    });
+                    spyOn(controller.kfMessageService, 'showErrorByCode');
+                    
+                    // act
+                    controller.save();
+
+                    // assert
+                    expect(controller.kfMessageService.showErrorByCode).toHaveBeenCalled();
+                });
+            });
+
+            describe('with valid data', () => {
+                it('then correct data is sent to API', () => {
+                    // arrange
+                    spyOn(controller, 'departmentIsRelatedWithNegotiator').and.returnValue(false);
+
+                    var activity: Business.Activity = TestHelpers.ActivityGenerator.generate();
+                    var requestData: Dto.IUpdateActivityResource;
+
+                    controller.activity = activity;
+                    spyOn($state, 'go').and.callFake(() => { });
+
+                    $http.expectPUT(/\/api\/activities/, (data: string) => {
+                        requestData = JSON.parse(data);
+                        return true;
+                    }).respond(201, {});
+
+                    // act
+                    controller.save();
+                    $http.flush();
+
+                    // assert
+                    expect(requestData.id).toEqual(activity.id);
+                    expect(requestData.activityStatusId).toEqual(activity.activityStatusId);
+                    expect(requestData.marketAppraisalPrice).toEqual(activity.marketAppraisalPrice);
+                    expect(requestData.recommendedPrice).toEqual(activity.recommendedPrice);
+                    expect(requestData.vendorEstimatedPrice).toEqual(activity.vendorEstimatedPrice);
+                    expect(requestData.leadNegotiator.userId).toEqual(activity.leadNegotiator.userId);
+                    expect(requestData.secondaryNegotiators.map((negotiator) => negotiator.userId)).toEqual(activity.secondaryNegotiator.map((negotiator) => negotiator.userId));
+                });
+
+                it('then user is redirected to activity view page', () => {
+                    // arrange
+                    var activityFromServerMock: Dto.IActivity = TestHelpers.ActivityGenerator.generateDto();
+
+                    spyOn($state, 'go').and.callFake(() => { });
+
+                    $http.expectPUT(/\/api\/activities/, (data: string) => {
+                        return true;
+                    }).respond(201, activityFromServerMock);
+
+                    // act
+                    controller.save();
+                    $http.flush();
+
+                    // assert
+                    expect($state.go).toHaveBeenCalledWith('app.activity-view', { id: activityFromServerMock.id });
+                });
+            });
         });
 
     });
