@@ -11,6 +11,7 @@
             if (propertySearchResultOwnership) {
                 this.id = propertySearchResultOwnership.id;
                 this.ownershipTypeId = propertySearchResultOwnership.ownershipTypeId;
+                this.sellDate = propertySearchResultOwnership.sellDate;
                 this.contacts = propertySearchResultOwnership.contacts.map((c: Dto.IPropertySearchResultContact) => { return new PropertySearchResultContact(c) });
 
                 this.isCurrentOwner = !this.sellDate;
