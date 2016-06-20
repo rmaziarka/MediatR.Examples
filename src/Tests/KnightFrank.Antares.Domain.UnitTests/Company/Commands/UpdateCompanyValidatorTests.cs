@@ -14,6 +14,7 @@
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Company.Commands;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 

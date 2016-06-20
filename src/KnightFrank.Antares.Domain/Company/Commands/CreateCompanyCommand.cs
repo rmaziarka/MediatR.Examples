@@ -3,8 +3,6 @@ namespace KnightFrank.Antares.Domain.Company.Commands
     using System;
     using System.Collections.Generic;
 
-    using KnightFrank.Antares.Dal.Model.Enum;
-
     using MediatR;
 
     public class CreateCompanyCommand : IRequest<Guid>

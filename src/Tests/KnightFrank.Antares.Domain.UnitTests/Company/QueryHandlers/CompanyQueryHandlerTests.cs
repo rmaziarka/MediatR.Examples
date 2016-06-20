@@ -10,6 +10,7 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Company.Queries;
     using KnightFrank.Antares.Domain.Company.QueryHandlers;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 
