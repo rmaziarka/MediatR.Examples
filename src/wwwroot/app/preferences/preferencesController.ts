@@ -47,6 +47,10 @@ module Antares.Preferences {
             }               
         }
 
+        cancelEditPreferences=() =>{
+            this.$state.go('app.contact-add');
+        }
+
         save() {
            this.currentUserResource = this.dataAccessService.getCurrentUserResource();
             this.userData.salutationFormatId = this.defaultSalutationFormatId;
