@@ -91,6 +91,7 @@
             </div>
         </section>
 
+        <!-- Upward chain -->
         <section>
             <h3 class="page-header">Upward chain</h3>
 
@@ -99,32 +100,34 @@
             </div>
 
             <card-list-item class="chain-list">
-                <card show-context-menu="true" show-item-details="true" display-new-control="true"
+                <card show-context-menu="true" show-item-details="" display-new-control="true"
                       card-template-url="'app/offer/templates/chainCard.html'" item="">
                     <card-context-menu>
                         <context-menu-item type="details" item="" action=""></context-menu-item>
                     </card-context-menu>
                 </card>
 
-                <card show-context-menu="true" show-item-details="true" display-new-control="true"
+                <card show-context-menu="true" show-item-details="" display-new-control="true"
                       card-template-url="'app/offer/templates/chainCard.html'" item="">
                     <card-context-menu>
                         <context-menu-item type="details" item="" action=""></context-menu-item>
                     </card-context-menu>
                 </card>
 
-                <card show-context-menu="true" show-item-details="true" display-new-control="true"
+                <card show-context-menu="true" show-item-details="" display-new-control="true"
                       card-template-url="'app/offer/templates/chainCard.html'" item="">
                     <card-context-menu>
                         <context-menu-item type="details" item="" action=""></context-menu-item>
                     </card-context-menu>
                 </card>
 
-                <card show-context-menu="false" show-item-details="false" display-new-control="true"
+                <card show-context-menu="false" show-item-details="" display-new-control="true"
                       card-template-url="'app/offer/templates/chainCard.html'" item="">
                 </card>
             </card-list-item>
         </section>
+        <!-- // Upward chain -->
+
     </div>
 </div>
 
@@ -171,3 +174,260 @@
         </div>
     </side-panel-content>
 </side-panel>
+
+<!-- Chain transaction detailt -->
+<kf-side-panel>
+    <side-panel-cards>
+        <kf-side-panel-card>
+            <side-panel-header>
+                <h3>Chain transaction details</h3>
+            </side-panel-header>
+            <side-panel-content>
+                <div class="side-panel-nav">
+                    <a href="#" class="side-panel-prev text-small">Previous</a>
+                    <a href="#" class="side-panel-next pull-right">Next</a>
+                </div>
+                <div class="section-details">
+                    <h5>Property</h5>
+                    <div class="card card-no-menu card-details">
+                        <div class="card-body">
+                            <div class="card-item">
+                                123 Knightsbridge <i class="fa fa-external-link" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-details">
+                    <h5>Vendor</h5>
+                    <div class="card card-no-menu">
+                        <div class="card-body">
+                            <div class="card-item">
+                                John Vendor
+                            </div>
+                        </div>
+                    </div>
+                    <h5>Buyer</h5>
+                    <div class="card card-no-menu">
+                        <div class="card-body">
+                            <div class="card-item">
+                                Theodore Buyer
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-details">
+                    <h5>Agent</h5>
+                    <div class="card card-no-menu">
+                        <div class="card-body">
+                            <div class="card-item">
+                                Abraham Lincoln
+                            </div>
+                            <div class="card-info">
+                                Lorem ipsum department
+                            </div>
+                        </div>
+                    </div>
+                    <h5>Solicitor</h5>
+                    <div class="card card-no-menu">
+                        <div class="card-body">
+                            <div class="card-item">
+                                Stuart Little
+                            </div>
+                            <div class="card-info">
+                                EEE Company
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-details">
+                    <h4>Progress</h4>
+                    <div class="section-row row">
+                        <div class="section-title col-xs-5">Mortgage</div>
+                        <div class="col-xs-6"><span class="status status-not-required">Not required</span></div>
+                    </div>
+                    <div class="section-row row">
+                        <div class="section-title col-xs-5">Survey</div>
+                        <div class="col-xs-6"><span class="status status-outstanding">Outstanding</span></div>
+                    </div>
+                    <div class="section-row row">
+                        <div class="section-title col-xs-5">Survey date</div>
+                        <div class="col-xs-6"><time>12-06-2016</time></div>
+                    </div>
+                    <div class="section-row row">
+                        <div class="section-title col-xs-5">Searches</div>
+                        <div class="col-xs-6"><span class="status status-complete">Complete</span></div>
+                    </div>
+                    <div class="section-row row">
+                        <div class="section-title col-xs-5">Enquiries</div>
+                        <div class="col-xs-6"><span class="status status-complete">Complete</span></div>
+                    </div>
+                    <div class="section-row row">
+                        <div class="section-title col-xs-5">Contract agreed</div>
+                        <div class="col-xs-6"><span class="status status-no">No</span></div>
+                    </div>
+                </div>
+            </side-panel-content>
+            <side-panel-footer>
+                <button type="button" class="btn btn-default pull-left">
+                    <i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span>
+                </button>
+            </side-panel-footer>
+        </kf-side-panel-card>
+        <busy is-busy="vm.isBusy" label="{{'COMMON.LOADING' | translate}}"></busy>
+    </side-panel-cards>
+</kf-side-panel>
+<!-- // Chain transaction details -->
+
+<!-- Chain transaction -->
+<!-- Change id's for edit panel -->
+<kf-side-panel>
+    <side-panel-cards>
+        <form action="#">
+            <kf-side-panel-card>
+                <side-panel-header>
+                    <h3>Chain transaction</h3>
+                </side-panel-header>
+                <side-panel-content>
+                    <div class="form-group">
+                        <label class="checkbox-inline">
+                            <input type="checkbox"> <span>End of chain</span>
+                        </label>
+                    </div>
+                    <div class="section-details">
+                        <div class="form-group">
+                            <h5 class="required">Property</h5>
+                            <button type="button" class="btn btn-default">
+                                <i class="fa fa-plus-circle"></i>
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label for="create-vendor" class="required">Vendor</label>
+                            <input type="text" id="create-vendor" class="form-control" placeholder="Name and Surname">
+                        </div>
+                        <div class="form-group">
+                            <h5 class="required">Agent</h5>
+                            <div class="form-group">
+                                <label class="radio-inline">
+                                    <input type="radio" value=""> <span>Knight Frank</span>
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value=""> <span>3rd party</span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-default">
+                                    <i class="fa fa-plus-circle"></i>
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-default">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Find a negotiator">
+                            </div>
+                            <div class="card card-no-menu">
+                                <div class="card-body">
+                                    <div class="card-item">John Smith</div>
+                                    <div class="card-info">Lorem ipsum department</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h5>Solicitor</h5>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-default">
+                                    <i class="fa fa-plus-circle"></i>
+                                </button>
+                            </div>
+                            <div class="card card-no-menu">
+                                <div class="card-body">
+                                    <div class="card-item">John Smith</div>
+                                    <div class="card-info">Lorem ipsum department</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4>Progress</h4>
+                    <div class="section-details">
+                        <div class="form-group">
+                            <label for="create-mortgage" class="required">Mortgage</label>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <select id="create-mortgage" class="form-control">
+                                        <option value="#">Unknown</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="create-survey" class="required">Survey</label>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <select id="create-survey" class="form-control">
+                                        <option value="#">Unknown</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="create-survey-date">Survey dates</label>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        <input type="text" id="create-survey-date" class="form-control" placeholder="dd-mm-yyyy">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="create-searches" class="required">Searches</label>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <select id="create-searches" class="form-control">
+                                        <option value="#">Unknown</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="create-enquiries" class="required">Enquiries</label>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <select id="create-enquiries" class="form-control">
+                                        <option value="#">Unknown</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="create-contact-agreed" class="required">Contract agreed</label>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <select id="create-contact-agreed" class="form-control">
+                                        <option value="#">Unknown</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </side-panel-content>
+                <side-panel-footer>
+                    <button class="btn btn-default" type="button">
+                        <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+                    </button>
+                    <button class="btn btn-primary" type="submit" ng-click="vm.updateContacts()">
+                        <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+                    </button>
+                </side-panel-footer>
+            </kf-side-panel-card>
+        </form>
+        <busy is-busy="vm.isBusy" label="{{'COMMON.LOADING' | translate}}"></busy>
+    </side-panel-cards>
+</kf-side-panel>
+<!-- // Chain transaction -->
