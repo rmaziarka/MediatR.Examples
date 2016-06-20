@@ -149,8 +149,12 @@
     <Compile Include="Common\BusinessValidators\EnumTypeItemValidatorTests.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidatorTests.cs" />
     <Compile Include="Common\Validator\LocaleValidatorTests.cs" />
+    <Compile Include="Company\CommandHandlers\UpdateCompanyCommandHandlerTests.cs" />
     <Compile Include="Company\CommandHandlers\CreateCompanyCommandHandlerTests.cs" />
+    <Compile Include="Company\Commands\UpdateCompanyValidatorTests.cs" />
     <Compile Include="Company\Commands\CreateCompanyValidatorTests.cs" />
+    <Compile Include="Company\Queries\CompanyQueryValidatorTests.cs" />
+    <Compile Include="Company\QueryHandlers\CompanyQueryHandlerTests.cs" />
     <Compile Include="Contact\Queries\ContactQueryValidatorTests.cs" />
     <Compile Include="Contact\QueryHandlers\ContactQueryHandlerTests.cs" />
     <Compile Include="LatestView\Commands\CreateLatestViewCommandValidatorTests.cs" />

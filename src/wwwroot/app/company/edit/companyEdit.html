@@ -1,0 +1,117 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="page-header" translate="COMPANY.EDIT_COMPANY"></h2>
+    </div>
+
+    <form ng-submit="editCompanyForm.$valid && vm.hasCompanyContacts() && vm.updateCompany()" name="editCompanyForm" id="editCompanyForm" method="post" novalidate>
+        <div class="col-md-4">
+            <fieldset>
+                <h3 class="page-header" translate="COMPANY.BASIC_INFORMATION"></h3>
+
+                <div class="form-group" ng-class="{'has-error': (editCompanyForm.$submitted || editCompanyForm.name.$dirty) && editCompanyForm.name.$invalid}">
+                    <label class="required" for="name" translate="COMPANY.NAME"></label>
+                    <input type="text" class="form-control" id="name" name="name" required ng-maxlength="128" ng-model="vm.company.name" autocomplete="off">
+                    <div ng-messages="editCompanyForm.name.$error" ng-show="editCompanyForm.$submitted || editCompanyForm.name.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error': (editCompanyForm.$submitted || editCompanyForm.website.$dirty) && editCompanyForm.website.$invalid}">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="website" translate="COMPANY.WEBSITE"></label>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" id="website" name="website" ng-maxlength="2500" ng-model="vm.company.websiteUrl" placeholder="http://">
+                            <span class="form-control-feedback">
+                                <external-link url="vm.company.websiteUrl" show-text="false"></external-link>
+                            </span>
+                        </div>
+                    </div>
+                    <div ng-messages="editCompanyForm.website.$error" ng-show="editCompanyForm.$submitted || editCompanyForm.website.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error': (editCompanyForm.$submitted || editCompanyForm.clientcareurl.$dirty) && editCompanyForm.clientcareurl.$invalid}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="clientcareurl" translate="COMPANY.CLIENT_CARE_WEBSITE"></label>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" id="clientcareurl" name="clientcareurl" ng-maxlength="2500" ng-model="vm.company.clientCarePageUrl" placeholder="http://">
+                            <span class="form-control-feedback">
+                                <external-link url="vm.company.clientCarePageUrl" show-text="false"></external-link>
+                            </span>
+                        </div>
+                    </div>
+                    <div ng-messages="editCompanyForm.clientcareurl.$error" ng-show="editCompanyForm.$submitted || editCompanyForm.clientcareurl.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="client-care-status" translate="COMPANY.CLIENT_CARE_STATUS"></label>
+                            <enum-select id="client-care-status" name="status" ng-model="vm.company.clientCareStatusId" enum-type-code="{{vm.enumTypeclientCareStatus}}"></enum-select>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-md-4">
+            <section>
+                <list id="list-contacts">
+                    <list-header>
+                        <h3 class="page-header" translate="COMPANY.CONTACTS"></h3>
+                    </list-header>
+                    <list-actions>
+                        <div class="form-group">
+                            <button class="btn btn-default" type="button" ng-click="vm.showContactList()">
+                                <i class="fa fa-plus-circle"></i>
+                            </button>
+                        </div>
+                    </list-actions>
+                    <list-no-items ng-show="vm.hasCompanyContacts() === false" ng-class="{'has-error': editCompanyForm.$submitted}">
+                        <p class="help-block" id="no-contacts-help-block" ng-show="editCompanyForm.$submitted === false" translate="COMPANY.NO_CONTACTS"></p>
+                        <p class="help-block" id="contacts-are-required-help-block" ng-show="editCompanyForm.$submitted" translate="COMPANY.CONTACTS_ARE_REQUIRED"></p>
+                    </list-no-items>
+                    <list-item id="list-item-contact-{{contact.id}}" ng-repeat="contact in vm.company.contacts">
+                        {{contact.getName()}}
+                    </list-item>
+                </list>
+            </section>
+
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <button class="btn btn-default" type="button" ng-click="vm.cancelEditCompany()">
+                    <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+                </button>
+                <button type="submit" id="company-save-btn" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<side-panel component-id="vm.componentIds.contactSidePanelId">
+    <side-panel-header>
+        <h3 translate="COMPANY.FINDCONTACT"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <contact-list component-id="vm.componentIds.contactListId"></contact-list>
+    </side-panel-content>
+    <side-panel-footer>
+        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()">
+            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+        </button>
+        <button class="btn btn-primary" type="button" ng-click="vm.updateContacts()">
+            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+        </button>
+    </side-panel-footer>
+</side-panel>

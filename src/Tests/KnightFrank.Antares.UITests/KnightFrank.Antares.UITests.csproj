@@ -111,6 +111,8 @@
     <Compile Include="Pages\AddressTemplatePage.cs" />
     <Compile Include="Pages\CommonPage.cs" />
     <Compile Include="Pages\EditOfferPage.cs" />
+    <Compile Include="Pages\EditCompanyPage.cs" />
+    <Compile Include="Pages\ViewCompanyPage.cs" />
     <Compile Include="Pages\NavigationDrawerPage.cs" />
     <Compile Include="Pages\Panels\ActivityListPage.cs" />
     <Compile Include="Pages\Panels\AttachmentPreviewPage.cs" />
@@ -140,6 +142,8 @@
     <Compile Include="ProjectTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steps\CommonSteps.cs" />
+    <Compile Include="Steps\EditCompanySteps.cs" />
+    <Compile Include="Steps\ViewCompanySteps.cs" />
     <Compile Include="Steps\CreateCompanySteps.cs" />
     <Compile Include="Steps\CreatePropertySteps.cs" />
     <Compile Include="Steps\CreateContactSteps.cs" />

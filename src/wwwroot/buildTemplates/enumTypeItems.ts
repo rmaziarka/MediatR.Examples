@@ -13,6 +13,7 @@ module Antares.Common.Models.Enums
 	 	OfferStatus,
 	 	ActivityUserType,
 	 	ActivityDepartmentType,
+	 	ClientCareStatus,
 	 }
 
 	
@@ -72,5 +73,12 @@ module Antares.Common.Models.Enums
 	{
 		Managing,
 		Standard,
+	}
+
+	export enum ClientCareStatus
+	{
+		MassiveActionClient,
+		PrincipalClient,
+		KeyClient,
 	}
 }

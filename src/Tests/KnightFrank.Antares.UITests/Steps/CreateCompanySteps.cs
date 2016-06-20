@@ -51,52 +51,60 @@
         public void FillInCompanyData(Table table)
         {
             var details = table.CreateInstance<Company>();
-            this.page.SetCompanyName(details.Name);
+
+			this.scenarioContext.Set(details.WebsiteUrl, "Url");
+
+			this.page.SetCompanyName(details.Name);
+            this.page.SetWebsite(details.WebsiteUrl);
+            this.page.SetClientCareUrl(details.ClientCarePageUrl);
+            this.page.SetClientCareStatus();
         }
 
-        [When(@"User clicks save company button on create company page")]
+		[When(@"User selects contacts on create company page")]
+		public void SelectContactsForCompany(Table table)
+		{
+			this.page.AddContactToCompany().WaitForSidePanelToShow();
+
+			IEnumerable<Contact> contacts = table.CreateSet<Contact>();
+
+			foreach (Contact contact in contacts)
+			{
+				this.page.ContactsList.WaitForContactsListToLoad().SelectContact(contact.FirstName, contact.Surname);
+			}
+			this.page.ContactsList.SaveContact();
+			this.page.WaitForSidePanelToHide();
+		}
+
+		[Then(@"List of company contacts should contain following contacts")]
+		public void CheckContactsList(Table table)
+		{
+			List<string> contacts =
+				table.CreateSet<Contact>().Select(contact => contact.FirstName + " " + contact.Surname).ToList();
+
+			List<string> selectedContacts = this.page.Contacts;
+
+			Assert.Equal(contacts.Count, selectedContacts.Count);
+			contacts.ShouldBeEquivalentTo(selectedContacts);
+		}
+
+		[When(@"User clicks on website url icon")]
+		public void WhenUserClicksOnWebsiteUrlIcon()
+		{
+			this.page.ClickOnWebsiteLink();
+		}
+
+		[Then(@"url opens in new tab")]
+		public void ThenUrlOpensInNewTab()
+		{
+			var scenarioUrl = this.scenarioContext.Get<string>("Url");
+
+			Assert.True(this.page.CheckNewTab(scenarioUrl));
+		}
+
+		[When(@"User clicks save company button on create company page")]
         public void SaveCompany()
         {
             this.page.SaveCompany();
-        }
-
-        [When(@"User selects contacts on create company page")]
-        public void SelectContactsForCompany(Table table)
-        {
-            this.page.SelectContact().WaitForSidePanelToShow();
-
-            IEnumerable<Contact> contacts = table.CreateSet<Contact>();
-
-            foreach (Contact contact in contacts)
-            {
-                this.page.ContactsList.WaitForContactsListToLoad().SelectContact(contact.FirstName, contact.Surname);
-            }
-            this.page.ContactsList.SaveContact();
-            this.page.WaitForSidePanelToHide();
-        }
-
-        [Then(@"List of company contacts should contain following contacts")]
-        public void CheckContactsList(Table table)
-        {
-            List<string> contacts =
-                table.CreateSet<Contact>().Select(contact => contact.FirstName + " " + contact.Surname).ToList();
-
-            List<string> selectedContacts = this.page.Contacts;
-
-            Assert.Equal(contacts.Count, selectedContacts.Count);
-            contacts.ShouldBeEquivalentTo(selectedContacts);
-        }
-
-        [Then(@"Company form on create company page should be diaplyed")]
-        public void CheckIfCreateContactIsDisplayed()
-        {
-            Assert.True(this.page.IsCompanyFormPresent());
-        }
-
-        [Then(@"New company should be created")]
-        public void CheckIfCompanyCreated()
-        {
-            //TODO implement check if contact was created
         }
     }
 }
