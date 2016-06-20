@@ -45,7 +45,7 @@ module Antares.Activity.View {
         }
 
         onPanelsHidden = () => {
-            this.isPropertyPreviewPanelVisible = true;
+            this.isPropertyPreviewPanelVisible = false;
         }
 
         showPropertyPreview = (property: Business.PreviewProperty) => {
