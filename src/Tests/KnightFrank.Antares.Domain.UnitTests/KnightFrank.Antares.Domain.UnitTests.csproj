@@ -136,6 +136,8 @@
     <Compile Include="AreaBreakdown\QueryHandlers\AreaBreakdownQueryHandlerTests.cs" />
     <Compile Include="Attachments\Queries\AttachmentQueryValidatorTests.cs" />
     <Compile Include="Attachments\QueryHandlers\AttachmentQueryHandlerTests.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\ActivityControlsConfigurationItem.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\ActivityControlsConfigurationTests.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidatorTests.cs" />
     <Compile Include="Characteristic\QueryHandlers\CharacteristicGroupsQueryHandlerTests.cs" />
     <Compile Include="Common\BusinessValidators\ActivityTypeDefinitionValidatorTest.cs" />
