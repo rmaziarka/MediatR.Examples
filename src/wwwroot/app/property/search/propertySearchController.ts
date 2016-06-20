@@ -13,7 +13,7 @@ module Antares.Property {
 
         searchResult: Business.PropertySearchResultItem[] = [];
 
-        constructor(private propertyService: Services.PropertyService) {
+        constructor(public propertyService: Services.PropertyService) {
         }
 
         search = () => {
@@ -21,17 +21,12 @@ module Antares.Property {
             this.onPageChanged();
         }
 
-        onPageChanged = () => {
+        onPageChanged = () =>{
             this.propertyService.getSearchResult(this.searchQuery, this.currentPage - 1, this.resultsPerPage)
-                .then((result: Business.PropertySearchResult) => {
+                .then((result: Business.PropertySearchResult) =>{
                     this.showSearchOptions = true;
-                    this.searchResult = [];
+                    this.searchResult = result.data;
                     this.totalResults = result.total;
-
-                    return result.data;
-                })
-                .then((items: Business.PropertySearchResultItem[]) => {
-                    _.each(items, (item: Business.PropertySearchResultItem) => this.searchResult.push(item));
                 });
         }
     }
