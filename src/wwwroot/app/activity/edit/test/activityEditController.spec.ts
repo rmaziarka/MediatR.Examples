@@ -161,5 +161,41 @@ module Antares {
             });
         });
 
+        describe('when onNegotiatorAdded with new user', () => {
+
+            it('then their department should NOT be added if already added', () => {
+                // arrange
+                var user: Dto.IUser = TestHelpers.UserGenerator.generateDto();
+                var activityDepartment: Business.ActivityDepartment = TestHelpers.ActivityDepartmentGenerator.generate({ departmentId: user.department.id });
+
+                controller.activity.activityDepartments = [activityDepartment];
+
+                // act
+                controller.onNegotiatorAdded(user);
+
+                // assert
+                expect(controller.activity.activityDepartments.length).toBe(1);
+            });
+
+            it('then their department should be added if NOT already added', () => {
+                // arrange
+                var user: Dto.IUser = TestHelpers.UserGenerator.generateDto();
+                controller.activity.activityDepartments = [TestHelpers.ActivityDepartmentGenerator.generate()];
+                controller.standardDepartmentType = TestHelpers.EnumTypeItemGenerator.generateDto();
+
+                // act
+                controller.onNegotiatorAdded(user);
+
+                // assert
+                expect(controller.activity.activityDepartments.length).toBe(2);
+
+                var addedActivityDepartment = controller.activity.activityDepartments[1];
+
+                expect(addedActivityDepartment.departmentId).toBe(user.department.id);
+                expect(addedActivityDepartment.activityId).toBe(controller.activity.id);
+                expect(addedActivityDepartment.departmentType).toBe(controller.standardDepartmentType);
+                expect(addedActivityDepartment.departmentTypeId).toBe(controller.standardDepartmentType.id);
+            });
+        });
     });
 }

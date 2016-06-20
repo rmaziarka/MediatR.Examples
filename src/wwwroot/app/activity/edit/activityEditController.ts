@@ -11,7 +11,7 @@ module Antares.Activity {
         public enumTypeActivityStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityStatus;
         private departmentsController: Antares.Attributes.ActivityDepartmentsEditControlController;
 
-        private standardDepartmentType: Dto.IEnumTypeItem;
+        public standardDepartmentType: Dto.IEnumTypeItem;
 
         private isPropertyPreviewPanelVisible: boolean = false;
 
@@ -85,7 +85,7 @@ module Antares.Activity {
         }
         
         private addDepartment(department: Business.Department) {
-            if (!_.some(this.activity.activityDepartments, { 'departmentId': department.id })) {
+            if (!_.some(this.activity.activityDepartments, (activityDepartment: Business.ActivityDepartment) => { return activityDepartment.departmentId === department.id })) {
                 this.activity.activityDepartments.push(this.createActivityDepartment(department));
             }
         }
