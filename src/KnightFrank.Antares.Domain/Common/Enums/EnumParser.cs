@@ -4,6 +4,7 @@
 
     using KnightFrank.Antares.Dal.Model;
     using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
 
     public class EnumParser : IEnumParser
     {
@@ -29,7 +30,7 @@
                 }
             }
 
-           throw new ArgumentException();
+           throw new BusinessValidationException(BusinessValidationMessage.CreateEnumTypeItemNotExistMessage(typeof(T).ToString(), enumEntityId));
         }
     }
 }
