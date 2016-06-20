@@ -16,10 +16,26 @@ module Antares.Common.Component {
 
             var addressForm = new Business.AddressForm();
             angular.extend(addressForm, addressDefinitions);
-            addressForm.updateAddressFieldRows();
+
+            addressForm.normalizeFieldsName();
+            addressForm.addressFieldDefinitions = this.pickAddressFieldDefinitions(addressForm.addressFieldDefinitions);
+            addressForm.groupAddressFieldRows();
+
             this.addressForm = addressForm;
         }
-        
+
+        pickAddressFieldDefinitions = (addressFieldDefinitions: Business.AddressFormFieldDefinition[]) => {
+            var notEmptyMatchedDefinitions: Business.AddressFormFieldDefinition[] = [];
+
+            _.each(addressFieldDefinitions, (fieldDefinition: Business.AddressFormFieldDefinition) => {
+                if (this.address[fieldDefinition.name]) {
+                    notEmptyMatchedDefinitions.push(fieldDefinition);
+                }
+            });
+
+            return notEmptyMatchedDefinitions;
+        }
+
         isRowEmpty(row: Array<Business.AddressFormFieldDefinition>): boolean {
             return !_.any(row, (field: Business.AddressFormFieldDefinition) => {
                 return !!this.address[field.name];

@@ -8,15 +8,18 @@ module Antares.Common.Models.Business {
             public id: string = "",
             public countryId: string = "",
             public addressFieldDefinitions: AddressFormFieldDefinition[] = []
-        ) {
-            this.updateAddressFieldRows();
+        ){
+            this.normalizeFieldsName();
+            this.groupAddressFieldRows();
         }
 
-        updateAddressFieldRows() {
+        normalizeFieldsName () {
             _.forEach(this.addressFieldDefinitions, (field: AddressFormFieldDefinition) => {
                 field.name = field.name.charAt(0).toLowerCase() + field.name.slice(1);
             });
+        }
 
+        groupAddressFieldRows() {
             this.addressFieldRows = _.toArray<AddressFormFieldDefinition[]>(_.groupBy<AddressFormFieldDefinition>(this.addressFieldDefinitions, 'rowOrder'));
         }
     }

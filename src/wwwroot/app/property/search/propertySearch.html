@@ -7,7 +7,7 @@
                 <form ng-submit="vm.searchPropertyForm.$valid && vm.search()" name="vm.searchPropertyForm" method="post" novalidate>
                     <div class="form-group" ng-class="{'has-error': (vm.searchPropertyForm.$submitted || vm.searchPropertyForm.searchQuery.$dirty) && vm.searchPropertyForm.searchQuery.$invalid}">
                         <div class="search-property input-group">
-                            <input type="search" class="form-control" required id="search-query" name="searchQuery" translate translate-attr-placeholder="PROPERTY.SEARCH.QUERY_PLACEHOLDER" ng-model="vm.searchQuery">
+                            <input type="search" class="form-control" required id="search-query" name="searchQuery" translate translate-attr-placeholder="PROPERTY.SEARCH.QUERY_PLACEHOLDER" ng-model="vm.searchQuery" autocomplete="off">
                             <div class="input-group-btn">
                                 <button class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></button>
                             </div>
