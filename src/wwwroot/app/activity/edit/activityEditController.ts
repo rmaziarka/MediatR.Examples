@@ -13,7 +13,7 @@ module Antares.Activity {
 
         public standardDepartmentType: Dto.IEnumTypeItem;
 
-        private isPropertyPreviewPanelVisible: boolean = false;
+        public isPropertyPreviewPanelVisible: boolean = false;
 
         private departmentErrorMessageCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.MESSAGE';
         private departmentErrorTitleCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.TITLE';

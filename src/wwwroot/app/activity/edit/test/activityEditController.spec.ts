@@ -12,6 +12,7 @@ module Antares {
             element: ng.IAugmentedJQuery,
             $http: ng.IHttpBackendService,
             $state: ng.ui.IStateService,
+            eventAggregator: Antares.Core.EventAggregator,
             assertValidator: TestHelpers.AssertValidators,
             controller: ActivityEditController;
 
@@ -19,12 +20,14 @@ module Antares {
         var secondaryNegotiatorsMock = TestHelpers.ActivityUserGenerator.generateMany(3, Enums.NegotiatorTypeEnum.SecondaryNegotiator);
 
         beforeEach(inject((
+            _eventAggregator_: Antares.Core.EventAggregator,
             $rootScope: ng.IRootScopeService,
             $controller: ng.IControllerService,
             _$state_: ng.ui.IStateService,
             $httpBackend: ng.IHttpBackendService) => {
 
             // init
+            eventAggregator = _eventAggregator_;
             scope = $rootScope.$new();
             $http = $httpBackend;
             $state = _$state_;
@@ -195,6 +198,30 @@ module Antares {
                 expect(addedActivityDepartment.activityId).toBe(controller.activity.id);
                 expect(addedActivityDepartment.departmentType).toBe(controller.standardDepartmentType);
                 expect(addedActivityDepartment.departmentTypeId).toBe(controller.standardDepartmentType.id);
+            });
+        });
+
+        describe('should subscribe to events', () => {
+            it('when close side panel event then property view panel should be closed', () => {
+                // arrange
+                controller.isPropertyPreviewPanelVisible = true;
+
+                // act
+                eventAggregator.publish(new Common.Component.CloseSidePanelEvent());
+
+                // assert
+                expect(controller.isPropertyPreviewPanelVisible).toBeFalsy();
+            });
+
+            it('when open property prewiew panel event then property view panel should be opened', () => {
+                // arrange
+                controller.isPropertyPreviewPanelVisible = false;
+
+                // act
+                eventAggregator.publish(new Attributes.OpenPropertyPrewiewPanelEvent());
+
+                // assert
+                expect(controller.isPropertyPreviewPanelVisible).toBeTruthy();
             });
         });
     });
