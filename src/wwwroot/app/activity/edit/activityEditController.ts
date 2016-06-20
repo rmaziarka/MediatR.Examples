@@ -17,6 +17,40 @@ module Antares.Activity {
 
         private departmentErrorMessageCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.MESSAGE';
         private departmentErrorTitleCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.TITLE';
+		
+		//controls
+		controlSchemas: any = {
+			marketAppraisalPrice: {
+				formName: "marketAppraisalPriceControlForm",
+				controlId: "market-appraisal-price",
+				translationKey: "ACTIVITY.EDIT.PRICES.MARKET_APPRAISAL_PRICE",
+				fieldName: "marketAppraisalPrice"
+			},
+			recommendedPrice: {
+				formName: "recommendedPriceControlForm",
+				controlId: "recommended-price",
+				translationKey: "ACTIVITY.EDIT.PRICES.RECOMMENDED_PRICE",
+				fieldName: "recommendedPrice"
+			},
+			vendorEstimatedPrice: {
+				formName: "vendorEstimatedPriceControlForm",
+				controlId: "vendor-estimated-price",
+				translationKey: "ACTIVITY.EDIT.PRICES.VENDOR_ESTIMATED_PRICE",
+				fieldName: "vendorEstimatedPrice"
+			},
+			askingPrice: {
+				formName: "askingPriceControlForm",
+				controlId: "asking-price",
+				translationKey: "ACTIVITY.EDIT.PRICES.ASKING_PRICE",
+				fieldName: "askingPrice"
+			},
+			shortLetPricePerWeek: {
+				formName: "shortLetPricePerWeekControlForm",
+				controlId: "short-let-price-per-week",
+				translationKey: "ACTIVITY.EDIT.PRICES.SHORT_LET_PRICE_PER_WEEK",
+				fieldName: "shortLetPricePerWeek"
+			}
+		};
 
         constructor(
             private dataAccessService: Services.DataAccessService,

@@ -7,5 +7,7 @@ declare module Antares.Activity {
         activityType: Attributes.IActivityTypeEditControlConfig;
         vendors: Attributes.IActivityVendorsControlConfig;
         landlords: Attributes.IActivityLandlordsControlConfig;
+		askingPrice?: Attributes.IActivityAskingPriceControlConfig;
+		shortLetPricePerWeek?: Attributes.IActivityShortLetPricePerWeekControlConfig;
     }
 }

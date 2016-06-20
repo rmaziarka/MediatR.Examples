@@ -28,11 +28,11 @@
         <div class="col-md-4">
             <fieldset id="activity-edit-prices">
                 <h3 class="page-header" translate="ACTIVITY.EDIT.PRICES.PRICES"></h3>
-                <activity-market-appraisal-price-edit-control config="aevm.config.marketAppraisalPrice" ng-model='aevm.activity.marketAppraisalPrice'></activity-market-appraisal-price-edit-control>
-                <activity-recommended-price-edit-control config="aevm.config.recommendedPrice" ng-model='aevm.activity.recommendedPrice'></activity-recommended-price-edit-control>
-                <activity-vendor-estimated-price-edit-control config="aevm.config.vendorEstimatedPrice" ng-model='aevm.activity.vendorEstimatedPrice'></activity-vendor-estimated-price-edit-control>
-                <activity-asking-price-edit-control config="aevm.config.askingPrice" ng-model='aevm.activity.askingPrice'></activity-asking-price-edit-control>
-                <activity-short-let-price-per-week-edit-control config="aevm.config.shortLetPricePerWeek" ng-model='aevm.activity.shortLetPricePerWeek'></activity-short-let-price-per-week-edit-control>
+                <price-edit-control config="aevm.config.marketAppraisalPrice" schema="aevm.controlSchemas.marketAppraisalPrice" ng-model='aevm.activity.marketAppraisalPrice'></price-edit-control>
+                <price-edit-control config="aevm.config.recommendedPrice" schema="aevm.controlSchemas.recommendedPrice" ng-model='aevm.activity.recommendedPrice'></price-edit-control>
+                <price-edit-control config="aevm.config.vendorEstimatedPrice" schema="aevm.controlSchemas.vendorEstimatedPrice" ng-model='aevm.activity.vendorEstimatedPrice'></price-edit-control>
+                <price-edit-control config="aevm.config.askingPrice" schema="aevm.controlSchemas.askingPrice" ng-model='aevm.activity.askingPrice'></price-edit-control>
+                <price-edit-control config="aevm.config.shortLetPricePerWeek" schema="aevm.controlSchemas.shortLetPricePerWeek" ng-model='aevm.activity.shortLetPricePerWeek'></price-edit-control>
             </fieldset>
         </div>
 

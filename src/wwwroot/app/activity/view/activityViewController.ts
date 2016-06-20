@@ -22,6 +22,30 @@ module Antares.Activity.View {
 
         isPropertyPreviewPanelVisible: boolean = false;
 
+		//controls
+		controlSchemas: any = {
+			marketAppraisalPrice: {
+				controlId: "market-appraisal-price",
+				translationKey: "ACTIVITY.VIEW.PRICES.MARKET_APPRAISAL_PRICE"
+			},
+			recommendedPrice: {
+				controlId: "recommended-price",
+				translationKey: "ACTIVITY.VIEW.PRICES.RECOMMENDED_PRICE"
+			},
+			vendorEstimatedPrice: {
+				controlId: "vendor-estimated-price",
+				translationKey: "ACTIVITY.VIEW.PRICES.VENDOR_ESTIMATED_PRICE"
+			},
+			askingPrice: {
+				controlId: "asking-price",
+				translationKey: "ACTIVITY.VIEW.PRICES.ASKING_PRICE"
+			},
+			shortLetPricePerWeek: {
+				controlId: "short-let-price-per-week",
+				translationKey: "ACTIVITY.VIEW.PRICES.SHORT_LET_PRICE_PER_WEEK"
+			}
+		};
+
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private $scope: ng.IScope,
@@ -46,9 +70,8 @@ module Antares.Activity.View {
 
         onPanelsHidden = () => {
             this.isPropertyPreviewPanelVisible = false;
-        }
-
-        showPropertyPreview = (property: Business.PreviewProperty) => {
+        };
+	    showPropertyPreview = (property: Business.PreviewProperty) => {
             this.components.propertyPreview().setProperty(property);
             this.showPanel(this.components.panels.propertyPreview);
 
@@ -56,35 +79,30 @@ module Antares.Activity.View {
                 entityId: property.id,
                 entityType: EntityType.Property
             });
-        }
-
-        showActivityAttachmentAdd = () => {
+        };
+	    showActivityAttachmentAdd = () => {
             this.components.activityAttachmentAdd().clearAttachmentForm();
             this.showPanel(this.components.panels.activityAttachmentAdd);
-        }
-
-        showActivityAttachmentPreview = (attachment: Common.Models.Business.Attachment) => {
+        };
+	    showActivityAttachmentPreview = (attachment: Common.Models.Business.Attachment) => {
             this.components.activityAttachmentPreview().setAttachment(attachment, this.activity.id);
             this.showPanel(this.components.panels.activityAttachmentPreview);
-        }
-
-        cancelActivityAttachmentAdd = () => {
+        };
+	    cancelActivityAttachmentAdd = () => {
             this.components.panels.activityAttachmentAdd().hide();
         };
 
         saveAttachment = (attachment: Common.Models.Business.Attachment) =>{
             return this.activityAttachmentResource.save({ id : this.activity.id }, new Business.CreateActivityAttachmentResource(this.activity.id, attachment))
                 .$promise;
-        }
-
-        addSavedAttachmentToList = (result: Dto.IAttachment) => {
+        };
+	    addSavedAttachmentToList = (result: Dto.IAttachment) => {
             var savedAttachment = new Business.Attachment(result);
             this.activity.attachments.push(savedAttachment);
 
             this.hidePanels(true);
-        }
-
-        saveActivityAttachment = () => {
+        };
+	    saveActivityAttachment = () => {
             this.saveActivityAttachmentBusy = true;
 
             this.components.activityAttachmentAdd()
@@ -99,26 +117,24 @@ module Antares.Activity.View {
         showViewingPreview = (viewing: Common.Models.Dto.IViewing) =>{
             this.selectedViewing = viewing;
             this.showPanel(this.components.panels.previewViewingsSidePanel);
-        }
-
-        showOfferPreview = (offer: Common.Models.Dto.IOffer) => {
+        };
+	    showOfferPreview = (offer: Common.Models.Dto.IOffer) => {
             this.selectedOffer = offer;
             this.showPanel(this.components.panels.offerPreview);
-        }
+        };
 
-        cancelViewingPreview() {
+	    cancelViewingPreview() {
             this.hidePanels();
         }
 
         goToEdit = () => {
             this.$state.go('app.activity-edit', { id: this.$state.params['id'] });
-        }
-
-        navigateToOfferView = (offer: Common.Models.Dto.IOffer) =>{
+        };
+	    navigateToOfferView = (offer: Common.Models.Dto.IOffer) =>{
             this.$state.go('app.offer-view', { id: offer.id });
-        }
+        };
 
-        defineComponentIds() {
+	    defineComponentIds() {
             this.componentIds = {
                 propertyPreviewId: 'viewActivity:propertyPreviewComponent',
                 propertyPreviewSidePanelId: 'viewActivity:propertyPreviewSidePanelComponent',

@@ -1,0 +1,4 @@
+<div class="section-row row" ng-if="vm.config">
+    <div class="col-xs-6" translate="{{vm.schema.translationKey}}"></div>
+    <div id="{{vm.schema.controlId}}" class="col-xs-6" ng-if="vm.price !== null">{{vm.price | number : 2 }} GBP</div>
+</div>

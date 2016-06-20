@@ -48,7 +48,9 @@ module Antares.TestHelpers {
                 activityStatus: ConfigGenerator.generateActivityStatusEditConfig(),
                 activityType: ConfigGenerator.generateActivityTypeEditConfig(),
                 landlords: ConfigGenerator.generateActivityLandlordsConfig(),
-                vendors: ConfigGenerator.generateActivityVendorsConfig()
+                vendors: ConfigGenerator.generateActivityVendorsConfig(),
+				askingPrice: ConfigGenerator.generateActivityAskingPriceConfig(),
+				shortLetPricePerWeek: ConfigGenerator.generateActivityShortLetPricePerWeekControlConfig()
             };
 
             return config;
@@ -59,7 +61,27 @@ module Antares.TestHelpers {
                 activityStatus: ConfigGenerator.generateActivityStatusEditConfig(),
                 activityType: ConfigGenerator.generateActivityTypeEditConfig(),
                 landlords: ConfigGenerator.generateActivityLandlordsConfig(),
-                vendors: ConfigGenerator.generateActivityVendorsConfig()
+                vendors: ConfigGenerator.generateActivityVendorsConfig(),
+				askingPrice: ConfigGenerator.generateActivityAskingPriceConfig(),
+				shortLetPricePerWeek: ConfigGenerator.generateActivityShortLetPricePerWeekControlConfig()
+            };
+
+            return config;
+        }
+
+		public static generateActivityAskingPriceConfig(): Attributes.IActivityAskingPriceControlConfig {
+            var config: Attributes.IActivityAskingPriceControlConfig = {
+                active: true,
+                askingPrice: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
+            };
+
+            return config;
+        }
+
+		public static generateActivityShortLetPricePerWeekControlConfig(): Attributes.IActivityShortLetPricePerWeekControlConfig {
+            var config: Attributes.IActivityShortLetPricePerWeekControlConfig = {
+                active: true,
+                shortLetPricePerWeek: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
             };
 
             return config;
