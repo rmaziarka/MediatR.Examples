@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Activity.CommandHandlers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
 
@@ -16,8 +17,6 @@
     using KnightFrank.Antares.Domain.Activity.CommandHandlers;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
-    using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
-    using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
@@ -40,7 +39,7 @@
         [AutoMoqData]
         public void Given_ValidCommand_When_Handling_Then_ShouldSaveActivity(
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
-            [Frozen] Mock<IGenericRepository<Dal.Model.Property.Activities.ActivityType>> activityTypeRepository,
+            [Frozen] Mock<IGenericRepository<ActivityType>> activityTypeRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             [Frozen] Mock<IGenericRepository<User>> userRepository,
             [Frozen] Mock<IEntityValidator> entityValidator,
@@ -49,7 +48,7 @@
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IActivityTypeDefinitionValidator> activityTypeDefinitionValidator,
             [Frozen] Mock<IAttributeValidator<Tuple<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>>> attributeValidator,
-            [Frozen] Mock<IEntityMapper> entityMapper,
+            [Frozen] Mock<IEntityMapper<Activity>> activityEntityMapper,
             CreateActivityCommandHandler handler,
             CreateActivityCommand command,
             Guid expectedActivityId,
@@ -62,8 +61,12 @@
             property.Address = fixture.Create<Address>();
             property.PropertyType =
                 fixture.Build<PropertyType>().With(x => x.EnumCode, Domain.Common.Enums.PropertyType.Flat.ToString()).Create();
-            propertyRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(property);
-            var activityType =
+            propertyRepository.Setup(
+                x => x.GetWithInclude(
+                    It.IsAny<Expression<Func<Property, bool>>>(),
+                    It.IsAny<Expression<Func<Property, object>>>(),
+                    It.IsAny<Expression<Func<Property, object>>>())).Returns(new[] { property });
+            ActivityType activityType =
                 fixture.Build<ActivityType>()
                        .With(x => x.EnumCode, Domain.Common.Enums.ActivityType.FreeholdSale.ToString())
                        .Create();
@@ -92,12 +95,10 @@
                              .Returns(command.ContactIds.Select(id => new Contact { Id = id }));
 
             var mappedActivity = new Activity { PropertyId = property.Id, ActivityTypeId = command.ActivityTypeId };
-            entityMapper
+            activityEntityMapper
                 .Setup(
                     x =>
-                        x.MapAllowedValues(command, It.Is<Activity>(a => a.PropertyId == command.PropertyId && a.ActivityTypeId == command.ActivityTypeId),
-                            It.IsAny<IControlsConfiguration<Tuple<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>>>(),
-                            PageType.Create, new Tuple<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>(Domain.Common.Enums.PropertyType.Flat, Domain.Common.Enums.ActivityType.FreeholdSale)))
+                        x.MapAllowedValues(command, It.Is<Activity>(a => a.PropertyId == command.PropertyId && a.ActivityTypeId == command.ActivityTypeId), PageType.Create))
                 .Returns(mappedActivity);
 
             // Act
@@ -106,21 +107,19 @@
             // Assert
             activityId.Should().Be(activity.Id);
 
-            entityMapper
+            activityEntityMapper
                 .Verify(
                     x =>
-                        x.MapAllowedValues(command, It.Is<Activity>(a => a.PropertyId == command.PropertyId && a.ActivityTypeId == command.ActivityTypeId),
-                            It.IsAny<IControlsConfiguration<Tuple<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>>>(),
-                            PageType.Create, new Tuple<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>(Domain.Common.Enums.PropertyType.Flat, Domain.Common.Enums.ActivityType.FreeholdSale)), Times.Once);
+                        x.MapAllowedValues(command, It.Is<Activity>(a => a.PropertyId == command.PropertyId && a.ActivityTypeId == command.ActivityTypeId), PageType.Create), Times.Once);
 
             activity.ActivityUsers.Should().HaveCount(1);
-            ActivityUser leadNegotiator = activity.ActivityUsers.SingleOrDefault();
+            ActivityUser leadNegotiator = activity.ActivityUsers.Single();
             leadNegotiator.User.Should().Be(user);
             leadNegotiator.UserType.Code.Should().Be(ActivityUserType.LeadNegotiator.ToString());
             leadNegotiator.CallDate.Should().Be(DateTime.UtcNow.AddDays(14).Date);
 
             activity.ActivityDepartments.Should().HaveCount(1);
-            ActivityDepartment managingDepartment = activity.ActivityDepartments.SingleOrDefault();
+            ActivityDepartment managingDepartment = activity.ActivityDepartments.Single();
             managingDepartment.Department.Should().Be(user.Department);
             managingDepartment.DepartmentType.Code.Should().Be(ActivityDepartmentType.Managing.ToString());
 

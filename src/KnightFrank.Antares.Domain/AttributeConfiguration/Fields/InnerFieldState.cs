@@ -21,6 +21,11 @@
         public string Name { get; set; }
         public ControlCode ControlCode { get; set; }
         public string DictionaryCode { get; set; }
-        public IList<string> AllowedCodes { get; set; } 
+        public IList<string> AllowedCodes { get; set; }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

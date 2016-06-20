@@ -11,7 +11,6 @@
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
-    using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
@@ -41,9 +40,7 @@
 
         private readonly IEnumTypeItemValidator enumTypeItemValidator;
 
-        private readonly IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityConfiguration;
-
-        private readonly IEntityMapper entityMapper;
+        private readonly IEntityMapper<Activity> activityEntityMapper;
 
         private readonly IAttributeValidator<Tuple<PropertyType, ActivityType>> attributeValidator;
 
@@ -57,8 +54,7 @@
             IEnumTypeItemValidator enumTypeItemValidator,
             IActivityTypeDefinitionValidator activityTypeDefinitionValidator,
             IGenericRepository<EnumTypeItem> enumTypeItemRepository,
-            IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityConfiguration,
-            IEntityMapper entityMapper,
+            IEntityMapper<Activity> activityEntityMapper,
             IAttributeValidator<Tuple<PropertyType, ActivityType>> attributeValidator)
 
         {
@@ -71,8 +67,7 @@
             this.enumTypeItemValidator = enumTypeItemValidator;
             this.activityTypeDefinitionValidator = activityTypeDefinitionValidator;
             this.enumTypeItemRepository = enumTypeItemRepository;
-            this.activityConfiguration = activityConfiguration;
-            this.entityMapper = entityMapper;
+            this.activityEntityMapper = activityEntityMapper;
             this.attributeValidator = attributeValidator;
         }
 
@@ -101,7 +96,7 @@
 
             List<ActivityUser> commandNegotiators = this.ValidateAndRetrieveNegotiatorsFromCommand(message);
 
-            activity = this.entityMapper.MapAllowedValues(message, activity, this.activityConfiguration, PageType.Update, new Tuple<PropertyType, ActivityType>(propertyType, activityType));
+            activity = this.activityEntityMapper.MapAllowedValues(message, activity, PageType.Update);
 
             this.ValidateActivityNegotiators(commandNegotiators, activity);
             this.UpdateActivityNegotiators(commandNegotiators, activity);

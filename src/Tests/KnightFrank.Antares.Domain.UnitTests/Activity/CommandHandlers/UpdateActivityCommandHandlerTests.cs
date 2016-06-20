@@ -16,8 +16,6 @@
     using KnightFrank.Antares.Domain.Activity.CommandHandlers;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
-    using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
-    using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
@@ -50,8 +48,8 @@
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IEntityValidator> entityValidator,
             [Frozen] Mock<ICollectionValidator> collectionValidator,
-            [Frozen] Mock<IEntityMapper> entityMapper,
-            [Frozen] Mock<IAttributeValidator<Tuple<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>>> attributeValidator,
+            [Frozen] Mock<IEntityMapper<Activity>> activityEntityMapper,
+            [Frozen] Mock<IAttributeValidator<Tuple<Domain.Common.Enums.PropertyType, ActivityType>>> attributeValidator,
             Department department,
             UpdateActivityCommandHandler handler,
             IFixture fixture)
@@ -67,13 +65,7 @@
             this.SetupEnumTypeItemRepository(enumTypeItemRepository, fixture);
             this.SetupUserRepository(userRepository, command, activity, department, fixture);
 
-            entityMapper
-                .Setup(
-                    x =>
-                        x.MapAllowedValues(command, activity,
-                            It.IsAny<IControlsConfiguration<Tuple<Domain.Common.Enums.PropertyType, ActivityType>>>(),
-                            PageType.Update, new Tuple<Domain.Common.Enums.PropertyType, ActivityType>(Domain.Common.Enums.PropertyType.Flat, ActivityType.FreeholdSale)))
-                .Returns(activity);
+            activityEntityMapper.Setup(x => x.MapAllowedValues(command, activity, PageType.Update)).Returns(activity);
 
             // Act
             handler.Handle(command);
@@ -81,24 +73,11 @@
             // Assert
             this.VerifyIfValidationsWereCalled(activity, command, entityValidator, collectionValidator);
 
-            entityMapper.Verify(
-                x =>
-                    x.MapAllowedValues(command, activity,
-                        It.IsAny<IControlsConfiguration<Tuple<Domain.Common.Enums.PropertyType, ActivityType>>>(),
-                        PageType.Update, new Tuple<Domain.Common.Enums.PropertyType, ActivityType>(Domain.Common.Enums.PropertyType.Flat, Domain.Common.Enums.ActivityType.FreeholdSale)), Times.Once);
+            activityEntityMapper.Verify(x => x.MapAllowedValues(command, activity, PageType.Update), Times.Once);
 
             attributeValidator.Verify(
               x =>
-                  x.Validate(PageType.Update, new Tuple<Domain.Common.Enums.PropertyType, ActivityType>(Domain.Common.Enums.PropertyType.Flat,
-                      Domain.Common.Enums.ActivityType.FreeholdSale), command));
-
-            /* activity.ShouldBeEquivalentTo(
-                 command,
-                 options =>
-                 options.Including(x => x.ActivityStatusId)
-                        .Including(x => x.MarketAppraisalPrice)
-                        .Including(x => x.RecommendedPrice)
-                        .Including(x => x.VendorEstimatedPrice));*/
+                  x.Validate(PageType.Update, new Tuple<Domain.Common.Enums.PropertyType, ActivityType>(Domain.Common.Enums.PropertyType.Flat, ActivityType.FreeholdSale), command));
         }
 
         [Theory]
@@ -203,7 +182,7 @@
            [Frozen] Mock<IGenericRepository<User>> userRepository,
            [Frozen] Mock<IGenericRepository<ActivityUser>> activityUserRepository,
            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-           [Frozen] Mock<IEntityMapper> entityMapper,
+           [Frozen] Mock<IEntityMapper<Activity>> activityEntityMapper,
            Department department,
            ActivityUser activityLeadNegotiator,
            UpdateActivityCommandHandler handler,
@@ -222,25 +201,14 @@
             this.SetupEnumTypeItemRepository(enumTypeItemRepository, fixture);
             this.SetupUserRepository(userRepository, command, activity, department, fixture);
 
-            entityMapper
-                .Setup(
-                    x =>
-                        x.MapAllowedValues(command, activity,
-                            It.IsAny<IControlsConfiguration<Tuple<Domain.Common.Enums.PropertyType, ActivityType>>>(),
-                            PageType.Update, new Tuple<Domain.Common.Enums.PropertyType, ActivityType>(Domain.Common.Enums.PropertyType.Flat, Domain.Common.Enums.ActivityType.FreeholdSale)))
-                .Returns(activity);
+            activityEntityMapper.Setup(x => x.MapAllowedValues(command, activity, PageType.Update)).Returns(activity);
 
             // Act
             handler.Handle(command);
 
             // Assert
             activityUserRepository.Verify(r => r.Delete(secondaryNegotiatorToDelete), Times.Once);
-            entityMapper
-                .Verify(
-                    x =>
-                        x.MapAllowedValues(command, activity,
-                            It.IsAny<IControlsConfiguration<Tuple<Domain.Common.Enums.PropertyType, ActivityType>>>(),
-                            PageType.Update, new Tuple<Domain.Common.Enums.PropertyType, ActivityType>(Domain.Common.Enums.PropertyType.Flat, Domain.Common.Enums.ActivityType.FreeholdSale)), Times.Once);
+            activityEntityMapper.Verify(x => x.MapAllowedValues(command, activity, PageType.Update), Times.Once);
         }
 
         [Theory]
@@ -249,7 +217,7 @@
            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
            [Frozen] Mock<IGenericRepository<User>> userRepository,
            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-           [Frozen] Mock<IEntityMapper> entityMapper,
+           [Frozen] Mock<IEntityMapper<Activity>> activityEntityMapper,
            Department department,
            ActivityUser activityLeadNegotiator,
            UpdateActivityCommandHandler handler,
@@ -269,13 +237,7 @@
             this.SetupEnumTypeItemRepository(enumTypeItemRepository, fixture);
             this.SetupUserRepository(userRepository, command, activity, department, fixture);
 
-            entityMapper
-                .Setup(
-                    x =>
-                        x.MapAllowedValues(command, activity,
-                            It.IsAny<IControlsConfiguration<Tuple<Domain.Common.Enums.PropertyType, ActivityType>>>(),
-                            PageType.Update, new Tuple<Domain.Common.Enums.PropertyType, ActivityType>(Domain.Common.Enums.PropertyType.Flat, Domain.Common.Enums.ActivityType.FreeholdSale)))
-                .Returns(activity);
+            activityEntityMapper.Setup(x => x.MapAllowedValues(command, activity, PageType.Update)).Returns(activity);
 
             // Act
             handler.Handle(command);
@@ -287,12 +249,7 @@
             negotiator.UserType.Code.Should().Be(ActivityUserType.SecondaryNegotiator.ToString());
             negotiator.CallDate.Should().Be(callDate);
 
-            entityMapper
-                .Verify(
-                    x =>
-                        x.MapAllowedValues(command, activity,
-                            It.IsAny<IControlsConfiguration<Tuple<Domain.Common.Enums.PropertyType, ActivityType>>>(),
-                            PageType.Update, new Tuple<Domain.Common.Enums.PropertyType, ActivityType>(Domain.Common.Enums.PropertyType.Flat, Domain.Common.Enums.ActivityType.FreeholdSale)), Times.Once);
+            activityEntityMapper.Verify(x => x.MapAllowedValues(command, activity, PageType.Update), Times.Once);
         }
 
         [Theory]
@@ -306,7 +263,7 @@
            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
            [Frozen] Mock<IGenericRepository<User>> userRepository,
            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
-           [Frozen] Mock<IEntityMapper> entityMapper,
+           [Frozen] Mock<IEntityMapper<Activity>> activityEntityMapper,
            Department department,
            ActivityUser activityLeadNegotiator,
            List<ActivityUser> activitySecondaryNegotiators,
@@ -347,13 +304,7 @@
 
             this.SetupUserRepository(userRepository, command, activity, department, fixture);
 
-            entityMapper
-                .Setup(
-                    x =>
-                        x.MapAllowedValues(command, activity,
-                            It.IsAny<IControlsConfiguration<Tuple<Domain.Common.Enums.PropertyType, ActivityType>>>(),
-                            PageType.Update, new Tuple<Domain.Common.Enums.PropertyType, ActivityType>(Domain.Common.Enums.PropertyType.Flat, Domain.Common.Enums.ActivityType.FreeholdSale)))
-                .Returns(activity);
+            activityEntityMapper.Setup(x => x.MapAllowedValues(command, activity, PageType.Update)).Returns(activity);
 
             // Act
             handler.Handle(command);
@@ -365,18 +316,13 @@
             negotiator.UserType.Code.Should().Be(isNegotiatorToBeChangedToLead ? ActivityUserType.LeadNegotiator.ToString() : ActivityUserType.SecondaryNegotiator.ToString());
             negotiator.CallDate.Should().Be(callDate);
 
-            entityMapper
-                .Verify(
-                    x =>
-                        x.MapAllowedValues(command, activity,
-                            It.IsAny<IControlsConfiguration<Tuple<Domain.Common.Enums.PropertyType, ActivityType>>>(),
-                            PageType.Update, new Tuple<Domain.Common.Enums.PropertyType, ActivityType>(Domain.Common.Enums.PropertyType.Flat, Domain.Common.Enums.ActivityType.FreeholdSale)), Times.Once);
+            activityEntityMapper.Verify(x => x.MapAllowedValues(command, activity, PageType.Update), Times.Once);
         }
 
         private Activity GetActivity(IFixture fixture, ActivityUser activityLeadNegotiator = null, List<ActivityUser> activitySecondaryNegotiators = null)
         {
             var activity = fixture.Create<Activity>();
-            activity.ActivityType.EnumCode = Domain.Common.Enums.ActivityType.FreeholdSale.ToString();
+            activity.ActivityType.EnumCode = ActivityType.FreeholdSale.ToString();
             activity.Property = fixture.Create<Property>();
             activity.Property.Address = fixture.Create<Address>();
             activity.Property.PropertyType = fixture.Create<PropertyType>();

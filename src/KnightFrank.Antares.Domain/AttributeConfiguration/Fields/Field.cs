@@ -1,6 +1,7 @@
 namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq.Expressions;
 
     using FluentValidation;
@@ -39,7 +40,15 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
         public static Field<TEntity, TProperty> Create<TProperty>(Expression<Func<TEntity, TProperty>> expression)
         {
             return new Field<TEntity, TProperty>(expression, CreateInnerField(expression));
+        }
 
+        public static IList<IField> Create<TProperty, TProperty2>(Expression<Func<TEntity, TProperty>> expression, Expression<Func<TEntity, TProperty2>> associatedExpression = null)
+        {
+            return new List<IField>
+            {
+                new Field<TEntity, TProperty>(expression, CreateInnerField(expression)),
+                new Field<TEntity, TProperty2>(associatedExpression, CreateInnerField(associatedExpression))
+            };
         }
 
         public static Field<TEntity, string> CreateText(Expression<Func<TEntity, string>> expression, int length)

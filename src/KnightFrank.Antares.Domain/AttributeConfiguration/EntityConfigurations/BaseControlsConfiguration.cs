@@ -6,6 +6,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
 
@@ -29,6 +30,27 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
         {
             foreach (KeyValuePair<Tuple<TKey, PageType>, IList<Tuple<Control, IList<IField>>>> controlPageConfiguration in this.ControlPageConfiguration)
             {
+                /*
+                 * For each defined set of page type and a tuple key (e.g. property type and activity type)
+                 * we need to find controls that have not been explicitly defined. These controls need now to be
+                 * added to configuration with hidden expressions so that data shaping process could easily find
+                 * fields that need to be got ridden of from entity.
+                 */
+                IEnumerable<KeyValuePair<Tuple<PageType, ControlCode>, Tuple<Control, IList<IField>>>> notConfiguredControls =
+                    this.AvailableControls.Where(
+                        x =>
+                            /*
+                             * In the list of available controls for current page type
+                             * look for those controls that have not been configured i.e. are not present in controlPageConfiguration
+                             */ 
+                            x.Key.Item1 == controlPageConfiguration.Key.Item2 &&
+                            controlPageConfiguration.Value.All(cpc => cpc.Item1.ControlCode != x.Key.Item2));
+
+                foreach (KeyValuePair<Tuple<PageType, ControlCode>, Tuple<Control, IList<IField>>> control in notConfiguredControls)
+                {
+                    this.Use(control.Value.Item1.ControlCode, new List<Tuple<TKey, PageType>> { controlPageConfiguration.Key }).Hidden();
+                }
+
                 foreach (Tuple<Control, IList<IField>> controlConfiguraiton in controlPageConfiguration.Value)
                 {
                     foreach (IField field in controlConfiguraiton.Item2)

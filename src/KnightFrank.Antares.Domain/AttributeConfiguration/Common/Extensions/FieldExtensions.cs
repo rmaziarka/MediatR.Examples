@@ -1,7 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
@@ -119,6 +118,17 @@
                 {
                     field.SetRequired();
                 }
+            }
+
+            return controlFields;
+        }
+
+        public static IList<Tuple<Control, IList<IField>>> Hidden(this IList<Tuple<Control, IList<IField>>> controlFields)
+        {
+            foreach (Tuple<Control, IList<IField>> tuple in controlFields)
+            {
+                Expression<Func<object, bool>> always = x => true;
+                tuple.Item1.SetHiddenRule(always);
             }
 
             return controlFields;
