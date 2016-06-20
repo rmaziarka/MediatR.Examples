@@ -25,8 +25,8 @@ module Antares {
                     'enumsPromise': (enumService: Antares.Services.EnumService) => {
                         return enumService.getEnumPromise();
                     },
-                    'resourcesPromise': (resourcesProvider: Antares.Providers.ResourcesProvider) => {
-                        return resourcesProvider.load();
+                    'enumsProviderPromise': (enumProvider: Providers.EnumProvider) =>{
+                        return enumProvider.init();
                     }
                 }
             });
