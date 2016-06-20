@@ -16,7 +16,7 @@
                             <div ng-messages-include="app/common/views/errorMessages.html"></div>
                         </div>
                     </div>
-                    <div class="form-group form-inline" ng-show="vm.showSearchOptions">
+                    <div class="form-group form-inline" id="search-options" ng-if="vm.showSearchOptions">
                         <div class="row">
                             <div class="col-xs-5 search-property-label">
                                 <span class="text-uppercase" translate="PROPERTY.SEARCH.RESULTS_COUNT"></span> <span class="search-property-count">{{vm.totalResults}}</span>
