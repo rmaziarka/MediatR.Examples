@@ -6,14 +6,12 @@
     using System.Linq;
     using System.Net;
     using System.Net.Http;
-    using System.Security.Claims;
     using System.Web.Http;
 
     using KnightFrank.Antares.Domain.User.QueryResults;
 
     using Domain.User.Queries;
 
-    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.User.Commands;
@@ -28,17 +26,19 @@
     {
 
         private readonly IMediator mediator;
-        private readonly IReadGenericRepository<User> userRepository; 
+        private readonly IReadGenericRepository<User> userRepository;
+
         /// <summary>
         /// Initializes a new instance of the UsersController class.
         /// </summary>
         /// <param name="mediator">The mediator.</param>
         /// <param name="userRepository">User repository</param>
-        public UsersController(IMediator mediator, IReadGenericRepository<User> userRepository )
+        public UsersController(IMediator mediator, IReadGenericRepository<User> userRepository)
         {
             this.mediator = mediator;
             this.userRepository = userRepository;
         }
+
 
 
         /// <summary>
@@ -97,15 +97,16 @@
         [Route("current")]
         public User GetUserData()
         {
-            //ToDo: this needs to be removed and updated with the Get in the front end
-            //waiting for authentication to be completed
+            //ToDo: waiting for authentication to be completed
             //hardcoded for now as first user in database 
             User user = this.userRepository.Get()
-                .Include(u=>u.Locale)
-                .Include( u=>u.Department)
-                .Include(u=>u.Country)
-                .First();
+                 .Include(u => u.Locale)
+                 .Include(u => u.Department)
+                 .Include(u => u.Country)
+                 .Include(u => u.Roles)
+                 .Include(u => u.Division)
+                 .First();
             return user;
         }
-    }
+  }
 }

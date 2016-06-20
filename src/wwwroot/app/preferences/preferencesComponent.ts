@@ -6,7 +6,7 @@ module Antares.Preferences {
         controllerAs: 'vm',
         controller: 'PreferencesController',
         bindings: {
-            userData: '<'
+            userData: '='
         }
     });
 }

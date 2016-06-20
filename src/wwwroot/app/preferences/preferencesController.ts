@@ -8,6 +8,7 @@ module Antares.Preferences {
         enumTypeSalutationFormat: Dto.EnumTypeCode = Dto.EnumTypeCode.SalutationFormat;
         private salutationFormats: any;
         private currentUserResource: Common.Models.Resources.ICurrentUserResourceClass;
+
         selectedSalutaionFormatId:string;
         defaultSalutationFormatId: string= "";
 
