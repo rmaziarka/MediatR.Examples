@@ -1,5 +1,6 @@
 ﻿CREATE TABLE #TempActivityType (
-	[Code] NVARCHAR (50) NOT NULL
+	[Code] NVARCHAR (50) NOT NULL,
+	[EnumCode] NVARCHAR (250) NOT NULL
 );
 
 BULK INSERT #TempActivityType
@@ -13,21 +14,22 @@ BULK INSERT #TempActivityType
     )
 
 ALTER TABLE ActivityType NOCHECK CONSTRAINT ALL
-	    	
+
 MERGE ActivityType AS T
 	USING #TempActivityType
-	AS S	
-	ON 
+	AS S
+	ON
 	(
         (T.Code = S.Code)
 	)
 	WHEN MATCHED THEN
 		UPDATE SET
-		T.[Code] = S.[Code]
+		T.[Code] = S.[Code],
+		T.[EnumCode] = S.[EnumCode]
 
-	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT ([Code])
-		VALUES ([Code])
+	WHEN NOT MATCHED BY TARGET THEN
+		INSERT ([Code],[EnumCode])
+		VALUES ([Code],[EnumCode])
 
     WHEN NOT MATCHED BY SOURCE THEN
 		DELETE;

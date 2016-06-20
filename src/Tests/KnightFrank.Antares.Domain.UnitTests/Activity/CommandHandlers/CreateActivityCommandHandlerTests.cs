@@ -17,6 +17,7 @@
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 
@@ -57,8 +58,8 @@
                                       (Expression<Func<EnumTypeItem, bool>> expr) =>
                                       new[]
                                           {
-                                              this.CreateEnumTypeItem(EnumTypeItemCode.LeadNegotiator, fixture),
-                                              this.CreateEnumTypeItem(EnumTypeItemCode.ManagingDepartment, fixture)
+                                              this.CreateEnumTypeItem(ActivityUserType.LeadNegotiator.ToString(), fixture),
+                                              this.CreateEnumTypeItem(ActivityDepartmentType.Managing.ToString(), fixture)
                                           }.Where(
                                               expr.Compile()));
 
@@ -85,15 +86,15 @@
             activity.ActivityUsers.Should().HaveCount(1);
             ActivityUser leadNegotiator = activity.ActivityUsers.SingleOrDefault();
             leadNegotiator.User.Should().Be(user);
-            leadNegotiator.UserType.Code.Should().Be(EnumTypeItemCode.LeadNegotiator);
+            leadNegotiator.UserType.Code.Should().Be(ActivityUserType.LeadNegotiator.ToString());
             leadNegotiator.CallDate.Should().Be(DateTime.UtcNow.AddDays(14).Date);
 
             activity.ActivityDepartments.Should().HaveCount(1);
             ActivityDepartment managingDepartment = activity.ActivityDepartments.SingleOrDefault();
             managingDepartment.Department.Should().Be(user.Department);
-            managingDepartment.DepartmentType.Code.Should().Be(EnumTypeItemCode.ManagingDepartment);
+            managingDepartment.DepartmentType.Code.Should().Be(ActivityDepartmentType.Managing.ToString());
 
-            entityValidator.Verify(x => x.EntityExists<ActivityType>(command.ActivityTypeId), Times.Once);
+            entityValidator.Verify(x => x.EntityExists<Dal.Model.Property.Activities.ActivityType>(command.ActivityTypeId), Times.Once);
             entityValidator.Verify(x => x.EntityExists(property, command.PropertyId), Times.Once);
             entityValidator.Verify(x => x.EntityExists(user, command.LeadNegotiatorId), Times.Once);
             activityTypeDefinitionValidator.Verify(

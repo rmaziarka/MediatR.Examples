@@ -167,11 +167,20 @@
     <Compile Include="Common\Commands\CreateOrUpdateAddress.cs" />
     <Compile Include="Common\Commands\CreateOrUpdateAddressValidator.cs" />
     <Compile Include="Common\Enums\DivisionEnum.cs" />
-    <Compile Include="Common\Enums\EnumTypeItemCode.cs" />
     <Compile Include="Common\Enums\GenerateEnumTypeItems.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GenerateEnumTypeItems.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Enums\ActivityType.cs">
+      <DependentUpon>ActivityType.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Common\Enums\PropertyType.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PropertyType.tt</DependentUpon>
     </Compile>
     <Compile Include="Common\NinjectInstanceResolver.cs" />
     <Compile Include="Common\INinjectInstanceResolver.cs" />
@@ -351,6 +360,14 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastOutputs>.\GenerateEnumTypeItems.cs</LastOutputs>
       <LastGenOutput>GenerateEnumTypeItems.cs</LastGenOutput>
+    </Content>
+    <Content Include="Common\Enums\ActivityType.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ActivityType.cs</LastGenOutput>
+    </Content>
+    <Content Include="Common\Enums\PropertyType.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PropertyType.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

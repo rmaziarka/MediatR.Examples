@@ -132,6 +132,7 @@
     <Compile Include="Pages\Panels\PropertyPreviewPage.cs" />
     <Compile Include="Pages\Panels\CreateViewingPage.cs" />
     <Compile Include="Pages\Panels\ViewingDetailsPage.cs" />
+    <Compile Include="Pages\SearchPropertyPage.cs" />
     <Compile Include="Pages\ViewActivityPage.cs" />
     <Compile Include="Pages\ViewOfferPage.cs" />
     <Compile Include="Pages\ViewRequirementPage.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Steps\EditActivitySteps.cs" />
     <Compile Include="Steps\EditOfferSteps.cs" />
     <Compile Include="Steps\NavigationDrawerSteps.cs" />
+    <Compile Include="Steps\SearchPropertySteps.cs" />
     <Compile Include="Steps\ViewActivitySteps.cs" />
     <Compile Include="Steps\ViewOfferSteps.cs" />
     <Compile Include="Steps\ViewRequirementSteps.cs" />

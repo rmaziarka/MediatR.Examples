@@ -14,6 +14,7 @@
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 
@@ -168,7 +169,7 @@
 
         private ActivityUser CreateActivityUser(Guid activityUserId, Guid activityId, bool isLeadNegotiator, IFixture fixture)
         {
-            string userTypeCode = isLeadNegotiator ? EnumTypeItemCode.LeadNegotiator : EnumTypeItemCode.SecondaryNegotiator;
+            string userTypeCode = isLeadNegotiator ? ActivityUserType.LeadNegotiator.ToString() : ActivityUserType.SecondaryNegotiator.ToString();
             EnumTypeItem userType = fixture.Build<EnumTypeItem>().With(i => i.Code, userTypeCode).Create();
 
             return

@@ -2,9 +2,11 @@
 {
     using FluentAssertions;
 
+    using FluentValidation.Resources;
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Domain.User.Queries;
+    using KnightFrank.Antares.Tests.Common.Extensions.Fluent.ValidationResult;
 
     using Ploeh.AutoFixture.Xunit2;
 
@@ -39,8 +41,7 @@
             ValidationResult validationResult = validator.Validate(query);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().Contain(failure => failure.PropertyName == nameof(query.PartialName));
+            validationResult.IsInvalid(nameof(query.PartialName), nameof(Messages.notempty_error));
         }
 
         [Theory]
@@ -56,8 +57,7 @@
             ValidationResult validationResult = validator.Validate(query);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().Contain(failure => failure.PropertyName == nameof(query.PartialName));
+            validationResult.IsInvalid(nameof(query.PartialName), nameof(Messages.notempty_error));
         }
     }
 
