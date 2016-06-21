@@ -184,6 +184,7 @@
     <Compile Include="Steps\CharacteristicGroups\CharacteristicGroupsSteps.cs" />
     <Compile Include="Steps\Companies\CompaniesSteps.cs" />
     <Compile Include="Steps\LatestViews\LatestViewsSteps.cs" />
+    <Compile Include="Steps\Metadata\MetadataSteps.cs" />
     <Compile Include="Steps\Offers\OffersSteps.cs" />
     <Compile Include="Steps\Property\AreaBreakdownSteps.cs" />
     <Compile Include="Steps\Services\ServicesSteps.cs" />
@@ -212,6 +213,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LatestViews.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Metadata\Metadata.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Metadata.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Offers\Offers.feature.cs">
       <AutoGen>True</AutoGen>
@@ -346,6 +352,10 @@
     <None Include="Tests\LatestViews\LatestViews.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>LatestViews.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Metadata\Metadata.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Metadata.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Offers\Offers.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
