@@ -1,6 +1,5 @@
 ﻿namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
 {
-    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
 
     internal sealed class ActivityTypeLocalisedConfiguration : BaseEntityConfiguration<ActivityTypeLocalised>

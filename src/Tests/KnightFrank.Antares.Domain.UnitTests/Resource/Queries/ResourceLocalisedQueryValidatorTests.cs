@@ -6,6 +6,7 @@
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Domain.Resource.Queries;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Xunit;
 

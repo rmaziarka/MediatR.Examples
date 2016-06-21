@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Enum.Types;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
     using KnightFrank.Foundation.Antares.Cloud.Storage.Blob;
     using KnightFrank.Foundation.Antares.Cloud.Storage.Blob.Interfaces;
 

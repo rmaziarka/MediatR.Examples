@@ -101,9 +101,11 @@ module Antares.Services {
             }
         };
 
-        getCompanyResource(): Resources.IBaseResourceClass<Resources.ICompanyResource> {
-            return <Resources.IBaseResourceClass<Resources.ICompanyResource>>
-                this.$resource(this.appConfig.rootUrl + '/api/companies/:id');
+        getCompanyResource(): Resources.ICompanyResourceClass{
+            return <Resources.ICompanyResourceClass>
+                this.$resource(this.appConfig.rootUrl + '/api/companies/:id', null, {
+                update: this.updateAction
+                });
         }
 
         getContactResource(): Resources.IBaseResourceClass<Resources.IContactResource> {

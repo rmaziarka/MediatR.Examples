@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.Common.Exceptions;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
     using KnightFrank.Foundation.Antares.Cloud.Storage.Blob;
 
     using Moq;

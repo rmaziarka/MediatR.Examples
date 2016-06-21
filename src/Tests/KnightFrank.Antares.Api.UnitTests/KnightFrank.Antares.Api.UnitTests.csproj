@@ -131,9 +131,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoMoqDataAttribute.cs" />
-    <Compile Include="FixtureExtension\ValidationResultExtensions.cs" />
-    <Compile Include="InlineAutoMoqDataAttribute.cs" />
     <Compile Include="Services\AzureStorage\DocumentStorageProviderTests.cs" />
     <Compile Include="Services\AzureStorage\Factories\BlobResourceFactoryTests.cs" />
     <Compile Include="Services\AzureStorage\EntityDocumentStorageProviderTests.cs" />
@@ -157,6 +154,10 @@
     <ProjectReference Include="..\..\KnightFrank.Antares.Domain\KnightFrank.Antares.Domain.csproj">
       <Project>{5987D78C-856D-4315-8B8B-BAF00C286AFF}</Project>
       <Name>KnightFrank.Antares.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KnightFrank.Antares.Tests.Common\KnightFrank.Antares.Tests.Common.csproj">
+      <Project>{28a06047-69af-4192-8cb0-d6fd21073f3b}</Project>
+      <Name>KnightFrank.Antares.Tests.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

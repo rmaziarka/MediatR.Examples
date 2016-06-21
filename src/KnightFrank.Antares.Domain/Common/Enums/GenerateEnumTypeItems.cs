@@ -15,6 +15,7 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	OfferStatus,
 	 	ActivityUserType,
 	 	ActivityDepartmentType,
+        ClientCareStatus
 	 }
 
 	

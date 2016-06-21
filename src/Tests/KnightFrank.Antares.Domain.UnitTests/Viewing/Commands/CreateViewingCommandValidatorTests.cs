@@ -5,9 +5,12 @@
 
     using FluentAssertions;
 
+    using FluentValidation.Resources;
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Domain.Viewing.Commands;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
+    using KnightFrank.Antares.Tests.Common.Extensions.Fluent.ValidationResult;
 
     using Ploeh.AutoFixture;
 
@@ -52,8 +55,7 @@
             ValidationResult validationResult = validator.Validate(this.cmd);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(this.cmd.RequirementId));
+            validationResult.IsInvalid(nameof(this.cmd.RequirementId), nameof(Messages.notempty_error));
         }
 
         [Theory]
@@ -67,8 +69,7 @@
             ValidationResult validationResult = validator.Validate(this.cmd);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(this.cmd.ActivityId));
+            validationResult.IsInvalid(nameof(this.cmd.ActivityId), nameof(Messages.notempty_error));
         }
 
         [Theory]
@@ -82,8 +83,7 @@
             ValidationResult validationResult = validator.Validate(this.cmd);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(this.cmd.AttendeesIds));
+            validationResult.IsInvalid(nameof(this.cmd.AttendeesIds), nameof(Messages.notempty_error));
         }
 
         [Theory]
@@ -97,8 +97,7 @@
             ValidationResult validationResult = validator.Validate(this.cmd);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(this.cmd.PostViewingComment));
+            validationResult.IsInvalid(nameof(this.cmd.PostViewingComment), nameof(Messages.length_error));
         }
 
         [Theory]
@@ -112,8 +111,7 @@
             ValidationResult validationResult = validator.Validate(this.cmd);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(this.cmd.InvitationText));
+            validationResult.IsInvalid(nameof(this.cmd.InvitationText), nameof(Messages.length_error));
         }
 
         [Theory]
@@ -127,8 +125,7 @@
             ValidationResult validationResult = validator.Validate(this.cmd);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(this.cmd.StartDate));
+            validationResult.IsInvalid(nameof(this.cmd.StartDate), nameof(Messages.notempty_error));
         }
 
         [Theory]
@@ -142,8 +139,7 @@
             ValidationResult validationResult = validator.Validate(this.cmd);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(this.cmd.EndDate));
+            validationResult.IsInvalid(nameof(this.cmd.EndDate), nameof(Messages.notempty_error));
         }
 
         [Theory]
@@ -158,8 +154,7 @@
             ValidationResult validationResult = validator.Validate(this.cmd);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(this.cmd.EndDate));
+            validationResult.IsInvalid(nameof(this.cmd.EndDate), nameof(Messages.greaterthan_error));
         }
 
         [Theory]
@@ -174,8 +169,7 @@
             ValidationResult validationResult = validator.Validate(this.cmd);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(e => e.PropertyName == nameof(this.cmd.EndDate));
+            validationResult.IsInvalid(nameof(this.cmd.EndDate), nameof(Messages.greaterthan_error));
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests
 {
-    using KnightFrank.Antares.Domain.UnitTests.Autofixture;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Builders;
 
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.AutoMoq;

@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Domain.AreaBreakdown.CommandHandlers;
     using KnightFrank.Antares.Domain.AreaBreakdown.Commands;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 
