@@ -1,6 +1,6 @@
 ﻿Feature: Attachments
 
-@Attachment
+@Property
 Scenario: Upload attachment
 	Given Property exists in database
 		| PropertyType | Division    |
@@ -13,7 +13,7 @@ Scenario: Upload attachment
 		| abc.pdf  | 1024 | ba3b115b-4a5f-42c9-8e0f-25b7ed903b00 |
 	Then User should get OK http status code
 
-@Attachment
+@Property
 Scenario Outline: Upload attachment with invalid data
 	Given User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode         | enumTypeItemCode |
@@ -33,7 +33,8 @@ Scenario Outline: Upload attachment with invalid data
 	| Brochure     | ba3b115b-4a5f-42c9-8e0f-25b7ed903b00 | BadRequest |
 	| Brochure     |                                      | NotFound   |
 
-Scenario: Get Activity with attachment
+@Property
+Scenario: Get property with attachment
 	Given Property exists in database
 		| PropertyType | Division    |
 		| House        | Residential |

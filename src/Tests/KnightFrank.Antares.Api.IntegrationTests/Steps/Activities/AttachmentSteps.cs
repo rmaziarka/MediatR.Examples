@@ -22,7 +22,7 @@
     [Binding]
     public class AttachmentSteps
     {
-        private const string ApiUrl = "/api/activities";
+        private const string ApiUrl = "/api/activities/{0}/attachments";
         private readonly BaseTestClassFixture fixture;
 
         private readonly ScenarioContext scenarioContext;
@@ -38,9 +38,10 @@
         }
 
         [Given(@"Attachment for (.*) with following data exists in database")]
-        public void CreateAttachmentForActivityInDatabase(string documentType, Table table)
+        public void AddAttachment(string documentType, Table table)
         {
             var attachment = table.CreateInstance<Attachment>();
+
             attachment.DocumentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[documentType];
             attachment.CreatedDate = DateTime.Now;
             attachment.LastModifiedDate = DateTime.Now;
@@ -48,37 +49,38 @@
 
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
             Activity activity = this.fixture.DataContext.Activities.Single(x => x.Id.Equals(activityId));
+
             activity.Attachments.Add(attachment);
             this.fixture.DataContext.SaveChanges();
         }
 
         [When(@"User uploads attachment for (.*) activity id for (.*) with following data")]
-        public void UploadAttachmentForActivity(string activityId, string documentType, Table table)
+        public void UploadAttachment(string activityId, string documentType, Table table)
         {
             if (activityId.Equals("latest"))
             {
                 activityId = this.scenarioContext.Get<Activity>("Activity").Id.ToString();
             }
 
-            string requestUrl = $"{ApiUrl}/{activityId}/attachments";
+            string requestUrl = string.Format($"{ApiUrl}", activityId);
 
             var createAttachment = table.CreateInstance<CreateAttachment>();
 
             createAttachment.DocumentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[documentType];
             createAttachment.UserId = this.fixture.DataContext.Users.First().Id;
 
-            var createActivityAttachmentCommand = new CreateActivityAttachmentCommand
+            var details = new CreateActivityAttachmentCommand
             {
                 EntityId = activityId.Equals(string.Empty) ? new Guid() : new Guid(activityId),
                 Attachment = createAttachment
             };
 
-            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, createActivityAttachmentCommand);
+            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, details);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
         [Then(@"Retrieved activity should have expected attachments")]
-        public void CheckActivityAttachments()
+        public void CheckAttachment()
         {
             var activity = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent());
             Activity actualActivity = this.fixture.DataContext.Activities.Single(x => x.Id.Equals(activity.Id));
