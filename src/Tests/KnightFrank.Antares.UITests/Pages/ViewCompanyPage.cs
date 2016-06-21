@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Runtime.Remoting.Messaging;
 
     using KnightFrank.Antares.UITests.Pages.Panels;
 
@@ -18,11 +17,8 @@
         private readonly ElementLocator companyName = new ElementLocator(Locator.CssSelector, "div#name");
         private readonly ElementLocator website = new ElementLocator(Locator.CssSelector ,"#websiteUrl a[name=url]");
         private readonly ElementLocator clientCarePage = new ElementLocator(Locator.CssSelector, "#clientCarePageUrl a[name=url]");
-
-        private readonly ElementLocator clientCareStatus = new ElementLocator(Locator.Id, "client-care-status");
         private readonly ElementLocator contactsList = new ElementLocator(Locator.CssSelector, "#list-contacts .ng-binding");
-        private readonly ElementLocator websiteUrlIcon = new ElementLocator(Locator.CssSelector, "a[name='url'] > i");
-		private readonly ElementLocator editCompanyButton = new ElementLocator(Locator.Id, "company-edit-btn");
+        private readonly ElementLocator editCompanyButton = new ElementLocator(Locator.Id, "company-edit-btn");
 
 		public ViewCompanyPage(DriverContext driverContext) : base(driverContext)
         {

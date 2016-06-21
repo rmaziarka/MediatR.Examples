@@ -7,7 +7,7 @@
 
     public class PropertyPreviewPage : ProjectPageBase
     {
-        private readonly ElementLocator viewPropertyLink = new ElementLocator(Locator.CssSelector, "a[ng-click *= 'goToPropertyView']");
+        private readonly ElementLocator viewPropertyLink = new ElementLocator(Locator.CssSelector, "property-preview-panel a");
 
         public PropertyPreviewPage(DriverContext driverContext) : base(driverContext)
         {

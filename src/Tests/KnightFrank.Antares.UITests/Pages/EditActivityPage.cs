@@ -13,11 +13,11 @@
 
     public class EditActivityPage : ProjectPageBase
     {
-        private readonly ElementLocator marketAppraisalPrice = new ElementLocator(Locator.Id, "market-appraisal-price");
-        private readonly ElementLocator recommendedPrice = new ElementLocator(Locator.Id, "recommended-price");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "activity-edit-save");
-        private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, "#activityStatus > select");
-        private readonly ElementLocator vendorEstimatedPrice = new ElementLocator(Locator.Id, "vendor-estimated-price");
+        private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, "activity-status-control #status");
+        // Valuation prices
+        private readonly ElementLocator askingPrice = new ElementLocator(Locator.Id, "asking-price");
+        private readonly ElementLocator shortLetPricePerWeek = new ElementLocator(Locator.Id, "short-let-price-per-week");
         // Locators for negotiators
         private readonly ElementLocator editLeadNegotiator = new ElementLocator(Locator.Id, "lead-edit-btn");
         private readonly ElementLocator searchLeadNegotator = new ElementLocator(Locator.CssSelector, "#lead-search input");
@@ -56,21 +56,15 @@
             return this;
         }
 
-        public EditActivityPage SetMarketAppraisalPrice(int price)
+        public EditActivityPage SetAskingPrice(string price)
         {
-            this.Driver.SendKeys(this.marketAppraisalPrice, price.ToString());
+            this.Driver.SendKeys(this.askingPrice, price);
             return this;
         }
 
-        public EditActivityPage SetRecommendedPrice(int price)
+        public EditActivityPage SetShortLetPricePerWeek(string price)
         {
-            this.Driver.SendKeys(this.recommendedPrice, price.ToString());
-            return this;
-        }
-
-        public EditActivityPage SetVendorEstimatedPrice(int price)
-        {
-            this.Driver.SendKeys(this.vendorEstimatedPrice, price.ToString());
+            this.Driver.SendKeys(this.shortLetPricePerWeek, price);
             return this;
         }
 
@@ -141,11 +135,15 @@
     {
         public string ActivityStatus { get; set; }
 
-        public int MarketAppraisalPrice { get; set; }
+        public string MarketAppraisalPrice { get; set; }
 
-        public int RecommendedPrice { get; set; }
+        public string RecommendedPrice { get; set; }
 
-        public int VendorEstimatedPrice { get; set; }
+        public string VendorEstimatedPrice { get; set; }
+
+        public string AskingPrice { get; set; }
+
+        public string ShortLetPricePerWeek { get; set; }
     }
 
     public class Negotiator

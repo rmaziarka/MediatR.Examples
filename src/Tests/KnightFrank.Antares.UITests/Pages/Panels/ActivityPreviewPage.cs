@@ -17,6 +17,7 @@
         private readonly ElementLocator type = new ElementLocator(Locator.Id, "activity-preview-type");
         private readonly ElementLocator vendors = new ElementLocator(Locator.CssSelector, "#activity-preview-vendors .ng-binding");
         private readonly ElementLocator viewActivityLink = new ElementLocator(Locator.CssSelector, ".slide-in a");
+        private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "activity-preview-panel .busy");
 
         public ActivityPreviewPage(DriverContext driverContext) : base(driverContext)
         {
@@ -40,6 +41,12 @@
                 this.Driver.GetElement(this.type).Text
             };
             return list;
+        }
+
+        public ActivityPreviewPage WaitForDetailsToLoad()
+        {
+            this.Driver.WaitUntilElementIsNoLongerFound(this.loadingIndicator, BaseConfiguration.MediumTimeout);
+            return this;
         }
     }
 }

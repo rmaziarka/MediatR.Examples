@@ -1,10 +1,9 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
-    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
-    using Dal.Model.Enum;
+
     using KnightFrank.Antares.UITests.Extensions;
     using KnightFrank.Antares.UITests.Pages.Panels;
 
@@ -12,8 +11,6 @@
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
     using Objectivity.Test.Automation.Common.WebElements;
-
-    using OpenQA.Selenium;
 
     public class CreateCompanyPage : ProjectPageBase
     {
@@ -126,7 +123,7 @@
             string currentUrl = this.Driver.Url;
             this.Driver.Close();
             this.Driver.SwitchTo().Window(this.currentWindowHandler);
-            var ah = $"http://{url}/";
+            string ah = $"http://{url}/";
             return ah.Equals(currentUrl);
 
         }    

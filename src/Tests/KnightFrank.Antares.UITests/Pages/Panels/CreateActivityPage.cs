@@ -9,10 +9,11 @@
 
     public class CreateActivityPage : ProjectPageBase
     {
-        private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "activity-add-button");
-        private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, "#status > select");
-        private readonly ElementLocator type = new ElementLocator(Locator.CssSelector, "#addActivityForm #type");
+        private readonly ElementLocator saveButton = new ElementLocator(Locator.CssSelector, "activity-add-panel #activity-add-button");
+        private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, "activity-add-panel #status");
+        private readonly ElementLocator type = new ElementLocator(Locator.CssSelector, "activity-add-panel #type");
         private readonly ElementLocator vendor = new ElementLocator(Locator.CssSelector, "#activity-add-vendors span.ng-binding");
+        private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "activity-add-panel .busy");
 
         public CreateActivityPage(DriverContext driverContext) : base(driverContext)
         {
@@ -43,6 +44,12 @@
         public CreateActivityPage SelectActivityStatus(string activityStatus)
         {
             this.Driver.GetElement<Select>(this.status).SelectByText(activityStatus);
+            return this;
+        }
+
+        public CreateActivityPage WaitForDetailsToLoad()
+        {
+            this.Driver.WaitUntilElementIsNoLongerFound(this.loadingIndicator, BaseConfiguration.MediumTimeout);
             return this;
         }
     }

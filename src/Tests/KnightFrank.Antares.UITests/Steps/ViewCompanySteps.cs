@@ -21,10 +21,9 @@
     {
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly DriverContext driverContext;
-
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
-        private ViewCompanyPage page;
+        private readonly ViewCompanyPage page;
 
         public ViewCompanySteps(ScenarioContext scenarioContext)
         {

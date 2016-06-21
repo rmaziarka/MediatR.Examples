@@ -85,19 +85,19 @@
         [When(@"User clicks view activity link from activity on view property page")]
         public void OpenViewActivityPage()
         {
-            this.page.ActivityPreview.ClickViewActivity();
+            this.page.ActivityPreview.WaitForDetailsToLoad().ClickViewActivity();
         }
 
         [When(@"User selects (.*) activity type on create activity page")]
         public void SelectActivityType(string type)
         {
-            this.page.Activity.SelectActivityType(type);
+            this.page.Activity.SelectActivityType(type).WaitForDetailsToLoad();
         }
 
         [When(@"User selects (.*) activity status on create activity page")]
         public void SelectActivityStatus(string status)
         {
-            this.page.Activity.SelectActivityStatus(status);
+            this.page.Activity.SelectActivityStatus(status).WaitForDetailsToLoad();
         }
 
         [When(@"User clicks save button on create activity page")]
