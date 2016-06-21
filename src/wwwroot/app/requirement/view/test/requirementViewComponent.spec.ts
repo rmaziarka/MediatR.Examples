@@ -129,6 +129,7 @@ module Antares {
             var appConfigMock: Common.Models.IAppConfig =
                 {
                     rootUrl: "",
+                    appRootUrl: "",
                     fileChunkSizeInBytes: 12,
                     enumOrder: {
                         "OfferStatus": {

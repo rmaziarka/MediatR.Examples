@@ -49,7 +49,8 @@ module Antares.Offer {
             private kfMessageService: Services.KfMessageService,
             private latestViewsProvider: LatestViewsProvider,
             private pubSub: PubSub,
-            private eventAggregator: Core.EventAggregator) {
+            private eventAggregator: Core.EventAggregator,
+            private appConfig: Common.Models.IAppConfig) {
             super(componentRegistry, $scope);
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
             eventAggregator.with(this).subscribe(CloseSidePanelEvent, this.companyContactPanelClosed);
@@ -147,12 +148,14 @@ module Antares.Offer {
             this.isCompanyContactAddPanelVisible = false;
         }
 
-        navigateToActivity = (ativity: Business.Activity) => {
-            this.$window.open(this.$state.href('app.activity-view', { id: ativity.id }, { absolute: true }), '_blank');
+        navigateToActivity = (activity: Business.Activity) => {
+            var activityViewUrl = this.appConfig.appRootUrl + this.$state.href('app.activity-view', { id: activity.id }, { absolute: false });
+            this.$window.open(activityViewUrl, '_blank');
         }
 
         navigateToRequirement = (requirement: Business.Requirement) => {
-            this.$window.open(this.$state.href('app.requirement-view', { id: requirement.id }, { absolute: true }), '_blank');
+            var requirementViewUrl = this.appConfig.appRootUrl + this.$state.href('app.requirement-view', { id: requirement.id }, { absolute: false });
+            this.$window.open(requirementViewUrl, '_blank');
         }
 
         showActivityPreview = (offer: Common.Models.Business.Offer) => {
