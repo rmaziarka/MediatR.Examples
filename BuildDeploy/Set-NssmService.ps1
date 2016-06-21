@@ -121,7 +121,7 @@ function Set-NssmService {
         $AdditionalParameters
     )
 
-    Write-Host -Info "Configuring service '$ServiceName'"
+    Write-Host -Object "Configuring service '$ServiceName'"
 
     if (!$NssmPath) {
         $NssmSrcPath = Get-PathToExternalLib -ModulePath 'nssm'
@@ -135,7 +135,7 @@ function Set-NssmService {
         if (!(Test-Path -Path $NssmSrcPath)) {
             throw "Cannot find nssm at '$NssmSrcPath'."
         }
-        Write-Host -Info "Copying nssm from '$NssmSrcPath' to '$NssmPath'"
+        Write-Host -Object "Copying nssm from '$NssmSrcPath' to '$NssmPath'"
         Copy-Directory -Path $NssmSrcPath -Destination $NssmPath
     }
 
@@ -146,20 +146,20 @@ function Set-NssmService {
     $currentService = Get-Service -Name $ServiceName -ErrorAction SilentlyContinue
     if ($Remove) {
         if ($currentService) {
-            Write-Host -Info "Stopping service '$ServiceName'"
+            Write-Host -Object "Stopping service '$ServiceName'"
             Stop-Service -Name $ServiceName
-            Write-Host -Info "Removing service '$ServiceName'"
+            Write-Host -Object "Removing service '$ServiceName'"
             [void](Start-ExternalProcess -Command $NssmExePath -ArgumentList @('remove', "`"$ServiceName`"", 'confirm') -Quiet)
             return $true
         } else {
-            Write-Host -Info "Service '$ServiceName' already does not exist."
+            Write-Host -Object "Service '$ServiceName' already does not exist."
             return $false
         }
     }
 
     $serviceStopped = !$currentService
     if (!$currentService) {
-        Write-Host -Info "Creating service '$ServiceName' with command line '$Path'"
+        Write-Host -Object "Creating service '$ServiceName' with command line '$Path'"
         [void](Start-ExternalProcess -Command $NssmExePath -ArgumentList @('install', "`"$ServiceName`"", "`"$Path`"") -Quiet)
         $serviceStopped = $true
         $serviceChanged = $true
@@ -204,17 +204,17 @@ function Set-NssmService {
         $value = $appParam.Value
         if ($nssmOutput -ne $appParam.Value) {
             if (!$serviceStopped) {
-                Write-Host -Info "Stopping service '$ServiceName'"
+                Write-Host -Object "Stopping service '$ServiceName'"
                 Stop-Service -Name $ServiceName
                 $serviceStopped = $true
             }
             if ($appParam.Key -eq 'ObjectName') {
                 
                 $value = "`"{0}`" {1}" -f $Credential.UserName, $Credential.GetNetworkCredential().Password
-                Write-Host -Info "Setting service '$ServiceName' parameter '$($appParam.Key)' to '$($Credential.UserName) <password>'"
+                Write-Host -Object "Setting service '$ServiceName' parameter '$($appParam.Key)' to '$($Credential.UserName) <password>'"
             } else {
                 $value ="`"$value`""
-                Write-Host -Info "Setting service '$ServiceName' parameter '$($appParam.Key)' to '$value)'"
+                Write-Host -Object "Setting service '$ServiceName' parameter '$($appParam.Key)' to '$value)'"
             }
             
             $argumentList = @('set', "`"$ServiceName`"", $appParam.Key, $value)
@@ -227,14 +227,14 @@ function Set-NssmService {
     
     $currentService = Get-Service -Name $ServiceName -ErrorAction SilentlyContinue
     if ($currentService.Status -ne $Status) {
-        Write-Host -Info "Setting service status from $($currentService.Status) to '$Status'"
+        Write-Host -Object "Setting service status from $($currentService.Status) to '$Status'"
         Set-Service -Name $ServiceName -Status $Status
         $serviceChanged = $true
     }
     else
     {
         if ($currentService.Status -eq "Running") {
-            Write-Host -Info "Restarting service $ServiceName"
+            Write-Host -Object "Restarting service $ServiceName"
             Restart-Service -Name $ServiceName -Force
         }
     }

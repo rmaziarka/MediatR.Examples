@@ -1,0 +1,4 @@
+﻿<div class="card-info" ng-if="vm.isShow()">
+    <span class="text-uppercase" translate="{{vm.currentOwnershipTypeId | dynamicTranslate}}"></span> -
+    <span ng-repeat="c in vm.currentContacts">{{c.getName()}}<span ng-hide="$last">, </span></span>
+</div>

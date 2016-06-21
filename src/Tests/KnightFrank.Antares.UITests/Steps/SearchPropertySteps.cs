@@ -1,7 +1,9 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
+    using System.Threading;
 
+    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;
@@ -17,6 +19,8 @@
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
         private SearchPropertyPage page;
+
+        private string property;
 
         public SearchPropertySteps(ScenarioContext scenarioContext)
         {
@@ -40,22 +44,44 @@
             this.page = new SearchPropertyPage(this.driverContext).OpenSearchPropertyPage();
         }
 
-        [When(@"User searches for (.*) on search property page")]
-        public void SearchProperty(string property)
+        [When(@"User searches for added property on search property page")]
+        public void SearchProperty()
         {
-            this.page.SearchProperty(property);
+            var prop = this.scenarioContext.Get<Property>("Property");
+            this.property = prop.Address.PropertyNumber + " " + prop.Address.PropertyName + " " + prop.Address.Line2 + " " +
+                              prop.Address.Line3 + " " + prop.Address.Postcode;
+            this.page.SearchProperty(this.property);
         }
 
-        [When(@"User clicks on first found property on search property page")]
-        public void SelectSearchResult()
+        [When(@"User waits (.*) seconds")]
+        public void WhenUserWaitsSeconds(double seconds)
         {
-            this.page.SelectPropertySearchResult();
+            Thread.Sleep(TimeSpan.FromSeconds(seconds));
+        }
+
+
+        [When(@"User clicks on first property on search property page")]
+        public void ClickSearchResult()
+        {
+            this.page.ClickSearchResult();
         }
 
         [Then(@"Search form on search property page should be displayed")]
         public void CheckIfSearchPropertyPresent()
         {
             Assert.True(this.page.IsViewSearchFormPresent());
+        }
+
+        [Then(@"Proper address details are displayed on first property on search property page")]
+        public void CheckAddressDetails()
+        {
+            Assert.Equal(this.page.GetAddressDetails(), this.property);
+        }
+
+        [Then(@"Ownership details (.*) are displayed on first property on search property page")]
+        public void CheckOwnershipDetails(string ownership)
+        {
+            Assert.Equal(this.page.AddressOwnership, ownership);
         }
     }
 }

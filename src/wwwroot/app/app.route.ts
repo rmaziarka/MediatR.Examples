@@ -1,7 +1,7 @@
 ﻿/// <reference path="typings/_all.d.ts" />
 
 module Antares {
-    import LatestViewsProvider = Antares.Providers.LatestViewsProvider;
+    import LatestViewsProvider = Providers.LatestViewsProvider;
     var app: ng.IModule = angular.module('app');
 
     app.config(['$stateProvider', '$urlRouterProvider', initRoute]);
@@ -22,11 +22,14 @@ module Antares {
                     'lastEntriesPromise': (latestViewsProvider: LatestViewsProvider) => {
                         return latestViewsProvider.refresh();
                     },
-                    'enumsPromise': (enumService: Antares.Services.EnumService) => {
+                    'enumsPromise': (enumService: Services.EnumService) => {
                         return enumService.getEnumPromise();
                     },
                     'enumsProviderPromise': (enumProvider: Providers.EnumProvider) =>{
                         return enumProvider.init();
+                    },
+                    'addressDefinitions': (addressFormsProvider: Providers.AddressFormsProvider) => {
+                        return addressFormsProvider.loadDefinitions();
                     }
                 }
             });

@@ -8,6 +8,12 @@ module Antares {
     declare var moment: any;
 
     xdescribe('Given view activity page is loaded', () => {
+        beforeEach(() => {
+            angular.mock.module(($provide: any) => {
+                $provide.service('addressFormsProvider', Mock.AddressFormsProviderMock);
+            });
+        });
+
         var scope: ng.IScope,
             compile: ng.ICompileService,
             element: ng.IAugmentedJQuery,
@@ -102,7 +108,6 @@ module Antares {
 
                 enumService.setEnum('ActivityDepartmentType',enumItems);
 
-                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
                 $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
                     return [];
                 });
@@ -113,7 +118,6 @@ module Antares {
                 element = $compile('<activity-view activity="activity" config="config"></activity-view>')(scope);
 
                 scope.$apply();
-                $http.flush();
 
                 controller = element.controller('activityView');
             }));
@@ -219,7 +223,6 @@ module Antares {
 
                 $http = $httpBackend;
 
-                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
                 $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
                     return [];
                 });
@@ -231,7 +234,6 @@ module Antares {
                 element = compile('<activity-view activity="activity"></activity-view>')(scope);
 
                 scope.$apply();
-                $http.flush();
             }));
 
             it('when existing property then property card should have address element visible', () => {
@@ -275,7 +277,6 @@ module Antares {
 
                 $http = $httpBackend;
 
-                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
                 $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
                     return [];
                 });
@@ -292,7 +293,6 @@ module Antares {
                 // act
                 element = compile('<activity-view activity="activity"></activity-view>')(scope);
                 scope.$apply();
-                $http.flush();
 
                 // assert
                 var noItemsElement = element.find(pageObjectSelectors.viewings.noItems);
@@ -311,7 +311,6 @@ module Antares {
                 // act
                 element = compile('<activity-view activity="activity"></activity-view>')(scope);
                 scope.$apply();
-                $http.flush();
 
                 // assert
                 var noItemsElement = element.find(pageObjectSelectors.viewings.noItems);
@@ -351,7 +350,6 @@ module Antares {
                 // act
                 element = compile('<activity-view activity="activity"></activity-view>')(scope);
                 scope.$apply();
-                $http.flush();
 
                 // assert
                 var viewingGroups = element.find(pageObjectSelectors.viewings.group);
@@ -377,7 +375,6 @@ module Antares {
                 // act
                 element = compile('<activity-view activity="activity"></activity-view>')(scope);
                 scope.$apply();
-                $http.flush();
 
                 var viewingItem = element.find(pageObjectSelectors.viewings.item).first();
 

@@ -79,7 +79,7 @@ module Antares.Attributes {
         }
 
         public switchToLeadNegotiator = (activityUser: Business.ActivityUser) => {
-            var field = this.$scope['negotiatorForm']['callDate'];
+            var field = this['negotiatorForm']['callDate'];
             if (field.$invalid && field.$dirty) {
                 this.leadNegotiator.callDate = null;
             }

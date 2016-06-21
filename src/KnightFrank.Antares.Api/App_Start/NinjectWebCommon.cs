@@ -12,10 +12,13 @@
     using KnightFrank.Antares.Domain;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
     using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
+    using KnightFrank.Antares.Search;
+    using KnightFrank.Antares.Search.Common.Validators;
 
     using MediatR;
 
     using Ninject;
+    using Ninject.Extensions.Conventions;
     using Ninject.Planning.Bindings.Resolvers;
     using Ninject.Web.Common;
     using Ninject.Web.WebApi.FilterBindingSyntax;
@@ -23,6 +26,7 @@
     public class NinjectWebCommon
     {
         /* should be used only in integration testing scenarios */
+
         public static Action<IKernel> RebindAction { private get; set; }
 
         public static IKernel CreateKernel()
@@ -42,7 +46,10 @@
 
                 RebindAction?.Invoke(kernel);
 
+                BindRequestHandlers(kernel);
+
                 kernel.Load<DomainModule>();
+                kernel.Load<SearchModule>();
 
                 return kernel;
             }
@@ -51,6 +58,19 @@
                 kernel.Dispose();
                 throw;
             }
+        }
+
+        private static void BindRequestHandlers(StandardKernel kernel)
+        {
+            kernel.Bind(
+                x =>
+                x.FromAssemblyContaining(typeof(DomainModule), typeof(SearchModule))
+                 .SelectAllClasses()
+                 .InheritedFrom(typeof(IRequestHandler<,>))
+                 .BindAllInterfaces()
+                 .Configure(y => y.WhenInjectedInto(typeof(ValidatorHandler<,>))));
+
+            kernel.Bind(typeof(IRequestHandler<,>)).To(typeof(ValidatorHandler<,>));
         }
 
         private static void ConfigureDependenciesInHttpRequestScope(StandardKernel kernel)
