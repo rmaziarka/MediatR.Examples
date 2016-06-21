@@ -81,8 +81,6 @@ module Antares {
                         activityDepartment.departmentType.id = '2';
                         activityDepartment.departmentType.code = 'Standard'
                 }
-
-                activityDepartment
             });
             
             beforeEach(angular.mock.module(($provide: angular.auto.IProvideService) => {
@@ -225,89 +223,6 @@ module Antares {
 
                 expect(departmentItems.length).toBe(3);
                 expect(departmentItems.first().find('.department-status').length).toBe(1);
-            });
-        });
-
-        describe('and vendors are loaded', () => {
-            beforeEach(inject((
-                $rootScope: ng.IRootScopeService,
-                $compile: ng.ICompileService,
-                $httpBackend: ng.IHttpBackendService) => {
-
-                $http = $httpBackend;
-
-                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
-                $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
-                    return [];
-                });
-
-                scope = $rootScope.$new();
-                compile = $compile;
-            }));
-
-            it('when no vendors then "no items" element should be visible', () => {
-                // arrange
-                var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate({ contacts: [] });
-                var configMock = { vendors: {}, departments: {} } as IActivityViewConfig;
-
-                scope['activity'] = activityMock;
-                scope['config'] = configMock;
-
-                // act
-                element = compile('<activity-view activity="activity" config="config"></activity-view>')(scope);
-                scope.$apply();
-                $http.flush();
-
-                // assert
-                var noItemsElement = element.find(pageObjectSelectors.vendorList.noItems);
-                var listItemElements = element.find(pageObjectSelectors.vendorList.items);
-
-                expect(noItemsElement.hasClass('ng-hide')).toBeFalsy();
-                expect(listItemElements.length).toBe(0);
-            });
-
-            it('when existing vendors then list item components should be visible', () => {
-                // arrange
-                var contact1Mock = TestHelpers.ContactGenerator.generate();
-                var contact2Mock = TestHelpers.ContactGenerator.generate();
-                var activityMock = TestHelpers.ActivityGenerator.generate({ contacts: [contact1Mock, contact2Mock] });
-                var configMock = { vendors: {}, departments: {} } as IActivityViewConfig;
-                scope['activity'] = activityMock;
-                scope['config'] = configMock;
-
-                // act
-                element = compile('<activity-view activity="activity" config="config"></activity-view>')(scope);
-                scope.$apply();
-                $http.flush();
-
-                // assert
-                var noItemsElement = element.find(pageObjectSelectors.vendorList.noItems);
-                var listItemElements = element.find(pageObjectSelectors.vendorList.items);
-
-                expect(noItemsElement.hasClass('ng-hide')).toBeTruthy();
-                expect(listItemElements.length).toBe(2);
-            });
-
-            it('when existing vendors then list item components should have proper data', () => {
-                // arrange
-                var contact1Mock = TestHelpers.ContactGenerator.generate();
-                var contact2Mock = TestHelpers.ContactGenerator.generate();
-                var activityMock = TestHelpers.ActivityGenerator.generate({ contacts: [contact1Mock, contact2Mock] });
-                var configMock = { vendors: {}, departments: {} } as IActivityViewConfig;
-                scope['activity'] = activityMock;
-                scope['config'] = configMock;
-
-                // act
-                element = compile('<activity-view activity="activity" config="config"></activity-view>')(scope);
-                scope.$apply();
-                $http.flush();
-
-                // assert
-                var vendorsItemsElement1 = element.find(pageObjectSelectors.vendorList.item + contact1Mock.id);
-                var vendorsItemsElement2 = element.find(pageObjectSelectors.vendorList.item + contact2Mock.id);
-
-                expect(vendorsItemsElement1[0].innerText.trim()).toBe(contact1Mock.getName());
-                expect(vendorsItemsElement2[0].innerText.trim()).toBe(contact2Mock.getName());
             });
         });
 

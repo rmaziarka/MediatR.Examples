@@ -16,10 +16,11 @@ module Antares {
 	    };
 
 		var pageObjectSelectors = {
+			control: "#price-view-control",
             price: '#' + schemaMock.controlId
         };
 
-	    describe('is loaded', () => {
+	    describe('is configured', () => {
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService) => {
@@ -37,6 +38,25 @@ module Antares {
                 var priceElement: ng.IAugmentedJQuery = element.find(pageObjectSelectors.price);
 	            var expectedPrice: string = priceMock + ".00 GBP";
                 expect(priceElement.text()).toBe(expectedPrice);
+            });
+        });
+
+		describe('is not configured', () => {
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService) => {
+				
+                scope = $rootScope.$new();
+                scope['price'] = priceMock;
+                scope['schema'] = schemaMock;
+                element = $compile('<price-view-control price="price" config="config.askingPrice" schema="schema"></price-view-control>')(scope);
+				
+                scope.$apply();
+            }));
+
+            it('then control is not displayed', () => {
+                var controlElement: ng.IAugmentedJQuery = element.find(pageObjectSelectors.control);
+                expect(controlElement.length).toBe(0);
             });
         });
     });

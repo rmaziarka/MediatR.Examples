@@ -7,22 +7,20 @@
             <section id="property-basic-info">
                 <fieldset id="activity-edit-basic">
                     <h3 class="page-header" translate="ACTIVITY.EDIT.BASIC_INFORMATION"></h3>
-                    <activity-status-control ng-model="aevm.activity.activityStatusId" config="aevm.config.activityStatus" on-activity-status-changed="aevm.activityStatusChanged(activityStatusId)"/>
+                    <activity-status-control ng-model="aevm.activity.activityStatusId" config="aevm.config.activityStatus" on-activity-status-changed="aevm.activityStatusChanged(activityStatusId)" />
                 </fieldset>
             </section>
             <section id="activity-edit-negotiators">
-                <activity-negotiators-edit-control
-                    property-division-id="{{aevm.activity.property.divisionId}}"
-                    activity-id="aevm.activity.id"
-                    on-negotiator-added="aevm.onNegotiatorAdded(user)"
-                    lead-negotiator="aevm.activity.leadNegotiator"
-                    secondary-negotiators="aevm.activity.secondaryNegotiator"></activity-negotiators-edit-control>
+                <activity-negotiators-edit-control property-division-id="{{aevm.activity.property.divisionId}}"
+                                                   activity-id="aevm.activity.id"
+                                                   on-negotiator-added="aevm.onNegotiatorAdded(user)"
+                                                   lead-negotiator="aevm.activity.leadNegotiator"
+                                                   secondary-negotiators="aevm.activity.secondaryNegotiator"></activity-negotiators-edit-control>
             </section>
             <section id="activity-edit-departments">
-                <activity-departments-edit-control
-                    activity-id="aevm.activity.id"
-                    departments="aevm.activity.activityDepartments"
-                    department-is-related-with-negotiator="aevm.departmentIsRelatedWithNegotiator(department)"></activity-departments-edit-control>
+                <activity-departments-edit-control activity-id="aevm.activity.id"
+                                                   departments="aevm.activity.activityDepartments"
+                                                   department-is-related-with-negotiator="aevm.departmentIsRelatedWithNegotiator(department)"></activity-departments-edit-control>
             </section>
         </div>
         <div class="col-md-4">
@@ -41,17 +39,10 @@
                 <property-view-control property="aevm.activity.property" is-panel-visible="aevm.isPropertyPreviewPanelVisible" config="aevm.config.property"></property-view-control>
             </section>
             <section id="activity-edit-vendors">
-                <list id="list-vendors">
-                    <list-header>
-                        <h3 class="page-header" translate="ACTIVITY.EDIT.VENDORS"></h3>
-                    </list-header>
-                    <list-no-items ng-show="aevm.activity.contacts.length === 0">
-                        <p class="help-block" translate="ACTIVITY.EDIT.NO_VENDORS"></p>
-                    </list-no-items>
-                    <list-item id="list-item-{{contact.id}}" ng-repeat="contact in aevm.activity.contacts">
-                        {{contact.getName()}}
-                    </list-item>
-                </list>
+                <activity-vendors-edit-control contacts="aevm.activity.contacts" config="aevm.config.vendors"></activity-vendors-edit-control>
+            </section>
+            <section id="activity-edit-landlords">
+                <activity-landlords-edit-control contacts="aevm.activity.contacts" config="aevm.config.landlords"></activity-landlords-edit-control>
             </section>
         </div>
         <div class="col-md-12">

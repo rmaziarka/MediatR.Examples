@@ -4,11 +4,11 @@ module Antares.Attributes {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
 
-    export class ActivityVendorsControlController {
+    export class ActivityVendorsEditControlController {
         // binding
         vendorContacts: Business.Contact[];
         config: IActivityVendorsControlConfig;
     }
 
-    angular.module('app').controller('ActivityVendorsControlController', ActivityVendorsControlController);
+    angular.module('app').controller('ActivityVendorsEditControlController', ActivityVendorsEditControlController);
 };

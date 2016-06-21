@@ -19,11 +19,12 @@ module Antares {
 	    };
 
 		var pageObjectSelectors = {
+			control: "#price-edit-control",
             price: '#' + schemaMock.controlId
         };
 
 
-	    describe('is loaded', () => {
+	    describe('is configured', () => {
             beforeEach(inject((
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService) => {
@@ -48,6 +49,23 @@ module Antares {
             it('when price value is lower than minimum value then validation message should be displayed', () => {
                 var minValue = 0;
                 assertValidator.assertMinValueValidator(minValue - 1, false, pageObjectSelectors.price);
+            });
+        });
+
+		describe('is not configured', () => {
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService) => {
+				
+                scope = $rootScope.$new();
+	            scope['vm'] = { ngModel : priceMock, schema : schemaMock };
+                element = $compile('<price-edit-control ng-model="vm.ngModel" config="vm.config" schema="vm.schema"></price-edit-control>')(scope);
+                scope.$apply();
+            }));
+
+            it('then control is not displayed', () => {
+                var controlElement: ng.IAugmentedJQuery = element.find(pageObjectSelectors.control);
+                expect(controlElement.length).toBe(0);
             });
         });
     });

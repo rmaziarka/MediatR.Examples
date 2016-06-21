@@ -62,17 +62,6 @@ module Antares {
                 var dateElement = element.find(pageObjectSelectors.createdDate);
                 expect(dateElement.text()).toBe(formattedDate);
             });
-
-            it('when activity is set then activity vendors should be displayed', () => {
-                
-
-                // assert
-                var vendorsItemsElement1 = element.find(pageObjectSelectors.vendor + contact1Mock.id);
-                var vendorsItemsElement2 = element.find(pageObjectSelectors.vendor + contact2Mock.id);
-
-                expect(vendorsItemsElement1[0].innerText).toBe(contact1Mock.getName());
-                expect(vendorsItemsElement2[0].innerText).toBe(contact2Mock.getName());
-            });
         });
     });
 }

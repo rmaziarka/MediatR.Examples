@@ -199,6 +199,7 @@
       "STATUS": "Status",
       "PROPERTY": "Property",
       "VENDORS": "Vendors",
+      "LANDLORDS": "Landlords",
       "NO_VENDORS": "No vendors defined",
       "PRICES": {
         "PRICES": "Valuation prices",

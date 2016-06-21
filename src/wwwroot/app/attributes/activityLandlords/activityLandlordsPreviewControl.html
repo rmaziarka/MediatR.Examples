@@ -1,8 +1,8 @@
-<div class="row section-row" ng-if='vm.config'>
+<div class="row section-row" ng-if='vm.config' id="activity-landlords-preview">
     <div class="col-xs-5" translate="ACTIVITY.PREVIEW.LANDLORDS"></div>
-    <div class="col-xs-7" id="activity-preview-landlords">
+    <div class="col-xs-7">
         <div class="row">
-            <div class="col-md-12" id="activity-preview-landlords-item-{{contact.id}}" ng-repeat="contact in vm.contacts track by $id(contact)">
+            <div class="col-md-12" id="activity-landlords-preview-item-{{contact.id}}" ng-repeat="contact in vm.contacts track by $id(contact)">
                 {{contact.getName()}}
             </div>
         </div>
