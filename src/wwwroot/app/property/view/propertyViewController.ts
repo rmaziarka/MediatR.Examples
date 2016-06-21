@@ -51,6 +51,7 @@ module Antares.Property.View {
 
         onPanelsHidden = () =>{
             this.isActivityAddPanelVisible = false;
+            this.isActivityPreviewPanelVisible = false;
         }
 
         fixOwnershipDates = () => {
