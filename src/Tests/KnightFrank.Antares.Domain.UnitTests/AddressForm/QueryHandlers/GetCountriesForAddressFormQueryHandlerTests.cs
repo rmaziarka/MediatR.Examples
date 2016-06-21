@@ -14,6 +14,7 @@
     using KnightFrank.Antares.Domain.AddressForm.QueryResults;
     using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 
@@ -54,7 +55,7 @@
         }
 
         [Theory]
-        [InlineAutoMoqData]
+        [AutoMoqData]
         public void Given_InvalidEntityTypeInQuery_When_HandlingQuery_Then_ShouldThrowException(string entityTypeCode)
         {
             // Arrange

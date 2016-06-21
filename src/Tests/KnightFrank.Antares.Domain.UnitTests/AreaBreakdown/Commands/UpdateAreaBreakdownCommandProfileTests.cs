@@ -6,6 +6,7 @@
 
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.AreaBreakdown.Commands;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Ploeh.AutoFixture;
 

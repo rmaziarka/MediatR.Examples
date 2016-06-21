@@ -93,6 +93,10 @@ declare module Antares.Common.Models {
             update(params: Object, data: Object): T;
         }
 
+        interface ICompanyResourceClass extends Resources.IBaseResourceClass<Resources.ICompanyResource> {
+          
+        }
+
         interface IActivityResourceClass extends Resources.IBaseResourceClass<Resources.IActivityResource> {
             getActivityTypes(params: any, ownership: any): ng.resource.IResource<Dto.IActivityTypeQueryResult[]>;
         }

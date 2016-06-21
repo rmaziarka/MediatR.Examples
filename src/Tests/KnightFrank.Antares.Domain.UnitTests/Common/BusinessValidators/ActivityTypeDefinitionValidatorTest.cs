@@ -8,7 +8,8 @@
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
-    using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 
@@ -30,7 +31,7 @@
             this.activityTypeDefinitionRepository = fixture.Freeze<Mock<IGenericRepository<ActivityTypeDefinition>>>();
         }
         [Theory]
-        [InlineAutoMoqData]
+        [AutoMoqData]
         public void Given_ValidActivityTypeDefinition_Then_ShouldBeNoExceptionThrown(
             [Frozen]Mock<IGenericRepository<ActivityTypeDefinition>> repository,
             ActivityTypeDefinitionValidator activityTypeDefinitionValidator,
@@ -49,7 +50,7 @@
         }
 
         [Theory]
-        [InlineAutoMoqData]
+        [AutoMoqData]
         public void Given_InvalidActivityTypeIdActivityTypeDefinition_Then_ShouldBeNoExceptionThrown(
             ActivityTypeDefinitionValidator activityTypeDefinitionValidator,
             ActivityTypeDefinition expectedActivityTypeDefinition)
@@ -67,7 +68,7 @@
 
 
         [Theory]
-        [InlineAutoMoqData]
+        [AutoMoqData]
         public void Given_InvalidCountryIdActivityTypeDefinition_Then_ShouldBeNoExceptionThrown(
             ActivityTypeDefinitionValidator activityTypeDefinitionValidator,
             ActivityTypeDefinition expectedActivityTypeDefinition)
@@ -84,7 +85,7 @@
         }
 
         [Theory]
-        [InlineAutoMoqData]
+        [AutoMoqData]
         public void Given_InvalidPropertyTypeIdActivityTypeDefinition_Then_ShouldBeNoExceptionThrown(
             ActivityTypeDefinitionValidator activityTypeDefinitionValidator,
             ActivityTypeDefinition expectedActivityTypeDefinition)

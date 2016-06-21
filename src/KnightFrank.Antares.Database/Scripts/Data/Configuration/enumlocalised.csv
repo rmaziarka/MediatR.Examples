@@ -21,3 +21,6 @@ OfferStatus;New;en;New
 OfferStatus;Withdrawn;en;Withdrawn
 OfferStatus;Rejected;en;Rejected
 OfferStatus;Accepted;en;Accepted
+ClientCareStatus;MassiveActionClient;en;Massive Action Client
+ClientCareStatus;PrincipalClient;en;Principal Client
+ClientCareStatus;KeyClient;en;Key Client
