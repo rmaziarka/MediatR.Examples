@@ -12,22 +12,16 @@
         private readonly ElementLocator saveButton = new ElementLocator(Locator.CssSelector, "activity-add-panel #activity-add-button");
         private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, "activity-add-panel #status");
         private readonly ElementLocator type = new ElementLocator(Locator.CssSelector, "activity-add-panel #type");
-        private readonly ElementLocator vendor = new ElementLocator(Locator.CssSelector, "#activity-add-vendors span.ng-binding");
+        private readonly ElementLocator vendor = new ElementLocator(Locator.CssSelector, "#activity-vendors-edit span.ng-binding");
         private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "activity-add-panel .busy");
 
         public CreateActivityPage(DriverContext driverContext) : base(driverContext)
         {
         }
 
-        public string GetActivityStatus()
-        {
-            return this.Driver.GetElement<Select>(this.status).SelectElement().SelectedOption.Text;
-        }
+        public string ActivityStatus => this.Driver.GetElement<Select>(this.status).SelectElement().SelectedOption.Text;
 
-        public string GetActivityVendor()
-        {
-            return this.Driver.GetElement(this.vendor).Text;
-        }
+        public string ActivityVendor => this.Driver.GetElement(this.vendor).Text;
 
         public CreateActivityPage SaveActivity()
         {

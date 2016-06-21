@@ -18,7 +18,7 @@
         private readonly ElementLocator addressElement = new ElementLocator(Locator.XPath, "//card[@id = 'card-property']//span[text()='{0}']");
         private readonly ElementLocator propertyCard = new ElementLocator(Locator.Id, "card-property");
         private readonly ElementLocator editButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'goToEdit']");
-        private readonly ElementLocator marketAppraisalPrice = new ElementLocator(Locator.Id, "marketAppraisalPrice");
+        private readonly ElementLocator askingPrice = new ElementLocator(Locator.Id, "asking-price");
         private readonly ElementLocator recommendedPrice = new ElementLocator(Locator.Id, "recommendedPrice");
         private readonly ElementLocator status = new ElementLocator(Locator.Id, "activityStatus");
         private readonly ElementLocator vendorEstimatedPrice = new ElementLocator(Locator.Id, "vendorEstimatedPrice");
@@ -57,7 +57,7 @@
         {
         }
 
-        public string MarketAppraisalPrice => this.Driver.GetElement(this.marketAppraisalPrice).Text;
+        public string AskingPrice => this.Driver.GetElement(this.askingPrice).Text;
 
         public string RecommendedPrice => this.Driver.GetElement(this.recommendedPrice).Text;
 

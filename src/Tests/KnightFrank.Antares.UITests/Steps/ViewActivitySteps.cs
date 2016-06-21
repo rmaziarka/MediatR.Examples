@@ -151,7 +151,7 @@
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(details.ActivityStatus, this.page.Status),
-                () => Assert.Equal(details.AskingPrice + ".00" + " GBP", this.page.MarketAppraisalPrice));
+                () => Assert.Equal(int.Parse(details.AskingPrice).ToString("N2") + " GBP", this.page.AskingPrice));
         }
 
         [Then(@"Attachment should be displayed on view activity page")]

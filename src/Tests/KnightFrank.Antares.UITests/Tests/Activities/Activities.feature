@@ -19,14 +19,14 @@ Scenario: Create activity
 	When User navigates to view property page with id
 		And User clicks add activites button on view property page	
 	When User selects Freehold Sale activity type on create activity page
-		And User selects Market appraisal activity status on create activity page
+		And User selects Pre-appraisal activity status on create activity page
 	Then Activity details are set on create activity page
 	    | Vendor       | Status        |
 	    | Sarah Chatto | Pre-appraisal |
 	When User clicks save button on create activity page
 	Then Activity details are set on view property page
-		| Vendor       | Status           | Type          |
-		| Sarah Chatto | Market appraisal | Freehold Sale |
+		| Vendor       | Status        | Type          |
+		| Sarah Chatto | Pre-appraisal | Freehold Sale |
 
 @Activity
 Scenario: Edit activity

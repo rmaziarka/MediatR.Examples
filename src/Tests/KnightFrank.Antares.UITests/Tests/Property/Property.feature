@@ -29,11 +29,11 @@ Scenario: Update residential property
 			| PropertyNumber | PropertyName | Line2 | Line3          | Postcode | City | County |
 			|                |              |       | Address line 3 | W2U 8AN  |      |        |
 		And User selects property characteristics on edit property page
-			| Name    | Comment |
-			| Airport | Airport |
+			| Name     | Comment  |
+			| Detached | Detached |
 		And User selects property characteristics on edit property page
-			| Name |
-			| Spa  |
+			| Name     |
+			| Terraced |
 		And User clicks save property button on edit property page
 	Then Property should be updated with address details 
 		| PropertyNumber | PropertyName | Line2 | Line3          | Postcode | City | County |
@@ -45,14 +45,32 @@ Scenario: Update residential property
 			| Bedrooms | Receptions | Bathrooms | LandArea                  | PropertyArea            | CarParkingSpaces |
 			| 1 - 2    | 1 - 2      | 3 - 4     | 5,000.13 - 9,000.1 sq. ft | 1,000 - 3,000.12 sq. ft | 2 - 3            |
 		And Characteristics are displayed on view property page
-			| Name        | Comment |
-			| Airport     | Airport |
-			| Coastal     | Comment |
-			| Island      | Comment |
-			| Town/City   | Comment |
-			| Village     | Comment |
-			| Golf Course | Comment |
-			| Spa         |         |
+			| Name                   | Comment  |
+			| Detached               | Detached |
+			| Terraced               |          |
+			| Conservatory           | Comment  |
+			| Garden                 | Comment  |
+			| Land                   | Comment  |
+			| Patio / Terrace        | Comment  |
+			| Island                 | Comment  |
+			| Rural                  | Comment  |
+			| Town/City              | Comment  |
+			| Village                | Comment  |
+			| Coastal                | Comment  |
+			| Fishing                | Comment  |
+			| Equestrian             | Comment  |
+			| Golf Course            | Comment  |
+			| Leisure Facilities     | Comment  |
+			| Listed                 | Comment  |
+			| New Development        | Comment  |
+			| Secondary accomodation | Comment  |
+			| Swimming Pool          | Comment  |
+			| Tennis Court           | Comment  |
+			| Waterside              | Comment  |
+			| Fair                   | Comment  |
+			| Good                   | Comment  |
+			| Unmodernised           | Comment  |
+			| Very Good              | Comment  |
 		And Ownership details should contain following data on view property page
 			| Position | ContactName | ContactSurname | Type     | PurchaseDate |
 			| 1        | Alex        | Johnson        | Freehold | 05-01-2014   |

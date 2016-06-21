@@ -293,8 +293,8 @@
             var details = table.CreateInstance<ActivityDetails>();
 
             Verify.That(this.driverContext,
-                () => Assert.Equal(details.Vendor, this.page.Activity.GetActivityVendor()),
-                () => Assert.Equal(details.Status, this.page.Activity.GetActivityStatus()));
+                () => Assert.Equal(details.Vendor, this.page.Activity.ActivityVendor),
+                () => Assert.Equal(details.Status, this.page.Activity.ActivityStatus));
         }
 
         [Then(@"Characteristics are displayed on view property page")]
