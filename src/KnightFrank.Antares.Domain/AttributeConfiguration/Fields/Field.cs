@@ -3,6 +3,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
+    using System.Reflection;
 
     using FluentValidation;
     using FluentValidation.Internal;
@@ -53,35 +54,33 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
 
         public static Field<TEntity, string> CreateText(Expression<Func<TEntity, string>> expression, int length)
         {
-            var innerField = CreateInnerField(expression);
+            InnerField innerField = CreateInnerField(expression);
             innerField.AddValidator(new EntityValidator<TEntity>(x => x.RuleFor(expression).Length(length)));
             return new Field<TEntity, string>(expression, innerField);
         }
 
         public static Field<TEntity, Guid> CreateDictionary(Expression<Func<TEntity, Guid>> expression, string dictionaryCode)
         {
-            //TODO: support validation
             return new Field<TEntity, Guid>(expression, CreateInnerDictionaryField(expression, dictionaryCode));
         }
 
         public static Field<TEntity, Guid?> CreateDictionary(Expression<Func<TEntity, Guid?>> expression, string dictionaryCode)
         {
-            //TODO: support validation
             return new Field<TEntity, Guid?>(expression, CreateInnerDictionaryField(expression, dictionaryCode));
         }
 
         private static InnerField CreateInnerField<TProperty>(Expression<Func<TEntity, TProperty>> expression)
         {
-            var member = expression.GetMember();
-            var compiled = expression.Compile();
+            MemberInfo member = expression.GetMember();
+            Func<TEntity, TProperty> compiled = expression.Compile();
             var innerField = new InnerField(member, compiled.CoerceToNonGeneric(), expression, typeof(TEntity), typeof(TProperty));
             return innerField;
         }
 
         private static InnerField CreateInnerDictionaryField<TProperty>(Expression<Func<TEntity, TProperty>> expression, string dictionaryCode)
         {
-            var member = expression.GetMember();
-            var compiled = expression.Compile();
+            MemberInfo member = expression.GetMember();
+            Func<TEntity, TProperty> compiled = expression.Compile();
             var innerField = new InnerDictionaryField(member, compiled.CoerceToNonGeneric(), expression, typeof(TEntity), typeof(TProperty), dictionaryCode);
             return innerField;
         }

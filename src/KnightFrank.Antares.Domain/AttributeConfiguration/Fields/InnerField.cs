@@ -40,19 +40,6 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
             return this;
         }
 
-        public void Validate<T>(T obj)
-        {
-            foreach (IValidator validator in this.Validators)
-            {
-                var result = validator.Validate(obj);
-                if (!result.IsValid)
-                {
-                    Console.WriteLine("Validator: " + validator.ToString());
-                }
-
-            }
-        }
-
         public void SetReadonlyRule(LambdaExpression readonlyExpression)
         {
             this.IsReadonlyExpression = readonlyExpression.Compile();

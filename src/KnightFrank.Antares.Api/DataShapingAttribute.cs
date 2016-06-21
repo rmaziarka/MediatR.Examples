@@ -1,5 +1,7 @@
 ﻿namespace KnightFrank.Antares.Api
 {
+    using System;
+    using System.Collections.Generic;
     using System.Net.Http;
     using System.Web.Http.Filters;
 
@@ -26,6 +28,21 @@
         [Inject]
         public IEntityMapper<Activity> ActivityEntityMapper { get; set; }
 
+        private readonly IDictionary<Type, Action<ObjectContent>> shapingFunctions;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataShapingAttribute"/> class.
+        /// </summary>
+        public DataShapingAttribute()
+        {
+            this.shapingFunctions = new Dictionary<Type, Action<ObjectContent>>
+            {
+                { typeof(Activity), this.ShapeActivity },
+                { typeof(Offer), this.ShapeOffer },
+                { typeof(Property), this.ShapeProperty }
+            };
+        }
+
         /// <summary>
         /// Occurs after the action method is invoked.
         /// </summary>
@@ -38,31 +55,34 @@
                 return;
             }
 
-            // TODO: move to dictionary method
-            if (objectContent.ObjectType == typeof(Activity))
+            if (this.shapingFunctions.ContainsKey(objectContent.ObjectType))
             {
-                var activity = (Activity)objectContent.Value;
-                this.ActivityEntityMapper.NullifyDisallowedValues(activity, PageType.Details);
+                this.shapingFunctions[objectContent.ObjectType].Invoke(objectContent);
             }
+        }
 
-            if (objectContent.ObjectType == typeof(Offer))
-            {
-                var offer = (Offer)objectContent.Value;
-                this.ActivityEntityMapper.NullifyDisallowedValues(offer.Activity, PageType.Details);
-            }
+        private void ShapeActivity(ObjectContent objectContent)
+        {
+            var activity = (Activity)objectContent.Value;
+            this.ActivityEntityMapper.NullifyDisallowedValues(activity, PageType.Details);
+        }
 
-            if (objectContent.ObjectType == typeof(Property))
+        private void ShapeOffer(ObjectContent objectContent)
+        {
+            var offer = (Offer)objectContent.Value;
+            this.ActivityEntityMapper.NullifyDisallowedValues(offer.Activity, PageType.Details);
+        }
+
+        private void ShapeProperty(ObjectContent objectContent)
+        {
+            var property = (Property)objectContent.Value;
+            if (property.Activities != null)
             {
-                var property = (Property)objectContent.Value;
-                if (property.Activities != null)
+                foreach (Activity activity in property.Activities)
                 {
-                    foreach (Activity activity in property.Activities)
-                    {
-                        this.ActivityEntityMapper.NullifyDisallowedValues(activity, PageType.Details);
-                    }
+                    this.ActivityEntityMapper.NullifyDisallowedValues(activity, PageType.Details);
                 }
             }
-
         }
     }
 }

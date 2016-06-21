@@ -1,7 +1,7 @@
 ﻿namespace KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions
 {
-    using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Dynamic;
     using System.Linq;
 
@@ -10,32 +10,33 @@
 
     public static class ListExtensions
     {
+        [SuppressMessage("ReSharper", "RedundantCast")]
         public static IDictionary<ControlCode, object> MapToResponse(this IList<InnerFieldState> fieldStates)
         {
-            Dictionary<ControlCode, dynamic> result =
+            Dictionary<ControlCode, dynamic> configResult =
                 fieldStates
-                    .Where(x => !x.Hidden)
-                    .GroupBy(x => x.ControlCode)
-                    .ToDictionary(x => x.Key, x =>
+                    .Where(control => !control.Hidden)
+                    .GroupBy(control => control.ControlCode)
+                    .ToDictionary(control => control.Key, control =>
                     {
-                        dynamic r = x.ToDictionary(
-                            f => f.Name,
-                            f =>
+                        dynamic controlConfigResult = control.ToDictionary(
+                            fieldState => fieldState.Name,
+                            fieldState =>
                             {
-                                IDictionary<string, dynamic> a = new ExpandoObject();
-                                a["Active"] = (object)!f.Readonly;
-                                a["Required"] = (object)f.Required;
-                                if (f.AllowedCodes != null)
+                                IDictionary<string, dynamic> fieldConfigResult = new ExpandoObject();
+                                fieldConfigResult["Active"] = (object)!fieldState.Readonly;
+                                fieldConfigResult["Required"] = (object)fieldState.Required;
+                                if (fieldState.AllowedCodes != null)
                                 {
-                                    a["AllowedCodes"] = f.AllowedCodes;
+                                    fieldConfigResult["AllowedCodes"] = fieldState.AllowedCodes;
                                 }
-                                return a;
+                                return fieldConfigResult;
                             });
 
-                        return r;
+                        return controlConfigResult;
                     });
 
-            return result;
+            return configResult;
         }
     }
 }
