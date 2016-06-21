@@ -82,7 +82,7 @@
             this.page.WaitForSidePanelToHide(60);
         }
 
-        [When(@"User clicks attachment details link on view activity page")]
+        [When(@"User clicks attachment card on view activity page")]
         public void OpenAttachmentPreview()
         {
             this.page.OpenAttachmentPreview().WaitForSidePanelToShow();

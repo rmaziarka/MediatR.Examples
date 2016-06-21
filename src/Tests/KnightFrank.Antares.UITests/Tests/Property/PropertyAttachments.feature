@@ -12,7 +12,7 @@ Scenario: Upload attachment for property
 	Then Attachment should be displayed on view poperty page
 		| FileName       | Type       | Size   |
 		| Floor Plan.PDF | Floor Plan | 2.9 MB |
-	When User clicks attachment details link on view property page
+	When User clicks attachment card on view property page
 	Then Attachment details on attachment preview page are the same like on view property page
 		And Property attachment Floor Plan.pdf should be downloaded
 		And User closes attachment preview page on view property page
