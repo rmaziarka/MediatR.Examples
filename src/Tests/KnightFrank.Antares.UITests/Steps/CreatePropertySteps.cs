@@ -18,7 +18,6 @@
     public class CreatePropertySteps
     {
         private readonly DriverContext driverContext;
-        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
         private CreatePropertyPage page;
 
@@ -44,7 +43,7 @@
         {
             this.page = new CreatePropertyPage(this.driverContext).OpenCreatePropertyPage();
         }
-        
+
         [When(@"User navigates to edit property page with id")]
         public void OpenEditPropertyPage()
         {

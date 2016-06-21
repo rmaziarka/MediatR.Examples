@@ -1,11 +1,13 @@
 ﻿Feature: Characteristic Groups
 
+@Characteristics
 Scenario: Get charactersitics
 	Given User gets House for PropertyType
 		And User retrieves GB country id
 	When User retrieves characteristics for given country and defined property type
 	Then User should get OK http status code
 
+@Characteristics
 Scenario Outline: Check error codes for get charactersitics method
 	Given User gets House for PropertyType
 		And User retrieves GB country id

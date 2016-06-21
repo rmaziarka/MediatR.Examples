@@ -14,10 +14,10 @@
     [Binding]
     public class EditOfferSteps
     {
+        private const string Format = "dd-MM-yyyy";
         private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
         private EditOfferPage page;
-        private const string Format = "dd-MM-yyyy";
 
         public EditOfferSteps(ScenarioContext scenarioContext)
         {

@@ -1,6 +1,6 @@
 ﻿Feature: Attachments
 
-@Attachment
+@Activity
 Scenario: Upload attachment
 	Given Activity exists in database
 	When User uploads attachment for latest activity id for TermsOfBusiness with following data
@@ -8,7 +8,7 @@ Scenario: Upload attachment
 		| abc.pdf  | 1024 | ba3b115b-4a5f-42c9-8e0f-25b7ed903b00 |
 	Then User should get OK http status code
 
-@Attachment
+@Activity
 Scenario Outline: Upload attachment with invalid data
 	Given User gets Freehold Sale for ActivityType
 		And User gets EnumTypeItemId and EnumTypeItem code
@@ -33,7 +33,7 @@ Scenario Outline: Upload attachment with invalid data
 	| TermsOfBusiness |                                      | NotFound   |
 
 @Activity
-Scenario: Get Activity with attachment
+Scenario: Get activity with attachment
 	Given Activity exists in database
 		And Attachment for TermsOfBusiness with following data exists in database
 			| FileName | Size | ExternalDocumentId                   |

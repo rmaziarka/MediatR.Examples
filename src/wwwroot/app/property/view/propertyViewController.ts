@@ -6,6 +6,8 @@ module Antares.Property.View {
     import Dto = Common.Models.Dto;
     import CartListOrder = Common.Component.ListOrder;
     import Resources = Common.Models.Resources;
+    import LatestViewsProvider = Providers.LatestViewsProvider;
+    import EntityType = Common.Models.Enums.EntityType;
 
     export class PropertyViewController extends Core.WithPanelsBaseController {
         isActivityAddPanelVisible: boolean = false;
@@ -13,6 +15,9 @@ module Antares.Property.View {
         ownershipAddPanelVisible: boolean = false;
         
         propertyId: string;
+
+        enumTypePropertyDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.PropertyDocumentType;
+        entityType: EntityType = EntityType.Property;
 
         loadingContacts: boolean = false;
 
@@ -27,15 +32,17 @@ module Antares.Property.View {
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
+            private propertyService: Property.PropertyService,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService,
-            private eventAggregator: Antares.Core.EventAggregator) {
+            private latestViewsProvider: LatestViewsProvider,
+            private eventAggregator: Core.EventAggregator) {
 
             super(componentRegistry, $scope);
             this.propertyId = $state.params['id'];
             this.fixOwnershipDates();
 
-            this.eventAggregator.with(this).subscribe(Antares.Common.Component.CloseSidePanelEvent, () => {
+            this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
                 // TODO iteration?
                 this.isActivityAddPanelVisible = false;
                 this.isActivityPreviewPanelVisible = false;
@@ -44,11 +51,28 @@ module Antares.Property.View {
             this.eventAggregator.with(this).subscribe(Activity.ActivityAddedSidePanelEvent, (msg: Activity.ActivityAddedSidePanelEvent) => {
                 this.property.activities.push(new Business.Activity(msg.activityAdded));
             });
+
+            eventAggregator
+                .with(this)
+                .subscribe(Common.Component.Attachment.AttachmentSavedEvent, (event: Common.Component.Attachment.AttachmentSavedEvent) => {
+                    this.addSavedAttachmentToList(event.attachmentSaved);
+                });
         }
 
         onPanelsHidden = () =>{
             this.isActivityAddPanelVisible = false;
             this.isActivityPreviewPanelVisible = false;
+        }
+
+        addSavedAttachmentToList = (result: Dto.IAttachment) => {
+            var savedAttachment = new Business.Attachment(result);
+            this.property.attachments.push(savedAttachment);
+        }
+
+        saveAttachment = (attachment: Common.Component.Attachment.AttachmentUploadCardModel) => {
+            var command = new Property.Command.PropertyAttachmentSaveCommand(this.property.id, attachment);
+            return this.propertyService.createPropertyAttachment(command)
+                .then((result: angular.IHttpPromiseCallbackArg<Dto.IAttachment>) => { return result.data; });
         }
 
         fixOwnershipDates = () => {

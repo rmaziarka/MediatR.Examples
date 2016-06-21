@@ -17,7 +17,8 @@ module Antares {
             activity: {
                 createdDate: '#activity-preview-created-date',
                 status: '#activity-preview-status',
-                vendors: '#activity-preview-vendors [id^=activity-preview-vendor-item-]'
+                vendors: '#activity-preview-vendors [id^=activity-preview-vendor-item-]',
+                cardListActivities: '#card-list-activities'
             },
             areaBreakdown: {
                 addBtn: '#card-list-areas button#addItemBtn',
@@ -119,8 +120,10 @@ module Antares {
                 $http.flush();
 
                 // assert
-                var noItemsElement = element.find('card-list-no-items');
-                var cardElements = element.find('card');
+                var cardListElement = element.find(pageObjectSelectors.activity.cardListActivities);
+
+                var noItemsElement = cardListElement.find('card-list-no-items');
+                var cardElements = cardListElement.find('card');
                 expect(noItemsElement.hasClass('ng-hide')).toBeFalsy();
                 expect(cardElements.length).toBe(0);
             });
@@ -136,8 +139,10 @@ module Antares {
                 $http.flush();
 
                 // assert
-                var noItemsElement = element.find('card-list-no-items');
-                var cardElements = element.find('card');
+                var cardListElement = element.find(pageObjectSelectors.activity.cardListActivities);
+
+                var noItemsElement = cardListElement.find('card-list-no-items');
+                var cardElements = cardListElement.find('card');
                 expect(noItemsElement.hasClass('ng-hide')).toBeTruthy();
                 expect(cardElements.length).toBe(2);
             });
@@ -166,7 +171,8 @@ module Antares {
                 $http.flush();
 
                 // assert
-                var cardListElement = element.find('card-list');
+                var cardListElement = element.find(pageObjectSelectors.activity.cardListActivities);
+
                 var cardElement = cardListElement.find('card#activity-card-It1');
                 var activityDataElement = cardElement.find('[id="activity-data-It1"]');
                 var activityStatusElement = cardElement.find('[id="activity-status-It1"]');
@@ -223,7 +229,7 @@ module Antares {
             }));
 
             xit('then activity details are visible on activity preview panel', () => {
-                // arrange 
+                // arrange
                 $http.expectPOST(/\/api\/latestviews/, () =>{
                     return true;
                 }).respond(200, []);

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
 
     using KnightFrank.Antares.Dal.Model.Address;
+    using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Offer;
 
@@ -52,5 +53,7 @@
         public double? MaxLandArea { get; set; }
 
         public string Description { get; set; }
+
+        public virtual ICollection<Attachment> Attachments { get; set; } = new List<Attachment>();
     }
 }

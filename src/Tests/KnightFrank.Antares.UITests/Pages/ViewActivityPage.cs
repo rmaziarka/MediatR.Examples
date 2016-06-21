@@ -28,7 +28,7 @@
         private readonly ElementLocator attachmentDate = new ElementLocator(Locator.CssSelector, "#card-list-attachments time[id *= 'attachment-created-date']");
         private readonly ElementLocator attachmentType = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-type']");
         private readonly ElementLocator attachmentSize = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-file-size']");
-        private readonly ElementLocator attachmentDetailsLink = new ElementLocator(Locator.CssSelector, "#activity-view-attachments .detailsLink");
+        private readonly ElementLocator attachmentCard = new ElementLocator(Locator.CssSelector, "#card-list-attachments .card-body");
         // Viewing locators
         private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-group-item");
         private readonly ElementLocator viewingDetailsLink = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) a");
@@ -69,7 +69,7 @@
 
         public AttachFilePage AttachFile => new AttachFilePage(this.DriverContext);
 
-        public AttachmentPreviewPage PreviewAttachment => new AttachmentPreviewPage(this.DriverContext);
+        public AttachmentPreviewPage AttachmentPreview => new AttachmentPreviewPage(this.DriverContext);
 
         public ViewingDetailsPage ViewingDetails => new ViewingDetailsPage(this.DriverContext);
 
@@ -136,7 +136,7 @@
 
         public ViewActivityPage OpenAttachmentPreview()
         {
-            this.Driver.Click(this.attachmentDetailsLink);
+            this.Driver.Click(this.attachmentCard);
             return this;
         }
 

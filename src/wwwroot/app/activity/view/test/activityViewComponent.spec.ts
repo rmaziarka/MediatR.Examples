@@ -2,7 +2,6 @@
 
 module Antares {
     import ActivityViewController = Activity.View.ActivityViewController;
-    import AttachmentPreviewController = Common.Component.AttachmentPreviewController;
     import PropertyPreviewController = Property.Preview.PropertyPreviewController;
     import Business = Common.Models.Business;
     import IActivityViewConfig = Activity.IActivityViewConfig;
@@ -82,7 +81,7 @@ module Antares {
                         activityDepartment.departmentType.code = 'Standard'
                 }
             });
-            
+
             beforeEach(angular.mock.module(($provide: angular.auto.IProvideService) => {
                 $provide.service('enumService', Antares.Mock.EnumServiceMock);
             }));
@@ -141,22 +140,6 @@ module Antares {
                 expect(listHeaderElementContent.length).toBe(1);
                 expect(listNoItemsElement.length).toBe(1);
                 expect(listNoItemsElementContent.length).toBe(1);
-            });
-
-            it('card-list component for attachments is set up', () => {
-                // assert
-                var cardListElement = element.find(pageObjectSelectors.attachments.list),
-                    cardListHeaderElement = cardListElement.find('card-list-header'),
-                    cardListHeaderElementContent = cardListHeaderElement.find('[translate="ACTIVITY.VIEW.ATTACHMENTS"]'),
-                    cardListNoItemsElement = cardListElement.find('card-list-no-items'),
-                    cardListNoItemsElementContent = cardListNoItemsElement.find('[translate="ACTIVITY.VIEW.NO_ATTACHMENTS"]');
-
-                expect(cardListElement.length).toBe(1);
-                expect(cardListElement[0].getAttribute('show-item-add')).toBe("avvm.showActivityAttachmentAdd");
-                expect(cardListHeaderElement.length).toBe(1);
-                expect(cardListHeaderElementContent.length).toBe(1);
-                expect(cardListNoItemsElement.length).toBe(1);
-                expect(cardListNoItemsElementContent.length).toBe(1);
             });
 
             it('then activity summary component for activity is displayed and should have proper data', () => {
@@ -260,7 +243,7 @@ module Antares {
                 expect(addressElement[0].getAttribute('address')).toBe("cvm.item.address");
             });
 
-            describe('and property details is clicked', () => {
+            xdescribe('and property details is clicked', () => {
                 it('then property details are set in property preview component', () => {
                     // arrange
                     activityMock.property = TestHelpers.PropertyGenerator.generate();
@@ -280,132 +263,6 @@ module Antares {
 
                     // assert
                     expect(propertyPreviewController.setProperty).toHaveBeenCalledWith(activityMock.property);
-                });
-            });
-        });
-
-        describe('and attachments are loaded', () => {
-            var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
-
-            beforeEach(inject((
-                $rootScope: ng.IRootScopeService,
-                $compile: ng.ICompileService,
-                $filter: ng.IFilterService,
-                $httpBackend: ng.IHttpBackendService) => {
-
-                filter = $filter;
-                $http = $httpBackend;
-
-                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
-
-                scope = $rootScope.$new();
-                compile = $compile;
-
-                scope['activity'] = activityMock;
-                element = compile('<activity-view activity="activity"></activity-view>')(scope);
-
-                scope.$apply();
-                $http.flush();
-            }));
-
-            it('when no attachments then "no items" element should be visible', () => {
-                // arrange / act
-                activityMock.attachments = [];
-                scope.$apply();
-
-                // assert
-                var cardListElement = element.find(pageObjectSelectors.attachments.list),
-                    cardListNoItemsElement = cardListElement.find('card-list-no-items'),
-                    cardListNoItemsElementContent = cardListNoItemsElement.find('[translate="ACTIVITY.VIEW.NO_ATTACHMENTS"]'),
-                    cardListItemElement = cardListElement.find('card-list-item');
-
-                expect(cardListNoItemsElement.hasClass('ng-hide')).toBeFalsy();
-                expect(cardListNoItemsElementContent.length).toBe(1);
-                expect(cardListItemElement.length).toBe(0);
-            });
-
-            it('when existing attachments then card components should be visible', () => {
-                // arrange / act
-                activityMock.attachments = TestHelpers.AttachmentGenerator.generateMany(2);
-                scope.$apply();
-
-                // assert
-                var cardListElement = element.find(pageObjectSelectors.attachments.list),
-                    cardListNoItemsElement = cardListElement.find('card-list-no-items'),
-                    cardListItemElement = cardListElement.find('card-list-item'),
-                    cardListItemCardElement = cardListItemElement.find('card');
-
-                expect(cardListNoItemsElement.hasClass('ng-hide')).toBeTruthy();
-                expect(cardListItemElement.length).toBe(2);
-                expect(cardListItemCardElement.length).toBe(2);
-
-            });
-
-            it('when existing attachments then card components should have proper order', () => {
-                // arrange / act
-                var date1Mock = new Date('2016-01-12');
-                var date2Mock = new Date('2016-01-18');
-                activityMock.attachments = TestHelpers.AttachmentGenerator.generateMany(2);
-                activityMock.attachments[0].createdDate = date1Mock;
-                activityMock.attachments[1].createdDate = date2Mock;
-                scope.$apply();
-
-                // assert
-                var cardListElement = element.find(pageObjectSelectors.attachments.list),
-                    cardListItemCardElements = cardListElement.find('card-list-item card'),
-                    cardListItem1CardElement = cardListElement.find('card[id="attachment-card-' + activityMock.attachments[0].id + '"]'),
-                    cardListItem2CardElement = cardListElement.find('card[id="attachment-card-' + activityMock.attachments[1].id + '"]');
-
-                expect(cardListItemCardElements[0]).toBe(cardListItem2CardElement[0]);
-                expect(cardListItemCardElements[1]).toBe(cardListItem1CardElement[0]);
-            });
-
-            it('when existing attachments then card components should have proper data', () => {
-                // arrange / act
-                var dateMock = new Date('2011-01-01');
-                var attachmentMock = TestHelpers.AttachmentGenerator.generate({ user: new Business.User({ id: 'us1', firstName: 'firstName1', lastName: 'lastName1', departmentId: 'depId', department: null }) });
-                attachmentMock.createdDate = dateMock;
-
-                var sizeMock = '999.7 MB';
-                spyOn(attachmentMock, 'humanizedSize').and.returnValue(sizeMock);
-
-                activityMock.attachments = [attachmentMock];
-                scope.$apply();
-
-                // assert
-                var cardListElement = element.find(pageObjectSelectors.attachments.list),
-                    cardListItemElement = cardListElement.find('card-list-item'),
-                    cardListItemCardElement = cardListItemElement.find('card[id="attachment-card-' + attachmentMock.id + '"]');
-
-                var attachmentDataElement = cardListItemCardElement.find('[id="attachment-data-' + attachmentMock.id + '"]');
-                var attachmentDateElement = cardListItemCardElement.find('[id="attachment-created-date-' + attachmentMock.id + '"]');
-                var attachmentTypeElement = cardListItemCardElement.find('[id="attachment-type-' + attachmentMock.id + '"]');
-                var attachmentFileSizeElement = cardListItemCardElement.find('[id="attachment-file-size-' + attachmentMock.id + '"]');
-
-                expect(attachmentDataElement.text()).toBe(attachmentMock.fileName);
-                var formattedDate = filter('date')(dateMock, 'dd-MM-yyyy');
-                expect(attachmentDateElement.text()).toBe(formattedDate);
-                expect(attachmentTypeElement.text()).toBe('DYNAMICTRANSLATIONS.' + attachmentMock.documentTypeId);
-                expect(attachmentFileSizeElement.text()).toBe(sizeMock);
-            });
-
-            describe('and attachment details is clicked', () => {
-                it('then attachment details are set in attachment preview component', () => {
-                    // arrange
-                    activityMock.attachments = TestHelpers.AttachmentGenerator.generateMany(4);
-                    scope.$apply();
-
-                    var attachmentForDetailsClick = activityMock.attachments[2];
-                    var attachmentPreviewController: AttachmentPreviewController = element.find('attachment-preview').controller('attachmentPreview');
-
-                    spyOn(attachmentPreviewController, 'setAttachment');
-
-                    // act
-                    var cardElement = element.find('card[id="attachment-card-' + attachmentForDetailsClick.id + '"]');
-                    cardElement.find(pageObjectSelectors.common.detailsLink).click();
-
-                    // assert
-                    expect(attachmentPreviewController.setAttachment).toHaveBeenCalledWith(attachmentForDetailsClick, activityMock.id);
                 });
             });
         });

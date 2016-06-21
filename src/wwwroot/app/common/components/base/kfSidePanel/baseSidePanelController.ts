@@ -8,17 +8,20 @@ module Antares.Common.Component {
         isBusy: boolean;
 
         protected panelShown = () => {
+                };
 
-        };
+                protected panelHidden = () => {
+                };
 
         show = () => {
             this.stateChanged = true;
             this.panelShown();
         }
 
-        hide = () => {
-            this.stateChanged = true;
-        }
+                hide = () => {
+                    this.stateChanged = true;
+                    this.panelHidden();
+                }
 
         $onChanges = (changesObj: IBaseSidePanelChange) => {
             if (changesObj.isVisible && changesObj.isVisible.currentValue !== changesObj.isVisible.previousValue) {

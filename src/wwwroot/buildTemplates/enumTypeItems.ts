@@ -10,10 +10,10 @@ module Antares.Common.Models.Enums
 	 	ActivityStatus,
 	 	Division,
 	 	ActivityDocumentType,
+	 	PropertyDocumentType,
 	 	OfferStatus,
 	 	ActivityUserType,
 	 	ActivityDepartmentType,
-	 	ClientCareStatus,
 	 }
 
 	
@@ -55,6 +55,14 @@ module Antares.Common.Models.Enums
 		GasCertificate,
 	}
 
+	export enum PropertyDocumentType
+	{
+		Photograph,
+		FloorPlan,
+		Brochure,
+		VideoTour,
+	}
+
 	export enum OfferStatus
 	{
 		New,
@@ -73,12 +81,5 @@ module Antares.Common.Models.Enums
 	{
 		Managing,
 		Standard,
-	}
-
-	export enum ClientCareStatus
-	{
-		MassiveActionClient,
-		PrincipalClient,
-		KeyClient,
 	}
 }

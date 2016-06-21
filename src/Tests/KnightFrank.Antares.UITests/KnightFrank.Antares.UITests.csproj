@@ -196,10 +196,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Offer.feature</DependentUpon>
     </Compile>
+    <Compile Include="Tests\Property\Attachments.feature.cs">
+      <DependentUpon>Attachments.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Tests\Property\Property.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Property.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Requirement\Attachments.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Attachments.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Requirement\Requirement.feature.cs">
       <AutoGen>True</AutoGen>
@@ -221,6 +231,9 @@
     </None>
     <None Include="packages.config" />
     <Content Include="Resources\PDF document.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Floor Plan.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Tests\Activities\Activities.feature">
@@ -251,9 +264,17 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Offer.feature.cs</LastGenOutput>
     </None>
+    <None Include="Tests\Property\Attachments.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Attachments.feature.cs</LastGenOutput>
+    </None>
     <None Include="Tests\Property\Property.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Property.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Requirement\Attachments.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Attachments.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Requirement\Requirement.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
@@ -278,6 +299,10 @@
     <ProjectReference Include="..\..\KnightFrank.Antares.Dal\KnightFrank.Antares.Dal.csproj">
       <Project>{2525af42-f89c-48d8-89a7-74449702c627}</Project>
       <Name>KnightFrank.Antares.Dal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\KnightFrank.Antares.Domain\KnightFrank.Antares.Domain.csproj">
+      <Project>{5987D78C-856D-4315-8B8B-BAF00C286AFF}</Project>
+      <Name>KnightFrank.Antares.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

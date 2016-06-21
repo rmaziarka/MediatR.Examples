@@ -10,8 +10,6 @@
     using Objectivity.Test.Automation.Common.Types;
     using Objectivity.Test.Automation.Common.WebElements;
 
-    using OpenQA.Selenium;
-
     public class EditOfferPage : ProjectPageBase
     {
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");

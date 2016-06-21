@@ -33,6 +33,8 @@
                     .Include(p => p.Activities.Select(a => a.ActivityType))
                     .Include(p => p.PropertyCharacteristics)
                     .Include(p => p.PropertyAreaBreakdowns)
+                    .Include(a => a.Attachments)
+                    .Include(a => a.Attachments.Select(at => at.User))
                     .FirstOrDefault(p => p.Id == message.Id);
 
             if (result != null)
