@@ -22,12 +22,13 @@
       "COMPANIES": "Companies",
       "REQUIREMENTS": "Requirements",
       "PROPERTIES": "Properties",
-      "ACTIVITIES": "Activities"
+      "ACTIVITIES": "Activities",
+      "SEARCH": "Search"
     },
     "NAVIGATIONDRAWER": {
-      "RECENTPROPERTIES": "Recent properties",
-      "RECENTACTIVITIES": "Recent activities",
-      "RECENTREQUIREMENTS": "Recent requirements"
+      "RECENTPROPERTIES": "Recent",
+      "RECENTACTIVITIES": "Recent",
+      "RECENTREQUIREMENTS": "Recent"
     },
     "MAKEOFFER": "Make an offer",
     "SETASLEAD": "Set as lead",
@@ -162,6 +163,13 @@
       "TYPE": "Type",
       "ADDRESS": "Address",
       "PROPERTY_VIEW_LINK": "View property"
+    },
+    "SEARCH": {
+      "PROPERTIES": "Properties",
+      "NO_ITEMS": "Sorry, no properties matched your search. Please try again.",
+      "QUERY_PLACEHOLDER": "Search for a property",
+      "RESULTS_COUNT": "Results:",
+      "RESULTS_PER_PAGE": "results / page:"
     }
   },
   "COMMERCIAL_PROPERTY": {

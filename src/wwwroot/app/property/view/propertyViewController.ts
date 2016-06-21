@@ -32,7 +32,7 @@ module Antares.Property.View {
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
-            private propertyService: Property.PropertyService,
+            private propertyService: Services.PropertyService,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService,
             private latestViewsProvider: LatestViewsProvider,

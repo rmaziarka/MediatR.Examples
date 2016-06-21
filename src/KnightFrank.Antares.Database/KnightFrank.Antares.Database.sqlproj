@@ -70,6 +70,8 @@
     <Folder Include="Scripts\Data\Test" />
     <Folder Include="Scripts\Data\Configuration" />
     <Folder Include="Scripts\SQL" />
+    <Folder Include="Functions" />
+    <Folder Include="Scripts\Views" />
   </ItemGroup>
   <ItemGroup>
     <None Include="KnightFrank.Antares.Database.nuspec" />
@@ -245,6 +247,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\SQL\ActivityTypeLocalised.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Functions\FlattenedJSON.sql" />
+    <None Include="Scripts\Views\ElasticSearchContact.sql" />
+    <None Include="Scripts\Views\ElasticSearchProperty.sql" />
   </ItemGroup>
   <Import Project="..\packages\OctoPack.3.0.53\tools\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.0.53\tools\OctoPack.targets')" />
   <Target Name="EnsureOctoPackImported" BeforeTargets="BeforeBuild" Condition="'$(OctoPackImported)' == ''">

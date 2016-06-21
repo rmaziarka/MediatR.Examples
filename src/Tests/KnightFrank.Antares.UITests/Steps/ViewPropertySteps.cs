@@ -226,7 +226,7 @@
             {
                 Assert.True(field.Equals(string.Empty)
                     ? this.page.IsAddressDetailsNotVisible(field)
-                    : this.page.IsAddressDetailsVisible(field));
+                    : this.page.IsAddressDetailsVisible(field), field + " in not displayed");
             }
         }
 

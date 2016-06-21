@@ -21,6 +21,9 @@
     using KnightFrank.Antares.Domain.Property.Commands;
     using KnightFrank.Antares.Domain.Property.Queries;
     using KnightFrank.Antares.Domain.Property.QueryResults;
+    using KnightFrank.Antares.Search.Common.QueryResults;
+    using KnightFrank.Antares.Search.Property.Queries;
+    using KnightFrank.Antares.Search.Property.QueryResults;
 
     using MediatR;
 
@@ -43,6 +46,18 @@
         {
             this.mediator = mediator;
             this.userRepository = userRepository;
+        }
+
+        /// <summary>
+        /// Search property by query
+        /// </summary>
+        /// <param name="pageableQuery">Query</param>
+        /// <returns>Pageable data with filtered properties</returns>
+        [HttpGet]
+        [Route("search")]
+        public PageableResult<PropertyResult> SearchProperties([FromUri(Name = "")] PropertiesPageableQuery pageableQuery)
+        {
+            return this.mediator.Send(pageableQuery);
         }
 
         /// <summary>

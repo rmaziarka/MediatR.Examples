@@ -4,8 +4,14 @@ module Antares {
     import Dto = Common.Models.Dto;
     import ActivityEditController = Activity.ActivityEditController;
     import Enums = Common.Models.Enums;
-
+    
     describe('Given edit activity page is loaded', () => {
+        beforeEach(() => {
+            angular.mock.module(($provide: any) => {
+                $provide.service('addressFormsProvider', Mock.AddressFormsProviderMock);
+            });
+        });
+
         var scope: ng.IScope,
             compile: ng.ICompileService,
             element: ng.IAugmentedJQuery,
@@ -78,7 +84,6 @@ module Antares {
                 // act
                 element = compile('<activity-edit activity="activity"></activity-edit>')(scope);
                 scope.$apply();
-                $http.flush();
 
                 // assert
                 var noItemsElement = element.find(pageObjectSelectors.vendorList.noItems);
@@ -98,7 +103,6 @@ module Antares {
                 // act
                 element = compile('<activity-edit activity="activity"></activity-edit>')(scope);
                 scope.$apply();
-                $http.flush();
 
                 // assert
                 var noItemsElement = element.find(pageObjectSelectors.vendorList.noItems);
@@ -118,7 +122,6 @@ module Antares {
                 // act
                 element = compile('<activity-edit activity="activity"></activity-edit>')(scope);
                 scope.$apply();
-                $http.flush();
 
                 // assert
                 var vendorsItemsElement1 = element.find(pageObjectSelectors.vendorList.item + contact1Mock.id);
@@ -142,15 +145,11 @@ module Antares {
                 state = $state;
                 $http = $httpBackend;
 
-                // http backend
-                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
-
                 // compile
                 scope['activity'] = TestHelpers.ActivityGenerator.generate();
                 element = compile('<activity-edit activity="activity"></activity-edit>')(scope);
 
                 scope.$apply();
-                $httpBackend.flush();
             }));
 
             it('then card component should have address data', () => {

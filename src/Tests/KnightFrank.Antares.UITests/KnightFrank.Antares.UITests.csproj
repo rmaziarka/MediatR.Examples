@@ -216,6 +216,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Requirement.feature</DependentUpon>
     </Compile>
+    <Compile Include="Tests\Search\Search.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Search.feature</DependentUpon>
+    </Compile>
     <Compile Include="Tests\Viewing\Viewing.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -280,6 +285,10 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Requirement.feature.cs</LastGenOutput>
     </None>
+    <None Include="Tests\Search\Search.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Search.feature.cs</LastGenOutput>
+    </None>
     <None Include="Tests\Viewing\Viewing.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Viewing.feature.cs</LastGenOutput>
@@ -326,7 +335,7 @@
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\..\packages\SpecFlow.2.0.0\tools\TechTalk.SpecFlow.targets" />
+  <Import Project="..\..\packages\SpecFlow.2.0.0\tools\TechTalk.SpecFlow.targets" /> 
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
