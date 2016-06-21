@@ -7,6 +7,7 @@ module Antares.Activity {
     export class ActivityPreviewPanelController extends Antares.Common.Component.BaseSidePanelController {
         config: Antares.Activity.IActivityPreviewPanelConfig;
         activity: Business.Activity;
+        isBusy: boolean;
         propertyTypeId: string;
         constructor(private configService: Services.ConfigService) {
             super();
@@ -16,6 +17,8 @@ module Antares.Activity {
             this.config= null;
             this.activity = angular.copy(this.activity);
             this.activity.property = null;
+            this.isBusy = true;
+
             this.configService.getActivity(
                 Common.Models.Enums.PageTypeEnum.Preview,
                  this.propertyTypeId, 
@@ -25,6 +28,7 @@ module Antares.Activity {
         }
         configLoaded = (newConfig: IActivityAddPanelConfig) => {
             this.config = newConfig;
+            this.isBusy = false;
         }
     }
 
