@@ -29,12 +29,12 @@
         public bool BindModel(HttpActionContext actionContext, ModelBindingContext bindingContext)
         {
             string requestContent = actionContext.Request.Content.ReadAsStringAsync().Result;
-            PageType pageType;
-            if (!EnumExtensions.TryParseEnum((string)actionContext.ActionArguments["pageType"], out pageType))
+            if (actionContext.ActionArguments["pageType"] == null)
             {
                 throw new ValidationException("Incorrect Page Type");
             }
 
+            var pageType = (PageType)actionContext.ActionArguments["pageType"];
             switch (pageType)
             {
                 case PageType.Create:

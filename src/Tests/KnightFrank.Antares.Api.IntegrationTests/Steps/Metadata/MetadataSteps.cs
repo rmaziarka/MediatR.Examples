@@ -43,7 +43,7 @@
         [When(@"User gets activity preview attributes with invalid (.*) data")]
         public void GetActivityAttributesInvalidData(string data)
         {
-            string pageType = data.Equals("page") ? 1000.ToString() : nameof(PageType.Create);
+            string pageType = data.Equals("page") ? "invalid" : nameof(PageType.Create);
             Guid propertyTypeId = data.Equals("propertyType")
                 ? Guid.NewGuid()
                 : this.scenarioContext.Get<Property>("Property").PropertyTypeId;
