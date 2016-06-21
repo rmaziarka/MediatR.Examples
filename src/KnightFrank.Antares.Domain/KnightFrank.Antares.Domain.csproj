@@ -83,7 +83,6 @@
     <Compile Include="Activity\CommandHandlers\UpdateActivityUserCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandler.cs" />
     <Compile Include="Activity\Commands\CreateActivityAttachmentCommand.cs" />
-    <Compile Include="Activity\Commands\CreateActivityAttachmentCommandValidator.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\ActivityProfile.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommandValidator.cs" />
@@ -142,6 +141,9 @@
     <Compile Include="AreaBreakdown\Queries\AreaBreakdownQuery.cs" />
     <Compile Include="AreaBreakdown\Queries\AreaBreakdownQueryValidator.cs" />
     <Compile Include="AreaBreakdown\QueryHandlers\AreaBreakdownQueryHandler.cs" />
+    <Compile Include="Attachment\Commands\CreateEntityAttachmentCommand.cs" />
+    <Compile Include="Attachment\Commands\CreateEntityAttachmentCommandHandler.cs" />
+    <Compile Include="Attachment\Commands\CreateEntityAttachmentCommandValidator.cs" />
     <Compile Include="Attachment\Queries\AttachmentQuery.cs" />
     <Compile Include="Attachment\Queries\AttachmentQueryValidator.cs" />
     <Compile Include="Attachment\QueryHandlers\AttachmentQueryHandler.cs" />
@@ -234,6 +236,10 @@
     <Compile Include="Offer\Queries\OfferQuery.cs" />
     <Compile Include="Offer\Queries\OfferQueryValidator.cs" />
     <Compile Include="Offer\QueryHandlers\OfferQueryHandler.cs" />
+    <Compile Include="Property\CommandHandlers\CreatePropertyAttachmentCommandHandler.cs" />
+    <Compile Include="Property\Commands\CreatePropertyAttachmentCommand.cs" />
+    <Compile Include="Requirement\CommandHandlers\CreateRequirementAttachmentCommandHandler.cs" />
+    <Compile Include="Requirement\Commands\CreateRequirementAttachmentCommand.cs" />
     <Compile Include="User\Queries\UsersQuery.cs" />
     <Compile Include="Contact\Queries\ContactQueryValidator.cs" />
     <Compile Include="Contact\Queries\ContactsQuery.cs" />
@@ -242,7 +248,7 @@
     <Compile Include="Contact\QueryHandlers\ContactsQueryHandler.cs" />
     <Compile Include="DomainModule.cs" />
     <Compile Include="Common\Exceptions\DomainValidationException.cs" />
-    <Compile Include="Enum\Types\ActivityDocumentType.cs" />
+    <Compile Include="Enum\Types\DocumentType.cs" />
     <Compile Include="Enum\Queries\EnumItemQuery.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQuery.cs" />
     <Compile Include="Enum\Queries\EnumLocalisedQueryValidator.cs" />

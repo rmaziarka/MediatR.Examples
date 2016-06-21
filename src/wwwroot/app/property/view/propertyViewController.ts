@@ -13,6 +13,9 @@ module Antares.Property.View {
         ownershipAddPanelVisible: boolean = false;
         propertyId: string;
 
+        enumTypePropertyDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.PropertyDocumentType;
+        entityType: EntityType = EntityType.Property;
+
         loadingContacts: boolean = false;
 
         ownershipsCartListOrder: CartListOrder = new CartListOrder('purchaseDate', true, true);
@@ -24,13 +27,32 @@ module Antares.Property.View {
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
+            private propertyService: Property.PropertyService,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService,
-            private latestViewsProvider: LatestViewsProvider) {
+            private latestViewsProvider: LatestViewsProvider,
+            private eventAggregator: Antares.Core.EventAggregator) {
 
             super(componentRegistry, $scope);
             this.propertyId = $state.params['id'];
             this.fixOwnershipDates();
+
+            eventAggregator
+                .with(this)
+                .subscribe(Common.Component.Attachment.AttachmentSavedEvent, (event: Common.Component.Attachment.AttachmentSavedEvent) => {
+                    this.addSavedAttachmentToList(event.attachmentSaved);
+                });
+        }
+
+        addSavedAttachmentToList = (result: Dto.IAttachment) => {
+            var savedAttachment = new Business.Attachment(result);
+            this.property.attachments.push(savedAttachment);
+        }
+
+        saveAttachment = (attachment: Antares.Common.Component.Attachment.AttachmentUploadCardModel) => {
+            var command = new Antares.Property.Command.PropertyAttachmentSaveCommand(this.property.id, attachment);
+            return this.propertyService.createPropertyAttachment(command)
+                .then((result: angular.IHttpPromiseCallbackArg<Dto.IAttachment>) => { return result.data; });
         }
 
         fixOwnershipDates = () => {

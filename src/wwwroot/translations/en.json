@@ -232,8 +232,6 @@
       "VIEWINGS": "Viewings",
       "VIEWING_DETAILS": "Viewing details",
       "NO_VIEWINGS": "No viewings",
-      "ATTACHMENTS": "Attachments",
-      "NO_ATTACHMENTS": "No attachments",
       "OFFERS": "Offers",
       "OFFERPREVIEW": "Offer preview"
     }
@@ -334,6 +332,10 @@
       "SIZE": "Size",
       "ADDED": "Added",
       "BY": "By"
+    },
+    "LIST": {
+      "ATTACHMENTS": "Attachments",
+      "NO_ATTACHMENTS": "No attachments"
     }
   },
   "OFFER": {
@@ -386,7 +388,7 @@
       "EMPTY": "No departments added yet",
       "NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR": {
         "TITLE": "No negotiator assigned to new department",
-        "MESSAGE": "You’re trying to add one or more new departments without negotiators assigned to them. Please select a negotiator for each of those departments or remove the departments" 
+        "MESSAGE": "You’re trying to add one or more new departments without negotiators assigned to them. Please select a negotiator for each of those departments or remove the departments"
       }
     }
   }

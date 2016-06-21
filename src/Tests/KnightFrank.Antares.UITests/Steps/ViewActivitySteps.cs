@@ -73,8 +73,8 @@
             this.page.OpenAttachFilePanel().WaitForSidePanelToShow();
         }
 
-        [When(@"User adds (.*) file with (.*) type on attach file page")]
-        public void SelectAttachmentType(string file, string type)
+        [When(@"User adds (.*) file with (.*) type on view activity page")]
+        public void AddAttachment(string file, string type)
         {
             this.page.AttachFile.SelectType(type)
                 .AddFiletoAttachment(file)
@@ -82,7 +82,7 @@
             this.page.WaitForSidePanelToHide(60);
         }
 
-        [When(@"User clicks attachment details link on view activity page")]
+        [When(@"User clicks attachment card on view activity page")]
         public void OpenAttachmentPreview()
         {
             this.page.OpenAttachmentPreview().WaitForSidePanelToShow();
@@ -123,10 +123,10 @@
             }
         }
 
-        [Then(@"Attachment (.*) should be downloaded")]
+        [Then(@"Activity attachment (.*) should be downloaded")]
         public void ThenAttachmentShouldBeDownloaded(string attachmentName)
         {
-            FileInfo fileInfo = this.page.PreviewAttachment.GetDownloadedAttachmentInfo();
+            FileInfo fileInfo = this.page.AttachmentPreview.GetDownloadedAttachmentInfo();
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(attachmentName.ToLower(), fileInfo.Name),
@@ -169,7 +169,8 @@
         [Then(@"Attachment details on attachment preview page are the same like on view activity page")]
         public void ChackAttachmentDetails()
         {
-            Attachment actual = this.page.PreviewAttachment.GetAttachmentDetails();
+            Attachment actual = this.page.AttachmentPreview.GetAttachmentDetails();
+            actual.Date = actual.Date.Split(',')[0];
             Attachment expected = this.page.AttachmentDetails;
             expected.User = "John Smith";
 
@@ -213,7 +214,7 @@
         [Then(@"User closes attachment preview page on view activity page")]
         public void CloseAttachmentPreviewPanel()
         {
-            this.page.PreviewAttachment.CloseAttachmentPreviewPage();
+            this.page.AttachmentPreview.CloseAttachmentPreviewPage();
             this.page.WaitForSidePanelToHide();
         }
 

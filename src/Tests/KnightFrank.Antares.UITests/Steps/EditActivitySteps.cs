@@ -19,10 +19,10 @@
     [Binding]
     public class EditActivitySteps
     {
+        private const string Format = "dd-MM-yyyy";
         private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
         private EditActivityPage page;
-        private const string Format = "dd-MM-yyyy";
 
         public EditActivitySteps(ScenarioContext scenarioContext)
         {

@@ -30,13 +30,13 @@
     public class ActivitiesSteps
     {
         private const string ApiUrl = "/api/activities";
-        private readonly BaseTestClassFixture fixture;
         private readonly DateTime date = DateTime.UtcNow;
+        private readonly BaseTestClassFixture fixture;
         private readonly ScenarioContext scenarioContext;
 
-        private User leadNegotiator;
-
         private List<ActivityDepartment> activityDepartments;
+
+        private User leadNegotiator;
 
         public ActivitiesSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {
@@ -185,8 +185,11 @@
 
             updateActivityCommand.Departments = new List<UpdateActivityDepartment>
             {
-                new UpdateActivityDepartment { DepartmentId = this.leadNegotiator.DepartmentId,
-                    DepartmentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Managing"]}
+                new UpdateActivityDepartment
+                {
+                    DepartmentId = this.leadNegotiator.DepartmentId,
+                    DepartmentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Managing"]
+                }
             };
 
             activityFromDatabase = new Activity
@@ -308,13 +311,16 @@
             actualActivity.ShouldBeEquivalentTo(activity.Single());
         }
 
-
         [Then(@"Departments should be the same as already added")]
         public void ThenDepartmentsShouldBeTheSameAsAlreadyAdded()
         {
             var activityFromdb = this.scenarioContext.Get<Activity>("Activity");
-            List<ActivityDepartment> addedActivityDepartments = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent()).ActivityDepartments.ToList();
-            List<ActivityDepartment> updatedActivityDepartments = this.fixture.DataContext.ActivityDepartment.Select(x => x).Where(x => x.ActivityId.Equals(activityFromdb.Id)).ToList();
+            List<ActivityDepartment> addedActivityDepartments =
+                JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent()).ActivityDepartments.ToList();
+            List<ActivityDepartment> updatedActivityDepartments =
+                this.fixture.DataContext.ActivityDepartment.Select(x => x)
+                    .Where(x => x.ActivityId.Equals(activityFromdb.Id))
+                    .ToList();
 
             updatedActivityDepartments.ShouldAllBeEquivalentTo(addedActivityDepartments, opt => opt
                 .Excluding(x => x.Activity)

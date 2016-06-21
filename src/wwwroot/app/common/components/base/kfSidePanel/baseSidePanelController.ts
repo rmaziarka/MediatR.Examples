@@ -10,7 +10,9 @@ module Antares {
                 isBusy: boolean;
 
                 protected panelShown = () => {
+                };
 
+                protected panelHidden = () => {
                 };
 
                 show = () => {
@@ -20,6 +22,7 @@ module Antares {
 
                 hide = () => {
                     this.stateChanged = true;
+                    this.panelHidden();
                 }
 
                 $onChanges = (changesObj: IBaseSidePanelChange) => {

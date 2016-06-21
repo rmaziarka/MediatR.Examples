@@ -62,7 +62,9 @@
             kernel.Bind<IStorageClientWrapper>().To<StorageClientWrapper>();
             kernel.Bind<IBlobResourceFactory>().To<BlobResourceFactory>();
             kernel.Bind<ISharedAccessBlobPolicyFactory>().To<SharedAccessBlobPolicyFactory>();
-            kernel.Bind<IStorageProvider>().To<ActivityStorageProvider>();
+            kernel.Bind<IEntityDocumentStorageProvider>().To<EntityDocumentStorageProvider>();
+            kernel.Bind<IDocumentStorageProvider>().To<DocumentStorageProvider>();
+
         }
     }
 }

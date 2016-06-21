@@ -110,7 +110,6 @@
   <ItemGroup>
     <Compile Include="Activity\CommandHandlers\CreateActivityAttachmentCommandHandlerTests.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityUserCommandHandlerTests.cs" />
-    <Compile Include="Activity\Commands\CreateActivityAttachmentCommandValidatorTests.cs" />
     <Compile Include="Activity\Commands\UpdateActivityDepartmentValidatorTests.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUserCommandValidatorTests.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUserValidatorTests.cs" />
@@ -136,9 +135,11 @@
     <Compile Include="AreaBreakdown\Commands\UpdateAreaBreakdownCommandValidatorTests.cs" />
     <Compile Include="AreaBreakdown\Queries\AreaBreakdownQueryValidatorTests.cs" />
     <Compile Include="AreaBreakdown\QueryHandlers\AreaBreakdownQueryHandlerTests.cs" />
+    <Compile Include="Attachments\Commands\CreateEntityAttachmentCommandValidatorTests.cs" />
     <Compile Include="Attachments\Queries\AttachmentQueryValidatorTests.cs" />
     <Compile Include="Attachments\QueryHandlers\AttachmentQueryHandlerTests.cs" />
     <Compile Include="BaseTestClassFixture.cs" />
+    <Compile Include="AutoConfiguredMoqDataAttribute.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidatorTests.cs" />
     <Compile Include="Characteristic\QueryHandlers\CharacteristicGroupsQueryHandlerTests.cs" />
     <Compile Include="Common\BusinessValidators\ActivityTypeDefinitionValidatorTest.cs" />
@@ -162,6 +163,8 @@
     <Compile Include="Offer\CommandHandlers\CreateOfferCommandHandlerTests.cs" />
     <Compile Include="Offer\Commands\UpdateOfferCommandValidatorTests.cs" />
     <Compile Include="Offer\Commands\CreateOfferCommandValidatorTests.cs" />
+    <Compile Include="Property\CommandHandlers\CreatePropertyAttachmentCommandHandlerTests.cs" />
+    <Compile Include="Requirement\Commands\CreateRequirementAttachmentCommandHandlerTests.cs" />
     <Compile Include="Viewing\CommandHandlers\CreateViewingCommandHandlerTests.cs" />
     <Compile Include="Viewing\CommandHandlers\UpdateViewingCommandHandlerTests.cs" />
     <Compile Include="Viewing\Commands\UpdateViewingCommandValidatorTests.cs" />

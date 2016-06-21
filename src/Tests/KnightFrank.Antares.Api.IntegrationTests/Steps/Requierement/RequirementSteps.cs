@@ -26,8 +26,8 @@
     public class RequirementSteps : IClassFixture<BaseTestClassFixture>
     {
         private const string ApiUrl = "/api/requirements";
-        private readonly BaseTestClassFixture fixture;
         private readonly DateTime date = DateTime.UtcNow;
+        private readonly BaseTestClassFixture fixture;
         private readonly ScenarioContext scenarioContext;
 
         public RequirementSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
@@ -238,7 +238,8 @@
         public void CompareRequirements()
         {
             var currentRequirement = JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent());
-            Requirement expectedRequirement = this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(currentRequirement.Id));
+            Requirement expectedRequirement =
+                this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(currentRequirement.Id));
 
             AssertionOptions.AssertEquivalencyUsing(options =>
                 options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>());

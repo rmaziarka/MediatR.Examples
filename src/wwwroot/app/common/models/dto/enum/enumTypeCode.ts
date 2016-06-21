@@ -5,6 +5,8 @@ module Antares.Common.Models.Dto {
         ActivityStatus = <any>'activityStatus',
         Division = <any>'division',
         ActivityDocumentType = <any>'activityDocumentType',
+        PropertyDocumentType = <any>'propertyDocumentType',
+        RequirementDocumentType = <any>'requirementDocumentType',
         OfferStatus = <any>'offerStatus',
         ActivityDepartmentType = <any>'activityDepartmentType',
         ClientCareStatus = <any>'clientCareStatus'
