@@ -16,21 +16,18 @@ module Antares.Attributes
         // controller
         public managingDepartmentType: Dto.IEnumItem;
         public standardDepartmentType: Dto.IEnumItem;
-        private activityEdit: Antares.Activity.ActivityEditController;
+        private activityEdit: Activity.ActivityEditController;
 
-        constructor(
-            private enumService: Services.EnumService) {
-
-            this.enumService.getEnumPromise().then(this.onEnumLoaded);
+        constructor(private enumProvider: Providers.EnumProvider) {
         }
 
-        onEnumLoaded = (result: Dto.IEnumDictionary) => {
-            this.managingDepartmentType = this.getDepartmentTypeByCode(result, Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Managing]);
-            this.standardDepartmentType = this.getDepartmentTypeByCode(result, Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Standard]);
+        private $onInit = () => {
+            this.managingDepartmentType = this.getDepartmentTypeByCode(Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Managing]);
+            this.standardDepartmentType = this.getDepartmentTypeByCode(Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Standard]);
         }
 
-        private getDepartmentTypeByCode = (result: Dto.IEnumDictionary, code: string): Dto.IEnumItem => {
-            var departmentTypes: Dto.IEnumItem[] = result[Dto.EnumTypeCode.ActivityDepartmentType];
+        private getDepartmentTypeByCode = (code: string): Dto.IEnumItem => {
+            var departmentTypes: Dto.IEnumItem[] = this.enumProvider.enums[Dto.EnumTypeCode.ActivityDepartmentType];
 
             return departmentTypes.filter((department: Dto.IEnumItem) => {
                 return department.code === code;

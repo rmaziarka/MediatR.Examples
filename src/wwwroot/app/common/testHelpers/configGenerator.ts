@@ -62,8 +62,11 @@ module Antares.TestHelpers {
                 activityType: ConfigGenerator.generateActivityTypeEditConfig(),
                 landlords: ConfigGenerator.generateActivityLandlordsConfig(),
                 vendors: ConfigGenerator.generateActivityVendorsConfig(),
-				askingPrice: ConfigGenerator.generateActivityAskingPriceConfig(),
-				shortLetPricePerWeek: ConfigGenerator.generateActivityShortLetPricePerWeekControlConfig()
+                askingPrice: ConfigGenerator.generateActivityAskingPriceConfig(),
+                shortLetPricePerWeek: ConfigGenerator.generateActivityShortLetPricePerWeekControlConfig(),
+                departments: ConfigGenerator.generateDepartmentViewControlConfig(),
+                negotiators: ConfigGenerator.generateNegotiatorsViewControlConfig(),
+                property: ConfigGenerator.generatePropertyViewControlConfig()
             };
 
             return config;
@@ -82,6 +85,33 @@ module Antares.TestHelpers {
             var config: Attributes.IActivityShortLetPricePerWeekControlConfig = {
                 active: true,
                 shortLetPricePerWeek: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
+            };
+
+            return config;
+        }
+
+        public static generateDepartmentViewControlConfig(): Attributes.IActivityDepartmentsViewControlConfig {
+            var config: Attributes.IActivityDepartmentsViewControlConfig = {
+                active: true,
+                activityDepartments: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
+            };
+
+            return config;
+        }
+
+        public static generateNegotiatorsViewControlConfig(): Attributes.IActivityNegotiatorsControlConfig {
+            var config: Attributes.IActivityNegotiatorsControlConfig = {
+                active: true,
+                contactIds: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
+            };
+
+            return config;
+        }
+
+        public static generatePropertyViewControlConfig(): Attributes.IPropertyViewControlConfig {
+            var config: Attributes.IPropertyViewControlConfig = {
+                active: true,
+                propertyId: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
             };
 
             return config;

@@ -5,5 +5,8 @@ declare module Antares.Activity {
 
     interface IActivityEditConfig extends IActivityConfig {
         activityStatus: Attributes.IActivityStatusEditControlConfig;
+        departments: Attributes.IActivityDepartmentsViewControlConfig;
+        negotiators: Attributes.IActivityNegotiatorsControlConfig;
+        property: Attributes.IPropertyViewControlConfig
     }
 }
