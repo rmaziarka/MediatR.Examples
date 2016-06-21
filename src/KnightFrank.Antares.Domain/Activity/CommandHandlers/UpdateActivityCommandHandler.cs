@@ -79,6 +79,7 @@
                     x => x.ActivityUsers,
                     x => x.ActivityDepartments,
                     x => x.Property.PropertyType,
+                    x => x.Property.Address,
                     x => x.ActivityType)
                     .SingleOrDefault();
 
