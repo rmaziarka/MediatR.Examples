@@ -2,6 +2,7 @@
 {
     using System;
     using System.Web;
+    using System.Web.Http.Filters;
 
     using KnightFrank.Antares.Api.Core;
     using KnightFrank.Antares.Api.Services.AzureStorage;
@@ -17,6 +18,7 @@
     using Ninject;
     using Ninject.Planning.Bindings.Resolvers;
     using Ninject.Web.Common;
+    using Ninject.Web.WebApi.FilterBindingSyntax;
 
     public class NinjectWebCommon
     {
@@ -73,6 +75,8 @@
         {
             kernel.Bind<IControlsConfiguration<Tuple<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>>>().To<ActivityControlsConfiguration>();
             kernel.Bind<IEntityMapper<Activity>>().To<ActivityEntityMapper>();
+            kernel.BindHttpFilter<DataShapingFilter>(FilterScope.Action).WhenActionMethodHas<DataShapingAttribute>();
+            kernel.BindHttpFilter<DataShapingFilter>(FilterScope.Controller).WhenControllerHas<DataShapingAttribute>();
         }
     }
 }
