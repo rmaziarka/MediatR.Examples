@@ -25,6 +25,9 @@ module Antares {
                     'enumsPromise': (enumService: Services.EnumService) => {
                         return enumService.getEnumPromise();
                     },
+                    'enumsProviderPromise': (enumProvider: Providers.EnumProvider) =>{
+                        return enumProvider.init();
+                    },
                     'addressDefinitions': (addressFormsProvider: Providers.AddressFormsProvider) => {
                         return addressFormsProvider.loadDefinitions();
                     }

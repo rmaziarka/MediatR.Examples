@@ -4,6 +4,7 @@
         id: string = null;
         address: Business.Address = new Business.Address();
         divisionId: string = null;
+        propertyTypeId: string;
 
         constructor(property?: Dto.IPreviewProperty)
         {

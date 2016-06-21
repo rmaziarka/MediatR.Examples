@@ -157,17 +157,23 @@ module Antares {
                 $compile: ng.ICompileService,
                 $httpBackend: ng.IHttpBackendService,
                 $filter: ng.IFilterService,
-                enumService:Antares.Mock.EnumServiceMock) => {
+                enumProvider: Providers.EnumProvider) => {
 
                 filter = $filter;
                 $http = $httpBackend;
-                var enumItems = [
-                { id: '1', code: 'New' },
-                { id: '2', code: 'Withdrawn' },
-                { id: '3', code: 'Rejected' },
-                { id: '4', code: 'Accepted' }
-            ];
-                enumService.setEnum('OfferStatus',enumItems);
+
+                type Dictionary = { [id: string]: string };
+                var offerStatusToCodeDict: Dictionary = {
+                    '1': 'New',
+                    '2': 'Withdrawn',
+                    '3': 'Rejected',
+                    '4': 'Accepted'
+                };
+
+                enumProvider.getEnumCodeById = (statusId: string) =>{
+                    return offerStatusToCodeDict[statusId];
+                };
+
                 scope = $rootScope.$new();
                 scope['requirement'] = requirementMock;
                 element = $compile('<requirement-view requirement="requirement"></requirement-view>')(scope);

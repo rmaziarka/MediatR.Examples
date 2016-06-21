@@ -74,18 +74,16 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity\CommandHandlers\CreateActivityAttachmentCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandler.cs" />
-    <Compile Include="Activity\CommandHandlers\UpdateActivityUserCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandler.cs" />
+    <Compile Include="Activity\CommandHandlers\UpdateActivityUserCommandHandler.cs" />
     <Compile Include="Activity\Commands\CreateActivityAttachmentCommand.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\ActivityProfile.cs" />
-    <Compile Include="Activity\Commands\CreateActivityCommandValidator.cs" />
     <Compile Include="Activity\Commands\UpdateActivityDepartment.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUserCommand.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUserCommandValidator.cs" />
@@ -93,7 +91,6 @@
     <Compile Include="Activity\Commands\UpdateActivityUserValidator.cs" />
     <Compile Include="Activity\Commands\UpdateActivityUser.cs" />
     <Compile Include="Activity\Commands\UpdateActivityCommand.cs" />
-    <Compile Include="Activity\Commands\UpdateActivityCommandValidator.cs" />
     <Compile Include="Activity\Queries\ActivitiesQuery.cs" />
     <Compile Include="Activity\Queries\ActivityQuery.cs" />
     <Compile Include="Activity\Queries\ActivityTypeQueryValidator.cs" />
@@ -147,6 +144,30 @@
     <Compile Include="Attachment\Queries\AttachmentQuery.cs" />
     <Compile Include="Attachment\Queries\AttachmentQueryValidator.cs" />
     <Compile Include="Attachment\QueryHandlers\AttachmentQueryHandler.cs" />
+    <Compile Include="AttributeConfiguration\Common\ActivityEntityMapper.cs" />
+    <Compile Include="AttributeConfiguration\Common\AttributeValidator.cs" />
+    <Compile Include="AttributeConfiguration\Common\BaseEntityMapper.cs" />
+    <Compile Include="AttributeConfiguration\Common\EntityValidator.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\DictionaryExtensions.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\EnumExtensions.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\FieldExtensions.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\LambdaExtension.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\ListExtensions.cs" />
+    <Compile Include="AttributeConfiguration\Common\IAttributeValidator.cs" />
+    <Compile Include="AttributeConfiguration\Common\IEntityMapper.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\ActivityControlsConfiguration.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\BaseControlsConfiguration.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerThreeTypes.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerTwoTypes.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\IControlsConfiguration.cs" />
+    <Compile Include="AttributeConfiguration\Enums\ControlCode.cs" />
+    <Compile Include="AttributeConfiguration\Enums\PageType.cs" />
+    <Compile Include="AttributeConfiguration\Fields\Control.cs" />
+    <Compile Include="AttributeConfiguration\Fields\Field.cs" />
+    <Compile Include="AttributeConfiguration\Fields\IField.cs" />
+    <Compile Include="AttributeConfiguration\Fields\InnerDictionaryField.cs" />
+    <Compile Include="AttributeConfiguration\Fields\InnerField.cs" />
+    <Compile Include="AttributeConfiguration\Fields\InnerFieldState.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQuery.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidator.cs" />
     <Compile Include="Characteristic\QueryHandlers\CharacteristicGroupsQueryHandler.cs" />
@@ -169,6 +190,7 @@
     <Compile Include="Common\Commands\CreateOrUpdateAddress.cs" />
     <Compile Include="Common\Commands\CreateOrUpdateAddressValidator.cs" />
     <Compile Include="Common\Enums\DivisionEnum.cs" />
+    <Compile Include="Common\Enums\EnumParser.cs" />
     <Compile Include="Common\Enums\GenerateEnumTypeItems.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -179,6 +201,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Common\Enums\IEnumParser.cs" />
     <Compile Include="Common\Enums\PropertyType.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

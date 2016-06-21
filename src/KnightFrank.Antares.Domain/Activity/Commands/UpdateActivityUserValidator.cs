@@ -4,9 +4,13 @@
 
     public class UpdateActivityUserValidator : AbstractValidator<UpdateActivityUser>
     {
-        public UpdateActivityUserValidator()
+        public UpdateActivityUserValidator(bool callDateRequired)
         {
             this.RuleFor(x => x.UserId).NotEmpty();
+            if (callDateRequired)
+            {
+                this.RuleFor(x => x.CallDate).NotEmpty();
+            }
         }
     }
 }

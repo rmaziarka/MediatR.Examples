@@ -7,6 +7,7 @@
     using System.Net.Http;
     using System.Web.Http;
 
+    using KnightFrank.Antares.Api;
     using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.User;
@@ -66,6 +67,7 @@
         /// <returns>Property entity</returns>
         [HttpGet]
         [Route("{id}")]
+        [DataShaping]
         public Property GetProperty(Guid id)
         {
             Property property = this.mediator.Send(new PropertyQuery { Id = id });
@@ -85,6 +87,7 @@
         /// <returns>Newly created property </returns>
         [HttpPost]
         [Route("")]
+        [DataShaping]
         public Property CreateProperty(CreatePropertyCommand command)
         {
             Guid propertyId = this.mediator.Send(command);
@@ -122,6 +125,7 @@
         /// <returns>Newly updated property</returns>
         [HttpPut]
         [Route("")]
+        [DataShaping]
         public Property UpdateProperty(UpdatePropertyCommand command)
         {
             Guid propertyId = this.mediator.Send(command);

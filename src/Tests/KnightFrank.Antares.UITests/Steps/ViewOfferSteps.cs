@@ -55,7 +55,7 @@
         [When(@"User clicks view activity link from activity on view offer page")]
         public void OpenViewActivityPage()
         {
-            this.page.ActivityPreview.ClickViewActivity();
+            this.page.ActivityPreview.WaitForDetailsToLoad().ClickViewActivity();
         }
 
         [When(@"User clicks requirement details button on view offer page")]

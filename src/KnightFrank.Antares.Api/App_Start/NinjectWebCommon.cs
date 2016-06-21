@@ -2,12 +2,16 @@
 {
     using System;
     using System.Web;
+    using System.Web.Http.Filters;
 
     using KnightFrank.Antares.Api.Core;
     using KnightFrank.Antares.Api.Services.AzureStorage;
     using KnightFrank.Antares.Api.Services.AzureStorage.Factories;
     using KnightFrank.Antares.Dal;
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Search;
     using KnightFrank.Antares.Search.Common.Validators;
 
@@ -17,6 +21,7 @@
     using Ninject.Extensions.Conventions;
     using Ninject.Planning.Bindings.Resolvers;
     using Ninject.Web.Common;
+    using Ninject.Web.WebApi.FilterBindingSyntax;
 
     public class NinjectWebCommon
     {
@@ -37,6 +42,7 @@
 
                 ConfigureDependenciesInHttpRequestScope(kernel);
                 ConfigureMediator(kernel);
+                ConfigureAttributeConfigurations(kernel);
 
                 RebindAction?.Invoke(kernel);
 
@@ -85,6 +91,14 @@
             kernel.Bind<IEntityDocumentStorageProvider>().To<EntityDocumentStorageProvider>();
             kernel.Bind<IDocumentStorageProvider>().To<DocumentStorageProvider>();
 
+        }
+
+        private static void ConfigureAttributeConfigurations(StandardKernel kernel)
+        {
+            kernel.Bind<IControlsConfiguration<Tuple<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>>>().To<ActivityControlsConfiguration>();
+            kernel.Bind<IEntityMapper<Activity>>().To<ActivityEntityMapper>();
+            kernel.BindHttpFilter<DataShapingFilter>(FilterScope.Action).WhenActionMethodHas<DataShapingAttribute>();
+            kernel.BindHttpFilter<DataShapingFilter>(FilterScope.Controller).WhenControllerHas<DataShapingAttribute>();
         }
     }
 }

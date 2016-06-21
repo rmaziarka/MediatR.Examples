@@ -44,7 +44,7 @@
 
             this.enumTypeItemValidator.ItemExists(EnumType.Division, message.DivisionId);
 
-            this.entityValidator.EntityExists<PropertyType>(message.PropertyTypeId);
+            this.entityValidator.EntityExists<Dal.Model.Property.PropertyType>(message.PropertyTypeId);
 
             ValidationResult validationResult = this.domainValidator.Validate(message);
 
@@ -54,7 +54,7 @@
             }
 
             var property = Mapper.Map<Property>(message);
-            
+
             this.propertyRepository.Add(property);
             this.propertyRepository.Save();
 

@@ -2,10 +2,10 @@
 module Antares {
 
     import EnumSorterFilter = Common.Filters.EnumSorterFilter;
+    type Dictionary = { [id: string]: string };
 
     describe('Given enum sort configuration', () => {
-        var filter: ng.IFilterService,
-            appConfigMock: Common.Models.IAppConfig =
+        var appConfigMock: Common.Models.IAppConfig =
                 {
                     rootUrl: "",
                     fileChunkSizeInBytes: 12,
@@ -18,23 +18,21 @@ module Antares {
                         }
                     }
                 },
-            enumSorterFilter: EnumSorterFilter;
+            enumSorterFilter: EnumSorterFilter,
+            offerStatusToCodeDict: Dictionary = {
+                '1': 'New' ,
+                '2': 'Withdrawn' ,
+                '3': 'Rejected' ,
+                '4': 'Accepted' 
+            };
 
-        // beforeEach(angular.mock.module(($provide: angular.auto.IProvideService) => {
-        //     $provide.value('enumService', Antares.Mock.EnumServiceMock);
-        // }));
+        beforeEach(inject((enumProvider: Providers.EnumProvider) =>{
 
-        beforeEach(inject((enumService: Antares.Services.EnumService
-        ) => {
-            var enumItems = [
-                { id: '1', code: 'New' },
-                { id: '2', code: 'Withdrawn' },
-                { id: '3', code: 'Rejected' },
-                { id: '4', code: 'Accepted' }
-            ];
-
-            (<any>enumService).setEnum('OfferStatus', enumItems);
-            enumSorterFilter = new EnumSorterFilter(enumService, appConfigMock);
+            enumProvider.getEnumCodeById = (statusId: string) =>{
+                return offerStatusToCodeDict[statusId];
+            }
+            
+            enumSorterFilter = new EnumSorterFilter(enumProvider, appConfigMock);
         }));
         
         describe('when enum sorting filter', () => {

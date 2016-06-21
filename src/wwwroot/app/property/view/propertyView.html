@@ -35,8 +35,8 @@
                         <card-list-items as-sortable="vm.areaBreakdownDndOptions" ng-model="vm.property.propertyAreaBreakdowns">
                             <div ng-repeat="propertyAreaBreakdown in vm.property.propertyAreaBreakdowns track by propertyAreaBreakdown.id" as-sortable-item>
                                 <div as-sortable-item-handle>
-                                    <card id="area-card-{{propertyAreaBreakdown.id}}" show-context-menu="true" display-new-control="true"
-                                          card-template-url="'app/property/view/areaBreakdown/list/areaBreakdownCard.html'" item="propertyAreaBreakdown">
+                                    <card id="area-card-{{propertyAreaBreakdown.id}}" show-context-menu="true" display-new-control="true" card-template-url="'app/property/view/areaBreakdown/list/areaBreakdownCard.html'"
+                                        item="propertyAreaBreakdown">
                                         <card-context-menu>
                                             <context-menu-item type="edit" item="propertyAreaBreakdown" action="vm.showAreaEdit"></context-menu-item>
                                         </card-context-menu>
@@ -50,7 +50,8 @@
             <div class="col-md-4">
                 <section>
                     <h3 class="page-header" translate="PROPERTY.VIEW.CHARACTERISTICS"></h3>
-                    <characteristic-list-view componentId="characteristicListView" property-type-id="vm.property.propertyTypeId" country-id="vm.property.address.countryId" characteristics-map="vm.property.propertyCharacteristicsMap"></characteristic-list-view>
+                    <characteristic-list-view componentId="characteristicListView" property-type-id="vm.property.propertyTypeId" country-id="vm.property.address.countryId"
+                        characteristics-map="vm.property.propertyCharacteristicsMap"></characteristic-list-view>
                 </section>
             </div>
             <div class="col-md-4">
@@ -130,24 +131,6 @@
     </side-panel-footer>
 </side-panel>
 
-<side-panel component-id="vm.componentIds.activityAddSidePanelId" is-busy="vm.savePropertyActivityBusy">
-    <side-panel-header>
-        <h3 translate="ACTIVITY.ADD.CREATE_ACTIVITY"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <activity-add component-id="vm.componentIds.activityAddId" activities="vm.property.activities" property-type-id="vm.property.propertyTypeId"></activity-add>
-        <busy is-busy="vm.savePropertyActivityBusy" label="{{'ACTIVITY.ADD.SAVING_ACTIVITY_IN_PROGRESS' | translate}}"></busy>
-    </side-panel-content>
-    <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelAddActivity()">
-            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
-        </button>
-        <button class="btn btn-primary" type="button" ng-click="vm.saveActivity()" ng-disabled="" id="activity-add-button">
-            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
-        </button>
-    </side-panel-footer>
-</side-panel>
-
 <side-panel component-id="vm.componentIds.ownershipViewSidePanelId" id="ownership-panel">
     <side-panel-header>
         <h3 translate="OWNERSHIP.VIEW.OWNERSHIPDETAILS"></h3>
@@ -155,16 +138,6 @@
     <side-panel-content>
         <ownership-view component-id="vm.componentIds.ownershipViewId">
         </ownership-view>
-    </side-panel-content>
-</side-panel>
-
-<side-panel component-id="vm.componentIds.activityPreviewSidePanelId">
-    <side-panel-header>
-        <h3 translate="ACTIVITY.PREVIEW.ACTIVITYPREVIEW"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <activity-preview component-id="vm.componentIds.activityPreviewId">
-        </activity-preview>
     </side-panel-content>
 </side-panel>
 
@@ -201,3 +174,15 @@
         </button>
     </side-panel-footer>
 </side-panel>
+
+<activity-add-panel is-visible="vm.isActivityAddPanelVisible" 
+property-type-Id="vm.property.propertyTypeId" property-id="vm.property.id"
+    ownerships="vm.property.ownerships">
+</activity-add-panel>
+
+<activity-preview-panel 
+is-visible="vm.isActivityPreviewPanelVisible" 
+property-type-id="vm.property.propertyTypeId" 
+activity='vm.selectedActivity'>
+
+</activity-preview-panel>

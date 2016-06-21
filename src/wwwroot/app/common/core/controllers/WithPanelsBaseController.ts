@@ -7,6 +7,7 @@ module Antares.Core {
         components: any;
         componentIds: any;
         currentPanel: any;
+        onPanelsHidden: Function = () => {};
 
         constructor(
             protected componentRegistry: Core.Service.ComponentRegistry,
@@ -31,6 +32,8 @@ module Antares.Core {
                     this.components.panels[panel]().hide();
                 }
             }
+
+            this.onPanelsHidden();
         }
 
         protected showPanel(panel: any) {

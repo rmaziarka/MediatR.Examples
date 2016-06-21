@@ -4,18 +4,20 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoMapper;
-
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
 
     using MediatR;
 
+    using ActivityType = KnightFrank.Antares.Domain.Common.Enums.ActivityType;
     using EnumType = KnightFrank.Antares.Domain.Common.Enums.EnumType;
 
     public class UpdateActivityCommandHandler : IRequestHandler<UpdateActivityCommand, Guid>
@@ -38,6 +40,10 @@
 
         private readonly IEnumTypeItemValidator enumTypeItemValidator;
 
+        private readonly IEntityMapper<Activity> activityEntityMapper;
+
+        private readonly IAttributeValidator<Tuple<PropertyType, ActivityType>> attributeValidator;
+
         public UpdateActivityCommandHandler(
             IGenericRepository<Activity> activityRepository,
             IGenericRepository<User> userRepository,
@@ -47,7 +53,10 @@
             ICollectionValidator collectionValidator,
             IEnumTypeItemValidator enumTypeItemValidator,
             IActivityTypeDefinitionValidator activityTypeDefinitionValidator,
-            IGenericRepository<EnumTypeItem> enumTypeItemRepository)
+            IGenericRepository<EnumTypeItem> enumTypeItemRepository,
+            IEntityMapper<Activity> activityEntityMapper,
+            IAttributeValidator<Tuple<PropertyType, ActivityType>> attributeValidator)
+
         {
             this.activityRepository = activityRepository;
             this.userRepository = userRepository;
@@ -58,15 +67,29 @@
             this.enumTypeItemValidator = enumTypeItemValidator;
             this.activityTypeDefinitionValidator = activityTypeDefinitionValidator;
             this.enumTypeItemRepository = enumTypeItemRepository;
+            this.activityEntityMapper = activityEntityMapper;
+            this.attributeValidator = attributeValidator;
         }
 
         public Guid Handle(UpdateActivityCommand message)
         {
             Activity activity =
-                this.activityRepository.GetWithInclude(x => x.Id == message.Id, x => x.ActivityUsers, x => x.ActivityDepartments)
+                this.activityRepository.GetWithInclude(
+                    x => x.Id == message.Id,
+                    x => x.ActivityUsers,
+                    x => x.ActivityDepartments,
+                    x => x.Property.PropertyType,
+                    x => x.Property.Address,
+                    x => x.ActivityType)
                     .SingleOrDefault();
 
             this.entityValidator.EntityExists(activity, message.Id);
+
+            // ReSharper disable once PossibleNullReferenceException
+            var activityType = EnumExtensions.ParseEnum<ActivityType>(activity.ActivityType.EnumCode);
+            var propertyType = EnumExtensions.ParseEnum<PropertyType>(activity.Property.PropertyType.EnumCode);
+
+            this.attributeValidator.Validate(PageType.Update, new Tuple<PropertyType, ActivityType>(propertyType, activityType), message);
 
             this.enumTypeItemValidator.ItemExists(EnumType.ActivityStatus, message.ActivityStatusId);
 
@@ -74,7 +97,7 @@
 
             List<ActivityUser> commandNegotiators = this.ValidateAndRetrieveNegotiatorsFromCommand(message);
 
-            Mapper.Map(message, activity);
+            activity = this.activityEntityMapper.MapAllowedValues(message, activity, PageType.Update);
 
             this.ValidateActivityNegotiators(commandNegotiators, activity);
             this.UpdateActivityNegotiators(commandNegotiators, activity);
@@ -125,12 +148,12 @@
                         {
                             User user = this.GetUser(n.UserId);
                             return new ActivityUser
-                                       {
-                                           UserId = user.Id,
-                                           User = user,
-                                           UserType = this.GetSecondaryNegotiatorUserType(),
-                                           CallDate = n.CallDate
-                                       };
+                            {
+                                UserId = user.Id,
+                                User = user,
+                                UserType = this.GetSecondaryNegotiatorUserType(),
+                                CallDate = n.CallDate
+                            };
                         }));
 
             // All negotirators
@@ -292,10 +315,10 @@
         private static ActivityDepartment CreateActivityDepartament(UpdateActivityDepartment updateActivityDepartment)
         {
             return new ActivityDepartment
-                       {
-                           DepartmentId = updateActivityDepartment.DepartmentId,
-                           DepartmentTypeId = updateActivityDepartment.DepartmentTypeId
-                       };
+            {
+                DepartmentId = updateActivityDepartment.DepartmentId,
+                DepartmentTypeId = updateActivityDepartment.DepartmentTypeId
+            };
         }
 
         private static void UpdateActivityDepartament(UpdateActivityDepartment updateActivityDepartment, ActivityDepartment oldDepartament)
@@ -321,11 +344,6 @@
         private EnumTypeItem GetManagingDepartmentType()
         {
             return this.enumTypeItemRepository.FindBy(i => i.Code == ActivityDepartmentType.Managing.ToString()).Single();
-        }
-
-        private EnumTypeItem GetStandardDepartmentType()
-        {
-            return this.enumTypeItemRepository.FindBy(i => i.Code == ActivityDepartmentType.Standard.ToString()).Single();
         }
     }
 }

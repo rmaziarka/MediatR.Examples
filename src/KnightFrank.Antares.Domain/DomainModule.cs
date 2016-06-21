@@ -7,8 +7,12 @@
     using FluentValidation;
 
     using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Common.Enums;
 
     using Ninject.Modules;
 
@@ -23,6 +27,10 @@
 
             this.Bind(typeof(IReadGenericRepository<>)).To(typeof(ReadGenericRepository<>));
             this.Bind<IEntityValidator>().To(typeof(EntityValidator));
+            this.Bind<IEnumParser>().To<EnumParser>();
+            this.Bind<IControlsConfiguration<Tuple<PageType, ActivityType>>>().To(typeof(ActivityControlsConfiguration));
+            this.Bind<IAttributeValidator<Tuple<PropertyType, ActivityType>>>().To(typeof(AttributeValidator<>));
+            
             this.Bind<ICollectionValidator>().To(typeof(CollectionValidator));
             this.Bind<IEnumTypeItemValidator>().To(typeof(EnumTypeItemValidator));
             this.Bind<IAddressValidator>().To(typeof(AddressValidator));
