@@ -7,7 +7,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
 
-    public abstract class ControlsConfigurationPerTwoTypes<TEnum1, TEnum2> : BaseControlsConfiguration<Tuple<TEnum1, TEnum2>>
+    public abstract class ControlsConfigurationPerTwoTypes<TEnum1, TEnum2> : BaseControlsConfiguration<Tuple<TEnum1, TEnum2>> where TEnum1 : struct where TEnum2 : struct
     {
         protected IList<Tuple<Tuple<TEnum1, TEnum2>, PageType>> When(TEnum1 enum1, TEnum2 enum2, params PageType[] pages)
         {
