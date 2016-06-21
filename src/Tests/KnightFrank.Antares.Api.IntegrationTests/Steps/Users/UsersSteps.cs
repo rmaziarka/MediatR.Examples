@@ -69,6 +69,7 @@
                 user.BusinessId = business.Id;
                 user.DepartmentId = department.Id;
                 user.LocaleId = locale.Id;
+                user.DivisionId = this.fixture.DataContext.EnumTypeItems.First(e => e.EnumType.Code.Equals("Division")).Id;
             }
 
             this.fixture.DataContext.Users.AddRange(users);
@@ -169,7 +170,8 @@
             .Excluding(x=>x.Business)
             .Excluding(x=>x.Country)
             .Excluding(x => x.Department)
-            .Excluding(x => x.Locale));
+            .Excluding(x => x.Locale)
+            .Excluding(x=>x.Division));
 
         }
 
