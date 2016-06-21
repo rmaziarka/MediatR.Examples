@@ -2,16 +2,14 @@
 
 module Antares {
     import ActivityAddPanelController = Activity.ActivityAddPanelController;
-    import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
-
-    import runDescribe = TestHelpers.runDescribe;
+	import LatestViewsProvider = Providers.LatestViewsProvider;
 
     describe('Given add activity panel', () => {
-        var $scope: ng.IScope,
-            $http: ng.IHttpBackendService,
+        var $http: ng.IHttpBackendService,
             controller: ActivityAddPanelController,
-            eventAggregator: Antares.Core.EventAggregator;
+            eventAggregator: Core.EventAggregator,
+			latestViewsProviderSpy: LatestViewsProvider;
 
         describe('when save', () => {
             var newActivity: Antares.Activity.AddCard.ActivityAddCardModel;
@@ -19,7 +17,11 @@ module Antares {
             beforeEach(inject((
                 _eventAggregator_: Antares.Core.EventAggregator,
                 $controller: ng.IControllerService,
-                $httpBackend: ng.IHttpBackendService) => {
+                $httpBackend: ng.IHttpBackendService,
+				latestViewsProvider: LatestViewsProvider) =>{
+
+				spyOn(latestViewsProvider, 'addView');
+				latestViewsProviderSpy = latestViewsProvider;
 
                 $http = $httpBackend;
                 eventAggregator = _eventAggregator_;
@@ -54,49 +56,59 @@ module Antares {
                 expect(requestData.contactIds).toEqual(contactIds);
             });
 
-            it('then event for closing panel should be published', () => {
-                // arrange
-                var isCloseSidePanelEventPublished: boolean = false;
+	        it('then event for closing panel should be published',
+	        () =>{
+		        // arrange
+		        var isCloseSidePanelEventPublished: boolean = false;
 
-                eventAggregator.with({}).subscribe(Antares.Common.Component.CloseSidePanelEvent, () => {
-                    isCloseSidePanelEventPublished = true;
-                });
+		        eventAggregator.with({})
+			        .subscribe(Antares.Common.Component.CloseSidePanelEvent,
+			        () =>{
+				        isCloseSidePanelEventPublished = true;
+			        });
 
-                $http.expectPOST(/\/api\/activities/, (data: string) => {
-                    return true;
-                }).respond(200, new Business.Activity());
+		        $http.expectPOST(/\/api\/activities/,
+			        (data: string) =>{
+				        return true;
+			        })
+			        .respond(200, new Business.Activity());
 
-                // act
-                controller.save(newActivity);
-                $http.flush();
+		        // act
+		        controller.save(newActivity);
+		        $http.flush();
 
-                // assert
-                expect(isCloseSidePanelEventPublished).toBeTruthy();
-            })
+		        // assert
+		        expect(isCloseSidePanelEventPublished).toBeTruthy();
+	        });
 
-            it('then event for adding new activity should be published', () => {
-                // arrange
-                var isActivityAddedSidePanelEventPublished: boolean = false;
-                var activityFromEvent: Antares.Common.Models.Dto.IActivity = null;
-                var activitySaved: Antares.Common.Models.Dto.IActivity = TestHelpers.ActivityGenerator.generateDto();
+	        it('then event for adding new activity should be published',
+	        () =>{
+		        // arrange
+		        var isActivityAddedSidePanelEventPublished: boolean = false;
+		        var activityFromEvent: Antares.Common.Models.Dto.IActivity = null;
+		        var activitySaved: Antares.Common.Models.Dto.IActivity = TestHelpers.ActivityGenerator.generateDto();
 
-                eventAggregator.with({}).subscribe(Activity.ActivityAddedSidePanelEvent, (msg: Activity.ActivityAddedSidePanelEvent) => {
-                    isActivityAddedSidePanelEventPublished = true;
-                    activityFromEvent = msg.activityAdded;
-                });
+		        eventAggregator.with({})
+			        .subscribe(Activity.ActivityAddedSidePanelEvent,
+			        (msg: Activity.ActivityAddedSidePanelEvent) =>{
+				        isActivityAddedSidePanelEventPublished = true;
+				        activityFromEvent = msg.activityAdded;
+			        });
 
-                $http.expectPOST(/\/api\/activities/, (data: string) => {
-                    return true;
-                }).respond(200, activitySaved);
+		        $http.expectPOST(/\/api\/activities/,
+			        (data: string) =>{
+				        return true;
+			        })
+			        .respond(200, activitySaved);
 
-                // act
-                controller.save(newActivity);
-                $http.flush();
+		        // act
+		        controller.save(newActivity);
+		        $http.flush();
 
-                // assert
-                expect(isActivityAddedSidePanelEventPublished).toBeTruthy();
-                expect(activityFromEvent).toEqual(activitySaved);
-            })
+		        // assert
+		        expect(isActivityAddedSidePanelEventPublished).toBeTruthy();
+		        expect(activityFromEvent).toEqual(activitySaved);
+	        });
         });
 
         describe('when load config', () => {

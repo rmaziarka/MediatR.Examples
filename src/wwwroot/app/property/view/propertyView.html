@@ -210,24 +210,6 @@
     </side-panel-footer>
 </side-panel>
 
-<side-panel component-id="vm.componentIds.activityAddSidePanelId" is-busy="vm.savePropertyActivityBusy">
-    <side-panel-header>
-        <h3 translate="ACTIVITY.ADD.CREATE_ACTIVITY"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <activity-add component-id="vm.componentIds.activityAddId" activities="vm.property.activities" property-type-id="vm.property.propertyTypeId"></activity-add>
-        <busy is-busy="vm.savePropertyActivityBusy" label="{{'ACTIVITY.ADD.SAVING_ACTIVITY_IN_PROGRESS' | translate}}"></busy>
-    </side-panel-content>
-    <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelAddActivity()">
-            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
-        </button>
-        <button class="btn btn-primary" type="button" ng-click="vm.saveActivity()" ng-disabled="" id="activity-add-button">
-            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
-        </button>
-    </side-panel-footer>
-</side-panel>
-
 <side-panel component-id="vm.componentIds.ownershipViewSidePanelId" id="ownership-panel">
     <side-panel-header>
         <h3 translate="OWNERSHIP.VIEW.OWNERSHIPDETAILS"></h3>

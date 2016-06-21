@@ -6,8 +6,6 @@ module Antares.Property.View {
     import Dto = Common.Models.Dto;
     import CartListOrder = Common.Component.ListOrder;
     import Resources = Common.Models.Resources;
-    import LatestViewsProvider = Providers.LatestViewsProvider;
-    import EntityType = Common.Models.Enums.EntityTypeEnum;
 
     export class PropertyViewController extends Core.WithPanelsBaseController {
         isActivityAddPanelVisible: boolean = false;
@@ -31,7 +29,6 @@ module Antares.Property.View {
             private dataAccessService: Services.DataAccessService,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService,
-            private latestViewsProvider: LatestViewsProvider,
             private eventAggregator: Antares.Core.EventAggregator) {
 
             super(componentRegistry, $scope);
@@ -92,11 +89,6 @@ module Antares.Property.View {
             this.hidePanels();
             this.selectedActivity = activity;
             this.isActivityPreviewPanelVisible = true;
-
-            this.latestViewsProvider.addView({
-                entityId: activity.id,
-                entityType: EntityType.Activity
-            });
         }
 
         showContactList = () => {
@@ -141,21 +133,6 @@ module Antares.Property.View {
         saveOwnership() {
             this.components.ownershipAdd().saveOwnership(this.property.id).then(() => {
                 this.cancelUpdateContacts();
-            });
-        }
-
-        saveActivity() {
-            this.savePropertyActivityBusy = true;
-
-            this.components.activityAdd().saveActivity(this.property.id).then((result: Dto.IActivity) => {
-                this.cancelAddActivity();
-
-                this.latestViewsProvider.addView({
-                    entityId: result.id,
-                    entityType: EntityType.Activity
-                });
-            }).finally(() => {
-                this.savePropertyActivityBusy = false;
             });
         }
 
@@ -206,8 +183,6 @@ module Antares.Property.View {
                 ownershipAddId: 'viewProperty:ownershipAddComponent',
                 ownershipViewId: 'viewProperty:ownershipViewComponent',
                 ownershipViewSidePanelId: 'viewProperty:ownershipViewSidePanelComponent',
-                activityAddId: 'viewProperty:activityAddComponent',
-                activityAddSidePanelId: 'viewProperty:activityAddSidePanelComponent',
                 areaAddSidePanelId: 'viewProperty:areaAddSidePanelComponent',
                 areaEditSidePanelId: 'viewProperty:areaEditSidePanelComponent',
                 areaAddId: 'viewProperty:areaAddComponent',
@@ -218,7 +193,6 @@ module Antares.Property.View {
         defineComponents() {
             this.components = {
                 contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
-                activityAdd: () => { return this.componentRegistry.get(this.componentIds.activityAddId); },
                 ownershipAdd: () => { return this.componentRegistry.get(this.componentIds.ownershipAddId); },
                 ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewId); },
                 areaAdd: () => { return this.componentRegistry.get(this.componentIds.areaAddId); },
@@ -226,7 +200,6 @@ module Antares.Property.View {
                 panels: {
                     contact: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
                     ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); },
-                    activityAdd: () => { return this.componentRegistry.get(this.componentIds.activityAddSidePanelId); },
                     areaAdd: () => { return this.componentRegistry.get(this.componentIds.areaAddSidePanelId); },
                     areaEdit: () => { return this.componentRegistry.get(this.componentIds.areaEditSidePanelId); }
                 }
