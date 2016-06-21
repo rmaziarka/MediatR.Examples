@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
 
     using KnightFrank.Antares.Dal;
@@ -52,7 +53,7 @@
             address.AddressFormId = addressFormId;
             address.CountryId = countryId;
             address.Line1 = string.Empty;
-            address.Line3 = string.Empty;
+            address.Line3 = DateTime.Now.ToString(CultureInfo.InvariantCulture);
 
             var property = new Property
             {
