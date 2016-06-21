@@ -20,10 +20,11 @@
     [Binding]
     public class EditCompanySteps
     {
+        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly DriverContext driverContext;
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
-        private EditCompanyPage page;
+        private readonly EditCompanyPage page;
 
         public EditCompanySteps(ScenarioContext scenarioContext)
         {

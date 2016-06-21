@@ -49,10 +49,10 @@
             this.page = new ViewActivityPage(this.driverContext).OpenViewActivityPageWithId(activityId.ToString());
         }
 
-        [When(@"User clicks property details link on view activity page")]
+        [When(@"User clicks property details on view activity page")]
         public void OpenPreviewPropertyPage()
         {
-            this.page.ClickDetailsLink().WaitForSidePanelToShow();
+            this.page.ClickPropertyCard().WaitForSidePanelToShow();
         }
 
         [When(@"User clicks view property link from property on view activity page")]
@@ -151,9 +151,9 @@
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(details.ActivityStatus, this.page.Status),
-                () => Assert.Equal(details.MarketAppraisalPrice.ToString("N2") + " GBP", this.page.MarketAppraisalPrice),
-                () => Assert.Equal(details.RecommendedPrice.ToString("N2") + " GBP", this.page.RecommendedPrice),
-                () => Assert.Equal(details.VendorEstimatedPrice.ToString("N2") + " GBP", this.page.VendorEstimatedPrice));
+                () => Assert.Equal(details.MarketAppraisalPrice + " GBP", this.page.MarketAppraisalPrice),
+                () => Assert.Equal(details.RecommendedPrice + " GBP", this.page.RecommendedPrice),
+                () => Assert.Equal(details.VendorEstimatedPrice + " GBP", this.page.VendorEstimatedPrice));
         }
 
         [Then(@"Attachment should be displayed on view activity page")]
