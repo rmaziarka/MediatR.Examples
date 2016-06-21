@@ -4,6 +4,9 @@ OwnershipType
 ActivityStatus
 Division
 ActivityDocumentType
+PropertyDocumentType
+RequirementDocumentType
 OfferStatus
 ActivityUserType
 ActivityDepartmentType
+ClientCareStatus

@@ -14,6 +14,7 @@
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Activity.Queries;
     using KnightFrank.Antares.Domain.Activity.QueryResults;
+    using KnightFrank.Antares.Domain.Attachment.Commands;
     using KnightFrank.Antares.Domain.Attachment.Queries;
 
     using MediatR;
@@ -128,7 +129,7 @@
                 command.Attachment.UserId = this.userRepository.FindBy(u => true).First().Id;
             }
 
-            command.ActivityId = id;
+            command.EntityId = id;
             Guid attachmentId = this.mediator.Send(command);
 
             var attachmentQuery = new AttachmentQuery { Id = attachmentId };

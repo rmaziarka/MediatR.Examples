@@ -93,91 +93,12 @@
                         </card-list-item>
                     </card-list>
                 </section>
+
+                <attachments-manager entity-id="vm.property.id" enum-document-type="{{vm.enumTypePropertyDocumentType}}" entity-type="{{vm.entityType}}" attachments="vm.property.attachments" on-save-attachment-for-entity="vm.saveAttachment(attachment)"></attachments-manager>
             </div>
         </div>
     </div>
 </div>
-
-<side-panel>
-    <side-panel-header>
-        <h3 translate="ATTACHMENT.ATTACHMENTPREVIEW"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <div class="row section-row">
-            <div class="col-xs-5">Name</div>
-            <div class="col-xs-7 text-truncate">
-                <i class="fa fa-download pull-right" aria-hidden="true"></i>
-                <a href="#">Lorem ipsum file.docx</a>
-            </div>
-        </div>
-        <div class="row section-row">
-            <div class="col-xs-5">Type</div>
-            <div class="col-xs-7">Floor plan</div>
-        </div>
-        <div class="row section-row">
-            <div class="col-xs-5">Size</div>
-            <div class="col-xs-7">2MB</div>
-        </div>
-        <div class="row section-row">
-            <div class="col-xs-5">Added</div>
-            <div class="col-xs-7"><time>19-03-2016</time></div>
-        </div>
-        <div class="row section-row">
-            <div class="col-xs-5">By</div>
-            <div class="col-xs-7">John Smith</div>
-        </div>
-    </side-panel-content>
-</side-panel>
-
-<side-panel>
-    <side-panel-header>
-        <h3 translate="ATTACHMENT.ATTACHFILE"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <form>
-            <div class="form-group has-error">
-                <div class="row">
-                    <div class="col-md-12">
-                        <label for="file">File:</label>
-                    </div>
-                    <div class="col-md-12">
-                        <button type="button" class="close close-side-panel" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                        <div class="text-truncate">Lorem ipsum file.docx</div>
-                    </div>
-                    <div ng-hide="true" class="col-md-12">
-                        <span class="btn btn-default btn-file">
-                            Browse <input id="file" type="file">
-                        </span>
-                        <p class="help-block">Please select file to upload</p>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-9">
-                        <label class="required" for="type-file">Type</label>
-                        <select id="type-file" class="form-control">
-                            <option>- select -</option>
-                            <option>File type</option>
-                            <option>File type</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <busy is-busy="true" label="{{'COMMON.FILEUPLOADING' | translate}}"></busy>
-    </side-panel-content>
-    <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelUpdateContacts()" ng-show="!vm.ownershipAddPanelVisible">
-            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
-        </button>
-        <button class="btn btn-primary" type="button">
-            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
-        </button>
-    </side-panel-footer>
-</side-panel>
 
 <side-panel component-id="vm.componentIds.contactSidePanelId">
     <side-panel-header>

@@ -81,15 +81,18 @@
     "SQUARE_FEET": "sq. ft"
   },
   "COMPANY": {
-    "ADD": {
-      "CREATE_COMPANY": "Create company",
-      "BASIC_INFORMATION": "Basic information",
-      "NAME": "Name",
-      "CONTACTS": "Contacts",
-      "NO_CONTACTS": "No contacts added yet.",
-      "CONTACTS_ARE_REQUIRED": "Please select at least one contact to create a company.",
-      "FINDCONTACT": "Find contact"
-    }
+    "CREATE_COMPANY": "Create company",
+    "EDIT_COMPANY": "Edit company",
+    "BASIC_INFORMATION": "Basic information",
+    "NAME": "Name",
+    "CONTACTS": "Contacts",
+    "NO_CONTACTS": "No contacts added yet.",
+    "CONTACTS_ARE_REQUIRED": "Please select at least one contact to create a company.",
+    "FINDCONTACT": "Find contact",
+    "WEBSITE": "Website",
+    "CLIENT_CARE_WEBSITE": "Client care page",
+    "CLIENT_CARE_STATUS": "Client care status",
+    "VIEW_COMPANY": "View company"
   },
   "CONTACT": {
     "TITLE": "Title",
@@ -237,8 +240,6 @@
       "VIEWINGS": "Viewings",
       "VIEWING_DETAILS": "Viewing details",
       "NO_VIEWINGS": "No viewings",
-      "ATTACHMENTS": "Attachments",
-      "NO_ATTACHMENTS": "No attachments",
       "OFFERS": "Offers",
       "OFFERPREVIEW": "Offer preview"
     }
@@ -339,6 +340,10 @@
       "SIZE": "Size",
       "ADDED": "Added",
       "BY": "By"
+    },
+    "LIST": {
+      "ATTACHMENTS": "Attachments",
+      "NO_ATTACHMENTS": "No attachments"
     }
   },
   "OFFER": {

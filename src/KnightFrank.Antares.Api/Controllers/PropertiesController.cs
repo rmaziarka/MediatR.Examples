@@ -7,9 +7,14 @@
     using System.Net.Http;
     using System.Web.Http;
 
+    using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.User;
+    using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.AreaBreakdown.Commands;
     using KnightFrank.Antares.Domain.AreaBreakdown.Queries;
+    using KnightFrank.Antares.Domain.Attachment.Commands;
+    using KnightFrank.Antares.Domain.Attachment.Queries;
     using KnightFrank.Antares.Domain.Ownership.Commands;
     using KnightFrank.Antares.Domain.Ownership.Queries;
     using KnightFrank.Antares.Domain.Property.Commands;
@@ -28,15 +33,18 @@
     public class PropertiesController : ApiController
     {
         private readonly IMediator mediator;
+        private readonly IGenericRepository<User> userRepository;
         private const string LocaleCode = "en";
 
         /// <summary>
         ///     Properties controller constructor
         /// </summary>
         /// <param name="mediator">Mediator instance.</param>
-        public PropertiesController(IMediator mediator)
+        /// <param name="userRepository">User repository</param>
+        public PropertiesController(IMediator mediator, IGenericRepository<User> userRepository)
         {
             this.mediator = mediator;
+            this.userRepository = userRepository;
         }
 
         /// <summary>
@@ -81,6 +89,30 @@
         {
             Guid propertyId = this.mediator.Send(command);
             return this.GetProperty(propertyId);
+        }
+
+        /// <summary>
+        ///     Creates the attachment.
+        /// </summary>
+        /// <param name="id">Activity Id</param>
+        /// <param name="command">Attachment data</param>
+        /// <returns>Created attachment</returns>
+        [HttpPost]
+        [Route("{id}/attachments")]
+        public Attachment CreateAttachment(Guid id, CreatePropertyAttachmentCommand command)
+        {
+            // User id is mocked.
+            // TODO Set correct user id from header.
+            if (command.Attachment != null)
+            {
+                command.Attachment.UserId = this.userRepository.FindBy(u => true).First().Id;
+            }
+
+            command.EntityId = id;
+            Guid attachmentId = this.mediator.Send(command);
+
+            var attachmentQuery = new AttachmentQuery { Id = attachmentId };
+            return this.mediator.Send(attachmentQuery);
         }
 
         /// <summary>
@@ -189,6 +221,6 @@
             this.mediator.Send(command);
 
             return this.mediator.Send(new AreaBreakdownQuery { PropertyId = command.PropertyId});
-        } 
+        }
     }
 }

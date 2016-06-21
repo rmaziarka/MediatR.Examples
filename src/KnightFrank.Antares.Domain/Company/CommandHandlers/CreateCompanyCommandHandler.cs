@@ -19,7 +19,8 @@
         private readonly IGenericRepository<Company> companyRepository;
         private readonly IGenericRepository<Contact> contactRepository;
 
-        public CreateCompanyCommandHandler(IGenericRepository<Company> companyRepository, IGenericRepository<Contact> contactRepository)
+        public CreateCompanyCommandHandler(IGenericRepository<Company> companyRepository,
+            IGenericRepository<Contact> contactRepository)
         {
             this.companyRepository = companyRepository;
             this.contactRepository = contactRepository;

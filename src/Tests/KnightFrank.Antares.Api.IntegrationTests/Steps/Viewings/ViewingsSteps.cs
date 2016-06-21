@@ -24,8 +24,8 @@
     public class ViewingsSteps : IClassFixture<BaseTestClassFixture>
     {
         private const string ApiUrl = "/api/viewings";
-        private readonly BaseTestClassFixture fixture;
         private readonly DateTime date = DateTime.UtcNow;
+        private readonly BaseTestClassFixture fixture;
         private readonly ScenarioContext scenarioContext;
 
         public ViewingsSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
@@ -194,7 +194,8 @@
         [Then(@"Viewing details in requirement should be the same as added")]
         public void CompareRequirementViewings()
         {
-            Viewing viewing = JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent()).Viewings.Single();
+            Viewing viewing =
+                JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent()).Viewings.Single();
             Viewing expectedVieiwng = this.fixture.DataContext.Viewing.Single(v => v.Id.Equals(viewing.Id));
 
             viewing.ShouldBeEquivalentTo(expectedVieiwng, opt => opt

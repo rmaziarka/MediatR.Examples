@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Reflection;
 
@@ -22,6 +23,7 @@
     [Binding]
     public class ViewPropertySteps
     {
+        private const string Format = "dd-MM-yyyy";
         private readonly DriverContext driverContext;
         private readonly ScenarioContext scenarioContext;
         private ViewPropertyPage page;
@@ -182,6 +184,27 @@
                 .WaitForSidePanelToShow();
         }
 
+        [When(@"User clicks add attachment button on view property page")]
+        public void OpenAttachFilePanel()
+        {
+            this.page.OpenAttachFilePanel().WaitForSidePanelToShow();
+        }
+
+        [When(@"User clicks attachment card on view property page")]
+        public void OpenAttachmentPreview()
+        {
+            this.page.OpenAttachmentPreview().WaitForSidePanelToShow();
+        }
+
+        [When(@"User adds (.*) file with (.*) type on view property page")]
+        public void AddAttachment(string file, string type)
+        {
+            this.page.AttachFile.SelectType(type)
+                .AddFiletoAttachment(file)
+                .SaveAttachment();
+            this.page.WaitForSidePanelToHide(60);
+        }
+
         [Then(@"Activity details are set on view property page")]
         public void CheckActivityDetails(Table table)
         {
@@ -302,6 +325,44 @@
                 () => Assert.True(this.page.IsSuccessMessageDisplayed()),
                 () => Assert.Equal("New property has been created", this.page.SuccessMessage));
             this.page.WaitForSuccessMessageToHide();
+        }
+
+        [Then(@"Attachment should be displayed on view poperty page")]
+        public void CheckIfAttachmentIsDisplayed(Table table)
+        {
+            Attachment actual = this.page.AttachmentDetails;
+            var expected = table.CreateInstance<Attachment>();
+            expected.Date = DateTime.UtcNow.ToString(Format);
+
+            actual.ShouldBeEquivalentTo(expected);
+        }
+
+        [Then(@"Attachment details on attachment preview page are the same like on view property page")]
+        public void ChackAttachmentDetails()
+        {
+            Attachment actual = this.page.AttachmentPreview.GetAttachmentDetails();
+            actual.Date = actual.Date.Split(',')[0];
+            Attachment expected = this.page.AttachmentDetails;
+            expected.User = "John Smith";
+
+            actual.ShouldBeEquivalentTo(expected);
+        }
+
+        [Then(@"User closes attachment preview page on view property page")]
+        public void CloseAttachmentPreviewPanel()
+        {
+            this.page.AttachmentPreview.CloseAttachmentPreviewPage();
+            this.page.WaitForSidePanelToHide();
+        }
+
+        [Then(@"Property attachment (.*) should be downloaded")]
+        public void ThenAttachmentShouldBeDownloaded(string attachmentName)
+        {
+            FileInfo fileInfo = this.page.AttachmentPreview.GetDownloadedAttachmentInfo();
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(attachmentName.ToLower(), fileInfo.Name),
+                () => Assert.Equal("." + attachmentName.Split('.')[1], fileInfo.Extension));
         }
     }
 }

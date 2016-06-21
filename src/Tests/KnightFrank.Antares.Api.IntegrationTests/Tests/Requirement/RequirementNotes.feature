@@ -1,7 +1,6 @@
 ﻿Feature: Requirement notes
 
 @Requirements
-@Notes
 Scenario: Save note to existing requirement
 	Given Contacts exists in database
 		| FirstName | Surname | Title  |
@@ -12,7 +11,6 @@ Scenario: Save note to existing requirement
 		And Note is saved in database
 
 @Requirements
-@Notes
 Scenario: Save note to non existing requirement
 	When User creates note for requirement using api
 	Then User should get BadRequest http status code

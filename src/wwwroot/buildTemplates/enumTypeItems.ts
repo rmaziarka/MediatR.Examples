@@ -10,6 +10,7 @@ module Antares.Common.Models.Enums
 	 	ActivityStatus,
 	 	Division,
 	 	ActivityDocumentType,
+	 	PropertyDocumentType,
 	 	OfferStatus,
 	 	ActivityUserType,
 	 	ActivityDepartmentType,
@@ -52,6 +53,14 @@ module Antares.Common.Models.Enums
 		VideoTour,
 		EPC,
 		GasCertificate,
+	}
+
+	export enum PropertyDocumentType
+	{
+		Photograph,
+		FloorPlan,
+		Brochure,
+		VideoTour,
 	}
 
 	export enum OfferStatus

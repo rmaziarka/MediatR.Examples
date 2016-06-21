@@ -186,6 +186,8 @@
     <Compile Include="Steps\LatestViews\LatestViewsSteps.cs" />
     <Compile Include="Steps\Offers\OffersSteps.cs" />
     <Compile Include="Steps\Property\AreaBreakdownSteps.cs" />
+    <Compile Include="Steps\Property\AttachmentsSteps.cs" />
+    <Compile Include="Steps\Requierement\AttachmentsSteps.cs" />
     <Compile Include="Steps\Services\ServicesSteps.cs" />
     <Compile Include="Steps\Property\PropertyTypesSteps.cs" />
     <Compile Include="Extensions\FixtureExtension.cs" />
@@ -217,6 +219,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Offers.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Property\Attachments.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Attachments.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Property\PropertyAreaBreakdown.feature.cs">
       <AutoGen>True</AutoGen>
@@ -253,6 +260,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Companies.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Requirement\Attachments.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Attachments.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Services\Services.feature.cs">
       <DependentUpon>Services.feature</DependentUpon>
@@ -351,9 +363,17 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Offers.feature.cs</LastGenOutput>
     </None>
+    <None Include="Tests\Property\Attachments.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Attachments.feature.cs</LastGenOutput>
+    </None>
     <None Include="Tests\Property\PropertyAreaBreakdown.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>PropertyAreaBreakdown.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Requirement\Attachments.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Attachments.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Users\Users.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
