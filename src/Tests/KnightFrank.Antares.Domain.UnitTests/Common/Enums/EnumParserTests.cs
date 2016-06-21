@@ -6,6 +6,7 @@
 
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
+    using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
 
     using Moq;
@@ -34,7 +35,7 @@
             propertyTypeRepository.Setup(x => x.GetById(enumEntityId)).Returns(default(PropertyType));
 
             // Act & Assert
-            Assert.Throws<ArgumentException>(() => enumParser.Parse<PropertyType, Domain.Common.Enums.PropertyType>(enumEntityId));
+            Assert.Throws<BusinessValidationException>(() => enumParser.Parse<PropertyType, Domain.Common.Enums.PropertyType>(enumEntityId));
 
             // Assert
             propertyTypeRepository.Verify(x => x.GetById(enumEntityId), Times.Once);
