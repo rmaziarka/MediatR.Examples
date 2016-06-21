@@ -6,18 +6,15 @@ module Antares.Contact {
 
     export class ContactAddController {
         public contact: Antares.Common.Models.Dto.IContact;
-        //mailingSalutations: any;
-        //eventSalutations: any;
-        //defaultMailingSalutationId: any;
-        //defaultEventSalutationId: any;
-        //defaultSalutationFormat: string = "";
         userData: Dto.ICurrentUser;
-        enumTypeSalutationFormat: Dto.EnumTypeCode = Dto.EnumTypeCode.SalutationFormat;
-        private salutationFormats: any;
+        mailingSalutationFormat: Dto.EnumTypeCode = Dto.EnumTypeCode.MailingSalutation;
+        eventSalutationFormat: Dto.EnumTypeCode = Dto.EnumTypeCode.EventSalutation;
         private currentUserResource: Common.Models.Resources.ICurrentUserResourceClass;
 
-        selectedSalutaionFormatId: string;
+        defaultSalutationFormat: string = "";
         defaultSalutationFormatId: string = "";
+        defaultMailingSalutationId: string = "";
+        defaultEventSalutationId: string = "";
 
         private contactResource: Antares.Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IContactResource>;
 
@@ -29,7 +26,6 @@ module Antares.Contact {
             private $state: ng.ui.IStateService) {
 
             this.contactResource = dataAccessService.getContactResource();
-            this.enumService.getEnumPromise().then(this.onEnumLoaded);
         }
 
         $onInit = () => {
@@ -38,28 +34,29 @@ module Antares.Contact {
         }
 
         onEnumLoaded = (result: any) => {
-            //find matching code
-            var list = result[Dto.EnumTypeCode.SalutationFormat];
-            var defaultSalutationFormat: string;
+            var mailingList = result[Dto.EnumTypeCode.MailingSalutation];
+            var eventList = result[Dto.EnumTypeCode.EventSalutation];
+            var defaultFormatList = result[Dto.EnumTypeCode.SalutationFormat];
 
-            if (this.defaultSalutationFormatId == undefined || this.defaultSalutationFormatId.length === 0) {
-                //set default based on division
-                if (this.userData.division.code === "Residential") {
-                    defaultSalutationFormat = "JohnSmithEsq";
-                }
-                else {
-                    defaultSalutationFormat = "MrJohnSmith";
-                }
-            }
+            var defaultMailingSalutation: string = "MailingSemiformal";
+            var defaultEventSalutation: string = "EventSemiformal";
 
-            if (defaultSalutationFormat != undefined && defaultSalutationFormat.length > 0) {
-                var thisVal = <Dto.IEnumTypeItem>_.find(list, (item: Dto.IEnumTypeItem) => {
-                    return item.code === defaultSalutationFormat;
-                });
+            var mailingVal = <Dto.IEnumTypeItem>_.find(mailingList, (item: Dto.IEnumTypeItem) => {
+                return item.code === defaultMailingSalutation;
+            });
 
-                this.defaultSalutationFormatId = thisVal.id;
-            }
+            var eventVal = <Dto.IEnumTypeItem>_.find(eventList, (item: Dto.IEnumTypeItem) => {
+                return item.code === defaultEventSalutation;
+            });
+
+            var defaultFormat = <Dto.IEnumTypeItem>_.find(defaultFormatList, (item: Dto.IEnumTypeItem) => {
+                return item.id === this.defaultSalutationFormatId;
+            });
+
+            this.defaultMailingSalutationId = mailingVal.id;
+            this.defaultEventSalutationId = eventVal.id;
         }
+
         setSalutations = () => {
             this.contact.mailingSemiformalSalutation = ((this.contact.title||"") + " " + (this.contact.lastName||"")).trim();
 
@@ -70,7 +67,7 @@ module Antares.Contact {
                 ((this.contact.title && (this.contact.title.toLowerCase() == "mrs" || this.contact.title.toLowerCase() == "ms" || this.contact.title.toLowerCase() == "miss")) ? "Madam" :
                         ((this.contact.title || "") + " " + (this.contact.lastName || "")).trim());
 
-            this.contact.mailingEnvelopeSalutation = ((this.contact.title && this.contact.title.toLowerCase() == "mr" && this.defaultSalutationFormat == "") ? 
+            this.contact.mailingEnvelopeSalutation = ((this.contact.title && this.contact.title.toLowerCase() == "mr" && this.defaultSalutationFormat == "JohnSmithEsq") ? 
                 ((this.contact.firstName || "") + " " + (this.contact.lastName || "") + ", Esq").trim() :
                 (((this.contact.title || "") + " " + (this.contact.firstName || "")).trim() + " " + (this.contact.lastName || "")).trim());
         }
