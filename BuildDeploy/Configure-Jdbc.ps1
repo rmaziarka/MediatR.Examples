@@ -42,15 +42,15 @@
         $Schedule
     )
 
-    Write-Host -Info "Configuring Elasticsearch-Jdbc"
+    Write-Host -Object "Configuring Elasticsearch-Jdbc"
 			
-    Write-Host -Info "Reading $PathToSettingsTemplate"    
+    Write-Host -Object "Reading $PathToSettingsTemplate"    
 				
     $settings = Get-Content -Path $PathToSettingsTemplate -Raw | ConvertFrom-Json
 
-    Write-Host -Info "Populating settings with values: SqlIp=$SqlIp;SqlPort=$SqlPort;databaseName=$SqlDatabaseName;"
-    Write-Host -Info "Populating settings with values: user=$SqlUser;password=$SqlPassword;"
-    Write-Host -Info "Populating settings with values: index=$ElasticsearchIndex;schedule=$Schedule;"
+    Write-Host -Object "Populating settings with values: SqlIp=$SqlIp;SqlPort=$SqlPort;databaseName=$SqlDatabaseName;"
+    Write-Host -Object "Populating settings with values: user=$SqlUser;password=$SqlPassword;"
+    Write-Host -Object "Populating settings with values: index=$ElasticsearchIndex;schedule=$Schedule;"
 
     $settings.jdbc.url = "jdbc:sqlserver://" + $SqlIp + ":" + $SqlPort+ ";databaseName=$SqlDatabaseName"
     $settings.jdbc.user = $SqlUser
@@ -62,17 +62,17 @@
     
     $pathToSettings = "$PathToJdbc\bin\settings.json" 
 
-    Write-Host -Info "Saving settings to $pathToSettings"
+    Write-Host -Object "Saving settings to $pathToSettings"
 
     [System.IO.File]::WriteAllLines($pathToSettings, $json)
     
-    Write-Host -Info "Creating execute.bat"
+    Write-Host -Object "Creating execute.bat"
     
     $executeCommand = "java -cp `"$PathToJdbc\lib\*`" -Dlog4j.configurationFile=`"$PathToJdbc\bin\log4j2.xml`" org.xbib.tools.Runner org.xbib.tools.JDBCImporter `"$PathToJdbc\bin\settings.json`""
         
     New-Item -Path "$PathToJdbc\bin" -Name "execute.bat" -Type "file" -Value $executeCommand -Force
         
-    Write-Host -Info "Starting elasticsearch-jdbc as a service"
+    Write-Host -Object "Starting elasticsearch-jdbc as a service"
 
     try
     {
@@ -82,10 +82,10 @@
             -ServiceDisplayName "JDBC importer for Elasticsearch"`
             -ServiceDescription "The Java Database Connection (JDBC) importer allows to fetch data from JDBC sources for indexing into Elasticsearch."
 
-        Write-Host -Info "Succesfully configured Jdbc." -ForegroundColor Green
+        Write-Host -Object "Succesfully configured Jdbc." -ForegroundColor Green
     }
     catch [Exception] {
         Write-Host $_.Exception.Message -ForegroundColor Red        
-        Write-Host -Info "Failed to configure Jdbc." -ForegroundColor Red
+        Write-Host -Object "Failed to configure Jdbc." -ForegroundColor Red
     }
 }
