@@ -4,6 +4,8 @@ module Antares.Activity {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
     import PageTypeEnum = Antares.Common.Models.Enums.PageTypeEnum;
+	import LatestViewsProvider = Providers.LatestViewsProvider;
+	import EntityType = Antares.Common.Models.Enums.EntityTypeEnum;
 
     export class ActivityAddPanelController extends Antares.Common.Component.BaseSidePanelController {
         // binding
@@ -16,7 +18,11 @@ module Antares.Activity {
         cardPristine: any;
         isBusy: boolean;
 
-        constructor(private activityService: Activity.ActivityService, private configService: Services.ConfigService, private eventAggregator: Antares.Core.EventAggregator) {
+        constructor(
+			private activityService: Activity.ActivityService, 
+			private configService: Services.ConfigService, 
+			private eventAggregator: Antares.Core.EventAggregator,
+			private latestViewsProvider: LatestViewsProvider) {
             super();
         }
 
@@ -42,9 +48,14 @@ module Antares.Activity {
             var command = new AddPanel.ActivityAddPanelCommand(activity, this.propertyId);
             this.isBusy = true;
 
-            this.activityService.addActivityPanel(command).then((activityDto: Dto.IActivity) => {
+            this.activityService.addActivity(command).then((activityDto: Dto.IActivity) => {
                 this.eventAggregator.publish(new Antares.Activity.ActivityAddedSidePanelEvent(activityDto));
                 this.eventAggregator.publish(new Antares.Common.Component.CloseSidePanelEvent());
+
+				this.latestViewsProvider.addView({
+					entityId: activityDto.id,
+					entityType: EntityType.Activity
+				});
             }).finally(() => { this.isBusy = false; });
         }
 

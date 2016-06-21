@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Domain.Activity.QueryHandlers;
     using KnightFrank.Antares.Domain.RequirementNote.Queries;
     using KnightFrank.Antares.Domain.RequirementNote.QueryHandlers;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 

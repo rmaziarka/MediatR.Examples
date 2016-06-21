@@ -47,23 +47,29 @@
             this.page = new CreateCompanyPage(this.driverContext).OpenCreateCompanyPage();
         }
 
+        [Then(@"Company form on create company page should be diaplyed")]
+        public void CheckIfCreateContactIsDisplayed()
+        {
+            Assert.True(this.page.IsAddCompanyFormPresent());
+        }
+
         [When(@"User fills in company details on create company page")]
         public void FillInCompanyData(Table table)
         {
             var details = table.CreateInstance<Company>();
-            this.page.SetCompanyName(details.Name);
-        }
 
-        [When(@"User clicks save company button on create company page")]
-        public void SaveCompany()
-        {
-            this.page.SaveCompany();
+            this.scenarioContext.Set(details.WebsiteUrl, "Url");
+
+            this.page.SetCompanyName(details.Name);
+            this.page.SetWebsite(details.WebsiteUrl);
+            this.page.SetClientCareUrl(details.ClientCarePageUrl);
+            this.page.SetClientCareStatus();
         }
 
         [When(@"User selects contacts on create company page")]
         public void SelectContactsForCompany(Table table)
         {
-            this.page.SelectContact().WaitForSidePanelToShow();
+            this.page.AddContactToCompany().WaitForSidePanelToShow();
 
             IEnumerable<Contact> contacts = table.CreateSet<Contact>();
 
@@ -87,16 +93,24 @@
             contacts.ShouldBeEquivalentTo(selectedContacts);
         }
 
-        [Then(@"Company form on create company page should be diaplyed")]
-        public void CheckIfCreateContactIsDisplayed()
+        [When(@"User clicks on website url icon")]
+        public void WhenUserClicksOnWebsiteUrlIcon()
         {
-            Assert.True(this.page.IsCompanyFormPresent());
+            this.page.ClickOnWebsiteLink();
         }
 
-        [Then(@"New company should be created")]
-        public void CheckIfCompanyCreated()
+        [Then(@"url opens in new tab")]
+        public void ThenUrlOpensInNewTab()
         {
-            //TODO implement check if contact was created
+            var scenarioUrl = this.scenarioContext.Get<string>("Url");
+
+            Assert.True(this.page.CheckNewTab(scenarioUrl));
+        }
+
+        [When(@"User clicks save company button on create company page")]
+        public void SaveCompany()
+        {
+            this.page.SaveCompany();
         }
     }
 }

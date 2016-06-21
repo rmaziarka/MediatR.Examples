@@ -6,10 +6,10 @@
 
     using KnightFrank.Antares.Domain.Common.Commands;
     using KnightFrank.Antares.Domain.Requirement.Commands;
-    using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture;
 
     using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.AutoMoq;
+
     using Xunit;
 
     [Collection("CreateRequirementCommandValidator")]

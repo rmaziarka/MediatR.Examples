@@ -5,6 +5,7 @@
     using System.Linq;
 
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Xunit;
 

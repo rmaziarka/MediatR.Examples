@@ -2,12 +2,11 @@
 {
     using System;
 
-    using FluentAssertions;
-
     using FluentValidation.Resources;
     using FluentValidation.Results;
 
     using KnightFrank.Antares.Domain.AreaBreakdown.Commands;
+    using KnightFrank.Antares.Tests.Common.Extensions.Fluent.ValidationResult;
 
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit2;
@@ -44,9 +43,7 @@
             ValidationResult validationResult = validator.Validate(command);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(failure => failure.PropertyName == nameof(command.Id));
-            validationResult.Errors.Should().ContainSingle(x => x.ErrorCode == nameof(Messages.notempty_error));
+            validationResult.IsInvalid(nameof(command.Id), nameof(Messages.notempty_error));
         }
 
         [Theory]
@@ -62,9 +59,7 @@
             ValidationResult validationResult = validator.Validate(command);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(failure => failure.PropertyName == nameof(command.PropertyId));
-            validationResult.Errors.Should().ContainSingle(x => x.ErrorCode == nameof(Messages.notempty_error));
+            validationResult.IsInvalid(nameof(command.PropertyId), nameof(Messages.notempty_error));
         }
 
         [Theory]
@@ -83,9 +78,7 @@
             ValidationResult validationResult = validator.Validate(command);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(failure => failure.PropertyName == nameof(command.Name));
-            validationResult.Errors.Should().ContainSingle(x => x.ErrorCode == nameof(Messages.notempty_error));
+            validationResult.IsInvalid(nameof(command.Name), nameof(Messages.notempty_error));
         }
 
         [Theory]
@@ -102,9 +95,7 @@
             ValidationResult validationResult = validator.Validate(command);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(failure => failure.PropertyName == nameof(command.Name));
-            validationResult.Errors.Should().ContainSingle(x => x.ErrorCode == nameof(Messages.length_error));
+            validationResult.IsInvalid(nameof(command.Name), nameof(Messages.length_error));
         }
 
         [Theory]
@@ -122,9 +113,7 @@
             ValidationResult validationResult = validator.Validate(command);
 
             // Assert
-            validationResult.IsValid.Should().BeFalse();
-            validationResult.Errors.Should().ContainSingle(failure => failure.PropertyName == nameof(command.Size));
-            validationResult.Errors.Should().ContainSingle(x => x.ErrorCode == nameof(Messages.greaterthan_error));
+            validationResult.IsInvalid(nameof(command.Size), nameof(Messages.greaterthan_error));
         }
     }
 }

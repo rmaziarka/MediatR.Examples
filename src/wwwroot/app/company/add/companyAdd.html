@@ -1,51 +1,73 @@
 <div class="row">
     <div class="col-md-12">
-        <h2 class="page-header" translate="COMPANY.ADD.CREATE_COMPANY"></h2>
+        <h2 class="page-header" translate="COMPANY.CREATE_COMPANY"></h2>
     </div>
 
     <form ng-submit="addCompanyForm.$valid && vm.hasCompanyContacts() && vm.createCompany()" name="addCompanyForm" id="addCompanyForm" method="post" novalidate>
         <div class="col-md-4">
             <fieldset>
-                <h3 class="page-header" translate="COMPANY.ADD.BASIC_INFORMATION"></h3>
+                <h3 class="page-header" translate="COMPANY.BASIC_INFORMATION"></h3>
 
                 <div class="form-group" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.name.$dirty) && addCompanyForm.name.$invalid}">
-                    <label class="required" for="name" translate="COMPANY.ADD.NAME"></label>
+                    <label class="required" for="name" translate="COMPANY.NAME"></label>
                     <input type="text" class="form-control" id="name" name="name" required ng-maxlength="128" ng-model="vm.company.name" autocomplete="off">
                     <div ng-messages="addCompanyForm.name.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.name.$dirty">
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="website">Website</label>
-                    <input type="url" class="form-control" id="website" placeholder="http://">
+                <div class="form-group has-feedback" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.website.$dirty) && addCompanyForm.website.$invalid}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="control-label" for="website" translate="COMPANY.WEBSITE"></label>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" id="website" name="website" ng-maxlength="2500" ng-model="vm.company.websiteUrl" placeholder="http://">
+                            <span class="form-control-feedback">
+                                <external-link url="vm.company.websiteUrl" show-text="false"></external-link>
+                            </span>
+                        </div>
+                    </div>
+                    <div ng-messages="addCompanyForm.website.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.website.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="client-care-website">Client care website</label>
-                    <input type="url" class="form-control" id="client-care-website" placeholder="http://">
+                <div class="form-group has-feedback" ng-class="{'has-error': (addCompanyForm.$submitted || addCompanyForm.clientcareurl.$dirty) && addCompanyForm.clientcareurl.$invalid}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="control-label" for="clientcareurl" translate="COMPANY.CLIENT_CARE_WEBSITE"></label>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" id="clientcareurl" name="clientcareurl" ng-maxlength="2500" ng-model="vm.company.clientCarePageUrl" placeholder="http://">
+                            <div class="form-control-feedback">
+                                <external-link url="vm.company.clientCarePageUrl" show-text="false"></external-link>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-messages="addCompanyForm.clientcareurl.$error" ng-show="addCompanyForm.$submitted || addCompanyForm.clientcareurl.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
                 </div>
+       
 
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="client-care-status">Client care status</label>
-                            <select id="client-care-status" class="form-control">
-                                <option>-- select --</option>
-                                <option>Option item</option>
-                                <option>Option item</option>
-                            </select>
-                        </div>
+                            <label for="client-care-status" translate="COMPANY.CLIENT_CARE_STATUS"></label>
+                            <select class="form-control" id="client-care-status" name="selectedStatus" ng-options="item as (item.id | dynamicTranslate) for item in vm.clientCareStatuses track by item.id"
+                                    ng-model="vm.selectedStatus">
+                                <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
+                            </select></div>
                     </div>
                 </div>
             </fieldset>
         </div>
         <div class="col-md-4">
-
                 <section>
                     <list id="list-contacts">
                         <list-header>
-                            <h3 class="page-header" translate="COMPANY.ADD.CONTACTS"></h3>
+                            <h3 class="page-header" translate="COMPANY.CONTACTS"></h3>
                         </list-header>
                         <list-actions>
                             <div class="form-group">
@@ -55,8 +77,8 @@
                             </div>
                         </list-actions>
                         <list-no-items ng-show="vm.hasCompanyContacts() === false" ng-class="{'has-error': addCompanyForm.$submitted}">
-                            <p class="help-block" id="no-contacts-help-block" ng-show="addCompanyForm.$submitted === false" translate="COMPANY.ADD.NO_CONTACTS"></p>
-                            <p class="help-block" id="contacts-are-required-help-block" ng-show="addCompanyForm.$submitted" translate="COMPANY.ADD.CONTACTS_ARE_REQUIRED"></p>
+                            <p class="help-block" id="no-contacts-help-block" ng-show="addCompanyForm.$submitted === false" translate="COMPANY.NO_CONTACTS"></p>
+                            <p class="help-block" id="contacts-are-required-help-block" ng-show="addCompanyForm.$submitted" translate="COMPANY.CONTACTS_ARE_REQUIRED"></p>
                         </list-no-items>
                         <list-item id="list-item-contact-{{contact.id}}" ng-repeat="contact in vm.company.contacts">
                             {{contact.getName()}}
@@ -74,60 +96,10 @@
     </form>
 </div>
 
-<!-- TODO
-
-<div class="row">
-    <div class="col-md-12">
-        <h2 class="page-header">View company</h2>
-
-        <div class="well">
-            <button type="button" class="btn btn-default pull-right"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT">Edit</span></button>
-            <div>A company</div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <h3 class="page-header">Basic info</h3>
-
-                <div class="section-row row">
-                    <div class="col-xs-4">Website</div>
-                    <div class="col-xs-8"><a href="#" target="_blank">www.companywebpage.com</a> <i class="fa fa-external-link" aria-hidden="true"></i></div>
-                </div>
-
-                <div class="section-row row">
-                    <div class="col-xs-4">Client Care website</div>
-                    <div class="col-xs-8"><a href="#" target="_blank">www.clientcare.companywebpage.com</a> <i class="fa fa-external-link" aria-hidden="true"></i></div>
-                </div>
-
-                <div class="section-row row">
-                    <div class="col-xs-4">Client Care status</div>
-                    <div class="col-xs-8">Lorem ipsum</div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <h3 class="page-header">Contacts</h3>
-
-                <div class="card card-no-menu">
-                    <div class="card-body">
-                        <div class="card-item">Gilberto Lyons</div>
-                    </div>
-                </div>
-
-                <div class="card card-no-menu">
-                    <div class="card-body">
-                        <div class="card-item">Drew Sanders</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
--->
 
 <side-panel component-id="vm.componentIds.contactSidePanelId">
     <side-panel-header>
-        <h3 translate="COMPANY.ADD.FINDCONTACT"></h3>
+        <h3 translate="COMPANY.FINDCONTACT"></h3>
     </side-panel-header>
     <side-panel-content>
         <contact-list component-id="vm.componentIds.contactListId"></contact-list>

@@ -5,11 +5,15 @@ module Antares.TestHelpers {
     import Dto = Common.Models.Dto;
 
     export class CompanyGenerator {
-        public static generateDto(): Dto.ICompany {
+        public static generateDto(): Dto.ICompany{
 
-            var company = <Dto.ICompany> {
-                id: CompanyGenerator.makeRandom('id'),
-                name: CompanyGenerator.makeRandom('name'),
+            var company: Dto.ICompany = {
+                id : CompanyGenerator.makeRandom('id'),
+                name : CompanyGenerator.makeRandom('name'),
+                websiteUrl : CompanyGenerator.makeRandom('website'),
+                clientCarePageUrl: CompanyGenerator.makeRandom('clientCarePageUrl'),
+                clientCareStatusId: CompanyGenerator.makeRandom('clientCareStatusId'),
+                clientCareStatus: <Dto.IEnumTypeItem>{},
                 contacts: ContactGenerator.generateMany(3)
             }
 

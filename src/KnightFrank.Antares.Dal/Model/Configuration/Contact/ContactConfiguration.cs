@@ -2,7 +2,8 @@
 {
     using KnightFrank.Antares.Dal.Model.Contacts;
 
-    internal class ContactConfiguration : BaseEntityConfiguration<Contact>
+    internal sealed class ContactConfiguration : BaseEntityConfiguration<Contact>
     {
-    }
+	   
+	}
 }

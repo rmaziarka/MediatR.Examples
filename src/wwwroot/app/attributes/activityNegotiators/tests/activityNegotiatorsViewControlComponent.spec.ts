@@ -75,16 +75,22 @@ module Antares {
             });
 
             it('then list of secondary negotiators should be ordered by first and last name', () => {
+                secondaryNegotiators[0].user.firstName = 'b';
+                secondaryNegotiators[0].user.lastName = 'a';
+
+                secondaryNegotiators[1].user.firstName = 'A';
+                secondaryNegotiators[1].user.lastName = 'b';
+
+                secondaryNegotiators[2].user.firstName = 'a';
+                secondaryNegotiators[2].user.lastName = 'a';
+
+                scope.$apply();
+
                 var elementNegotiatorList: ng.IAugmentedJQuery = element.find(pageObjectSelector.secondaryNegotiatorItems);
-                var expectedOrder: Business.ActivityUser[] = _.sortByOrder(secondaryNegotiators, ['user.firstName', 'user.lastName']);
 
-                var isOrdered: boolean = _.every(elementNegotiatorList, (itm, ind, coll): boolean => {
-                    var sourceEl: string = expectedOrder[ind].user.firstName + ' ' + expectedOrder[ind].user.lastName;
-
-                    return itm.innerText === sourceEl;
-                });
-
-                expect(isOrdered).toBeTruthy();
+                expect(elementNegotiatorList[0].innerText).toBe(secondaryNegotiators[2].user.getName());
+                expect(elementNegotiatorList[1].innerText).toBe(secondaryNegotiators[1].user.getName());
+                expect(elementNegotiatorList[2].innerText).toBe(secondaryNegotiators[0].user.getName());
             });
 
             describe('when secondary negotiators list is empty', () => {
