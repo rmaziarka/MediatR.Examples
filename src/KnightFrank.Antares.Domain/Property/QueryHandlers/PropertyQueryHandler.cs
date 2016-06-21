@@ -27,6 +27,7 @@
                     .Include(p => p.Address)
                     .Include(p => p.AttributeValues)
                     .Include(p => p.Division)
+                    .Include(p => p.PropertyType)
                     .Include(p => p.Activities.Select(o => o.Contacts))
                     .Include(p => p.Activities.Select(a => a.ActivityStatus))
                     .Include(p => p.PropertyCharacteristics)
