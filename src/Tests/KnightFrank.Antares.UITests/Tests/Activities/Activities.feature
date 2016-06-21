@@ -48,8 +48,8 @@ Scenario: Edit activity
 	Then John Smith is set as lead negotiator on view activity page
 	When User clicks edit button on view activity page
 		And User edits activity details on edit activity page
-			| ActivityStatus   | Asking price |
-			| Market appraisal | 4000         |
+			| ActivityStatus   | AskingPrice |
+			| Market appraisal | 4000        |
 		And User changes lead negotiator to Adam Williams on edit activity page
         And User adds secondary negotiators on edit activity page
             | Name            |
@@ -60,9 +60,9 @@ Scenario: Edit activity
 		And User removes 3 secondary negotiator on edit activity page
 		And User clicks save button on edit activity page
 	Then View activity page should be displayed
-		#And Activity details on view activty page are following
-		#	| ActivityStatus   | MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |
-		#	| Market appraisal | 4000                 | 5000             | 6000                 |
+		And Activity details on view activty page are following
+			| ActivityStatus   | AskingPrice |
+			| Market appraisal | 4000        |
 		And Adam Williams is set as lead negotiator on view activity page
         And Secondary negotiators are set on view activity page
             | Name            | NextCall |
