@@ -12,8 +12,8 @@
                                      on-activity-status-changed="vm.activityStatusChanged(activityStatusId)">
             </activity-status-control>
  
-            <activity-vendors-control vendor-contacts="vm.activity.contacts" config="vm.config.vendors"></activity-vendors-control>
-            <activity-landlords-control landlords-contacts="vm.activity.contacts" config="vm.config.landlords"></activity-landlords-control>
+            <activity-vendors-edit-control contacts="vm.activity.contacts" config="vm.config.vendors"></activity-vendors-edit-control>
+            <activity-landlords-edit-control contacts="vm.activity.contacts" config="vm.config.landlords"></activity-landlords-edit-control>
         </side-panel-content>
         <side-panel-footer>
             <button class="btn btn-default" type="button" ng-click="vm.cancel()">
