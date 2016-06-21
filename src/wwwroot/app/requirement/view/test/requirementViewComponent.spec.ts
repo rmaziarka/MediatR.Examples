@@ -8,6 +8,12 @@ module Antares {
     declare var moment: any;
 
     describe('Given view requirement page is loaded', () => {
+        beforeEach(() => {
+            angular.mock.module(($provide: any) => {
+                $provide.service('addressFormsProvider', Mock.AddressFormsProviderMock);
+            });
+        });
+
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
             compile: ng.ICompileService,
@@ -162,13 +168,11 @@ module Antares {
                 { id: '4', code: 'Accepted' }
             ];
                 enumService.setEnum('OfferStatus',enumItems);
-                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
                 scope = $rootScope.$new();
                 scope['requirement'] = requirementMock;
                 element = $compile('<requirement-view requirement="requirement"></requirement-view>')(scope);
 
                 scope.$apply();
-                $http.flush();
 
                 controller = element.controller('requirementView');
             }));
@@ -349,8 +353,6 @@ module Antares {
                 filter = $filter;
                 $http = $httpBackend;
                 compile = $compile;
-
-                Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
 
                 scope = $rootScope.$new();
             }));

@@ -125,6 +125,10 @@
       <HintPath>..\packages\Ninject.Extensions.ContextPreservation.3.2.0.0\lib\net45-full\Ninject.Extensions.ContextPreservation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ninject.Extensions.Conventions, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Extensions.Conventions.3.2.0.0\lib\net45-full\Ninject.Extensions.Conventions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ninject.Extensions.NamedScope, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.Extensions.NamedScope.3.2.0.0\lib\net45-full\Ninject.Extensions.NamedScope.dll</HintPath>
       <Private>True</Private>
@@ -275,6 +279,10 @@
     <ProjectReference Include="..\KnightFrank.Antares.Domain\KnightFrank.Antares.Domain.csproj">
       <Project>{5987d78c-856d-4315-8b8b-baf00c286aff}</Project>
       <Name>KnightFrank.Antares.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KnightFrank.Antares.Search\KnightFrank.Antares.Search.csproj">
+      <Project>{50a891d9-fb72-4fb3-82fb-930ef9ec6000}</Project>
+      <Name>KnightFrank.Antares.Search</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

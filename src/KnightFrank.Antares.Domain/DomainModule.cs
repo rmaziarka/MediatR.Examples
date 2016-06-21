@@ -10,26 +10,13 @@
     using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
 
-    using MediatR;
-
-    using Ninject.Extensions.Conventions;
     using Ninject.Modules;
 
     public class DomainModule : NinjectModule
     {
         public override void Load()
         {
-            this.Bind(
-                x =>
-                x.FromThisAssembly()
-                 .SelectAllClasses()
-                 .InheritedFrom(typeof(IRequestHandler<,>))
-                 .BindAllInterfaces()
-                 .Configure(y => y.WhenInjectedInto(typeof(ValidatorCommandHandler<,>))));
-
             this.Bind(typeof(IResourceLocalisedRepositoryProvider)).To(typeof(ResourceLocalisedRepositoryProvider));
-
-            this.Bind(typeof(IRequestHandler<,>)).To(typeof(ValidatorCommandHandler<,>));
 
             this.Bind(typeof(IGenericRepository<>)).To(typeof(GenericRepository<>));
             this.Bind<INinjectInstanceResolver>().To<NinjectInstanceResolver>();
@@ -40,6 +27,7 @@
             this.Bind<IEnumTypeItemValidator>().To(typeof(EnumTypeItemValidator));
             this.Bind<IAddressValidator>().To(typeof(AddressValidator));
             this.Bind<IActivityTypeDefinitionValidator>().To(typeof(ActivityTypeDefinitionValidator));
+
             AssemblyScanner.FindValidatorsInAssembly(Assembly.GetExecutingAssembly()).ForEach(
                 assemblyScanResult =>
                     {

@@ -212,6 +212,8 @@
     <Compile Include="Contact\Commands\UpdateContactCommandValidator.cs" />
     <Compile Include="Contact\Queries\ContactQuery.cs" />
     <Compile Include="Contact\QueryHandlers\ContactQueryHandler.cs" />
+    <Compile Include="Country\Queries\CountriesQuery.cs" />
+    <Compile Include="Country\QueryHandlers\CountriesQueryHandler.cs" />
     <Compile Include="LatestView\CommandHandlers\CreateLatestViewCommandHandler.cs" />
     <Compile Include="LatestView\Commands\CreateLatestViewCommand.cs" />
     <Compile Include="LatestView\Commands\CreateLatestViewCommandValidator.cs" />
@@ -376,6 +378,7 @@
       <LastGenOutput>PropertyType.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

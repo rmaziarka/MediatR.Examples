@@ -22,7 +22,7 @@ try {
     . ".\Drop-Database.ps1"
     . ".\Configure-Jdbc.ps1"
     . ".\Set-NssmService"
-    #. ".\Start-ExternalProcess"
+    . ".\Start-ExternalProcess"
     . ".\Configure-Elasticsearch"
 
     $sqlDatabaseName = "KnightFrank.Antares"
@@ -31,15 +31,15 @@ try {
 
     Deploy-Database -ProjectRootPath $ProjectRootPath -DropExistingDatabase:$DropExistingDatabase -DatabaseName $sqlDatabaseName -SqlUser $sqlUser -SqlPassword $sqlPassword
     
-    #Configure-Elasticsearch
+    Configure-Elasticsearch -PathToMappingsFile "$ProjectRootPath\tools\KnightFrank.Antares.ResourceGroup\Templates\elasticsearch.mappings.json"
     
-    #Configure-Jdbc -PathToSettingsTemplate "$ProjectRootPath\tools\KnightFrank.Antares.ResourceGroup\Templates\settings.json"`
-    #            -PathToNssm "C:\nssm\nssm-2.24"`
-    #           -PathToJdbc "C:\jdbc\elasticsearch-jdbc-2.3.2.0"`
-    #            -SqlDatabaseName $sqlDatabaseName `
-    #            -Schedule "0 0/1 * 1/1 * ? *"`
-    #            -SqlUser $sqlUser `
-    #            -SqlPassword $sqlPassword
+    Configure-Jdbc -PathToSettingsTemplate "$ProjectRootPath\tools\KnightFrank.Antares.ResourceGroup\Templates\settings.json"`
+               -PathToNssm "C:\nssm\nssm-2.24"`
+               -PathToJdbc "C:\jdbc\elasticsearch-jdbc-2.3.2.0"`
+               -SqlDatabaseName $sqlDatabaseName `
+               -Schedule "0 0/1 * 1/1 * ? *"`
+               -SqlUser $sqlUser `
+               -SqlPassword $sqlPassword
     
 } finally {
     Pop-Location
