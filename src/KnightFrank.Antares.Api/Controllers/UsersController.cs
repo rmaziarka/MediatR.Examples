@@ -1,58 +1,65 @@
 ﻿namespace KnightFrank.Antares.Api.Controllers
 {
+    using System;
     using System.Collections.Generic;
-    using System.Collections.Specialized;
+    using System.Data.Entity;
     using System.Linq;
+    using System.Net;
+    using System.Net.Http;
     using System.Security.Claims;
-    using System.Web.Configuration;
     using System.Web.Http;
 
-    using KnightFrank.Antares.Dal.Model.Enum;
-    using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.User.QueryResults;
 
     using Domain.User.Queries;
 
+    using KnightFrank.Antares.Dal.Model.Enum;
+    using KnightFrank.Antares.Dal.Model.User;
+    using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.User.Commands;
+
     using MediatR;
 
+    /// <summary>
+    /// UsersController
+    /// </summary>
     [RoutePrefix("api/users")]
     public class UsersController : ApiController
     {
-        private static readonly NameValueCollection config = WebConfigurationManager.AppSettings;
 
-        // TODO: here should inject repository (we should use handler)
-        private readonly IReadGenericRepository<EnumTypeItem> enumTypeItemRepository;
         private readonly IMediator mediator;
-
-        public UsersController(IReadGenericRepository<EnumTypeItem> enumTypeItemRepository, IMediator mediator)
+        private readonly IReadGenericRepository<User> userRepository; 
+        /// <summary>
+        /// Initializes a new instance of the UsersController class.
+        /// </summary>
+        /// <param name="mediator">The mediator.</param>
+        /// <param name="userRepository">User repository</param>
+        public UsersController(IMediator mediator, IReadGenericRepository<User> userRepository )
         {
-            this.enumTypeItemRepository = enumTypeItemRepository;
             this.mediator = mediator;
+            this.userRepository = userRepository;
         }
-     
-        [Route("data")]
-        public UserDataResult GetUserData()
+
+
+        /// <summary>
+        /// Get User by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{id}")]
+        public User GetUserById(Guid id)
         {
-            var identity = (ClaimsIdentity)this.User.Identity;
+            User user = this.mediator.Send(new UserQuery { Id = id });
 
-            EnumTypeItem division = this.GetEnumTypeItemByCode(config["CurrentUser.Division"]);
-            var user = new UserDataResult
-                           {
-                               Name = identity.Name,
-                               Email = identity.Claims.First(c => c.Type == ClaimTypes.Email).Value,
-                               Country = identity.Claims.First(c => c.Type == ClaimTypes.Country).Value,
-                               Roles = identity.FindAll(ClaimTypes.Role).Select(claim => claim.Value),
-                               Division = division
-                           };
-
+            if (user == null)
+            {
+                throw new HttpResponseException(this.Request.CreateErrorResponse(HttpStatusCode.NotFound, "User not found."));
+            }
             return user;
         }
 
-        private EnumTypeItem GetEnumTypeItemByCode(string enumTypeItemCode)
-        {
-            return this.enumTypeItemRepository.Get().Single(eti => eti.Code == enumTypeItemCode);
-        }
-
+    
         /// <summary>
         /// Get all users matching criteria within query
         /// </summary>
@@ -68,6 +75,37 @@
             }
 
             return this.mediator.Send(query);
+        }
+
+        /// <summary>
+        /// Updates the User.
+        /// </summary>
+        /// <param name="command">The command.</param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("")]
+        public User UpdateUser(UpdateUserCommand command)
+        {
+            Guid userId = this.mediator.Send(command);
+            return this.GetUserById(userId);
+        }
+
+        /// <summary>
+        /// Get First user in database
+        /// </summary>
+        /// <returns></returns>
+        [Route("current")]
+        public User GetUserData()
+        {
+            //ToDo: this needs to be removed and updated with the Get in the front end
+            //waiting for authentication to be completed
+            //hardcoded for now as first user in database 
+            User user = this.userRepository.Get()
+                .Include(u=>u.Locale)
+                .Include( u=>u.Department)
+                .Include(u=>u.Country)
+                .First();
+            return user;
         }
     }
 }

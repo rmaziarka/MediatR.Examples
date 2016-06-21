@@ -7,6 +7,7 @@ module Antares.Common.Models.Dto {
         ActivityDocumentType = <any>'activityDocumentType',
         OfferStatus = <any>'offerStatus',
         ActivityDepartmentType = <any>'activityDepartmentType',
+        SalutationFormat = <any>'salutationFormat',
         MailingSalutation = <any>'mailingSalutation',
         EventSalutation = <any>'eventSalutation',
     }

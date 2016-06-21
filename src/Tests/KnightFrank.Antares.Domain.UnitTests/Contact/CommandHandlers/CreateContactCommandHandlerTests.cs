@@ -8,6 +8,7 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Contact.CommandHandlers;
     using KnightFrank.Antares.Domain.Contact.Commands;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 

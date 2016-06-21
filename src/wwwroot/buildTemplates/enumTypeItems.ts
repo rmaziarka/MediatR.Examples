@@ -13,6 +13,7 @@ module Antares.Common.Models.Enums
 	 	OfferStatus,
 	 	ActivityUserType,
 	 	ActivityDepartmentType,
+	 	SalutationFormat,
 	 }
 
 	
@@ -72,5 +73,11 @@ module Antares.Common.Models.Enums
 	{
 		Managing,
 		Standard,
+	}
+
+	export enum SalutationFormat
+	{
+		MrJohnSmith,
+		JohnSmithEsq,
 	}
 }

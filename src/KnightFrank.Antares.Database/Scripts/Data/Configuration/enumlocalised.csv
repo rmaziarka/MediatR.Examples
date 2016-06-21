@@ -21,6 +21,8 @@ OfferStatus;New;en;New
 OfferStatus;Withdrawn;en;Withdrawn
 OfferStatus;Rejected;en;Rejected
 OfferStatus;Accepted;en;Accepted
+SalutationFormat;MrJohnSmith;en;Mr John Smith 
+SalutationFormat;JohnSmithEsq;en;John Smith, Esq
 MailingSalutation;MailingFormal;en;Formal
 MailingSalutation;MailingSemiformal;en;Semiformal
 MailingSalutation;MailingInformal;en;Informal

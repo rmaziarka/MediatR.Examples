@@ -7,5 +7,6 @@ ActivityDocumentType
 OfferStatus
 ActivityUserType
 ActivityDepartmentType
+SalutationFormat
 MailingSalutation
 EventSalutation
