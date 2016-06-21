@@ -7,6 +7,12 @@ module Antares {
     import Business = Common.Models.Business;
 
     describe('Given view property page is loaded', () => {
+        beforeEach(() => {
+            angular.mock.module(($provide: any) => {
+                $provide.service('addressFormsProvider', Mock.AddressFormsProviderMock);
+            });
+        });
+
         var scope: ng.IScope,
             compile: ng.ICompileService,
             element: ng.IAugmentedJQuery,
@@ -613,7 +619,6 @@ module Antares {
     });
 
     function setUpBaseHttpMocks($http: ng.IHttpBackendService): void {
-        Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Mock.AddressForm.AddressFormWithOneLine]);
         $http.whenGET(/\/api\/enums\/.*\/items/).respond(() => {
             return [];
         });

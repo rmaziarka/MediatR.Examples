@@ -9,6 +9,12 @@ module Antares {
     declare var moment: any;
 
     describe('Given view activity page is loaded', () => {
+        beforeEach(() => {
+            angular.mock.module(($provide: any) => {
+                $provide.service('addressFormsProvider', Mock.AddressFormsProviderMock);
+            });
+        });
+
         var scope: ng.IScope,
             compile: ng.ICompileService,
             element: ng.IAugmentedJQuery,

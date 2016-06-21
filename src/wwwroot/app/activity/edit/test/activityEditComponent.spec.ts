@@ -4,8 +4,14 @@ module Antares {
     import Dto = Common.Models.Dto;
     import ActivityEditController = Activity.ActivityEditController;
     import Enums = Common.Models.Enums;
-
+    
     describe('Given edit activity page is loaded', () => {
+        beforeEach(() => {
+            angular.mock.module(($provide: any) => {
+                $provide.service('addressFormsProvider', Mock.AddressFormsProviderMock);
+            });
+        });
+
         var scope: ng.IScope,
             compile: ng.ICompileService,
             element: ng.IAugmentedJQuery,
@@ -74,7 +80,7 @@ module Antares {
                 compile = $compile;
                 state = $state;
                 $http = $httpBackend;
-                
+
                 // enums
                 enumService.setEnum(Dto.EnumTypeCode.ActivityStatus.toString(), activityStatuses);
 

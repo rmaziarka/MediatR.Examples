@@ -6,7 +6,7 @@ module Antares.Common.Component {
     import Business = Common.Models.Business;
 
     export class AddressFormViewController {
-        addressForm: any;
+        addressForm: Business.AddressForm;
         address: Business.Address;
         templateUrl: string;
         addressType: string;
@@ -24,7 +24,7 @@ module Antares.Common.Component {
             this.addressForm = addressForm;
         }
 
-        pickAddressFieldDefinitions = (addressFieldDefinitions: Business.AddressFormFieldDefinition[]) => {
+        private pickAddressFieldDefinitions = (addressFieldDefinitions: Business.AddressFormFieldDefinition[]) => {
             var notEmptyMatchedDefinitions: Business.AddressFormFieldDefinition[] = [];
 
             _.each(addressFieldDefinitions, (fieldDefinition: Business.AddressFormFieldDefinition) => {

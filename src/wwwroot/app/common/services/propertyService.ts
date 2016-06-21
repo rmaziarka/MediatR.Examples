@@ -13,8 +13,7 @@ module Antares.Services {
             var getParams: ng.IRequestShortcutConfig = { params: { query: query, page: page, size: size } };
 
             return this.$http.get<Dto.IPropertySearchResult>(this.appConfig.rootUrl + "/api/properties/search", getParams)
-                .then<Dto.IPropertySearchResult>((result: ng.IHttpPromiseCallbackArg<Dto.IPropertySearchResult>) => result.data)
-                .then((result: Dto.IPropertySearchResult) => new Business.PropertySearchResult(result));
+                .then<Dto.IPropertySearchResult>((result: ng.IHttpPromiseCallbackArg<Dto.IPropertySearchResult>) => new Business.PropertySearchResult(<Dto.IPropertySearchResult>result.data));
         }
     }
 
