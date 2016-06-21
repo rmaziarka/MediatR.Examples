@@ -130,6 +130,7 @@
     <Compile Include="Pages\Panels\PropertyPreviewPage.cs" />
     <Compile Include="Pages\Panels\CreateViewingPage.cs" />
     <Compile Include="Pages\Panels\ViewingDetailsPage.cs" />
+    <Compile Include="Pages\EditPreferencesPage.cs" />
     <Compile Include="Pages\SearchPropertyPage.cs" />
     <Compile Include="Pages\ViewActivityPage.cs" />
     <Compile Include="Pages\ViewOfferPage.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Steps\EditActivitySteps.cs" />
     <Compile Include="Steps\EditOfferSteps.cs" />
     <Compile Include="Steps\NavigationDrawerSteps.cs" />
+    <Compile Include="Steps\EditPreferencesSteps.cs" />
     <Compile Include="Steps\SearchPropertySteps.cs" />
     <Compile Include="Steps\ViewActivitySteps.cs" />
     <Compile Include="Steps\ViewOfferSteps.cs" />
@@ -191,6 +193,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Offer.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Preferences\Preferences.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Preferences.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\Property\Property.feature.cs">
       <AutoGen>True</AutoGen>
@@ -246,6 +253,10 @@
     <None Include="Tests\Offer\Offer.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Offer.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\Preferences\Preferences.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Preferences.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Property\Property.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
