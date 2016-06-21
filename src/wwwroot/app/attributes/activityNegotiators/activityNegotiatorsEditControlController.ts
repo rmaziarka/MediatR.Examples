@@ -9,7 +9,8 @@ module Antares.Attributes {
 
     export class ActivityNegotiatorsEditControlController {
         // bindings
-        onNegotiatorAdded: (obj: { user: Dto.IUser }) => void
+        onNegotiatorAdded: (obj: { user: Dto.IUser }) => void;
+        config: IActivityDepartmentsViewControlConfig;
 
         public activityId: string;
         public propertyDivisionId: string;

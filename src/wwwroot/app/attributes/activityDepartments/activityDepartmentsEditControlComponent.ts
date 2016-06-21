@@ -9,7 +9,8 @@ module Antares.Attributes
         bindings: {
             activityId: '<',
             departments: '=',
-            departmentIsRelatedWithNegotiator: '&'
+            departmentIsRelatedWithNegotiator: '&',
+            config: '<'
         }
     });
 }

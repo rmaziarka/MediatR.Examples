@@ -13,12 +13,14 @@
             <section id="activity-edit-negotiators">
                 <activity-negotiators-edit-control property-division-id="{{aevm.activity.property.divisionId}}"
                                                    activity-id="aevm.activity.id"
+                                                   config="aevm.config.negotiators"
                                                    on-negotiator-added="aevm.onNegotiatorAdded(user)"
                                                    lead-negotiator="aevm.activity.leadNegotiator"
                                                    secondary-negotiators="aevm.activity.secondaryNegotiator"></activity-negotiators-edit-control>
             </section>
             <section id="activity-edit-departments">
                 <activity-departments-edit-control activity-id="aevm.activity.id"
+                                                   config="aevm.config.departments"
                                                    departments="aevm.activity.activityDepartments"
                                                    department-is-related-with-negotiator="aevm.departmentIsRelatedWithNegotiator(department)"></activity-departments-edit-control>
             </section>

@@ -10,7 +10,8 @@ module Antares.Attributes {
             propertyDivisionId: '@',
             leadNegotiator: '=' ,
             secondaryNegotiators: '=',
-            onNegotiatorAdded: '&'
+            onNegotiatorAdded: '&',
+            config: '<'
         }
     });
 }

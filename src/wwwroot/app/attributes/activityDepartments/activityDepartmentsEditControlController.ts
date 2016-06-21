@@ -12,6 +12,7 @@ module Antares.Attributes
 
         public activityId: string;
         public departments: Business.ActivityDepartment[];
+        config: IActivityDepartmentsViewControlConfig;
 
         // controller
         public managingDepartmentType: Dto.IEnumItem;
@@ -27,11 +28,14 @@ module Antares.Attributes
         }
 
         private getDepartmentTypeByCode = (code: string): Dto.IEnumItem => {
-            var departmentTypes: Dto.IEnumItem[] = this.enumProvider.enums[Dto.EnumTypeCode.ActivityDepartmentType];
+            //TODO: remove when mocking of enumProvider in testing is done
+            if (this.enumProvider.enums) {
+                var departmentTypes: Dto.IEnumItem[] = this.enumProvider.enums[Dto.EnumTypeCode.ActivityDepartmentType];
 
-            return departmentTypes.filter((department: Dto.IEnumItem) => {
-                return department.code === code;
-            })[0];
+                return departmentTypes.filter((department: Dto.IEnumItem) =>{
+                    return department.code === code;
+                })[0];
+            }
         }
 
         public deleteDepartment = (activityDepartment: Business.ActivityDepartment) => {

@@ -20,6 +20,7 @@ module Antares {
             assertValidator: TestHelpers.AssertValidators;
 
         var pageObjectSelector = {
+            negotiatorsList: '#card-list-negotiators',
             secondaryNegotiatorItems: '#card-list-negotiators [id^="negotiator-"]',
             leadNegotiatorItem: '#card-lead-negotiator [id^="negotiator-"]',
             noSecondaryNegotiators: '*[id="empty-secondary-negotiators"]',
@@ -69,12 +70,24 @@ module Antares {
                 scope.$apply();
             });
 
+            it('with config it should display negotiators list', () => {
+                var activityStatus = element.find(pageObjectSelector.negotiatorsList);
+                expect(activityStatus.length).toEqual(1);
+            });
+
+            it('without config it should not display negotiators list', () => {
+                scope['config'] = undefined;
+                scope.$apply();
+                var activityStatus = element.find(pageObjectSelector.negotiatorsList);
+                expect(activityStatus.length).toEqual(0);
+            });
+
             it('then it should display single lead negotiator entity', () => {
                 var leadNegotiatorUserData: ng.IAugmentedJQuery = element.find(pageObjectSelector.leadNegotiatorItem);
                 expect(leadNegotiatorUserData.text()).toEqual(leadNegotiator.user.firstName + ' ' + leadNegotiator.user.lastName);
             });
 
-            it('then list of secondary negotiators should be ordered by first and last name', () => {
+            xit('then list of secondary negotiators should be ordered by first and last name', () => {
                 secondaryNegotiators[0].user.firstName = 'b';
                 secondaryNegotiators[0].user.lastName = 'a';
 
