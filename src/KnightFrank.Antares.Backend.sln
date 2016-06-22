@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.Api", "KnightFrank.Antares.Api\KnightFrank.Antares.Api.csproj", "{0F7A831A-FEB0-41F9-A1E0-AB8205327B48}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "KnightFrank.Antares.Database", "KnightFrank.Antares.Database\KnightFrank.Antares.Database.sqlproj", "{93A305E8-D11A-4821-B6A1-79787FAD0E93}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.Api.UnitTests", "Tests\KnightFrank.Antares.Api.UnitTests\KnightFrank.Antares.Api.UnitTests.csproj", "{F9F91CF8-73E3-462C-A23F-25ABE7CF4D24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightFrank.Antares.Search", "KnightFrank.Antares.Search\KnightFrank.Antares.Search.csproj", "{50A891D9-FB72-4FB3-82FB-930EF9EC6000}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{F9F91CF8-73E3-462C-A23F-25ABE7CF4D24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9F91CF8-73E3-462C-A23F-25ABE7CF4D24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9F91CF8-73E3-462C-A23F-25ABE7CF4D24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50A891D9-FB72-4FB3-82FB-930EF9EC6000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50A891D9-FB72-4FB3-82FB-930EF9EC6000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50A891D9-FB72-4FB3-82FB-930EF9EC6000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50A891D9-FB72-4FB3-82FB-930EF9EC6000}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
