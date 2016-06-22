@@ -36,7 +36,7 @@
 
             this.userRepository = fixture.Freeze<Mock<IReadGenericRepository<User>>>();
             this.mockedDepartmentData = fixture.Create<Department>();
-            this.query = fixture.Create<UsersQuery>();
+            this.query = fixture.Build<UsersQuery>().With(x => x.Take, 0).Create();
             this.handler = fixture.Create<UsersQueryHandler>();
         }
 
@@ -50,7 +50,7 @@
         [InlineAutoData("sma j", new[] { "10000000-0000-0000-0000-000000000000" })]
         [InlineAutoData("jo sm", new[] { "10000000-0000-0000-0000-000000000000", "40000000-0000-0000-0000-000000000000" })]
         [InlineAutoData("sm jo", new[] { "10000000-0000-0000-0000-000000000000", "40000000-0000-0000-0000-000000000000" })]
-        public void Given_ExistingUsersInQuery_When_Handling_Then_CorrectResultsReturned(string partialName, string[] expectedIds)
+        public void Given_ExistingUsersInQuery_When_Handling_Then_CorrectAllResultsReturned(string partialName, string[] expectedIds)
         {
             // Arrange
             IList<User> userList = this.CreateUserList(this.mockedDepartmentData);
@@ -118,6 +118,24 @@
             resultUserList.Should().BeEmpty();
         }
 
+        [Fact]
+        public void Given_TakenParameterIs0_When_Handling_Then_ResultShouldHave3Items()
+        {
+            //Arrange
+            IList<User> userList = this.CreateUserList(this.mockedDepartmentData);
+            this.userRepository.Setup(x => x.Get()).Returns(userList.AsQueryable());
+
+            this.query.PartialName = "j";
+            this.query.Take = 0;
+
+
+            //Act
+            IEnumerable<UsersQueryResult> resultUserList = this.handler.Handle(this.query).AsQueryable();
+
+            //Assert
+            resultUserList.Should().HaveCount(3);
+        }
+
         [Theory]
         [InlineAutoData(2)]
         [InlineAutoData(3)]
@@ -135,28 +153,28 @@
             IEnumerable<UsersQueryResult> resultUserList = this.handler.Handle(this.query).AsQueryable();
 
             //Assert
-            Assert.True(resultUserList.Count() <= takeValue);
+            resultUserList.Should().HaveCount(takeValue);
         }
 
 
         [Fact]
-       public void Given_ExcludedParameter_When_Handling_Then_ExcludedIdIsNotReturned()
+        public void Given_ExcludedParameter_When_Handling_Then_ExcludedIdIsNotReturned()
         {
             //Arrange
             IList<User> userList = this.CreateUserList(this.mockedDepartmentData);
             this.userRepository.Setup(x => x.Get()).Returns(userList.AsQueryable());
-           this.query.PartialName = "j";
+            this.query.PartialName = "j";
 
-            IList<Guid>  enumerable = userList.Select(x=>x.Id).Take(2).ToList();
+            IList<Guid> enumerable = userList.Select(x => x.Id).Take(2).ToList();
 
-           this.query.ExcludedIds = enumerable.ToList();
+            this.query.ExcludedIds = enumerable.ToList();
 
             //Act
             IEnumerable<UsersQueryResult> resultUserList = this.handler.Handle(this.query).AsQueryable();
 
             //Assert
-           resultUserList.Should().NotContain(enumerable.Any());
-           Assert.True(resultUserList.Any());
+            resultUserList.Should().NotContain(enumerable.Any());
+            Assert.True(resultUserList.Any());
         }
 
 
