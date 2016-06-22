@@ -22,13 +22,13 @@
         {
         }
 
+        public string AddressOwnership => this.Driver.GetElement(this.propertyOwnership).Text;
+
         public string GetAddressDetails()
         {
             List<string> list = this.Driver.GetElements(this.propertyAaddress).Select(x => x.Text).ToList();
-            return list.Aggregate<string, string>(null, (current, el) => current + (el + " ")).Trim();
-        } 
-
-        public string AddressOwnership => this.Driver.GetElement(this.propertyOwnership).Text;
+            return list.Aggregate<string, string>(null, (current, el) => current + el + " ").Trim();
+        }
 
         public SearchPropertyPage SearchProperty(string property)
         {

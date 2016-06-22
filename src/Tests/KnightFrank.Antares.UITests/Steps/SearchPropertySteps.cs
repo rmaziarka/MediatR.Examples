@@ -16,7 +16,6 @@
     public class SearchPropertySteps
     {
         private readonly DriverContext driverContext;
-        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
         private SearchPropertyPage page;
 
@@ -49,7 +48,7 @@
         {
             var prop = this.scenarioContext.Get<Property>("Property");
             this.property = prop.Address.PropertyNumber + " " + prop.Address.PropertyName + " " + prop.Address.Line2 + " " +
-                              prop.Address.Line3 + " " + prop.Address.Postcode;
+                            prop.Address.Line3 + " " + prop.Address.Postcode;
             this.page.SearchProperty(this.property);
         }
 
@@ -58,7 +57,6 @@
         {
             Thread.Sleep(TimeSpan.FromSeconds(seconds));
         }
-
 
         [When(@"User clicks on first property on search property page")]
         public void ClickSearchResult()

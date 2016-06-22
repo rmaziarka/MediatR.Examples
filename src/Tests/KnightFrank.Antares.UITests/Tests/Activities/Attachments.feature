@@ -5,10 +5,10 @@ Scenario: Upload attachment for activity
 	Given Contacts are created in database
 		| Title | FirstName | Surname |
 		| Sir   | Felix     | Jordan  |
-		And Property with Commercial division and Leisure.Hotel type is defined
+		And Property with Residential division and Development Plot type is defined
 		And Property attributes details are defined
-			| MinArea  | MaxArea  | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces | MinGuestRooms | MaxGuestRooms | MinFunctionRooms | MaxFunctionRooms |
-			| 20000.25 | 30000.45 | 25000.19    | 40000.1     | 30                  | 50                  | 100           | 200           | 10               | 20               |
+			| MinLandArea | MaxLandArea |
+			| 25000.19    | 40000.1     |
 		And Property characteristics are defined
 		And Property in GB is created in database
 			| PropertyNumber | PropertyName                       | Line2      | Postcode | City        | County             |
@@ -16,7 +16,7 @@ Scenario: Upload attachment for activity
 		And Property ownership is defined
 			| PurchaseDate | BuyPrice |
 			| 01-05-2015   | 1000000  |
-		And Property Open Market Letting activity is defined
+		And Property Long Leasehold Sale activity is defined
 	When User navigates to view activity page with id
 		And User clicks add attachment button on view activity page
 		And User adds PDF document.pdf file with Brochure type on view activity page
