@@ -1,0 +1,101 @@
+<div ng-if="vm.config">
+    <h3 class="page-header" translate="NEGOTIATORS.{{vm.labelTranslationKey}}.HEADER"></h3>
+
+    <h4 translate="NEGOTIATORS.{{vm.labelTranslationKey}}.LEAD"></h4>
+    <search ng-show="vm.isLeadNegotiatorInEditMode" id="lead-search"
+            options="vm.negotiatorsSearchOptions"
+            focus-on="vm.isLeadNegotiatorInEditMode"
+            blur-on="!vm.isLeadNegotiatorInEditMode"
+            on-select-item="vm.changeLeadNegotiator" on-cancel="vm.cancelChangeLeadNegotiator" load-items="vm.getUsers"
+            item-template-url="app/attributes/activityNegotiators/userSearchTemplate.html" search-placeholder="NEGOTIATORS.{{vm.labelTranslationKey}}.FIND"></search>
+    <div id="lead-edit-btn-wrapper" ng-hide="vm.isLeadNegotiatorInEditMode" class="form-group">
+        <button class="btn btn-default" id="lead-edit-btn" type="button" ng-click="vm.editLeadNegotiator()"><i class="fa fa-pencil"></i></button>
+    </div>
+
+    <card id="card-lead-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'" display-new-control="true" item="vm.leadNegotiator">
+    </card>
+
+    <ng-form name="vm.negotiatorForm">
+        <div class="negotiators-call-date form-inline form-group" show-errors>
+            <div class="row">
+                <div class="col-md-12 col-lg-2">
+                    <label class="required" for="lead-call-date"><span translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:</label>
+                </div>
+                <div class="col-md-12 col-lg-10">
+                    <div class="input-group">
+                        <input type="text" id="lead-call-date" name="callDate" class="form-control" ng-model="vm.leadNegotiator.callDate" uib-datepicker-popup="dd-MM-yyyy"
+                               is-open="vm.nagotiatorCallDateOpened[vm.leadNegotiator.userId]" close-text="Close" placeholder="dd-mm-yyyy" required date-greater-than="{{ vm.today }}" autocomplete="off" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="vm.openNegotiatorCallDate(vm.leadNegotiator.userId)"><i class="fa fa-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-10 col-lg-offset-2">
+                    <div ng-messages="negotiatorForm.callDate.$error" ng-show="negotiatorForm.$submitted || negotiatorForm.callDate.$dirty">
+                        <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-form>
+
+    <card-list id="card-list-negotiators" show-item-add="vm.isSecondaryNegotiatorsInEditMode ? null : vm.editSecondaryNegotiators">
+        <card-list-header>
+            <h4 translate="NEGOTIATORS.{{vm.labelTranslationKey}}.SECONDARY"></h4>
+            <search ng-show="vm.isSecondaryNegotiatorsInEditMode" id="secondary-search"
+                    options="vm.negotiatorsSearchOptions"
+                    focus-on="vm.isSecondaryNegotiatorsInEditMode"
+                    blur-on="!vm.isSecondaryNegotiatorsInEditMode"
+                    on-select-item="vm.addSecondaryNegotiator" on-cancel="vm.cancelAddSecondaryNegotiator" load-items="vm.getUsers"
+                    item-template-url="app/attributes/activityNegotiators/userSearchTemplate.html" search-placeholder="NEGOTIATORS.{{vm.labelTranslationKey}}.ADD"></search>
+        </card-list-header>
+        <card-list-no-items id="empty-secondary-negotiators" ng-show="!vm.secondaryNegotiators || vm.secondaryNegotiators.length === 0">
+            <p class="help-block" translate="NEGOTIATORS.{{vm.labelTranslationKey}}.EMPTY"></p>
+        </card-list-no-items>
+        <card-list-item ng-repeat="negotiator in vm.secondaryNegotiators | orderBy: ['user.firstName', 'user.lastName']">
+
+            <card id="card-secondary-negotiator-{{negotiator.userId}}" show-context-menu="true" display-new-control="true" card-template-url="'app/activity/templates/negotiatorCard.html'"
+                  item="negotiator">
+                <card-context-menu>
+                    <context-menu-item type="remove"
+                                       item="negotiator"
+                                       action="vm.deleteSecondaryNegotiator">
+                    </context-menu-item>
+                    <context-menu-item type="setAslead"
+                                       item="negotiator"
+                                       action="vm.switchToLeadNegotiator">
+                    </context-menu-item>
+                </card-context-menu>
+            </card>
+            <ng-form name="vm.negotiatorForm">
+                <div class="negotiators-call-date form-inline form-group" show-errors>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-2">
+                            <label for="call-date-{{negotiator.userId}}"><span translate="NEGOTIATORS.COMMON.NEXTCALL"></span>:</label>
+                        </div>
+                        <div class="col-md-12 col-lg-10">
+                            <div class="input-group">
+                                <input type="text" id="call-date-{{negotiator.userId}}" name="callDate" class="form-control" ng-model="negotiator.callDate" uib-datepicker-popup="dd-MM-yyyy"
+                                       is-open="vm.nagotiatorCallDateOpened[negotiator.userId]" close-text="Close" placeholder="dd-mm-yyyy" date-greater-than="{{ vm.today }}" date-validate-when-changed="" autocomplete="off" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="vm.openNegotiatorCallDate(negotiator.userId)"><i class="fa fa-calendar"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-10 col-lg-offset-2">
+                            <div ng-messages="negotiatorForm.callDate.$error" ng-show="negotiatorForm.$submitted || negotiatorForm.callDate.$dirty">
+                                <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
+                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-form>
+        </card-list-item>
+    </card-list>
+</div>

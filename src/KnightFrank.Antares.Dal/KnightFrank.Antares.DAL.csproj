@@ -60,6 +60,7 @@
     <Compile Include="Model\Attribute\Attribute.cs" />
     <Compile Include="Model\Attribute\AttributeValues.cs" />
     <Compile Include="Model\BaseAuditableEntity.cs" />
+    <Compile Include="Model\BaseEntityWithCode.cs" />
     <Compile Include="Model\BaseLocalisedEntity.cs" />
     <Compile Include="Model\Common\IAuditableEntity.cs" />
     <Compile Include="Model\Common\IBaseEntity.cs" />

@@ -7,14 +7,22 @@
     using System.Net.Http;
     using System.Web.Http;
 
+    using KnightFrank.Antares.Api;
+    using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.User;
+    using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.AreaBreakdown.Commands;
     using KnightFrank.Antares.Domain.AreaBreakdown.Queries;
+    using KnightFrank.Antares.Domain.Attachment.Queries;
     using KnightFrank.Antares.Domain.Ownership.Commands;
     using KnightFrank.Antares.Domain.Ownership.Queries;
     using KnightFrank.Antares.Domain.Property.Commands;
     using KnightFrank.Antares.Domain.Property.Queries;
     using KnightFrank.Antares.Domain.Property.QueryResults;
+    using KnightFrank.Antares.Search.Common.QueryResults;
+    using KnightFrank.Antares.Search.Property.Queries;
+    using KnightFrank.Antares.Search.Property.QueryResults;
 
     using MediatR;
 
@@ -25,15 +33,30 @@
     public class PropertiesController : ApiController
     {
         private readonly IMediator mediator;
+        private readonly IGenericRepository<User> userRepository;
         private const string LocaleCode = "en";
 
         /// <summary>
         ///     Properties controller constructor
         /// </summary>
         /// <param name="mediator">Mediator instance.</param>
-        public PropertiesController(IMediator mediator)
+        /// <param name="userRepository">User repository</param>
+        public PropertiesController(IMediator mediator, IGenericRepository<User> userRepository)
         {
             this.mediator = mediator;
+            this.userRepository = userRepository;
+        }
+
+        /// <summary>
+        /// Search property by query
+        /// </summary>
+        /// <param name="pageableQuery">Query</param>
+        /// <returns>Pageable data with filtered properties</returns>
+        [HttpGet]
+        [Route("search")]
+        public PageableResult<PropertyResult> SearchProperties([FromUri(Name = "")] PropertiesPageableQuery pageableQuery)
+        {
+            return this.mediator.Send(pageableQuery);
         }
 
         /// <summary>
@@ -43,6 +66,7 @@
         /// <returns>Property entity</returns>
         [HttpGet]
         [Route("{id}")]
+        [DataShaping]
         public Property GetProperty(Guid id)
         {
             Property property = this.mediator.Send(new PropertyQuery { Id = id });
@@ -62,10 +86,35 @@
         /// <returns>Newly created property </returns>
         [HttpPost]
         [Route("")]
+        [DataShaping]
         public Property CreateProperty(CreatePropertyCommand command)
         {
             Guid propertyId = this.mediator.Send(command);
             return this.GetProperty(propertyId);
+        }
+
+        /// <summary>
+        ///     Creates the attachment.
+        /// </summary>
+        /// <param name="id">Activity Id</param>
+        /// <param name="command">Attachment data</param>
+        /// <returns>Created attachment</returns>
+        [HttpPost]
+        [Route("{id}/attachments")]
+        public Attachment CreateAttachment(Guid id, CreatePropertyAttachmentCommand command)
+        {
+            // User id is mocked.
+            // TODO Set correct user id from header.
+            if (command.Attachment != null)
+            {
+                command.Attachment.UserId = this.userRepository.FindBy(u => true).First().Id;
+            }
+
+            command.EntityId = id;
+            Guid attachmentId = this.mediator.Send(command);
+
+            var attachmentQuery = new AttachmentQuery { Id = attachmentId };
+            return this.mediator.Send(attachmentQuery);
         }
 
         /// <summary>
@@ -75,6 +124,7 @@
         /// <returns>Newly updated property</returns>
         [HttpPut]
         [Route("")]
+        [DataShaping]
         public Property UpdateProperty(UpdatePropertyCommand command)
         {
             Guid propertyId = this.mediator.Send(command);
@@ -174,6 +224,6 @@
             this.mediator.Send(command);
 
             return this.mediator.Send(new AreaBreakdownQuery { PropertyId = command.PropertyId});
-        } 
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿Feature: Negotiators
 
+@Activity
 Scenario: Update Activity with negotiators
 	Given Property exists in database
 		| PropertyType | Division    |
@@ -17,6 +18,7 @@ Scenario: Update Activity with negotiators
 		And Activity details should be the same as already added
 		And Departments should be the same as already added
 
+@Activity
 Scenario: Update Activity with lead negotiator and next call date
 	Given Property exists in database
 		| PropertyType | Division    |
@@ -29,6 +31,7 @@ Scenario: Update Activity with lead negotiator and next call date
 	Then User should get OK http status code
 		And Activity details should be the same as already added
 
+@Activity
 Scenario: Update Activity with lead negotiator only
 	Given Property exists in database
 		| PropertyType | Division    |
@@ -41,6 +44,7 @@ Scenario: Update Activity with lead negotiator only
 	Then User should get OK http status code
 		And Activity details should be the same as already added
 
+@Activity
 Scenario Outline: Update activity with invalid negotiators data
 	Given Property exists in database
 		| PropertyType | Division    |
@@ -61,6 +65,7 @@ Scenario Outline: Update activity with invalid negotiators data
 	| invalid        | jsmith              | 1            |
 	| jsmith         | jsmith              | -1           |
 
+@Activity
 Scenario: Update only last call date
 	Given Property exists in database
 		| PropertyType | Division    |
@@ -72,6 +77,7 @@ Scenario: Update only last call date
 	Then User should get OK http status code
 		And Last call date should be updated in data base
 
+@Activity
 Scenario Outline: Update last call date for invalid data
 	Given Property exists in database
 		| PropertyType | Division    |
@@ -88,6 +94,7 @@ Scenario Outline: Update last call date for invalid data
 	| -2           | valid   |
 	| 2            | invalid |
 
+@Activity
 Scenario: Update Activity with duplicate department
 	Given Property exists in database
 		| PropertyType | Division    |

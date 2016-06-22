@@ -1,9 +1,13 @@
 ﻿declare module Antares.Common.Models.Dto {
     interface IEnumDictionary {
-        [id:string]:IEnumItem[],
-        entityType: IEnumItem[];
-        ownershipType: IEnumItem[];
+        [id: string]: IEnumItem[],
+        activityDepartmentType: IEnumItem[];
+        activityDocumentType: IEnumItem[];
         activityStatus: IEnumItem[];
+        activityUserType: IEnumItem[];
         division: IEnumItem[];
+        entityType: IEnumItem[];
+        offerStatus: IEnumItem[];
+        ownershipType: IEnumItem[];
     }
 }

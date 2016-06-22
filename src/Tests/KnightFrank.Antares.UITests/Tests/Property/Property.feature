@@ -21,19 +21,19 @@ Scenario: Update residential property
 		And User opens navigation drawer menu
 		And User selects Properties menu item
 		And User clicks edit property button on view property page
-		And User selects Commercial property and Hotel type on edit property page
+		And User selects Residential property and House type on edit property page
 		And User fills in property details on edit property page
-			| MinGuestRooms | MaxGuestRooms | MinFunctionRooms | MaxFunctionRooms | MinArea | MaxArea |
-			| 120           | 200           | 10               | 20               | 4000.5  | 5500.0  |
+			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
+			| 1           | 2           | 1             | 2             | 3            | 4            | 1000    | 3000.12 | 5000.13     | 9000.1      | 2                   | 3                   |
 		And User fills in address details on edit property page
 			| PropertyNumber | PropertyName | Line2 | Line3          | Postcode | City | County |
 			|                |              |       | Address line 3 | W2U 8AN  |      |        |
 		And User selects property characteristics on edit property page
-			| Name    | Comment |
-			| Airport | Airport |
+			| Name     | Comment  |
+			| Detached | Detached |
 		And User selects property characteristics on edit property page
-			| Name |
-			| Spa  |
+			| Name     |
+			| Terraced |
 		And User clicks save property button on edit property page
 	Then Property should be updated with address details 
 		| PropertyNumber | PropertyName | Line2 | Line3          | Postcode | City | County |
@@ -41,18 +41,36 @@ Scenario: Update residential property
 		And Latest 1 property should contain following data
 			| LatestData |
 			| -          |
-		And Property should be updated with Hotel property type and following attributes
-			| PropertyArea           | LandArea                   | CarParkingSpaces | GuestRooms | FunctionRooms |
-			| 4,000.5 - 5,500 sq. ft | 6,000.13 - 10,000.1 sq. ft | 3 - 5            | 120 - 200  | 10 - 20       |
+		And Property should be updated with House property type and following attributes
+			| Bedrooms | Receptions | Bathrooms | LandArea                  | PropertyArea            | CarParkingSpaces |
+			| 1 - 2    | 1 - 2      | 3 - 4     | 5,000.13 - 9,000.1 sq. ft | 1,000 - 3,000.12 sq. ft | 2 - 3            |
 		And Characteristics are displayed on view property page
-			| Name        | Comment |
-			| Airport     | Airport |
-			| Coastal     | Comment |
-			| Island      | Comment |
-			| Town/City   | Comment |
-			| Village     | Comment |
-			| Golf Course | Comment |
-			| Spa         |         |
+			| Name                   | Comment  |
+			| Detached               | Detached |
+			| Terraced               |          |
+			| Conservatory           | Comment  |
+			| Garden                 | Comment  |
+			| Land                   | Comment  |
+			| Patio / Terrace        | Comment  |
+			| Island                 | Comment  |
+			| Rural                  | Comment  |
+			| Town/City              | Comment  |
+			| Village                | Comment  |
+			| Coastal                | Comment  |
+			| Fishing                | Comment  |
+			| Equestrian             | Comment  |
+			| Golf Course            | Comment  |
+			| Leisure Facilities     | Comment  |
+			| Listed                 | Comment  |
+			| New Development        | Comment  |
+			| Secondary accomodation | Comment  |
+			| Swimming Pool          | Comment  |
+			| Tennis Court           | Comment  |
+			| Waterside              | Comment  |
+			| Fair                   | Comment  |
+			| Good                   | Comment  |
+			| Unmodernised           | Comment  |
+			| Very Good              | Comment  |
 		And Ownership details should contain following data on view property page
 			| Position | ContactName | ContactSurname | Type     | PurchaseDate |
 			| 1        | Alex        | Johnson        | Freehold | 05-01-2014   |
@@ -108,7 +126,7 @@ Scenario: Create residential property
 	When User selects contacts for ownership on view property page
 		| FirstName | Surname |
 		| Eva       | Queen   |
-		And User fills in ownership details on view property page
+		When User fills in ownership details on view property page
 			| Type     | Current | PurchasePrice | PurchaseDate |
 			| Freehold | true    | 1000000       | 15-01-2014   |
 	Then Ownership details should contain following data on view property page
@@ -126,14 +144,14 @@ Scenario: Create residential property
 		| PropertyNumber | PropertyName      | Line2    | Postcode | City   | County      |
 		| 20             | Westminster Abbey | Deans Yd | SW1P 3PA | London | Westminster |
 	When User clicks add attachment button on view activity page
-		And User adds PDF document.pdf file with Brochure type on attach file page
+		And User adds PDF document.pdf file with Brochure type on view activity page
 		And User clicks edit button on view activity page
 		And User edits activity details on edit activity page
-			| ActivityStatus   | MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |
-			| Market appraisal | 3000                 | 4000             | 5000                 |
+			| ActivityStatus   | ShortLetPricePerWeek |
+			| Market appraisal | 3000                 |
 		And User clicks save button on edit activity page
 	Then View activity page should be displayed
-	When User clicks property details link on view activity page
+	When User clicks property details on view activity page
 		And User clicks view property link from property on view activity page
 	Then View property page should be displayed
 

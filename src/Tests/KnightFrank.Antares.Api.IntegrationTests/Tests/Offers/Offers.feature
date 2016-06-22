@@ -76,8 +76,6 @@ Scenario: Get Accepted residential sales offer
 		| FirstName | Surname | Title |
 		| Jon       | Lajoie  | Dude  |
 		And Company exists in database
-			| Name    |
-			| Company |
 		And Property exists in database
 			| PropertyType | Division    |
 			| House        | Residential |
@@ -121,8 +119,6 @@ Scenario Outline: Update accepted residential sales offer
 		| FirstName | Surname | Title |
 		| Jon       | Lajoie  | Dude  |
 		And Company exists in database
-			| Name    |
-			| Company |
 		And Property exists in database
 			| PropertyType | Division    |
 			| House        | Residential |
@@ -138,8 +134,6 @@ Scenario Outline: Update accepted residential sales offer
 			| FirstName | Surname | Title |
 			| Adam      | Lajoie  | Sir   |
 		And Company exists in database
-			| Name |
-			| New  |
 	When User updates offer with <newOfferStatus> status
 	Then User should get OK http status code
 		And Offer details should be updated
@@ -177,8 +171,6 @@ Scenario Outline: Update accepted residential sales offer with invalid data
 		| FirstName | Surname | Title |
 		| Jon       | Lajoie  | Dude  |
 		And Company exists in database
-			| Name    |
-			| Company |
 		And Property exists in database
 			| PropertyType | Division    |
 			| House        | Residential |

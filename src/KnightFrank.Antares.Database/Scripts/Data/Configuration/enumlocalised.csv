@@ -17,6 +17,11 @@ ActivityDocumentType;Brochure;en;Brochure
 ActivityDocumentType;VideoTour;en;Video Tour
 ActivityDocumentType;EPC;en;EPC
 ActivityDocumentType;GasCertificate;en;Gas Certificate
+RequirementDocumentType;TermsOfBusiness;en;Terms of Business
+PropertyDocumentType;Photograph;en;Photograph
+PropertyDocumentType;FloorPlan;en;Floor Plan
+PropertyDocumentType;Brochure;en;Brochure
+PropertyDocumentType;VideoTour;en;Video Tour
 OfferStatus;New;en;New
 OfferStatus;Withdrawn;en;Withdrawn
 OfferStatus;Rejected;en;Rejected
@@ -25,6 +30,9 @@ ActivityUserType;LeadNegotiator;en;Lead negotiator
 ActivityUserType;SecondaryNegotiator;en;Secondary negotiator
 ActivityDepartmentType;Managing;en;Managing
 ActivityDepartmentType;Standard;en;Standard
+ClientCareStatus;MassiveActionClient;en;Massive Action Client
+ClientCareStatus;PrincipalClient;en;Principal Client
+ClientCareStatus;KeyClient;en;Key Client
 MortgageStatus;Unknown;en;Unknown
 MortgageStatus;NotRequiredCashFromSale;en;Not required - cash from sale
 MortgageStatus;NotRequiredCashInBank;en;Not required - cash in bank

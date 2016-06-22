@@ -5,6 +5,8 @@
         marketAppraisalPrice?: number;
         recommendedPrice?: number;
         vendorEstimatedPrice?: number;
+		askingPrice?: number;
+		shortLetPricePerWeek?: number;
 
         leadNegotiator: IUpdateActivityUserResource;
         secondaryNegotiators: IUpdateActivityUserResource[];

@@ -8,14 +8,12 @@
 
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
-    using KnightFrank.Antares.Domain.Activity.Queries;
-    using KnightFrank.Antares.Domain.Activity.QueryHandlers;
     using KnightFrank.Antares.Domain.RequirementNote.Queries;
     using KnightFrank.Antares.Domain.RequirementNote.QueryHandlers;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 
-    using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;

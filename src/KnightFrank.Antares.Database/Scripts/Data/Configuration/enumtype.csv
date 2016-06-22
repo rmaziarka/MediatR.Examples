@@ -4,11 +4,14 @@ OwnershipType
 ActivityStatus
 Division
 ActivityDocumentType
+PropertyDocumentType
+RequirementDocumentType
 OfferStatus
 ActivityUserType
 ActivityDepartmentType
 MortgageStatus
 MortgageSurveyStatus
+ClientCareStatus
 AdditionalSurveyStatus
 SearchStatus
 Enquiries

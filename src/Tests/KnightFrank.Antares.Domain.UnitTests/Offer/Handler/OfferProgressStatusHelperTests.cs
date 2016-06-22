@@ -11,7 +11,6 @@ namespace KnightFrank.Antares.Domain.UnitTests.Offer.Handler
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Offer.OfferHelpers;
-    using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
 
     using Moq;
 
@@ -21,7 +20,7 @@ namespace KnightFrank.Antares.Domain.UnitTests.Offer.Handler
     using Xunit;
 
     using EnumType = KnightFrank.Antares.Domain.Common.Enums.EnumType;
-
+    using Tests.Common.Extensions.AutoFixture;
     [Collection("OfferProgressStatusHelperTests")]
     [Trait("FeatureTitle", "OfferProgressStatusHelper")]
     public class OfferProgressStatusHelperTests : IClassFixture<BaseTestClassFixture>

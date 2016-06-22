@@ -46,7 +46,11 @@ module Antares.Property {
                     ownershipModel.purchaseDate = Core.DateTimeUtils.convertDateToUtc(ownershipModel.purchaseDate);
                     ownershipModel.sellDate = Core.DateTimeUtils.convertDateToUtc(ownershipModel.sellDate);
 
-                    this.ownerships.push(ownershipModel);
+                    var newOwnerships: Business.Ownership[] = null;
+                    newOwnerships = angular.copy(this.ownerships);
+                    newOwnerships.push(ownershipModel);
+
+                    this.ownerships = newOwnerships;
                     var form = this.$scope["addOwnershipForm"];
                     form.$setPristine();
                 });

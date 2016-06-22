@@ -10,6 +10,7 @@
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal.Model.Address;
+    using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Attribute;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Property;
@@ -143,7 +144,8 @@
                 PropertyTypeId = propertyTypeId,
                 DivisionId = divisionId,
                 AttributeValues = attributeValues,
-                PropertyCharacteristics = propertyCharacteristic
+                PropertyCharacteristics = propertyCharacteristic,
+                Attachments = new List<Attachment>()
             };
 
             this.fixture.DataContext.Properties.Add(property);
@@ -369,7 +371,8 @@
                 .Excluding(x => x.PropertyType)
                 .Excluding(x => x.Address.AddressForm)
                 .Excluding(x => x.Address.Country)
-                .Excluding(x => x.PropertyCharacteristics));
+                .Excluding(x => x.PropertyCharacteristics)
+                .Excluding(x => x.Attachments));
 
             updatedProperty.PropertyCharacteristics.Should()
                            .Equal(actualProperty?.PropertyCharacteristics,
@@ -393,7 +396,8 @@
                 .Excluding(x => x.Address.AddressForm)
                 .Excluding(x => x.Address.Country)
                 .Excluding(x => x.PropertyType)
-                .Excluding(x => x.PropertyCharacteristics));
+                .Excluding(x => x.PropertyCharacteristics)
+                .Excluding(x => x.Attachments));
 
             expectedProperty.PropertyCharacteristics.Should()
                             .Equal(actualProperty?.PropertyCharacteristics,

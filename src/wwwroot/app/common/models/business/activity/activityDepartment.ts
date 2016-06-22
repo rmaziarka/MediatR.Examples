@@ -7,7 +7,7 @@ module Antares.Common.Models.Business {
         departmentId: string = "";
         department: Department = null;
         departmentTypeId: string;
-        departmentType: Dto.IEnumTypeItem;
+        departmentType: Dto.IEnumItem;
 
         constructor(activityDepartment?: Dto.IActivityDepartment) {
             if (activityDepartment) {

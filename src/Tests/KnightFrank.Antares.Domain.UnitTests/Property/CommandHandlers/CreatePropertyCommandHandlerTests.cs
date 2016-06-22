@@ -9,6 +9,7 @@
     using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Property.CommandHandlers;
     using KnightFrank.Antares.Domain.Property.Commands;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 
@@ -39,7 +40,7 @@
 
             // Assert
             propertyToBeSaved.Should().NotBeNull();
-            entityValidator.Verify(x=>x.EntityExists<PropertyType>(command.PropertyTypeId));
+            entityValidator.Verify(x=>x.EntityExists<Dal.Model.Property.PropertyType>(command.PropertyTypeId));
             enumTypeItemValidator.Verify(x => x.ItemExists(EnumType.Division, command.DivisionId));
             propertyToBeSaved.Address.ShouldBeEquivalentTo(command.Address, options => options.IncludingProperties().ExcludingMissingMembers());
             propertyRepository.Verify(x => x.Add(It.IsAny<Property>()), Times.Once);

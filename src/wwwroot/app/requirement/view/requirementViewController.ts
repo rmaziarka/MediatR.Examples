@@ -3,6 +3,7 @@
 module Antares.Requirement.View {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
+    import EntityType = Common.Models.Enums.EntityTypeEnum;
 
     export class RequirementViewController extends Core.WithPanelsBaseController {
         requirement: Business.Requirement;
@@ -16,12 +17,35 @@ module Antares.Requirement.View {
         selectedOffer: Dto.IOffer;
         selectedViewing: Dto.IViewing;
 
+        enumTypeRequirementDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.RequirementDocumentType;
+        entityType: EntityType = EntityType.Requirement;
+
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private $scope: ng.IScope,
-            private $state: ng.ui.IStateService) {
+            private $state: ng.ui.IStateService,
+            private dataAccessService: Services.DataAccessService,
+            private eventAggregator: Core.EventAggregator,
+            private requirementService: Requirement.RequirementService) {
 
             super(componentRegistry, $scope);
+
+            eventAggregator
+                .with(this)
+                .subscribe(Common.Component.Attachment.AttachmentSavedEvent, (event: Common.Component.Attachment.AttachmentSavedEvent) => {
+                    this.addSavedAttachmentToList(event.attachmentSaved);
+                });
+        }
+
+        addSavedAttachmentToList = (result: Dto.IAttachment) => {
+            var savedAttachment = new Business.Attachment(result);
+            this.requirement.attachments.push(savedAttachment);
+        }
+
+        saveAttachment = (attachment: Common.Component.Attachment.AttachmentUploadCardModel) => {
+            var command = new Requirement.Command.RequirementAttachmentSaveCommand(this.requirement.id, attachment);
+            return this.requirementService.createRequirementAttachment(command)
+                .then((result: angular.IHttpPromiseCallbackArg<Dto.IAttachment>) => { return result.data; });
         }
 
         showNotesPanel = () =>{

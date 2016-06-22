@@ -43,9 +43,9 @@
 
             var offer = new Offer
             {
-                ActivityId = activityId,
                 //TODO improve selecting negotiator
                 NegotiatorId = this.dataContext.Users.First().Id,
+                ActivityId = activityId,
                 Price = 1000,
                 CompletionDate = DateTime.UtcNow,
                 ExchangeDate = DateTime.UtcNow,

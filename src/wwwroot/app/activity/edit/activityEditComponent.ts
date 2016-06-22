@@ -6,7 +6,8 @@ module Antares.Activity {
         controllerAs : 'aevm',
         controller: 'ActivityEditController',
         bindings: {
-            activity: '='
+            activity: '=',
+            config: '<'
         }
     });
 }

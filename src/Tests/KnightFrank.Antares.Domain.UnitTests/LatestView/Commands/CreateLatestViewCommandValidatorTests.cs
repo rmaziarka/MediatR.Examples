@@ -10,6 +10,8 @@
     using Dal.Model.Common;
     using Domain.LatestView.Commands;
 
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
+
     using Xunit;
 
     [Trait("FeatureTitle", "LatestView")]

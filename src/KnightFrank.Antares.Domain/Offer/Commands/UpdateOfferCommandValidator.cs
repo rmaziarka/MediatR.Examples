@@ -1,7 +1,5 @@
 ﻿namespace KnightFrank.Antares.Domain.Offer.Commands
 {
-    using System;
-
     using FluentValidation;
 
     public class UpdateOfferCommandValidator : AbstractValidator<UpdateOfferCommand>

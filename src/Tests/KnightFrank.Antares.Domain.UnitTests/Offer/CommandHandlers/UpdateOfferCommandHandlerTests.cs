@@ -14,7 +14,8 @@
     using KnightFrank.Antares.Domain.Offer.CommandHandlers;
     using KnightFrank.Antares.Domain.Offer.Commands;
     using KnightFrank.Antares.Domain.Offer.OfferHelpers;
-    using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 
@@ -33,7 +34,7 @@
 
         public UpdateOfferCommandHandlerTests()
         {
-            Fixture fixture = new Fixture().Customize();
+            IFixture fixture = new Fixture().Customize();
 
             this.acceptedEnumType = fixture.Create<Dal.Model.Enum.EnumType>();
             this.acceptedEnumType.EnumTypeItems = fixture.CreateMany<EnumTypeItem>().ToList();

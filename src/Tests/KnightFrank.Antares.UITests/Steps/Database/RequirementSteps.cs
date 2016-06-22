@@ -37,7 +37,7 @@
             var requirement = table.CreateInstance<Requirement>();
 
             // Get country and address form id
-            Guid countryId = this.dataContext.Countries.Single(x => x.IsoCode == "GB").Id;
+            Guid countryId = this.dataContext.Countries.Single(x => x.IsoCode.Equals("GB")).Id;
             Guid enumTypeId =
                 this.dataContext.EnumTypeItems.Single(
                     e => e.EnumType.Code.Equals(nameof(EntityType)) && e.Code.Equals(nameof(EntityType.Requirement))).Id;

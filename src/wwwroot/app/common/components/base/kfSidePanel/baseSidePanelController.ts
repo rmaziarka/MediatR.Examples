@@ -1,42 +1,41 @@
 /// <reference path="../../../../typings/_all.d.ts" />
 
-module Antares {
-    export module Common {
-        export module Component {
-            export abstract class BaseSidePanelController{
+module Antares.Common.Component {
+    export abstract class BaseSidePanelController {
 
-                isVisible: boolean = false;
-                stateChanged: boolean = false;
-                isBusy: boolean;
+        isVisible: boolean;
+        stateChanged: boolean = false;
+        isBusy: boolean;
 
-                protected panelShown = () => {
-
+        protected panelShown = () => {
                 };
 
-                show = () => {
-                    this.stateChanged = true;
-                    this.panelShown();
-                }
+                protected panelHidden = () => {
+                };
+
+        show = () => {
+            this.stateChanged = true;
+            this.panelShown();
+        }
 
                 hide = () => {
                     this.stateChanged = true;
+                    this.panelHidden();
                 }
 
-                protected $onChanges(changesObj: IBaseSidePanelChange) {
-                    if (changesObj.isVisible && changesObj.isVisible.currentValue !== changesObj.isVisible.previousValue && typeof (changesObj.isVisible.previousValue) === "boolean") {
-                        if (changesObj.isVisible.currentValue === true) {
-                            this.show();
-                        }
-                        else if (changesObj.isVisible.currentValue === false) {
-                            this.hide();
-                        }
-                    }
+        public $onChanges(changesObj: IBaseSidePanelChange) {
+            if (changesObj.isVisible && changesObj.isVisible.currentValue !== changesObj.isVisible.previousValue) {
+                if (changesObj.isVisible.currentValue === true) {
+                    this.show();
                 }
-            }
-
-            interface IBaseSidePanelChange {
-                isVisible: { currentValue: any, previousValue: any}
+                else if (changesObj.isVisible.currentValue === false && !changesObj.isVisible.isFirstChange()) {
+                    this.hide();
+                }
             }
         }
+    }
+
+    interface IBaseSidePanelChange {
+        isVisible: { currentValue: any, previousValue: any, isFirstChange: () => boolean }
     }
 }

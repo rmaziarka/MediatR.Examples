@@ -71,7 +71,7 @@ declare module Antares.Common.Models {
         interface IPropertyAreaBreakdownResource extends ng.resource.IResource<Dto.IPropertyAreaBreakdown> {
         }
 
-        interface IActivityAttachmentResource extends ng.resource.IResource<Dto.IAttachment> {
+        interface IActivityAttachmentSaveCommand extends ng.resource.IResource<Antares.Activity.Command.ActivityAttachmentSaveCommand> {
         }
 
         interface IAzureUploadUrlResource extends ng.resource.IResource<Dto.IAzureUploadUrlContainer> {
@@ -96,8 +96,12 @@ declare module Antares.Common.Models {
             update(params: Object, data: Object): T;
         }
 
+        interface ICompanyResourceClass extends Resources.IBaseResourceClass<Resources.ICompanyResource> {
+          
+        }
+
         interface IActivityResourceClass extends Resources.IBaseResourceClass<Resources.IActivityResource> {
-            getActivityTypes(params: any, ownership: any): ng.resource.IResource<Dto.IActivityType>;
+            getActivityTypes(params: any, ownership: any): ng.resource.IResource<Dto.IActivityTypeQueryResult[]>;
         }
 
         interface IActivityUserResourceClass extends Resources.IBaseResourceClass<Resources.IActivityUserResource> {

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
 
     using KnightFrank.Antares.Dal;
@@ -39,13 +40,13 @@
             var address = table.CreateInstance<Address>();
 
             // Get country and address form id
-            Guid countryId = this.dataContext.Countries.Single(c => c.IsoCode.Equals("GB")).Id;
-            Guid enumTypeId =
+            Guid countryId = this.dataContext.Countries.Single(x => x.IsoCode.Equals("GB")).Id;
+            Guid enumTypeItemId =
                 this.dataContext.EnumTypeItems.Single(
                     e => e.EnumType.Code.Equals(nameof(EntityType)) && e.Code.Equals(nameof(EntityType.Property))).Id;
             Guid addressFormId =
                 this.dataContext.AddressFormEntityTypes.Single(
-                    afe => afe.AddressForm.CountryId.Equals(countryId) && afe.EnumTypeItemId.Equals(enumTypeId)).AddressFormId;
+                    afe => afe.AddressForm.CountryId.Equals(countryId) && afe.EnumTypeItemId.Equals(enumTypeItemId)).AddressFormId;
 
             // Get property type id and division id
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
@@ -55,7 +56,7 @@
             address.AddressFormId = addressFormId;
             address.CountryId = countryId;
             address.Line1 = string.Empty;
-            address.Line3 = string.Empty;
+            address.Line3 = DateTime.Now.ToString(CultureInfo.InvariantCulture);
 
             var property = new Property
             {
@@ -84,7 +85,7 @@
         {
             Guid propertyTypeId = this.dataContext.PropertyTypes.Single(i => i.Code.Equals(propertyType)).Id;
             Guid divisionId =
-                this.dataContext.EnumTypeItems.Single(i => i.EnumType.Code.Equals(nameof(Division)) && i.Code.Equals(division)).Id;
+                this.dataContext.EnumTypeItems.Single(e => e.EnumType.Code.Equals(nameof(Division)) && e.Code.Equals(division)).Id;
 
             this.scenarioContext.Set(propertyTypeId, "PropertyTypeId");
             this.scenarioContext.Set(divisionId, "DivisionId");
@@ -101,7 +102,7 @@
         public void SetPropertyCharacterstics()
         {
             var propertyTypeId = this.scenarioContext.Get<Guid>("PropertyTypeId");
-            Guid countryId = this.dataContext.Countries.Single(x => x.IsoCode == "GB").Id;
+            Guid countryId = this.dataContext.Countries.Single(x => x.IsoCode.Equals("GB")).Id;
 
             var list = new List<Guid>();
 

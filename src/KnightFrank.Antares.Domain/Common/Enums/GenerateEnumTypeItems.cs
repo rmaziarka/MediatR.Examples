@@ -10,10 +10,13 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	ActivityStatus,
 	 	Division,
 	 	ActivityDocumentType,
+	 	RequirementDocumentType,
+	 	PropertyDocumentType,
 	 	OfferStatus,
 	 	ActivityUserType,
 	 	ActivityDepartmentType,
 	 	MortgageStatus,
+        ClientCareStatus,
 	 	MortgageSurveyStatus,
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,
@@ -57,6 +60,27 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		VideoTour,
 		EPC,
 		GasCertificate,
+	}
+
+	public enum RequirementDocumentType
+	{
+		TermsOfBusiness,
+		MarketingSignOff,
+		CDDDocument,
+		Photograph,
+		FloorPlan,
+		Brochure,
+		VideoTour,
+		EPC,
+		GasCertificate,
+	}
+
+	public enum PropertyDocumentType
+	{
+		Photograph,
+		FloorPlan,
+		Brochure,
+		VideoTour,
 	}
 
 	public enum OfferStatus

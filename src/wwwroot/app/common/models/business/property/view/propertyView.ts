@@ -6,6 +6,7 @@
         address: Business.Address = new Business.Address();
         ownerships: Business.Ownership[] = [];
         activities: Business.Activity[] = [];
+        attachments: Attachment[] = [];
         division: Business.EnumTypeItem = <Business.EnumTypeItem>{};
         attributeValues: any = {};
         // dynamic object created basing on list of characteristic (with characteristicId as key)
@@ -26,6 +27,10 @@
 
                 this.propertyTypeId = property.propertyTypeId;
                 this.attributeValues = property.attributeValues;
+
+                if (property.attachments) {
+                    this.attachments = property.attachments.map((attachment: Dto.IAttachment) => { return new Business.Attachment(attachment) });
+                }
 
                 _.reduce(property.propertyCharacteristics, (propertyCharacteristicObject, characteristicItem) => {
                     propertyCharacteristicObject[characteristicItem.characteristicId] = new CharacteristicSelect(characteristicItem);

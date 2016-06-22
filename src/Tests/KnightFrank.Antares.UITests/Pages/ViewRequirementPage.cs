@@ -39,6 +39,12 @@
         private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .ng-binding");
         private readonly ElementLocator editOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showEditOfferPanel'] li");
         private readonly ElementLocator detailsOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showOfferDetailsView'] li");
+        private readonly ElementLocator addAttachmentButton = new ElementLocator(Locator.CssSelector, "#card-list-attachments button");
+        private readonly ElementLocator attachmentFileTitle = new ElementLocator(Locator.CssSelector, "#card-list-attachments div[id *= 'attachment-data'");
+        private readonly ElementLocator attachmentDate = new ElementLocator(Locator.CssSelector, "#card-list-attachments time[id *= 'attachment-created-date']");
+        private readonly ElementLocator attachmentType = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-type']");
+        private readonly ElementLocator attachmentSize = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-file-size']");
+        private readonly ElementLocator attachmentCard = new ElementLocator(Locator.CssSelector, "#card-list-attachments .card-body");
 
         public ViewRequirementPage(DriverContext driverContext) : base(driverContext)
         {
@@ -63,6 +69,18 @@
         public string CreateDate => this.Driver.GetElement(this.requirementDate).Text;
 
         public List<string> Applicants => this.Driver.GetElements(this.requirementApplicants).Select(el => el.Text).ToList();
+
+        public Attachment AttachmentDetails => new Attachment
+        {
+            FileName = this.Driver.GetElement(this.attachmentFileTitle).Text,
+            Type = this.Driver.GetElement(this.attachmentType).Text,
+            Size = this.Driver.GetElement(this.attachmentSize).Text,
+            Date = this.Driver.GetElement(this.attachmentDate).Text
+        };
+
+        public AttachFilePage AttachFile => new AttachFilePage(this.DriverContext);
+
+        public AttachmentPreviewPage AttachmentPreview => new AttachmentPreviewPage(this.DriverContext);
 
         public ViewRequirementPage OpenViewRequirementPageWithId(string id)
         {
@@ -190,6 +208,24 @@
         public ViewRequirementPage WaitForSidePanelToHide()
         {
             this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.MediumTimeout);
+            return this;
+        }
+
+        public ViewRequirementPage WaitForSidePanelToHide(double timeout)
+        {
+            this.Driver.WaitUntilElementIsNoLongerFound(this.panel, timeout);
+            return this;
+        }
+
+        public ViewRequirementPage OpenAttachFilePanel()
+        {
+            this.Driver.Click(this.addAttachmentButton);
+            return this;
+        }
+
+        public ViewRequirementPage OpenAttachmentPreview()
+        {
+            this.Driver.Click(this.attachmentCard);
             return this;
         }
     }

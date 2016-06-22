@@ -9,7 +9,7 @@ module Antares.Common.Component {
             transclude: {
                 'cards': '?sidePanelCards'
             },
-            controller:'kfSidePanelController'
+            controller: 'kfSidePanelController',
         };
     }
 

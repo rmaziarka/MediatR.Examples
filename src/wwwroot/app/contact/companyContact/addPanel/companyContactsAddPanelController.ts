@@ -37,7 +37,7 @@ module Antares.Ownership {
                 });
         }
 
-        $onChanges(changesObj: any) {
+        public $onChanges(changesObj: any) {
             super.$onChanges(changesObj);
             if (changesObj.initialySelectedCompanyContacts && changesObj.initialySelectedCompanyContacts.currentValue && changesObj.initialySelectedCompanyContacts.currentValue !== changesObj.initialySelectedCompanyContacts.previousValue) {
                 this.loadCompanyContacts();

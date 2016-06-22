@@ -3,7 +3,8 @@
     using FluentValidation.TestHelper;
 
     using KnightFrank.Antares.Domain.Common.Validator;
-    using KnightFrank.Antares.Domain.Enum.QueryHandlers;
+    using KnightFrank.Antares.Domain.Enum.Queries;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Xunit;
 

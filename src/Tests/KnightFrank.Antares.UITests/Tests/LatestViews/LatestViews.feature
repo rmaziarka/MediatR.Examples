@@ -1,4 +1,4 @@
-﻿Feature: Latest views
+﻿Feature: Latest views UI tests
 
 @LatestViews
 Scenario: Display latest viewed properties
@@ -8,7 +8,7 @@ Scenario: Display latest viewed properties
 			| 70             | Condo        | Longford St | TS1 4RN  | Middlesbrough | North Yorkshire |
 		And Property Freehold Sale activity is defined
 	When User navigates to view activity page with id
-		And User clicks property details link on view activity page
+		And User clicks property details on view activity page
 		And User opens navigation drawer menu
 		And User selects Properties menu item
 	Then Latest 1 property should contain following data
@@ -67,13 +67,13 @@ Scenario: Display latest viewed properties
 
 @LatestViews
 Scenario: Display latest viewed activities
-	Given Property with Residential division and Retail.Car Showroom type is defined
+	Given Property with Residential division and House type is defined
 		And Property in GB is created in database
 			| PropertyNumber | PropertyName              | Line2       | Postcode | City    | County      |
 			| 24             | The Alternative Tuck Shop | Holywell St | OX1 3SB  | Oksford | Oxfordshire |
 	When User navigates to view property page with id
 		And User clicks add activites button on view property page	
-		And User selects Long Leasehold Sale activity type on create activity page
+		And User selects Freehold Sale activity type on create activity page
 		And User clicks save button on create activity page
 		And User opens navigation drawer menu
 		And User selects Activities menu item

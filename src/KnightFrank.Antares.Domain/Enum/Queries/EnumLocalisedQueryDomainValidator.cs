@@ -1,4 +1,4 @@
-﻿namespace KnightFrank.Antares.Domain.Enum.QueryHandlers
+﻿namespace KnightFrank.Antares.Domain.Enum.Queries
 {
     using FluentValidation;
 
@@ -6,7 +6,6 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.Validator;
-    using KnightFrank.Antares.Domain.Enum.Queries;
 
     public class EnumLocalisedQueryDomainValidator : AbstractValidator<EnumLocalisedQuery>, IDomainValidator<EnumLocalisedQuery>
     {

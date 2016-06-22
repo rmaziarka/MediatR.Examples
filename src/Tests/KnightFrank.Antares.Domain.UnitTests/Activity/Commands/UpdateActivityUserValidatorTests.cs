@@ -7,13 +7,14 @@
     using FluentValidation.Resources;
     using FluentValidation.Results;
 
-    using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
-
     using Ploeh.AutoFixture;
 
     using Xunit;
 
     using KnightFrank.Antares.Domain.Activity.Commands;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
+    using KnightFrank.Antares.Tests.Common.Extensions.Fluent.ValidationResult;
 
     [Trait("FeatureTitle", "Property Activity")]
     [Collection("UpdateActivityUserValidator")]
@@ -35,7 +36,7 @@
             this.AssertIfValid(command);
         }
 
-        [Theory]
+        //[Theory] TODO: solve issue with Autofixture and incjecting values inside constructor
         [AutoMoqData]
         public void Given_ValidUpdateActivityUserWithNullDate_When_Validating_Then_IsValid(
             UpdateActivityUser command)

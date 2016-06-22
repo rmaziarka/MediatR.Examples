@@ -81,5 +81,13 @@
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
+
+        [When(@"User retrieves all address templates for (.*) entity")]
+        public void WhenUserRetrievesAllAddressTemplatesForPropertyEntity(string entity)
+        {
+            string requestUrl = $"{ApiUrl}/list?entityType={entity}";
+            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
     }
 }

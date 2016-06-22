@@ -19,11 +19,11 @@ Scenario: Upload attachment for activity
 		And Property Open Market Letting activity is defined
 	When User navigates to view activity page with id
 		And User clicks add attachment button on view activity page
-		And User adds PDF document.pdf file with Brochure type on attach file page
+		And User adds PDF document.pdf file with Brochure type on view activity page
 	Then Attachment should be displayed on view activity page
 		| FileName         | Type     | Size   |
 		| PDF document.pdf | Brochure | 2.9 MB |
-	When User clicks attachment details link on view activity page
+	When User clicks attachment card on view activity page
 	Then Attachment details on attachment preview page are the same like on view activity page
-		And Attachment PDF document.pdf should be downloaded
+		And Activity attachment PDF document.pdf should be downloaded
 		And User closes attachment preview page on view activity page

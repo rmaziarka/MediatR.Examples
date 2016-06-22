@@ -24,10 +24,11 @@ namespace KnightFrank.Antares.Domain.UnitTests.Offer.CommandHandlers
     using Xunit;
 
     using EnumType = KnightFrank.Antares.Domain.Common.Enums.EnumType;
-    using FixtureExtension;
 
     using KnightFrank.Antares.Domain.Common.Enums;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
+    using Tests.Common.Extensions.AutoFixture;
     [Collection("CreateOfferCommandHandler")]
     [Trait("FeatureTitle", "Offer")]
     public class CreateOfferCommandHandlerTests : IClassFixture<BaseTestClassFixture>
@@ -36,7 +37,7 @@ namespace KnightFrank.Antares.Domain.UnitTests.Offer.CommandHandlers
 
         public CreateOfferCommandHandlerTests()
         {
-            Fixture fixture = new Fixture().Customize();
+            IFixture fixture = new Fixture().Customize();
 
             this.acceptedEnumType = fixture.Create<Dal.Model.Enum.EnumType>();
             this.acceptedEnumType.EnumTypeItems = fixture.CreateMany<EnumTypeItem>().ToList();

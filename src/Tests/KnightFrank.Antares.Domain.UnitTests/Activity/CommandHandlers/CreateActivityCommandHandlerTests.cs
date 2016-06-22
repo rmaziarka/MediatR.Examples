@@ -15,8 +15,11 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.CommandHandlers;
     using KnightFrank.Antares.Domain.Activity.Commands;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
+    using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
 
     using Moq;
 
@@ -24,6 +27,9 @@
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
+
+    using ActivityType = KnightFrank.Antares.Dal.Model.Property.Activities.ActivityType;
+    using PropertyType = KnightFrank.Antares.Dal.Model.Property.PropertyType;
 
     [Trait("FeatureTitle", "Activity")]
     [Collection("CreateActivityCommandHandler")]
@@ -33,6 +39,7 @@
         [AutoMoqData]
         public void Given_ValidCommand_When_Handling_Then_ShouldSaveActivity(
             [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
+            [Frozen] Mock<IGenericRepository<ActivityType>> activityTypeRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             [Frozen] Mock<IGenericRepository<User>> userRepository,
             [Frozen] Mock<IEntityValidator> entityValidator,
@@ -40,6 +47,8 @@
             [Frozen] Mock<IGenericRepository<Property>> propertyRepository,
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IActivityTypeDefinitionValidator> activityTypeDefinitionValidator,
+            [Frozen] Mock<IAttributeValidator<Tuple<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>>> attributeValidator,
+            [Frozen] Mock<IEntityMapper<Activity>> activityEntityMapper,
             CreateActivityCommandHandler handler,
             CreateActivityCommand command,
             Guid expectedActivityId,
@@ -50,7 +59,18 @@
             Activity activity = null;
             var property = fixture.Create<Property>();
             property.Address = fixture.Create<Address>();
-            propertyRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(property);
+            property.PropertyType =
+                fixture.Build<PropertyType>().With(x => x.EnumCode, Domain.Common.Enums.PropertyType.Flat.ToString()).Create();
+            propertyRepository.Setup(
+                x => x.GetWithInclude(
+                    It.IsAny<Expression<Func<Property, bool>>>(),
+                    It.IsAny<Expression<Func<Property, object>>>(),
+                    It.IsAny<Expression<Func<Property, object>>>())).Returns(new[] { property });
+            ActivityType activityType =
+                fixture.Build<ActivityType>()
+                       .With(x => x.EnumCode, Domain.Common.Enums.ActivityType.FreeholdSale.ToString())
+                       .Create();
+            activityTypeRepository.Setup(x => x.GetById(command.ActivityTypeId)).Returns(activityType);
 
             enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
                                   .Returns(
@@ -74,28 +94,42 @@
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
                              .Returns(command.ContactIds.Select(id => new Contact { Id = id }));
 
+            var mappedActivity = new Activity { PropertyId = property.Id, ActivityTypeId = command.ActivityTypeId };
+            activityEntityMapper
+                .Setup(
+                    x =>
+                        x.MapAllowedValues(command, It.Is<Activity>(a => a.PropertyId == command.PropertyId && a.ActivityTypeId == command.ActivityTypeId), PageType.Create))
+                .Returns(mappedActivity);
+
             // Act
             Guid activityId = handler.Handle(command);
 
             // Assert
             activityId.Should().Be(activity.Id);
 
-            activity.ShouldBeEquivalentTo(command, opt => opt.IncludingProperties().ExcludingMissingMembers());
+            activityEntityMapper
+                .Verify(
+                    x =>
+                        x.MapAllowedValues(command, It.Is<Activity>(a => a.PropertyId == command.PropertyId && a.ActivityTypeId == command.ActivityTypeId), PageType.Create), Times.Once);
 
             activity.ActivityUsers.Should().HaveCount(1);
-            ActivityUser leadNegotiator = activity.ActivityUsers.SingleOrDefault();
+            ActivityUser leadNegotiator = activity.ActivityUsers.Single();
             leadNegotiator.User.Should().Be(user);
             leadNegotiator.UserType.Code.Should().Be(ActivityUserType.LeadNegotiator.ToString());
             leadNegotiator.CallDate.Should().Be(DateTime.UtcNow.AddDays(14).Date);
 
             activity.ActivityDepartments.Should().HaveCount(1);
-            ActivityDepartment managingDepartment = activity.ActivityDepartments.SingleOrDefault();
+            ActivityDepartment managingDepartment = activity.ActivityDepartments.Single();
             managingDepartment.Department.Should().Be(user.Department);
             managingDepartment.DepartmentType.Code.Should().Be(ActivityDepartmentType.Managing.ToString());
 
-            entityValidator.Verify(x => x.EntityExists<Dal.Model.Property.Activities.ActivityType>(command.ActivityTypeId), Times.Once);
             entityValidator.Verify(x => x.EntityExists(property, command.PropertyId), Times.Once);
             entityValidator.Verify(x => x.EntityExists(user, command.LeadNegotiatorId), Times.Once);
+            entityValidator.Verify(x => x.EntityExists(activityType, command.ActivityTypeId), Times.Once);
+            attributeValidator.Verify(
+                x =>
+                    x.Validate(PageType.Create, new Tuple<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>(Domain.Common.Enums.PropertyType.Flat,
+                        Domain.Common.Enums.ActivityType.FreeholdSale), command));
             activityTypeDefinitionValidator.Verify(
                 x => x.Validate(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>()),
                 Times.Once);

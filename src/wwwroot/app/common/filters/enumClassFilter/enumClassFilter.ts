@@ -7,11 +7,11 @@ module Antares {
         export module Filters {
 
 	        export class EnumClassFilter {
-		        constructor(private enumService: Antares.Services.EnumService){
+		        constructor(private enumProvider: Antares.Providers.EnumProvider){
 		        }
 
 		        getEnumValue = (enumItemId: string) =>{
-			        return this.enumService.getEnumCodeById(enumItemId);
+			        return this.enumProvider.getEnumCodeById(enumItemId);
 		        }
 				
 		        camelToDash = (str: string) =>{
@@ -20,9 +20,9 @@ module Antares {
 								.toLowerCase();
 				}
 
-                static getInstance(enumService: Antares.Services.EnumService) {
+                static getInstance(enumProvider: Antares.Providers.EnumProvider) {
                     var mappingFunc: any = (id: string) =>{
-	                    var filter = new EnumClassFilter(enumService);
+	                    var filter = new EnumClassFilter(enumProvider);
 	                    var code = filter.getEnumValue(id);
 	                    if (code !== undefined) {
 		                    return filter.camelToDash(code);
