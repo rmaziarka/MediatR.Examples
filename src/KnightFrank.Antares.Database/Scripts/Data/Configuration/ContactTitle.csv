@@ -1,0 +1,30 @@
+﻿Title;Locale;Priority
+Frau;DE;
+Herr;DE;
+Captain;EN;
+Count;EN;
+Countess;EN;
+Dame;EN;
+Datin;EN;
+Dato;EN;
+Datuk;EN;
+Dr;EN;
+H.E.;EN;
+HRH;EN;
+Lady;EN;
+Lord;EN;
+Prof;EN;
+Sheikh;EN;
+Sheikha;EN;
+Sir;EN;
+The Hon;EN;
+Mr;EN;1
+Mr and Mrs;EN;2
+Mrs;EN;3
+Ms;EN;4
+Miss;EN;5
+Señor;ES;
+Señora;ES;
+Madame;FR;
+Maître;FR;
+Monsieur;FR;
