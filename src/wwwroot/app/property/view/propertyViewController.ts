@@ -10,7 +10,6 @@ module Antares.Property.View {
     import EntityType = Common.Models.Enums.EntityType;
 
     export class PropertyViewController extends Core.WithPanelsBaseController {
-        isActivityAddPanelVisible: boolean = false;
         isActivityPreviewPanelVisible:boolean = false;
         ownershipAddPanelVisible: boolean = false;
         
@@ -43,15 +42,9 @@ module Antares.Property.View {
             this.fixOwnershipDates();
 
             this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
-                // TODO iteration?
-                this.isActivityAddPanelVisible = false;
                 this.isActivityPreviewPanelVisible = false;
             });
-
-            this.eventAggregator.with(this).subscribe(Activity.ActivityAddedSidePanelEvent, (msg: Activity.ActivityAddedSidePanelEvent) => {
-                this.property.activities.push(new Business.Activity(msg.activityAdded));
-            });
-
+            
             eventAggregator
                 .with(this)
                 .subscribe(Common.Component.Attachment.AttachmentSavedEvent, (event: Common.Component.Attachment.AttachmentSavedEvent) => {
@@ -60,7 +53,6 @@ module Antares.Property.View {
         }
 
         onPanelsHidden = () =>{
-            this.isActivityAddPanelVisible = false;
             this.isActivityPreviewPanelVisible = false;
         }
 
@@ -95,9 +87,8 @@ module Antares.Property.View {
             this.showPanel(this.components.panels.ownershipView);
         }
 
-        showActivityAdd = () =>{
-            this.hidePanels();
-            this.isActivityAddPanelVisible = true;
+        goToActivityAdd = () => {
+            //state go
         }
 
         showAreaAdd = () => {
@@ -142,11 +133,7 @@ module Antares.Property.View {
         cancelAddOwnership() {
             this.ownershipAddPanelVisible = false;
         }
-
-        cancelAddActivity() {
-            this.components.panels.activityAdd().hide();
-        }
-
+        
         cancelAddArea() {
             this.components.panels.areaAdd().hide();
         }
