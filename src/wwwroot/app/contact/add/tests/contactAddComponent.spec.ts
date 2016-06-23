@@ -1,27 +1,75 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares {
+    import ContactAddController = Antares.Contact.ContactAddController;
+    import Dto = Antares.Common.Models.Dto;
+
     describe('Given contact is being added', () => {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
+            controller: ContactAddController,
             assertValidator: Antares.TestHelpers.AssertValidators;
 
         var pageObjectSelectors = {
             titleSelector: 'input#title',
             firstNameSelector: 'input#first-name',
-            surnameSelector: 'input#surname'
+            lastNameSelector: 'input#last-name',
+            mailingFormalSalutationSelector: 'input#mailing-formal-salutation',
+            mailingSemiformalSalutationSelector: 'input#mailing-semiformal-salutation',
+            mailingInformalSalutationSelector: 'input#mailing-informal-salutation',
+            mailingPersonalSalutationSelector: 'input#mailing-personal-salutation',
+            mailingEnvelopeSalutationSelector: 'input#mailing-envelope-salutation',
+            eventInviteSalutationSelector: 'input#event-invite-salutation',
+            eventSemiformalSalutationSelector: 'input#event-semiformal-salutation',
+            eventInformalSalutationSelector: 'input#event-informal-salutation',
+            eventPersonalSalutationSelector: 'input#event-personal-salutation',
+            eventEnvelopeSalutationSelector: 'input#event-envelope-salutation'
         };
+
+        var mailingSalutations = [
+            { id: '1', code: 'MailingFormal' },
+            { id: '2', code: 'MailingSemiformal' },
+            { id: '3', code: 'MailingInformal' },
+            { id: '4', code: 'MailingPersonal' },
+            { id: '5', code: 'MailingEnvelope' }
+        ];
+
+        var eventSalutations = [
+            { id: '1', code: 'EventInvite' },
+            { id: '2', code: 'EventSemiformal' },
+            { id: '3', code: 'EventInformal' },
+            { id: '4', code: 'EventPersonal' },
+            { id: '5', code: 'EventEnvelope' }
+        ];
+
+        var salutationFormats = [
+            { id: '1', code: 'MrJohnSmith' },
+            { id: '2', code: 'JohnSmithEsq' }
+        ];
 
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
-            $compile: ng.ICompileService) => {
+            $compile: ng.ICompileService,
+            enumService: Mock.EnumServiceMock) => {
 
             scope = $rootScope.$new();
-            element = $compile('<contact-add></contact-add>')(scope);
+            scope["userData"] = <Dto.ICurrentUser>{
+                division: <Dto.IEnumTypeItem>{ id: 'enumId', code: 'code' }
+            };
+
+            enumService.setEnum(Dto.EnumTypeCode.MailingSalutation.toString(), mailingSalutations);
+            enumService.setEnum(Dto.EnumTypeCode.EventSalutation.toString(), eventSalutations);
+            enumService.setEnum(Dto.EnumTypeCode.SalutationFormat.toString(), salutationFormats);
+
+            element = $compile("<contact-add user-data='userData'></contact-add>")(scope);
             scope.$apply();
+            controller = element.controller("contactAdd");
 
             assertValidator = new Antares.TestHelpers.AssertValidators(element, scope);
-        }));
+        },
+        ));
+
+        ///////// titleSelector
 
         it('when title value is missing then required message should be displayed', () => {
             assertValidator.assertRequiredValidator(null, false, pageObjectSelectors.titleSelector);
@@ -41,15 +89,7 @@ module Antares {
             assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.titleSelector);
         });
 
-        /////////
-
-        it('when first name value is missing then required message should be displayed', () => {
-            assertValidator.assertRequiredValidator(null, false, pageObjectSelectors.firstNameSelector);
-        });
-
-        it('when first name value is present then required message should not be displayed', () => {
-            assertValidator.assertRequiredValidator('Name', true, pageObjectSelectors.firstNameSelector);
-        });
+        ///////// firstNameSelector
 
         it('when first name value is too long then validation message should be displayed', () => {
             var maxLength = 128;
@@ -61,24 +101,144 @@ module Antares {
             assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.firstNameSelector);
         });
 
-        /////////
+        ///////// lastNameSelector
 
-        it('when surname value is missing then required message should be displayed', () => {
-            assertValidator.assertRequiredValidator(null, false, pageObjectSelectors.surnameSelector);
+        it('when last name value is missing then required message should be displayed', () => {
+            assertValidator.assertRequiredValidator(null, false, pageObjectSelectors.lastNameSelector);
         });
 
-        it('when surname value is present then required message should not be displayed', () => {
-            assertValidator.assertRequiredValidator('Name', true, pageObjectSelectors.surnameSelector);
+        it('when last name value is present then required message should not be displayed', () => {
+            assertValidator.assertRequiredValidator('Name', true, pageObjectSelectors.lastNameSelector);
         });
 
-        it('when surname value is too long then validation message should be displayed', () => {
+        it('when last name value is too long then validation message should be displayed', () => {
             var maxLength = 128;
-            assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.surnameSelector);
+            assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.lastNameSelector);
         });
 
-        it('when surname value has max length then validation message should not be displayed', () => {
+        it('when last name value has max length then validation message should not be displayed', () => {
             var maxLength = 128;
-            assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.surnameSelector);
+            assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.lastNameSelector);
+        });
+
+        ///////// mailingFormalSalutationSelector
+
+        it('when mailing formal salutation value is too long then validation message should be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.mailingFormalSalutationSelector);
+        });
+
+        it('when mailing formal salutation value has max length then validation message should not be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.mailingFormalSalutationSelector);
+        });
+
+        ///////// mailingSemiformalSalutationSelector
+
+        it('when mailing semiformal salutation value is too long then validation message should be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.mailingSemiformalSalutationSelector);
+        });
+
+        it('when mailing semiformal salutation value has max length then validation message should not be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.mailingSemiformalSalutationSelector);
+        });
+
+        ///////// mailingInformalSalutationSelector
+
+        it('when mailing informal salutation value is too long then validation message should be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.mailingInformalSalutationSelector);
+        });
+
+        it('when mailing informal salutation value has max length then validation message should not be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.mailingInformalSalutationSelector);
+        });
+
+        ///////// mailingPersonalSalutationSelector
+
+        it('when mailing personal salutation value is too long then validation message should be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.mailingPersonalSalutationSelector);
+        });
+
+        it('when mailing personal salutation value has max length then validation message should not be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.mailingPersonalSalutationSelector);
+        });
+
+        ///////// mailingEnvelopeSalutationSelector
+
+        it('when mailing envelope salutation value is too long then validation message should be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.mailingEnvelopeSalutationSelector);
+        });
+
+        it('when mailing envelope salutation value has max length then validation message should not be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.mailingEnvelopeSalutationSelector);
+        });
+
+        ///////// eventInviteSalutationSelector
+
+        it('when event invite salutation value is too long then validation message should be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.eventInviteSalutationSelector);
+        });
+
+        it('when event invite salutation value has max length then validation message should not be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.eventInviteSalutationSelector);
+        });
+
+        ///////// eventSemiformalSalutationSelector
+
+        it('when event semiformal salutation value is too long then validation message should be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.eventSemiformalSalutationSelector);
+        });
+
+        it('when event semiformal salutation value has max length then validation message should not be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.eventSemiformalSalutationSelector);
+        });
+
+        ///////// eventInformalSalutationSelector
+
+        it('when event informal salutation value is too long then validation message should be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.eventInformalSalutationSelector);
+        });
+
+        it('when event informal salutation value has max length then validation message should not be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.eventInformalSalutationSelector);
+        });
+
+        ///////// eventPersonalSalutationSelector
+
+        it('when event personal salutation value is too long then validation message should be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.eventPersonalSalutationSelector);
+        });
+
+        it('when event personal salutation value has max length then validation message should not be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.eventPersonalSalutationSelector);
+        });
+
+        ///////// eventEnvelopeSalutationSelector
+
+        it('when event envelope salutation value is too long then validation message should be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.eventEnvelopeSalutationSelector);
+        });
+
+        it('when event envelope salutation value has max length then validation message should not be displayed', () => {
+            var maxLength = 128;
+            assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.eventEnvelopeSalutationSelector);
         });
     });
 }
