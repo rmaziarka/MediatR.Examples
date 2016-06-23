@@ -29,6 +29,14 @@
                     .Include(v => v.Activity)
                     .Include(v => v.Activity.Contacts)
                     .Include(v => v.Activity.Property.Address)
+                    .Include(v => v.Broker)
+                    .Include(v => v.Lender)
+                    .Include(v => v.Surveyor)
+                    .Include(v => v.AdditionalSurveyor)
+                    .Include(v => v.BrokerCompany)
+                    .Include(v => v.LenderCompany)
+                    .Include(v => v.SurveyorCompany)
+                    .Include(v => v.AdditionalSurveyorCompany)
                     .SingleOrDefault(v => v.Id == message.Id);
 
             return offer;

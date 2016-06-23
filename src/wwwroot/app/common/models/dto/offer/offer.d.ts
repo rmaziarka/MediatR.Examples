@@ -14,6 +14,37 @@
         activity: Dto.IActivity;
         requirement: Dto.IRequirement;
         status: Dto.IEnumTypeItem;
-        createdDate?:Date;
+        createdDate?: Date;
+        mortgageStatus: Dto.IEnumTypeItem;
+        mortgageStatusId: string;
+        mortgageSurveyStatus: Dto.IEnumTypeItem;
+        mortgageSurveyStatusId: string;
+        searchStatus: Dto.IEnumTypeItem; 
+        searchStatusId: string;
+        enquiries: Dto.IEnumTypeItem; 
+        enquiriesId: string;
+        contractApproved: boolean;
+        mortgageLoanToValue?: number;
+        broker?: Dto.IContact;
+        brokerCompany?: Dto.ICompany;
+        brokerId?: string;
+        brokerCompanyId?: string;
+        lender?: Dto.IContact;
+        lenderCompany?: Dto.ICompany;
+        lenderId?: string;
+        lenderCompanyId?: string;
+        mortgageSurveyDate?: Date | string;
+        surveyor?: Dto.IContact;
+        surveyorCompany?: Dto.ICompany;
+        surveyorId?: string;
+        surveyorCompanyId?: string;
+        additionalSurveyor?: Dto.IContact;
+        additionalSurveyorCompany?: Dto.ICompany;
+        additionalSurveyorId?: string;
+        additionalSurveyorCompanyId?: string;
+        additionalSurveyStatus: Dto.IEnumTypeItem;
+        additionalSurveyStatusId: string;
+        additionalSurveyDate?: Date | string;
+        progressComment: string;
     }
 }

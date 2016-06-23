@@ -1,26 +1,32 @@
 ﻿Feature: Attachments
 
-@Activity
+@Attachment
 Scenario: Upload attachment
-	Given Activity exists in database
+	Given User gets EnumTypeItemId and EnumTypeItem code
+		| enumTypeCode         | enumTypeItemCode |
+		| ActivityDocumentType | TermsOfBusiness  |
+		And Property exists in database
+			| PropertyType | Division    |
+			| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 	When User uploads attachment for latest activity id for TermsOfBusiness with following data
 		| FileName | Size | ExternalDocumentId                   |
 		| abc.pdf  | 1024 | ba3b115b-4a5f-42c9-8e0f-25b7ed903b00 |
 	Then User should get OK http status code
 
-@Activity
+@Attachment
 Scenario Outline: Upload attachment with invalid data
-	Given User gets Freehold Sale for ActivityType
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| ActivityStatus         | PreAppraisal     |
-			| ActivityDocumentType   | <documentType>   |
-			| ActivityUserType       | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
+	Given User gets EnumTypeItemId and EnumTypeItem code
+		| enumTypeCode           | enumTypeItemCode |
+		| ActivityDocumentType   | <documentType>   |
 		And Property exists in database
 			| PropertyType | Division    |
 			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 	When User uploads attachment for <activityId> activity id for <documentType> with following data
 		| FileName | Size | ExternalDocumentId                   |
 		| abc.pdf  | 1024 | ba3b115b-4a5f-42c9-8e0f-25b7ed903b00 |
@@ -33,8 +39,16 @@ Scenario Outline: Upload attachment with invalid data
 	| TermsOfBusiness |                                      | NotFound   |
 
 @Activity
-Scenario: Get activity with attachment
-	Given Activity exists in database
+Scenario: Get Activity with attachment
+	Given User gets EnumTypeItemId and EnumTypeItem code
+		| enumTypeCode         | enumTypeItemCode |
+		| ActivityDocumentType | TermsOfBusiness  |
+		And Property exists in database
+			| PropertyType | Division    |
+			| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Attachment for TermsOfBusiness with following data exists in database
 			| FileName | Size | ExternalDocumentId                   |
 			| abc.pdf  | 1024 | ba3b115b-4a5f-42c9-8e0f-25b7ed903b00 |

@@ -162,6 +162,15 @@
   <data name="ExchangeDateGreaterOrEqualToCreateDate" xml:space="preserve">
     <value>Exchange Date must be greater than or equal to {0}.</value>
   </data>
+  <data name="MortgageSurveyDateGreaterOrEqualToCreateDate" xml:space="preserve">
+    <value>Mortgage Survey Date must be greater than or equal to {0}.</value>
+  </data>
+  <data name="AdditionalSurveyDateGreaterOrEqualToCreateDate" xml:space="preserve">
+    <value>Additional Survey Date must be greater than or equal to {0}.</value>
+  </data>
+  <data name="Enum_Value_Not_Passed" xml:space="preserve">
+    <value>Enum value of the field {0} not passed</value>
+  </data>
   <data name="Missing_Requirement_Attendees_Id" xml:space="preserve">
     <value>One or more attendees are not on the applicant list.</value>
   </data>

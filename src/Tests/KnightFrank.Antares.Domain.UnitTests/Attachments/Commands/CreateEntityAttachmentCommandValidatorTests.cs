@@ -9,7 +9,6 @@
     using FluentValidation.TestHelper;
 
     using KnightFrank.Antares.Domain.Attachment.Commands;
-    using KnightFrank.Antares.Domain.UnitTests.FixtureExtension;
     using KnightFrank.Antares.Tests.Common.Extensions.Fluent.ValidationResult;
 
     using Xunit;

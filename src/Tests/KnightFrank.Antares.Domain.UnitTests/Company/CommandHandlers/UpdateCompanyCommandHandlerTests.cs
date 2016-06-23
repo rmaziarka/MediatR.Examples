@@ -5,8 +5,6 @@
     using System.Linq;
     using System.Linq.Expressions;
 
-    using FluentAssertions;
-
     using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Repository;

@@ -183,6 +183,7 @@
     <Compile Include="Steps\Activities\NegotiatorsSteps.cs" />
     <Compile Include="Steps\CharacteristicGroups\CharacteristicGroupsSteps.cs" />
     <Compile Include="Steps\Companies\CompaniesSteps.cs" />
+    <Compile Include="Steps\CompanyContacts\CompanyContactsSteps.cs" />
     <Compile Include="Steps\LatestViews\LatestViewsSteps.cs" />
     <Compile Include="Steps\Metadata\MetadataSteps.cs" />
     <Compile Include="Steps\Offers\OffersSteps.cs" />
@@ -210,6 +211,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Negotiators.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\CompanyContacts\CompanyContacts.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CompanyContacts.feature</DependentUpon>
     </Compile>
     <Compile Include="Tests\LatestViews\LatestViews.feature.cs">
       <AutoGen>True</AutoGen>
@@ -360,6 +366,10 @@
     <None Include="Tests\Activities\Negotiators.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Negotiators.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\CompanyContacts\CompanyContacts.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>CompanyContacts.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\LatestViews\LatestViews.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

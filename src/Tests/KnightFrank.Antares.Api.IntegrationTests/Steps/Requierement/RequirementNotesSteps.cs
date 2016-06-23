@@ -35,6 +35,21 @@
             this.scenarioContext = scenarioContext;
         }
 
+        [Given(@"Requirement notes exists in database")]
+        public void CretaeNoteInDatabase(Table notesTable)
+        {
+            Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
+            Requirement requirement = this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(requirementId));
+
+            List<RequirementNote> notes = notesTable.CreateSet<RequirementNote>().ToList();
+            notes.ForEach(x => x.RequirementId = requirement.Id);
+
+            requirement.RequirementNotes = notes;
+
+            this.fixture.DataContext.SaveChanges();
+            this.scenarioContext.Set(requirement, "Requirement");
+        }
+
         [When(@"User creates note for requirement using api")]
         public void CreateNoteUsingApi()
         {
@@ -52,21 +67,6 @@
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, note);
             this.scenarioContext.SetHttpResponseMessage(response);
-        }
-
-        [Given(@"Requirement notes exists in database")]
-        public void CretaeNoteInDatabase(Table notesTable)
-        {
-            Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
-            Requirement requirement = this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(requirementId));
-
-            List<RequirementNote> notes = notesTable.CreateSet<RequirementNote>().ToList();
-            notes.ForEach(x => x.RequirementId = requirement.Id);
-
-            requirement.RequirementNotes = notes;
-
-            this.fixture.DataContext.SaveChanges();
-            this.scenarioContext.Set(requirement, "Requirement");
         }
 
         [Then(@"Note is saved in database")]

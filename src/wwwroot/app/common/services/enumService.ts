@@ -10,7 +10,7 @@ module Antares.Services {
     export class EnumService {
 
         private promise: ng.IPromise<Dto.IEnumDictionary> = null;
-        private enums: any;
+        public enums: any;
         private enumCodeDict: dictionary = {};
         constructor(private dataAccessService: DataAccessService) {
         }

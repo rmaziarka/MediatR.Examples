@@ -80,7 +80,12 @@ Scenario: Get requirement with notes
 
 @Requirements
 Scenario: Get requirement with offer and viewing
-	Given Activity exists in database 
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
 			| Title  | FirstName | Surname |
 			| Mister | Tomasz    | Bien    |

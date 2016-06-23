@@ -26,6 +26,29 @@ OfferStatus;New;en;New
 OfferStatus;Withdrawn;en;Withdrawn
 OfferStatus;Rejected;en;Rejected
 OfferStatus;Accepted;en;Accepted
+ActivityUserType;LeadNegotiator;en;Lead negotiator
+ActivityUserType;SecondaryNegotiator;en;Secondary negotiator
+ActivityDepartmentType;Managing;en;Managing
+ActivityDepartmentType;Standard;en;Standard
 ClientCareStatus;MassiveActionClient;en;Massive Action Client
 ClientCareStatus;PrincipalClient;en;Principal Client
 ClientCareStatus;KeyClient;en;Key Client
+MortgageStatus;Unknown;en;Unknown
+MortgageStatus;NotRequiredCashFromSale;en;Not required - cash from sale
+MortgageStatus;NotRequiredCashInBank;en;Not required - cash in bank
+MortgageStatus;InProgress;en;In progress
+MortgageStatus;Agreed;en;Agreed
+MortgageSurveyStatus;Unknown;en;Unknown
+MortgageSurveyStatus;NotRequired;en;Not required
+MortgageSurveyStatus;Complete;en;Complete
+MortgageSurveyStatus;Outstanding;en;Outstanding
+AdditionalSurveyStatus;Unknown;en;Unknown
+AdditionalSurveyStatus;NotRequired;en;Not required
+AdditionalSurveyStatus;InProgress;en;In progress
+AdditionalSurveyStatus;Complete;en;Complete
+SearchStatus;NotStarted;en;Not started
+SearchStatus;AppliedFor;en;Applied for
+SearchStatus;Complete;en;Complete
+Enquiries;NotStarted;en;Not started
+Enquiries;Sent;en;Sent
+Enquiries;Complete;en;Complete

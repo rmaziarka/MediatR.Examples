@@ -1,0 +1,21 @@
+<kf-side-panel-card>
+    <side-panel-header>
+        <h3 translate="REQUIREMENT.ADD.FINDCONTACT"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <div ng-show="vm.isLoading">...loading data...</div>
+        <card-list-item class="requirement-view-offers" ng-repeat="contact in vm.contacts track by contact.id">
+            <card show-context-menu="false" show-item-details="" display-new-control="true" card-selected="vm.cardSelected"
+                  card-template-url="'app/contact/companyContact/listCard/companyContactCard.html'" item="contact" selected="contact.selected" allow-selection="true">
+            </card>
+        </card-list-item>
+    </side-panel-content>
+    <side-panel-footer>
+        <button class="btn btn-default" type="button" ng-click="vm.close()">
+            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+        </button>
+        <button class="btn btn-primary" type="button" ng-click="vm.save()" id="ownership-save-button">
+            <i class="fa fa-check" aria-hidden="true"></i> <span translate="COMMON.APPLY"></span>
+        </button>
+    </side-panel-footer>
+</kf-side-panel-card>

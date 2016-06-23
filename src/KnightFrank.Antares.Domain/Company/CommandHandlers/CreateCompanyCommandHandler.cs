@@ -5,6 +5,7 @@
     using System.Linq;
 
     using AutoMapper;
+    using AutoMapper.Internal;
 
     using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Contacts;
@@ -16,14 +17,13 @@
 
     public class CreateCompanyCommandHandler : IRequestHandler<CreateCompanyCommand, Guid>
     {
-        private readonly IGenericRepository<Company> companyRepository;
         private readonly IGenericRepository<Contact> contactRepository;
+        private readonly IGenericRepository<CompanyContact> companyContactRepository;
 
-        public CreateCompanyCommandHandler(IGenericRepository<Company> companyRepository,
-            IGenericRepository<Contact> contactRepository)
+        public CreateCompanyCommandHandler(IGenericRepository<Contact> contactRepository, IGenericRepository<CompanyContact> companyContactRepository)
         {
-            this.companyRepository = companyRepository;
             this.contactRepository = contactRepository;
+            this.companyContactRepository = companyContactRepository;
         }
 
         public Guid Handle(CreateCompanyCommand message)
@@ -36,10 +36,9 @@
                 throw new BusinessValidationException(ErrorMessage.Missing_Company_Contacts_Id);
             }
 
-            company.Contacts = companyContacts;
+            companyContacts.Each(c => this.companyContactRepository.Add(new CompanyContact { Company = company, Contact = c }));
 
-            this.companyRepository.Add(company);
-            this.companyRepository.Save();
+            this.companyContactRepository.Save();
 
             return company.Id;
         }

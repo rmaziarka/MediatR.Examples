@@ -235,7 +235,9 @@
     <Compile Include="Contact\CommandHandlers\CreateContactCommandHandler.cs" />
     <Compile Include="Contact\Commands\UpdateContactCommandValidator.cs" />
     <Compile Include="Contact\Queries\ContactQuery.cs" />
+    <Compile Include="Company\Queries\CompanyContactsQuery.cs" />
     <Compile Include="Contact\QueryHandlers\ContactQueryHandler.cs" />
+    <Compile Include="Company\QueryHandlers\CompanyContactsQueryHandler.cs" />
     <Compile Include="Country\Queries\CountriesQuery.cs" />
     <Compile Include="Country\QueryHandlers\CountriesQueryHandler.cs" />
     <Compile Include="LatestView\CommandHandlers\CreateLatestViewCommandHandler.cs" />
@@ -259,6 +261,8 @@
     <Compile Include="Offer\Commands\CreateOfferCommand.cs" />
     <Compile Include="Offer\Commands\OfferCommandProfile.cs" />
     <Compile Include="Offer\Commands\CreateOfferCommandValidator.cs" />
+    <Compile Include="Offer\OfferHelpers\IOfferProgressStatusHelper.cs" />
+    <Compile Include="Offer\OfferHelpers\OfferProgressStatusHelper.cs" />
     <Compile Include="Offer\Queries\OfferQuery.cs" />
     <Compile Include="Offer\Queries\OfferQueryValidator.cs" />
     <Compile Include="Offer\QueryHandlers\OfferQueryHandler.cs" />
@@ -378,6 +382,7 @@
     <EmbeddedResource Include="Properties\BusinessErrorMessages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>BusinessErrorMessages.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

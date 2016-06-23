@@ -146,8 +146,9 @@
         public void CreateActivity(string activityType)
         {
             Guid activityTypeId = this.dataContext.ActivityTypes.Single(i => i.Code.Equals(activityType)).Id;
-            Guid activityStatusId = this.dataContext.EnumTypeItems.Single(
-                i => i.EnumType.Code.Equals(nameof(ActivityStatus)) && i.Code.Equals(nameof(ActivityStatus.PreAppraisal))).Id;
+            Guid activityStatusId =
+                this.dataContext.EnumTypeItems.Single(
+                    i => i.EnumType.Code.Equals(nameof(ActivityStatus)) && i.Code.Equals(nameof(ActivityStatus.PreAppraisal))).Id;
             Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
 
             var activity = new Activity
@@ -199,8 +200,9 @@
         public void CreateActivityWithNegotiators(string activityType)
         {
             Guid activityTypeId = this.dataContext.ActivityTypes.Single(i => i.Code.Equals(activityType)).Id;
-            Guid activityStatusId = this.dataContext.EnumTypeItems.Single(
-                i => i.EnumType.Code.Equals(nameof(ActivityStatus)) && i.Code.Equals(nameof(ActivityStatus.PreAppraisal))).Id;
+            Guid activityStatusId =
+                this.dataContext.EnumTypeItems.Single(
+                    i => i.EnumType.Code.Equals(nameof(ActivityStatus)) && i.Code.Equals(nameof(ActivityStatus.PreAppraisal))).Id;
             Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
 
             var activity = new Activity

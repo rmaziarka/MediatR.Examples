@@ -14,7 +14,6 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.AreaBreakdown.Commands;
     using KnightFrank.Antares.Domain.AreaBreakdown.Queries;
-    using KnightFrank.Antares.Domain.Attachment.Commands;
     using KnightFrank.Antares.Domain.Attachment.Queries;
     using KnightFrank.Antares.Domain.Ownership.Commands;
     using KnightFrank.Antares.Domain.Ownership.Queries;

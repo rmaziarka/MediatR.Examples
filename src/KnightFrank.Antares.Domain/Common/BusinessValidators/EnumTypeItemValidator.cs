@@ -26,6 +26,18 @@
             }
         }
 
+        public void ValidateMandatoryIfItemExists(Enums.EnumType enumType, Guid? enumTypeItemId)
+        {
+            if (enumTypeItemId.HasValue)
+            {
+                this.ItemExists(enumType, enumTypeItemId.Value);
+            }
+            else
+            {
+                throw new BusinessValidationException(new BusinessValidationMessage(ErrorMessage.Enum_Value_Not_Passed, new[] {enumType.ToString()}));
+            }
+        }
+
         public void ItemExists<T>(T enumTypeItem, Guid enumTypeItemId)
         {
             if (enumTypeItem == null)

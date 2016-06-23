@@ -1,6 +1,5 @@
 ﻿namespace KnightFrank.Antares.Api.Controllers
 {
-    using System;
     using System.Web.Http;
 
     using FluentValidation;
@@ -8,7 +7,6 @@
     using KnightFrank.Antares.Api.Models;
     using KnightFrank.Antares.Api.Services.AzureStorage;
     using KnightFrank.Antares.Api.Validators.Services;
-    using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Foundation.Antares.Cloud.Storage.Blob;
 
     [RoutePrefix("api/services")]

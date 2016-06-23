@@ -7,6 +7,10 @@ module Antares.Attributes {
     import DepartmentUserResourceParameters = Common.Models.Resources.IDepartmentUserResourceParameters;
     import SearchOptions = Antares.Common.Component.SearchOptions;
 
+	interface IActivityNegotiatorsEditControlForm extends ng.IFormController {
+		callDate: ng.INgModelController
+	}
+
     export class ActivityNegotiatorsEditControlController {
         // bindings
         onNegotiatorAdded: (obj: { user: Dto.IUser }) => void;
@@ -26,6 +30,8 @@ module Antares.Attributes {
 
         public today: Date = new Date();
         public usersSearchMaxCount: number = 100;
+
+		public negotiatorsForm: IActivityNegotiatorsEditControlForm;
 
         constructor(
             private $scope: ng.IScope,
@@ -79,7 +85,7 @@ module Antares.Attributes {
         }
 
         public switchToLeadNegotiator = (activityUser: Business.ActivityUser) => {
-            var field = this['negotiatorForm']['callDate'];
+            var field = this.negotiatorsForm.callDate;
             if (field.$invalid && field.$dirty) {
                 this.leadNegotiator.callDate = null;
             }

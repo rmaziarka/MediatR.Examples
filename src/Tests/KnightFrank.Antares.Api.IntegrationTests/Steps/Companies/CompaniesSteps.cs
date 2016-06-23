@@ -45,7 +45,10 @@
         [Given(@"Company exists in database")]
         public void GivenCompanyExistsInDatabase()
         {
-           Company company = new Company() {Name = StringExtension.GenerateMaxAlphanumericString(20)};
+            var company = new Company() {Name = StringExtension.GenerateMaxAlphanumericString(20)};
+            List<Guid> contactsIds = this.scenarioContext.Get<List<Contact>>("Contacts").Select(c => c.Id).ToList();
+
+            company.CompaniesContacts = contactsIds.Select(id => new CompanyContact { ContactId = id }).ToList();
 
             this.fixture.DataContext.Companies.Add(company);
             this.fixture.DataContext.SaveChanges();
@@ -159,7 +162,7 @@
         }
 
         [Then(@"Company should be added to database")]
-       public void ThenCompanyShouldBeAddedToDataBase()
+        public void ThenCompanyShouldBeAddedToDataBase()
         {
             var company = JsonConvert.DeserializeObject<Company>(this.scenarioContext.GetResponseContent());
             var expectedCompany = this.scenarioContext.Get<Company>("Company");
@@ -167,22 +170,26 @@
             Company actualCompany = this.fixture.DataContext.Companies.Single(x => x.Id.Equals(company.Id));
 
             actualCompany.ShouldBeEquivalentTo(expectedCompany, opt => opt
-            .Excluding(c=>c.ClientCareStatus));
+                .Excluding(c => c.ClientCareStatus)
+                .Excluding(c => c.CompaniesContacts)
+                .Excluding(c => c.Contacts));
         }
 
-		[Then(@"Company should be updated")]
-		public void ThenCompanyShouldBeUpdatedInDataBase()
-		{
-			var company = JsonConvert.DeserializeObject<Company>(this.scenarioContext.GetResponseContent());
-			var expectedCompany = this.scenarioContext.Get<Company>("Company");
+        [Then(@"Company should be updated")]
+        public void ThenCompanyShouldBeUpdatedInDataBase()
+        {
+            var company = JsonConvert.DeserializeObject<Company>(this.scenarioContext.GetResponseContent());
+            var expectedCompany = this.scenarioContext.Get<Company>("Company");
 
-			Company actualCompany = this.fixture.DataContext.Companies.Single(x => x.Id.Equals(company.Id));
+            Company actualCompany = this.fixture.DataContext.Companies.Single(x => x.Id.Equals(company.Id));
 
-			actualCompany.ShouldBeEquivalentTo(expectedCompany, opt => opt
-						 .Excluding(c => c.ClientCareStatus));
-		}
+            actualCompany.ShouldBeEquivalentTo(expectedCompany, opt => opt
+                .Excluding(c => c.ClientCareStatus)
+                .Excluding(c => c.CompaniesContacts)
+                .Excluding(c => c.Contacts));
+        }
 
-		[Then(@"Company details should match those in database")]
+        [Then(@"Company details should match those in database")]
         public void ThenCompanyShouldMatchThoseInDatabase()
         {
             var actualCompany = JsonConvert.DeserializeObject<Company>(this.scenarioContext.GetResponseContent());
@@ -191,7 +198,9 @@
             Company expectedCompany = this.fixture.DataContext.Companies.Single(x => x.Id.Equals(companyId));
 
             actualCompany.ShouldBeEquivalentTo(expectedCompany, opt => opt
-            .Excluding(c => c.ClientCareStatus));
+                .Excluding(c => c.ClientCareStatus)
+                .Excluding(c => c.CompaniesContacts)
+                .Excluding(c => c.Contacts));
         }
 
         private void CreateCompany(CreateCompanyCommand company)

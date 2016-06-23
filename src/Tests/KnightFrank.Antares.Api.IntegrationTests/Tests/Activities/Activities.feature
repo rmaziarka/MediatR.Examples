@@ -56,32 +56,24 @@ Scenario Outline: Get Activity using invalid data
 
 @Activity
 Scenario: Get Activity
-	Given User gets Freehold Sale for ActivityType
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 	When User gets activity with latest id
 	Then User should get OK http status code
 		And Activity details should be the same as already added
 
 @Activity
 Scenario: Record and update residential sale valuation
-	Given User gets Freehold Sale for ActivityType
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 	When User updates activity latest id and latest status with following sale valuation
 		| MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |
 		| 1                    | 2                | 3                    |
@@ -90,17 +82,12 @@ Scenario: Record and update residential sale valuation
 
 @Activity
 Scenario Outline: Record and update residential sale valuation using invalid data
-	Given User gets Freehold Sale for ActivityType
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| Division               | Residential      |
-			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 	When User updates activity <activityId> id and <activityStatusID> status with following sale valuation
 		| MarketAppraisalPrice   | RecommendedPrice | VendorEstimatedPrice |
 		| <marketAppraisalPrice> | 2                | 3                    |
@@ -114,32 +101,24 @@ Scenario Outline: Record and update residential sale valuation using invalid dat
 @Activity
 Scenario: Get all activities
 	Given All activities have been deleted from database
-		And User gets Freehold Sale for ActivityType
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| ActivityStatus         | NotSelling       |
-			| ActivityUserType       | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
 		And Property exists in database
 			| PropertyType | Division    |
 			| House        | Residential |
-		And Activity for latest property and NotSelling activity status exists in database
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| NotSelling     | Freehold Sale |
 	When User gets activities
 	Then User should get OK http status code
 		And Retrieved activities should be the same as in database
 
 @Activity
 Scenario: Get Activity with viewing and offer
-	Given User gets Freehold Sale for ActivityType
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |

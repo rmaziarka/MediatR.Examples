@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
+    using KnightFrank.Antares.Domain.Offer.OfferHelpers;
     using KnightFrank.Antares.Domain.Common.Enums;
 
     using Ninject.Modules;
@@ -35,6 +36,7 @@
             this.Bind<IEnumTypeItemValidator>().To(typeof(EnumTypeItemValidator));
             this.Bind<IAddressValidator>().To(typeof(AddressValidator));
             this.Bind<IActivityTypeDefinitionValidator>().To(typeof(ActivityTypeDefinitionValidator));
+            this.Bind<IOfferProgressStatusHelper>().To<OfferProgressStatusHelper>();
 
             AssemblyScanner.FindValidatorsInAssembly(Assembly.GetExecutingAssembly()).ForEach(
                 assemblyScanResult =>

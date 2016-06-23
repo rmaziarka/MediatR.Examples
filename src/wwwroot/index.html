@@ -49,12 +49,14 @@
     <script src="app/app.bootstrap.js"></script>
     <script src="app/app.module.js"></script>
     <script src="app/requirement/requirement.module.js"></script>
+    <script src="app/common/core/baseMessage.js"></script>
     <script src="app/common/core/controllers/WithPanelsBaseController.js"></script>
     <script src="app/common/core/dateTimeUtils.js"></script>
     <script src="app/common/core/event.js"></script>
     <script src="app/common/core/eventAggregator.js"></script>
     <script src="app/common/core/listOrder.js"></script>
     <script src="app/common/core/lowerCaseFirstCharacter.js"></script>
+    <script src="app/common/core/PubSub.js"></script>
     <script src="app/common/core/services/dateTime/validDateRangeService.js"></script>
     <script src="app/common/core/services/registry/componentRegistryService.js"></script>
     <script src="app/common/models/business/activity/activity.js"></script>
@@ -77,9 +79,12 @@
     <script src="app/common/models/business/characteristic/characteristicGroup.js"></script>
     <script src="app/common/models/business/characteristic/characteristicSelect.js"></script>
     <script src="app/common/models/business/company/company.js"></script>
+    <script src="app/common/models/business/company/companyContact.js"></script>
+    <script src="app/common/models/business/company/companyContactWithSelection.js"></script>
     <script src="app/common/models/business/company/createCompanyResource.js"></script>
     <script src="app/common/models/business/company/editCompanyResource.js"></script>
     <script src="app/common/models/business/contact/contact.js"></script>
+    <script src="app/common/models/business/contact/contactWithSelection.js"></script>
     <script src="app/common/models/business/enum/EnumTypeItem.js"></script>
     <script src="app/common/models/business/offer/offer.js"></script>
     <script src="app/common/models/business/ownership/ownership.js"></script>
@@ -166,6 +171,7 @@
     <script src="app/common/components/enum/select/enumSelectController.js"></script>
     <script src="app/common/components/externalLink/externalLinkComponent.js"></script>
     <script src="app/common/components/externalLink/externalLinkController.js"></script>
+    <script src="app/common/components/kfSidePanel/closeSidePanelMessage.js"></script>
     <script src="app/common/components/list/listComponent.js"></script>
     <script src="app/common/components/listItem/listItemComponent.js"></script>
     <script src="app/common/components/navigationDrawer/navigationDrawerComponent.js"></script>
@@ -202,6 +208,7 @@
     <script src="app/common/factories/azureBlobUploadFactory.js"></script>
     <script src="app/common/factories/localizationLoaderFactory.js"></script>
     <script src="app/common/filters/dynamicTranslate/dynamicTranslateFilter.js"></script>
+    <script src="app/common/filters/enumClassFilter/enumClassFilter.js"></script>
     <script src="app/common/filters/enumSorterFilter/enumSorterFilter.js"></script>
     <script src="app/common/filters/fileSize/fileSizeFilter.js"></script>
     <script src="app/common/interceptors/kfErrorInterceptor.js"></script>
@@ -288,6 +295,10 @@
     <script src="app/company/view/companyViewController.js"></script>
     <script src="app/contact/add/contactAddComponent.js"></script>
     <script src="app/contact/add/contactAddController.js"></script>
+    <script src="app/contact/companyContact/addPanel/companyContactsAddPanelComponent.js"></script>
+    <script src="app/contact/companyContact/addPanel/companyContactsAddPanelController.js"></script>
+    <script src="app/contact/companyContact/listCard/companyContactListCardComponent.js"></script>
+    <script src="app/contact/companyContact/listCard/companyContactListCardController.js"></script>
     <script src="app/contact/list/contactListComponent.js"></script>
     <script src="app/contact/list/contactListController.js"></script>
     <script src="app/offer/addEdit/offerAddEditComponent.js"></script>

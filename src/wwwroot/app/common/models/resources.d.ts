@@ -35,6 +35,9 @@ declare module Antares.Common.Models {
         interface IContactResource extends ng.resource.IResource<Dto.IContact> {
         }
 
+        interface ICompanyContactResource extends ng.resource.IResource<Dto.IContact> {
+        }
+
         interface IRequirementResource extends ng.resource.IResource<Dto.IRequirement> {
         }
 

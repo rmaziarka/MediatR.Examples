@@ -112,6 +112,8 @@ Scenario: Display latest viewed activities
 			| 100000   | 500000   |
 		And Viewing for requirement is defined
 		And Offer for requirement is defined
+			| Status |
+			| New    |
 	When User navigates to view offer page with id
 		And User clicks activity details on view offer page
 	Then Latest 3 activities should contain following data
@@ -163,7 +165,7 @@ Scenario: Display latest viewed requirements
 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
 			| 100000   | 500000   | 2           | 3           | 2                 | 4                 | 1            | 3            | 2                | 2                | 90000   | 150000  | 200000      | 300000      | Note        |
 	When User navigates to view requirement page with id
-	Then Latest 2 requirement should contain following data
+	Then Latest 2 requirements should contain following data
 		| LatestData             |
 		| Van Wilder, Van Wilder |
 		| Triss Merigold         |
@@ -175,7 +177,7 @@ Scenario: Display latest viewed requirements
 		And Requirement applicants on view requirement page are same as the following
 			| FirstName | Surname  |
 			| Triss     | Merigold |
-		And Latest 2 requirement should contain following data
+		And Latest 2 requirements should contain following data
 			| LatestData             |
 			| Triss Merigold         |
 			| Van Wilder, Van Wilder |

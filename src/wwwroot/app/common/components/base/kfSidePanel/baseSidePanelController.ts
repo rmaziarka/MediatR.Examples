@@ -23,7 +23,7 @@ module Antares.Common.Component {
                     this.panelHidden();
                 }
 
-        $onChanges = (changesObj: IBaseSidePanelChange) => {
+        public $onChanges(changesObj: IBaseSidePanelChange) {
             if (changesObj.isVisible && changesObj.isVisible.currentValue !== changesObj.isVisible.previousValue) {
                 if (changesObj.isVisible.currentValue === true) {
                     this.show();

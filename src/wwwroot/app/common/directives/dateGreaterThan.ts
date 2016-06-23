@@ -16,7 +16,7 @@ namespace Antares.Common.Directive {
                 }
                 var fromDateString : string = JSON.parse(attrs['dateGreaterThan']);
                 var fromDate: Date = new Date(fromDateString);
-                var toDate: Date = this.uibDateParser.parse(inputValue, 'yyyy-MM-dd');
+                var toDate: Date = this.uibDateParser.parse(inputValue, 'dd-MM-yyyy');
                 var isValid: boolean = this.validDateRange.isValidDateRange(fromDate, toDate);
                 ngModel.$setValidity('dateGreaterThan', isValid);
                 return inputValue;
@@ -25,7 +25,7 @@ namespace Antares.Common.Directive {
             ngModel.$parsers.push(validateDateRange);
             ngModel.$formatters.push(validateDateRange);
             attrs.$observe('dateGreaterThan', () => {
-                validateDateRange(ngModel.$viewValue);
+                validateDateRange(ngModel.$modelValue);
             });
         }
         static factory() {

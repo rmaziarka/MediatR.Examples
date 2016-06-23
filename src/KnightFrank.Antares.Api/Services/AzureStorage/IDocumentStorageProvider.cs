@@ -1,7 +1,5 @@
 ﻿namespace KnightFrank.Antares.Api.Services.AzureStorage
 {
-    using System.Collections.Generic;
-
     using KnightFrank.Foundation.Antares.Cloud.Storage.Blob;
 
     public interface IDocumentStorageProvider

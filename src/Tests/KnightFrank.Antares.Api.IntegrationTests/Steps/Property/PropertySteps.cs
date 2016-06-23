@@ -17,6 +17,7 @@
     using KnightFrank.Antares.Dal.Model.Property.Characteristics;
     using KnightFrank.Antares.Dal.Model.Resource;
     using KnightFrank.Antares.Domain.Common.Commands;
+    using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Property.Commands;
 
     using Newtonsoft.Json;
@@ -74,13 +75,15 @@
         [Given(@"User gets (.*) address form for (.*) and country details")]
         public void GetCountryAddressData(string countryCode, string enumType)
         {
-            Country country = this.fixture.DataContext.Countries.SingleOrDefault(x => x.IsoCode == countryCode);
-            EnumTypeItem enumTypeItem = this.fixture.DataContext.EnumTypeItems.SingleOrDefault(e => e.Code == enumType);
+            Country country = this.fixture.DataContext.Countries.SingleOrDefault(x => x.IsoCode.Equals(countryCode));
+            EnumTypeItem enumTypeItem =
+                this.fixture.DataContext.EnumTypeItems.SingleOrDefault(
+                    e => e.EnumType.Code.Equals(nameof(EntityType)) && e.Code.Equals(enumType));
             Guid countryId = country?.Id ?? Guid.NewGuid();
             Guid enumTypeId = enumTypeItem?.Id ?? Guid.NewGuid();
 
             AddressFormEntityType addressForm = this.fixture.DataContext.AddressFormEntityTypes.SingleOrDefault(
-                afe => afe.AddressForm.CountryId == countryId && afe.EnumTypeItemId == enumTypeId);
+                afe => afe.AddressForm.CountryId.Equals(countryId) && afe.EnumTypeItemId.Equals(enumTypeId));
 
             Guid addressFormId = addressForm?.AddressFormId ?? Guid.NewGuid();
 
@@ -96,15 +99,17 @@
 
             const string countryCode = "GB";
             Guid countryId = this.fixture.DataContext.Countries.Single(x => x.IsoCode.Equals(countryCode)).Id;
-            Guid enumTypeItemId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals("Property")).Id;
+            Guid enumTypeItemId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    e => e.EnumType.Code.Equals(nameof(EntityType)) && e.Code.Equals(nameof(EntityType.Property))).Id;
             Guid addressFormId =
                 this.fixture.DataContext.AddressFormEntityTypes.Single(
-                    afe => afe.AddressForm.CountryId == countryId && afe.EnumTypeItemId == enumTypeItemId).AddressFormId;
+                    afe => afe.AddressForm.CountryId.Equals(countryId) && afe.EnumTypeItemId.Equals(enumTypeItemId)).AddressFormId;
 
             Guid propertyTypeId = this.fixture.DataContext.PropertyTypes.Single(i => i.Code.Equals(propertyType)).Id;
             Guid divisionId =
-                this.fixture.DataContext.EnumTypeItems.Single(i => i.EnumType.Code.Equals("Division") && i.Code.Equals(division))
-                    .Id;
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    i => i.EnumType.Code.Equals(nameof(Division)) && i.Code.Equals(division)).Id;
 
             AttributeValues attributeValues = this.scenarioContext.Keys.Contains("AttributeValues")
                 ? this.scenarioContext.Get<AttributeValues>("AttributeValues")

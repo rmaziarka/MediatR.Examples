@@ -1,0 +1,48 @@
+// Statuses
+
+.status {
+  &::before {
+    font-family: FontAwesome;
+    font-size: 17px;
+    line-height: 1;
+    margin-right: 8px;
+  }
+
+  &-unknown {
+    &::before {
+      color: $color-orange-peel;
+      content: '\f128';
+    }
+  }
+
+  &-not-required,
+  &-not-required-cash-from-sale,
+  &-not-required-cash-in-bank {
+    &::before {
+      color: $color-mine-shaft;
+      content: '\f068';
+    }
+  }
+
+  &-in-progress,
+  &-not-started,
+  &-sent,
+  &-applied-for,
+  &-no,
+  &-outstanding {
+    &::before {
+      color: $color-guardsman-red;
+      content: '\f00d';
+    }
+  }
+
+  &-agreed,
+  &-completed,
+  &-yes,
+  &-complete {
+    &::before {
+      color: $color-japanese-laurel;
+      content: '\f00c';
+    }
+  }
+}
