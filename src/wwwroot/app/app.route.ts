@@ -29,10 +29,10 @@ module Antares {
             });
 
         $stateProvider
-            .state('app.contact-add', {
-                url: '/contact/add',
+            .state("app.contact-add", {
+                url: "/contact/add",
                 params: {},
-                template: '<contact-add></contact-add>'
+                template: "<contact-add user-data='appVm.userData'></contact-add>"
             });
 
         $urlRouterProvider.otherwise('/app/contact/add');

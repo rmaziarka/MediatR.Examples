@@ -7,7 +7,7 @@ module Antares.Contact {
         controller: 'ContactAddController',
         bindings: {
             contact: '<',  
-            userData: '<'
+            userData: '='
         }
     });
 }
