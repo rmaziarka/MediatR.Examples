@@ -45,7 +45,7 @@
         [Given(@"Company exists in database")]
         public void GivenCompanyExistsInDatabase()
         {
-            var company = new Company() {Name = StringExtension.GenerateMaxAlphanumericString(20)};
+            var company = new Company { Name = StringExtension.GenerateMaxAlphanumericString(20) };
             List<Guid> contactsIds = this.scenarioContext.Get<List<Contact>>("Contacts").Select(c => c.Id).ToList();
 
             company.CompaniesContacts = contactsIds.Select(id => new CompanyContact { ContactId = id }).ToList();
@@ -56,36 +56,36 @@
             this.SetScenarioContextForAddedCompanyId(company.Id);
         }
 
-		[Given(@"User creates company in database with following data")]
-		public void CreateCompanyInDb(Table table)
-		{
-			Company company = table.CreateSet<Company>().Single();
-			this.fixture.DataContext.Companies.Add(company);
-			this.fixture.DataContext.SaveChanges();
+        [Given(@"User creates company in database with following data")]
+        public void CreateCompanyInDb(Table table)
+        {
+            Company company = table.CreateSet<Company>().Single();
+            this.fixture.DataContext.Companies.Add(company);
+            this.fixture.DataContext.SaveChanges();
 
-			this.scenarioContext.Set(company, "Company");
-		}
+            this.scenarioContext.Set(company, "Company");
+        }
 
-		[When(@"User creates company by API for contact")]
+        [When(@"User creates company by API for contact")]
         public void WhenUserCreateCompanyByApiForContact(Table table)
         {
-            string clientCareStatus =  this.GetClientCareStatus(table, "EnumTypeItemCode");
-           
+            string clientCareStatus = this.GetClientCareStatus(table, "EnumTypeItemCode");
+
             Guid clientcareStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[clientCareStatus];
 
             var company = table.CreateInstance<CreateCompanyCommand>();
             company.ClientCareStatusId = clientcareStatusId;
 
-            this.CreateCompany(company);            
+            this.CreateCompany(company);
         }
-    
+
         [When(@"User creates company by API with all fields")]
         public void WhenUserCreatesCompanyByApiWithAllFields(Table table)
         {
             string clientCareStatus = this.GetClientCareStatus(table, "ClientCareStatus");
             Guid clientcareStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[clientCareStatus];
-                  
-            CreateCompanyCommand company = table.CreateInstance<CreateCompanyCommand>();
+
+            var company = table.CreateInstance<CreateCompanyCommand>();
             company.ClientCareStatusId = clientcareStatusId;
 
             this.CreateCompany(company);
@@ -97,52 +97,51 @@
             const int max = 128;
             var company = new CreateCompanyCommand { Name = StringExtension.GenerateMaxAlphanumericString(max) };
             this.CreateCompany(company);
-            
         }
 
-		[When(@"User updates company by API")]
-		public void UpdateCompany()
-		{
-			string requestUrl = $"{ApiUrl}";
-			var company = this.scenarioContext.Get<Company>("Company");
-			var contactList = this.scenarioContext.Get<List<Contact>>("Contacts");
+        [When(@"User updates company by API")]
+        public void UpdateCompany()
+        {
+            string requestUrl = $"{ApiUrl}";
+            var company = this.scenarioContext.Get<Company>("Company");
+            var contactList = this.scenarioContext.Get<List<Contact>>("Contacts");
 
-			var commandCompany = new UpdateCompanyCommand
-			{
-				Id = company.Id,
-				Name = company.Name,
-				ClientCarePageUrl = company.ClientCarePageUrl,
-				ClientCareStatusId = company.ClientCareStatusId,
-				WebsiteUrl = company.WebsiteUrl,
-				Contacts = contactList 
-			};
+            var commandCompany = new UpdateCompanyCommand
+            {
+                Id = company.Id,
+                Name = company.Name,
+                ClientCarePageUrl = company.ClientCarePageUrl,
+                ClientCareStatusId = company.ClientCareStatusId,
+                WebsiteUrl = company.WebsiteUrl,
+                Contacts = contactList
+            };
 
-			HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, commandCompany);
-			this.scenarioContext.SetHttpResponseMessage(response);
-		}
+            HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, commandCompany);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
 
-		[When(@"User updates company by API with invalid data")]
-		public void UpdateCompanyWithInvalidData()
-		{
-			string requestUrl = $"{ApiUrl}";
-			var company = this.scenarioContext.Get<Company>("Company");
-			var contactList = this.scenarioContext.Get<List<Contact>>("Contacts");
+        [When(@"User updates company by API with invalid data")]
+        public void UpdateCompanyWithInvalidData()
+        {
+            string requestUrl = $"{ApiUrl}";
+            var company = this.scenarioContext.Get<Company>("Company");
+            var contactList = this.scenarioContext.Get<List<Contact>>("Contacts");
 
-			var commandCompany = new UpdateCompanyCommand
-			{
-				Id = company.Id,
-				Name = string.Empty,
-				ClientCarePageUrl = company.ClientCarePageUrl,
-				ClientCareStatusId = company.ClientCareStatusId,
-				WebsiteUrl = company.WebsiteUrl,
-				Contacts = contactList
-			};
+            var commandCompany = new UpdateCompanyCommand
+            {
+                Id = company.Id,
+                Name = string.Empty,
+                ClientCarePageUrl = company.ClientCarePageUrl,
+                ClientCareStatusId = company.ClientCareStatusId,
+                WebsiteUrl = company.WebsiteUrl,
+                Contacts = contactList
+            };
 
-			HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, commandCompany);
-			this.scenarioContext.SetHttpResponseMessage(response);
-		}
+            HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, commandCompany);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
 
-		[When(@"User gets company details")]
+        [When(@"User gets company details")]
         public void WhenUserGetsCompanyDetails()
         {
             var companyId = this.scenarioContext.Get<Guid>("AddedCompanyId");
@@ -207,7 +206,7 @@
         {
             string requestUrl = $"{ApiUrl}";
             var contactList = this.scenarioContext.Get<List<Contact>>("Contacts");
-           
+
             company.ContactIds = contactList.Select(x => x.Id).ToList();
             this.scenarioContext.Set(new Company
             {
@@ -221,7 +220,8 @@
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, company);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
-		private string GetClientCareStatus(Table table, string columName)
+
+        private string GetClientCareStatus(Table table, string columName)
         {
             foreach (TableRow row in table.Rows)
             {
