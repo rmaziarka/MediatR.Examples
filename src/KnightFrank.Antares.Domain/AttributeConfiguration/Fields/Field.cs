@@ -9,6 +9,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
     using FluentValidation.Internal;
 
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions.Fields;
 
     public class Field<TEntity, TProperty> : IField
     {
@@ -19,7 +20,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
         {
             InnerField innerFieldCopy = this.InnerField.Copy();
             var copyField = new Field<TEntity, TProperty>(this.Selector, innerFieldCopy);
-            
+
             return copyField;
         }
 
@@ -52,11 +53,14 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Fields
             };
         }
 
-        public static Field<TEntity, string> CreateText(Expression<Func<TEntity, string>> expression, int length)
+        public static Field<TEntity, string> CreateText(Expression<Func<TEntity, string>> expression, int maxLength)
         {
-            InnerField innerField = CreateInnerField(expression);
-            innerField.AddValidator(new EntityValidator<TEntity>(x => x.RuleFor(expression).Length(length)));
-            return new Field<TEntity, string>(expression, innerField);
+            return new Field<TEntity, string>(expression, CreateInnerField(expression)).Length(maxLength);
+        }
+
+        public static Field<TEntity, string> CreateText(Expression<Func<TEntity, string>> expression, int minLength, int maxLength)
+        {
+            return new Field<TEntity, string>(expression, CreateInnerField(expression)).Length(minLength, maxLength);
         }
 
         public static Field<TEntity, Guid> CreateDictionary(Expression<Func<TEntity, Guid>> expression, string dictionaryCode)
