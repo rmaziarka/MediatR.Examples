@@ -38,5 +38,9 @@
 
         public EnumTypeItem SalutationFormat { get; set; }
 
+        public Guid DivisionId { get; set; }
+
+        public virtual EnumTypeItem Division { get; set; }
+
     }
 }

@@ -20,6 +20,11 @@
              .WithMany()
              .HasForeignKey(x => x.SalutationFormatId)
              .WillCascadeOnDelete(false);
+
+            this.HasRequired(x => x.Division)
+          .WithMany()
+          .HasForeignKey(x => x.DivisionId)
+          .WillCascadeOnDelete(false);
         }
     }
 }

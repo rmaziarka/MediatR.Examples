@@ -7,7 +7,8 @@ CREATE TABLE #TempUser (
 	Business NVARCHAR (255) NOT NULL,
 	CountryCode NVARCHAR (2) NOT NULL,
 	Department NVARCHAR (100) NOT NULL,
-	LocaleCode NVARCHAR (2) NOT NULL
+	LocaleCode NVARCHAR (2) NOT NULL, 
+	DivisionCode NVARCHAR (100) NULL
 );
 
 ALTER TABLE [User] NOCHECK CONSTRAINT ALL
@@ -32,12 +33,14 @@ MERGE dbo.[User] AS T
 		B.Id AS BusinessId,
 		D.Id AS DepartmentId,
 		L.Id AS LocaleId,
-		C.Id AS CountryId
+		C.Id AS CountryId, 
+		E.Id As DivisionId
 	FROM #TempUser temp
 	JOIN Business B ON B.Name = temp.Business
 	JOIN Department D ON D.Name = temp.Department
 	JOIN Locale L ON L.IsoCode = temp.LocaleCode
 	JOIN Country C ON C.IsoCOde = temp.CountryCode
+	JOIN EnumTypeItem E ON E.Code = temp.DivisionCode
 	)
 	AS S	
 	ON 
@@ -53,11 +56,12 @@ MERGE dbo.[User] AS T
 		T.BusinessId = S.BusinessId,
 		T.CountryId = S.CountryId,
 		T.DepartmentId = S.DepartmentId,
-		T.LocaleId = S.LocaleId
-
+		T.LocaleId = S.LocaleId,
+		T.DivisionId= S.DivisionId
+		
 	WHEN NOT MATCHED BY TARGET THEN 
-		INSERT (ActiveDirectoryDomain, ActiveDirectoryLogin, FirstName, LastName, BusinessId, CountryId, DepartmentId, LocaleId)
-		VALUES (ActiveDirectoryDomain, ActiveDirectoryLogin, FirstName, LastName, BusinessId, CountryId, DepartmentId, LocaleId)
+		INSERT (ActiveDirectoryDomain, ActiveDirectoryLogin, FirstName, LastName, BusinessId, CountryId, DepartmentId, LocaleId, DivisionId)
+		VALUES (ActiveDirectoryDomain, ActiveDirectoryLogin, FirstName, LastName, BusinessId, CountryId, DepartmentId, LocaleId, DivisionId)
 
     WHEN NOT MATCHED BY SOURCE THEN DELETE;
     

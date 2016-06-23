@@ -11,6 +11,8 @@ module Antares.Common.Component {
         public required: boolean = false; // set via binding
         public ngModel: string;           // set via binding
         public enumTypeCode: string;      // set via binding
+        public hideDefault: boolean;
+        public selectOption: any;
 
         private items: Dto.IEnumItem[];
 
@@ -22,6 +24,19 @@ module Antares.Common.Component {
 
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
         }
+
+        $onInit = () =>{
+            this.hideSelectOption();
+        }
+
+        //requiredfor IE as ng-hide class still displays on IE
+        hideSelectOption = () =>{
+            if (this.hideDefault) {
+                var selector = 'select option#selectOption';
+                var selectOption = $(selector);
+                selectOption.remove();
+               }
+         }
 
         private onEnumLoaded = (result: any) => {
             this.items = result[this.enumTypeCode];
