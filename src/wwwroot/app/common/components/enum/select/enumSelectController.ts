@@ -25,18 +25,6 @@ module Antares.Common.Component {
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
         }
 
-        $onInit = () =>{
-            this.hideSelectOption();
-        }
-
-        //requiredfor IE as ng-hide class still displays on IE
-        hideSelectOption = () =>{
-            if (this.hideDefault) {
-                var selector = 'select option#selectOption';
-                var selectOption = $(selector);
-                selectOption.remove();
-               }
-         }
 
         private onEnumLoaded = (result: any) => {
             this.items = result[this.enumTypeCode];
