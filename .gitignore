@@ -261,3 +261,4 @@ src/Tests/KnightFrank.Antares.Api.IntegrationTests/Tests/**/*.feature.cs
 /src/wwwroot/app/typings/_all.d.ts
 /src/wwwroot/specRunner.html
 /src/wwwroot/buildTemplates/enumTypeItems.ts
+src/KnightFrank.Antares.Domain/Common/Enums/OfferType.cs

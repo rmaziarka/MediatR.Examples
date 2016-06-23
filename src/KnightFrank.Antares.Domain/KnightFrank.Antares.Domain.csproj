@@ -161,6 +161,7 @@
     <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerThreeTypes.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerTwoTypes.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\IControlsConfiguration.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\OfferControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\Enums\ControlCode.cs" />
     <Compile Include="AttributeConfiguration\Enums\PageType.cs" />
     <Compile Include="AttributeConfiguration\Fields\Control.cs" />
@@ -208,6 +209,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PropertyType.tt</DependentUpon>
     </Compile>
+    <Compile Include="Common\Enums\OfferType.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OfferType.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Enums\RequirementType.cs" />
     <Compile Include="Common\NinjectInstanceResolver.cs" />
     <Compile Include="Common\INinjectInstanceResolver.cs" />
     <Compile Include="Common\Specifications\EnumTypeItemWithEnumType.cs" />
@@ -256,6 +263,8 @@
     <Compile Include="LatestView\QueryResults\LatestViewQueryResultItem.cs" />
     <Compile Include="Offer\CommandHandlers\UpdateOfferCommandHandler.cs" />
     <Compile Include="Offer\CommandHandlers\CreateOfferCommandHandler.cs" />
+    <Compile Include="Common\Validator\DateInFutureValidator.cs" />
+    <Compile Include="Common\Validator\DateInPastValidator.cs" />
     <Compile Include="Offer\Commands\UpdateOfferCommandValidator.cs" />
     <Compile Include="Offer\Commands\UpdateOfferCommand.cs" />
     <Compile Include="Offer\Commands\CreateOfferCommand.cs" />
@@ -405,6 +414,10 @@
     <Content Include="Common\Enums\PropertyType.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PropertyType.cs</LastGenOutput>
+    </Content>
+    <Content Include="Common\Enums\OfferType.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>OfferType.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup />

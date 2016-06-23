@@ -9,7 +9,6 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
     using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
-    using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Offer.OfferHelpers;
@@ -29,14 +28,13 @@
             this.Bind(typeof(IReadGenericRepository<>)).To(typeof(ReadGenericRepository<>));
             this.Bind<IEntityValidator>().To(typeof(EntityValidator));
             this.Bind<IEnumParser>().To<EnumParser>();
-            this.Bind<IControlsConfiguration<Tuple<PageType, ActivityType>>>().To(typeof(ActivityControlsConfiguration));
-            this.Bind<IAttributeValidator<Tuple<PropertyType, ActivityType>>>().To(typeof(AttributeValidator<>));
-            
             this.Bind<ICollectionValidator>().To(typeof(CollectionValidator));
             this.Bind<IEnumTypeItemValidator>().To(typeof(EnumTypeItemValidator));
             this.Bind<IAddressValidator>().To(typeof(AddressValidator));
             this.Bind<IActivityTypeDefinitionValidator>().To(typeof(ActivityTypeDefinitionValidator));
             this.Bind<IOfferProgressStatusHelper>().To<OfferProgressStatusHelper>();
+
+            this.ConfigureAttributeConfigurations();
 
             AssemblyScanner.FindValidatorsInAssembly(Assembly.GetExecutingAssembly()).ForEach(
                 assemblyScanResult =>
@@ -58,6 +56,16 @@
                                       y.GetGenericTypeDefinition() == typeof(IDomainValidator<>)
                                       && ((TypeInfo)assemblyScanResult.ValidatorType).ImplementedInterfaces.Contains(
                                           assemblyScanResult.InterfaceType));
+        }
+
+        private void ConfigureAttributeConfigurations()
+        {
+            this.Bind<IControlsConfiguration<Tuple<PropertyType, ActivityType>>>().To<ActivityControlsConfiguration>();
+            this.Bind<IControlsConfiguration<Tuple<OfferType, RequirementType, ActivityType>>>().To<OfferControlsConfiguration>();
+            this.Bind<IAttributeValidator<Tuple<PropertyType, ActivityType>>>().To(typeof(AttributeValidator<>));
+
+            this.Bind<IEntityMapper<Dal.Model.Property.Activities.Activity>>().To<ActivityEntityMapper>();
+            
         }
     }
 }
