@@ -134,5 +134,10 @@
 
             return newControl;
         }
+
+        public override string ToString()
+        {
+            return $"{this.ControlCode},{this.PageType}";
+        }
     }
 }

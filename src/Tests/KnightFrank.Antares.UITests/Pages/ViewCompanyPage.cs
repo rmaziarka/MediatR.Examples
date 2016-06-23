@@ -3,56 +3,63 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using KnightFrank.Antares.UITests.Pages.Panels;
+    using KnightFrank.Antares.UITests.Extensions;
 
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
 
-    using OpenQA.Selenium;
-
     public class ViewCompanyPage : ProjectPageBase
     {
+        private readonly ElementLocator clientCarePage = new ElementLocator(Locator.CssSelector, "#clientCarePageUrl [name = 'url']");
+        private readonly ElementLocator clientCareStatus = new ElementLocator(Locator.Id, "clientCareStatus");
+        private readonly ElementLocator companyName = new ElementLocator(Locator.Id, "name");
         private readonly ElementLocator companyViewForm = new ElementLocator(Locator.CssSelector, "company-view");
-        private readonly ElementLocator companyName = new ElementLocator(Locator.CssSelector, "div#name");
-        private readonly ElementLocator website = new ElementLocator(Locator.CssSelector ,"#websiteUrl a[name=url]");
-        private readonly ElementLocator clientCarePage = new ElementLocator(Locator.CssSelector, "#clientCarePageUrl a[name=url]");
         private readonly ElementLocator contactsList = new ElementLocator(Locator.CssSelector, "#list-contacts .ng-binding");
         private readonly ElementLocator editCompanyButton = new ElementLocator(Locator.Id, "company-edit-btn");
+        private readonly ElementLocator website = new ElementLocator(Locator.CssSelector, "#websiteUrl [name = 'url']");
 
-		public ViewCompanyPage(DriverContext driverContext) : base(driverContext)
+        public ViewCompanyPage(DriverContext driverContext) : base(driverContext)
         {
         }
 
-        public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
+        public string Website => this.Driver.GetElement(this.website).Text;
+
+        public string CompanyName => this.Driver.GetElement(this.companyName).Text;
+
+        public string ClientCarePage => this.Driver.GetElement(this.clientCarePage).Text;
+
+        public string ClientCareStatus => this.Driver.GetElement(this.clientCareStatus).Text;
 
         public List<string> Contacts => this.Driver.GetElements(this.contactsList).Select(el => el.Text).ToList();
+
+        public ViewCompanyPage OpenViewCompanyPageWithId(string id)
+        {
+            new CommonPage(this.DriverContext).NavigateToPageWithId("view company", id);
+            return this;
+        }
 
         public bool IsViewCompanyFormPresent()
         {
             return this.Driver.IsElementPresent(this.companyViewForm, BaseConfiguration.MediumTimeout);
         }
 
-        public string GetCompanyName()
+        public ViewCompanyPage EditCompany()
         {
-            IWebElement element = this.Driver.GetElement(this.companyName);
-            return element.Text;
-        }
-    
-		public string GetWebsiteUrl()
-        {
-            return this.Driver.GetElement(this.website).Text;
+            this.Driver.GetElement(this.editCompanyButton).Click();
+            this.Driver.WaitForAngularToFinish();
+            return this;
         }
 
-		public string GetClientCareUrl()
+        internal class CompanyDetails
         {
-            return this.Driver.GetElement(this.clientCarePage).Text;
-        }
+            public string Name { get; set; }
 
-	    public ViewCompanyPage EditCompany()
-	    {
-			this.Driver.GetElement(this.editCompanyButton).Click();
-			return this;
-		}
-	}
+            public string WebsiteUrl { get; set; }
+
+            public string ClientCarePageUrl { get; set; }
+
+            public string ClientCareStatus { get; set; }
+        }
+    }
 }

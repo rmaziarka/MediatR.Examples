@@ -6,7 +6,6 @@
 
     using FluentAssertions;
 
-    using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.UITests.Pages;
 
@@ -21,6 +20,7 @@
     public class CreateCompanySteps
     {
         private readonly DriverContext driverContext;
+
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
         private CreateCompanyPage page;
@@ -54,16 +54,17 @@
         }
 
         [When(@"User fills in company details on create company page")]
+        [When(@"User fills in company details on create company page")]
         public void FillInCompanyData(Table table)
         {
-            var details = table.CreateInstance<Company>();
+            var details = table.CreateInstance<ViewCompanyPage.CompanyDetails>();
 
             this.scenarioContext.Set(details.WebsiteUrl, "Url");
 
             this.page.SetCompanyName(details.Name);
             this.page.SetWebsite(details.WebsiteUrl);
-            this.page.SetClientCareUrl(details.ClientCarePageUrl);
-            this.page.SetClientCareStatus();
+            this.page.SetClientCarePage(details.ClientCarePageUrl);
+            this.page.SelectClientCareStatus(details.ClientCareStatus);
         }
 
         [When(@"User selects contacts on create company page")]
@@ -81,7 +82,7 @@
             this.page.WaitForSidePanelToHide();
         }
 
-        [Then(@"List of company contacts should contain following contacts")]
+        [Then(@"List of company contacts should contain following contacts on create company page")]
         public void CheckContactsList(Table table)
         {
             List<string> contacts =

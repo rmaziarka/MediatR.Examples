@@ -14,19 +14,19 @@
 
     public class CreateCompanyPage : ProjectPageBase
     {
-        private readonly ElementLocator companyForm = new ElementLocator(Locator.CssSelector, "company-add");
         private readonly ElementLocator addContact = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
-        private readonly ElementLocator companyName = new ElementLocator(Locator.Id, "name");
-        private readonly ElementLocator website = new ElementLocator(Locator.Id, "website");
         private readonly ElementLocator clientCarePage = new ElementLocator(Locator.Id, "clientcareurl");
         private readonly ElementLocator clientCareStatus = new ElementLocator(Locator.Id, "client-care-status");
+        private readonly ElementLocator companyForm = new ElementLocator(Locator.CssSelector, "company-add");
+        private readonly ElementLocator companyName = new ElementLocator(Locator.Id, "name");
         private readonly ElementLocator contactsList = new ElementLocator(Locator.CssSelector, "#list-contacts .ng-binding");
-        private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "company-save-btn");
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
-        private readonly ElementLocator websiteUrlIcon = new ElementLocator(Locator.CssSelector, "a[name='url'] > i");
+        private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "company-save-btn");
+        private readonly ElementLocator website = new ElementLocator(Locator.Id, "website");
+        private readonly ElementLocator websiteUrlIcon = new ElementLocator(Locator.XPath, "//input[@id = 'website']//ancestor::div[1]//a[@name = 'url']");
 
         private string currentWindowHandler;
-        
+
         public CreateCompanyPage(DriverContext driverContext) : base(driverContext)
         {
         }
@@ -40,7 +40,7 @@
             new CommonPage(this.DriverContext).NavigateToPage("create company");
             return this;
         }
-     
+
         public CreateCompanyPage AddContactToCompany()
         {
             this.Driver.GetElement(this.addContact).Click();
@@ -60,21 +60,15 @@
             return this;
         }
 
-        public CreateCompanyPage SetClientCareUrl(string clientCarePageUrl)
+        public CreateCompanyPage SetClientCarePage(string clientCarePageUrl)
         {
             this.Driver.SendKeys(this.clientCarePage, clientCarePageUrl);
             return this;
         }
 
-        public CreateCompanyPage SetClientCareStatus()
+        public CreateCompanyPage SelectClientCareStatus(string status)
         {
-            //select the first in the drop down.
-            var select = this.Driver.GetElement<Select>(this.clientCareStatus);
-
-			// TODO:
-			//  IWebElement element = select.SelectElement().Options.Single(o => o.Text.Trim().Equals(clientCareStatus));
-            select.SelectByIndex(1);
-            this.Driver.WaitForAngularToFinish();
+            this.Driver.GetElement<Select>(this.clientCareStatus).SelectByText(status);
             return this;
         }
 
@@ -89,7 +83,7 @@
             return this.Driver.IsElementPresent(this.companyForm, BaseConfiguration.MediumTimeout);
         }
 
-		public CreateCompanyPage WaitForSidePanelToShow()
+        public CreateCompanyPage WaitForSidePanelToShow()
         {
             this.Driver.WaitForElementToBeDisplayed(this.panel, BaseConfiguration.MediumTimeout);
             return this;
@@ -116,6 +110,7 @@
                 if (handler != this.currentWindowHandler)
                 {
                     this.Driver.SwitchTo().Window(handler);
+                    this.Driver.WaitForAjax();
                     break;
                 }
             }
@@ -125,7 +120,6 @@
             this.Driver.SwitchTo().Window(this.currentWindowHandler);
             string ah = $"http://{url}/";
             return ah.Equals(currentUrl);
-
-        }    
+        }
     }
 }

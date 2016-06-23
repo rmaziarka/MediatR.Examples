@@ -7,7 +7,7 @@ module Antares.Attributes {
     import DepartmentUserResourceParameters = Common.Models.Resources.IDepartmentUserResourceParameters;
     import SearchOptions = Antares.Common.Component.SearchOptions;
 
-	interface IActivityNegotiatorsEditControlForm extends ng.IFormController {
+	export interface IActivityNegotiatorsEditControlForm extends ng.IFormController {
 		callDate: ng.INgModelController
 	}
 
@@ -100,26 +100,6 @@ module Antares.Attributes {
 
         public openNegotiatorCallDate = (negotiatorUserId: string) => {
             this.nagotiatorCallDateOpened[negotiatorUserId] = true;
-        }
-
-        public updateNegotiatorCallDate = (activityUser: Business.ActivityUser) => {
-            return (date: Date) => {
-
-                var activityUserToSend: Business.ActivityUser = angular.copy(activityUser);
-                activityUserToSend.callDate = date;
-
-                var dto = new Business.UpdateSingleActivityUserResource(activityUserToSend);
-
-                var promise = this.dataAccessService.getActivityUserResource()
-                    .update({ id: activityUser.activityId }, dto)
-                    .$promise;
-
-                promise.then(() => {
-                    activityUser.callDate = moment(date).toDate();
-                });
-
-                return promise;
-            }
         }
 
         public getUsersQuery = (searchValue: string): DepartmentUserResourceParameters => {
