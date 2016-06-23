@@ -157,6 +157,7 @@
     <Compile Include="AttributeConfiguration\Common\IEntityMapper.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ActivityControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\BaseControlsConfiguration.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerOneType.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerThreeTypes.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerTwoTypes.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\IControlsConfiguration.cs" />

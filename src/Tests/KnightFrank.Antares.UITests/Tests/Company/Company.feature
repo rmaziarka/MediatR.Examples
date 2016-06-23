@@ -23,7 +23,7 @@ Scenario: Create, view and edit company
 	When User clicks on website url icon 
 	Then url opens in new tab
 	When User clicks save company button on create company page
-	Then  View company page is displayed with following details
+	Then View company page is displayed with following details
 		| Name         | WebsiteUrl                 | ClientCarePageUrl   |
 		| Knight Frank | http://www.knightfrank.com | http://www.test.com |
 	When User clicks edit company button on view company page
@@ -31,8 +31,8 @@ Scenario: Create, view and edit company
 		| Name         | WebsiteUrl                 | ClientCarePageUrl   |
 		| Knight Frank | http://www.knightfrank.com | http://www.test.com |
 	When User fills in company details on edit company page 
-		| Name        | WebsiteUrl         | ClientCarePageUrl |
-		| Objectivity | www.objectivity.com | www.test-2.com      | 
+		| Name        | WebsiteUrl          | ClientCarePageUrl |
+		| Objectivity | www.objectivity.com | www.test-2.com    |
 		And User selects contacts on edit company page
 			| FirstName | Surname |
 			| Humpty    | Dumpty  |
@@ -47,5 +47,5 @@ Scenario: Create, view and edit company
 	Then url opens in new tab
 	When User clicks save company button on edit company page
 	Then  View company page is displayed with following details
-		| Name        | WebsiteUrl         | ClientCarePageUrl |
-		| Objectivity | http://www.objectivity.com | http://www.test-2.com    |
+		| Name        | WebsiteUrl                 | ClientCarePageUrl     |
+		| Objectivity | http://www.objectivity.com | http://www.test-2.com |
