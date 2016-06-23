@@ -23,6 +23,8 @@
 
     using Xunit;
 
+    using RequirementType = KnightFrank.Antares.Dal.Model.Property.RequirementType;
+
     [Binding]
     public class RequirementSteps : IClassFixture<BaseTestClassFixture>
     {
@@ -46,6 +48,9 @@
         {
             const string countryCode = "GB";
             Guid countryId = this.fixture.DataContext.Countries.Single(x => x.IsoCode.Equals(countryCode)).Id;
+            Guid requirementTypeId =
+                this.fixture.DataContext.RequirementTypes.Single(
+                    x => x.EnumCode == Domain.Common.Enums.RequirementType.ResidentialLetting.ToString()).Id;
             Guid enumTypeItemId =
                 this.fixture.DataContext.EnumTypeItems.Single(
                     e => e.EnumType.Code.Equals(nameof(EntityType)) && e.Code.Equals(nameof(EntityType.Requirement))).Id;
@@ -69,7 +74,8 @@
                 CreateDate = this.date,
                 Contacts = contacts,
                 Address = address,
-                Description = StringExtension.GenerateMaxAlphanumericString(4000)
+                Description = StringExtension.GenerateMaxAlphanumericString(4000),
+                RequirementTypeId = requirementTypeId
             };
 
             this.fixture.DataContext.Requirements.Add(requirement);
@@ -109,11 +115,13 @@
             string requestUrl = $"{ApiUrl}";
 
             var contacts = this.scenarioContext.Get<List<Contact>>("Contacts");
+            string requirementT = table.Rows[0]["Requirement Type"];
+            IQueryable<RequirementType> requirementType = this.fixture.DataContext.RequirementTypes.Where(x => x.EnumCode == requirementT);
             var requirement = table.CreateInstance<CreateRequirementCommand>();
 
             requirement.CreateDate = DateTime.Now;
             requirement.ContactIds = contacts.Select(contact => contact.Id).ToList();
-
+            requirement.RequirementTypeId = requirementType.First().Id;
             requirement.Address = this.scenarioContext.Get<CreateOrUpdateAddress>("Location");
             if (requirement.Description.ToLower().Equals("max"))
             {
@@ -141,7 +149,8 @@
                     Postcode = string.Empty,
                     AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId"),
                     CountryId = this.scenarioContext.Get<Guid>("CountryId")
-                }
+                },
+                RequirementTypeId = this.fixture.DataContext.RequirementTypes.First().Id
             };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
@@ -235,7 +244,8 @@
 
             expectedRequirement.ShouldBeEquivalentTo(currentRequirement, opt => opt.
                 Excluding(req => req.Address.Country).
-                Excluding(req => req.Address.AddressForm));
+                Excluding(req => req.Address.AddressForm).
+                Excluding(req => req.RequirementType));
         }
     }
 }

@@ -173,6 +173,12 @@
     <None Include="Scripts\Data\Configuration\activitytypelocalised.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Scripts\Data\Configuration\requirementtype.csv" />
+    <None Include="Scripts\Data\Configuration\requirementtypelocalised.csv" />
+    <None Include="Scripts\SQL\RequirementType.sql" />
+    <None Include="Scripts\SQL\RequirementTypeActivityTypeDefinition.sql" />
+    <None Include="Scripts\Data\Configuration\requirementtypeactivitytypedefinition.csv" />
+    <None Include="Scripts\SQL\RequirementTypeLocalised.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />

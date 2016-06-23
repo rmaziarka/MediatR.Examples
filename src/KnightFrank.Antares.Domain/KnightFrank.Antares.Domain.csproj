@@ -215,6 +215,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PropertyType.tt</DependentUpon>
     </Compile>
+    <Compile Include="Common\Enums\RequirementType.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RequirementType.tt</DependentUpon>
+    </Compile>
     <Compile Include="Common\NinjectInstanceResolver.cs" />
     <Compile Include="Common\INinjectInstanceResolver.cs" />
     <Compile Include="Common\Specifications\EnumTypeItemWithEnumType.cs" />
@@ -412,6 +417,10 @@
     <Content Include="Common\Enums\PropertyType.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PropertyType.cs</LastGenOutput>
+    </Content>
+    <Content Include="Common\Enums\RequirementType.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RequirementType.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup />

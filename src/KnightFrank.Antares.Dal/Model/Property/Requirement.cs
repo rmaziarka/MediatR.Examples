@@ -19,6 +19,10 @@
         public virtual ICollection<Viewing> Viewings { get; set; } = new List<Viewing>();
 
         public virtual ICollection<Offer> Offers { get; set; } = new List<Offer>();
+       
+        public Guid RequirementTypeId { get; set; }
+
+        public virtual RequirementType RequirementType { get; set; }
 
         public Guid AddressId { get; set; }
 
@@ -27,5 +31,9 @@
         public string Description { get; set; }
 
         public virtual ICollection<Attachment> Attachments { get; set; } = new List<Attachment>();
+
+        public decimal RentMin  { get; set; }
+
+        public decimal RentMax  { get; set; }
     }
 }

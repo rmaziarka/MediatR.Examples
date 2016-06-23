@@ -8,8 +8,8 @@ Scenario: Create requirement
 			| Tomasz    | Bien    | Mister |
 	When User sets locations details for the requirement with max length fields
 		And User creates following requirement using api
- 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
- 			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | max         |
+ 			| Description | Requirement Type   |
+ 			| max         | ResidentialLetting |
 	Then User should get OK http status code
 		And Requirement should be the same as added
 

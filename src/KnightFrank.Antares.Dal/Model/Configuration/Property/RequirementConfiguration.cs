@@ -29,6 +29,8 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property
                     cs.MapLeftKey("RequirementId");
                     cs.MapRightKey("AttachmentId");
                 });
+
+            this.HasRequired(x => x.RequirementType);
         }
     }
 }

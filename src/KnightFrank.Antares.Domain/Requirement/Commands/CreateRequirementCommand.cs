@@ -42,5 +42,7 @@
         public double? MaxLandArea { get; set; }
 
         public string Description { get; set; }
+
+        public Guid RequirementTypeId { get; set; }
     }
 }

@@ -29,6 +29,9 @@
 :r .\SQL\ActivityType.sql
 :r .\SQL\ActivityTypeDefinition.sql
 :r .\SQL\ActivityTypeLocalised.sql
+:r .\SQL\RequirementType.sql
+:r .\SQL\RequirementTypeActivityTypeDefinition.sql
+:r .\SQL\RequirementTypeLocalised.sql
 
 :r .\Views\ElasticSearchContact.sql
 :r .\Views\ElasticSearchProperty.sql
