@@ -1,10 +1,11 @@
 ﻿namespace KnightFrank.Antares.Dal.Model.Contacts
 {
 	using System;
+	using System.Collections.Generic;
 
 	using KnightFrank.Antares.Dal.Model.Enum;
 
-	public class Contact : BaseAuditableEntity
+    public class Contact : BaseAuditableEntity
     {
 		public string Title { get; set; }
 
@@ -39,5 +40,7 @@
 		public Guid? DefaultEventSalutationId { get; set; }
 
 		public virtual EnumTypeItem DefaultEventSalutation { get; set; }
-	}
+
+        public virtual ICollection<ContactUser> ContactUsers { get; set; } = new List<ContactUser>();
+    }
 }
