@@ -6,7 +6,8 @@ module Antares.Property {
         controllerAs: 'vm',
         controller: 'ActivityPreviewController',
         bindings: {
-            componentId: '<'
+            componentId: '<',
+            activity:'<'
         }
     });
 }

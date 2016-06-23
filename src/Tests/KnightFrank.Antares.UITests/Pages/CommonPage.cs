@@ -85,6 +85,9 @@
                 case "edit offer":
                     this.Driver.NavigateTo(GetUrl("EditOfferPage", id));
                     break;
+                case "view company":
+                    this.Driver.NavigateTo(GetUrl("ViewCompanyPage", id));
+                    break;
                 default:
                     Assert.True(false, "Page does not exist");
                     break;

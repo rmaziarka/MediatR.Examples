@@ -65,7 +65,7 @@
         }
 
         [Then(@"Contact form on create contact page should be displayed")]
-        public void CheckIfFirstNameIsDisplayed()
+        public void CheckIfContactFormPresent()
         {
             Assert.True(new CreateContactPage(this.driverContext).IsContactFormPresent());
         }

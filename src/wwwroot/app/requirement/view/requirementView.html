@@ -18,8 +18,9 @@
             <div class="col-md-4">
                 <section>
                     <h3 class="page-header" translate="REQUIREMENT.VIEW.LOCATION"></h3>
-                    <requirement-address-form-view address="vm.requirement.address">
-                    </requirement-address-form-view>
+                    <address-form-view address="vm.requirement.address"
+                                       address-type="requirement"
+                                       template-url="'app/common/components/addressForm/addressFormView/templates/requirementAddressForm.html'"></address-form-view>
                 </section>
 
                 <section>
@@ -44,7 +45,7 @@
 
                     <div class="panel panel-default applicant" ng-repeat="contact in vm.requirement.contacts">
                         <div class="panel-body">
-                            {{ contact.firstName + " " + contact.surname }}
+                            {{::contact.getName()}}
                         </div>
                     </div>
                 </section>
@@ -73,6 +74,7 @@
                         </card-list-item>
                     </card-list>
                 </section>
+                <attachments-manager entity-id="vm.requirement.id" enum-document-type="{{vm.enumTypeRequirementDocumentType}}" entity-type="{{vm.entityType}}" attachments="vm.requirement.attachments" on-save-attachment-for-entity="vm.saveAttachment(attachment)"></attachments-manager>
             </div>
             <div class="col-md-4">
                 <section>

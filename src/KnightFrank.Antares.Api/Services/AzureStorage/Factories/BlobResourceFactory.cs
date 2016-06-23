@@ -9,61 +9,61 @@
     using KnightFrank.Foundation.Antares.Cloud.Storage.Blob.Interfaces;
     using KnightFrank.Foundation.Antares.Cloud.Storage.Blob.Objects;
 
-    using Antares = KnightFrank.Foundation.Antares.Cloud.Storage.Blob;
+    using KnightFrank.Foundation.Antares.Cloud.Storage.Blob;
 
     public class BlobResourceFactory : IBlobResourceFactory
     {
-        public ICloudBlobResource Create(ActivityDocumentType activityDocumentType, Guid externalDocumentId, AttachmentUrlParameters parameters)
+        public ICloudBlobResource Create(DocumentType documentType, Guid externalDocumentId, AttachmentUrlParameters parameters, CloudStorageContainerType cloudStorageContainerType)
         {
             ICloudBlobResource blobResource;
 
-            switch (activityDocumentType)
+            switch (documentType)
             {
-                case ActivityDocumentType.Brochure:
+                case DocumentType.Brochure:
                     {
                         blobResource = new CloudBlobBrochureDocumentResource(
-                                Antares.CloudStorageContainerType.Activity,
-                                parameters.LocaleIsoCode,
-                                parameters.EntityReferenceId.ToString(),
-                                externalDocumentId.ToString(),
-                                parameters.Filename);
+                            cloudStorageContainerType,
+                            parameters.LocaleIsoCode,
+                            parameters.EntityReferenceId.ToString(),
+                            externalDocumentId.ToString(),
+                            parameters.Filename);
 
                         break;
                     }
-                case ActivityDocumentType.Epc:
+                case DocumentType.Epc:
                     {
                         blobResource = new CloudBlobEPCGraphDocumentResource(
-                           Antares.CloudStorageContainerType.Activity,
+                            cloudStorageContainerType,
                             parameters.LocaleIsoCode,
                             parameters.EntityReferenceId.ToString(),
                             externalDocumentId.ToString(),
                             parameters.Filename);
                         break;
                     }
-                case ActivityDocumentType.FloorPlan:
+                case DocumentType.FloorPlan:
                     {
                         blobResource = new CloudBlobFloorPlanDocumentResource(
-                           Antares.CloudStorageContainerType.Activity,
+                            cloudStorageContainerType,
                             parameters.LocaleIsoCode,
                             parameters.EntityReferenceId.ToString(),
                             externalDocumentId.ToString(),
                             parameters.Filename);
                         break;
                     }
-                case ActivityDocumentType.Photograph:
+                case DocumentType.Photograph:
                     {
                         blobResource = new CloudBlobImageResource(
-                            Antares.CloudStorageContainerType.Activity,
+                            cloudStorageContainerType,
                             parameters.LocaleIsoCode,
                             parameters.EntityReferenceId.ToString(),
                             externalDocumentId.ToString(),
                             parameters.Filename);
                         break;
                     }
-                case ActivityDocumentType.VideoTour:
+                case DocumentType.VideoTour:
                     {
                         blobResource = new CloudBlobVideoResource(
-                            Antares.CloudStorageContainerType.Activity,
+                            cloudStorageContainerType,
                             VideoFormat.Mp4, // not used
                             parameters.LocaleIsoCode,
                             parameters.EntityReferenceId.ToString(),
@@ -71,13 +71,13 @@
                             parameters.Filename);
                         break;
                     }
-                case ActivityDocumentType.MarketingSignOff:
-                case ActivityDocumentType.CddDocument:
-                case ActivityDocumentType.GasCertificate:
-                case ActivityDocumentType.TermsOfBusiness:
+                case DocumentType.MarketingSignOff:
+                case DocumentType.CddDocument:
+                case DocumentType.GasCertificate:
+                case DocumentType.TermsOfBusiness:
                     {
                         blobResource = new CloudBlobGeneralDocumentResource(
-                            Antares.CloudStorageContainerType.Activity,
+                            cloudStorageContainerType,
                             parameters.LocaleIsoCode,
                             parameters.EntityReferenceId.ToString(),
                             externalDocumentId.ToString(),
@@ -87,7 +87,7 @@
                     }
                 default:
                     {
-                        throw new DomainValidationException("activityDocumentType", "Activity type is not supported");
+                        throw new DomainValidationException("documentType", "Document type is not supported");
                     }
             }
 

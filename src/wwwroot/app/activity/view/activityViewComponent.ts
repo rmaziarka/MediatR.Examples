@@ -6,7 +6,8 @@ module Antares.Property {
         controllerAs: 'avvm',
         controller: 'activityViewController',
         bindings: {
-            activity: '<'
+            activity: '<',
+            config: '<'
         }
     });
 }

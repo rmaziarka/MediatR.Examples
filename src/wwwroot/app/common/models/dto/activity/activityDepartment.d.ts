@@ -4,6 +4,6 @@ declare module Antares.Common.Models.Dto {
         activityId: string;
         departmentId: string;
         department: IDepartment;
-        departmentType: Dto.IEnumTypeItem;
+        departmentType: Dto.IEnumItem;
     }
 }

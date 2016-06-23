@@ -27,7 +27,7 @@ module Antares.Common.Directive {
                 return (modelValue.length <= maxCount);
             }
             scope.$watch('ngModel', (newValue, oldValue) => {
-                if ((newValue !== undefined || oldValue !== undefined) && newValue !== oldValue) {
+                if ((newValue !== undefined || oldValue !== undefined) && newValue !== oldValue && newValue !== "") {
                     ngModel.$setDirty();
                 }
             });

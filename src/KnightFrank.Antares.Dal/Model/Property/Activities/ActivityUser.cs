@@ -2,7 +2,6 @@
 {
     using System;
 
-    using KnightFrank.Antares.Dal.Model.Common;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.User;
 

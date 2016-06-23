@@ -9,6 +9,7 @@
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Resource;
+    using KnightFrank.Antares.Domain.Common.Enums;
 
     using TechTalk.SpecFlow;
 
@@ -63,7 +64,9 @@
         [Given(@"AddressForm exists for (.*) EnumTypeItem")]
         public void GivenThereExistsAddressFormForPropertyEnumTypeItem(string enumTypeItemCode)
         {
-            EnumTypeItem enumTypeItem = this.fixture.DataContext.EnumTypeItems.FirstOrDefault(x => x.Code == enumTypeItemCode);
+            EnumTypeItem enumTypeItem =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    e => e.EnumType.Code.Equals(nameof(EntityType)) && e.Code.Equals(enumTypeItemCode));
 
             var addressFormEntityType = new AddressFormEntityType { EnumTypeItem = enumTypeItem, AddressForm = this.AddressForm };
 
@@ -75,6 +78,14 @@
         public void WhenUserTryToRetrieveContactsDetailsForFollowingData(string enumTypeItem, string countryCode)
         {
             string requestUrl = $"{ApiUrl}?entityType={enumTypeItem}&countryCode={countryCode}";
+            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+            this.scenarioContext.SetHttpResponseMessage(response);
+        }
+
+        [When(@"User retrieves all address templates for (.*) entity")]
+        public void WhenUserRetrievesAllAddressTemplatesForPropertyEntity(string entity)
+        {
+            string requestUrl = $"{ApiUrl}/list?entityType={entity}";
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
             this.scenarioContext.SetHttpResponseMessage(response);
         }

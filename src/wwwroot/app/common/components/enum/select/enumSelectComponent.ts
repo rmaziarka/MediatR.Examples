@@ -11,7 +11,7 @@ module Antares.Common.Component {
             required: '<',
             ngModel: '=',
             enumTypeCode: '@',
-            hideDefault: '<'
+            hideEmptyValue: '<'
         }
     });
 }

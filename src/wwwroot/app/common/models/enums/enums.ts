@@ -13,6 +13,11 @@ module Antares.Common.Models.Enums
 	 	OfferStatus,
 	 	ActivityUserType,
 	 	ActivityDepartmentType,
+	 	MortgageStatus,
+	 	MortgageSurveyStatus,
+	 	AdditionalSurveyStatus,
+	 	SearchStatus,
+	 	Enquiries,
 	 }
 
 	
@@ -72,5 +77,44 @@ module Antares.Common.Models.Enums
 	{
 		Managing,
 		Standard,
+	}
+
+	export enum MortgageStatus
+	{
+		Unknown,
+		NotRequiredCashFromSale,
+		NotRequiredCashInBank,
+		InProgress,
+		Agreed,
+	}
+
+	export enum MortgageSurveyStatus
+	{
+		Unknown,
+		NotRequired,
+		Complete,
+		Outstanding,
+	}
+
+	export enum AdditionalSurveyStatus
+	{
+		Unknown,
+		NotRequired,
+		InProgress,
+		Complete,
+	}
+
+	export enum SearchStatus
+	{
+		NotStarted,
+		AppliedFor,
+		Complete,
+	}
+
+	export enum Enquiries
+	{
+		NotStarted,
+		Sent,
+		Complete,
 	}
 }

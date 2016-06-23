@@ -1,13 +1,11 @@
 ﻿namespace KnightFrank.Antares.Domain.Property.Commands
 {
     using FluentValidation;
-    using FluentValidation.Results;
 
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Characteristics;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common;
-    using KnightFrank.Antares.Domain.Common.Validator;
 
     public class UpdatePropertyCommandDomainValidator : AbstractValidator<UpdatePropertyCommand>,
                                                         IDomainValidator<UpdatePropertyCommand>

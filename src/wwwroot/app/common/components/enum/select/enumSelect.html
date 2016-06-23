@@ -1,5 +1,4 @@
 ﻿<select class="form-control" id="{{vm.id}}" name="{{vm.name}}" ng-model="vm.ngModel" ng-required="vm.required">
-    <option id="selectOption" value="" translate="COMMON.SELECTEMPTYVALUE" ng-if=!vm.hideDefault></option>
+    <option ng-if="!vm.hideEmptyValue" value="" translate="COMMON.SELECTEMPTYVALUE"></option>
     <option ng-repeat="item in vm.items track by item.id" value="{{item.id}}">{{item.id | dynamicTranslate}}</option>
 </select>
-

@@ -38,13 +38,15 @@
                     <label class="required" for="offer-statusId" translate="OFFER.ADD.STATUS"></label>
                     <div class="row">
                         <div class="col-md-6">
-                            <select class="form-control" required id="offer-status" name="selectedStatus" ng-options="item as (item.id | dynamicTranslate) for item in vm.statuses track by item.id" ng-model="vm.selectedStatus">
-                                <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
-                            </select>
+                            <enum-select id="offer-status"
+                                         required="true"
+                                         name="selectedStatus"
+                                         ng-model="vm.offer.statusId"
+                                         enum-type-code="{{vm.enumTypeOfferStatus}}"></enum-select>
+                            <div ng-messages="vm.editOfferForm.selectedStatus.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.selectedStatus.$dirty">
+                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div ng-messages="vm.editOfferForm.selectedStatus.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.selectedStatus.$dirty">
-                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
                 </div>
 
@@ -153,11 +155,247 @@
                 </div>
             </section>
         </div>
+        <div class="col-md-4" ng-if="vm.offerAccepted()">
+            <section id="progress-section">
+                <h3 class="page-header" translate="OFFER.EDIT.PROGRESS_SUMMARY"></h3>
+                <fieldset>
+                    <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.mortgageStatus.$dirty) && vm.editOfferForm.mortgageStatus.$invalid}">
+                        <label class="required" for="offer-statusId" translate="OFFER.EDIT.MORTGAGE_STATUS"></label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <enum-select id="offer-mortgage-status" required="true" hide-empty-value="true"
+                                             name="mortgageStatus"
+                                             ng-model="vm.offer.mortgageStatusId"
+                                             enum-type-code="{{vm.enumTypeMortgageStatus}}"></enum-select>
+                                <div ng-messages="vm.editOfferForm.mortgageStatus.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.mortgageStatus.$dirty">
+                                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.mortgageSurveyStatus.$dirty) && vm.editOfferForm.mortgageSurveyStatus.$invalid}">
+                        <label class="required" for="mortgage-survey-status" translate="OFFER.EDIT.MORTGAGE_SURVEY_STATUS"></label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <enum-select id="mortgage-survey-status" required="true" hide-empty-value="true"
+                                             name="mortgageSurveyStatus"
+                                             ng-model="vm.offer.mortgageSurveyStatusId"
+                                             enum-type-code="{{vm.enumTypeMortgageSurveyStatus}}"></enum-select>
+                                <div ng-messages="vm.editOfferForm.mortgageSurveyStatus.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.mortgageSurveyStatus.$dirty">
+                                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.additionalSurveyStatus.$dirty) && vm.editOfferForm.additionalSurveyStatus.$invalid}">
+                        <label class="required" for="additional-survey-status" translate="OFFER.EDIT.ADDITIONAL_SURVEY_STATUS"></label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <enum-select id="additional-survey-status" required="true" hide-empty-value="true"
+                                             name="additionalSurveyStatus"
+                                             ng-model="vm.offer.additionalSurveyStatusId"
+                                             enum-type-code="{{vm.enumTypeAdditionalSurveyStatus}}"></enum-select>
+                                <div ng-messages="vm.editOfferForm.additionalSurveyStatus.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.additionalSurveyStatus.$dirty">
+                                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.searchStatus.$dirty) && vm.editOfferForm.searchStatus.$invalid}">
+                        <label class="required" for="search-status" translate="OFFER.EDIT.SEARCH_STATUS"></label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <enum-select id="search-status" required="true" hide-empty-value="true"
+                                             name="searchStatus"
+                                             ng-model="vm.offer.searchStatusId"
+                                             enum-type-code="{{vm.enumTypeSearchStatus}}"></enum-select>
+                                <div ng-messages="vm.editOfferForm.searchStatus.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.searchStatus.$dirty">
+                                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.enquiries.$dirty) && vm.editOfferForm.enquiries.$invalid}">
+                        <label class="required" for="enquiries" translate="OFFER.EDIT.ENQUIRIES"></label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <enum-select id="enquiries" required="true" hide-empty-value="true"
+                                             name="enquiries"
+                                             ng-model="vm.offer.enquiriesId"
+                                             enum-type-code="{{vm.enumTypeEnquiriesStatus}}"></enum-select>
+                                <div ng-messages="vm.editOfferForm.enquiries.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.enquiries.$dirty">
+                                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="contract-approved" class="form-group">
+                        <h5 translate="OFFER.EDIT.CONTRACT_APPROVED"></h5>
+                        <label class="radio-inline">
+                            <input type="radio" ng-model="vm.offer.contractApproved" ng-value="true"><span translate="OFFER.EDIT.YES"></span>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" ng-model="vm.offer.contractApproved" ng-value="false"><span translate="OFFER.EDIT.NO"></span>
+                        </label>
+                    </div>
+                </fieldset>
+            </section>
+
+            <section>
+                <h3 class="page-header" translate="OFFER.EDIT.MORTGAGE_DETAILS"></h3>
+                <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.mortgageLoanToValue.$dirty) && vm.editOfferForm.mortgageLoanToValue.$invalid}">
+                    <label for="mortgage-loan-to-value" translate="OFFER.EDIT.MORTGAGE_LOAN_TO_VALUE"></label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="number" id="mortgage-loan-to-value" name="mortgageLoanToValue" class="form-control" ng-model="vm.offer.mortgageLoanToValue" min="0" max="200" pattern="[0-9]+">
+                                <div class="input-group-addon">%</div>
+                            </div>
+                            <div ng-messages="vm.editOfferForm.mortgageLoanToValue.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.mortgageLoanToValue.$dirty">
+                                <p name="maxNumberValidationError" ng-message="max" class="help-block with-errors" translate="OFFER.EDIT.LOAN_TO_VALUE_MUST_BE_LESS_OR_EQUAL_200"></p>
+                                <p name="minNumberValidationError" ng-message="min" class="help-block with-errors" translate="OFFER.EDIT.LOAN_TO_VALUE_MUST_BE_GREATER_THAN_ZERO"></p>
+                                <p name="patternValidationError" ng-message="pattern" class="help-block with-errors" translate="FORM.NUMBER_HAS_TO_BE_INTEGER"></p>
+                                <p name="numberValidationError" ng-message="number" class="help-block with-errors" translate="FORM.NUMBER_HAS_TO_BE_INTEGER"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h5 translate="OFFER.EDIT.BROKER"></h5>
+                    <button id="edit-broker" type="button" class="btn btn-default" ng-click="vm.showBrokerSelectPanel()">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <list-no-items ng-if="!vm.offer.broker">
+                    <p class="help-block" id="no-contacts-help-block" ng-show="vm.editOfferForm.$submitted === false" translate="OFFER.EDIT.NO_BROKER"></p>
+                </list-no-items>
+                <div id="broker" class="row" ng-if="!!vm.offer.broker">
+                    <div class="col-md-6">
+                        <card-list-item class="offer-broker">
+                            <card show-context-menu="false" card-template-url="'app/offer/view/offerContactCard.html'" item="vm.offer.broker">
+                            </card>
+                        </card-list-item>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h5 translate="OFFER.EDIT.LENDER"></h5>
+                    <button id="edit-lender" type="button" class="btn btn-default" ng-click="vm.showLenderSelectPanel()">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <list-no-items ng-if="!vm.offer.lender">
+                    <p class="help-block" id="no-contacts-help-block" ng-show="vm.editOfferForm.$submitted === false" translate="OFFER.EDIT.NO_LENDER"></p>
+                </list-no-items>
+                <div id="lender" class="row" ng-if="!!vm.offer.lender">
+                    <div class="col-md-6">
+                        <card-list-item class="offer-lender">
+                            <card show-context-menu="false" card-template-url="'app/offer/view/offerContactCard.html'" item="vm.offer.lender">
+                            </card>
+                        </card-list-item>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.mortgageSurveyDate.$dirty) && vm.editOfferForm.mortgageSurveyDate.$invalid}">
+                    <label for="mortgage-survey-date" translate="OFFER.EDIT.MORTGAGE_SURVEY_DATE"></label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="text" id="mortgage-survey-date" name="mortgageSurveyDate" class="form-control" placeholder="dd-mm-yyyy" ng-model="vm.offer.mortgageSurveyDate" uib-datepicker-popup="dd-MM-yyyy"
+                                       is-open="vm.mortgageSurveyDateOpen" close-text="Close" date-greater-than="{{vm.offer.offerDate}}" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="vm.openMortgageSurveyDate()">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <div ng-messages="vm.editOfferForm.mortgageSurveyDate.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.mortgageSurveyDate.$dirty">
+                                <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="OFFER.EDIT.DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h5 translate="OFFER.EDIT.SURVEYOR"></h5>
+                    <button id="edit-surveyor" type="button" class="btn btn-default" ng-click="vm.showSurveyorSelectPanel()">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <list-no-items ng-if="!vm.offer.surveyor">
+                    <p class="help-block" id="no-contacts-help-block" ng-show="vm.editOfferForm.$submitted === false" translate="OFFER.EDIT.NO_SURVEYOR"></p>
+                </list-no-items>
+                <div id="surveyor" class="row" ng-if="!!vm.offer.surveyor">
+                    <div class="col-md-6">
+                        <card-list-item class="offer-surveyor">
+                            <card show-context-menu="false" card-template-url="'app/offer/view/offerContactCard.html'" item="vm.offer.surveyor">
+                            </card>
+                        </card-list-item>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <h3 class="page-header" translate="OFFER.EDIT.ADDITIONAL_SURVEY"></h3>
+                <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.additionalSurveyDate.$dirty) && vm.editOfferForm.additionalSurveyDate.$invalid}">
+                    <label for="additional-survey-date" translate="OFFER.EDIT.ADDITIONAL_SURVEY_DATE"></label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="text" id="additional-survey-date" name="additionalSurveyDate" class="form-control" placeholder="dd-mm-yyyy" ng-model="vm.offer.additionalSurveyDate" uib-datepicker-popup="dd-MM-yyyy"
+                                        is-open="vm.additionalSurveyDateOpen" close-text="Close" date-greater-than="{{vm.offer.offerDate}}" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="vm.openAdditionalSurveyDate()">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <div ng-messages="vm.editOfferForm.additionalSurveyDate.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.additionalSurveyDate.$dirty">
+                                <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="OFFER.EDIT.DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h5 translate="OFFER.EDIT.SURVEYOR"></h5>
+                    <button id="edit-additional-surveyor" type="button" class="btn btn-default" ng-click="vm.showAdditionalSurveyorSelectPanel()">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <list-no-items ng-if="!vm.offer.additionalSurveyor">
+                    <p class="help-block" id="no-contacts-help-block" ng-show="vm.editOfferForm.$submitted === false" translate="OFFER.EDIT.NO_SURVEYOR"></p>
+                </list-no-items>
+                <div id="additional-surveyor" class="row" ng-if="!!vm.offer.additionalSurveyor">
+                    <div class="col-md-6">
+                        <card-list-item class="offer-additional-surveyor">
+                            <card show-context-menu="false" card-template-url="'app/offer/view/offerContactCard.html'" item="vm.offer.additionalSurveyor">
+                            </card>
+                        </card-list-item>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3 class="page-header" translate="OFFER.EDIT.OTHER_DETAILS"></h3>
+                <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.progressComment.$dirty) && vm.editOfferForm.progressComment.$invalid}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="comment" translate="OFFER.EDIT.COMMENT"></label>
+                            <span class="pull-right character-limit">{{vm.editOfferForm.progressComment.$viewValue.length || 0}}/4000</span>
+                            <textarea id="comment" class="form-control" rows="6" ng-model="vm.offer.progressComment" kf-max-count="4000" name="progressComment"></textarea>
+                            <div ng-messages="vm.editOfferForm.progressComment.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.progressComment.$dirty">
+                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
         <div class="col-md-12">
             <div class="form-group">
                 <div>
-                    <button id="offer-edit-cancel" type="button" class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
-                    <button id="offer-edit-save" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
+                    <button id="offer-edit-cancel" type="button" class="btn btn-default" ng-click="vm.cancel()">
+                        <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+                    </button>
+                    <button id="offer-edit-save" type="submit" class="btn btn-primary">
+                        <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -207,3 +445,7 @@
         </div>
     </side-panel-content>
 </side-panel>
+
+<company-contacts-add-panel is-visible="vm.isCompanyContactAddPanelVisible" on-save="vm.onContactSelected" allow-multiple-select="false"
+                            initialy-selected-company-contacts="vm.sidePanelSelectedCompanyContacts">
+</company-contacts-add-panel>

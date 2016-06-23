@@ -2,16 +2,12 @@
 
 @Viewings
 Scenario: Create viewing
-	Given User gets Freehold Sale for ActivityType
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
@@ -22,16 +18,12 @@ Scenario: Create viewing
 
 @Viewings
 Scenario: Create viewing with mandatory fields
-	Given User gets Freehold Sale for ActivityType
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database 
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
@@ -42,16 +34,12 @@ Scenario: Create viewing with mandatory fields
 
 @Viewings
 Scenario Outline: Create viewing with invalid data
-	Given User gets Freehold Sale for ActivityType
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
@@ -67,16 +55,12 @@ Scenario Outline: Create viewing with invalid data
 
 @Viewings
 Scenario: Update viewing
-	Given User gets Freehold Sale for ActivityType
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
@@ -89,16 +73,12 @@ Scenario: Update viewing
 
 @Viewings
 Scenario Outline: Update viewing with invalid data
-	Given User gets Freehold Sale for ActivityType
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |		
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |

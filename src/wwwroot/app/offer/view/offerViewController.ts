@@ -4,14 +4,20 @@ module Antares.Component {
     import Business = Common.Models.Business;
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
+	import Dto = Common.Models.Dto;
 
     export class OfferViewController extends Core.WithPanelsBaseController {
+		public offer: Business.Offer;
+        private offerStatuses: Common.Models.Dto.IEnumItem[];
+		
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService,
-            private latestViewsProvider: LatestViewsProvider) {
+            private latestViewsProvider: LatestViewsProvider,
+			private enumService: Services.EnumService) {
             super(componentRegistry, $scope);
+			this.enumService.getEnumPromise().then(this.onEnumLoaded);
         }
 
         navigateToActivity = (ativity: Business.Activity) =>{
@@ -45,6 +51,20 @@ module Antares.Component {
             this.components = {
                 activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId); }
             };
+        }
+
+		onEnumLoaded = (result: any) => {
+            this.offerStatuses = result[Dto.EnumTypeCode.OfferStatus];
+        }
+
+		isOfferNew = (): boolean => {
+            var selectedOfferStatus: Common.Models.Dto.IEnumItem = _.find(this.offerStatuses, (status:  Common.Models.Dto.IEnumItem) => status.id === this.offer.statusId);
+            if (selectedOfferStatus) {
+	            return selectedOfferStatus.code ===
+		            Common.Models.Enums.OfferStatus[Common.Models.Enums.OfferStatus.New];
+            }
+
+            return false;
         }
     }
 

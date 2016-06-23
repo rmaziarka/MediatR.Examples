@@ -12,6 +12,10 @@
   background-color: $color-lily-white;
 }
 
+.card-selectable {
+  cursor: pointer;
+}
+
 .card-no-menu {
   .card-body {
     width: 100%;
@@ -50,7 +54,6 @@
 .card-info {
   color: $color-dusty-gray;
   font-size: 12px;
-  margin-top: 3px;
 }
 
 .card-action {

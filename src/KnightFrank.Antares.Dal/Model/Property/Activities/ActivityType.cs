@@ -1,8 +1,6 @@
 ﻿namespace KnightFrank.Antares.Dal.Model.Property.Activities
 {
-    public class ActivityType : BaseEntity
+    public class ActivityType : BaseEntityWithCode
     {
-        public string Code { get; set; }
-        public string EnumCode { get; set; }
     }
 }
