@@ -33,6 +33,8 @@
                     return this.kernel.Get<ActivityLatestViewDataProvider>();
                 case EntityTypeEnum.Requirement:
                     return this.kernel.Get<RequirementLatestViewDataProvider>();
+                case EntityTypeEnum.Company:
+                    return this.kernel.Get<CompanyLatestViewDataProvider>();
             }
 
             throw new NotImplementedException();
