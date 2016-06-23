@@ -34,7 +34,6 @@
         {
             this.Driver.SendKeys(this.searchField, property);
             this.Driver.Click(this.searchButton);
-            this.Driver.WaitForAngularToFinish();
             return this;
         }
 
