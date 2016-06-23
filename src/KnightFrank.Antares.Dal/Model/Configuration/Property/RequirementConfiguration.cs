@@ -22,12 +22,6 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property
             this.Property(r => r.Description)
                 .HasMaxLength(4000);
 
-            this.Property(r => r.MinPrice)
-                .IsMoney();
-
-            this.Property(r => r.MaxPrice)
-                .IsMoney();
-
             this.HasMany(p => p.Attachments)
                 .WithMany()
                 .Map(cs =>

@@ -69,20 +69,6 @@
                 CreateDate = this.date,
                 Contacts = contacts,
                 Address = address,
-                MinArea = 1,
-                MaxArea = 2,
-                MinBathrooms = 1,
-                MaxBathrooms = 2,
-                MinBedrooms = 1,
-                MaxBedrooms = 2,
-                MinLandArea = 1,
-                MaxLandArea = 2,
-                MinPrice = 1,
-                MaxPrice = 2,
-                MinParkingSpaces = 1,
-                MaxParkingSpaces = 2,
-                MinReceptionRooms = 1,
-                MaxReceptionRooms = 2,
                 Description = StringExtension.GenerateMaxAlphanumericString(4000)
             };
 

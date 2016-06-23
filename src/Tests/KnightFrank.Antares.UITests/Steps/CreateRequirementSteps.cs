@@ -63,20 +63,7 @@
         {
             var details = table.CreateInstance<Requirement>();
 
-            this.page.SetPropertyMinPrice(details.MinPrice.ToString())
-                .SetPropertyMaxPrice(details.MaxPrice.ToString())
-                .SetPropertyBedroomsMin(details.MinBedrooms.ToString())
-                .SetPropertyBedroomMax(details.MaxBedrooms.ToString())
-                .SetPropertyReceptionRoomsMin(details.MinReceptionRooms.ToString())
-                .SetPropertyReceptionRoomsMax(details.MaxReceptionRooms.ToString())
-                .SetPropertyBathroomsMin(details.MinBathrooms.ToString())
-                .SetPropertyBathroomsMax(details.MaxBathrooms.ToString())
-                .SetPropertyParkingSpacesMin(details.MinParkingSpaces.ToString())
-                .SetPropertyParkingSpacesMax(details.MaxParkingSpaces.ToString())
-                .SetPropertyAreaMin(details.MinArea.ToString())
-                .SetPropertyAreaMax(details.MaxArea.ToString())
-                .SetPropertyLandAreaMin(details.MinLandArea.ToString())
-                .SetPropertyLandAreaMax(details.MaxLandArea.ToString())
+            this.page
                 .SetPropertyRequirementsNote(details.Description);
         }
 
