@@ -11,7 +11,7 @@ CREATE TABLE #Temp (
 );
 
 BULK INSERT #TempRequirementTypeActivityTypeDefinition
-    FROM 'C:\_Projects\KnightFrank.Antares\src\KnightFrank.Antares.Database\Scripts\Data\Configuration\requirementtypeactivitytypedefinition.csv'
+    FROM '$(OutputPath)\Scripts\Data\Configuration\requirementtypeactivitytypedefinition.csv'
                WITH
     (
 		FIRSTROW = 2,
