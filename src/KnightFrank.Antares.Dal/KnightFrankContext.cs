@@ -44,6 +44,7 @@
         }
 
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<ContactTitle> ContactTitles { get; set; }
         public DbSet<Requirement> Requirements { get; set; }
         public DbSet<EnumType> EnumTypes { get; set; }
         public DbSet<EnumTypeItem> EnumTypeItems { get; set; }

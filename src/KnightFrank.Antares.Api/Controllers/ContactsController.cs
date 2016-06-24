@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
@@ -71,6 +72,16 @@
         public Guid CreateContact([FromBody] CreateContactCommand command)
         {
             return this.mediator.Send(command);
+        }
+
+        /// <summary>
+        /// Get contact title list
+        /// </summary>
+        [HttpGet]
+        [Route("titles")]
+        public IList<ContactTitle> GetContactTitles()
+        {
+            return this.mediator.Send(new ContactTitleQuery()).ToList();
         }
     }
 }
