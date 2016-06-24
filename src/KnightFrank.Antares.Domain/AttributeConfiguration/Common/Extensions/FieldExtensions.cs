@@ -96,8 +96,7 @@
         {
             foreach (Tuple<Control, IList<IField>> tuple in controlFields)
             {
-                Expression<Func<object, bool>> always = x => true;
-                tuple.Item1.SetHiddenRule(always);
+                tuple.Item1.SetHidden();
             }
 
             return controlFields;
