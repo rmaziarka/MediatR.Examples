@@ -4,7 +4,7 @@
 @Offer
 Scenario: Create residential sales offer on requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname  |
+		| Title | FirstName | LastName |
 		| Sir   | John      | Soane    |
 		| Sir   | Robert    | McAlpine |
 		| Sir   | Edward    | Graham   |
@@ -56,8 +56,8 @@ Scenario: Create residential sales offer on requirement
 @Offer
 Scenario: Update residential sales offer on requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Dr    | Indiana   | Jackson |
+		| Title | FirstName | LastName |
+		| Dr    | Indiana   | Jackson  |
 		And Property with Residential division and House type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
@@ -92,9 +92,9 @@ Scenario: Update residential sales offer on requirement
 @Offer
 Scenario: View offer details page
 	Given Contacts are created in database
-		| Title  | FirstName | Surname |
-		| Madame | Judith    | Greciet |
-		| Chef   | Julius    | Chaloff |
+		| Title  | FirstName | LastName |
+		| Madame | Judith    | Greciet  |
+		| Chef   | Julius    | Chaloff  |
 		And Property with Residential division and House type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
@@ -146,7 +146,7 @@ Scenario: View offer details page
 @Offer
 Scenario: Update residential sales offer
 	Given Contacts are created in database
-		| Title | FirstName | Surname      |
+		| Title | FirstName | LastName     |
 		| Lady  | Sarah     | McCorquodale |
 		And Property with Residential division and House type is defined
 		And Property attributes details are defined

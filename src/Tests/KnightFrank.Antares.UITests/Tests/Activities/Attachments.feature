@@ -3,8 +3,8 @@
 @Activity
 Scenario: Upload attachment for activity
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Sir   | Felix     | Jordan  |
+		| Title | FirstName | LastName |
+		| Sir   | Felix     | Jordan   |
 		And Property with Commercial division and Leisure.Hotel type is defined
 		And Property attributes details are defined
 			| MinArea  | MaxArea  | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces | MinGuestRooms | MaxGuestRooms | MinFunctionRooms | MaxFunctionRooms |

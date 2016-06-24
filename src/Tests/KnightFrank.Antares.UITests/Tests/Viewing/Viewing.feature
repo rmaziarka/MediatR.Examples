@@ -4,10 +4,10 @@
 @Viewing
 Scenario: Create viewing on requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Dr    | Amber     | Brooks  |
-		| Dr    | Sarah     | Knight  |
-		| Dr    | Kennedi   | Hyde    |
+		| Title | FirstName | LastName |
+		| Dr    | Amber     | Brooks   |
+		| Dr    | Sarah     | Knight   |
+		| Dr    | Kennedi   | Hyde     |
 		And Property with Residential division and Flat type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
@@ -60,10 +60,10 @@ Scenario: Create viewing on requirement
 @Viewing
 Scenario: Update viewing on requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Dr    | Alan      | Baker   |
-		| Sir   | Martin    | Jackson |
-		| Dr    | Alex      | Baldwin |
+		| Title | FirstName | LastName |
+		| Dr    | Alan      | Baker    |
+		| Sir   | Martin    | Jackson  |
+		| Dr    | Alex      | Baldwin  |
 		And Property with Residential division and House type is defined
 		And Property attributes details are defined
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |

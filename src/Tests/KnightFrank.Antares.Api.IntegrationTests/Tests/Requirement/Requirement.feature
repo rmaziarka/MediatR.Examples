@@ -4,8 +4,8 @@
 Scenario: Create requirement
 	Given User gets GB address form for Requirement and country details
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
 	When User sets locations details for the requirement with max length fields
 		And User creates following requirement using api
  			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
@@ -17,8 +17,8 @@ Scenario: Create requirement
 Scenario: Create requirement with mandatory fields
 	Given User gets GB address form for Requirement and country details
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
 	When User creates requirement with mandatory fields using api
 	Then User should get OK http status code
 		And Requirement should be the same as added
@@ -27,8 +27,8 @@ Scenario: Create requirement with mandatory fields
 Scenario Outline: Create requirement without data
 	Given User gets GB address form for Property and country details
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
 	When User sets locations details for the requirement
 		| Postcode | City   | Line2   |
 		| 1234     | London | Big Ben |
@@ -57,8 +57,8 @@ Scenario: Create requirement with invalid contact
 @Requirements
 Scenario: Get requirement
 	Given Contacts exists in database
-		| Title  | FirstName | Surname |
-		| Mister | Tomasz    | Bien    |
+		| Title  | FirstName | LastName |
+		| Mister | Tomasz    | Bien     |
 		And Requirement exists in database
 	When User retrieves requirement for latest id
 	Then User should get OK http status code
@@ -67,8 +67,8 @@ Scenario: Get requirement
 @Requirements
 Scenario: Get requirement with notes
 	Given Contacts exists in database
-		| Title  | FirstName | Surname |
-		| Mister | Tomasz    | Bien    |
+		| Title  | FirstName | LastName |
+		| Mister | Tomasz    | Bien     |
 		And Requirement exists in database
 		And Requirement notes exists in database
 			| Description |
@@ -82,8 +82,8 @@ Scenario: Get requirement with notes
 Scenario: Get requirement with offer and viewing
 	Given Activity exists in database 
 		And Contacts exists in database
-			| Title  | FirstName | Surname |
-			| Mister | Tomasz    | Bien    |
+			| Title  | FirstName | LastName |
+			| Mister | Tomasz    | Bien     |
 		And Requirement exists in database
 		And Offer with New status exists in database
 		And Viewing exists in database

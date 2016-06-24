@@ -13,8 +13,8 @@ Scenario: Create viewing
 			| House        | Residential |
 		And Activity for latest property and PreAppraisal activity status exists in database
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
 		And Requirement exists in database
 	When User creates viewing using api
 	Then User should get OK http status code
@@ -33,8 +33,8 @@ Scenario: Create viewing with mandatory fields
 			| House        | Residential |
 		And Activity for latest property and PreAppraisal activity status exists in database
 		And Contacts exists in database 
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
 		And Requirement exists in database
 	When User creates viewing with mandatory fields using api
 	Then User should get OK http status code
@@ -53,8 +53,8 @@ Scenario Outline: Create viewing with invalid data
 			| House        | Residential |
 		And Activity for latest property and PreAppraisal activity status exists in database
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
 		And Requirement exists in database
 	When User creates viewing with invalid <data> using api
 	Then User should get BadRequest http status code
@@ -78,9 +78,9 @@ Scenario: Update viewing
 			| House        | Residential |
 		And Activity for latest property and PreAppraisal activity status exists in database
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
-			| Tom       | Jones   | Sir    |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
+			| Tom       | Jones    | Sir    |
 		And Requirement exists in database
 		And Viewing exists in database
 	When User updates viewing 
@@ -100,9 +100,9 @@ Scenario Outline: Update viewing with invalid data
 			| House        | Residential |
 		And Activity for latest property and PreAppraisal activity status exists in database
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
-			| Tom       | Jones   | Sir    |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
+			| Tom       | Jones    | Sir    |
 		And Requirement exists in database
 		And Viewing exists in database
 	When User updates viewing with invalid <data> data

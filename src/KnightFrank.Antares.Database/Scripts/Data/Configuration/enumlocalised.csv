@@ -27,9 +27,7 @@ MailingSalutation;MailingFormal;en;Formal
 MailingSalutation;MailingSemiformal;en;Semiformal
 MailingSalutation;MailingInformal;en;Informal
 MailingSalutation;MailingPersonal;en;Personal
-MailingSalutation;MailingEnvelope;en;Envelope
 EventSalutation;EventInvite;en;Invite
 EventSalutation;EventSemiformal;en;Semiformal
 EventSalutation;EventInformal;en;Informal
 EventSalutation;EventPersonal;en;Personal
-EventSalutation;EventEnvelope;en;Envelope

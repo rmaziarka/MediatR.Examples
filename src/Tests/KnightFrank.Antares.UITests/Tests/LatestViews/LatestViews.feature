@@ -97,7 +97,7 @@ Scenario: Display latest viewed activities
 		| The Alternative Tuck Shop, 24 Holywell St |
 		| St John Flat, 2 Walton St                 |
 	When Contacts are created in database
-		| Title | FirstName | Surname   |
+		| Title | FirstName | LastName  |
 		| Lady  | Joanna    | Thornhill |
 		And Property with Residential division and House type is defined
 		And Property in GB is created in database
@@ -139,13 +139,13 @@ Scenario: Display latest viewed activities
 @LatestViews
 Scenario: Display latest viewed requirements
 	Given Contacts are created in database
-		| Title | FirstName | Surname  |
+		| Title | FirstName | LastName |
 		| Miss  | Triss     | Merigold |
 	When User navigates to create requirement page
 		And User opens navigation drawer menu
 		And User selects Requirements menu item
 		And User selects contacts on create requirement page
-			| FirstName | Surname  |
+			| FirstName | LastName |
 			| Triss     | Merigold |
 		And User fills in location details on create requirement page
 			| Country        | Line2    | Postcode | City   |
@@ -156,9 +156,9 @@ Scenario: Display latest viewed requirements
 			| LatestData             |
 			| Triss Merigold         |
 	When Contacts are created in database
-		| Title | FirstName | Surname |
-		| Dr    | Van       | Wilder  |
-		| Sir   | Van       | Wilder  |
+		| Title | FirstName | LastName |
+		| Dr    | Van       | Wilder   |
+		| Sir   | Van       | Wilder   |
 		And Requirement for GB is created in database
 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
 			| 100000   | 500000   | 2           | 3           | 2                 | 4                 | 1            | 3            | 2                | 2                | 90000   | 150000  | 200000      | 300000      | Note        |
@@ -173,7 +173,7 @@ Scenario: Display latest viewed requirements
 			| Line2    | Postcode | City   |
 			| Gower St | WC1E 6BT | London |
 		And Requirement applicants on view requirement page are same as the following
-			| FirstName | Surname  |
+			| FirstName | LastName |
 			| Triss     | Merigold |
 		And Latest 2 requirement should contain following data
 			| LatestData             |

@@ -33,9 +33,9 @@ Scenario: Create Activity
 			| PropertyType | Division    |
 			| House        | Residential |
 		And Contacts exists in database
-			| FirstName | Surname | Title |
-			| Michael   | Angel   | cheef |
-			| Michael   | Angel   | cook  |
+			| FirstName | LastName | Title |
+			| Michael   | Angel    | cheef |
+			| Michael   | Angel    | cook  |
 		And Ownership Freeholder exists in database
 			| PurchaseDate | SellDate   | BuyPrice | SellPrice |
 			| 01-05-2011   | 01-04-2013 | 1000000  |           |
@@ -141,8 +141,8 @@ Scenario: Get Activity with viewing and offer
 			| House        | Residential |
 		And Activity for latest property and PreAppraisal activity status exists in database
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
 		And Requirement exists in database
 		And Viewing exists in database
 		And Offer with New status exists in database
