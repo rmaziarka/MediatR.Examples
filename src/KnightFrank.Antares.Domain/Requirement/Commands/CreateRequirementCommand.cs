@@ -44,5 +44,8 @@
         public string Description { get; set; }
 
         public Guid RequirementTypeId { get; set; }
+
+        public decimal? RentMin { get; set; }
+        public decimal? RentMax { get; set; }
     }
 }

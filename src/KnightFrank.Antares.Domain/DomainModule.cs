@@ -30,6 +30,7 @@
             this.Bind<IEntityValidator>().To(typeof(EntityValidator));
             this.Bind<IEnumParser>().To<EnumParser>();
             this.Bind<IControlsConfiguration<Tuple<PageType, ActivityType>>>().To(typeof(ActivityControlsConfiguration));
+            this.Bind<IControlsConfiguration<Tuple<RequirementType>>>().To(typeof(RequirementControlsConfiguration));
             this.Bind<IAttributeValidator<Tuple<PropertyType, ActivityType>>>().To(typeof(AttributeValidator<>));
             
             this.Bind<ICollectionValidator>().To(typeof(CollectionValidator));

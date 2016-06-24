@@ -1,3 +1,4 @@
+// ReSharper disable InconsistentNaming
 namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
 {
     public enum ControlCode
@@ -17,6 +18,20 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         VendorEstimatedPrice,
         Offers,
         Viewings,
-        Attachments
+        Attachments,
+
+        #region Requirement
+
+        Requirement_RequirementType,
+        Requirement_Description,
+        Requirement_RentRange,
+        Requirement_LocationRequirements,
+        Requirement_Applicants,
+        Requirement_Offers,
+        Requirement_Viewings,
+        Requirement_Attachments,
+        Requirement_CreationDate
+
+        #endregion
     }
 }

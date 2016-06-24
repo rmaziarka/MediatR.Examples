@@ -168,6 +168,7 @@
     <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerThreeTypes.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerTwoTypes.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\IControlsConfiguration.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\RequirementControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\Enums\ControlCode.cs" />
     <Compile Include="AttributeConfiguration\Enums\PageType.cs" />
     <Compile Include="AttributeConfiguration\Fields\Control.cs" />
