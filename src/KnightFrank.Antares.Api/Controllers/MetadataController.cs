@@ -22,7 +22,7 @@
     public class MetadataController : ApiController
     {
         private readonly IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityConfiguration;
-        private readonly IControlsConfiguration<Tuple<OfferType, RequirementType, ActivityType>> offerConfiguration;
+        private readonly IControlsConfiguration<Tuple<OfferType, RequirementType>> offerConfiguration;
         private readonly IEnumParser enumParser;
 
         /// <summary>
@@ -33,7 +33,7 @@
         /// <param name="enumParser">The enum parser.</param>
         public MetadataController(
             IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityConfiguration,
-            IControlsConfiguration<Tuple<OfferType, RequirementType, ActivityType>> offerConfiguration,
+            IControlsConfiguration<Tuple<OfferType, RequirementType>> offerConfiguration,
             IEnumParser enumParser)
         {
             this.activityConfiguration = activityConfiguration;
@@ -68,22 +68,20 @@
         /// <param name="pageType">Type of the page.</param>
         /// <param name="offerTypeId">Type of the offer.</param>
         /// <param name="requirementTypeId">Type of the requirement.</param>
-        /// <param name="activityTypeId">Type of the activity.</param>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
         [HttpPost]
         [Route("attributes/offer")]
-        public dynamic GetOfferConfiguration(PageType pageType, Guid offerTypeId, Guid requirementTypeId, Guid activityTypeId, [ModelBinder(typeof(ConfigurableOfferModelBinder))]object entity)
+        public dynamic GetOfferConfiguration(PageType pageType, Guid offerTypeId, Guid requirementTypeId, [ModelBinder(typeof(ConfigurableOfferModelBinder))]object entity)
         {
-            if (offerTypeId == Guid.Empty || requirementTypeId == Guid.Empty || activityTypeId == Guid.Empty)
+            if (offerTypeId == Guid.Empty || requirementTypeId == Guid.Empty)
                 return null;
 
             OfferType offerType = this.enumParser.Parse<Dal.Model.Offer.OfferType, OfferType>(offerTypeId);
 
             //TODO replace when RequirementType introduce in DB
             var requirementType = RequirementType.ResidentalLetting;
-            ActivityType activityType = this.enumParser.Parse<Dal.Model.Property.Activities.ActivityType, ActivityType>(activityTypeId);
-            IList<InnerFieldState> fieldStates = this.offerConfiguration.GetInnerFieldsState(pageType, new Tuple<OfferType, RequirementType, ActivityType>(offerType, requirementType, activityType), entity);
+            IList<InnerFieldState> fieldStates = this.offerConfiguration.GetInnerFieldsState(pageType, new Tuple<OfferType, RequirementType>(offerType, requirementType), entity);
             return fieldStates.MapToResponse();
         }
     }

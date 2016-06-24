@@ -24,6 +24,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
 
         #region Offer ControlCode
         Offer_Status,
+        Offer_OfferType,
         Offer_Requirement,
         Offer_Activity,
         Offer_Negotiator,

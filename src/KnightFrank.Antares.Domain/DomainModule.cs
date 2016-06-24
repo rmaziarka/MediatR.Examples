@@ -61,11 +61,10 @@
         private void ConfigureAttributeConfigurations()
         {
             this.Bind<IControlsConfiguration<Tuple<PropertyType, ActivityType>>>().To<ActivityControlsConfiguration>();
-            this.Bind<IControlsConfiguration<Tuple<OfferType, RequirementType, ActivityType>>>().To<OfferControlsConfiguration>();
+            this.Bind<IControlsConfiguration<Tuple<OfferType, RequirementType>>>().To<OfferControlsConfiguration>();
             this.Bind<IAttributeValidator<Tuple<PropertyType, ActivityType>>>().To(typeof(AttributeValidator<>));
 
             this.Bind<IEntityMapper<Dal.Model.Property.Activities.Activity>>().To<ActivityEntityMapper>();
-            
         }
     }
 }
