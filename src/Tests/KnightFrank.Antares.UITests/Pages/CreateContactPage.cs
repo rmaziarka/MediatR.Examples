@@ -52,5 +52,11 @@
         {
             return this.Driver.IsElementPresent(this.contactForm, BaseConfiguration.MediumTimeout);
         }
+
+        public bool CheckIfContactAddPage()
+        {
+            string currentUrl = this.Driver.Url;
+            return currentUrl == CommonPage.GetUrl("CreateContactPage").ToString();
+        }
     }
 }

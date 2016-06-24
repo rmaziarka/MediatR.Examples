@@ -12,9 +12,12 @@
             this.HasRequired(an => an.Activity)
                 .WithMany(a => a.ActivityDepartments)
                 .HasForeignKey(an => an.ActivityId)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(false);    
 
-            this.HasRequired(an => an.Department).WithMany().HasForeignKey(an => an.DepartmentId).WillCascadeOnDelete(false);
+            this.HasRequired(an => an.Department)
+                .WithMany()
+                .HasForeignKey(an => an.DepartmentId)
+                .WillCascadeOnDelete(false);
 
             var uniqueIndexName = "IX_ActivityId_DepartmentId";
             this.Property(an => an.ActivityId)

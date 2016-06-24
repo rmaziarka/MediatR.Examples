@@ -11,6 +11,7 @@
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Ownership.Commands;
 
     using Newtonsoft.Json;
@@ -43,7 +44,9 @@
             foreach (Ownership ownership in ownerships)
             {
                 ownership.PropertyId = this.scenarioContext.Get<Property>("Property").Id;
-                ownership.OwnershipTypeId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals(ownershipType)).Id;
+                ownership.OwnershipTypeId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e => e.EnumType.Code.Equals(nameof(OwnershipType)) && e.Code.Equals(ownershipType)).Id;
                 ownership.Contacts = this.scenarioContext.Get<ICollection<Contact>>("Contacts");
             }
 
@@ -56,7 +59,9 @@
         {
             var ownership = table.CreateInstance<CreateOwnershipCommand>();
 
-            ownership.OwnershipTypeId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals(ownershipType)).Id;
+            ownership.OwnershipTypeId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    e => e.EnumType.Code.Equals(nameof(OwnershipType)) && e.Code.Equals(ownershipType)).Id;
             ownership.ContactIds = this.scenarioContext.Get<ICollection<Contact>>("Contacts").Select(x => x.Id).ToList();
 
             this.CreateOwnership(ownership);
@@ -68,7 +73,9 @@
         {
             var ownership = new CreateOwnershipCommand
             {
-                OwnershipTypeId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals(ownershipType)).Id,
+                OwnershipTypeId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e => e.EnumType.Code.Equals(nameof(OwnershipType)) && e.Code.Equals(ownershipType)).Id,
                 ContactIds = this.scenarioContext.Get<ICollection<Contact>>("Contacts").Select(x => x.Id).ToList()
             };
 

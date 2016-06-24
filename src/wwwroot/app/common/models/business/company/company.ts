@@ -3,14 +3,21 @@
 module Antares.Common.Models.Business {
     export class Company implements Dto.ICompany {
         id: string = '';
-        name: string = '';        
+        name: string = '';    
+        websiteUrl: string = '';
+        clientCarePageUrl: string = '';
+        clientCareStatusId: string = '';
+        clientCareStatus: Business.EnumTypeItem;
         contacts: Contact[] = [];
 
         constructor(company?: Dto.ICompany) {
+
             if (company) {
                 angular.extend(this, company);
-                
-                this.contacts = company.contacts.map((contact: Dto.IContact) => { return new Contact(contact) });
+
+                if (company.contacts) {
+                    this.contacts = company.contacts.map((contact: Dto.IContact) =>{ return new Contact(contact) });
+                }
             }
         }
     }

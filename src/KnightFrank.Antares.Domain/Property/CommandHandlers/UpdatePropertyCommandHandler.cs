@@ -52,7 +52,7 @@
 
             this.enumTypeItemValidator.ItemExists(EnumType.Division, message.DivisionId);
 
-            this.entityValidator.EntityExists<PropertyType>(message.PropertyTypeId);
+            this.entityValidator.EntityExists<Dal.Model.Property.PropertyType>(message.PropertyTypeId);
 
             Property property =
                 this.propertyRepository.GetWithInclude(x => x.Id == message.Id, x => x.PropertyCharacteristics).SingleOrDefault();

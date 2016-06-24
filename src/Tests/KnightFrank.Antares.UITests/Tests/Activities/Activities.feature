@@ -3,12 +3,12 @@
 @Activity
 Scenario: Create activity
 	Given Contacts are created in database
-		| Title | FirstName | LastName |
-		| Lady  | Sarah     | Chatto   |
-		And Property with Commercial division and Leisure.Hotel type is defined
+		| Title | FirstName | Surname |
+		| Lady  | Sarah     | Chatto  |
+		And Property with Residential division and Bungalow type is defined
 		And Property attributes details are defined
-			| MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces | MinGuestRooms | MaxGuestRooms | MinFunctionRooms | MaxFunctionRooms |
-			| 20000   | 30000   | 25000       | 40000       | 30                  | 40                  | 60            | 180           | 15               | 25               |
+			| MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces | MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms |
+			| 1000    | 2000    | 1500        | 3000        | 1                   | 2                   | 1           | 2           | 1             | 2             | 1            | 2            |
 		And Property characteristics are defined
 		And Property in GB is created in database
 			| PropertyNumber | PropertyName | Line2       | Postcode | City        | County  |
@@ -18,21 +18,21 @@ Scenario: Create activity
 			| 01-01-2005   | 100000000 |
 	When User navigates to view property page with id
 		And User clicks add activites button on view property page	
+	When User selects Freehold Sale activity type on create activity page
+		And User selects Pre-appraisal activity status on create activity page
 	Then Activity details are set on create activity page
 	    | Vendor       | Status        |
 	    | Sarah Chatto | Pre-appraisal |
-	When User selects Freehold Sale activity type on create activity page
-		And User selects Market appraisal activity status on create activity page
-		And User clicks save button on create activity page
+	When User clicks save button on create activity page
 	Then Activity details are set on view property page
-		| Vendor       | Status           | Type          |
-		| Sarah Chatto | Market appraisal | Freehold Sale |
+		| Vendor       | Status        | Type          |
+		| Sarah Chatto | Pre-appraisal | Freehold Sale |
 
 @Activity
 Scenario: Edit activity
 	Given Contacts are created in database
-		| Title | FirstName | LastName |
-		| Lady  | Amanda    | Harlech  |
+		| Title | FirstName | Surname |
+		| Lady  | Amanda    | Harlech |
 		And Property with Residential division and Flat type is defined
 		And Property attributes details are defined
 			| MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces | MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms |
@@ -48,8 +48,8 @@ Scenario: Edit activity
 	Then John Smith is set as lead negotiator on view activity page
 	When User clicks edit button on view activity page
 		And User edits activity details on edit activity page
-			| ActivityStatus   | MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |
-			| Market appraisal | 4000                 | 5000             | 6000                 |
+			| ActivityStatus   | AskingPrice |
+			| Market appraisal | 4000        |
 		And User changes lead negotiator to Adam Williams on edit activity page
         And User adds secondary negotiators on edit activity page
             | Name            |
@@ -61,8 +61,8 @@ Scenario: Edit activity
 		And User clicks save button on edit activity page
 	Then View activity page should be displayed
 		And Activity details on view activty page are following
-			| ActivityStatus   | MarketAppraisalPrice | RecommendedPrice | VendorEstimatedPrice |
-			| Market appraisal | 4000                 | 5000             | 6000                 |
+			| ActivityStatus   | AskingPrice |
+			| Market appraisal | 4000        |
 		And Adam Williams is set as lead negotiator on view activity page
         And Secondary negotiators are set on view activity page
             | Name            | NextCall |
@@ -83,8 +83,8 @@ Scenario: Edit activity
 @Activity
 Scenario: Edit negotiators next call dates 
 	Given Contacts are created in database
-		| Title | FirstName | LastName |
-		| Mr    | Michael   | Johnson  |
+		| Title | FirstName | Surname |
+		| Mr    | Michael   | Johnson |
 		And Property with Residential division and Flat type is defined
 		And Property attributes details are defined
 			| MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces | MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms |
@@ -143,8 +143,8 @@ Scenario: Edit negotiators next call dates
 @Activity
 Scenario: Edit negotiators departments 
 	Given Contacts are created in database
-		| Title | FirstName | LastName |
-		| Mr    | Michael   | Jordan   |
+		| Title | FirstName | Surname |
+		| Mr    | Michael   | Jordan  |
 		And Property with Residential division and Flat type is defined
 		And Property attributes details are defined
 			| MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces | MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms |

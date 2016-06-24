@@ -1,5 +1,8 @@
 {
   "App.Settings": {
+    "App":{
+      "RootUrl": "http://local.app.antares.knightfrank.com/"
+    },
     "Api": {
       "RootUrl": "http://local.api.antares.knightfrank.com"
     },

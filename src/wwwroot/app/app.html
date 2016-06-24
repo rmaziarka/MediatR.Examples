@@ -23,21 +23,31 @@
                 <uib-accordion-heading>
                     {{'COMMON.MENU.CONTACTS' | translate}} <i class="pull-right fa accordion-arrow fa-chevron-down"></i>
                 </uib-accordion-heading>
-                <a class="accordion-button btn btn-default btn-sm" ui-sref="app.contact-add">{{'COMMON.MENU.CREATE' | translate}}</a>
+
+                <ul class="drawer-menu">
+                    <li class="drawer-menu-item"><a ui-sref="app.contact-add" class="drawer-menu-link">{{'COMMON.MENU.CREATE' | translate}}</a></li>
+                </ul>
             </uib-accordion-group>
             <uib-accordion-group>
                 <uib-accordion-heading>
                     {{'COMMON.MENU.COMPANIES' | translate}} <i class="pull-right fa accordion-arrow fa-chevron-down"></i>
                 </uib-accordion-heading>
-                <a class="accordion-button btn btn-default btn-sm" ui-sref="app.company-add">{{'COMMON.MENU.CREATE' | translate}}</a>
+
+                <ul class="drawer-menu">
+                    <li class="drawer-menu-item"><a ui-sref="app.company-add" class="drawer-menu-link">{{'COMMON.MENU.CREATE' | translate}}</a></li>
+                </ul>
             </uib-accordion-group>
             <uib-accordion-group>
                 <uib-accordion-heading>
                     {{'COMMON.MENU.PROPERTIES' | translate}} <i class="pull-right fa accordion-arrow fa-chevron-down"></i>
                 </uib-accordion-heading>
+
+                <ul class="drawer-menu">
+                    <li class="drawer-menu-item"><a ui-sref="app.property-search" class="drawer-menu-link">{{'COMMON.MENU.SEARCH' | translate}}</a></li>
+                    <li class="drawer-menu-item"><a ui-sref="app.property-add" class="drawer-menu-link">{{'COMMON.MENU.CREATE' | translate}}</a></li>
+                </ul>
                 <navigation-drawer type="property">
                 </navigation-drawer>
-                <a class="accordion-button btn btn-default btn-sm" ui-sref="app.property-add">{{'COMMON.MENU.CREATE' | translate}}</a>
             </uib-accordion-group>
             <uib-accordion-group>
                 <uib-accordion-heading>
@@ -50,9 +60,12 @@
                 <uib-accordion-heading>
                     {{'COMMON.MENU.REQUIREMENTS' | translate}} <i class="pull-right fa accordion-arrow fa-chevron-down"></i>
                 </uib-accordion-heading>
+
+                <ul class="drawer-menu">
+                    <li class="drawer-menu-item"><a ui-sref="app.requirement-add" class="drawer-menu-link">{{'COMMON.MENU.CREATE' | translate}}</a></li>
+                </ul>
                 <navigation-drawer type="requirement">
                 </navigation-drawer>
-                <a class="accordion-button btn btn-default btn-sm" ui-sref="app.requirement-add">{{'COMMON.MENU.CREATE' | translate}}</a>
             </uib-accordion-group>
         </uib-accordion>
     </nav>

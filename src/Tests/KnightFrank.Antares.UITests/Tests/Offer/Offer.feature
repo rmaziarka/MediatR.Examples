@@ -75,6 +75,8 @@ Scenario: Update residential sales offer on requirement
 			| 100000   | 500000   | 1           | 3           | 1                 | 2                 | 1            | 3            | 1                | 3                | 900     | 3500    | 1200        | 6000        | Note        |
 		And Viewing for requirement is defined
 		And Offer for requirement is defined
+			| Status |
+			| New    |
 	When User navigates to view requirement page with id
 		And User clicks edit offer button for 1 offer on view requirement page
 	Then Activity details on view requirement page are same as the following
@@ -114,16 +116,16 @@ Scenario: View offer details page
 	When User navigates to view requirement page with id
 		And User clicks make an offer button for 1 activity on view requirement page
 		And User fills in offer details on view requirement page
-			| Status   | Offer | SpecialConditions     |
-			| Accepted | 95000 | My special conditions |
+			| Status    | Offer | SpecialConditions     |
+			| Withdrawn | 95000 | My special conditions |
 		And User clicks save offer button on view requirement page
 	Then New offer should be created and displayed on view requirement page
 	When User clicks 1 offer details on view requirement page
 		And User clicks details offer link on view requirement page
 	Then View offer page should be displayed
 		And Offer header details on view offer page are same as the following
-			| Details                        | Status   |
-			| Judith Greciet, Julius Chaloff | Accepted |
+			| Details                        | Status    |
+			| Judith Greciet, Julius Chaloff | Withdrawn |
 		And Offer activity details on view offer page are same as the following
 			| Details                     |
 			| Greciet’s house, 34 Bixteth |
@@ -131,8 +133,8 @@ Scenario: View offer details page
 			| Details                        |
 			| Judith Greciet, Julius Chaloff |
 		And Offer details on view offer page are same as the following
-			| Status   | Offer     | SpecialConditions     | Negotiator |
-			| Accepted | 95,000.00 | My special conditions | John Smith |
+			| Status    | Offer     | SpecialConditions     | Negotiator |
+			| Withdrawn | 95,000.00 | My special conditions | John Smith |
 	When User clicks activity details on view offer page
 	Then Activity details on view offer page are same as the following 
 		| Status        | Negotiator | Vendor                        | Type          |
@@ -144,7 +146,7 @@ Scenario: View offer details page
 	Then View requirement page should be displayed
 
 @Offer
-Scenario: Update residential sales offer
+Scenario: Update new residential sales offer
 	Given Contacts are created in database
 		| Title | FirstName | LastName     |
 		| Lady  | Sarah     | McCorquodale |
@@ -165,22 +167,97 @@ Scenario: Update residential sales offer
 			| 100000   | 500000   | 3           | 6           | 2                 | 4                 | 2            | 6            | 1                | 6                | 9000    | 32000   | 12000       | 60000       | Note        |
 		And Viewing for requirement is defined
 		And Offer for requirement is defined
+			| Status |
+			| New    |
 	When User navigates to view offer page with id
 		And User clicks edit offer button on view offer page
 		And User fills in offer details on edit offer page
-			| Status   | Offer  | SpecialConditions     |
-			| Accepted | 450000 | My special conditions |
+			| Status | Offer  | SpecialConditions     |
+			| New    | 450000 | My special conditions |
 		And User clicks save offer on edit offer page
 	Then Offer updated success message should be displayed
 		And Offer details on view offer page are same as the following
-			| Status   | Offer      | SpecialConditions     | Negotiator |
-			| Accepted | 450,000.00 | My special conditions | John Smith |
+			| Status | Offer      | SpecialConditions     | Negotiator |
+			| New    | 450,000.00 | My special conditions | John Smith |
 		And Offer header details on view offer page are same as the following
-			| Details            | Status   |
-			| Sarah McCorquodale | Accepted |
+			| Details            | Status |
+			| Sarah McCorquodale | New    |
 		And Offer activity details on view offer page are same as the following
 			| Details                             |
 			| Sarah McCorquodale, 84 Granville Rd |
 		And Offer requirement details on view offer page are same as the following
 			| Details            |
 			| Sarah McCorquodale |
+
+@Offer
+Scenario: Create and update accepted residential sales offer
+	Given Contacts are created in database
+		| Title | FirstName | Surname   |
+		| Sir   | Steve     | Harris    |
+		| Sir   | Dave      | Murray    |
+		| Sir   | Adrian    | Smith     |
+		| Sir   | Bruce     | Dickinson |
+		And Company is created in database
+			| Name        | WebsiteUrl             | ClientCarePageUrl      |
+			| Objectivity | https://www.google.com | https://www.google.com |
+		And Contacts are created in database
+			| Title | FirstName | Surname |
+			| Sir   | Mark      | Walport |
+		And Property with Residential division and House type is defined
+		And Property attributes details are defined
+			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
+			| 5           | 6           | 3             | 5             | 2            | 3            | 2500    | 3000    | 3500        | 5500        | 2                   | 2                   |
+		And Property characteristics are defined
+		And Property in GB is created in database
+			| PropertyNumber | PropertyName  | Line2    | Postcode | City    | County        |
+			| 21             | Moselle House | Derby Rd | WD17 2LW | Watford | Hertfordshire |
+		And Property ownership is defined
+			| PurchaseDate | BuyPrice |
+			| 10-01-2015   | 100000   |
+		And Property Freehold Sale activity is defined
+		And Requirement for GB is created in database
+			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
+			| 90000    | 120000   | 4           | 7           | 3                 | 5                 | 2            | 4            | 1                | 2                | 2000    | 3500    | 3000        | 6000        | Note        |
+		And Viewing for requirement is defined
+	When User navigates to view requirement page with id
+		And User clicks make an offer button for 1 activity on view requirement page
+		And User fills in offer details on view requirement page
+			| Status   | Offer  | SpecialConditions     |
+			| Accepted | 110000 | My special conditions |
+		And User clicks save offer button on view requirement page
+	Then New offer should be created and displayed on view requirement page
+	When User clicks details offer button for 1 offer on view requirement page
+	Then View offer page should be displayed
+		And Offer progress summary details on view offer page are same as the following
+			| MortgageStatus | MortgageSurveyStatus | AdditionalSurveyStatus | SearchStatus | Enquiries   | ContractApproved |
+			| Unknown        | Unknown              | Unknown                | Not started  | Not started | false            |
+	When User clicks edit offer button on view offer page
+		And User fills in offer details on edit offer page
+			| Status   | Offer  | SpecialConditions |
+			| Accepted | 120000 | Text              |
+		And User fills in offer progress summary on edit offer page
+			| MortgageStatus | MortgageSurveyStatus | AdditionalSurveyStatus | SearchStatus | Enquiries | ContractApproved |
+			| Agreed         | Complete             | Complete               | Complete     | Complete  | true             |
+		And User fills in offer mortgage details on edit offer page
+			| MortgageLoanToValue | Broker       | BrokerCompany | Lender      | LenderCompany | Surveyor     | SurveyorCompany |
+			| 100                 | Steve Harris | Objectivity   | Dave Murray | Objectivity   | Adrian Smith | Objectivity     |
+		And User fills in offer additional details on edit offer page
+			| AdditionalSurveyor | AdditionalSurveyorCompany | Comment  |
+			| Bruce Dickinson    | Objectivity               | Approved |
+	Then Following company contacts should be displayed on edit offer page
+		| Broker       | BrokerCompany | Lender      | LenderCompany | Surveyor     | SurveyorCompany | AdditionalSurveyor | AdditionalSurveyorCompany |
+		| Steve Harris | Objectivity   | Dave Murray | Objectivity   | Adrian Smith | Objectivity     | Bruce Dickinson    | Objectivity               |
+	When User clicks save offer on edit offer page
+	Then Offer updated success message should be displayed
+		And Offer details on view offer page are same as the following
+			| Status   | Offer      | SpecialConditions | Negotiator |
+			| Accepted | 120,000.00 | Text              | John Smith |
+		And Offer progress summary details on view offer page are same as the following
+			| MortgageStatus | MortgageSurveyStatus | AdditionalSurveyStatus | SearchStatus | Enquiries | ContractApproved |
+			| Agreed         | Complete             | Complete               | Complete     | Complete  | true             |
+		And Offer mortgage details details on view offer page are same as the following
+			| MortgageLoanToValue | Broker       | BrokerCompany | Lender      | LenderCompany | Surveyor     | SurveyorCompany |
+			| 100                 | Steve Harris | Objectivity   | Dave Murray | Objectivity   | Adrian Smith | Objectivity     |
+		And Offer additional details on view offer page are same as the following
+			| AdditionalSurveyor | AdditionalSurveyorCompany | Comment  |
+			| Bruce Dickinson    | Objectivity               | Approved |

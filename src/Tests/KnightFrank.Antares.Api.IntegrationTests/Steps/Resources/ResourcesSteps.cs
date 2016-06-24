@@ -19,8 +19,8 @@
     public class ResourcesSteps : IClassFixture<BaseTestClassFixture>
     {
         private const string ApiUrl = "/api/resources";
-        private readonly ScenarioContext scenarioContext;
         private readonly BaseTestClassFixture fixture;
+        private readonly ScenarioContext scenarioContext;
 
         public ResourcesSteps(ScenarioContext scenarioContext, BaseTestClassFixture fixture)
         {

@@ -24,8 +24,8 @@
     public class ViewingsSteps : IClassFixture<BaseTestClassFixture>
     {
         private const string ApiUrl = "/api/viewings";
-        private readonly BaseTestClassFixture fixture;
         private readonly DateTime date = DateTime.UtcNow;
+        private readonly BaseTestClassFixture fixture;
         private readonly ScenarioContext scenarioContext;
 
         public ViewingsSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
@@ -36,6 +36,37 @@
                 throw new ArgumentNullException(nameof(scenarioContext));
             }
             this.scenarioContext = scenarioContext;
+        }
+
+        [Given(@"Viewing exists in database")]
+        public void CreateViewingInDatabase()
+        {
+            var requirement = this.scenarioContext.Get<Requirement>("Requirement");
+
+            var viewing = new Viewing
+            {
+                StartDate = this.date,
+                EndDate = this.date.AddHours(1),
+                InvitationText = StringExtension.GenerateMaxAlphanumericString(4000),
+                Attendees = new List<Contact>
+                {
+                    new Contact
+                    {
+                        Id = requirement.Contacts[0].Id,
+                        FirstName = requirement.Contacts[0].FirstName,
+                        Surname = requirement.Contacts[0].Surname,
+                        Title = requirement.Contacts[0].Title
+                    }
+                },
+                RequirementId = requirement.Id,
+                ActivityId = this.scenarioContext.Get<Activity>("Activity").Id,
+                NegotiatorId = this.fixture.DataContext.Users.First().Id
+            };
+
+            this.fixture.DataContext.Viewing.Add(viewing);
+            this.fixture.DataContext.SaveChanges();
+
+            this.scenarioContext.Set(viewing, "Viewing");
         }
 
         [When(@"User creates viewing using api")]
@@ -108,37 +139,6 @@
             this.CreateViewing(details);
         }
 
-        [Given(@"Viewing exists in database")]
-        public void CreateViewingInDatabase()
-        {
-            var requirement = this.scenarioContext.Get<Requirement>("Requirement");
-
-            var viewing = new Viewing
-            {
-                StartDate = this.date,
-                EndDate = this.date.AddHours(1),
-                InvitationText = StringExtension.GenerateMaxAlphanumericString(4000),
-                Attendees = new List<Contact>
-                {
-                    new Contact
-                    {
-                        Id = requirement.Contacts[0].Id,
-                        FirstName = requirement.Contacts[0].FirstName,
-                        LastName = requirement.Contacts[0].LastName,
-                        Title = requirement.Contacts[0].Title
-                    }
-                },
-                RequirementId = requirement.Id,
-                ActivityId = this.scenarioContext.Get<Activity>("Activity").Id,
-                NegotiatorId = this.fixture.DataContext.Users.First().Id
-            };
-
-            this.fixture.DataContext.Viewing.Add(viewing);
-            this.fixture.DataContext.SaveChanges();
-
-            this.scenarioContext.Set(viewing, "Viewing");
-        }
-
         [When(@"User updates viewing")]
         public void UpdateViewing()
         {
@@ -194,7 +194,8 @@
         [Then(@"Viewing details in requirement should be the same as added")]
         public void CompareRequirementViewings()
         {
-            Viewing viewing = JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent()).Viewings.Single();
+            Viewing viewing =
+                JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent()).Viewings.Single();
             Viewing expectedVieiwng = this.fixture.DataContext.Viewing.Single(v => v.Id.Equals(viewing.Id));
 
             viewing.ShouldBeEquivalentTo(expectedVieiwng, opt => opt

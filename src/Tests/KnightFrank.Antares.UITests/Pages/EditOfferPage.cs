@@ -4,19 +4,18 @@
     using System.Linq;
 
     using KnightFrank.Antares.UITests.Extensions;
+    using KnightFrank.Antares.UITests.Pages.Panels;
 
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
     using Objectivity.Test.Automation.Common.WebElements;
 
-    using OpenQA.Selenium;
-
     public class EditOfferPage : ProjectPageBase
     {
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator save = new ElementLocator(Locator.Id, "offer-edit-save");
-        private readonly ElementLocator status = new ElementLocator(Locator.Id, "offer-status");
+        private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, "#offer-status select");
         private readonly ElementLocator activity = new ElementLocator(Locator.CssSelector, "#section-vendor .requirement-view-offers .card-body");
         // Basic information
         private readonly ElementLocator offer = new ElementLocator(Locator.Id, "offer-price");
@@ -25,40 +24,42 @@
         private readonly ElementLocator proposedExchangeDate = new ElementLocator(Locator.Id, "offer-proposed-exchange-date");
         private readonly ElementLocator proposedCompletionDate = new ElementLocator(Locator.Id, "proposed-completion-date");
         // Progress summary
-        private readonly ElementLocator mortgageStatus = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator mortgageSurveyStatus = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator additionalSurveyStatus = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator searchStatus = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator enquiries = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator contractApproved = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator contractNotApproved = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator mortgageStatus = new ElementLocator(Locator.CssSelector, "#offer-mortgage-status select");
+        private readonly ElementLocator mortgageSurveyStatus = new ElementLocator(Locator.CssSelector, "#mortgage-survey-status select");
+        private readonly ElementLocator additionalSurveyStatus = new ElementLocator(Locator.CssSelector, "#additional-survey-status select");
+        private readonly ElementLocator searchStatus = new ElementLocator(Locator.CssSelector, "#search-status select");
+        private readonly ElementLocator enquiries = new ElementLocator(Locator.CssSelector, "#enquiries select");
+        private readonly ElementLocator contractApproved = new ElementLocator(Locator.CssSelector, "#contract-approved [ng-value = 'true']");
+        private readonly ElementLocator contractNotApproved = new ElementLocator(Locator.CssSelector, "#contract-approved [ng-value = 'false']");
         // Mortgage details
-        private readonly ElementLocator mortgageLoanToValue = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator addBroker = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator brokers = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator addLender = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator lenders = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator mortgageSurveyDate = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator mortgageAddSurveyor = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator mortgageSurveyors = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator mortgageLoanToValue = new ElementLocator(Locator.Id, "mortgage-loan-to-value");
+        private readonly ElementLocator editBroker = new ElementLocator(Locator.Id, "edit-broker");
+        private readonly ElementLocator broker = new ElementLocator(Locator.CssSelector, "#broker .ng-binding");
+        private readonly ElementLocator editLender = new ElementLocator(Locator.Id, "edit-lender");
+        private readonly ElementLocator lender = new ElementLocator(Locator.CssSelector, "#lender .ng-binding");
+        private readonly ElementLocator mortgageSurveyDate = new ElementLocator(Locator.Id, "mortgage-survey-date");
+        private readonly ElementLocator mortgageEditSurveyor = new ElementLocator(Locator.Id, "edit-surveyor");
+        private readonly ElementLocator mortgageSurveyor = new ElementLocator(Locator.CssSelector, "#surveyor .ng-binding");
         // Additional survey
-        private readonly ElementLocator additionalSurveyDate = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator addAdditionalSurveyor = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator additionalSurveyors = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator additionalSurveyDate = new ElementLocator(Locator.Id, "additional-survey-date");
+        private readonly ElementLocator editAdditionalSurveyor = new ElementLocator(Locator.Id, "edit-additional-surveyor");
+        private readonly ElementLocator additionalSurveyor = new ElementLocator(Locator.CssSelector, "#additional-surveyor .ng-binding");
         // Other details
-        private readonly ElementLocator comment = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator comment = new ElementLocator(Locator.Id, "comment");
 
         public EditOfferPage(DriverContext driverContext) : base(driverContext)
         {
         }
 
-        public List<string> Brokers => this.Driver.GetElements(this.brokers).Select(el => el.Text).ToList();
+        public SelectableContactsListPage ContactsList => new SelectableContactsListPage(this.DriverContext);
+
+        public List<string> Broker => this.Driver.GetElements(this.broker).Select(el => el.Text).ToList();
         
-        public List<string> Lenders => this.Driver.GetElements(this.lenders).Select(el => el.Text).ToList();
+        public List<string> Lender => this.Driver.GetElements(this.lender).Select(el => el.Text).ToList();
 
-        public List<string> MortgageSurveyors => this.Driver.GetElements(this.mortgageSurveyors).Select(el => el.Text).ToList();
+        public List<string> MortgageSurveyor => this.Driver.GetElements(this.mortgageSurveyor).Select(el => el.Text).ToList();
 
-        public List<string> AdditionalSurveyors => this.Driver.GetElements(this.additionalSurveyors).Select(el => el.Text).ToList();
+        public List<string> AdditionalSurveyor => this.Driver.GetElements(this.additionalSurveyor).Select(el => el.Text).ToList();
 
         public EditOfferPage OpenEditOfferPageWithId(string id)
         {
@@ -120,45 +121,66 @@
             return this;
         }
 
+        public EditOfferPage WaitForSidePanelToHide()
+        {
+            this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.MediumTimeout);
+            return this;
+        }
+
         public EditOfferPage SelectMortgageStatus(string text)
         {
-            this.Driver.GetElement<Select>(this.mortgageStatus).SelectByText(text);
+            if (!string.IsNullOrEmpty(text))
+            {
+                this.Driver.GetElement<Select>(this.mortgageStatus).SelectByText(text);
+            }
             return this;
         }
 
         public EditOfferPage SelectMortgageSurveyStatus(string text)
         {
-            this.Driver.GetElement<Select>(this.mortgageSurveyStatus).SelectByText(text);
+            if (!string.IsNullOrEmpty(text))
+            {
+                this.Driver.GetElement<Select>(this.mortgageSurveyStatus).SelectByText(text);
+            }
             return this;
         }
 
         public EditOfferPage SelectAdditionalSurveyStatus(string text)
         {
-            this.Driver.GetElement<Select>(this.additionalSurveyStatus).SelectByText(text);
+            if (!string.IsNullOrEmpty(text))
+            {
+                this.Driver.GetElement<Select>(this.additionalSurveyStatus).SelectByText(text);
+            }
             return this;
         }
 
         public EditOfferPage SelectSearchStatus(string text)
         {
-            this.Driver.GetElement<Select>(this.searchStatus).SelectByText(text);
+            if (!string.IsNullOrEmpty(text))
+            {
+                this.Driver.GetElement<Select>(this.searchStatus).SelectByText(text);
+            }
             return this;
         }
 
         public EditOfferPage SelectEnquiries(string text)
         {
-            this.Driver.GetElement<Select>(this.enquiries).SelectByText(text);
+            if (!string.IsNullOrEmpty(text))
+            {
+                this.Driver.GetElement<Select>(this.enquiries).SelectByText(text);
+            }
             return this;
         }
 
         public EditOfferPage ApproveContract()
         {
-            this.Driver.GetElement<Checkbox>(this.contractApproved).TickCheckbox();
+            this.Driver.Click(this.contractApproved);
             return this;
         }
 
         public EditOfferPage DisapproveContract()
         {
-            this.Driver.GetElement<Checkbox>(this.contractNotApproved).TickCheckbox();
+            this.Driver.Click(this.contractNotApproved);
             return this;
         }
 
@@ -168,15 +190,15 @@
             return this;
         }
 
-        public EditOfferPage AddBroker()
+        public EditOfferPage EditBroker()
         {
-            this.Driver.Click(this.addBroker);
+            this.Driver.Click(this.editBroker);
             return this;
         }
 
-        public EditOfferPage AddLender()
+        public EditOfferPage EditLender()
         {
-            this.Driver.Click(this.addLender);
+            this.Driver.Click(this.editLender);
             return this;
         }
 
@@ -186,9 +208,9 @@
             return this;
         }
 
-        public EditOfferPage AddMortgageSurveyor()
+        public EditOfferPage EditMortgageSurveyor()
         {
-            this.Driver.Click(this.mortgageAddSurveyor);
+            this.Driver.Click(this.mortgageEditSurveyor);
             return this;
         }
 
@@ -198,9 +220,9 @@
             return this;
         }
 
-        public EditOfferPage AddAdditionalSurveyor()
+        public EditOfferPage EditAdditionalSurveyor()
         {
-            this.Driver.Click(this.addAdditionalSurveyor);
+            this.Driver.Click(this.editAdditionalSurveyor);
             return this;
         }
 

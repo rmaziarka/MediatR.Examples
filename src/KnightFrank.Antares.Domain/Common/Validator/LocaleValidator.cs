@@ -1,7 +1,5 @@
 ﻿namespace KnightFrank.Antares.Domain.Common.Validator
 {
-    using System.Linq;
-
     using FluentValidation;
     using FluentValidation.Results;
 

@@ -46,6 +46,13 @@
   .panel-heading {
     background-color: $color-crimson;
     padding: 0;
+
+    + .panel-collapse {
+      > .panel-body,
+      > .list-group {
+        border: 0;
+      }
+    }
   }
 
   .panel-title {
@@ -58,34 +65,14 @@
 
   .panel-collapse > .panel-body {
     background-color: $color-concrete;
-    margin: 0 16px;
-    padding: 15px 0;
+    margin: 0 22px;
+    padding: 0;
   }
 
   .panel {
     border: 0;
     border-bottom: 1px solid $color-amaranth;
     box-shadow: none;
-  }
-
-  .accordion-button {
-    background-color: transparent;
-    border: 1px solid $color-crimson;
-    border-radius: 3px;
-    color: $color-crimson;
-    font: {
-      size: 13px;
-      weight: 700;
-    }
-    line-height: 1;
-    padding: 8px 16px;
-    transition: all 0.2s ease;
-
-    &:hover,
-    &:focus {
-      background-color: $color-crimson;
-      color: $color-white;
-    }
   }
 
   .accordion-toggle {
@@ -106,11 +93,6 @@
       line-height: 14px;
       transition: all 0.1s ease;
     }
-  }
-
-  .panel-collapse > .panel-body,
-  .panel-collapse > .list-group {
-    border-top: 1px solid $color-mercury;
   }
 }
 
@@ -135,24 +117,79 @@
 }
 
 .accordion-title {
+  border-top: 1px solid $color-mercury;
   font: {
-    size: 15px;
-    weight: 700;
+    size: 13px;
+    weight: 900;
   };
-  line-height: 1;
-  margin: 0 0 12px;
+  letter-spacing: 4px;
+  margin: {
+    bottom: 10px;
+    top: 2px;
+  }
+  padding-top: 18px;
+  text-transform: uppercase;
+}
+
+// Drawer menu
+
+.drawer-menu,
+.recent {
+  list-style: none;
+  padding-left: 0;
+}
+
+.drawer-menu {
+  margin-bottom: 15px;
+
+  &-item {
+    overflow: hidden;
+    position: relative;
+  }
+
+  &-link {
+    color: $color-crimson;
+    display: block;
+    font: {
+      size: 13px;
+      weight: 700;
+    }
+    padding: 3px 0;
+    transition: all 0.1s ease;
+
+    &::before {
+      border: {
+        color: transparent transparent transparent $color-crimson;
+        style: solid;
+        width: 3px 0 3px 5px;
+      }
+      content: '';
+      height: 0;
+      left: -17px;
+      position: absolute;
+      top: 9px;
+      transition: all 0.2s ease;
+      width: 0;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      color: $color-crimson;
+      padding-left: 11px;
+      text-decoration: none;
+
+      &::before {
+        left: 0;
+      }
+    }
+  }
 }
 
 // Recent items
 
 .recent {
-  border-bottom: 1px solid $color-alto;
-  list-style: none;
-  margin-bottom: 16px;
-  padding: {
-    bottom: 10px;
-    left: 0;
-  }
+  margin-bottom: 20px;
 
   &-item {
     color: $color-crimson;

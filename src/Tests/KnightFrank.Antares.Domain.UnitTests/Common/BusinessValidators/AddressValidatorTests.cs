@@ -34,7 +34,7 @@
         }
 
         [Theory]
-        [InlineAutoMoqData]
+        [AutoMoqData]
         public void
             Given_InvalidCreateOrUpdateAddressCommand_When_InconsistentCountryData_ShouldThrowBusinessException(
                 [Frozen] Mock<IGenericRepository<AddressFieldDefinition>> addressFieldDefinitionRepository,
@@ -61,7 +61,7 @@
         }
 
         [Theory]
-        [InlineAutoMoqData]
+        [AutoMoqData]
         public void
             Given_InvalidCreateOrUpdateAddressCommand_When_QueryContainsMoreData_Then_ShouldThrowBusinessException(
                 [Frozen] Mock<IGenericRepository<AddressFieldDefinition>> addressFieldDefinitionRepository,
@@ -90,7 +90,7 @@
         }
 
         [Theory]
-        [InlineAutoMoqData]
+        [AutoMoqData]
         public void
             Given_InvalidCreateOrUpdateAddressCommand_When_FieldIsInWrongFormat_Then_ShouldThrowBusinessException(
                 [Frozen] Mock<IGenericRepository<AddressFieldDefinition>> addressFieldDefinitionRepository,
@@ -168,7 +168,7 @@
         }
         
         [Theory]
-        [InlineAutoMoqData]
+        [AutoMoqData]
         public void
             Given_ValidCreateOrUpdateAddressCommand_Then_NoValidationResults(
                 [Frozen] Mock<IGenericRepository<AddressFieldDefinition>> addressFieldDefinitionRepository,

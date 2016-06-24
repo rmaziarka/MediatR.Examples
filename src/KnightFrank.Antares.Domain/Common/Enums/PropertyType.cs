@@ -3,7 +3,7 @@
 // ReSharper disable InconsistentNaming
 namespace KnightFrank.Antares.Domain.Common.Enums
 {
-	public enum PropertType {
+	public enum PropertyType {
 		Leisure,
     	Retail,
     	Industrial,

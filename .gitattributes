@@ -64,6 +64,7 @@
 *.sh text
 *.bat text
 *.mof text
+*.ps1 text
 
 # templates
 *.ejs text

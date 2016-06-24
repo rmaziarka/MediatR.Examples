@@ -13,6 +13,7 @@
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.Common.Commands;
+    using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Requirement.Commands;
 
     using Newtonsoft.Json;
@@ -26,8 +27,8 @@
     public class RequirementSteps : IClassFixture<BaseTestClassFixture>
     {
         private const string ApiUrl = "/api/requirements";
-        private readonly BaseTestClassFixture fixture;
         private readonly DateTime date = DateTime.UtcNow;
+        private readonly BaseTestClassFixture fixture;
         private readonly ScenarioContext scenarioContext;
 
         public RequirementSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
@@ -45,7 +46,9 @@
         {
             const string countryCode = "GB";
             Guid countryId = this.fixture.DataContext.Countries.Single(x => x.IsoCode.Equals(countryCode)).Id;
-            Guid enumTypeItemId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals("Requirement")).Id;
+            Guid enumTypeItemId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    e => e.EnumType.Code.Equals(nameof(EntityType)) && e.Code.Equals(nameof(EntityType.Requirement))).Id;
             Guid addressFormId =
                 this.fixture.DataContext.AddressFormEntityTypes.Single(
                     afe => afe.AddressForm.CountryId == countryId && afe.EnumTypeItemId == enumTypeItemId).AddressFormId;
@@ -238,7 +241,8 @@
         public void CompareRequirements()
         {
             var currentRequirement = JsonConvert.DeserializeObject<Requirement>(this.scenarioContext.GetResponseContent());
-            Requirement expectedRequirement = this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(currentRequirement.Id));
+            Requirement expectedRequirement =
+                this.fixture.DataContext.Requirements.Single(req => req.Id.Equals(currentRequirement.Id));
 
             AssertionOptions.AssertEquivalencyUsing(options =>
                 options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>());

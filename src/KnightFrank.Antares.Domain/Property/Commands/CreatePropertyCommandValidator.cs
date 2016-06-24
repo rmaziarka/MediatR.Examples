@@ -12,7 +12,6 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Common.Commands;
-    using KnightFrank.Antares.Domain.Common.Validator;
 
     using Attribute = KnightFrank.Antares.Dal.Model.Attribute.Attribute;
 

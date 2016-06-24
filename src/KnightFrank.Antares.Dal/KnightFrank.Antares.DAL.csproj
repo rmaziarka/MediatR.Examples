@@ -60,6 +60,7 @@
     <Compile Include="Model\Attribute\Attribute.cs" />
     <Compile Include="Model\Attribute\AttributeValues.cs" />
     <Compile Include="Model\BaseAuditableEntity.cs" />
+    <Compile Include="Model\BaseEntityWithCode.cs" />
     <Compile Include="Model\BaseLocalisedEntity.cs" />
     <Compile Include="Model\Common\IAuditableEntity.cs" />
     <Compile Include="Model\Common\IBaseEntity.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Model\Configuration\BaseAuditableEntityConfiguration.cs" />
     <Compile Include="Model\Configuration\Contact\ContactTitleConfiguration.cs" />
     <Compile Include="Model\Configuration\Contact\ContactUserConfiguration.cs" />
+    <Compile Include="Model\Configuration\Company\CompanyContactConfiguration.cs" />
     <Compile Include="Model\Configuration\LatestView\LatestViewConfiguration.cs" />
     <Compile Include="Model\Configuration\Offer\OfferConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Activities\ActivityTypeLocalisedConfiguration.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="Model\Configuration\User\UserConfiguration.cs" />
     <Compile Include="KnightFrankContext.cs" />
     <Compile Include="Model\BaseEntity.cs" />
+    <Compile Include="Model\Company\CompanyContact.cs" />
     <Compile Include="Model\Contacts\ContactUser.cs" />
     <Compile Include="Model\Contacts\Contact.cs" />
     <Compile Include="Model\Contacts\ContactTitle.cs" />

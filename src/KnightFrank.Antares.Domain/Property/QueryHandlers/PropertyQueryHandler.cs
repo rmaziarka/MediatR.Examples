@@ -27,10 +27,14 @@
                     .Include(p => p.Address)
                     .Include(p => p.AttributeValues)
                     .Include(p => p.Division)
+                    .Include(p => p.PropertyType)
                     .Include(p => p.Activities.Select(o => o.Contacts))
                     .Include(p => p.Activities.Select(a => a.ActivityStatus))
+                    .Include(p => p.Activities.Select(a => a.ActivityType))
                     .Include(p => p.PropertyCharacteristics)
                     .Include(p => p.PropertyAreaBreakdowns)
+                    .Include(a => a.Attachments)
+                    .Include(a => a.Attachments.Select(at => at.User))
                     .FirstOrDefault(p => p.Id == message.Id);
 
             if (result != null)

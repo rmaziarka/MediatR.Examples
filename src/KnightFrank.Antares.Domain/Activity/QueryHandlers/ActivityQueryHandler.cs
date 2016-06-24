@@ -23,6 +23,7 @@
             Activity result =
                 this.activityRepository.Get()
                     .Include(a => a.Property)
+                    .Include(a => a.Property.PropertyType)
                     .Include(a => a.Property.Address)
                     .Include(a => a.Contacts)
                     .Include(a => a.Attachments)
@@ -32,6 +33,7 @@
                     .Include(a => a.Viewings.Select(v => v.Negotiator))
                     .Include(a => a.Viewings.Select(v => v.Requirement))
                     .Include(a => a.Viewings.Select(v => v.Requirement.Contacts))
+                    .Include(a => a.ActivityType)
                     .Include(a => a.ActivityUsers)
                     .Include(a => a.ActivityUsers.Select(an => an.User))
                     .Include(a => a.ActivityUsers.Select(an => an.UserType))

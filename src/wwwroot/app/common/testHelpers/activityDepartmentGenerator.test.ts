@@ -17,7 +17,7 @@ module Antares.TestHelpers {
                 department: department,
                 departmentType:departmentType
             };
-            return activityDepartment;
+            return angular.extend(activityDepartment, specificData || {});
         }
 
         public static generateManyDtos(n: number): Dto.IActivityDepartment[] {
