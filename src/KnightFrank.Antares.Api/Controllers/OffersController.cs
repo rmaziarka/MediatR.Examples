@@ -36,6 +36,7 @@
         /// <returns>Offer.</returns>
         [HttpPost]
         [Route("")]
+        [DataShaping]
         public Offer CreateOffer(CreateOfferCommand command)
         {
             Guid offerId = this.mediator.Send(command);
@@ -49,6 +50,7 @@
         /// <returns></returns>
         [HttpPut]
         [Route("")]
+        [DataShaping]
         public Offer UpdateOffer(UpdateOfferCommand command)
         {
             Guid offerId = this.mediator.Send(command);
@@ -62,6 +64,7 @@
         /// <returns>Offer.</returns>
         [HttpGet]
         [Route("{id}")]
+        [DataShaping]
         public Offer GetOffer(Guid id)
         {
             Offer offer = this.mediator.Send(new OfferQuery { Id = id });

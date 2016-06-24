@@ -30,3 +30,6 @@
 :r .\SQL\ActivityType.sql
 :r .\SQL\ActivityTypeDefinition.sql
 :r .\SQL\ActivityTypeLocalised.sql
+
+:r .\Views\ElasticSearchContact.sql
+:r .\Views\ElasticSearchProperty.sql

@@ -4,10 +4,13 @@ module Antares.Services {
 
     import Dto = Common.Models.Dto;
     type dictionary = { [id: string]: string };
+
+    //OBSOLETE - To remove
+    // You should use EnumProvider
     export class EnumService {
 
         private promise: ng.IPromise<Dto.IEnumDictionary> = null;
-        private enums: any;
+        public enums: any;
         private enumCodeDict: dictionary = {};
         constructor(private dataAccessService: DataAccessService) {
         }
@@ -38,10 +41,6 @@ module Antares.Services {
         public getEnumPromise = (): ng.IPromise<Common.Models.Dto.IEnumDictionary> => {
             return this.promise;
         };
-
-        public getEnumCodeById = (enumId: string) => {
-            return this.enumCodeDict[enumId];
-        }
     }
 
     angular.module('app').service('enumService', EnumService);

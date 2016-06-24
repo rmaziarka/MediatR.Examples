@@ -1,20 +1,15 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.RequirementNote.CommandHandlers
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq.Expressions;
 
     using FluentAssertions;
 
-    using FluentValidation.Results;
-
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
-    using KnightFrank.Antares.Domain.Common;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
-    using KnightFrank.Antares.Domain.Common.Exceptions;
     using KnightFrank.Antares.Domain.RequirementNote.CommandHandlers;
     using KnightFrank.Antares.Domain.RequirementNote.Commands;
     using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;

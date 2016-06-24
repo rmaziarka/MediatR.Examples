@@ -122,13 +122,7 @@ Scenario: Get non existing property
 @Property
 Scenario: Get property
 	Given User gets GB address form for Property and country details
-		And User gets Freehold Sale for ActivityType
 		And User gets House for PropertyType
-        And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
 		And Property attributes exists in database
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |
 			| 1           | 3           | 1             | 3             | 2            | 3            | 1000.1  | 3000.1  | 500.1       | 4000.1      | 1                   | 3                   |
@@ -143,7 +137,9 @@ Scenario: Get property
 			| PurchaseDate | SellDate   | BuyPrice | SellPrice |
 			| 01-05-2011   | 01-04-2013 | 1000000  | 1200000   |
 			| 01-05-2014   | 01-04-2015 | 1000000  | 1200000   |
-		And Activity for latest property and PreAppraisal activity status exists in database
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Property has following charactersitics
 			| CharacteristicCode | Text         |
 			| Detached           | DetachedText |

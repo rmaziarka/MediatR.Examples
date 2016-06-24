@@ -5,15 +5,15 @@ module Antares.TestHelpers {
     import Business = Common.Models.Business;
 
     export class UserGenerator {
-        public static generateDto(specificData?: any): Dto.IUser{
-            var departmentId = UserGenerator.makeRandom('departmentId');
+        public static generateDto(specificData?: any): Dto.IUser {
+
+            var department: Dto.IDepartment = TestHelpers.DepartmentGenerator.generateDto();
             var user: Dto.IUser = {
-                id: UserGenerator.makeRandom('id'),
-                firstName: UserGenerator.makeRandom('firstName'),
-                lastName: UserGenerator.makeRandom('lastName'),
-                departmentId: departmentId,
-                //TODO use generator
-                department: { id: departmentId, name: 'name', countryId: '1'}
+                id: StringGenerator.generate(),
+                firstName: StringGenerator.generate(),
+                lastName: StringGenerator.generate(),
+                departmentId: department.id,
+                department: department
             }
 
             return angular.extend(user, specificData || {});
@@ -29,10 +29,6 @@ module Antares.TestHelpers {
 
         public static generate(specificData?: any): Business.User {
             return new Business.User(UserGenerator.generateDto(specificData));
-        }
-
-        private static makeRandom(text: string): string {
-            return text + _.random(1, 1000000);
         }
     }
 }

@@ -33,23 +33,23 @@
         private readonly ElementLocator successMessage = new ElementLocator(Locator.CssSelector, ".alert-success {0}");
         private readonly ElementLocator messageText = new ElementLocator(Locator.CssSelector, ".growl-message");
         // Progress summary
-        private readonly ElementLocator mortgageStatus = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator mortgageSurveyStatus = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator additionalSurveyStatus = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator searchStatus = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator enquiries = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator contractApproved = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator mortgageStatus = new ElementLocator(Locator.Id, "offer-mortgage-status");
+        private readonly ElementLocator mortgageSurveyStatus = new ElementLocator(Locator.Id, "mortgage-survey-status");
+        private readonly ElementLocator additionalSurveyStatus = new ElementLocator(Locator.Id, "additional-survey-status");
+        private readonly ElementLocator searchStatus = new ElementLocator(Locator.Id, "search-status");
+        private readonly ElementLocator enquiries = new ElementLocator(Locator.Id, "enquiries");
+        private readonly ElementLocator contractApproved = new ElementLocator(Locator.CssSelector, "#contract-approved.status-yes");
         // Mortgage details
-        private readonly ElementLocator mortgageLoanToValue = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator brokers = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator lenders = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator mortgageSurveyDate = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator mortgageSurveyors = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator mortgageLoanToValue = new ElementLocator(Locator.CssSelector, ".mortgage-loan-to-value");
+        private readonly ElementLocator broker = new ElementLocator(Locator.CssSelector, ".offer-broker .ng-binding");
+        private readonly ElementLocator lender = new ElementLocator(Locator.CssSelector, ".offer-lender .ng-binding");
+        private readonly ElementLocator mortgageSurveyDate = new ElementLocator(Locator.CssSelector, ".mortgage-survey-date");
+        private readonly ElementLocator mortgageSurveyor = new ElementLocator(Locator.CssSelector, ".offer-surveyor .ng-binding");
         // Additional survey
-        private readonly ElementLocator additionalSurveyDate = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator additionalSurveyors = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator additionalSurveyDate = new ElementLocator(Locator.CssSelector, ".additional-survey-date");
+        private readonly ElementLocator additionalSurveyor = new ElementLocator(Locator.CssSelector, ".offer-additional-surveyor .ng-binding");
         // Other details
-        private readonly ElementLocator comment = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator comment = new ElementLocator(Locator.CssSelector, "#comment .ng-binding");
 
         public ViewOfferPage(DriverContext driverContext) : base(driverContext)
         {
@@ -81,21 +81,19 @@
 
         public string Enquiries => this.Driver.GetElement(this.enquiries).Text;
 
-        public string ContractApproved => this.Driver.GetElement(this.contractApproved).Text;
-
         public string MortgageLoanToValue => this.Driver.GetElement(this.mortgageLoanToValue).Text;
 
-        public List<string> Brokers => this.Driver.GetElements(this.brokers).Select(el => el.Text).ToList();
+        public List<string> Broker => this.Driver.GetElements(this.broker).Select(el => el.Text).ToList();
 
-        public List<string> Lenders => this.Driver.GetElements(this.lenders).Select(el => el.Text).ToList();
+        public List<string> Lender => this.Driver.GetElements(this.lender).Select(el => el.Text).ToList();
 
         public string MortgageSurveyDate => this.Driver.GetElement(this.mortgageSurveyDate).Text;
 
-        public List<string> MortgageSurveyors => this.Driver.GetElements(this.mortgageSurveyors).Select(el => el.Text).ToList();
+        public List<string> MortgageSurveyor => this.Driver.GetElements(this.mortgageSurveyor).Select(el => el.Text).ToList();
 
         public string AdditionalSurveyDate => this.Driver.GetElement(this.additionalSurveyDate).Text;
 
-        public List<string> AdditionalSurveyors => this.Driver.GetElements(this.additionalSurveyors).Select(el => el.Text).ToList();
+        public List<string> AdditionalSurveyor => this.Driver.GetElements(this.additionalSurveyor).Select(el => el.Text).ToList();
 
         public string Comment => this.Driver.GetElement(this.comment).Text;
 
@@ -150,5 +148,55 @@
         {
             return this.Driver.IsElementPresent(this.successMessage.Format(string.Empty), BaseConfiguration.MediumTimeout);
         }
+
+        public bool IsContractApproved()
+        {
+            return this.Driver.IsElementPresent(this.contractApproved, BaseConfiguration.ShortTimeout);
+        }
+    }
+
+    internal class OfferProgressSummary
+    {
+        public string MortgageStatus { get; set; }
+
+        public string MortgageSurveyStatus { get; set; }
+
+        public string AdditionalSurveyStatus { get; set; }
+
+        public string SearchStatus { get; set; }
+
+        public string Enquiries { get; set; }
+
+        public bool ContractApproved { get; set; }
+    }
+
+    internal class OfferMortgageDetails
+    {
+        public string MortgageLoanToValue { get; set; }
+
+        public string Broker { get; set; }
+
+        public string BrokerCompany { get; set; }
+
+        public string Lender { get; set; }
+
+        public string LenderCompany { get; set; }
+
+        public string Surveyor { get; set; }
+
+        public string SurveyorCompany { get; set; }
+
+        public string MortgageSurveyDate { get; set; }
+    }
+
+    internal class OfferAdditional
+    {
+        public string AdditionalSurveyDate { get; set; }
+
+        public string AdditionalSurveyor { get; set; }
+
+        public string AdditionalSurveyorCompany { get; set; }
+
+        public string Comment { get; set; }
     }
 }

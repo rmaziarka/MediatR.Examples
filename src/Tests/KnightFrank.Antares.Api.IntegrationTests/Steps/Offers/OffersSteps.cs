@@ -8,9 +8,11 @@
 
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
+    using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Offer.Commands;
 
     using Newtonsoft.Json;
@@ -21,9 +23,9 @@
     public class OffersSteps
     {
         private const string ApiUrl = "/api/offers";
+        private readonly DateTime date = DateTime.UtcNow;
         private readonly BaseTestClassFixture fixture;
         private readonly ScenarioContext scenarioContext;
-        private readonly DateTime date = DateTime.UtcNow;
 
         public OffersSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {
@@ -40,7 +42,9 @@
         {
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
-            Guid statusId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals(status)).Id;
+            Guid statusId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(status)).Id;
 
             var offer = new Offer
             {
@@ -57,6 +61,57 @@
                 LastModifiedDate = this.date
             };
 
+            if (status.ToLower().Equals(nameof(OfferStatus.Accepted).ToLower()))
+            {
+                CompanyContact companyContact = this.scenarioContext.Get<Company>("Company").CompaniesContacts.First();
+
+                offer.MortgageStatusId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e => e.EnumType.Code.Equals(nameof(MortgageStatus)) && e.Code.Equals(nameof(MortgageStatus.Unknown))).Id;
+
+                offer.MortgageSurveyStatusId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e =>
+                            e.EnumType.Code.Equals(nameof(MortgageSurveyStatus)) &&
+                            e.Code.Equals(nameof(MortgageSurveyStatus.Unknown))).Id;
+
+                offer.AdditionalSurveyStatusId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e =>
+                            e.EnumType.Code.Equals(nameof(AdditionalSurveyStatus)) &&
+                            e.Code.Equals(nameof(AdditionalSurveyStatus.Unknown))).Id;
+
+                offer.SearchStatusId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e => e.EnumType.Code.Equals(nameof(SearchStatus)) && e.Code.Equals(nameof(SearchStatus.NotStarted))).Id;
+
+                offer.EnquiriesId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e => e.EnumType.Code.Equals(nameof(Enquiries)) && e.Code.Equals(nameof(Enquiries.NotStarted))).Id;
+
+                offer.ContractApproved = true;
+
+                offer.MortgageLoanToValue = 100;
+
+                offer.BrokerId = companyContact.ContactId;
+                offer.BrokerCompanyId = companyContact.CompanyId;
+
+                offer.LenderId = companyContact.ContactId;
+                offer.LenderCompanyId = companyContact.CompanyId;
+
+                offer.MortgageSurveyDate = this.date;
+
+                offer.SurveyorId = companyContact.ContactId;
+                offer.SurveyorCompanyId = companyContact.CompanyId;
+
+                offer.AdditionalSurveyDate = this.date;
+
+                offer.AdditionalSurveyorId = companyContact.ContactId;
+                offer.AdditionalSurveyorCompanyId = companyContact.CompanyId;
+
+                offer.ProgressComment = StringExtension.GenerateMaxAlphanumericString(4000);
+            }
+
             this.fixture.DataContext.Offer.Add(offer);
             this.fixture.DataContext.SaveChanges();
 
@@ -66,7 +121,9 @@
         [When(@"User creates (.*) offer using api")]
         public void CreateOfferUsingApi(string status)
         {
-            Guid statusId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals(status)).Id;
+            Guid statusId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(status)).Id;
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
 
@@ -88,7 +145,9 @@
         [When(@"User creates (.*) offer with mandatory fields using api")]
         public void CreateOfferWithMandatoryFieldsUsingApi(string status)
         {
-            Guid statusId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals(status)).Id;
+            Guid statusId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(status)).Id;
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
 
@@ -109,7 +168,8 @@
         {
             Guid statusId = data.Equals("status")
                 ? Guid.NewGuid()
-                : this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals("New")).Id;
+                : this.fixture.DataContext.EnumTypeItems.Single(
+                    e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(nameof(OfferStatus.New))).Id;
             Guid activityId = data.Equals("activity") ? Guid.NewGuid() : this.scenarioContext.Get<Activity>("Activity").Id;
             Guid requirementId = data.Equals("requirement")
                 ? Guid.NewGuid()
@@ -147,7 +207,9 @@
             var details = new UpdateOfferCommand
             {
                 Id = offer.Id,
-                StatusId = this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals(status)).Id,
+                StatusId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(status)).Id,
                 Price = 2000,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
                 CompletionDate = this.date.AddDays(2),
@@ -155,11 +217,62 @@
                 OfferDate = this.date.AddMinutes(-1)
             };
 
+            if (status.ToLower().Equals(nameof(OfferStatus.Accepted).ToLower()))
+            {
+                CompanyContact companyContact = this.scenarioContext.Get<Company>("Company").CompaniesContacts.First();
+
+                details.MortgageStatusId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e => e.EnumType.Code.Equals(nameof(MortgageStatus)) && e.Code.Equals(nameof(MortgageStatus.Agreed))).Id;
+
+                details.MortgageSurveyStatusId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e =>
+                            e.EnumType.Code.Equals(nameof(MortgageSurveyStatus)) &&
+                            e.Code.Equals(nameof(MortgageSurveyStatus.Complete))).Id;
+
+                details.AdditionalSurveyStatusId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e =>
+                            e.EnumType.Code.Equals(nameof(AdditionalSurveyStatus)) &&
+                            e.Code.Equals(nameof(AdditionalSurveyStatus.Complete))).Id;
+
+                details.SearchStatusId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e => e.EnumType.Code.Equals(nameof(SearchStatus)) && e.Code.Equals(nameof(SearchStatus.Complete))).Id;
+
+                details.EnquiriesId =
+                    this.fixture.DataContext.EnumTypeItems.Single(
+                        e => e.EnumType.Code.Equals(nameof(Enquiries)) && e.Code.Equals(nameof(Enquiries.Complete))).Id;
+
+                details.ContractApproved = false;
+
+                details.MortgageLoanToValue = 0;
+
+                details.BrokerId = null;
+                details.BrokerCompanyId = null;
+
+                details.LenderId = companyContact.ContactId;
+                details.LenderCompanyId = companyContact.CompanyId;
+
+                details.MortgageSurveyDate = this.date;
+
+                details.SurveyorId = companyContact.ContactId;
+                details.SurveyorCompanyId = companyContact.CompanyId;
+
+                details.AdditionalSurveyDate = this.date;
+
+                details.AdditionalSurveyorId = companyContact.ContactId;
+                details.AdditionalSurveyorCompanyId = companyContact.CompanyId;
+
+                details.ProgressComment = StringExtension.GenerateMaxAlphanumericString(4000);
+            }
+
             this.UpdateOffer(details);
         }
 
-        [When(@"User updates offer with invalid (.*) data")]
-        public void UpdateOfferWithInvalidData(string data)
+        [When(@"User updates (.*) offer with invalid (.*) data")]
+        public void UpdateOfferWithInvalidData(string status, string data)
         {
             var offer = this.scenarioContext.Get<Offer>("Offer");
             var details = new UpdateOfferCommand
@@ -168,7 +281,8 @@
                 StatusId =
                     data.Equals("status")
                         ? Guid.NewGuid()
-                        : this.fixture.DataContext.EnumTypeItems.Single(e => e.Code.Equals("New")).Id,
+                        : this.fixture.DataContext.EnumTypeItems.Single(
+                            e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(status)).Id,
                 CompletionDate = this.date,
                 ExchangeDate = this.date,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
@@ -176,10 +290,38 @@
                 OfferDate = this.date.AddMinutes(-1)
             };
 
+            if (status.ToLower().Equals(nameof(OfferStatus.Accepted).ToLower()))
+            {
+                details.BrokerId = data.Equals("broker") ? Guid.NewGuid() : offer.BrokerId;
+                details.BrokerCompanyId = data.Equals("brokerCompany") ? Guid.NewGuid() : offer.BrokerCompanyId;
+
+                details.LenderId = data.Equals("lender") ? Guid.NewGuid() : offer.LenderId;
+                details.LenderCompanyId = data.Equals("lenderCompany") ? Guid.NewGuid() : offer.LenderCompanyId;
+
+                details.SurveyorId = data.Equals("surveyor") ? Guid.NewGuid() : offer.SurveyorId;
+                details.SurveyorCompanyId = data.Equals("surveyorCompany") ? Guid.NewGuid() : offer.SurveyorCompanyId;
+
+                details.AdditionalSurveyorId = data.Equals("additionalSurveyor") ? Guid.NewGuid() : offer.AdditionalSurveyorId;
+                details.AdditionalSurveyorCompanyId = data.Equals("additionalSurveyorCompany")
+                    ? Guid.NewGuid()
+                    : offer.AdditionalSurveyorCompanyId;
+
+                details.MortgageStatusId = data.Equals("mortgageStatus") ? Guid.NewGuid() : offer.MortgageStatusId;
+                details.MortgageSurveyStatusId = data.Equals("mortgageSurveyStatus")
+                    ? Guid.NewGuid()
+                    : offer.MortgageSurveyStatusId;
+                details.AdditionalSurveyStatusId = data.Equals("additionalSurveyStatus")
+                    ? Guid.NewGuid()
+                    : offer.AdditionalSurveyStatusId;
+                details.SearchStatusId = data.Equals("searchStatus") ? Guid.NewGuid() : offer.SearchStatusId;
+                details.EnquiriesId = data.Equals("enquiries") ? Guid.NewGuid() : offer.EnquiriesId;
+            }
+
             this.UpdateOffer(details);
         }
 
         [Then(@"Offer details should be the same as already added")]
+        [Then(@"Offer details should be updated")]
         public void CheckOfferDetails()
         {
             var offer = JsonConvert.DeserializeObject<Offer>(this.scenarioContext.GetResponseContent());
@@ -189,7 +331,20 @@
                 .Excluding(o => o.Negotiator)
                 .Excluding(o => o.Status)
                 .Excluding(o => o.Requirement)
-                .Excluding(o => o.Activity));
+                .Excluding(o => o.Activity)
+                .Excluding(o => o.MortgageStatus)
+                .Excluding(o => o.SearchStatus)
+                .Excluding(o => o.MortgageSurveyStatus)
+                .Excluding(o => o.AdditionalSurveyStatus)
+                .Excluding(o => o.Enquiries)
+                .Excluding(o => o.Broker)
+                .Excluding(o => o.BrokerCompany)
+                .Excluding(o => o.Lender)
+                .Excluding(o => o.LenderCompany)
+                .Excluding(o => o.Surveyor)
+                .Excluding(o => o.SurveyorCompany)
+                .Excluding(o => o.AdditionalSurveyor)
+                .Excluding(o => o.AdditionalSurveyorCompany));
 
             expectedOffer.NegotiatorId.Should().NotBeEmpty();
         }

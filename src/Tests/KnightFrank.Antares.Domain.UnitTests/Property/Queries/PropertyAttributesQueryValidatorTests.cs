@@ -30,7 +30,7 @@
         }
 
         [Theory]
-        [InlineAutoMoqData]
+        [AutoMoqData]
         public void Given_CorrectPropertyAttributesQuery_When_Validating_Then_NoValidationErrors(
             PropertyAttributesQueryValidator validator)
         {
@@ -42,7 +42,7 @@
         }
 
         [Theory]
-        [InlineAutoMoqData]
+        [AutoMoqData]
         public void Given_InCorrectPropertyAttributesQueryWithNoCountryCode_When_Validating_Then_ValidationErrors(
            PropertyAttributesQueryValidator validator)
         {
@@ -52,7 +52,7 @@
         }
 
         [Theory]
-        [InlineAutoMoqData]
+        [AutoMoqData]
         public void Given_InCorrectPropertyAttributesQueryWithNoPropertyTypeId_When_Validating_Then_ValidationErrors(
            PropertyAttributesQueryValidator validator)
         {

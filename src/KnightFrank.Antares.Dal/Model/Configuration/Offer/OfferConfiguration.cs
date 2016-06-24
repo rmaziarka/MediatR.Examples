@@ -11,6 +11,31 @@
                 .HasForeignKey(x => x.StatusId)
                 .WillCascadeOnDelete(false);
 
+            this.HasOptional(x => x.MortgageStatus)
+                .WithMany()
+                .HasForeignKey(x => x.MortgageStatusId)
+                .WillCascadeOnDelete(false);
+
+            this.HasOptional(x => x.MortgageSurveyStatus)
+                .WithMany()
+                .HasForeignKey(x => x.MortgageSurveyStatusId)
+                .WillCascadeOnDelete(false);
+
+            this.HasOptional(x => x.AdditionalSurveyStatus)
+                .WithMany()
+                .HasForeignKey(x => x.AdditionalSurveyStatusId)
+                .WillCascadeOnDelete(false);
+
+            this.HasOptional(x => x.SearchStatus)
+                .WithMany()
+                .HasForeignKey(x => x.SearchStatusId)
+                .WillCascadeOnDelete(false);
+
+            this.HasOptional(x => x.Enquiries)
+                .WithMany()
+                .HasForeignKey(x => x.EnquiriesId)
+                .WillCascadeOnDelete(false);
+
             this.HasRequired(x => x.Requirement)
                 .WithMany(x => x.Offers)
                 .HasForeignKey(x => x.RequirementId)
@@ -24,6 +49,26 @@
             this.HasRequired(p => p.Negotiator)
                 .WithMany()
                 .HasForeignKey(p => p.NegotiatorId)
+                .WillCascadeOnDelete(false);
+
+            this.HasOptional(p => p.Broker)
+                .WithMany()
+                .HasForeignKey(p => p.BrokerId)
+                .WillCascadeOnDelete(false);
+
+            this.HasOptional(p => p.Lender)
+                .WithMany()
+                .HasForeignKey(p => p.LenderId)
+                .WillCascadeOnDelete(false);
+
+            this.HasOptional(p => p.Surveyor)
+                .WithMany()
+                .HasForeignKey(p => p.SurveyorId)
+                .WillCascadeOnDelete(false);
+
+            this.HasOptional(p => p.AdditionalSurveyor)
+                .WithMany()
+                .HasForeignKey(p => p.AdditionalSurveyorId)
                 .WillCascadeOnDelete(false);
 
             this.Property(x => x.SpecialConditions).HasMaxLength(4000);

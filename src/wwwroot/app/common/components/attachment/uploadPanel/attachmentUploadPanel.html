@@ -1,0 +1,6 @@
+﻿﻿<kf-side-panel>
+    <side-panel-cards>
+        <attachment-upload-card entity-id="vm.entityId" enum-document-type="{{vm.enumDocumentType}}" entity-type="{{vm.entityType}}" on-upload-started="vm.startUpload()" on-upload-finished="vm.endUploadAndSave(attachment)" on-upload-failed="vm.endUpload()" attachment-clear="vm.attachmentClear"></attachment-upload-card>
+        <busy is-busy="vm.isBusy" label="{{'COMMON.FILEISUPLOADING' | translate}}"></busy>
+    </side-panel-cards>
+</kf-side-panel>

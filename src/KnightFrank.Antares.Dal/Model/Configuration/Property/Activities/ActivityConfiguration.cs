@@ -32,6 +32,12 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
             this.Property(o => o.VendorEstimatedPrice)
                 .IsMoney();
 
+            this.Property(o => o.ShortLetPricePerWeek)
+                .IsMoney();
+
+            this.Property(o => o.AskingPrice)
+                .IsMoney();
+
             this.HasMany(p => p.Attachments)
                 .WithMany()
                 .Map(cs =>

@@ -13,6 +13,7 @@
     using KnightFrank.Antares.Tests.Common.Extensions.Fluent.ValidationResult;
 
     using Ploeh.AutoFixture;
+    using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
 
@@ -24,13 +25,14 @@
 
         public UpdateOfferCommandValidatorTests()
         {
-            IFixture fixture = new Fixture().Customize();   
+            IFixture fixture = new Fixture().Customize();
 
             this.cmd = fixture.Build<UpdateOfferCommand>()
                               .With(x => x.Price, 1)
                               .With(x => x.OfferDate, DateTime.UtcNow.Date)
                               .With(x => x.CompletionDate, DateTime.UtcNow.Date)
                               .With(x => x.ExchangeDate, DateTime.UtcNow.Date)
+                              .With(x => x.MortgageLoanToValue, 1)
                               .Create();
         }
 
@@ -127,6 +129,98 @@
 
             // Assert
             validationResult.IsInvalid(nameof(this.cmd.Price), nameof(Messages.greaterthan_error));
+        }
+
+        [Theory]
+        [InlineAutoData(-200, nameof(Messages.greaterthanorequal_error))]
+        [InlineAutoData(-1, nameof(Messages.greaterthanorequal_error))]
+        [InlineAutoData(201, nameof(Messages.lessthanorequal_error))]
+        [InlineAutoData(501, nameof(Messages.lessthanorequal_error))]
+        public void Given_InvalidMortgageLoanToValueICommand_When_Validating_Then_CorrectErrorCodeIsReturned(int mortgageLoanToValue, string errorCode, UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            this.cmd.MortgageLoanToValue = mortgageLoanToValue;
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsInvalid(nameof(this.cmd.MortgageLoanToValue), errorCode);
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_NullMortgageLoanToValueInCommand_When_Validating_Then_IsValid(UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            this.cmd.MortgageLoanToValue = null;
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeTrue();
+        }
+
+        [Theory]
+        [InlineAutoData(0)]
+        [InlineAutoData(55)]
+        [InlineAutoData(200)]
+        public void Given_ValidMortgageLoanToValueInCommand_When_Validating_Then_IsValid(int mortgageLoanToValue, UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            this.cmd.MortgageLoanToValue = mortgageLoanToValue;
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeTrue();
+        }
+
+        [Theory]
+        [InlineAutoData("")]
+        [InlineAutoData("example comment")]
+        public void Given_EmptyProgressCommentInCommand_When_Validating_Then_IsValid(string progressComment, UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            this.cmd.ProgressComment = progressComment;
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeTrue();
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_MaxAllowedCharInProgressCommentInCommand_When_Validating_Then_IsValid(UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            int maxAllowed = 4000;
+            this.cmd.ProgressComment = string.Join(string.Empty, new Fixture().CreateMany<char>(maxAllowed));
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsValid.Should().BeTrue();
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_TooLongProgressCommentInCommand_When_Validating_Then_IsInvalid(UpdateOfferCommandValidator validator)
+        {
+            // Arrange
+            int maxAllowed = 4000;
+            this.cmd.ProgressComment = string.Join(string.Empty, new Fixture().CreateMany<char>(maxAllowed + 1));
+
+            // Act
+            ValidationResult validationResult = validator.Validate(this.cmd);
+
+            // Assert
+            validationResult.IsInvalid(nameof(this.cmd.ProgressComment), nameof(Messages.length_error));
         }
     }
 }

@@ -14,7 +14,7 @@ module Antares {
             completionDateOpen: boolean = false;
             today: Date = new Date();
 
-            defaultStatusCode: string = 'New';
+            defaultStatusCode: string = Common.Models.Enums.OfferStatus[Common.Models.Enums.OfferStatus.New];
             statuses: any;
             selectedStatus: any;
 
@@ -40,18 +40,18 @@ module Antares {
                 this.requirement = <Dto.IRequirement>{};
             }
 
-            getOriginalOffer = (): Business.Offer =>{
+            getOriginalOffer = (): Business.Offer => {
                 return this.originalOffer;
             }
 
-            setOffer = (offer: Business.Offer) =>{
+            setOffer = (offer: Business.Offer) => {
                 this.originalOffer = offer;
                 this.offer = angular.copy(offer);
                 this.activity = offer.activity;
                 this.selectedStatus = _.find(this.statuses, (status: any) => status.id === this.offer.statusId);
             }
 
-            reset = () =>{
+            reset = () => {
                 this.offer = new Business.Offer(<Dto.IOffer>{
                     offerDate: new Date(),
                     activityId: this.activity.id,
@@ -78,7 +78,7 @@ module Antares {
                 }
             }
 
-            openOfferDate(){
+            openOfferDate() {
                 this.offerDateOpen = true;
             }
 
@@ -95,26 +95,26 @@ module Antares {
                 return this.addOfferForm.$valid;
             }
 
-            saveOffer() {
+            saveOffer = () => {
                 if (!this.isDataValid()) {
                     return this.$q.reject();
                 }
 
                 var offerResource = this.dataAccessService.getOfferResource();
                 this.offer.statusId = this.selectedStatus.id;
+                this.offer.offerDate = Core.DateTimeUtils.createDateAsUtc(this.offer.offerDate);
+                this.offer.exchangeDate = Core.DateTimeUtils.createDateAsUtc(this.offer.exchangeDate);
+                this.offer.completionDate = Core.DateTimeUtils.createDateAsUtc(this.offer.completionDate);
 
                 if (this.mode === "add") {
                     this.offer.statusId = this.selectedStatus.id;
 
-                    this.offer.offerDate = Core.DateTimeUtils.createDateAsUtc(this.offer.offerDate);
-                    this.offer.exchangeDate = Core.DateTimeUtils.createDateAsUtc(this.offer.exchangeDate);
-                    this.offer.completionDate = Core.DateTimeUtils.createDateAsUtc(this.offer.completionDate);
-                    
                     return offerResource
                         .save(this.offer)
                         .$promise;
                 }
                 else if (this.mode === "edit") {
+
                     var updateOffer: Dto.IOffer = angular.copy(this.offer);
                     return offerResource
                         .update(updateOffer)

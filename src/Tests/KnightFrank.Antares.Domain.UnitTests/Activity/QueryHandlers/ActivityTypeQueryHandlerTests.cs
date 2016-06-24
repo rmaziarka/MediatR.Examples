@@ -6,12 +6,9 @@
 
     using FluentAssertions;
 
-    using FluentValidation.Results;
-
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.Resource;
     using KnightFrank.Antares.Dal.Repository;
-    using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Activity.Queries;
     using KnightFrank.Antares.Domain.Activity.QueryHandlers;
     using KnightFrank.Antares.Domain.Activity.QueryResults;

@@ -1,5 +1,1 @@
-<div class="address-view" ng-repeat="row in vm.addressForm.addressFieldRows | orderBy: 'rowOrder'" ng-if="!vm.isRowEmpty(row)">
-    <div class="address-view-item" ng-repeat="field in row | orderBy: 'columnOrder'">
-        <span>{{vm.address[field.name]}}</span>
-    </div>
-</div>
+<ng-include src="vm.templateUrl"></ng-include>

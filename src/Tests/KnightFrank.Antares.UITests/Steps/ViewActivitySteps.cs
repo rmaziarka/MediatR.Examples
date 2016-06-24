@@ -49,10 +49,10 @@
             this.page = new ViewActivityPage(this.driverContext).OpenViewActivityPageWithId(activityId.ToString());
         }
 
-        [When(@"User clicks property details link on view activity page")]
+        [When(@"User clicks property details on view activity page")]
         public void OpenPreviewPropertyPage()
         {
-            this.page.ClickDetailsLink().WaitForSidePanelToShow();
+            this.page.ClickPropertyCard().WaitForSidePanelToShow();
         }
 
         [When(@"User clicks view property link from property on view activity page")]
@@ -73,8 +73,8 @@
             this.page.OpenAttachFilePanel().WaitForSidePanelToShow();
         }
 
-        [When(@"User adds (.*) file with (.*) type on attach file page")]
-        public void SelectAttachmentType(string file, string type)
+        [When(@"User adds (.*) file with (.*) type on view activity page")]
+        public void AddAttachment(string file, string type)
         {
             this.page.AttachFile.SelectType(type)
                 .AddFiletoAttachment(file)
@@ -82,7 +82,7 @@
             this.page.WaitForSidePanelToHide(60);
         }
 
-        [When(@"User clicks attachment details link on view activity page")]
+        [When(@"User clicks attachment card on view activity page")]
         public void OpenAttachmentPreview()
         {
             this.page.OpenAttachmentPreview().WaitForSidePanelToShow();
@@ -123,10 +123,10 @@
             }
         }
 
-        [Then(@"Attachment (.*) should be downloaded")]
+        [Then(@"Activity attachment (.*) should be downloaded")]
         public void ThenAttachmentShouldBeDownloaded(string attachmentName)
         {
-            FileInfo fileInfo = this.page.PreviewAttachment.GetDownloadedAttachmentInfo();
+            FileInfo fileInfo = this.page.AttachmentPreview.GetDownloadedAttachmentInfo();
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(attachmentName.ToLower(), fileInfo.Name),
@@ -151,9 +151,7 @@
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(details.ActivityStatus, this.page.Status),
-                () => Assert.Equal(details.MarketAppraisalPrice.ToString("N2") + " GBP", this.page.MarketAppraisalPrice),
-                () => Assert.Equal(details.RecommendedPrice.ToString("N2") + " GBP", this.page.RecommendedPrice),
-                () => Assert.Equal(details.VendorEstimatedPrice.ToString("N2") + " GBP", this.page.VendorEstimatedPrice));
+                () => Assert.Equal(int.Parse(details.AskingPrice).ToString("N2") + " GBP", this.page.AskingPrice));
         }
 
         [Then(@"Attachment should be displayed on view activity page")]
@@ -169,7 +167,8 @@
         [Then(@"Attachment details on attachment preview page are the same like on view activity page")]
         public void ChackAttachmentDetails()
         {
-            Attachment actual = this.page.PreviewAttachment.GetAttachmentDetails();
+            Attachment actual = this.page.AttachmentPreview.GetAttachmentDetails();
+            actual.Date = actual.Date.Split(',')[0];
             Attachment expected = this.page.AttachmentDetails;
             expected.User = "John Smith";
 
@@ -213,7 +212,7 @@
         [Then(@"User closes attachment preview page on view activity page")]
         public void CloseAttachmentPreviewPanel()
         {
-            this.page.PreviewAttachment.CloseAttachmentPreviewPage();
+            this.page.AttachmentPreview.CloseAttachmentPreviewPage();
             this.page.WaitForSidePanelToHide();
         }
 

@@ -36,7 +36,6 @@ module Antares {
                 $http = $httpBackend;
                 filter = $filter;
 
-                Antares.Mock.AddressForm.mockHttpResponce($http, 'a1', [200, Antares.Mock.AddressForm.AddressFormWithOneLine]);
                 $http.whenGET(/\/api\/enums\/.*\/items/).respond(() =>{
                     return [];
                 });

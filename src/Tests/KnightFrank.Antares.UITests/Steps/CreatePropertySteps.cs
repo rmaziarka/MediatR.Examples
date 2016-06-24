@@ -18,7 +18,6 @@
     public class CreatePropertySteps
     {
         private readonly DriverContext driverContext;
-        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
         private CreatePropertyPage page;
 
@@ -44,7 +43,7 @@
         {
             this.page = new CreatePropertyPage(this.driverContext).OpenCreatePropertyPage();
         }
-        
+
         [When(@"User navigates to edit property page with id")]
         public void OpenEditPropertyPage()
         {
@@ -130,7 +129,7 @@
         }
 
         [Then(@"Property form on create property page should be displayed")]
-        public void CheckIfPropertyTypeIsDisplayed()
+        public void CheckIfPropertyFormDisplayed()
         {
             Assert.True(new CreatePropertyPage(this.driverContext).IsPropertyFormPresent());
         }
