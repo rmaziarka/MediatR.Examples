@@ -15,7 +15,7 @@ Scenario Outline: Upload attachment with invalid data
 			| enumTypeCode           | enumTypeItemCode |
 			| ActivityStatus         | PreAppraisal     |
 			| ActivityDocumentType   | <documentType>   |
-			| ActivityUserType       | LeadNegotiator   |
+			| UserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
 		And Property exists in database
 			| PropertyType | Division    |

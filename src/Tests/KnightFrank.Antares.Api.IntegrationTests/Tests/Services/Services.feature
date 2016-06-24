@@ -7,7 +7,7 @@ Scenario Outline: Upload attachment for entity with ActivityDocumentType
 			| enumTypeCode           | enumTypeItemCode |
 			| ActivityStatus         | PreAppraisal     |
 			| ActivityDocumentType   | TermsOfBusiness  |
-			| ActivityUserType       | LeadNegotiator   |
+			| UserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
 		And Property exists in database
 			| PropertyType | Division    |
@@ -28,7 +28,7 @@ Scenario Outline: Download attachment for entity with ActivityDocumentType
 			| enumTypeCode           | enumTypeItemCode |
 			| ActivityStatus         | PreAppraisal     |
 			| ActivityDocumentType   | TermsOfBusiness  |
-			| ActivityUserType       | LeadNegotiator   |
+			| UserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
 		And Property exists in database
 			| PropertyType | Division    |

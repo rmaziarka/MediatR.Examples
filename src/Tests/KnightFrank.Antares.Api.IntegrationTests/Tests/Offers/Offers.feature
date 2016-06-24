@@ -5,7 +5,7 @@ Scenario: Create residential sales offer
 	Given User gets EnumTypeItemId and EnumTypeItem code
 		| enumTypeCode           | enumTypeItemCode |
 		| ActivityStatus         | PreAppraisal     |
-		| ActivityUserType       | LeadNegotiator   |
+		| UserType       | LeadNegotiator   |
 		| ActivityDepartmentType | Managing         |
 		And User gets Freehold Sale for ActivityType
 		And Property exists in database
@@ -25,7 +25,7 @@ Scenario: Create residential sales offer with mandatory fields
 	Given User gets EnumTypeItemId and EnumTypeItem code
 		| enumTypeCode           | enumTypeItemCode |
 		| ActivityStatus         | PreAppraisal     |
-		| ActivityUserType       | LeadNegotiator   |
+		| UserType       | LeadNegotiator   |
 		| ActivityDepartmentType | Managing         |
 		And User gets Freehold Sale for ActivityType
 		And Property exists in database
@@ -45,7 +45,7 @@ Scenario Outline: Create residential sales offer with invalid data
 	Given User gets EnumTypeItemId and EnumTypeItem code
 		| enumTypeCode           | enumTypeItemCode |
 		| ActivityStatus         | PreAppraisal     |
-		| ActivityUserType       | LeadNegotiator   |
+		| UserType       | LeadNegotiator   |
 		| ActivityDepartmentType | Managing         |
 		And User gets Freehold Sale for ActivityType
 		And Property exists in database
@@ -70,7 +70,7 @@ Scenario: Get residential sales offer
 	Given User gets EnumTypeItemId and EnumTypeItem code
 		| enumTypeCode           | enumTypeItemCode |
 		| ActivityStatus         | PreAppraisal     |
-		| ActivityUserType       | LeadNegotiator   |
+		| UserType       | LeadNegotiator   |
 		| ActivityDepartmentType | Managing         |
 		And User gets Freehold Sale for ActivityType
 		And Property exists in database
@@ -96,7 +96,7 @@ Scenario: Update residential sales offer
 	Given User gets EnumTypeItemId and EnumTypeItem code
 		| enumTypeCode           | enumTypeItemCode |
 		| ActivityStatus         | PreAppraisal     |
-		| ActivityUserType       | LeadNegotiator   |
+		| UserType       | LeadNegotiator   |
 		| ActivityDepartmentType | Managing         |
 		And User gets Freehold Sale for ActivityType
 		And Property exists in database

@@ -11,7 +11,7 @@ namespace KnightFrank.Antares.Domain.Common.Enums
         Division,
         ActivityDocumentType,
         OfferStatus,
-        ActivityUserType,
+        UserType,
         ActivityDepartmentType,
         SalutationFormat
     }
@@ -63,7 +63,7 @@ namespace KnightFrank.Antares.Domain.Common.Enums
         Accepted,
     }
 
-    public enum ActivityUserType
+    public enum UserType
     {
         LeadNegotiator,
         SecondaryNegotiator,

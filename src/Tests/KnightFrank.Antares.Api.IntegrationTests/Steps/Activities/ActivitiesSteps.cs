@@ -55,7 +55,7 @@
             enumTable.AddRow("ActivityStatus", "PreAppraisal");
             enumTable.AddRow("Division", "Residential");
             enumTable.AddRow("ActivityDocumentType", "TermsOfBusiness");
-            enumTable.AddRow("ActivityUserType", "LeadNegotiator");
+            enumTable.AddRow("UserType", "LeadNegotiator");
             enumTable.AddRow("ActivityDepartmentType", "Managing");
             enumTable.AddRow("ActivityDepartmentType", "Standard");
             enumTable.AddRow("OfferStatus", "New");

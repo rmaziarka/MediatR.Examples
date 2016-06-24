@@ -11,7 +11,7 @@ module Antares.Common.Models.Enums
 	 	Division,
 	 	ActivityDocumentType,
 	 	OfferStatus,
-	 	ActivityUserType,
+	 	UserType,
 	 	ActivityDepartmentType,
 	 }
 
@@ -62,7 +62,7 @@ module Antares.Common.Models.Enums
 		Accepted,
 	}
 
-	export enum ActivityUserType
+	export enum UserType
 	{
 		LeadNegotiator,
 		SecondaryNegotiator,

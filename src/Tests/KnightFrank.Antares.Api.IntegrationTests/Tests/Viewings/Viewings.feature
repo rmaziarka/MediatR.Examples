@@ -6,7 +6,7 @@ Scenario: Create viewing
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
 			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
+			| UserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
 		And Property exists in database
 			| PropertyType | Division    |
@@ -26,7 +26,7 @@ Scenario: Create viewing with mandatory fields
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
 			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
+			| UserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
 		And Property exists in database
 			| PropertyType | Division    |
@@ -46,7 +46,7 @@ Scenario Outline: Create viewing with invalid data
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
 			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
+			| UserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
 		And Property exists in database
 			| PropertyType | Division    |
@@ -71,7 +71,7 @@ Scenario: Update viewing
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
 			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
+			| UserType               | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
 		And Property exists in database
 			| PropertyType | Division    |
@@ -93,7 +93,7 @@ Scenario Outline: Update viewing with invalid data
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
 			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
+			| UserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
 		And Property exists in database
 			| PropertyType | Division    |

@@ -127,7 +127,7 @@ Scenario: Get property
         And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
 			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
+			| UserType               | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
 		And Property attributes exists in database
 			| MinBedrooms | MaxBedrooms | MinReceptions | MaxReceptions | MinBathrooms | MaxBathrooms | MinArea | MaxArea | MinLandArea | MaxLandArea | MinCarParkingSpaces | MaxCarParkingSpaces |

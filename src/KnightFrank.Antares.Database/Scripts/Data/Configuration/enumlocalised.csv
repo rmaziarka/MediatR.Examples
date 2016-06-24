@@ -33,3 +33,5 @@ EventSalutation;EventSemiformal;en;Semiformal
 EventSalutation;EventInformal;en;Informal
 EventSalutation;EventPersonal;en;Personal
 EventSalutation;EventEnvelope;en;Envelope
+UserType;LeadNegotiator;en;Lead Negotiator
+UserType;SecondaryNegotiator;en;Secondary Negotiator

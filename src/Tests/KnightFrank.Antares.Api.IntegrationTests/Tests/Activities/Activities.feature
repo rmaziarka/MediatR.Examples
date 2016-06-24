@@ -6,7 +6,7 @@ Scenario Outline: Create activity with invalid data
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
 			| <activityStatusId>     | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
+			| UserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
 		And Property exists in database
 			| PropertyType | Division    |
@@ -27,7 +27,7 @@ Scenario: Create Activity
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
 			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
+			| UserType               | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
 		And Property exists in database
 			| PropertyType | Division    |
@@ -60,7 +60,7 @@ Scenario: Get Activity
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
 			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
+			| UserType               | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
 		And Property exists in database
 			| PropertyType | Division    |
@@ -76,7 +76,7 @@ Scenario: Record and update residential sale valuation
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
 			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
+			| UserType               | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
 		And Property exists in database
 			| PropertyType | Division    |
@@ -95,7 +95,7 @@ Scenario Outline: Record and update residential sale valuation using invalid dat
 			| enumTypeCode           | enumTypeItemCode |
 			| Division               | Residential      |
 			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
+			| UserType               | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
 		And Property exists in database
 			| PropertyType | Division    |
@@ -118,7 +118,7 @@ Scenario: Get all activities
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
 			| ActivityStatus         | NotSelling       |
-			| ActivityUserType       | LeadNegotiator   |
+			| UserType               | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
 		And Property exists in database
 			| PropertyType | Division    |
@@ -134,7 +134,7 @@ Scenario: Get Activity with viewing and offer
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode           | enumTypeItemCode |
 			| ActivityStatus         | PreAppraisal     |
-			| ActivityUserType       | LeadNegotiator   |
+			| UserType               | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
 		And Property exists in database
 			| PropertyType | Division    |

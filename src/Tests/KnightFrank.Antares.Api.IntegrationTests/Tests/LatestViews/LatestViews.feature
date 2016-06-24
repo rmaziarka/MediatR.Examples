@@ -14,7 +14,7 @@ Scenario: Create latest viewed activity
     Given User gets EnumTypeItemId and EnumTypeItem code
 		| enumTypeCode           | enumTypeItemCode |
 		| ActivityStatus         | PreAppraisal     |
-		| ActivityUserType       | LeadNegotiator   |
+		| UserType       | LeadNegotiator   |
 		| ActivityDepartmentType | Managing         |
 		And Property exists in database
 			| PropertyType | Division    |
@@ -65,7 +65,7 @@ Scenario: Get latest viewed activities
     Given User gets EnumTypeItemId and EnumTypeItem code
 		| enumTypeCode           | enumTypeItemCode |
 		| ActivityStatus         | PreAppraisal     |
-		| ActivityUserType       | LeadNegotiator   |
+		| UserType       | LeadNegotiator   |
 		| ActivityDepartmentType | Managing         |
 		And User gets Freehold Sale for ActivityType
 		And Property exists in database
