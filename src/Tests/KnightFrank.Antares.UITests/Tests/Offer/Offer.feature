@@ -192,7 +192,7 @@ Scenario: Update new residential sales offer
 @Offer
 Scenario: Create and update accepted residential sales offer
 	Given Contacts are created in database
-		| Title | FirstName | Surname   |
+		| Title | FirstName | LastName   |
 		| Sir   | Steve     | Harris    |
 		| Sir   | Dave      | Murray    |
 		| Sir   | Adrian    | Smith     |
@@ -201,7 +201,7 @@ Scenario: Create and update accepted residential sales offer
 			| Name        | WebsiteUrl             | ClientCarePageUrl      |
 			| Objectivity | https://www.google.com | https://www.google.com |
 		And Contacts are created in database
-			| Title | FirstName | Surname |
+			| Title | FirstName | LastName |
 			| Sir   | Mark      | Walport |
 		And Property with Residential division and House type is defined
 		And Property attributes details are defined

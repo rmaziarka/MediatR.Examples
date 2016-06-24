@@ -2,20 +2,20 @@
     export class PropertySearchResultContact {
         id: string = null;
         firstName: string = null;
-        surname: string = null;
+        lastName: string = null;
         title: string = null;
 
         constructor(propertySearchResultContact?: Dto.IPropertySearchResultContact) {
             if (propertySearchResultContact) {
                 this.id = propertySearchResultContact.id;
                 this.firstName = propertySearchResultContact.firstName;
-                this.surname = propertySearchResultContact.surname;
+                this.lastName = propertySearchResultContact.surname;
                 this.title = propertySearchResultContact.title;
             }
         }
 
         public getName() {
-            return this.firstName + ' ' + this.surname;
+            return this.firstName + ' ' + this.lastName;
         }
     }
 }

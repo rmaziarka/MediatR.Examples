@@ -3,7 +3,7 @@
 @Requirements
 Scenario: Upload attachment
 	Given Contacts exists in database
-		| Title  | FirstName | Surname |
+		| Title  | FirstName | LastName |
 		| Mister | Tomasz    | Bien    |
 		And Requirement exists in database
 		And User gets EnumTypeItemId and EnumTypeItem code
@@ -17,7 +17,7 @@ Scenario: Upload attachment
 @Requirements
 Scenario Outline: Upload attachment with invalid data
 	Given Contacts exists in database
-		| Title  | FirstName | Surname |
+		| Title  | FirstName | LastName |
 		| Mister | Tomasz    | Bien    |
 		And Requirement exists in database
 		And User gets EnumTypeItemId and EnumTypeItem code
@@ -38,7 +38,7 @@ Scenario Outline: Upload attachment with invalid data
 @Requirements
 Scenario: Get requirement with attachment
 	Given Contacts exists in database
-		| Title  | FirstName | Surname |
+		| Title  | FirstName | LastName |
 		| Mister | Tomasz    | Bien    |
 		And Requirement exists in database
 		And User gets EnumTypeItemId and EnumTypeItem code

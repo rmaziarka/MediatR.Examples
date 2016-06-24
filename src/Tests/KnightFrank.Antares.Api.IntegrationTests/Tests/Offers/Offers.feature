@@ -62,7 +62,7 @@ Scenario: Get residential sales offer
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
+			| FirstName | LastName | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Requirement exists in database
 		And Offer with New status exists in database
@@ -73,7 +73,7 @@ Scenario: Get residential sales offer
 @Offers
 Scenario: Get Accepted residential sales offer
 	Given Contacts exists in database
-		| FirstName | Surname | Title |
+		| FirstName | LastName | Title |
 		| Jon       | Lajoie  | Dude  |
 		And Company exists in database
 		And Property exists in database
@@ -105,7 +105,7 @@ Scenario: Update residential sales offer
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
+			| FirstName | LastName | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Requirement exists in database
 		And Offer with New status exists in database
@@ -116,7 +116,7 @@ Scenario: Update residential sales offer
 @Offers
 Scenario Outline: Update accepted residential sales offer
 	Given Contacts exists in database
-		| FirstName | Surname | Title |
+		| FirstName | LastName | Title |
 		| Jon       | Lajoie  | Dude  |
 		And Company exists in database
 		And Property exists in database
@@ -131,7 +131,7 @@ Scenario Outline: Update accepted residential sales offer
 		And Requirement exists in database
 		And Offer with <offerStatus> status exists in database
 		And Contacts exists in database
-			| FirstName | Surname | Title |
+			| FirstName | LastName | Title |
 			| Adam      | Lajoie  | Sir   |
 		And Company exists in database
 	When User updates offer with <newOfferStatus> status
@@ -168,7 +168,7 @@ Scenario Outline: Update residential sales offer with invalid data
 @Offers
 Scenario Outline: Update accepted residential sales offer with invalid data
 	Given Contacts exists in database
-		| FirstName | Surname | Title |
+		| FirstName | LastName | Title |
 		| Jon       | Lajoie  | Dude  |
 		And Company exists in database
 		And Property exists in database
@@ -178,7 +178,7 @@ Scenario Outline: Update accepted residential sales offer with invalid data
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
+			| FirstName | LastName | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Requirement exists in database
 		And Offer with Accepted status exists in database

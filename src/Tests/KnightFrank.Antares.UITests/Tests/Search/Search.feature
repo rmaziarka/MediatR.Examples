@@ -3,7 +3,7 @@
 @Property
 Scenario: Property search
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
+		| Title | FirstName | LastName |
 		| Sir   | John      | Johnson |
 		And Property with Residential division and Flat type is defined
 		And Property in GB is created in database

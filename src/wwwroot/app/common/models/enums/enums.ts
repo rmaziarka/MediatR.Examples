@@ -10,14 +10,20 @@ module Antares.Common.Models.Enums
 	 	ActivityStatus,
 	 	Division,
 	 	ActivityDocumentType,
+	 	RequirementDocumentType,
+	 	PropertyDocumentType,
 	 	OfferStatus,
 	 	ActivityUserType,
 	 	ActivityDepartmentType,
 	 	MortgageStatus,
+	 	ClientCareStatus,
 	 	MortgageSurveyStatus,
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,
 	 	Enquiries,
+	 	SalutationFormat,
+	 	MailingSalutation,
+	 	EventSalutation,
 	 }
 
 	
@@ -59,6 +65,19 @@ module Antares.Common.Models.Enums
 		GasCertificate,
 	}
 
+	export enum RequirementDocumentType
+	{
+		TermsOfBusiness,
+	}
+
+	export enum PropertyDocumentType
+	{
+		Photograph,
+		FloorPlan,
+		Brochure,
+		VideoTour,
+	}
+
 	export enum OfferStatus
 	{
 		New,
@@ -86,6 +105,13 @@ module Antares.Common.Models.Enums
 		NotRequiredCashInBank,
 		InProgress,
 		Agreed,
+	}
+
+	export enum ClientCareStatus
+	{
+		MassiveActionClient,
+		PrincipalClient,
+		KeyClient,
 	}
 
 	export enum MortgageSurveyStatus
@@ -116,5 +142,27 @@ module Antares.Common.Models.Enums
 		NotStarted,
 		Sent,
 		Complete,
+	}
+
+	export enum SalutationFormat
+	{
+		MrJohnSmith,
+		JohnSmithEsq,
+	}
+
+	export enum MailingSalutation
+	{
+		MailingFormal,
+		MailingSemiformal,
+		MailingInformal,
+		MailingPersonal,
+	}
+
+	export enum EventSalutation
+	{
+		EventInvite,
+		EventSemiformal,
+		EventInformal,
+		EventPersonal,
 	}
 }
