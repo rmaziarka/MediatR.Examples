@@ -6,8 +6,8 @@ Scenario: Upload attachment for requirement
 		| Title | FirstName | Surname |
 		| Miss  | Alana     | Duran   |
 		And Requirement for GB is created in database
-			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
-			| 1000     | 5000     | 1           | 1           | 1                 | 1                 | 1            | 1            | 1                | 1                | 900     | 1500    | 2000        | 3000        | Note        |
+			| Description |
+			| Description |
 	When User navigates to view requirement page with id
 		And User clicks add attachment button on view requirement page
 		And User adds PDF document.pdf file with Terms of Business type on view requirement page

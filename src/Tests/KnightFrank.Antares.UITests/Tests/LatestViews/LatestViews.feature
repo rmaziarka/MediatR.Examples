@@ -108,8 +108,8 @@ Scenario: Display latest viewed activities
 			| 10-01-2015   | 10000000 |
 		And Property Freehold Sale activity is defined
 		And Requirement for GB is created in database
-			| MinPrice | MaxPrice |
-			| 100000   | 500000   |
+			| Description |
+			| Description |
 		And Viewing for requirement is defined
 		And Offer for requirement is defined
 			| Status |
@@ -162,8 +162,8 @@ Scenario: Display latest viewed requirements
 		| Dr    | Van       | Wilder  |
 		| Sir   | Van       | Wilder  |
 		And Requirement for GB is created in database
-			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
-			| 100000   | 500000   | 2           | 3           | 2                 | 4                 | 1            | 3            | 2                | 2                | 90000   | 150000  | 200000      | 300000      | Note        |
+			| Description |
+			| Description |
 	When User navigates to view requirement page with id
 	Then Latest 2 requirements should contain following data
 		| LatestData             |

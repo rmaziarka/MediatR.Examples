@@ -21,8 +21,8 @@ Scenario: Create viewing on requirement
 			| 01-05-2014   | 1000000  |
 		And Property Freehold Sale activity is defined
 		And Requirement for GB is created in database
-			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
-			| 100000   | 500000   | 2           | 3           | 2                 | 4                 | 1            | 3            | 2                | 2                | 90000   | 150000  | 200000      | 300000      | Note        |
+			| Description |
+			| Description |
 	When User navigates to view requirement page with id
 		And User clicks add viewings button on view requirement page
 		And User selects activity on view requirement page
@@ -77,8 +77,8 @@ Scenario: Update viewing on requirement
 			| 10-12-2013   | 10000000 |
 		And Property Freehold Sale activity is defined
 		And Requirement for GB is created in database
-			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
-			| 100000   | 500000   | 2           | 3           | 2                 | 4                 | 2            | 3            | 1                | 3                | 1300    | 3500    | 2000        | 11000       | Note        |
+			| Description |
+			| Description |
 		And Viewing for requirement is defined
 	When User navigates to view requirement page with id
 		And User clicks 1 viewings details on view requirement page

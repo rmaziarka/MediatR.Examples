@@ -21,8 +21,8 @@ Scenario: Create residential sales offer on requirement
 			| 10-01-1998   | 100000000 |
 		And Property Freehold Sale activity is defined
 		And Requirement for GB is created in database
-			| MinPrice | MaxPrice  | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
-			| 90000000 | 120000000 | 5           | 15          | 2                 | 4                 | 2            | 10           | 15               | 25               | 20000   | 25000   | 30000       | 50000       | Note        |
+			| Description |
+			| Description |
 		And Viewing for requirement is defined
 	When User navigates to view requirement page with id
 		And User clicks make an offer button for 1 activity on view requirement page
@@ -71,8 +71,8 @@ Scenario: Update residential sales offer on requirement
 			| 10-12-2013   | 10000000 |
 		And Property Freehold Sale activity is defined
 		And Requirement for GB is created in database
-			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
-			| 100000   | 500000   | 1           | 3           | 1                 | 2                 | 1            | 3            | 1                | 3                | 900     | 3500    | 1200        | 6000        | Note        |
+			| Description |
+			| Description |
 		And Viewing for requirement is defined
 		And Offer for requirement is defined
 			| Status |
@@ -110,8 +110,8 @@ Scenario: View offer details page
 			| 10-01-2015   | 100000   |
 		And Property Freehold Sale activity is defined
 		And Requirement for GB is created in database
-			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
-			| 90000    | 120000   | 3           | 4           | 2                 | 4                 | 2            | 2            | 1                | 2                | 2000    | 2500    | 3000        | 5000        | Note        |
+			| Description |
+			| Description |        
 		And Viewing for requirement is defined
 	When User navigates to view requirement page with id
 		And User clicks make an offer button for 1 activity on view requirement page
@@ -163,8 +163,8 @@ Scenario: Update new residential sales offer
 			| 10-12-2000   | 100000000 |
 		And Property Freehold Sale activity is defined
 		And Requirement for GB is created in database
-			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
-			| 100000   | 500000   | 3           | 6           | 2                 | 4                 | 2            | 6            | 1                | 6                | 9000    | 32000   | 12000       | 60000       | Note        |
+			| Description |
+			| Description |
 		And Viewing for requirement is defined
 		And Offer for requirement is defined
 			| Status |
@@ -216,8 +216,8 @@ Scenario: Create and update accepted residential sales offer
 			| 10-01-2015   | 100000   |
 		And Property Freehold Sale activity is defined
 		And Requirement for GB is created in database
-			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
-			| 90000    | 120000   | 4           | 7           | 3                 | 5                 | 2            | 4            | 1                | 2                | 2000    | 3500    | 3000        | 6000        | Note        |
+			| Description |
+			| Description |
 		And Viewing for requirement is defined
 	When User navigates to view requirement page with id
 		And User clicks make an offer button for 1 activity on view requirement page

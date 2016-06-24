@@ -63,8 +63,7 @@
         {
             var details = table.CreateInstance<Requirement>();
 
-            this.page
-                .SetPropertyRequirementsNote(details.Description);
+            this.page.SetRequirementDescription(details.Description);
         }
 
         [When(@"User selects contacts on create requirement page")]

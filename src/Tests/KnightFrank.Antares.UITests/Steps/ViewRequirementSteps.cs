@@ -238,11 +238,9 @@
         [Then(@"Requirement property details on view requirement page are same as the following")]
         public void CheckResidentialSalesRequirementPropertyDetails(Table table)
         {
-            Dictionary<string, string> details = this.page.GetPropertyRequirements();
             var expectedDetails = table.CreateInstance<Requirement>();
 
-            Verify.That(this.driverContext,
-                () => Assert.Equal(expectedDetails.Description, details["Requirement description"]));
+            Assert.Equal(expectedDetails.Description, this.page.RequirementDescription);
         }
 
         [Then(@"Requirement applicants on view requirement page are same as the following")]
