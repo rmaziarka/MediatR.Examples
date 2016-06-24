@@ -173,9 +173,11 @@
     <None Include="Scripts\Data\Configuration\activitytypelocalised.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\Data\Configuration\offerType.csv" />
+    <None Include="Scripts\Data\Configuration\offertype.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Scripts\Data\Configuration\offertypelocalised.csv">
-      <CopyToOutputDirectory>DoNotCopy</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

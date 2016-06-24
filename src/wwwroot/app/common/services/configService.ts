@@ -2,10 +2,9 @@
 
 
 module Antares.Services {
-    import IActivityConfig = Antares.Activity.IActivityConfig;
-    import IActivityAddPanelConfig = Antares.Activity.IActivityAddPanelConfig;
-    import Attributes = Antares.Attributes;
-    import PageTypeEnum = Antares.Common.Models.Enums.PageTypeEnum;
+    import IActivityConfig = Activity.IActivityConfig;
+    import PageTypeEnum = Common.Models.Enums.PageTypeEnum;
+    import IOfferConfig = Offer.IOfferConfig;
 
     export class ConfigService {
 
@@ -27,6 +26,21 @@ module Antares.Services {
             return this.$http
                 .post<IActivityConfig>(postUrl, entity, { params: params})
                 .then<IActivityConfig>((result: ng.IHttpPromiseCallbackArg<IActivityConfig>) => result.data);
+        }
+
+        public getOffer = (pageType: PageTypeEnum, requirementTypeId: string, offerTypeId: string, entity: any): ng.IHttpPromise<IOfferConfig> =>{
+            var routeUrl = '/attributes/offer';
+            var postUrl = this.appConfig.rootUrl + this.apiUrl + routeUrl;
+
+            var params = {
+                pageType: pageType,
+                requirementTypeId: requirementTypeId || '00000000-0000-0000-0000-000000000000',
+                offerTypeId: offerTypeId || '00000000-0000-0000-0000-000000000000'
+            }
+
+            return this.$http
+                .post<IOfferConfig>(postUrl, entity, { params: params })
+                .then<IOfferConfig>((result: ng.IHttpPromiseCallbackArg<IOfferConfig>) => result.data);
         }
     }
 

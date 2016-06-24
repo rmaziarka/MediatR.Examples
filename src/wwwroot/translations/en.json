@@ -367,7 +367,8 @@
       "EXCHANGE_DATE": "Proposed exchange date",
       "COMPLETION_DATE": "Proposed completion date",
       "VIEW": "View",
-      "SAVING_OFFER_IN_PROGRESS": "Saving offer ..."
+      "SAVING_OFFER_IN_PROGRESS": "Saving offer ...",
+      "NEW_OFFER":  "New offer"
     },
     "PREVIEW": {
         "ACTIVITY": "Activity",

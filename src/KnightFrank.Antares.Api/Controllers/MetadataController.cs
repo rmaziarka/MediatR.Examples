@@ -80,7 +80,7 @@
             OfferType offerType = this.enumParser.Parse<Dal.Model.Offer.OfferType, OfferType>(offerTypeId);
 
             //TODO replace when RequirementType introduce in DB
-            var requirementType = RequirementType.ResidentalLetting;
+            var requirementType = RequirementType.ResidentialLetting;
             IList<InnerFieldState> fieldStates = this.offerConfiguration.GetInnerFieldsState(pageType, new Tuple<OfferType, RequirementType>(offerType, requirementType), entity);
             return fieldStates.MapToResponse();
         }

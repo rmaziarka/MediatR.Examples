@@ -20,6 +20,8 @@ module Antares.Requirement.View {
         enumTypeRequirementDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.RequirementDocumentType;
         entityType: EntityType = EntityType.Requirement;
 
+        isOfferAddEditPanelVisible: boolean = false;
+
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private $scope: ng.IScope,
@@ -35,6 +37,18 @@ module Antares.Requirement.View {
                 .subscribe(Common.Component.Attachment.AttachmentSavedEvent, (event: Common.Component.Attachment.AttachmentSavedEvent) => {
                     this.addSavedAttachmentToList(event.attachmentSaved);
                 });
+
+            this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
+                this.isOfferAddEditPanelVisible = false;
+            });
+
+            this.eventAggregator.with(this).subscribe(Offer.OfferAddedSidePanelEvent, (msg: Offer.OfferAddedSidePanelEvent) =>{
+                this.onSaveOffer(msg.addedOffer);
+            });
+        }
+
+        onPanelsHidden = () =>{
+            this.isOfferAddEditPanelVisible = false;
         }
 
         addSavedAttachmentToList = (result: Dto.IAttachment) => {
@@ -112,10 +126,6 @@ module Antares.Requirement.View {
                 viewingPreviewId : 'addRequirement:viewingPreviewComponent',
                 configureViewingsSidePanelId : 'addRequirement:configureViewingsSidePanelComponent',
                 previewViewingSidePanelId : 'addRequirement:previewViewingSidePanelComponent',
-                offerAddId : 'requirementView:addOfferComponent',
-                offerEditId : 'requirementView:editOfferComponent',
-                offerEditPreviewId : 'requirementView:editOfferPreviewComponent',
-                offerSidePanelId : 'requirementView:offerSidePanelComponent',
                 offerPreviewId : 'requirementView:offerPreviewComponent',
                 offerPreviewSidePanelId : 'requirementView:offerPreviewSidePanelComponent',
                 offerEditSidePanelId : 'requirementView:offerEditSidePanelComponent'
@@ -131,16 +141,12 @@ module Antares.Requirement.View {
                 viewingEdit : () =>{ return this.componentRegistry.get(this.componentIds.viewingEditId); },
                 viewingPreview : () =>{ return this.componentRegistry.get(this.componentIds.viewingPreviewId); },
                 offerPreview : () =>{ return this.componentRegistry.get(this.componentIds.offerPreviewId); },
-                offerAdd : () =>{ return this.componentRegistry.get(this.componentIds.offerAddId); },
-                offerEdit : () =>{ return this.componentRegistry.get(this.componentIds.offerEditId); },
                 offerEditPreview : () =>{ return this.componentRegistry.get(this.componentIds.offerEditPreviewId); },
                 panels : {
                     notes : () =>{ return this.componentRegistry.get(this.componentIds.notesSidePanelId); },
                     configureViewings : () =>{ return this.componentRegistry.get(this.componentIds.configureViewingsSidePanelId); },
                     previewViewings : () =>{ return this.componentRegistry.get(this.componentIds.previewViewingSidePanelId); },
                     offerPreview : () =>{ return this.componentRegistry.get(this.componentIds.offerPreviewSidePanelId) },
-                    offerAdd : () =>{ return this.componentRegistry.get(this.componentIds.offerSidePanelId); },
-                    offerEdit : () =>{ return this.componentRegistry.get(this.componentIds.offerEditSidePanelId) }
                 }
             }
         }
@@ -190,16 +196,9 @@ module Antares.Requirement.View {
         }
 
         showAddOfferPanel = (viewing: Dto.IViewing) =>{
-            if (this.components.panels.offerAdd().visible) {
-                return;
-            }
-
-            var offerAddComponent = this.components.offerAdd();
-
-            offerAddComponent.activity = viewing.activity;
-            offerAddComponent.reset();
-
-            this.showPanel(this.components.panels.offerAdd);
+            this.hidePanels();
+            this.selectedViewing = viewing;
+            this.isOfferAddEditPanelVisible = true;
         }
 
         showEditOfferPreviewPanel = () =>{
@@ -228,18 +227,10 @@ module Antares.Requirement.View {
             this.hidePanels();
         }
 
-        saveOffer = () =>{
-            this.addEditOfferBusy = true;
-            this.components.offerAdd()
-                .saveOffer()
-                .then((offerModel: Dto.IOffer) =>{
-                    var offer = new Business.Offer(offerModel);
-					this.requirement.offers.push(offer);
-                    this.hidePanels();
-                })
-                .finally(() =>{
-                    this.addEditOfferBusy = false;
-                });
+        onSaveOffer = (offerModel: Dto.IOffer) =>{
+            var offer = new Business.Offer(offerModel);
+            this.requirement.offers.push(offer);
+            this.hidePanels();
         }
 
         saveEditOfferCore = (component: any) =>{

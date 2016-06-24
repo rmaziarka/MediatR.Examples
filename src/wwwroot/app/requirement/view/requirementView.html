@@ -206,20 +206,4 @@
     </side-panel-footer>
 </side-panel>
 
-<side-panel component-id="vm.componentIds.offerSidePanelId" id="add-offer-panel" is-busy="vm.addEditOfferBusy">
-    <side-panel-header>
-        <h3 translate="REQUIREMENT.VIEW.NEWOFFER"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <offer-add component-id="vm.componentIds.offerAddId" requirement="vm.requirement" mode="add"></offer-add>
-        <busy is-busy="vm.addEditOfferBusy" label="{{'OFFER.ADD.SAVING_OFFER_IN_PROGRESS' | translate}}"></busy>
-    </side-panel-content>
-    <side-panel-footer>
-        <button class="btn btn-default" type="button" ng-click="vm.cancelSaveOffer()">
-            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
-        </button>
-        <button class="btn btn-primary" type="button" ng-click="vm.saveOffer()">
-            <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
-        </button>
-    </side-panel-footer>
-</side-panel>
+<offer-add-edit-panel is-visible="vm.isOfferAddEditPanelVisible" activity="vm.selectedViewing.activity" mode="add" onSave="vm.onSaveOffer" requirement="vm.requirement"></offer-add-edit-panel>

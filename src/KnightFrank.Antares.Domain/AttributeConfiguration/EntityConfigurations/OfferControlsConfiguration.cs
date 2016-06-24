@@ -43,7 +43,7 @@
                         ControlCode.Offer_ExchangeDate,
                         ControlCode.Offer_CompletionDate
                     },
-                this.When(OfferType.ResidentalSale, RequirementType.ResidentalSale, PageType.Create));
+                this.When(OfferType.ResidentialSale, RequirementType.ResidentialSale, PageType.Create));
 
             this.Use(
                 new List<ControlCode>
@@ -56,7 +56,7 @@
                         ControlCode.Offer_ExchangeDate,
                         ControlCode.Offer_CompletionDate
                     },
-                this.When(OfferType.ResidentalLetting, RequirementType.ResidentalLetting, PageType.Create));
+                this.When(OfferType.ResidentalLetting, RequirementType.ResidentialLetting, PageType.Create));
         }
     }
 }

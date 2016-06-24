@@ -6,6 +6,7 @@ module Antares {
     import OfferAddEditController = Component.OfferAddEditController;
     import SidePanelController = Common.Component.SidePanelController;
     declare var moment: any;
+    type Dictionary = { [id: string]: string };
 
     describe('Given view requirement page is loaded', () => {
         beforeEach(() => {
@@ -149,7 +150,7 @@ module Antares {
 
             
             beforeEach(angular.mock.module(($provide: angular.auto.IProvideService) => {
-                $provide.service('enumService', Antares.Mock.EnumServiceMock);
+                $provide.service('enumService', Mock.EnumServiceMock);
                 $provide.constant('appConfig', appConfigMock);
             }));
 
@@ -163,7 +164,6 @@ module Antares {
                 filter = $filter;
                 $http = $httpBackend;
 
-                type Dictionary = { [id: string]: string };
                 var offerStatusToCodeDict: Dictionary = {
                     '1': 'New',
                     '2': 'Withdrawn',
@@ -282,65 +282,19 @@ module Antares {
 
             describe('when make new offer action is called', () => {
                 var
-                    newOfferController: OfferAddEditController,
-                    newOfferPanelController: SidePanelController,
                     chosenViewing: Business.Viewing;
 
                 beforeEach(() => {
-                    newOfferController = controller.components.offerAdd();
-                    newOfferPanelController = controller.components.panels.offerAdd();
-
-                    spyOn(newOfferController, 'reset');
-
                     chosenViewing = requirementMock.viewings[0];
                     controller.showAddOfferPanel(chosenViewing);
                 });
 
-                it('new offer side panel is shown', () => {
-                    var sidePanel = element.find(pageObjectSelectors.offers.sidePanel);
-                    expect(sidePanel.length).toBe(1, 'Side panel not found');
-                    expect(newOfferPanelController.visible).toBeTruthy('Side panel not visible');
+                it('new offer side panel is shown', () =>{
+                    expect(controller.isOfferAddEditPanelVisible).toBeTruthy('Side panel not visible');
                 });
 
-                it('new offer form is reset', () => {
-                    expect(newOfferController.reset).toHaveBeenCalledTimes(1);
-                });
-
-                it('activity on offer is set', () => {
-                    expect(newOfferController.activity).toBeDefined();
-                    expect(newOfferController.activity.id).toEqual(chosenViewing.activity.id);
-                });
-
-                it('when cancel action is called side panel is hidden', () => {
-                    controller.cancelSaveOffer();
-
-                    expect(newOfferPanelController.visible).toBeFalsy('Side panel is not hidden');
-                });
-
-                xdescribe('when save action is called', () => {
-                    var
-                        offerMock: Business.Offer;
-
-                    beforeEach(inject((
-                        $q: ng.IQService) => {
-
-                        offerMock = TestHelpers.OfferGenerator.generate();
-                        var deferred = $q.defer();
-                        spyOn(newOfferController, 'saveOffer').and.returnValue(deferred.promise);
-
-                        controller.saveOffer();
-                        deferred.resolve(offerMock);
-
-                        scope.$apply();
-                    }));
-
-                    it('side panel is hidden', () => {
-                        expect(newOfferPanelController.visible).toBeFalsy('Side panel is not hidden');
-                    });
-
-                    it('offer has been added to offers list', () => {
-                        expect(controller.requirement.offers).toContain(offerMock);
-                    });
+                it('viewing is selected', () =>{
+                    expect(controller.selectedViewing).toBe(chosenViewing);
                 });
             });
         });

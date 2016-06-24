@@ -14,6 +14,7 @@ module Antares.TestHelpers {
                 statusId: OfferGenerator.makeRandom('statusId'),
                 negotiatorId: OfferGenerator.makeRandom('negotiatorId'),
                 price: 1000,
+                pricePerWeek: 100,
                 offerDate: new Date(),
                 specialConditions: 'special conditions',
                 exchangeDate: moment().days(1),

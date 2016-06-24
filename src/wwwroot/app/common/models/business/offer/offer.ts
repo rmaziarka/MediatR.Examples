@@ -4,11 +4,13 @@ module Antares.Common.Models.Business {
     declare var moment: any;
 
     export class Offer implements Dto.IOffer {
+        [index: string]: any;
         id: string = null;
         statusId: string = null;
         activityId: string = null;
         requirementId: string = null;
         price: number;
+        pricePerWeek: number;
         exchangeDate: Date;
         completionDate: Date;
         specialConditions: string;

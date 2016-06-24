@@ -5,6 +5,7 @@
         requirementId: string;
         statusId: string;
         price: number;
+        pricePerWeek: number;
         offerDate: Date;
         exchangeDate?: Date;
         completionDate?: Date;
