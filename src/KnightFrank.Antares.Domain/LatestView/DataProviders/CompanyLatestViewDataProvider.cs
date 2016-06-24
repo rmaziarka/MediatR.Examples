@@ -27,7 +27,7 @@ namespace KnightFrank.Antares.Domain.LatestView.DataProviders
             {
                 Id = latestView.EntityId,
                 CreatedDate = latestView.CreatedDate,
-                Data = company.Name
+                Data = company
             };
         }
     }

@@ -21,6 +21,10 @@ module Antares {
                         titleKey: "COMMON.NAVIGATIONDRAWER.RECENTACTIVITIES",
                         fieldName: "activities"
                     },
+                    "company": {
+                        titleKey: "COMMON.NAVIGATIONDRAWER.RECENTCOMPANIES",
+                        fieldName: "companies"
+                    },
                     "requirement": {
                         titleKey: "COMMON.NAVIGATIONDRAWER.RECENTREQUIREMENTS",
                         fieldName: "requirements"
