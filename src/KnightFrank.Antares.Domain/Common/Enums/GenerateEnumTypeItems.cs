@@ -16,11 +16,13 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	ActivityUserType,
 	 	ActivityDepartmentType,
 	 	MortgageStatus,
-        ClientCareStatus,
+	 	ClientCareStatus,
 	 	MortgageSurveyStatus,
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,
 	 	Enquiries,
+	 	ActivitySource,
+	 	ActivitySellingReason,
 	 }
 
 	
@@ -65,14 +67,6 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	public enum RequirementDocumentType
 	{
 		TermsOfBusiness,
-		MarketingSignOff,
-		CDDDocument,
-		Photograph,
-		FloorPlan,
-		Brochure,
-		VideoTour,
-		EPC,
-		GasCertificate,
 	}
 
 	public enum PropertyDocumentType
@@ -112,6 +106,13 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		Agreed,
 	}
 
+	public enum ClientCareStatus
+	{
+		MassiveActionClient,
+		PrincipalClient,
+		KeyClient,
+	}
+
 	public enum MortgageSurveyStatus
 	{
 		Unknown,
@@ -140,5 +141,50 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		NotStarted,
 		Sent,
 		Complete,
+	}
+
+	public enum ActivitySource
+	{
+		KFContactsRegister,
+		KFPR,
+		Knightfrank,
+		KnightfrankGlobalSearch,
+		DirectEmail,
+		DirectPhoneCall,
+		DeveloperWebsite,
+		LeadGenerationCanvassingActivities,
+		OnTheMarket,
+		OtherInternetPortal,
+		OtherPortalGlobrix,
+		OtherPortalPrimelocation,
+		POD,
+		TBSReferralAdvert,
+		TBSReferralBank,
+		TBSReferralPastClient,
+		TBSReferralKF,
+		TBSReferralProfessionalContact,
+		TBSReferralWebsite,
+		MagazineA,
+		MagazineB,
+		MagazineC,
+		NewspaperA,
+		NewspaperB,
+		NewspaperC,
+	}
+
+	public enum ActivitySellingReason
+	{
+		Upsizing,
+		DebtFinancialDifficulty,
+		Divorce,
+		Downsizing,
+		FamilySize,
+		PrivateDeveloper,
+		Probate,
+		ReceiverDisposal,
+		RegularPropertyValueAppraisal,
+		Relocation,
+		Retiring,
+		SurpliceToTequirement,
 	}
 }
