@@ -368,7 +368,8 @@
       "COMPLETION_DATE": "Proposed completion date",
       "VIEW": "View",
       "SAVING_OFFER_IN_PROGRESS": "Saving offer ...",
-      "NEW_OFFER":  "New offer"
+      "NEW_OFFER": "New offer",
+      "OFFER_PER_WEEK": "GBP / week"
     },
     "PREVIEW": {
         "ACTIVITY": "Activity",

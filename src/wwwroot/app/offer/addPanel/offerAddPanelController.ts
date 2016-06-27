@@ -52,6 +52,7 @@ module Antares.Offer {
             save = (offer: Business.CreateOfferCommand) => {
                 this.isBusy = true;
                 offer.requirementId = this.requirement.id;
+                offer.activityId = this.activity.id;
                 this.offerService.createOffer(offer).then((offerDto: Dto.IOffer) =>{
                     this.eventAggregator.publish(new Offer.OfferAddedSidePanelEvent(offerDto));
                     this.eventAggregator.publish(new Antares.Common.Component.CloseSidePanelEvent());

@@ -18,6 +18,23 @@ module Antares.Offer {
         offer: Business.CreateOfferCommand = new Business.CreateOfferCommand();
         private defaultOfferStatusCode: string = Common.Models.Enums.OfferStatus[Common.Models.Enums.OfferStatus.New];
 
+        // controls
+        controlSchemas: any = {
+            price: <Attributes.IPriceEditControlSchema> {
+                formName : "offerPriceControlForm",
+                controlId : "offer-price",
+                translationKey : "OFFER.ADD.OFFER",
+                fieldName: "offerPrice"
+            },
+            pricePerWeek: <Attributes.IPriceEditControlSchema> {
+                formName: "offerPricePerWeekControlForm",
+                controlId: "offer-price-per-week",
+                translationKey: "OFFER.ADD.OFFER",
+                fieldName: "offerPricePerWeek",
+                suffix: "OFFER.ADD.OFFER_PER_WEEK"
+            }
+        }
+
         constructor(
             private enumProvider: Providers.EnumProvider) {
         }

@@ -6,6 +6,8 @@
         <side-panel-content>
             <activity-card activity="vm.activity"></activity-card>
             <offer-status-control ng-model="vm.offer.statusId" config="vm.config.offer_Status"></offer-status-control>
+            <price-edit-control ng-model="vm.offer.price" config="vm.config.offer_Price" schema="vm.controlSchemas.price"></price-edit-control>
+            <price-edit-control ng-model="vm.offer.pricePerWeek" config="vm.config.offer_PricePerWeek" schema="vm.controlSchemas.pricePerWeek"></price-edit-control>
         </side-panel-content>
         <side-panel-footer>
             <button class="btn btn-default" type="button" ng-click="vm.cancel()">
