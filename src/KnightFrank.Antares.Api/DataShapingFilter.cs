@@ -29,14 +29,24 @@
         [Inject]
         private readonly IEntityMapper<Activity> activityEntityMapper;
 
+        /// <summary>
+        /// Gets or sets the offer entity mapper.
+        /// </summary>
+        /// <value>
+        /// The offer entity mapper.
+        /// </value>
+        [Inject]
+        private readonly IEntityMapper<Offer> offerEntityMapper;
+
         private readonly IDictionary<Type, Action<ObjectContent>> shapingFunctions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataShapingFilter"/> class.
         /// </summary>
-        public DataShapingFilter(IEntityMapper<Activity> activityEntityMapper)
+        public DataShapingFilter(IEntityMapper<Activity> activityEntityMapper, IEntityMapper<Offer> offerEntityMapper)
         {
             this.activityEntityMapper = activityEntityMapper;
+            this.offerEntityMapper = offerEntityMapper;
             this.shapingFunctions = new Dictionary<Type, Action<ObjectContent>>
             {
                 { typeof(Activity), this.ShapeActivity },
@@ -75,12 +85,23 @@
         {
             var activity = (Activity)objectContent.Value;
             this.activityEntityMapper.NullifyDisallowedValues(activity, PageType.Details);
+            if (activity.Offers != null)
+            {
+                foreach (Offer offer in activity.Offers)
+                {
+                    // TODO don't shape activity associated with offer, because it is not fetched from DB
+                    // think of global solution
+                    this.offerEntityMapper.NullifyDisallowedValues(offer, PageType.Details);
+                }
+            }
         }
 
         private void ShapeOffer(ObjectContent objectContent)
         {
             var offer = (Offer)objectContent.Value;
+            this.offerEntityMapper.NullifyDisallowedValues(offer, PageType.Details);
             this.activityEntityMapper.NullifyDisallowedValues(offer.Activity, PageType.Details);
+            //TODO add NullifyDisallowedValues for requirement
         }
 
         private void ShapeProperty(ObjectContent objectContent)

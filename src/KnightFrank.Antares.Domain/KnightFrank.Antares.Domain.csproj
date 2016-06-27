@@ -155,6 +155,7 @@
     <Compile Include="AttributeConfiguration\Common\Extensions\ListExtensions.cs" />
     <Compile Include="AttributeConfiguration\Common\IAttributeValidator.cs" />
     <Compile Include="AttributeConfiguration\Common\IEntityMapper.cs" />
+    <Compile Include="AttributeConfiguration\Common\OfferEntityMapper.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ActivityControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\BaseControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerOneType.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="Common\Commands\CreateOrUpdateAddress.cs" />
     <Compile Include="Common\Commands\CreateOrUpdateAddressValidator.cs" />
     <Compile Include="Common\Enums\DivisionEnum.cs" />
+    <Compile Include="Common\Enums\EnumMapper.cs" />
     <Compile Include="Common\Enums\EnumParser.cs" />
     <Compile Include="Common\Enums\GenerateEnumTypeItems.cs">
       <AutoGen>True</AutoGen>

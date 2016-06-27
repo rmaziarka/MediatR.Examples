@@ -10,7 +10,6 @@
         {
             this.RuleFor(x => x.ActivityId).NotEmpty();
             this.RuleFor(x => x.RequirementId).NotEmpty();
-            this.RuleFor(x => x.OfferTypeId).NotEmpty();
             this.RuleFor(x => x.StatusId).NotEmpty();
             this.RuleFor(x => x.Price).GreaterThan(0).When(x => x.Price.HasValue);
             this.RuleFor(x => x.PricePerWeek).GreaterThan(0).When(x => x.PricePerWeek.HasValue);

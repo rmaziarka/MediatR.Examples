@@ -5,6 +5,6 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 {
 	public enum OfferType {
 		ResidentialSale,
-    	ResidentalLetting,
+    	ResidentialLetting,
     }
 }

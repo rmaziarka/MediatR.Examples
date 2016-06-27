@@ -65,6 +65,7 @@
             this.Bind<IAttributeValidator<Tuple<PropertyType, ActivityType>>>().To(typeof(AttributeValidator<>));
 
             this.Bind<IEntityMapper<Dal.Model.Property.Activities.Activity>>().To<ActivityEntityMapper>();
+            this.Bind<IEntityMapper<Dal.Model.Offer.Offer>>().To<OfferEntityMapper>();
         }
     }
 }
