@@ -3,18 +3,18 @@
 @Requirement
 Scenario: Create requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Miss  | Alana     | Jones   |
+		| Title | FirstName | LastName |
+		| Miss  | Alana     | Jones    |
 	When User navigates to create requirement page
 		And User selects contacts on create requirement page
-			| FirstName | Surname |
-			| Alana     | Jones   |
+			| FirstName | LastName |
+			| Alana     | Jones    |
 		And User selects contacts on create requirement page
-			| FirstName | Surname |
-			| Alana     | Jones   |
+			| FirstName | LastName |
+			| Alana     | Jones    |
 	Then List of applicants should contain following contacts
-		| FirstName | Surname |
-		| Alana     | Jones   |
+		| FirstName | LastName |
+		| Alana     | Jones    |
 	When User fills in location details on create requirement page
 		| Country        | Line2        | Postcode | City   |
 		| United Kingdom | Upper Ground | SE1 9PP  | London |
@@ -30,14 +30,14 @@ Scenario: Create requirement
 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
 			| 100000   | 500000   | 2           | 3           | 2                 | 4                 | 1            | 3            | 2                | 2                | 90000   | 150000  | 200000      | 300000      | Note        |
 		And Requirement applicants on view requirement page are same as the following
-			| FirstName | Surname |
-			| Alana     | Jones   |
+			| FirstName | LastName |
+			| Alana     | Jones    |
 
 @Requirement
 Scenario: Create note on requirement
 	Given Contacts are created in database
-		| Title | FirstName | Surname |
-		| Miss  | Anna      | Wilder  |
+		| Title | FirstName | LastName |
+		| Miss  | Anna      | Wilder   |
 		And Requirement for GB is created in database
 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
 			| 100000   | 500000   | 2           | 3           | 2                 | 4                 | 1            | 3            | 2                | 2                | 90000   | 150000  | 200000      | 300000      | Note        |

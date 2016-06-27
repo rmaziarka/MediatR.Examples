@@ -13,8 +13,8 @@ Scenario: Create residential sales offer
 			| House        | Residential |
 		And Activity for latest property and PreAppraisal activity status exists in database
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
 		And Requirement exists in database
 	When User creates New offer using api
 	Then User should get OK http status code
@@ -33,8 +33,8 @@ Scenario: Create residential sales offer with mandatory fields
 			| House        | Residential |
 		And Activity for latest property and PreAppraisal activity status exists in database
 		And Contacts exists in database 
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
 		And Requirement exists in database
 	When User creates Accepted offer with mandatory fields using api
 	Then User should get OK http status code
@@ -53,8 +53,8 @@ Scenario Outline: Create residential sales offer with invalid data
 			| House        | Residential |
 		And Activity for latest property and PreAppraisal activity status exists in database
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
 		And Requirement exists in database
 	When User creates offer with invalid <data> using api
 	Then User should get BadRequest http status code
@@ -78,8 +78,8 @@ Scenario: Get residential sales offer
 			| House        | Residential |
 		And Activity for latest property and PreAppraisal activity status exists in database
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
 		And Requirement exists in database
 		And Offer with New status exists in database
 	When User gets offer for latest id
@@ -104,8 +104,8 @@ Scenario: Update residential sales offer
 			| House        | Residential |
 		And Activity for latest property and PreAppraisal activity status exists in database
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
 		And Requirement exists in database
 		And Offer with New status exists in database
 	When User updates offer with Accepted status
@@ -116,8 +116,8 @@ Scenario: Update residential sales offer
 Scenario Outline: Update residential sales offer with invalid data
 	Given Activity exists in database
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
-			| Tomasz    | Bien    | Mister |
+			| FirstName | LastName | Title  |
+			| Tomasz    | Bien     | Mister |
 		And Requirement exists in database
 		And Offer with New status exists in database
 	When User updates offer with invalid <data> data

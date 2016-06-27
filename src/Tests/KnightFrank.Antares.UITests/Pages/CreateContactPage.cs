@@ -10,7 +10,7 @@
     {
         private readonly ElementLocator contactFirstName = new ElementLocator(Locator.Id, "first-name");
         private readonly ElementLocator contactForm = new ElementLocator(Locator.Id, "addContactForm");
-        private readonly ElementLocator contactSurname = new ElementLocator(Locator.Id, "surname");
+        private readonly ElementLocator contactLastName = new ElementLocator(Locator.Id, "last-name");
         private readonly ElementLocator contactTitle = new ElementLocator(Locator.Id, "title");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.CssSelector, "#addContactForm button");
 
@@ -36,9 +36,9 @@
             return this;
         }
 
-        public CreateContactPage SetSurname(string surname)
+        public CreateContactPage SetLastName(string lastName)
         {
-            this.Driver.SendKeys(this.contactSurname, surname);
+            this.Driver.SendKeys(this.contactLastName, lastName);
             return this;
         }
 

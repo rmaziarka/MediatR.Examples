@@ -73,8 +73,8 @@ module Antares.Contact {
         }
 
         public save() {
-            this.contact.defaultMailingSalutationId = this.defaultMailingSalutationId != null ? this.defaultMailingSalutationId.id : "";
-            this.contact.defaultEventSalutationId = this.defaultEventSalutationId != null ? this.defaultEventSalutationId.id : "";
+            this.contact.defaultMailingSalutationId = this.defaultMailingSalutationId != null ? this.defaultMailingSalutationId : "";
+            this.contact.defaultEventSalutationId = this.defaultEventSalutationId != null ? this.defaultEventSalutationId : "";
             this.contactResource.save(this.contact);
             var form = this.$scope["addContactForm"];
             form.$setPristine();

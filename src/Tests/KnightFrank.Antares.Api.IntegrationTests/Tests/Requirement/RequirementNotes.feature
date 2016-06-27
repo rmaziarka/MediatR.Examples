@@ -4,8 +4,8 @@
 @Notes
 Scenario: Save note to existing requirement
 	Given Contacts exists in database
-		| FirstName | Surname | Title  |
-		| Tomasz    | Bien    | Mister |
+		| FirstName | LastName | Title  |
+		| Tomasz    | Bien     | Mister |
 		And Requirement exists in database
 	When User creates note for requirement using api
 	Then User should get OK http status code

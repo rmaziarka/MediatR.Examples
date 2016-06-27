@@ -49,7 +49,7 @@
 
             this.page.SetTitle(contact.Title)
                 .SetFirstName(contact.FirstName)
-                .SetSurname(contact.LastName);
+                .SetLastName(contact.LastName);
         }
 
         [When(@"User clicks save contact button on create contact page")]

@@ -151,8 +151,8 @@ module Antares {
                     activityStatusId: '123',
                     activityTypeId: '123',
                     contacts: [
-                        <Dto.IContact>{ id: 'Contact1', firstName: 'John', surname: 'Test1', title: 'Mr' },
-                        <Dto.IContact>{ id: 'Contact2', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }
+                        <Dto.IContact>{ id: 'Contact1', firstName: 'John', lastName: 'Test1', title: 'Mr' },
+                        <Dto.IContact>{ id: 'Contact2', firstName: 'Amy', lastName: 'Test2', title: 'Mrs' }
                     ]
                 });
                 activityMock.createdDate = date1Mock;
@@ -314,8 +314,8 @@ module Antares {
                 activityStatusId: '456',
                 activityTypeId: '456',
                 contacts: [
-                    <Dto.IContact>{ id: 'Contact1', firstName: 'John', surname: 'Test1', title: 'Mr' },
-                    <Dto.IContact>{ id: 'Contact2', firstName: 'Amy', surname: 'Test2', title: 'Mrs' }
+                    <Dto.IContact>{ id: 'Contact1', firstName: 'John', lastName: 'Test1', title: 'Mr' },
+                    <Dto.IContact>{ id: 'Contact2', firstName: 'Amy', lastName: 'Test2', title: 'Mrs' }
                 ]
             });
             activity2Mock.createdDate = date2Mock;
@@ -406,9 +406,9 @@ module Antares {
                 var contactListController: ContactListController = element.find('contact-list').controller('contactList');
                 contactListController.isLoading = false;
                 contactListController.contacts = [
-                    new Business.Contact(<Dto.IContact>{ firstName: 'Vernon', surname: 'Vaughn', title: 'Mr' }),
-                    new Business.Contact(<Dto.IContact>{ firstName: 'Julie', surname: 'Lerman', title: 'Mrs' }),
-                    new Business.Contact(<Dto.IContact>{ firstName: 'Mark', surname: 'Rendle', title: 'Mr' })
+                    new Business.Contact(<Dto.IContact>{ firstName: 'Vernon', lastName: 'Vaughn', title: 'Mr' }),
+                    new Business.Contact(<Dto.IContact>{ firstName: 'Julie', lastName: 'Lerman', title: 'Mrs' }),
+                    new Business.Contact(<Dto.IContact>{ firstName: 'Mark', lastName: 'Rendle', title: 'Mr' })
                 ];
 
                 scope.$apply();
@@ -433,13 +433,13 @@ module Antares {
             var createDateAsUtc = Core.DateTimeUtils.createDateAsUtc;
 
             var contacts1: Dto.IContact[] = [
-                { id: 'db9b4d6b-178a-41ce-8d29-8182b8a533c6', firstName: 'John', surname: 'Papa', title: 'Mr' },
-                { id: '78fbd602-5cd6-456e-a7e5-996d5ae2bbe5', firstName: 'Mark', surname: 'Rendle', title: 'Mr' }
+                { id: 'db9b4d6b-178a-41ce-8d29-8182b8a533c6', firstName: 'John', lastName: 'Papa', title: 'Mr' },
+                { id: '78fbd602-5cd6-456e-a7e5-996d5ae2bbe5', firstName: 'Mark', lastName: 'Rendle', title: 'Mr' }
             ];
 
             var contacts2: Dto.IContact[] = [
-                { id: 'db9b4d6b-178a-41ce-8d29-8182b8a533c6', firstName: 'Julie', surname: 'Lerman', title: 'Mrs' },
-                { id: '78fbd602-5cd6-456e-a7e5-996d5ae2bbe5', firstName: 'Ian', surname: 'Cooper', title: 'Mr' }
+                { id: 'db9b4d6b-178a-41ce-8d29-8182b8a533c6', firstName: 'Julie', lastName: 'Lerman', title: 'Mrs' },
+                { id: '78fbd602-5cd6-456e-a7e5-996d5ae2bbe5', firstName: 'Ian', lastName: 'Cooper', title: 'Mr' }
             ];
 
             var ownerships: Dto.IOwnership[] = [

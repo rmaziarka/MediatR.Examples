@@ -9,7 +9,7 @@ module Antares.TestHelpers {
 
             var contact: Dto.IContact = {
                 firstName: ContactGenerator.makeRandom('firstName'),
-                surname: ContactGenerator.makeRandom('surname'),
+                lastName: ContactGenerator.makeRandom('lastName'),
                 id: ContactGenerator.makeRandom('id'),
                 title: ContactGenerator.makeRandom('title')
             }

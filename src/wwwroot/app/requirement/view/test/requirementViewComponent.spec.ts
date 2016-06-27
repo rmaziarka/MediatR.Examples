@@ -63,8 +63,8 @@ module Antares {
                 maxLandArea: 5678,
                 description: 'sample',
                 contacts: [
-                    { id: '1', firstName: 'John', surname: 'Doe', title: 'Mr.' },
-                    { id: '2', firstName: 'Jane', surname: 'Doe', title: 'Mrs.' }
+                    { id: '1', firstName: 'John', lastName: 'Doe', title: 'Mr.' },
+                    { id: '2', firstName: 'Jane', lastName: 'Doe', title: 'Mrs.' }
                 ],
                 requirementNotes: [
                     new Business.RequirementNote({ id: 'note1', requirementId: '111', description: 'descr 1', createdDate: new Date(), user: null }),

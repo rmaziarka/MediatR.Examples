@@ -253,7 +253,7 @@
                     expectdOwnershipDetails += " " + ownershipDetails.PurchaseDate + " - " + ownershipDetails.SellDate;
                 }
 
-                Assert.Equal(ownershipDetails.ContactName + " " + ownershipDetails.ContactSurname, contact);
+                Assert.Equal(ownershipDetails.ContactName + " " + ownershipDetails.ContactLastName, contact);
                 Assert.Equal(expectdOwnershipDetails, currentOwnershipDetails);
             }
         }
