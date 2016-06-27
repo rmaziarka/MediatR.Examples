@@ -10,6 +10,8 @@
                     <activity-status-control ng-model="vm.activity.activityStatusId" config="vm.config.activityStatus" on-activity-status-changed="vm.activityStatusChanged(activityStatusId)" />
                     <enum-item-edit-control ng-model="vm.activity.activitySourceId" config="vm.configMocked.activitySource" schema="vm.activitySourceSchema"></enum-item-edit-control>
                     <enum-item-edit-control ng-model="vm.activity.activitySellingReasonId" config="vm.configMocked.activitySellingReason" schema="vm.activitySellingReasonSchema"></enum-item-edit-control>
+                    <textarea-edit-control ng-model="vm.activity.activitySourceDescription" config="vm.configMocked.activitySourceDescription" schema="vm.activitySourceDescriptionSchema"></textarea-edit-control>
+                    <text-edit-control ng-model="vm.activity.keyNumber" config="vm.configMocked.keyNumber" schema="vm.keyNumberSchema"></text-edit-control>
                 </fieldset>
             </section>
             <section id="activity-edit-negotiators">

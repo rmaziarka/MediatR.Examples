@@ -25,6 +25,8 @@ module Antares.Common.Models.Business {
         shortLetPricePerWeek: number = null;
         activitySourceId: string = '';
         activitySellingReasonId: string = '';
+        activitySourceDescription: string = '';
+        keyNumber: string = '';
 
         constructor(activity?: Dto.IActivity) {
             if (activity) {

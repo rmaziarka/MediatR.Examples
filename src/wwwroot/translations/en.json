@@ -222,7 +222,9 @@
         "SHORT_LET_PRICE_PER_WEEK": "Short Let Price Per Week"
       },
       "SOURCE": "Source",
-      "SELLING_REASON": "Selling reason"
+      "SOURCE_DESCRIPTION": "Source - description",
+      "SELLING_REASON": "Selling reason",
+      "KEY_NUMBER":  "Key number"
     },
     "PREVIEW": {
       "ACTIVITYPREVIEW": "Activity preview",

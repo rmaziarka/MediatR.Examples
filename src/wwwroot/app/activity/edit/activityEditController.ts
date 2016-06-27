@@ -76,6 +76,20 @@ module Antares.Activity {
             enumTypeCode: Dto.EnumTypeCode.ActivitySellingReason
         }
 
+        activitySourceDescriptionSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'activitySourceDescriptionId',
+            translationKey: 'ACTIVITY.EDIT.SOURCE_DESCRIPTION',
+            fieldName: 'activitySourceDescriptionId',
+            formName: 'activitySourceDescriptionForm',
+        }
+
+       keyNumberSchema: Antares.Attributes.ITextEditControlSchema = {
+           controlId: 'keyNumberId',
+            translationKey: 'ACTIVITY.EDIT.KEY_NUMBER',
+            fieldName: 'keyNumberId',
+            formName: 'keyNumberForm',
+        }
+
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService,
@@ -101,8 +115,20 @@ module Antares.Activity {
                         active: true
                     }
                 },
+                activitySourceDescription: {
+                    activitySourceDescriptionId: {
+                        required: true,
+                        active: true
+                    }
+                },
                 activitySellingReason: {
                     activitySellingReasonId: {
+                        required: true,
+                        active: true
+                    }
+                },
+                keyNumber: {
+                    keyNumberId: {
                         required: true,
                         active: true
                     }
