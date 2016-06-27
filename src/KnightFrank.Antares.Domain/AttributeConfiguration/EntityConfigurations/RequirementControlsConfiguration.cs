@@ -86,7 +86,6 @@
 
             this.Use(new List<ControlCode>
             {
-                ControlCode.Requirement_CreationDate,
                 ControlCode.Requirement_RentRange,
                 ControlCode.Requirement_LocationRequirements,
                 ControlCode.Requirement_Viewings,
