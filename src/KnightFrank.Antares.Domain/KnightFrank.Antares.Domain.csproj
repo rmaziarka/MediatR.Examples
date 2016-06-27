@@ -195,8 +195,10 @@
     <Compile Include="Company\Commands\CreateCompanyCommand.cs" />
     <Compile Include="Company\Commands\CreateCompanyCommandProfile.cs" />
     <Compile Include="Company\Commands\CreateCompanyValidator.cs" />
+    <Compile Include="Contact\Commands\ContactUserValidator.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandProfile.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidator.cs" />
+    <Compile Include="Contact\Commands\ContactUserCommand.cs" />
     <Compile Include="Contact\Commands\UpdateContactCommand.cs" />
     <Compile Include="Contact\Commands\CreateContactCommand.cs" />
     <Compile Include="Contact\CommandHandlers\UpdateContactCommandHandler.cs" />

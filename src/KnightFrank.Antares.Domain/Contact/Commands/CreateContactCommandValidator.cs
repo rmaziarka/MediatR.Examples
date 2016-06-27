@@ -21,6 +21,9 @@ namespace KnightFrank.Antares.Domain.Contact.Commands
 			this.RuleFor(x => x.EventInformalSalutation).Length(1, 128);
 			this.RuleFor(x => x.EventPersonalSalutation).Length(1, 128);
 			this.RuleFor(x => x.EventEnvelopeSalutation).Length(1, 128);
-		}
+
+            this.RuleFor(x => x.LeadNegotiator).NotNull().SetValidator(new ContactUserValidator());
+
+        }
 	}
 }
