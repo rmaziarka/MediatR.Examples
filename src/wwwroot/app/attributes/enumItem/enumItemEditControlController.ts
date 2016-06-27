@@ -7,10 +7,9 @@ module Antares.Attributes {
     export class EnumItemEditControlController {
         // bindings 
         public ngModel: string;
-        public config: IEnumSelectEditControlConfig;
+        public config: any;
         public onSelectedItemChanged: (obj: { id: string }) => void;
-        public enumTypeCode: Dto.EnumTypeCode;
-        public labelKey: string;
+        public schema: IEnumItemEditControlSchema;
 
         // controller
         private allEnumItems: Dto.IEnumItem[] = [];
@@ -18,23 +17,25 @@ module Antares.Attributes {
         constructor(private enumProvider: Antares.Providers.EnumProvider) { }
 
         $onInit = () => {
-            this.allEnumItems = this.enumProvider.enums[this.enumTypeCode];
+            this.allEnumItems = this.enumProvider.enums[this.schema.enumTypeCode];
         }
 
         public getEnumItems = () => {
-            if (!(this.config && this.config.enumItem)) {
+            if (!(this.config && this.config[this.schema.fieldName])) {
                 return [];
             }
 
-            if (!this.config.enumItem.allowedCodes) {
+            if (!this.config[this.schema.fieldName].allowedCodes) {
                 return this.allEnumItems;
             }
 
-            return <Dto.IEnumItem[]>_(this.allEnumItems).indexBy('code').at(this.config.enumItem.allowedCodes).value();
+            return <Dto.IEnumItem[]>_(this.allEnumItems).indexBy('code').at(this.config[this.schema.fieldName].allowedCodes).value();
         }
 
         public changeSelectedItem = () => {
-            this.onSelectedItemChanged({ id: this.ngModel });
+            if (this.onSelectedItemChanged) {
+                this.onSelectedItemChanged({ id: this.ngModel });
+            }
         }
     }
 
