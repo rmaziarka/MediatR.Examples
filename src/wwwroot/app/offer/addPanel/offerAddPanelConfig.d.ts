@@ -3,6 +3,6 @@
 declare module Antares.Offer {
     import Attributes = Antares.Attributes;
 
-    interface IOfferAddEditPanelConfig extends IOfferConfig {
+    interface IOfferAddPanelConfig extends IOfferConfig {
     }
 }

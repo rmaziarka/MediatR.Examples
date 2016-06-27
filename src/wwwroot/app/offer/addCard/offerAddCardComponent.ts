@@ -1,10 +1,10 @@
 ﻿/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Offer {
-    angular.module('app').component('offerAddEditCard', {
-        templateUrl: 'app/offer/addEditCard/offerAddEditCard.html',
+    angular.module('app').component('offerAddCard', {
+        templateUrl: 'app/offer/addCard/offerAddCard.html',
         controllerAs: 'vm',
-        controller: 'OfferAddEditCardController',
+        controller: 'OfferAddCardController',
         bindings: {
             config:'<',
             onSave: '&',

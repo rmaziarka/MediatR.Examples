@@ -1,10 +1,11 @@
-﻿<form name="vm.offerAddEditCardForm" ng-submit="vm.offerAddEditCardForm.isFormValid() && vm.save()" novalidate>
+﻿<form name="vm.offerAddCardForm" ng-submit="vm.offerAddCardForm.isFormValid() && vm.save()" novalidate>
     <kf-side-panel-card>
         <side-panel-header>
             <h3 translate="OFFER.ADD.NEW_OFFER"></h3>
         </side-panel-header>
         <side-panel-content>
             <activity-card activity="vm.activity"></activity-card>
+            <offer-status-control ng-model="vm.offer.statusId" config="vm.config.offer_Status"></offer-status-control>
         </side-panel-content>
         <side-panel-footer>
             <button class="btn btn-default" type="button" ng-click="vm.cancel()">

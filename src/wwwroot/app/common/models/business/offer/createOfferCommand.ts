@@ -1,9 +1,7 @@
-﻿/// <reference path="../../../typings/_all.d.ts" />
+﻿/// <reference path="../../../../typings/_all.d.ts" />
 
-module Antares.Services.Commands {
-    import Dto = Common.Models.Dto;
-
-    export class OfferAddPanelCommand implements IOfferAddPanelCommand {
+module Antares.Common.Models.Business {
+    export class CreateOfferCommand {
         activityId: string;
         requirementId: string;
         statusId: string;
@@ -14,7 +12,8 @@ module Antares.Services.Commands {
         completionDate: Date;
         specialConditions: string;
 
-        constructor(model: Dto.IOffer) {
+        constructor(model?: CreateOfferCommand){
+            model = model || <CreateOfferCommand>{};
             this.activityId = model.activityId;
             this.requirementId = model.requirementId;
             this.statusId = model.statusId;
@@ -25,17 +24,5 @@ module Antares.Services.Commands {
             this.completionDate = model.completionDate;
             this.specialConditions = model.specialConditions;
         }
-    }
-
-    export interface IOfferAddPanelCommand {
-        activityId: string;
-        requirementId: string;
-        statusId: string;
-        price: number;
-        pricePerWeek: number;
-        offerDate: Date;
-        exchangeDate: Date;
-        completionDate: Date;
-        specialConditions: string;
     }
 }

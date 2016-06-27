@@ -15,6 +15,15 @@ module Antares.TestHelpers {
             return config;
         }
 
+        public static generateOfferStatusEditConfig(): Attributes.IOfferStatusEditControlConfig {
+            var config: Attributes.IOfferStatusEditControlConfig = {
+                active: true,
+                statusId: null
+            };
+
+            return config;
+        }
+
         public static generateActivityTypeEditConfig(): Attributes.IActivityTypeEditControlConfig {
             var config: Attributes.IActivityTypeEditControlConfig = {
                 active: true,
