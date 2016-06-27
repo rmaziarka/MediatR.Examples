@@ -10,14 +10,19 @@ module Antares.Common.Models.Enums
 	 	ActivityStatus,
 	 	Division,
 	 	ActivityDocumentType,
+	 	RequirementDocumentType,
+	 	PropertyDocumentType,
 	 	OfferStatus,
 	 	ActivityUserType,
 	 	ActivityDepartmentType,
 	 	MortgageStatus,
+	 	ClientCareStatus,
 	 	MortgageSurveyStatus,
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,
 	 	Enquiries,
+	 	ActivitySource,
+	 	ActivitySellingReason,
 	 }
 
 	
@@ -59,6 +64,19 @@ module Antares.Common.Models.Enums
 		GasCertificate,
 	}
 
+	export enum RequirementDocumentType
+	{
+		TermsOfBusiness,
+	}
+
+	export enum PropertyDocumentType
+	{
+		Photograph,
+		FloorPlan,
+		Brochure,
+		VideoTour,
+	}
+
 	export enum OfferStatus
 	{
 		New,
@@ -86,6 +104,13 @@ module Antares.Common.Models.Enums
 		NotRequiredCashInBank,
 		InProgress,
 		Agreed,
+	}
+
+	export enum ClientCareStatus
+	{
+		MassiveActionClient,
+		PrincipalClient,
+		KeyClient,
 	}
 
 	export enum MortgageSurveyStatus
@@ -116,5 +141,50 @@ module Antares.Common.Models.Enums
 		NotStarted,
 		Sent,
 		Complete,
+	}
+
+	export enum ActivitySource
+	{
+		KFContactsRegister,
+		KFPR,
+		Knightfrank,
+		KnightfrankGlobalSearch,
+		DirectEmail,
+		DirectPhoneCall,
+		DeveloperWebsite,
+		LeadGenerationCanvassingActivities,
+		OnTheMarket,
+		OtherInternetPortal,
+		OtherPortalGlobrix,
+		OtherPortalPrimelocation,
+		POD,
+		TBSReferralAdvert,
+		TBSReferralBank,
+		TBSReferralPastClient,
+		TBSReferralKF,
+		TBSReferralProfessionalContact,
+		TBSReferralWebsite,
+		MagazineA,
+		MagazineB,
+		MagazineC,
+		NewspaperA,
+		NewspaperB,
+		NewspaperC,
+	}
+
+	export enum ActivitySellingReason
+	{
+		Upsizing,
+		DebtFinancialDifficulty,
+		Divorce,
+		Downsizing,
+		FamilySize,
+		PrivateDeveloper,
+		Probate,
+		ReceiverDisposal,
+		RegularPropertyValueAppraisal,
+		Relocation,
+		Retiring,
+		SurpliceToTequirement,
 	}
 }

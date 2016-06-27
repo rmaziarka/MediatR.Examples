@@ -24,6 +24,8 @@ module Antares.Activity {
         private departmentErrorMessageCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.MESSAGE';
         private departmentErrorTitleCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.TITLE';
 
+
+        public configMocked: any;
         //controls
         controlSchemas: any = {
             marketAppraisalPrice: {
@@ -58,6 +60,22 @@ module Antares.Activity {
             }
         };
 
+        activitySourceSchema: Antares.Attributes.IEnumItemEditControlSchema = {
+            controlId: 'activitySourceId',
+            translationKey: 'ACTIVITY.EDIT.SOURCE',
+            fieldName: 'activitySourceId',
+            formName: 'activitySourceForm',
+            enumTypeCode: Dto.EnumTypeCode.ActivitySource
+        }
+
+        activitySellingReasonSchema: Antares.Attributes.IEnumItemEditControlSchema = {
+            controlId: 'activitySellingReasonId',
+            translationKey: 'ACTIVITY.EDIT.SELLING_REASON',
+            fieldName: 'activitySellingReasonId',
+            formName: 'activitySellingReasonForm',
+            enumTypeCode: Dto.EnumTypeCode.ActivitySellingReason
+        }
+
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService,
@@ -67,14 +85,29 @@ module Antares.Activity {
 
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
 
-
+            
             this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
                 this.isPropertyPreviewPanelVisible = false;
             });
-
+            
             this.eventAggregator.with(this).subscribe(Attributes.OpenPropertyPrewiewPanelEvent, (event: Antares.Attributes.OpenPropertyPrewiewPanelEvent) => {
                 this.isPropertyPreviewPanelVisible = true;
             });
+
+            this.configMocked = {
+                activitySource: {
+                    activitySourceId: {
+                        required: true,
+                        active: true
+                    }
+                },
+                activitySellingReason: {
+                    activitySellingReasonId: {
+                        required: true,
+                        active: true
+                    }
+                }
+            }
         }
         
         $onInit = () => {

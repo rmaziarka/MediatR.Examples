@@ -15,6 +15,8 @@ module Antares.Common.Models.Dto {
         ClientCareStatus = <any>'clientCareStatus',
         AdditionalSurveyStatus = <any>'additionalSurveyStatus',
         SearchStatus = <any>'searchStatus',
-        Enquiries = <any>'enquiries'
+        Enquiries = <any>'enquiries',
+        ActivitySource = <any>'activitySource',
+        ActivitySellingReason = <any>'activitySellingReason'
     }
 }

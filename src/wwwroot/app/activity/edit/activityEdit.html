@@ -8,6 +8,8 @@
                 <fieldset id="activity-edit-basic">
                     <h3 class="page-header" translate="ACTIVITY.EDIT.BASIC_INFORMATION"></h3>
                     <activity-status-control ng-model="vm.activity.activityStatusId" config="vm.config.activityStatus" on-activity-status-changed="vm.activityStatusChanged(activityStatusId)" />
+                    <enum-item-edit-control ng-model="vm.activity.activitySourceId" config="vm.configMocked.activitySource" schema="vm.activitySourceSchema"></enum-item-edit-control>
+                    <enum-item-edit-control ng-model="vm.activity.activitySellingReasonId" config="vm.configMocked.activitySellingReason" schema="vm.activitySellingReasonSchema"></enum-item-edit-control>
                 </fieldset>
             </section>
             <section id="activity-edit-negotiators">

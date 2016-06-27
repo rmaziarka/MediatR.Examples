@@ -17,5 +17,7 @@ declare module Antares.Common.Models.Dto {
         offers?: IOffer[];
 		askingPrice?: number;
         shortLetPricePerWeek?: number;
+        activitySourceId: string;
+        activitySellingReasonId: string;
     }
 }
