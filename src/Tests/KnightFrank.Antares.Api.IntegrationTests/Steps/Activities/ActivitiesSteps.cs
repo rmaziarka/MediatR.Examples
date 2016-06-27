@@ -147,7 +147,7 @@
                 ActivityStatusId = activityStatusId,
                 ContactIds = vendors,
                 ActivityTypeId = activityTypeId,
-                LeadNegotiatorId = leadNegotiatorId
+                LeadNegotiator = new UpdateActivityUser { UserId = leadNegotiatorId, CallDate = DateTime.Today }
             };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, activityCommand);

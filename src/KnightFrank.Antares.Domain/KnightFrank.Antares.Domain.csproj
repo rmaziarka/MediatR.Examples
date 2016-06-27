@@ -81,6 +81,7 @@
     <Compile Include="Activity\CommandHandlers\CreateActivityCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityCommandHandler.cs" />
     <Compile Include="Activity\CommandHandlers\UpdateActivityUserCommandHandler.cs" />
+    <Compile Include="Activity\Commands\ActivityCommandBase.cs" />
     <Compile Include="Activity\Commands\CreateActivityAttachmentCommand.cs" />
     <Compile Include="Activity\Commands\CreateActivityCommand.cs" />
     <Compile Include="Activity\Commands\ActivityProfile.cs" />

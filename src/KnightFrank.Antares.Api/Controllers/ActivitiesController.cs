@@ -48,10 +48,6 @@
         [DataShaping]
         public Activity CreateActivity([FromBody] CreateActivityCommand command)
         {
-            // User id is mocked.
-            // TODO Set correct user id from header.
-            command.LeadNegotiatorId = this.userRepository.FindBy(u => true).First().Id;
-
             Guid activityId = this.mediator.Send(command);
 
             return this.GetActivity(activityId);

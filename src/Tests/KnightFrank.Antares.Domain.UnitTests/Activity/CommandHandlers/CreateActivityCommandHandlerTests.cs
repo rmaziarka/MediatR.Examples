@@ -55,7 +55,7 @@
             IFixture fixture)
         {
             // Arrange
-            User user = this.CreateUser(command.LeadNegotiatorId, fixture);
+            User user = this.CreateUser(command.LeadNegotiator.UserId, fixture);
             Activity activity = null;
             var property = fixture.Create<Property>();
             property.Address = fixture.Create<Address>();
@@ -124,7 +124,7 @@
             managingDepartment.DepartmentType.Code.Should().Be(ActivityDepartmentType.Managing.ToString());
 
             entityValidator.Verify(x => x.EntityExists(property, command.PropertyId), Times.Once);
-            entityValidator.Verify(x => x.EntityExists(user, command.LeadNegotiatorId), Times.Once);
+            entityValidator.Verify(x => x.EntityExists(user, command.LeadNegotiator.UserId), Times.Once);
             entityValidator.Verify(x => x.EntityExists(activityType, command.ActivityTypeId), Times.Once);
             attributeValidator.Verify(
                 x =>

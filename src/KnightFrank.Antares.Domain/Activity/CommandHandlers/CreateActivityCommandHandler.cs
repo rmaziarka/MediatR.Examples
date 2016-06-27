@@ -114,8 +114,8 @@
             activity.Contacts = vendors;
 
             User negotiator =
-                this.userRepository.GetWithInclude(x => message.LeadNegotiatorId == x.Id, x => x.Department).SingleOrDefault();
-            this.entityValidator.EntityExists(negotiator, message.LeadNegotiatorId);
+                this.userRepository.GetWithInclude(x => message.LeadNegotiator.UserId == x.Id, x => x.Department).SingleOrDefault();
+            this.entityValidator.EntityExists(negotiator, message.LeadNegotiator.UserId);
 
             activity.ActivityUsers.Add(
                 new ActivityUser
