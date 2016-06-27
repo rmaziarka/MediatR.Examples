@@ -7,11 +7,17 @@ module Antares.Property.View {
     import CartListOrder = Common.Component.ListOrder;
     import Resources = Common.Models.Resources;
     import LatestViewsProvider = Providers.LatestViewsProvider;
-    import EntityType = Common.Models.Enums.EntityTypeEnum;
+    import EntityType = Common.Models.Enums.EntityType;
 
     export class PropertyViewController extends Core.WithPanelsBaseController {
+        isActivityAddPanelVisible: boolean = false;
+        isActivityPreviewPanelVisible:boolean = false;
         ownershipAddPanelVisible: boolean = false;
+        
         propertyId: string;
+
+        enumTypePropertyDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.PropertyDocumentType;
+        entityType: EntityType = EntityType.Property;
 
         loadingContacts: boolean = false;
 
@@ -19,18 +25,54 @@ module Antares.Property.View {
         activitiesCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
         userData: Dto.ICurrentUser;
         property: Business.PropertyView;
+        config: Activity.IActivityAddPanelConfig;
         savePropertyActivityBusy: boolean = false;
+        selectedActivity: Common.Models.Business.Activity;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private dataAccessService: Services.DataAccessService,
+            private propertyService: Services.PropertyService,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService,
-            private latestViewsProvider: LatestViewsProvider) {
+            private latestViewsProvider: LatestViewsProvider,
+            private eventAggregator: Core.EventAggregator) {
 
             super(componentRegistry, $scope);
             this.propertyId = $state.params['id'];
             this.fixOwnershipDates();
+
+            this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
+                // TODO iteration?
+                this.isActivityAddPanelVisible = false;
+                this.isActivityPreviewPanelVisible = false;
+            });
+
+            this.eventAggregator.with(this).subscribe(Activity.ActivityAddedSidePanelEvent, (msg: Activity.ActivityAddedSidePanelEvent) => {
+                this.property.activities.push(new Business.Activity(msg.activityAdded));
+            });
+
+            eventAggregator
+                .with(this)
+                .subscribe(Common.Component.Attachment.AttachmentSavedEvent, (event: Common.Component.Attachment.AttachmentSavedEvent) => {
+                    this.addSavedAttachmentToList(event.attachmentSaved);
+                });
+        }
+
+        onPanelsHidden = () =>{
+            this.isActivityAddPanelVisible = false;
+            this.isActivityPreviewPanelVisible = false;
+        }
+
+        addSavedAttachmentToList = (result: Dto.IAttachment) => {
+            var savedAttachment = new Business.Attachment(result);
+            this.property.attachments.push(savedAttachment);
+        }
+
+        saveAttachment = (attachment: Common.Component.Attachment.AttachmentUploadCardModel) => {
+            var command = new Property.Command.PropertyAttachmentSaveCommand(this.property.id, attachment);
+            return this.propertyService.createPropertyAttachment(command)
+                .then((result: angular.IHttpPromiseCallbackArg<Dto.IAttachment>) => { return result.data; });
         }
 
         fixOwnershipDates = () => {
@@ -53,18 +95,9 @@ module Antares.Property.View {
             this.showPanel(this.components.panels.ownershipView);
         }
 
-        showActivityAdd = () => {
-            this.components.activityAdd().clearActivity();
-
-            var vendor: Business.Ownership = _.find(this.property.ownerships, (ownership: Business.Ownership) => {
-                return ownership.isVendor();
-            });
-
-            if (vendor) {
-                this.components.activityAdd().setVendors(vendor.contacts);
-            }
-
-            this.showPanel(this.components.panels.activityAdd);
+        showActivityAdd = () =>{
+            this.hidePanels();
+            this.isActivityAddPanelVisible = true;
         }
 
         showAreaAdd = () => {
@@ -78,13 +111,9 @@ module Antares.Property.View {
         }
 
         showActivityPreview = (activity: Common.Models.Business.Activity) => {
-            this.components.activityPreview().setActivity(activity);
-            this.showPanel(this.components.panels.activityPreview);
-
-            this.latestViewsProvider.addView({
-                entityId: activity.id,
-                entityType: EntityType.Activity
-            });
+            this.hidePanels();
+            this.selectedActivity = activity;
+            this.isActivityPreviewPanelVisible = true;
         }
 
         showContactList = () => {
@@ -129,21 +158,6 @@ module Antares.Property.View {
         saveOwnership() {
             this.components.ownershipAdd().saveOwnership(this.property.id).then(() => {
                 this.cancelUpdateContacts();
-            });
-        }
-
-        saveActivity() {
-            this.savePropertyActivityBusy = true;
-
-            this.components.activityAdd().saveActivity(this.property.id).then((result: Dto.IActivity) => {
-                this.cancelAddActivity();
-
-                this.latestViewsProvider.addView({
-                    entityId: result.id,
-                    entityType: EntityType.Activity
-                });
-            }).finally(() => {
-                this.savePropertyActivityBusy = false;
             });
         }
 
@@ -194,10 +208,6 @@ module Antares.Property.View {
                 ownershipAddId: 'viewProperty:ownershipAddComponent',
                 ownershipViewId: 'viewProperty:ownershipViewComponent',
                 ownershipViewSidePanelId: 'viewProperty:ownershipViewSidePanelComponent',
-                activityAddId: 'viewProperty:activityAddComponent',
-                activityAddSidePanelId: 'viewProperty:activityAddSidePanelComponent',
-                activityPreviewId: 'viewProperty:activityPreviewComponent',
-                activityPreviewSidePanelId: 'viewProperty:activityPreviewSidePanelComponent',
                 areaAddSidePanelId: 'viewProperty:areaAddSidePanelComponent',
                 areaEditSidePanelId: 'viewProperty:areaEditSidePanelComponent',
                 areaAddId: 'viewProperty:areaAddComponent',
@@ -208,8 +218,6 @@ module Antares.Property.View {
         defineComponents() {
             this.components = {
                 contactList: () => { return this.componentRegistry.get(this.componentIds.contactListId); },
-                activityAdd: () => { return this.componentRegistry.get(this.componentIds.activityAddId); },
-                activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewId); },
                 ownershipAdd: () => { return this.componentRegistry.get(this.componentIds.ownershipAddId); },
                 ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewId); },
                 areaAdd: () => { return this.componentRegistry.get(this.componentIds.areaAddId); },
@@ -217,8 +225,6 @@ module Antares.Property.View {
                 panels: {
                     contact: () => { return this.componentRegistry.get(this.componentIds.contactSidePanelId); },
                     ownershipView: () => { return this.componentRegistry.get(this.componentIds.ownershipViewSidePanelId); },
-                    activityAdd: () => { return this.componentRegistry.get(this.componentIds.activityAddSidePanelId); },
-                    activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId); },
                     areaAdd: () => { return this.componentRegistry.get(this.componentIds.areaAddSidePanelId); },
                     areaEdit: () => { return this.componentRegistry.get(this.componentIds.areaEditSidePanelId); }
                 }

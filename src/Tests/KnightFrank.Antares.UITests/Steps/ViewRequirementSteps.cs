@@ -2,7 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+
+    using FluentAssertions;
 
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Contacts;
@@ -153,6 +156,12 @@
                 .WaitForSidePanelToShow();
         }
 
+        [When(@"User clicks details offer button for (.*) offer on view requirement page")]
+        public void DetailsOffer(int position)
+        {
+            this.page.OpenOfferActions(position).DetailsOffer(1);
+        }
+
         [When(@"User fills in offer details on view requirement page")]
         public void FillOfferDetails(Table table)
         {
@@ -185,6 +194,27 @@
         public void OpenViewOfferPage()
         {
             this.page.OfferPreview.ClickDetailsLink();
+        }
+
+        [When(@"User clicks add attachment button on view requirement page")]
+        public void OpenAttachFilePanel()
+        {
+            this.page.OpenAttachFilePanel().WaitForSidePanelToShow();
+        }
+
+        [When(@"User adds (.*) file with (.*) type on view requirement page")]
+        public void AddAttachment(string file, string type)
+        {
+            this.page.AttachFile.SelectType(type)
+                .AddFiletoAttachment(file)
+                .SaveAttachment();
+            this.page.WaitForSidePanelToHide(60);
+        }
+
+        [When(@"User clicks attachment card on view requirement page")]
+        public void OpenAttachmentPreview()
+        {
+            this.page.OpenAttachmentPreview().WaitForSidePanelToShow();
         }
 
         [Then(@"Side panel should not be displayed on view requirement page")]
@@ -332,6 +362,44 @@
             this.page.WaitForDetailsToLoad();
             var date = this.scenarioContext.Get<DateTime>("RequirementDate");
             Assert.Equal(date.ToString("MMMM d, yyyy"), this.page.CreateDate);
+        }
+
+        [Then(@"Attachment should be displayed on view requirement page")]
+        public void CheckIfAttachmentIsDisplayed(Table table)
+        {
+            Attachment actual = this.page.AttachmentDetails;
+            var expected = table.CreateInstance<Attachment>();
+            expected.Date = DateTime.UtcNow.ToString(Format);
+
+            actual.ShouldBeEquivalentTo(expected);
+        }
+
+        [Then(@"Attachment details on attachment preview page are the same like on view requirement page")]
+        public void ChackAttachmentDetails()
+        {
+            Attachment actual = this.page.AttachmentPreview.GetAttachmentDetails();
+            actual.Date = actual.Date.Split(',')[0];
+            Attachment expected = this.page.AttachmentDetails;
+            expected.User = "John Smith";
+
+            actual.ShouldBeEquivalentTo(expected);
+        }
+
+        [Then(@"Requirement attachment (.*) should be downloaded")]
+        public void ThenAttachmentShouldBeDownloaded(string attachmentName)
+        {
+            FileInfo fileInfo = this.page.AttachmentPreview.GetDownloadedAttachmentInfo();
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(attachmentName.ToLower(), fileInfo.Name),
+                () => Assert.Equal("." + attachmentName.Split('.')[1], fileInfo.Extension));
+        }
+
+        [Then(@"User closes attachment preview page on view requirement page")]
+        public void CloseAttachmentPreviewPanel()
+        {
+            this.page.AttachmentPreview.CloseAttachmentPreviewPage();
+            this.page.WaitForSidePanelToHide();
         }
     }
 }

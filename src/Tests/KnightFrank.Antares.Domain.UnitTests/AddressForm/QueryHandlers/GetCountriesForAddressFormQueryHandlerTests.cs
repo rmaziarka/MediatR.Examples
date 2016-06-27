@@ -55,7 +55,7 @@
         }
 
         [Theory]
-        [InlineAutoMoqData]
+        [AutoMoqData]
         public void Given_InvalidEntityTypeInQuery_When_HandlingQuery_Then_ShouldThrowException(string entityTypeCode)
         {
             // Arrange

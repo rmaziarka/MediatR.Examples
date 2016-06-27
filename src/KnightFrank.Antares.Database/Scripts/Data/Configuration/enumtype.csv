@@ -4,9 +4,17 @@ OwnershipType
 ActivityStatus
 Division
 ActivityDocumentType
+PropertyDocumentType
+RequirementDocumentType
 OfferStatus
 UserType
 ActivityDepartmentType
+MortgageStatus
+MortgageSurveyStatus
+ClientCareStatus
+AdditionalSurveyStatus
+SearchStatus
+Enquiries
 SalutationFormat
 MailingSalutation
 EventSalutation

@@ -2,7 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
-
+    using KnightFrank.Antares.Dal.Model.Company;
 	using KnightFrank.Antares.Dal.Model.Enum;
 
     public class Contact : BaseAuditableEntity
@@ -41,6 +41,8 @@
 
 		public virtual EnumTypeItem DefaultEventSalutation { get; set; }
 
-        public virtual ICollection<ContactUser> ContactUsers { get; set; } = new List<ContactUser>();
-    }
+        public virtual ICollection<ContactUser> ContactUsers { get; set; } = new List<ContactUser>();	
+
+        public virtual ICollection<CompanyContact> CompaniesContacts { get; set; }
+	}
 }

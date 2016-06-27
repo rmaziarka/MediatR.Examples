@@ -11,8 +11,6 @@
     using FluentValidation.Internal;
     using FluentValidation.Validators;
 
-    using MediatR;
-
     public static class AbstractValidatorFluentExtension
     {
         public static void ShouldHaveRules<TRequest, TProperty>(

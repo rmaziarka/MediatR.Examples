@@ -34,6 +34,8 @@
                     .Include(req => req.Offers)
                     .Include(req => req.Offers.Select(v => v.Negotiator))
                     .Include(req => req.Offers.Select(v => v.Activity.Property.Address))
+                    .Include(req => req.Attachments)
+                    .Include(req => req.Attachments.Select(at => at.User))
                     .SingleOrDefault(req => req.Id == message.Id);
 
             return requirement;

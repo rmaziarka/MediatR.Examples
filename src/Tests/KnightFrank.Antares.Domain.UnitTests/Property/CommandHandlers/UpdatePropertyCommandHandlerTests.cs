@@ -35,7 +35,7 @@
            [Frozen] Mock<IAddressValidator> addressValidator,
            UpdatePropertyCommandHandler handler)
         {
-            // Arrange 
+            // Arrange
             addressValidator.Setup(x => x.Validate(It.IsAny<CreateOrUpdateAddress>()))
                  .Throws(new BusinessValidationException(It.IsAny<BusinessValidationMessage>()));
 
@@ -65,7 +65,7 @@
 
             // Assert
             property.Address.ShouldBeEquivalentTo(command.Address, options => options.IncludingProperties().ExcludingMissingMembers());
-            entityValidator.Verify(x => x.EntityExists<PropertyType>(command.PropertyTypeId));
+            entityValidator.Verify(x => x.EntityExists<Dal.Model.Property.PropertyType>(command.PropertyTypeId));
             enumTypeItemValidator.Verify(x => x.ItemExists(EnumType.Division, command.DivisionId));
             entityValidator.Verify(x => x.EntityExists(property, command.Id));
             propertyRepository.Verify(p => p.Save(), Times.Once);

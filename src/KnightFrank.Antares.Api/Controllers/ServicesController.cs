@@ -7,45 +7,55 @@
     using KnightFrank.Antares.Api.Models;
     using KnightFrank.Antares.Api.Services.AzureStorage;
     using KnightFrank.Antares.Api.Validators.Services;
+    using KnightFrank.Foundation.Antares.Cloud.Storage.Blob;
 
     [RoutePrefix("api/services")]
     public class ServicesController : ApiController
     {
-        private readonly IStorageProvider storageProvider;
+        private readonly IDocumentStorageProvider documentStorageProvider;
 
-        public ServicesController(IStorageProvider storageProvider)
+        public ServicesController(IDocumentStorageProvider documentStorageProvider)
         {
-            this.storageProvider = storageProvider;
+            this.documentStorageProvider = documentStorageProvider;
+
+            this.documentStorageProvider.ConfigureUploadUrl();
+            this.documentStorageProvider.ConfigureDownloadUrl();
         }
 
         /// <summary>
-        ///    Get destination url for uploading activity document
+        ///    Get destination url for uploading document
         /// </summary>
+        /// <param name="entity">The name of the entity the attachment is related to.</param>
+        /// <param name="parameters">The parameters query.</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("attachment/upload/activity/")]
-        public AzureUploadUrlContainer GetUrlForUploadFile([FromUri(Name = "")] AttachmentUrlParameters parameters)
+        [Route("attachment/upload/{entity}/")]
+        public AzureUploadUrlContainer GetUrlForUploadFile(CloudStorageContainerType entity, [FromUri(Name = "")] AttachmentUrlParameters parameters)
         {
             var validator = new AttachmentUrlParametersValidator();
             validator.ValidateAndThrow(parameters);
 
-            return this.storageProvider.GetActivityUploadSasUri(parameters);
+            parameters.cloudStorageContainerType = entity;
+
+            return this.documentStorageProvider.GetUploadUrlMethod(parameters.cloudStorageContainerType)(parameters);
         }
 
         /// <summary>
-        ///    Get destination url for downloading activity document
+        ///    Get destination url for downloading document
         /// </summary>
+        /// <param name="entity">The name of the entity the attachment is related to.</param>
+        /// <param name="parameters">The parameters query.</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("attachment/download/activity/")]
-        public AzureDownloadUrlContainer GetUrlForDownloadFile([FromUri(Name = "")] AttachmentDownloadUrlParameters parameters)
+        [Route("attachment/download/{entity}/")]
+        public AzureDownloadUrlContainer GetUrlForDownloadFile(CloudStorageContainerType entity, [FromUri(Name = "")] AttachmentDownloadUrlParameters parameters)
         {
-            // TODO: DocumentTypeId, EntityReferenceId and Filename should be fetched from DB, not sent from client.
-
             var validator = new AttachmentDownloadUrlParametersValidator();
             validator.ValidateAndThrow(parameters);
 
-            return this.storageProvider.GetActivityDownloadSasUri(parameters);
+            parameters.cloudStorageContainerType = entity;
+
+            return this.documentStorageProvider.GetDownloadUrlMethod(parameters.cloudStorageContainerType)(parameters);
         }
     }
 }

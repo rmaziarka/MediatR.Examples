@@ -13,6 +13,7 @@ BULK INSERT #TempContactTitle
     (
 		FIRSTROW = 2,
 		FIELDTERMINATOR = ';',
+		CODEPAGE = 1252,
 		ROWTERMINATOR = '\n',
 		TABLOCK
     )

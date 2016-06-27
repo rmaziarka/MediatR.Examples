@@ -10,7 +10,8 @@ module Antares {
             var controllerFunction = Property.PropertyEditController;
             controller = Object.create(controllerFunction.prototype);
             controller.userData = <Dto.ICurrentUser>{
-                division: <Dto.IEnumTypeItem>{id: 'enumId', code: 'code'}
+                division: <Dto.IEnumTypeItem>{ id: 'enumId', code: 'code' },
+                country: <Dto.ICountry>{ id: 'countryId', isoCode: 'gb' }
             };
             controller.property = new Business.Property();
             var scope: ng.IScope = $rootScope.$new();

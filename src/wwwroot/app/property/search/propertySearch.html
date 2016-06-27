@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="page-header" translate="PROPERTY.SEARCH.PROPERTIES"></h2>
+
+        <div class="row">
+            <div class="col-md-6 col-lg-4">
+                <form ng-submit="vm.searchPropertyForm.$valid && vm.search()" name="vm.searchPropertyForm" method="post" novalidate>
+                    <div class="form-group" ng-class="{'has-error': (vm.searchPropertyForm.$submitted || vm.searchPropertyForm.searchQuery.$dirty) && vm.searchPropertyForm.searchQuery.$invalid}">
+                        <div class="search-property input-group">
+                            <input type="search" class="form-control" required id="search-query" name="searchQuery" translate translate-attr-placeholder="PROPERTY.SEARCH.QUERY_PLACEHOLDER" ng-model="vm.searchQuery" autocomplete="off">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                        <div ng-messages="vm.searchPropertyForm.searchQuery.$error" ng-show="vm.searchPropertyForm.$submitted || vm.searchPropertyForm.searchQuery.$dirty">
+                            <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                        </div>
+                    </div>
+                    <div class="form-group form-inline" id="search-options" ng-if="vm.showSearchOptions">
+                        <div class="row">
+                            <div class="col-xs-5 search-property-label">
+                                <span class="text-uppercase" translate="PROPERTY.SEARCH.RESULTS_COUNT"></span> <span class="search-property-count">{{vm.totalResults}}</span>
+                            </div>
+                            <div class="col-xs-7 text-right">
+                                <label for="results-on-page" translate="PROPERTY.SEARCH.RESULTS_PER_PAGE"></label>
+                                <select id="results-on-page" class="form-control search-property-select" ng-model="vm.resultsPerPage" ng-options="result for result in vm.resultsPerPageOptions" ng-change="vm.search()"></select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="search-property-results">
+                            <card-list>
+                                <card-list-item ng-repeat="result in vm.searchResult track by result.id">
+                                    <card show-context-menu="false" display-new-control="true" item="result"
+                                          card-template-url="'app/property/templates/propertySearchCard.html'">
+                                    </card>
+                                </card-list-item>
+                                <card-list-no-items>
+                                    <div class="form-group" ng-show="vm.showSearchOptions && vm.searchResult.length === 0">
+                                        <p class="help-block" translate="PROPERTY.SEARCH.NO_ITEMS"></p>
+                                    </div>
+                                </card-list-no-items>
+                            </card-list>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-right" ng-if="vm.searchResult.length > 0">
+                        <uib-pagination
+                            boundary-links="true"
+                            max-size="5"
+                            items-per-page="vm.resultsPerPage"
+                            ng-change="vm.onPageChanged()"
+                            ng-model="vm.currentPage"
+                            total-items="vm.totalResults"
+                            rotate="true"
+                            force-ellipses="true"
+                            class="pagination-md"
+                            previous-text="&lsaquo;"
+                            next-text="&rsaquo;"
+                            first-text="&laquo;"
+                            last-text="&raquo;"></uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

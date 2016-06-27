@@ -7,12 +7,9 @@
     using Dal.Repository;
     using Commands;
 
-    using FluentValidation.Results;
-
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
-    using KnightFrank.Antares.Domain.Common.Exceptions;
 
     using MediatR;
 

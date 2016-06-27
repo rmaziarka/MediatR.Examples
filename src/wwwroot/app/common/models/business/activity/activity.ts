@@ -21,6 +21,8 @@ module Antares.Common.Models.Business {
         activityUsers: ActivityUser[] = [];
         activityDepartments: ActivityDepartment[] = [];
         offers: Offer[];
+        askingPrice: number = null;
+        shortLetPricePerWeek: number = null;
 
         constructor(activity?: Dto.IActivity) {
             if (activity) {

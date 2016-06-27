@@ -3,7 +3,7 @@
 module Antares {
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
-
+    import IActivityViewConfig = Antares.Activity.IActivityViewConfig;
     describe('Given activity route controller', () =>{
         var scope: ng.IScope;
         var controllerProvider: ng.IControllerService;
@@ -26,7 +26,8 @@ module Antares {
             it('then addView of last views provider is called', () => {
                 //Arrange
                 var activityMock = TestHelpers.ActivityGenerator.generate();
-                var parametrs = { $scope: scope, activity: activityMock, latestViewsProvider: latestViewsProviderSpy };
+                var config = { vendors: {} } as IActivityViewConfig;
+                var parametrs = { $scope: scope, activity: activityMock, latestViewsProvider: latestViewsProviderSpy, config: config };
 
                 //Act
                 controllerProvider('ActivityRouteController', parametrs);

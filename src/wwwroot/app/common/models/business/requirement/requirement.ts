@@ -13,6 +13,7 @@ module Antares.Common.Models.Business {
         viewingsByDay: ViewingGroup[];
         viewings: Viewing[];
         offers: Offer[];
+        attachments: Attachment[] = [];
 
         constructor(requirement?: Dto.IRequirement) {
             if (requirement) {
@@ -27,6 +28,9 @@ module Antares.Common.Models.Business {
                 if (requirement.viewings) {
                     this.viewings = requirement.viewings.map((item) => new Viewing(item));
                     this.groupViewings(this.viewings);
+                }
+                if (requirement.attachments) {
+                    this.attachments = requirement.attachments.map((attachment: Dto.IAttachment) => { return new Business.Attachment(attachment) });
                 }
             }
         }

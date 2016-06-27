@@ -16,9 +16,9 @@
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator viewActivityForm = new ElementLocator(Locator.CssSelector, "activity-view > div");
         private readonly ElementLocator addressElement = new ElementLocator(Locator.XPath, "//card[@id = 'card-property']//span[text()='{0}']");
-        private readonly ElementLocator detailsLink = new ElementLocator(Locator.CssSelector, "#card-property .detailsLink");
+        private readonly ElementLocator propertyCard = new ElementLocator(Locator.Id, "card-property");
         private readonly ElementLocator editButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'goToEdit']");
-        private readonly ElementLocator marketAppraisalPrice = new ElementLocator(Locator.Id, "marketAppraisalPrice");
+        private readonly ElementLocator askingPrice = new ElementLocator(Locator.Id, "asking-price");
         private readonly ElementLocator recommendedPrice = new ElementLocator(Locator.Id, "recommendedPrice");
         private readonly ElementLocator status = new ElementLocator(Locator.Id, "activityStatus");
         private readonly ElementLocator vendorEstimatedPrice = new ElementLocator(Locator.Id, "vendorEstimatedPrice");
@@ -28,7 +28,7 @@
         private readonly ElementLocator attachmentDate = new ElementLocator(Locator.CssSelector, "#card-list-attachments time[id *= 'attachment-created-date']");
         private readonly ElementLocator attachmentType = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-type']");
         private readonly ElementLocator attachmentSize = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-file-size']");
-        private readonly ElementLocator attachmentDetailsLink = new ElementLocator(Locator.CssSelector, "#activity-view-attachments .detailsLink");
+        private readonly ElementLocator attachmentCard = new ElementLocator(Locator.CssSelector, "#card-list-attachments .card-body");
         // Viewing locators
         private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-group-item");
         private readonly ElementLocator viewingDetailsLink = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) a");
@@ -42,9 +42,9 @@
         private readonly ElementLocator leadNegotiator = new ElementLocator(Locator.CssSelector, "#card-lead-negotiator .panel-item");
         private readonly ElementLocator secondaryNegotiatorData = new ElementLocator(Locator.CssSelector, "#card-list-negotiators card-list-item .ng-binding");
         private readonly ElementLocator leadNegotiatorNextCallDate = new ElementLocator(Locator.CssSelector, "#card-lead-negotiator + editable-date time"); 
-        private readonly ElementLocator leadNegotiatorNextCallEditButton = new ElementLocator(Locator.CssSelector, "negotiators-view > editable-date button[ng-click *= 'openEditMode']");
-        private readonly ElementLocator leadNegotiatorNextCallDateField = new ElementLocator(Locator.CssSelector, "negotiators-view > editable-date #next-call-1");
-        private readonly ElementLocator leadNegotiatorNextCallSaveButton = new ElementLocator(Locator.CssSelector, "negotiators-view > editable-date button[type='submit']");
+        private readonly ElementLocator leadNegotiatorNextCallEditButton = new ElementLocator(Locator.CssSelector, "editable-date[selected-date *= 'leadNegotiator'] button");
+        private readonly ElementLocator leadNegotiatorNextCallDateField = new ElementLocator(Locator.CssSelector, "editable-date[selected-date *= 'leadNegotiator'] #next-call-1");
+        private readonly ElementLocator leadNegotiatorNextCallSaveButton = new ElementLocator(Locator.CssSelector, "editable-date[selected-date *= 'leadNegotiator'] button[type = 'submit']");
         private readonly ElementLocator secondaryNegotiatorNextCallEditButton = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//button");
         private readonly ElementLocator secondaryNegotiatorNextCallDateField = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//input");
         private readonly ElementLocator secondaryNegotiatorNextCallSaveButton = new ElementLocator(Locator.XPath, "//div[text()='{0}']/ancestor::card/following-sibling::editable-date//button[@type='submit']");
@@ -57,7 +57,7 @@
         {
         }
 
-        public string MarketAppraisalPrice => this.Driver.GetElement(this.marketAppraisalPrice).Text;
+        public string AskingPrice => this.Driver.GetElement(this.askingPrice).Text;
 
         public string RecommendedPrice => this.Driver.GetElement(this.recommendedPrice).Text;
 
@@ -69,7 +69,7 @@
 
         public AttachFilePage AttachFile => new AttachFilePage(this.DriverContext);
 
-        public AttachmentPreviewPage PreviewAttachment => new AttachmentPreviewPage(this.DriverContext);
+        public AttachmentPreviewPage AttachmentPreview => new AttachmentPreviewPage(this.DriverContext);
 
         public ViewingDetailsPage ViewingDetails => new ViewingDetailsPage(this.DriverContext);
 
@@ -99,9 +99,9 @@
             return this;
         }
 
-        public ViewActivityPage ClickDetailsLink()
+        public ViewActivityPage ClickPropertyCard()
         {
-            this.Driver.Click(this.detailsLink);
+            this.Driver.Click(this.propertyCard);
             return this;
         }
 
@@ -136,7 +136,7 @@
 
         public ViewActivityPage OpenAttachmentPreview()
         {
-            this.Driver.Click(this.attachmentDetailsLink);
+            this.Driver.Click(this.attachmentCard);
             return this;
         }
 

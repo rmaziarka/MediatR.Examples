@@ -22,6 +22,10 @@
 
         public decimal? VendorEstimatedPrice { get; set; }
 
+        public decimal? ShortLetPricePerWeek { get; set; }
+
+        public decimal? AskingPrice { get; set; }
+
         public Guid ActivityTypeId { get; set; }
 
         public UpdateActivityUser LeadNegotiator { get; set; }

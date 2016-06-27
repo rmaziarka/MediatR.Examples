@@ -20,6 +20,13 @@
             this.Message = GetMessage(errorCode);
         }
 
+        public BusinessValidationMessage(ErrorMessage errorCode, params string[] messageParameters)
+        {
+            this.ErrorCode = errorCode;
+            string messageTemplate = GetMessage(errorCode);
+            this.Message = string.Format(messageTemplate, messageParameters);
+        }
+
         public static BusinessValidationMessage CreateEntityNotExistMessage(string entityType, Guid id)
         {
             string errorMessageTemplate = GetMessage(ErrorMessage.Entity_Not_Exists);
@@ -96,6 +103,20 @@
             string errorMessageTemplate = GetMessage(ErrorMessage.CompletionDateGreaterOrEqualToCreateDate);
             string message = string.Format(errorMessageTemplate, createDate.Date.ToShortDateString());
             return new BusinessValidationMessage(ErrorMessage.CompletionDateGreaterOrEqualToCreateDate, message);
+        }
+
+        public static BusinessValidationMessage MortgageSurveyDateGreaterOrEqualToCreateDateMessage(DateTime createDate)
+        {
+            string errorMessageTemplate = GetMessage(ErrorMessage.MortgageSurveyDateGreaterOrEqualToCreateDate);
+            string message = string.Format(errorMessageTemplate, createDate.Date.ToShortDateString());
+            return new BusinessValidationMessage(ErrorMessage.MortgageSurveyDateGreaterOrEqualToCreateDate, message);
+        }
+
+        public static BusinessValidationMessage AdditionalSurveyDateGreaterOrEqualToCreateDateMessage(DateTime createDate)
+        {
+            string errorMessageTemplate = GetMessage(ErrorMessage.AdditionalSurveyDateGreaterOrEqualToCreateDate);
+            string message = string.Format(errorMessageTemplate, createDate.Date.ToShortDateString());
+            return new BusinessValidationMessage(ErrorMessage.AdditionalSurveyDateGreaterOrEqualToCreateDate, message);
         }
 
         private static string GetMessage(ErrorMessage errorCode)

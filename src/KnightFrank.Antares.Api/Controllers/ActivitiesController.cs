@@ -7,6 +7,7 @@
     using System.Net.Http;
     using System.Web.Http;
 
+    using KnightFrank.Antares.Api;
     using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.User;
@@ -44,6 +45,7 @@
         /// <param name="command">Activity data to create</param>
         [HttpPost]
         [Route("")]
+        [DataShaping]
         public Activity CreateActivity([FromBody] CreateActivityCommand command)
         {
             // User id is mocked.
@@ -62,6 +64,7 @@
         /// <returns>Activity entity</returns>
         [HttpGet]
         [Route("{id}")]
+        [DataShaping]
         public Activity GetActivity(Guid id)
         {
             Activity activity = this.mediator.Send(new ActivityQuery { Id = id });
@@ -92,6 +95,7 @@
         /// <returns>Activity entity</returns>
         [HttpPut]
         [Route("")]
+        [DataShaping]
         public Activity UpdateActivity(UpdateActivityCommand command)
         {
             Guid activityId = this.mediator.Send(command);
@@ -128,7 +132,7 @@
                 command.Attachment.UserId = this.userRepository.FindBy(u => true).First().Id;
             }
 
-            command.ActivityId = id;
+            command.EntityId = id;
             Guid attachmentId = this.mediator.Send(command);
 
             var attachmentQuery = new AttachmentQuery { Id = attachmentId };
