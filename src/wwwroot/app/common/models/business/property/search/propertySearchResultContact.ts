@@ -9,7 +9,7 @@
             if (propertySearchResultContact) {
                 this.id = propertySearchResultContact.id;
                 this.firstName = propertySearchResultContact.firstName;
-                this.lastName = propertySearchResultContact.surname;
+                this.lastName = propertySearchResultContact.lastName;
                 this.title = propertySearchResultContact.title;
             }
         }

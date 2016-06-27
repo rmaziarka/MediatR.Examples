@@ -66,7 +66,7 @@ module Antares {
             controller = element.controller("contactAdd");
 
             assertValidator = new Antares.TestHelpers.AssertValidators(element, scope);
-        },
+        }
         ));
 
         ///////// titleSelector
