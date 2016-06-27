@@ -117,7 +117,6 @@
             expected.Should().Equal(current);
         }
 
-
         [Then(@"Latest (.*) company should contain following data")]
         [Then(@"Latest (.*) companies should contain following data")]
         public void CheckLatestCompanyItems(int count, Table table)

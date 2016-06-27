@@ -78,6 +78,7 @@
         public List<string> GetLatestEntities(string entity)
         {
             this.Driver.WaitForAngularToFinish();
+            this.Driver.WaitForElementToBeDisplayed(this.latestEntities.Format(entity), BaseConfiguration.MediumTimeout);
             return this.Driver.GetElements(this.latestEntities.Format(entity)).Select(e => e.Text).ToList();
         }
 
