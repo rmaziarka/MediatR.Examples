@@ -23,7 +23,7 @@
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "company-save-btn");
         private readonly ElementLocator website = new ElementLocator(Locator.Id, "website");
-        private readonly ElementLocator websiteUrlIcon = new ElementLocator(Locator.CssSelector, "a[name='url'] > i");
+        private readonly ElementLocator websiteUrlIcon = new ElementLocator(Locator.XPath, "//input[@id = 'website']//ancestor::div[1]//a[@name = 'url']");
 
         private string currentWindowHandler;
 
@@ -110,6 +110,7 @@
                 if (handler != this.currentWindowHandler)
                 {
                     this.Driver.SwitchTo().Window(handler);
+                    this.Driver.WaitForAjax();
                     break;
                 }
             }

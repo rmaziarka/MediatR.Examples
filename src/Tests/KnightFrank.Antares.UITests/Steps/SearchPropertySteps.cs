@@ -1,7 +1,6 @@
 ﻿namespace KnightFrank.Antares.UITests.Steps
 {
     using System;
-    using System.Threading;
 
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.UITests.Pages;
@@ -50,12 +49,6 @@
             this.property = prop.Address.PropertyNumber + " " + prop.Address.PropertyName + " " + prop.Address.Line2 + " " +
                             prop.Address.Line3 + " " + prop.Address.Postcode;
             this.page.SearchProperty(this.property);
-        }
-
-        [When(@"User waits (.*) seconds")]
-        public void WhenUserWaitsSeconds(double seconds)
-        {
-            Thread.Sleep(TimeSpan.FromSeconds(seconds));
         }
 
         [When(@"User clicks on first property on search property page")]

@@ -18,7 +18,7 @@ Scenario: Create company
 		| FirstName | Surname |
 		| Indiana   | Jones   |
 		| Adam      | Sandler |
-	When User clicks on website url icon 
+	When User clicks on website url icon
 	Then url opens in new tab
 	When User clicks save company button on create company page
 	Then View company page should be displayed

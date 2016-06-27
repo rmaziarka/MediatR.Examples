@@ -151,7 +151,14 @@
     <Compile Include="AttributeConfiguration\Common\EntityValidator.cs" />
     <Compile Include="AttributeConfiguration\Common\Extensions\DictionaryExtensions.cs" />
     <Compile Include="AttributeConfiguration\Common\Extensions\EnumExtensions.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\FieldActions.cs" />
     <Compile Include="AttributeConfiguration\Common\Extensions\FieldExtensions.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\Fields\LengthExtension.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\Fields\LessThanOrEqualToExtensions.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\Fields\LessThanExtensions.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\Fields\GreaterThanExtensions.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\Fields\GreaterThanOrEqualToExtensions.cs" />
+    <Compile Include="AttributeConfiguration\Common\Extensions\Fields\RequiredExtensions.cs" />
     <Compile Include="AttributeConfiguration\Common\Extensions\LambdaExtension.cs" />
     <Compile Include="AttributeConfiguration\Common\Extensions\ListExtensions.cs" />
     <Compile Include="AttributeConfiguration\Common\IAttributeValidator.cs" />
