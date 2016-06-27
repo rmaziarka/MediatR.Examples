@@ -8,9 +8,8 @@ module Antares.Attribues {
         bindings: {
             config: '<',
             ngModel: '=',
-            onSelectedItemChanged: '&',
-            enumTypeCode: '@',
-            translationKey: '@'
+            onSelectedItemChanged: '&?',
+            schema: '<'
         }
     });
 }
