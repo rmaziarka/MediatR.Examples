@@ -15,11 +15,11 @@
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.CommandHandlers;
     using KnightFrank.Antares.Domain.Activity.Commands;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Tests.Common.Extensions.AutoFixture.Attributes;
-
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using Moq;
 
@@ -28,10 +28,11 @@
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
-    using Xunit.Sdk;
 
+    using ActivityType = KnightFrank.Antares.Domain.Common.Enums.ActivityType;
     using Assert = Xunit.Assert;
     using ErrorMessage = KnightFrank.Antares.Domain.Common.BusinessValidators.ErrorMessage;
+    using PropertyType = KnightFrank.Antares.Dal.Model.Property.PropertyType;
 
     [Trait("FeatureTitle", "Activity")]
     [Collection("UpdateActivityCommandHandler")]
@@ -48,6 +49,8 @@
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<IEntityValidator> entityValidator,
             [Frozen] Mock<ICollectionValidator> collectionValidator,
+            [Frozen] Mock<IEntityMapper<Activity>> activityEntityMapper,
+            [Frozen] Mock<IAttributeValidator<Tuple<Domain.Common.Enums.PropertyType, ActivityType>>> attributeValidator,
             Department department,
             UpdateActivityCommandHandler handler,
             IFixture fixture)
@@ -57,9 +60,13 @@
             Activity activity = this.GetActivity(fixture);
             this.SetupActivity(activity, department, fixture);
 
-            activityRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Activity, bool>>>(), It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
+            activityRepository.Setup(x => x.GetWithInclude(
+                It.IsAny<Expression<Func<Activity, bool>>>(),
+                It.IsAny<Expression<Func<Activity, object>>[]>())).Returns(new List<Activity> { activity });
             this.SetupEnumTypeItemRepository(enumTypeItemRepository, fixture);
             this.SetupUserRepository(userRepository, command, activity, department, fixture);
+
+            activityEntityMapper.Setup(x => x.MapAllowedValues(command, activity, PageType.Update)).Returns(activity);
 
             // Act
             handler.Handle(command);
@@ -67,13 +74,11 @@
             // Assert
             this.VerifyIfValidationsWereCalled(activity, command, entityValidator, collectionValidator);
 
-            activity.ShouldBeEquivalentTo(
-                command,
-                options =>
-                options.Including(x => x.ActivityStatusId)
-                       .Including(x => x.MarketAppraisalPrice)
-                       .Including(x => x.RecommendedPrice)
-                       .Including(x => x.VendorEstimatedPrice));
+            activityEntityMapper.Verify(x => x.MapAllowedValues(command, activity, PageType.Update), Times.Once);
+
+            attributeValidator.Verify(
+              x =>
+                  x.Validate(PageType.Update, new Tuple<Domain.Common.Enums.PropertyType, ActivityType>(Domain.Common.Enums.PropertyType.Flat, ActivityType.FreeholdSale), command));
         }
 
         [Theory]
@@ -178,6 +183,7 @@
            [Frozen] Mock<IGenericRepository<User>> userRepository,
            [Frozen] Mock<IGenericRepository<ActivityUser>> activityUserRepository,
            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
+           [Frozen] Mock<IEntityMapper<Activity>> activityEntityMapper,
            Department department,
            ActivityUser activityLeadNegotiator,
            UpdateActivityCommandHandler handler,
@@ -196,11 +202,14 @@
             this.SetupEnumTypeItemRepository(enumTypeItemRepository, fixture);
             this.SetupUserRepository(userRepository, command, activity, department, fixture);
 
+            activityEntityMapper.Setup(x => x.MapAllowedValues(command, activity, PageType.Update)).Returns(activity);
+
             // Act
             handler.Handle(command);
 
             // Assert
             activityUserRepository.Verify(r => r.Delete(secondaryNegotiatorToDelete), Times.Once);
+            activityEntityMapper.Verify(x => x.MapAllowedValues(command, activity, PageType.Update), Times.Once);
         }
 
         [Theory]
@@ -209,6 +218,7 @@
            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
            [Frozen] Mock<IGenericRepository<User>> userRepository,
            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
+           [Frozen] Mock<IEntityMapper<Activity>> activityEntityMapper,
            Department department,
            ActivityUser activityLeadNegotiator,
            UpdateActivityCommandHandler handler,
@@ -228,6 +238,8 @@
             this.SetupEnumTypeItemRepository(enumTypeItemRepository, fixture);
             this.SetupUserRepository(userRepository, command, activity, department, fixture);
 
+            activityEntityMapper.Setup(x => x.MapAllowedValues(command, activity, PageType.Update)).Returns(activity);
+
             // Act
             handler.Handle(command);
 
@@ -237,6 +249,8 @@
             // ReSharper disable once PossibleNullReferenceException
             negotiator.UserType.Code.Should().Be(UserType.SecondaryNegotiator.ToString());
             negotiator.CallDate.Should().Be(callDate);
+
+            activityEntityMapper.Verify(x => x.MapAllowedValues(command, activity, PageType.Update), Times.Once);
         }
 
         [Theory]
@@ -250,6 +264,7 @@
            [Frozen] Mock<IGenericRepository<Activity>> activityRepository,
            [Frozen] Mock<IGenericRepository<User>> userRepository,
            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
+           [Frozen] Mock<IEntityMapper<Activity>> activityEntityMapper,
            Department department,
            ActivityUser activityLeadNegotiator,
            List<ActivityUser> activitySecondaryNegotiators,
@@ -290,6 +305,8 @@
 
             this.SetupUserRepository(userRepository, command, activity, department, fixture);
 
+            activityEntityMapper.Setup(x => x.MapAllowedValues(command, activity, PageType.Update)).Returns(activity);
+
             // Act
             handler.Handle(command);
 
@@ -297,15 +314,20 @@
             ActivityUser negotiator = activity.ActivityUsers.SingleOrDefault(u => u.UserId == negotiatorIdToUpdate);
             negotiator.Should().NotBeNull();
             // ReSharper disable once PossibleNullReferenceException
-            negotiator.UserType.Code.Should().Be(isNegotiatorToBeChangedToLead ? UserType.LeadNegotiator.ToString(): UserType.SecondaryNegotiator.ToString());
+            negotiator.UserType.Code.Should().Be(isNegotiatorToBeChangedToLead ? UserType.LeadNegotiator.ToString() : UserType.SecondaryNegotiator.ToString());
             negotiator.CallDate.Should().Be(callDate);
+
+            activityEntityMapper.Verify(x => x.MapAllowedValues(command, activity, PageType.Update), Times.Once);
         }
 
         private Activity GetActivity(IFixture fixture, ActivityUser activityLeadNegotiator = null, List<ActivityUser> activitySecondaryNegotiators = null)
         {
             var activity = fixture.Create<Activity>();
+            activity.ActivityType.EnumCode = ActivityType.FreeholdSale.ToString();
             activity.Property = fixture.Create<Property>();
             activity.Property.Address = fixture.Create<Address>();
+            activity.Property.PropertyType = fixture.Create<PropertyType>();
+            activity.Property.PropertyType.EnumCode = Domain.Common.Enums.PropertyType.Flat.ToString();
 
             if (activityLeadNegotiator == null)
             {
@@ -388,7 +410,7 @@
 
         private void VerifyIfValidationsWereCalled(Activity activity, UpdateActivityCommand command, Mock<IEntityValidator> entityValidator, Mock<ICollectionValidator> collectionValidator)
         {
-            entityValidator.Verify(x => x.EntityExists(activity, activity.Id), Times.Once);
+            entityValidator.Verify(x => x.EntityExists(It.Is<Activity>(a => a.Id == activity.Id), command.Id), Times.Once);
             entityValidator.Verify(x => x.EntityExists<User>(command.LeadNegotiator.UserId), Times.Once);
             entityValidator.Verify(x => x.EntitiesExist<User>(It.Is<List<Guid>>(list => list.SequenceEqual(command.SecondaryNegotiators.Select(n => n.UserId).ToList()))), Times.Once);
 
