@@ -3,6 +3,7 @@
         [index: string]: any;
 
         id: string;
+        requirementTypeId: string;
 
         contacts: IContact[];
         address: IAddress;

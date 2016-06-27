@@ -192,6 +192,13 @@
                 </div>
             </div>
         </fieldset>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    <requirement-type-control ng-model="vm.requirement.requirementTypeId" config="vm.config.requirement_RequirementType" on-requirement-type-changed="vm.requirementTypeChanged(requirementTypeId)" />
+                </div>
+            </div>
+        </div>
         <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.description.$dirty) && addRequirementForm.description.$invalid}">
             <div class="row">
                 <div class="col-md-12">

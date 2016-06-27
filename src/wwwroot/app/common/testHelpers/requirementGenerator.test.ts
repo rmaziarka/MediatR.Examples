@@ -7,7 +7,8 @@ module Antares.TestHelpers {
     export class RequirementGenerator {
         public static generateDto(specificData?: any): Dto.IRequirement{
             var requirement: Dto.IRequirement = {
-                id : RequirementGenerator.makeRandom('id'),
+                id: RequirementGenerator.makeRandom('id'),
+                requirementTypeId: RequirementGenerator.makeRandom('requirementTypeid'),
                 contacts : [],
                 address : null,
                 createDate : new Date(),

@@ -3,6 +3,7 @@
 
 module Antares.Services {
     import IActivityConfig = Antares.Activity.IActivityConfig;
+    import IRequirementConfig = Antares.Requirement.IRequirementConfig;
     import IActivityAddPanelConfig = Antares.Activity.IActivityAddPanelConfig;
     import Attributes = Antares.Attributes;
     import PageTypeEnum = Antares.Common.Models.Enums.PageTypeEnum;
@@ -27,6 +28,20 @@ module Antares.Services {
             return this.$http
                 .post<IActivityConfig>(postUrl, entity, { params: params})
                 .then<IActivityConfig>((result: ng.IHttpPromiseCallbackArg<IActivityConfig>) => result.data);
+        }
+
+        public getRequirement = (pageType: PageTypeEnum, requirementTypeId: string, entity: any): ng.IHttpPromise<IRequirementConfig> => {
+            var routeUrl = '/attributes/requirement';
+            var postUrl = this.appConfig.rootUrl + this.apiUrl + routeUrl;
+
+            var params = {
+                pageType: pageType,
+                requirementTypeId: requirementTypeId || '00000000-0000-0000-0000-000000000000'
+            }
+
+            return this.$http
+                .post<IRequirementConfig>(postUrl, entity, { params: params })
+                .then<IRequirementConfig>((result: ng.IHttpPromiseCallbackArg<IRequirementConfig>) => result.data);
         }
     }
 

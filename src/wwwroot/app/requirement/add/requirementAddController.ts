@@ -2,6 +2,7 @@
 
 module Antares.Requirement.Add {
     import Business = Common.Models.Business;
+    import RequirementAddConfig = Antares.Requirement.IRequirementAddConfig;
     
     export class RequirementAddController extends Core.WithPanelsBaseController {
         requirementResource: any;
@@ -9,6 +10,7 @@ module Antares.Requirement.Add {
         loadingContacts: boolean = false;
         entityTypeCode: string = 'Requirement';
         isSaving: boolean = false;
+        public config: RequirementAddConfig;
 
         constructor(
             private dataAccessService: Services.DataAccessService,

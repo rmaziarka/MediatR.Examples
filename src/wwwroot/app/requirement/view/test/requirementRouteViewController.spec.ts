@@ -3,6 +3,7 @@
 module Antares {
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
+    import IRequirementViewConfig = Requirement.IRequirementViewConfig;
 
     describe('Given requirement route view controller', () => {
         var scope: ng.IScope;
@@ -26,7 +27,8 @@ module Antares {
             it('then addView of last views provider is called', () => {
                 //Arrange
                 var requirementMock = TestHelpers.RequirementGenerator.generate();
-                var parametrs = { $scope: scope, requirement: requirementMock, latestViewsProvider: latestViewsProviderSpy };
+                var config = { requirementType: {} } as IRequirementViewConfig;
+                var parametrs = { $scope: scope, requirement: requirementMock, latestViewsProvider: latestViewsProviderSpy, config: config };
 
                 //Act
                 controllerProvider('RequirementRouteViewController', parametrs);
