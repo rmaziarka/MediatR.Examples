@@ -1,0 +1,22 @@
+﻿<ng-form name="enumItemEditControlForm">
+    <div class="form-group" show-errors>
+        <div class="row">
+            <div class="col-md-9">
+                <label for="status" class="" translate="{{vm.translationKey}}"></label>
+                <select class="form-control"
+                        id="enumItem"
+                        name="enumItem"
+                        ng-required="vm.config.enumItem.required"
+                        ng-disabled="!vm.config.enumItem.active"
+                        ng-model="vm.ngModel"
+                        ng-change="vm.changeSelectedItem()">
+                        <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
+                        <option ng-repeat="item in vm.getEnumItems() track by item.id" value="{{item.id}}">{{item.id | dynamicTranslate}}</option>
+                    </select>
+                    <div ng-messages="enumItemEditControlForm.enumItem.$error" ng-show="enumItemEditControlForm.$submitted || enumItemEditControlForm.enumItem.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</ng-form>
