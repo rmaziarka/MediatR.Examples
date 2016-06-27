@@ -9,13 +9,16 @@ module Antares.Activity {
     function initRoute($stateProvider: ng.ui.IStateProvider) {
         $stateProvider
             .state('app.activity-add', {
-                url: '/activity/add',
+                url: '/property/:propertyId/activity/add',
                 template: "<activity-add property='property'></activity-add>",
-                controller: ($scope: ng.IScope, $stateParams: ng.ui.IStateParamsService) => {
-                    $scope['property'] = $stateParams['property'];
+                controller: ($scope: ng.IScope, property: Common.Models.Dto.IProperty) => {
+                    $scope['property'] = new Common.Models.Business.Property(property);
                 },
-                params: {
-                    property: null
+                resolve: {
+                    property: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) =>{
+                        var propertyId: string = $stateParams['propertyId'];
+                        return dataAccessService.getPropertyResource().get({ id : propertyId }).$promise;
+                    }
                 }
             })
             .state('app.activity-edit', {

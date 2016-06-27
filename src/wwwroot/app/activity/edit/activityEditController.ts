@@ -110,12 +110,6 @@ module Antares.Activity {
             }
         }
         
-        $onInit = () => {
-            if (this.pageMode === PageMode.Add && !this.property) {
-                this.$state.go('app.default');
-            }
-        }
-        
         public save() {
             var valid = this.anyNewDepartmentIsRelatedWithNegotiator();
             if (!valid) {
