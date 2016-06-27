@@ -10,26 +10,12 @@ module Antares.Activity {
         $stateProvider
             .state('app.activity-add', {
                 url: '/activity/add',
-                template: "<activity-edit></activity-edit>",
+                template: "<activity-add property='property'></activity-add>",
+                controller: ($scope: ng.IScope, $stateParams: ng.ui.IStateParamsService) => {
+                    $scope['property'] = $stateParams['property'];
+                },
                 params: {
-                    propertyTypeId: ''
-                }
-            })
-            .state('app.activity-view', {
-                url: '/activity/view/:id',
-                template: "<activity-view activity='activity' config='config'></activity-view>",
-                controller: "ActivityRouteController",
-                resolve: {
-                    activity: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) => {
-                        var activityId: string = $stateParams['id'];
-                        return dataAccessService.getActivityResource().get({ id: activityId }).$promise;
-                    },
-                    config: (activity: IActivity, configService: Services.ConfigService) => {
-                        return configService.getActivity(PageTypeEnum.Details,
-                            activity.property.propertyTypeId,
-                            activity.activityTypeId,
-                            activity);
-                    }
+                    property: null
                 }
             })
             .state('app.activity-edit', {
@@ -70,6 +56,23 @@ module Antares.Activity {
                                 config[key] = viewConfig[key];
                             });
                         return config;
+                    }
+                }
+            })
+            .state('app.activity-view', {
+                url: '/activity/view/:id',
+                template: "<activity-view activity='activity' config='config'></activity-view>",
+                controller: "ActivityRouteController",
+                resolve: {
+                    activity: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) => {
+                        var activityId: string = $stateParams['id'];
+                        return dataAccessService.getActivityResource().get({ id: activityId }).$promise;
+                    },
+                    config: (activity: IActivity, configService: Services.ConfigService) => {
+                        return configService.getActivity(PageTypeEnum.Details,
+                            activity.property.propertyTypeId,
+                            activity.activityTypeId,
+                            activity);
                     }
                 }
             });

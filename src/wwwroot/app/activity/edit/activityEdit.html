@@ -2,55 +2,55 @@
     <div class="col-md-12">
         <h2 class="page-header" translate="ACTIVITY.EDIT.EDIT_ACTIVITY"></h2>
     </div>
-    <form ng-submit="editActivityForm.isFormValid() && aevm.save()" name="editActivityForm" method="post" novalidate>
+    <form ng-submit="editActivityForm.isFormValid() && vm.save()" name="editActivityForm" method="post" novalidate>
         <div class="col-md-4">
             <section id="property-basic-info">
                 <fieldset id="activity-edit-basic">
                     <h3 class="page-header" translate="ACTIVITY.EDIT.BASIC_INFORMATION"></h3>
-                    <activity-status-control ng-model="aevm.activity.activityStatusId" config="aevm.config.activityStatus" on-activity-status-changed="aevm.activityStatusChanged(activityStatusId)" />
+                    <activity-status-control ng-model="vm.activity.activityStatusId" config="vm.config.activityStatus" on-activity-status-changed="vm.activityStatusChanged(activityStatusId)" />
                 </fieldset>
             </section>
             <section id="activity-edit-negotiators">
-                <activity-negotiators-edit-control property-division-id="{{aevm.activity.property.divisionId}}"
-                                                   activity-id="aevm.activity.id"
-                                                   config="aevm.config.negotiators"
-                                                   on-negotiator-added="aevm.onNegotiatorAdded(user)"
-                                                   lead-negotiator="aevm.activity.leadNegotiator"
-                                                   secondary-negotiators="aevm.activity.secondaryNegotiator"></activity-negotiators-edit-control>
+                <activity-negotiators-edit-control property-division-id="{{vm.activity.property.divisionId}}"
+                                                   activity-id="vm.activity.id"
+                                                   config="vm.config.negotiators"
+                                                   on-negotiator-added="vm.onNegotiatorAdded(user)"
+                                                   lead-negotiator="vm.activity.leadNegotiator"
+                                                   secondary-negotiators="vm.activity.secondaryNegotiator"></activity-negotiators-edit-control>
             </section>
             <section id="activity-edit-departments">
-                <activity-departments-edit-control activity-id="aevm.activity.id"
-                                                   config="aevm.config.departments"
-                                                   departments="aevm.activity.activityDepartments"
-                                                   department-is-related-with-negotiator="aevm.departmentIsRelatedWithNegotiator(department)"></activity-departments-edit-control>
+                <activity-departments-edit-control activity-id="vm.activity.id"
+                                                   config="vm.config.departments"
+                                                   departments="vm.activity.activityDepartments"
+                                                   department-is-related-with-negotiator="vm.departmentIsRelatedWithNegotiator(department)"></activity-departments-edit-control>
             </section>
         </div>
         <div class="col-md-4">
             <fieldset id="activity-edit-prices">
                 <h3 class="page-header" translate="ACTIVITY.EDIT.PRICES.PRICES"></h3>
-                <price-edit-control config="aevm.config.marketAppraisalPrice" schema="aevm.controlSchemas.marketAppraisalPrice" ng-model='aevm.activity.marketAppraisalPrice'></price-edit-control>
-                <price-edit-control config="aevm.config.recommendedPrice" schema="aevm.controlSchemas.recommendedPrice" ng-model='aevm.activity.recommendedPrice'></price-edit-control>
-                <price-edit-control config="aevm.config.vendorEstimatedPrice" schema="aevm.controlSchemas.vendorEstimatedPrice" ng-model='aevm.activity.vendorEstimatedPrice'></price-edit-control>
-                <price-edit-control config="aevm.config.askingPrice" schema="aevm.controlSchemas.askingPrice" ng-model='aevm.activity.askingPrice'></price-edit-control>
-                <price-edit-control config="aevm.config.shortLetPricePerWeek" schema="aevm.controlSchemas.shortLetPricePerWeek" ng-model='aevm.activity.shortLetPricePerWeek'></price-edit-control>
+                <price-edit-control config="vm.config.marketAppraisalPrice" schema="vm.controlSchemas.marketAppraisalPrice" ng-model='vm.activity.marketAppraisalPrice'></price-edit-control>
+                <price-edit-control config="vm.config.recommendedPrice" schema="vm.controlSchemas.recommendedPrice" ng-model='vm.activity.recommendedPrice'></price-edit-control>
+                <price-edit-control config="vm.config.vendorEstimatedPrice" schema="vm.controlSchemas.vendorEstimatedPrice" ng-model='vm.activity.vendorEstimatedPrice'></price-edit-control>
+                <price-edit-control config="vm.config.askingPrice" schema="vm.controlSchemas.askingPrice" ng-model='vm.activity.askingPrice'></price-edit-control>
+                <price-edit-control config="vm.config.shortLetPricePerWeek" schema="vm.controlSchemas.shortLetPricePerWeek" ng-model='vm.activity.shortLetPricePerWeek'></price-edit-control>
             </fieldset>
         </div>
 
         <div class="col-md-4">
             <section id="activity-edit-property">
-                <property-view-control property="aevm.activity.property" is-panel-visible="aevm.isPropertyPreviewPanelVisible" config="aevm.config.property"></property-view-control>
+                <property-view-control property="vm.activity.property" is-panel-visible="vm.isPropertyPreviewPanelVisible" config="vm.config.property"></property-view-control>
             </section>
             <section id="activity-edit-vendors">
-                <activity-vendors-edit-control contacts="aevm.activity.contacts" config="aevm.config.vendors"></activity-vendors-edit-control>
+                <activity-vendors-edit-control contacts="vm.activity.contacts" config="vm.config.vendors"></activity-vendors-edit-control>
             </section>
             <section id="activity-edit-landlords">
-                <activity-landlords-edit-control contacts="aevm.activity.contacts" config="aevm.config.landlords"></activity-landlords-edit-control>
+                <activity-landlords-edit-control contacts="vm.activity.contacts" config="vm.config.landlords"></activity-landlords-edit-control>
             </section>
         </div>
         <div class="col-md-12">
             <div class="form-group">
                 <div>
-                    <button id="activity-edit-cancel" type="button" class="btn btn-default" ng-click="aevm.cancel()"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
+                    <button id="activity-edit-cancel" type="button" class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
                     <button id="activity-edit-save" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
                 </div>
             </div>

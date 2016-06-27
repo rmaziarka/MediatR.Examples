@@ -5,9 +5,15 @@ module Antares.Activity {
     import Business = Common.Models.Business;
     import Enums = Common.Models.Enums;
 
+    enum PageMode {
+        Add,
+        Edit
+    }
+
     export class ActivityEditController {
         public config: IActivityEditConfig;
         public activity: Business.Activity;
+        public property: Business.Property;
         public enumTypeActivityStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityStatus;
         private departmentsController: Antares.Attributes.ActivityDepartmentsEditControlController;
 
@@ -17,40 +23,40 @@ module Antares.Activity {
 
         private departmentErrorMessageCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.MESSAGE';
         private departmentErrorTitleCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.TITLE';
-		
-		//controls
-		controlSchemas: any = {
-			marketAppraisalPrice: {
-				formName: "marketAppraisalPriceControlForm",
-				controlId: "market-appraisal-price",
-				translationKey: "ACTIVITY.EDIT.PRICES.MARKET_APPRAISAL_PRICE",
-				fieldName: "marketAppraisalPrice"
-			},
-			recommendedPrice: {
-				formName: "recommendedPriceControlForm",
-				controlId: "recommended-price",
-				translationKey: "ACTIVITY.EDIT.PRICES.RECOMMENDED_PRICE",
-				fieldName: "recommendedPrice"
-			},
-			vendorEstimatedPrice: {
-				formName: "vendorEstimatedPriceControlForm",
-				controlId: "vendor-estimated-price",
-				translationKey: "ACTIVITY.EDIT.PRICES.VENDOR_ESTIMATED_PRICE",
-				fieldName: "vendorEstimatedPrice"
-			},
-			askingPrice: {
-				formName: "askingPriceControlForm",
-				controlId: "asking-price",
-				translationKey: "ACTIVITY.EDIT.PRICES.ASKING_PRICE",
-				fieldName: "askingPrice"
-			},
-			shortLetPricePerWeek: {
-				formName: "shortLetPricePerWeekControlForm",
-				controlId: "short-let-price-per-week",
-				translationKey: "ACTIVITY.EDIT.PRICES.SHORT_LET_PRICE_PER_WEEK",
-				fieldName: "shortLetPricePerWeek"
-			}
-		};
+
+        //controls
+        controlSchemas: any = {
+            marketAppraisalPrice: {
+                formName: "marketAppraisalPriceControlForm",
+                controlId: "market-appraisal-price",
+                translationKey: "ACTIVITY.EDIT.PRICES.MARKET_APPRAISAL_PRICE",
+                fieldName: "marketAppraisalPrice"
+            },
+            recommendedPrice: {
+                formName: "recommendedPriceControlForm",
+                controlId: "recommended-price",
+                translationKey: "ACTIVITY.EDIT.PRICES.RECOMMENDED_PRICE",
+                fieldName: "recommendedPrice"
+            },
+            vendorEstimatedPrice: {
+                formName: "vendorEstimatedPriceControlForm",
+                controlId: "vendor-estimated-price",
+                translationKey: "ACTIVITY.EDIT.PRICES.VENDOR_ESTIMATED_PRICE",
+                fieldName: "vendorEstimatedPrice"
+            },
+            askingPrice: {
+                formName: "askingPriceControlForm",
+                controlId: "asking-price",
+                translationKey: "ACTIVITY.EDIT.PRICES.ASKING_PRICE",
+                fieldName: "askingPrice"
+            },
+            shortLetPricePerWeek: {
+                formName: "shortLetPricePerWeekControlForm",
+                controlId: "short-let-price-per-week",
+                translationKey: "ACTIVITY.EDIT.PRICES.SHORT_LET_PRICE_PER_WEEK",
+                fieldName: "shortLetPricePerWeek"
+            }
+        };
 
         constructor(
             private dataAccessService: Services.DataAccessService,
@@ -70,20 +76,19 @@ module Antares.Activity {
                 this.isPropertyPreviewPanelVisible = true;
             });
         }
-
-        private onEnumLoaded = (result: any) => {
-            var departmentTypes: any = result[Dto.EnumTypeCode.ActivityDepartmentType];
-            this.standardDepartmentType = <Dto.IEnumTypeItem>_.find(departmentTypes, (item: Dto.IEnumTypeItem) => {
-                return item.code === Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Standard];
-            });
+        
+        $onInit = () => {
+            if (this.pageMode === PageMode.Add && !this.property) {
+                this.$state.go('app.default');
+            }
         }
-
+        
         public save() {
             var valid = this.anyNewDepartmentIsRelatedWithNegotiator();
             if (!valid) {
                 this.kfMessageService.showErrorByCode(this.departmentErrorMessageCode, this.departmentErrorTitleCode);
                 return;
-            } 
+            }
 
             this.dataAccessService.getActivityResource()
                 .update(new Business.UpdateActivityResource(this.activity))
@@ -95,7 +100,7 @@ module Antares.Activity {
 
         activityStatusChanged = (activityStatusId: string) => {
         }
-        
+
         cancel() {
             this.$state.go('app.activity-view', { id: this.activity.id });
         }
@@ -104,18 +109,29 @@ module Antares.Activity {
             this.departmentsController = departmentsController;
         }
 
-        onNegotiatorAdded = (user: Dto.IUser) => {
+        public onNegotiatorAdded = (user: Dto.IUser) => {
             this.addDepartment(user.department);
-        }
-
-        private anyNewDepartmentIsRelatedWithNegotiator = () => {
-            var newDepartments = this.activity.activityDepartments.filter((item: Business.ActivityDepartment) => { return !item.id });
-            return _.all(newDepartments, (item) => this.departmentIsRelatedWithNegotiator(item.department));
         }
 
         public departmentIsRelatedWithNegotiator = (department: Business.Department) => {
             return this.activity.leadNegotiator.user.departmentId === department.id ||
                 _.some(this.activity.secondaryNegotiator, (item) => item.user.departmentId === department.id);
+        } 
+
+        private get pageMode(): PageMode {
+            return this.activity && this.activity.id ? PageMode.Edit : PageMode.Add;
+        }
+
+        private onEnumLoaded = (result: any) => {
+            var departmentTypes: any = result[Dto.EnumTypeCode.ActivityDepartmentType];
+            this.standardDepartmentType = <Dto.IEnumTypeItem>_.find(departmentTypes, (item: Dto.IEnumTypeItem) => {
+                return item.code === Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Standard];
+            });
+        }
+
+        private anyNewDepartmentIsRelatedWithNegotiator = () => {
+            var newDepartments = this.activity.activityDepartments.filter((item: Business.ActivityDepartment) => { return !item.id });
+            return _.all(newDepartments, (item) => this.departmentIsRelatedWithNegotiator(item.department));
         }
         
         private addDepartment(department: Business.Department) {
