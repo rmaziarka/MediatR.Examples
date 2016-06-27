@@ -10,7 +10,8 @@ module Antares.Common.Component.Attachment {
             entityType: '@',
             enumDocumentType: '@',
             attachments: '<',
-            onSaveAttachmentForEntity: '&'
+            onSaveAttachmentForEntity: '&',
+            title: '@'
         }
     });
 }

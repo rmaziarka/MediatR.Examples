@@ -233,6 +233,8 @@
       "ACTIVITY_DETAILS": "Activity details"
     },
     "VIEW": {
+      "BASIC_INFORMATION": "Basic information",
+      "DETAILS": "Details",
       "VIEW_ACTIVITY": "View activity",
       "PROPERTY": "Property",
       "VENDORS": "Vendors",
@@ -247,11 +249,16 @@
         "ASKING_PRICE": "Asking price",
         "SHORT_LET_PRICE_PER_WEEK": "Short Let Price Per Week"
       },
-      "VIEWINGS": "Viewings",
+
+      "RECENT_FILES": "Recent files",
       "VIEWING_DETAILS": "Viewing details",
-      "NO_VIEWINGS": "No viewings",
+      "NEGOTIATORS_DEPARTMENTS": "Negotiators & Departments",
+      "NO_UPCOMING_VIEWINGS": "No upcoming viewings",
       "OFFERS": "Offers",
-      "OFFERPREVIEW": "Offer preview"
+      "OFFERPREVIEW": "Offer preview",
+      "OVERVIEW": "Overview",
+      "SUMMARY": "Summary",
+      "UPCOMING_VIEWINGS": "Upcoming viewings"
     }
   },
   "NEGOTIATORS": {

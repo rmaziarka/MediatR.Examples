@@ -20,6 +20,7 @@ module Antares.Common.Component.Attachment {
         isAttachmentPreviewPanelVisible: boolean;
         isAttachmentUploadPanelVisible: boolean;
         isAttachmentUploadPanelBusy: boolean = false;
+        title: string;
 
         selectedAttachment: Common.Models.Business.Attachment = <Common.Models.Business.Attachment>{};
 

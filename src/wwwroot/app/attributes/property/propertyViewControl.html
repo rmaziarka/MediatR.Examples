@@ -1,5 +1,5 @@
 <div ng-if="vm.config">
-    <h3 class="page-header" translate="ACTIVITY.VIEW.PROPERTY"></h3>
+    <h3 class="page-header" ng-if="!vm.hideHeader" translate="ACTIVITY.VIEW.PROPERTY"></h3>
     <card id="card-property" card-template-url="'app/property/templates/propertyCard.html'"  show-context-menu="false"
           item="vm.property" show-item-details="vm.publishOpenEvent"  display-new-control="true">
     </card>
