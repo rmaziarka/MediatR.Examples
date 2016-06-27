@@ -6,13 +6,17 @@
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
 
+    using OpenQA.Selenium;
+
     public class CreateContactPage : ProjectPageBase
     {
         private readonly ElementLocator contactFirstName = new ElementLocator(Locator.Id, "first-name");
         private readonly ElementLocator contactForm = new ElementLocator(Locator.Id, "addContactForm");
-        private readonly ElementLocator contactLastName = new ElementLocator(Locator.Id, "last-name");
+        private readonly ElementLocator contactSurname = new ElementLocator(Locator.Id, "surname");
         private readonly ElementLocator contactTitle = new ElementLocator(Locator.Id, "title");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.CssSelector, "#addContactForm button");
+        private readonly ElementLocator salutationsMailingsDropdown = new ElementLocator(Locator.XPath, "//select[@id='mailings-use-salutation']");
+        private readonly ElementLocator salutationsEventsDropdown = new ElementLocator(Locator.XPath, "//select[@id='events-use-salutation'");
 
         public CreateContactPage(DriverContext driverContext) : base(driverContext)
         {
@@ -36,9 +40,21 @@
             return this;
         }
 
-        public CreateContactPage SetLastName(string lastName)
+        public CreateContactPage SetSurname(string surname)
         {
-            this.Driver.SendKeys(this.contactLastName, lastName);
+            this.Driver.SendKeys(this.contactSurname, surname);
+            return this;
+        }
+
+        public CreateContactPage SetMailingSalutation(string salutation)
+        {
+            this.Driver.GetElement(this.salutationsMailingsDropdown).SendKeys(salutation);
+            return this;
+        }
+
+        public CreateContactPage SetEventSalutation(string salutation)
+        {
+            this.Driver.GetElement(this.salutationsEventsDropdown).SendKeys(salutation);
             return this;
         }
 

@@ -7,7 +7,7 @@ ActivityDocumentType
 PropertyDocumentType
 RequirementDocumentType
 OfferStatus
-ActivityUserType
+UserType
 ActivityDepartmentType
 MortgageStatus
 MortgageSurveyStatus

@@ -26,8 +26,8 @@ OfferStatus;New
 OfferStatus;Withdrawn
 OfferStatus;Rejected
 OfferStatus;Accepted
-ActivityUserType;LeadNegotiator
-ActivityUserType;SecondaryNegotiator
+UserType;LeadNegotiator
+UserType;SecondaryNegotiator
 ActivityDepartmentType;Managing
 ActivityDepartmentType;Standard
 MortgageStatus;Unknown

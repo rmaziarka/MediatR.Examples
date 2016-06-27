@@ -153,7 +153,7 @@
 
         private EnumTypeItem GetLeadNegotiatorUserType()
         {
-            return this.enumTypeItemRepository.FindBy(i => i.Code == ActivityUserType.LeadNegotiator.ToString()).Single();
+            return this.enumTypeItemRepository.FindBy(i => i.Code == UserType.LeadNegotiator.ToString()).Single();
         }
 
         private EnumTypeItem GetManagingDepartmentType()

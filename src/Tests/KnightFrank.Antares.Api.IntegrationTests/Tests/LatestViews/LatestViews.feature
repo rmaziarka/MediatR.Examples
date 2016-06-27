@@ -24,9 +24,9 @@ Scenario: Create latest viewed activity
 @LatestViews
 Scenario: Create latest viewed requirement
 	Given Contacts exists in database
-		| FirstName | LastName | Title  |
-		| Tomasz    | Bien     | Mister |
-		| Adam      | Malysz   | Mister |
+		| FirstName | Surname | Title  |
+		| Tomasz    | Bien    | Mister |
+		| Adam      | Malysz  | Mister |
 		And Requirement exists in database
 	When User adds Requirement to latest viewed entities using api
 	Then User should get OK http status code
@@ -87,19 +87,19 @@ Scenario: Get latest viewed activities
 @LatestViews
 Scenario: Get latest viewed requirements
 	Given Contacts exists in database 
-		| FirstName | LastName | Title |
-		| Tomasz    | Bien     | Sir   |
+		| FirstName | Surname | Title |
+		| Tomasz    | Bien    | Sir   |
 		And Requirement exists in database
 		And Requirement is added to latest views
 		And Contacts exists in database
-			| FirstName | LastName | Title  |
-			| Tomasz    | Bien     | Mister |
+			| FirstName | Surname | Title  |
+			| Tomasz    | Bien    | Mister |
 		And Requirement exists in database
 		And Requirement is added to latest views
 		And Requirement is added to latest views
 		And Contacts exists in database
-			| FirstName | LastName | Title |
-			| Tomasz    | Bien     | Dude  |
+			| FirstName | Surname | Title |
+			| Tomasz    | Bien    | Dude  |
 		And Requirement exists in database
 		And Requirement is added to latest views
 	When User gets latest viewed entities

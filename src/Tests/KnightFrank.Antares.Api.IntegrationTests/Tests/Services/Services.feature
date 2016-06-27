@@ -14,7 +14,7 @@ Scenario Outline: Upload attachment for entity with ActivityDocumentType
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| Title  | FirstName | LastName |
+			| Title  | FirstName | Surname |
 			| Mister | Tomasz    | Bien    |
 		And Requirement exists in database
 	When User retrieves url for <entity> attachment upload for <filename> and <activityDocumentTypeCode> code
@@ -40,7 +40,7 @@ Scenario Outline: Download attachment for entity with ActivityDocumentType
 			| PropertyType | Division    |
 			| House        | Residential |
 		And Contacts exists in database
-			| Title  | FirstName | LastName |
+			| Title  | FirstName | Surname |
 			| Mister | Tomasz    | Bien    |
 		And Activity exists in database
 			| ActivityStatus | ActivityType  |

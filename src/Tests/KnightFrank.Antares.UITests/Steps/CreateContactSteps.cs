@@ -43,13 +43,14 @@
         }
 
         [When(@"User fills in contact details on create contact page")]
+        [Given(@"User fills in contact details on create contact page")]
         public void CreateContact(Table table)
         {
             var contact = table.CreateInstance<Contact>();
 
             this.page.SetTitle(contact.Title)
                 .SetFirstName(contact.FirstName)
-                .SetLastName(contact.LastName);
+                .SetSurname(contact.LastName);
         }
 
         [When(@"User clicks save contact button on create contact page")]
@@ -76,5 +77,16 @@
             Assert.True(new CreateContactPage(this.driverContext).CheckIfContactAddPage());
         }
 
+        [When(@"User chooses '(.*)' as Mailings Salutations")]
+        public void UserChoosesMailiingSalutation(string salutation)
+        {
+            this.page.SetMailingSalutation(salutation);
+        }
+
+        [When(@"User chooses '(.*)' as Events Salutations")]
+        public void UserChoosesEventSalutation(string salutation)
+        {
+            this.page.SetEventSalutation(salutation);
+        }
     }
 }

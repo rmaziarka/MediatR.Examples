@@ -74,8 +74,8 @@
                     UserTypeId =
                         this.fixture.DataContext.EnumTypeItems.Single(
                             i =>
-                                i.EnumType.Code.Equals(nameof(ActivityUserType)) &&
-                                i.Code.Equals(nameof(ActivityUserType.LeadNegotiator))).Id
+                                i.EnumType.Code.Equals(nameof(UserType)) &&
+                                i.Code.Equals(nameof(UserType.LeadNegotiator))).Id
                 }
             };
 

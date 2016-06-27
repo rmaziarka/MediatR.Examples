@@ -247,7 +247,7 @@
             ActivityUser negotiator = activity.ActivityUsers.SingleOrDefault(u => u.UserId == secondaryNegotiatorIdToAdd);
             negotiator.Should().NotBeNull();
             // ReSharper disable once PossibleNullReferenceException
-            negotiator.UserType.Code.Should().Be(ActivityUserType.SecondaryNegotiator.ToString());
+            negotiator.UserType.Code.Should().Be(UserType.SecondaryNegotiator.ToString());
             negotiator.CallDate.Should().Be(callDate);
 
             activityEntityMapper.Verify(x => x.MapAllowedValues(command, activity, PageType.Update), Times.Once);
@@ -314,7 +314,7 @@
             ActivityUser negotiator = activity.ActivityUsers.SingleOrDefault(u => u.UserId == negotiatorIdToUpdate);
             negotiator.Should().NotBeNull();
             // ReSharper disable once PossibleNullReferenceException
-            negotiator.UserType.Code.Should().Be(isNegotiatorToBeChangedToLead ? ActivityUserType.LeadNegotiator.ToString() : ActivityUserType.SecondaryNegotiator.ToString());
+            negotiator.UserType.Code.Should().Be(isNegotiatorToBeChangedToLead ? UserType.LeadNegotiator.ToString() : UserType.SecondaryNegotiator.ToString());
             negotiator.CallDate.Should().Be(callDate);
 
             activityEntityMapper.Verify(x => x.MapAllowedValues(command, activity, PageType.Update), Times.Once);
@@ -351,12 +351,12 @@
 
         private EnumTypeItem GetLeadNegotiatorUserType(IFixture fixture)
         {
-            return fixture.Build<EnumTypeItem>().With(i => i.Code, ActivityUserType.LeadNegotiator.ToString()).Create();
+            return fixture.Build<EnumTypeItem>().With(i => i.Code, UserType.LeadNegotiator.ToString()).Create();
         }
 
         private EnumTypeItem GetSecondaryNegotiatorUserType(IFixture fixture)
         {
-            return fixture.Build<EnumTypeItem>().With(i => i.Code, ActivityUserType.SecondaryNegotiator.ToString()).Create();
+            return fixture.Build<EnumTypeItem>().With(i => i.Code, UserType.SecondaryNegotiator.ToString()).Create();
         }
 
         private EnumTypeItem GetManagingDepartmentType(IFixture fixture)

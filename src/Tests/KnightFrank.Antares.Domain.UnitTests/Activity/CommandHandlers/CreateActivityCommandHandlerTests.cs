@@ -77,7 +77,7 @@
                                       (Expression<Func<EnumTypeItem, bool>> expr) =>
                                       new[]
                                           {
-                                              this.CreateEnumTypeItem(ActivityUserType.LeadNegotiator.ToString(), fixture),
+                                              this.CreateEnumTypeItem(UserType.LeadNegotiator.ToString(), fixture),
                                               this.CreateEnumTypeItem(ActivityDepartmentType.Managing.ToString(), fixture)
                                           }.Where(
                                               expr.Compile()));
@@ -115,7 +115,7 @@
             activity.ActivityUsers.Should().HaveCount(1);
             ActivityUser leadNegotiator = activity.ActivityUsers.Single();
             leadNegotiator.User.Should().Be(user);
-            leadNegotiator.UserType.Code.Should().Be(ActivityUserType.LeadNegotiator.ToString());
+            leadNegotiator.UserType.Code.Should().Be(UserType.LeadNegotiator.ToString());
             leadNegotiator.CallDate.Should().Be(DateTime.UtcNow.AddDays(14).Date);
 
             activity.ActivityDepartments.Should().HaveCount(1);

@@ -14,8 +14,6 @@ module Antares.Common.Models.Enums
 	 	UserType,
 	 	ActivityDepartmentType,
 	 	SalutationFormat,
-	 	MailingSalutation,
-	 	EventSalutation,
 	 }
 
 	
@@ -81,21 +79,5 @@ module Antares.Common.Models.Enums
 	{
 		MrJohnSmith,
 		JohnSmithEsq,
-	}
-
-	export enum MailingSalutation
-	{
-		MailingFormal,
-		MailingSemiformal,
-		MailingInformal,
-		MailingPersonal,
-	}
-
-	export enum EventSalutation
-	{
-		EventInvite,
-		EventSemiformal,
-		EventInformal,
-		EventPersonal,
 	}
 }

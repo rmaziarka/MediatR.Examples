@@ -9,8 +9,8 @@ Scenario: Create viewing
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | LastName | Title  |
-			| Tomasz    | Bien     | Mister |
+			| FirstName | Surname | Title  |
+			| Tomasz    | Bien    | Mister |
 		And Requirement exists in database
 	When User creates viewing using api
 	Then User should get OK http status code
@@ -25,8 +25,8 @@ Scenario: Create viewing with mandatory fields
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database 
-			| FirstName | LastName | Title  |
-			| Tomasz    | Bien     | Mister |
+			| FirstName | Surname | Title  |
+			| Tomasz    | Bien    | Mister |
 		And Requirement exists in database
 	When User creates viewing with mandatory fields using api
 	Then User should get OK http status code
@@ -41,8 +41,8 @@ Scenario Outline: Create viewing with invalid data
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | LastName | Title  |
-			| Tomasz    | Bien     | Mister |
+			| FirstName | Surname | Title  |
+			| Tomasz    | Bien    | Mister |
 		And Requirement exists in database
 	When User creates viewing with invalid <data> using api
 	Then User should get BadRequest http status code
@@ -62,9 +62,9 @@ Scenario: Update viewing
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | LastName | Title  |
-			| Tomasz    | Bien     | Mister |
-			| Tom       | Jones    | Sir    |
+			| FirstName | Surname | Title  |
+			| Tomasz    | Bien    | Mister |
+			| Tom       | Jones   | Sir    |
 		And Requirement exists in database
 		And Viewing exists in database
 	When User updates viewing 
@@ -80,9 +80,9 @@ Scenario Outline: Update viewing with invalid data
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | LastName | Title  |
-			| Tomasz    | Bien     | Mister |
-			| Tom       | Jones    | Sir    |
+			| FirstName | Surname | Title  |
+			| Tomasz    | Bien    | Mister |
+			| Tom       | Jones   | Sir    |
 		And Requirement exists in database
 		And Viewing exists in database
 	When User updates viewing with invalid <data> data

@@ -8,3 +8,12 @@ Scenario: Create contact
 		| Alan      | Macarthur | Sir   |
 		And User clicks save contact button on create contact page
 	Then New contact should be created
+
+@Contact
+Scenario: Contact Salutations 
+	Given User navigates to create contact page
+	And User fills in contact details on create contact page
+		| FirstName | LastName  | Title |
+		| Alan      | Macarthur | Sir   |
+	When User chooses 'InFormal' as Mailings Salutations
+

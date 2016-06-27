@@ -63,3 +63,9 @@ Scenario Outline: Get contact using invalid data
 	| 00000000-0000-0000-0000-000000000000 | BadRequest |
 	| A                                    | BadRequest |
 	| invalid                              | NotFound   |
+
+@Contacts
+Scenario: Get all titles
+	When User retrieves all contact's titles
+	Then User should get OK http status code
+		And Contact titles list should have expected values
