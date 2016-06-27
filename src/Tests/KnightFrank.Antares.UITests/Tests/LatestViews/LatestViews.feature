@@ -181,3 +181,45 @@ Scenario: Display latest viewed requirements
 			| LatestData             |
 			| Triss Merigold         |
 			| Van Wilder, Van Wilder |
+
+@LatestViews
+Scenario: Display latest viewed companies
+	Given Contacts are created in database
+		| FirstName | Surname | Title |
+		| Dustin    | Hoffman | Dr    |
+	When User navigates to create company page
+		And User opens navigation drawer menu
+		And User selects Companies menu item
+		And User fills in company details on create company page 
+			| Name        | WebsiteUrl            | ClientCarePageUrl      | ClientCareStatus      |
+			| Hoffman Inc | www.DustinHoffman.com | www.DustinHoffman.test | Massive Action Client |
+		And User selects contacts on create company page
+			| FirstName | Surname |
+			| Dustin    | Hoffman |
+		And User clicks save company button on create company page
+	Then View company page should be displayed
+		And Latest 1 company should contain following data
+			| LatestData  |
+			| Hoffman Inc |
+	When Contacts are created in database
+		| FirstName | Surname | Title |
+		| Tom       | Hanks   | Dr    |
+		And Company is created in database
+			| Name      | WebsiteUrl               | ClientCarePageUrl         |
+			| Hanks Inc | https://www.tomhanks.com | https://www.tomhanks2.com |
+	When User navigates to edit company page with id
+		And User opens navigation drawer menu
+		And User selects Companies menu item
+	Then Latest 2 companies should contain following data
+		| LatestData  |
+		| Hanks Inc   |
+		| Hoffman Inc |
+	When User clicks latest company on 2 position in drawer menu
+	Then View company page should be displayed
+		And Company should have following details on view company page
+			| Name        | WebsiteUrl                   | ClientCarePageUrl             | ClientCareStatus      |
+			| Hoffman Inc | http://www.DustinHoffman.com | http://www.DustinHoffman.test | Massive Action Client |
+		And Latest 2 company should contain following data
+			| LatestData  |
+			| Hoffman Inc |
+			| Hanks Inc   |
