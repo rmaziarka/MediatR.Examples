@@ -69,7 +69,7 @@
             this.Use(
                 new List<ControlCode>
                 {
-                    ControlCode.CreationDate,
+                    ControlCode.Requirement_CreationDate,
                     ControlCode.Requirement_RequirementType,
                     ControlCode.Requirement_Applicants,
                     ControlCode.Requirement_Description
@@ -86,12 +86,12 @@
 
             this.Use(new List<ControlCode>
             {
-                ControlCode.CreationDate,
+                ControlCode.Requirement_CreationDate,
                 ControlCode.Requirement_RentRange,
                 ControlCode.Requirement_LocationRequirements,
-                ControlCode.Viewings,
+                ControlCode.Requirement_Viewings,
                 ControlCode.Requirement_Attachments,
-                ControlCode.Offers
+                ControlCode.Requirement_Offers
             }, this.When(new List<RequirementType>
             {
                 RequirementType.ResidentialLetting
