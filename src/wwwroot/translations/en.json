@@ -314,7 +314,8 @@
       "SELECTACTIVITY": "Select activity",
       "OFFERPREVIEW": "Offer preview",
       "OFFERDETAILS": "Offer details",
-      "NEWOFFER": "New offer"
+      "NEWOFFER": "New offer",
+      "TYPE":  "Requirement type"
     }
   },
   "NOTES": {

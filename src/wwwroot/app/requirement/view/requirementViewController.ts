@@ -4,6 +4,7 @@ module Antares.Requirement.View {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
+    import RequirementViewConfig = Antares.Requirement.IRequirementViewConfig;
 
     export class RequirementViewController extends Core.WithPanelsBaseController {
         requirement: Business.Requirement;
@@ -16,6 +17,7 @@ module Antares.Requirement.View {
         userData: Dto.IUserData;
         selectedOffer: Dto.IOffer;
         selectedViewing: Dto.IViewing;
+        public config: RequirementViewConfig;
 
         enumTypeRequirementDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.RequirementDocumentType;
         entityType: EntityType = EntityType.Requirement;

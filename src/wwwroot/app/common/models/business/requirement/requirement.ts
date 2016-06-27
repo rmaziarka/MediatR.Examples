@@ -5,6 +5,7 @@ module Antares.Common.Models.Business {
         [index: string]: any;
 
         id: string = '';
+        requirementTypeId: string = '';
         createDate: Date = null;
         contacts: Contact[] = [];
         address: Address = new Address();

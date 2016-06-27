@@ -1,0 +1,22 @@
+﻿<ng-form name="requirementTypeControlForm" ng-if="vm.config || true">
+    <div class="form-group" show-errors>
+        <div class="row">
+            <div class="col-md-9">
+                <label for="status" class="" translate="REQUIREMENT.ADD.TYPE"></label>
+                <select class="form-control"
+                        id="status"
+                        name="status"
+                        ng-required="vm.config.requirementTypeId.required"
+                        ng-disabled="!vm.config.requirementTypeId.active"
+                        ng-model="vm.ngModel"
+                        ng-change="vm.changeRequirementType()">
+                    <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
+                    <option ng-repeat="item in vm.getRequirementTypes() track by item.id" value="{{item.id}}">{{item.id | dynamicTranslate}}</option>
+                </select>
+                <div ng-messages="requirementTypeControlForm.status.$error" ng-show="requirementTypeControlForm.$submitted || requirementTypeControlForm.status.$dirty">
+                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-form>

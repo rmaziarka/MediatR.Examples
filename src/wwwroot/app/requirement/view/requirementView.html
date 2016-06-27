@@ -1,6 +1,5 @@
 ﻿<div class="row">
     <div class="col-md-12">
-
         <!-- Property details -->
         <h2 class="page-header" translate="REQUIREMENT.VIEW.REQUIREMENT_DETAILS"></h2>
         <div class="well requirement-details-header">
@@ -17,6 +16,7 @@
         <div class="row">
             <div class="col-md-4">
                 <section>
+                    <requirement-type-preview-control type-id="vm.requirement.requirementTypeId" config="vm.config.requirement_RequirementType"/>
                     <h3 class="page-header" translate="REQUIREMENT.VIEW.LOCATION"></h3>
                     <address-form-view address="vm.requirement.address"
                                        address-type="requirement"
