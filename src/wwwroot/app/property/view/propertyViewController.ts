@@ -88,7 +88,7 @@ module Antares.Property.View {
         }
 
         goToActivityAdd = () => {
-            //state go
+            this.$state.go('app.activity-add', { propertyTypeId: this.property.propertyTypeId });
         }
 
         showAreaAdd = () => {

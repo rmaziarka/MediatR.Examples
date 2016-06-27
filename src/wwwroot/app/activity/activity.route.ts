@@ -1,13 +1,20 @@
 /// <reference path="../typings/_all.d.ts" />
 
 module Antares.Activity {
-    import IActivity = Antares.Common.Models.Dto.IActivity;
-    import PageTypeEnum = Antares.Common.Models.Enums.PageTypeEnum;
+    import IActivity = Common.Models.Dto.IActivity;
+    import PageTypeEnum = Common.Models.Enums.PageTypeEnum;
     var app: ng.IModule = angular.module('app');
     app.config(initRoute);
 
     function initRoute($stateProvider: ng.ui.IStateProvider) {
         $stateProvider
+            .state('app.activity-add', {
+                url: '/activity/add',
+                template: "<activity-edit></activity-edit>",
+                params: {
+                    propertyTypeId: ''
+                }
+            })
             .state('app.activity-view', {
                 url: '/activity/view/:id',
                 template: "<activity-view activity='activity' config='config'></activity-view>",
@@ -17,7 +24,7 @@ module Antares.Activity {
                         var activityId: string = $stateParams['id'];
                         return dataAccessService.getActivityResource().get({ id: activityId }).$promise;
                     },
-                    config: (activity: IActivity, configService: Services.ConfigService) =>{
+                    config: (activity: IActivity, configService: Services.ConfigService) => {
                         return configService.getActivity(PageTypeEnum.Details,
                             activity.property.propertyTypeId,
                             activity.activityTypeId,
@@ -46,21 +53,21 @@ module Antares.Activity {
                             activity.activityTypeId,
                             activity);
                     },
-                    config: (editConfig: IActivityEditConfig, viewConfig: IActivityViewConfig) =>{
-                        var config: IActivityEditConfig = <IActivityEditConfig> ({});
+                    config: (editConfig: IActivityEditConfig, viewConfig: IActivityViewConfig) => {
+                        var config: IActivityEditConfig = <IActivityEditConfig>({});
 
                         Object.keys(editConfig)
-                                .forEach((key: string) => {
-                                    config[key] = editConfig[key];
+                            .forEach((key: string) => {
+                                config[key] = editConfig[key];
                             });
 
                         Object.keys(viewConfig)
-                                .forEach((key: string) => {
-                                    if (config[key]) {
-                                        return;
-                                    }
+                            .forEach((key: string) => {
+                                if (config[key]) {
+                                    return;
+                                }
 
-                                    config[key] = viewConfig[key];
+                                config[key] = viewConfig[key];
                             });
                         return config;
                     }
