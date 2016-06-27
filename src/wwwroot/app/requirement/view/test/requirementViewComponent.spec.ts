@@ -3,8 +3,7 @@
 module Antares {
     import RequirementViewController = Requirement.View.RequirementViewController;
     import Business = Common.Models.Business;
-    import OfferAddEditController = Component.OfferAddEditController;
-    import SidePanelController = Common.Component.SidePanelController;
+    import Dto = Common.Models.Dto;
     declare var moment: any;
     type Dictionary = { [id: string]: string };
 
@@ -14,6 +13,11 @@ module Antares {
                 $provide.service('addressFormsProvider', Mock.AddressFormsProviderMock);
             });
         });
+
+        var setupOfferStatuses = (enumProvider: Providers.EnumProvider) => {
+            var enumsDictionary = TestHelpers.EnumDictionaryGenerator.generateDictionary();
+            enumProvider.enums = enumsDictionary;
+        };
 
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
@@ -164,6 +168,7 @@ module Antares {
                 filter = $filter;
                 $http = $httpBackend;
 
+                setupOfferStatuses(enumProvider);
                 var offerStatusToCodeDict: Dictionary = {
                     '1': 'New',
                     '2': 'Withdrawn',
@@ -171,7 +176,7 @@ module Antares {
                     '4': 'Accepted'
                 };
 
-                enumProvider.getEnumCodeById = (statusId: string) =>{
+                enumProvider.getEnumCodeById = (statusId: string) => {
                     return offerStatusToCodeDict[statusId];
                 };
 
@@ -309,13 +314,15 @@ module Antares {
                 $rootScope: ng.IRootScopeService,
                 $compile: ng.ICompileService,
                 $httpBackend: ng.IHttpBackendService,
-                $filter: ng.IFilterService) => {
+                $filter: ng.IFilterService,
+                enumProvider: Providers.EnumProvider) => {
 
                 filter = $filter;
                 $http = $httpBackend;
                 compile = $compile;
 
                 scope = $rootScope.$new();
+                setupOfferStatuses(enumProvider);
             }));
 
             it('then note list is displayed', () => {

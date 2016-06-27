@@ -50,9 +50,9 @@ module Antares.Offer {
             this.setDefaultOfferStatus();
         }
 
-        private setDefaultOfferStatus = (): void => {
+        private setDefaultOfferStatus = (): void =>{
             var offerStatus = this.enumProvider.enums[Dto.EnumTypeCode.OfferStatus];
-            var defaultOfferStatus: any = _.find(offerStatus, { 'code': this.defaultOfferStatusCode });
+            var defaultOfferStatus: any = _.find(offerStatus, { 'code' : this.defaultOfferStatusCode });
             if (defaultOfferStatus) {
                 this.offer.statusId = defaultOfferStatus.id;
             }
