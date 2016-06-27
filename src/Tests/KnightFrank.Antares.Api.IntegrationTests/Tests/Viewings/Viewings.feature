@@ -2,19 +2,15 @@
 
 @Viewings
 Scenario: Create viewing
-	Given User gets Freehold Sale for ActivityType
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| ActivityStatus         | PreAppraisal     |
-			| UserType       | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | LastName | Title  |
-			| Tomasz    | Bien     | Mister |
+			| FirstName | Surname | Title  |
+			| Tomasz    | Bien    | Mister |
 		And Requirement exists in database
 	When User creates viewing using api
 	Then User should get OK http status code
@@ -22,19 +18,15 @@ Scenario: Create viewing
 
 @Viewings
 Scenario: Create viewing with mandatory fields
-	Given User gets Freehold Sale for ActivityType
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| ActivityStatus         | PreAppraisal     |
-			| UserType       | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database 
-			| FirstName | LastName | Title  |
-			| Tomasz    | Bien     | Mister |
+			| FirstName | Surname | Title  |
+			| Tomasz    | Bien    | Mister |
 		And Requirement exists in database
 	When User creates viewing with mandatory fields using api
 	Then User should get OK http status code
@@ -42,19 +34,15 @@ Scenario: Create viewing with mandatory fields
 
 @Viewings
 Scenario Outline: Create viewing with invalid data
-	Given User gets Freehold Sale for ActivityType
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| ActivityStatus         | PreAppraisal     |
-			| UserType       | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | LastName | Title  |
-			| Tomasz    | Bien     | Mister |
+			| FirstName | Surname | Title  |
+			| Tomasz    | Bien    | Mister |
 		And Requirement exists in database
 	When User creates viewing with invalid <data> using api
 	Then User should get BadRequest http status code
@@ -67,20 +55,16 @@ Scenario Outline: Create viewing with invalid data
 
 @Viewings
 Scenario: Update viewing
-	Given User gets Freehold Sale for ActivityType
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| ActivityStatus         | PreAppraisal     |
-			| UserType               | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | LastName | Title  |
-			| Tomasz    | Bien     | Mister |
-			| Tom       | Jones    | Sir    |
+			| FirstName | Surname | Title  |
+			| Tomasz    | Bien    | Mister |
+			| Tom       | Jones   | Sir    |
 		And Requirement exists in database
 		And Viewing exists in database
 	When User updates viewing 
@@ -89,20 +73,16 @@ Scenario: Update viewing
 
 @Viewings
 Scenario Outline: Update viewing with invalid data
-	Given User gets Freehold Sale for ActivityType
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode           | enumTypeItemCode |
-			| ActivityStatus         | PreAppraisal     |
-			| UserType       | LeadNegotiator   |
-			| ActivityDepartmentType | Managing         |
-		And Property exists in database
-			| PropertyType | Division    |
-			| House        | Residential |
-		And Activity for latest property and PreAppraisal activity status exists in database
+	Given Property exists in database
+		| PropertyType | Division    |
+		| House        | Residential |		
+		And Activity exists in database
+			| ActivityStatus | ActivityType  |
+			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | LastName | Title  |
-			| Tomasz    | Bien     | Mister |
-			| Tom       | Jones    | Sir    |
+			| FirstName | Surname | Title  |
+			| Tomasz    | Bien    | Mister |
+			| Tom       | Jones   | Sir    |
 		And Requirement exists in database
 		And Viewing exists in database
 	When User updates viewing with invalid <data> data

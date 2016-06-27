@@ -9,8 +9,6 @@
 
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
-    using KnightFrank.Antares.Api.IntegrationTests.Steps.Enums;
-    using KnightFrank.Antares.Api.IntegrationTests.Steps.Property;
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Contacts;
@@ -20,6 +18,7 @@
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Activity.QueryResults;
+    using KnightFrank.Antares.Domain.Common.Enums;
 
     using Newtonsoft.Json;
 
@@ -30,13 +29,12 @@
     public class ActivitiesSteps
     {
         private const string ApiUrl = "/api/activities";
-        private readonly BaseTestClassFixture fixture;
         private readonly DateTime date = DateTime.UtcNow;
+        private readonly BaseTestClassFixture fixture;
         private readonly ScenarioContext scenarioContext;
+        private List<ActivityDepartment> activityDepartments;
 
         private User leadNegotiator;
-
-        private List<ActivityDepartment> activityDepartments;
 
         public ActivitiesSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
         {
@@ -48,48 +46,37 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"Activity exists in database")]
-        public void GivenActivityExistsInDb()
-        {
-            var enumTable = new Table("enumTypeCode", "enumTypeItemCode");
-            enumTable.AddRow("ActivityStatus", "PreAppraisal");
-            enumTable.AddRow("Division", "Residential");
-            enumTable.AddRow("ActivityDocumentType", "TermsOfBusiness");
-            enumTable.AddRow("UserType", "LeadNegotiator");
-            enumTable.AddRow("ActivityDepartmentType", "Managing");
-            enumTable.AddRow("ActivityDepartmentType", "Standard");
-            enumTable.AddRow("OfferStatus", "New");
-
-            this.GetActivityTypeId("Freehold Sale");
-
-            new EnumsSteps(this.fixture, this.scenarioContext).GetEnumTypeItemId(enumTable);
-
-            var property = new Table("PropertyType", "Division");
-            property.AddRow("House", "Residential");
-
-            new PropertySteps(this.fixture, this.scenarioContext).CreatePropertyInDatabase(property);
-            this.CreateActivityInDatabase("latest", "PreAppraisal");
-        }
-
         [Given(@"All activities have been deleted from database")]
         public void DeleteActivities()
         {
             this.fixture.DataContext.Activities.RemoveRange(this.fixture.DataContext.Activities.ToList());
         }
 
-        [Given(@"Activity for (.*) property and (.*) activity status exists in database")]
-        public void CreateActivityInDatabase(string id, string activityStatus)
+        [Given(@"Activity exists in database")]
+        public void CreateActivityinDatabase(Table table)
         {
-            Guid activityStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[activityStatus];
-            Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Property>("Property").Id : new Guid(id);
-            var activityTypeId = this.scenarioContext.Get<Guid>("ActivityTypeId");
+            string activityStatus = table.Rows[0]["ActivityStatus"];
+            string activityType = table.Rows[0]["ActivityType"];
 
-            Guid leadNegotiatorTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["LeadNegotiator"];
+            Guid activityStatusId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    i => i.EnumType.Code.Equals(nameof(ActivityStatus)) && i.Code.Equals(activityStatus)).Id;
+            Guid activityTypeId = this.fixture.DataContext.ActivityTypes.Single(i => i.Code.Equals(activityType)).Id;
+            Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
+
             this.leadNegotiator = this.fixture.DataContext.Users.First();
 
             var activityNegotiatorList = new List<ActivityUser>
             {
-                new ActivityUser { UserId = this.leadNegotiator.Id, UserTypeId = leadNegotiatorTypeId }
+                new ActivityUser
+                {
+                    UserId = this.leadNegotiator.Id,
+                    UserTypeId =
+                        this.fixture.DataContext.EnumTypeItems.Single(
+                            i =>
+                                i.EnumType.Code.Equals(nameof(UserType)) &&
+                                i.Code.Equals(nameof(UserType.LeadNegotiator))).Id
+                }
             };
 
             this.activityDepartments = new List<ActivityDepartment>
@@ -97,7 +84,11 @@
                 new ActivityDepartment
                 {
                     DepartmentId = this.leadNegotiator.DepartmentId,
-                    DepartmentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Managing"]
+                    DepartmentTypeId =
+                        this.fixture.DataContext.EnumTypeItems.Single(
+                            i =>
+                                i.EnumType.Code.Equals(nameof(ActivityDepartmentType)) &&
+                                i.Code.Equals(nameof(ActivityDepartmentType.Managing))).Id
                 }
             };
 
@@ -118,6 +109,20 @@
             this.fixture.DataContext.SaveChanges();
 
             this.scenarioContext.Set(activity, "Activity");
+        }
+
+        [Given(@"User gets (.*) for ActivityType")]
+        public void GetActivityTypeId(string activityTypeCode)
+        {
+            if (activityTypeCode.Equals("invalid"))
+            {
+                this.scenarioContext.Set(Guid.NewGuid(), "ActivityTypeId");
+            }
+            else
+            {
+                Guid activityTypeId = this.fixture.DataContext.ActivityTypes.Single(i => i.Code.Equals(activityTypeCode)).Id;
+                this.scenarioContext.Set(activityTypeId, "ActivityTypeId");
+            }
         }
 
         [When(@"User creates activity for given (.*) property id using api")]
@@ -149,20 +154,6 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [Given(@"User gets (.*) for ActivityType")]
-        public void GetActivityTypeId(string activityTypeCode)
-        {
-            if (activityTypeCode.Equals("invalid"))
-            {
-                this.scenarioContext.Set(Guid.NewGuid(), "ActivityTypeId");
-            }
-            else
-            {
-                Guid activityTypeId = this.fixture.DataContext.ActivityTypes.Single(i => i.Code.Equals(activityTypeCode)).Id;
-                this.scenarioContext.Set(activityTypeId, "ActivityTypeId");
-            }
-        }
-
         [When(@"User updates activity (.*) id and (.*) status with following sale valuation")]
         public void UpdateActivitySaleValuation(string id, string status, Table table)
         {
@@ -185,8 +176,15 @@
 
             updateActivityCommand.Departments = new List<UpdateActivityDepartment>
             {
-                new UpdateActivityDepartment { DepartmentId = this.leadNegotiator.DepartmentId,
-                    DepartmentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Managing"]}
+                new UpdateActivityDepartment
+                {
+                    DepartmentId = this.leadNegotiator.DepartmentId,
+                    DepartmentTypeId =
+                        this.fixture.DataContext.EnumTypeItems.Single(
+                            i =>
+                                i.EnumType.Code.Equals(nameof(ActivityDepartmentType)) &&
+                                i.Code.Equals(nameof(ActivityDepartmentType.Managing))).Id
+                }
             };
 
             activityFromDatabase = new Activity
@@ -308,13 +306,16 @@
             actualActivity.ShouldBeEquivalentTo(activity.Single());
         }
 
-
         [Then(@"Departments should be the same as already added")]
         public void ThenDepartmentsShouldBeTheSameAsAlreadyAdded()
         {
             var activityFromdb = this.scenarioContext.Get<Activity>("Activity");
-            List<ActivityDepartment> addedActivityDepartments = JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent()).ActivityDepartments.ToList();
-            List<ActivityDepartment> updatedActivityDepartments = this.fixture.DataContext.ActivityDepartment.Select(x => x).Where(x => x.ActivityId.Equals(activityFromdb.Id)).ToList();
+            List<ActivityDepartment> addedActivityDepartments =
+                JsonConvert.DeserializeObject<Activity>(this.scenarioContext.GetResponseContent()).ActivityDepartments.ToList();
+            List<ActivityDepartment> updatedActivityDepartments =
+                this.fixture.DataContext.ActivityDepartment.Select(x => x)
+                    .Where(x => x.ActivityId.Equals(activityFromdb.Id))
+                    .ToList();
 
             updatedActivityDepartments.ShouldAllBeEquivalentTo(addedActivityDepartments, opt => opt
                 .Excluding(x => x.Activity)
