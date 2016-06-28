@@ -198,8 +198,8 @@ Scenario: Create and update accepted residential sales offer
 		| Sir   | Adrian    | Smith     |
 		| Sir   | Bruce     | Dickinson |
 		And Company is created in database
-			| Name        |
-			| Objectivity |
+			| Name        | WebsiteUrl             | ClientCarePageUrl      |
+			| Objectivity | https://www.google.com | https://www.google.com |
 		And Contacts are created in database
 			| Title | FirstName | Surname |
 			| Sir   | Mark      | Walport |

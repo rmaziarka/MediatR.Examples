@@ -13,6 +13,8 @@
         public readonly ControlCode ControlCode;
         public readonly PageType PageType;
         private IList<InnerField> fields;
+        private static Expression<Func<object, bool>> always = x => true;
+        private static Func<object, bool> alwaysCompiled = x => true;
 
         public bool IsReadonly(object entity) => entity != null && ((bool?)this.isReadonlyDelegate?.DynamicInvoke(entity) ?? false);
         public bool IsHidden(object entity) => entity != null && ((bool?)this.isHiddenDelegate?.DynamicInvoke(entity) ?? false);
@@ -40,11 +42,16 @@
             this.IsReadonlyExpression = expression;
             this.isReadonlyDelegate = expression.Compile();
         }
-
-        public void SetHiddenRule(LambdaExpression expression)
+         public void SetHiddenRule(LambdaExpression expression)
         {
             this.IsHiddenExpression = expression;
             this.isHiddenDelegate = expression.Compile();
+        }
+
+        public void SetHidden()
+        {
+            this.IsHiddenExpression = always;
+            this.isHiddenDelegate = alwaysCompiled;
         }
 
         public void SetFieldHiddenRule(LambdaExpression fieldExpression, LambdaExpression expression)
@@ -126,6 +133,11 @@
             }
 
             return newControl;
+        }
+
+        public override string ToString()
+        {
+            return $"{this.ControlCode},{this.PageType}";
         }
     }
 }

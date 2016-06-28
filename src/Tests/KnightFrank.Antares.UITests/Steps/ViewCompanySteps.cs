@@ -7,6 +7,7 @@
     using FluentAssertions;
 
     using KnightFrank.Antares.Dal.Model.Company;
+    using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;
@@ -19,11 +20,9 @@
     [Binding]
     public class ViewCompanySteps
     {
-        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly DriverContext driverContext;
-        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
-        private readonly ViewCompanyPage page;
+        private ViewCompanyPage page;
 
         public ViewCompanySteps(ScenarioContext scenarioContext)
         {
@@ -41,26 +40,44 @@
             }
         }
 
-        [Then(@"View company page is displayed with following details")]
-        public void ThenViewCompanyPageIsDisplayedWithFollowingDetails(Table table)
+        [When(@"User navigates to view company page with id")]
+        public void OpenViewCompanyPageWithId()
         {
-            List<Company> companies = table.CreateSet<Company>().ToList();
-            Assert.True(this.page.IsViewCompanyFormPresent());
-
-            string name = this.page.GetCompanyName();
-            string websiteUrl = this.page.GetWebsiteUrl();
-            string clientCareUrl = this.page.GetClientCareUrl();
-
-            Company company = companies.First();
-            name.ShouldBeEquivalentTo(company.Name);
-            websiteUrl.ShouldBeEquivalentTo(company.WebsiteUrl);
-            clientCareUrl.ShouldBeEquivalentTo(company.ClientCarePageUrl);
+            Guid companyId = this.scenarioContext.Get<Company>("Company").Id;
+            this.page = new ViewCompanyPage(this.driverContext).OpenViewCompanyPageWithId(companyId.ToString());
         }
 
-		[When(@"User clicks edit company button on view company page")]
-		public void EditCompany()
-		{
-			this.page.EditCompany();
-		}
-	}
+        [When(@"User clicks edit company button on view company page")]
+        public void EditCompany()
+        {
+            this.page.EditCompany();
+        }
+
+        [Then(@"View company page should be displayed")]
+        public void CheckIfViewCompanyDisplayed()
+        {
+            Assert.True(this.page.IsViewCompanyFormPresent());
+        }
+
+        [Then(@"Company should have following details on view company page")]
+        public void CheckCompanyDetails(Table table)
+        {
+            var company = table.CreateInstance<ViewCompanyPage.CompanyDetails>();
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(company.Name, this.page.CompanyName),
+                () => Assert.Equal(company.WebsiteUrl, this.page.Website),
+                () => Assert.Equal(company.ClientCarePageUrl, this.page.ClientCarePage),
+                () => Assert.Equal(company.ClientCareStatus, this.page.ClientCareStatus));
+        }
+
+        [Then(@"Company contacts should have following contacts on view company page")]
+        public void CheckCompanyContacts(Table table)
+        {
+            List<string> contacts = table.CreateSet<Contact>().Select(c => c.FirstName + " " + c.Surname).ToList();
+            List<string> expectedContacts = this.page.Contacts;
+
+            contacts.Should().Equal(expectedContacts);
+        }
+    }
 }

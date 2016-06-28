@@ -1,0 +1,28 @@
+<ng-form name='vm.{{vm.schema.formName}}' ng-if="vm.config" id="date-edit-control">
+    <div class="form-group" show-errors>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="{{vm.schema.controlId}}" translate="{{vm.schema.translationKey}}" ng-class="{required: vm.config[vm.schema.fieldName].required}"></label>
+                <div class="input-group">
+                    <input type="text" id="{{vm.schema.controlId}}" class="form-control" placeholder="dd-mm-yyyy" uib-datepicker-popup="dd-MM-yyyy"
+                           is-open="vm.datePickerOpen" close-text="Close" ng-model="vm.ngModel" name="date"
+                           ng-required="vm.config[vm.schema.fieldName].required"
+                           ng-disabled="!vm.config[vm.schema.fieldName].active"
+                           date-greater-than="{{ vm.greaterThan }}"
+                           date-lower-than="{{ vm.lowerThan }}">
+
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.datePickerOpen=!vm.datePickerOpen" ng-disabled="!vm.config[vm.schema.fieldName].active">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </button>
+                    </span>
+                </div>
+                <div ng-messages="vm[vm.schema.formName].date.$error" ng-show="vm[vm.schema.formName].$submitted || vm[vm.schema.formName].date.$dirty">
+                    <p name="dateLowerThanValidationError" ng-message="dateLowerThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_FUTURE"></p>
+                    <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CANNOT_BE_IN_PAST"></p>
+                    <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-form>

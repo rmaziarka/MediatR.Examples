@@ -11,35 +11,6 @@
 
     public static class FieldExtensions
     {
-        public static Field<TEntity, TProperty> GreaterThan<TEntity, TProperty>(this Field<TEntity, TProperty> field, TProperty limit)
-            where TProperty : IComparable, IComparable<TProperty>
-        {
-            field.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(field.Selector).GreaterThan(limit)));
-            return field;
-        }
-
-        public static Field<TEntity, TProperty?> GreaterThan<TEntity, TProperty>(this Field<TEntity, TProperty?> field, TProperty limit)
-           where TProperty : struct, IComparable, IComparable<TProperty>
-        {
-            field.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(field.Selector).GreaterThan(limit)));
-            return field;
-        }
-
-
-        public static Field<TEntity, TProperty?> GreaterThanOrEqualTo<TEntity, TProperty>(this Field<TEntity, TProperty?> field, TProperty limit)
-          where TProperty : struct, IComparable, IComparable<TProperty>
-        {
-            field.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(field.Selector).GreaterThanOrEqualTo(limit)));
-            return field;
-        }
-
-        public static Field<TEntity, TProperty> Required<TEntity, TProperty>(this Field<TEntity, TProperty> field)
-        {
-            field.InnerField.Required = true;
-            field.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(field.Selector).NotEmpty().NotNull()));
-            return field;
-        }
-
         public static Field<TEntity, TProperty> ExternalValidator<TEntity, TProperty>(this Field<TEntity, TProperty> field, AbstractValidator<TProperty> externalValidator)
         {
             field.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(field.Selector).SetValidator(externalValidator)));
@@ -94,30 +65,28 @@
             return SetAllowedValues(controls, field, allowedValues);
         }
 
-        public static Field<TEntity, TProperty> Field<TEntity, TProperty>(this IList<Tuple<Control, IList<IField>>> controlFields, Expression<Func<TEntity, TProperty>> field)
+        public static IList<Field<TEntity, TProperty>> Field<TEntity, TProperty>(this IList<Tuple<Control, IList<IField>>> controlFields, Expression<Func<TEntity, TProperty>> fieldSelector)
         {
+            var fields = new List<Field<TEntity, TProperty>>();
             foreach (Tuple<Control, IList<IField>> controlField in controlFields)
             {
-                foreach (IField fieldp in controlField.Item2)
+                foreach (IField field in controlField.Item2)
                 {
-                    if (fieldp.InnerField.Expression.ToString() == field.ToString())
+                    if (field.InnerField.ContainerType == typeof(TEntity) && field.InnerField.Expression.ToString() == fieldSelector.ToString())
                     {
-                        return fieldp as Field<TEntity, TProperty>;
+                        fields.Add(field as Field<TEntity, TProperty>);
                     }
                 }
             }
 
-            return null;
+            return fields;
         }
 
-        public static IList<Tuple<Control, IList<IField>>> Required(this IList<Tuple<Control, IList<IField>>> controlFields)
+        public static IList<Tuple<Control, IList<IField>>> Fields<TEntity, TProperty>(this IList<Tuple<Control, IList<IField>>> controlFields, FieldActions<TEntity, TProperty> fieldActions)
         {
-            foreach (Tuple<Control, IList<IField>> tuple in controlFields)
+            foreach (KeyValuePair<Expression<Func<TEntity, TProperty>>, Action<IList<Field<TEntity, TProperty>>>> fieldAction in fieldActions)
             {
-                foreach (IField field in tuple.Item2)
-                {
-                    field.SetRequired();
-                }
+                fieldAction.Value(controlFields.Field(fieldAction.Key));
             }
 
             return controlFields;
@@ -127,8 +96,17 @@
         {
             foreach (Tuple<Control, IList<IField>> tuple in controlFields)
             {
-                Expression<Func<object, bool>> always = x => true;
-                tuple.Item1.SetHiddenRule(always);
+                tuple.Item1.SetHidden();
+            }
+
+            return controlFields;
+        }
+
+        public static IList<Tuple<Control, IList<IField>>> ReadonlyWhen<TEntity>(this IList<Tuple<Control, IList<IField>>> controlFields, Expression<Func<TEntity, bool>> expression )
+        {
+            foreach (Tuple<Control, IList<IField>> tuple in controlFields)
+            {
+                tuple.Item1.SetReadonlyRule(expression);
             }
 
             return controlFields;
