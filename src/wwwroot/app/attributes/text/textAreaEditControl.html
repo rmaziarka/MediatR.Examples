@@ -6,7 +6,7 @@
                 <span class="pull-right character-limit">{{vm[vm.schema.formName].text.$viewValue.length || 0}}/4000</span>
                 <textarea ng-model="vm.ngModel"
                           ng-maxlength="4000"
-                          rows="9"
+                          rows="{{vm.rows}}"
                           kf-max-count="4000"
                           id="{{vm.schema.controlId}}"
                           name="text"
