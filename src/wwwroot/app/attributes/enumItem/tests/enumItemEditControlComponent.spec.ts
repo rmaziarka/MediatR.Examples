@@ -3,28 +3,23 @@
 module Antares {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
-    import ActivityStatusEditControlController = Attributes.ActivityStatusEditControlController;
+    import EnumItemEditControlController = Attributes.EnumItemEditControlController;
 
-    interface IScope extends ng.IScope {
-        leadNegotiator: Business.ActivityUser;
-        secondaryNegotiators: Business.ActivityUser[];
-        propertyDivisionId: string;
-    }
-
-    describe('Given activity status edit component', () => {
-        var scope: IScope,
+    describe('Given enum item edit component', () => {
+        var scope: ng.IScope,
             compile: ng.ICompileService,
             element: ng.IAugmentedJQuery,
-            controller: ActivityStatusEditControlController,
+            controller: EnumItemEditControlController,
+
             assertValidator: TestHelpers.AssertValidators;
 
         var statusMock: number = 1;
         var statusChangedMock = () => { };
         var pageObjectSelector = {
-            status: '#status'
+            status: '[name="enumItem"]'
         };
 
-        var mockedComponentHtml = '<activity-status-control ng-model="vm.ngModel" config="vm.config" on-activity-status-changed="vm.statusChanged()"></activity-status-control>';
+        var mockedComponentHtml = '<enum-item-edit-control ng-model="vm.ngModel" config="vm.config" schema="vm.schema"></enum-item-edit-control>';
 
         var activityStatusCodes = [
             { id: "status1", code: "status1" },
@@ -32,17 +27,25 @@ module Antares {
         ];
 
         var configMock: Attributes.IActivityStatusEditControlConfig = TestHelpers.ConfigGenerator.generateActivityStatusEditConfig();
+        var schemaMock: Attributes.IEnumItemEditControlSchema = {
+            fieldName: 'activityStatusId',
+            formName: 'formName',
+            controlId: 'controlId',
+            enumTypeCode: Dto.EnumTypeCode.ActivityStatus,
+            translationKey: 'translationKey'
+        };
 
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService,
-            enumService: Mock.EnumServiceMock) => {
+            enumProvider: Antares.Providers.EnumProvider) => {
             
             // init
-            scope = <IScope>$rootScope.$new();
-            scope['vm'] = { ngModel: statusMock, config: configMock, statusChanged: statusChangedMock };
-            spyOn(scope['vm'], 'statusChanged');
-            enumService.setEnum(Dto.EnumTypeCode.ActivityStatus.toString(), activityStatusCodes);
+            scope = $rootScope.$new();
+            scope['vm'] = { ngModel: statusMock, config: configMock, schema: schemaMock };
+            enumProvider.enums = <Dto.IEnumDictionary>{
+                activityStatus: activityStatusCodes
+            };
 
             compile = $compile;
             element = compile(mockedComponentHtml)(scope);
@@ -72,16 +75,6 @@ module Antares {
                 var activityStatus = element.find(pageObjectSelector.status);
                 expect((<HTMLSelectElement>activityStatus[0]).disabled).toEqual(false);
                 expect((<HTMLSelectElement>activityStatus[0]).required).toEqual(true);
-            });
-
-            xit('when select value is change then on change method is called', () => {
-                var config = TestHelpers.ConfigGenerator.generateActivityStatusEditConfig();
-                // TODO fix tests
-                controller.config.activityStatusId = null;
-                controller.ngModel = 'status2';
-                scope.$apply();
-                element.find(pageObjectSelector.status).triggerHandler('change');
-                expect(scope['vm']['statusChanged']).toHaveBeenCalled();
             });
         });
     });
