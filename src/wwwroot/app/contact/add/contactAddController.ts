@@ -89,6 +89,9 @@ module Antares.Contact {
 
             this.defaultMailingSalutationId = mailingVal.id;
             this.defaultEventSalutationId = eventVal.id;
+
+            if (defaultFormat != null)
+                this.defaultSalutationFormat = (defaultFormat.code || "");
         }
 
         setSalutations = () => {
