@@ -19,7 +19,7 @@
         [AutoData]
         public void Given_CorrectCreateContactCommand_When_Validating_Then_NoValidationErrors(CreateContactCommandValidator validator, CreateContactCommand command, Fixture fixture)
         {
-            ValidationResult validationResult = validator.Validate(command);
+          ValidationResult validationResult = validator.Validate(command);
 
             Assert.True(validationResult.IsValid);
         }
@@ -161,7 +161,18 @@
 			TestIncorrectCommand(validator, command, nameof(command.EventEnvelopeSalutation));
 		}
 
-		private static void TestIncorrectCommand(CreateContactCommandValidator validator, CreateContactCommand command, string testedPropertyName)
+        [Theory]
+        [AutoData]
+        public void Given_IncorrectCreateContactCommandWithNoLeadNegotiator_When_Validating_Then_ValidationError(
+            CreateContactCommandValidator validator, 
+            CreateContactCommand command)
+        {
+            command.LeadNegotiator = null;
+
+            TestIncorrectCommand(validator, command, nameof(command.LeadNegotiator));
+        }
+
+        private static void TestIncorrectCommand(CreateContactCommandValidator validator, CreateContactCommand command, string testedPropertyName)
         {
             ValidationResult validationResult = validator.Validate(command);
             Assert.False(validationResult.IsValid);
