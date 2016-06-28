@@ -51,4 +51,41 @@ SearchStatus;AppliedFor;en;Applied for
 SearchStatus;Complete;en;Complete
 Enquiries;NotStarted;en;Not started
 Enquiries;Sent;en;Sent
-Enquiries;Complete;en;Complete
+Enquiries;Complete;en;Complete;en;
+ActivitySource;KFContactsRegister;en;KF Contacts register
+ActivitySource;KFPR;en;KF PR
+ActivitySource;Knightfrank;en;Knightfrank.co.uk
+ActivitySource;KnightfrankGlobalSearch;en;Knightfrank.com global search
+ActivitySource;DirectEmail;en;Direct email
+ActivitySource;DirectPhoneCall;en;Direct phone call
+ActivitySource;DeveloperWebsite;en;Developer Website
+ActivitySource;LeadGenerationCanvassingActivities;en;Lead generation canvassing activities
+ActivitySource;OnTheMarket;en;Onthemarket.com
+ActivitySource;OtherInternetPortal;en;Other internet portal
+ActivitySource;OtherPortalGlobrix;en;Other portal - Globix
+ActivitySource;OtherPortalPrimelocation;en;Other portal - Primelocation
+ActivitySource;POD;en;POD
+ActivitySource;TBSReferralAdvert;en;TBS - Referral - Advert
+ActivitySource;TBSReferralBank;en;TBS - Referral - Bank
+ActivitySource;TBSReferralPastClient;en;TBS - Referral - Past Client
+ActivitySource;TBSReferralKF;en;TBS - Referral - KF
+ActivitySource;TBSReferralProfessionalContact;en;TBS - Referral - Professional Contact
+ActivitySource;TBSReferralWebsite;en;TBS - Referral - Website
+ActivitySource;MagazineA;en;Magazine A
+ActivitySource;MagazineB;en;Magazine B
+ActivitySource;MagazineC;en;Magazine C
+ActivitySource;NewspaperA;en;Newspaper A
+ActivitySource;NewspaperB;en;Newspaper B
+ActivitySource;NewspaperC;en;Newspaper C
+ActivitySellingReason;Upsizing;en;Upsizing
+ActivitySellingReason;DebtFinancialDifficulty;en;Debt/Financial Difficulty
+ActivitySellingReason;Divorce;en;Divorce
+ActivitySellingReason;Downsizing;en;Downsizing
+ActivitySellingReason;FamilySize;en;Family Size
+ActivitySellingReason;PrivateDeveloper;en;Private Developer
+ActivitySellingReason;Probate;en;Probate
+ActivitySellingReason;ReceiverDisposal;en;Receiver Disposal
+ActivitySellingReason;RegularPropertyValueAppraisal;en;Regular Property Value Appraisal
+ActivitySellingReason;Relocation;en;Relocation
+ActivitySellingReason;Retiring;en;Retiring
+ActivitySellingReason;SurpliceToRequirement;en;Surplice to requirement

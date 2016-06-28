@@ -45,6 +45,33 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
                     cs.MapLeftKey("ActivityId");
                     cs.MapRightKey("AttachmentId");
                 });
+
+            this.HasOptional(a => a.Source).WithMany().HasForeignKey(s => s.SourceId).WillCascadeOnDelete(false);
+            
+            this.HasOptional(a => a.SellingReason).WithMany().HasForeignKey(s => s.SellingReasonId).WillCascadeOnDelete(false);
+
+            this.Property(a => a.SourceDescription)
+                .HasMaxLength(4000);
+
+            this.Property(a => a.PitchingThreats)
+                .HasMaxLength(4000);
+
+            this.Property(a => a.AccessDetails.KeyNumber)
+                .HasColumnName("KeyNumber")
+                .HasMaxLength(128);
+
+            this.Property(a => a.AccessDetails.AccessArrangements)
+                .HasColumnName("AccessArrangements")
+                .HasMaxLength(4000);
+
+            this.Property(a => a.AppraisalMeeting.AppraisalMeetingStart)
+                .HasColumnName("AppraisalMeetingStart");
+
+            this.Property(a => a.AppraisalMeeting.AppraisalMeetingEnd)
+                .HasColumnName("AppraisalMeetingEnd");
+
+            this.Property(a => a.AppraisalMeeting.InvitationText)
+                .HasColumnName("InvitationText");
         }
     }
 }
