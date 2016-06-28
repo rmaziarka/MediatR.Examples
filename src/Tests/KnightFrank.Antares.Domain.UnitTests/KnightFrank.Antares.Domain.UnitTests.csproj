@@ -136,8 +136,14 @@
     <Compile Include="Attachments\Commands\CreateEntityAttachmentCommandValidatorTests.cs" />
     <Compile Include="Attachments\Queries\AttachmentQueryValidatorTests.cs" />
     <Compile Include="Attachments\QueryHandlers\AttachmentQueryHandlerTests.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\BaseControlsConfigurationTests.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerThreeTypesItem.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerTwoTypesItem.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerOneTypeItem.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ActivityControlsConfigurationItem.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ActivityControlsConfigurationTests.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\OfferControlsConfigurationFixture.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\OfferControlsConfigurationTests.cs" />
     <Compile Include="BaseTestClassFixture.cs" />
     <Compile Include="AutoConfiguredMoqDataAttribute.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidatorTests.cs" />

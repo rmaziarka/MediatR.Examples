@@ -39,6 +39,10 @@
                 case PageType.Create:
                     bindingContext.Model = JsonConvert.DeserializeObject<CreateOfferCommand>(requestContent);
                     break;
+                case PageType.Update:
+                    bindingContext.Model = JsonConvert.DeserializeObject<UpdateOfferCommand>(requestContent);
+                    break;
+                case PageType.Details:
                 case PageType.Preview:
                     bindingContext.Model = JsonConvert.DeserializeObject<Offer>(requestContent);
                     break;
