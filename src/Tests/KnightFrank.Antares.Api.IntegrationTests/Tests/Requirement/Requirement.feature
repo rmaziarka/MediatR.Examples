@@ -8,8 +8,8 @@ Scenario: Create requirement
 			| Tomasz    | Bien    | Mister |
 	When User sets locations details for the requirement with max length fields
 		And User creates following requirement using api
- 			| Description | Requirement Type   |
- 			| max         | ResidentialLetting |
+ 			| RequirementType    |
+ 			| ResidentialLetting |
 	Then User should get OK http status code
 		And Requirement should be the same as added
 
@@ -33,8 +33,8 @@ Scenario Outline: Create requirement without data
 		| Postcode | City   | Line2   |
 		| 1234     | London | Big Ben |
 		And User creates following requirement without <data> using api
-			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description            |
-			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | RequirementDescription |
+			| Description            | RentMin | RentMax |
+			| RequirementDescription | 10      | 20      |
 	Then User should get BadRequest http status code
 
 	Examples: 
@@ -42,6 +42,7 @@ Scenario Outline: Create requirement without data
 	| contact      |
 	| country      |
 	| address form |
+	| requirement  |
 
 @Requirements
 Scenario: Create requirement with invalid contact
@@ -50,8 +51,8 @@ Scenario: Create requirement with invalid contact
 		| Postcode | City   | Line2   |
 		| 1234     | London | Big Ben |
 		And User creates following requirement with invalid contact using api			
-			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description            |
-			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | RequirementDescription |
+			| Description            | RentMin | RentMax |
+			| RequirementDescription | 10      | 20      |
 	Then User should get BadRequest http status code
 
 @Requirements
