@@ -54,7 +54,9 @@ module Antares.Common.Models.Business {
 
                 if (activity.viewings) {
                     this.viewings = activity.viewings.map((item) => new Viewing(item));
-                    this.groupViewings(this.viewings);
+                    this.viewings
+                        .sort((nextViewing, previousViewing) => (moment(previousViewing.startDate).toDate().getTime() - moment(nextViewing.startDate).toDate().getTime()));
+                    this.groupViewings(this.viewings.slice(0,5));
                 }
 
                 if (activity.offers) {
