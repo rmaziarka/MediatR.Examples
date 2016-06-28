@@ -33,7 +33,7 @@ Scenario: Create Activity
 			| PropertyType | Division    |
 			| House        | Residential |
 		And Contacts exists in database
-			| FirstName | Surname | Title |
+			| FirstName | Lastname | Title |
 			| Michael   | Angel   | cheef |
 			| Michael   | Angel   | cook  |
 		And Ownership Freeholder exists in database
@@ -120,7 +120,7 @@ Scenario: Get Activity with viewing and offer
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
+			| FirstName | Lastname | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Requirement exists in database
 		And Viewing exists in database

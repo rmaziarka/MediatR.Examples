@@ -69,20 +69,23 @@
             };
 
             //Secondary negotiators
-            this.entityValidator.EntitiesExist<User>(message.SecondaryNegotiators.Select(n => n.UserId).ToList());
+            if (message.SecondaryNegotiators != null)
+            {
+                this.entityValidator.EntitiesExist<User>(message.SecondaryNegotiators.Select(n => n.UserId).ToList());
 
-            commandNegotiators.AddRange(
-                message.SecondaryNegotiators.Select(
-                    n =>
-                    {
-                        User user = this.GetUser(n.UserId);
-                        return new ContactUser
+                commandNegotiators.AddRange(
+                    message.SecondaryNegotiators.Select(
+                        n =>
                         {
-                            UserId = user.Id,
-                            User = user,
-                            UserType = this.GetSecondaryNegotiatorUserType()
-                        };
-                    }));
+                            User user = this.GetUser(n.UserId);
+                            return new ContactUser
+                            {
+                                UserId = user.Id,
+                                User = user,
+                                UserType = this.GetSecondaryNegotiatorUserType()
+                            };
+                        }));
+            }
 
             // All negotiators
             this.collectionValidator.CollectionIsUnique(

@@ -131,7 +131,7 @@ Scenario: Get property
 			| PropertyType | Division    |
 			| House        | Residential |
         And Contacts exists in database
-		    | FirstName | Surname | Title |
+		    | FirstName | Lastname | Title |
 		    | Michael   | Angel   | cheef |
 		And Ownership Freeholder exists in database
 			| PurchaseDate | SellDate   | BuyPrice | SellPrice |
