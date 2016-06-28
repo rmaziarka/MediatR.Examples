@@ -8,6 +8,7 @@ module Antares {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
             controller: ContactAddController,
+            $http: ng.IHttpBackendService,
             assertValidator: Antares.TestHelpers.AssertValidators;
 
         var pageObjectSelectors = {
@@ -50,7 +51,14 @@ module Antares {
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $compile: ng.ICompileService,
+            $httpBackend: ng.IHttpBackendService,
             enumService: Mock.EnumServiceMock) => {
+
+            $http = $httpBackend;
+
+            $http.expectGET('/api/contacts/titles').respond(() => {
+                return [200, []];
+            });
 
             scope = $rootScope.$new();
             scope["userData"] = <Dto.ICurrentUser>{
@@ -71,7 +79,7 @@ module Antares {
 
         ///////// titleSelector
 
-        it('when title value is missing then required message should be displayed', () => {
+        it('when title value is missing then yyyyyy required message should be displayed', () => {
             assertValidator.assertRequiredValidator(null, false, pageObjectSelectors.titleSelector);
         });
 
@@ -159,7 +167,7 @@ module Antares {
 
         ///////// mailingPersonalSalutationSelector
 
-        it('when mailing personal salutation value is too long then validation message should be displayed', () => {
+        it('when mailing personal salutation value is too long then validation message should be displayed', ($http) => {
             var maxLength = 128;
             assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.mailingPersonalSalutationSelector);
         });
