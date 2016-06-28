@@ -10,7 +10,13 @@
                             <div class="row">
                                 <div class="col-md-5">
                                     <label class="required" for="title" translate="CONTACT.TITLE"></label>
-                                    <input type="text" class="form-control" id="title" name="title" required ng-maxlength="128" ng-model="vm.contact.title" ng-change="vm.setSalutations()" autocomplete="off">
+
+                                    <search id="contact-title-search"
+                                            on-select-item="vm.contactTitleSelect"
+                                            load-items="vm.getContactTitles"
+                                            options="vm.searchOptions"
+                                            item-template-url="app/contact/add/contactTitleSearchTemplate.html"></search>
+
                                     <div ng-messages="addContactForm.title.$error" ng-show="addContactForm.$submitted || addContactForm.title.$dirty">
                                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                                     </div>
@@ -49,8 +55,8 @@
                                 <h4 class="page-header" translate="CONTACT.SALUTATION.MAILINGS"></h4>
                                 <div class="form-group">
                                     <label for="default-mailing-salutation-id" translate="CONTACT.SALUTATION.USE_SALUTATION"></label>
-                                    <enum-select id="default-mailing-salutation-id" name="defaultMailingSalutationId" ng-model="vm.defaultMailingSalutationId" enum-type-code="{{vm.mailingSalutationFormat}}" hide-default="true"></enum-select>
-                               </div>
+                                    <enum-select id="default-mailing-salutation-id" name="defaultMailingSalutationId" ng-model="vm.defaultMailingSalutationId" enum-type-code="{{vm.mailingSalutationFormat}}" hide-empty-value="true"></enum-select>
+                                </div>
                                 <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.mailingFormalSalutation.$dirty) && addContactForm.mailingFormalSalutation.$invalid}">
                                     <label for="mailing-formal-salutation" translate="CONTACT.SALUTATION.FORMAL"></label>
                                     <input id="mailing-formal-salutation" name="mailingFormalSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.mailingFormalSalutation" autocomplete="off">
@@ -91,7 +97,7 @@
                                 <h4 class="page-header" translate="CONTACT.SALUTATION.EVENTS"></h4>
                                 <div class="form-group">
                                     <label for="default-event-salutation-id" translate="CONTACT.SALUTATION.USE_SALUTATION"></label>
-                                    <enum-select id="default-event-salutation-id" name="defaultEventSalutationId" ng-model="vm.defaultEventSalutationId" enum-type-code="{{vm.eventSalutationFormat}}" hide-default="true"></enum-select>
+                                    <enum-select id="default-event-salutation-id" name="defaultEventSalutationId" ng-model="vm.defaultEventSalutationId" enum-type-code="{{vm.eventSalutationFormat}}" hide-empty-value="true"></enum-select>
                                 </div>
                                 <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.eventInviteSalutation.$dirty) && addContactForm.eventInviteSalutation.$invalid}">
                                     <label for="event-invite-salutation" translate="CONTACT.SALUTATION.INVITE"></label>

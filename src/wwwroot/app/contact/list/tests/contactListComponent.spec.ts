@@ -11,8 +11,40 @@ module Antares {
             $http:ng.IHttpBackendService;
 
         var contacts: Dto.IContact[] = [
-            { id: '1', firstName: 'Test1', lastName : 'Test1_S', title : 'Mr' },
-            { id: '2', firstName: 'Test2', lastName : 'Test2_S', title : 'Mr' }
+            {
+                id: '1',
+                firstName: 'Test1',
+                lastName: 'Test1_S',
+                title: 'Mr',
+                mailingFormalSalutation: '',
+                mailingSemiformalSalutation: '',
+                mailingInformalSalutation: '',
+                mailingPersonalSalutation: '',
+                mailingEnvelopeSalutation: '',
+                defaultMailingSalutationId: '',
+                eventInviteSalutation: '',
+                eventSemiformalSalutation: '',
+                eventInformalSalutation: '',
+                eventPersonalSalutation: '',
+                eventEnvelopeSalutation: '',
+                defaultEventSalutationId: '' },
+            {
+                id: '2',
+                firstName: 'Test2',
+                lastName: 'Test2_S',
+                title: 'Mr',
+                mailingFormalSalutation: '',
+                mailingSemiformalSalutation: '',
+                mailingInformalSalutation: '',
+                mailingPersonalSalutation: '',
+                mailingEnvelopeSalutation: '',
+                defaultMailingSalutationId: '',
+                eventInviteSalutation: '',
+                eventSemiformalSalutation: '',
+                eventInformalSalutation: '',
+                eventPersonalSalutation: '',
+                eventEnvelopeSalutation: '',
+                defaultEventSalutationId: '' }
         ];
 
         var controller: ContactListController;

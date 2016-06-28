@@ -16,7 +16,6 @@ module Antares.Common.Models.Dto {
         AdditionalSurveyStatus = <any>'additionalSurveyStatus',
         SearchStatus = <any>'searchStatus',
         Enquiries = <any>'enquiries',
-        ActivityDepartmentType = <any>'activityDepartmentType',
         SalutationFormat = <any>'salutationFormat',
         MailingSalutation = <any>'mailingSalutation',
         EventSalutation = <any>'eventSalutation',

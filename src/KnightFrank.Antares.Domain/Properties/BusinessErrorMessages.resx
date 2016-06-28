@@ -204,4 +204,7 @@
   <data name="Activity_Should_Have_Only_One_Managing_Department" xml:space="preserve">
     <value>Activity should hva only one managing department.</value>
   </data>
+  <data name="Negotiators_Not_Unique" xml:space="preserve">
+    <value>One or more negotiators are duplicated.</value>
+  </data>
 </root>

@@ -11,6 +11,6 @@
                typeahead-editable="vm.options.isEditable"
                typeahead-template-url="{{vm.itemTemplateUrl}}"
                placeholder="{{vm.searchPlaceholder | translate}}">
-        <button data-type="cancel" type="button" class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>
+        <button ng-if="onCancel" data-type="cancel" type="button" class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>
     </div>
 </div>
