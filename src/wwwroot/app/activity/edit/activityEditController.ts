@@ -28,8 +28,6 @@ module Antares.Activity {
         private departmentErrorTitleCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.TITLE';
         private defaultActivityStatusCode: string = 'PreAppraisal';
 
-        public configMocked: any;
-
         //controls
         controlSchemas: any = {
             marketAppraisalPrice: {
@@ -65,10 +63,10 @@ module Antares.Activity {
         };
 
         activitySourceSchema: Antares.Attributes.IEnumItemEditControlSchema = {
-            controlId: 'activitySourceId',
+            controlId: 'sourceId',
             translationKey: 'ACTIVITY.EDIT.SOURCE',
-            fieldName: 'activitySourceId',
-            formName: 'activitySourceForm',
+            fieldName: 'sourceId',
+            formName: 'sourceForm',
             enumTypeCode: Dto.EnumTypeCode.ActivitySource
         }
 
@@ -81,46 +79,46 @@ module Antares.Activity {
         }
 
         activitySellingReasonSchema: Antares.Attributes.IEnumItemEditControlSchema = {
-            controlId: 'activitySellingReasonId',
+            controlId: 'sellingReasonId',
             translationKey: 'ACTIVITY.EDIT.SELLING_REASON',
-            fieldName: 'activitySellingReasonId',
-            formName: 'activitySellingReasonForm',
+            fieldName: 'sellingReasonId',
+            formName: 'sellingReasonForm',
             enumTypeCode: Dto.EnumTypeCode.ActivitySellingReason
         }
 
         activitySourceDescriptionSchema: Antares.Attributes.ITextEditControlSchema = {
-            controlId: 'activitySourceDescriptionId',
+            controlId: 'sourceDescriptionId',
             translationKey: 'ACTIVITY.EDIT.SOURCE_DESCRIPTION',
-            fieldName: 'activitySourceDescriptionId',
-            formName: 'activitySourceDescriptionForm',
+            fieldName: 'sourceDescription',
+            formName: 'sourceDescriptionForm'
         }
 
         keyNumberSchema: Antares.Attributes.ITextEditControlSchema = {
             controlId: 'keyNumberId',
             translationKey: 'ACTIVITY.EDIT.KEY_NUMBER',
-            fieldName: 'keyNumberId',
-            formName: 'keyNumberForm',
+            fieldName: 'keyNumber',
+            formName: 'keyNumberForm'
         }
 
         pitchingThreatsSchema: Antares.Attributes.ITextEditControlSchema = {
             controlId: 'pitchingThreatsId',
             translationKey: 'ACTIVITY.EDIT.PITCHING_THREATS',
-            fieldName: 'pitchingThreatsId',
-            formName: 'pitchingThreatsForm',
+            fieldName: 'pitchingThreats',
+            formName: 'pitchingThreatsForm'
         }
 
         accessArrangementsSchema: Antares.Attributes.ITextEditControlSchema = {
             controlId: 'accessArrangementsId',
             translationKey: 'ACTIVITY.EDIT.ACCESS_ARRANGEMENTS',
-            fieldName: 'accessArrangementsId',
-            formName: 'accessArrangementsForm',
+            fieldName: 'accessArrangements',
+            formName: 'accessArrangementsForm'
         }
 
         invitationTextSchema: Antares.Attributes.ITextEditControlSchema = {
             controlId: 'invitationTextId',
             translationKey: 'ACTIVITY.EDIT.APPRAISAL_MEETING.INVITATION_TEXT',
-            fieldName: 'invitationTextId',
-            formName: 'invitationTextForm',
+            fieldName: 'invitationText',
+            formName: 'invitationTextForm'
         }
 
         constructor(
@@ -148,52 +146,6 @@ module Antares.Activity {
             this.setStandardDepartmentType();
             this.setDefaultActivityStatus();
             this.setVendorContacts();
-
-            // TODO use config from server
-            this.configMocked = {
-                activitySource: {
-                    activitySourceId: {
-                        required: true,
-                        active: true
-                    }
-                },
-                activitySourceDescription: {
-                    activitySourceDescriptionId: {
-                        required: true,
-                        active: true
-                    }
-                },
-                activitySellingReason: {
-                    activitySellingReasonId: {
-                        required: true,
-                        active: true
-                    }
-                },
-                keyNumber: {
-                    keyNumberId: {
-                        required: true,
-                        active: true
-                    }
-                },
-                pitchingThreats: {
-                    pitchingThreatsId: {
-                        required: true,
-                        active: true
-                    }
-                },
-                accessArrangements: {
-                    accessArrangementsId: {
-                        required: true,
-                        active: true
-                    }
-                },
-                invitationText: {
-                    invitationTextId: {
-                        required: true,
-                        active: true
-                    }
-                }
-            }
         }
 
         public activityTypeChanged = (activityTypeId: string) => {
