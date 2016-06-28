@@ -24,9 +24,12 @@ module Antares.Common.Models.Business {
         askingPrice: number = null;
         shortLetPricePerWeek: number = null;
         activitySourceId: string = '';
-        activitySellingReasonId: string = '';
         activitySourceDescription: string = '';
+        activitySellingReasonId: string = '';
+        pitchningThreats: string = '';
         keyNumber: string = '';
+        accessArrangements: string = '';
+        invitationText: string = '';
 
         constructor(activity?: Dto.IActivity) {
             if (activity) {

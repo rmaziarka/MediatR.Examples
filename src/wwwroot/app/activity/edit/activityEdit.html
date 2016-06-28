@@ -4,16 +4,12 @@
     </div>
     <form ng-submit="editActivityForm.isFormValid() && vm.save()" name="editActivityForm" method="post" novalidate>
         <div class="col-md-4">
-            <section id="property-basic-info">
-                <fieldset id="activity-edit-basic">
-                    <h3 class="page-header" translate="ACTIVITY.EDIT.BASIC_INFORMATION"></h3>
-                    <activity-status-control ng-model="vm.activity.activityStatusId" config="vm.config.activityStatus" on-activity-status-changed="vm.activityStatusChanged(activityStatusId)" />
-                    <enum-item-edit-control ng-model="vm.activity.activitySourceId" config="vm.configMocked.activitySource" schema="vm.activitySourceSchema"></enum-item-edit-control>
-                    <enum-item-edit-control ng-model="vm.activity.activitySellingReasonId" config="vm.configMocked.activitySellingReason" schema="vm.activitySellingReasonSchema"></enum-item-edit-control>
-                    <textarea-edit-control ng-model="vm.activity.activitySourceDescription" config="vm.configMocked.activitySourceDescription" schema="vm.activitySourceDescriptionSchema"></textarea-edit-control>
-                    <text-edit-control ng-model="vm.activity.keyNumber" config="vm.configMocked.keyNumber" schema="vm.keyNumberSchema"></text-edit-control>
-                </fieldset>
+            <section id="activity-edit-vendors">
+                <activity-vendors-edit-control contacts="vm.activity.contacts" config="vm.config.vendors"></activity-vendors-edit-control>
             </section>
+            <section id="activity-edit-landlords">
+                <activity-landlords-edit-control contacts="vm.activity.contacts" config="vm.config.landlords"></activity-landlords-edit-control>
+            </section>            
             <section id="activity-edit-negotiators">
                 <activity-negotiators-edit-control property-division-id="{{vm.activity.property.divisionId}}"
                                                    activity-id="vm.activity.id"
@@ -38,18 +34,29 @@
                 <price-edit-control config="vm.config.askingPrice" schema="vm.controlSchemas.askingPrice" ng-model='vm.activity.askingPrice'></price-edit-control>
                 <price-edit-control config="vm.config.shortLetPricePerWeek" schema="vm.controlSchemas.shortLetPricePerWeek" ng-model='vm.activity.shortLetPricePerWeek'></price-edit-control>
             </fieldset>
+            <section id="activity-basic-info">
+                <fieldset id="activity-edit-basic">
+                    <h3 class="page-header" translate="ACTIVITY.EDIT.BASIC_INFORMATION"></h3>
+                    <activity-status-control ng-model="vm.activity.activityStatusId" config="vm.config.activityStatus" on-activity-status-changed="vm.activityStatusChanged(activityStatusId)" />
+                    <property-view-control property="vm.activity.property" is-panel-visible="vm.isPropertyPreviewPanelVisible" config="vm.config.property"></property-view-control>
+                    <enum-item-edit-control ng-model="vm.activity.activitySourceId" config="vm.configMocked.activitySource" schema="vm.activitySourceSchema"></enum-item-edit-control>
+                    <textarea-edit-control ng-model="vm.activity.activitySourceDescription" config="vm.configMocked.activitySourceDescription" schema="vm.activitySourceDescriptionSchema"></textarea-edit-control>
+                    <enum-item-edit-control ng-model="vm.activity.activitySellingReasonId" config="vm.configMocked.activitySellingReason" schema="vm.activitySellingReasonSchema"></enum-item-edit-control>
+                    <textarea-edit-control ng-model="vm.activity.pitchingThreats" config="vm.configMocked.pitchingThreats" schema="vm.pitchingThreatsSchema"></textarea-edit-control>
+                </fieldset>
+            </section>
+            <section id="activity-additional-info">
+                <fieldset>
+                    <h3 class="page-header" translate="ACTIVITY.EDIT.ADDITIONAL_INFORMATION"></h3>
+                    <text-edit-control ng-model="vm.activity.keyNumber" config="vm.configMocked.keyNumber" schema="vm.keyNumberSchema"></text-edit-control>
+                    <textarea-edit-control ng-model="vm.activity.accessArrangements" config="vm.configMocked.accessArrangements" schema="vm.accessArrangementsSchema"></textarea-edit-control>
+                </fieldset>
+            </section>
         </div>
 
         <div class="col-md-4">
-            <section id="activity-edit-property">
-                <property-view-control property="vm.activity.property" is-panel-visible="vm.isPropertyPreviewPanelVisible" config="vm.config.property"></property-view-control>
-            </section>
-            <section id="activity-edit-vendors">
-                <activity-vendors-edit-control contacts="vm.activity.contacts" config="vm.config.vendors"></activity-vendors-edit-control>
-            </section>
-            <section id="activity-edit-landlords">
-                <activity-landlords-edit-control contacts="vm.activity.contacts" config="vm.config.landlords"></activity-landlords-edit-control>
-            </section>
+            <h3 class="page-header" translate="ACTIVITY.EDIT.APPRAISAL_MEETING.APPRAISAL_MEETING"></h3>
+            <textarea-edit-control ng-model="vm.activity.invitationText" config="vm.configMocked.invitationText" schema="vm.invitationTextSchema"></textarea-edit-control>
         </div>
         <div class="col-md-12">
             <div class="form-group">

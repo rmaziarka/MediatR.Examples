@@ -208,6 +208,7 @@
     "EDIT": {
       "EDIT_ACTIVITY": "Edit activity",
       "BASIC_INFORMATION": "Basic information",
+      "ADDITIONAL_INFORMATION": "Additional information",
       "STATUS": "Status",
       "PROPERTY": "Property",
       "VENDORS": "Vendors",
@@ -224,7 +225,13 @@
       "SOURCE": "Source",
       "SOURCE_DESCRIPTION": "Source - description",
       "SELLING_REASON": "Selling reason",
-      "KEY_NUMBER":  "Key number"
+      "KEY_NUMBER": "Key number",
+      "PITCHING_THREATS": "Pitching threats",
+      "ACCESS_ARRANGEMENTS": "Access arrangements",
+      "APPRAISAL_MEETING": {
+        "APPRAISAL_MEETING": "Appraisal meeting",
+        "INVITATION_TEXT": "Invitation text"
+      }
     },
     "PREVIEW": {
       "ACTIVITYPREVIEW": "Activity preview",

@@ -90,6 +90,27 @@ module Antares.Activity {
             formName: 'keyNumberForm',
         }
 
+       pitchingThreatsSchema: Antares.Attributes.ITextEditControlSchema = {
+           controlId: 'pitchingThreatsId',
+           translationKey: 'ACTIVITY.EDIT.PITCHING_THREATS',
+           fieldName: 'pitchingThreatsId',
+           formName: 'pitchingThreatsForm',
+       }
+
+       accessArrangementsSchema: Antares.Attributes.ITextEditControlSchema = {
+           controlId: 'accessArrangementsId',
+           translationKey: 'ACTIVITY.EDIT.ACCESS_ARRANGEMENTS',
+           fieldName: 'accessArrangementsId',
+           formName: 'accessArrangementsForm',
+       }
+
+       invitationTextSchema: Antares.Attributes.ITextEditControlSchema = {
+           controlId: 'invitationTextId',
+           translationKey: 'ACTIVITY.EDIT.APPRAISAL_MEETING.INVITATION_TEXT',
+           fieldName: 'invitationTextId',
+           formName: 'invitationTextForm',
+       }
+
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService,
@@ -108,6 +129,7 @@ module Antares.Activity {
                 this.isPropertyPreviewPanelVisible = true;
             });
 
+            // TODO use config from server
             this.configMocked = {
                 activitySource: {
                     activitySourceId: {
@@ -129,6 +151,24 @@ module Antares.Activity {
                 },
                 keyNumber: {
                     keyNumberId: {
+                        required: true,
+                        active: true
+                    }
+                },
+                pitchingThreats: {
+                    pitchingThreatsId: {
+                        required: true,
+                        active: true
+                    }
+                },
+                accessArrangements: {
+                    accessArrangementsId: {
+                        required: true,
+                        active: true
+                    }
+                },
+                invitationText: {
+                    invitationTextId: {
                         required: true,
                         active: true
                     }
