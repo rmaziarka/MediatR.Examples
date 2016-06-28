@@ -14,8 +14,6 @@
             this.ContactIds = new List<Guid>();
         }
 
-        public DateTime CreateDate { get; set; }
-
         public IList<Guid> ContactIds { get; set; }
 
         public CreateOrUpdateAddress Address { get; set; }

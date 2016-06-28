@@ -1,0 +1,9 @@
+﻿<ng-form name='vm.requirementDescriptionEditControlForm' ng-if="vm.config" id="price-edit-control">
+    <label for="description" translate="REQUIREMENT.ADD.DESCRIPTION">Description</label>
+    <span class="pull-right character-limit">{{vm.requirementDescriptionEditControlForm.description.$viewValue.length || 0}}/4000</span>
+    <textarea id="description" kf-max-count="4000" rows="8" class="form-control" ng-required="vm.config.required"
+              name="description" ng-model="vm.ngModel"></textarea>
+    <div ng-messages="vm.requirementDescriptionEditControlForm.description.$error" ng-show="vm.requirementDescriptionEditControlForm.$submitted || vm.requirementDescriptionEditControlForm.description.$dirty">
+        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+    </div>
+</ng-form>

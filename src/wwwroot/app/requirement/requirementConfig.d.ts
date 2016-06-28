@@ -3,6 +3,6 @@
 declare module Antares.Requirement {
     interface IRequirementConfig {
         [key: string]: any;
-
+        requirement_Description: Attributes.IRequirementDescriptionEditControlConfig;
     }
 }

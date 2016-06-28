@@ -3,23 +3,27 @@
 module Antares.Requirement.Add {
     import Business = Common.Models.Business;
     import RequirementAddConfig = Antares.Requirement.IRequirementAddConfig;
-    
+    import PageTypeEnum = Antares.Common.Models.Enums.PageTypeEnum;
+
     export class RequirementAddController extends Core.WithPanelsBaseController {
         requirementResource: any;
         requirement: Business.Requirement = new Business.Requirement();
         loadingContacts: boolean = false;
         entityTypeCode: string = 'Requirement';
         isSaving: boolean = false;
+        configService: Services.ConfigService;
         public config: RequirementAddConfig;
 
         constructor(
             private dataAccessService: Services.DataAccessService,
             componentRegistry: Core.Service.ComponentRegistry,
+            configService: Services.ConfigService,
             private $scope: ng.IScope,
             private $state: ng.ui.IStateService) {
-            
+
             super(componentRegistry, $scope);
             this.requirementResource = dataAccessService.getRequirementResource();
+            this.configService = configService;
         }
 
         updateContacts() {
@@ -45,6 +49,16 @@ module Antares.Requirement.Add {
                 .finally(() => { this.loadingContacts = false; });
 
             this.showPanel(this.components.panels.contactSidePanel);
+        }
+
+        requirementTypeChanged = (requirementTypeId: string) => {
+            this.requirement.requirementTypeId = requirementTypeId;
+            this.configService.getRequirement(PageTypeEnum.Create,
+                this.requirement.requirementTypeId,
+                this.requirement)
+                .then((config: any) => {
+                    this.config = config;
+                });
         }
 
         save() {

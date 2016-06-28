@@ -202,12 +202,7 @@
         <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.description.$dirty) && addRequirementForm.description.$invalid}">
             <div class="row">
                 <div class="col-md-12">
-                    <label for="description" translate="REQUIREMENT.ADD.DESCRIPTION">Description</label>
-                    <span class="pull-right character-limit">{{addRequirementForm.description.$viewValue.length || 0}}/4000</span>
-                    <textarea id="description" kf-max-count="4000" rows="8" class="form-control" name="description" ng-model="vm.requirement.description"></textarea>
-                    <div ng-messages="addRequirementForm.description.$error" ng-show="addRequirementForm.$submitted || addRequirementForm.description.$dirty">
-                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
-                    </div>
+                    <requirement-description-edit-control ng-model="vm.requirement.description" config="vm.config.requirement_Description" />
                 </div>
             </div>
         </div>

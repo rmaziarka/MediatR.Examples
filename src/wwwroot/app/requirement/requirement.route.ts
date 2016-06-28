@@ -12,6 +12,7 @@ module Antares.Requirement {
             .state('app.requirement-add', {
                 url: '/requirement/add',
                 template: '<requirement-add config="config" user-data="appVm.userData"></requirement-add>',
+                controller: "RequirementRouteAddController",
                 resolve: {
                     config: (configService: Services.ConfigService) => {
                         return configService.getRequirement(PageTypeEnum.Create,

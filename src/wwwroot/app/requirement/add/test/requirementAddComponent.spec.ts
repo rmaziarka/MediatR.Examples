@@ -3,6 +3,7 @@
 module Antares {
     import RequirementAddController = Requirement.Add.RequirementAddController;
     import Business = Common.Models.Business;
+    import ControlConfig = Antares.Common.Models.Dto.IControlConfig;
 
     describe('Given requirement is being added', () =>{
         var scope: ng.IScope,
@@ -38,7 +39,8 @@ module Antares {
             maxArea: 1234,
             maxLandArea: 5678
         });
-        
+
+        var configMock: Requirement.IRequirementAddConfig = TestHelpers.ConfigGenerator.generateRequirementAddConfig();
         var controller: RequirementAddController;
 
         beforeEach(inject((
@@ -56,7 +58,8 @@ module Antares {
             });
 
             scope = $rootScope.$new();
-            element = $compile('<requirement-add></requirement-add>')(scope);
+            scope['config'] = configMock;
+            element = $compile('<requirement-add config="config"></requirement-add>')(scope);
             scope.$apply();
 
             controller = element.controller('requirementAdd');

@@ -119,7 +119,6 @@
             IQueryable<RequirementType> requirementType = this.fixture.DataContext.RequirementTypes.Where(x => x.EnumCode == requirementT);
             var requirement = table.CreateInstance<CreateRequirementCommand>();
 
-            requirement.CreateDate = DateTime.Now;
             requirement.ContactIds = contacts.Select(contact => contact.Id).ToList();
             requirement.RequirementTypeId = requirementType.First().Id;
             requirement.Address = this.scenarioContext.Get<CreateOrUpdateAddress>("Location");
@@ -166,8 +165,6 @@
             var requirement = table.CreateInstance<CreateRequirementCommand>();
             var location = this.scenarioContext.Get<CreateOrUpdateAddress>("Location");
 
-            requirement.CreateDate = DateTime.Now;
-
             if (!missingData.Equals("contact"))
             {
                 requirement.ContactIds = contacts.Select(contact => contact.Id).ToList();
@@ -210,7 +207,6 @@
 
             var requirement = table.CreateInstance<CreateRequirementCommand>();
 
-            requirement.CreateDate = DateTime.Now;
             requirement.ContactIds = new List<Guid> { Guid.NewGuid() };
 
             requirement.Address = this.scenarioContext.Get<CreateOrUpdateAddress>("Location");
