@@ -3,9 +3,11 @@
     using System;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.UITests.Extensions;
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;
+    using Objectivity.Test.Automation.Common.Extensions;
 
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
@@ -50,7 +52,7 @@
 
             this.page.SetTitle(contact.Title)
                 .SetFirstName(contact.FirstName)
-                .SetSurname(contact.LastName);
+                .SetLastName(contact.LastName);
         }
 
         [When(@"User clicks save contact button on create contact page")]
@@ -77,16 +79,28 @@
             Assert.True(new CreateContactPage(this.driverContext).CheckIfContactAddPage());
         }
 
-        [When(@"User chooses '(.*)' as Mailings Salutations")]
-        public void UserChoosesMailiingSalutation(string salutation)
+        [When(@"User chooses '(.*)' as Mailings Use Salutation")]
+        public void UserChoosesMailingsUseSalutation(string salutation)
         {
-            this.page.SetMailingSalutation(salutation);
+            this.page.SetMailingsUseSalutation(salutation);
         }
 
-        [When(@"User chooses '(.*)' as Events Salutations")]
-        public void UserChoosesEventSalutation(string salutation)
+        [When(@"User chooses '(.*)' as Events Use Salutation")]
+        public void UserChoosesEventsUseSalutation(string salutation)
         {
-            this.page.SetEventSalutation(salutation);
+            this.page.SetEventsUseSalutation(salutation);
+        }
+
+        [Then(@"Check Mailings Salutations")]
+        public void CheckSemiMailingsSalutations(Table table)
+        {
+            var salutations = table.CreateInstance<Contact>();
+
+            Assert.True(string.Equals(salutations.MailingSemiformalSalutation, this.page.GetSemiformalMailingSalutation()));
+            Assert.True(string.Equals(salutations.MailingFormalSalutation, this.page.GetFormalMailingSalutation()));
+            Assert.True(string.Equals(salutations.MailingInformalSalutation, this.page.GetInformalMailingSalutation()));
+            Assert.True(string.Equals(salutations.MailingPersonalSalutation, this.page.GetPersonalMailingSalutation()));
+            Assert.True(string.Equals(salutations.MailingEnvelopeSalutation, this.page.GetEnvelopeMailingSalutation()));
         }
     }
 }
