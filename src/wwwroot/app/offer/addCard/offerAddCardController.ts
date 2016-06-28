@@ -51,6 +51,12 @@ module Antares.Offer {
                 controlId: "offer-completion-date",
                 translationKey: "OFFER.ADD.COMPLETION_DATE",
                 fieldName: "completionDate"
+            },
+            specialConditions: <Attributes.ITextEditControlSchema>{
+                formName: "specialConfitionsControlForm",
+                controlId: "offer-special-conditions",
+                translationKey: "OFFER.ADD.SPECIAL_CONDITIONS",
+                fieldName: "specialConditions"
             }
         }
 
