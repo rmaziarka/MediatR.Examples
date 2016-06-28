@@ -91,6 +91,7 @@
         [Then(@"Latest (.*) properties should contain following data")]
         public void CheckLatestPropertyItems(int count, Table table)
         {
+            this.page.OpenNavigationDrawer().ClickDrawerMenuItem("Properties");
             List<string> expected = table.CreateSet<NavigationDrawerPage.LatestViews>().Select(el => el.LatestData).ToList();
             List<string> current = this.page.GetLatestEntities("property").Take(count).ToList();
 
@@ -101,6 +102,7 @@
         [Then(@"Latest (.*) activities should contain following data")]
         public void CheckLatestActivityItems(int count, Table table)
         {
+            this.page.OpenNavigationDrawer().ClickDrawerMenuItem("Activities");
             List<string> expected = table.CreateSet<NavigationDrawerPage.LatestViews>().Select(el => el.LatestData).ToList();
             List<string> current = this.page.GetLatestEntities("activity").Take(count).ToList();
 
@@ -111,6 +113,7 @@
         [Then(@"Latest (.*) requirements should contain following data")]
         public void CheckLatestRequirementItems(int count, Table table)
         {
+            this.page.OpenNavigationDrawer().ClickDrawerMenuItem("Requirements");
             List<string> expected = table.CreateSet<NavigationDrawerPage.LatestViews>().Select(el => el.LatestData).ToList();
             List<string> current = this.page.GetLatestEntities("requirement").Take(count).ToList();
 
@@ -121,6 +124,7 @@
         [Then(@"Latest (.*) companies should contain following data")]
         public void CheckLatestCompanyItems(int count, Table table)
         {
+            this.page.OpenNavigationDrawer().ClickDrawerMenuItem("Companies");
             List<string> expected = table.CreateSet<NavigationDrawerPage.LatestViews>().Select(el => el.LatestData).ToList();
             List<string> current = this.page.GetLatestEntities("company").Take(count).ToList();
 

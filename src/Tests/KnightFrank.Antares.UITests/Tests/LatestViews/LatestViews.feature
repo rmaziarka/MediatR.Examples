@@ -9,8 +9,6 @@ Scenario: Display latest viewed properties
 		And Property Freehold Sale activity is defined
 	When User navigates to view activity page with id
 		And User clicks property details on view activity page
-		And User opens navigation drawer menu
-		And User selects Properties menu item
 	Then Latest 1 property should contain following data
 		| LatestData            |
 		| Condo, 70 Longford St |
@@ -75,8 +73,6 @@ Scenario: Display latest viewed activities
 		And User clicks add activites button on view property page	
 		And User selects Freehold Sale activity type on create activity page
 		And User clicks save button on create activity page
-		And User opens navigation drawer menu
-		And User selects Activities menu item
 	Then Latest 1 activity should contain following data
 		| LatestData                                |
 		| The Alternative Tuck Shop, 24 Holywell St |
@@ -144,8 +140,6 @@ Scenario: Display latest viewed requirements
 		| Title | FirstName | Surname  |
 		| Miss  | Triss     | Merigold |
 	When User navigates to create requirement page
-		And User opens navigation drawer menu
-		And User selects Requirements menu item
 		And User selects contacts on create requirement page
 			| FirstName | Surname  |
 			| Triss     | Merigold |
@@ -188,8 +182,6 @@ Scenario: Display latest viewed companies
 		| FirstName | Surname | Title |
 		| Dustin    | Hoffman | Dr    |
 	When User navigates to create company page
-		And User opens navigation drawer menu
-		And User selects Companies menu item
 		And User fills in company details on create company page 
 			| Name        | WebsiteUrl            | ClientCarePageUrl      | ClientCareStatus      |
 			| Hoffman Inc | www.DustinHoffman.com | www.DustinHoffman.test | Massive Action Client |
@@ -208,8 +200,6 @@ Scenario: Display latest viewed companies
 			| Name      | WebsiteUrl               | ClientCarePageUrl         |
 			| Hanks Inc | https://www.tomhanks.com | https://www.tomhanks2.com |
 	When User navigates to edit company page with id
-		And User opens navigation drawer menu
-		And User selects Companies menu item
 	Then Latest 2 companies should contain following data
 		| LatestData  |
 		| Hanks Inc   |

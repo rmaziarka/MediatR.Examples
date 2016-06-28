@@ -12,6 +12,7 @@
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Common;
+    using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.LatestView;
     using KnightFrank.Antares.Dal.Model.Property;
@@ -114,27 +115,52 @@
             this.scenarioContext["RequirementsId"] = requirementsId;
         }
 
+        [Given(@"Company is added to latest views")]
+        public void AddCompanyToLatestViews()
+        {
+            Guid companyId = this.scenarioContext.Get<Company>("Company").Id;
+            List<Guid> companiesId = this.scenarioContext.ContainsKey("CompaniesId")
+                ? this.scenarioContext.Get<List<Guid>>("CompaniesId")
+                : new List<Guid>();
+
+            companiesId.Add(companyId);
+
+            var details = new LatestView
+            {
+                CreatedDate = this.date,
+                UserId = this.fixture.DataContext.Users.First().Id,
+                EntityId = companyId,
+                EntityType = EntityTypeEnum.Company
+            };
+
+            this.fixture.DataContext.LatestView.Add(details);
+            this.fixture.DataContext.SaveChanges();
+            this.scenarioContext["CompaniesId"] = companiesId;
+        }
+
         [When(@"User adds (.*) to latest viewed entities using api")]
         public void CreateLatestView(string entity)
         {
             var details = new CreateLatestViewCommand();
-            if (entity.ToLower().Equals("property"))
+
+            switch (entity.ToLower())
             {
-                Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
-                details.EntityId = propertyId;
-                details.EntityType = EntityTypeEnum.Property;
-            }
-            else if (entity.ToLower().Equals("activity"))
-            {
-                Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
-                details.EntityId = activityId;
-                details.EntityType = EntityTypeEnum.Activity;
-            }
-            else if (entity.ToLower().Equals("requirement"))
-            {
-                Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
-                details.EntityId = requirementId;
-                details.EntityType = EntityTypeEnum.Requirement;
+                case "property":
+                    details.EntityId = this.scenarioContext.Get<Property>("Property").Id;
+                    details.EntityType = EntityTypeEnum.Property;
+                    break;
+                case "activity":
+                    details.EntityId = this.scenarioContext.Get<Activity>("Activity").Id;
+                    details.EntityType = EntityTypeEnum.Activity;
+                    break;
+                case "requirement":
+                    details.EntityId = this.scenarioContext.Get<Requirement>("Requirement").Id;
+                    details.EntityType = EntityTypeEnum.Requirement;
+                    break;
+                case "company":
+                    details.EntityId = this.scenarioContext.Get<Company>("Company").Id;
+                    details.EntityType = EntityTypeEnum.Company;
+                    break;
             }
 
             this.CreateLatestView(details);
@@ -161,7 +187,7 @@
         [Then(@"Latest viewed details should match Property entities")]
         public void CheckLatestsViewedProperties()
         {
-            const string entityTypeCode = "Property";
+            const string entityTypeCode = nameof(EntityTypeEnum.Property);
 
             List<Guid> entitiesIds = this.scenarioContext.Get<List<Guid>>("PropertiesIds").ToList();
             entitiesIds.Reverse();
@@ -195,7 +221,7 @@
         [Then(@"Latest viewed details should match Activity entities")]
         public void CheckLatestsViewedActivities()
         {
-            const string entityTypeCode = "Activity";
+            const string entityTypeCode = nameof(EntityTypeEnum.Activity);
 
             List<Guid> entitiesIds = this.scenarioContext.Get<List<Guid>>("ActivitiesIds").ToList();
             entitiesIds.Reverse();
@@ -230,7 +256,7 @@
         [Then(@"Latest viewed details should match Requirement entities")]
         public void CheckLatestsViewedRequirements()
         {
-            const string entityTypeCode = "Requirement";
+            const string entityTypeCode = nameof(EntityTypeEnum.Requirement);
 
             List<Guid> entitiesIds = this.scenarioContext.Get<List<Guid>>("RequirementsId").ToList();
             entitiesIds.Reverse();
@@ -260,10 +286,40 @@
             latestViews.Should().Equal(data, (v1, v2) => v1.CreatedDate.Equals(v2.CreatedDate));
         }
 
+        [Then(@"Latest viewed details should match Company entities")]
+        public void CheckLatestsViewedCompanies()
+        {
+            const string entityTypeCode = nameof(EntityTypeEnum.Company);
+
+            List<Guid> entitiesIds = this.scenarioContext.Get<List<Guid>>("CompaniesId").ToList();
+            entitiesIds.Reverse();
+            entitiesIds = entitiesIds.Distinct().Take(this.maxLatestViews).ToList();
+
+            LatestViewQueryResultItem response =
+                JsonConvert.DeserializeObject<List<LatestViewQueryResultItem>>(this.scenarioContext.GetResponseContent()).Single();
+
+            response.EntityTypeCode.Should().Be(entityTypeCode);
+
+            List<LatestViewData> data = response.List.ToList();
+
+            List<Company> currentCompanies = data.Select(d => JsonConvert.DeserializeObject<Company>(d.Data.ToString())).ToList();
+
+            List<Company> expectedCompanies =
+                entitiesIds.Select(guid => this.fixture.DataContext.Companies.Single(c => c.Id.Equals(guid))).ToList();
+
+            expectedCompanies.ShouldAllBeEquivalentTo(currentCompanies, opt => opt.Excluding(c => c.CompaniesContacts));
+
+            List<LatestView> latestViews = this.fixture.DataContext.LatestView.Select(r => r).GroupBy(lv => lv.EntityId)
+                                               .Select(gLv => gLv.OrderByDescending(lv => lv.CreatedDate).FirstOrDefault())
+                                               .OrderByDescending(lv => lv.CreatedDate).Take(this.maxLatestViews).ToList();
+
+            latestViews.Should().Equal(data, (v1, v2) => v1.CreatedDate.Equals(v2.CreatedDate));
+        }
+
         [Then(@"Retrieved latest view should contain Property entity")]
         public void CheckLatestsViewedProperty()
         {
-            const string entityTypeCode = "Property";
+            const string entityTypeCode = nameof(EntityTypeEnum.Property);
             Guid entityId = this.scenarioContext.Get<Property>("Property").Id;
             Guid addressId = this.fixture.DataContext.Properties.Single(p => p.Id.Equals(entityId)).AddressId;
 
@@ -284,12 +340,14 @@
 
             latestView.CreatedDate.Should().Be(data.Single().CreatedDate);
             latestView.EntityTypeString.Should().Be(entityTypeCode);
+            latestView.EntityId.Should().Be(entityId);
+            latestView.EntityType.Should().Be(EntityTypeEnum.Property);
         }
 
         [Then(@"Retrieved latest view should contain Activity entity")]
         public void CheckLatestsViewedActivity()
         {
-            const string entityTypeCode = "Activity";
+            const string entityTypeCode = nameof(EntityTypeEnum.Activity);
             Guid entityId = this.scenarioContext.Get<Activity>("Activity").Id;
             Guid addressId = this.fixture.DataContext.Activities.Single(p => p.Id.Equals(entityId)).Property.AddressId;
 
@@ -310,12 +368,14 @@
 
             latestView.CreatedDate.Should().Be(data.Single().CreatedDate);
             latestView.EntityTypeString.Should().Be(entityTypeCode);
+            latestView.EntityId.Should().Be(entityId);
+            latestView.EntityType.Should().Be(EntityTypeEnum.Activity);
         }
 
         [Then(@"Retrieved latest view should contain Requirement entity")]
         public void CheckLatestsViewedRequirement()
         {
-            const string entityTypeCode = "Requirement";
+            const string entityTypeCode = nameof(EntityTypeEnum.Requirement);
             Guid entityId = this.scenarioContext.Get<Requirement>("Requirement").Id;
 
             LatestViewQueryResultItem response =
@@ -340,6 +400,35 @@
 
             latestView.CreatedDate.Should().Be(data.Single().CreatedDate);
             latestView.EntityTypeString.Should().Be(entityTypeCode);
+            latestView.EntityId.Should().Be(entityId);
+            latestView.EntityType.Should().Be(EntityTypeEnum.Requirement);
+        }
+
+        [Then(@"Retrieved latest view should contain Company entity")]
+        public void CheckLatestsViewedCompany()
+        {
+            const string entityTypeCode = nameof(EntityTypeEnum.Company);
+            Guid entityId = this.scenarioContext.Get<Company>("Company").Id;
+
+            LatestViewQueryResultItem response =
+                JsonConvert.DeserializeObject<List<LatestViewQueryResultItem>>(this.scenarioContext.GetResponseContent()).Single();
+
+            response.EntityTypeCode.Should().Be(entityTypeCode);
+
+            List<LatestViewData> data = response.List.ToList();
+            data.Should().HaveCount(1);
+
+            var currentCompany = JsonConvert.DeserializeObject<Company>(data.Single().Data.ToString());
+            Company expectedCompany = this.fixture.DataContext.Companies.Single(c => c.Id.Equals(entityId));
+
+            expectedCompany.ShouldBeEquivalentTo(currentCompany, opt => opt.Excluding(c => c.CompaniesContacts));
+
+            LatestView latestView = this.fixture.DataContext.LatestView.Single();
+
+            latestView.CreatedDate.Should().Be(data.Single().CreatedDate);
+            latestView.EntityTypeString.Should().Be(entityTypeCode);
+            latestView.EntityId.Should().Be(entityId);
+            latestView.EntityType.Should().Be(EntityTypeEnum.Company);
         }
 
         private void CreateLatestView(CreateLatestViewCommand command)
