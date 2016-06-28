@@ -17,6 +17,12 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         VendorEstimatedPrice,
         Offers,
         Viewings,
-        Attachments
+        Attachments,
+        Source,
+        SourceDescription,
+        SellingReason,
+        PitchingThreats,
+        KeyNumber,
+        AccessArrangements
     }
 }

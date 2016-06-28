@@ -12,24 +12,33 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
         protected IList<Tuple<Tuple<TEnum1, TEnum2>, PageType>> When(TEnum1 enum1, TEnum2 enum2, params PageType[] pages)
         {
             return pages.Select(
-                page => new Tuple<Tuple<TEnum1, TEnum2>, PageType>(new Tuple<TEnum1, TEnum2>(enum1, enum2), page)).ToList();
+                page => Tuple.Create(Tuple.Create(enum1, enum2), page)).ToList();
         }
 
-        protected IList<Tuple<Tuple<TEnum1, TEnum2>, PageType>> When(IList<TEnum1> enums1, TEnum2 enum2, params PageType[] pages)
+        protected IList<Tuple<Tuple<TEnum1, TEnum2>, PageType>> When(IEnumerable<TEnum1> enums1, TEnum2 enum2, params PageType[] pages)
         {
             return
                 pages.SelectMany(
                     page =>
-                        enums1.Select(e => new Tuple<Tuple<TEnum1, TEnum2>, PageType>(new Tuple<TEnum1, TEnum2>(e, enum2), page)))
+                        enums1.Select(e => Tuple.Create(Tuple.Create(e, enum2), page)))
                      .ToList();
         }
 
-        protected IList<Tuple<Tuple<TEnum1, TEnum2>, PageType>> When(TEnum1 enum1, IList<TEnum2> enums2, params PageType[] pages)
+        protected IList<Tuple<Tuple<TEnum1, TEnum2>, PageType>> When(TEnum1 enum1, IEnumerable<TEnum2> enums2, params PageType[] pages)
         {
             return
                 pages.SelectMany(
                     page =>
-                        enums2.Select(e => new Tuple<Tuple<TEnum1, TEnum2>, PageType>(new Tuple<TEnum1, TEnum2>(enum1, e), page)))
+                        enums2.Select(e => Tuple.Create(Tuple.Create(enum1, e), page)))
+                     .ToList();
+        }
+
+        protected IList<Tuple<Tuple<TEnum1, TEnum2>, PageType>> When(IEnumerable<Tuple<TEnum1, TEnum2>> enumsPairs, params PageType[] pages)
+        {
+            return
+                pages.SelectMany(
+                    page =>
+                        enumsPairs.Select(pair => Tuple.Create(pair, page)))
                      .ToList();
         }
 
@@ -46,7 +55,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
                 pages.SelectMany(
                     page =>
                         enums1.SelectMany(
-                            enum1 => enums2.Select(enum2 => new Tuple<Tuple<TEnum1, TEnum2>, PageType>(new Tuple<TEnum1, TEnum2>(enum1, enum2), page))))
+                            enum1 => enums2.Select(enum2 => Tuple.Create(Tuple.Create(enum1, enum2), page))))
                      .ToList();
         }
     }

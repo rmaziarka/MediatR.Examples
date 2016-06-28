@@ -1,6 +1,8 @@
 ﻿namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.Activity.Commands;
@@ -16,10 +18,9 @@
     {
         public override void DefineControls()
         {
-            this.DefineControlsForCreate();
+            this.DefineControlsForCreateAndEdit();
             this.DefineControlsForDetailsView();
             this.DefineControlsForPreview();
-            this.DefineControlsForEdit();
         }
 
         private void DefineControlsForPreview()
@@ -46,94 +47,91 @@
             this.AddControl(PageType.Details, ControlCode.Offers, Field<Activity>.Create(x => x.Offers));
             this.AddControl(PageType.Details, ControlCode.Viewings, Field<Activity>.Create(x => x.Viewings));
             this.AddControl(PageType.Details, ControlCode.Attachments, Field<Activity>.Create(x => x.Attachments));
+            this.AddControl(PageType.Details, ControlCode.Source, Field<Activity>.Create(x => x.SourceId, x => x.Source));
+            this.AddControl(PageType.Details, ControlCode.SourceDescription, Field<Activity>.Create(x => x.SourceDescription));
+            this.AddControl(PageType.Details, ControlCode.SellingReason, Field<Activity>.Create(x => x.SellingReasonId, x => x.SellingReason));
+            this.AddControl(PageType.Details, ControlCode.PitchingThreats, Field<Activity>.Create(x => x.PitchingThreats));
         }
 
-        private void DefineControlsForCreate()
+        private void DefineControlsForCreateAndEdit()
         {
-            this.AddControl(PageType.Create, ControlCode.ActivityType, Field<CreateActivityCommand>.Create(x => x.ActivityTypeId).Required());
-            this.AddControl(PageType.Create, ControlCode.ActivityStatus, Field<CreateActivityCommand>.Create(x => x.ActivityStatusId).Required());
-            this.AddControl(PageType.Create, ControlCode.Departments, Field<CreateActivityCommand>.Create(x => x.Departments).Required().ExternalCollectionValidator(new UpdateActivityDepartmentValidator()));
-            this.AddControl(PageType.Create, ControlCode.AskingPrice, Field<CreateActivityCommand>.Create(x => x.AskingPrice));
-            this.AddControl(PageType.Create, ControlCode.ShortLetPricePerWeek, Field<CreateActivityCommand>.Create(x => x.ShortLetPricePerWeek));
-            this.AddControl(PageType.Create, ControlCode.Vendors, Field<CreateActivityCommand>.Create(x => x.ContactIds));
-            this.AddControl(PageType.Create, ControlCode.Landlords, Field<CreateActivityCommand>.Create(x => x.ContactIds));
-            this.AddControl(PageType.Create, ControlCode.Negotiators,
-                new List<IField>
-                {
-                    Field<CreateActivityCommand>.Create(x => x.LeadNegotiator).Required().ExternalValidator(new UpdateActivityUserValidator(true)),
-                    Field<CreateActivityCommand>.Create(x => x.SecondaryNegotiators).ExternalCollectionValidator(new UpdateActivityUserValidator(false))
-                });
-        }
-
-        private void DefineControlsForEdit()
-        {
-            this.AddControl(PageType.Update, ControlCode.ActivityType, Field<UpdateActivityCommand>.Create(x => x.ActivityTypeId).Required());
-            this.AddControl(PageType.Update, ControlCode.ActivityStatus, Field<UpdateActivityCommand>.Create(x => x.ActivityStatusId).Required());
-            this.AddControl(PageType.Update, ControlCode.Departments, Field<UpdateActivityCommand>.Create(x => x.Departments).Required().ExternalCollectionValidator(new UpdateActivityDepartmentValidator()));
-            this.AddControl(PageType.Update, ControlCode.AskingPrice, Field<UpdateActivityCommand>.Create(x => x.AskingPrice));
-            this.AddControl(PageType.Update, ControlCode.ShortLetPricePerWeek, Field<UpdateActivityCommand>.Create(x => x.ShortLetPricePerWeek));
-            this.AddControl(PageType.Update, ControlCode.Vendors, Field<UpdateActivityCommand>.Create(x => x.ContactIds));
-            this.AddControl(PageType.Update, ControlCode.Landlords, Field<UpdateActivityCommand>.Create(x => x.ContactIds));
-            this.AddControl(PageType.Update, ControlCode.Negotiators,
-                new List<IField>
-                {
-                    Field<UpdateActivityCommand>.Create(x => x.LeadNegotiator).Required().ExternalValidator(new UpdateActivityUserValidator(true)),
-                    Field<UpdateActivityCommand>.Create(x => x.SecondaryNegotiators).ExternalCollectionValidator(new UpdateActivityUserValidator(false))
-                });
+            foreach(PageType pageType in new [] {PageType.Create, PageType.Update })
+            {
+                this.AddControl(pageType, ControlCode.ActivityType, Field<ActivityCommandBase>.Create(x => x.ActivityTypeId).Required());
+                this.AddControl(pageType, ControlCode.ActivityStatus, Field<ActivityCommandBase>.Create(x => x.ActivityStatusId).Required());
+                this.AddControl(pageType, ControlCode.Departments, Field<ActivityCommandBase>.Create(x => x.Departments).Required().ExternalCollectionValidator(new UpdateActivityDepartmentValidator()));
+                this.AddControl(pageType, ControlCode.AskingPrice, Field<ActivityCommandBase>.Create(x => x.AskingPrice));
+                this.AddControl(pageType, ControlCode.ShortLetPricePerWeek, Field<ActivityCommandBase>.Create(x => x.ShortLetPricePerWeek));
+                this.AddControl(pageType, ControlCode.Vendors, Field<ActivityCommandBase>.Create(x => x.ContactIds));
+                this.AddControl(pageType, ControlCode.Landlords, Field<ActivityCommandBase>.Create(x => x.ContactIds));
+                this.AddControl(pageType, ControlCode.Negotiators,
+                    new List<IField>
+                    {
+                        Field<ActivityCommandBase>.Create(x => x.LeadNegotiator).Required().ExternalValidator(new UpdateActivityUserValidator(true)),
+                        Field<ActivityCommandBase>.Create(x => x.SecondaryNegotiators).ExternalCollectionValidator(new UpdateActivityUserValidator(false))
+                    });
+                this.AddControl(pageType, ControlCode.Source, Field<ActivityCommandBase>.Create(x => x.SourceId).Required());
+                this.AddControl(pageType, ControlCode.SourceDescription, Field<ActivityCommandBase>.Create(x => x.SourceDescription));
+                this.AddControl(pageType, ControlCode.SellingReason, Field<ActivityCommandBase>.Create(x => x.SellingReasonId).Required());
+                this.AddControl(pageType, ControlCode.PitchingThreats, Field<ActivityCommandBase>.Create(x => x.PitchingThreats));
+                this.AddControl(pageType, ControlCode.KeyNumber, Field<ActivityCommandBase>.Create(x => x.KeyNumber));
+                this.AddControl(pageType, ControlCode.AccessArrangements, Field<ActivityCommandBase>.Create(x => x.AccessArrangements));
+            }
         }
 
         public override void DefineMappings()
         {
-            var openMarketLettingProperties = new List<PropertyType>
-            {
-                PropertyType.House, PropertyType.Flat, PropertyType.Bungalow, PropertyType.Maisonette, PropertyType.GarageOnly, PropertyType.ParkingSpace,
-                PropertyType.Houseboat
-            };
+            List<Tuple<PropertyType, ActivityType>> openMarketLetting =
+                new[]
+                {
+                    PropertyType.House, PropertyType.Flat, PropertyType.Bungalow, PropertyType.Maisonette, PropertyType.GarageOnly,
+                    PropertyType.ParkingSpace, PropertyType.Houseboat
+                }.Select(p => Tuple.Create(p, ActivityType.OpenMarketLetting)).ToList();
 
-            var freeholdSaleProperties = new List<PropertyType>
-            {
-                PropertyType.House, PropertyType.Flat, PropertyType.Bungalow, PropertyType.Maisonette, PropertyType.DevelopmentPlot, PropertyType.FarmEstate,
-                PropertyType.GarageOnly,PropertyType.ParkingSpace, PropertyType.Land, PropertyType.Houseboat
-            };
+            List<Tuple<PropertyType, ActivityType>> freeholdSale =
+                new[]
+                {
+                    PropertyType.House, PropertyType.Flat, PropertyType.Bungalow, PropertyType.Maisonette,
+                    PropertyType.DevelopmentPlot, PropertyType.FarmEstate,
+                    PropertyType.GarageOnly, PropertyType.ParkingSpace, PropertyType.Land, PropertyType.Houseboat
+                }.Select(p => Tuple.Create(p, ActivityType.FreeholdSale)).ToList();
 
-            var longLeaseholdSaleProperties = new List<PropertyType>
-            {
-                PropertyType.Flat, PropertyType.Maisonette, PropertyType.DevelopmentPlot, PropertyType.Land
-            };
-            
-            this.Use(new List<ControlCode> { ControlCode.ActivityStatus, ControlCode.ActivityType }, this.ForAll(PageType.Preview, PageType.Details, PageType.Create, PageType.Update));
-            this.Use(new List<ControlCode> { ControlCode.Departments, ControlCode.Negotiators }, this.ForAll(PageType.Details, PageType.Create, PageType.Update));
+            List<Tuple<PropertyType, ActivityType>> longLeaseholdSale =
+                new[] { PropertyType.Flat, PropertyType.Maisonette, PropertyType.DevelopmentPlot, PropertyType.Land }
+                    .Select(p => Tuple.Create(p, ActivityType.LongLeaseholdSale))
+                    .ToList();
 
-            this.Use(new List<ControlCode> { ControlCode.Landlords }, 
-                this.When(openMarketLettingProperties, ActivityType.OpenMarketLetting, PageType.Preview, PageType.Details, PageType.Create, PageType.Update));
-
-            this.Use(new List<ControlCode> { ControlCode.Vendors }, 
-                this.When(freeholdSaleProperties, ActivityType.FreeholdSale, PageType.Preview, PageType.Details, PageType.Create, PageType.Update));
-
-            this.Use(new List<ControlCode> { ControlCode.Vendors }, 
-                this.When(longLeaseholdSaleProperties, ActivityType.LongLeaseholdSale, PageType.Preview, PageType.Details, PageType.Create, PageType.Update));
+            List<Tuple<PropertyType, ActivityType>> residentialSale = freeholdSale.Union(longLeaseholdSale).ToList();
+            List<Tuple<PropertyType, ActivityType>> allResidentials = residentialSale.Union(openMarketLetting).ToList();
 
             this.Use(ControlCode.CreationDate, this.ForAll(PageType.Preview, PageType.Details));
 
-            this.Use(new List<ControlCode> { ControlCode.Offers, ControlCode.Viewings, ControlCode.Attachments, ControlCode.Property }, this.ForAll(PageType.Details));
+            this.Use(new[] { ControlCode.ActivityStatus, ControlCode.ActivityType },
+                this.When(allResidentials, PageType.Preview, PageType.Details, PageType.Create, PageType.Update));
 
-            this.Use(new List<ControlCode> { ControlCode.ShortLetPricePerWeek }, 
-                this.When(openMarketLettingProperties, ActivityType.OpenMarketLetting, PageType.Details));
+            this.Use(new[] { ControlCode.Departments, ControlCode.Negotiators },
+                this.When(allResidentials, PageType.Details, PageType.Create, PageType.Update));
 
-            this.Use(new List<ControlCode> { ControlCode.AskingPrice }, 
-                this.When(freeholdSaleProperties, ActivityType.FreeholdSale, PageType.Details));
+            this.Use(ControlCode.Landlords,
+                this.When(openMarketLetting, PageType.Preview, PageType.Details, PageType.Create, PageType.Update));
 
-            this.Use(new List<ControlCode> { ControlCode.AskingPrice }, 
-                this.When(longLeaseholdSaleProperties, ActivityType.LongLeaseholdSale, PageType.Details));
+            this.Use(ControlCode.Vendors,
+                this.When(residentialSale, PageType.Preview, PageType.Details, PageType.Create, PageType.Update));
 
-            this.Use(new List<ControlCode> {  ControlCode.ShortLetPricePerWeek }, 
-                this.When(openMarketLettingProperties, ActivityType.OpenMarketLetting, PageType.Create, PageType.Update));
+            this.Use(new[] { ControlCode.Offers, ControlCode.Viewings, ControlCode.Attachments, ControlCode.Property },
+                this.ForAll(PageType.Details));
 
-            this.Use(new List<ControlCode> { ControlCode.AskingPrice }, 
-                this.When(freeholdSaleProperties, ActivityType.FreeholdSale, PageType.Create, PageType.Update));
+            this.Use(ControlCode.ShortLetPricePerWeek,
+                this.When(openMarketLetting, PageType.Details, PageType.Create, PageType.Update));
 
-            this.Use(new List<ControlCode> { ControlCode.AskingPrice }, 
-                this.When(longLeaseholdSaleProperties, ActivityType.LongLeaseholdSale, PageType.Create, PageType.Update));
+            this.Use(new[] { ControlCode.AskingPrice, ControlCode.SellingReason },
+                this.When(residentialSale, PageType.Details, PageType.Create, PageType.Update));
+
+            this.Use(new[] { ControlCode.Source, ControlCode.SourceDescription, ControlCode.PitchingThreats },
+                this.When(allResidentials, PageType.Details, PageType.Create, PageType.Update));
+
+            this.Use(new[] { ControlCode.KeyNumber, ControlCode.AccessArrangements },
+                this.When(allResidentials, PageType.Create, PageType.Update));
         }
     }
 }

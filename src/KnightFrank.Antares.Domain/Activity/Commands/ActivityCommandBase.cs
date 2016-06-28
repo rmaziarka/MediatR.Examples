@@ -34,5 +34,17 @@
         public IList<UpdateActivityDepartment> Departments { get; set; }
 
         public IList<Guid> ContactIds { get; set; }
+
+        public Guid SourceId { get; set; }
+
+        public string SourceDescription { get; set; }
+
+        public Guid SellingReasonId { get; set; }
+
+        public string PitchingThreats { get; set; }
+
+        public string KeyNumber { get; set; }
+
+        public string AccessArrangements { get; set; }
     }
 }
