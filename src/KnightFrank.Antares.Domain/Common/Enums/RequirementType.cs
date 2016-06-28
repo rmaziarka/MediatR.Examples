@@ -4,7 +4,7 @@
 namespace KnightFrank.Antares.Domain.Common.Enums
 {
 	public enum RequirementType {
-		ResidentialSelling,
+		ResidentialSale,
     	ResidentialLetting,
     }
 }
