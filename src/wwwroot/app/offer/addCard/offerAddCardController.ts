@@ -17,6 +17,7 @@ module Antares.Offer {
         offerAddCardForm: ng.IFormController;
         offer: Business.CreateOfferCommand = new Business.CreateOfferCommand();
         private defaultOfferStatusCode: string = Common.Models.Enums.OfferStatus[Common.Models.Enums.OfferStatus.New];
+        today: Date = new Date();
 
         // controls
         controlSchemas: any = {
@@ -30,8 +31,26 @@ module Antares.Offer {
                 formName: "offerPricePerWeekControlForm",
                 controlId: "offer-price-per-week",
                 translationKey: "OFFER.ADD.OFFER",
-                fieldName: "offerPricePerWeek",
+                fieldName: "pricePerWeek",
                 suffix: "OFFER.ADD.OFFER_PER_WEEK"
+            },
+            offerDate: <Attributes.IDateEditControlSchema>{
+                formName: "offerDateControlForm",
+                controlId: "offer-date",
+                translationKey: "OFFER.ADD.OFFER_DATE",
+                fieldName: "offerDate"
+            },
+            exchangeDate: <Attributes.IDateEditControlSchema>{
+                formName: "exchangeDateControlForm",
+                controlId: "offer-exchange-date",
+                translationKey: "OFFER.ADD.EXCHANGE_DATE",
+                fieldName: "exchangeDate"
+            },
+            completionDate: <Attributes.IDateEditControlSchema>{
+                formName: "completionDateControlForm",
+                controlId: "offer-completion-date",
+                translationKey: "OFFER.ADD.COMPLETION_DATE",
+                fieldName: "completionDate"
             }
         }
 

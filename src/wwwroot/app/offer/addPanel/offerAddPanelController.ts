@@ -35,9 +35,9 @@ module Antares.Offer {
             private loadConfig = (command: Business.CreateOfferCommand) => {
                 this.isBusy = true;
 
-                var requirementTypeId = '094ADAA7-1C3A-E611-8299-8CDCD4521601';
+                var requirementTypeId = '128E59E5-013D-E611-8299-8CDCD4521601';
                 //this.requirementTypeId = this.requirement.typeId;
-                var offerTypeId = '094ADAA7-1C3A-E611-8299-8CDCD4521601';
+                var offerTypeId = '128E59E5-013D-E611-8299-8CDCD4521601';
 
                 this.configService
                     .getOffer(this.pageType, requirementTypeId, offerTypeId, command)
@@ -51,8 +51,13 @@ module Antares.Offer {
 
             save = (offer: Business.CreateOfferCommand) => {
                 this.isBusy = true;
+
                 offer.requirementId = this.requirement.id;
                 offer.activityId = this.activity.id;
+                offer.offerDate = Core.DateTimeUtils.createDateAsUtc(offer.offerDate);
+                offer.exchangeDate = Core.DateTimeUtils.createDateAsUtc(offer.exchangeDate);
+                offer.completionDate = Core.DateTimeUtils.createDateAsUtc(offer.completionDate);
+
                 this.offerService.createOffer(offer).then((offerDto: Dto.IOffer) =>{
                     this.eventAggregator.publish(new Offer.OfferAddedSidePanelEvent(offerDto));
                     this.eventAggregator.publish(new Antares.Common.Component.CloseSidePanelEvent());
