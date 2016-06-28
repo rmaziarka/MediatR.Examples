@@ -11,7 +11,8 @@ module Antares.Common.Component.Attachment {
             enumDocumentType: '@',
             attachments: '<',
             onSaveAttachmentForEntity: '&',
-            title: '@'
+            title: '@',
+            filesNumberLimit: '<'
         }
     });
 }

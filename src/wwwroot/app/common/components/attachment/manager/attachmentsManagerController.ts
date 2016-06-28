@@ -21,6 +21,7 @@ module Antares.Common.Component.Attachment {
         isAttachmentUploadPanelVisible: boolean;
         isAttachmentUploadPanelBusy: boolean = false;
         title: string;
+        filesNumberLimit: number;
 
         selectedAttachment: Common.Models.Business.Attachment = <Common.Models.Business.Attachment>{};
 

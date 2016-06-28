@@ -7,7 +7,7 @@ module Antares {
     import IActivityViewConfig = Activity.IActivityViewConfig;
     declare var moment: any;
 
-    xdescribe('Given view activity page is loaded', () => {
+    describe('Given view activity page is loaded', () => {
         beforeEach(() => {
             angular.mock.module(($provide: any) => {
                 $provide.service('addressFormsProvider', Mock.AddressFormsProviderMock);
@@ -31,12 +31,6 @@ module Antares {
                 createdDate: '#activity-view-well #createdDate',
                 status: '#activity-view-well #activityStatus',
                 type: '#activity-view-well #activityType'
-            },
-            prices: {
-                main: '#activity-view-prices',
-                marketAppraisalPrice: '#activity-view-prices #marketAppraisalPrice',
-                recommendedPrice: '#activity-view-prices #recommendedPrice',
-                vendorEstimatedPrice: '#activity-view-prices #vendorEstimatedPrice'
             },
             property: {
                 card: '#activity-view-property card#card-property'
@@ -68,7 +62,7 @@ module Antares {
             }
         };
 
-        describe('when activity is loaded', () => {
+        xdescribe('when activity is loaded', () => {
             var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
             var configMock = { vendors: {}, departments: {} } as IActivityViewConfig;
 
@@ -163,46 +157,6 @@ module Antares {
                 expect(activityTypeElement.text()).toBe('DYNAMICTRANSLATIONS.' + activityMock.activityTypeId);
             });
 
-            it('and valuation prices are null then valuation prices for activity are not displayed', () => {
-                // arrange / act
-                controller.activity.marketAppraisalPrice = null;
-                controller.activity.recommendedPrice = null;
-                controller.activity.vendorEstimatedPrice = null;
-
-                // assert
-                var pricesElement = element.find(pageObjectSelectors.prices.main);
-                var marketAppraisalPriceElement = element.find(pageObjectSelectors.prices.marketAppraisalPrice);
-                var recomendedPriceElement = element.find(pageObjectSelectors.prices.recommendedPrice);
-                var vendorEstimatedPriceElement = element.find(pageObjectSelectors.prices.vendorEstimatedPrice);
-
-                expect(pricesElement.length).toBe(1);
-                expect(marketAppraisalPriceElement.length).toBe(0);
-                expect(recomendedPriceElement.length).toBe(0);
-                expect(vendorEstimatedPriceElement.length).toBe(0);
-            });
-
-            it('and valuation prices are not null then valuation prices for activity are displayed and should have proper data', () => {
-                // arrange / act
-                controller.activity.marketAppraisalPrice = 99;
-                controller.activity.recommendedPrice = 1.1;
-                controller.activity.vendorEstimatedPrice = 55.05;
-                scope.$apply();
-
-                // assert
-                var pricesElement = element.find(pageObjectSelectors.prices.main);
-                var marketAppraisalPriceElement = element.find(pageObjectSelectors.prices.marketAppraisalPrice);
-                var recomendedPriceElement = element.find(pageObjectSelectors.prices.recommendedPrice);
-                var vendorEstimatedPriceElement = element.find(pageObjectSelectors.prices.vendorEstimatedPrice);
-
-                expect(pricesElement.length).toBe(1);
-                expect(marketAppraisalPriceElement.length).toBe(1);
-                expect(marketAppraisalPriceElement.text()).toBe('99.00 GBP');
-                expect(recomendedPriceElement.length).toBe(1);
-                expect(recomendedPriceElement.text()).toBe('1.10 GBP');
-                expect(vendorEstimatedPriceElement.length).toBe(1);
-                expect(vendorEstimatedPriceElement.text()).toBe('55.05 GBP');
-            });
-
             it('and activity departments list is displayed and sorted', () => {
                 // assert
                 var departmentsSectionElement = element.find(pageObjectSelectors.departments.departmentsSection);
@@ -213,7 +167,7 @@ module Antares {
             });
         });
 
-        describe('and property is loaded', () => {
+        xdescribe('and property is loaded', () => {
             var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate({ contacts: [] });
 
             beforeEach(inject((
