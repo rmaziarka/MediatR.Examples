@@ -322,13 +322,65 @@ module Antares {
             var createDateAsUtc = Core.DateTimeUtils.createDateAsUtc;
 
             var contacts1: Dto.IContact[] = [
-                { id: 'db9b4d6b-178a-41ce-8d29-8182b8a533c6', firstName: 'John', lastName: 'Papa', title: 'Mr' },
-                { id: '78fbd602-5cd6-456e-a7e5-996d5ae2bbe5', firstName: 'Mark', lastName: 'Rendle', title: 'Mr' }
+                {
+                    id: 'db9b4d6b-178a-41ce-8d29-8182b8a533c6', firstName: 'John', lastName: 'Papa', title: 'Mr',
+                    mailingFormalSalutation: '',
+                    mailingSemiformalSalutation: '',
+                    mailingInformalSalutation: '',
+                    mailingPersonalSalutation: '',
+                    mailingEnvelopeSalutation: '',
+                    defaultMailingSalutationId: '',
+                    eventInviteSalutation: '',
+                    eventSemiformalSalutation: '',
+                    eventInformalSalutation: '',
+                    eventPersonalSalutation: '',
+                    eventEnvelopeSalutation: '',
+                    defaultEventSalutationId: '' },
+                {
+                    id: '78fbd602-5cd6-456e-a7e5-996d5ae2bbe5', firstName: 'Mark', lastName: 'Rendle', title: 'Mr',
+                    mailingFormalSalutation: '',
+                    mailingSemiformalSalutation: '',
+                    mailingInformalSalutation: '',
+                    mailingPersonalSalutation: '',
+                    mailingEnvelopeSalutation: '',
+                    defaultMailingSalutationId: '',
+                    eventInviteSalutation: '',
+                    eventSemiformalSalutation: '',
+                    eventInformalSalutation: '',
+                    eventPersonalSalutation: '',
+                    eventEnvelopeSalutation: '',
+                    defaultEventSalutationId: '' }
             ];
 
             var contacts2: Dto.IContact[] = [
-                { id: 'db9b4d6b-178a-41ce-8d29-8182b8a533c6', firstName: 'Julie', lastName: 'Lerman', title: 'Mrs' },
-                { id: '78fbd602-5cd6-456e-a7e5-996d5ae2bbe5', firstName: 'Ian', lastName: 'Cooper', title: 'Mr' }
+                {
+                    id: 'db9b4d6b-178a-41ce-8d29-8182b8a533c6', firstName: 'Julie', lastName: 'Lerman', title: 'Mrs',
+                    mailingFormalSalutation: '',
+                    mailingSemiformalSalutation: '',
+                    mailingInformalSalutation: '',
+                    mailingPersonalSalutation: '',
+                    mailingEnvelopeSalutation: '',
+                    defaultMailingSalutationId: '',
+                    eventInviteSalutation: '',
+                    eventSemiformalSalutation: '',
+                    eventInformalSalutation: '',
+                    eventPersonalSalutation: '',
+                    eventEnvelopeSalutation: '',
+                    defaultEventSalutationId: '' },
+                {
+                    id: '78fbd602-5cd6-456e-a7e5-996d5ae2bbe5', firstName: 'Ian', lastName: 'Cooper', title: 'Mr',
+                    mailingFormalSalutation: '',
+                    mailingSemiformalSalutation: '',
+                    mailingInformalSalutation: '',
+                    mailingPersonalSalutation: '',
+                    mailingEnvelopeSalutation: '',
+                    defaultMailingSalutationId: '',
+                    eventInviteSalutation: '',
+                    eventSemiformalSalutation: '',
+                    eventInformalSalutation: '',
+                    eventPersonalSalutation: '',
+                    eventEnvelopeSalutation: '',
+                    defaultEventSalutationId: '' }
             ];
 
             var ownerships: Dto.IOwnership[] = [

@@ -11,7 +11,19 @@ module Antares.TestHelpers {
                 firstName: ContactGenerator.makeRandom('firstName'),
                 lastName: ContactGenerator.makeRandom('lastName'),
                 id: ContactGenerator.makeRandom('id'),
-                title: ContactGenerator.makeRandom('title')
+                title: ContactGenerator.makeRandom('title'),
+                mailingFormalSalutation: ContactGenerator.makeRandom('mailingFormalSalutation'),
+                mailingSemiformalSalutation: ContactGenerator.makeRandom('mailingSemiformalSalutation'),
+                mailingInformalSalutation: ContactGenerator.makeRandom('mailingInformalSalutation'),
+                mailingPersonalSalutation: ContactGenerator.makeRandom('mailingPersonalSalutation'),
+                mailingEnvelopeSalutation: ContactGenerator.makeRandom('mailingEnvelopeSalutation'),
+                defaultMailingSalutationId: ContactGenerator.makeRandom('defaultMailingSalutationId'),
+                eventInviteSalutation: ContactGenerator.makeRandom('eventInviteSalutation'),
+                eventSemiformalSalutation: ContactGenerator.makeRandom('eventSemiformalSalutation'),
+                eventInformalSalutation: ContactGenerator.makeRandom('eventInformalSalutation'),
+                eventPersonalSalutation: ContactGenerator.makeRandom('eventPersonalSalutation'),
+                eventEnvelopeSalutation: ContactGenerator.makeRandom('eventEnvelopeSalutation'),
+                defaultEventSalutationId: ContactGenerator.makeRandom('defaultEventSalutationId')
             }
 
             return contact;
