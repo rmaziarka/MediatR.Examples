@@ -59,12 +59,12 @@
                                 </card-list-item>
                             </card-list>
                         </section>
-                        <attachments-manager title="{{'ACTIVITY.VIEW.RECENT_FILES' | translate}}" entity-id="avvm.activity.id" enum-document-type="{{avvm.enumTypeActivityDocumentType}}" entity-type="{{avvm.entityType}}" attachments="avvm.activity.attachments" on-save-attachment-for-entity="avvm.saveAttachment(attachment)"></attachments-manager>
+                        <attachments-manager title="{{'ACTIVITY.VIEW.RECENT_FILES' | translate}}" files-number-limit="5" entity-id="avvm.activity.id" enum-document-type="{{avvm.enumTypeActivityDocumentType}}" entity-type="{{avvm.entityType}}" attachments="avvm.activity.attachments" on-save-attachment-for-entity="avvm.saveAttachment(attachment)"></attachments-manager>
                     </div>
                     <div class="col-md-4">
                         <section>
                             <h3 class="page-header" translate="ACTIVITY.VIEW.OFFERS"></h3>
-                            <card-list-item class="activity-view-offers" ng-repeat="offer in avvm.activity.offers | orderBy: '-createdDate' | enumSorter: 'OfferStatus':'statusId' track by offer.id + offer.statusId + offer.offerDate">
+                            <card-list-item class="activity-view-offers" ng-repeat="offer in avvm.activity.offers | orderBy: '-createdDate' | limitTo: 5 | enumSorter: 'OfferStatus':'statusId' track by offer.id + offer.statusId + offer.offerDate">
                                 <card card-template-url="'app/activity/view/activityOffersCard.html'" item="offer" show-item-details="avvm.showOfferPreview"
                                       display-new-control="true" show-context-menu="true">
                                     <card-context-menu>
@@ -99,7 +99,6 @@
                         </section>
                         <section id='departments-section'>
                             <activity-departments-view-control config="avvm.config.departments" activity-departments="avvm.activity.activityDepartments">
-
                             </activity-departments-view-control>
                         </section>
                     </div>
