@@ -15,7 +15,7 @@
         <uib-tabset>
             <uib-tab index="0" heading="{{'ACTIVITY.VIEW.OVERVIEW' | translate}}">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <section>
                             <h3 class="page-header" translate="ACTIVITY.VIEW.SUMMARY"></h3>
                         </section>
@@ -37,7 +37,7 @@
                             </activity-negotiators-view-control>
                         </section>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <section id="activity-view-viewings">
                             <h3 class="page-header" translate="ACTIVITY.VIEW.UPCOMING_VIEWINGS"></h3>
                             <card-list id="viewings-list">
@@ -48,7 +48,9 @@
                                     <card-list-group class="viewing-group">
                                         <card-list-group-header>
                                             <h5>
-                                                <time>{{::group.viewings[0].startDate | date : 'dd-MM-yyyy'}}</time>
+                                                <time>
+                                                    {{::group.viewings[0].startDate | date : 'dd-MM-yyyy'}}
+                                                </time>
                                             </h5>
                                         </card-list-group-header>
                                         <card-list-group-item ng-repeat="viewing in group.viewings | orderBy: '-startDate' track by viewing.id">
@@ -61,7 +63,7 @@
                         </section>
                         <attachments-manager title="{{'ACTIVITY.VIEW.RECENT_FILES' | translate}}" files-number-limit="5" entity-id="avvm.activity.id" enum-document-type="{{avvm.enumTypeActivityDocumentType}}" entity-type="{{avvm.entityType}}" attachments="avvm.activity.attachments" on-save-attachment-for-entity="avvm.saveAttachment(attachment)"></attachments-manager>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <section>
                             <h3 class="page-header" translate="ACTIVITY.VIEW.OFFERS"></h3>
                             <card-list-item class="activity-view-offers" ng-repeat="offer in avvm.activity.offers | orderBy: '-createdDate' | enumSorter: 'OfferStatus':'statusId' | limitTo: 5 track by offer.id + offer.statusId + offer.offerDate">
@@ -80,7 +82,7 @@
 
             <uib-tab index="1" heading="{{'ACTIVITY.VIEW.DETAILS' | translate}}">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <section>
                             <h3 class="page-header" translate="ACTIVITY.VIEW.LANDLORDS" ng-if="avvm.config.landlords"></h3>
                         </section>
@@ -102,7 +104,7 @@
                             </activity-departments-view-control>
                         </section>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <section>
                             <h3 class="page-header" translate="ACTIVITY.VIEW.BASIC_INFORMATION"></h3>
                         </section>
