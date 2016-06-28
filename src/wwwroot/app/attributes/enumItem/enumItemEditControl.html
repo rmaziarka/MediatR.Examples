@@ -2,7 +2,7 @@
     <div class="form-group" show-errors>
         <div class="row">
             <div class="col-md-9">
-                <label for="status" ng-class="{'required': vm.config[vm.schema.fieldName].required}" translate="{{vm.schema.translationKey}}"></label>
+                <label for="status" ng-class="{'required': vm.config[vm.schema.fieldName].required}" translate="{{vm.schema.translationKey}}" ng-if="vm.schema.translationKey"></label>
                 <select class="form-control"
                         id="{{vm.schema.controlId}}"
                         name="enumItem"

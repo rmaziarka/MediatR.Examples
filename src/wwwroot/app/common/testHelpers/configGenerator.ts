@@ -36,7 +36,11 @@ module Antares.TestHelpers {
         public static generateActivityStatusEditConfig(): Attributes.IActivityStatusEditControlConfig {
             var config: Attributes.IActivityStatusEditControlConfig = {
                 active: true,
-                activityStatusId: null
+                activityStatusId: {
+                    active: true,
+                    required: true,
+                    allowedCodes: null
+                }
             };
 
             return config;

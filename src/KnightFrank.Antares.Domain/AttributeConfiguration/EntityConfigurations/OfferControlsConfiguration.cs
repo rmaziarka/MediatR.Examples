@@ -31,7 +31,7 @@
             this.AddControl(PageType.Create, ControlCode.Offer_OfferDate, Field<CreateOfferCommand>.Create(x => x.OfferDate).Required().ExternalValidator(new DateInPastValidator(nameof(CreateOfferCommand.OfferDate))));
             this.AddControl(PageType.Create, ControlCode.Offer_ExchangeDate, Field<CreateOfferCommand>.Create(x => x.ExchangeDate).ExternalValidator(new DateInFutureValidator(nameof(CreateOfferCommand.ExchangeDate))));
             this.AddControl(PageType.Create, ControlCode.Offer_CompletionDate, Field<CreateOfferCommand>.Create(x => x.CompletionDate).ExternalValidator(new DateInFutureValidator(nameof(CreateOfferCommand.CompletionDate))));
-            this.AddControl(PageType.Create, ControlCode.Offer_SpecialConditions, Field<CreateOfferCommand>.CreateText(x => x.SpecialConditions, 4000).Required());
+            this.AddControl(PageType.Create, ControlCode.Offer_SpecialConditions, Field<CreateOfferCommand>.CreateText(x => x.SpecialConditions, 4000));
         }
 
         private void DefineControlsForUpdate()
@@ -42,7 +42,7 @@
             this.AddControl(PageType.Update, ControlCode.Offer_OfferDate, Field<UpdateOfferCommand>.Create(x => x.OfferDate).Required().ExternalValidator(new DateInPastValidator(nameof(CreateOfferCommand.OfferDate))));
             this.AddControl(PageType.Update, ControlCode.Offer_ExchangeDate, Field<UpdateOfferCommand>.Create(x => x.ExchangeDate).ExternalValidator(new DateInFutureValidator(nameof(CreateOfferCommand.ExchangeDate))));
             this.AddControl(PageType.Update, ControlCode.Offer_CompletionDate, Field<UpdateOfferCommand>.Create(x => x.CompletionDate).ExternalValidator(new DateInFutureValidator(nameof(CreateOfferCommand.CompletionDate))));
-            this.AddControl(PageType.Update, ControlCode.Offer_SpecialConditions, Field<UpdateOfferCommand>.CreateText(x => x.SpecialConditions, 4000).Required());
+            this.AddControl(PageType.Update, ControlCode.Offer_SpecialConditions, Field<UpdateOfferCommand>.CreateText(x => x.SpecialConditions, 4000));
 
             this.AddControl(PageType.Update, ControlCode.Offer_SearchStatus, Field<UpdateOfferCommand>.Create(x => x.SearchStatusId));
             this.AddControl(PageType.Update, ControlCode.Offer_MortgageSurveyStatus, Field<UpdateOfferCommand>.Create(x => x.MortgageSurveyStatusId));
