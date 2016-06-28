@@ -101,6 +101,15 @@ module Antares.Services {
             }
         };
 
+        private getRequirementTypesAction: ng.resource.IActionDescriptor = {
+            url: this.appConfig.rootUrl + '/api/requirements/types?countryCode=:countryCode',
+            method: 'GET',
+            isArray: true,
+            params: {
+                countryCode: '@countryCode'
+            }
+        };
+
         getCompanyResource(): Resources.ICompanyResourceClass{
             return <Resources.ICompanyResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/companies/:id', null, {
@@ -120,7 +129,9 @@ module Antares.Services {
 
         getRequirementResource(): Resources.IRequirementResourceClass {
             return <Resources.IRequirementResourceClass>
-                this.$resource(this.appConfig.rootUrl + '/api/requirements/:id');
+                this.$resource(this.appConfig.rootUrl + '/api/requirements/:id', null, {
+                    getRequirementTypes: this.getRequirementTypesAction
+                });
         }
 
         getViewingResource(): Resources.IViewingResourceClass {

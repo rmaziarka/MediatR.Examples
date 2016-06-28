@@ -283,6 +283,9 @@
     <Compile Include="Property\Commands\CreatePropertyAttachmentCommand.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementAttachmentCommandHandler.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementAttachmentCommand.cs" />
+    <Compile Include="Requirement\Queries\RequirementTypeQuery.cs" />
+    <Compile Include="Requirement\QueryHandlers\RequirementTypeQueryHandler.cs" />
+    <Compile Include="Requirement\QueryResults\RequirementTypeQueryResult.cs" />
     <Compile Include="User\Queries\UsersQuery.cs" />
     <Compile Include="Contact\Queries\ContactQueryValidator.cs" />
     <Compile Include="Contact\Queries\ContactsQuery.cs" />

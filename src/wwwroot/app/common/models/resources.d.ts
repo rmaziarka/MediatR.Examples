@@ -115,6 +115,7 @@ declare module Antares.Common.Models {
         }
 
         interface IRequirementResourceClass extends Resources.IBaseResourceClass<Resources.IRequirementResource> {
+            getRequirementTypes(params: any): ng.resource.IResource<Dto.IRequirementTypeQueryResult[]>;
         }
 
         interface IViewingResourceClass extends Resources.IBaseResourceClass<Resources.IViewingResource> {

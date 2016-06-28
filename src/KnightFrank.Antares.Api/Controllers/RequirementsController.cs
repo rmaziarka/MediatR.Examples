@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.Api.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
@@ -13,6 +14,8 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.Activity.Queries;
+    using KnightFrank.Antares.Domain.Activity.QueryResults;
     using KnightFrank.Antares.Domain.Attachment.Queries;
     using KnightFrank.Antares.Domain.Requirement.Queries;
     using KnightFrank.Antares.Domain.RequirementNote.Commands;
@@ -111,6 +114,18 @@
 
             var attachmentQuery = new AttachmentQuery { Id = attachmentId };
             return this.mediator.Send(attachmentQuery);
+        }
+
+        /// <summary>
+        /// Gets the activity types.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns>List of activity types</returns>
+        [HttpGet]
+        [Route("types")]
+        public IEnumerable<RequirementTypeQueryResult> GetActivityTypes([FromUri(Name = "")]RequirementTypeQuery query)
+        {
+            return this.mediator.Send(query);
         }
     }
 }

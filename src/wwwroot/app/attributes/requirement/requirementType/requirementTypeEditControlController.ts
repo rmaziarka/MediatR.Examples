@@ -10,32 +10,29 @@ module Antares.Attributes {
         onRequirementTypeChanged: (obj: { requirementTypeId: string }) => void;
 
         // controller
-        private allRequirementTypes: Dto.IEnumItem[] = [];
+        private requirementResource: Common.Models.Resources.IRequirementResourceClass;
+        private allRequirementTypes: Dto.IRequirementTypeQueryResult[] = [];
 
-        constructor(private enumService: Services.EnumService) { }
+        constructor(private dataAccessService: Antares.Services.DataAccessService) { }
 
         $onInit = () => {
-            this.enumService.getEnumPromise().then(this.onEnumLoaded);
-        }
-
-        public getRequirementTypes = () => {
-            if (!(this.config && this.config.requirementTypeId)) {
-                return [];
-            }
-
-            if (!this.config.requirementTypeId.allowedCodes) {
-                return this.allRequirementTypes;
-            }
-
-            return <Dto.IEnumItem[]>_(this.allRequirementTypes).indexBy('code').at(this.config.requirementTypeId.allowedCodes).value();
+            this.requirementResource = this.dataAccessService.getRequirementResource();
+            this.loadRequirementTypes();
         }
 
         public changeRequirementType = () => {
             this.onRequirementTypeChanged({ requirementTypeId: this.ngModel });
         }
 
-        private onEnumLoaded = (result: Dto.IEnumDictionary) => {
-            this.allRequirementTypes = result[Dto.EnumTypeCode.RequirementType];
+        loadRequirementTypes = () =>{
+            this.requirementResource
+                .getRequirementTypes({
+                    countryCode: "GB"
+                })
+                .$promise
+                .then((requirementTypes: Dto.IRequirementTypeQueryResult[]) => {
+                    this.allRequirementTypes = requirementTypes;
+                });
         }
     }
 
