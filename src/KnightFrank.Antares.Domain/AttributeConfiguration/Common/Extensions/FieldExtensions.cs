@@ -102,6 +102,16 @@
             return controlFields;
         }
 
+        public static IList<Tuple<Control, IList<IField>>> ReadonlyWhen<TEntity>(this IList<Tuple<Control, IList<IField>>> controlFields, Expression<Func<TEntity, bool>> expression )
+        {
+            foreach (Tuple<Control, IList<IField>> tuple in controlFields)
+            {
+                tuple.Item1.SetReadonlyRule(expression);
+            }
+
+            return controlFields;
+        }
+
         private static IList<Control> SetFieldExpression<TEntity, TProperty>(IList<Control> controls, Expression<Func<TEntity, TProperty>> field, Expression<Func<TEntity, bool>> expression, bool readonlyExpression)
         {
             if (controls.Count > 1)
