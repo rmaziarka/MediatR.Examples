@@ -1,12 +1,12 @@
 <div ng-if="vm.config">
-    <h4 translate="NEGOTIATORS.{{vm.labelTranslationKey}}.LEAD"></h4>
+    <h5 translate="NEGOTIATORS.{{vm.labelTranslationKey}}.LEAD"></h5>
     <card id="card-lead-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'" item="vm.leadNegotiator">
     </card>
     <editable-date selected-date="vm.leadNegotiator.callDate" is-required="true" on-save="vm.updateNegotiatorCallDate(vm.leadNegotiator)"></editable-date>
 
     <card-list id="card-list-negotiators" ng-if="!vm.hideSecondaryNegotiators">
         <card-list-header>
-            <h4 translate="NEGOTIATORS.{{vm.labelTranslationKey}}.SECONDARY"></h4>
+            <h5 translate="NEGOTIATORS.{{vm.labelTranslationKey}}.SECONDARY"></h5>
         </card-list-header>
         <card-list-no-items id="empty-secondary-negotiators" ng-show="!vm.secondaryNegotiators || vm.secondaryNegotiators.length === 0">
             <p class="help-block" translate="NEGOTIATORS.{{vm.labelTranslationKey}}.EMPTY"></p>
