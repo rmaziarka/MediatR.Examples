@@ -125,7 +125,7 @@
             var contacts = this.scenarioContext.Get<List<Contact>>("Contacts");
             var requirement = table.CreateInstance<CreateRequirementCommand>();
 
-            requirement.CreateDate = DateTime.Now;
+            requirement.CreateDate = this.date;
             requirement.ContactIds = contacts.Select(contact => contact.Id).ToList();
 
             requirement.Address = this.scenarioContext.Get<CreateOrUpdateAddress>("Location");
@@ -171,7 +171,7 @@
             var requirement = table.CreateInstance<CreateRequirementCommand>();
             var location = this.scenarioContext.Get<CreateOrUpdateAddress>("Location");
 
-            requirement.CreateDate = DateTime.Now;
+            requirement.CreateDate = this.date;
 
             if (!missingData.Equals("contact"))
             {
@@ -215,7 +215,7 @@
 
             var requirement = table.CreateInstance<CreateRequirementCommand>();
 
-            requirement.CreateDate = DateTime.Now;
+            requirement.CreateDate = this.date;
             requirement.ContactIds = new List<Guid> { Guid.NewGuid() };
 
             requirement.Address = this.scenarioContext.Get<CreateOrUpdateAddress>("Location");
