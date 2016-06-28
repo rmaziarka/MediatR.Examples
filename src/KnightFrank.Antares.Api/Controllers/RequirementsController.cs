@@ -47,6 +47,7 @@
         /// <returns>Requirement identifier.</returns>
         [HttpPost]
         [Route("")]
+        [DataShaping]
         public Requirement CreateRequirement(CreateRequirementCommand command)
         {
             Guid requirementId =  this.mediator.Send(command);
@@ -61,6 +62,7 @@
         /// <returns>Requirement.</returns>
         [HttpGet]
         [Route("{id}")]
+        [DataShaping]
         public Requirement GetRequirementById(Guid id)
         {
             Requirement requirement = this.mediator.Send(new RequirementQuery { Id = id });
@@ -81,6 +83,7 @@
         /// <returns>Requirement note</returns>
         [HttpPost]
         [Route("{id}/notes")]
+        [DataShaping]
         public RequirementNote CreateRequirementNote(Guid id, CreateRequirementNoteCommand command)
         {
             command.RequirementId = id;

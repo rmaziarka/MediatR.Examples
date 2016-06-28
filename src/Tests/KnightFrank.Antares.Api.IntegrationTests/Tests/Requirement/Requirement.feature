@@ -8,8 +8,8 @@ Scenario: Create requirement
 			| Tomasz    | Bien    | Mister |
 	When User sets locations details for the requirement with max length fields
 		And User creates following requirement using api
- 			| RequirementType    |
- 			| ResidentialLetting |
+ 			| Description | Requirement Type   |
+ 			| max         | ResidentialLetting |
 	Then User should get OK http status code
 		And Requirement should be the same as added
 
@@ -38,11 +38,11 @@ Scenario Outline: Create requirement without data
 	Then User should get BadRequest http status code
 
 	Examples: 
-	| data         |
-	| contact      |
-	| country      |
-	| address form |
-	| requirement  |
+	| data             |
+	| contact          |
+	| country          |
+	| address form     |
+	| requirement type |
 
 @Requirements
 Scenario: Create requirement with invalid contact

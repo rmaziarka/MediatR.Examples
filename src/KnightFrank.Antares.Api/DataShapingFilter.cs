@@ -29,19 +29,33 @@
         [Inject]
         private readonly IEntityMapper<Activity> activityEntityMapper;
 
+
+        /// <summary>
+        /// Gets or sets the requirement entity mapper.
+        /// </summary>
+        /// <value>
+        /// The requirement entity mapper.
+        /// </value>
+        [Inject]
+        private readonly IEntityMapper<Requirement> requirementEntityMapper;
+
         private readonly IDictionary<Type, Action<ObjectContent>> shapingFunctions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataShapingFilter"/> class.
         /// </summary>
-        public DataShapingFilter(IEntityMapper<Activity> activityEntityMapper)
+        public DataShapingFilter(IEntityMapper<Activity> activityEntityMapper, IEntityMapper<Requirement> requirementEntityMapper )
         {
             this.activityEntityMapper = activityEntityMapper;
+            this.requirementEntityMapper = requirementEntityMapper;
             this.shapingFunctions = new Dictionary<Type, Action<ObjectContent>>
             {
                 { typeof(Activity), this.ShapeActivity },
                 { typeof(Offer), this.ShapeOffer },
-                { typeof(Property), this.ShapeProperty }
+                { typeof(Property), this.ShapeProperty },
+                { typeof(Requirement), this.ShapeRequirement },
+                { typeof(RequirementNote), this.ShapeRequirementNote },
+                { typeof(Viewing), this.ShapeViewing }
             };
         }
 
@@ -81,6 +95,7 @@
         {
             var offer = (Offer)objectContent.Value;
             this.activityEntityMapper.NullifyDisallowedValues(offer.Activity, PageType.Details);
+            this.requirementEntityMapper.NullifyDisallowedValues(offer.Requirement, PageType.Details);
         }
 
         private void ShapeProperty(ObjectContent objectContent)
@@ -93,6 +108,33 @@
                     this.activityEntityMapper.NullifyDisallowedValues(activity, PageType.Details);
                 }
             }
+        }
+
+        private void ShapeRequirement(ObjectContent objectContent)
+        {
+            var requirement = (Requirement)objectContent.Value;
+            this.requirementEntityMapper.NullifyDisallowedValues(requirement, PageType.Details);
+
+            if (requirement.Offers != null)
+            {
+                foreach (Offer offer in requirement.Offers)
+                {
+                    // TODO uncomment after merge with create letting offer branch
+                    // this.offerEntityMapper.NullifyDisallowedValues(offer, PageType.Details);
+                }
+            }
+        }
+
+        private void ShapeRequirementNote(ObjectContent objectContent)
+        {
+            var requirementNote = (RequirementNote)objectContent.Value;
+            this.requirementEntityMapper.NullifyDisallowedValues(requirementNote.Requirement, PageType.Details);
+        }
+
+        private void ShapeViewing(ObjectContent objectContent)
+        {
+            var viewing = (Viewing)objectContent.Value;
+            this.requirementEntityMapper.NullifyDisallowedValues(viewing.Requirement, PageType.Details);
         }
     }
 }

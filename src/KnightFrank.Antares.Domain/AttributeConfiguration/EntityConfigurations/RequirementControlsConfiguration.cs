@@ -40,19 +40,19 @@
         {
             this.AddControl(PageType.Details, ControlCode.Requirement_CreationDate, Field<Requirement>.Create(x => x.CreateDate));
             this.AddControl(PageType.Details, ControlCode.Requirement_RequirementType,
-                Field<Requirement>.CreateDictionary(x => x.RequirementTypeId, nameof(RequirementType)).Required());
+                Field<Requirement>.Create(x => x.RequirementTypeId, x => x.RequirementType));
             this.AddControl(PageType.Details, ControlCode.Requirement_Description,
-                Field<Requirement>.CreateText(x => x.Description, 4000));
+                Field<Requirement>.Create(x => x.Description));
             this.AddControl(PageType.Details, ControlCode.Requirement_RentRange, new List<IField>
             {                
                 Field<Requirement>.Create(x => x.RentMin),
                 Field<Requirement>.Create(x => x.RentMax)
             });
-            this.AddControl(PageType.Details, ControlCode.Requirement_LocationRequirements, Field<Requirement>.Create(x => x.Address));
+            this.AddControl(PageType.Details, ControlCode.Requirement_LocationRequirements, Field<Requirement>.Create(x => x.Address, x => x.AddressId));
             this.AddControl(PageType.Details, ControlCode.Requirement_Applicants, Field<Requirement>.Create(x => x.Contacts));
             this.AddControl(PageType.Details, ControlCode.Requirement_Viewings, Field<Requirement>.Create(x => x.Viewings));
             this.AddControl(PageType.Details, ControlCode.Requirement_Attachments, Field<Requirement>.Create(x => x.Attachments));
-            this.AddControl(PageType.Details, ControlCode.Requirement_Offers, Field<Requirement>.Create(x => x.Offers));            
+            this.AddControl(PageType.Details, ControlCode.Requirement_Offers, Field<Requirement>.Create(x => x.Offers));
         }        
 
         public override void DefineMappings()
