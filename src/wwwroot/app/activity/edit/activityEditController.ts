@@ -4,6 +4,7 @@ module Antares.Activity {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
     import Enums = Common.Models.Enums;
+    import PageTypeEnum = Common.Models.Enums.PageTypeEnum;
 
     enum PageMode {
         Add,
@@ -13,19 +14,22 @@ module Antares.Activity {
     export class ActivityEditController {
         public config: IActivityEditConfig;
         public activity: Business.Activity;
-        public property: Business.Property;
+        public property: Business.PropertyView;
+
+        public propertyDivisionId: string;
+        public propertyTypeId: string;
         public enumTypeActivityStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityStatus;
         private departmentsController: Antares.Attributes.ActivityDepartmentsEditControlController;
-
         public standardDepartmentType: Dto.IEnumTypeItem;
 
         public isPropertyPreviewPanelVisible: boolean = false;
 
         private departmentErrorMessageCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.MESSAGE';
         private departmentErrorTitleCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.TITLE';
-
+        private defaultActivityStatusCode: string = 'PreAppraisal';
 
         public configMocked: any;
+
         //controls
         controlSchemas: any = {
             marketAppraisalPrice: {
@@ -68,6 +72,14 @@ module Antares.Activity {
             enumTypeCode: Dto.EnumTypeCode.ActivitySource
         }
 
+        activityStatusSchema: Antares.Attributes.IEnumItemEditControlSchema = {
+            controlId: 'activityStatusId',
+            translationKey: 'ACTIVITY.EDIT.STATUS',
+            fieldName: 'activityStatusId',
+            formName: 'activityStatusForm',
+            enumTypeCode: Dto.EnumTypeCode.ActivityStatus
+        }
+
         activitySellingReasonSchema: Antares.Attributes.IEnumItemEditControlSchema = {
             controlId: 'activitySellingReasonId',
             translationKey: 'ACTIVITY.EDIT.SELLING_REASON',
@@ -83,51 +95,59 @@ module Antares.Activity {
             formName: 'activitySourceDescriptionForm',
         }
 
-       keyNumberSchema: Antares.Attributes.ITextEditControlSchema = {
-           controlId: 'keyNumberId',
+        keyNumberSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'keyNumberId',
             translationKey: 'ACTIVITY.EDIT.KEY_NUMBER',
             fieldName: 'keyNumberId',
             formName: 'keyNumberForm',
         }
 
-       pitchingThreatsSchema: Antares.Attributes.ITextEditControlSchema = {
-           controlId: 'pitchingThreatsId',
-           translationKey: 'ACTIVITY.EDIT.PITCHING_THREATS',
-           fieldName: 'pitchingThreatsId',
-           formName: 'pitchingThreatsForm',
-       }
+        pitchingThreatsSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'pitchingThreatsId',
+            translationKey: 'ACTIVITY.EDIT.PITCHING_THREATS',
+            fieldName: 'pitchingThreatsId',
+            formName: 'pitchingThreatsForm',
+        }
 
-       accessArrangementsSchema: Antares.Attributes.ITextEditControlSchema = {
-           controlId: 'accessArrangementsId',
-           translationKey: 'ACTIVITY.EDIT.ACCESS_ARRANGEMENTS',
-           fieldName: 'accessArrangementsId',
-           formName: 'accessArrangementsForm',
-       }
+        accessArrangementsSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'accessArrangementsId',
+            translationKey: 'ACTIVITY.EDIT.ACCESS_ARRANGEMENTS',
+            fieldName: 'accessArrangementsId',
+            formName: 'accessArrangementsForm',
+        }
 
-       invitationTextSchema: Antares.Attributes.ITextEditControlSchema = {
-           controlId: 'invitationTextId',
-           translationKey: 'ACTIVITY.EDIT.APPRAISAL_MEETING.INVITATION_TEXT',
-           fieldName: 'invitationTextId',
-           formName: 'invitationTextForm',
-       }
+        invitationTextSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'invitationTextId',
+            translationKey: 'ACTIVITY.EDIT.APPRAISAL_MEETING.INVITATION_TEXT',
+            fieldName: 'invitationTextId',
+            formName: 'invitationTextForm',
+        }
 
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService,
-            private enumService: Services.EnumService,
             public kfMessageService: Services.KfMessageService,
-            private eventAggregator: Core.EventAggregator) {
+            private configService: Services.ConfigService,
+            private eventAggregator: Core.EventAggregator,
+            private enumProvider: Providers.EnumProvider) {
 
-            this.enumService.getEnumPromise().then(this.onEnumLoaded);
-
-            
             this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
                 this.isPropertyPreviewPanelVisible = false;
             });
-            
+
             this.eventAggregator.with(this).subscribe(Attributes.OpenPropertyPrewiewPanelEvent, (event: Antares.Attributes.OpenPropertyPrewiewPanelEvent) => {
                 this.isPropertyPreviewPanelVisible = true;
             });
+        }
+
+        public $onInit = () => {
+            this.activity = this.activity || new Business.Activity();
+            this.propertyTypeId = this.isAddMode() ? this.property.propertyTypeId : this.activity.property.propertyTypeId;
+            this.propertyDivisionId = this.isAddMode() ? this.property.division.id : this.activity.property.divisionId;
+
+            this.setStandardDepartmentType();
+            this.setDefaultActivityStatus();
+            this.setVendorContacts();
 
             // TODO use config from server
             this.configMocked = {
@@ -175,7 +195,25 @@ module Antares.Activity {
                 }
             }
         }
-        
+
+        public activityTypeChanged = (activityTypeId: string) => {
+            this.activity.activityTypeId = activityTypeId;
+
+            this.reloadConfig(this.activity);
+        }
+
+        public activityStatusChanged = (activityStatusId: string) => {
+            this.reloadConfig(this.activity);
+        }
+
+        public reloadConfig = (activity: Business.Activity) => {
+            var entity = new Business.UpdateActivityResource(this.activity);
+
+            this.configService
+                .getActivity(PageTypeEnum.Create, this.propertyTypeId, activity.activityTypeId, entity)
+                .then((newConfig: IActivityEditConfig) => this.config = newConfig);
+        }
+
         public save() {
             var valid = this.anyNewDepartmentIsRelatedWithNegotiator();
             if (!valid) {
@@ -191,14 +229,11 @@ module Antares.Activity {
                 });
         }
 
-        activityStatusChanged = (activityStatusId: string) => {
-        }
-
-        cancel() {
+        public cancel() {
             this.$state.go('app.activity-view', { id: this.activity.id });
         }
 
-        setDepartmentsEdit(departmentsController: Antares.Attributes.ActivityDepartmentsEditControlController) {
+        public setDepartmentsEdit(departmentsController: Antares.Attributes.ActivityDepartmentsEditControlController) {
             this.departmentsController = departmentsController;
         }
 
@@ -209,24 +244,57 @@ module Antares.Activity {
         public departmentIsRelatedWithNegotiator = (department: Business.Department) => {
             return this.activity.leadNegotiator.user.departmentId === department.id ||
                 _.some(this.activity.secondaryNegotiator, (item) => item.user.departmentId === department.id);
-        } 
+        }
+
+        public isAddMode = () => {
+            return this.pageMode === PageMode.Add;
+        }
+
+        public isEditMode = () => {
+            return this.pageMode === PageMode.Edit;
+        }
 
         private get pageMode(): PageMode {
             return this.activity && this.activity.id ? PageMode.Edit : PageMode.Add;
         }
 
-        private onEnumLoaded = (result: any) => {
-            var departmentTypes: any = result[Dto.EnumTypeCode.ActivityDepartmentType];
+        private setStandardDepartmentType = () => {
+            var departmentTypes: any = this.enumProvider.enums[Dto.EnumTypeCode.ActivityDepartmentType];
             this.standardDepartmentType = <Dto.IEnumTypeItem>_.find(departmentTypes, (item: Dto.IEnumTypeItem) => {
                 return item.code === Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Standard];
             });
+        }
+
+        private setDefaultActivityStatus = () => {
+            var activityStatuses = this.enumProvider.enums[Dto.EnumTypeCode.ActivityStatus];
+            var defaultActivityStatus: any = <Dto.IEnumTypeItem>_.find(activityStatuses, (item: Dto.IEnumTypeItem) =>{
+                return item.code === this.defaultActivityStatusCode;
+            });
+
+            if (defaultActivityStatus) {
+                this.activity.activityStatusId = defaultActivityStatus.id;
+            }
+        }
+
+        private setVendorContacts = (): void => {
+            if (this.pageMode === PageMode.Edit) {
+                return;
+            }
+
+            var vendor: Business.Ownership = _.find(this.property.ownerships, (ownership: Business.Ownership) => {
+                return ownership.isVendor();
+            });
+
+            if (vendor) {
+                this.activity.contacts = vendor.contacts;
+            }
         }
 
         private anyNewDepartmentIsRelatedWithNegotiator = () => {
             var newDepartments = this.activity.activityDepartments.filter((item: Business.ActivityDepartment) => { return !item.id });
             return _.all(newDepartments, (item) => this.departmentIsRelatedWithNegotiator(item.department));
         }
-        
+
         private addDepartment(department: Business.Department) {
             if (!_.some(this.activity.activityDepartments, (activityDepartment: Business.ActivityDepartment) => { return activityDepartment.departmentId === department.id })) {
                 this.activity.activityDepartments.push(this.createActivityDepartment(department));

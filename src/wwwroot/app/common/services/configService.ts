@@ -2,10 +2,8 @@
 
 
 module Antares.Services {
-    import IActivityConfig = Antares.Activity.IActivityConfig;
-    import IActivityAddPanelConfig = Antares.Activity.IActivityAddPanelConfig;
-    import Attributes = Antares.Attributes;
-    import PageTypeEnum = Antares.Common.Models.Enums.PageTypeEnum;
+    import IActivityConfig = Activity.IActivityConfig;
+    import PageTypeEnum = Common.Models.Enums.PageTypeEnum;
 
     export class ConfigService {
 

@@ -206,6 +206,7 @@
       "SAVING_ACTIVITY_IN_PROGRESS": "Saving activity ..."
     },
     "EDIT": {
+      "ACTIVITY_TITLE": "Activity title",
       "EDIT_ACTIVITY": "Edit activity",
       "BASIC_INFORMATION": "Basic information",
       "ADDITIONAL_INFORMATION": "Additional information",

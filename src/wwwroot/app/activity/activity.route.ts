@@ -12,12 +12,12 @@ module Antares.Activity {
                 url: '/property/:propertyId/activity/add',
                 template: "<activity-add property='property'></activity-add>",
                 controller: ($scope: ng.IScope, property: Common.Models.Dto.IProperty) => {
-                    $scope['property'] = new Common.Models.Business.Property(property);
+                    $scope['property'] = new Common.Models.Business.PropertyView(property);
                 },
                 resolve: {
-                    property: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) =>{
+                    property: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) => {
                         var propertyId: string = $stateParams['propertyId'];
-                        return dataAccessService.getPropertyResource().get({ id : propertyId }).$promise;
+                        return dataAccessService.getPropertyResource().get({ id: propertyId }).$promise;
                     }
                 }
             })

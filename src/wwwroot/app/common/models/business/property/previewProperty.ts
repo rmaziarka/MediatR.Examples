@@ -11,7 +11,7 @@
             if (property) {
                 this.id = property.id;
                 this.address = new Business.Address(property.address);
-
+                this.propertyTypeId = property.propertyTypeId;
                 this.divisionId = property.divisionId;
             }
         }
