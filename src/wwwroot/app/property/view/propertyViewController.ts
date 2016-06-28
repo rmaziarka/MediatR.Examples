@@ -4,14 +4,15 @@
 module Antares.Property.View {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
+    import Enums = Common.Models.Enums;
     import CartListOrder = Common.Component.ListOrder;
     import Resources = Common.Models.Resources;
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityType;
 
     export class PropertyViewController extends Core.WithPanelsBaseController {
-        isActivityAddPanelVisible: boolean = false;
-        isActivityPreviewPanelVisible:boolean = false;
+        isActivityAddPanelVisible:Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isActivityPreviewPanelVisible:Enums.SidePanelState = Enums.SidePanelState.Untouched;
         ownershipAddPanelVisible: boolean = false;
         
         propertyId: string;
@@ -44,8 +45,8 @@ module Antares.Property.View {
 
             this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
                 // TODO iteration?
-                this.isActivityAddPanelVisible = false;
-                this.isActivityPreviewPanelVisible = false;
+                this.isActivityAddPanelVisible = Enums.SidePanelState.Closed;
+                this.isActivityPreviewPanelVisible = Enums.SidePanelState.Closed;
             });
 
             this.eventAggregator.with(this).subscribe(Activity.ActivityAddedSidePanelEvent, (msg: Activity.ActivityAddedSidePanelEvent) => {
@@ -60,10 +61,15 @@ module Antares.Property.View {
         }
 
         onPanelsHidden = () =>{
-            this.isActivityAddPanelVisible = false;
-            this.isActivityPreviewPanelVisible = false;
-        }
+            if(this.isActivityAddPanelVisible !== Enums.SidePanelState.Untouched) {
+                this.isActivityAddPanelVisible = Enums.SidePanelState.Closed;
+            }
 
+            if(this.isActivityPreviewPanelVisible !== Enums.SidePanelState.Untouched) {
+                this.isActivityPreviewPanelVisible = Enums.SidePanelState.Closed;
+            }
+        }
+ 
         addSavedAttachmentToList = (result: Dto.IAttachment) => {
             var savedAttachment = new Business.Attachment(result);
             this.property.attachments.push(savedAttachment);
@@ -97,7 +103,7 @@ module Antares.Property.View {
 
         showActivityAdd = () =>{
             this.hidePanels();
-            this.isActivityAddPanelVisible = true;
+            this.isActivityAddPanelVisible = Enums.SidePanelState.Opened;
         }
 
         showAreaAdd = () => {
@@ -113,7 +119,7 @@ module Antares.Property.View {
         showActivityPreview = (activity: Common.Models.Business.Activity) => {
             this.hidePanels();
             this.selectedActivity = activity;
-            this.isActivityPreviewPanelVisible = true;
+            this.isActivityPreviewPanelVisible = Enums.SidePanelState.Opened;
         }
 
         showContactList = () => {

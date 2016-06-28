@@ -13,10 +13,12 @@ module Antares.Offer {
             config: IOfferAddPanelConfig;
             activity: Dto.IActivity;
             requirement: Dto.IRequirement;
-            
+            isVisible: Enums.SidePanelState;
+
             // properties
             cardPristine: any;
             isBusy: boolean = false;
+            
             pageType: Enums.PageTypeEnum = Enums.PageTypeEnum.Create;
 
             constructor(

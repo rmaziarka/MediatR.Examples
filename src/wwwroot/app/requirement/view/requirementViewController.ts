@@ -4,6 +4,7 @@ module Antares.Requirement.View {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
+    import Enums = Common.Models.Enums;
 
     export class RequirementViewController extends Core.WithPanelsBaseController {
         requirement: Business.Requirement;
@@ -20,7 +21,7 @@ module Antares.Requirement.View {
         enumTypeRequirementDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.RequirementDocumentType;
         entityType: EntityType = EntityType.Requirement;
 
-        isOfferAddEditPanelVisible: boolean = false;
+        isOfferAddEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -39,7 +40,7 @@ module Antares.Requirement.View {
                 });
 
             this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
-                this.isOfferAddEditPanelVisible = false;
+                this.isOfferAddEditPanelVisible = Enums.SidePanelState.Closed;
             });
 
             this.eventAggregator.with(this).subscribe(Offer.OfferAddedSidePanelEvent, (msg: Offer.OfferAddedSidePanelEvent) =>{
@@ -48,7 +49,7 @@ module Antares.Requirement.View {
         }
 
         onPanelsHidden = () =>{
-            this.isOfferAddEditPanelVisible = false;
+            this.isOfferAddEditPanelVisible = Enums.SidePanelState.Closed;
         }
 
         addSavedAttachmentToList = (result: Dto.IAttachment) => {
@@ -198,7 +199,7 @@ module Antares.Requirement.View {
         showAddOfferPanel = (viewing: Dto.IViewing) =>{
             this.hidePanels();
             this.selectedViewing = viewing;
-            this.isOfferAddEditPanelVisible = true;
+            this.isOfferAddEditPanelVisible = Enums.SidePanelState.Opened;
         }
 
         showEditOfferPreviewPanel = () =>{
