@@ -58,8 +58,7 @@
             this.AddControl(PageType.Update, ControlCode.Offer_AdditionalSurveyorCompany, Field<UpdateOfferCommand>.Create(x => x.AdditionalSurveyorCompanyId));
             this.AddControl(PageType.Update, ControlCode.Offer_Enquiries, Field<UpdateOfferCommand>.Create(x => x.EnquiriesId));
             this.AddControl(PageType.Update, ControlCode.Offer_ContractApproved, Field<UpdateOfferCommand>.Create(x => x.ContractApproved));
-            //TODO add validator LessThanOrEqualTo
-            this.AddControl(PageType.Update, ControlCode.Offer_MortgageLoanToValue, Field<UpdateOfferCommand>.Create(x => x.MortgageLoanToValue).GreaterThanOrEqualTo(0)/*.LessThanOrEqualTo(200)*/);
+            this.AddControl(PageType.Update, ControlCode.Offer_MortgageLoanToValue, Field<UpdateOfferCommand>.Create(x => x.MortgageLoanToValue).GreaterThanOrEqualTo(0).LessThanOrEqualTo(200));
             this.AddControl(PageType.Update, ControlCode.Offer_MortgageSurveyDate, Field<UpdateOfferCommand>.Create(x => x.MortgageSurveyDate));
             this.AddControl(PageType.Update, ControlCode.Offer_AdditionalSurveyDate, Field<UpdateOfferCommand>.Create(x => x.AdditionalSurveyDate));
             this.AddControl(PageType.Update, ControlCode.Offer_ProgressComment, Field<UpdateOfferCommand>.CreateText(x => x.ProgressComment, 4000).Required());
