@@ -162,8 +162,34 @@ module Antares {
                     activityStatusId: '123',
                     activityTypeId: '123',
                     contacts: [
-                        <Dto.IContact>{ id: 'Contact1', firstName: 'John', lastName: 'Test1', title: 'Mr' },
-                        <Dto.IContact>{ id: 'Contact2', firstName: 'Amy', lastName: 'Test2', title: 'Mrs' }
+                        <Dto.IContact>{
+                            id: 'Contact1', firstName: 'John', lastName: 'Test1', title: 'Mr',
+                            mailingFormalSalutation: '',
+                            mailingSemiformalSalutation: '',
+                            mailingInformalSalutation: '',
+                            mailingPersonalSalutation: '',
+                            mailingEnvelopeSalutation: '',
+                            defaultMailingSalutationId: '',
+                            eventInviteSalutation: '',
+                            eventSemiformalSalutation: '',
+                            eventInformalSalutation: '',
+                            eventPersonalSalutation: '',
+                            eventEnvelopeSalutation: '',
+                            defaultEventSalutationId: '' },
+                        <Dto.IContact>{
+                            id: 'Contact2', firstName: 'Amy', lastName: 'Test2', title: 'Mrs',
+                            mailingFormalSalutation: '',
+                            mailingSemiformalSalutation: '',
+                            mailingInformalSalutation: '',
+                            mailingPersonalSalutation: '',
+                            mailingEnvelopeSalutation: '',
+                            defaultMailingSalutationId: '',
+                            eventInviteSalutation: '',
+                            eventSemiformalSalutation: '',
+                            eventInformalSalutation: '',
+                            eventPersonalSalutation: '',
+                            eventEnvelopeSalutation: '',
+                            defaultEventSalutationId: '' }
                     ]
                 });
                 activityMock.createdDate = date1Mock;

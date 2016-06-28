@@ -12,6 +12,7 @@ module Antares.Common.Models.Business {
         division: EnumTypeItem;
         roles: string[];
         salutationFormatId: string;
+        locale: Locale;
 
         constructor(user?: Dto.ICurrentUser){
             if (user) {
