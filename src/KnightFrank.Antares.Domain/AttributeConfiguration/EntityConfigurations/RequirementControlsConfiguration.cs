@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
 
-    using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions.Fields;

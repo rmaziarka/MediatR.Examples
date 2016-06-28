@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Linq.Expressions;
 
+    using FluentAssertions;
+
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
@@ -27,6 +29,7 @@
         [AutoMoqData]
         public void Given_CorrectCommand_When_Handle_Then_ShouldCreateRequirement(
             [Frozen] Mock<IGenericRepository<Requirement>> requirementRepository,
+            [Frozen] Mock<IGenericRepository<RequirementType>> requirementTypeRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             [Frozen] Mock<IAddressValidator> addressValidator,
             CreateRequirementCommand command,
@@ -35,9 +38,12 @@
         {
             // Arrange
             command.ContactIds = fixture.CreateMany<Guid>(2).ToList();
+            var requirementType = new RequirementType { Id = command.RequirementTypeId, EnumCode = "ResidentialLetting"};
 
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(
                 command.ContactIds.Select(x => new Contact { Id = x }));
+
+            requirementTypeRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(requirementType);
 
             requirementRepository.Setup(x => x.Add(It.IsAny<Requirement>()));
             requirementRepository.Setup(x => x.Save());
@@ -47,6 +53,7 @@
 
             // Assert
             requirementRepository.VerifyAll();
+            requirementTypeRepository.Verify(x => x.GetById(It.IsAny<Guid>()), Times.Once());
             contactRepository.VerifyAll();
             addressValidator.Verify(x => x.Validate(It.IsAny<CreateOrUpdateAddress>()), Times.Once());
         }
@@ -55,6 +62,7 @@
         [AutoMoqData]
         public void Given_CreateRequirementCommandWithInvalidApplicants_When_Handle_Then_ShouldThrowBusinessException(
         [Frozen] Mock<IGenericRepository<Requirement>> requirementRepository,
+        [Frozen] Mock<IGenericRepository<RequirementType>> requirementTypeRepository,
         [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
         [Frozen] Mock<IAddressValidator> addressValidator,
         CreateRequirementCommand command,
@@ -63,6 +71,7 @@
         {
             // Arrange
             command.ContactIds = fixture.CreateMany<Guid>(2).ToList();
+            var requirementType = new RequirementType { Id = command.RequirementTypeId, EnumCode = "ResidentialLetting" };
 
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>())).Returns(
                 new List<Contact>()
@@ -70,9 +79,13 @@
                     fixture.Build<Contact>().With(x => x.Id, command.ContactIds.First()).Create()
                 });
 
-            // Act + Assert
-            var businessValidationException = Assert.Throws<BusinessValidationException>(() => { handler.Handle(command); });
-            Assert.Equal(ErrorMessage.Missing_Requirement_Applicants_Id, businessValidationException.ErrorCode);
+            requirementTypeRepository.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(requirementType);
+
+            // Act
+            Action act = () => handler.Handle(command);
+
+            // Assert
+            act.ShouldThrow<BusinessValidationException>().And.ErrorCode.ShouldBeEquivalentTo(ErrorMessage.Missing_Requirement_Applicants_Id);
         }
     }
 }
