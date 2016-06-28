@@ -18,14 +18,18 @@ module Antares.Common.Component {
                 if (changesObj.isVisible.currentValue === Enums.SidePanelState.Opened) {
                     this.panelShown();
                 }
+                else if (changesObj.isVisible.currentValue === Enums.SidePanelState.Closed
+                    && changesObj.isVisible.previousValue === Enums.SidePanelState.Untouched) {
+                    this.isVisible = Enums.SidePanelState.Untouched;
+                }
                 else if (changesObj.isVisible.currentValue === Enums.SidePanelState.Closed) {
-                    this.panelShown();
+                    this.panelHidden();
                 }
             }
         }
     }
 
     interface IBaseSidePanelChange {
-        isVisible: { currentValue: any, previousValue: any, isFirstChange: () => boolean }
+        isVisible: { currentValue: Enums.SidePanelState, previousValue: Enums.SidePanelState, isFirstChange: () => boolean }
     }
 }
