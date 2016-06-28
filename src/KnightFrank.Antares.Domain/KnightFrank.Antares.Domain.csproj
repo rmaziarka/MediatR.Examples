@@ -162,6 +162,7 @@
     <Compile Include="AttributeConfiguration\Common\Extensions\ListExtensions.cs" />
     <Compile Include="AttributeConfiguration\Common\IAttributeValidator.cs" />
     <Compile Include="AttributeConfiguration\Common\IEntityMapper.cs" />
+    <Compile Include="AttributeConfiguration\Common\RequirementEntityMapper.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ActivityControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\BaseControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerOneType.cs" />
@@ -283,6 +284,9 @@
     <Compile Include="Property\Commands\CreatePropertyAttachmentCommand.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementAttachmentCommandHandler.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementAttachmentCommand.cs" />
+    <Compile Include="Requirement\Queries\RequirementTypeQuery.cs" />
+    <Compile Include="Requirement\QueryHandlers\RequirementTypeQueryHandler.cs" />
+    <Compile Include="Requirement\QueryResults\RequirementTypeQueryResult.cs" />
     <Compile Include="User\Queries\UsersQuery.cs" />
     <Compile Include="Contact\Queries\ContactQueryValidator.cs" />
     <Compile Include="Contact\Queries\ContactsQuery.cs" />
@@ -365,7 +369,6 @@
     <Compile Include="RequirementNote\Queries\RequirementNoteQueryValidator.cs" />
     <Compile Include="RequirementNote\QueryHandlers\RequirementNoteQueryHandler.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementCommandHandler.cs" />
-    <Compile Include="Requirement\Commands\CreateRequirementCommandValidator.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommand.cs" />
     <Compile Include="Requirement\Commands\RequirementCommandProfile.cs" />
     <Compile Include="Ownership\Queries\OwnershipByIdQuery.cs" />

@@ -50,7 +50,10 @@
             if (property != null)
             {
                 PropertyInfo targetProperty = entity.GetType().GetProperty(property.Name);
-                targetProperty?.SetValue(entity, value);
+                if (property.PropertyType == targetProperty?.PropertyType)
+                {
+                    targetProperty?.SetValue(entity, value);
+                }
             }
         }
     }

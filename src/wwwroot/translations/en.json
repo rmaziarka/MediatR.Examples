@@ -288,7 +288,8 @@
       "PARKINGSPACES": "Parking spaces",
       "AREA": "Area",
       "LANDAREA": "Land area",
-      "DESCRIPTION": "Description"
+      "DESCRIPTION": "Description",
+      "TYPE": "Requirement type"
     },
     "VIEW": {
       "REQUIREMENT_DETAILS": "Requirement details",
