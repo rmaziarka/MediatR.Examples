@@ -11,12 +11,11 @@ module Antares.Attributes {
 
         // controller
         private requirementResource: Common.Models.Resources.IRequirementResourceClass;
-        private allRequirementTypes: Dto.IRequirementTypeQueryResult[] = [];
+        private allRequirementTypes: Dto.IRequirementTypeQueryResult[];
 
-        constructor(private dataAccessService: Antares.Services.DataAccessService) { }
+        constructor(public requirementService: Requirement.RequirementService) { }
 
         $onInit = () => {
-            this.requirementResource = this.dataAccessService.getRequirementResource();
             this.loadRequirementTypes();
         }
 
@@ -25,13 +24,10 @@ module Antares.Attributes {
         }
 
         loadRequirementTypes = () =>{
-            this.requirementResource
-                .getRequirementTypes({
-                    countryCode: "GB"
-                })
-                .$promise
-                .then((requirementTypes: Dto.IRequirementTypeQueryResult[]) => {
-                    this.allRequirementTypes = requirementTypes;
+            this.requirementService
+                .getRequirementTypes("GB")
+                .then((requirementTypes: angular.IHttpPromiseCallbackArg<Array<Dto.IRequirementTypeQueryResult>>) => {
+                    this.allRequirementTypes = requirementTypes.data;
                 });
         }
     }

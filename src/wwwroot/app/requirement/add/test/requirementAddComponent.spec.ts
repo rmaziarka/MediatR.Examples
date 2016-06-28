@@ -51,6 +51,10 @@ module Antares {
                 return [200, []];
             });
 
+            $http.whenGET(/\/api\/requirements\/types/).respond(() => {
+                return [200, []];
+            });
+
             scope = $rootScope.$new();
             element = $compile('<requirement-add></requirement-add>')(scope);
             scope.$apply();

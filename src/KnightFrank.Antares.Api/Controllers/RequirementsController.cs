@@ -123,7 +123,7 @@
         /// <returns>List of activity types</returns>
         [HttpGet]
         [Route("types")]
-        public IEnumerable<RequirementTypeQueryResult> GetActivityTypes([FromUri(Name = "")]RequirementTypeQuery query)
+        public IEnumerable<RequirementTypeQueryResult> GetRequirementTypes([FromUri(Name = "")]RequirementTypeQuery query)
         {
             return this.mediator.Send(query);
         }
