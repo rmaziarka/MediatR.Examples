@@ -4,6 +4,7 @@
 
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions.Fields;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
     using KnightFrank.Antares.Domain.Common.Enums;
