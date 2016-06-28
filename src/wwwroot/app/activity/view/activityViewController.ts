@@ -22,30 +22,6 @@ module Antares.Activity.View {
 
         isPropertyPreviewPanelVisible: boolean = false;
 
-		//controls
-		controlSchemas: any = {
-			marketAppraisalPrice: {
-				controlId: "market-appraisal-price",
-				translationKey: "ACTIVITY.VIEW.PRICES.MARKET_APPRAISAL_PRICE"
-			},
-			recommendedPrice: {
-				controlId: "recommended-price",
-				translationKey: "ACTIVITY.VIEW.PRICES.RECOMMENDED_PRICE"
-			},
-			vendorEstimatedPrice: {
-				controlId: "vendor-estimated-price",
-				translationKey: "ACTIVITY.VIEW.PRICES.VENDOR_ESTIMATED_PRICE"
-			},
-			askingPrice: {
-				controlId: "asking-price",
-				translationKey: "ACTIVITY.VIEW.PRICES.ASKING_PRICE"
-			},
-			shortLetPricePerWeek: {
-				controlId: "short-let-price-per-week",
-				translationKey: "ACTIVITY.VIEW.PRICES.SHORT_LET_PRICE_PER_WEEK"
-			}
-		};
-
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private $scope: ng.IScope,
