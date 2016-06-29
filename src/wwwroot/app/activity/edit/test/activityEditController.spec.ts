@@ -14,7 +14,11 @@ module Antares {
             $state: ng.ui.IStateService,
             eventAggregator: Antares.Core.EventAggregator,
             assertValidator: TestHelpers.AssertValidators,
-            controller: ActivityEditController;
+            controller: ActivityEditController,
+            $q: ng.IQService,
+            $scope: ng.IScope,
+            activityService: Activity.ActivityService,
+            latestViewsProvider: Providers.LatestViewsProvider;
 
         var leadNegotiatorMock = TestHelpers.ActivityUserGenerator.generate(Enums.NegotiatorTypeEnum.LeadNegotiator);
         var secondaryNegotiatorsMock = TestHelpers.ActivityUserGenerator.generateMany(3, Enums.NegotiatorTypeEnum.SecondaryNegotiator);
@@ -24,15 +28,22 @@ module Antares {
             $rootScope: ng.IRootScopeService,
             $controller: ng.IControllerService,
             _$state_: ng.ui.IStateService,
-            $httpBackend: ng.IHttpBackendService) => {
+            $httpBackend: ng.IHttpBackendService,
+            _$q_: ng.IQService,
+            _activityService_: Activity.ActivityService,
+            _latestViewsProvider_: Providers.LatestViewsProvider) => {
 
             // init
             eventAggregator = _eventAggregator_;
-            scope = $rootScope.$new();
+            $scope = $rootScope.$new();
             $http = $httpBackend;
             $state = _$state_;
+            activityService = _activityService_;
+            $q = _$q_;
+            latestViewsProvider = _latestViewsProvider_;
 
-            controller = <ActivityEditController>$controller('ActivityEditController');
+            $scope = $rootScope.$new();
+            controller = <ActivityEditController>$controller('ActivityEditController', { $scope: $scope });
             controller.activity = new Business.Activity();
             controller.activity.leadNegotiator = leadNegotiatorMock;
             controller.activity.secondaryNegotiator = secondaryNegotiatorsMock;
@@ -115,52 +126,122 @@ module Antares {
             });
 
             describe('with valid data', () => {
-                it('then correct data is sent to API', () => {
-                    // arrange
+                beforeEach(() => {
                     spyOn(controller, 'departmentIsRelatedWithNegotiator').and.returnValue(false);
-
-                    var activity: Business.Activity = TestHelpers.ActivityGenerator.generate();
-                    var requestData: Dto.IUpdateActivityResource;
-
-                    controller.activity = activity;
                     spyOn($state, 'go').and.callFake(() => { });
 
-                    $http.expectPUT(/\/api\/activities/, (data: string) => {
-                        requestData = JSON.parse(data);
-                        return true;
-                    }).respond(201, {});
+                })
 
-                    // act
-                    controller.save();
-                    $http.flush();
+                describe('for edit mode', () => {
+                    var deferred: ng.IDeferred<any>;
+                    var activityFromService: Dto.IActivity;
+                    var requestData: Antares.Activity.Commands.IActivityEditCommand;
+                    var activity: Business.Activity;
 
-                    // assert
-                    expect(requestData.id).toEqual(activity.id);
+                    beforeEach(() => {
+                        // arrange
+                        deferred = $q.defer();
+                        activity = TestHelpers.ActivityGenerator.generate();
+                        controller.activity = activity;
+
+                        activityFromService = TestHelpers.ActivityGenerator.generateDto();
+
+                        spyOn(activityService, 'updateActivity').and.callFake((activityCommand: Antares.Activity.Commands.IActivityEditCommand) => {
+                            requestData = activityCommand;
+                            return deferred.promise;
+                        });
+                    })
+
+                    it('then correct data is sent to API', () => {
+                        // act
+                        controller.save();
+                        deferred.resolve(activityFromService);
+                        $scope.$apply();
+
+                        // assert
+                        expect(requestData.id).toEqual(activity.id);
+                        expectCorrectRequest(requestData, activity);
+                    });
+
+                    it('then user is redirected to activity view page', () => {
+                        // act
+                        controller.save();
+                        deferred.resolve(activityFromService);
+                        $scope.$apply();
+
+                        // assert
+                        expect($state.go).toHaveBeenCalledWith('app.activity-view', { id: activityFromService.id });
+                    });
+                })
+
+                describe('for add mode', () => {
+                    var deferred: ng.IDeferred<any>;
+                    var activityFromService: Dto.IActivity;
+                    var requestData: Antares.Activity.Commands.IActivityAddCommand;
+                    var activity: Business.Activity;
+
+                    beforeEach(() => {
+                        // arrange
+                        deferred = $q.defer();
+                        activity = TestHelpers.ActivityGenerator.generate();
+                        activity.id = null;
+                        controller.activity = activity;
+
+                        activityFromService = TestHelpers.ActivityGenerator.generateDto();
+
+                        spyOn(activityService, 'addActivity').and.callFake((activityCommand: Antares.Activity.Commands.IActivityAddCommand) => {
+                            requestData = activityCommand;
+                            return deferred.promise;
+                        });
+
+                        spyOn(latestViewsProvider, 'addView').and.callFake(() => { });
+                    })
+
+                    it('then correct data is sent to API', () => {
+                        // act
+                        controller.save();
+                        deferred.resolve(activityFromService);
+                        $scope.$apply();
+
+                        // assert
+                        expectCorrectRequest(requestData, activity);
+                    });
+
+                    it('then user is redirected to activity view page', () => {
+                        // act
+                        controller.save();
+                        deferred.resolve(activityFromService);
+                        $scope.$apply();
+
+                        // assert
+                        expect($state.go).toHaveBeenCalledWith('app.activity-view', { id: activityFromService.id });
+                    });
+
+                    it('then activity should be addded to latest view', () => {
+                        // act
+                        controller.save();
+                        deferred.resolve(activityFromService);
+                        $scope.$apply();
+
+                        // assert
+                        expect(latestViewsProvider.addView).toHaveBeenCalled();
+                    });
+                })
+
+                var expectCorrectRequest = (requestData: Antares.Activity.Commands.IActivityBaseCommand, activity: Business.Activity) => {
                     expect(requestData.activityStatusId).toEqual(activity.activityStatusId);
                     expect(requestData.marketAppraisalPrice).toEqual(activity.marketAppraisalPrice);
                     expect(requestData.recommendedPrice).toEqual(activity.recommendedPrice);
                     expect(requestData.vendorEstimatedPrice).toEqual(activity.vendorEstimatedPrice);
-                    //expect(requestData.leadNegotiator.userId).toEqual(activity.leadNegotiator.userId);
+                    expect(requestData.leadNegotiator.userId).toEqual(activity.leadNegotiator.userId);
+                    expect(requestData.sellingReasonId).toEqual(activity.sellingReasonId);
+                    expect(requestData.sourceId).toEqual(activity.sourceId);
+                    expect(requestData.pitchningThreats).toEqual(activity.pitchningThreats);
+                    expect(requestData.keyNumber).toEqual(activity.keyNumber);
+                    expect(requestData.accessArrangements).toEqual(activity.accessArrangements);
+
                     expect(requestData.secondaryNegotiators.map((negotiator) => negotiator.userId)).toEqual(activity.secondaryNegotiator.map((negotiator) => negotiator.userId));
-                });
-
-                it('then user is redirected to activity view page', () => {
-                    // arrange
-                    var activityFromServerMock: Dto.IActivity = TestHelpers.ActivityGenerator.generateDto();
-
-                    spyOn($state, 'go').and.callFake(() => { });
-
-                    $http.expectPUT(/\/api\/activities/, (data: string) => {
-                        return true;
-                    }).respond(201, activityFromServerMock);
-
-                    // act
-                    controller.save();
-                    $http.flush();
-
-                    // assert
-                    expect($state.go).toHaveBeenCalledWith('app.activity-view', { id: activityFromServerMock.id });
-                });
+                }
             });
         });
 

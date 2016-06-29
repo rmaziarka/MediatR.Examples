@@ -18,6 +18,8 @@ module Antares.Activity {
 
                     activity.property = new Common.Models.Business.PreviewProperty(property);
                     activity.propertyId = activity.property.id;
+
+                    $scope['activity'] = activity;
                 },
                 resolve: {
                     property: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) => {

@@ -15,8 +15,6 @@ module Antares.Activity {
         public activity: Business.Activity;
         public userData: Dto.IUserData;
 
-        //public propertyDivisionId: string;
-        //public propertyTypeId: string;
         public enumTypeActivityStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityStatus;
         private departmentsController: Antares.Attributes.ActivityDepartmentsEditControlController;
         public standardDepartmentType: Dto.IEnumTypeItem;
@@ -115,7 +113,7 @@ module Antares.Activity {
             fieldName: 'accessArrangements',
             formName: 'accessArrangementsForm'
         }
-   
+
         invitationTextSchema: Antares.Attributes.ITextEditControlSchema = {
             controlId: 'invitationTextId',
             translationKey: 'ACTIVITY.EDIT.APPRAISAL_MEETING.INVITATION_TEXT',
@@ -187,6 +185,7 @@ module Antares.Activity {
             }
 
             if (this.isAddMode()) {
+                // todo change to one parameter
                 var addCommand = new Commands.ActivityAddCommand(this.activity, this.activity.property.id);
 
                 this.activityService.addActivity(addCommand).then((activityDto: Dto.IActivity) => {
@@ -202,11 +201,7 @@ module Antares.Activity {
                 var editCommand = new Commands.ActivityEditCommand(this.activity);
 
                 this.activityService.updateActivity(editCommand).then((activityDto: Dto.IActivity) => {
-                    //this.latestViewsProvider.addView(<Common.Models.Commands.ICreateLatestViewCommand>{
-                    //    entityId: activityDto.id,
-                    //    entityType: Enums.EntityTypeEnum.Activity
-                    //});
-                    this.$state.go('app.activity-view', { id: this.activity.id });
+                    this.$state.go('app.activity-view', { id: activityDto.id });
                 });
             }
         }
@@ -240,7 +235,7 @@ module Antares.Activity {
         public getAvailableAttendeeUsers = (): Business.User[] => {
 
             var users: Business.User[] = [];
-            
+
             this.activity.secondaryNegotiator.map((n: Business.ActivityUser) => {
                 return n.user;
             }) || [];
@@ -296,7 +291,7 @@ module Antares.Activity {
             }
         }
 
-        private setLeadNegotiator = () =>{
+        private setLeadNegotiator = () => {
             if (this.pageMode === PageMode.Edit) {
                 return;
             }
@@ -308,7 +303,7 @@ module Antares.Activity {
             this.activity.leadNegotiator.user.departmentId = this.userData.department.id;
         }
 
-        private setDefaultDepartment = () =>{
+        private setDefaultDepartment = () => {
             if (this.pageMode === PageMode.Edit) {
                 return;
             }
@@ -317,7 +312,7 @@ module Antares.Activity {
             defaultDepartment.departmentId = this.userData.department.id;
             defaultDepartment.department.id = this.userData.department.id;
             defaultDepartment.department.name = this.userData.department.name;
-            //defaultDepartment.departmentType.code = Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Managing];
+
             var managingTypeEnumItems: Dto.IEnumItem[] = this.enumProvider.enums.activityDepartmentType.filter((enumItem: Dto.IEnumItem) => { return enumItem.code === Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Managing]; });
             defaultDepartment.departmentTypeId = managingTypeEnumItems[0].id;
 

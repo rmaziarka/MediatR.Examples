@@ -22,6 +22,7 @@ module Antares.Activity.Commands {
         keyNumber: string = '';
         accessArrangements: string = '';
         attendees: Business.UpdateActivityAttendeeResource[];
+        pitchningThreats: string = '';
 
         constructor(activity: Business.Activity){
             this.activityStatusId = activity.activityStatusId;
@@ -34,6 +35,7 @@ module Antares.Activity.Commands {
             this.sourceId = activity.sourceId;
             this.sourceDescription = activity.sourceDescription;
             this.sellingReasonId = activity.sellingReasonId;
+            this.pitchningThreats = activity.pitchningThreats;
             this.keyNumber = activity.keyNumber;
             this.accessArrangements = activity.accessArrangements;
             this.leadNegotiator = new ActivityUserCommandPart(activity.leadNegotiator);
@@ -61,6 +63,7 @@ module Antares.Activity.Commands {
         sellingReasonId: string;
         keyNumber: string;
         accessArrangements: string;
+        pitchningThreats: string;
         attendees: Business.UpdateActivityAttendeeResource[];
     }
 }
