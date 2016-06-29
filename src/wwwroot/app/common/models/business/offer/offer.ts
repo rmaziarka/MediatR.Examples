@@ -9,6 +9,7 @@ module Antares.Common.Models.Business {
         statusId: string = null;
         activityId: string = null;
         requirementId: string = null;
+        offerTypeId: string = null;
         price: number;
         pricePerWeek: number;
         exchangeDate: Date;

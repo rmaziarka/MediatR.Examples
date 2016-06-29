@@ -1,0 +1,25 @@
+﻿<form name="vm.offerEditCardForm" ng-submit="vm.offerEditCardForm.isFormValid() && vm.save()" novalidate>
+    <kf-side-panel-card>
+        <side-panel-header>
+            <h3 translate="OFFER.EDIT.EDIT_OFFER"></h3>
+        </side-panel-header>
+        <side-panel-content>
+            <activity-card activity="vm.offer.activity"></activity-card>
+            <enum-item-edit-control ng-model="vm.offer.statusId" config="vm.config.offer_Status" schema="vm.controlSchemas.status"></enum-item-edit-control>
+            <price-edit-control ng-model="vm.offer.price" config="vm.config.offer_Price" schema="vm.controlSchemas.price"></price-edit-control>
+            <price-edit-control ng-model="vm.offer.pricePerWeek" config="vm.config.offer_PricePerWeek" schema="vm.controlSchemas.pricePerWeek"></price-edit-control>
+            <date-edit-control ng-model="vm.offer.offerDate" config="vm.config.offer_OfferDate" schema="vm.controlSchemas.offerDate" lower-than="vm.today"></date-edit-control>
+            <textarea-edit-control ng-model="vm.offer.specialConditions" config="vm.config.offer_SpecialConditions" schema="vm.controlSchemas.specialConditions" rows="6"></textarea-edit-control>
+            <date-edit-control ng-model="vm.offer.exchangeDate" config="vm.config.offer_ExchangeDate" schema="vm.controlSchemas.exchangeDate" greater-than="vm.today"></date-edit-control>
+            <date-edit-control ng-model="vm.offer.completionDate" config="vm.config.offer_CompletionDate" schema="vm.controlSchemas.completionDate" greater-than="vm.today"></date-edit-control>
+        </side-panel-content>
+        <side-panel-footer>
+            <button class="btn btn-default" type="button" ng-click="vm.cancel()">
+                <i class="fa" ng-class="{ 'fa-ban':!vm.backToPreview, 'fa-angle-double-left': vm.backToPreview }"></i> <span translate="COMMON.CANCEL"></span>
+            </button>
+            <button class="btn btn-primary" id="offer-save-button" type="submit">
+                <i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span>
+            </button>
+        </side-panel-footer>
+    </kf-side-panel-card>
+</form>

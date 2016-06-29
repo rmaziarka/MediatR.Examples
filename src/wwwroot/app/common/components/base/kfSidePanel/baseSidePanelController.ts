@@ -6,6 +6,7 @@ module Antares.Common.Component {
                 
         isBusy: boolean;
         isVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        busyLabelKey: string;
 
         protected panelShown = () => {
         };

@@ -2,7 +2,7 @@
 
 module Antares.Services {
     import Dto = Common.Models.Dto;
-    import CreateOfferCommand = Common.Models.Business.CreateOfferCommand;
+    import Business = Common.Models.Business;
 
     export class OfferService {
         private url: string = '/api/offers/';
@@ -12,8 +12,13 @@ module Antares.Services {
             private appConfig: Common.Models.IAppConfig)
         { }
 
-        createOffer = (offerCommand: CreateOfferCommand): ng.IPromise<Dto.IOffer> =>{
+        createOffer = (offerCommand: Business.CreateOfferCommand): ng.IPromise<Dto.IOffer> =>{
             return this.$http.post(this.appConfig.rootUrl + this.url, offerCommand)
+                .then<Dto.IOffer>((result: ng.IHttpPromiseCallbackArg<Dto.IOffer>) => result.data);
+        }
+
+        updateOffer = (offerCommand: Dto.IOffer): ng.IPromise<Dto.IOffer> =>{
+            return this.$http.put(this.appConfig.rootUrl + this.url, offerCommand)
                 .then<Dto.IOffer>((result: ng.IHttpPromiseCallbackArg<Dto.IOffer>) => result.data);
         }
     }

@@ -372,6 +372,7 @@
       "OFFER_PER_WEEK": "GBP / week"
     },
     "PREVIEW": {
+        "PREVIEW": "Offer preview",
         "ACTIVITY": "Activity",
         "STATUS": "Status",
         "OFFER": "Offer",
@@ -412,6 +413,7 @@
       "BASIC_INFORMATION": "Basic information",
       "STATUS": "Status",
       "OFFER": "Offer",
+      "OFFER_PER_WEEK": "GBP / week",
       "OFFER_DATE": "Offer date",
       "SPECIAL_CONDITIONS": "Special conditions",
       "NEGOTIATOR": "Negotiator",

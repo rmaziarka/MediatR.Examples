@@ -13,6 +13,7 @@ module Antares.TestHelpers {
                 requirementId: OfferGenerator.makeRandom('requirementId'),
                 statusId: OfferGenerator.makeRandom('statusId'),
                 negotiatorId: OfferGenerator.makeRandom('negotiatorId'),
+                offerTypeId: OfferGenerator.makeRandom('offerTypeId'),
                 price: 1000,
                 pricePerWeek: 100,
                 offerDate: new Date(),

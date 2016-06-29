@@ -5,6 +5,7 @@ module Antares.Requirement.View {
     import Business = Common.Models.Business;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
     import Enums = Common.Models.Enums;
+    import OfferPanelMode = Antares.Offer.Component.OfferPanelMode;
 
     export class RequirementViewController extends Core.WithPanelsBaseController {
         requirement: Business.Requirement;
@@ -21,7 +22,9 @@ module Antares.Requirement.View {
         enumTypeRequirementDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.RequirementDocumentType;
         entityType: EntityType = EntityType.Requirement;
 
-        isOfferAddEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isOfferAddPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isOfferEditPreviewPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        offerPanelMode: OfferPanelMode = OfferPanelMode.Preview;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -40,16 +43,22 @@ module Antares.Requirement.View {
                 });
 
             this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
-                this.isOfferAddEditPanelVisible = Enums.SidePanelState.Closed;
+                this.isOfferAddPanelVisible = Enums.SidePanelState.Closed;
+                this.isOfferEditPreviewPanelVisible = Enums.SidePanelState.Closed;
             });
 
             this.eventAggregator.with(this).subscribe(Offer.OfferAddedSidePanelEvent, (msg: Offer.OfferAddedSidePanelEvent) =>{
-                this.onSaveOffer(msg.addedOffer);
+                this.onSaveNewOffer(msg.addedOffer);
+            });
+
+            this.eventAggregator.with(this).subscribe(Offer.OfferUpdatedSidePanelEvent, (msg: Offer.OfferUpdatedSidePanelEvent) => {
+                this.onUpdateOffer(msg.updatedOffer);
             });
         }
 
         onPanelsHidden = () =>{
-            this.isOfferAddEditPanelVisible = Enums.SidePanelState.Closed;
+            this.isOfferAddPanelVisible = Enums.SidePanelState.Closed;
+            this.isOfferEditPreviewPanelVisible = Enums.SidePanelState.Closed;
         }
 
         addSavedAttachmentToList = (result: Dto.IAttachment) => {
@@ -127,9 +136,6 @@ module Antares.Requirement.View {
                 viewingPreviewId : 'addRequirement:viewingPreviewComponent',
                 configureViewingsSidePanelId : 'addRequirement:configureViewingsSidePanelComponent',
                 previewViewingSidePanelId : 'addRequirement:previewViewingSidePanelComponent',
-                offerPreviewId : 'requirementView:offerPreviewComponent',
-                offerPreviewSidePanelId : 'requirementView:offerPreviewSidePanelComponent',
-                offerEditSidePanelId : 'requirementView:offerEditSidePanelComponent'
             }
         }
 
@@ -141,13 +147,10 @@ module Antares.Requirement.View {
                 viewingAdd : () =>{ return this.componentRegistry.get(this.componentIds.viewingAddId); },
                 viewingEdit : () =>{ return this.componentRegistry.get(this.componentIds.viewingEditId); },
                 viewingPreview : () =>{ return this.componentRegistry.get(this.componentIds.viewingPreviewId); },
-                offerPreview : () =>{ return this.componentRegistry.get(this.componentIds.offerPreviewId); },
-                offerEditPreview : () =>{ return this.componentRegistry.get(this.componentIds.offerEditPreviewId); },
                 panels : {
                     notes : () =>{ return this.componentRegistry.get(this.componentIds.notesSidePanelId); },
                     configureViewings : () =>{ return this.componentRegistry.get(this.componentIds.configureViewingsSidePanelId); },
                     previewViewings : () =>{ return this.componentRegistry.get(this.componentIds.previewViewingSidePanelId); },
-                    offerPreview : () =>{ return this.componentRegistry.get(this.componentIds.offerPreviewSidePanelId) },
                 }
             }
         }
@@ -196,68 +199,45 @@ module Antares.Requirement.View {
                 });
         }
 
-        showAddOfferPanel = (viewing: Dto.IViewing) =>{
-            this.hidePanels();
-            this.selectedViewing = viewing;
-            this.isOfferAddEditPanelVisible = Enums.SidePanelState.Opened;
-        }
-
-        showEditOfferPreviewPanel = () =>{
-            this.components.offerEditPreview().setOffer(this.selectedOffer);
-            this.offerPreviewPanelVisible = false;
-        }
-
-        showEditOfferPanel = (offer: Dto.IOffer) =>{
-            this.components.offerEdit().setOffer(offer);
-            this.showPanel(this.components.panels.offerEdit);
-        }
-
         showOfferDetailsView = (offer: Dto.IOffer) =>{
             this.$state.go('app.offer-view', { id: offer.id });
         }
 
-        cancelSaveOffer = () =>{
+        showAddOfferPanel = (viewing: Dto.IViewing) => {
             this.hidePanels();
+            this.selectedViewing = viewing;
+            this.isOfferAddPanelVisible = Enums.SidePanelState.Opened;
         }
 
-        cancelOfferEditPreview(){
-            this.offerPreviewPanelVisible = true;
+        showOfferPreviewPanel = (offer: Dto.IOffer) =>{
+            if (!this.isOfferEditPreviewPanelVisible) {
+                this.hidePanels();
+            }
+            this.selectedOffer = offer;
+            this.isOfferEditPreviewPanelVisible = Enums.SidePanelState.Opened;
+            this.offerPanelMode = OfferPanelMode.Preview;
         }
 
-        cancelOfferEdit(){
-            this.hidePanels();
+        showOfferEditPanel = (offer: Dto.IOffer) =>{
+            if (!this.isOfferEditPreviewPanelVisible) {
+                this.hidePanels();
+            }
+            this.selectedOffer = offer;
+            this.isOfferEditPreviewPanelVisible = Enums.SidePanelState.Opened;
+            this.offerPanelMode = OfferPanelMode.Edit;
         }
 
-        onSaveOffer = (offerModel: Dto.IOffer) =>{
+        onSaveNewOffer = (offerModel: Dto.IOffer) =>{
             var offer = new Business.Offer(offerModel);
             this.requirement.offers.push(offer);
-            this.hidePanels();
         }
 
-        saveEditOfferCore = (component: any) =>{
-            this.addEditOfferBusy = true;
-            component
-                .saveOffer()
-                .then((offer: Common.Models.Dto.IOffer) =>{
-                    var originalOffer = component.getOriginalOffer();
-                    angular.copy(new Business.Offer(offer), originalOffer);
-                    if (component === this.components.offerEditPreview()) {
-                        this.offerPreviewPanelVisible = true;
-                    }
-                    else {
-                        this.hidePanels();
-                    }
-                }).finally(() =>{
-                    this.addEditOfferBusy = false;
-                });
-        }
-
-        saveEditOffer = () =>{
-            this.saveEditOfferCore(this.components.offerEdit());
-        }
-
-        saveEditPreviewOffer = () =>{
-            this.saveEditOfferCore(this.components.offerEditPreview());
+        onUpdateOffer = (offerModel: Dto.IOffer) =>{
+            var offer = new Business.Offer(offerModel);
+            var existingOfferIndex = _.findIndex(this.requirement.offers, { id : offer.id });
+            if (existingOfferIndex > -1) {
+                this.requirement.offers[existingOfferIndex] = offer;
+            }
         }
     }
 

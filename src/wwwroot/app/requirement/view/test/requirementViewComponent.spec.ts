@@ -4,6 +4,7 @@ module Antares {
     import RequirementViewController = Requirement.View.RequirementViewController;
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
+    import SidePanelState = Common.Models.Enums.SidePanelState;
     declare var moment: any;
     type Dictionary = { [id: string]: string };
 
@@ -295,7 +296,7 @@ module Antares {
                 });
 
                 it('new offer side panel is shown', () =>{
-                    expect(controller.isOfferAddEditPanelVisible).toBeTruthy('Side panel not visible');
+                    expect(controller.isOfferAddPanelVisible).toBe(SidePanelState.Opened, 'Side panel not visible');
                 });
 
                 it('viewing is selected', () =>{
