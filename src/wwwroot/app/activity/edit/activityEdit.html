@@ -1,34 +1,34 @@
 ﻿<div class="row">
-    <div class="col-md-12">
-        <h2 class="page-header" translate="ACTIVITY.ADD.CREATE_ACTIVITY" ng-if="vm.isAddMode()"></h2>
-        <h2 class="page-header" translate="ACTIVITY.EDIT.EDIT_ACTIVITY" ng-if="vm.isEditMode()"></h2>
-        <div class="well">
-            <label translate="ACTIVITY.EDIT.ACTIVITY_TITLE"></label>
-            <div ng-if="vm.isAddMode()">{{ vm.property.address.getAddressText() }}</div>
-            <div ng-if="vm.isEditMode()">{{ vm.activity.property.address.getAddressText() }}</div>
-            <div class="row">
-                <div class="col-md-4">
-                    <activity-type-edit-control property-type-id="vm.propertyTypeId" ng-model="vm.activity.activityTypeId" config="vm.config.activityType"
-                                                on-activity-type-changed="vm.activityTypeChanged(activityTypeId)">
-                    </activity-type-edit-control>
-                </div>
-                <div class="col-md-8">
-                    <enum-item-edit-control ng-model="vm.activity.activityStatusId"
-                                            config="vm.config.activityStatus"
-                                            schema="vm.activityStatusSchema"
-                                            on-selected-item-changed="vm.activityStatusChanged(activityStatusId)"></enum-item-edit-control>
+    <form ng-submit="editActivityForm.isFormValid() && vm.save()" name="editActivityForm" method="post" novalidate>
+        <div class="col-md-12">
+            <h2 class="page-header" translate="ACTIVITY.ADD.CREATE_ACTIVITY" ng-if="vm.isAddMode()"></h2>
+            <h2 class="page-header" translate="ACTIVITY.EDIT.EDIT_ACTIVITY" ng-if="vm.isEditMode()"></h2>
+            <div class="well">
+                <label translate="ACTIVITY.EDIT.ACTIVITY_TITLE"></label>
+                <div ng-if="vm.isAddMode()">{{ vm.property.address.getAddressText() }}</div>
+                <div ng-if="vm.isEditMode()">{{ vm.activity.property.address.getAddressText() }}</div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <activity-type-edit-control property-type-id="vm.propertyTypeId" ng-model="vm.activity.activityTypeId" config="vm.config.activityType"
+                                                    on-activity-type-changed="vm.activityTypeChanged(activityTypeId)">
+                        </activity-type-edit-control>
+                    </div>
+                    <div class="col-md-8">
+                        <enum-item-edit-control ng-model="vm.activity.activityStatusId"
+                                                config="vm.config.activityStatus"
+                                                schema="vm.activityStatusSchema"
+                                                on-selected-item-changed="vm.activityStatusChanged(activityStatusId)"></enum-item-edit-control>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <form ng-submit="editActivityForm.isFormValid() && vm.save()" name="editActivityForm" method="post" novalidate>
         <div class="col-md-4">
             <section id="activity-edit-vendors">
                 <activity-vendors-edit-control contacts="vm.activity.contacts" config="vm.config.vendors"></activity-vendors-edit-control>
             </section>
             <section id="activity-edit-landlords">
                 <activity-landlords-edit-control contacts="vm.activity.contacts" config="vm.config.landlords"></activity-landlords-edit-control>
-            </section>            
+            </section>
             <section id="activity-edit-negotiators">
                 <activity-negotiators-edit-control property-division-id="{{ vm.propertyDivisionId }}"
                                                    activity-id="vm.activity.id"
@@ -75,7 +75,7 @@
 
         <div class="col-md-4">
             <h3 class="page-header" translate="ACTIVITY.EDIT.APPRAISAL_MEETING.APPRAISAL_MEETING"></h3>
-            <activity-attendees-edit-control  users="vm.availableAttendeeUsers" contacts="vm.availableAttendeeContacts" attendees="vm.activity.attendees" config="vm.configMocked.attendees"></activity-attendees-edit-control>
+            <activity-attendees-edit-control users="vm.availableAttendeeUsers" contacts="vm.availableAttendeeContacts" attendees="vm.activity.attendees" config="vm.configMocked.attendees"></activity-attendees-edit-control>
             <textarea-edit-control ng-model="vm.activity.invitationText" config="vm.config.invitationText" schema="vm.invitationTextSchema"></textarea-edit-control>
         </div>
         <div class="col-md-12">
