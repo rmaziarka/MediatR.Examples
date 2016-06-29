@@ -14,9 +14,7 @@
     public class EditPreferencesPage : ProjectPageBase
     {
         private readonly ElementLocator salutationFormat = new ElementLocator(Locator.CssSelector, "#salutationFormat select");
-
         private readonly ElementLocator salutationFormatSelected = new ElementLocator(Locator.CssSelector, "#salutationFormat select option:checked");
-        
         private readonly ElementLocator save = new ElementLocator(Locator.Id, "preferences-save");
 
         public EditPreferencesPage(DriverContext driverContext) : base(driverContext)
