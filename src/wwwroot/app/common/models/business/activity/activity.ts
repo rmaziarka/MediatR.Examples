@@ -69,6 +69,8 @@ module Antares.Common.Models.Business {
                     this.offers = activity.offers.map((item) => new Offer(item));
                 }
             }
+
+            this.secondaryNegotiator = this.secondaryNegotiator ? this.secondaryNegotiator : [];
         }
 
         groupViewings(viewings: Viewing[]) {

@@ -139,9 +139,6 @@ module Antares.Activity {
             this.eventAggregator.with(this).subscribe(Attributes.OpenPropertyPrewiewPanelEvent, (event: Antares.Attributes.OpenPropertyPrewiewPanelEvent) => {
                 this.isPropertyPreviewPanelVisible = true;
             });
-
-            this.availableAttendeeUsers = this.getAvailableAttendeeUsers();
-            this.availableAttendeeContacts = this.getAvailableAttendeeContacts();
         }
 
         public $onInit = () => {
@@ -152,6 +149,9 @@ module Antares.Activity {
             this.setStandardDepartmentType();
             this.setDefaultActivityStatus();
             this.setVendorContacts();
+
+            this.availableAttendeeUsers = this.getAvailableAttendeeUsers();
+            this.availableAttendeeContacts = this.getAvailableAttendeeContacts();
         }
 
         public activityTypeChanged = (activityTypeId: string) => {
@@ -214,11 +214,17 @@ module Antares.Activity {
         }
 
         public getAvailableAttendeeUsers = (): Business.User[] => {
-            var users: Business.User[] = this.activity.secondaryNegotiator.map((n: Business.ActivityUser) => {
+
+            var users: Business.User[] = [];
+            
+            this.activity.secondaryNegotiator.map((n: Business.ActivityUser) => {
                 return n.user;
             }) || [];
 
-            users.push(this.activity.leadNegotiator.user);
+            if (this.activity.leadNegotiator) {
+                users.push(this.activity.leadNegotiator.user);
+            }
+
             return users;
         }
 
