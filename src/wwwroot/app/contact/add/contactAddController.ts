@@ -62,8 +62,6 @@ module Antares.Contact {
         }
 
         public contactTitleSelect = (contactTitle: string) => {
-
-            // TODO - Fire on non-select (i.e. free text entry)
             this.selectedTitle = contactTitle;
         }
         
