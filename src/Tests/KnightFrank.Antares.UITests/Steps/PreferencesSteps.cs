@@ -8,17 +8,15 @@
 
     using TechTalk.SpecFlow;
 
-    using Xunit;
-
     [Binding]
-    public class EditPreferencesSteps
+    public class PreferencesSteps
     {
         private readonly DriverContext driverContext;
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ScenarioContext scenarioContext;
-        private EditPreferencesPage page;
+        private PreferencesPage page;
 
-        public EditPreferencesSteps(ScenarioContext scenarioContext)
+        public PreferencesSteps(ScenarioContext scenarioContext)
         {
             if (scenarioContext == null)
             {
@@ -30,35 +28,28 @@
 
             if (this.page == null)
             {
-                this.page = new EditPreferencesPage(this.driverContext);
+                this.page = new PreferencesPage(this.driverContext);
             }
         }
 
-        [Given(@"User navigates to edit preferences page")]
-        [When(@"User navigates to edit preferences page")]
-        public void WhenUserNavigatesToEditPreferencesPage()
+        [Given(@"User navigates to preferences page")]
+        [When(@"User navigates to preferences page")]
+        public void OpenPreferencesPage()
         {
-            this.page = new EditPreferencesPage(this.driverContext).OpenEditPreferencesPage();
+            this.page = new PreferencesPage(this.driverContext).OpenPreferencesPage();
         }
 
-       [When(@"User selects (.*) format")]
-       [Given(@"User selects (.*) format")]
-        public void WhenUserSelectsFormat(string setSalutationFormat)
+        [Given(@"User selects (.*) format on preferences page")]
+        [When(@"User selects (.*) format on preferences page")]
+        public void SelectFormat(string setSalutationFormat)
         {
             this.page.SelectSalutaionFormat(setSalutationFormat);
         }
 
-        [When(@"User saves preferences")]
-        [Then(@"User saves preferences")]
+        [When(@"User saves preferences on preferences page")]
         public void SavePreferences()
         {
             this.page.SavePreferences();
-        }
-
-        [Then(@"User salutation is set to (.*)")]
-        public void ThenUserSalutationIsSet(string salutation)
-        {
-            Assert.True(this.page.IsSalutationValue(salutation));
         }
     }
 }

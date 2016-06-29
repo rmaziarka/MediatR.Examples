@@ -54,7 +54,6 @@
         }
 
         [When(@"User fills in company details on create company page")]
-        [When(@"User fills in company details on create company page")]
         public void FillInCompanyData(Table table)
         {
             var details = table.CreateInstance<ViewCompanyPage.CompanyDetails>();
