@@ -31,8 +31,8 @@
                 </section>
 
                 <section>
-                    <h3 class="page-header" translate="REQUIREMENT.VIEW.LOCATION"></h3>
-                    <address-form-view address="vm.requirement.address"
+                    <h3 ng-if="vm.config.requirement_LocationRequirements" class="page-header" translate="REQUIREMENT.VIEW.LOCATION"></h3>
+                    <address-form-view address="vm.requirement.address" config="vm.config.requirement_LocationRequirements"
                                        address-type="requirement"
                                        template-url="'app/common/components/addressForm/addressFormView/templates/requirementAddressForm.html'"></address-form-view>
                 </section>

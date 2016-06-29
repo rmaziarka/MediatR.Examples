@@ -36,6 +36,7 @@ module Antares {
 
                 // init
                 scope = $rootScope.$new();
+                scope['templateUrl'] = 'app/common/components/addressForm/addressFormEdit/templates/propertyAddressForm.html';
                 compile = $compile;
                 state = $state;
                 $http = $httpBackend;
@@ -53,7 +54,7 @@ module Antares {
 
                 scope['userCountryCode'] = 'TESTCOUNTRY';
                 scope['address'] = new Business.Address();
-                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address" user-country-code="userCountryCode"></address-form-edit>')(scope);
+                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address" user-country-code="userCountryCode" template-url="templateUrl"></address-form-edit>')(scope);
                 scope.$apply();
                 controller = element.controller('addressFormEdit');
 
@@ -68,7 +69,7 @@ module Antares {
                 });
 
                 scope['address'] = addressMock;
-                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address"></address-form-edit>')(scope);
+                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address" template-url="templateUrl"></address-form-edit>')(scope);
                 scope.$apply();
                 controller = element.controller('addressFormEdit');
 
@@ -83,7 +84,7 @@ module Antares {
                 });
 
                 scope['address'] = addressMock;
-                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address"></address-form-edit>')(scope);
+                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address" template-url="templateUrl"></address-form-edit>')(scope);
                 scope.$apply();
 
                 $http.flush();
@@ -125,7 +126,8 @@ module Antares {
 
                 // compile
                 scope['address'] = addressMock;
-                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address"></address-form-edit>')(scope);
+                scope['templateUrl'] = 'app/common/components/addressForm/addressFormEdit/templates/propertyAddressForm.html';
+                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address" template-url="templateUrl"></address-form-edit>')(scope);
                 scope.$apply();
                 controller = element.controller('addressFormEdit');
                 assertValidator = new TestHelpers.AssertValidators(element, scope);
@@ -206,7 +208,8 @@ module Antares {
 
                 // compile
                 scope['address'] = addressMock;
-                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address"></address-form-edit>')(scope);
+                scope['templateUrl'] = 'app/common/components/addressForm/addressFormEdit/templates/propertyAddressForm.html';
+                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address"  template-url="templateUrl"></address-form-edit>')(scope);
                 scope.$apply();
                 controller = element.controller('addressFormEdit');
                 assertValidator = new TestHelpers.AssertValidators(element, scope);

@@ -28,8 +28,9 @@
                         Rent control will be here
                     </fieldset>
                     <fieldset>
-                        <h3 class="page-header">Location requirements</h3>
-                        <address-form-edit entity-type-code="vm.entityTypeCode" address="vm.requirement.address" user-country-code="vm.userData.country"></address-form-edit>
+                        <h3 ng-if="vm.config.requirement_LocationRequirements" class="page-header">Location requirements</h3>
+                        <address-form-edit entity-type-code="vm.entityTypeCode" address="vm.requirement.address" user-country-code="vm.userData.country" config="vm.config.requirement_LocationRequirements"
+                                           template-url="'app/common/components/addressForm/addressFormEdit/templates/requirementAddressForm.html'"></address-form-edit>
                     </fieldset>
                 </div>
                 <div class="col-md-4">

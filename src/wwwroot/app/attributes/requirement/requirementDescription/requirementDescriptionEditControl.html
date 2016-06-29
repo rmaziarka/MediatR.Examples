@@ -1,4 +1,4 @@
-﻿<ng-form name='vm.requirementDescriptionEditControlForm' ng-if="vm.config" id="price-edit-control">
+﻿<ng-form name='vm.requirementDescriptionEditControlForm' ng-if="vm.config" id="description-edit-control">
     <label for="description" translate="REQUIREMENT.ADD.DESCRIPTION">Description</label>
     <span class="pull-right character-limit">{{vm.requirementDescriptionEditControlForm.description.$viewValue.length || 0}}/4000</span>
     <textarea id="description" kf-max-count="4000" rows="8" class="form-control" ng-required="vm.config.required"
