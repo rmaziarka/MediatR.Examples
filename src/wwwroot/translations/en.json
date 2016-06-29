@@ -209,7 +209,10 @@
       "ACTIVITY_TITLE": "Activity title",
       "EDIT_ACTIVITY": "Edit activity",
       "BASIC_INFORMATION": "Basic information",
-      "ADDITIONAL_INFORMATION": "Additional information",
+      "ADDITIONAL_INFORMATION": {
+        "ADDITIONAL_INFORMATION": "Additional information",
+        "ACCESS_DETAILS":  "Access details"
+      },
       "STATUS": "Status",
       "PROPERTY": "Property",
       "VENDORS": "Vendors",
