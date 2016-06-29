@@ -10,7 +10,7 @@ module Antares.Activity {
         $stateProvider
             .state('app.activity-add', {
                 url: '/property/:propertyId/activity/add',
-                template: "<activity-add property='property'></activity-add>",
+                template: "<activity-add property='property' user-data='appVm.userData'></activity-add>",
                 controller: ($scope: ng.IScope, property: Common.Models.Dto.IProperty) => {
                     $scope['property'] = new Common.Models.Business.PropertyView(property);
                 },

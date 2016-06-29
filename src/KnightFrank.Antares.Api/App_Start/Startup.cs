@@ -26,7 +26,7 @@ namespace KnightFrank.Antares.Api
             AutoMapperConfig.Configure();
             
             app
-                .Use<MockUserMiddleware>()
+                .Use<MockUserMiddleware>(kernel)
                 .UseNinjectMiddleware(() => kernel)
                 .UseNinjectWebApi(server)
                 .UseWebApi(server);

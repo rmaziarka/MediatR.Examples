@@ -340,6 +340,7 @@
     <Compile Include="Property\Queries\PropertyAttributesQueryValidator.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQueryResult.cs" />
     <Compile Include="Property\QueryResults\PropertyTypeQuerySingleResult.cs" />
+    <Compile Include="User\QueryResults\UserDepartment.cs" />
     <Compile Include="Viewing\CommandHandlers\UpdateViewingCommandHandler.cs" />
     <Compile Include="User\QueryResults\UsersQueryResult.cs" />
     <Compile Include="Viewing\CommandHandlers\CreateViewingCommandHandler.cs" />

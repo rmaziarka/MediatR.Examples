@@ -15,6 +15,7 @@ module Antares.Activity {
         public config: IActivityEditConfig;
         public activity: Business.Activity;
         public property: Business.PropertyView;
+        public userData: Dto.IUserData;
 
         public propertyDivisionId: string;
         public propertyTypeId: string;
@@ -157,6 +158,7 @@ module Antares.Activity {
             this.setStandardDepartmentType();
             this.setDefaultActivityStatus();
             this.setVendorContacts();
+            this.setLeadNegotiator();
 
             this.availableAttendeeUsers = this.getAvailableAttendeeUsers();
             this.availableAttendeeContacts = this.getAvailableAttendeeContacts();
@@ -274,6 +276,16 @@ module Antares.Activity {
             if (vendor) {
                 this.activity.contacts = vendor.contacts;
             }
+        }
+
+        private setLeadNegotiator = () =>{
+            if (this.pageMode === PageMode.Edit) {
+                return;
+            }
+
+            this.activity.leadNegotiator.user.id = this.userData.id;
+            this.activity.leadNegotiator.user.firstName = this.userData.firstName;
+            this.activity.leadNegotiator.user.lastName = this.userData.lastName;
         }
 
         private anyNewDepartmentIsRelatedWithNegotiator = () => {

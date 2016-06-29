@@ -70,8 +70,9 @@ module Antares.Common.Models.Business {
                 }
             }
 
-            this.secondaryNegotiator = this.secondaryNegotiator ? this.secondaryNegotiator : [];
-            this.attendees = this.attendees ? this.attendees : [];
+            this.secondaryNegotiator = this.secondaryNegotiator || [];
+            this.attendees = this.attendees || [];
+            this.leadNegotiator = this.leadNegotiator || new ActivityUser();
         }
 
         groupViewings(viewings: Viewing[]) {
