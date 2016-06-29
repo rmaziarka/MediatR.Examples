@@ -10,6 +10,9 @@
     using KnightFrank.Antares.Api.IntegrationTests.Extensions;
     using KnightFrank.Antares.Api.IntegrationTests.Fixtures;
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Dal.Model.User;
+    using KnightFrank.Antares.Domain.Common.Enums;
+    using KnightFrank.Antares.Domain.Contact.Commands;
 
     using Newtonsoft.Json;
 
@@ -46,6 +49,7 @@
         public void CreateContactsInDb(Table table)
         {
             List<Contact> contacts = table.CreateSet<Contact>().ToList();
+
             this.fixture.DataContext.Contacts.AddRange(contacts);
             this.fixture.DataContext.SaveChanges();
 
@@ -57,13 +61,15 @@
         {
             const int max = 128;
 
-            var contact = new Contact
+            Guid leadNegotiatorId = this.GetCurrentUserId();
+            var contact = new CreateContactCommand()
             {
                 LastName = StringExtension.GenerateMaxAlphanumericString(max),
-                Title = StringExtension.GenerateMaxAlphanumericString(max)
+                Title = StringExtension.GenerateMaxAlphanumericString(max),
+                LeadNegotiator = new ContactUserCommand() { UserId = leadNegotiatorId }
             };
 
-            this.CreateContact(contact);
+           this.CreateContactWithApi(contact);         
         }
 
         [Given(@"User creates contact using api with max length all fields")]
@@ -79,7 +85,12 @@
             Guid defaultEventSalutationId =
                 this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[defaultEventSalutation];
 
-            var contact = new Contact
+            //get negotiator ids
+            Guid leadNegotiatorId = this.GetCurrentUserId();
+            var userList = this.scenarioContext.Get<IEnumerable<User>>("User List");
+            Guid secondaryNegotiatorId = userList.First().Id;
+
+            var contact = new CreateContactCommand()
             {
                 Title = StringExtension.GenerateMaxAlphanumericString(max),
                 FirstName = StringExtension.GenerateMaxAlphanumericString(max),
@@ -96,19 +107,41 @@
                 EventPersonalSalutation = StringExtension.GenerateMaxAlphanumericString(max),
                 EventEnvelopeSalutation = StringExtension.GenerateMaxAlphanumericString(max),
                 DefaultEventSalutationId = defaultEventSalutationId,
-                CreatedDate = DateTime.UtcNow,
-                LastModifiedDate = DateTime.UtcNow,
-                UserId = null
+                LeadNegotiator = new ContactUserCommand() { UserId = leadNegotiatorId },
+                SecondaryNegotiators = new List<ContactUserCommand>() { new ContactUserCommand() { UserId= secondaryNegotiatorId } }
             };
 
-            this.CreateContact(contact);
+            this.CreateContactWithApi(contact);
         }
 
         [When(@"User creates contact using api with following data")]
         public void CreateContact(Table table)
         {
-            var contact = table.CreateInstance<Contact>();
-            this.CreateContact(contact);
+            Guid leadNegotiatorId = this.GetCurrentUserId();
+
+            var contact = table.CreateInstance<CreateContactCommand>();
+            contact.LeadNegotiator = new ContactUserCommand() { UserId = leadNegotiatorId };
+            this.CreateContactWithApi(contact);
+        }
+
+        [When(@"User creates contact using api with same negotiators")]
+        public void WhenUserCreatesContactUsingApiWithSameNegotiators(Table table)
+        {
+            var userId= this.scenarioContext.Get<List<User>>("User List").First().Id;
+           
+            var contact = table.CreateInstance<CreateContactCommand>();
+            contact.LeadNegotiator = new ContactUserCommand() { UserId = userId };
+            contact.SecondaryNegotiators = new List<ContactUserCommand>()
+            {
+                new ContactUserCommand() { UserId = userId }
+            };
+            this.CreateContactWithApi(contact);
+        }
+
+
+        private Guid GetCurrentUserId()
+        {
+           return this.fixture.DataContext.Users.First().Id;
         }
 
         [When(@"User retrieves all contact details")]
@@ -151,43 +184,69 @@
         public void CheckContactDetailsFromPost()
         {
             var contactId = JsonConvert.DeserializeObject<Guid>(this.scenarioContext.GetResponseContent());
-            var contact = this.scenarioContext.Get<Contact>("Contact");
-            contact.Id = contactId;
-
+            var contactCommand = this.scenarioContext.Get<CreateContactCommand>("Contact");
+         
             Contact expectedContact = this.fixture.DataContext.Contacts.Single(x => x.Id.Equals(contactId));
-            contact.ShouldBeEquivalentTo(expectedContact);
+            this.CheckAllFieldsHaveExpectedValues(contactCommand, expectedContact);
         }
 
         [Then(@"Contact details required fields should be the same as already added")]
         public void CheckContactDetailsRequiredFieldsFromPost()
         {
             var contactId = JsonConvert.DeserializeObject<Guid>(this.scenarioContext.GetResponseContent());
-            var contact = this.scenarioContext.Get<Contact>("Contact");
-            contact.Id = contactId;
-
+            var contact = this.scenarioContext.Get<CreateContactCommand>("Contact");
+            
             Contact expectedContact = this.fixture.DataContext.Contacts.Single(x => x.Id.Equals(contactId));
 
             contact.Title.ShouldBeEquivalentTo(expectedContact.Title);
             contact.LastName.ShouldBeEquivalentTo(expectedContact.LastName);
+
+            var leadNegotiatorUserTypeId = this.fixture.DataContext.EnumTypeItems.Single(
+                i => i.EnumType.Code.Equals(nameof(UserType)) && i.Code.Equals(nameof(UserType.LeadNegotiator))).Id;
+            expectedContact.ContactUsers.First(x=>x.UserTypeId == leadNegotiatorUserTypeId).UserId.ShouldBeEquivalentTo(contact.LeadNegotiator.UserId);
         }
 
         [Then(@"Contact details all fields should be the same as already added")]
         public void CheckContactDetailsAllFieldsFromPost()
         {
             var contactId = JsonConvert.DeserializeObject<Guid>(this.scenarioContext.GetResponseContent());
-            var contact = this.scenarioContext.Get<Contact>("Contact");
-            contact.Id = contactId;
+            var contactCommand = this.scenarioContext.Get<CreateContactCommand>("Contact");
+          
 
             Contact expectedContact = this.fixture.DataContext.Contacts.Single(x => x.Id.Equals(contactId));
 
             AssertionOptions.AssertEquivalencyUsing(options =>
                options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 5000)).WhenTypeIs<DateTime>());
 
-            contact.ShouldBeEquivalentTo(expectedContact, opt => opt.Excluding(x => x.CompaniesContacts)
-                                                                    .Excluding(x => x.ContactUsers)
-                                                                    .Excluding(x => x.DefaultEventSalutation)
-                                                                    .Excluding(x => x.DefaultMailingSalutation));
+            this.CheckAllFieldsHaveExpectedValues(contactCommand, expectedContact);
         }
+
+        private void CheckAllFieldsHaveExpectedValues(CreateContactCommand contactCommand, Contact expectedContact)
+        {
+            contactCommand.Title.ShouldBeEquivalentTo(expectedContact.Title);
+            contactCommand.FirstName.ShouldBeEquivalentTo(expectedContact.FirstName);
+            contactCommand.LastName.ShouldBeEquivalentTo(expectedContact.LastName);
+            contactCommand.MailingFormalSalutation.ShouldBeEquivalentTo(expectedContact.MailingFormalSalutation);
+            contactCommand.MailingSemiformalSalutation.ShouldBeEquivalentTo(expectedContact.MailingSemiformalSalutation);
+            contactCommand.MailingInformalSalutation.ShouldBeEquivalentTo(expectedContact.MailingInformalSalutation);
+            contactCommand.MailingPersonalSalutation.ShouldBeEquivalentTo(expectedContact.MailingPersonalSalutation);
+            contactCommand.MailingEnvelopeSalutation.ShouldBeEquivalentTo(expectedContact.MailingEnvelopeSalutation);
+            contactCommand.DefaultMailingSalutationId.ShouldBeEquivalentTo(expectedContact.DefaultMailingSalutationId);
+            contactCommand.EventInviteSalutation.ShouldBeEquivalentTo(expectedContact.EventInviteSalutation);
+            contactCommand.MailingSemiformalSalutation.ShouldBeEquivalentTo(expectedContact.MailingSemiformalSalutation);
+            contactCommand.EventSemiformalSalutation.ShouldBeEquivalentTo(expectedContact.EventSemiformalSalutation);
+            contactCommand.EventInformalSalutation.ShouldBeEquivalentTo(expectedContact.EventInformalSalutation);
+            contactCommand.EventPersonalSalutation.ShouldBeEquivalentTo(expectedContact.EventPersonalSalutation);
+            contactCommand.EventEnvelopeSalutation.ShouldBeEquivalentTo(expectedContact.EventEnvelopeSalutation);
+            contactCommand.DefaultEventSalutationId.ShouldBeEquivalentTo(expectedContact.DefaultEventSalutationId);
+
+            //negotiators
+            var negotiatorList = new List<ContactUserCommand>();
+            negotiatorList.Add(contactCommand.LeadNegotiator);
+            negotiatorList.AddRange(contactCommand.SecondaryNegotiators);
+            
+            expectedContact.ContactUsers.ShouldAllBeEquivalentTo(negotiatorList, opt => opt.Including(x => x.UserId));
+          }
 
         [Then(@"Get contact details should be the same as already added")]
         public void CheckContactDetailsFromGet()
@@ -255,12 +314,12 @@
             expectedTitles.ShouldAllBeEquivalentTo(response, opt => opt.Excluding(x => x.Locale));
         }
 
-        private void CreateContact(Contact contact)
+        private void CreateContactWithApi(CreateContactCommand contactCommand)
         {
             string requestUrl = $"{ApiUrl}";
-            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, contact);
+            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, contactCommand);
             this.scenarioContext.SetHttpResponseMessage(response);
-            this.scenarioContext.Set(contact, "Contact");
+            this.scenarioContext.Set(contactCommand, "Contact");
         }   
     }
 }
