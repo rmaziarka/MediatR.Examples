@@ -74,7 +74,7 @@ module Antares.Activity.View {
                 });
         }       
 
-        onPanelsHidden = () => {
+        onOldPanelsHidden = () => {
             this.isPropertyPreviewPanelVisible = Enums.SidePanelState.Closed;
         };
 
