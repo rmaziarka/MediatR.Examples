@@ -63,14 +63,13 @@
 
         private RequirementType GetRequirementType(Offer offer)
         {
-            OfferType offerType = this.GetOfferType(offer);
-            return EnumMapper.GetRequirementType(offerType);
-
-            // TODO remove above and replace below, after merge with branche 'residental-letting-req'
-            /*Requirement requirement = offer.Requirement
-                                      ?? this.requirementRepository.GetWithInclude(r => r.RequirementType)
-                                             .Single(x => x.Id == offer.RequirementId);
-            return  EnumExtensions.ParseEnum<RequirementType>(requirement.RequirementType.EnumCode);*/
+            Requirement requirement = offer.Requirement;
+            if (requirement == null || requirement.RequirementType == null)
+            {
+                requirement =
+                    this.requirementRepository.GetWithInclude(r => r.RequirementType).Single(x => x.Id == offer.RequirementId);
+            }
+            return EnumExtensions.ParseEnum<RequirementType>(requirement.RequirementType.EnumCode);
         }
     }
 }

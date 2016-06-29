@@ -109,8 +109,8 @@
             {
                 foreach (Offer offer in activity.Offers)
                 {
-                    // TODO don't shape activity associated with offer, because it is not fetched from DB
                     // think of global solution
+                    // don't shape activity & requirement associated with offer, because it is not fetched from DB
                     this.offerEntityMapper.NullifyDisallowedValues(offer, PageType.Details);
                 }
             }
@@ -145,8 +145,7 @@
             {
                 foreach (Offer offer in requirement.Offers)
                 {
-                    // TODO uncomment after merge with create letting offer branch
-                    // this.offerEntityMapper.NullifyDisallowedValues(offer, PageType.Details);
+                    this.offerEntityMapper.NullifyDisallowedValues(offer, PageType.Details);
                 }
             }
         }
