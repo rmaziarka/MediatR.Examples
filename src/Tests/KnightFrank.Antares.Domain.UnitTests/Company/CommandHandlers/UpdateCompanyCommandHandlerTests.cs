@@ -89,7 +89,7 @@
 			    Id = id,
 			    WebsiteUrl = "www.x.com",
 			    ClientCarePageUrl = "www.y.com",
-				Contacts = new List<Contact>()
+                CompaniesContacts = new List<CompanyContact>()
 		    };
 	    }
     }
