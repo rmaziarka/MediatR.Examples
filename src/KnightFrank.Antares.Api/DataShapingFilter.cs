@@ -10,8 +10,8 @@
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
+    using KnightFrank.Antares.Domain.Common;
 
-    using Ninject;
     using Ninject.Web.WebApi.Filter;
 
     /// <summary>
@@ -26,23 +26,29 @@
         /// <value>
         /// The activity entity mapper.
         /// </value>
-        [Inject]
-        private readonly IEntityMapper<Activity> activityEntityMapper;
+        private IEntityMapper<Activity> activityEntityMapper;
+
+        private readonly INinjectInstanceResolver ninjectInstanceResolver;
 
         private readonly IDictionary<Type, Action<ObjectContent>> shapingFunctions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataShapingFilter"/> class.
         /// </summary>
-        public DataShapingFilter(IEntityMapper<Activity> activityEntityMapper)
+        public DataShapingFilter(INinjectInstanceResolver ninjectInstanceResolver)
         {
-            this.activityEntityMapper = activityEntityMapper;
+            this.ninjectInstanceResolver = ninjectInstanceResolver;
             this.shapingFunctions = new Dictionary<Type, Action<ObjectContent>>
             {
                 { typeof(Activity), this.ShapeActivity },
                 { typeof(Offer), this.ShapeOffer },
                 { typeof(Property), this.ShapeProperty }
             };
+        }
+
+        private void InitDependencies()
+        {
+            this.activityEntityMapper = this.ninjectInstanceResolver.GetInstance<IEntityMapper<Activity>>();
         }
 
         /// <summary>
@@ -56,6 +62,8 @@
             {
                 return;
             }
+
+            this.InitDependencies();
 
             if (this.shapingFunctions.ContainsKey(objectContent.ObjectType))
             {

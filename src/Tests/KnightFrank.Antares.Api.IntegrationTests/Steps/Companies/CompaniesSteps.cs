@@ -170,8 +170,7 @@
 
             actualCompany.ShouldBeEquivalentTo(expectedCompany, opt => opt
                 .Excluding(c => c.ClientCareStatus)
-                .Excluding(c => c.CompaniesContacts)
-                .Excluding(c => c.Contacts));
+                .Excluding(c => c.CompaniesContacts));
         }
 
         [Then(@"Company should be updated")]
@@ -184,8 +183,7 @@
 
             actualCompany.ShouldBeEquivalentTo(expectedCompany, opt => opt
                 .Excluding(c => c.ClientCareStatus)
-                .Excluding(c => c.CompaniesContacts)
-                .Excluding(c => c.Contacts));
+                .Excluding(c => c.CompaniesContacts));
         }
 
         [Then(@"Company details should match those in database")]
@@ -198,20 +196,16 @@
 
             actualCompany.ShouldBeEquivalentTo(expectedCompany, opt => opt
                 .Excluding(c => c.ClientCareStatus)
-                .Excluding(c => c.CompaniesContacts)
-                .Excluding(c => c.Contacts));
+                .Excluding(c => c.CompaniesContacts));
         }
 
         private void CreateCompany(CreateCompanyCommand company)
         {
             string requestUrl = $"{ApiUrl}";
-            var contactList = this.scenarioContext.Get<List<Contact>>("Contacts");
 
-            company.ContactIds = contactList.Select(x => x.Id).ToList();
             this.scenarioContext.Set(new Company
             {
                 Name = company.Name,
-                Contacts = contactList,
                 ClientCarePageUrl = company.ClientCarePageUrl,
                 ClientCareStatusId = company.ClientCareStatusId,
                 WebsiteUrl = company.WebsiteUrl

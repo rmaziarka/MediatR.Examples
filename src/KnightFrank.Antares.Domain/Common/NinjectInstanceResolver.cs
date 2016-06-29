@@ -39,5 +39,10 @@
 
             throw new NotImplementedException();
         }
+
+        public T GetInstance<T>()
+        {
+            return this.kernel.Get<T>();
+        }
     }
 }
