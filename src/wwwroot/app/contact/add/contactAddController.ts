@@ -41,7 +41,7 @@ module Antares.Contact {
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
             this.contactTitleService.get().then((contactTitles) =>{
                 this.contactTitles = contactTitles.data;
-            });
+            });            
         }
 
         public getContactTitles = (typedTitle: string) =>{
@@ -63,6 +63,7 @@ module Antares.Contact {
 
         public contactTitleSelect = (contactTitle: string) => {
             this.selectedTitle = contactTitle;
+            this.setSalutations();
         }
         
         onEnumLoaded = (result: any) => {
@@ -92,19 +93,24 @@ module Antares.Contact {
                 this.defaultSalutationFormat = (defaultFormat.code || "");
         }
 
-        setSalutations = () => {
-            this.contact.mailingSemiformalSalutation = ((this.contact.title || "") + " " + (this.contact.lastName || "")).trim();
+        setSalutations = () =>{
+
+            if (!this.contact) return; // Note, due to us not being able to bind contact.title at present, this is necessary
+
+            var title = this.selectedTitle;
+
+            this.contact.mailingSemiformalSalutation = ((title || "") + " " + (this.contact.lastName || "")).trim();
 
             this.contact.mailingInformalSalutation = (this.contact.firstName && this.contact.firstName.length > 1) ?
-                this.contact.firstName : ((this.contact.title || "") + " " + (this.contact.lastName || "")).trim();
+                this.contact.firstName : ((title || "") + " " + (this.contact.lastName || "")).trim();
 
-            this.contact.mailingFormalSalutation = (this.contact.title && this.contact.title.toLowerCase() == "mr") ? "Sir" :
-                ((this.contact.title && (this.contact.title.toLowerCase() == "mrs" || this.contact.title.toLowerCase() == "ms" || this.contact.title.toLowerCase() == "miss")) ? "Madam" :
-                    ((this.contact.title || "") + " " + (this.contact.lastName || "")).trim());
+            this.contact.mailingFormalSalutation = (title && title.toLowerCase() == "mr") ? "Sir" :
+                ((title && (title.toLowerCase() == "mrs" || title.toLowerCase() == "ms" || title.toLowerCase() == "miss")) ? "Madam" :
+                    ((title || "") + " " + (this.contact.lastName || "")).trim());
 
-            this.contact.mailingEnvelopeSalutation = ((this.contact.title && this.contact.title.toLowerCase() == "mr" && this.defaultSalutationFormat == "JohnSmithEsq") ?
+            this.contact.mailingEnvelopeSalutation = ((title && title.toLowerCase() == "mr" && this.defaultSalutationFormat == "JohnSmithEsq") ?
                 ((this.contact.firstName || "") + " " + (this.contact.lastName || "") + ", Esq").trim() :
-                (((this.contact.title || "") + " " + (this.contact.firstName || "")).trim() + " " + (this.contact.lastName || "")).trim());
+                (((title || "") + " " + (this.contact.firstName || "")).trim() + " " + (this.contact.lastName || "")).trim());
         }
 
         public save() {
