@@ -307,7 +307,7 @@
             List<Company> expectedCompanies =
                 entitiesIds.Select(guid => this.fixture.DataContext.Companies.Single(c => c.Id.Equals(guid))).ToList();
 
-            expectedCompanies.ShouldAllBeEquivalentTo(currentCompanies, opt => opt.Excluding(c => c.CompaniesContacts));
+            expectedCompanies.ShouldAllBeEquivalentTo(currentCompanies, opt => opt.Excluding(c => c.CompaniesContacts).Excluding(c => c.ClientCareStatus));
 
             List<LatestView> latestViews = this.fixture.DataContext.LatestView.Select(r => r).GroupBy(lv => lv.EntityId)
                                                .Select(gLv => gLv.OrderByDescending(lv => lv.CreatedDate).FirstOrDefault())
@@ -421,7 +421,7 @@
             var currentCompany = JsonConvert.DeserializeObject<Company>(data.Single().Data.ToString());
             Company expectedCompany = this.fixture.DataContext.Companies.Single(c => c.Id.Equals(entityId));
 
-            expectedCompany.ShouldBeEquivalentTo(currentCompany, opt => opt.Excluding(c => c.CompaniesContacts));
+            expectedCompany.ShouldBeEquivalentTo(currentCompany, opt => opt.Excluding(c => c.CompaniesContacts).Excluding(c => c.ClientCareStatus));
 
             LatestView latestView = this.fixture.DataContext.LatestView.Single();
 
