@@ -10,8 +10,8 @@
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
+    using KnightFrank.Antares.Domain.Common;
 
-    using Ninject;
     using Ninject.Web.WebApi.Filter;
 
     /// <summary>
@@ -26,8 +26,7 @@
         /// <value>
         /// The activity entity mapper.
         /// </value>
-        [Inject]
-        private readonly IEntityMapper<Activity> activityEntityMapper;
+        private IEntityMapper<Activity> activityEntityMapper;
 
 
         /// <summary>
@@ -36,18 +35,26 @@
         /// <value>
         /// The requirement entity mapper.
         /// </value>
-        [Inject]
-        private readonly IEntityMapper<Requirement> requirementEntityMapper;
+        private IEntityMapper<Requirement> requirementEntityMapper;
+
+        /// <summary>
+        /// Gets or sets the offer entity mapper.
+        /// </summary>
+        /// <value>
+        /// The offer entity mapper.
+        /// </value>
+        private IEntityMapper<Offer> offerEntityMapper;
+
+        private readonly INinjectInstanceResolver ninjectInstanceResolver;
 
         private readonly IDictionary<Type, Action<ObjectContent>> shapingFunctions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataShapingFilter"/> class.
         /// </summary>
-        public DataShapingFilter(IEntityMapper<Activity> activityEntityMapper, IEntityMapper<Requirement> requirementEntityMapper )
+        public DataShapingFilter(INinjectInstanceResolver ninjectInstanceResolver)
         {
-            this.activityEntityMapper = activityEntityMapper;
-            this.requirementEntityMapper = requirementEntityMapper;
+            this.ninjectInstanceResolver = ninjectInstanceResolver;
             this.shapingFunctions = new Dictionary<Type, Action<ObjectContent>>
             {
                 { typeof(Activity), this.ShapeActivity },
@@ -57,6 +64,13 @@
                 { typeof(RequirementNote), this.ShapeRequirementNote },
                 { typeof(Viewing), this.ShapeViewing }
             };
+        }
+
+        private void InitDependencies()
+        {
+            this.activityEntityMapper = this.ninjectInstanceResolver.GetInstance<IEntityMapper<Activity>>();
+            this.offerEntityMapper = this.ninjectInstanceResolver.GetInstance<IEntityMapper<Offer>>();
+            this.requirementEntityMapper = this.ninjectInstanceResolver.GetInstance<IEntityMapper<Requirement>>();
         }
 
         /// <summary>
@@ -70,6 +84,8 @@
             {
                 return;
             }
+
+            this.InitDependencies();
 
             if (this.shapingFunctions.ContainsKey(objectContent.ObjectType))
             {
@@ -89,11 +105,21 @@
         {
             var activity = (Activity)objectContent.Value;
             this.activityEntityMapper.NullifyDisallowedValues(activity, PageType.Details);
+            if (activity.Offers != null)
+            {
+                foreach (Offer offer in activity.Offers)
+                {
+                    // TODO don't shape activity associated with offer, because it is not fetched from DB
+                    // think of global solution
+                    this.offerEntityMapper.NullifyDisallowedValues(offer, PageType.Details);
+                }
+            }
         }
 
         private void ShapeOffer(ObjectContent objectContent)
         {
             var offer = (Offer)objectContent.Value;
+            this.offerEntityMapper.NullifyDisallowedValues(offer, PageType.Details);
             this.activityEntityMapper.NullifyDisallowedValues(offer.Activity, PageType.Details);
             this.requirementEntityMapper.NullifyDisallowedValues(offer.Requirement, PageType.Details);
         }

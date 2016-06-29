@@ -6,10 +6,41 @@ module Antares.TestHelpers {
     import Enums = Common.Models.Enums;
 
     export class ConfigGenerator {
+        public static generateOfferOfferDateConfig(): Attributes.IOfferOfferDateControlConfig{
+            var config: Attributes.IOfferOfferDateControlConfig = {
+                active : true,
+                offerDate : null
+            }
+
+            return config;
+        }
+
+        public static generateOfferExchangeDateConfig(): Attributes.IOfferExchangeDateControlConfig {
+            var config: Attributes.IOfferExchangeDateControlConfig = {
+                active: true,
+                exchangeDate: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferCompletionDateConfig(): Attributes.IOfferCompletionDateControlConfig {
+            var config: Attributes.IOfferCompletionDateControlConfig = {
+                active: true,
+                completionDate: null
+            }
+
+            return config;
+        }
+
         public static generateActivityStatusEditConfig(): Attributes.IActivityStatusEditControlConfig {
             var config: Attributes.IActivityStatusEditControlConfig = {
                 active: true,
-                activityStatusId: null
+                activityStatusId: {
+                    active: true,
+                    required: true,
+                    allowedCodes: null
+                }
             };
 
             return config;

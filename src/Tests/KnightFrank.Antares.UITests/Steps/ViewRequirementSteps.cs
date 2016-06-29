@@ -162,8 +162,8 @@
             this.page.OpenOfferActions(position).DetailsOffer(1);
         }
 
-        [When(@"User fills in offer details on view requirement page")]
-        public void FillOfferDetails(Table table)
+        [When(@"User fills in sales offer details on view requirement page")]
+        public void FillSalesOfferDetails(Table table)
         {
             var details = table.CreateInstance<OfferData>();
 
@@ -175,6 +175,27 @@
 
             this.page.Offer.SelectStatus(details.Status)
                 .SetOffer(details.Offer)
+                .SetOfferDate(details.OfferDate)
+                .SetSpecialConditions(details.SpecialConditions)
+                .SetProposedExchangeDate(details.ExchangeDate)
+                .SetProposedCompletionDate(details.CompletionDate);
+
+            this.scenarioContext.Set(details, "Offer");
+        }
+
+        [When(@"User fills in letting offer details on view requirement page")]
+        public void FillLettingOfferDetails(Table table)
+        {
+            var details = table.CreateInstance<OfferData>();
+
+            details.OfferDate = this.scenarioContext.ContainsKey("Offer")
+                ? this.scenarioContext.Get<Offer>("Offer").OfferDate.AddDays(-1).ToString(Format)
+                : DateTime.UtcNow.ToString(Format);
+            details.ExchangeDate = DateTime.UtcNow.AddDays(1).ToString(Format);
+            details.CompletionDate = DateTime.UtcNow.AddDays(2).ToString(Format);
+
+            this.page.Offer.SelectStatus(details.Status)
+                .SetOfferPerWeek(details.OfferPerWeek)
                 .SetOfferDate(details.OfferDate)
                 .SetSpecialConditions(details.SpecialConditions)
                 .SetProposedExchangeDate(details.ExchangeDate)

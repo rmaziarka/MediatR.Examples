@@ -8,10 +8,7 @@
     using KnightFrank.Antares.Api.Services.AzureStorage;
     using KnightFrank.Antares.Api.Services.AzureStorage.Factories;
     using KnightFrank.Antares.Dal;
-    using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain;
-    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
-    using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Search;
     using KnightFrank.Antares.Search.Common.Validators;
 
@@ -42,7 +39,7 @@
 
                 ConfigureDependenciesInHttpRequestScope(kernel);
                 ConfigureMediator(kernel);
-                ConfigureAttributeConfigurations(kernel);
+                ConfigureFilters(kernel);
 
                 RebindAction?.Invoke(kernel);
 
@@ -93,10 +90,8 @@
 
         }
 
-        private static void ConfigureAttributeConfigurations(StandardKernel kernel)
+        private static void ConfigureFilters(StandardKernel kernel)
         {
-            kernel.Bind<IControlsConfiguration<Tuple<Domain.Common.Enums.PropertyType, Domain.Common.Enums.ActivityType>>>().To<ActivityControlsConfiguration>();
-            kernel.Bind<IEntityMapper<Activity>>().To<ActivityEntityMapper>();
             kernel.BindHttpFilter<DataShapingFilter>(FilterScope.Action).WhenActionMethodHas<DataShapingAttribute>();
             kernel.BindHttpFilter<DataShapingFilter>(FilterScope.Controller).WhenControllerHas<DataShapingAttribute>();
         }

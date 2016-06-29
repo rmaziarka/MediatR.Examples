@@ -86,6 +86,8 @@
         public DbSet<CharacteristicLocalised> CharacteristicLocaliseds { get; set; }
         public DbSet<Viewing> Viewing { get; set; }
         public DbSet<Offer> Offer { get; set; }
+        public DbSet<OfferType> OfferTypes { get; set; }
+        public DbSet<OfferTypeLocalised> OfferTypeLocaliseds { get; set; }
         public DbSet<PropertyAreaBreakdown> PropertyAreaBreakdown { get; set; }
         public DbSet<LatestView> LatestView { get; set; }
         public DbSet<CompanyContact> CompanyContacts { get; set; }

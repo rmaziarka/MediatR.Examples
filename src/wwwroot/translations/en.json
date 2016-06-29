@@ -373,9 +373,12 @@
       "EXCHANGE_DATE": "Proposed exchange date",
       "COMPLETION_DATE": "Proposed completion date",
       "VIEW": "View",
-      "SAVING_OFFER_IN_PROGRESS": "Saving offer ..."
+      "SAVING_OFFER_IN_PROGRESS": "Saving offer ...",
+      "NEW_OFFER": "New offer",
+      "OFFER_PER_WEEK": "GBP / week"
     },
     "PREVIEW": {
+        "PREVIEW": "Offer preview",
         "ACTIVITY": "Activity",
         "STATUS": "Status",
         "OFFER": "Offer",
@@ -416,6 +419,7 @@
       "BASIC_INFORMATION": "Basic information",
       "STATUS": "Status",
       "OFFER": "Offer",
+      "OFFER_PER_WEEK": "GBP / week",
       "OFFER_DATE": "Offer date",
       "SPECIAL_CONDITIONS": "Special conditions",
       "NEGOTIATOR": "Negotiator",

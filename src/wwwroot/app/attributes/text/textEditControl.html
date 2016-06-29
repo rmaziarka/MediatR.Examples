@@ -1,0 +1,18 @@
+﻿<ng-form name="vm.{{vm.schema.formName}}" ng-if="vm.config">
+    <div class="form-group" show-errors>
+        <div class="row">
+            <div class="col-md-9">
+                <label for="status" ng-class="{'required': vm.config[vm.schema.fieldName].required}" translate="{{vm.schema.translationKey}}"></label>
+                <input ng-model="vm.ngModel"
+                       id="{{vm.schema.controlId}}" 
+                       ng-required="vm.config[vm.schema.fieldName].required"
+                       name="text"
+                       class="form-control" 
+                       type="text"/>
+                    <div ng-messages="vm[vm.schema.formName].text.$error" ng-show="vm[vm.schema.formName].$submitted || vm[vm.schema.formName].text.$dirty">
+                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</ng-form>

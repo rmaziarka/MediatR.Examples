@@ -1,0 +1,70 @@
+﻿<kf-side-panel-card>
+    <side-panel-header>
+        <h3 translate="OFFER.PREVIEW.PREVIEW"></h3>
+    </side-panel-header>
+    <side-panel-content>
+        <!--- old preview start -->
+        <div class="section-details">
+            <div class="section-row row">
+                <div class="col-md-12 text-left">
+                    <a ui-sref="app.offer-view({id: vm.offer.id})" translate="COMMON.DETAILS"></a>
+                </div>
+            </div>
+        </div>
+        <!--- old preview end -->
+
+        <!-- new-->
+        <activity-card activity="vm.offer.activity"></activity-card>
+        <!-- end new -->
+
+        <!--- old preview start -->
+        <div class="section-details">
+            <div class="section-row row">
+                <div class="col-xs-6 section-title" translate="OFFER.PREVIEW.STATUS"></div>
+                <div class="col-xs-6" id="offer-preview-status">{{vm.offer.statusId | dynamicTranslate}}</div>
+            </div>
+            <div class="section-row row">
+                <div class="col-xs-6 section-title" translate="OFFER.PREVIEW.OFFER"></div>
+                <div class="col-xs-6" id="offer-preview-price">{{vm.offer.price}} GBP</div>
+            </div>
+            <div class="section-row row">
+                <div class="col-xs-6 section-title" translate="OFFER.PREVIEW.OFFER_DATE"></div>
+                <div class="col-xs-6" id="offer-preview-date"><time>{{vm.offer.offerDate | date : 'dd-MM-yyyy'}}</time></div>
+            </div>
+        </div>
+
+        <div class="section-details">
+            <h5 translate="OFFER.PREVIEW.SPECIAL_CONDITIONS"></h5>
+            <p id="offer-preview-special-conditions">{{vm.offer.specialConditions}}</p>
+        </div>
+
+        <div class="section-details">
+            <h5 translate="OFFER.PREVIEW.NEGOTIATOR"></h5>
+
+            <div class="panel panel-default">
+                <div class="panel-body" id="offer-preview-negotiator">
+                    {{vm.offer.negotiator.getName()}}
+                </div>
+            </div>
+        </div>
+
+        <div class="section-details">
+            <div class="section-row row">
+                <div class="col-xs-6 section-title" translate="OFFER.PREVIEW.EXCHANGE_DATE"></div>
+                <div class="col-xs-6"><time id="offer-preview-exchange-date">{{vm.offer.exchangeDate | date : 'dd-MM-yyyy'}}</time>
+                </div>
+            </div>
+            <div class="section-row row">
+                <div class="col-xs-6 section-title" translate="OFFER.PREVIEW.COMPLETION_DATE"></div>
+                <div class="col-xs-6"><time id="offer-preview-completion-date">{{vm.offer.completionDate | date : 'dd-MM-yyyy'}}</time>
+                </div>
+            </div>
+        </div>
+        <!-- old preview end -->
+    </side-panel-content>
+    <side-panel-footer>
+        <button type="button" class="btn btn-default pull-left" ng-click="vm.edit()">
+            <i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span>
+        </button>
+    </side-panel-footer>
+</kf-side-panel-card>

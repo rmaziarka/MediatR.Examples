@@ -221,6 +221,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ModelBinders\ConfigurableRequirementModelBinder.cs" />
+    <Compile Include="ModelBinders\ConfigurableOfferModelBinder.cs" />
     <Compile Include="Services\AzureStorage\IDocumentStorageProvider.cs" />
     <Compile Include="Controllers\CompanyContactsController.cs" />
     <Compile Include="Controllers\LatestViewsController.cs" />

@@ -45,6 +45,7 @@
             Guid statusId =
                 this.fixture.DataContext.EnumTypeItems.Single(
                     e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(status)).Id;
+            Guid offerTypeId = this.fixture.DataContext.OfferTypes.Single(o => o.EnumCode.Equals("ResidentialSale")).Id;
 
             var offer = new Offer
             {
@@ -58,7 +59,8 @@
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
                 StatusId = statusId,
                 CreatedDate = this.date,
-                LastModifiedDate = this.date
+                LastModifiedDate = this.date,
+                OfferTypeId = offerTypeId
             };
 
             if (status.ToLower().Equals(nameof(OfferStatus.Accepted).ToLower()))
@@ -344,7 +346,8 @@
                 .Excluding(o => o.Surveyor)
                 .Excluding(o => o.SurveyorCompany)
                 .Excluding(o => o.AdditionalSurveyor)
-                .Excluding(o => o.AdditionalSurveyorCompany));
+                .Excluding(o => o.AdditionalSurveyorCompany)
+                .Excluding(o => o.OfferType));
 
             expectedOffer.NegotiatorId.Should().NotBeEmpty();
         }
@@ -359,7 +362,8 @@
                 opt => opt.Excluding(o => o.Activity)
                           .Excluding(o => o.Negotiator)
                           .Excluding(o => o.Requirement)
-                          .Excluding(o => o.Status));
+                          .Excluding(o => o.Status)
+                          .Excluding(o => o.OfferType));
         }
 
         private void CreateOffer(CreateOfferCommand command)

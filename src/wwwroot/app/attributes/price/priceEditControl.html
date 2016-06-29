@@ -2,12 +2,12 @@
     <div class="form-group" show-errors>
         <div class="row">
             <div class="col-md-7">
-                <label for="price" translate="{{vm.schema.translationKey}}"></label>
+                <label for="{{vm.schema.controlId}}" translate="{{vm.schema.translationKey}}" ng-class="{required: vm.config[vm.schema.fieldName].required}"></label>
                 <div class="input-group">
                     <input ng-model="vm.ngModel"
-                           id="{{vm.schema.controlId}}" ng-required="vm.config[vm.schema.fieldName].required"
+                           id="{{vm.schema.controlId}}" ng-required="vm.config[vm.schema.fieldName].required" ng-disabled="!vm.config[vm.schema.fieldName].active"
                            name="price" class="form-control" type="number" min="0" />
-                    <div class="input-group-addon">GBP</div>
+                    <div class="input-group-addon" translate="{{vm.schema.suffix || 'GBP'}}"></div>
                 </div>
                 <div ng-messages="vm[vm.schema.formName].price.$error" ng-show="vm[vm.schema.formName].$submitted || vm[vm.schema.formName].price.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>

@@ -185,6 +185,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Scripts\SQL\RequirementTypeLocalised.sql" />
+    <None Include="Scripts\Data\Configuration\offertype.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Data\Configuration\offertypelocalised.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
@@ -264,6 +270,8 @@
     <Build Include="Functions\FlattenedJSON.sql" />
     <None Include="Scripts\Views\ElasticSearchContact.sql" />
     <None Include="Scripts\Views\ElasticSearchProperty.sql" />
+    <None Include="Scripts\SQL\OfferType.sql" />
+    <None Include="Scripts\SQL\OfferTypeLocalised.sql" />
   </ItemGroup>
   <Import Project="..\packages\OctoPack.3.0.53\tools\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.0.53\tools\OctoPack.targets')" />
   <Target Name="EnsureOctoPackImported" BeforeTargets="BeforeBuild" Condition="'$(OctoPackImported)' == ''">

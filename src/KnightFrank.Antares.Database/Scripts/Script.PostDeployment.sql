@@ -32,6 +32,8 @@
 :r .\SQL\RequirementType.sql
 :r .\SQL\RequirementTypeActivityTypeDefinition.sql
 :r .\SQL\RequirementTypeLocalised.sql
+:r .\SQL\OfferType.sql
+:r .\SQL\OfferTypeLocalised.sql
 
 :r .\Views\ElasticSearchContact.sql
 :r .\Views\ElasticSearchProperty.sql

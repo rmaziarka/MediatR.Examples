@@ -21,6 +21,7 @@
     {
         private readonly IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityConfiguration;
         private readonly IControlsConfiguration<Tuple<RequirementType>> requirementConfiguration;
+        private readonly IControlsConfiguration<Tuple<OfferType, RequirementType>> offerConfiguration;
         private readonly IEnumParser enumParser;
 
         /// <summary>
@@ -28,8 +29,13 @@
         /// </summary>
         /// <param name="activityConfiguration">The activity configuration.</param>
         /// <param name="requirementConfiguration">The requirement configuration.</param>
+        /// <param name="offerConfiguration">The offer configuration.</param>
         /// <param name="enumParser">The enum parser.</param>
-        public MetadataController(IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityConfiguration, IControlsConfiguration<Tuple<RequirementType>> requirementConfiguration, IEnumParser enumParser)
+        public MetadataController(
+            IControlsConfiguration<Tuple<PropertyType, ActivityType>> activityConfiguration,
+            IControlsConfiguration<Tuple<OfferType, RequirementType>> offerConfiguration,
+            IControlsConfiguration<Tuple<RequirementType>> requirementConfiguration,
+            IEnumParser enumParser)
         {
             this.activityConfiguration = activityConfiguration;
             this.requirementConfiguration = requirementConfiguration;
@@ -75,6 +81,28 @@
 
             RequirementType requirementType = this.enumParser.Parse<Dal.Model.Property.RequirementType, RequirementType>(requirementTypeId);
             IList<InnerFieldState> fieldStates = this.requirementConfiguration.GetInnerFieldsState(pageType, new Tuple<RequirementType>(requirementType), entity);
+            return fieldStates.MapToResponse();
+        }
+        /// <summary>
+        /// Gets the offer configuration.
+        /// </summary>
+        /// <param name="pageType">Type of the page.</param>
+        /// <param name="offerTypeId">Type of the offer.</param>
+        /// <param name="requirementTypeId">Type of the requirement.</param>
+        /// <param name="entity">The entity.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("attributes/offer")]
+        public dynamic GetOfferConfiguration(PageType pageType, Guid offerTypeId, Guid requirementTypeId, [ModelBinder(typeof(ConfigurableOfferModelBinder))]object entity)
+        {
+            if (offerTypeId == Guid.Empty || requirementTypeId == Guid.Empty)
+                return null;
+
+            OfferType offerType = this.enumParser.Parse<Dal.Model.Offer.OfferType, OfferType>(offerTypeId);
+
+            //TODO replace when RequirementType introduce in DB
+            var requirementType = RequirementType.ResidentialLetting;
+            IList<InnerFieldState> fieldStates = this.offerConfiguration.GetInnerFieldsState(pageType, new Tuple<OfferType, RequirementType>(offerType, requirementType), entity);
             return fieldStates.MapToResponse();
         }
     }

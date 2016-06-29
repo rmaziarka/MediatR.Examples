@@ -29,7 +29,7 @@ Scenario: Create residential sales offer on requirement
 	Then Activity details on view requirement page are same as the following
 		| Details                                     |
 		| John Soane’s house, 13 Lincoln’s Inn Fields |
-	When User fills in offer details on view requirement page
+	When User fills in sales offer details on view requirement page
 		| Status | Offer  | SpecialConditions |
 		| New    | 100000 | Text              |
 		And User clicks save offer button on view requirement page
@@ -82,7 +82,7 @@ Scenario: Update residential sales offer on requirement
 	Then Activity details on view requirement page are same as the following
 		| Details             |
 		| House, 22 Eltham Dr |
-	When User fills in offer details on view requirement page
+	When User fills in sales offer details on view requirement page
 		| Status   | Offer | SpecialConditions  |
 		| Accepted | 2000  | Special conditions |
 		And User clicks save offer button on view requirement page
@@ -115,7 +115,7 @@ Scenario: View offer details page
 		And Viewing for requirement is defined
 	When User navigates to view requirement page with id
 		And User clicks make an offer button for 1 activity on view requirement page
-		And User fills in offer details on view requirement page
+		And User fills in sales offer details on view requirement page
 			| Status    | Offer | SpecialConditions     |
 			| Withdrawn | 95000 | My special conditions |
 		And User clicks save offer button on view requirement page
@@ -221,7 +221,7 @@ Scenario: Create and update accepted residential sales offer
 		And Viewing for requirement is defined
 	When User navigates to view requirement page with id
 		And User clicks make an offer button for 1 activity on view requirement page
-		And User fills in offer details on view requirement page
+		And User fills in sales offer details on view requirement page
 			| Status   | Offer  | SpecialConditions     |
 			| Accepted | 110000 | My special conditions |
 		And User clicks save offer button on view requirement page
