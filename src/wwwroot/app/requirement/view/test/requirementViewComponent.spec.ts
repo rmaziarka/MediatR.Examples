@@ -236,31 +236,6 @@ module Antares {
                 // TODO: after address view component is implemented
             });
 
-            it('basic property requirements are displayed in proper order and with correct values', () => {
-                var expectedBasicDetailsResults = [
-                    { label: 'REQUIREMENT.VIEW.PRICE', min: 'vm.requirement.minPrice', max: 'vm.requirement.maxPrice', suffix: "'GBP'" },
-                    { label: 'REQUIREMENT.VIEW.BEDROOMS', min: 'vm.requirement.minBedrooms', max: 'vm.requirement.maxBedrooms', suffix: null },
-                    { label: 'REQUIREMENT.VIEW.RECEPTIONROOMS', min: 'vm.requirement.minReceptionRooms', max: 'vm.requirement.maxReceptionRooms', suffix: null },
-                    { label: 'REQUIREMENT.VIEW.BATHROOMS', min: 'vm.requirement.minBathrooms', max: 'vm.requirement.maxBathrooms', suffix: null },
-                    { label: 'REQUIREMENT.VIEW.PARKINGSPACES', min: 'vm.requirement.minParkingSpaces', max: 'vm.requirement.maxParkingSpaces', suffix: null },
-                    { label: 'REQUIREMENT.VIEW.AREA', min: 'vm.requirement.minArea', max: 'vm.requirement.maxArea', suffix: "'sq ft'" },
-                    { label: 'REQUIREMENT.VIEW.LANDAREA', min: 'vm.requirement.minLandArea', max: 'vm.requirement.maxLandArea', suffix: "'sq ft'" }
-                ];
-
-                var rangeViewElements = element.find('range-view');
-
-                expect(rangeViewElements.length).toBe(expectedBasicDetailsResults.length);
-                for (var i = 0; i < rangeViewElements.length; i++) {
-                    var rangeView = rangeViewElements[i];
-                    var expected = expectedBasicDetailsResults[i];
-                    expect(rangeView.getAttribute('label')).toBe(expected.label);
-                    expect(rangeView.getAttribute('min')).toBe(expected.min);
-                    expect(rangeView.getAttribute('max')).toBe(expected.max);
-                    expect(rangeView.getAttribute('suffix')).toBe(expected.suffix);
-                };
-
-            });
-
             it('applicant list is displayed', () => {
                 var applicantList = element.find('#applicant-list');
                 var applicants = applicantList.find('.applicant');

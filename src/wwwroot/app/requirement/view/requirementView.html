@@ -15,28 +15,28 @@
 
         <div class="row">
             <div class="col-md-4">
+                <h3 class="page-header" translate="REQUIREMENT.VIEW.BASIC_INFORMATION"></h3>
                 <section>
                     <requirement-type-preview-control type-id="vm.requirement.requirementTypeId" config="vm.config.requirement_RequirementType" />
+                </section>
+
+                <section>
+                    <requirement-description-preview-control description="vm.requirement.description" config="vm.config.requirement_Description"/>
+                </section>
+
+                <section>
+                    <h3 class="page-header" translate="REQUIREMENT.VIEW.RENT_REQUIREMENTS"></h3>
+                    <!-- TODO: Put rent control here -->
+                    Rent control will be here
+                </section>
+
+                <section>
                     <h3 class="page-header" translate="REQUIREMENT.VIEW.LOCATION"></h3>
                     <address-form-view address="vm.requirement.address"
                                        address-type="requirement"
                                        template-url="'app/common/components/addressForm/addressFormView/templates/requirementAddressForm.html'"></address-form-view>
                 </section>
 
-                <section>
-                    <h3 class="page-header" translate="REQUIREMENT.VIEW.BASIC_REQUIREMENTS"></h3>
-                    <range-view label="{{ 'REQUIREMENT.VIEW.PRICE' | translate }}" min="vm.requirement.minPrice" max="vm.requirement.maxPrice" suffix="'GBP'"></range-view>
-                    <range-view label="{{ 'REQUIREMENT.VIEW.BEDROOMS' | translate }}" min="vm.requirement.minBedrooms" max="vm.requirement.maxBedrooms"></range-view>
-                    <range-view label="{{ 'REQUIREMENT.VIEW.RECEPTIONROOMS' | translate }}" min="vm.requirement.minReceptionRooms" max="vm.requirement.maxReceptionRooms"></range-view>
-                    <range-view label="{{ 'REQUIREMENT.VIEW.BATHROOMS' | translate }}" min="vm.requirement.minBathrooms" max="vm.requirement.maxBathrooms"></range-view>
-                    <range-view label="{{ 'REQUIREMENT.VIEW.PARKINGSPACES' | translate }}" min="vm.requirement.minParkingSpaces" max="vm.requirement.maxParkingSpaces"></range-view>
-                    <range-view label="{{ 'REQUIREMENT.VIEW.AREA' | translate }}" min="vm.requirement.minArea" max="vm.requirement.maxArea" suffix="'sq ft'"></range-view>
-                    <range-view label="{{ 'REQUIREMENT.VIEW.LANDAREA' | translate }}" min="vm.requirement.minLandArea" max="vm.requirement.maxLandArea" suffix="'sq ft'"></range-view>
-                </section>
-
-                <section>
-                    <requirement-description-preview-control description="vm.requirement.description" config="vm.config.requirement_Description" />
-                </section>
             </div>
             <div class="col-md-4" id="applicant-list">
                 <section>
