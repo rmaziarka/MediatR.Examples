@@ -48,7 +48,7 @@
             List<CompanyContact> expectedCompanyContacts = this.fixture.DataContext.CompanyContacts.ToList();
 
             response.ShouldAllBeEquivalentTo(expectedCompanyContacts,
-                opt => opt.Excluding(c => c.Contact.CompaniesContacts).Excluding(c => c.Company.CompaniesContacts));
+                opt => opt.Excluding(c => c.Company).Excluding(c => c.Contact));
         }
 
         private void GetCompanyContactsRequest()

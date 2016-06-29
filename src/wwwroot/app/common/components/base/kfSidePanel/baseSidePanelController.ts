@@ -19,7 +19,7 @@ module Antares.Common.Component {
                     this.panelShown();
                 }
                 else if (changesObj.isVisible.currentValue === Enums.SidePanelState.Closed
-                    && changesObj.isVisible.currentValue === Enums.SidePanelState.Untouched) {
+                    && changesObj.isVisible.previousValue === Enums.SidePanelState.Untouched) {
                     this.isVisible = Enums.SidePanelState.Untouched;
                 }
                 else if (changesObj.isVisible.currentValue === Enums.SidePanelState.Closed) {

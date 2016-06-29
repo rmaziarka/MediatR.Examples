@@ -12,8 +12,6 @@
 
         public string Surname { get; set; }
 
-		
-
         public virtual ICollection<CompanyContact> CompaniesContacts { get; set; }
 	}
 }
