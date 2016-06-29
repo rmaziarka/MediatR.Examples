@@ -24,7 +24,6 @@ module Antares.Property.View {
         activitiesCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
         userData: Dto.IUserData;
         property: Business.PropertyView;
-        config: Activity.IActivityAddPanelConfig;
         savePropertyActivityBusy: boolean = false;
         selectedActivity: Common.Models.Business.Activity;
 
