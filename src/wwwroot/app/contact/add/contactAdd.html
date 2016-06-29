@@ -60,15 +60,15 @@
                                     <enum-select id="default-mailing-salutation-id" name="defaultMailingSalutationId" ng-model="vm.defaultMailingSalutationId" enum-type-code="{{vm.mailingSalutationFormat}}" hide-empty-value="true"></enum-select>
                                 </div>
                                 <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.mailingFormalSalutation.$dirty) && addContactForm.mailingFormalSalutation.$invalid}">
-                                    <label for="mailing-formal-salutation" translate="CONTACT.SALUTATION.FORMAL"></label>
-                                    <input id="mailing-formal-salutation" name="mailingFormalSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.mailingFormalSalutation" autocomplete="off">
+                                    <label class="required" for="mailing-formal-salutation" translate="CONTACT.SALUTATION.FORMAL"></label>
+                                    <input id="mailing-formal-salutation" name="mailingFormalSalutation" required type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.mailingFormalSalutation" autocomplete="off">
                                     <div ng-messages="addContactForm.mailingFormalSalutation.$error" ng-show="addContactForm.$submitted || addContactForm.mailingFormalSalutation.$dirty">
                                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                                     </div>
                                 </div>
                                 <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.mailingSemiformalSalutation.$dirty) && addContactForm.mailingSemiformalSalutation.$invalid}">
-                                    <label for="mailing-semiformal-salutation" translate="CONTACT.SALUTATION.SEMIFORMAL"></label>
-                                    <input id="mailing-semiformal-salutation" name="mailingSemiformalSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.mailingSemiformalSalutation" autocomplete="off">
+                                    <label class="required" for="mailing-semiformal-salutation" translate="CONTACT.SALUTATION.SEMIFORMAL"></label>
+                                    <input id="mailing-semiformal-salutation" name="mailingSemiformalSalutation" required type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.mailingSemiformalSalutation" autocomplete="off">
                                     <div ng-messages="addContactForm.mailingSemiformalSalutation.$error" ng-show="addContactForm.$submitted || addContactForm.mailingSemiformalSalutation.$dirty">
                                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                                     </div>
@@ -88,8 +88,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.mailingEnvelopeSalutation.$dirty) && addContactForm.mailingEnvelopeSalutation.$invalid}">
-                                    <label for="mailing-envelope-salutation" translate="CONTACT.SALUTATION.ENVELOPE"></label>
-                                    <input id="mailing-envelope-salutation" name="mailingEnvelopeSalutation" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.mailingEnvelopeSalutation" autocomplete="off">
+                                    <label class="required" for="mailing-envelope-salutation" translate="CONTACT.SALUTATION.ENVELOPE"></label>
+                                    <input id="mailing-envelope-salutation" name="mailingEnvelopeSalutation" required type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.mailingEnvelopeSalutation" autocomplete="off">
                                     <div ng-messages="addContactForm.mailingEnvelopeSalutation.$error" ng-show="addContactForm.$submitted || addContactForm.mailingEnvelopeSalutation.$dirty">
                                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                                     </div>
