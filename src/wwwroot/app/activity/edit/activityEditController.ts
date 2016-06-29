@@ -4,7 +4,6 @@ module Antares.Activity {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
     import Enums = Common.Models.Enums;
-    import PageTypeEnum = Common.Models.Enums.PageTypeEnum;
 
     enum PageMode {
         Add,
@@ -138,6 +137,8 @@ module Antares.Activity {
             private $state: ng.ui.IStateService,
             public kfMessageService: Services.KfMessageService,
             private configService: Services.ConfigService,
+            private activityService: Activity.ActivityService,
+            private latestViewsProvider: Providers.LatestViewsProvider,
             private eventAggregator: Core.EventAggregator,
             private enumProvider: Providers.EnumProvider) {
 
@@ -159,6 +160,7 @@ module Antares.Activity {
             this.setDefaultActivityStatus();
             this.setVendorContacts();
             this.setLeadNegotiator();
+            this.setDefaultDepartment();
 
             this.availableAttendeeUsers = this.getAvailableAttendeeUsers();
             this.availableAttendeeContacts = this.getAvailableAttendeeContacts();
@@ -178,23 +180,40 @@ module Antares.Activity {
             var entity = new Business.UpdateActivityResource(this.activity);
 
             this.configService
-                .getActivity(PageTypeEnum.Create, this.propertyTypeId, activity.activityTypeId, entity)
+                .getActivity(Enums.PageTypeEnum.Create, this.propertyTypeId, activity.activityTypeId, entity)
                 .then((newConfig: IActivityEditConfig) => this.config = newConfig);
         }
 
-        public save() {
+        public save = () => {
             var valid = this.anyNewDepartmentIsRelatedWithNegotiator();
             if (!valid) {
                 this.kfMessageService.showErrorByCode(this.departmentErrorMessageCode, this.departmentErrorTitleCode);
                 return;
             }
 
-            this.dataAccessService.getActivityResource()
-                .update(new Business.UpdateActivityResource(this.activity))
-                .$promise
-                .then((activity: Dto.IActivity) => {
-                    this.$state.go('app.activity-view', { id: activity.id });
+            if (this.isAddMode()) {
+                var addCommand = new Commands.ActivityAddCommand(this.activity, this.property.id);
+
+                this.activityService.addActivity(addCommand).then((activityDto: Dto.IActivity) => {
+                    this.latestViewsProvider.addView(<Common.Models.Commands.ICreateLatestViewCommand>{
+                        entityId: activityDto.id,
+                        entityType: Enums.EntityTypeEnum.Activity
+                    });
+
+                    this.$state.go('app.activity-view', { id: this.activity.id });
                 });
+            }
+            else {
+                var editCommand = new Commands.ActivityEditCommand(this.activity);
+
+                this.activityService.updateActivity(editCommand).then((activityDto: Dto.IActivity) => {
+                    //this.latestViewsProvider.addView(<Common.Models.Commands.ICreateLatestViewCommand>{
+                    //    entityId: activityDto.id,
+                    //    entityType: Enums.EntityTypeEnum.Activity
+                    //});
+                    this.$state.go('app.activity-view', { id: this.activity.id });
+                });
+            }
         }
 
         public cancel() {
@@ -255,7 +274,7 @@ module Antares.Activity {
 
         private setDefaultActivityStatus = () => {
             var activityStatuses = this.enumProvider.enums[Dto.EnumTypeCode.ActivityStatus];
-            var defaultActivityStatus: any = <Dto.IEnumTypeItem>_.find(activityStatuses, (item: Dto.IEnumTypeItem) =>{
+            var defaultActivityStatus: any = <Dto.IEnumTypeItem>_.find(activityStatuses, (item: Dto.IEnumTypeItem) => {
                 return item.code === this.defaultActivityStatusCode;
             });
 
@@ -286,6 +305,20 @@ module Antares.Activity {
             this.activity.leadNegotiator.user.id = this.userData.id;
             this.activity.leadNegotiator.user.firstName = this.userData.firstName;
             this.activity.leadNegotiator.user.lastName = this.userData.lastName;
+            this.activity.leadNegotiator.user.departmentId = this.userData.department.id;
+        }
+
+        private setDefaultDepartment = () =>{
+            if (this.pageMode === PageMode.Edit) {
+                return;
+            }
+
+            var defaultDepartment = new Business.ActivityDepartment();
+            defaultDepartment.departmentId = this.userData.department.id;
+            defaultDepartment.department.id = this.userData.department.id;
+            defaultDepartment.department.name = this.userData.department.name;
+            defaultDepartment.departmentType.code = Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Managing];
+            this.activity.activityDepartments.push(defaultDepartment);
         }
 
         private anyNewDepartmentIsRelatedWithNegotiator = () => {

@@ -45,18 +45,18 @@ module Antares.Activity {
         }
 
         save = (activity: AddCard.ActivityAddCardModel) => {
-            var command = new AddPanel.ActivityAddPanelCommand(activity, this.propertyId);
-            this.isBusy = true;
+    //        var command = new AddPanel.ActivityAddPanelCommand(activity, this.propertyId);
+    //        this.isBusy = true;
 
-            this.activityService.addActivity(command).then((activityDto: Dto.IActivity) => {
-                this.eventAggregator.publish(new Antares.Activity.ActivityAddedSidePanelEvent(activityDto));
-                this.eventAggregator.publish(new Antares.Common.Component.CloseSidePanelEvent());
+    //        this.activityService.addActivity(command).then((activityDto: Dto.IActivity) => {
+    //            this.eventAggregator.publish(new Antares.Activity.ActivityAddedSidePanelEvent(activityDto));
+    //            this.eventAggregator.publish(new Antares.Common.Component.CloseSidePanelEvent());
 
-				this.latestViewsProvider.addView({
-					entityId: activityDto.id,
-					entityType: EntityType.Activity
-				});
-            }).finally(() => { this.isBusy = false; });
+				//this.latestViewsProvider.addView({
+				//	entityId: activityDto.id,
+				//	entityType: EntityType.Activity
+				//});
+    //        }).finally(() => { this.isBusy = false; });
         }
 
         reloadConfig = (activity: AddCard.ActivityAddCardModel) => {
