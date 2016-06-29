@@ -2,7 +2,7 @@
     <h5 translate="NEGOTIATORS.{{vm.labelTranslationKey}}.LEAD"></h5>
     <card id="card-lead-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'" item="vm.leadNegotiator">
     </card>
-    <editable-date selected-date="vm.leadNegotiator.callDate" is-required="true" on-save="vm.updateNegotiatorCallDate(vm.leadNegotiator)"></editable-date>
+    <editable-date selected-date="vm.leadNegotiator.callDate" can-be-edited="vm.canBeEdited" is-required="true" on-save="vm.updateNegotiatorCallDate(vm.leadNegotiator)"></editable-date>
 
     <card-list id="card-list-negotiators" ng-if="!vm.hideSecondaryNegotiators">
         <card-list-header>
@@ -14,7 +14,7 @@
         <card-list-item ng-repeat="negotiator in vm.secondaryNegotiators | orderBy: ['user.firstName', 'user.lastName']">
             <card item="negotiator" id="card-secondary-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'">
             </card>
-            <editable-date selected-date="negotiator.callDate" on-save="vm.updateNegotiatorCallDate(negotiator)"></editable-date>
+            <editable-date selected-date="negotiator.callDate" can-be-edited="vm.canBeEdited" on-save="vm.updateNegotiatorCallDate(negotiator)"></editable-date>
         </card-list-item>
     </card-list>
 </div>

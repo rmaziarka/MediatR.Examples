@@ -3,11 +3,9 @@
 module Antares {
     import ActivityViewController = Activity.View.ActivityViewController;
     import Business = Common.Models.Business;
-    import Dto = Common.Models.Dto;
 
     describe('Given activity view controller', () => {
         var scope: ng.IScope,
-            q: ng.IQService,
             evtAggregator: Antares.Core.EventAggregator,
             controller: ActivityViewController,
             $http: ng.IHttpBackendService;
@@ -86,6 +84,50 @@ module Antares {
                 expect(requestData.attachment).toBeSameAsAttachmentModel(attachmentModel);
 
             });
+        });
+
+        describe('and selected tab is `Overview`', () =>{
+            beforeEach(() =>{
+                controller.selectedTabIndex = 0;
+            });
+
+            it("when selected tab is changed to `Details` then selected tab index must be 1", () =>{
+                // act
+                controller.setActiveTabIndex(1);
+
+                // assert
+                expect(controller.selectedTabIndex).toBe(1);
+            });
+
+            it("then `isOverviewTabSelected` must be true",
+            () =>{
+                // act & assert
+                expect(controller.isOverviewTabSelected()).toBe(true);
+            });
+
+            it("then `isDetailsTabSelected` must be false",
+                () => {
+                    // act & assert
+                    expect(controller.isDetailsTabSelected()).toBe(false);
+                });
+        });
+
+        describe('and selected tab is `Details`', () => {
+            beforeEach(() => {
+                controller.selectedTabIndex = 1;
+            });
+
+            it('then `isOverviewTabSelected` must be false',
+                () => {
+                    // act & assert
+                    expect(controller.isOverviewTabSelected()).toBe(false);
+                });
+
+            it('then `isDetailsTabSelected` must be true',
+                () => {
+                    // act & assert
+                    expect(controller.isDetailsTabSelected()).toBe(true);
+                });
         });
     });
 }

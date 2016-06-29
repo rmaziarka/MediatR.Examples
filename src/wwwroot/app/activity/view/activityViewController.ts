@@ -11,11 +11,13 @@ module Antares.Activity.View {
     export class ActivityViewController extends Core.WithPanelsBaseController {
         // bindings
         activity: Business.Activity;
+        public selectedTabIndex: number = 0;
 
         enumTypeActivityDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityDocumentType;
         entityType: EntityType = EntityType.Activity;
 
-        activityAttachmentResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IActivityAttachmentSaveCommand>;
+        activityAttachmentResource: Common.Models.Resources.
+        IBaseResourceClass<Common.Models.Resources.IActivityAttachmentSaveCommand>;
 
         selectedOffer: Dto.IOffer;
         selectedViewing: Dto.IViewing;
@@ -28,48 +30,66 @@ module Antares.Activity.View {
             private $state: ng.ui.IStateService,
             private dataAccessService: Services.DataAccessService,
             private latestViewsProvider: LatestViewsProvider,
-            private eventAggregator: Core.EventAggregator) {
+            private eventAggregator: Core.EventAggregator){
 
             super(componentRegistry, $scope);
 
             this.activityAttachmentResource = dataAccessService.getAttachmentResource();
-            
-            this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
-                this.isPropertyPreviewPanelVisible = false;
-            });
 
-            this.eventAggregator.with(this).subscribe(Attributes.OpenPropertyPrewiewPanelEvent, (event: Antares.Attributes.OpenPropertyPrewiewPanelEvent) => {
-                this.hidePanels();
-                this.isPropertyPreviewPanelVisible = true;
-            });
+            this.eventAggregator.with(this)
+                .subscribe(Common.Component.CloseSidePanelEvent,
+                () =>{
+                    this.isPropertyPreviewPanelVisible = false;
+                });
+
+            this.eventAggregator.with(this)
+                .subscribe(Attributes.OpenPropertyPrewiewPanelEvent,
+                (event: Antares.Attributes.OpenPropertyPrewiewPanelEvent) =>{
+                    this.hidePanels();
+                    this.isPropertyPreviewPanelVisible = true;
+                });
 
             eventAggregator
                 .with(this)
-                .subscribe(Common.Component.Attachment.AttachmentSavedEvent, (event: Common.Component.Attachment.AttachmentSavedEvent) => {
+                .subscribe(Common.Component.Attachment.AttachmentSavedEvent,
+                (event: Common.Component.Attachment.AttachmentSavedEvent) =>{
                     this.addSavedAttachmentToList(event.attachmentSaved);
                 });
         }
 
-        onPanelsHidden = () => {
+        public setActiveTabIndex = (tabIndex: number) =>{
+            this.selectedTabIndex = tabIndex;
+        }
+
+        public isOverviewTabSelected = () =>{
+            return this.selectedTabIndex === 0;
+        }
+
+        public isDetailsTabSelected = () =>{
+            return this.selectedTabIndex === 1;
+        }
+
+        onPanelsHidden = () =>{
             this.isPropertyPreviewPanelVisible = false;
         };
-	    showPropertyPreview = (property: Business.PreviewProperty) => {
+        showPropertyPreview = (property: Business.PreviewProperty) =>{
             this.components.propertyPreview().setProperty(property);
             this.showPanel(this.components.panels.propertyPreview);
 
             this.latestViewsProvider.addView({
-                entityId: property.id,
-                entityType: EntityType.Property
+                entityId : property.id,
+                entityType : EntityType.Property
             });
         }
 
-        addSavedAttachmentToList = (result: Dto.IAttachment) => {
+        addSavedAttachmentToList = (result: Dto.IAttachment) =>{
             var savedAttachment = new Business.Attachment(result);
             this.activity.attachments.push(savedAttachment);
         }
 
-        saveAttachment = (attachment: Antares.Common.Component.Attachment.AttachmentUploadCardModel) => {
-            return this.activityAttachmentResource.save({ id: this.activity.id }, new Antares.Activity.Command.ActivityAttachmentSaveCommand(this.activity.id, attachment))
+        saveAttachment = (attachment: Antares.Common.Component.Attachment.AttachmentUploadCardModel) =>{
+            return this.activityAttachmentResource.save({ id : this.activity.id },
+                    new Antares.Activity.Command.ActivityAttachmentSaveCommand(this.activity.id, attachment))
                 .$promise;
         }
 
@@ -77,40 +97,44 @@ module Antares.Activity.View {
             this.selectedViewing = viewing;
             this.showPanel(this.components.panels.previewViewingsSidePanel);
         };
-	    showOfferPreview = (offer: Common.Models.Dto.IOffer) => {
+        showOfferPreview = (offer: Common.Models.Dto.IOffer) =>{
             this.selectedOffer = offer;
             this.showPanel(this.components.panels.offerPreview);
         };
 
-	    cancelViewingPreview() {
+        cancelViewingPreview(){
             this.hidePanels();
         }
 
-        goToEdit = () => {
-            this.$state.go('app.activity-edit', { id: this.$state.params['id'] });
+        goToEdit = () =>{
+            this.$state.go('app.activity-edit', { id : this.$state.params['id'] });
         };
-	    navigateToOfferView = (offer: Common.Models.Dto.IOffer) =>{
-            this.$state.go('app.offer-view', { id: offer.id });
+        navigateToOfferView = (offer: Common.Models.Dto.IOffer) =>{
+            this.$state.go('app.offer-view', { id : offer.id });
         };
 
-	    defineComponentIds() {
+        defineComponentIds(){
             this.componentIds = {
-                propertyPreviewId: 'viewActivity:propertyPreviewComponent',
-                propertyPreviewSidePanelId: 'viewActivity:propertyPreviewSidePanelComponent',
-                previewViewingSidePanelId: 'viewActivity:previewViewingSidePanelComponent',
-                viewingPreviewId: 'viewActivity:viewingPreviewComponent',
-                offerPreviewId: 'viewActivity:offerPreviewComponent',
-                offerPreviewSidePanelId: 'viewActivity:offerPreviewSidePanelComponent'
+                propertyPreviewId : 'viewActivity:propertyPreviewComponent',
+                propertyPreviewSidePanelId : 'viewActivity:propertyPreviewSidePanelComponent',
+                previewViewingSidePanelId : 'viewActivity:previewViewingSidePanelComponent',
+                viewingPreviewId : 'viewActivity:viewingPreviewComponent',
+                offerPreviewId : 'viewActivity:offerPreviewComponent',
+                offerPreviewSidePanelId : 'viewActivity:offerPreviewSidePanelComponent'
             };
         }
 
-        defineComponents() {
+        defineComponents(){
             this.components = {
-                viewingPreview: () => { return this.componentRegistry.get(this.componentIds.viewingPreviewId); },
-                offerPreview: () => { return this.componentRegistry.get(this.componentIds.offerPreviewId);  },
-                panels: {
-                    previewViewingsSidePanel: () => { return this.componentRegistry.get(this.componentIds.previewViewingSidePanelId); },
-                    offerPreview: () =>{ return this.componentRegistry.get(this.componentIds.offerPreviewSidePanelId); }
+                viewingPreview : () =>{ return this.componentRegistry.get(this.componentIds.viewingPreviewId); },
+                offerPreview : () =>{ return this.componentRegistry.get(this.componentIds.offerPreviewId); },
+                panels : {
+                    previewViewingsSidePanel : () =>{
+                        return this.componentRegistry.get(this.componentIds.previewViewingSidePanelId);
+                    },
+                    offerPreview : () =>{
+                        return this.componentRegistry.get(this.componentIds.offerPreviewSidePanelId);
+                    }
                 }
             };
         }
