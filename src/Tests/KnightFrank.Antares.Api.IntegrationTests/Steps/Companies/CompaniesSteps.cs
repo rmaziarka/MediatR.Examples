@@ -36,12 +36,6 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"Company does not exist")]
-        public void GivenCompanyDoesNotExist()
-        {
-            this.SetScenarioContextForAddedCompanyId(Guid.NewGuid());
-        }
-
         [Given(@"Company exists in database")]
         public void GivenCompanyExistsInDatabase()
         {
@@ -49,57 +43,63 @@
             List<Guid> contactsIds = this.scenarioContext.Get<List<Contact>>("Contacts").Select(c => c.Id).ToList();
 
             company.CompaniesContacts = contactsIds.Select(id => new CompanyContact { ContactId = id }).ToList();
+            company.ClientCarePageUrl = "www.clientcare.com";
+            company.WebsiteUrl = "www.api.com";
+            company.ClientCareStatusId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    eti => eti.EnumType.Code.Equals("ClientCareStatus") && eti.Code.Equals("MassiveActionClient")).Id;
 
-            this.fixture.DataContext.Companies.Add(company);
-            this.fixture.DataContext.SaveChanges();
-            this.scenarioContext.Set(company, "Company");
-            this.SetScenarioContextForAddedCompanyId(company.Id);
-        }
-
-        [Given(@"User creates company in database with following data")]
-        public void CreateCompanyInDb(Table table)
-        {
-            Company company = table.CreateSet<Company>().Single();
             this.fixture.DataContext.Companies.Add(company);
             this.fixture.DataContext.SaveChanges();
 
             this.scenarioContext.Set(company, "Company");
         }
 
-        [When(@"User creates company by API for contact")]
-        public void WhenUserCreateCompanyByApiForContact(Table table)
+        [When(@"User creates company with invalid (name|status|contact) using api")]
+        public void CreateCompanyWithInvalidDataUsingApi(string data)
         {
-            string clientCareStatus = this.GetClientCareStatus(table, "EnumTypeItemCode");
-
-            Guid clientcareStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[clientCareStatus];
-
-            var company = table.CreateInstance<CreateCompanyCommand>();
-            company.ClientCareStatusId = clientcareStatusId;
+            var company = new CreateCompanyCommand
+            {
+                ContactIds =
+                    data.Equals("contact")
+                        ? new List<Guid>() { Guid.NewGuid() }
+                        : new List<Guid>(this.scenarioContext.Get<List<Contact>>("Contacts").Select(c => c.Id)),
+                Name = data.Equals("name") ? string.Empty : StringExtension.GenerateMaxAlphanumericString(20),
+                ClientCareStatusId =
+                    data.Equals("status")
+                        ? Guid.NewGuid()
+                        : this.fixture.DataContext.EnumTypeItems.Single(
+                            eti => eti.EnumType.Code.Equals("ClientCareStatus") && eti.Code.Equals("KeyClient")).Id,
+            };
 
             this.CreateCompany(company);
         }
 
-        [When(@"User creates company by API with all fields")]
-        public void WhenUserCreatesCompanyByApiWithAllFields(Table table)
+        [When(@"User creates company using api")]
+        public void CreateCompanyUsingApi(Table table)
         {
-            string clientCareStatus = this.GetClientCareStatus(table, "ClientCareStatus");
-            Guid clientcareStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[clientCareStatus];
-
             var company = table.CreateInstance<CreateCompanyCommand>();
-            company.ClientCareStatusId = clientcareStatusId;
+            company.ClientCareStatusId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    eti => eti.EnumType.Code.Equals("ClientCareStatus") && eti.Code.Equals("MassiveActionClient")).Id;
+            company.ContactIds = new List<Guid>(this.scenarioContext.Get<List<Contact>>("Contacts").Select(c => c.Id));
 
             this.CreateCompany(company);
         }
 
-        [When(@"User creates company by API for contact for maximum name length")]
-        public void CreateUsersWithMaxFields()
+        [When(@"User creates company with required fields using api")]
+        public void CreateCompanyRequiredFieldsUsingApi()
         {
             const int max = 128;
-            var company = new CreateCompanyCommand { Name = StringExtension.GenerateMaxAlphanumericString(max) };
+            var company = new CreateCompanyCommand
+            {
+                Name = StringExtension.GenerateMaxAlphanumericString(max),
+                ContactIds = new List<Guid>(this.scenarioContext.Get<List<Contact>>("Contacts").Select(c => c.Id))
+            };
             this.CreateCompany(company);
         }
 
-        [When(@"User updates company by API")]
+        [When(@"User updates company using api")]
         public void UpdateCompany()
         {
             string requestUrl = $"{ApiUrl}";
@@ -109,19 +109,19 @@
             var commandCompany = new UpdateCompanyCommand
             {
                 Id = company.Id,
-                Name = company.Name,
-                ClientCarePageUrl = company.ClientCarePageUrl,
+                Name = StringExtension.GenerateMaxAlphanumericString(20),
+                ClientCarePageUrl = "www.update.com",
                 ClientCareStatusId = company.ClientCareStatusId,
-                WebsiteUrl = company.WebsiteUrl,
-                Contacts = contactList
+                WebsiteUrl = "www.update.com2",
+                Contacts = contactList.Select(c => new Contact { Id = c.Id }).ToList()
             };
 
             HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, commandCompany);
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        [When(@"User updates company by API with invalid data")]
-        public void UpdateCompanyWithInvalidData()
+        [When(@"User updates company with invalid (name|status|contact) using api")]
+        public void UpdateCompanyWithInvalidData(string data)
         {
             string requestUrl = $"{ApiUrl}";
             var company = this.scenarioContext.Get<Company>("Company");
@@ -130,11 +130,14 @@
             var commandCompany = new UpdateCompanyCommand
             {
                 Id = company.Id,
-                Name = string.Empty,
+                Name = data.Equals("name") ? string.Empty : StringExtension.GenerateMaxAlphanumericString(20),
                 ClientCarePageUrl = company.ClientCarePageUrl,
-                ClientCareStatusId = company.ClientCareStatusId,
+                ClientCareStatusId = data.Equals("status") ? Guid.NewGuid() : company.ClientCareStatusId,
                 WebsiteUrl = company.WebsiteUrl,
-                Contacts = contactList
+                Contacts =
+                    data.Equals("contact")
+                        ? new List<Contact>() { new Contact { Id = Guid.NewGuid() } }
+                        : contactList.Select(c => new Contact { Id = c.Id }).ToList()
             };
 
             HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, commandCompany);
@@ -142,61 +145,35 @@
         }
 
         [When(@"User gets company details")]
-        public void WhenUserGetsCompanyDetails()
+        public void GetCompany()
         {
-            var companyId = this.scenarioContext.Get<Guid>("AddedCompanyId");
-            string requestUrl = $"{ApiUrl}/{companyId}";
+            Guid companyId = this.scenarioContext.ContainsKey("Company")
+                ? this.scenarioContext.Get<Company>("Company").Id
+                : Guid.NewGuid();
 
-            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
-            this.scenarioContext.SetHttpResponseMessage(response);
+            this.GetCompany($"{ApiUrl}/{companyId}");
         }
 
         [When(@"User gets company details with invalid query")]
-        public void WhenUserGetsCompanyDetailsWithInvalidQuery()
+        public void GetCompanyInvalidQuery()
         {
-            string requestUrl = $"{ApiUrl}/{Guid.Empty}";
-
-            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
-            this.scenarioContext.SetHttpResponseMessage(response);
+            this.GetCompany($"{ApiUrl}/{Guid.Empty}");
         }
 
-        [Then(@"Company should be added to database")]
-        public void ThenCompanyShouldBeAddedToDataBase()
-        {
-            var company = JsonConvert.DeserializeObject<Company>(this.scenarioContext.GetResponseContent());
-            var expectedCompany = this.scenarioContext.Get<Company>("Company");
-            expectedCompany.Id = company.Id;
-            Company actualCompany = this.fixture.DataContext.Companies.Single(x => x.Id.Equals(company.Id));
-
-            actualCompany.ShouldBeEquivalentTo(expectedCompany, opt => opt
-                .Excluding(c => c.ClientCareStatus)
-                .Excluding(c => c.CompaniesContacts));
-        }
-
+        [Then(@"Company should be same as in database")]
         [Then(@"Company should be updated")]
-        public void ThenCompanyShouldBeUpdatedInDataBase()
-        {
-            var company = JsonConvert.DeserializeObject<Company>(this.scenarioContext.GetResponseContent());
-            var expectedCompany = this.scenarioContext.Get<Company>("Company");
-
-            Company actualCompany = this.fixture.DataContext.Companies.Single(x => x.Id.Equals(company.Id));
-
-            actualCompany.ShouldBeEquivalentTo(expectedCompany, opt => opt
-                .Excluding(c => c.ClientCareStatus)
-                .Excluding(c => c.CompaniesContacts));
-        }
-
-        [Then(@"Company details should match those in database")]
-        public void ThenCompanyShouldMatchThoseInDatabase()
+        public void CheckCompany()
         {
             var actualCompany = JsonConvert.DeserializeObject<Company>(this.scenarioContext.GetResponseContent());
+            Company expectedCompany = this.fixture.DataContext.Companies.Single(c => c.Id.Equals(actualCompany.Id));
 
-            var companyId = this.scenarioContext.Get<Guid>("AddedCompanyId");
-            Company expectedCompany = this.fixture.DataContext.Companies.Single(x => x.Id.Equals(companyId));
+            expectedCompany.ShouldBeEquivalentTo(actualCompany,
+                opt => opt.Excluding(c => c.ClientCareStatus).Excluding(c => c.CompaniesContacts));
 
-            actualCompany.ShouldBeEquivalentTo(expectedCompany, opt => opt
-                .Excluding(c => c.ClientCareStatus)
-                .Excluding(c => c.CompaniesContacts));
+            expectedCompany.CompaniesContacts.Should()
+                           .Equal(actualCompany.CompaniesContacts,
+                               (c1, c2) =>
+                                   c1.CompanyId.Equals(c2.CompanyId) && c1.ContactId.Equals(c2.ContactId) && c1.Id.Equals(c2.Id));
         }
 
         private void CreateCompany(CreateCompanyCommand company)
@@ -215,18 +192,10 @@
             this.scenarioContext.SetHttpResponseMessage(response);
         }
 
-        private string GetClientCareStatus(Table table, string columName)
+        private void GetCompany(string requestUrl)
         {
-            foreach (TableRow row in table.Rows)
-            {
-                return row[columName];
-            }
-            return string.Empty;
-        }
-
-        private void SetScenarioContextForAddedCompanyId(Guid id)
-        {
-            this.scenarioContext.Set(id, "AddedCompanyId");
+            HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
+            this.scenarioContext.SetHttpResponseMessage(response);
         }
     }
 }
