@@ -2,6 +2,7 @@
 
 module Antares.Common.Component {
     export class SearchOptions {
+        isRequired = false;
         isEditable = false;
         nullOnSelect = true;
         showCancelButton = true;

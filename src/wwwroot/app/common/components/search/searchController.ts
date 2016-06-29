@@ -21,8 +21,8 @@ module Antares.Common.Component {
                 this.selectedItem = null;
         }
 
-        public change = <T>($item: T) => {
-            this.onChangeValue($item);
+        public change = () => {
+            this.onChangeValue(this.selectedItem);
 
             if (this.options.nullOnSelect)
                 this.selectedItem = null;
