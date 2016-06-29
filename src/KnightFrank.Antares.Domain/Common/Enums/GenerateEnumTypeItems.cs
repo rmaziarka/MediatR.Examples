@@ -21,7 +21,9 @@ namespace KnightFrank.Antares.Domain.Common.Enums
         AdditionalSurveyStatus,
         SearchStatus,
         Enquiries,
-        SalutationFormat
+        SalutationFormat,
+		MailingSalutation,
+		EventSalutation
     }
 
 
