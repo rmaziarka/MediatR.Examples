@@ -5,6 +5,7 @@ module Antares.Providers {
     import LatestViewsService = Services.LatestViewsService;
     import Address = Common.Models.Business.Address;
     import Contact = Common.Models.Business.Contact;
+    import Company = Common.Models.Business.Company;
     import ILatestListEntry = Common.Models.Dto.ILatestListEntry;
     import ILatestViewResultItem = Common.Models.Dto.ILatestViewResultItem;
     import EntityTypeEnum = Common.Models.Enums.EntityTypeEnum;
@@ -16,6 +17,7 @@ module Antares.Providers {
         public properties: ILatestListEntry[];
         public activities: ILatestListEntry[];
         public requirements: ILatestListEntry[];
+        public companies: ILatestListEntry[];
 
         constructor(private latestViewsService: LatestViewsService, private $state: angular.ui.IStateService) {
         }
@@ -36,6 +38,7 @@ module Antares.Providers {
             this.loadProperties(result.data);
             this.loadActivities(result.data);
             this.loadRequirements(result.data);
+            this.loadCompanies(result.data);
         }
 
         public loadActivities = (latestViewsItems: ILatestViewResultItem[]) => {
@@ -92,6 +95,23 @@ module Antares.Providers {
                 });
 
             this.requirements = requirements;
+        }
+
+        public loadCompanies = (latestViewsItems: ILatestViewResultItem[]) => {
+            var latestCompanies = latestViewsItems
+                .filter((item) => item.entityTypeCode === <any>EntityTypeEnum.Company)[0];
+
+            if (!latestCompanies)
+                return;
+
+            var companies = latestCompanies.list.map(view =>
+                <ILatestListEntry>{
+                    id: view.id,
+                    name: new Company(view.data).name,
+                    url: this.$state.href("app.company-view", { id: view.id })
+                });
+
+            this.companies = companies;
         }
     }
 

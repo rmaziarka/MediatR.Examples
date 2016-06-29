@@ -31,7 +31,7 @@
 
         public Guid Handle(UpdateCompanyCommand message)
         {
-            Company company = this.companyRepository.GetWithInclude(x => x.Id == message.Id).SingleOrDefault();
+            Company company = this.companyRepository.GetWithInclude(x => x.Id == message.Id, x => x.CompaniesContacts).SingleOrDefault();
 
             if (company == null)
             {
