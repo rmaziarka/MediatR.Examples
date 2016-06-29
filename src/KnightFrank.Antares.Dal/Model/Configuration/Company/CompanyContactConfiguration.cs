@@ -11,11 +11,13 @@
         {
             this.HasRequired(t => t.Contact)
                 .WithMany(t => t.CompaniesContacts)
-                .HasForeignKey(t => t.ContactId);
+                .HasForeignKey(t => t.ContactId)
+                .WillCascadeOnDelete(false); 
 
             this.HasRequired(t => t.Company)
                 .WithMany(t => t.CompaniesContacts)
-                .HasForeignKey(t => t.CompanyId);
+                .HasForeignKey(t => t.CompanyId)
+                .WillCascadeOnDelete(false);
 
             var uniqueIndexName = "IX_CompanyId_ContactId";
             this.Property(an => an.CompanyId)

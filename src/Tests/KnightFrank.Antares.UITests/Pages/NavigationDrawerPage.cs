@@ -10,6 +10,8 @@
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
 
+    using OpenQA.Selenium;
+
     public class NavigationDrawerPage : ProjectPageBase
     {
         private readonly ElementLocator createLink = new ElementLocator(Locator.CssSelector, "div.panel-open a[href *= 'add']");
@@ -60,7 +62,11 @@
 
         public void ClickDrawerMenuItem(string drawerMenuItem)
         {
-            this.Driver.Click(this.menuItem.Format(drawerMenuItem, string.Empty));
+            if (!this.Driver.IsElementPresent(this.menuItem.Format(drawerMenuItem, this.subMenuItem.Value),
+                BaseConfiguration.ShortTimeout))
+            {
+                this.Driver.Click(this.menuItem.Format(drawerMenuItem, string.Empty));
+            }
         }
 
         public bool IsSubMenuVisible(string drawerMenuItem)

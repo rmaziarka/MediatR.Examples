@@ -7,9 +7,14 @@ module Antares.Requirement.View {
     import RequirementViewConfig = Antares.Requirement.IRequirementViewConfig;
     import Enums = Common.Models.Enums;
     import OfferPanelMode = Antares.Offer.Component.OfferPanelMode;
+    import Attachment = Common.Component.Attachment;
 
     export class RequirementViewController extends Core.WithPanelsBaseController {
         requirement: Business.Requirement;
+
+        isAttachmentsUploadPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isAttachmentsPreviewPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+
         viewingAddPanelVisible: boolean = false;
         viewingPreviewPanelVisible: boolean = true;
         offerPreviewPanelVisible: boolean = true;
@@ -20,9 +25,7 @@ module Antares.Requirement.View {
         selectedOffer: Dto.IOffer;
         selectedViewing: Dto.IViewing;
         public config: RequirementViewConfig;
-
-        enumTypeRequirementDocumentType: Dto.EnumTypeCode = Dto.EnumTypeCode.RequirementDocumentType;
-        entityType: EntityType = EntityType.Requirement;
+        attachmentManagerData: Attachment.IAttachmentsManagerData;
 
         isOfferAddPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         isOfferEditPreviewPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
@@ -56,16 +59,59 @@ module Antares.Requirement.View {
             this.eventAggregator.with(this).subscribe(Offer.OfferUpdatedSidePanelEvent, (msg: Offer.OfferUpdatedSidePanelEvent) => {
                 this.onUpdateOffer(msg.updatedOffer);
             });
+
+            this.eventAggregator.with(this).subscribe(Attachment.OpenAttachmentPreviewPanelEvent, this.openAttachmentPreviewPanel);
+            this.eventAggregator.with(this).subscribe(Attachment.OpenAttachmentUploadPanelEvent, this.openAttachmentUploadPanel);
+
+            this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
+                this.hidePanels();
+            });
+
+            this.recreateAttachmentsData();
         }
 
-        onPanelsHidden = () =>{
+        onOldPanelsHidden = () => {
+            this.hideNewPanels();
+        }
+
+        hideNewPanels = () => {
+            this.isAttachmentsUploadPanelVisible = Enums.SidePanelState.Closed;
+            this.isAttachmentsPreviewPanelVisible = Enums.SidePanelState.Closed;
             this.isOfferAddPanelVisible = Enums.SidePanelState.Closed;
             this.isOfferEditPreviewPanelVisible = Enums.SidePanelState.Closed;
+            this.recreateAttachmentsData();
+        }
+
+        openAttachmentPreviewPanel = () => {
+            this.hidePanels();
+
+            this.isAttachmentsPreviewPanelVisible = Enums.SidePanelState.Opened;
+            this.recreateAttachmentsData();
+        }
+
+        openAttachmentUploadPanel = () => {
+            this.hidePanels();
+
+            this.isAttachmentsUploadPanelVisible = Enums.SidePanelState.Opened;
+            this.recreateAttachmentsData();
+        }
+
+        recreateAttachmentsData = () => {
+            this.attachmentManagerData = {
+                entityId: this.requirement.id,
+                enumDocumentType: Dto.EnumTypeCode.RequirementDocumentType,
+                entityType: Enums.EntityTypeEnum.Requirement,
+                attachments: this.requirement.attachments,
+                isPreviewPanelVisible: this.isAttachmentsPreviewPanelVisible,
+                isUploadPanelVisible: this.isAttachmentsUploadPanelVisible
+            }
         }
 
         addSavedAttachmentToList = (result: Dto.IAttachment) => {
             var savedAttachment = new Business.Attachment(result);
             this.requirement.attachments.push(savedAttachment);
+
+            this.recreateAttachmentsData();
         }
 
         saveAttachment = (attachment: Common.Component.Attachment.AttachmentUploadCardModel) => {

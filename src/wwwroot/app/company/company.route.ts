@@ -20,11 +20,7 @@ module Antares.Company {
             {
                 url : '/company/:id',
                 template : '<company-view company="company"></company-view>',
-                controller : ($scope: ng.IScope, company: Dto.ICompany) =>{
-                    var companyViewModel = new Business.Company(company);
-
-                    $scope['company'] = companyViewModel;
-                },
+                controller: "CompanyRouteController",
                 resolve : {
                     company : ($stateParams: ng.ui.IStateParamsService, dataAccessService: Antares.Services.DataAccessService) =>{
                         var companyId: string = $stateParams['id'];
@@ -37,11 +33,7 @@ module Antares.Company {
                 url : '/company/edit/:id',
                 params : {},
                 template: '<company-edit company="company"></company-edit>',
-                controller: ($scope: ng.IScope, company: Dto.ICompany) => {
-                    var companyViewModel = new Business.Company(company);
-
-                    $scope['company'] = companyViewModel;
-                },
+                controller: "CompanyRouteController",
                 resolve: {
                     company: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Antares.Services.DataAccessService) => {
                         var companyId: string = $stateParams['id'];
