@@ -5,6 +5,7 @@ module Antares.Common.Component {
         // component attributes (API)
         public loadItems: ($viewValue: string) => void;
         public onSelectItem: <T>($item: T) => void;
+        public onChangeValue: <T>($item: T) => void;
         public onCancel: () => void;
         public itemTemplateUrl: string;
         public searchPlaceholder: string;
@@ -16,7 +17,15 @@ module Antares.Common.Component {
         public select = <T>($item: T) => {
             this.onSelectItem($item);
 
-            this.selectedItem = null;
+            if (this.options.nullOnSelect)
+                this.selectedItem = null;
+        }
+
+        public change = <T>($item: T) => {
+            this.onChangeValue($item);
+
+            if (this.options.nullOnSelect)
+                this.selectedItem = null;
         }
 
         public cancel = () => {

@@ -9,6 +9,7 @@ module Antares.Common.Component
         bindings: {
             options: '<',
             onSelectItem: '<',
+            onChangeValue: '<',
             onCancel: '<',
             loadItems: '<',
             itemTemplateUrl: '@',

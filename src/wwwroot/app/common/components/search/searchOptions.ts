@@ -3,6 +3,7 @@
 module Antares.Common.Component {
     export class SearchOptions {
         isEditable = false;
+        nullOnSelect = true;
         minLength = 3;
         modelOptions = {
             debounce: {
