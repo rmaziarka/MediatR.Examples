@@ -11,32 +11,32 @@
             <div class="col-md-8">
                 <h3 class="page-header" translate="CONTACT.SALUTATION.SALUTATIONS"></h3>
 
-                <section id="section-basic-information">
+                <section id="section-salutations-mailings">
                     <h5 class="page-header" translate="CONTACT.SALUTATION.MAILINGS"></h5>
                     <div class="section-details">
                         <div class="section-row row">
                             <div class="section-title col-xs-4" translate="CONTACT.SALUTATION.DEFAULT"></div>
-                            <div class="col-xs-8">{{ (vm.contact.defaultMailingSalutationId | dynamicTranslate) }}</div>
+                            <div class="col-xs-8" id="defaultMailingSalutation">{{ (vm.contact.defaultMailingSalutationId | dynamicTranslate) }}</div>
                         </div>
                         <div class="section-row row">
                             <div class="section-title col-xs-4" translate="CONTACT.SALUTATION.FORMAL"></div>
-                            <div class="col-xs-8">{{vm.contact.mailingFormalSalutation }}</div>
+                            <div class="col-xs-8" id="mailingFormalSalutation">{{vm.contact.mailingFormalSalutation }}</div>
                         </div>
                         <div class="section-row row">
                             <div class="section-title col-xs-4" translate="CONTACT.SALUTATION.SEMIFORMAL"></div>
-                            <div class="col-xs-8">{{vm.contact.mailingSemiformalSalutation }}</div>
+                            <div class="col-xs-8" id="mailingSemiformalSalutation">{{vm.contact.mailingSemiformalSalutation }}</div>
                         </div>
                         <div class="section-row row">
                             <div class="section-title col-xs-4" translate="CONTACT.SALUTATION.INFORMAL"></div>
-                            <div class="col-xs-8">{{vm.contact.mailingInformalSalutation }}</div>
+                            <div class="col-xs-8" id="mailingInformalSalutation">{{vm.contact.mailingInformalSalutation }}</div>
                         </div>
                         <div class="section-row row">
                             <div class="section-title col-xs-4" translate="CONTACT.SALUTATION.PERSONAL"></div>
-                            <div class="col-xs-8">{{vm.contact.mailingPersonalSalutation }}</div>
+                            <div class="col-xs-8" id="mailingPersonalSalutation">{{vm.contact.mailingPersonalSalutation }}</div>
                         </div>
                         <div class="section-row row">
                             <div class="section-title col-xs-4" translate="CONTACT.SALUTATION.ENVELOPE"></div>
-                            <div class="col-xs-8">{{vm.contact.mailingEnvelopeSalutation }}</div>
+                            <div class="col-xs-8" id="mailingEnvelopeSalutation">{{vm.contact.mailingEnvelopeSalutation }}</div>
                         </div>
                     </div>
                 </section>
