@@ -8,7 +8,7 @@ module Antares.Property.View {
     import CartListOrder = Common.Component.ListOrder;
     import Resources = Common.Models.Resources;
     import LatestViewsProvider = Providers.LatestViewsProvider;
-    import Attachment = Antares.Common.Component.Attachment;
+    import Attachment = Common.Component.Attachment;
 
     export class PropertyViewController extends Core.WithPanelsBaseController {
 
@@ -31,7 +31,7 @@ module Antares.Property.View {
         config: Activity.IActivityAddPanelConfig;
         savePropertyActivityBusy: boolean = false;
         selectedActivity: Common.Models.Business.Activity;
-        attachmentData: Attachment.IAttachmentsManagerData;
+        attachmentManagerData: Attachment.IAttachmentsManagerData;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -95,7 +95,7 @@ module Antares.Property.View {
         }
 
         recreateAttachmentsData = () => {
-            this.attachmentData = {
+            this.attachmentManagerData = {
                 entityId: this.property.id,
                 enumDocumentType : Dto.EnumTypeCode.PropertyDocumentType,
                 entityType: Enums.EntityTypeEnum.Property,
