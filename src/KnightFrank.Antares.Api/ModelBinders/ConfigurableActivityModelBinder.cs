@@ -1,10 +1,13 @@
 ﻿namespace KnightFrank.Antares.Api.ModelBinders
 {
+    using System;
+    using System.Collections.Generic;
     using System.Web.Http.Controllers;
     using System.Web.Http.ModelBinding;
 
     using FluentValidation;
 
+    using KnightFrank.Antares.Api.Core;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
@@ -33,18 +36,23 @@
                 throw new ValidationException("Incorrect Page Type");
             }
 
+            var jsonSerializerSettings = new JsonSerializerSettings
+                                             {
+                                                 Converters = new List<JsonConverter> { new NullToDefaultValueConverter<Guid>() }
+                                             };
+
             var pageType = (PageType)actionContext.ActionArguments["pageType"];
             switch (pageType)
             {
                 case PageType.Create:
-                    bindingContext.Model = JsonConvert.DeserializeObject<CreateActivityCommand>(requestContent);
+                    bindingContext.Model = JsonConvert.DeserializeObject<CreateActivityCommand>(requestContent, jsonSerializerSettings);
                     break;
                 case PageType.Update:
-                    bindingContext.Model = JsonConvert.DeserializeObject<UpdateActivityCommand>(requestContent);
+                    bindingContext.Model = JsonConvert.DeserializeObject<UpdateActivityCommand>(requestContent, jsonSerializerSettings);
                     break;
                 case PageType.Details:
                 case PageType.Preview:
-                    bindingContext.Model = JsonConvert.DeserializeObject<Activity>(requestContent);
+                    bindingContext.Model = JsonConvert.DeserializeObject<Activity>(requestContent, jsonSerializerSettings);
                     break;
             }
             return true;

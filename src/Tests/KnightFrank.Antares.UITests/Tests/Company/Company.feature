@@ -54,10 +54,10 @@ Scenario: Edit company
 			| Rudolf    | Rednose |
 	Then List of company contacts should contain following contacts on edit company page
 		| FirstName | Surname |
-		| Indiana   | Jones   |
-		| Adam      | Sandler |
 		| Humpty    | Dumpty  |
 		| Rudolf    | Rednose |
+		| Marlon    | Brando  |
+		| Robert    | De Niro |
 	When User clicks on website url icon 
 	Then url opens in new tab
 	When User clicks save company button on edit company page
@@ -67,7 +67,7 @@ Scenario: Edit company
 			| Objectivity | http://www.objectivity.com | http://www.test-2.com | Principal Client |
 		And Company contacts should have following contacts on view company page
 			| FirstName | Surname |
-			| Indiana   | Jones   |
-			| Adam      | Sandler |
 			| Humpty    | Dumpty  |
 			| Rudolf    | Rednose |
+			| Marlon    | Brando  |
+			| Robert    | De Niro |
