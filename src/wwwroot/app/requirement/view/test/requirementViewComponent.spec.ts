@@ -54,6 +54,7 @@ module Antares {
                 }
             }
         }
+        var configMock: Requirement.IRequirementAddConfig = TestHelpers.ConfigGenerator.generateRequirementAddConfig();
 
         describe('and proper requirement id is provided', () => {
             var activityMock: Business.Activity = TestHelpers.ActivityGenerator.generate();
@@ -177,7 +178,8 @@ module Antares {
 
                 scope = $rootScope.$new();
                 scope['requirement'] = requirementMock;
-                element = $compile('<requirement-view requirement="requirement"></requirement-view>')(scope);
+                scope['config'] = configMock;
+                element = $compile('<requirement-view config="config" requirement="requirement"></requirement-view>')(scope);
 
                 scope.$apply();
 

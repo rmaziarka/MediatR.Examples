@@ -148,5 +148,14 @@ module Antares.TestHelpers {
 
             return config;
         }
+
+        public static generateRequirementViewConfig(): Requirement.IRequirementViewConfig {
+            var config: Requirement.IRequirementViewConfig = {
+                requirementType: null,
+                requirement_Description: ConfigGenerator.generateRequirementDescriptionAddConfig()
+            };
+
+            return config;
+        }
     }
 }
