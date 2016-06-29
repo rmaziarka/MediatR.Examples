@@ -5,7 +5,7 @@ module Antares.Attributes {
         templateUrl:'app/attributes/requirement/requirementDescription/requirementDescriptionPreviewControl.html',
             controllerAs: 'vm',
             bindings: {
-                typeId: '<',
+                description: '<',
                 config:'<'
             }
     });
