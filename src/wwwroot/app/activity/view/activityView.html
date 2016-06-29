@@ -40,10 +40,10 @@
                     </div>
                     <div class="col-md-3">
                         <section id="activity-view-viewings">
-                            <h3 class="page-header" translate="ACTIVITY.VIEW.UPCOMING_VIEWINGS"></h3>
+                            <h3 class="page-header" translate="ACTIVITY.VIEW.VIEWINGS"></h3>
                             <card-list id="viewings-list">
                                 <card-list-no-items ng-show="avvm.activity.viewings.length === 0">
-                                    <p class="help-block" translate="ACTIVITY.VIEW.NO_UPCOMING_VIEWINGS"></p>
+                                    <p class="help-block" translate="ACTIVITY.VIEW.NO_VIEWINGS"></p>
                                 </card-list-no-items>
                                 <card-list-item ng-repeat="group in avvm.activity.viewingsByDay | orderBy: '-day'">
                                     <card-list-group class="viewing-group">
