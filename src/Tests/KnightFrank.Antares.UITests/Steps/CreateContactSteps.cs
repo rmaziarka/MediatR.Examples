@@ -39,6 +39,7 @@
         }
 
         [Given(@"User navigates to create contact page")]
+        [When(@"User navigates to create contact page")]
         public void OpenCreateContactPage()
         {
             this.page = new CreateContactPage(this.driverContext).OpenCreateContactPage();
@@ -96,11 +97,11 @@
         {
             var salutations = table.CreateInstance<Contact>();
 
-            Assert.True(string.Equals(salutations.MailingSemiformalSalutation, this.page.GetSemiformalMailingSalutation()));
-            Assert.True(string.Equals(salutations.MailingFormalSalutation, this.page.GetFormalMailingSalutation()));
-            Assert.True(string.Equals(salutations.MailingInformalSalutation, this.page.GetInformalMailingSalutation()));
-            Assert.True(string.Equals(salutations.MailingPersonalSalutation, this.page.GetPersonalMailingSalutation()));
-            Assert.True(string.Equals(salutations.MailingEnvelopeSalutation, this.page.GetEnvelopeMailingSalutation()));
+            Assert.True(string.Equals(salutations.MailingSemiformalSalutation, this.page.SemiformalMailingSalutation));
+            Assert.True(string.Equals(salutations.MailingFormalSalutation, this.page.FormalMailingSalutation));
+            Assert.True(string.Equals(salutations.MailingInformalSalutation, this.page.InformalMailingSalutation));
+            Assert.True(string.Equals(salutations.MailingPersonalSalutation, this.page.PersonalMailingSalutation));
+            Assert.True(string.Equals(salutations.MailingEnvelopeSalutation, this.page.EnvelopeMailingSalutation));
         }
     }
 }

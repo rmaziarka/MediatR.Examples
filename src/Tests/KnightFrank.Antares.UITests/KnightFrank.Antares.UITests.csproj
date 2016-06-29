@@ -205,11 +205,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Tests\Preferences\Preferences.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Preferences.feature</DependentUpon>
-    </Compile>
     <Compile Include="Tests\Property\Property.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -282,10 +277,6 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Attachments.feature.cs</LastGenOutput>
     </None>
-    <None Include="Tests\Preferences\Preferences.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>Preferences.feature.cs</LastGenOutput>
-    </None>
     <None Include="Tests\Property\Property.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Property.feature.cs</LastGenOutput>
@@ -348,7 +339,7 @@
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\..\packages\SpecFlow.2.0.0\tools\TechTalk.SpecFlow.targets" /> 
+  <Import Project="..\..\packages\SpecFlow.2.0.0\tools\TechTalk.SpecFlow.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

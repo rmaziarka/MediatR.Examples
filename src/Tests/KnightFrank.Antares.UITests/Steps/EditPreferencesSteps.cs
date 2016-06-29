@@ -34,21 +34,23 @@
             }
         }
 
-        [Given(@"User navigates to Edit Preferences page")]
-        [When(@"User navigates to Edit Preferences page")]
+        [Given(@"User navigates to edit preferences page")]
+        [When(@"User navigates to edit preferences page")]
         public void WhenUserNavigatesToEditPreferencesPage()
         {
             this.page = new EditPreferencesPage(this.driverContext).OpenEditPreferencesPage();
         }
 
        [When(@"User selects (.*) format")]
+       [Given(@"User selects (.*) format")]
         public void WhenUserSelectsFormat(string setSalutationFormat)
         {
             this.page.SelectSalutaionFormat(setSalutationFormat);
         }
 
         [When(@"User saves preferences")]
-        public void SavesPreferences()
+        [Then(@"User saves preferences")]
+        public void SavePreferences()
         {
             this.page.SavePreferences();
         }
@@ -58,9 +60,5 @@
         {
             Assert.True(this.page.IsSalutationValue(salutation));
         }
-
-
-
-
     }
 }
