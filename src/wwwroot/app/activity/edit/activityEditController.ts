@@ -13,11 +13,10 @@ module Antares.Activity {
     export class ActivityEditController {
         public config: IActivityEditConfig;
         public activity: Business.Activity;
-        public property: Business.PropertyView;
         public userData: Dto.IUserData;
 
-        public propertyDivisionId: string;
-        public propertyTypeId: string;
+        //public propertyDivisionId: string;
+        //public propertyTypeId: string;
         public enumTypeActivityStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityStatus;
         private departmentsController: Antares.Attributes.ActivityDepartmentsEditControlController;
         public standardDepartmentType: Dto.IEnumTypeItem;
@@ -152,10 +151,6 @@ module Antares.Activity {
         }
 
         public $onInit = () => {
-            this.activity = this.activity || new Business.Activity();
-            this.propertyTypeId = this.isAddMode() ? this.property.propertyTypeId : this.activity.property.propertyTypeId;
-            this.propertyDivisionId = this.isAddMode() ? this.property.division.id : this.activity.property.divisionId;
-
             this.setStandardDepartmentType();
             this.setDefaultActivityStatus();
             this.setVendorContacts();
@@ -180,7 +175,7 @@ module Antares.Activity {
             var entity = new Business.UpdateActivityResource(this.activity);
 
             this.configService
-                .getActivity(Enums.PageTypeEnum.Create, this.propertyTypeId, activity.activityTypeId, entity)
+                .getActivity(Enums.PageTypeEnum.Create, this.activity.property.propertyTypeId, activity.activityTypeId, entity)
                 .then((newConfig: IActivityEditConfig) => this.config = newConfig);
         }
 
@@ -192,7 +187,7 @@ module Antares.Activity {
             }
 
             if (this.isAddMode()) {
-                var addCommand = new Commands.ActivityAddCommand(this.activity, this.property.id);
+                var addCommand = new Commands.ActivityAddCommand(this.activity, this.activity.property.id);
 
                 this.activityService.addActivity(addCommand).then((activityDto: Dto.IActivity) => {
                     this.latestViewsProvider.addView(<Common.Models.Commands.ICreateLatestViewCommand>{
@@ -200,7 +195,7 @@ module Antares.Activity {
                         entityType: Enums.EntityTypeEnum.Activity
                     });
 
-                    this.$state.go('app.activity-view', { id: this.activity.id });
+                    this.$state.go('app.activity-view', { id: activityDto.id });
                 });
             }
             else {
@@ -273,6 +268,10 @@ module Antares.Activity {
         }
 
         private setDefaultActivityStatus = () => {
+            if (this.pageMode === PageMode.Edit) {
+                return;
+            }
+
             var activityStatuses = this.enumProvider.enums[Dto.EnumTypeCode.ActivityStatus];
             var defaultActivityStatus: any = <Dto.IEnumTypeItem>_.find(activityStatuses, (item: Dto.IEnumTypeItem) => {
                 return item.code === this.defaultActivityStatusCode;
@@ -288,7 +287,7 @@ module Antares.Activity {
                 return;
             }
 
-            var vendor: Business.Ownership = _.find(this.property.ownerships, (ownership: Business.Ownership) => {
+            var vendor: Business.Ownership = _.find(this.activity.property.ownerships, (ownership: Business.Ownership) => {
                 return ownership.isVendor();
             });
 
@@ -302,6 +301,7 @@ module Antares.Activity {
                 return;
             }
 
+            this.activity.leadNegotiator.userId = this.userData.id;
             this.activity.leadNegotiator.user.id = this.userData.id;
             this.activity.leadNegotiator.user.firstName = this.userData.firstName;
             this.activity.leadNegotiator.user.lastName = this.userData.lastName;
@@ -317,7 +317,10 @@ module Antares.Activity {
             defaultDepartment.departmentId = this.userData.department.id;
             defaultDepartment.department.id = this.userData.department.id;
             defaultDepartment.department.name = this.userData.department.name;
-            defaultDepartment.departmentType.code = Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Managing];
+            //defaultDepartment.departmentType.code = Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Managing];
+            var managingTypeEnumItems: Dto.IEnumItem[] = this.enumProvider.enums.activityDepartmentType.filter((enumItem: Dto.IEnumItem) => { return enumItem.code === Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Managing]; });
+            defaultDepartment.departmentTypeId = managingTypeEnumItems[0].id;
+
             this.activity.activityDepartments.push(defaultDepartment);
         }
 

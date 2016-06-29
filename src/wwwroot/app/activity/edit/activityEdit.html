@@ -5,11 +5,10 @@
             <h2 class="page-header" translate="ACTIVITY.EDIT.EDIT_ACTIVITY" ng-if="vm.isEditMode()"></h2>
             <div class="well">
                 <label translate="ACTIVITY.EDIT.ACTIVITY_TITLE"></label>
-                <div ng-if="vm.isAddMode()">{{ vm.property.address.getAddressText() }}</div>
-                <div ng-if="vm.isEditMode()">{{ vm.activity.property.address.getAddressText() }}</div>
+                <div>{{ vm.activity.property.address.getAddressText() }}</div>
                 <div class="row">
                     <div class="col-md-4">
-                        <activity-type-edit-control property-type-id="vm.propertyTypeId" ng-model="vm.activity.activityTypeId" config="vm.config.activityType"
+                        <activity-type-edit-control property-type-id="vm.activity.property.propertyTypeId" ng-model="vm.activity.activityTypeId" config="vm.config.activityType"
                                                     on-activity-type-changed="vm.activityTypeChanged(activityTypeId)">
                         </activity-type-edit-control>
                     </div>
@@ -30,7 +29,7 @@
                 <activity-landlords-edit-control contacts="vm.activity.contacts" config="vm.config.landlords"></activity-landlords-edit-control>
             </section>
             <section id="activity-edit-negotiators">
-                <activity-negotiators-edit-control property-division-id="{{ vm.propertyDivisionId }}"
+                <activity-negotiators-edit-control property-division-id="{{ vm.activity.property.divisionId }}"
                                                    activity-id="vm.activity.id"
                                                    config="vm.config.negotiators"
                                                    on-negotiator-added="vm.onNegotiatorAdded(user)"
@@ -56,7 +55,7 @@
             <section id="activity-basic-info">
                 <fieldset id="activity-edit-basic">
                     <h3 class="page-header" translate="ACTIVITY.EDIT.BASIC_INFORMATION"></h3>
-                    <property-view-control property="vm.property" is-panel-visible="vm.isPropertyPreviewPanelVisible" config="vm.config.property"></property-view-control>
+                    <property-view-control property="vm.activity.property" is-panel-visible="vm.isPropertyPreviewPanelVisible" config="vm.config.property"></property-view-control>
                     <enum-item-edit-control ng-model="vm.activity.sourceId" config="vm.config.source" schema="vm.activitySourceSchema"></enum-item-edit-control>
                     <textarea-edit-control ng-model="vm.activity.sourceDescription" config="vm.config.sourceDescription" schema="vm.activitySourceDescriptionSchema"></textarea-edit-control>
                     <enum-item-edit-control ng-model="vm.activity.sellingReasonId" config="vm.config.sellingReason" schema="vm.activitySellingReasonSchema"></enum-item-edit-control>

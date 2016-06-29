@@ -248,7 +248,7 @@ module Antares {
             xdescribe('and property details is clicked', () => {
                 it('then property details are set in property preview component', () => {
                     // arrange
-                    activityMock.property = TestHelpers.PropertyGenerator.generate();
+                    activityMock.property = TestHelpers.PropertyGenerator.generatePropertyPreview();
                     scope.$apply();
 
                     var propertyPreviewController: PropertyPreviewController = element.find('property-preview').controller('propertyPreview');

@@ -3,6 +3,8 @@
 module Antares.Activity {
     import IActivity = Common.Models.Dto.IActivity;
     import PageTypeEnum = Common.Models.Enums.PageTypeEnum;
+    import Business = Common.Models.Business;
+
     var app: ng.IModule = angular.module('app');
     app.config(initRoute);
 
@@ -10,9 +12,12 @@ module Antares.Activity {
         $stateProvider
             .state('app.activity-add', {
                 url: '/property/:propertyId/activity/add',
-                template: "<activity-add property='property' user-data='appVm.userData'></activity-add>",
+                template: "<activity-add activity='activity' user-data='appVm.userData'></activity-add>",
                 controller: ($scope: ng.IScope, property: Common.Models.Dto.IProperty) => {
-                    $scope['property'] = new Common.Models.Business.PropertyView(property);
+                    var activity = new Business.Activity();
+
+                    activity.property = new Common.Models.Business.PreviewProperty(property);
+                    activity.propertyId = activity.property.id;
                 },
                 resolve: {
                     property: ($stateParams: ng.ui.IStateParamsService, dataAccessService: Services.DataAccessService) => {

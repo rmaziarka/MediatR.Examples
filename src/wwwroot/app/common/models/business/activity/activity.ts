@@ -23,9 +23,9 @@ module Antares.Common.Models.Business {
         offers: Offer[];
         askingPrice: number = null;
         shortLetPricePerWeek: number = null;
-        activitySourceId: string = '';
-        activitySourceDescription: string = '';
-        activitySellingReasonId: string = '';
+        sourceId: string = '';
+        sourceDescription: string = '';
+        sellingReasonId: string = '';
         pitchningThreats: string = '';
         keyNumber: string = '';
         accessArrangements: string = '';

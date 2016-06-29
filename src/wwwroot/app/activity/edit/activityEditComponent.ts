@@ -6,7 +6,7 @@ module Antares.Activity {
         controllerAs : 'vm',
         controller: 'ActivityEditController',
         bindings: {
-            property: '<',
+            activity: '<',
             userData: '<'
         }
     });
