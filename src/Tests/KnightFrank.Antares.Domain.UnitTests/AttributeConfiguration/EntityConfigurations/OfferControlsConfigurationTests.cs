@@ -13,43 +13,40 @@
     [Trait("FeatureTitle", "OfferControlsConfigurations")]
     public class OfferControlsConfigurationTests : BaseControlsConfigurationTests<OfferControlsConfigurationFixture>
     {
-        private OfferControlsConfiguration offerControlsConfiguration;
+        private readonly OfferControlsConfiguration offerControlsConfiguration;
 
-        private ControlsConfigurationPerTwoTypes<OfferType, RequirementType> GetControlsConfiguration()
+        public OfferControlsConfigurationTests()
         {
-            return this.offerControlsConfiguration ?? (this.offerControlsConfiguration = new OfferControlsConfiguration());
+            this.offerControlsConfiguration = new OfferControlsConfiguration();
         }
 
         [Theory]
         [MemberData(nameof(OfferControlsConfigurationFixture.GetCreateOfferConfiguration),
             MemberType = typeof(OfferControlsConfigurationFixture))]
-        public void
-            Given_ConfigurationForCreate_When_ConfigurationIsInstantiated_Then_ConfigurationShouldBeCorrect(
+        public void Given_ConfigurationForCreate_When_ConfigurationIsInstantiated_Then_ConfigurationShouldBeCorrect(
             ControlsConfigurationPerTwoTypesItem<CreateOfferCommand, OfferType, RequirementType> controlConfigurationItem)
         {
-            this.ControlsConfigurationPerTwoTypesItemTest(controlConfigurationItem, this.GetControlsConfiguration());
+            this.ControlsConfigurationPerTwoTypesItemTest(controlConfigurationItem, this.offerControlsConfiguration);
         }
-
 
         [Theory]
         [MemberData(nameof(OfferControlsConfigurationFixture.GetUpdateOfferConfiguration),
             MemberType = typeof(OfferControlsConfigurationFixture))]
-        public void
-            Given_ConfigurationForUpdate_When_ConfigurationIsInstantiated_Then_ConfigurationShouldBeCorrect(
+        public void Given_ConfigurationForUpdate_When_ConfigurationIsInstantiated_Then_ConfigurationShouldBeCorrect(
             ControlsConfigurationPerTwoTypesItem<UpdateOfferCommand, OfferType, RequirementType> controlConfigurationItem)
         {
-            this.ControlsConfigurationPerTwoTypesItemTest(controlConfigurationItem, this.GetControlsConfiguration());
+            this.ControlsConfigurationPerTwoTypesItemTest(controlConfigurationItem, this.offerControlsConfiguration);
         }
 
-
         [Theory]
-        [MemberData(nameof(OfferControlsConfigurationFixture.GetDetailsOfferConfiguration), MemberType = typeof(OfferControlsConfigurationFixture))]
-        [MemberData(nameof(OfferControlsConfigurationFixture.GetPreviewOfferConfiguration), MemberType = typeof(OfferControlsConfigurationFixture))]
-        public void
-            Given_ConfigurationForRead_When_ConfigurationIsInstantiated_Then_ConfigurationShouldBeCorrect(
+        [MemberData(nameof(OfferControlsConfigurationFixture.GetDetailsOfferConfiguration),
+            MemberType = typeof(OfferControlsConfigurationFixture))]
+        [MemberData(nameof(OfferControlsConfigurationFixture.GetPreviewOfferConfiguration),
+            MemberType = typeof(OfferControlsConfigurationFixture))]
+        public void Given_ConfigurationForRead_When_ConfigurationIsInstantiated_Then_ConfigurationShouldBeCorrect(
             ControlsConfigurationPerTwoTypesItem<Offer, OfferType, RequirementType> controlConfigurationItem)
         {
-            this.ControlsConfigurationPerTwoTypesItemTest(controlConfigurationItem, this.GetControlsConfiguration());
+            this.ControlsConfigurationPerTwoTypesItemTest(controlConfigurationItem, this.offerControlsConfiguration);
         }
     }
 }

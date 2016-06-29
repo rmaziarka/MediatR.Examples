@@ -155,6 +155,7 @@
     <Compile Include="Common\BusinessValidators\EntityValidatorTests.cs" />
     <Compile Include="Common\BusinessValidators\EnumTypeItemValidatorTests.cs" />
     <Compile Include="Common\Enums\EnumParserTests.cs" />
+    <Compile Include="Common\Extension\ArrayExtension.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidatorTests.cs" />
     <Compile Include="Common\Validator\LocaleValidatorTests.cs" />
     <Compile Include="Company\CommandHandlers\UpdateCompanyCommandHandlerTests.cs" />
