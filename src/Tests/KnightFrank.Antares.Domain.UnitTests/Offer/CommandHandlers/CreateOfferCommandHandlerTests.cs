@@ -27,6 +27,7 @@
 
     using EnumType = KnightFrank.Antares.Dal.Model.Enum.EnumType;
     using OfferType = KnightFrank.Antares.Dal.Model.Offer.OfferType;
+    using RequirementType = KnightFrank.Antares.Dal.Model.Property.RequirementType;
 
     [Collection("CreateOfferCommandHandler")]
     [Trait("FeatureTitle", "Offer")]
@@ -53,15 +54,21 @@
             [Frozen] Mock<IGenericRepository<Offer>> offerRepository,
             [Frozen] Mock<IReadGenericRepository<User>> userRepository,
             [Frozen] Mock<IGenericRepository<EnumType>> enumTypeRepository,
+            [Frozen] Mock<IGenericRepository<Requirement>> requirementRepository,
             [Frozen] Mock<IGenericRepository<OfferType>> offerTypeRepository,
+            Requirement requirement,
+            RequirementType requirementType,
             OfferType offerType,
             CreateOfferCommand command,
             CreateOfferCommandHandler handler,
             List<User> users)
         {
             // TODO remove userRepository after userRepository is removed from tested method
+            requirementType.EnumCode = Domain.Common.Enums.RequirementType.ResidentialLetting.ToString();
+            requirement.RequirementType = requirementType;
             userRepository.Setup(u => u.Get()).Returns(users.AsQueryable());
             offerRepository.Setup(r => r.Add(It.IsAny<Offer>())).Returns((Offer a) => a);
+            requirementRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Requirement, bool>>>(), It.IsAny<Expression<Func<Requirement, object>>[]>())).Returns(new List<Requirement> { requirement });
             offerTypeRepository.Setup(r => r.FindBy(It.IsAny<Expression<Func<OfferType, bool>>>())).Returns(new[] { offerType });
 
             enumTypeRepository
@@ -73,10 +80,11 @@
 
             // Assert
             entityValidator.Verify(x => x.EntityExists<Activity>(command.ActivityId), Times.Once);
-            entityValidator.Verify(x => x.EntityExists<Requirement>(command.RequirementId), Times.Once);
+            entityValidator.Verify(x => x.EntityExists(requirement, command.RequirementId), Times.Once);
             enumTypeValidator.Verify(x => x.ItemExists(Domain.Common.Enums.EnumType.OfferStatus, command.StatusId), Times.Once);
             offerRepository.Verify(r => r.Add(It.IsAny<Offer>()), Times.Once());
             offerRepository.Verify(r => r.Save(), Times.Once());
+            requirementRepository.Verify(r => r.GetWithInclude(It.IsAny<Expression<Func<Requirement, bool>>>(), It.IsAny<Expression<Func<Requirement, object>>[]>()), Times.Once());
             offerTypeRepository.Verify(r => r.FindBy(It.IsAny<Expression<Func<OfferType, bool>>>()), Times.Once());
         }
     }

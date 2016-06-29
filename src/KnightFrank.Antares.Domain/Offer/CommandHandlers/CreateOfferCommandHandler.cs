@@ -10,6 +10,7 @@
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Offer.Commands;
@@ -20,7 +21,7 @@
     using EnumType = KnightFrank.Antares.Dal.Model.Enum.EnumType;
     using DomainEnumType = Common.Enums.EnumType;
     using EnumMapper = KnightFrank.Antares.Domain.Common.Enums.EnumMapper;
-    using OfferType = KnightFrank.Antares.Dal.Model.Offer.OfferType;
+    using OfferType = KnightFrank.Antares.Domain.Common.Enums.OfferType;
     using RequirementType = KnightFrank.Antares.Domain.Common.Enums.RequirementType;
 
     public class CreateOfferCommandHandler : IRequestHandler<CreateOfferCommand, Guid>
@@ -32,7 +33,10 @@
         private readonly IEnumTypeItemValidator enumTypeItemValidator;
         private readonly IGenericRepository<EnumType> enumTypeRepository;
         private readonly IEntityMapper<Offer> offerEntityMapper;
-        private readonly IGenericRepository<OfferType> offerTypeRepository;
+        private readonly IGenericRepository<Requirement> requirementRepository;
+        private readonly IGenericRepository<Dal.Model.Offer.OfferType> offerTypeRepository;
+        private readonly IAttributeValidator<Tuple<OfferType, RequirementType>> attributeValidator;
+
 
         public CreateOfferCommandHandler(
             IGenericRepository<Offer> offerRepository,
@@ -41,8 +45,10 @@
             IEnumTypeItemValidator enumTypeItemValidator,
             IOfferProgressStatusHelper offerProgressStatusHelper, 
             IGenericRepository<EnumType> enumTypeRepository,
-            IGenericRepository<OfferType> offerTypeRepository,
-            IEntityMapper<Offer> offerEntityMapper)
+            IGenericRepository<Requirement> requirementRepository,
+            IGenericRepository<Dal.Model.Offer.OfferType> offerTypeRepository,
+            IEntityMapper<Offer> offerEntityMapper,
+            IAttributeValidator<Tuple<OfferType, RequirementType>> attributeValidator)
         {
             this.offerRepository = offerRepository;
             this.userRepository = userRepository;
@@ -50,24 +56,35 @@
             this.enumTypeItemValidator = enumTypeItemValidator;
             this.offerProgressStatusHelper = offerProgressStatusHelper;
             this.enumTypeRepository = enumTypeRepository;
+            this.requirementRepository = requirementRepository;
             this.offerTypeRepository = offerTypeRepository;
             this.offerEntityMapper = offerEntityMapper;
+            this.attributeValidator = attributeValidator;
         }
 
         public Guid Handle(CreateOfferCommand message)
         {
+            Requirement requirement = this.GetRequirement(message.RequirementId);
+            this.entityValidator.EntityExists(requirement, message.RequirementId);
+
             this.entityValidator.EntityExists<Activity>(message.ActivityId);
-            this.entityValidator.EntityExists<Requirement>(message.RequirementId);
             this.enumTypeItemValidator.ItemExists(DomainEnumType.OfferStatus, message.StatusId);
             this.RemoveHoursFromDates(message);
 
-            Guid offerTypeId = this.GetOfferTypeByRequirementId(message.RequirementId).Id;
+            var requirementTypeEnum = EnumExtensions.ParseEnum<RequirementType>(requirement.RequirementType.EnumCode);
+            OfferType offerTypeEnum = EnumMapper.GetOfferType(requirementTypeEnum);
 
+            this.attributeValidator.Validate(
+                PageType.Create,
+                new Tuple<OfferType, RequirementType>(offerTypeEnum, requirementTypeEnum),
+                message);
+
+            Dal.Model.Offer.OfferType offerType = this.GetOfferType(offerTypeEnum);
             var offer = new Offer
                             {
                                 ActivityId = message.ActivityId,
                                 RequirementId = message.RequirementId,
-                                OfferTypeId = offerTypeId
+                                OfferTypeId = offerType.Id
                             };
 
             this.offerEntityMapper.MapAllowedValues(message, offer, PageType.Create);
@@ -104,14 +121,15 @@
                 .GetWithInclude(x => OfferProgressStatusHelper.OfferProgressStatusesEnumTypes.Contains(x.Code), x => x.EnumTypeItems)
                 .ToList();
         }
-
-        private OfferType GetOfferTypeByRequirementId(Guid requirementId)
+        
+        private Requirement GetRequirement(Guid requirementId)
         {
-            //TODO change when we have requimentType (it should be define base on requirement)
-            var requirementType = RequirementType.ResidentialLetting;
-
-            Common.Enums.OfferType offerType = EnumMapper.GetOfferType(requirementType);
-            return this.offerTypeRepository.FindBy(x => x.EnumCode == offerType.ToString()).Single();
+            return this.requirementRepository.GetWithInclude(x => x.Id == requirementId, x => x.RequirementType).SingleOrDefault();
+        }
+        
+        private Dal.Model.Offer.OfferType GetOfferType(OfferType offerTypeEnum)
+        {
+            return this.offerTypeRepository.FindBy(x => x.EnumCode == offerTypeEnum.ToString()).Single();
         }
     }
 }
