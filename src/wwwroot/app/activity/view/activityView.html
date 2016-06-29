@@ -22,12 +22,13 @@
                         <section id="activity-view-property">
                             <property-view-control property="avvm.activity.property" is-panel-visible="avvm.isPropertyPreviewPanelVisible" hide-header="true" config="avvm.config.property"></property-view-control>
                         </section>
-                        <section id="activity-view-vendors">
+                        <section id="activity-view-vendors-summary">
                             <activity-vendors-view-control contacts="avvm.activity.contacts" config="avvm.config.vendors"></activity-vendors-view-control>
                         </section>
-                        <section id="activity-view-landlords">
+                        <section id="activity-view-landlords-summary">
                             <activity-landlords-view-control contacts="avvm.activity.contacts" config="avvm.config.landlords"></activity-landlords-view-control>
                         </section>
+                        <hr/>
                         <section>
                             <activity-negotiators-view-control config="avvm.config.negotiators"
                                                                property-division-id="{{avvm.activity.property.divisionId}}"
@@ -87,8 +88,14 @@
                         <section>
                             <h3 class="page-header" translate="ACTIVITY.VIEW.LANDLORDS" ng-if="avvm.config.landlords"></h3>
                         </section>
-                        <section id="activity-view-landlords">
-                            <activity-landlords-view-control contacts="avvm.activity.contacts" config="avvm.config.landlords"></activity-landlords-view-control>
+                        <section id="activity-view-landlords-details">
+                            <activity-landlords-view-control contacts="avvm.activity.contacts" config="avvm.config.landlords" hide-header="true"></activity-landlords-view-control>
+                        </section>
+                        <section>
+                            <h3 class="page-header" translate="ACTIVITY.VIEW.VENDORS" ng-if="avvm.config.vendors"></h3>
+                        </section>
+                        <section id="activity-view-vendors-details">
+                            <activity-vendors-view-control contacts="avvm.activity.contacts" config="avvm.config.vendors" hide-header="true"></activity-vendors-view-control>
                         </section>
                         <section>
                             <h3 class="page-header" translate="ACTIVITY.VIEW.NEGOTIATORS_DEPARTMENTS"></h3>
