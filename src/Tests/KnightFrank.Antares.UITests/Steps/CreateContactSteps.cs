@@ -3,11 +3,9 @@
     using System;
 
     using KnightFrank.Antares.Dal.Model.Contacts;
-    using KnightFrank.Antares.UITests.Extensions;
     using KnightFrank.Antares.UITests.Pages;
 
     using Objectivity.Test.Automation.Common;
-    using Objectivity.Test.Automation.Common.Extensions;
 
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
@@ -46,7 +44,6 @@
         }
 
         [When(@"User fills in contact details on create contact page")]
-        [Given(@"User fills in contact details on create contact page")]
         public void CreateContact(Table table)
         {
             var contact = table.CreateInstance<Contact>();
@@ -62,34 +59,10 @@
             this.page.SaveContact();
         }
 
-        [Then(@"New contact should be created")]
-        public void CheckIfContactCreated()
-        {
-            //TODO implement check if contact was created
-        }
-
         [Then(@"Contact form on create contact page should be displayed")]
         public void CheckIfContactFormPresent()
         {
             Assert.True(new CreateContactPage(this.driverContext).IsContactFormPresent());
-        }
-
-        [Then(@"User is taken to the contact add page")]
-        public void UserIsTakenToTheContactAddPage()
-        {
-            Assert.True(new CreateContactPage(this.driverContext).CheckIfContactAddPage());
-        }
-
-        [When(@"User chooses '(.*)' as Mailings Use Salutation")]
-        public void UserChoosesMailingsUseSalutation(string salutation)
-        {
-            this.page.SetMailingsUseSalutation(salutation);
-        }
-
-        [When(@"User chooses '(.*)' as Events Use Salutation")]
-        public void UserChoosesEventsUseSalutation(string salutation)
-        {
-            this.page.SetEventsUseSalutation(salutation);
         }
 
         [Then(@"Check Mailings Salutations")]
@@ -97,11 +70,12 @@
         {
             var salutations = table.CreateInstance<Contact>();
 
-            Assert.True(string.Equals(salutations.MailingSemiformalSalutation, this.page.SemiformalMailingSalutation));
-            Assert.True(string.Equals(salutations.MailingFormalSalutation, this.page.FormalMailingSalutation));
-            Assert.True(string.Equals(salutations.MailingInformalSalutation, this.page.InformalMailingSalutation));
-            Assert.True(string.Equals(salutations.MailingPersonalSalutation, this.page.PersonalMailingSalutation));
-            Assert.True(string.Equals(salutations.MailingEnvelopeSalutation, this.page.EnvelopeMailingSalutation));
+            Verify.That(this.driverContext,
+                () => Assert.Equal(salutations.MailingSemiformalSalutation, this.page.SemiformalMailingSalutation),
+                () => Assert.Equal(salutations.MailingFormalSalutation, this.page.FormalMailingSalutation),
+                () => Assert.Equal(salutations.MailingInformalSalutation, this.page.InformalMailingSalutation),
+                () => Assert.Equal(salutations.MailingPersonalSalutation, this.page.PersonalMailingSalutation),
+                () => Assert.Equal(salutations.MailingEnvelopeSalutation, this.page.EnvelopeMailingSalutation));
         }
     }
 }

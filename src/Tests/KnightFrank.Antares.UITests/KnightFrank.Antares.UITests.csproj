@@ -133,9 +133,10 @@
     <Compile Include="Pages\Panels\CreateViewingPage.cs" />
     <Compile Include="Pages\Panels\SelectableContactsListPage.cs" />
     <Compile Include="Pages\Panels\ViewingDetailsPage.cs" />
-    <Compile Include="Pages\EditPreferencesPage.cs" />
+    <Compile Include="Pages\PreferencesPage.cs" />
     <Compile Include="Pages\SearchPropertyPage.cs" />
     <Compile Include="Pages\ViewActivityPage.cs" />
+    <Compile Include="Pages\ViewContactPage.cs" />
     <Compile Include="Pages\ViewOfferPage.cs" />
     <Compile Include="Pages\ViewRequirementPage.cs" />
     <Compile Include="Pages\Panels\ActivityPreviewPage.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Steps\EditPreferencesSteps.cs" />
     <Compile Include="Steps\SearchPropertySteps.cs" />
     <Compile Include="Steps\ViewActivitySteps.cs" />
+    <Compile Include="Steps\ViewContactSteps.cs" />
     <Compile Include="Steps\ViewOfferSteps.cs" />
     <Compile Include="Steps\ViewRequirementSteps.cs" />
     <Compile Include="Steps\ViewPropertySteps.cs" />

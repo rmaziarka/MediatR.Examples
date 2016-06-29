@@ -5,33 +5,27 @@
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
-
-    using OpenQA.Selenium;
+    using Objectivity.Test.Automation.Common.WebElements;
 
     public class CreateContactPage : ProjectPageBase
     {
-        private readonly ElementLocator contactFirstName = new ElementLocator(Locator.Id, "first-name");
         private readonly ElementLocator contactForm = new ElementLocator(Locator.Id, "addContactForm");
-        private readonly ElementLocator contactLastName = new ElementLocator(Locator.Id, "last-name");
-        private readonly ElementLocator contactTitle = new ElementLocator(Locator.Name, "searchText");
         private readonly ElementLocator saveButton = new ElementLocator(Locator.CssSelector, "#addContactForm button");
-        private readonly ElementLocator salutationsMailingsDropdown = new ElementLocator(Locator.XPath, "//select[@id='default-mailing-salutation-id']");
-        private readonly ElementLocator salutationsEventsDropdown = new ElementLocator(Locator.XPath, "//select[@id='defaultEventSalutationId']");
-        private readonly ElementLocator mailingsFormalInput = new ElementLocator(Locator.XPath, "//input[@id='mailing-formal-salutation']");
-        private readonly ElementLocator mailingsSemiformalInput = new ElementLocator(Locator.XPath, "//input[@id='mailing-semiformal-salutation']");
-        private readonly ElementLocator mailingsInformalInput = new ElementLocator(Locator.XPath, "//input[@id='mailing-informal-salutation']");
-        private readonly ElementLocator mailingsPersonalInput = new ElementLocator(Locator.XPath, "//input[@id='mailing-personal-salutation']");
-        private readonly ElementLocator mailingsEnvelopeInput = new ElementLocator(Locator.XPath, "//input[@id='mailing-envelope-salutation']");
+        // Contact
+        private readonly ElementLocator firstName = new ElementLocator(Locator.Id, "first-name");
+        private readonly ElementLocator lastName = new ElementLocator(Locator.Id, "last-name");
+        private readonly ElementLocator title = new ElementLocator(Locator.CssSelector, "#contact-title-search input");
+        // Salutation
+        private readonly ElementLocator salutationsMailingsDropdown = new ElementLocator(Locator.CssSelector, "#default-mailing-salutation-id select");
+        private readonly ElementLocator mailingsFormalInput = new ElementLocator(Locator.Id, "mailing-formal-salutation");
+        private readonly ElementLocator mailingsSemiformalInput = new ElementLocator(Locator.Id, "mailing-semiformal-salutation");
+        private readonly ElementLocator mailingsInformalInput = new ElementLocator(Locator.Id, "mailing-informal-salutation");
+        private readonly ElementLocator mailingsPersonalInput = new ElementLocator(Locator.Id, "mailing-personal-salutation");
+        private readonly ElementLocator mailingsEnvelopeInput = new ElementLocator(Locator.Id, "mailing-envelope-salutation");
 
         public CreateContactPage(DriverContext driverContext) : base(driverContext)
         {
         }
-
-        public string Title => this.Driver.Value(this.contactTitle);
-
-        public string FirstName => this.Driver.Value(this.contactFirstName);
-
-        public string LastName => this.Driver.Value(this.contactLastName);
 
         public string FormalMailingSalutation => this.Driver.Value(this.mailingsFormalInput);
 
@@ -49,33 +43,27 @@
             return this;
         }
 
-        public CreateContactPage SetTitle(string title)
+        public CreateContactPage SetTitle(string text)
         {
-            this.Driver.SendKeys(this.contactTitle, title);
+            this.Driver.SendKeys(this.title, text);
             return this;
         }
 
-        public CreateContactPage SetFirstName(string firstName)
+        public CreateContactPage SetFirstName(string text)
         {
-            this.Driver.SendKeys(this.contactFirstName, firstName);
+            this.Driver.SendKeys(this.firstName, text);
             return this;
         }
 
-        public CreateContactPage SetLastName(string surname)
+        public CreateContactPage SetLastName(string text)
         {
-            this.Driver.SendKeys(this.contactLastName, surname);
+            this.Driver.SendKeys(this.lastName, text);
             return this;
         }
 
-        public CreateContactPage SetMailingsUseSalutation(string salutation)
+        public CreateContactPage SelectMailingsUseSalutation(string text)
         {
-            this.Driver.GetElement(this.salutationsMailingsDropdown).SendKeys(salutation);
-            return this;
-        }
-
-        public CreateContactPage SetEventsUseSalutation(string salutation)
-        {
-            this.Driver.GetElement(this.salutationsEventsDropdown).SendKeys(salutation);
+            this.Driver.GetElement<Select>(this.salutationsMailingsDropdown).SelectByText(text);
             return this;
         }
 
@@ -89,11 +77,20 @@
         {
             return this.Driver.IsElementPresent(this.contactForm, BaseConfiguration.MediumTimeout);
         }
+    }
 
-        public bool CheckIfContactAddPage()
-        {
-            string currentUrl = this.Driver.Url;
-            return currentUrl == CommonPage.GetUrl("CreateContactPage").ToString();
-        }
+    internal class Salutation
+    {
+        public string DefaultMailingSalutation { get; set; }
+
+        public string MailingFormalSalutation { get; set; }
+
+        public string MailingSemiformalSalutation { get; set; }
+
+        public string MailingInformalSalutation { get; set; }
+
+        public string MailingPersonalSalutation { get; set; }
+
+        public string MailingEnvelopeSalutation { get; set; }
     }
 }
