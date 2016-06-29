@@ -79,24 +79,20 @@ module Antares {
 
         ///////// titleSelector
 
-        // 28136 - Add back in when fixed
-        xit('when title value is missing then required message should be displayed', () => {
+        it('when title value is missing then required message should be displayed', () => {
             assertValidator.assertRequiredValidator(null, false, pageObjectSelectors.titleSelector);
         });
 
-        // 28136 - Add back in when fixed
-        xit('when title value is present then required message should not be displayed', () => {
+        it('when title value is present then required message should not be displayed', () => {
             assertValidator.assertRequiredValidator('Miss', true, pageObjectSelectors.titleSelector);
         });
         
-        // 28136 - Add back in when fixed
-        xit('when title value is too long then validation message should be displayed', () => {
+        it('when title value is too long then validation message should be displayed', () => {
             var maxLength = 128;
             assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.titleSelector);
         });
 
-        // 28136 - Add back in when fixed
-        xit('when title value has max length then validation message should not be displayed', () => {
+        it('when title value has max length then validation message should not be displayed', () => {
             var maxLength = 128;
             assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.titleSelector);
         });
@@ -171,8 +167,7 @@ module Antares {
 
         ///////// mailingPersonalSalutationSelector
 
-        // 28136 - Add back in when fixed
-        xit('when mailing personal salutation value is too long then validation message should be displayed', ($http) => {
+        it('when mailing personal salutation value is too long then validation message should be displayed', ($http) => {
             var maxLength = 128;
             assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.mailingPersonalSalutationSelector);
         });

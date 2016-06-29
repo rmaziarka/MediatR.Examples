@@ -12,13 +12,14 @@
                                     <label class="required" for="title" translate="CONTACT.TITLE"></label>
 
                                     <search id="contact-title-search"
+                                            name="title"
                                             on-select-item="vm.contactTitleSelect"
                                             on-change-value="vm.contactTitleSelect"
                                             load-items="vm.getContactTitles"
                                             options="vm.searchOptions"
                                             item-template-url="app/contact/add/contactTitleSearchTemplate.html"></search>
 
-                                    <div ng-messages="addContactForm.title.$error" ng-show="addContactForm.$submitted || addContactForm.title.$dirty">
+                                    <div ng-messages="addContactForm.searchText.$error" ng-show="addContactForm.$submitted || addContactForm.searchText.$dirty">
                                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                                     </div>
                                 </div>

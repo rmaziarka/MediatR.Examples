@@ -4,6 +4,7 @@
         <input type="text" class="form-control"
                name="searchText"
                ng-model="vm.selectedItem"
+               ng-required="vm.options.isRequired"
                ng-model-options="vm.options.modelOptions"
                ng-change="vm.change()"
                uib-typeahead="item as item.getName() for item in vm.loadItems($viewValue)"
@@ -14,5 +15,6 @@
                placeholder="{{vm.searchPlaceholder | translate}}"
                autocomplete="off">
         <button ng-if="vm.options.showCancelButton" data-type="cancel" type="button" class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>
+        
     </div>
 </div>
