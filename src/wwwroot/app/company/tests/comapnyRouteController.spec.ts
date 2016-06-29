@@ -3,9 +3,8 @@
 module Antares {
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
-    import IActivityViewConfig = Antares.Activity.IActivityViewConfig;
 
-    describe('Given activity route controller', () =>{
+    describe('Given company route controller', () => {
         var scope: ng.IScope;
         var controllerProvider: ng.IControllerService;
         var latestViewsProviderSpy: LatestViewsProvider;
@@ -13,7 +12,7 @@ module Antares {
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
             $controller: any,
-            latestViewsProvider: LatestViewsProvider) =>{
+            latestViewsProvider: LatestViewsProvider) => {
 
             spyOn(latestViewsProvider, 'addView');
             latestViewsProviderSpy = latestViewsProvider;
@@ -26,15 +25,14 @@ module Antares {
         describe('when constructor is executed', () => {
             it('then addView of last views provider is called', () => {
                 //Arrange
-                var activityMock = TestHelpers.ActivityGenerator.generate();
-                var config = { vendors: {} } as IActivityViewConfig;
-                var parametrs = { $scope: scope, activity: activityMock, latestViewsProvider: latestViewsProviderSpy, config: config };
+                var companyMock = TestHelpers.CompanyGenerator.generate();
+                var parametrs = { $scope: scope, company: companyMock, latestViewsProvider: latestViewsProviderSpy };
 
                 //Act
-                controllerProvider('ActivityRouteController', parametrs);
-
+                controllerProvider('CompanyRouteController', parametrs);
+                
                 //Assert
-                expect(latestViewsProviderSpy.addView).toHaveBeenCalledWith({ entityId: activityMock.id, entityType: EntityType.Activity });
+                expect(latestViewsProviderSpy.addView).toHaveBeenCalledWith({ entityId: companyMock.id, entityType: EntityType.Company });
             });
         });
     });
