@@ -65,7 +65,7 @@
                         </card-list-item>
                     </card-list>
                 </section>
-                <attachments-manager entity-id="avvm.activity.id" enum-document-type="{{avvm.enumTypeActivityDocumentType}}" entity-type="{{avvm.entityType}}" attachments="avvm.activity.attachments" on-save-attachment-for-entity="avvm.saveAttachment(attachment)"></attachments-manager>
+                <attachments-manager data="avvm.attachmentManagerData" on-save-attachment-for-entity="avvm.saveAttachment(attachment)"></attachments-manager>
             </div>
             <div class="col-md-4">
                 <section>
