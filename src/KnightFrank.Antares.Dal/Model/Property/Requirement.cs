@@ -32,8 +32,8 @@
 
         public virtual ICollection<Attachment> Attachments { get; set; } = new List<Attachment>();
 
-        public decimal RentMin  { get; set; }
+        public decimal? RentMin  { get; set; }
 
-        public decimal RentMax  { get; set; }
+        public decimal? RentMax  { get; set; }
     }
 }
