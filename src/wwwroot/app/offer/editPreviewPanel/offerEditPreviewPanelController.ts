@@ -7,16 +7,12 @@ module Antares.Offer {
         import Services = Antares.Services;
         import Business = Antares.Common.Models.Business;
 
-        export enum OfferPanelMode {
-            Edit,
-            Preview
-        }
-
         export class OfferEditPreviewPanelController extends Antares.Common.Component.BaseSidePanelController {
             // bindings
             config: IOfferConfig;
-            offer: Dto.IOffer;
+            offer: Business.Offer;
             mode: OfferPanelMode;
+            requirement: Business.Requirement;
 
             // properties
             cardPristine: any;
@@ -58,12 +54,8 @@ module Antares.Offer {
             private loadConfig = (pageType: Enums.PageTypeEnum, offer: Dto.IOffer) => {
                 this.isBusy = true;
 
-                // TODO: update after merge with letting requirement
-                var requirementTypeId = '128E59E5-013D-E611-8299-8CDCD4521601';
-                //this.requirementTypeId = this.requirement.typeId;
-
                 this.configService
-                    .getOffer(pageType, requirementTypeId, offer.offerTypeId, offer)
+                    .getOffer(pageType, this.requirement.requirementTypeId, offer.offerTypeId, offer)
                     .then(this.configLoaded)
                     .finally(() => { this.isBusy = false; });
             }

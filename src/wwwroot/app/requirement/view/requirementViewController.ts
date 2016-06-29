@@ -3,10 +3,9 @@
 module Antares.Requirement.View {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
-    import EntityType = Common.Models.Enums.EntityTypeEnum;
-    import RequirementViewConfig = Antares.Requirement.IRequirementViewConfig;
+    import RequirementViewConfig = Requirement.IRequirementViewConfig;
     import Enums = Common.Models.Enums;
-    import OfferPanelMode = Antares.Offer.Component.OfferPanelMode;
+    import OfferPanelMode = Offer.Component.OfferPanelMode;
     import Attachment = Common.Component.Attachment;
 
     export class RequirementViewController extends Core.WithPanelsBaseController {
@@ -50,22 +49,19 @@ module Antares.Requirement.View {
             this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
                 this.isOfferAddPanelVisible = Enums.SidePanelState.Closed;
                 this.isOfferEditPreviewPanelVisible = Enums.SidePanelState.Closed;
+                this.hidePanels();
             });
 
             this.eventAggregator.with(this).subscribe(Offer.OfferAddedSidePanelEvent, (msg: Offer.OfferAddedSidePanelEvent) =>{
                 this.onSaveNewOffer(msg.addedOffer);
             });
 
-            this.eventAggregator.with(this).subscribe(Offer.OfferUpdatedSidePanelEvent, (msg: Offer.OfferUpdatedSidePanelEvent) => {
+            this.eventAggregator.with(this).subscribe(Offer.OfferUpdatedSidePanelEvent, (msg: Offer.OfferUpdatedSidePanelEvent) =>{
                 this.onUpdateOffer(msg.updatedOffer);
             });
 
             this.eventAggregator.with(this).subscribe(Attachment.OpenAttachmentPreviewPanelEvent, this.openAttachmentPreviewPanel);
             this.eventAggregator.with(this).subscribe(Attachment.OpenAttachmentUploadPanelEvent, this.openAttachmentUploadPanel);
-
-            this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
-                this.hidePanels();
-            });
 
             this.recreateAttachmentsData();
         }

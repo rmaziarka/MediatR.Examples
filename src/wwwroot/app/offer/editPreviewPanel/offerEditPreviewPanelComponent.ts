@@ -9,6 +9,7 @@ module Antares.Component {
         bindings: {
             isVisible: '<',
             offer: '<',
+            requirement: '<',
             mode: '<'
         }
     });

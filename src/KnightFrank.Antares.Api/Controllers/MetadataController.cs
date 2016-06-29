@@ -39,6 +39,7 @@
         {
             this.activityConfiguration = activityConfiguration;
             this.requirementConfiguration = requirementConfiguration;
+            this.offerConfiguration = offerConfiguration;
             this.enumParser = enumParser;
         }
 

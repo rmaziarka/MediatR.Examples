@@ -134,7 +134,7 @@
                 ActivityId = activityId,
                 RequirementId = requirementId,
                 StatusId = statusId,
-                Price = 10,
+                PricePerWeek = 10,  // requirement and offer are of type ResidentialLetting
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(400),
                 OfferDate = this.date,
                 CompletionDate = this.date,
@@ -152,13 +152,13 @@
                     e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(status)).Id;
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;
             Guid requirementId = this.scenarioContext.Get<Requirement>("Requirement").Id;
-
+            
             var details = new CreateOfferCommand
             {
                 ActivityId = activityId,
                 RequirementId = requirementId,
                 StatusId = statusId,
-                Price = 10,
+                PricePerWeek = 10,  // requirement and offer are of type ResidentialLetting
                 OfferDate = this.date
             };
 

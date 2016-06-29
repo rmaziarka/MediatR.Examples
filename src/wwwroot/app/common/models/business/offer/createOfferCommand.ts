@@ -4,6 +4,7 @@ module Antares.Common.Models.Business {
     export class CreateOfferCommand {
         activityId: string;
         requirementId: string;
+        offerTypeId: string;
         statusId: string;
         price: number;
         pricePerWeek: number;
@@ -16,6 +17,7 @@ module Antares.Common.Models.Business {
             model = model || <CreateOfferCommand>{};
             this.activityId = model.activityId;
             this.requirementId = model.requirementId;
+            this.offerTypeId = model.offerTypeId;
             this.statusId = model.statusId;
             this.price = model.price;
             this.pricePerWeek = model.pricePerWeek;
