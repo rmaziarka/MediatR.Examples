@@ -24,7 +24,7 @@ module Antares.Attributes {
         };
 
         publishOpenEvent = () =>{
-            this.eventAggregator.publish(new OpenViewingPrewiewPanelEvent());
+            this.eventAggregator.publish(new OpenViewingPreviewPanelEvent());
         }
     }
 

@@ -6,20 +6,8 @@ module Antares.Viewing {
     import EntityType = Common.Models.Enums.EntityTypeEnum;
 
     export class ViewingPreviewPanelController extends Antares.Common.Component.BaseSidePanelController {
-
-        constructor(private latestViewsProvider: LatestViewsProvider){
-            super();
-        }
-
         // binding
         viewing: Viewing;
-
-        panelShown = () => {
-            this.latestViewsProvider.addView({
-                entityId: this.viewing.id,
-                entityType: EntityType.Activity
-            });
-        }
     }
 
     angular.module('app').controller('ViewingPreviewPanelController', ViewingPreviewPanelController);

@@ -1,8 +1,8 @@
 module Antares.Attributes {
     import Event = Core.Event;
 
-    export class OpenViewingPrewiewPanelEvent extends Event {
-        private openViewingPrewiewPanelEvent: boolean;
-        getKey(): string { return "viewingPrewiew.openPanel"; }
+    export class OpenViewingPreviewPanelEvent extends Event {
+        private openViewingPreviewPanelEvent: boolean;
+        getKey(): string { return "viewingPreview.openPanel"; }
     }
 }
