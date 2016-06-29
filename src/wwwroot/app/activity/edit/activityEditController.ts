@@ -116,12 +116,20 @@ module Antares.Activity {
             fieldName: 'accessArrangements',
             formName: 'accessArrangementsForm'
         }
-
+   
         invitationTextSchema: Antares.Attributes.ITextEditControlSchema = {
             controlId: 'invitationTextId',
             translationKey: 'ACTIVITY.EDIT.APPRAISAL_MEETING.INVITATION_TEXT',
             fieldName: 'invitationText',
             formName: 'invitationTextForm'
+        }
+
+        configMocked: any = {
+            attendees: {
+                attendees: {
+                    active: true
+                }
+            }
         }
 
         constructor(

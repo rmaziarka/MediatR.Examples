@@ -30,7 +30,7 @@ module Antares.Attributes {
             it('with no selected attendees then all users and contacts should be displayed as not selected', () => {
                 controller.attendees = [];
 
-                var availableAttendees: Business.UpdateActivityAttendee[] = controller.getAvailableAttendees();
+                var availableAttendees: Models.EditActivityAttendeeModel[] = controller.getAvailableAttendees();
 
                 expect(availableAttendees.length).toBe(4);
                 expectAttendeeOnList(availableAttendees, controller.contacts[0].id, false);
@@ -52,7 +52,7 @@ module Antares.Attributes {
                 controller.attendees.push(attendee);
 
                 // act
-                var availableAttendees: Business.UpdateActivityAttendee[] = controller.getAvailableAttendees();
+                var availableAttendees: Models.EditActivityAttendeeModel[] = controller.getAvailableAttendees();
 
                 // assert
                 expect(availableAttendees.length).toBe(5);
@@ -77,7 +77,7 @@ module Antares.Attributes {
                 controller.attendees.push(attendee);
 
                 // act
-                var availableAttendees: Business.UpdateActivityAttendee[] = controller.getAvailableAttendees();
+                var availableAttendees: Models.EditActivityAttendeeModel[] = controller.getAvailableAttendees();
 
                 // assert
                 expect(availableAttendees.length).toBe(4);
@@ -102,7 +102,7 @@ module Antares.Attributes {
                 controller.attendees.push(attendee);
 
                 // act
-                var availableAttendees: Business.UpdateActivityAttendee[] = controller.getAvailableAttendees();
+                var availableAttendees: Models.EditActivityAttendeeModel[] = controller.getAvailableAttendees();
 
                 // assert
                 expect(availableAttendees.length).toBe(4);
@@ -139,14 +139,14 @@ module Antares.Attributes {
             });
         });
 
-        var expectAttendeeOnList = (list: Business.UpdateActivityAttendee[], attendeeId: string, isSelectedExpected: boolean): void => {
+        var expectAttendeeOnList = (list: Models.EditActivityAttendeeModel[], attendeeId: string, isSelectedExpected: boolean): void => {
             var attendee = isAttendeeOnList(list, attendeeId);
             expect(attendee).toBeTruthy();
             expect(attendee.isSelected).toBe(isSelectedExpected);
         }
 
-        var isAttendeeOnList = (list: Business.UpdateActivityAttendee[], attendeeId: string): Business.UpdateActivityAttendee => {
-            var attendeesOnList = list.filter((activityAttendee: Business.UpdateActivityAttendee) => {
+        var isAttendeeOnList = (list: Models.EditActivityAttendeeModel[], attendeeId: string): Models.EditActivityAttendeeModel => {
+            var attendeesOnList = list.filter((activityAttendee: Models.EditActivityAttendeeModel) => {
                 return activityAttendee.getId() === attendeeId;
             });
 

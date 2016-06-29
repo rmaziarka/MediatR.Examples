@@ -71,6 +71,7 @@ module Antares.Common.Models.Business {
             }
 
             this.secondaryNegotiator = this.secondaryNegotiator ? this.secondaryNegotiator : [];
+            this.attendees = this.attendees ? this.attendees : [];
         }
 
         groupViewings(viewings: Viewing[]) {

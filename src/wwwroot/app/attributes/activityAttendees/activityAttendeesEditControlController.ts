@@ -9,10 +9,10 @@ module Antares.Attributes {
         users: Business.User[];
         contacts: Business.Contact[];
         attendees: Dto.IActivityAttendee[];
-        config: any;
+        config: IActivityAttendeesEditControlConfig;
 
         // controller 
-        availableAttendees: Business.UpdateActivityAttendee[];
+        availableAttendees: Models.EditActivityAttendeeModel[];
 
         constructor() {
             this.attendees = this.attendees ? this.attendees : [];
@@ -27,38 +27,38 @@ module Antares.Attributes {
             this.updateSelectedAttendeesFromSelectedList();
         }
 
-        public getAvailableAttendees = (): Business.UpdateActivityAttendee[] => {
-            var availableAttendees: Business.UpdateActivityAttendee[] = [];
+        public getAvailableAttendees = (): Models.EditActivityAttendeeModel[] => {
+            var availableAttendees: Models.EditActivityAttendeeModel[] = [];
 
-            availableAttendees = this.attendees.map((attendee: Dto.IActivityAttendee) => new Business.UpdateActivityAttendee(attendee.user, attendee.contact, true));
+            availableAttendees = this.attendees.map((attendee: Dto.IActivityAttendee) => new Models.EditActivityAttendeeModel(attendee.user, attendee.contact, true));
 
-            var attendeeUsersToAdd = this.users.map((user: Business.User) => new Business.UpdateActivityAttendee(user, null));
+            var attendeeUsersToAdd = this.users.map((user: Business.User) => new Models.EditActivityAttendeeModel(user, null));
             this.addOnlyNotSelectedAttendeesToList(availableAttendees, attendeeUsersToAdd);
 
-            var attendeeContactsToAdd: Business.UpdateActivityAttendee[] = this.contacts.map((contact: Business.Contact) => new Business.UpdateActivityAttendee(null, contact));
+            var attendeeContactsToAdd: Models.EditActivityAttendeeModel[] = this.contacts.map((contact: Business.Contact) => new Models.EditActivityAttendeeModel(null, contact));
             this.addOnlyNotSelectedAttendeesToList(availableAttendees, attendeeContactsToAdd);
 
             return availableAttendees;
         }
 
-        public onAttendeeSelected = (attendee: Business.UpdateActivityAttendee) => {
+        public onAttendeeSelected = (attendee: Models.EditActivityAttendeeModel) => {
             this.updateSelectedAttendeesFromSelectedList();
         }
 
         private updateSelectedAttendeesFromSelectedList = () => {
-            this.attendees = this.availableAttendees.filter((aa: Business.UpdateActivityAttendee) => { return aa.isSelected; });
+            this.attendees = this.availableAttendees.filter((aa: Models.EditActivityAttendeeModel) => { return aa.isSelected; });
         }
 
-        private addOnlyNotSelectedAttendeesToList = (availableAttendees: Business.UpdateActivityAttendee[], attendeesToAdd: Business.UpdateActivityAttendee[]) => {
-            attendeesToAdd.forEach((attendeeToAdd: Business.UpdateActivityAttendee) => {
+        private addOnlyNotSelectedAttendeesToList = (availableAttendees: Models.EditActivityAttendeeModel[], attendeesToAdd: Models.EditActivityAttendeeModel[]) => {
+            attendeesToAdd.forEach((attendeeToAdd: Models.EditActivityAttendeeModel) => {
                 if (this.isAttendeeNotAddedToList(availableAttendees, attendeeToAdd)) {
                     availableAttendees.push(attendeeToAdd);
                 }
             });
         }
 
-        private isAttendeeNotAddedToList = (availableAttendees: Business.UpdateActivityAttendee[], attendeeToAdd: Business.UpdateActivityAttendee): boolean => {
-            var attendeesOnList = availableAttendees.filter((addedAttendee: Business.UpdateActivityAttendee) => {
+        private isAttendeeNotAddedToList = (availableAttendees: Models.EditActivityAttendeeModel[], attendeeToAdd: Models.EditActivityAttendeeModel): boolean => {
+            var attendeesOnList = availableAttendees.filter((addedAttendee: Models.EditActivityAttendeeModel) => {
                 return attendeeToAdd.getId() === addedAttendee.getId();
             });
 

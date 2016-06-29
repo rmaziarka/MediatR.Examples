@@ -38,12 +38,12 @@ module Antares.TestHelpers {
             return _.times(n, () => { return ActivityAttendeeGenerator.generateAttendeeUserDto() });
         }
 
-        public static generateManyAttendeeContact(n: number): Business.UpdateActivityAttendee[] {
-            return _.map<Dto.IActivityAttendee, Business.UpdateActivityAttendee>(ActivityAttendeeGenerator.generateManyAttendeeContactDtos(n), (aa: Dto.IActivityAttendee) => { return new Business.UpdateActivityAttendee(null, aa.contact); });
+        public static generateManyAttendeeContact(n: number): Attributes.Models.EditActivityAttendeeModel[] {
+            return _.map<Dto.IActivityAttendee, Attributes.Models.EditActivityAttendeeModel>(ActivityAttendeeGenerator.generateManyAttendeeContactDtos(n), (aa: Dto.IActivityAttendee) => { return new Attributes.Models.EditActivityAttendeeModel(null, aa.contact); });
         }
 
-        public static generateManyAttendeeUser(n: number): Business.UpdateActivityAttendee[] {
-            return _.map<Dto.IActivityAttendee, Business.UpdateActivityAttendee>(ActivityAttendeeGenerator.generateManyAttendeeUserDtos(n), (aa: Dto.IActivityAttendee) => { return new Business.UpdateActivityAttendee(aa.user, null); });
+        public static generateManyAttendeeUser(n: number): Attributes.Models.EditActivityAttendeeModel[] {
+            return _.map<Dto.IActivityAttendee, Attributes.Models.EditActivityAttendeeModel>(ActivityAttendeeGenerator.generateManyAttendeeUserDtos(n), (aa: Dto.IActivityAttendee) => { return new Attributes.Models.EditActivityAttendeeModel(aa.user, null); });
         }
 
     }

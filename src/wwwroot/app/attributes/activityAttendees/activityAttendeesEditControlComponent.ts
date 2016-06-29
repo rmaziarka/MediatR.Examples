@@ -9,7 +9,7 @@ module Antares.Attributes {
             users: '<',
             contacts: '<',
             attendees: '=',
-         //   config: '<'
+            config: '<'
         }
     });
 }
