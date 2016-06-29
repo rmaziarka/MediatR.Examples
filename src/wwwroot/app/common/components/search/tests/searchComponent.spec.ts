@@ -99,8 +99,7 @@ module Antares {
 
         describe('when clicking cancel', () => {
 
-            // 28136 - Add back in when fixed            
-            xit('than cancel action is called', () => {
+            it('than cancel action is called', () => {
                 // arrange
                 spyOn(controller, 'cancel');
 

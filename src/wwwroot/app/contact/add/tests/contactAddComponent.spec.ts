@@ -88,7 +88,7 @@ module Antares {
         xit('when title value is present then required message should not be displayed', () => {
             assertValidator.assertRequiredValidator('Miss', true, pageObjectSelectors.titleSelector);
         });
-        
+
         // 28136 - Add back in when fixed
         xit('when title value is too long then validation message should be displayed', () => {
             var maxLength = 128;

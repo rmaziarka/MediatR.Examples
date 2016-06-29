@@ -6,19 +6,20 @@
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <form ng-submit="addContactForm.$valid && vm.save()" name="addContactForm" id="addContactForm" method="post" novalidate>
                     <fieldset>
-                        <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.title.$dirty) && addContactForm.title.$invalid}">
+                        <div class="form-group" ng-class="{'has-error': (addContactForm.$submitted || addContactForm.searchText.$dirty) && addContactForm.searchText.$invalid}">
                             <div class="row">
                                 <div class="col-md-5">
                                     <label class="required" for="title" translate="CONTACT.TITLE"></label>
 
                                     <search id="contact-title-search"
+                                            name="title"
                                             on-select-item="vm.contactTitleSelect"
                                             on-change-value="vm.contactTitleSelect"
                                             load-items="vm.getContactTitles"
                                             options="vm.searchOptions"
                                             item-template-url="app/contact/add/contactTitleSearchTemplate.html"></search>
 
-                                    <div ng-messages="addContactForm.title.$error" ng-show="addContactForm.$submitted || addContactForm.title.$dirty">
+                                    <div ng-messages="addContactForm.searchText.$error" ng-show="addContactForm.$submitted || addContactForm.searchText.$dirty">
                                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                                     </div>
                                 </div>
