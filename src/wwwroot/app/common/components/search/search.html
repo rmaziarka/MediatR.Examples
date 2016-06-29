@@ -13,6 +13,6 @@
                typeahead-template-url="{{vm.itemTemplateUrl}}"
                placeholder="{{vm.searchPlaceholder | translate}}"
                autocomplete="off">
-        <button ng-if="onCancel" data-type="cancel" type="button" class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>
+        <button ng-if="vm.options.showCancelButton" data-type="cancel" type="button" class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>
     </div>
 </div>

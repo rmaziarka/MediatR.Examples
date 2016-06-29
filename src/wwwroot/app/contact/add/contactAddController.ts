@@ -7,7 +7,7 @@ module Antares.Contact {
 
     export class ContactAddController {
         public contact: Antares.Common.Models.Dto.IContact;
-        public searchOptions: Common.Component.SearchOptions = new Common.Component.SearchOptions({ minLength: 0, isEditable : true, nullOnSelect : false });
+        public searchOptions: Common.Component.SearchOptions = new Common.Component.SearchOptions({ minLength: 0, isEditable : true, nullOnSelect : false, showCancelButton: false });
 
         userData: Dto.ICurrentUser;
         mailingSalutationFormat: Dto.EnumTypeCode = Dto.EnumTypeCode.MailingSalutation;
