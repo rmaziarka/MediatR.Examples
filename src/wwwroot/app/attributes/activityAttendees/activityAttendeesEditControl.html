@@ -1,0 +1,6 @@
+﻿<h5 class="page-header" translate="ACTIVITY.EDIT.APPRAISAL_MEETING.ATTENDEES"></h5>
+<div class="form-group">
+    <div class="checkbox" ng-repeat="person in vm.availableAttendees">
+        <label><input type="checkbox" ng-model="person.isSelected" ng-change="vm.onAttendeeSelected(person)">{{person.getName()}}</label>
+    </div>
+</div>

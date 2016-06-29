@@ -24,6 +24,9 @@ module Antares.Activity {
 
         public isPropertyPreviewPanelVisible: boolean = false;
 
+        public availableAttendeeUsers: Business.User[];
+        public availableAttendeeContacts: Business.Contact[];
+
         private departmentErrorMessageCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.MESSAGE';
         private departmentErrorTitleCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.TITLE';
         private defaultActivityStatusCode: string = 'PreAppraisal';
@@ -136,6 +139,9 @@ module Antares.Activity {
             this.eventAggregator.with(this).subscribe(Attributes.OpenPropertyPrewiewPanelEvent, (event: Antares.Attributes.OpenPropertyPrewiewPanelEvent) => {
                 this.isPropertyPreviewPanelVisible = true;
             });
+
+            this.availableAttendeeUsers = this.getAvailableAttendeeUsers();
+            this.availableAttendeeContacts = this.getAvailableAttendeeContacts();
         }
 
         public $onInit = () => {
@@ -190,6 +196,7 @@ module Antares.Activity {
         }
 
         public onNegotiatorAdded = (user: Dto.IUser) => {
+            this.availableAttendeeUsers = this.getAvailableAttendeeUsers();
             this.addDepartment(user.department);
         }
 
@@ -204,6 +211,19 @@ module Antares.Activity {
 
         public isEditMode = () => {
             return this.pageMode === PageMode.Edit;
+        }
+
+        public getAvailableAttendeeUsers = (): Business.User[] => {
+            var users: Business.User[] = this.activity.secondaryNegotiator.map((n: Business.ActivityUser) => {
+                return n.user;
+            }) || [];
+
+            users.push(this.activity.leadNegotiator.user);
+            return users;
+        }
+
+        public getAvailableAttendeeContacts = (): Business.Contact[] => {
+            return this.activity.contacts;
         }
 
         private get pageMode(): PageMode {

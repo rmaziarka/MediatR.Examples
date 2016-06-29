@@ -30,6 +30,7 @@ module Antares.Common.Models.Business {
         keyNumber: string = '';
         accessArrangements: string = '';
         invitationText: string = '';
+        attendees: Dto.IActivityAttendee[] = [];
 
         constructor(activity?: Dto.IActivity) {
             if (activity) {

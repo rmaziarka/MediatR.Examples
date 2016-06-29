@@ -231,7 +231,8 @@
       "ACCESS_ARRANGEMENTS": "Access arrangements",
       "APPRAISAL_MEETING": {
         "APPRAISAL_MEETING": "Appraisal meeting",
-        "INVITATION_TEXT": "Invitation text"
+        "INVITATION_TEXT": "Invitation text",
+        "ATTENDEES":  "Attendees"
       }
     },
     "PREVIEW": {
