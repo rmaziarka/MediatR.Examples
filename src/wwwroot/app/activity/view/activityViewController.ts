@@ -20,7 +20,8 @@ module Antares.Activity.View {
         selectedOffer: Dto.IOffer;
         selectedViewing: Dto.IViewing;
 
-        isPropertyPreviewPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;        
+        isPropertyPreviewPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isViewingPreviewPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
 
         //controls
         controlSchemas: any = {
@@ -59,12 +60,17 @@ module Antares.Activity.View {
             this.activityAttachmentResource = dataAccessService.getAttachmentResource();
 
             this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
-                this.isPropertyPreviewPanelVisible = Enums.SidePanelState.Closed;
+                this.hidePanels();
             });
 
             this.eventAggregator.with(this).subscribe(Attributes.OpenPropertyPrewiewPanelEvent, (event: Antares.Attributes.OpenPropertyPrewiewPanelEvent) => {
                 this.hidePanels();
                 this.isPropertyPreviewPanelVisible = Enums.SidePanelState.Opened;
+            });
+
+            this.eventAggregator.with(this).subscribe(Attributes.OpenViewingPrewiewPanelEvent, (event: Antares.Attributes.OpenViewingPrewiewPanelEvent) => {
+                this.hidePanels();
+                this.isViewingPreviewPanelVisible = Enums.SidePanelState.Opened;
             });
 
             eventAggregator
@@ -76,6 +82,7 @@ module Antares.Activity.View {
 
         onPanelsHidden = () => {
             this.isPropertyPreviewPanelVisible = Enums.SidePanelState.Closed;
+            this.isViewingPreviewPanelVisible = Enums.SidePanelState.Closed;
         };
 
         showPropertyPreview = (property: Business.PreviewProperty) => {
