@@ -9,7 +9,7 @@ Scenario: Create viewing
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
+			| FirstName | LastName | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Requirement exists in database
 	When User creates viewing using api
@@ -25,7 +25,7 @@ Scenario: Create viewing with mandatory fields
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database 
-			| FirstName | Surname | Title  |
+			| FirstName | LastName | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Requirement exists in database
 	When User creates viewing with mandatory fields using api
@@ -41,7 +41,7 @@ Scenario Outline: Create viewing with invalid data
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
+			| FirstName | LastName | Title  |
 			| Tomasz    | Bien    | Mister |
 		And Requirement exists in database
 	When User creates viewing with invalid <data> using api
@@ -62,7 +62,7 @@ Scenario: Update viewing
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
+			| FirstName | LastName | Title  |
 			| Tomasz    | Bien    | Mister |
 			| Tom       | Jones   | Sir    |
 		And Requirement exists in database
@@ -80,7 +80,7 @@ Scenario Outline: Update viewing with invalid data
 			| ActivityStatus | ActivityType  |
 			| PreAppraisal   | Freehold Sale |
 		And Contacts exists in database
-			| FirstName | Surname | Title  |
+			| FirstName | LastName | Title  |
 			| Tomasz    | Bien    | Mister |
 			| Tom       | Jones   | Sir    |
 		And Requirement exists in database

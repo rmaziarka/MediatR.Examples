@@ -7,7 +7,7 @@ module Antares.Contact {
 
     export class ContactAddController {
         public contact: Antares.Common.Models.Dto.IContact;
-        public searchOptions: Common.Component.SearchOptions = new Common.Component.SearchOptions({ minLength: 0, isEditable : true });
+        public searchOptions: Common.Component.SearchOptions = new Common.Component.SearchOptions({ minLength: 0, isEditable : true, nullOnSelect : false, showCancelButton: false });
 
         userData: Dto.ICurrentUser;
         mailingSalutationFormat: Dto.EnumTypeCode = Dto.EnumTypeCode.MailingSalutation;
@@ -66,7 +66,7 @@ module Antares.Contact {
             // TODO - Fire on non-select (i.e. free text entry)
             this.selectedTitle = contactTitle;
         }
-
+        
         onEnumLoaded = (result: any) => {
             var mailingList = result[Dto.EnumTypeCode.MailingSalutation];
             var eventList = result[Dto.EnumTypeCode.EventSalutation];

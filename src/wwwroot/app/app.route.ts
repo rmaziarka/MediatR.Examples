@@ -34,13 +34,6 @@ module Antares {
                 }
             });
 
-        $stateProvider
-            .state("app.contact-add", {
-                url: "/contact/add",
-                params: {},
-                template: "<contact-add user-data='appVm.userData'></contact-add>"
-            });
-
         $urlRouterProvider.otherwise('/app/contact/add');
     }
 

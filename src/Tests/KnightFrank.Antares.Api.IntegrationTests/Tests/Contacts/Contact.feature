@@ -10,6 +10,9 @@ Scenario: Create contact with required fields
 @Contacts
 Scenario: Create contact with all fields
 	Given All contacts have been deleted
+		And Users exists in database
+			| activeDirectoryDomain | activeDirectoryLogin | firstName | lastName |
+			| AD                    | tester             | John      | Smith    |
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode      | enumTypeItemCode  |
 			| MailingSalutation | MailingSemiformal |
@@ -31,6 +34,17 @@ Scenario Outline: Create contact using invalid data
 	| firstName | lastname | title |
 	| Michael   |          | cheef |
 	| Michael   | Angel    |       |
+
+@Contacts
+Scenario: Create contact with duplicate negotiators
+	Given Users exists in database
+			| activeDirectoryDomain | activeDirectoryLogin | firstName | lastName |
+			| AD2                   | secondary               | John      | Smith    |
+	When User creates contact using api with same negotiators
+		| FirstName | LastName | Title |
+		| Michael   | Angel    | Mr    |
+	Then User should get BadRequest http status code
+
 
 @Contacts
 Scenario: Get all contacts

@@ -98,14 +98,17 @@
   },
   "CONTACT": {
     "CREATE_CONTACT": "Create contact",
+    "VIEW_CONTACT": "View contact",
     "TITLE": "Title",
     "FIRSTNAME": "First name",
     "LASTNAME": "Last name",
     "SALUTATION": {
       "TITLE": "Salutation",
+      "SALUTATIONS": "Salutations",
       "MAILINGS": "Mailings",
       "EVENTS": "Events",
       "USE_SALUTATION": "Use salutation",
+      "DEFAULT": "Default salutation",
       "FORMAL": "Formal",
       "SEMIFORMAL": "Semiformal",
       "INFORMAL": "Informal",
