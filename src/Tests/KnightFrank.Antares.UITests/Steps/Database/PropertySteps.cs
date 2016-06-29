@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
 
     using KnightFrank.Antares.Dal;
@@ -12,6 +11,7 @@
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Domain.Common.Enums;
+    using KnightFrank.Antares.UITests.Extensions;
 
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
@@ -56,7 +56,7 @@
             address.AddressFormId = addressFormId;
             address.CountryId = countryId;
             address.Line1 = string.Empty;
-            address.Line3 = DateTime.Now.ToString(CultureInfo.InvariantCulture);
+            address.Line3 = StringExtension.GenerateMaxAlphanumericString(20);
 
             var property = new Property
             {
