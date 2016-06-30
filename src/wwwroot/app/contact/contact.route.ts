@@ -15,6 +15,20 @@ module Antares.Contact {
                 params : {},
                 template: "<contact-add user-data='appVm.userData' contact='contact'></contact-add>"
             })
+            .state('app.contact-edit', {
+                url: '/contact/edit/:id',
+                params: {},
+                template: "<contact-edit user-data='appVm.userData' contact='contact'></contact-edit>",
+                controller: ($scope: ng.IScope, contact: Dto.IContact) => {
+                    $scope['contact'] = new Business.Contact(contact);
+                },
+                resolve: {
+                    contact: ($stateParams: angular.ui.IStateParamsService, dataAccessService: Antares.Services.DataAccessService) => {
+                        var contactId: string = $stateParams['id'];
+                        return dataAccessService.getContactResource().get({ id: contactId }).$promise;
+                    }
+                }
+            })
             .state('app.contact-view', {
                 url: '/contact/:id',
                 template: '<contact-view contact="contact"></contact-view>',
