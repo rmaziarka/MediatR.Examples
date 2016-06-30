@@ -45,7 +45,7 @@
             switch (pageType)
             {
                 case PageType.Create:
-                    bindingContext.Model = JsonConvert.DeserializeObject<CreateActivityCommand>(requestContent, jsonSerializerSettings);
+                    bindingContext.Model = JsonConvert.DeserializeObject<CreateActivityCommand>(requestContent, jsonSerializerSettings) ?? new CreateActivityCommand();
                     break;
                 case PageType.Update:
                     bindingContext.Model = JsonConvert.DeserializeObject<UpdateActivityCommand>(requestContent, jsonSerializerSettings);

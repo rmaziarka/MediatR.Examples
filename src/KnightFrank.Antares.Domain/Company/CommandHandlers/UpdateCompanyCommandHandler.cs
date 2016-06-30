@@ -18,12 +18,16 @@
     {
         private readonly IGenericRepository<Company> companyRepository;
         private readonly IGenericRepository<Contact> contactRepository;
+        private readonly IEntityValidator entityValidator;
 
-        public UpdateCompanyCommandHandler(IGenericRepository<Company> companyRepository,
-            IGenericRepository<Contact> contactRepository)
+        public UpdateCompanyCommandHandler(
+            IGenericRepository<Company> companyRepository,
+            IGenericRepository<Contact> contactRepository,
+            IEntityValidator entityValidator)
         {
             this.companyRepository = companyRepository;
             this.contactRepository = contactRepository;
+            this.entityValidator = entityValidator;
         }
 
         public Guid Handle(UpdateCompanyCommand message)
@@ -32,10 +36,7 @@
 								  .GetWithInclude(x => x.Id == message.Id,
 												  x => x.Contacts).SingleOrDefault();
 
-			if (company == null)
-			{
-				throw new BusinessValidationException(ErrorMessage.Missing_Company_Id);
-			}
+            this.entityValidator.EntityExists(company, message.Id);
 
 			// TODO: validate unique collection
 
