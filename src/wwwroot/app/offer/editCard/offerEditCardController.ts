@@ -66,10 +66,6 @@ module Antares.Offer {
             }
         }
 
-        $onInit = () => {
-            this.resetCardData();
-        }
-
         $onChanges = (obj: any) => {
             if (obj.pristineFlag && obj.pristineFlag.currentValue !== obj.pristineFlag.previousValue) {
                 this.resetCardData();
