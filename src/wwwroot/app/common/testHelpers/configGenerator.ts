@@ -188,5 +188,17 @@ module Antares.TestHelpers {
 
             return config;
         }
+
+        public static generateRequirementTypeEditConfig(): Attributes.IRequirementTypeEditControlConfig {
+            var config: Attributes.IRequirementTypeEditControlConfig = {
+                active: true,
+                requirementTypeId: {
+                    required: true,
+                    active: true
+                }
+            };
+
+            return config;
+        }
     }
 }

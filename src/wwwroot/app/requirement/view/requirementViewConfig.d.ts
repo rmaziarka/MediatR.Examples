@@ -4,6 +4,6 @@ declare module Antares.Requirement {
     import Attributes = Antares.Attributes;
 
     interface IRequirementViewConfig extends IRequirementConfig {
-        requirementType: Attributes.IRequirementTypeEditFieldConfig;
+        requirementType: Attributes.IRequirementTypeEditControlConfig;
     }
 }

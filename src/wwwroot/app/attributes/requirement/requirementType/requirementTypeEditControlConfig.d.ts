@@ -2,6 +2,6 @@
 
 declare module Antares.Attributes {
     interface IRequirementTypeEditControlConfig extends Antares.Common.Models.Dto.IControlConfig  {
-        requirementTypeId: IRequirementTypeEditFieldConfig;
+        requirementTypeId: Antares.Common.Models.Dto.IFieldConfig;
     }
 }
