@@ -70,7 +70,7 @@ module Antares {
             enumService.setEnum(Dto.EnumTypeCode.EventSalutation.toString(), eventSalutations);
             enumService.setEnum(Dto.EnumTypeCode.SalutationFormat.toString(), salutationFormats);
 
-            element = $compile("<contact-add user-data='userData'></contact-add>")(scope);
+            element = $compile("<contact-add user-data='userData' contact='contact'></contact-add>")(scope);
             scope.$apply();
             controller = element.controller("contactAdd");
 
