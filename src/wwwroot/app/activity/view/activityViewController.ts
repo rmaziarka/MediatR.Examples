@@ -76,6 +76,9 @@ module Antares.Activity.View {
                 this.hidePanels();
                 this.isOfferPreviewPanelVisible = Enums.SidePanelState.Opened;
             });
+            
+            this.eventAggregator.with(this).subscribe(Attachment.OpenAttachmentPreviewPanelEvent, this.openAttachmentPreviewPanel);
+            this.eventAggregator.with(this).subscribe(Attachment.OpenAttachmentUploadPanelEvent, this.openAttachmentUploadPanel);
 
             eventAggregator
                 .with(this)
