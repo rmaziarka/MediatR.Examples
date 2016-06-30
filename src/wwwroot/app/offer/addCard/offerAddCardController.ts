@@ -16,7 +16,7 @@ module Antares.Offer {
         // controller
         offerAddCardForm: ng.IFormController;
         offer: Business.CreateOfferCommand = new Business.CreateOfferCommand();
-        private defaultOfferStatusCode: string = Common.Models.Enums.OfferStatus[Common.Models.Enums.OfferStatus.New];
+        defaultOfferStatusCode: string = Common.Models.Enums.OfferStatus[Common.Models.Enums.OfferStatus.New];
         today: Date = new Date();
 
         // controls
