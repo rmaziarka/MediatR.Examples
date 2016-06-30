@@ -10,7 +10,7 @@ module Antares.Contact {
         }
         
         goToEdit = () => {
-            
+            this.$state.go('app.contact-edit', { id: this.$state.params['id'] });
         }
     }
 

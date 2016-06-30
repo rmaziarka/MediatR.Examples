@@ -7,7 +7,6 @@ module Antares.Contact {
     import Business = Common.Models.Business;
 
     export class ContactAddController {
-        public config: Attributes.IContactNegotiatorsControlConfig;
         public contact: Antares.Common.Models.Dto.IContact; //TODO: This should be IContact not IContactTemp(Aneela)
         public searchOptions: Common.Component.SearchOptions = new Common.Component.SearchOptions({ minLength: 0, isEditable: true, nullOnSelect: false, showCancelButton: false, isRequired: true, maxLength: 128  });
 
