@@ -30,6 +30,14 @@ module Antares.Requirement.View {
         isOfferEditPreviewPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         offerPanelMode: OfferPanelMode = OfferPanelMode.Preview;
 
+        controlSchemas: any = {
+            rentRange: <Attributes.IRangeControlSchema>{
+                minControlId: "rent-min",
+                maxControlId: "rent-max",
+                translationKey: "REQUIREMENT.VIEW.RENT_WEEKLY"
+            }
+        }
+
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
             private $scope: ng.IScope,
