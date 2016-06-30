@@ -69,9 +69,11 @@
         /// <param name="command">Contact entity</param>
         [HttpPost]
         [Route("")]
-        public Guid CreateContact([FromBody] CreateContactCommand command)
+        public Contact CreateContact([FromBody] CreateContactCommand command)
         {
-            return this.mediator.Send(command);
+            Guid contactId = this.mediator.Send(command);
+
+            return this.GetContact(contactId);
         }
 
         /// <summary>

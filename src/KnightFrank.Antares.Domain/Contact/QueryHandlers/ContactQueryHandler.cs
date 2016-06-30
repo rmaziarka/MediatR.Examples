@@ -21,7 +21,7 @@
         {
             Contact contact =
                 this.contactRepository
-                    .Get()
+                    .GetWithInclude(c => c.ContactUsers)
                     .SingleOrDefault(req => req.Id == message.Id);
 
             return contact;

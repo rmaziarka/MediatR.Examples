@@ -193,10 +193,8 @@
         [Then(@"Contact details required fields should be the same as already added")]
         public void CheckContactDetailsRequiredFieldsFromPost()
         {
-            var contactId = JsonConvert.DeserializeObject<Guid>(this.scenarioContext.GetResponseContent());
+            var expectedContact = JsonConvert.DeserializeObject<Contact>(this.scenarioContext.GetResponseContent());
             var contact = this.scenarioContext.Get<CreateContactCommand>("Contact");
-            
-            Contact expectedContact = this.fixture.DataContext.Contacts.Single(x => x.Id.Equals(contactId));
 
             contact.Title.ShouldBeEquivalentTo(expectedContact.Title);
             contact.LastName.ShouldBeEquivalentTo(expectedContact.LastName);
@@ -209,11 +207,9 @@
         [Then(@"Contact details all fields should be the same as already added")]
         public void CheckContactDetailsAllFieldsFromPost()
         {
-            var contactId = JsonConvert.DeserializeObject<Guid>(this.scenarioContext.GetResponseContent());
+            var expectedContact = JsonConvert.DeserializeObject<Contact>(this.scenarioContext.GetResponseContent());
             var contactCommand = this.scenarioContext.Get<CreateContactCommand>("Contact");
-          
 
-            Contact expectedContact = this.fixture.DataContext.Contacts.Single(x => x.Id.Equals(contactId));
 
             AssertionOptions.AssertEquivalencyUsing(options =>
                options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 5000)).WhenTypeIs<DateTime>());

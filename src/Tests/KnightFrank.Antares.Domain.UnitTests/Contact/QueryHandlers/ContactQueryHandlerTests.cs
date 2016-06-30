@@ -1,7 +1,9 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Contact.QueryHandlers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
 
     using FluentAssertions;
 
@@ -32,7 +34,7 @@
         {
             expectedContact.Id = query.Id;
             mockedData.Add(expectedContact);
-            contactRepository.Setup(x => x.Get()).Returns(mockedData.AsQueryable());
+            contactRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Contact, object>>>())).Returns(mockedData.AsQueryable());
 
             Contact contact = handler.Handle(query);
 
