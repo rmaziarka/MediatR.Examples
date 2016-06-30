@@ -14,6 +14,11 @@
 
     public class ActivityControlsConfiguration : ControlsConfigurationPerTwoTypes<PropertyType, ActivityType>
     {
+        public ActivityControlsConfiguration()
+        {
+            this.Init();
+        }
+
         public override void DefineControls()
         {
             this.DefineControlsForCreate();
