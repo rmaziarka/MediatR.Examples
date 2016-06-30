@@ -1,6 +1,5 @@
 ﻿namespace KnightFrank.Antares.Domain.Company.QueryHandlers
 {
-    using System.Data.Entity;
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Company;
@@ -20,12 +19,9 @@
 
         public Company Handle(CompanyQuery message)
         {
-            Company company =
-                this.companyRepository
-                    .Get()
-                    .Include(c=>c.Contacts)
-                    .Include(c=>c.ClientCareStatus)
-                    .SingleOrDefault(req => req.Id == message.Id);
+            Company company = this.companyRepository
+                .GetWithInclude(x => x.CompaniesContacts.Select(y => y.Contact), x => x.ClientCareStatus)
+                .SingleOrDefault(com => com.Id == message.Id);
 
             return company;
         }

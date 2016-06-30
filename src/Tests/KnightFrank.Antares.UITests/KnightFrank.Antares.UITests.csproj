@@ -107,6 +107,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Extensions\DriverExtensions.cs" />
     <Compile Include="Pages\AddressTemplatePage.cs" />
     <Compile Include="Pages\CommonPage.cs" />

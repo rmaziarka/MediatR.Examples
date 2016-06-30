@@ -77,7 +77,7 @@
             List<string> contacts = table.CreateSet<Contact>().Select(c => c.FirstName + " " + c.LastName).ToList();
             List<string> expectedContacts = this.page.Contacts;
 
-            contacts.Should().Equal(expectedContacts);
+            expectedContacts.Should().Equal(contacts);
         }
     }
 }

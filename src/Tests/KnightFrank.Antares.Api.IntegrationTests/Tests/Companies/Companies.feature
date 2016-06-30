@@ -5,49 +5,37 @@ Scenario: Create new company with required fields
 	Given Contacts exists in database
 		| FirstName | LastName | Title |
 		| Michael   | Angel   | cheef | 
-	When User creates company by API for contact for maximum name length
+	When User creates company with required fields using api
 	Then User should get OK http status code
-		And Company should be added to database
+		And Company should be same as in database
 
 @Company
-Scenario Outline: Create new company with all fields
+Scenario: Create new company with all fields
 	Given Contacts exists in database
 		| FirstName | LastName | Title |
 		| Michael   | Angel   | Mr    |
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode     | enumTypeItemCode    |
-			| ClientCareStatus | MassiveActionClient |
-	 When User creates company by API with all fields
-	 	| Name   | WebsiteUrl   | ClientCarePageUrl   | ClientCareStatus   |
-	 	| <name> | <websiteUrl> | <clientCarePageUrl> | <clientCareStatus> |
+	 When User creates company using api
+	 	| Name         | WebsiteUrl  | ClientCarePageUrl  |
+	 	| Test Company | www.api.com | www.clientcare.com |
 	 Then User should get OK http status code
-		 And Company should be added to database
-
-	Examples:
-	| name         | websiteUrl  | clientCarePageUrl  | clientCareStatus    |
-	| Test Company | www.api.com | www.clientcare.com | MassiveActionClient |
+		 And Company should be same as in database
 
 @Company
 Scenario Outline: Create company with invalid data
 	Given Contacts exists in database
 		| FirstName | LastName | Title |
-		| Michael   | Angel   | ceo | 
-		And User gets EnumTypeItemId and EnumTypeItem code
-			| enumTypeCode   | enumTypeItemCode     |
-			| <enumTypeCode> | <enumTypeItemCode> |
-	When User creates company by API for contact
-		| Name   | EnumTypeCode   | EnumTypeItemCode   |
-		| <name> | <enumTypeCode> | <enumTypeItemCode> |
-	Then User should get <statusCode> http status code
+		| Michael   | Angel   | ceo   |
+	When User creates company with invalid <data> using api
+	Then User should get BadRequest http status code
 
-	Examples: 
-	| name         | enumTypeCode     | enumTypeItemCode | statusCode |
-	| Company Test | OfferStatus      | Accepted         | BadRequest |
-	|              | ClientCareStatus | KeyClient        | BadRequest |
+	Examples:
+	| data    |
+	| name    |
+	| status  |
+	| contact |
 
 @Company
-Scenario: Get non existant company
-	Given Company does not exist
+Scenario: Get non existing company
 	When User gets company details
 	Then User should get NotFound http status code
 
@@ -64,27 +52,29 @@ Scenario: Get company details
 		And Company exists in database
 	When User gets company details
 	Then User should get OK http status code
-		And Company details should match those in database
+		And Company should be same as in database
 
 @Company
-Scenario: Update company with all fields
+Scenario: Update company
 	Given Contacts exists in database
 		| FirstName | LastName | Title |
 		| Michael   | Angel   | cheef | 
-		And User creates company in database with following data
-	 		| Name         | WebsiteUrl  | ClientCarePageUrl  | ClientCareStatus    |
-	 		| Test Company | www.api.com | www.clientcare.com | MassiveActionClient |
-	When User updates company by API
+		And Company exists in database
+	When User updates company using api
 	Then User should get OK http status code
 		And Company should be updated
 
 @Company
-Scenario: Update company with invalid data
+Scenario Outline: Update company with invalid data
 	Given Contacts exists in database
 		| FirstName | LastName | Title |
 		| Michael   | Angel   | cheef | 
-		And User creates company in database with following data
-	 		| Name         | WebsiteUrl  | ClientCarePageUrl  | ClientCareStatus    |
-	 		| Test Company | www.api.com | www.clientcare.com | MassiveActionClient |
-	When User updates company by API with invalid data
+		And Company exists in database
+	When User updates company with invalid <data> using api
 	Then User should get BadRequest http status code
+
+	Examples: 
+	| data    |
+	| name    |
+	| status  |
+	| contact |

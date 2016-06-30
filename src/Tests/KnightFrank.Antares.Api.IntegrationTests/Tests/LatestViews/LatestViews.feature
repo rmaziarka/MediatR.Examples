@@ -33,6 +33,16 @@ Scenario: Create latest viewed requirement
 		And Retrieved latest view should contain Requirement entity
 
 @LatestViews
+Scenario: Create latest viewed company
+	Given Contacts exists in database
+		| FirstName | LastName | Title  |
+		| Tomasz    | Bien     | Mister |
+		And Company exists in database
+	When User adds Company to latest viewed entities using api
+	Then User should get OK http status code
+		And Retrieved latest view should contain Company entity
+
+@LatestViews
 Scenario: Create latest view using invalid entity type
 	When User creates latest view using invalid entity type
 	Then User should get BadRequest http status code
@@ -105,3 +115,25 @@ Scenario: Get latest viewed requirements
 	When User gets latest viewed entities
 	Then User should get OK http status code
 		And Latest viewed details should match Requirement entities
+
+@LatestViews
+Scenario: Get latest viewed companies
+	Given Contacts exists in database
+		| FirstName | LastName | Title |
+		| Anthony   | Hopkins  | Sir   |
+		And Company exists in database
+		And Company is added to latest views
+		And Contacts exists in database
+			| FirstName | LastName | Title |
+			| Paul      | Newman   | Sir   |
+		And Company exists in database
+		And Company is added to latest views
+		And Company is added to latest views
+		And Contacts exists in database
+			| FirstName | LastName   | Title |
+			| Denzel    | Washington | Sir   |
+		And Company exists in database
+		And Company is added to latest views
+	When User gets latest viewed entities
+	Then User should get OK http status code
+		And Latest viewed details should match Company entities

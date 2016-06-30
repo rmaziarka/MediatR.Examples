@@ -6,6 +6,7 @@
 
     using FluentAssertions;
 
+    using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.UITests.Pages;
 
@@ -19,10 +20,9 @@
     [Binding]
     public class EditCompanySteps
     {
-        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly DriverContext driverContext;
-        private readonly EditCompanyPage page;
         private readonly ScenarioContext scenarioContext;
+        private EditCompanyPage page;
 
         public EditCompanySteps(ScenarioContext scenarioContext)
         {
@@ -38,6 +38,13 @@
             {
                 this.page = new EditCompanyPage(this.driverContext);
             }
+        }
+
+        [When(@"User navigates to edit company page with id")]
+        public void OpenEditPropertyPage()
+        {
+            Guid companyId = this.scenarioContext.Get<Company>("Company").Id;
+            this.page = new EditCompanyPage(this.driverContext).OpenEditCompanyPageWithId(companyId.ToString());
         }
 
         [When(@"User clicks save company button on edit company page")]

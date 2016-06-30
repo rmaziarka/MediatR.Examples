@@ -9,8 +9,6 @@ Scenario: Display latest viewed properties
 		And Property Freehold Sale activity is defined
 	When User navigates to view activity page with id
 		And User clicks property details on view activity page
-		And User opens navigation drawer menu
-		And User selects Properties menu item
 	Then Latest 1 property should contain following data
 		| LatestData            |
 		| Condo, 70 Longford St |
@@ -75,8 +73,6 @@ Scenario: Display latest viewed activities
 		And User clicks add activites button on view property page	
 		And User selects Freehold Sale activity type on create activity page
 		And User clicks save button on create activity page
-		And User opens navigation drawer menu
-		And User selects Activities menu item
 	Then Latest 1 activity should contain following data
 		| LatestData                                |
 		| The Alternative Tuck Shop, 24 Holywell St |
@@ -144,8 +140,6 @@ Scenario: Display latest viewed requirements
 		| Title | FirstName | LastName |
 		| Miss  | Triss     | Merigold |
 	When User navigates to create requirement page
-		And User opens navigation drawer menu
-		And User selects Requirements menu item
 		And User selects contacts on create requirement page
 			| FirstName | LastName |
 			| Triss     | Merigold |
@@ -181,3 +175,41 @@ Scenario: Display latest viewed requirements
 			| LatestData             |
 			| Triss Merigold         |
 			| Van Wilder, Van Wilder |
+
+@LatestViews
+Scenario: Display latest viewed companies
+	Given Contacts are created in database
+		| FirstName | LastName | Title |
+		| Dustin    | Hoffman  | Dr    |
+	When User navigates to create company page
+		And User fills in company details on create company page 
+			| Name        | WebsiteUrl            | ClientCarePageUrl      | ClientCareStatus      |
+			| Hoffman Inc | www.DustinHoffman.com | www.DustinHoffman.test | Massive Action Client |
+		And User selects contacts on create company page
+			| FirstName | LastName |
+			| Dustin    | Hoffman  |
+		And User clicks save company button on create company page
+	Then View company page should be displayed
+		And Latest 1 company should contain following data
+			| LatestData  |
+			| Hoffman Inc |
+	When Contacts are created in database
+		| FirstName | LastName | Title |
+		| Tom       | Hanks    | Dr    |
+		And Company is created in database
+			| Name      | WebsiteUrl               | ClientCarePageUrl         |
+			| Hanks Inc | https://www.tomhanks.com | https://www.tomhanks2.com |
+	When User navigates to edit company page with id
+	Then Latest 2 companies should contain following data
+		| LatestData  |
+		| Hanks Inc   |
+		| Hoffman Inc |
+	When User clicks latest company on 2 position in drawer menu
+	Then View company page should be displayed
+		And Company should have following details on view company page
+			| Name        | WebsiteUrl                   | ClientCarePageUrl             | ClientCareStatus      |
+			| Hoffman Inc | http://www.DustinHoffman.com | http://www.DustinHoffman.test | Massive Action Client |
+		And Latest 2 company should contain following data
+			| LatestData  |
+			| Hoffman Inc |
+			| Hanks Inc   |

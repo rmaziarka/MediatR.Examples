@@ -71,5 +71,26 @@ module Antares.TestHelpers {
         public static generateManyRequirementListItems(n: number): Dto.ILatestViewData[] {
             return _.times(n, LatestViewGenerator.generateRequirementListItem);
         }
+
+        public static generateCompanyList(listLength: number): Dto.ILatestViewResultItem {
+            var item: Dto.ILatestViewResultItem = {
+                entityTypeCode: 'Company',
+                list: LatestViewGenerator.generateManyCompanyListItems(listLength)
+            };
+
+            return item;
+        }
+
+        public static generateCompanyListItem(): Dto.ILatestViewData {
+            return {
+                id: LatestViewGenerator.makeRandom('id'),
+                createDate: moment().days(1),
+                data: CompanyGenerator.generate()
+            }
+        }
+
+        public static generateManyCompanyListItems(n: number): Dto.ILatestViewData[] {
+            return _.times(n, LatestViewGenerator.generateCompanyListItem);
+        }
     }
 }

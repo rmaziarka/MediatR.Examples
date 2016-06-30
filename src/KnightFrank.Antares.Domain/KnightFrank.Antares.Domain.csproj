@@ -261,6 +261,7 @@
     <Compile Include="LatestView\DataProviders\BaseLatestViewDataProvider.cs" />
     <Compile Include="LatestView\DataProviders\EntityLatestViews.cs" />
     <Compile Include="LatestView\DataProviders\ILatestViewDataProvider.cs" />
+    <Compile Include="LatestView\DataProviders\CompanyLatestViewDataProvider.cs" />
     <Compile Include="LatestView\DataProviders\RequirementLatestViewDataProvider.cs" />
     <Compile Include="LatestView\DataProviders\PropertyLatestViewDataProvider.cs" />
     <Compile Include="LatestView\Queries\LatestViewsQuery.cs" />
