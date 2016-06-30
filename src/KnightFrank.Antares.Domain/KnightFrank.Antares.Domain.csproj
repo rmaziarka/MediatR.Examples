@@ -93,6 +93,7 @@
     <Compile Include="Activity\Commands\UpdateActivityCommand.cs" />
     <Compile Include="Activity\Queries\ActivitiesQuery.cs" />
     <Compile Include="Activity\Queries\ActivityQuery.cs" />
+    <Compile Include="Activity\Queries\ActivitiesFilterQuery.cs" />
     <Compile Include="Activity\Queries\ActivityTypeQueryValidator.cs" />
     <Compile Include="Activity\Queries\ActivityQueryValidator.cs" />
     <Compile Include="Activity\Queries\ActivityTypeQuery.cs" />

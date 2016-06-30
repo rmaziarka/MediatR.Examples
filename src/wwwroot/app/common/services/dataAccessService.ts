@@ -79,6 +79,16 @@ module Antares.Services {
             }
         };
 
+        private getActivitiesForRequirementAction: ng.resource.IActionDescriptor = {
+            url: this.appConfig.rootUrl + '/api/activities?countryCode=:countryCode&requirementTypeId=:requirementTypeId',
+            method: 'GET',
+            isArray: true,
+            params: {
+                countryCode: '@countryCode',
+                requirementTypeId: '@requirementTypeId'
+            }
+        };
+
         private getAttributesAction: ng.resource.IActionDescriptor = {
             url: this.appConfig.rootUrl + '/api/properties/attributes?countryId=:countryId&propertyTypeId=:propertyTypeId',
             method: 'GET',
@@ -193,7 +203,8 @@ module Antares.Services {
             return <Resources.IActivityResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/activities/:id', null, {
                     update: this.updateAction,
-                    getActivityTypes: this.getActivityTypesAction
+                    getActivityTypes: this.getActivityTypesAction,
+                    getActivitiesForRequirement: this.getActivitiesForRequirementAction
                 });
         }
 

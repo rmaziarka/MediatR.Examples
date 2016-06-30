@@ -132,7 +132,7 @@ module Antares.Requirement.View {
         showActivitiesPanel = () =>{
             this.loadingActivities = true;
             this.components.activitiesList()
-                .loadActivities()
+                .loadActivitiesForRequirement(this.requirement.requirementTypeId, "GB")
                 .finally(() =>{ this.loadingActivities = false; });
 
             this.components.viewingAdd().clearViewingAdd();
