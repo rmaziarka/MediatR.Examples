@@ -14,6 +14,15 @@ module Antares.Requirement.Add {
         configService: Services.ConfigService;
         public config: RequirementAddConfig;
 
+        controlSchemas: any = {
+            rentRange: <Attributes.IRangeControlSchema>{
+                formName: "rentRangeControlForm",
+                minControlId: "rent-min",
+                maxControlId: "rent-max",
+                translationKey: "REQUIREMENT.VIEW.RENT_WEEKLY"
+            }
+        }
+
         constructor(
             private dataAccessService: Services.DataAccessService,
             componentRegistry: Core.Service.ComponentRegistry,

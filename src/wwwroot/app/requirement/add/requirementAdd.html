@@ -23,9 +23,8 @@
                         </div>
                     </fieldset>
                     <fieldset>
-                        <h3 class="page-header" translate="REQUIREMENT.ADD.RENT_REQUIREMENTS"></h3>
-                        <!-- TODO: Put rent control here -->
-                        Rent control will be here
+                        <h3 class="page-header" translate="REQUIREMENT.ADD.RENT_REQUIREMENTS" ng-if="vm.config.requirement_RentRange"></h3>
+                        <range-edit-control min="vm.requirement.rentMin" max="vm.requirement.rentMax" config="vm.config.requirement_RentRange" schema="vm.controlSchemas.rentRange" />
                     </fieldset>
                     <fieldset>
                         <h3 ng-if="vm.config.requirement_LocationRequirements" class="page-header">Location requirements</h3>

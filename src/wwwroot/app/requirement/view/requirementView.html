@@ -25,9 +25,8 @@
                 </section>
 
                 <section>
-                    <h3 class="page-header" translate="REQUIREMENT.VIEW.RENT_REQUIREMENTS"></h3>
-                    <!-- TODO: Put rent control here -->
-                    Rent control will be here
+                    <h3 class="page-header" translate="REQUIREMENT.VIEW.RENT_REQUIREMENTS" ng-if="vm.config.requirement_RentRange"></h3>
+                    <range-view-control min="vm.requirement.rentMin" max="vm.requirement.rentMax" config="vm.config.requirement_RentRange" schema="vm.controlSchemas.rentRange">
                 </section>
 
                 <section>

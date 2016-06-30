@@ -1,0 +1,15 @@
+﻿<div ng-if="vm.config">
+    <div class="section-row row">
+        <div class="section-title col-xs-5">{{vm.schema.translationKey | translate}}</div>
+        <div class="col-xs-6" ng-show="vm.min != vm.max">
+            <span ng-show="vm.showMinPrefix">{{'COMMON.MIN' | translate | lowercase}}&nbsp;</span><span>{{vm.min | number}}</span>
+            <span ng-show="vm.showHyphen">-</span>
+            <span ng-show="vm.showMaxPrefix">{{'COMMON.MAX' | translate | lowercase}}&nbsp;</span><span>{{vm.max | number}}</span>
+            <span>&nbsp;GBP</span>
+        </div>
+        <div class="col-xs-7" ng-show="vm.min == vm.max">
+            <span ng-show="!vm.showHyphen">{{vm.min | number}}&nbsp;GBP</span>
+            <span ng-show="vm.showHyphen">-</span>
+        </div>
+    </div>
+</div>
