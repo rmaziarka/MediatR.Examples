@@ -31,7 +31,15 @@ module Antares.Attributes {
                 .$promise
                 .then((activityTypes: Dto.IActivityTypeQueryResult[]) => {
                     this.activityTypes = activityTypes;
+                    if (!this.ngModel) {
+                        this.setDefaultType();
+                    }
                 });
+        }
+
+        setDefaultType = () => {
+            this.ngModel = this.activityTypes[0].id;
+            this.changeActivityType();
         }
 
         changeActivityType = () => {

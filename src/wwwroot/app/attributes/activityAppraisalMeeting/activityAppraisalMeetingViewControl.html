@@ -1,0 +1,22 @@
+﻿<div name="activityAttendeesForm" ng-if="vm.config">
+    <card-list id="viewings-list">
+        <card-list-no-items ng-show="!vm.appraisalMeeting">
+            <p class="help-block" translate="REQUIREMENT.VIEW.NO_VIEWINGS"></p>
+        </card-list-no-items>
+        <card-list-item>
+            <card-list-group class="viewing-group">
+                <card-list-group-header>
+                    <h5><time>{{vm.appraisalMeeting.activityAppraisalMeetingStart | date : 'dd-MM-yyyy'}}</time></h5>
+                </card-list-group-header>
+                <card-list-group-item>
+                    <card class="viewing-item" show-context-menu="false" display-new-control="false"
+                          card-template-url="'app/attributes/activityAppraisalMeeting/activityAppraisalMeetingCard.html'" item="vm">
+
+                        <card-context-menu>
+                        </card-context-menu>
+                    </card>
+                </card-list-group-item>
+            </card-list-group>
+        </card-list-item>
+    </card-list>
+</div>
