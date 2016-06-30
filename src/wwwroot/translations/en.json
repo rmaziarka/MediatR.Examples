@@ -379,15 +379,16 @@
       "OFFER_PER_WEEK": "GBP / week"
     },
     "PREVIEW": {
-        "PREVIEW": "Offer preview",
-        "ACTIVITY": "Activity",
-        "STATUS": "Status",
-        "OFFER": "Offer",
-        "OFFER_DATE": "Offer date",
-        "SPECIAL_CONDITIONS": "Special conditions",
-        "NEGOTIATOR": "Negotiator",
-        "EXCHANGE_DATE": "Proposed exchange date",
-        "COMPLETION_DATE": "Proposed completion date"
+      "PREVIEW": "Offer preview",
+      "ACTIVITY": "Activity",
+      "STATUS": "Status",
+      "OFFER": "Offer",
+      "OFFER_DATE": "Offer date",
+      "SPECIAL_CONDITIONS": "Special conditions",
+      "NEGOTIATOR": "Negotiator",
+      "EXCHANGE_DATE": "Proposed exchange date",
+      "COMPLETION_DATE": "Proposed completion date",
+      "OFFER_PER_WEEK": "GBP / week"
     },
     "VIEW": {
         "VIEW_OFFER": "View offer",
