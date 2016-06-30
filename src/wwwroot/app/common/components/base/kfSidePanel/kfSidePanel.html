@@ -1,7 +1,7 @@
 <aside class="side-panel" ng-class="{'slide-in': vm.isVisible === 'Opened', 
         'slide-out': vm.isVisible === 'Closed', 
         'side-panel-loading': vm.isVisible === 'Opened' && vm.isBusy}">
-    <div ng-transclude="cards"></div>
+    <div ng-transclude="cards" class="page-wrapper"></div>
     <busy is-busy="vm.isBusy" label="{{vm.busyLabelKey | translate }}"></busy>
 </aside>
 

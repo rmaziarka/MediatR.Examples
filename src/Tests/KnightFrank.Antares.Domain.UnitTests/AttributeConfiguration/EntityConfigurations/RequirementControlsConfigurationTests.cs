@@ -134,7 +134,7 @@
                 new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_Viewings, PageType.Details,  RequirementType.ResidentialSale) },
                 new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_Attachments, PageType.Details,  RequirementType.ResidentialSale) },
                 new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_RentRange, PageType.Details,  RequirementType.ResidentialSale, x => true) },
-                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_LocationRequirements, PageType.Details,  RequirementType.ResidentialSale, x => true) },
+                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_LocationRequirements, PageType.Details,  RequirementType.ResidentialSale) },
             };
         }
 

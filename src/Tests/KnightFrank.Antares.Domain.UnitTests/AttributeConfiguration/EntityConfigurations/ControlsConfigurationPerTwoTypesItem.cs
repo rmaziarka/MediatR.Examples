@@ -17,8 +17,8 @@ namespace KnightFrank.Antares.Domain.UnitTests.AttributeConfiguration.EntityConf
             TEnum2 enum2,
             ControlCode controlCode,
             bool? isRequired = null,
-            Expression<Func<TEntity, object>> controlReadonlyExpression = null,
-            Expression<Func<TEntity, object>> controlHiddenExpression = null)
+            Expression<Func<TEntity, bool>> controlReadonlyExpression = null,
+            Expression<Func<TEntity, bool>> controlHiddenExpression = null)
             : base(pageType, enum1, controlCode, isRequired, controlReadonlyExpression, controlHiddenExpression)
         {
             this.Enum2 = enum2;

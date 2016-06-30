@@ -1,8 +1,12 @@
 ﻿namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
 
+    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Offer;
+    using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions.Fields;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
@@ -11,10 +15,19 @@
     using KnightFrank.Antares.Domain.Common.Validator;
     using KnightFrank.Antares.Domain.Offer.Commands;
 
+    using EnumType = KnightFrank.Antares.Domain.Common.Enums.EnumType;
     using OfferType = KnightFrank.Antares.Domain.Common.Enums.OfferType;
 
     public class OfferControlsConfiguration : ControlsConfigurationPerTwoTypes<OfferType, RequirementType>
     {
+        private readonly IGenericRepository<EnumTypeItem> enumTypeItemRepository;
+
+        public OfferControlsConfiguration(IGenericRepository<EnumTypeItem> enumTypeItemRepository)
+        {
+            this.enumTypeItemRepository = enumTypeItemRepository;
+            this.Init();
+        }
+
         public override void DefineControls()
         {
             this.DefineControlsForCreate();
@@ -61,7 +74,7 @@
             this.AddControl(PageType.Update, ControlCode.Offer_MortgageLoanToValue, Field<UpdateOfferCommand>.Create(x => x.MortgageLoanToValue).GreaterThanOrEqualTo(0).LessThanOrEqualTo(200));
             this.AddControl(PageType.Update, ControlCode.Offer_MortgageSurveyDate, Field<UpdateOfferCommand>.Create(x => x.MortgageSurveyDate));
             this.AddControl(PageType.Update, ControlCode.Offer_AdditionalSurveyDate, Field<UpdateOfferCommand>.Create(x => x.AdditionalSurveyDate));
-            this.AddControl(PageType.Update, ControlCode.Offer_ProgressComment, Field<UpdateOfferCommand>.CreateText(x => x.ProgressComment, 4000).Required());
+            this.AddControl(PageType.Update, ControlCode.Offer_ProgressComment, Field<UpdateOfferCommand>.CreateText(x => x.ProgressComment, 4000));
         }
 
         private void DefineControlsForDetails()
@@ -116,115 +129,122 @@
 
         public override void DefineMappings()
         {
+            Guid offerStatusAccepted =
+                this.enumTypeItemRepository
+                .FindBy(x => x.EnumType.Code == EnumType.OfferStatus.ToString() && x.Code == OfferStatus.Accepted.ToString())
+                .Select(x => x.Id)
+                .Single();
+
             this.Use(
                 new List<ControlCode>
-                    {
-                        ControlCode.Offer_Status,
-                        ControlCode.Offer_Price,
-                        ControlCode.Offer_OfferDate,
-                        ControlCode.Offer_SpecialConditions,
-                        ControlCode.Offer_ExchangeDate,
-                        ControlCode.Offer_CompletionDate
-                    },
+                {
+                    ControlCode.Offer_Status,
+                    ControlCode.Offer_Price,
+                    ControlCode.Offer_OfferDate,
+                    ControlCode.Offer_SpecialConditions,
+                    ControlCode.Offer_ExchangeDate,
+                    ControlCode.Offer_CompletionDate
+                },
                 this.When(OfferType.ResidentialSale, RequirementType.ResidentialSale, PageType.Create, PageType.Update, PageType.Details, PageType.Preview));
 
             this.Use(
                 new List<ControlCode>
-                    {
-                        ControlCode.Offer_Status,
-                        ControlCode.Offer_PricePerWeek,
-                        ControlCode.Offer_OfferDate,
-                        ControlCode.Offer_SpecialConditions,
-                        ControlCode.Offer_ExchangeDate,
-                        ControlCode.Offer_CompletionDate
-                    },
+                {
+                    ControlCode.Offer_Status,
+                    ControlCode.Offer_PricePerWeek,
+                    ControlCode.Offer_OfferDate,
+                    ControlCode.Offer_SpecialConditions,
+                    ControlCode.Offer_ExchangeDate,
+                    ControlCode.Offer_CompletionDate
+                },
                 this.When(OfferType.ResidentialLetting, RequirementType.ResidentialLetting, PageType.Create, PageType.Update, PageType.Details, PageType.Preview));
 
 
             this.Use(
                 new List<ControlCode>
-                    {
-                        ControlCode.Offer_SearchStatus,
-                        ControlCode.Offer_MortgageStatus,
-                        ControlCode.Offer_MortgageSurveyStatus,
-                        ControlCode.Offer_AdditionalSurveyStatus,
-                        ControlCode.Offer_Broker,
-                        ControlCode.Offer_BrokerCompany,
-                        ControlCode.Offer_Lender,
-                        ControlCode.Offer_LenderCompany,
-                        ControlCode.Offer_Surveyor,
-                        ControlCode.Offer_SurveyorCompany,
-                        ControlCode.Offer_AdditionalSurveyor,
-                        ControlCode.Offer_AdditionalSurveyorCompany,
-                        ControlCode.Offer_Enquiries,
-                        ControlCode.Offer_ContractApproved,
-                        ControlCode.Offer_MortgageLoanToValue,
-                        ControlCode.Offer_MortgageSurveyDate,
-                        ControlCode.Offer_AdditionalSurveyDate,
-                        ControlCode.Offer_ProgressComment
-                    },
+                {
+                    ControlCode.Offer_SearchStatus,
+                    ControlCode.Offer_MortgageStatus,
+                    ControlCode.Offer_MortgageSurveyStatus,
+                    ControlCode.Offer_AdditionalSurveyStatus,
+                    ControlCode.Offer_Broker,
+                    ControlCode.Offer_BrokerCompany,
+                    ControlCode.Offer_Lender,
+                    ControlCode.Offer_LenderCompany,
+                    ControlCode.Offer_Surveyor,
+                    ControlCode.Offer_SurveyorCompany,
+                    ControlCode.Offer_AdditionalSurveyor,
+                    ControlCode.Offer_AdditionalSurveyorCompany,
+                    ControlCode.Offer_Enquiries,
+                    ControlCode.Offer_ContractApproved,
+                    ControlCode.Offer_MortgageLoanToValue,
+                    ControlCode.Offer_MortgageSurveyDate,
+                    ControlCode.Offer_AdditionalSurveyDate,
+                    ControlCode.Offer_ProgressComment
+                },
                 this.When(OfferType.ResidentialSale, RequirementType.ResidentialSale, PageType.Update, PageType.Details));
 
             this.Use(
                 new List<ControlCode>
-                    {
-                        ControlCode.Offer_SearchStatus,
-                        ControlCode.Offer_MortgageStatus,
-                        ControlCode.Offer_MortgageSurveyStatus,
-                        ControlCode.Offer_AdditionalSurveyStatus,
-                        ControlCode.Offer_Broker,
-                        ControlCode.Offer_BrokerCompany,
-                        ControlCode.Offer_Lender,
-                        ControlCode.Offer_LenderCompany,
-                        ControlCode.Offer_Surveyor,
-                        ControlCode.Offer_SurveyorCompany,
-                        ControlCode.Offer_AdditionalSurveyor,
-                        ControlCode.Offer_AdditionalSurveyorCompany,
-                        ControlCode.Offer_Enquiries,
-                        ControlCode.Offer_ContractApproved,
-                        ControlCode.Offer_MortgageLoanToValue,
-                        ControlCode.Offer_MortgageSurveyDate,
-                        ControlCode.Offer_AdditionalSurveyDate,
-                        ControlCode.Offer_ProgressComment
-                    },
-                this.When(OfferType.ResidentialLetting, RequirementType.ResidentialLetting, PageType.Update, PageType.Details));
+                {
+                    ControlCode.Offer_SearchStatus,
+                    ControlCode.Offer_MortgageStatus,
+                    ControlCode.Offer_MortgageSurveyStatus,
+                    ControlCode.Offer_AdditionalSurveyStatus,
+                    ControlCode.Offer_Broker,
+                    ControlCode.Offer_BrokerCompany,
+                    ControlCode.Offer_Lender,
+                    ControlCode.Offer_LenderCompany,
+                    ControlCode.Offer_Surveyor,
+                    ControlCode.Offer_SurveyorCompany,
+                    ControlCode.Offer_AdditionalSurveyor,
+                    ControlCode.Offer_AdditionalSurveyorCompany,
+                    ControlCode.Offer_Enquiries,
+                    ControlCode.Offer_ContractApproved,
+                    ControlCode.Offer_MortgageLoanToValue,
+                    ControlCode.Offer_MortgageSurveyDate,
+                    ControlCode.Offer_AdditionalSurveyDate,
+                    ControlCode.Offer_ProgressComment
+                },
+                this.When(OfferType.ResidentialLetting, RequirementType.ResidentialLetting, PageType.Update, PageType.Details))
+                .ReadonlyWhen<UpdateOfferCommand>(x => x.StatusId != offerStatusAccepted);
 
             this.Use(
                 new List<ControlCode>
-                    {
-                        ControlCode.Offer_Requirement,
-                        ControlCode.Offer_Activity,
-                        ControlCode.Offer_Negotiator,
-                        ControlCode.Offer_CreatedDate,
-                        ControlCode.Offer_LastModifiedDate
-                    },
+                {
+                    ControlCode.Offer_Requirement,
+                    ControlCode.Offer_Activity,
+                    ControlCode.Offer_Negotiator,
+                    ControlCode.Offer_CreatedDate,
+                    ControlCode.Offer_LastModifiedDate
+                },
                 this.When(OfferType.ResidentialSale, RequirementType.ResidentialSale, PageType.Details));
 
             this.Use(
                 new List<ControlCode>
-                    {
-                        ControlCode.Offer_Requirement,
-                        ControlCode.Offer_Activity,
-                        ControlCode.Offer_Negotiator,
-                        ControlCode.Offer_CreatedDate,
-                        ControlCode.Offer_LastModifiedDate
-                    },
+                {
+                    ControlCode.Offer_Requirement,
+                    ControlCode.Offer_Activity,
+                    ControlCode.Offer_Negotiator,
+                    ControlCode.Offer_CreatedDate,
+                    ControlCode.Offer_LastModifiedDate
+                },
                 this.When(OfferType.ResidentialLetting, RequirementType.ResidentialLetting, PageType.Details));
 
             this.Use(
                 new List<ControlCode>
-                    {
-                        ControlCode.Offer_Activity,
-                        ControlCode.Offer_Negotiator
-                    },
+                {
+                    ControlCode.Offer_Activity,
+                    ControlCode.Offer_Negotiator
+                },
                 this.When(OfferType.ResidentialSale, RequirementType.ResidentialSale, PageType.Preview));
 
             this.Use(
                 new List<ControlCode>
-                    {
-                        ControlCode.Offer_Activity,
-                        ControlCode.Offer_Negotiator
-                    },
+                {
+                    ControlCode.Offer_Activity,
+                    ControlCode.Offer_Negotiator
+                },
                 this.When(OfferType.ResidentialLetting, RequirementType.ResidentialLetting, PageType.Preview));
         }
     }

@@ -15,17 +15,17 @@ namespace KnightFrank.Antares.Domain.UnitTests.AttributeConfiguration.EntityConf
 
         public readonly bool? IsRequired;
 
-        public readonly Expression<Func<TEntity, object>> ControlHiddenExpression;
+        public readonly Expression<Func<TEntity, bool>> ControlHiddenExpression;
 
-        public readonly Expression<Func<TEntity, object>> ControlReadonlyExpression;
+        public readonly Expression<Func<TEntity, bool>> ControlReadonlyExpression;
 
         public ControlsConfigurationPerOneTypeItem(
             PageType pageType,
             TEnum1 enum1,
             ControlCode controlCode,
             bool? isRequired = null,
-            Expression<Func<TEntity, object>> controlReadonlyExpression = null,
-            Expression<Func<TEntity, object>> controlHiddenExpression = null)
+            Expression<Func<TEntity, bool>> controlReadonlyExpression = null,
+            Expression<Func<TEntity, bool>> controlHiddenExpression = null)
         {
             this.PageType = pageType;
             this.ControlCode = controlCode;

@@ -1,7 +1,9 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.AttributeConfiguration.EntityConfigurations
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
 
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
@@ -25,21 +27,9 @@
                 ControlCode.Offer_Status, ControlCode.Offer_OfferDate
             };
 
-        private static readonly ControlCode[] updateNotRequiredControlCodes =
-            createRequiredControlCodes.Concat(
-                new[]
-                    {
-                        ControlCode.Offer_SearchStatus, ControlCode.Offer_MortgageSurveyStatus, ControlCode.Offer_MortgageStatus,
-                        ControlCode.Offer_AdditionalSurveyStatus, ControlCode.Offer_Broker, ControlCode.Offer_BrokerCompany,
-                        ControlCode.Offer_Lender, ControlCode.Offer_LenderCompany, ControlCode.Offer_Surveyor,
-                        ControlCode.Offer_SurveyorCompany, ControlCode.Offer_AdditionalSurveyor,
-                        ControlCode.Offer_AdditionalSurveyorCompany, ControlCode.Offer_Enquiries, ControlCode.Offer_ContractApproved,
-                        ControlCode.Offer_MortgageLoanToValue, ControlCode.Offer_MortgageSurveyDate,
-                        ControlCode.Offer_AdditionalSurveyDate
-                    });
+        private static readonly ControlCode[] updateNotRequiredControlCodes = createRequiredControlCodes;
 
-        private static readonly ControlCode[] updateRequiredControlCodes =
-            createRequiredControlCodes.Concat(new[] { ControlCode.Offer_ProgressComment });
+        private static readonly ControlCode[] updateRequiredControlCodes = createRequiredControlCodes;
 
         private static readonly ControlCode[] detailsControlCodes =
             updateRequiredControlCodes.Concat(updateNotRequiredControlCodes)
@@ -177,7 +167,7 @@
             RequirementType[] requirementTypes,
             ControlCode[] controleCodes)
         {
-            return BuildFixtureData<TEntity>(pageTypes, offerTypes, requirementTypes, controleCodes, null);
+            return BuildFixtureData<TEntity>(pageTypes, offerTypes, requirementTypes, controleCodes, null, null);
         }
 
         private static IEnumerable<object[]> BuildFixtureData<TEntity>(
@@ -185,7 +175,19 @@
             OfferType[] offerTypes,
             RequirementType[] requirementTypes,
             ControlCode[] controleCodes,
-            bool? isRequired)
+            bool? isRequired
+            )
+        {
+            return BuildFixtureData<TEntity>(pageTypes, offerTypes, requirementTypes, controleCodes, isRequired, null);
+        }
+
+        private static IEnumerable<object[]> BuildFixtureData<TEntity>(
+            PageType[] pageTypes,
+            OfferType[] offerTypes,
+            RequirementType[] requirementTypes,
+            ControlCode[] controleCodes,
+            bool? isRequired,
+            Expression<Func<TEntity, bool>> readonlyExpression)
         {
             return from pageType in pageTypes
                    from offerType in offerTypes
@@ -199,7 +201,8 @@
                                    offerType,
                                    requirementType,
                                    controleCode,
-                                   isRequired)
+                                   isRequired,
+                                   readonlyExpression)
                            };
         }
     }

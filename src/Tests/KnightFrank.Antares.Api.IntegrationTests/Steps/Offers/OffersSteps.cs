@@ -19,6 +19,8 @@
 
     using TechTalk.SpecFlow;
 
+    using OfferType = KnightFrank.Antares.Domain.Common.Enums.OfferType;
+
     [Binding]
     public class OffersSteps
     {
@@ -45,7 +47,7 @@
             Guid statusId =
                 this.fixture.DataContext.EnumTypeItems.Single(
                     e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(status)).Id;
-            Guid offerTypeId = this.fixture.DataContext.OfferTypes.Single(o => o.EnumCode.Equals("ResidentialSale")).Id;
+            Guid offerTypeId = this.fixture.DataContext.OfferTypes.Single(o => o.EnumCode.Equals(OfferType.ResidentialLetting.ToString())).Id;
 
             var offer = new Offer
             {
@@ -54,7 +56,7 @@
                 ExchangeDate = this.date,
                 NegotiatorId = this.fixture.DataContext.Users.First().Id,
                 OfferDate = this.date,
-                Price = 1000,
+                PricePerWeek = 1000,
                 RequirementId = requirementId,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
                 StatusId = statusId,
@@ -212,7 +214,7 @@
                 StatusId =
                     this.fixture.DataContext.EnumTypeItems.Single(
                         e => e.EnumType.Code.Equals(nameof(OfferStatus)) && e.Code.Equals(status)).Id,
-                Price = 2000,
+                PricePerWeek = 2000,
                 SpecialConditions = StringExtension.GenerateMaxAlphanumericString(4000),
                 CompletionDate = this.date.AddDays(2),
                 ExchangeDate = this.date.AddDays(2),
