@@ -1,4 +1,4 @@
-<div class="row section-row" ng-if="vm.config">
-    <div class="col-xs-5" translate="ACTIVITY.PREVIEW.STATUS"></div>
-    <div class="col-xs-7" id="activity-preview-status">{{vm.enumItemId | dynamicTranslate}} </div>
+<div class="row section-row" ng-if="vm.config" id="{{vm.schema.controlId}}">
+    <div class="col-xs-5" translate="{{vm.schema.translationKey}}" ng-if="vm.schema.translationKey"></div>
+    <div class="col-xs-7"   id="{{vm.schema.controlId}}">{{vm.ngModel | dynamicTranslate}} </div>
 </div>

@@ -3,10 +3,12 @@
 module Antares.Attributes {
     angular.module('app').component('enumItemViewControl', {
         templateUrl: 'app/attributes/enumItem/enumItemViewControl.html',
-            controllerAs: 'vm',
-            bindings: {
-                enumItemId: '<',
-                config: '<'
-            }
+        controllerAs: 'vm',
+        controller: 'EnumItemViewControlController',
+        bindings: {
+            schema: '<',
+            config: '<',
+            ngModel: '='
+        }
     });
 }
