@@ -288,7 +288,11 @@
       "PARKINGSPACES": "Parking spaces",
       "AREA": "Area",
       "LANDAREA": "Land area",
-      "DESCRIPTION": "Description"
+      "DESCRIPTION": "Requirement description",
+      "TYPE": "Requirement type",
+      "BASIC_INFORMATION": "Basic information",
+      "RENT_REQUIREMENTS": "Rent requirements",
+      "RENT_WEEKLY":  "Rent (weekly)"
     },
     "VIEW": {
       "REQUIREMENT_DETAILS": "Requirement details",
@@ -314,7 +318,11 @@
       "SELECTACTIVITY": "Select activity",
       "OFFERPREVIEW": "Offer preview",
       "OFFERDETAILS": "Offer details",
-      "NEWOFFER": "New offer"
+      "NEWOFFER": "New offer",
+      "TYPE": "Requirement type",
+      "BASIC_INFORMATION": "Basic information",
+      "RENT_REQUIREMENTS": "Rent requirements",
+      "RENT_WEEKLY": "Rent (weekly)"
     }
   },
   "NOTES": {
