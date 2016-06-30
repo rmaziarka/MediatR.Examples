@@ -24,6 +24,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         PitchingThreats,
         KeyNumber,
         AccessArrangements,
+        AppraisalMeeting,
         AppraisalMeetingDate,
         AppraisalMeetingAttendees,
         AppraisalMeetingInvitation

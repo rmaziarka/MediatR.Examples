@@ -51,14 +51,14 @@
             this.AddControl(PageType.Details, ControlCode.SourceDescription, Field<Activity>.Create(x => x.SourceDescription));
             this.AddControl(PageType.Details, ControlCode.SellingReason, Field<Activity>.Create(x => x.SellingReasonId, x => x.SellingReason));
             this.AddControl(PageType.Details, ControlCode.PitchingThreats, Field<Activity>.Create(x => x.PitchingThreats));
-            this.AddControl(PageType.Details, ControlCode.AppraisalMeetingDate,
+            this.AddControl(PageType.Details, ControlCode.AppraisalMeeting,
                 new List<IField>
                 {
                     Field<Activity>.Create(x => x.AppraisalMeeting.AppraisalMeetingStart),
-                    Field<Activity>.Create(x => x.AppraisalMeeting.AppraisalMeetingEnd)
+                    Field<Activity>.Create(x => x.AppraisalMeeting.AppraisalMeetingEnd),
+                    Field<Activity>.Create(x => x.ActivityAttendees),
+                    Field<Activity>.Create(x => x.AppraisalMeeting.InvitationText)
                 });
-            this.AddControl(PageType.Details, ControlCode.AppraisalMeetingAttendees, Field<Activity>.Create(x => x.ActivityAttendees));
-            this.AddControl(PageType.Details, ControlCode.AppraisalMeetingInvitation, Field<Activity>.Create(x => x.AppraisalMeeting.InvitationText));
         }
 
         private void DefineControlsForCreateAndEdit()
@@ -137,6 +137,8 @@
             this.Use(new[] { ControlCode.Offers, ControlCode.Viewings, ControlCode.Attachments, ControlCode.Property },
                 this.ForAll(PageType.Details));
 
+            this.Use(ControlCode.AppraisalMeeting, this.When(allResidentials, PageType.Details));
+
             this.Use(ControlCode.ShortLetPricePerWeek,
                 this.When(openMarketLetting, PageType.Details, PageType.Create, PageType.Update));
 
@@ -146,12 +148,16 @@
             this.Use(
                 new[]
                 {
-                    ControlCode.Source, ControlCode.SourceDescription, ControlCode.PitchingThreats, ControlCode.AppraisalMeetingDate,
-                    ControlCode.AppraisalMeetingInvitation, ControlCode.AppraisalMeetingAttendees
+                    ControlCode.Source, ControlCode.SourceDescription, ControlCode.PitchingThreats
                 },
                 this.When(allResidentials, PageType.Details, PageType.Create, PageType.Update));
 
-            this.Use(new[] { ControlCode.KeyNumber, ControlCode.AccessArrangements },
+            this.Use(
+                new[]
+                {
+                    ControlCode.KeyNumber, ControlCode.AccessArrangements, ControlCode.AppraisalMeetingDate,
+                    ControlCode.AppraisalMeetingInvitation, ControlCode.AppraisalMeetingAttendees
+                },
                 this.When(allResidentials, PageType.Create, PageType.Update));
         }
     }
