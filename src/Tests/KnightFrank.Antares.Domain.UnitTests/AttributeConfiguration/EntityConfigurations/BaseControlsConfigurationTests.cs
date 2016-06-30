@@ -7,7 +7,6 @@
 
     using FluentAssertions;
 
-    using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
@@ -42,11 +41,11 @@
                 fields.Select(x => x.InnerField.Required).All(x => x).Should().Be(controlConfigurationItem.IsRequired.Value);
             }
 
-            this.AssertExpression<CreateActivityCommand>(
+            this.AssertExpression<TEntity>(
                 controlConfigurationItem.ControlHiddenExpression,
                 control.IsHiddenExpression);
 
-            this.AssertExpression<CreateActivityCommand>(
+            this.AssertExpression<TEntity>(
                 controlConfigurationItem.ControlReadonlyExpression,
                 control.IsReadonlyExpression);
         }
@@ -76,11 +75,11 @@
                 fields.Select(x => x.InnerField.Required).All(x => x).Should().Be(controlConfigurationItem.IsRequired.Value);
             }
 
-            this.AssertExpression<CreateActivityCommand>(
+            this.AssertExpression<TEntity>(
                 controlConfigurationItem.ControlHiddenExpression,
                 control.IsHiddenExpression);
 
-            this.AssertExpression<CreateActivityCommand>(
+            this.AssertExpression<TEntity>(
                 controlConfigurationItem.ControlReadonlyExpression,
                 control.IsReadonlyExpression);
         }
@@ -111,10 +110,10 @@
                 fields.Select(x => x.InnerField.Required).All(x => x).Should().Be(controlConfigurationItem.IsRequired.Value);
             }
 
-            this.AssertExpression<CreateActivityCommand>(
+            this.AssertExpression<TEntity>(
                 controlConfigurationItem.ControlHiddenExpression,
                 control.IsHiddenExpression);
-            this.AssertExpression<CreateActivityCommand>(
+            this.AssertExpression<TEntity>(
                 controlConfigurationItem.ControlReadonlyExpression,
                 control.IsReadonlyExpression);
         }

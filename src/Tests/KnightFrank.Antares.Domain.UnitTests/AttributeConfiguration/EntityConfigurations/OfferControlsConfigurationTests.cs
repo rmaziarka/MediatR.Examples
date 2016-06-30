@@ -1,9 +1,16 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.AttributeConfiguration.EntityConfigurations
 {
+    using System;
+    using System.Linq.Expressions;
+
+    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Offer;
+    using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Offer.Commands;
+
+    using Moq;
 
     using Xunit;
 
@@ -17,7 +24,11 @@
 
         public OfferControlsConfigurationTests()
         {
-            this.offerControlsConfiguration = new OfferControlsConfiguration();
+            var enumtypeItemRepository = new Mock<IGenericRepository<EnumTypeItem>>();
+            enumtypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
+                                  .Returns(new[] { new EnumTypeItem { Id = Guid.NewGuid() } });
+
+            this.offerControlsConfiguration = new OfferControlsConfiguration(enumtypeItemRepository.Object);
         }
 
         [Theory]

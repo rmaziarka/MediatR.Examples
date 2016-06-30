@@ -17,8 +17,8 @@
             TEnum3 enum3,
             ControlCode controlCode,
             bool? isRequired = null,
-            Expression<Func<TEntity, object>> controlReadonlyExpression = null,
-            Expression<Func<TEntity, object>> controlHiddenExpression = null)
+            Expression<Func<TEntity, bool>> controlReadonlyExpression = null,
+            Expression<Func<TEntity, bool>> controlHiddenExpression = null)
             : base(pageType, enum1, enum2, controlCode, isRequired, controlReadonlyExpression, controlHiddenExpression)
         {
             this.Enum3 = enum3;
