@@ -15,6 +15,11 @@
 
     public class OfferControlsConfiguration : ControlsConfigurationPerTwoTypes<OfferType, RequirementType>
     {
+        public OfferControlsConfiguration()
+        {
+            this.Init();
+        }
+
         public override void DefineControls()
         {
             this.DefineControlsForCreate();
@@ -61,7 +66,7 @@
             this.AddControl(PageType.Update, ControlCode.Offer_MortgageLoanToValue, Field<UpdateOfferCommand>.Create(x => x.MortgageLoanToValue).GreaterThanOrEqualTo(0).LessThanOrEqualTo(200));
             this.AddControl(PageType.Update, ControlCode.Offer_MortgageSurveyDate, Field<UpdateOfferCommand>.Create(x => x.MortgageSurveyDate));
             this.AddControl(PageType.Update, ControlCode.Offer_AdditionalSurveyDate, Field<UpdateOfferCommand>.Create(x => x.AdditionalSurveyDate));
-            this.AddControl(PageType.Update, ControlCode.Offer_ProgressComment, Field<UpdateOfferCommand>.CreateText(x => x.ProgressComment, 4000).Required());
+            this.AddControl(PageType.Update, ControlCode.Offer_ProgressComment, Field<UpdateOfferCommand>.CreateText(x => x.ProgressComment, 4000));
         }
 
         private void DefineControlsForDetails()

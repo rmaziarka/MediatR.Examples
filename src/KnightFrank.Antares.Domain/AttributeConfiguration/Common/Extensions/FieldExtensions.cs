@@ -104,16 +104,6 @@
 
         public static IList<Tuple<Control, IList<IField>>> ReadonlyWhen<TEntity>(this IList<Tuple<Control, IList<IField>>> controlFields, Expression<Func<TEntity, bool>> expression )
         {
-            foreach (Tuple<Control, IList<IField>> tuple in controlFields)
-            {
-                tuple.Item1.SetReadonlyRule(expression);
-            }
-
-            return controlFields;
-        }
-
-        public static IList<Tuple<Control, IList<IField>>> ReadonlyWhen<TEntity>(this IList<Tuple<Control, IList<IField>>> controlFields, Expression<Func<TEntity, bool>> expression )
-        {
             IEnumerable<Tuple<Control, IList<IField>>> controlsForCurrentType = 
                 controlFields.Where(x => x.Item2.Any(f => f.InnerField.ContainerType == typeof(TEntity)));
 

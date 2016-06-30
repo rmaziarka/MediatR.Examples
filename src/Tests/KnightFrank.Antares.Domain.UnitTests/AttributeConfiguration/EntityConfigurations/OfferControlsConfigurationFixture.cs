@@ -35,11 +35,10 @@
                         ControlCode.Offer_SurveyorCompany, ControlCode.Offer_AdditionalSurveyor,
                         ControlCode.Offer_AdditionalSurveyorCompany, ControlCode.Offer_Enquiries, ControlCode.Offer_ContractApproved,
                         ControlCode.Offer_MortgageLoanToValue, ControlCode.Offer_MortgageSurveyDate,
-                        ControlCode.Offer_AdditionalSurveyDate
+                        ControlCode.Offer_AdditionalSurveyDate, ControlCode.Offer_ProgressComment
                     });
 
-        private static readonly ControlCode[] updateRequiredControlCodes =
-            createRequiredControlCodes.Concat(new[] { ControlCode.Offer_ProgressComment });
+        private static readonly ControlCode[] updateRequiredControlCodes = createRequiredControlCodes;
 
         private static readonly ControlCode[] detailsControlCodes =
             updateRequiredControlCodes.Concat(updateNotRequiredControlCodes)

@@ -14,6 +14,11 @@
 
     public class RequirementControlsConfiguration : ControlsConfigurationPerOneType<RequirementType>
     {
+        public RequirementControlsConfiguration()
+        {
+            this.Init();
+        }
+
         public override void DefineControls()
         {
             this.DefineControlsForCreate();
@@ -75,7 +80,7 @@
                     ControlCode.Requirement_Description,
                     ControlCode.Requirement_Viewings,
                     ControlCode.Requirement_Attachments,
-                    ControlCode.Requirement_Offers
+                    ControlCode.Requirement_Offers,
                     ControlCode.Requirement_LocationRequirements
                 }, this.ForAll(PageType.Details));
 
