@@ -4,12 +4,12 @@ module Antares.Attributes {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
 
-    export class TextEditControlController {
+    export class EnumItemViewControlController {
         // bindings 
         public ngModel: string;
         public config: any;
-        public schema: ITextEditControlSchema;
+        public schema: IEnumItemControlSchema;
     }
 
-    angular.module('app').controller('TextEditControlController', TextEditControlController);
+    angular.module('app').controller('EnumItemViewControlController', EnumItemViewControlController);
 };
