@@ -29,6 +29,7 @@
     "NAVIGATIONDRAWER": {
       "RECENTPROPERTIES": "Recent",
       "RECENTACTIVITIES": "Recent",
+      "RECENTCOMPANIES": "Recent",
       "RECENTREQUIREMENTS": "Recent"
     },
     "MAKEOFFER": "Make an offer",
@@ -252,6 +253,8 @@
       "ACTIVITY_DETAILS": "Activity details"
     },
     "VIEW": {
+      "BASIC_INFORMATION": "Basic information",
+      "DETAILS": "Details",
       "VIEW_ACTIVITY": "View activity",
       "PROPERTY": "Property",
       "VENDORS": "Vendors",
@@ -266,11 +269,16 @@
         "ASKING_PRICE": "Asking price",
         "SHORT_LET_PRICE_PER_WEEK": "Short Let Price Per Week"
       },
-      "VIEWINGS": "Viewings",
+
+      "RECENT_FILES": "Recent files",
       "VIEWING_DETAILS": "Viewing details",
+      "NEGOTIATORS_DEPARTMENTS": "Negotiators & Departments",
       "NO_VIEWINGS": "No viewings",
       "OFFERS": "Offers",
-      "OFFERPREVIEW": "Offer preview"
+      "OFFERPREVIEW": "Offer preview",
+      "OVERVIEW": "Overview",
+      "SUMMARY": "Summary",
+      "VIEWINGS": "Viewings"
     }
   },
   "NEGOTIATORS": {

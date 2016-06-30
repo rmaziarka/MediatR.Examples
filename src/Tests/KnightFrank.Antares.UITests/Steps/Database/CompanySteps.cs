@@ -28,6 +28,7 @@
         }
 
         [Given(@"Company is created in database")]
+        [When(@"Company is created in database")]
         public void CreateCompanyInDb(Table table)
         {
             var company = table.CreateInstance<Company>();

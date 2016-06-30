@@ -27,6 +27,12 @@
         {
         }
 
+        public EditCompanyPage OpenEditCompanyPageWithId(string id)
+        {
+            new CommonPage(this.DriverContext).NavigateToPageWithId("edit company", id);
+            return this;
+        }
+
         public ContactsListPage ContactsList => new ContactsListPage(this.DriverContext);
 
         public List<string> Contacts => this.Driver.GetElements(this.contactsList).Select(el => el.Text).ToList();

@@ -10,5 +10,7 @@ namespace KnightFrank.Antares.Domain.Common
         IGenericRepository<T> GetEntityGenericRepository<T>() where T : BaseEntity;
 
         ILatestViewDataProvider GetLatestViewDataProvider(EntityTypeEnum entityType);
+
+        T GetInstance<T>();
     }
 }

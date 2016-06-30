@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Linq.Expressions;
 
     using Xunit;
     using FluentAssertions;
@@ -37,7 +38,7 @@
                                              .With(c => c.Id, companyId)
                                              .Create();
 
-            companyRepository.Setup(r => r.Get()).Returns(new[] { expectedCompany }.AsQueryable());
+            companyRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Company,object>>[]>())).Returns(new[] { expectedCompany }.AsQueryable());
             query.Id = companyId;
 
             //Act

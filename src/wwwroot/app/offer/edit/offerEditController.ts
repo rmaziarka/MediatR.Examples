@@ -7,6 +7,7 @@ module Antares.Offer {
     import EntityType = Common.Models.Enums.EntityTypeEnum;
     import PubSub = Core.PubSub;
     import CloseSidePanelEvent = Antares.Common.Component.CloseSidePanelEvent;
+    import Enums = Common.Models.Enums;
 
     export class OfferEditController extends Core.WithPanelsBaseController {
         public offer: Business.Offer;
@@ -35,7 +36,7 @@ module Antares.Offer {
         additionalSurveyDateOpen: boolean = false;
         exchangeDateOpen: boolean = false;
         completionDateOpen: boolean = false;
-        isCompanyContactAddPanelVisible: boolean = false;
+        isCompanyContactAddPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         contactToSelect: string = '';
 
         constructor(
@@ -58,31 +59,39 @@ module Antares.Offer {
         }
 
         companyContactPanelClosed = () => {
-            this.isCompanyContactAddPanelVisible = false;
+            this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Closed;
         }
 
         showBrokerSelectPanel = () => {
             this.contactToSelect = 'Broker';
             this.sidePanelSelectedCompanyContacts = [new Business.CompanyContact(null, this.offer.broker, this.offer.brokerCompany)];
-            this.isCompanyContactAddPanelVisible = true;
+
+            this.hidePanels();
+            this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Opened;
         }
 
         showLenderSelectPanel = () => {
             this.contactToSelect = 'Lender';
             this.sidePanelSelectedCompanyContacts = [new Business.CompanyContact(null, this.offer.lender, this.offer.lenderCompany)];
-            this.isCompanyContactAddPanelVisible = true;
+
+            this.hidePanels();
+            this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Opened;
         }
 
         showSurveyorSelectPanel = () => {
             this.contactToSelect = 'Surveyor';
             this.sidePanelSelectedCompanyContacts = [new Business.CompanyContact(null, this.offer.surveyor, this.offer.surveyorCompany)];
-            this.isCompanyContactAddPanelVisible = true;
+
+            this.hidePanels();
+            this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Opened;
         }
 
         showAdditionalSurveyorSelectPanel = () => {
             this.contactToSelect = 'AadditionalSurveyor';
             this.sidePanelSelectedCompanyContacts = [new Business.CompanyContact(null, this.offer.additionalSurveyor, this.offer.additionalSurveyorCompany)];
-            this.isCompanyContactAddPanelVisible = true;
+
+            this.hidePanels();
+            this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Opened;
         }
 
         onContactSelected = (companyContact: Business.CompanyContact[]) => {
@@ -145,7 +154,7 @@ module Antares.Offer {
                     break;
             }
 
-            this.isCompanyContactAddPanelVisible = false;
+            this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Closed;
         }
 
         navigateToActivity = (activity: Business.Activity) => {
@@ -158,8 +167,10 @@ module Antares.Offer {
             this.$window.open(requirementViewUrl, '_blank');
         }
 
-        showActivityPreview = (offer: Common.Models.Business.Offer) => {
-            this.showPanel(this.components.activityPreview);
+        // TODO: refactor activity preview panel to new one
+        showActivityPreview = (offer: Common.Models.Business.Offer) =>{
+            this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Closed;
+            this.showPanel(this.components.panels.activityPreviewPanel);
 
             this.latestViewsProvider.addView({
                 entityId: offer.activity.id,
@@ -308,9 +319,12 @@ module Antares.Offer {
             };
         }
 
+        // TODO: refactor activity preview panel to new one
         defineComponents() {
             this.components = {
-                activityPreview: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId); }
+                panels: {
+                    activityPreviewPanel: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId) }
+                }
             };
         }
     }

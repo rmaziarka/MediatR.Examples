@@ -11,101 +11,95 @@
                 <span id="activityStatus">{{avvm.activity.activityStatusId | dynamicTranslate}}</span>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <section id="activity-view-property">
-                    <property-view-control property="avvm.activity.property" is-panel-visible="avvm.isPropertyPreviewPanelVisible" config="avvm.config.property"></property-view-control>
-                </section>
-                <section id="activity-view-vendors">
-                    <activity-vendors-view-control contacts="avvm.activity.contacts" config="avvm.config.vendors"></activity-vendors-view-control>
-                </section>
-                <section id="activity-view-landlords">
-                    <activity-landlords-view-control contacts="avvm.activity.contacts" config="avvm.config.landlords"></activity-landlords-view-control>
-                </section>
-                <section>
-                    <activity-negotiators-view-control config="avvm.config.negotiators"
-                                                       property-division-id="{{avvm.activity.property.divisionId}}"
-                                                       lead-negotiator="avvm.activity.leadNegotiator"
-                                                       secondary-negotiators="avvm.activity.secondaryNegotiator">
-                    </activity-negotiators-view-control>
-                </section>
-                <section id='departments-section'>
-                    <activity-departments-view-control config="avvm.config.departments" activity-departments="avvm.activity.activityDepartments">
-                        
-                    </activity-departments-view-control>
-                </section>
-            </div>
-            <div class="col-md-4">
-                <section id="activity-view-prices">
-                    <h3 class="page-header" translate="ACTIVITY.VIEW.PRICES.PRICES"></h3>
-                    <price-view-control config="avvm.config.marketAppraisalPrice" price='avvm.activity.marketAppraisalPrice' schema="avvm.controlSchemas.marketAppraisalPrice"></price-view-control>
-                    <price-view-control config="avvm.config.recommendedPrice" price='avvm.activity.recommendedPrice' schema="avvm.controlSchemas.recommendedPrice"></price-view-control>
-                    <price-view-control config="avvm.config.vendorEstimatedPrice" price='avvm.activity.vendorEstimatedPrice' schema="avvm.controlSchemas.vendorEstimatedPrice"></price-view-control>
-                    <price-view-control config="avvm.config.askingPrice" price='avvm.activity.askingPrice' schema="avvm.controlSchemas.askingPrice"></price-view-control>
-                    <price-view-control config="avvm.config.shortLetPricePerWeek" price='avvm.activity.shortLetPricePerWeek' schema="avvm.controlSchemas.shortLetPricePerWeek"></price-view-control>
-                </section>
-                <section id="activity-view-viewings">
-                    <h3 class="page-header" translate="ACTIVITY.VIEW.VIEWINGS"></h3>
-                    <card-list id="viewings-list">
-                        <card-list-no-items ng-show="avvm.activity.viewings.length === 0">
-                            <p class="help-block" translate="ACTIVITY.VIEW.NO_VIEWINGS"></p>
-                        </card-list-no-items>
-                        <card-list-item ng-repeat="group in avvm.activity.viewingsByDay | orderBy: '-day'">
-                            <card-list-group class="viewing-group">
-                                <card-list-group-header>
-                                    <h5>
-                                        <time>{{::group.viewings[0].startDate | date : 'dd-MM-yyyy'}}</time>
-                                    </h5>
-                                </card-list-group-header>
-                                <card-list-group-item ng-repeat="viewing in group.viewings | orderBy: '-startDate' track by viewing.id">
-                                    <card class="viewing-item" card-template-url="'app/activity/view/activityViewingsCard.html'" item="viewing" show-item-details="avvm.showViewingPreview">
-                                    </card>
-                                </card-list-group-item>
-                            </card-list-group>
-                        </card-list-item>
-                    </card-list>
-                </section>
-                <attachments-manager entity-id="avvm.activity.id" enum-document-type="{{avvm.enumTypeActivityDocumentType}}" entity-type="{{avvm.entityType}}" attachments="avvm.activity.attachments" on-save-attachment-for-entity="avvm.saveAttachment(attachment)"></attachments-manager>
-            </div>
-            <div class="col-md-4">
-                <section>
-                    <h3 class="page-header" translate="ACTIVITY.VIEW.OFFERS"></h3>
-                    <card-list-item class="activity-view-offers" ng-repeat="offer in avvm.activity.offers | orderBy: '-createdDate' | enumSorter: 'OfferStatus':'statusId' track by offer.id + offer.statusId + offer.offerDate">
-                        <card card-template-url="'app/activity/view/activityOffersCard.html'" item="offer" show-item-details="avvm.showOfferPreview"
-                              display-new-control="true" show-context-menu="true">
-                            <card-context-menu>
-                                <context-menu-item type="details" item="offer" action="avvm.navigateToOfferView"></context-menu-item>
-                            </card-context-menu>
-                        </card>
-                    </card-list-item>
-                </section>
-            </div>
-        </div>
+
+        <uib-tabset>
+            <uib-tab index="0" heading="{{'ACTIVITY.VIEW.OVERVIEW' | translate}}" select="avvm.setActiveTabIndex(0)">
+                <div class="row">
+                    <div class="col-md-3">
+                        <section>
+                            <h3 class="page-header" translate="ACTIVITY.VIEW.SUMMARY"></h3>
+                        </section>
+                        <section id="activity-view-property">
+                            <property-view-control property="avvm.activity.property" is-panel-visible="avvm.isPropertyPreviewPanelVisible" hide-header="true" config="avvm.config.property"></property-view-control>
+                        </section>
+                        <hr/>
+                        <section id="activity-view-vendors-summary">
+                            <activity-vendors-view-control contacts="avvm.activity.contacts" config="avvm.config.vendors"></activity-vendors-view-control>
+                        </section>
+                        <section id="activity-view-landlords-summary">
+                            <activity-landlords-view-control contacts="avvm.activity.contacts" config="avvm.config.landlords"></activity-landlords-view-control>
+                        </section>
+                        <section>
+                            <activity-negotiators-view-control config="avvm.config.negotiators"
+                                                               property-division-id="{{avvm.activity.property.divisionId}}"
+                                                               lead-negotiator="avvm.activity.leadNegotiator"
+                                                               can-be-edited="avvm.isOverviewTabSelected()"
+                                                               secondary-negotiators="avvm.activity.secondaryNegotiator"
+                                                               hide-secondary-negotiators="true">
+                            </activity-negotiators-view-control>
+                        </section>
+                    </div>
+                    <div class="col-md-3">
+                        <section id="activity-view-viewings">
+                    <viewing-view-control is-panel-visible="avvm.isViewingPreviewPanelVisible" viewings="avvm.activity.viewingsByDay" config="avvm.config.viewings"></viewing-view-control>
+                                                    {{::group.viewings[0].startDate | date : 'dd-MM-yyyy'}}
+                                                </time>
+                        </section>
+                <attachments-manager title="{{'ACTIVITY.VIEW.RECENT_FILES' | translate}}" data="avvm.attachmentManagerData" on-save-attachment-for-entity="avvm.saveAttachment(attachment)"></attachments-manager>
+                    </div>
+                    <div class="col-md-6">
+                        <section>
+                    <offer-view-control is-panel-visible="avvm.isOfferPreviewPanelVisible" 
+                        config="avvm.config.offers" 
+                        offers="avvm.activity.offers">
+                    </offer-view-control>
+                        </section>
+                    </div>
+                </div>
+            </uib-tab>
+
+
+            <uib-tab index="1" heading="{{'ACTIVITY.VIEW.DETAILS' | translate}}" select="avvm.setActiveTabIndex(1)">
+                <div class="row">
+                    <div class="col-md-3">
+                        <section>
+                            <h3 class="page-header" translate="ACTIVITY.VIEW.LANDLORDS" ng-if="avvm.config.landlords"></h3>
+                        </section>
+                        <section id="activity-view-landlords-details">
+                            <activity-landlords-view-control contacts="avvm.activity.contacts" config="avvm.config.landlords" hide-header="true"></activity-landlords-view-control>
+                        </section>
+                        <section>
+                            <h3 class="page-header" translate="ACTIVITY.VIEW.VENDORS" ng-if="avvm.config.vendors"></h3>
+                        </section>
+                        <section id="activity-view-vendors-details">
+                            <activity-vendors-view-control contacts="avvm.activity.contacts" config="avvm.config.vendors" hide-header="true"></activity-vendors-view-control>
+                        </section>
+                        <section>
+                            <h3 class="page-header" translate="ACTIVITY.VIEW.NEGOTIATORS_DEPARTMENTS"></h3>
+                        </section>
+                        <section>
+                            <activity-negotiators-view-control config="avvm.config.negotiators"
+                                                               property-division-id="{{avvm.activity.property.divisionId}}"
+                                                               lead-negotiator="avvm.activity.leadNegotiator"
+                                                               can-be-edited="avvm.isDetailsTabSelected()"
+                                                               secondary-negotiators="avvm.activity.secondaryNegotiator">
+                            </activity-negotiators-view-control>
+                        </section>
+                        <section id='departments-section'>
+                            <activity-departments-view-control config="avvm.config.departments" activity-departments="avvm.activity.activityDepartments">
+                            </activity-departments-view-control>
+                        </section>
+                    </div>
+                    <div class="col-md-3">
+                        <section>
+                            <h3 class="page-header" translate="ACTIVITY.VIEW.BASIC_INFORMATION"></h3>
+                        </section>
+                        <section id="activity-view-property">
+                            <property-view-control property="avvm.activity.property" is-panel-visible="avvm.isPropertyPreviewPanelVisible" config="avvm.config.property"></property-view-control>
+                        </section>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
     </div>
 </div>
-
-<side-panel component-id="avvm.componentIds.previewViewingSidePanelId" id="viewing-panel">
-    <side-panel-header>
-        <h3 translate="ACTIVITY.VIEW.VIEWING_DETAILS"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <viewing-preview component-id="avvm.componentIds.viewingPreviewId" viewing="avvm.selectedViewing">
-            <viewing-preview-custom-item>
-                <requirement-card requirement="avvm.selectedViewing.requirement" />
-            </viewing-preview-custom-item>
-        </viewing-preview>
-    </side-panel-content>
-</side-panel>
-
-<side-panel component-id="avvm.componentIds.offerPreviewSidePanelId">
-    <side-panel-header>
-        <h3 translate="ACTIVITY.VIEW.OFFERPREVIEW"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <offer-preview component-id="avvm.componentIds.offerPreviewId" offer="avvm.selectedOffer">
-            <offer-preview-custom-item>
-                <requirement-card requirement="avvm.selectedOffer.requirement" />
-            </offer-preview-custom-item>
-        </offer-preview>
-    </side-panel-content>
-</side-panel>
