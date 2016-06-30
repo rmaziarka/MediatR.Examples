@@ -89,3 +89,10 @@ ActivitySellingReason;RegularPropertyValueAppraisal;en;Regular Property Value Ap
 ActivitySellingReason;Relocation;en;Relocation
 ActivitySellingReason;Retiring;en;Retiring
 ActivitySellingReason;SurpliceToRequirement;en;Surplice to requirement
+DisposalType;PrivateTreaty;en;Private Treaty
+DisposalType;FormalTender;en;Formal Tender
+DisposalType;AuctionSpecificToResidential;en;Auction specific to residential sales activities
+Decoration;Unmodernised;en;Unmodernised
+Decoration;Fair;en;Fair
+Decoration;Good;en;Good
+Decoration;VeryGood;en;Very Good

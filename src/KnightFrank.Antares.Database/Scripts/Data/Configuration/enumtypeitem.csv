@@ -89,3 +89,10 @@ ActivitySellingReason;RegularPropertyValueAppraisal
 ActivitySellingReason;Relocation
 ActivitySellingReason;Retiring
 ActivitySellingReason;SurpliceToRequirement
+DisposalType;PrivateTreaty
+DisposalType;FormalTender
+DisposalType;AuctionSpecificToResidential
+Decoration;Unmodernised
+Decoration;Fair
+Decoration;Good
+Decoration;VeryGood

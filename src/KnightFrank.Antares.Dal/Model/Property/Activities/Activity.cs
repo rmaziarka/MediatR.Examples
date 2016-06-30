@@ -68,5 +68,17 @@
         public ActivityAppraisalMeeting AppraisalMeeting { get; set; }
 
         public virtual ICollection<ActivityAttendee> ActivityAttendees { get; set; } = new List<ActivityAttendee>();
+
+        public ActivityCharges ActivityCharges { get; set; } = new ActivityCharges();
+
+        public string OtherCondition { get; set; }
+
+        public Guid? DisposalTypeId { get; set; }
+
+        public virtual EnumTypeItem DisposalType { get; set; }
+
+        public Guid? DecorationId { get; set; }
+
+        public virtual EnumTypeItem Decoration { get; set; }
     }
 }

@@ -72,6 +72,17 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
 
             this.Property(a => a.AppraisalMeeting.InvitationText)
                 .HasColumnName("InvitationText");
+
+            this.Property(x => x.ActivityCharges.ServiceChargeAmount).IsMoney();
+            this.Property(x => x.ActivityCharges.ServiceChargeNote).HasMaxLength(4000);
+            this.Property(x => x.ActivityCharges.GroundRentAmount).IsMoney();
+            this.Property(x => x.ActivityCharges.GroundRentNote).HasMaxLength(4000);
+
+            this.HasOptional(a => a.DisposalType).WithMany().HasForeignKey(s => s.DisposalTypeId).WillCascadeOnDelete(false);
+
+            this.Property(x => x.OtherCondition).HasMaxLength(4000);
+
+            this.HasOptional(a => a.Decoration).WithMany().HasForeignKey(s => s.DecorationId).WillCascadeOnDelete(false);
         }
     }
 }
