@@ -135,7 +135,7 @@ module Antares {
 
             // act
             scope.$apply();
-            button.click();
+            controller.updateCompany();
             $http.flush();
 
             // asserts

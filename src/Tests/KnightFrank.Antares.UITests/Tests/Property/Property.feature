@@ -178,7 +178,6 @@ Scenario: Create commercial property
 			| Second floor       | 150  |
 			| Third floor area A | 70   |
 			| Third floor area B | 30   |
-			| Third floor area C | 50   |
 		And User clicks save area button on view property page
 	Then Area breakdown order is following on view property page
 		| Name               | Size |
@@ -186,7 +185,6 @@ Scenario: Create commercial property
 		| Second floor       | 150  |
 		| Third floor area A | 70   |
 		| Third floor area B | 30   |
-		| Third floor area C | 50   |
 
 @Property
 Scenario: Update commercial property area breakdown

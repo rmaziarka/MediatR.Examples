@@ -8,8 +8,7 @@ module Antares.Component {
         transclude: {
             customItem: "?viewingPreviewCustomItem"
         },
-        bindings : {
-            componentId: '<',
+        bindings : {            
             viewing: '<'
         }
     });

@@ -13,7 +13,7 @@
         private readonly ElementLocator applyButton = new ElementLocator(Locator.CssSelector, ".side-panel button[ng-click *= 'save']");
         private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "[ng-show *= 'isLoading']");
         private readonly ElementLocator sidePanelLoader = new ElementLocator(Locator.CssSelector, ".side-panel-loading");
-        private readonly ElementLocator contact = new ElementLocator(Locator.XPath, "//div[@class = 'side-panel-content']//div[text() = '{0}']/../div[text() = '{1}']//ancestor::div[contains(@class, 'card-selectable')]");
+        private readonly ElementLocator contact = new ElementLocator(Locator.XPath, "//div[@class = 'side-panel-content']//div[contains(text(),'{0}')]/../div[text() = '{1}']//ancestor::div[contains(@class, 'card-selectable')]");
 
         public SelectableContactsListPage(DriverContext driverContext) : base(driverContext)
         {
