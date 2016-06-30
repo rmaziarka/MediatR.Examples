@@ -11,6 +11,8 @@ module Antares.Common.Component {
         public searchPlaceholder: string;
 
         // component data
+        public searchId: string;
+        public searchName: string;
         public options: SearchOptions;
         public selectedItem: any;
 

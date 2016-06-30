@@ -160,7 +160,6 @@
     <Compile Include="Steps\EditActivitySteps.cs" />
     <Compile Include="Steps\EditOfferSteps.cs" />
     <Compile Include="Steps\NavigationDrawerSteps.cs" />
-    <Compile Include="Steps\EditPreferencesSteps.cs" />
     <Compile Include="Steps\SearchPropertySteps.cs" />
     <Compile Include="Steps\ViewActivitySteps.cs" />
     <Compile Include="Steps\ViewContactSteps.cs" />

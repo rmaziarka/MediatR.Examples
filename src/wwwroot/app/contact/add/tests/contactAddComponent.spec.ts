@@ -171,8 +171,7 @@ module Antares {
 
         ///////// mailingPersonalSalutationSelector
 
-        // 28136 - Add back in when fixed
-        xit('when mailing personal salutation value is too long then validation message should be displayed', ($http) => {
+        it('when mailing personal salutation value is too long then validation message should be displayed', () => {
             var maxLength = 128;
             assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.mailingPersonalSalutationSelector);
         });
