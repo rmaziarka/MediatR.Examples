@@ -3,7 +3,6 @@
 module Antares {
     import RequirementViewController = Requirement.View.RequirementViewController;
     import Business = Common.Models.Business;
-    import Dto = Common.Models.Dto;
     import SidePanelState = Common.Models.Enums.SidePanelState;
     declare var moment: any;
     type Dictionary = { [id: string]: string };
@@ -45,10 +44,6 @@ module Antares {
             },
             offers:
             {
-                saveButton: '#offer-save-btn',
-                cancelButton: '#offer-cancel-btn',
-                sidePanel: '#add-offer-panel',
-                makeOfferAction: 'context-menu-item[type=makeoffer]',
                 list: '.requirement-view-offers',
                 offerStatus:'.offer-status',
                 statusText:
