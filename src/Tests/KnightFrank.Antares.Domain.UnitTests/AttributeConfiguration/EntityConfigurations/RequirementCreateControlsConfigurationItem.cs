@@ -8,15 +8,20 @@ namespace KnightFrank.Antares.Domain.UnitTests.AttributeConfiguration.EntityConf
     using KnightFrank.Antares.Domain.Common.Enums;
 
 
-    public class RequirementCreateControlsConfigurationItem : RequirementDetailsControlsConfigurationItem
+    public class RequirementCreateControlsConfigurationItem
     {
-        public Expression<Func<CreateRequirementCommand, object>> ControlReadonlyExpression;
-        public Expression<Func<CreateRequirementCommand, object>> ControlHiddenExpression;
+        public ControlCode ControlCode;
+        public PageType PageType;
+        public RequirementType RequirementType;
+        public Expression<Func<CreateRequirementCommand, bool>> ControlReadonlyExpression;
+        public Expression<Func<CreateRequirementCommand, bool>> ControlHiddenExpression;
         public bool IsRequired;
 
-        public RequirementCreateControlsConfigurationItem(ControlCode controlCode, PageType pageType, RequirementType requrementType, bool isRequired, Expression<Func<CreateRequirementCommand, object>> controlReadonlyExpression = null, Expression<Func<CreateRequirementCommand, object>> controlHiddenExpression = null)
-            : base(controlCode, pageType, requrementType)
+        public RequirementCreateControlsConfigurationItem(ControlCode controlCode, PageType pageType, RequirementType requrementType, bool isRequired, Expression<Func<CreateRequirementCommand, bool>> controlReadonlyExpression = null, Expression<Func<CreateRequirementCommand, bool>> controlHiddenExpression = null)
         {
+            this.ControlCode = controlCode;
+            this.PageType = pageType;
+            this.RequirementType = requrementType;
             this.IsRequired = isRequired;
             this.ControlReadonlyExpression = controlReadonlyExpression;
             this.ControlHiddenExpression = controlHiddenExpression;

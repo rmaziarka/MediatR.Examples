@@ -71,7 +71,10 @@
                     ControlCode.Requirement_CreationDate,
                     ControlCode.Requirement_RequirementType,
                     ControlCode.Requirement_Applicants,
-                    ControlCode.Requirement_Description
+                    ControlCode.Requirement_Description,
+                    ControlCode.Requirement_Viewings,
+                    ControlCode.Requirement_Attachments,
+                    ControlCode.Requirement_Offers
                 }, this.ForAll(PageType.Details));
 
             this.Use(new List<ControlCode>
@@ -87,9 +90,6 @@
             {
                 ControlCode.Requirement_RentRange,
                 ControlCode.Requirement_LocationRequirements,
-                ControlCode.Requirement_Viewings,
-                ControlCode.Requirement_Attachments,
-                ControlCode.Requirement_Offers
             }, this.When(new List<RequirementType>
             {
                 RequirementType.ResidentialLetting

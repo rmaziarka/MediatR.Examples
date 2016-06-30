@@ -7,13 +7,15 @@
 
     using FluentAssertions;
 
+    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Domain.Requirement.Commands;
     using KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Fields;
-    using KnightFrank.Antares.Domain.Common.Enums;
 
     using Xunit;
+
+    using RequirementType = KnightFrank.Antares.Domain.Common.Enums.RequirementType;
 
     [Collection("RequirementControlsConfiguration")]
     [Trait("FeatureTitle", "AttributeConfigurations")]
@@ -41,8 +43,8 @@
             fields.Should().NotBeNullOrEmpty();
             fields.Select(x => x.InnerField.Required).All(x => x).Should().Be(configItem.IsRequired, configItem.ControlCode.ToString());
 
-            this.CheckExpression(control.IsHiddenExpression, configItem.ControlHiddenExpression);
-            this.CheckExpression(control.IsReadonlyExpression, configItem.ControlReadonlyExpression);
+            this.CheckCommandExpression(control.IsHiddenExpression, configItem.ControlHiddenExpression);
+            this.CheckCommandExpression(control.IsReadonlyExpression, configItem.ControlReadonlyExpression);
         }
 
         [Theory]
@@ -57,10 +59,31 @@
 
             IList<Tuple<Control, IList<IField>>> controlsForGivenConditions = config.ControlPageConfiguration[configKey];
             controlsForGivenConditions.Should().NotBeNullOrEmpty(configItem.ControlCode.ToString());
+
+            Tuple<Control, IList<IField>> controlConfig = controlsForGivenConditions.First(x => x.Item1.ControlCode == configItem.ControlCode);
+            Control control = controlConfig.Item1;
+            IList<IField> fields = controlConfig.Item2;
+
+            fields.Should().NotBeNullOrEmpty();
+            this.CheckRequirementExpression(control.IsHiddenExpression, configItem.ControlHiddenExpression);
         }
 
-        private void CheckExpression(LambdaExpression actualExpression,
-            Expression<Func<CreateRequirementCommand, object>> expectedExpression)
+        private void CheckCommandExpression(LambdaExpression actualExpression,
+            Expression<Func<CreateRequirementCommand, bool>> expectedExpression)
+        {
+            if (expectedExpression == null)
+            {
+                actualExpression.Should().BeNull();
+            }
+            else
+            {
+                actualExpression.Should().NotBeNull();
+                actualExpression.ToString().ShouldBeEquivalentTo(expectedExpression.ToString());
+            }
+        }
+
+        private void CheckRequirementExpression(LambdaExpression actualExpression,
+            Expression<Func<Requirement, bool>> expectedExpression)
         {
             if (expectedExpression == null)
             {
@@ -93,20 +116,25 @@
         {
             return new[]
             {
-                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_CreationDate, PageType.Details,  RequirementType.ResidentialLetting) },
-                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_RequirementType, PageType.Details,  RequirementType.ResidentialLetting) },
-                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_Applicants, PageType.Details,  RequirementType.ResidentialLetting) },
-                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_Description, PageType.Details,  RequirementType.ResidentialLetting) },
-                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_RentRange, PageType.Details,  RequirementType.ResidentialLetting) },
-                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_LocationRequirements, PageType.Details,  RequirementType.ResidentialLetting) },
-                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_Viewings, PageType.Details,  RequirementType.ResidentialLetting) },
-                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_Attachments, PageType.Details,  RequirementType.ResidentialLetting) },
-                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_Offers, PageType.Details,  RequirementType.ResidentialLetting) },
-                                   
                 new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_CreationDate, PageType.Details, RequirementType.ResidentialSale) },
                 new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_RequirementType, PageType.Details, RequirementType.ResidentialSale) },
                 new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_Applicants, PageType.Details, RequirementType.ResidentialSale) },
                 new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_Description, PageType.Details, RequirementType.ResidentialSale) },
+                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_Offers, PageType.Details,  RequirementType.ResidentialLetting) },
+                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_Viewings, PageType.Details,  RequirementType.ResidentialLetting) },
+                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_Attachments, PageType.Details,  RequirementType.ResidentialLetting) },
+                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_RentRange, PageType.Details,  RequirementType.ResidentialLetting) },
+                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_LocationRequirements, PageType.Details,  RequirementType.ResidentialLetting) },
+
+                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_CreationDate, PageType.Details, RequirementType.ResidentialSale) },
+                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_RequirementType, PageType.Details, RequirementType.ResidentialSale) },
+                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_Applicants, PageType.Details, RequirementType.ResidentialSale) },
+                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_Description, PageType.Details, RequirementType.ResidentialSale) },
+                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_Offers, PageType.Details,  RequirementType.ResidentialSale) },
+                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_Viewings, PageType.Details,  RequirementType.ResidentialSale) },
+                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_Attachments, PageType.Details,  RequirementType.ResidentialSale) },
+                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_RentRange, PageType.Details,  RequirementType.ResidentialSale, x => true) },
+                new object[] { new RequirementDetailsControlsConfigurationItem(ControlCode.Requirement_LocationRequirements, PageType.Details,  RequirementType.ResidentialSale, x => true) },
             };
         }
 
