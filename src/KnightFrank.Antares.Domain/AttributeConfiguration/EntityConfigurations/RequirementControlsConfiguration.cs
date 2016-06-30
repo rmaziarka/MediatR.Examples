@@ -87,7 +87,6 @@
             this.Use(new List<ControlCode>
             {
                 ControlCode.Requirement_RentRange,
-                ControlCode.Requirement_LocationRequirements,
                 ControlCode.Requirement_Viewings,
                 ControlCode.Requirement_Attachments,
                 ControlCode.Requirement_Offers
