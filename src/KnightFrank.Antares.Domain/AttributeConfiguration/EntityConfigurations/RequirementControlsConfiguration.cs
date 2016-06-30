@@ -21,7 +21,7 @@
         }
 
         private void DefineControlsForCreate()
-        {            
+        {
             this.AddControl(PageType.Create, ControlCode.Requirement_RequirementType,
                 Field<CreateRequirementCommand>.CreateDictionary(x => x.RequirementTypeId, nameof(RequirementType)).Required());
             this.AddControl(PageType.Create, ControlCode.Requirement_Description,
@@ -44,7 +44,7 @@
             this.AddControl(PageType.Details, ControlCode.Requirement_Description,
                 Field<Requirement>.Create(x => x.Description));
             this.AddControl(PageType.Details, ControlCode.Requirement_RentRange, new List<IField>
-            {                
+            {
                 Field<Requirement>.Create(x => x.RentMin),
                 Field<Requirement>.Create(x => x.RentMax)
             });
@@ -53,15 +53,16 @@
             this.AddControl(PageType.Details, ControlCode.Requirement_Viewings, Field<Requirement>.Create(x => x.Viewings));
             this.AddControl(PageType.Details, ControlCode.Requirement_Attachments, Field<Requirement>.Create(x => x.Attachments));
             this.AddControl(PageType.Details, ControlCode.Requirement_Offers, Field<Requirement>.Create(x => x.Offers));
-        }        
+        }
 
         public override void DefineMappings()
         {
             this.Use(
                 new List<ControlCode>
-                {                    
+                {
                     ControlCode.Requirement_RequirementType,
                     ControlCode.Requirement_Applicants,
+                    ControlCode.Requirement_LocationRequirements,
                     ControlCode.Requirement_Description
                 }, this.ForAll(PageType.Create));
 
@@ -71,13 +72,13 @@
                     ControlCode.Requirement_CreationDate,
                     ControlCode.Requirement_RequirementType,
                     ControlCode.Requirement_Applicants,
+                    ControlCode.Requirement_LocationRequirements,
                     ControlCode.Requirement_Description
                 }, this.ForAll(PageType.Details));
 
             this.Use(new List<ControlCode>
             {
                 ControlCode.Requirement_RentRange,
-                ControlCode.Requirement_LocationRequirements,
             }, this.When(new List<RequirementType>
             {
                 RequirementType.ResidentialLetting
