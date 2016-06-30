@@ -9,7 +9,7 @@ module Antares.Contact {
     export class ContactAddController {
         public config: Attributes.IContactNegotiatorsControlConfig;
         public contact: Antares.Common.Models.Dto.IContact; //TODO: This should be IContact not IContactTemp(Aneela)
-        public searchOptions: Common.Component.SearchOptions = new Common.Component.SearchOptions({ minLength: 0, isEditable: true, nullOnSelect: false, showCancelButton: false, isRequired : true });
+        public searchOptions: Common.Component.SearchOptions = new Common.Component.SearchOptions({ minLength: 0, isEditable: true, nullOnSelect: false, showCancelButton: false, isRequired: true, maxLength: 128  });
 
         userData: Dto.ICurrentUser;
         mailingSalutationFormat: Dto.EnumTypeCode = Dto.EnumTypeCode.MailingSalutation;
@@ -25,15 +25,15 @@ module Antares.Contact {
 
         private selectedTitle: string;
 
-        private contactResource: Antares.Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IContactResource>;
+        private contactResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IContactResource>;
 
         constructor(
-            private dataAccessService: Antares.Services.DataAccessService,
+            private dataAccessService: Services.DataAccessService,
             private enumService: Services.EnumService,
             private $scope: ng.IScope,
             private $q: ng.IQService,
             private $state: ng.ui.IStateService,
-            private contactTitleService: Antares.Services.ContactTitleService) {
+            private contactTitleService: Services.ContactTitleService) {
 
             this.contactResource = dataAccessService.getContactResource();
         }
@@ -41,23 +41,23 @@ module Antares.Contact {
         $onInit = () => {
             this.defaultSalutationFormatId = this.userData.salutationFormatId;
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
-            this.contactTitleService.get().then((contactTitles) =>{
+            this.contactTitleService.get().then((contactTitles) => {
                 this.contactTitles = contactTitles.data;
-            });            
+            });
         }
 
-        public getContactTitles = (typedTitle: string) =>{
+        public getContactTitles = (typedTitle: string) => {
 
             var locale = this.userData.locale.isoCode;
-            var items : IContactTitle[];
+            var items: IContactTitle[];
 
             if (typedTitle) {
                 items = this.contactTitles.filter((item) => { return item.title.toLowerCase().indexOf(typedTitle.toLowerCase()) > -1; }); // Filter by entered text (regardless of locale)
-                items = _.sortBy(items, function (item) { return [item.title] }); // Order alpabetically
+                items = _.sortBy(items, item => [item.title]); // Order alpabetically
             }
             else {
                 items = this.contactTitles.filter((item) => { return item.locale.isoCode.toLowerCase().indexOf(locale.toLowerCase()) > -1; }); // Filter by current locale
-                items = _.sortBy(items, function (item) { return [item.priority || Number.POSITIVE_INFINITY, item.title] }); // Order by priority (if null, set to infinity to place last), then alpabetically
+                items = _.sortBy(items, item => [item.priority || Number.POSITIVE_INFINITY, item.title]); // Order by priority (if null, set to infinity to place last), then alpabetically
             }
 
             return items.map((item) => item.title);
@@ -67,7 +67,7 @@ module Antares.Contact {
             this.selectedTitle = contactTitle;
             this.setSalutations();
         }
-        
+
         onEnumLoaded = (result: any) => {
             var mailingList = result[Dto.EnumTypeCode.MailingSalutation];
             var eventList = result[Dto.EnumTypeCode.EventSalutation];
@@ -95,7 +95,7 @@ module Antares.Contact {
                 this.defaultSalutationFormat = (defaultFormat.code || "");
         }
 
-        setSalutations = () =>{
+        setSalutations = () => {
 
             if (!this.contact) return; // Note, due to us not being able to bind contact.title at present, this is necessary
 

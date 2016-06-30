@@ -13,6 +13,7 @@ module Antares {
 
         var pageObjectSelectors = {
             titleSelector: 'input#title',
+            titleSectionSelector: '#title-section',
             firstNameSelector: 'input#first-name',
             lastNameSelector: 'input#last-name',
             mailingFormalSalutationSelector: 'input#mailing-formal-salutation',
@@ -79,26 +80,25 @@ module Antares {
 
         ///////// titleSelector
 
-        // 28136 - Add back in when fixed
-        xit('when title value is missing then required message should be displayed', () => {
-            assertValidator.assertRequiredValidator(null, false, pageObjectSelectors.titleSelector);
+        it('when title value is missing then required message should be displayed', () => {
+            assertValidator.assertRequiredValidator(null, false, pageObjectSelectors.titleSelector, pageObjectSelectors.titleSectionSelector);
         });
 
         // 28136 - Add back in when fixed
         xit('when title value is present then required message should not be displayed', () => {
-            assertValidator.assertRequiredValidator('Miss', true, pageObjectSelectors.titleSelector);
+            assertValidator.assertRequiredValidator('Miss', true, pageObjectSelectors.titleSelector, pageObjectSelectors.titleSectionSelector);
         });
 
         // 28136 - Add back in when fixed
         xit('when title value is too long then validation message should be displayed', () => {
             var maxLength = 128;
-            assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.titleSelector);
+            assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.titleSelector, pageObjectSelectors.titleSectionSelector);
         });
 
         // 28136 - Add back in when fixed
         xit('when title value has max length then validation message should not be displayed', () => {
             var maxLength = 128;
-            assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.titleSelector);
+            assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.titleSelector, pageObjectSelectors.titleSectionSelector);
         });
 
         ///////// firstNameSelector
