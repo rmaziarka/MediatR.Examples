@@ -68,6 +68,16 @@ Scenario: Get contact
 		And Get contact details should be the same as already added
 
 @Contacts
+Scenario: Get contact with salutations
+	Given All contacts have been deleted
+		And Contacts exists in database
+			| FirstName | LastName | Title  | MailingFormalSalutation | MailingSemiformalSalutation | MailingInformalSalutation | MailingPersonalSalutation | MailingEnvelopeSalutation | EventInviteSalutation | EventSemiformalSalutation | EventInformalSalutation | EventPersonalSalutation | EventEnvelopeSalutation |
+			| Tomasz    | Bien     | Mister | mfs1                    | mss1                        | mis1                      | mps1                      | mes1                      | eis2                  | ess2                      | eis2                    | eps2                    | ees2                    |
+	When User retrieves contact details for latest id
+	Then User should get OK http status code
+		And Get contact details should be the same as already added
+
+@Contacts
 Scenario Outline: Get contact using invalid data
 	When User retrieves contact details for <id> id
 	Then User should get <statusCode> http status code
