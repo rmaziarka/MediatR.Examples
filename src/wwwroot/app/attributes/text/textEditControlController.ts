@@ -8,7 +8,7 @@ module Antares.Attributes {
         // bindings 
         public ngModel: string;
         public config: any;
-        public schema: IEnumItemEditControlSchema;
+        public schema: ITextEditControlSchema;
     }
 
     angular.module('app').controller('TextEditControlController', TextEditControlController);
