@@ -6,10 +6,7 @@ module Antares.Common.Component.Attachment {
         controllerAs: 'vm',
         controller: 'AttachmentsManagerController',
         bindings: {
-            entityId: '<',
-            entityType: '@',
-            enumDocumentType: '@',
-            attachments: '<',
+            data: '<',
             onSaveAttachmentForEntity: '&',
             title: '@',
             filesNumberLimit: '<'

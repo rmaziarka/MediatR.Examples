@@ -2,16 +2,11 @@
 
 module Antares.Common.Component.Attachment {
     import Dto = Common.Models.Dto;
-    import Business = Common.Models.Business;
-    import Enums = Common.Models.Enums;
     import CartListOrder = Common.Component.ListOrder;
 
     export class AttachmentsManagerController {
         // bindings
-        entityId: string;
-        entityType: Enums.EntityTypeEnum;
-        enumDocumentType: Dto.EnumTypeCode;
-        attachments: Business.Attachment[];
+        data: IAttachmentsManagerData;
         onSaveAttachmentForEntity: (obj: { attachment: AttachmentUploadCardModel }) => ng.IPromise<Dto.IAttachment>;
 
         // controller
@@ -28,13 +23,7 @@ module Antares.Common.Component.Attachment {
         constructor(
             private dataAccessService: Services.DataAccessService,
             private eventAggregator: Antares.Core.EventAggregator) {
-
-            eventAggregator.with(this)
-                .subscribe(Common.Component.CloseSidePanelEvent, () => {
-                    this.isAttachmentUploadPanelVisible = false;
-                    this.isAttachmentPreviewPanelVisible = false;
-                });
-
+            
             eventAggregator.with(this)
                 .subscribe(Common.Component.BusySidePanelEvent, (event: Common.Component.BusySidePanelEvent) => {
                     this.isAttachmentUploadPanelBusy = event.isBusy;
@@ -45,21 +34,13 @@ module Antares.Common.Component.Attachment {
             return this.onSaveAttachmentForEntity({ attachment: attachment });
         }
 
-        showAttachmentAdd = () => {
-            if (this.isAttachmentPreviewPanelVisible === true) {
-                this.isAttachmentPreviewPanelVisible = false;
-            }
-
-            this.isAttachmentUploadPanelVisible = true;
+        showAttachmentAdd = () =>{
+            this.eventAggregator.publish(new OpenAttachmentUploadPanelEvent());
         }
 
         showAttachmentPreview = (attachment: Common.Models.Business.Attachment) => {
-            if (this.isAttachmentUploadPanelVisible === true) {
-                this.isAttachmentUploadPanelVisible = false;
-            }
-
             this.selectedAttachment = attachment;
-            this.isAttachmentPreviewPanelVisible = true;
+            this.eventAggregator.publish(new OpenAttachmentPreviewPanelEvent());
         }
     }
 
