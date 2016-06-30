@@ -23,7 +23,7 @@ module Antares.Activity.Commands {
         accessArrangements: string = '';
         attendees: Business.UpdateActivityAttendeeResource[];
         pitchningThreats: string = '';
-        activityAppraisalMeeting: ActivityAppraisalMeetingCommandPart = null;
+        appraisalMeeting: ActivityAppraisalMeetingCommandPart = null;
 
         constructor(activity: Business.Activity){
             this.activityStatusId = activity.activityStatusId;
@@ -44,7 +44,7 @@ module Antares.Activity.Commands {
             this.departments = activity.activityDepartments.map((d: Business.ActivityDepartment) => new ActivityDepartmentCommandPart(d));
             this.contactIds = activity.contacts.map((c: Business.Contact) => c.id);
             this.attendees = activity.attendees.map((a: Dto.IActivityAttendee) => new Business.UpdateActivityAttendeeResource(a));
-            this.activityAppraisalMeeting = new ActivityAppraisalMeetingCommandPart(activity.appraisalMeeting);
+            this.appraisalMeeting = new ActivityAppraisalMeetingCommandPart(activity.appraisalMeeting);
         }
     }
     

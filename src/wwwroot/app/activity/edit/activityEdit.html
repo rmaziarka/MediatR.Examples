@@ -77,8 +77,8 @@
             <activity-appraisal-meeting-date-edit-control config="vm.configAppraisalMeetingDateMocked.appraisalMeetingDate"
                                                      appraisal-meeting-start="vm.activity.appraisalMeeting.activityAppraisalMeetingStart"
                                                      appraisal-meeting-end="vm.activity.appraisalMeeting.activityAppraisalMeetingEnd"></activity-appraisal-meeting-date-edit-control>
-            <activity-attendees-edit-control users="vm.availableAttendeeUsers" contacts="vm.availableAttendeeContacts" attendees="vm.activity.attendees" config="vm.configMocked.attendees"></activity-attendees-edit-control>
-            <textarea-edit-control ng-model="vm.activity.appraisalMeeting.invitationText" config="vm.config.invitationText" schema="vm.invitationTextSchema"></textarea-edit-control>
+            <activity-attendees-edit-control users="vm.availableAttendeeUsers" contacts="vm.availableAttendeeContacts" attendees="vm.activity.attendees" config="vm.config.appraisalMeetingAttendees"></activity-attendees-edit-control>
+            <textarea-edit-control ng-model="vm.activity.appraisalMeeting.invitationText" config="vm.config.appraisalMeetingInvitation" schema="vm.invitationTextSchema"></textarea-edit-control>
         </div>
         <div class="col-md-12">
             <div class="form-group">

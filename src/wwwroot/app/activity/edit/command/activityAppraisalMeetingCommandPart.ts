@@ -4,14 +4,14 @@ module Antares.Activity.Commands {
     import Business = Common.Models.Business;
     
     export class ActivityAppraisalMeetingCommandPart {
-        activityAppraisalMeetingStart: string;
-        activityAppraisalMeetingEnd: string;
+        start: string;
+        end: string;
         invitationText: string;
 
         constructor(appraisalMeeting?: Business.ActivityAppraisalMeeting) {
             if (appraisalMeeting) {
-                this.activityAppraisalMeetingStart = moment(appraisalMeeting.activityAppraisalMeetingStart).toDate().toUTCString();
-                this.activityAppraisalMeetingEnd = moment(appraisalMeeting.activityAppraisalMeetingEnd).toDate().toUTCString();
+                this.start = moment(appraisalMeeting.activityAppraisalMeetingStart).toDate().toUTCString();
+                this.end = moment(appraisalMeeting.activityAppraisalMeetingEnd).toDate().toUTCString();
                 this.invitationText = appraisalMeeting.invitationText;
             }
         }
