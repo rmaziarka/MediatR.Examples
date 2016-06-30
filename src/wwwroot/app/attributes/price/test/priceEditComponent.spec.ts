@@ -48,7 +48,7 @@ module Antares {
 
             it('when price value is lower than minimum value then validation message should be displayed', () => {
                 var minValue = 0;
-                assertValidator.assertMinValueValidator(minValue - 1, false, pageObjectSelectors.price);
+                assertValidator.assertNumberGreaterThenValidator(minValue, false, pageObjectSelectors.price);
             });
         });
 
