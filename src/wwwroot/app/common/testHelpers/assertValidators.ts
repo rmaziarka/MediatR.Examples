@@ -25,6 +25,10 @@ module Antares.TestHelpers {
             this.assertValidator(inputValue, expectedResult, inputSelector, this.pageObjectSelectors.requiredValidatorSelector, parentSelector);
         }
 
+        public assertInputOnlyRequiredValidator = (inputValue: string | number, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
+            this.assertInputOnlyValidator(inputValue, expectedResult, inputSelector, this.pageObjectSelectors.requiredValidatorSelector);
+        }
+
         public assertMinValueValidator = (inputMinValue: number, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
             this.assertValidator(inputMinValue, expectedResult, inputSelector, this.pageObjectSelectors.minNumberValidationError, parentSelector);
         }
@@ -37,6 +41,12 @@ module Antares.TestHelpers {
             var value = this.generateString(inputValueLength);
 
             this.assertValidator(value, expectedResult, inputSelector, this.pageObjectSelectors.maxLengthValidatorSelector, parentSelector);
+        }
+
+        public assertInputOnlyMaxLengthValidator = (inputValueLength: number, expectedResult: boolean, inputSelector: string) => {
+            var value = this.generateString(inputValueLength);
+
+            this.assertInputOnlyValidator(value, expectedResult, inputSelector, this.pageObjectSelectors.maxLengthValidatorSelector);
         }
 
         public assertNumberGreaterThenValidator = (inputMaxValue: number, expectedResult: boolean, inputSelector: string, parentSelector?: string) => {
@@ -86,6 +96,19 @@ module Antares.TestHelpers {
 
             expect(pageObject.isInputValid()).toBe(expectedResult, isValidMessage);
             expect(pageObject.isValidationShown()).toBe(!expectedResult, isValidationShownMessage);
+        }
+
+        private assertInputOnlyValidator = (inputValue: any, expectedResult: boolean, inputSelector: string, errorSelector: string) => {
+            var input = this.element.find(inputSelector);
+
+            var pageObject: InputValidationAdapter =
+                new InputValidationAdapter(input, errorSelector, this.scope, null);
+
+            pageObject.writeValue(inputValue);
+
+            var isValidMessage = expectedResult ? "Input is invalid but is expected to be valid" : "Input is valid but is expected to be invalid";
+
+            expect(pageObject.isInputValid()).toBe(expectedResult, isValidMessage);
         }
 
         // TODO: method name not valid for what it does... use everywhere method below (assertElementHasHideClass)

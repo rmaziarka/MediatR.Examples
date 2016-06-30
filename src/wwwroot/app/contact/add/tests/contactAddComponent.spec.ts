@@ -79,26 +79,54 @@ module Antares {
         ));
 
         ///////// titleSelector
+        describe('and title component is configured for handling title', () => {
+            beforeEach(inject((
+                $rootScope: ng.IRootScopeService,
+                $compile: ng.ICompileService) => {
 
-        it('when title value is missing then required message should be displayed', () => {
-            assertValidator.assertRequiredValidator(null, false, pageObjectSelectors.titleSelector, pageObjectSelectors.titleSectionSelector);
-        });
+                scope = $rootScope.$new();
 
-        // 28136 - Add back in when fixed
-        xit('when title value is present then required message should not be displayed', () => {
-            assertValidator.assertRequiredValidator('Miss', true, pageObjectSelectors.titleSelector, pageObjectSelectors.titleSectionSelector);
-        });
+                scope["searchOptions"] = new Common.Component.SearchOptions({
+                        minLength: 0,
+                        isEditable: true,
+                        nullOnSelect: false,
+                        showCancelButton: false,
+                        isRequired: true,
+                        maxLength: 128,
+                        modelOptions: {
+                             debounce: {
+                                 default: 0,
+                                 blur: 0
+                             }
+                        }
+                    });
 
-        // 28136 - Add back in when fixed
-        xit('when title value is too long then validation message should be displayed', () => {
-            var maxLength = 128;
-            assertValidator.assertMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.titleSelector, pageObjectSelectors.titleSectionSelector);
-        });
+                scope["contactTitleSelect"] = () => { };
 
-        // 28136 - Add back in when fixed
-        xit('when title value has max length then validation message should not be displayed', () => {
-            var maxLength = 128;
-            assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.titleSelector, pageObjectSelectors.titleSectionSelector);
+                element = $compile("<search search-id='title' search-name='title' options='searchOptions' on-change-value='contactTitleSelect'></search>")(scope);
+                scope.$apply();
+                controller = element.controller("SearchController");
+
+                assertValidator = new TestHelpers.AssertValidators(element, scope);
+            }));
+
+            it('when title value is missing then validation should no pass', () => {
+                assertValidator.assertInputOnlyRequiredValidator(null, false, pageObjectSelectors.titleSelector);
+            });
+
+            it('when title value is present then validation should pass', () => {
+                assertValidator.assertRequiredValidator('Miss', true, pageObjectSelectors.titleSelector);
+            });
+
+            it('when title value has max length then validation should no pass', () => {
+                var maxLength = 128;
+                assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.titleSelector, pageObjectSelectors.titleSectionSelector);
+            });
+
+            it('when title value is too long then validation should no pass', () => {
+                var maxLength = 128;
+                assertValidator.assertInputOnlyMaxLengthValidator(maxLength + 1, false, pageObjectSelectors.titleSelector);
+            });
         });
 
         ///////// firstNameSelector
