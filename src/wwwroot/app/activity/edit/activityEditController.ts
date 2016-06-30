@@ -129,6 +129,10 @@ module Antares.Activity {
             }
         }
 
+        configAppraisalMeetingDateMocked :any = {
+            appraisalMeetingDate:  {start:  { active:  true, required:  true  }, end:  { active:  true, required:  true  }  } 
+        }
+
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService,

@@ -21,6 +21,7 @@ module Antares.TestHelpers {
                 activityDepartments: [],
                 sellingReasonId: StringGenerator.generate(),
                 sourceId: StringGenerator.generate(),
+                appraisalMeeting: ActivityAppraisalMeetingGenerator.generateDto()
             }
 
             return angular.extend(activity, specificData || {});

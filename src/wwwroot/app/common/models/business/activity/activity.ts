@@ -29,8 +29,8 @@ module Antares.Common.Models.Business {
         pitchningThreats: string = '';
         keyNumber: string = '';
         accessArrangements: string = '';
-        invitationText: string = '';
         attendees: Dto.IActivityAttendee[] = [];
+        appraisalMeeting: Business.ActivityAppraisalMeeting;
 
         constructor(activity?: Dto.IActivity) {
             if (activity) {
@@ -68,6 +68,8 @@ module Antares.Common.Models.Business {
                 if (activity.offers) {
                     this.offers = activity.offers.map((item) => new Offer(item));
                 }
+
+                this.appraisalMeeting = new Business.ActivityAppraisalMeeting(activity.appraisalMeeting);
             }
 
             this.secondaryNegotiator = this.secondaryNegotiator || [];

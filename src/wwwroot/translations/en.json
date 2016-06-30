@@ -233,6 +233,9 @@
       "PITCHING_THREATS": "Pitching threats",
       "ACCESS_ARRANGEMENTS": "Access arrangements",
       "APPRAISAL_MEETING": {
+        "DATE": "Date",
+        "START": "Start time:",
+        "END": "End time:",
         "APPRAISAL_MEETING": "Appraisal meeting",
         "INVITATION_TEXT": "Invitation text",
         "ATTENDEES":  "Attendees"
