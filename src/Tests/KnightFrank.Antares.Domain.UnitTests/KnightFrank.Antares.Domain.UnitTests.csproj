@@ -172,7 +172,6 @@
     <Compile Include="LatestView\Commands\CreateLatestViewCommandValidatorTests.cs" />
     <Compile Include="Offer\CommandHandlers\UpdateOfferCommandHandlerTests.cs" />
     <Compile Include="Offer\CommandHandlers\CreateOfferCommandHandlerTests.cs" />
-    <Compile Include="Offer\Commands\UpdateOfferCommandValidatorTests.cs" />
     <Compile Include="Offer\Handler\OfferProgressStatusHelperTests.cs" />
     <Compile Include="Property\CommandHandlers\CreatePropertyAttachmentCommandHandlerTests.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementAttachmentCommandHandlerTests.cs" />

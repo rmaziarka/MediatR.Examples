@@ -11,6 +11,9 @@
 
     using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Contacts;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common.Extensions;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Offer.OfferHelpers;
 
@@ -18,6 +21,7 @@
 
     using EnumType = KnightFrank.Antares.Dal.Model.Enum.EnumType;
     using DomainEnumType = Common.Enums.EnumType;
+    using OfferType = KnightFrank.Antares.Domain.Common.Enums.OfferType;
 
     public class UpdateOfferCommandHandler : IRequestHandler<UpdateOfferCommand, Guid>
     {
@@ -26,30 +30,47 @@
         private readonly IEnumTypeItemValidator enumTypeItemValidator;
         private readonly IOfferProgressStatusHelper offerProgressStatusHelper;
         private readonly IGenericRepository<EnumType> enumTypeRepository;
+        private readonly IEntityMapper<Offer> offerEntityMapper;
+        private readonly IAttributeValidator<Tuple<OfferType, RequirementType>> attributeValidator;
 
         public UpdateOfferCommandHandler(
             IGenericRepository<Offer> offerRepository,
             IEntityValidator entityValidator,
             IEnumTypeItemValidator enumTypeItemValidator,
             IGenericRepository<EnumType> enumTypeRepository,
-            IOfferProgressStatusHelper offerProgressStatusHelper)
+            IOfferProgressStatusHelper offerProgressStatusHelper,
+            IEntityMapper<Offer> offerEntityMapper,
+            IAttributeValidator<Tuple<OfferType, RequirementType>> attributeValidator)
         {
             this.offerRepository = offerRepository;
             this.entityValidator = entityValidator;
             this.enumTypeItemValidator = enumTypeItemValidator;
             this.enumTypeRepository = enumTypeRepository;
             this.offerProgressStatusHelper = offerProgressStatusHelper;
+            this.offerEntityMapper = offerEntityMapper;
+            this.attributeValidator = attributeValidator;
         }
 
         public Guid Handle(UpdateOfferCommand message)
         {
-            Offer offer = this.offerRepository.GetById(message.Id);
+            Offer offer =
+                this.offerRepository.GetWithInclude(
+                    x => x.Id == message.Id,
+                    x => x.OfferType,
+                    x => x.Requirement,
+                    x => x.Requirement.RequirementType).SingleOrDefault();
 
             this.entityValidator.EntityExists(offer, message.Id);
+
+            // ReSharper disable once PossibleNullReferenceException
+            var offerType = EnumExtensions.ParseEnum<OfferType>(offer.OfferType.EnumCode);
+            var requirementType = EnumExtensions.ParseEnum<RequirementType>(offer.Requirement.RequirementType.EnumCode);
+
+            this.attributeValidator.Validate(PageType.Update, new Tuple<OfferType, RequirementType>(offerType, requirementType), message);
+
             this.enumTypeItemValidator.ItemExists(DomainEnumType.OfferStatus, message.StatusId);
 
             this.RemoveHoursFromDates(message);
-
             this.ValidateOfferDates(message, offer);
 
             List<EnumType> enumTypeItems = this.GetEnumTypeItems();
@@ -68,7 +89,7 @@
                 this.offerProgressStatusHelper.KeepOfferOtherDetailsInMessage(offer, message);
             }
 
-            AutoMapper.Mapper.Map(message, offer);
+            offer = this.offerEntityMapper.MapAllowedValues(message, offer, PageType.Update);
 
             this.offerRepository.Save();
 

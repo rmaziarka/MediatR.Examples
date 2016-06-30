@@ -281,10 +281,8 @@
     <Compile Include="Offer\CommandHandlers\CreateOfferCommandHandler.cs" />
     <Compile Include="Common\Validator\DateInFutureValidator.cs" />
     <Compile Include="Common\Validator\DateInPastValidator.cs" />
-    <Compile Include="Offer\Commands\UpdateOfferCommandValidator.cs" />
     <Compile Include="Offer\Commands\UpdateOfferCommand.cs" />
     <Compile Include="Offer\Commands\CreateOfferCommand.cs" />
-    <Compile Include="Offer\Commands\OfferCommandProfile.cs" />
     <Compile Include="Offer\OfferHelpers\IOfferProgressStatusHelper.cs" />
     <Compile Include="Offer\OfferHelpers\OfferProgressStatusHelper.cs" />
     <Compile Include="Offer\Queries\OfferQuery.cs" />

@@ -8,7 +8,10 @@
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Offer;
+    using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Offer.CommandHandlers;
@@ -25,6 +28,8 @@
     using Xunit;
 
     using EnumType = KnightFrank.Antares.Domain.Common.Enums.EnumType;
+    using OfferType = KnightFrank.Antares.Dal.Model.Offer.OfferType;
+    using RequirementType = KnightFrank.Antares.Dal.Model.Property.RequirementType;
 
     [Collection("UpdateOfferCommandHandler")]
     [Trait("FeatureTitle", "Offer")]
@@ -50,10 +55,15 @@
             [Frozen] Mock<IEnumTypeItemValidator> enumTypeValidator,
             [Frozen] Mock<IGenericRepository<Offer>> offerRepository,
             [Frozen] Mock<IGenericRepository<Dal.Model.Enum.EnumType>> enumTypeRepository,
+            [Frozen] Mock<IEntityMapper<Offer>> offerEntityMapper,
             UpdateOfferCommand command,
             UpdateOfferCommandHandler handler,
-            Offer offer)
+            Offer offer,
+            OfferType offerType,
+            Requirement requirement,
+            RequirementType requirementType)
         {
+            this.SetupOffer(command.Id, offer, offerType, requirement, requirementType);
             offer.CreatedDate = DateTime.Now;
             command.OfferDate = DateTime.Now.AddDays(-1);
             command.ExchangeDate = DateTime.Now.AddDays(1);
@@ -61,11 +71,16 @@
             command.MortgageSurveyDate = DateTime.Now.AddDays(1);
             command.AdditionalSurveyDate = DateTime.Now.AddDays(1);
 
-            offerRepository.Setup(r => r.GetById(command.Id)).Returns(offer);
+            offerRepository
+                .Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Offer, bool>>>(), It.IsAny<Expression<Func<Offer, object>>[]>()))
+                .Returns(new[] { offer });
 
             enumTypeRepository
                 .Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Dal.Model.Enum.EnumType, bool>>>(), It.IsAny<Expression<Func<Dal.Model.Enum.EnumType, object>>>()))
                 .Returns(new List<Dal.Model.Enum.EnumType> { this.acceptedEnumType });
+
+            offerEntityMapper.Setup(
+                m => m.MapAllowedValues(command, offer, PageType.Update)).Returns(offer);
 
             // Act
             Guid offerId = handler.Handle(command);
@@ -75,7 +90,10 @@
             entityValidator.Verify(x => x.EntityExists(offer, command.Id), Times.Once);
             enumTypeValidator.Verify(x => x.ItemExists(EnumType.OfferStatus, command.StatusId), Times.Once);
             offerRepository.Verify(r => r.Save(), Times.Once());
+            offerEntityMapper.Verify(m => m.MapAllowedValues(It.IsAny<UpdateOfferCommand>(), It.IsAny<Offer>(), It.IsAny<PageType>()), Times.Once);
         }
+
+
 
         [Theory]
         [AutoMoqData]
@@ -84,10 +102,15 @@
             [Frozen] Mock<IEnumTypeItemValidator> enumTypeValidator,
             [Frozen] Mock<IGenericRepository<Offer>> offerRepository,
             [Frozen] Mock<IOfferProgressStatusHelper> offerProgressStatusHelper,
+            [Frozen] Mock<IEntityMapper<Offer>> offerEntityMapper,
             UpdateOfferCommand command,
             UpdateOfferCommandHandler handler,
-            Offer offer)
+            Offer offer,
+            OfferType offerType,
+            Requirement requirement,
+            RequirementType requirementType)
         {
+            this.SetupOffer(command.Id, offer, offerType, requirement, requirementType);
             offer.CreatedDate = DateTime.Now;
             command.OfferDate = DateTime.Now.AddDays(-1);
             command.ExchangeDate = DateTime.Now.AddDays(1);
@@ -97,7 +120,11 @@
 
             offerProgressStatusHelper.Setup(x => x.IsOfferInAcceptedStatus(It.IsAny<List<Dal.Model.Enum.EnumType>>(), It.IsAny<Guid>())).Returns(true);
 
-            offerRepository.Setup(r => r.GetById(command.Id)).Returns(offer);
+            offerRepository
+                .Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Offer, bool>>>(), It.IsAny<Expression<Func<Offer, object>>[]>()))
+                .Returns(new[] { offer });
+
+            offerEntityMapper.Setup(m => m.MapAllowedValues(command, offer, PageType.Update)).Returns(offer);
 
             // Act
             Guid offerId = handler.Handle(command);
@@ -137,10 +164,15 @@
             [Frozen] Mock<IEnumTypeItemValidator> enumTypeValidator,
             [Frozen] Mock<IGenericRepository<Offer>> offerRepository,
             [Frozen] Mock<IOfferProgressStatusHelper> offerProgressStatusHelper,
+            [Frozen] Mock<IEntityMapper<Offer>> offerEntityMapper,
             UpdateOfferCommand command,
             UpdateOfferCommandHandler handler,
-            Offer offer)
+            Offer offer,
+            OfferType offerType,
+            Requirement requirement,
+            RequirementType requirementType)
         {
+            this.SetupOffer(command.Id, offer, offerType, requirement, requirementType);
             offer.CreatedDate = DateTime.Now;
             command.OfferDate = DateTime.Now.AddDays(-1);
             command.ExchangeDate = DateTime.Now.AddDays(1);
@@ -150,7 +182,9 @@
 
             offerProgressStatusHelper.Setup(x => x.IsOfferInAcceptedStatus(It.IsAny<List<Dal.Model.Enum.EnumType>>(), It.IsAny<Guid>())).Returns(false);
 
-            offerRepository.Setup(r => r.GetById(command.Id)).Returns(offer);
+            offerRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Offer, bool>>>(), It.IsAny<Expression<Func<Offer, object>>[]>())).Returns(new[] { offer });
+
+            offerEntityMapper.Setup(m => m.MapAllowedValues(command, offer, PageType.Update)).Returns(offer);
 
             // Act
             Guid offerId = handler.Handle(command);
@@ -162,12 +196,22 @@
 
             offerProgressStatusHelper.Verify(x => x.IsOfferInAcceptedStatus(It.IsAny<List<Dal.Model.Enum.EnumType>>(), It.IsAny<Guid>()), Times.Once);
 
-            offerProgressStatusHelper.Verify(x => x.KeepOfferProgressStatusesInMessage(offer,command), Times.Once);
-            offerProgressStatusHelper.Verify(x => x.KeepOfferMortgageDetailsInMessage(offer,command), Times.Once);
-            offerProgressStatusHelper.Verify(x => x.KeepOfferAdditionalSurveyInMessage(offer,command), Times.Once);
-            offerProgressStatusHelper.Verify(x => x.KeepOfferOtherDetailsInMessage(offer,command), Times.Once);
+            offerProgressStatusHelper.Verify(x => x.KeepOfferProgressStatusesInMessage(offer, command), Times.Once);
+            offerProgressStatusHelper.Verify(x => x.KeepOfferMortgageDetailsInMessage(offer, command), Times.Once);
+            offerProgressStatusHelper.Verify(x => x.KeepOfferAdditionalSurveyInMessage(offer, command), Times.Once);
+            offerProgressStatusHelper.Verify(x => x.KeepOfferOtherDetailsInMessage(offer, command), Times.Once);
 
             offerRepository.Verify(r => r.Save(), Times.Once());
+        }
+
+        private void SetupOffer(Guid offerId, Offer offer, OfferType offerType, Requirement requirement, RequirementType requirementType)
+        {
+            requirementType.EnumCode = Domain.Common.Enums.RequirementType.ResidentialLetting.ToString();
+            requirement.RequirementType = requirementType;
+            offer.Requirement = requirement;
+            offerType.EnumCode = Domain.Common.Enums.OfferType.ResidentialLetting.ToString();
+            offer.OfferType = offerType;
+            offer.Id = offerId;
         }
     }
 }
