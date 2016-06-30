@@ -292,7 +292,8 @@
       "DESCRIPTION": "Requirement description",
       "TYPE": "Requirement type",
       "BASIC_INFORMATION": "Basic information",
-      "RENT_REQUIREMENTS":  "Rent requirements"
+      "RENT_REQUIREMENTS": "Rent requirements",
+      "RENT_WEEKLY":  "Rent (weekly)"
     },
     "VIEW": {
       "REQUIREMENT_DETAILS": "Requirement details",
@@ -321,7 +322,8 @@
       "NEWOFFER": "New offer",
       "TYPE": "Requirement type",
       "BASIC_INFORMATION": "Basic information",
-      "RENT_REQUIREMENTS": "Rent requirements"
+      "RENT_REQUIREMENTS": "Rent requirements",
+      "RENT_WEEKLY": "Rent (weekly)"
     }
   },
   "NOTES": {
