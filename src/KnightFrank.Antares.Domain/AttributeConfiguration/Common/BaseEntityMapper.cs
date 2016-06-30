@@ -16,7 +16,8 @@
         public TEntity MapAllowedValues<TSource>(TSource source, TEntity entity, IControlsConfiguration<TKey> config, PageType pageType, TKey key)
         {
             IList<InnerFieldState> fieldStates = config.GetInnerFieldsState(pageType, key, source);
-            foreach (InnerFieldState field in fieldStates.Where(x => !x.Readonly && !x.Hidden))
+            IEnumerable<InnerFieldState> fieldsToUpdate = fieldStates.Where(x => !x.Readonly);
+            foreach (InnerFieldState field in fieldsToUpdate)
             {
                 this.SetFieldValue(entity, field, field.Compiled(source));
             }
@@ -30,7 +31,10 @@
             Func<InnerFieldState, bool> noOtherActiveFieldIsDefinedForTheSameEntityExpression =
                 x => !fieldStates.Any(s => !s.Hidden && s.Expression.ToString() == x.Expression.ToString());
 
-            foreach (InnerFieldState field in fieldStates.Where(x => x.Hidden && noOtherActiveFieldIsDefinedForTheSameEntityExpression(x)))
+            IEnumerable<InnerFieldState> fieldsToNullify =
+                fieldStates.Where(x => x.Hidden && noOtherActiveFieldIsDefinedForTheSameEntityExpression(x));
+
+            foreach (InnerFieldState field in fieldsToNullify)
             {
                 object defaultValue = field.PropertyType.IsValueType ? Activator.CreateInstance(field.PropertyType) : null;
                 this.SetFieldValue(entity, field, defaultValue);

@@ -20,7 +20,10 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
         {
             this.AvailableControls = new Dictionary<Tuple<PageType, ControlCode>, Tuple<Control, IList<IField>>>();
             this.ControlPageConfiguration = new Dictionary<Tuple<TKey, PageType>, IList<Tuple<Control, IList<IField>>>>();
+        }
 
+        protected void Init()
+        {
             this.DefineControls();
             this.DefineMappings();
             this.BuildConfiguration();
