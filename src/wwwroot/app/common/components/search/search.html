@@ -9,14 +9,14 @@
                ng-required="vm.options.isRequired"
                ng-model-options="vm.options.modelOptions"
                ng-change="vm.change()"
+               ng-maxlength="vm.options.maxLength"
                uib-typeahead="item as item.getName() for item in vm.loadItems($viewValue)"
                typeahead-min-length="vm.options.minLength"
                typeahead-on-select="vm.select($item)"
                typeahead-editable="vm.options.isEditable"
                typeahead-template-url="{{vm.itemTemplateUrl}}"
                placeholder="{{vm.searchPlaceholder | translate}}"
-               autocomplete="off">
+               autocomplete="off" />
         <button ng-if="vm.options.showCancelButton" data-type="cancel" type="button" class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>
-
     </div>
 </div>

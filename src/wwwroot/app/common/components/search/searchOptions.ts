@@ -6,6 +6,7 @@ module Antares.Common.Component {
         isEditable = false;
         nullOnSelect = true;
         showCancelButton = true;
+        maxLength = null;
         minLength = 3;
         modelOptions = {
             debounce: {
