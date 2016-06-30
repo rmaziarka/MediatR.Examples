@@ -19,11 +19,7 @@
         </div>
 
         <div class="section-details">
-            <div class="section-row row">
-                <div class="col-xs-6 section-title" translate="OFFER.PREVIEW.STATUS"></div>
-                <div class="col-xs-6" id="offer-preview-status">{{vm.offer.statusId | dynamicTranslate}}</div>
-            </div>
-
+            <enum-item-view-control ng-model="vm.offer.statusId" config="vm.config.offer_Status" schema="vm.controlSchemas.status"></enum-item-view-control>
             <price-view-control price="vm.offer.price" config="vm.config.offer_Price" schema="vm.controlSchemas.price"></price-view-control>
             <price-view-control price="vm.offer.pricePerWeek" config="vm.config.offer_PricePerWeek" schema="vm.controlSchemas.pricePerWeek"></price-view-control>
 
