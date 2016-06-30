@@ -3,6 +3,7 @@
 module Antares {
     import ContactListController = Component.ContactListController;
     import Dto = Common.Models.Dto;
+    import Enums = Common.Models.Enums;
 
     describe('Given contacts are displayed', () =>{
 
@@ -27,7 +28,10 @@ module Antares {
                 eventInformalSalutation: '',
                 eventPersonalSalutation: '',
                 eventEnvelopeSalutation: '',
-                defaultEventSalutationId: '' },
+                defaultEventSalutationId: '',
+                leadNegotiator: TestHelpers.ContactUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator),
+                secondaryNegotiators:[]
+            },
             {
                 id: '2',
                 firstName: 'Test2',
@@ -44,7 +48,10 @@ module Antares {
                 eventInformalSalutation: '',
                 eventPersonalSalutation: '',
                 eventEnvelopeSalutation: '',
-                defaultEventSalutationId: '' }
+                defaultEventSalutationId: '',
+                leadNegotiator: TestHelpers.ContactUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator),
+                secondaryNegotiators: []
+            }
         ];
 
         var controller: ContactListController;

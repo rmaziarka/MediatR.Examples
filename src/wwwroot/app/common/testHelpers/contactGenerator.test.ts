@@ -3,6 +3,7 @@
 module Antares.TestHelpers {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
+    import Enums = Common.Models.Enums;
 
     export class ContactGenerator {
         public static generateDto(): Dto.IContact {
@@ -23,7 +24,9 @@ module Antares.TestHelpers {
                 eventInformalSalutation: ContactGenerator.makeRandom('eventInformalSalutation'),
                 eventPersonalSalutation: ContactGenerator.makeRandom('eventPersonalSalutation'),
                 eventEnvelopeSalutation: ContactGenerator.makeRandom('eventEnvelopeSalutation'),
-                defaultEventSalutationId: ContactGenerator.makeRandom('defaultEventSalutationId')
+                defaultEventSalutationId: ContactGenerator.makeRandom('defaultEventSalutationId'),
+                leadNegotiator: ContactUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator),
+                secondaryNegotiators:[]
             }
 
             return contact;
@@ -41,7 +44,7 @@ module Antares.TestHelpers {
             return new Business.Contact(ContactGenerator.generateDto());
         }
 
-        private static makeRandom(text: string): string {
+     private static makeRandom(text: string): string {
             return text + _.random(1, 1000000);
         }
     }

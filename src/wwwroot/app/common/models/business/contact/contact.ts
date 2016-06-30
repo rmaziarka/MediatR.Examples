@@ -20,6 +20,8 @@ module Antares.Common.Models.Business {
         eventEnvelopeSalutation: string;
         defaultEventSalutationId: string;
         company: Business.Company = null;
+        leadNegotiator: ContactUser;
+        secondaryNegotiators: ContactUser[];
 
         constructor(contact?: Dto.IContact, company?: Dto.ICompany) {
             angular.extend(this, contact);

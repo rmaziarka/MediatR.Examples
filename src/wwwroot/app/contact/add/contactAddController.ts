@@ -4,9 +4,11 @@ module Antares.Contact {
 
     import Dto = Common.Models.Dto;
     import IContactTitle = Common.Models.Dto.IContactTitle;
+    import Business = Common.Models.Business;
 
     export class ContactAddController {
-        public contact: Antares.Common.Models.Dto.IContact;
+        public config: Attributes.IContactNegotiatorsControlConfig;
+        public contact: Antares.Common.Models.Dto.IContact; //TODO: This should be IContact not IContactTemp(Aneela)
         public searchOptions: Common.Component.SearchOptions = new Common.Component.SearchOptions({ minLength: 0, isEditable: true, nullOnSelect: false, showCancelButton: false, isRequired : true });
 
         userData: Dto.ICurrentUser;
@@ -107,6 +109,7 @@ module Antares.Contact {
                 (((this.contact.title || "") + " " + (this.contact.firstName || "")).trim() + " " + (this.contact.lastName || "")).trim());
         }
 
+     
         public save() {
             this.contact.defaultMailingSalutationId = this.defaultMailingSalutationId != null ? this.defaultMailingSalutationId : "";
             this.contact.defaultEventSalutationId = this.defaultEventSalutationId != null ? this.defaultEventSalutationId : "";
@@ -115,9 +118,16 @@ module Antares.Contact {
                 this.contact.title = this.selectedTitle;
             }
 
-            this.contactResource.save(this.contact);
-            var form = this.$scope["addContactForm"];
-            form.$setPristine();
+            this.contactResource.save(this.contact)
+                .$promise
+                .then((contact: Dto.IContact) => {
+                    this.contact = new Business.Contact();
+                    var form = this.$scope["addContactForm"];
+                    form.$setPristine();
+                    this.$state.go('app.contact-view', contact);
+                });
+            //var form = this.$scope["addContactForm"];
+            //form.$setPristine();
         }
     }
 
