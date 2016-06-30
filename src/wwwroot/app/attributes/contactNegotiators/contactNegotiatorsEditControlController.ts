@@ -3,7 +3,6 @@
 module Antares.Attributes {
     import Business = Common.Models.Business;
     import Dto = Common.Models.Dto;
-    import Enums = Common.Models.Enums;
     import DepartmentUserResourceParameters = Common.Models.Resources.IDepartmentUserResourceParameters;
     import SearchOptions = Antares.Common.Component.SearchOptions;
 
@@ -13,9 +12,6 @@ module Antares.Attributes {
 
     export class ContactNegotiatorsEditControlController {
         // bindings
-        onNegotiatorAdded: (obj: { user: Dto.IUser }) => void;
-     
-
         public contactId: string; 
         public leadNegotiator: Business.ContactUser;
         public secondaryNegotiators: Business.ContactUser[] = [];
@@ -36,11 +32,8 @@ module Antares.Attributes {
 
         constructor(
             private $scope: ng.IScope,
-            private dataAccessService: Services.DataAccessService,
-            private enumService: Services.EnumService) {
-
-         
-        }
+            private dataAccessService: Services.DataAccessService) {
+            }
 
       
         public editLeadNegotiator = () => {
@@ -63,8 +56,7 @@ module Antares.Attributes {
 
         public addSecondaryNegotiator = (user: Dto.IUser) => {
             this.secondaryNegotiators.push(this.createContactUser(user));
-            this.isLeadNegotiatorInEditMode = true;
-        }
+          }
 
         public deleteSecondaryNegotiator = (contactUser: Business.ContactUser) => {
             _.remove(this.secondaryNegotiators, (itm) => itm.userId === contactUser.userId);
@@ -74,17 +66,11 @@ module Antares.Attributes {
             this.isSecondaryNegotiatorsInEditMode = false;
         }
 
-        public switchToLeadNegotiator = (contactUser: Business.ContactUser) => {
-            var field = this.negotiatorsForm.callDate;
-            if (field.$invalid && field.$dirty) {
-                this.leadNegotiator.callDate = null;
-            }
-
+        public switchToLeadNegotiator = (contactUser: Business.ContactUser) =>{
             _.remove(this.secondaryNegotiators, (itm) => itm.userId === contactUser.userId);
             this.secondaryNegotiators.push(this.leadNegotiator);
 
-        this.leadNegotiator = contactUser;
-          
+            this.leadNegotiator = contactUser;
         }
 
         public openNegotiatorCallDate = (negotiatorUserId: string) => {

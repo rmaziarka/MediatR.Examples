@@ -17,14 +17,16 @@ module Antares.Common.Component {
         public selectedItem: any;
 
         public select = <T>($item: T) => {
-            this.onSelectItem($item);
+            if (this.onSelectItem)
+                this.onSelectItem($item);
 
             if (this.options.nullOnSelect)
                 this.selectedItem = null;
         }
 
         public change = () => {
-            this.onChangeValue(this.selectedItem);
+            if(this.onChangeValue)
+                this.onChangeValue(this.selectedItem);
 
             if (this.options.nullOnSelect)
                 this.selectedItem = null;
