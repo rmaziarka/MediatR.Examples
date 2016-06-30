@@ -14,25 +14,27 @@
         <!--- old preview end -->
 
         <!-- new-->
-        <activity-card activity="vm.offer.activity"></activity-card>
-        <!-- end new -->
+        <div class="section-details">
+            <activity-card activity="vm.offer.activity"></activity-card>
+        </div>
 
-        <!--- old preview start -->
         <div class="section-details">
             <div class="section-row row">
                 <div class="col-xs-6 section-title" translate="OFFER.PREVIEW.STATUS"></div>
                 <div class="col-xs-6" id="offer-preview-status">{{vm.offer.statusId | dynamicTranslate}}</div>
             </div>
-            <div class="section-row row">
-                <div class="col-xs-6 section-title" translate="OFFER.PREVIEW.OFFER"></div>
-                <div class="col-xs-6" id="offer-preview-price">{{vm.offer.price}} GBP</div>
-            </div>
+
+            <price-view-control price="vm.offer.price" config="vm.config.offer_Price" schema="vm.controlSchemas.price"></price-view-control>
+            <price-view-control price="vm.offer.pricePerWeek" config="vm.config.offer_PricePerWeek" schema="vm.controlSchemas.pricePerWeek"></price-view-control>
+
             <div class="section-row row">
                 <div class="col-xs-6 section-title" translate="OFFER.PREVIEW.OFFER_DATE"></div>
                 <div class="col-xs-6" id="offer-preview-date"><time>{{vm.offer.offerDate | date : 'dd-MM-yyyy'}}</time></div>
             </div>
         </div>
+        <!-- end new -->
 
+        <!--- old preview start -->
         <div class="section-details">
             <h5 translate="OFFER.PREVIEW.SPECIAL_CONDITIONS"></h5>
             <p id="offer-preview-special-conditions">{{vm.offer.specialConditions}}</p>

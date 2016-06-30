@@ -10,6 +10,8 @@ module Antares.Common.Models.Business {
         contacts: Contact[] = [];
         address: Address = new Address();
         description: string;
+        rentMin: number;
+        rentMax: number;
         requirementNotes: RequirementNote[] = [];
         viewingsByDay: ViewingGroup[];
         viewings: Viewing[];
