@@ -33,6 +33,56 @@ module Antares.TestHelpers {
             return config;
         }
 
+        public static generateOfferStatusIdConfig(): Attributes.IOfferStatusControlConfig {
+            var config: Attributes.IOfferStatusControlConfig = {
+                active: true,
+                statusId: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferPriceConfig(): Attributes.IOfferPriceControlConfig {
+            var config: Attributes.IOfferPriceControlConfig = {
+                active: true,
+                price: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferPricePerWeekConfig(): Attributes.IOfferPricePerWeekControlConfig {
+            var config: Attributes.IOfferPricePerWeekControlConfig = {
+                active: true,
+                pricePerWeek: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferSpecialConditionsConfig(): Attributes.IOfferSpecialConditionsControlConfig {
+            var config: Attributes.IOfferSpecialConditionsControlConfig = {
+                active: true,
+                specialConditions: null
+            }
+
+            return config;
+        }
+        
+        public static generateOfferAddPanelConfig(): Offer.IOfferAddPanelConfig{
+            var config: Offer.IOfferAddPanelConfig = {
+                statusId: ConfigGenerator.generateOfferStatusIdConfig(),
+                completionDate: ConfigGenerator.generateOfferCompletionDateConfig(),
+                exchangeDate: ConfigGenerator.generateOfferExchangeDateConfig(),
+                offerDate: ConfigGenerator.generateOfferOfferDateConfig(),
+                price: ConfigGenerator.generateOfferPriceConfig(),
+                pricePerWeek: ConfigGenerator.generateOfferPricePerWeekConfig(),
+                specialConditions: ConfigGenerator.generateOfferSpecialConditionsConfig()
+            };
+
+            return config;
+        }
+
         public static generateActivityStatusEditConfig(): Attributes.IActivityStatusEditControlConfig {
             var config: Attributes.IActivityStatusEditControlConfig = {
                 active: true,
