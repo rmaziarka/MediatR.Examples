@@ -194,6 +194,10 @@
     }
   },
   "ACTIVITY": {
+    "COMMON": {
+      "ADDITIONAL_INFORMATION": "Additional information",
+      "PITCHING_THREATS" : "Pitching threats"
+    },
     "LIST": {
       "ACTIVITIES": "Activities",
       "NO_ITEMS": "No activities yet"
@@ -212,7 +216,7 @@
       "BASIC_INFORMATION": "Basic information",
       "ADDITIONAL_INFORMATION": {
         "ADDITIONAL_INFORMATION": "Additional information",
-        "ACCESS_DETAILS":  "Access details"
+        "ACCESS_DETAILS": "Access details"
       },
       "STATUS": "Status",
       "PROPERTY": "Property",
@@ -239,7 +243,7 @@
         "END": "End time:",
         "APPRAISAL_MEETING": "Appraisal meeting",
         "INVITATION_TEXT": "Invitation text",
-        "ATTENDEES":  "Attendees"
+        "ATTENDEES": "Attendees"
       }
     },
     "PREVIEW": {
@@ -256,6 +260,7 @@
       "BASIC_INFORMATION": "Basic information",
       "DETAILS": "Details",
       "VIEW_ACTIVITY": "View activity",
+      "APPRAISAL_MEETING": "Appraisal meeting",
       "PROPERTY": "Property",
       "VENDORS": "Vendors",
       "NO_VENDORS": "No vendors defined",

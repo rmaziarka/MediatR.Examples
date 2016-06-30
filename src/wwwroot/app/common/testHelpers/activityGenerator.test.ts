@@ -21,7 +21,11 @@ module Antares.TestHelpers {
                 activityDepartments: [],
                 sellingReasonId: StringGenerator.generate(),
                 sourceId: StringGenerator.generate(),
-                appraisalMeeting: ActivityAppraisalMeetingGenerator.generateDto()
+                appraisalMeeting: ActivityAppraisalMeetingGenerator.generateDto(),
+                accessDetails: {
+                    keyNumber: StringGenerator.generate(),
+                    accessArrangements: StringGenerator.generate(),
+                }
             }
 
             return angular.extend(activity, specificData || {});

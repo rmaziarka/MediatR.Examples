@@ -236,9 +236,9 @@ module Antares {
                     expect(requestData.leadNegotiator.userId).toEqual(activity.leadNegotiator.userId);
                     expect(requestData.sellingReasonId).toEqual(activity.sellingReasonId);
                     expect(requestData.sourceId).toEqual(activity.sourceId);
-                    expect(requestData.pitchningThreats).toEqual(activity.pitchningThreats);
-                    expect(requestData.keyNumber).toEqual(activity.keyNumber);
-                    expect(requestData.accessArrangements).toEqual(activity.accessArrangements);
+                    expect(requestData.pitchingThreats).toEqual(activity.pitchingThreats);
+                    expect(requestData.accessDetails.keyNumber).toEqual(activity.accessDetails.keyNumber);
+                    expect(requestData.accessDetails.accessArrangements).toEqual(activity.accessDetails.accessArrangements);
 
                     expect(requestData.secondaryNegotiators.map((negotiator) => negotiator.userId)).toEqual(activity.secondaryNegotiator.map((negotiator) => negotiator.userId));
                 }

@@ -26,11 +26,10 @@ module Antares.Common.Models.Business {
         sourceId: string = '';
         sourceDescription: string = '';
         sellingReasonId: string = '';
-        pitchningThreats: string = '';
-        keyNumber: string = '';
-        accessArrangements: string = '';
+        pitchingThreats: string = '';
         attendees: Dto.IActivityAttendee[] = [];
         appraisalMeeting: Business.ActivityAppraisalMeeting;
+        accessDetails: Business.ActivityAccessDetails = null;
 
         constructor(activity?: Dto.IActivity) {
             if (activity) {
@@ -70,6 +69,7 @@ module Antares.Common.Models.Business {
                 }
 
                 this.appraisalMeeting = new Business.ActivityAppraisalMeeting(activity.appraisalMeeting);
+                this.accessDetails = new Business.ActivityAccessDetails(activity.accessDetails);
             }
 
             this.secondaryNegotiator = this.secondaryNegotiator || [];

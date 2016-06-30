@@ -41,8 +41,15 @@
                     </div>
                     <div class="col-md-3">
                         <viewing-view-control is-panel-visible="avvm.isViewingPreviewPanelVisible" viewings="avvm.activity.viewingsByDay" config="avvm.config.viewings"></viewing-view-control>
+                        <section>
+                            <activity-appraisal-meeting-view-control config="avvm.config.appraisalMeeting"
+                                                                     appraisal-meeting="avvm.activity.appraisalMeeting"
+                                                                     attendees="avvm.activity.attendees"></activity-appraisal-meeting-view-control>
+                        </section>
 
                         <attachments-manager title="{{'ACTIVITY.VIEW.RECENT_FILES' | translate}}" data="avvm.attachmentManagerData" on-save-attachment-for-entity="avvm.saveAttachment(attachment)"></attachments-manager>
+
+
                     </div>
                     <div class="col-md-6">
                         <section>
@@ -94,6 +101,31 @@
                         <section id="activity-view-property">
                             <property-view-control property="avvm.activity.property" is-panel-visible="avvm.isPropertyPreviewPanelVisible" config="avvm.config.property"></property-view-control>
                         </section>
+
+                        <enum-item-view-control config="avvm.config.source"
+                                                ng-model="avvm.activity.sourceId"
+                                                schema="avvm.activitySourceSchema"></enum-item-view-control>
+                        <textarea-view-control config="avvm.config.sourceDescription"
+                                               ng-model="avvm.activity.sourceDescription"
+                                               schema="avvm.activitySourceDescriptionSchema"></textarea-view-control>
+                        <enum-item-view-control config="avvm.config.sellingReason"
+                                                ng-model="avvm.activity.sellingReasonId"
+                                                schema="avvm.activitySellingReasonSchema"></enum-item-view-control>
+                        <textarea-view-control config="avvm.config.pitchingThreats"
+                                               ng-model="avvm.activity.pitchingThreats"
+                                               schema="avvm.activityPitchingThreatsSchema"></textarea-view-control>
+
+                        <section>
+                            <h3 class="page-header" translate="ACTIVITY.COMMON.ADDITIONAL_INFORMATION"></h3>
+                        </section>
+                        <text-view-control config="avvm.config.keyNumber"
+                                               ng-model="avvm.activity.accessDetails.keyNumber"
+                                               schema="avvm.activityKeyNumberSchema"></text-view-control>
+                        <textarea-view-control config="avvm.config.accessArrangements"
+                                               ng-model="avvm.activity.accessDetails.accessArrangements"
+                                               schema="avvm.activityAccessArrangementsSchema"></textarea-view-control>
+ 
+
                     </div>
                 </div>
             </uib-tab>
