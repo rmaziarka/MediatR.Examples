@@ -6,10 +6,12 @@
     using FluentAssertions;
 
     using KnightFrank.Antares.Dal.Model.Address;
+    using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.CommandHandlers;
+    using KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
@@ -39,6 +41,10 @@
             [Frozen] Mock<IActivityTypeDefinitionValidator> activityTypeDefinitionValidator,
             [Frozen] Mock<IAttributeValidator<Tuple<PropertyType, Domain.Common.Enums.ActivityType>>> attributeValidator,
             [Frozen] Mock<IEntityMapper<Activity>> activityEntityMapper,
+            [Frozen] Mock<IActivityReferenceMapper<Contact>> contactsMapper,
+            [Frozen] Mock<IActivityReferenceMapper<ActivityUser>> usersMapper,
+            [Frozen] Mock<IActivityReferenceMapper<ActivityDepartment>> departmentsMapper,
+            [Frozen] Mock<IActivityReferenceMapper<ActivityAttendee>> attendeesMapper,
             CreateActivityCommandHandler handler,
             CreateActivityCommand command,
             Guid expectedActivityId,
@@ -72,6 +78,12 @@
                             PageType.Create))
                 .Returns(mappedActivity);
 
+            int callOrder = 0;
+            contactsMapper.Setup(x => x.ValidateAndAssign(command, It.IsAny<Activity>())).Callback(() => Assert.Equal(callOrder++, 0)).Verifiable();
+            usersMapper.Setup(x => x.ValidateAndAssign(command, It.IsAny<Activity>())).Callback(() => Assert.Equal(callOrder++, 1)).Verifiable();
+            departmentsMapper.Setup(x => x.ValidateAndAssign(command, It.IsAny<Activity>())).Callback(() => Assert.Equal(callOrder++, 2)).Verifiable();
+            attendeesMapper.Setup(x => x.ValidateAndAssign(command, It.IsAny<Activity>())).Callback(() => Assert.Equal(callOrder++, 3)).Verifiable();
+
             // Act
             Guid activityId = handler.Handle(command);
 
@@ -97,6 +109,11 @@
 
             activityRepository.Verify(r => r.Add(It.IsAny<Activity>()), Times.Once());
             activityRepository.Verify(r => r.Save(), Times.Once());
+
+            contactsMapper.Verify();
+            usersMapper.Verify();
+            departmentsMapper.Verify();
+            attendeesMapper.Verify();
         }
     }
 }
