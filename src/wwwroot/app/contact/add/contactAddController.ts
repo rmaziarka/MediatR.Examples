@@ -5,15 +5,18 @@ module Antares.Contact {
     import Dto = Common.Models.Dto;
     import IContactTitle = Common.Models.Dto.IContactTitle;
     import Business = Common.Models.Business;
+    import Enums = Common.Models.Enums;
 
     export class ContactAddController {
         public config: Attributes.IContactNegotiatorsControlConfig;
-        public contact: Antares.Common.Models.Dto.IContact; //TODO: This should be IContact not IContactTemp(Aneela)
+        public contact: Antares.Common.Models.Dto.IContact = new Business.Contact();
+         
         public searchOptions: Common.Component.SearchOptions = new Common.Component.SearchOptions({ minLength: 0, isEditable: true, nullOnSelect: false, showCancelButton: false, isRequired: true, maxLength: 128  });
 
         userData: Dto.ICurrentUser;
         mailingSalutationFormat: Dto.EnumTypeCode = Dto.EnumTypeCode.MailingSalutation;
         eventSalutationFormat: Dto.EnumTypeCode = Dto.EnumTypeCode.EventSalutation;
+      
         private currentUserResource: Common.Models.Resources.ICurrentUserResourceClass;
 
         defaultSalutationFormat: string = "";
@@ -36,6 +39,7 @@ module Antares.Contact {
             private contactTitleService: Services.ContactTitleService) {
 
             this.contactResource = dataAccessService.getContactResource();
+
         }
 
         $onInit = () => {
@@ -44,8 +48,28 @@ module Antares.Contact {
             this.contactTitleService.get().then((contactTitles) => {
                 this.contactTitles = contactTitles.data;
             });
-        }
 
+            this.setDefaultLeadNegotiator(this.userData,this.contact);
+           
+        }
+     
+        setDefaultLeadNegotiator = (currentUser:Dto.ICurrentUser, contact:Dto.IContact) =>{ 
+           var  defaultUser: Dto.IUser = {
+               id : currentUser.id,
+               firstName : currentUser.firstName,
+               lastName : currentUser.lastName,
+               departmentId : "",
+               department : null
+           }
+
+        
+
+            var defaultLeadNegotiator = new Business.ContactUser();
+            defaultLeadNegotiator.user = new Business.User(<Dto.IUser>defaultUser);
+            defaultLeadNegotiator.contactId = this.contact.id;
+            defaultLeadNegotiator.userId = this.userData.id;
+            contact.leadNegotiator = defaultLeadNegotiator;
+        }
         public getContactTitles = (typedTitle: string) => {
 
             var locale = this.userData.locale.isoCode;
@@ -115,8 +139,7 @@ module Antares.Contact {
                 (((title || "") + " " + (this.contact.firstName || "")).trim() + " " + (this.contact.lastName || "")).trim());
         }
 
-     
-        public save() {
+        public save(){
             this.contact.defaultMailingSalutationId = this.defaultMailingSalutationId != null ? this.defaultMailingSalutationId : "";
             this.contact.defaultEventSalutationId = this.defaultEventSalutationId != null ? this.defaultEventSalutationId : "";
 
@@ -126,14 +149,12 @@ module Antares.Contact {
 
             this.contactResource.save(this.contact)
                 .$promise
-                .then((contact: Dto.IContact) => {
+                .then((contact: Dto.IContact) =>{
                     this.contact = new Business.Contact();
                     var form = this.$scope["addContactForm"];
                     form.$setPristine();
                     this.$state.go('app.contact-view', contact);
                 });
-            //var form = this.$scope["addContactForm"];
-            //form.$setPristine();
         }
     }
 

@@ -13,7 +13,7 @@ module Antares.Contact {
             .state('app.contact-add', {
                 url: '/contact/add',
                 params : {},
-                template: "<contact-add user-data='appVm.userData' config='config'></contact-add>"
+                template: "<contact-add user-data='appVm.userData' contact='contact'></contact-add>"
             })
             .state('app.contact-view', {
                 url: '/contact/:id',
