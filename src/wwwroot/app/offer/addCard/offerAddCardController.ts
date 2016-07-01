@@ -3,6 +3,7 @@
 module Antares.Offer {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
+    declare var moment: any;
 
     export class OfferAddCardController {
         // bindings
@@ -17,7 +18,7 @@ module Antares.Offer {
         offerAddCardForm: ng.IFormController;
         offer: Business.CreateOfferCommand = new Business.CreateOfferCommand();
         defaultOfferStatusCode: string = Common.Models.Enums.OfferStatus[Common.Models.Enums.OfferStatus.New];
-        today: Date = new Date();
+        today: Date = moment().startOf('day').toDate();
 
         // controls
         controlSchemas: any = {
@@ -96,6 +97,7 @@ module Antares.Offer {
 
         private resetCardData = () => {
             this.offer = new Business.CreateOfferCommand();
+            this.offer.offerDate = this.today;
             this.setDefaultOfferStatus();
         }
 

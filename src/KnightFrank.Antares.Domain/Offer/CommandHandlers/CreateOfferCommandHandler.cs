@@ -89,8 +89,11 @@
 
             this.offerEntityMapper.MapAllowedValues(message, offer, PageType.Create);
 
-            List<EnumType> enumTypeItems = this.GetEnumTypeItems();
-            offer = this.offerProgressStatusHelper.SetOfferProgressStatuses(offer, enumTypeItems);
+            if (offerTypeEnum == OfferType.ResidentialSale)
+            {
+                List<EnumType> enumTypeItems = this.GetEnumTypeItems();
+                offer = this.offerProgressStatusHelper.SetOfferProgressStatuses(offer, enumTypeItems);
+            }
 
             Guid negotiatorId = this.userRepository.Get().First().Id;
             offer.NegotiatorId = negotiatorId;
