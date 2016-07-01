@@ -21,8 +21,8 @@ Scenario: Create viewing on requirement
 			| 01-05-2014   | 1000000  |
 		And Property Freehold Sale activity is defined
 		And Requirement for GB is created in database
-			| Description |
-			| Description |
+			| Type             | Description |
+			| Residential Sale | Description |
 	When User navigates to view requirement page with id
 		And User clicks add viewings button on view requirement page
 		And User selects activity on view requirement page
@@ -77,8 +77,8 @@ Scenario: Update viewing on requirement
 			| 10-12-2013   | 10000000 |
 		And Property Freehold Sale activity is defined
 		And Requirement for GB is created in database
-			| Description |
-			| Description |
+			| Type             | Description |
+			| Residential Sale | Description |
 		And Viewing for requirement is defined
 	When User navigates to view requirement page with id
 		And User clicks 1 viewings details on view requirement page

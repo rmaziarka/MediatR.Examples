@@ -137,7 +137,7 @@
         [When(@"User clicks view activity from offer on view requirement page")]
         public void ClickViewActivityOffer()
         {
-            this.page.OfferPreview.ClickViewLink();
+            this.page.OfferPreview.WaitForDetailsToLoad().ClickViewLink();
         }
 
         [When(@"User clicks make an offer button for (.*) activity on view requirement page")]
@@ -146,6 +146,7 @@
             this.page.OpenViewingActions(position)
                 .CreateOffer(1)
                 .WaitForSidePanelToShow();
+            this.page.Offer.WaitForDetailsToLoad();
         }
 
         [When(@"User clicks edit offer button for (.*) offer on view requirement page")]
@@ -162,8 +163,8 @@
             this.page.OpenOfferActions(position).DetailsOffer(1);
         }
 
-        [When(@"User fills in sales offer details on view requirement page")]
-        public void FillSalesOfferDetails(Table table)
+        [When(@"User fills in sale offer details on view requirement page")]
+        public void FillSaleOfferDetails(Table table)
         {
             var details = table.CreateInstance<OfferData>();
 
@@ -214,7 +215,7 @@
         [When(@"User clicks details offer link on view requirement page")]
         public void OpenViewOfferPage()
         {
-            this.page.OfferPreview.ClickDetailsLink();
+            this.page.OfferPreview.WaitForDetailsToLoad().ClickDetailsLink();
         }
 
         [When(@"User clicks add attachment button on view requirement page")]
@@ -245,7 +246,7 @@
         }
 
         [Then(@"Requirement location details on view requirement page are same as the following")]
-        public void CheckResidentialSalesRequirementLocationDetails(Table table)
+        public void CheckResidentialSaleRequirementLocationDetails(Table table)
         {
             Dictionary<string, string> details = this.page.GetLocationRequirements();
             var expectedDetails = table.CreateInstance<Address>();
@@ -256,16 +257,30 @@
                 () => Assert.Equal(expectedDetails.City, details["City"]));
         }
 
-        [Then(@"Requirement property details on view requirement page are same as the following")]
-        public void CheckResidentialSalesRequirementPropertyDetails(Table table)
+        [Then(@"Sale Requirement details on view requirement page are same as the following")]
+        public void CheckSaleRequirementDetails(Table table)
         {
-            var expectedDetails = table.CreateInstance<Requirement>();
+            var expectedDetails = table.CreateInstance<RequirementData>();
 
-            Assert.Equal(expectedDetails.Description, this.page.RequirementDescription);
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Description, this.page.RequirementDescription),
+                () => Assert.Equal(expectedDetails.Type, this.page.RequirementType));
+        }
+
+        [Then(@"Requirement details on view requirement page are same as the following")]
+        public void CheckLettingRequirementDetails(Table table)
+        {
+            var expectedDetails = table.CreateInstance<RequirementData>();
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Description, this.page.RequirementDescription),
+                () => Assert.Equal(expectedDetails.Type, this.page.RequirementType));
+
+                //TODO () => Assert.Equal(expectedDetails.RentMin + " - " + expectedDetails.RentMax + " GBP", this.page.Rent
         }
 
         [Then(@"Requirement applicants on view requirement page are same as the following")]
-        public void CheckResidentialSalesRequirementApplicants(Table table)
+        public void CheckRequirementApplicants(Table table)
         {
             List<string> applicants = this.page.Applicants;
             List<string> expectedApplicants =
@@ -307,8 +322,8 @@
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Details, actualDetails[0]),
-                () => Assert.Equal(expectedDetails.Offer, actualDetails[1]),
-                () => Assert.Equal(expectedDetails.Status, actualDetails[2]));
+                () => Assert.Equal(int.Parse(expectedDetails.Offer).ToString("N0") + " GBP", actualDetails[2]),
+                () => Assert.Equal(expectedDetails.Status, actualDetails[1]));
         }
 
         [Then(@"Viewing details on view requirement page are same as the following")]
@@ -327,8 +342,8 @@
                 () => Assert.Equal(expectedDetails.PostViewingComment, this.page.ViewingDetails.PostViewingComment));
         }
 
-        [Then(@"Offer details on view requirement page are same as the following")]
-        public void CheckOfferInDetailsPanel(Table table)
+        [Then(@"Sale offer details on view requirement page are same as the following")]
+        public void CheckSaleOfferInDetailsPanel(Table table)
         {
             var expectedDetails = table.CreateInstance<OfferData>();
 
@@ -342,6 +357,28 @@
                 () => Assert.Equal(expectedDetails.Details, this.page.OfferPreview.Details),
                 () => Assert.Equal(expectedDetails.Status, this.page.OfferPreview.Status),
                 () => Assert.Equal(expectedDetails.Offer, this.page.OfferPreview.Offer),
+                () => Assert.Equal(expectedDetails.OfferDate, this.page.OfferPreview.Date),
+                () => Assert.Equal(expectedDetails.SpecialConditions, this.page.OfferPreview.SpecialConditions),
+                () => Assert.Equal(expectedDetails.Negotiator, this.page.OfferPreview.Negotiator),
+                () => Assert.Equal(expectedDetails.ExchangeDate, this.page.OfferPreview.ProposedexchangeDate),
+                () => Assert.Equal(expectedDetails.CompletionDate, this.page.OfferPreview.ProposedCompletionDate));
+        }
+
+        [Then(@"Letting offer details on view requirement page are same as the following")]
+        public void CheckLettingOfferInDetailsPanel(Table table)
+        {
+            var expectedDetails = table.CreateInstance<OfferData>();
+
+            var offer = this.scenarioContext.Get<OfferData>("Offer");
+
+            expectedDetails.OfferDate = offer.OfferDate;
+            expectedDetails.ExchangeDate = offer.ExchangeDate;
+            expectedDetails.CompletionDate = offer.CompletionDate;
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Details, this.page.OfferPreview.Details),
+                () => Assert.Equal(expectedDetails.Status, this.page.OfferPreview.Status),
+                () => Assert.Equal(expectedDetails.Offer, this.page.OfferPreview.OfferPerWeek),
                 () => Assert.Equal(expectedDetails.OfferDate, this.page.OfferPreview.Date),
                 () => Assert.Equal(expectedDetails.SpecialConditions, this.page.OfferPreview.SpecialConditions),
                 () => Assert.Equal(expectedDetails.Negotiator, this.page.OfferPreview.Negotiator),
@@ -369,7 +406,7 @@
         }
 
         [Then(@"New requirement should be created")]
-        public void CheckIfNewResidentialSalesRequirementCreated()
+        public void CheckIfRequirementCreated()
         {
             this.page.WaitForDetailsToLoad();
             var date = this.scenarioContext.Get<DateTime>("RequirementDate");

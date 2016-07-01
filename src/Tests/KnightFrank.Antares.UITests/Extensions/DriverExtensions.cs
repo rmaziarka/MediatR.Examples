@@ -66,5 +66,11 @@
             driver.ScrollIntoMiddle(locator);
             driver.GetElement(locator).Click();
         }
+
+        public static void ClickWithJs(this IWebDriver driver, ElementLocator locator)
+        {
+            driver.ScrollIntoMiddle(locator);
+            driver.GetElement(locator).JavaScriptClick();
+        }
     }
 }

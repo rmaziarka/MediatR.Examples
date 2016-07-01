@@ -165,7 +165,6 @@
                 .ApplyContact();
             this.page.WaitForSidePanelToHide();
 
-
             this.scenarioContext.Set(details, "OfferAdditional");
         }
 
