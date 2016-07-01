@@ -9,7 +9,7 @@ module Antares.Contact {
 
     export class ContactAddController {
         public config: Attributes.IContactNegotiatorsControlConfig;
-        public contact: Antares.Common.Models.Dto.IContact = new Business.Contact();
+        public contact= new Business.Contact();
          
         public searchOptions: Common.Component.SearchOptions = new Common.Component.SearchOptions({ minLength: 0, isEditable: true, nullOnSelect: false, showCancelButton: false, isRequired: true, maxLength: 128  });
 
@@ -49,11 +49,12 @@ module Antares.Contact {
                 this.contactTitles = contactTitles.data;
             });
 
-            this.setDefaultLeadNegotiator(this.userData,this.contact);
+            var defaultLeadNegotiator=this.setDefaultLeadNegotiator(this.userData, this.contact);
+			this.contact.leadNegotiator = defaultLeadNegotiator;
            
         }
      
-        setDefaultLeadNegotiator = (currentUser:Dto.ICurrentUser, contact:Dto.IContact) =>{ 
+        setDefaultLeadNegotiator = (currentUser:Dto.ICurrentUser, contact:Dto.IContact) : any=>{ 
            var  defaultUser: Dto.IUser = {
                id : currentUser.id,
                firstName : currentUser.firstName,
@@ -61,14 +62,14 @@ module Antares.Contact {
                departmentId : "",
                department : null
            }
-
-        
-
+			
             var defaultLeadNegotiator = new Business.ContactUser();
             defaultLeadNegotiator.user = new Business.User(<Dto.IUser>defaultUser);
             defaultLeadNegotiator.contactId = this.contact.id;
             defaultLeadNegotiator.userId = this.userData.id;
-            contact.leadNegotiator = defaultLeadNegotiator;
+
+	        return defaultLeadNegotiator;
+
         }
         public getContactTitles = (typedTitle: string) => {
 

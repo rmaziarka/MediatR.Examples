@@ -6,13 +6,13 @@
             focus-on="vm.isLeadNegotiatorInEditMode"
             blur-on="!vm.isLeadNegotiatorInEditMode"
             on-select-item="vm.changeLeadNegotiator" on-cancel="vm.cancelChangeLeadNegotiator" load-items="vm.getUsers"
-            item-template-url="app/attributes/activityNegotiators/userSearchTemplate.html" search-placeholder="CONTACT.NEGOTIATORS.FIND"></search>
+            item-template-url="app/attributes/contactNegotiators/userSearchTemplate.html" search-placeholder="CONTACT.NEGOTIATORS.FIND"></search>
 
     <div id="lead-edit-btn-wrapper" ng-hide="vm.isLeadNegotiatorInEditMode" class="form-group">
         <button class="btn btn-default" id="lead-edit-btn" type="button" ng-click="vm.editLeadNegotiator()"><i class="fa fa-pencil"></i></button>
     </div>
 
-    <card id="card-lead-negotiator" card-template-url="'app/activity/templates/negotiatorCard.html'" display-new-control="true" item="vm.leadNegotiator"  ng-hide="!vm.leadNegotiator || vm.leadNegotiator.length === 0">
+    <card id="card-lead-negotiator" card-template-url="'app/contact/templates/negotiatorCard.html'" display-new-control="true" item="vm.leadNegotiator"  ng-hide="!vm.leadNegotiator || vm.leadNegotiator.length === 0">
     </card>
 
     <card-list id="card-list-negotiators" show-item-add="vm.isSecondaryNegotiatorsInEditMode ? null : vm.editSecondaryNegotiators">
@@ -23,14 +23,14 @@
                     focus-on="vm.isSecondaryNegotiatorsInEditMode"
                     blur-on="!vm.isSecondaryNegotiatorsInEditMode"
                     on-select-item="vm.addSecondaryNegotiator" on-cancel="vm.cancelAddSecondaryNegotiator" load-items="vm.getUsers"
-                    item-template-url="app/attributes/activityNegotiators/userSearchTemplate.html" search-placeholder="CONTACT.NEGOTIATORS.ADD"></search>
+                    item-template-url="app/attributes/contactNegotiators/userSearchTemplate.html" search-placeholder="CONTACT.NEGOTIATORS.ADD"></search>
         </card-list-header>
         <card-list-no-items id="empty-secondary-negotiators" ng-show="!vm.secondaryNegotiators || vm.secondaryNegotiators.length === 0">
             <p class="help-block" translate="CONTACT.NEGOTIATORS.EMPTY"></p>
         </card-list-no-items>
         <card-list-item ng-repeat="negotiator in vm.secondaryNegotiators | orderBy: ['user.firstName', 'user.lastName']">
 
-            <card id="card-secondary-negotiator-{{negotiator.userId}}" show-context-menu="true" display-new-control="true" card-template-url="'app/activity/templates/negotiatorCard.html'"
+            <card id="card-secondary-negotiator-{{negotiator.userId}}" show-context-menu="true" display-new-control="true" card-template-url="'app/contact/templates/negotiatorCard.html'"
                   item="negotiator">
                 <card-context-menu>
                     <context-menu-item type="remove"

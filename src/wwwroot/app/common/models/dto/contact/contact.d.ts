@@ -16,30 +16,7 @@
         eventPersonalSalutation: string;
         eventEnvelopeSalutation: string;
         defaultEventSalutationId: string;
-        leadNegotiator: IContactUser;
-        secondaryNegotiators: IContactUser[];
-
-       
+		contactUsers: IContactUser[];
+ 
     }
-
-    //interface IContactTemp {
-    //    id: string;
-    //    title: string;
-    //    firstName: string;
-    //    lastName: string;
-    //    mailingFormalSalutation: string;
-    //    mailingSemiformalSalutation: string;
-    //    mailingInformalSalutation: string;
-    //    mailingPersonalSalutation: string;
-    //    mailingEnvelopeSalutation: string;
-    //    defaultMailingSalutationId: string;
-    //    eventInviteSalutation: string;
-    //    eventSemiformalSalutation: string;
-    //    eventInformalSalutation: string;
-    //    eventPersonalSalutation: string;
-    //    eventEnvelopeSalutation: string;
-    //    defaultEventSalutationId: string;
-    //    leadNegotiator: IContactUser;
-    //    secondaryNegotiators: IContactUser[];
-    //}
 }

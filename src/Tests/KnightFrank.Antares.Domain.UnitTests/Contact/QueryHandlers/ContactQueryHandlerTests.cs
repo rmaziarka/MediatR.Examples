@@ -34,7 +34,7 @@
         {
             expectedContact.Id = query.Id;
             mockedData.Add(expectedContact);
-            contactRepository.Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<Contact, object>>>())).Returns(mockedData.AsQueryable());
+            contactRepository.Setup(x => x.Get()).Returns(mockedData.AsQueryable());
 
             Contact contact = handler.Handle(query);
 
