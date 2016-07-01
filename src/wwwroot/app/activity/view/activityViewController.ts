@@ -71,6 +71,17 @@ module Antares.Activity.View {
 
         public setActiveTabIndex = (tabIndex: number) =>{
             this.selectedTabIndex = tabIndex;
+            this.setInitialState();
+        }
+
+        public setInitialState = () => {
+            this.isPropertyPreviewPanelVisible = Enums.SidePanelState.Untouched;
+            this.isAttachmentsUploadPanelVisible = Enums.SidePanelState.Untouched;
+            this.isAttachmentsPreviewPanelVisible = Enums.SidePanelState.Untouched;
+            this.isViewingPreviewPanelVisible = Enums.SidePanelState.Untouched;
+            this.isOfferPreviewPanelVisible = Enums.SidePanelState.Untouched;
+
+            this.recreateAttachmentsData();
         }
 
         public isOverviewTabSelected = () =>{
@@ -89,10 +100,7 @@ module Antares.Activity.View {
             this.isOfferPreviewPanelVisible = Enums.SidePanelState.Closed;
 
             this.recreateAttachmentsData();
-        }        
-
-
-        
+        }
 
         openAttachmentPreviewPanel = () => {
             this.hidePanels();
@@ -125,8 +133,6 @@ module Antares.Activity.View {
                 isUploadPanelVisible: this.isAttachmentsUploadPanelVisible
             }
         }
-
-        
 
         addSavedAttachmentToList = (result: Dto.IAttachment) =>{
             var savedAttachment = new Business.Attachment(result);
