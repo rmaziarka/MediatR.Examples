@@ -1,6 +1,8 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 module Antares {
     import Business = Common.Models.Business;
+    declare var moment: any;
+
     describe('offerAddCardController', () => {
         var controller: Offer.OfferAddCardController;
 
@@ -26,6 +28,10 @@ module Antares {
 
             it('offer status id is set', () => {
                 expect(controller.offer.statusId).toBeDefined();
+            });
+
+            it('offer date should be set to today', () => {
+                expect(controller.offer.offerDate).toEqual(moment().startOf('day').toDate());
             });
 
             it('has control schema defined for all controls', () => {
