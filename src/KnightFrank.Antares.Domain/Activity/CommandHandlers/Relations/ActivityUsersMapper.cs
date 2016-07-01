@@ -39,27 +39,22 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
 
             List<Guid> negotiatorsIds = negotiators.Select(x => x.UserId).ToList();
 
-            this.collectionValidator.CollectionIsUnique(negotiatorsIds, ErrorMessage.Activity_Negotiators_Not_Unique);
-
-            this.collectionValidator.CollectionContainsAll(
-                this.userRepository.FindBy(x => negotiatorsIds.Contains(x.Id)).Select(x => x.Id).ToList(),
-                negotiatorsIds,
-                ErrorMessage.Missing_Activity_Negotiators_Id);
+            this.Validate(negotiatorsIds);
 
             EnumTypeItem leadNegotiatorUserType = this.GetLeadNegotiatorUserType();
             EnumTypeItem secondaryNegotiatorUserType = this.GetSecondaryNegotiatorUserType();
 
-            foreach (ActivityUser userToDelete in activity.ActivityUsers.Where(x => negotiatorsIds.Contains(x.UserId) == false).ToList())
-            {
-                activity.ActivityUsers.Remove(userToDelete);
-            }
+            activity.ActivityUsers
+                .Where(x => IsRemovedFromExistingList(x, negotiatorsIds))
+                .ToList()
+                .ForEach(x => activity.ActivityUsers.Remove(x));
 
             foreach (var negotiator in negotiators)
             {
                 ActivityUser existingUser = activity.ActivityUsers.SingleOrDefault(u => u.UserId == negotiator.UserId);
                 if (existingUser == null)
                 {
-                    if (negotiator.CallDate.HasValue && negotiator.CallDate.Value.Date < DateTime.UtcNow.Date)
+                    if (IsDateInPast(negotiator.CallDate))
                     {
                         throw new BusinessValidationException(ErrorMessage.Activity_Negotiator_CallDate_InPast);
                     }
@@ -67,8 +62,7 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
                     existingUser = new ActivityUser { UserId = negotiator.UserId };
                     activity.ActivityUsers.Add(existingUser);
                 }
-                else if (negotiator.CallDate.HasValue && negotiator.CallDate.Value.Date < DateTime.UtcNow.Date &&
-                    (!existingUser.CallDate.HasValue || existingUser.CallDate.Value != negotiator.CallDate.Value))
+                else if (IsDateInPast(negotiator.CallDate) && existingUser.CallDate != negotiator.CallDate)
                 {
                     throw new BusinessValidationException(ErrorMessage.Activity_Negotiator_CallDate_InPast);
                 }
@@ -76,6 +70,26 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
                 existingUser.CallDate = negotiator.CallDate;
                 existingUser.UserType = negotiator.IsLead ? leadNegotiatorUserType : secondaryNegotiatorUserType;
             }
+        }
+
+        private void Validate(List<Guid> negotiatorsIds)
+        {
+            this.collectionValidator.CollectionIsUnique(negotiatorsIds, ErrorMessage.Activity_Negotiators_Not_Unique);
+
+            this.collectionValidator.CollectionContainsAll(
+                this.userRepository.FindBy(x => negotiatorsIds.Contains(x.Id)).Select(x => x.Id).ToList(),
+                negotiatorsIds,
+                ErrorMessage.Missing_Activity_Negotiators_Id);
+        }
+
+        private static bool IsDateInPast(DateTime? date)
+        {
+            return date.HasValue && date.Value.Date < DateTime.UtcNow.Date;
+        }
+
+        private static bool IsRemovedFromExistingList(ActivityUser activityUser, List<Guid> currentIds)
+        {
+            return !currentIds.Contains(activityUser.UserId);
         }
 
         private EnumTypeItem GetLeadNegotiatorUserType()

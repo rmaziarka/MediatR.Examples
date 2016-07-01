@@ -1,6 +1,7 @@
 ﻿namespace KnightFrank.Antares.Domain.UnitTests.Activity.CommandHandlers.Relations
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
 
@@ -60,13 +61,7 @@
                 Enumerable.Range(0, existingDepartments).Select(i => fixture.Create<ActivityDepartment>()).ToList();
             departmentRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Department, bool>>>()))
                                 .Returns(command.Departments.Select(x => new Department { Id = x.DepartmentId }));
-            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
-                                  .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
-                                      new[]
-                                      {
-                                          this.GetManagingDepartmentType(fixture),
-                                          this.GetStandardDepartmentType(fixture)
-                                      }.Where(expr.Compile()));
+            this.SetupEnumTypeItemRepository(enumTypeItemRepository, fixture);
 
             // Act
             mapper.ValidateAndAssign(command, activity);
@@ -75,6 +70,67 @@
             activity.ActivityDepartments.Select(x => new { x.DepartmentId, x.DepartmentTypeId })
                     .Should()
                     .BeEquivalentTo(command.Departments.Select(x => new { x.DepartmentId, x.DepartmentTypeId }));
+        }
+
+        [Theory]
+        [InlineAutoMoqData(0, 0, true)]
+        [InlineAutoMoqData(0, 1, true)]
+        [InlineAutoMoqData(1, 0, false)]
+        [InlineAutoMoqData(1, 1, false)]
+        [InlineAutoMoqData(2, 0, true)]
+        [InlineAutoMoqData(2, 1, true)]
+        public void Given_CommandWithOrWithoutManagingDepartment_When_Handling_Then_ShouldThrowOrSucceed(
+            int managingDepartmentsCount,
+            int standardDepartmentsCount,
+            bool shouldThrow,
+            [Frozen] Mock<IGenericRepository<Department>> departmentRepository,
+            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
+            [Frozen] Mock<ICollectionValidator> collectionValidator,
+            ActivityDepartmentsMapper mapper,
+            IFixture fixture)
+        {
+            // Arrange
+            var command = new UpdateActivityCommand();
+            command.Departments =
+                Enumerable.Range(0, managingDepartmentsCount + standardDepartmentsCount)
+                          .Select(i =>
+                          {
+                              var department = fixture.Create<UpdateActivityDepartment>();
+                              department.DepartmentTypeId = i < managingDepartmentsCount
+                                  ? this.managingDepartmentTypeId
+                                  : this.standardDepartmentTypeId;
+                              return department;
+                          })
+                          .ToList();
+
+            var activity = fixture.Create<Activity>();
+            activity.ActivityDepartments = new List<ActivityDepartment>();
+
+            departmentRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Department, bool>>>()))
+                                .Returns(command.Departments.Select(x => new Department { Id = x.DepartmentId }));
+            this.SetupEnumTypeItemRepository(enumTypeItemRepository, fixture);
+
+            // Act & Assert
+            Action act = () => mapper.ValidateAndAssign(command, activity);
+            if (shouldThrow)
+            {
+                Assert.Throws<BusinessValidationException>(act);
+            }
+            else
+            {
+                act.ShouldNotThrow();
+            }
+        }
+
+        private void SetupEnumTypeItemRepository(Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository, IFixture fixture)
+        {
+            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
+                                  .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
+                                      new[]
+                                      {
+                                          this.GetManagingDepartmentType(fixture),
+                                          this.GetStandardDepartmentType(fixture)
+                                      }.Where(expr.Compile()));
         }
 
         private EnumTypeItem GetManagingDepartmentType(IFixture fixture)
