@@ -69,7 +69,7 @@ module Antares {
                 var attachmentModel = TestHelpers.AttachmentUploadCardModelGenerator.generate();
                 var requestData: Activity.Command.ActivityAttachmentSaveCommand;
 
-                var expectedUrl = '/api/activities/${controller.activity.id}/attachments';
+                var expectedUrl = `/api/activities/${controller.activity.id}/attachments`;
                 $http.expectPOST(expectedUrl, (data: string) => {
                     requestData = JSON.parse(data);
                     return true;
