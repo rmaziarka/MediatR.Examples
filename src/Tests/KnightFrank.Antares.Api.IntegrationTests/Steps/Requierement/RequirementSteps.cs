@@ -43,14 +43,14 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"Requirement exists in database")]
-        public void RequirementExistsInDatabase()
+        [Given(@"Requirement of type (.*) exists in database")]
+        public void RequirementExistsInDatabase(string requirementType)
         {
             const string countryCode = "GB";
             Guid countryId = this.fixture.DataContext.Countries.Single(x => x.IsoCode.Equals(countryCode)).Id;
             Guid requirementTypeId =
                 this.fixture.DataContext.RequirementTypes.Single(
-                    rt => rt.EnumCode.Equals(nameof(RequirementType.ResidentialLetting))).Id;
+                    rt => rt.EnumCode.Equals(requirementType)).Id;
             Guid enumTypeItemId =
                 this.fixture.DataContext.EnumTypeItems.Single(
                     e => e.EnumType.Code.Equals(nameof(EntityType)) && e.Code.Equals(nameof(EntityType.Requirement))).Id;
@@ -75,10 +75,16 @@
                 Contacts = contacts,
                 Address = address,
                 Description = StringExtension.GenerateMaxAlphanumericString(4000),
-                RequirementTypeId = requirementTypeId,
-                RentMin = 1000,
-                RentMax = 2000
+                RequirementTypeId = requirementTypeId
             };
+
+            switch (requirementType)
+            {
+                case nameof(RequirementType.ResidentialLetting):
+                    requirement.RentMin = 1000;
+                    requirement.RentMax = 2000;
+                    break;
+            }
 
             this.fixture.DataContext.Requirements.Add(requirement);
             this.fixture.DataContext.SaveChanges();

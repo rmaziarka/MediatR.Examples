@@ -60,7 +60,7 @@ Scenario: Get requirement
 	Given Contacts exists in database
 		| Title  | FirstName | Surname |
 		| Mister | Tomasz    | Bien    |
-		And Requirement exists in database
+		And Requirement of type ResidentialSale exists in database
 	When User retrieves requirement for latest id
 	Then User should get OK http status code
 		And Requirement should be the same as added
@@ -70,7 +70,7 @@ Scenario: Get requirement with notes
 	Given Contacts exists in database
 		| Title  | FirstName | Surname |
 		| Mister | Tomasz    | Bien    |
-		And Requirement exists in database
+		And Requirement of type ResidentialSale exists in database
 		And Requirement notes exists in database
 			| Description |
 			| Note1       |
@@ -90,7 +90,7 @@ Scenario: Get requirement with offer and viewing
 		And Contacts exists in database
 			| Title  | FirstName | Surname |
 			| Mister | Tomasz    | Bien    |
-		And Requirement exists in database
+		And Requirement of type ResidentialSale exists in database
 		And Offer with New status exists in database
 		And Viewing exists in database
 	When User retrieves requirement for latest id

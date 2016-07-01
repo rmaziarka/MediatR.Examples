@@ -5,7 +5,7 @@ Scenario: Upload attachment
 	Given Contacts exists in database
 		| Title  | FirstName | Surname |
 		| Mister | Tomasz    | Bien    |
-		And Requirement exists in database
+		And Requirement of type ResidentialSale exists in database
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode            | enumTypeItemCode |
 			| RequirementDocumentType | TermsOfBusiness  |
@@ -19,7 +19,7 @@ Scenario Outline: Upload attachment with invalid data
 	Given Contacts exists in database
 		| Title  | FirstName | Surname |
 		| Mister | Tomasz    | Bien    |
-		And Requirement exists in database
+		And Requirement of type ResidentialSale exists in database
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode            | enumTypeItemCode |
 			| RequirementDocumentType | TermsOfBusiness  |
@@ -40,7 +40,7 @@ Scenario: Get requirement with attachment
 	Given Contacts exists in database
 		| Title  | FirstName | Surname |
 		| Mister | Tomasz    | Bien    |
-		And Requirement exists in database
+		And Requirement of type ResidentialSale exists in database
 		And User gets EnumTypeItemId and EnumTypeItem code
 			| enumTypeCode            | enumTypeItemCode |
 			| RequirementDocumentType | TermsOfBusiness  |

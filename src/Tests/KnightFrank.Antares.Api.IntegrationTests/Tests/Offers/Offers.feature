@@ -1,7 +1,7 @@
 ﻿Feature: Offers
 
 @Offers
-Scenario: Create residential sales offer
+Scenario Outline: Create offer
 	Given Property exists in database
 		| PropertyType | Division    |
 		| House        | Residential |
@@ -11,13 +11,18 @@ Scenario: Create residential sales offer
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
-		And Requirement exists in database
+		And Requirement of type <requirementType> exists in database
 	When User creates New offer using api
 	Then User should get OK http status code
 		And Offer details should be the same as already added
 
+	Examples:
+	| requirementType    |
+	| ResidentialSale    |
+	| ResidentialLetting |
+
 @Offers
-Scenario: Create residential sales offer with mandatory fields
+Scenario Outline: Create offer with mandatory fields
 	Given Property exists in database
 		| PropertyType | Division    |
 		| House        | Residential |
@@ -27,10 +32,15 @@ Scenario: Create residential sales offer with mandatory fields
 		And Contacts exists in database 
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
-		And Requirement exists in database
+		And Requirement of type <requirementType> exists in database
 	When User creates Accepted offer with mandatory fields using api
 	Then User should get OK http status code
 		And Offer details should be the same as already added
+
+	Examples:
+	| requirementType    |
+	| ResidentialSale    |
+	| ResidentialLetting |
 
 @Offers
 Scenario Outline: Create residential sales offer with invalid data
@@ -43,7 +53,7 @@ Scenario Outline: Create residential sales offer with invalid data
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
-		And Requirement exists in database
+		And Requirement of type ResidentialSale exists in database
 	When User creates offer with invalid <data> using api
 	Then User should get BadRequest http status code
 
@@ -54,7 +64,7 @@ Scenario Outline: Create residential sales offer with invalid data
 	| status      |
 
 @Offers
-Scenario: Get residential sales offer
+Scenario Outline: Get offer
 	Given Property exists in database
 		| PropertyType | Division    |
 		| House        | Residential |
@@ -64,14 +74,19 @@ Scenario: Get residential sales offer
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
-		And Requirement exists in database
+		And Requirement of type <requirementType> exists in database
 		And Offer with New status exists in database
 	When User gets offer for latest id
 	Then User should get OK http status code
 		And Offer details should be the same as already added
 
+	Examples:
+	| requirementType    |
+	| ResidentialSale    |
+	| ResidentialLetting |
+
 @Offers
-Scenario: Get Accepted residential sales offer
+Scenario Outline: Get Accepted offer
 	Given Contacts exists in database
 		| FirstName | Surname | Title |
 		| Jon       | Lajoie  | Dude  |
@@ -85,11 +100,16 @@ Scenario: Get Accepted residential sales offer
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
-		And Requirement exists in database
+		And Requirement of type <requirementType> exists in database
 		And Offer with Accepted status exists in database
 	When User gets offer for latest id
 	Then User should get OK http status code
 		And Offer details should be the same as already added
+
+	Examples:
+	| requirementType    |
+	| ResidentialSale    |
+	| ResidentialLetting |
 
 @Offers
 Scenario: Get residential sales offer with invalid data
@@ -97,7 +117,7 @@ Scenario: Get residential sales offer with invalid data
 	Then User should get NotFound http status code
 
 @Offers
-Scenario: Update residential sales offer
+Scenario Outline: Update offer
 	Given Property exists in database
 		| PropertyType | Division    |
 		| House        | Residential |
@@ -107,14 +127,19 @@ Scenario: Update residential sales offer
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
-		And Requirement exists in database
+		And Requirement of type <requirementType> exists in database
 		And Offer with New status exists in database
 	When User updates offer with New status
 	Then User should get OK http status code
 		And Offer details should be updated
 
+	Examples:
+	| requirementType    |
+	| ResidentialSale    |
+	| ResidentialLetting |
+
 @Offers
-Scenario Outline: Update accepted residential sales offer
+Scenario Outline: Update accepted offer
 	Given Contacts exists in database
 		| FirstName | Surname | Title |
 		| Jon       | Lajoie  | Dude  |
@@ -128,7 +153,7 @@ Scenario Outline: Update accepted residential sales offer
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
-		And Requirement exists in database
+		And Requirement of type <requirementType> exists in database
 		And Offer with <offerStatus> status exists in database
 		And Contacts exists in database
 			| FirstName | Surname | Title |
@@ -139,10 +164,13 @@ Scenario Outline: Update accepted residential sales offer
 		And Offer details should be updated
 
 	Examples:
-	| offerStatus | newOfferStatus |
-	| New         | Accepted       |
-	| Accepted    | Accepted       |
-	| Accepted    | New            |
+	| offerStatus | newOfferStatus | requirementType    |
+	| New         | Accepted       | ResidentialSale    |
+	| Accepted    | Accepted       | ResidentialSale    |
+	| Accepted    | New            | ResidentialSale    |
+	| New         | Accepted       | ResidentialLetting |
+	| Accepted    | Accepted       | ResidentialLetting |
+	| Accepted    | New            | ResidentialLetting |
 
 @Offers
 Scenario Outline: Update residential sales offer with invalid data
@@ -155,7 +183,7 @@ Scenario Outline: Update residential sales offer with invalid data
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
-		And Requirement exists in database
+		And Requirement of type ResidentialSale exists in database
 		And Offer with New status exists in database
 	When User updates New offer with invalid <data> data
 	Then User should get BadRequest http status code
@@ -180,7 +208,7 @@ Scenario Outline: Update accepted residential sales offer with invalid data
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
-		And Requirement exists in database
+		And Requirement of type ResidentialSale exists in database
 		And Offer with Accepted status exists in database
 	When User updates Accepted offer with invalid <data> data
 	Then User should get BadRequest http status code
