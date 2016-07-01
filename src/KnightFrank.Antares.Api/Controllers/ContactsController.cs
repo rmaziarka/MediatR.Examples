@@ -85,5 +85,19 @@
         {
             return this.mediator.Send(new ContactTitleQuery()).ToList();
         }
+
+        /// <summary>
+        /// Updates a contact
+        /// </summary>
+        /// <param name="command">The command with contact to update</param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("")]
+        public Contact UpdateCompany(UpdateContactCommand command)
+        {
+            Guid contactId = this.mediator.Send(command);
+
+            return this.GetContact(contactId);
+        }
     }
 }
