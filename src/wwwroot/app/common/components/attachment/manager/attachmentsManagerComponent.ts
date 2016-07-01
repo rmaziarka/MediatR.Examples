@@ -8,7 +8,7 @@ module Antares.Common.Component.Attachment {
         bindings: {
             data: '<',
             onSaveAttachmentForEntity: '&',
-            title: '@',
+            header: '@',
             filesNumberLimit: '<'
         }
     });

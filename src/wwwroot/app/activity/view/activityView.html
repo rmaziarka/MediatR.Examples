@@ -20,7 +20,8 @@
                             <h3 class="page-header" translate="ACTIVITY.VIEW.SUMMARY"></h3>
                         </section>
                         <section id="activity-view-property">
-                            <property-view-control property="avvm.activity.property" is-panel-visible="avvm.isPropertyPreviewPanelVisible" hide-header="true" config="avvm.config.property"></property-view-control>
+                            <property-view-control property="avvm.activity.property" is-panel-visible="avvm.isPropertyPreviewPanelVisible" hide-header="true"
+                                config="avvm.config.property"></property-view-control>
                         </section>
                         <hr />
                         <section id="activity-view-vendors-summary">
@@ -30,11 +31,8 @@
                             <activity-landlords-view-control contacts="avvm.activity.contacts" config="avvm.config.landlords"></activity-landlords-view-control>
                         </section>
                         <section>
-                            <activity-negotiators-view-control config="avvm.config.negotiators"
-                                                               property-division-id="{{avvm.activity.property.divisionId}}"
-                                                               lead-negotiator="avvm.activity.leadNegotiator"
-                                                               can-be-edited="avvm.isOverviewTabSelected()"
-                                                               secondary-negotiators="avvm.activity.secondaryNegotiator"
+                            <activity-negotiators-view-control config="avvm.config.negotiators" property-division-id="{{avvm.activity.property.divisionId}}"
+                                lead-negotiator="avvm.activity.leadNegotiator" can-be-edited="avvm.isOverviewTabSelected()" secondary-negotiators="avvm.activity.secondaryNegotiator"
                                                                hide-secondary-negotiators="true">
                             </activity-negotiators-view-control>
                         </section>
@@ -46,15 +44,13 @@
                                                                      appraisal-meeting="avvm.activity.appraisalMeeting"
                                                                      attendees="avvm.activity.attendees"></activity-appraisal-meeting-view-control>
                         </section>
-                <attachments-manager title="{{'ACTIVITY.VIEW.RECENT_FILES' | translate}}" files-number-limit="5" data="avvm.attachmentManagerData" on-save-attachment-for-entity="avvm.saveAttachment(attachment)"></attachments-manager>
+                        <attachments-manager header="ACTIVITY.VIEW.RECENT_FILES" files-number-limit="5" data="avvm.attachmentManagerData" on-save-attachment-for-entity="avvm.saveAttachment(attachment)"></attachments-manager>
 
 
                     </div>
                     <div class="col-md-6">
                         <section>
-                            <offer-view-control is-panel-visible="avvm.isOfferPreviewPanelVisible"
-                                                config="avvm.config.offers"
-                                                offers="avvm.activity.offers">
+                            <offer-view-control is-panel-visible="avvm.isOfferPreviewPanelVisible" config="avvm.config.offers" offers="avvm.activity.offers">
                             </offer-view-control>
                         </section>
                     </div>
@@ -80,11 +76,8 @@
                             <h3 class="page-header" translate="ACTIVITY.VIEW.NEGOTIATORS_DEPARTMENTS"></h3>
                         </section>
                         <section>
-                            <activity-negotiators-view-control config="avvm.config.negotiators"
-                                                               property-division-id="{{avvm.activity.property.divisionId}}"
-                                                               lead-negotiator="avvm.activity.leadNegotiator"
-                                                               can-be-edited="avvm.isDetailsTabSelected()"
-                                                               secondary-negotiators="avvm.activity.secondaryNegotiator">
+                            <activity-negotiators-view-control config="avvm.config.negotiators" property-division-id="{{avvm.activity.property.divisionId}}"
+                                lead-negotiator="avvm.activity.leadNegotiator" can-be-edited="avvm.isDetailsTabSelected()" secondary-negotiators="avvm.activity.secondaryNegotiator">
                             </activity-negotiators-view-control>
                         </section>
                         <section id='departments-section'>

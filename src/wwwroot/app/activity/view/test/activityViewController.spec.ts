@@ -3,6 +3,7 @@
 module Antares {
     import ActivityViewController = Activity.View.ActivityViewController;
     import Business = Common.Models.Business;
+    import Enums = Common.Models.Enums;
 
     describe('Given activity view controller', () => {
         var scope: ng.IScope,
@@ -86,48 +87,77 @@ module Antares {
             });
         });
 
-        describe('and selected tab is `Overview`', () =>{
-            beforeEach(() =>{
+        describe("and selected tab is 'Overview'", () => {
+            beforeEach(() => {
                 controller.selectedTabIndex = 0;
             });
 
-            it("when selected tab is changed to `Details` then selected tab index must be 1", () =>{
-                // act
-                controller.setActiveTabIndex(1);
+            it("then 'isOverviewTabSelected' must be true",
+                () => {
+                    // act & assert
+                    expect(controller.isOverviewTabSelected()).toBe(true);
+                });
 
-                // assert
-                expect(controller.selectedTabIndex).toBe(1);
-            });
-
-            it("then `isOverviewTabSelected` must be true",
-            () =>{
-                // act & assert
-                expect(controller.isOverviewTabSelected()).toBe(true);
-            });
-
-            it("then `isDetailsTabSelected` must be false",
+            it("then 'isDetailsTabSelected' must be false",
                 () => {
                     // act & assert
                     expect(controller.isDetailsTabSelected()).toBe(false);
                 });
         });
 
-        describe('and selected tab is `Details`', () => {
+        describe("and selected tab is 'Details'", () => {
             beforeEach(() => {
                 controller.selectedTabIndex = 1;
             });
 
-            it('then `isOverviewTabSelected` must be false',
+            it("then 'isOverviewTabSelected' must be false",
                 () => {
                     // act & assert
                     expect(controller.isOverviewTabSelected()).toBe(false);
                 });
 
-            it('then `isDetailsTabSelected` must be true',
+            it("then 'isDetailsTabSelected' must be true",
                 () => {
                     // act & assert
                     expect(controller.isDetailsTabSelected()).toBe(true);
                 });
         });
+
+        describe('when selected tab is changed', () => {
+            beforeEach(() => {                
+                controller.isOfferPreviewPanelVisible = Enums.SidePanelState.Opened;
+                controller.isPropertyPreviewPanelVisible = Enums.SidePanelState.Closed;
+                controller.isAttachmentsUploadPanelVisible = Enums.SidePanelState.Opened
+                controller.isAttachmentsPreviewPanelVisible = Enums.SidePanelState.Opened;
+                controller.isViewingPreviewPanelVisible = Enums.SidePanelState.Opened;                
+            });
+
+            it("when 'Overview' tab is selected then selected tab index must be 0 and all side panels must have state 'Untouched'", () => {
+                // act
+                controller.setActiveTabIndex(0);
+                
+                // assert  
+                expect(controller.selectedTabIndex).toBe(0);                              
+                assertPanelState(controller, Enums.SidePanelState.Untouched);
+            });
+
+            it("when 'Details' tab is selected then selected tab index must be 1 and all side panels must have state 'Untouched'", () => {
+                // act
+                controller.setActiveTabIndex(1);
+
+                // assert
+                expect(controller.selectedTabIndex).toBe(1);
+                assertPanelState(controller, Enums.SidePanelState.Untouched);
+            });
+
+            var assertPanelState = (controller: ActivityViewController, state: Enums.SidePanelState) => {
+                expect(controller.isAttachmentsUploadPanelVisible).toBe(state);
+                expect(controller.isAttachmentsPreviewPanelVisible).toBe(state);
+                expect(controller.isPropertyPreviewPanelVisible).toBe(state);
+                expect(controller.isViewingPreviewPanelVisible).toBe(state);
+                expect(controller.isOfferPreviewPanelVisible).toBe(state);
+            };
+        });
+
     });
 }
