@@ -8,6 +8,8 @@ Scenario Outline: Create activity with invalid data
 			| <activityStatusId>     | PreAppraisal     |
 			| ActivityUserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
+			| ActivitySource         | DirectEmail      |
+			| ActivitySellingReason  | Relocation       |
 		And Property exists in database
 			| PropertyType | Division    |
 			| House        | Residential |
