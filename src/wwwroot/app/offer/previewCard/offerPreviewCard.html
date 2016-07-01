@@ -3,7 +3,7 @@
         <h3 translate="OFFER.PREVIEW.PREVIEW"></h3>
     </side-panel-header>
     <side-panel-content>
-        <!--- old preview start -->
+
         <div class="section-details">
             <div class="section-row row">
                 <div class="col-md-12 text-left">
@@ -11,9 +11,7 @@
                 </div>
             </div>
         </div>
-        <!--- old preview end -->
 
-        <!-- new-->
         <div class="section-details">
             <activity-card activity="vm.offer.activity"></activity-card>
         </div>
@@ -24,17 +22,13 @@
             <price-view-control price="vm.offer.pricePerWeek" config="vm.config.offer_PricePerWeek" schema="vm.controlSchemas.pricePerWeek"></price-view-control>
             <date-view-control ng-model="vm.offer.offerDate" config="vm.config.offer_OfferDate" schema="vm.controlSchemas.offerDate"></date-view-control>
         </div>
-        <!-- end new -->
 
-        <!--- old preview start -->
         <div class="section-details">
-            <h5 translate="OFFER.PREVIEW.SPECIAL_CONDITIONS"></h5>
-            <p id="offer-preview-special-conditions">{{vm.offer.specialConditions}}</p>
+            <textarea-view-control ng-model="vm.offer.specialConditions" config="vm.config.offer_SpecialConditions" schema="vm.controlSchemas.specialConditions"></textarea-view-control>
         </div>
 
         <div class="section-details">
             <h5 translate="OFFER.PREVIEW.NEGOTIATOR"></h5>
-
             <div class="panel panel-default">
                 <div class="panel-body" id="offer-preview-negotiator">
                     {{vm.offer.negotiator.getName()}}
@@ -43,18 +37,10 @@
         </div>
 
         <div class="section-details">
-            <div class="section-row row">
-                <div class="col-xs-6 section-title" translate="OFFER.PREVIEW.EXCHANGE_DATE"></div>
-                <div class="col-xs-6"><time id="offer-preview-exchange-date">{{vm.offer.exchangeDate | date : 'dd-MM-yyyy'}}</time>
-                </div>
-            </div>
-            <div class="section-row row">
-                <div class="col-xs-6 section-title" translate="OFFER.PREVIEW.COMPLETION_DATE"></div>
-                <div class="col-xs-6"><time id="offer-preview-completion-date">{{vm.offer.completionDate | date : 'dd-MM-yyyy'}}</time>
-                </div>
-            </div>
+            <date-view-control ng-model="vm.offer.exchangeDate" config="vm.config.offer_ExchangeDate" schema="vm.controlSchemas.exchangeDate"></date-view-control>
+            <date-view-control ng-model="vm.offer.completionDate" config="vm.config.offer_CompletionDate" schema="vm.controlSchemas.completionDate"></date-view-control>
         </div>
-        <!-- old preview end -->
+
     </side-panel-content>
     <side-panel-footer>
         <button type="button" class="btn btn-default pull-left" ng-click="vm.edit()">
