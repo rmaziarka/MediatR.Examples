@@ -110,11 +110,18 @@
                 Id = this.activity.Id,
                 ActivityTypeId = this.activity.ActivityTypeId,
                 ActivityStatusId = this.activity.ActivityStatusId,
+                SourceId = this.activity.SourceId,
+                SellingReasonId = this.activity.SellingReasonId,
                 LeadNegotiator = this.updateActivityUser,
                 SecondaryNegotiators =
                     this.secondaryNegotiatorsList.Select(
                         n => new UpdateActivityUser { UserId = n, CallDate = this.date.AddDays(10) }).ToList(),
-                Departments = this.updateActivityDepartments
+                Departments = this.updateActivityDepartments,
+                AppraisalMeeting = new UpdateActivityAppraisalMeeting
+                {
+                    Start = this.activity.AppraisalMeeting.AppraisalMeetingStart ?? DateTime.Now.AddHours(24),
+                    End = this.activity.AppraisalMeeting.AppraisalMeetingStart ?? DateTime.Now.AddHours(26)
+                }
             };
 
             HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, updateActivityCommand);

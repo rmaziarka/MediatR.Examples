@@ -57,12 +57,20 @@
         {
             string activityStatus = table.Rows[0]["ActivityStatus"];
             string activityType = table.Rows[0]["ActivityType"];
+            const string activitySource = "DirectEmail";
+            const string activitySellingReason ="Relocation";
 
             Guid activityStatusId =
                 this.fixture.DataContext.EnumTypeItems.Single(
                     i => i.EnumType.Code.Equals(nameof(ActivityStatus)) && i.Code.Equals(activityStatus)).Id;
             Guid activityTypeId = this.fixture.DataContext.ActivityTypes.Single(i => i.Code.Equals(activityType)).Id;
             Guid propertyId = this.scenarioContext.Get<Property>("Property").Id;
+            Guid activitySourceId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    i => i.EnumType.Code.Equals(nameof(ActivitySource)) && i.Code.Equals(activitySource)).Id;
+            Guid activitySellingReasonId =
+                this.fixture.DataContext.EnumTypeItems.Single(
+                    i => i.EnumType.Code.Equals(nameof(ActivitySellingReason)) && i.Code.Equals(activitySellingReason)).Id;
 
             this.leadNegotiator = this.fixture.DataContext.Users.First();
 
@@ -102,7 +110,9 @@
                 Contacts = new List<Contact>(),
                 Attachments = new List<Attachment>(),
                 ActivityUsers = activityNegotiatorList,
-                ActivityDepartments = this.activityDepartments
+                ActivityDepartments = this.activityDepartments,
+                SourceId = activitySourceId,
+                SellingReasonId = activitySellingReasonId
             };
 
             this.fixture.DataContext.Activities.Add(activity);
@@ -131,6 +141,9 @@
             string requestUrl = $"{ApiUrl}";
 
             Guid activityStatusId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["PreAppraisal"];
+            Guid managingDepartmentId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Managing"];
+            Guid sourceId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["DirectEmail"];
+            Guid sellingReasonId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["Relocation"];
             Guid propertyId = id.Equals("latest") ? this.scenarioContext.Get<Property>("Property").Id : new Guid(id);
             var activityTypeId = this.scenarioContext.Get<Guid>("ActivityTypeId");
 
@@ -139,7 +152,8 @@
                     .SelectMany(x => x.Contacts).Select(c => c.Id)
                     .ToList();
 
-            Guid leadNegotiatorId = this.fixture.DataContext.Users.First().Id;
+            User user = this.fixture.DataContext.Users.First();
+            Guid leadNegotiatorId = user.Id;
 
             var activityCommand = new CreateActivityCommand
             {
@@ -147,7 +161,11 @@
                 ActivityStatusId = activityStatusId,
                 ContactIds = vendors,
                 ActivityTypeId = activityTypeId,
-                LeadNegotiator = new UpdateActivityUser { UserId = leadNegotiatorId, CallDate = DateTime.Today }
+                SourceId = sourceId,
+                SellingReasonId = sellingReasonId,
+                LeadNegotiator = new UpdateActivityUser { UserId = leadNegotiatorId, CallDate = DateTime.Today.AddDays(3) },
+                Departments = new List<UpdateActivityDepartment> { new UpdateActivityDepartment { DepartmentId = user.DepartmentId, DepartmentTypeId = managingDepartmentId } },
+                AppraisalMeeting = new UpdateActivityAppraisalMeeting { Start = DateTime.Now.AddHours(24), End = DateTime.Now.AddHours(26) }
             };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, activityCommand);
@@ -164,6 +182,15 @@
 
             updateActivityCommand.Id = id.Equals("latest") ? activityFromDatabase.Id : new Guid(id);
             updateActivityCommand.ActivityTypeId = activityFromDatabase.ActivityTypeId;
+            updateActivityCommand.SourceId = activityFromDatabase.SourceId;
+            updateActivityCommand.SellingReasonId = activityFromDatabase.SellingReasonId;
+
+            updateActivityCommand.AppraisalMeeting = new UpdateActivityAppraisalMeeting
+            {
+                Start = activityFromDatabase.AppraisalMeeting.AppraisalMeetingStart ?? DateTime.Now.AddHours(24),
+                End = activityFromDatabase.AppraisalMeeting.AppraisalMeetingStart ?? DateTime.Now.AddHours(26)
+            };
+
             updateActivityCommand.LeadNegotiator = new UpdateActivityUser
             {
                 UserId = activityFromDatabase.ActivityUsers.First().UserId,
@@ -247,7 +274,12 @@
                 .Excluding(x => x.ActivityType)
                 .Excluding(x => x.Attachments)
                 .Excluding(x => x.ActivityUsers)
-                .Excluding(x => x.ActivityDepartments));
+                .Excluding(x => x.ActivityDepartments)
+                .Excluding(x => x.ActivityAttendees)
+                .Excluding(x => x.Contacts)
+                .Excluding(x => x.Offers)
+                .Excluding(x => x.Source)
+                .Excluding(x => x.SellingReason));
         }
 
         [Then(@"Activity details should be the same as already added")]
@@ -262,7 +294,12 @@
                 .Excluding(x => x.ActivityType)
                 .Excluding(x => x.Attachments)
                 .Excluding(x => x.ActivityUsers)
-                .Excluding(x => x.ActivityDepartments));
+                .Excluding(x => x.ActivityDepartments)
+                .Excluding(x => x.ActivityAttendees)
+                .Excluding(x => x.Contacts)
+                .Excluding(x => x.Offers)
+                .Excluding(x => x.Source)
+                .Excluding(x => x.SellingReason));
 
             actualActivity.ActivityStatus.Code.ShouldBeEquivalentTo("PreAppraisal");
             actualActivity.ActivityUsers.Should().Equal(activity.ActivityUsers, (c1, c2) =>
