@@ -4,38 +4,39 @@
 
         <div class="row">
             <div class="col-sm-6 col-md-4 col-lg-3">
-                <form ng-submit="editContactForm.$valid && vm.save()" name="editContactForm" id="editContactForm" method="post" novalidate>
+                <form ng-submit="vm.editContactForm.$valid && vm.save()" name="vm.editContactForm" id="editContactForm" method="post" novalidate>
                     <fieldset>
-                        <div id="title-section" class="form-group" ng-class="{'has-error': (editContactForm.$submitted || editContactForm.title.$dirty) && editContactForm.title.$invalid}">
+                        <div id="title-section" class="form-group" ng-class="{'has-error': (vm.editContactForm.$submitted || vm.editContactForm.title.$dirty) && vm.editContactForm.title.$invalid}">
                             <div class="row">
                                 <div class="col-md-5">
-                                    <label class="required" for="title" translate="CONTACT.TITLE"></label>
+                                    <label for="title" class="required" translate="CONTACT.TITLE"></label>
 
-                                    <input type="text" class="form-control" id="title" name="title" ng-maxlength="128" ng-model="vm.contact.title" ng-change="vm.setSalutations()" autocomplete="off">
+                                    <!-- TODO: change into search form -->
+                                    <input id="title" name="title" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.title" autocomplete="off">
 
-                                    <div ng-messages="editContactForm.title.$error" ng-show="editContactForm.$submitted || editContactForm.title.$dirty">
+                                    <div ng-messages="vm.editContactForm.title.$error" ng-show="vm.editContactForm.$submitted || vm.editContactForm.title.$dirty">
                                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" ng-class="{'has-error': (editContactForm.$submitted || editContactForm.firstName.$dirty) && editContactForm.firstName.$invalid}">
+                        <div class="form-group" ng-class="{'has-error': (vm.editContactForm.$submitted || vm.editContactForm.firstName.$dirty) && vm.editContactForm.firstName.$invalid}">
                             <div class="row">
                                 <div class="col-md-12">
                                     <label for="first-name" translate="CONTACT.FIRSTNAME"></label>
                                     <input type="text" class="form-control" id="first-name" name="firstName" ng-maxlength="128" ng-model="vm.contact.firstName" ng-change="vm.setSalutations()" autocomplete="off">
-                                    <div ng-messages="editContactForm.firstName.$error" ng-show="editContactForm.$submitted || editContactForm.firstName.$dirty">
+                                    <div ng-messages="vm.editContactForm.firstName.$error" ng-show="vm.editContactForm.$submitted || vm.editContactForm.firstName.$dirty">
                                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" ng-class="{'has-error': (editContactForm.$submitted || editContactForm.lastName.$dirty) && editContactForm.lastName.$invalid}">
+                        <div class="form-group" ng-class="{'has-error': (vm.editContactForm.$submitted || vm.editContactForm.lastName.$dirty) && vm.editContactForm.lastName.$invalid}">
                             <div class="row">
                                 <div class="col-md-12">
                                     <label class="required" for="last-name" translate="CONTACT.LASTNAME"></label>
                                     <input type="text" class="form-control" id="last-name" name="lastName" required ng-maxlength="128" ng-model="vm.contact.lastName" ng-change="vm.setSalutations()" autocomplete="off">
-                                    <div ng-messages="editContactForm.lastName.$error" ng-show="editContactForm.$submitted || editContactForm.lastName.$dirty">
+                                    <div ng-messages="vm.editContactForm.lastName.$error" ng-show="vm.editContactForm.$submitted || vm.editContactForm.lastName.$dirty">
                                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                                     </div>
                                 </div>

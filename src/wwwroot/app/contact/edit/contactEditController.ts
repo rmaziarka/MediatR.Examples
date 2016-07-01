@@ -3,17 +3,16 @@
 module Antares.Contact {
 
     import Dto = Common.Models.Dto;
-    import IContactTitle = Common.Models.Dto.IContactTitle;
     import Business = Common.Models.Business;
 
     export class ContactEditController {
   
         // bindings
-        public contact: Antares.Common.Models.Dto.IContact;
-        userData: Dto.ICurrentUser;
+        public contact: Dto.IContact;
+        userData: Dto.ICurrentUser; //todo is required?
 
-
-        private contactResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IContactResource>;
+        // fields
+        public editContactForm: ng.IFormController | any; // injected from the view
 
         constructor(
             private dataAccessService: Services.DataAccessService,
@@ -21,13 +20,14 @@ module Antares.Contact {
             private $scope: ng.IScope,
             private $q: ng.IQService,
             private $state: ng.ui.IStateService,
-            private contactTitleService: Services.ContactTitleService) {
+            private contactTitleService: Services.ContactTitleService) {//todo!remove unused params
 
-            this.contactResource = dataAccessService.getContactResource();
+            //this.contactResource = dataAccessService.getContactResource();
+
+            //todo - move to computed field: (editContactForm.$submitted || editContactForm.title.$dirty) && editContactForm.title.$invalid
         }
 
         $onInit = () => {
-            
         }
 
         setSalutations = () => {
@@ -35,11 +35,27 @@ module Antares.Contact {
         }
 
         public cancelEdit(){
-            this.$state.go('app.contact-view', this.contact);
+            this.redirectToView();
         }
      
-        public save() {
-            
+        public save(){
+            const editedContact: Dto.IContact = angular.copy(this.contact);
+
+            const contactResource = this.dataAccessService.getContactResource();
+
+            return contactResource
+                .update(editedContact)
+                .$promise
+                .then((contact: Dto.IContact) => {
+                    this.editContactForm.$setPristine();
+                    this.redirectToView();
+                }, (response: any) => {
+                    // todo show errors
+                });
+        }
+
+        private redirectToView() : ng.IPromise<any> {
+            return this.$state.go('app.contact-view', this.contact);
         }
     }
 
