@@ -57,10 +57,16 @@
 
         public string PitchingThreats { get; set; }
 
-        public ActivityAccessDetails AccessDetails { get; set; } = new ActivityAccessDetails();
+        public string KeyNumber { get; set; }
 
-        public ActivityAppraisalMeeting AppraisalMeeting { get; set; } = new ActivityAppraisalMeeting();
+        public string AccessArrangements { get; set; }
 
-        public virtual ICollection<ActivityAttendee> ActivityAttendees { get; set; } = new List<ActivityAttendee>();
+        public DateTimeOffset? AppraisalMeetingStart { get; set; }
+
+        public DateTimeOffset? AppraisalMeetingEnd { get; set; }
+
+        public string AppraisalMeetingInvitationText { get; set; }
+
+        public virtual ICollection<ActivityAttendee> AppraisalMeetingAttendees { get; set; } = new List<ActivityAttendee>();
     }
 }

@@ -10,7 +10,7 @@ module Antares.Activity.View {
 
     export class ActivityViewController {
         // bindings
-        activity: Business.Activity;
+        activity: Business.ActivityViewModel;
         public selectedTabIndex: number = 0;
 
         //fields

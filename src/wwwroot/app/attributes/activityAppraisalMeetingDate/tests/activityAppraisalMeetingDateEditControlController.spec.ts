@@ -22,8 +22,8 @@ module Antares.Attributes {
                 // init
                 $scope = $rootScope.$new();
                 config = {
-                    start: TestHelpers.ConfigGenerator.generateFieldConfig(),
-                    end: TestHelpers.ConfigGenerator.generateFieldConfig()
+                    appraisalMeetingStart: TestHelpers.ConfigGenerator.generateFieldConfig(),
+                    appraisalMeetingEnd: TestHelpers.ConfigGenerator.generateFieldConfig()
                 };
                 $scope['config'] = config;
                 $http = $httpBackend;
@@ -63,8 +63,8 @@ module Antares.Attributes {
                 .dataIt((data: TestCase) =>
                     `where startRequire is ${data[0]} and endRequire is ${data[1]} then isRequire must return ${data[2]}`)
                 .run((data: TestCase) => {
-                    controller.config.start.required = data[0];
-                    controller.config.end.required = data[1];
+                    controller.config.appraisalMeetingStart.required = data[0];
+                    controller.config.appraisalMeetingEnd.required = data[1];
 
                     // act & assert
                     expect(controller.isRequired()).toBe(data[2]);

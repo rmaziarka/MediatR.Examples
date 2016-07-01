@@ -44,7 +44,7 @@ module Antares {
 
             $scope = $rootScope.$new();
             controller = <ActivityEditController>$controller('ActivityEditController', { $scope: $scope });
-            controller.activity = new Business.Activity();
+            controller.activity = new Activity.ActivityEditModel();
             controller.activity.leadNegotiator = leadNegotiatorMock;
             controller.activity.secondaryNegotiator = secondaryNegotiatorsMock;
         }));
@@ -136,12 +136,12 @@ module Antares {
                     var deferred: ng.IDeferred<any>;
                     var activityFromService: Dto.IActivity;
                     var requestData: Antares.Activity.Commands.IActivityEditCommand;
-                    var activity: Business.Activity;
+                    var activity: Activity.ActivityEditModel;
 
                     beforeEach(() => {
                         // arrange
                         deferred = $q.defer();
-                        activity = TestHelpers.ActivityGenerator.generate();
+                        activity = TestHelpers.ActivityGenerator.generateActivityEdit();
                         controller.activity = activity;
 
                         activityFromService = TestHelpers.ActivityGenerator.generateDto();
@@ -178,12 +178,12 @@ module Antares {
                     var deferred: ng.IDeferred<any>;
                     var activityFromService: Dto.IActivity;
                     var requestData: Antares.Activity.Commands.IActivityAddCommand;
-                    var activity: Business.Activity;
+                    var activity: Activity.ActivityEditModel;
 
                     beforeEach(() => {
                         // arrange
                         deferred = $q.defer();
-                        activity = TestHelpers.ActivityGenerator.generate();
+                        activity = TestHelpers.ActivityGenerator.generateActivityEdit();
                         activity.id = null;
                         controller.activity = activity;
 
@@ -228,7 +228,7 @@ module Antares {
                     });
                 });
 
-                var expectCorrectRequest = (requestData: Antares.Activity.Commands.IActivityBaseCommand, activity: Business.Activity) => {
+                var expectCorrectRequest = (requestData: Antares.Activity.Commands.IActivityBaseCommand, activity: Activity.ActivityEditModel) => {
                     expect(requestData.activityStatusId).toEqual(activity.activityStatusId);
                     expect(requestData.marketAppraisalPrice).toEqual(activity.marketAppraisalPrice);
                     expect(requestData.recommendedPrice).toEqual(activity.recommendedPrice);
@@ -237,11 +237,11 @@ module Antares {
                     expect(requestData.sellingReasonId).toEqual(activity.sellingReasonId);
                     expect(requestData.sourceId).toEqual(activity.sourceId);
                     expect(requestData.pitchingThreats).toEqual(activity.pitchingThreats);
-                    expect(requestData.accessDetails.keyNumber).toEqual(activity.accessDetails.keyNumber);
-                    expect(requestData.accessDetails.accessArrangements).toEqual(activity.accessDetails.accessArrangements);
-                    expect(moment(requestData.appraisalMeeting.start).toDate()).toEqual(activity.appraisalMeeting.activityAppraisalMeetingStart);
-                    expect(moment(requestData.appraisalMeeting.end).toDate()).toEqual(activity.appraisalMeeting.activityAppraisalMeetingEnd);
-                    expect(requestData.appraisalMeeting.invitationText).toEqual(activity.appraisalMeeting.invitationText);
+                    expect(requestData.keyNumber).toEqual(activity.accessDetails.keyNumber);
+                    expect(requestData.accessArrangements).toEqual(activity.accessDetails.accessArrangements);
+                    expect(moment(requestData.appraisalMeetingStart).toDate()).toEqual(activity.appraisalMeeting.appraisalMeetingStart);
+                    expect(moment(requestData.appraisalMeetingEnd).toDate()).toEqual(activity.appraisalMeeting.appraisalMeetingEnd);
+                    expect(requestData.appraisalMeetingInvitationText).toEqual(activity.appraisalMeeting.appraisalMeetingInvitationText);
 
                     expect(requestData.secondaryNegotiators.map((negotiator) => negotiator.userId)).toEqual(activity.secondaryNegotiator.map((negotiator) => negotiator.userId));
                 }

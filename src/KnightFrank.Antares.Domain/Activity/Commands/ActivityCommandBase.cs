@@ -41,6 +41,12 @@
 
         public string AccessArrangements { get; set; }
 
-        public UpdateActivityAppraisalMeeting AppraisalMeeting { get; set; } = new UpdateActivityAppraisalMeeting();
+        public DateTimeOffset? AppraisalMeetingStart { get; set; }
+
+        public DateTimeOffset? AppraisalMeetingEnd { get; set; }
+
+        public string AppraisalMeetingInvitationText { get; set; }
+
+        public IList<UpdateActivityAttendee> AppraisalMeetingAttendeesList { get; set; } = new List<UpdateActivityAttendee>();
     }
 }

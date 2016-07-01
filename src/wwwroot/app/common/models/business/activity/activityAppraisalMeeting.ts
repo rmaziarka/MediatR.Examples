@@ -2,16 +2,14 @@
 
 module Antares.Common.Models.Business {
     export class ActivityAppraisalMeeting {
-        activityAppraisalMeetingStart: Date | string;
-        activityAppraisalMeetingEnd: Date | string;
-        invitationText: string;
+        appraisalMeetingStart: Date | string = null;
+        appraisalMeetingEnd: Date | string = null;
+        appraisalMeetingInvitationText: string;
 
-        constructor(appraisalMeeting?: Dto.IActivityAppraisalMeeting) {
-            if (appraisalMeeting) {
-                this.activityAppraisalMeetingStart = moment(appraisalMeeting.activityAppraisalMeetingStart).toDate();
-                this.activityAppraisalMeetingEnd = moment(appraisalMeeting.activityAppraisalMeetingEnd).toDate();
-                this.invitationText = appraisalMeeting.invitationText;
-            }
+        constructor(activityAppraisalMeetingStart?: Date | string, activityAppraisalMeetingEnd?: Date | string, invitationText?: string) {
+            this.appraisalMeetingStart = activityAppraisalMeetingStart ? moment(activityAppraisalMeetingStart).toDate() : '';
+            this.appraisalMeetingEnd = activityAppraisalMeetingEnd ? moment(activityAppraisalMeetingEnd).toDate() : '';
+            this.appraisalMeetingInvitationText = invitationText;
         }
     }
 }

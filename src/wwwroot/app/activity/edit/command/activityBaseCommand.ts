@@ -5,26 +5,29 @@ module Antares.Activity.Commands {
     import Dto = Common.Models.Dto;
     
     export class ActivityBaseCommand implements IActivityBaseCommand {
-        activityStatusId: string;
+        activityStatusId: string = '';
         marketAppraisalPrice: number;
         recommendedPrice: number;
         vendorEstimatedPrice: number;
         shortLetPricePerWeek: number;
         askingPrice: number;
-        activityTypeId: string;
+        activityTypeId: string ='';
         leadNegotiator: ActivityUserCommandPart;
         secondaryNegotiators: ActivityUserCommandPart[];
         departments: IActivityDepartmentCommandPart[];
         contactIds: string[];
-        sourceId: string = '';
+        sourceId: string = null;
         sourceDescription: string = '';
         sellingReasonId: string = '';
-        attendees: Business.UpdateActivityAttendeeResource[];
+        appraisalMeetingAttendeesList: Business.UpdateActivityAttendeeResource[];
         pitchingThreats: string = '';
-        appraisalMeeting: ActivityAppraisalMeetingCommandPart = null;
-        accessDetails: Dto.IActivityAccessDetails = null;
+        appraisalMeetingStart: string = null;
+        appraisalMeetingEnd: string = null;
+        appraisalMeetingInvitationText: string = '';
+        keyNumber: string = '';
+        accessArrangements: string = '';
 
-        constructor(activity: Business.Activity){
+        constructor(activity: Activity.ActivityEditModel) {
             this.activityStatusId = activity.activityStatusId;
             this.marketAppraisalPrice = activity.marketAppraisalPrice;
             this.recommendedPrice = activity.recommendedPrice;
@@ -40,12 +43,13 @@ module Antares.Activity.Commands {
             this.secondaryNegotiators = activity.secondaryNegotiator.map((n: Business.ActivityUser) => new ActivityUserCommandPart(n));
             this.departments = activity.activityDepartments.map((d: Business.ActivityDepartment) => new ActivityDepartmentCommandPart(d));
             this.contactIds = activity.contacts.map((c: Business.Contact) => c.id);
-            this.attendees = activity.attendees.map((a: Dto.IActivityAttendee) => new Business.UpdateActivityAttendeeResource(a));
-            this.appraisalMeeting = new ActivityAppraisalMeetingCommandPart(activity.appraisalMeeting);
-            this.accessDetails = {
-                accessArrangements: activity.accessDetails.accessArrangements,
-                keyNumber: activity.accessDetails.keyNumber
-            }
+            this.appraisalMeetingAttendeesList = activity.appraisalMeetingAttendees.map((a: Dto.IActivityAttendee) => new Business.UpdateActivityAttendeeResource(a));
+
+            this.appraisalMeetingStart = activity.appraisalMeeting.appraisalMeetingStart ? moment(activity.appraisalMeeting.appraisalMeetingStart).toDate().toUTCString() : null;
+            this.appraisalMeetingEnd = activity.appraisalMeeting.appraisalMeetingEnd ? moment(activity.appraisalMeeting.appraisalMeetingEnd).toDate().toUTCString() : null;
+            this.appraisalMeetingInvitationText = activity.appraisalMeeting.appraisalMeetingInvitationText;
+            this.keyNumber = activity.accessDetails.keyNumber;
+            this.accessArrangements = activity.accessDetails.accessArrangements;
         }
     }
     
@@ -64,9 +68,11 @@ module Antares.Activity.Commands {
         sourceId: string;
         sourceDescription: string;
         sellingReasonId: string;
-        accessDetails: Dto.IActivityAccessDetails;
+        appraisalMeetingStart: string;
+        appraisalMeetingEnd: string;
+        appraisalMeetingInvitationText: string;
+        keyNumber: string;
+        accessArrangements: string;
         pitchingThreats: string;
-        attendees: Business.UpdateActivityAttendeeResource[];
-        appraisalMeeting: ActivityAppraisalMeetingCommandPart;
     }
 }

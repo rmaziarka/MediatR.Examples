@@ -2,7 +2,7 @@
     <h5 class="page-header" translate="ACTIVITY.EDIT.APPRAISAL_MEETING.ATTENDEES"></h5>
     <div class="form-group">
         <div class="checkbox" ng-repeat="person in vm.availableAttendees">
-            <label><input type="checkbox" ng-model="person.isSelected" ng-disabled="!vm.config.attendees.active" ng-change="vm.onAttendeeSelected(person)">{{person.getName()}}</label>
+            <label><input type="checkbox" ng-model="person.isSelected" ng-disabled="!vm.config.appraisalMeetingAttendeesList.active" ng-change="vm.onAttendeeSelected(person)">{{person.getName()}}</label>
         </div>
     </div>
 </ng-form>

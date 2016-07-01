@@ -18,7 +18,7 @@ module Antares.Common.Models.Business {
 
         attendees: UpdateActivityAttendeeResource[] = [];
 
-        constructor(activity?: Business.Activity) {
+        constructor(activity?: Activity.ActivityEditModel) {
             if (activity) {
                 this.id = activity.id;
                 this.activityTypeId = activity.activityTypeId;
@@ -31,7 +31,7 @@ module Antares.Common.Models.Business {
                 this.departments = _.map(activity.activityDepartments, (department: Business.ActivityDepartment) => new UpdateActivityDepartmentResource(department));
 	            this.askingPrice = activity.askingPrice;
                 this.shortLetPricePerWeek = activity.shortLetPricePerWeek;
-                this.attendees = activity.attendees.map((attendee: Dto.IActivityAttendee) => new UpdateActivityAttendeeResource(attendee));
+                this.attendees = activity.appraisalMeetingAttendees.map((attendee: Dto.IActivityAttendee) => new UpdateActivityAttendeeResource(attendee));
             }
         }
     }

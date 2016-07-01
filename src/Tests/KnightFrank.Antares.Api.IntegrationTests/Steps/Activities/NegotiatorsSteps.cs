@@ -117,11 +117,8 @@
                     this.secondaryNegotiatorsList.Select(
                         n => new UpdateActivityUser { UserId = n, CallDate = this.date.AddDays(10) }).ToList(),
                 Departments = this.updateActivityDepartments,
-                AppraisalMeeting = new UpdateActivityAppraisalMeeting
-                {
-                    Start = this.activity.AppraisalMeeting.AppraisalMeetingStart ?? DateTime.Now.AddHours(24),
-                    End = this.activity.AppraisalMeeting.AppraisalMeetingStart ?? DateTime.Now.AddHours(26)
-                }
+                AppraisalMeetingStart = this.activity.AppraisalMeetingStart ?? DateTime.Now.AddHours(24),
+                AppraisalMeetingEnd = this.activity.AppraisalMeetingStart ?? DateTime.Now.AddHours(26)
             };
 
             HttpResponseMessage response = this.fixture.SendPutRequest(requestUrl, updateActivityCommand);

@@ -6,7 +6,7 @@ module Antares.Activity.Commands {
     export class ActivityEditCommand extends ActivityBaseCommand implements IActivityEditCommand {
         id: string;
 
-        constructor(activity: Business.Activity) {
+        constructor(activity: Activity.ActivityEditModel) {
             super(activity);
             this.id = activity.id;
         }

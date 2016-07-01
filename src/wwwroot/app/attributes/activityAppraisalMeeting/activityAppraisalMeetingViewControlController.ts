@@ -13,7 +13,10 @@ module Antares.Attributes {
         attendeesModel: Models.ViewActivityAttendeeModel[];
 
         constructor() {
-            this.attendeesModel = this.attendees.map((a: Dto.IActivityAttendee) => new Antares.Attributes.Models.ViewActivityAttendeeModel(a));
+            this.attendeesModel = [];
+            if (this.attendees) {
+                this.attendeesModel = this.attendees.map((a: Dto.IActivityAttendee) => new Antares.Attributes.Models.ViewActivityAttendeeModel(a));
+            }
         }
 
         public getAttendees = () : string => {

@@ -21,11 +21,12 @@ module Antares.TestHelpers {
                 activityDepartments: [],
                 sellingReasonId: StringGenerator.generate(),
                 sourceId: StringGenerator.generate(),
-                appraisalMeeting: ActivityAppraisalMeetingGenerator.generateDto(),
-                accessDetails: {
-                    keyNumber: StringGenerator.generate(),
-                    accessArrangements: StringGenerator.generate(),
-                }
+                keyNumber: StringGenerator.generate(),
+                accessArrangements: StringGenerator.generate(),
+                appraisalMeetingEnd: moment().toDate().toDateString(),
+                appraisalMeetingStart: moment().toDate().toDateString(),
+                appraisalMeetingInvitationText: StringGenerator.generate(),
+                appraisalMeetingAttendees: []
             }
 
             return angular.extend(activity, specificData || {});
@@ -41,6 +42,10 @@ module Antares.TestHelpers {
 
         public static generate(specificData?: any): Business.Activity {
             return new Business.Activity(ActivityGenerator.generateDto(specificData));
+        }
+
+        public static generateActivityEdit(specificData?: any): Activity.ActivityEditModel {
+            return new Activity.ActivityEditModel(ActivityGenerator.generateDto(specificData));
         }
     }
 }

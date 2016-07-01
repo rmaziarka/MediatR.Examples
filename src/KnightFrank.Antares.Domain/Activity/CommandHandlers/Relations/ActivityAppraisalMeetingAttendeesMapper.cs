@@ -5,6 +5,7 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
 
@@ -19,32 +20,32 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
 
         public void ValidateAndAssign(ActivityCommandBase message, Activity activity)
         {
-            if (message.AppraisalMeeting.Attendees.Count == 0)
+            if (message.AppraisalMeetingAttendeesList.Count == 0)
             {
-                activity.ActivityAttendees.Clear();
+                activity.AppraisalMeetingAttendees.Clear();
                 return;
             }
 
             List<Guid> usersIds =
-                message.AppraisalMeeting.Attendees.Where(x => x.UserId.HasValue).Select(x => x.UserId.Value).ToList();
+                message.AppraisalMeetingAttendeesList.Where(x => x.UserId.HasValue).Select(x => x.UserId.Value).ToList();
 
             List<Guid> contactsIds =
-                message.AppraisalMeeting.Attendees.Where(x => x.ContactId.HasValue).Select(x => x.ContactId.Value).ToList();
+                message.AppraisalMeetingAttendeesList.Where(x => x.ContactId.HasValue).Select(x => x.ContactId.Value).ToList();
 
             this.Validate(activity, usersIds, contactsIds);
 
-            activity.ActivityAttendees
+            activity.AppraisalMeetingAttendees
                     .Where(x => IsRemovedFromExistingList(x, usersIds, contactsIds))
                     .ToList()
-                    .ForEach(x => activity.ActivityAttendees.Remove(x));
+                    .ForEach(x => activity.AppraisalMeetingAttendees.Remove(x));
 
-            usersIds.Where(id => IsNewlyAddedUser(id, activity.ActivityAttendees))
+            usersIds.Where(id => IsNewlyAddedUser(id, activity.AppraisalMeetingAttendees))
                     .ToList()
-                    .ForEach(id => activity.ActivityAttendees.Add(new ActivityAttendee { UserId = id }));
+                    .ForEach(id => activity.AppraisalMeetingAttendees.Add(new ActivityAttendee { UserId = id }));
 
-            contactsIds.Where(id => IsNewlyAddedContact(id, activity.ActivityAttendees))
+            contactsIds.Where(id => IsNewlyAddedContact(id, activity.AppraisalMeetingAttendees))
                        .ToList()
-                       .ForEach(id => activity.ActivityAttendees.Add(new ActivityAttendee { ContactId = id }));
+                       .ForEach(id => activity.AppraisalMeetingAttendees.Add(new ActivityAttendee { ContactId = id }));
         }
 
         private static bool IsNewlyAddedUser(Guid id, ICollection<ActivityAttendee> activityAttendees)

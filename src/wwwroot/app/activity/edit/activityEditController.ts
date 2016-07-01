@@ -12,7 +12,7 @@ module Antares.Activity {
 
     export class ActivityEditController {
         public config: IActivityEditConfig;
-        public activity: Business.Activity;
+        public activity: ActivityEditModel;
         public userData: Dto.IUserData;
 
         public enumTypeActivityStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityStatus;
@@ -117,7 +117,7 @@ module Antares.Activity {
         invitationTextSchema: Antares.Attributes.ITextEditControlSchema = {
             controlId: 'invitationTextId',
             translationKey: 'ACTIVITY.EDIT.APPRAISAL_MEETING.INVITATION_TEXT',
-            fieldName: 'invitationText',
+            fieldName: 'appraisalMeetingInvitationText',
             formName: 'invitationTextForm'
         }
 
@@ -173,11 +173,21 @@ module Antares.Activity {
             this.reloadConfig(this.activity);
         }
 
-        public reloadConfig = (activity: Business.Activity) => {
-            var entity = new Business.UpdateActivityResource(this.activity);
+        public reloadConfig = (activity: Activity.ActivityEditModel) => {
+            var entity: Commands.ActivityBaseCommand;
+            var pageTypeEnum: Enums.PageTypeEnum;
+
+            if (this.isAddMode()) {
+                entity = new Commands.ActivityAddCommand(this.activity);
+                pageTypeEnum = Enums.PageTypeEnum.Create;
+            }
+            else {
+                entity = new Commands.ActivityEditCommand(this.activity);
+                pageTypeEnum = Enums.PageTypeEnum.Update;
+            }
 
             this.configService
-                .getActivity(Enums.PageTypeEnum.Create, this.activity.property.propertyTypeId, activity.activityTypeId, entity)
+                .getActivity(pageTypeEnum, this.activity.property.propertyTypeId, activity.activityTypeId, entity)
                 .then((newConfig: IActivityEditConfig) => this.config = newConfig);
         }
 
@@ -189,8 +199,7 @@ module Antares.Activity {
             }
 
             if (this.isAddMode()) {
-                // todo change to one parameter
-                var addCommand = new Commands.ActivityAddCommand(this.activity, this.activity.property.id);
+                var addCommand = new Commands.ActivityAddCommand(this.activity);
 
                 this.activityService.addActivity(addCommand).then((activityDto: Dto.IActivity) => {
                     this.latestViewsProvider.addView(<Common.Models.Commands.ICreateLatestViewCommand>{

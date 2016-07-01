@@ -15,7 +15,7 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
     {
         public ActivityAttendeeConfiguration()
         {
-            this.HasRequired(an => an.Activity).WithMany(a => a.ActivityAttendees).HasForeignKey(an => an.ActivityId).WillCascadeOnDelete(false);
+            this.HasRequired(an => an.Activity).WithMany(a => a.AppraisalMeetingAttendees).HasForeignKey(an => an.ActivityId).WillCascadeOnDelete(false);
             this.HasOptional(an => an.Contact).WithMany().HasForeignKey(an => an.ContactId).WillCascadeOnDelete(false);
             this.HasOptional(an => an.User).WithMany().HasForeignKey(an => an.UserId).WillCascadeOnDelete(false);
 

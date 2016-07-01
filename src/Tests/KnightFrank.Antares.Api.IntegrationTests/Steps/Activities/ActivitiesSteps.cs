@@ -165,7 +165,8 @@
                 SellingReasonId = sellingReasonId,
                 LeadNegotiator = new UpdateActivityUser { UserId = leadNegotiatorId, CallDate = DateTime.Today.AddDays(3) },
                 Departments = new List<UpdateActivityDepartment> { new UpdateActivityDepartment { DepartmentId = user.DepartmentId, DepartmentTypeId = managingDepartmentId } },
-                AppraisalMeeting = new UpdateActivityAppraisalMeeting { Start = DateTime.Now.AddHours(24), End = DateTime.Now.AddHours(26) }
+                AppraisalMeetingStart = DateTime.Now.AddHours(24),
+                AppraisalMeetingEnd = DateTime.Now.AddHours(26)
             };
 
             HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, activityCommand);
@@ -185,11 +186,9 @@
             updateActivityCommand.SourceId = activityFromDatabase.SourceId;
             updateActivityCommand.SellingReasonId = activityFromDatabase.SellingReasonId;
 
-            updateActivityCommand.AppraisalMeeting = new UpdateActivityAppraisalMeeting
-            {
-                Start = activityFromDatabase.AppraisalMeeting.AppraisalMeetingStart ?? DateTime.Now.AddHours(24),
-                End = activityFromDatabase.AppraisalMeeting.AppraisalMeetingStart ?? DateTime.Now.AddHours(26)
-            };
+
+            updateActivityCommand.AppraisalMeetingStart = activityFromDatabase.AppraisalMeetingStart ?? DateTime.Now.AddHours(24);
+            updateActivityCommand.AppraisalMeetingEnd = activityFromDatabase.AppraisalMeetingStart ?? DateTime.Now.AddHours(26);
 
             updateActivityCommand.LeadNegotiator = new UpdateActivityUser
             {
@@ -262,7 +261,7 @@
                 .Excluding(x => x.Attachments)
                 .Excluding(x => x.ActivityUsers)
                 .Excluding(x => x.ActivityDepartments)
-                .Excluding(x => x.ActivityAttendees)
+                .Excluding(x => x.AppraisalMeetingAttendees)
                 .Excluding(x => x.Contacts)
                 .Excluding(x => x.Offers)
                 .Excluding(x => x.Source)
@@ -282,7 +281,7 @@
                 .Excluding(x => x.Attachments)
                 .Excluding(x => x.ActivityUsers)
                 .Excluding(x => x.ActivityDepartments)
-                .Excluding(x => x.ActivityAttendees)
+                .Excluding(x => x.AppraisalMeetingAttendees)
                 .Excluding(x => x.Contacts)
                 .Excluding(x => x.Offers)
                 .Excluding(x => x.Source)
