@@ -11,6 +11,7 @@ module Antares {
         beforeEach(() => {
             angular.mock.module(($provide: any) => {
                 $provide.service('addressFormsProvider', Mock.AddressFormsProviderMock);
+                $provide.factory('addressFormViewDirective', () =>{ return {}; });
             });
         });
 
@@ -106,31 +107,31 @@ module Antares {
                     }
                 ],
                 offers: [
-                    {
+                    TestHelpers.OfferGenerator.generate({
                         id: "1",
                         statusId: "1",
                         createdDate: new Date(2016, 1, 1)
-                    },
-                    {
+                    }),
+                    TestHelpers.OfferGenerator.generate({
                         id: "2",
                         statusId: "2",
                         createdDate: new Date(2014, 1, 1)
-                    },
-                    {
+                    }),
+                    TestHelpers.OfferGenerator.generate({
                         id: "3",
                         statusId: "3",
                         createdDate: new Date(2015, 1, 1)
-                    },
-                    {
-                        id: "4",
-                        statusId: "3",
-                        createdDate: new Date(2011, 1, 1)
-                    },
-                    {
+                    }),
+                    TestHelpers.OfferGenerator.generate({
+                        id : "4",
+                        statusId : "3",
+                        createdDate : new Date(2011, 1, 1)
+                    }),
+                    TestHelpers.OfferGenerator.generate({
                         id: "5",
                         statusId: "4",
                         createdDate: new Date(2012, 1, 1)
-                    }
+                    })
                 ]
             });
 
