@@ -14,9 +14,9 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
 
     public class ActivityDepartmentsMapper : IActivityReferenceMapper<ActivityDepartment>
     {
+        private readonly ICollectionValidator collectionValidator;
         private readonly IGenericRepository<Department> departmentRepository;
         private readonly IGenericRepository<EnumTypeItem> enumTypeItemRepository;
-        private readonly ICollectionValidator collectionValidator;
 
         public ActivityDepartmentsMapper(IGenericRepository<Department> departmentRepository,
             IGenericRepository<EnumTypeItem> enumTypeItemRepository, ICollectionValidator collectionValidator)
@@ -28,12 +28,45 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
 
         public void ValidateAndAssign(ActivityCommandBase message, Activity activity)
         {
+            List<Guid> departmentsIds = this.Validate(message);
+
+            activity.ActivityDepartments
+                    .Where(x => IsRemovedFromExistingList(x, departmentsIds))
+                    .ToList()
+                    .ForEach(x => activity.ActivityDepartments.Remove(x));
+
+            foreach (UpdateActivityDepartment messageDepartment in message.Departments)
+            {
+                ActivityDepartment existingDepartment = GetExistingDepartment(activity, messageDepartment.DepartmentId);
+                if (existingDepartment == null)
+                {
+                    existingDepartment = new ActivityDepartment { DepartmentId = messageDepartment.DepartmentId };
+                    activity.ActivityDepartments.Add(existingDepartment);
+                }
+
+                existingDepartment.DepartmentTypeId = messageDepartment.DepartmentTypeId;
+            }
+        }
+
+        private static ActivityDepartment GetExistingDepartment(Activity activity, Guid departmentId)
+        {
+            return activity.ActivityDepartments.SingleOrDefault(u => u.DepartmentId == departmentId);
+        }
+
+        private static bool IsRemovedFromExistingList(ActivityDepartment activityDepartment, List<Guid> currentIds)
+        {
+            return !currentIds.Contains(activityDepartment.DepartmentId);
+        }
+
+        private List<Guid> Validate(ActivityCommandBase message)
+        {
             if (message.Departments.Count == 0)
             {
                 throw new BusinessValidationException(ErrorMessage.Activity_Should_Have_Exactly_One_Managing_Department);
             }
 
             List<Guid> departmentsIds = message.Departments.Select(x => x.DepartmentId).ToList();
+
             this.collectionValidator.CollectionIsUnique(departmentsIds, ErrorMessage.Activity_Departments_Not_Unique);
 
             this.collectionValidator.CollectionContainsAll(
@@ -49,23 +82,7 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
                 throw new BusinessValidationException(ErrorMessage.Activity_Should_Have_Exactly_One_Managing_Department);
             }
 
-            foreach (ActivityDepartment departmentToDelete in activity.ActivityDepartments.Where(x => departmentsIds.Contains(x.DepartmentId) == false).ToList())
-            {
-                activity.ActivityDepartments.Remove(departmentToDelete);
-            }
-
-            foreach (UpdateActivityDepartment messageDepartment in message.Departments)
-            {
-                ActivityDepartment existingDepartment =
-                    activity.ActivityDepartments.SingleOrDefault(u => u.DepartmentId == messageDepartment.DepartmentId);
-                if (existingDepartment == null)
-                {
-                    existingDepartment = new ActivityDepartment { DepartmentId = messageDepartment.DepartmentId };
-                    activity.ActivityDepartments.Add(existingDepartment);
-                }
-
-                existingDepartment.DepartmentTypeId = messageDepartment.DepartmentTypeId;
-            }
+            return departmentsIds;
         }
 
         private EnumTypeItem GetManagingDepartmentType()

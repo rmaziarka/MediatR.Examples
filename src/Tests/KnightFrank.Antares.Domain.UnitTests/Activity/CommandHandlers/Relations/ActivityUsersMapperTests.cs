@@ -70,13 +70,7 @@
                 Enumerable.Range(0, existingUsers).Select(i => fixture.Create<ActivityUser>()).ToList();
             userRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<User, bool>>>()))
                           .Returns(allNegotiators.Select(x => new User { Id = x.UserId }));
-            enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
-                                  .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
-                                      new[]
-                                      {
-                                          this.GetLeadNegotiatorUserType(fixture),
-                                          this.GetSecondaryNegotiatorUserType(fixture)
-                                      }.Where(expr.Compile()));
+            this.SetupEnumTypeRepository(enumTypeItemRepository, fixture);
 
             // Act
             mapper.ValidateAndAssign(command, activity);
@@ -130,6 +124,73 @@
 
             userRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<User, bool>>>()))
                           .Returns(allNegotiators.Select(x => new User { Id = x.UserId }));
+            this.SetupEnumTypeRepository(enumTypeItemRepository, fixture);
+
+            // Act
+            mapper.ValidateAndAssign(command, activity);
+
+            // Assert
+            activity.ActivityUsers.Should().BeEquivalentTo(originalUsers);
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_CommandWithAnyCallDateInThePastThatChanged_When_Handling_Then_ShouldThrowException(
+            [Frozen] Mock<IGenericRepository<User>> userRepository,
+            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
+            [Frozen] Mock<ICollectionValidator> collectionValidator,
+            ActivityUsersMapper mapper,
+            IFixture fixture)
+        {
+            // Arrange
+            var command = new UpdateActivityCommand();
+            command.LeadNegotiator = new UpdateActivityUser
+            {
+                UserId = Guid.NewGuid(),
+                CallDate = DateTime.Today.Date.AddDays(-10)
+            };
+
+            var activity = fixture.Create<Activity>();
+            activity.ActivityUsers = new List<ActivityUser> {new ActivityUser {UserId = command.LeadNegotiator.UserId, CallDate = DateTime.Today } };
+
+            userRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<User, bool>>>()))
+                          .Returns(new []{ new User { Id = command.LeadNegotiator.UserId } });
+            this.SetupEnumTypeRepository(enumTypeItemRepository, fixture);
+
+            // Act & Assert
+            Assert.Throws<BusinessValidationException>(() => mapper.ValidateAndAssign(command, activity));
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public void Given_CommandWithNewUserWithCallDateInThePast_When_Handling_Then_ShouldThrowException(
+            [Frozen] Mock<IGenericRepository<User>> userRepository,
+            [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
+            [Frozen] Mock<ICollectionValidator> collectionValidator,
+            ActivityUsersMapper mapper,
+            IFixture fixture)
+        {
+            // Arrange
+            var command = new UpdateActivityCommand();
+            command.LeadNegotiator = new UpdateActivityUser
+            {
+                UserId = Guid.NewGuid(),
+                CallDate = DateTime.Today.Date.AddDays(-10)
+            };
+
+            var activity = fixture.Create<Activity>();
+            activity.ActivityUsers = new List<ActivityUser>();
+
+            userRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<User, bool>>>()))
+                          .Returns(new[] { new User { Id = command.LeadNegotiator.UserId } });
+            this.SetupEnumTypeRepository(enumTypeItemRepository, fixture);
+
+            // Act & Assert
+            Assert.Throws<BusinessValidationException>(() => mapper.ValidateAndAssign(command, activity));
+        }
+
+        private void SetupEnumTypeRepository(Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository, IFixture fixture)
+        {
             enumTypeItemRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<EnumTypeItem, bool>>>()))
                                   .Returns((Expression<Func<EnumTypeItem, bool>> expr) =>
                                       new[]
@@ -137,12 +198,6 @@
                                           this.GetLeadNegotiatorUserType(fixture),
                                           this.GetSecondaryNegotiatorUserType(fixture)
                                       }.Where(expr.Compile()));
-
-            // Act
-            mapper.ValidateAndAssign(command, activity);
-
-            // Assert
-            activity.ActivityUsers.Should().BeEquivalentTo(originalUsers);
         }
 
         private EnumTypeItem GetLeadNegotiatorUserType(IFixture fixture)
