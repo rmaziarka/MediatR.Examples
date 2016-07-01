@@ -30,7 +30,7 @@ module Antares {
 
                 scope = $rootScope.$new();
                 scope['vm'] = { ngModel: dateToTest, config: configMock, schema: schemaMock };
-                element = $compile('<date-view-control ng-model="vm.ngModel" config="vm.config" schema="vm.schema"></date-view-control>')(scope);
+                element = $compile('<date-view-control date="vm.ngModel" config="vm.config" schema="vm.schema"></date-view-control>')(scope);
                 scope.$apply();
 
                 assertValidator = new TestHelpers.AssertValidators(element, scope);
@@ -54,7 +54,7 @@ module Antares {
 
                 scope = $rootScope.$new();
                 scope['vm'] = { ngModel: dateToTest, schema: schemaMock };
-                element = $compile('<price-view-control ng-model="vm.ngModel" config="vm.config" schema="vm.schema"></price-view-control>')(scope);
+                element = $compile('<price-view-control date="vm.ngModel" config="vm.config" schema="vm.schema"></price-view-control>')(scope);
                 scope.$apply();
             }));
 
