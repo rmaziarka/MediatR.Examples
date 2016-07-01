@@ -19,7 +19,8 @@ module Antares.Requirement.Add {
                 formName: "rentRangeControlForm",
                 minControlId: "rent-min",
                 maxControlId: "rent-max",
-                translationKey: "REQUIREMENT.VIEW.RENT_WEEKLY"
+                translationKey: "REQUIREMENT.VIEW.RENT_WEEKLY",
+                unit: "GBP"
             }
         }
 

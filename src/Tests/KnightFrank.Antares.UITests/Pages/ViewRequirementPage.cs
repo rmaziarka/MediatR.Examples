@@ -18,8 +18,8 @@
         private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "[ng-show *= 'isLoading']");
         private readonly ElementLocator requirementDate = new ElementLocator(Locator.CssSelector, "span[translate *= 'CREATEDDATE'] ~ span");
         // Basic information
-        private readonly ElementLocator requirementType = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator requirementDescription = new ElementLocator(Locator.XPath, "//*[contains(@translate, 'DESCRIPTION')]/../p");
+        private readonly ElementLocator requirementType = new ElementLocator(Locator.Id, "requirement-preview-type");
+        private readonly ElementLocator requirementDescription = new ElementLocator(Locator.CssSelector, "requirement-description-preview-control .ng-binding");
         // Rent
         private readonly ElementLocator rent = new ElementLocator(Locator.Id, string.Empty);
         // Applicants
@@ -41,8 +41,9 @@
         private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .card-body");
         private readonly ElementLocator offerActions = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .card-menu-button");
         private readonly ElementLocator offerStatus = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .offer-status");
-        private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .ng-binding");
-        private readonly ElementLocator editOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showEditOfferPanel'] li");
+        private readonly ElementLocator offerPrice = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .offer-price");
+        private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type(1) address-form-view");
+        private readonly ElementLocator editOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showOfferEditPanel'] li");
         private readonly ElementLocator detailsOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showOfferDetailsView'] li");
         // Attachments
         private readonly ElementLocator addAttachment = new ElementLocator(Locator.CssSelector, "#card-list-attachments button");
@@ -160,9 +161,12 @@
 
         public List<string> GetOfferDetails(int position)
         {
-            List<string> details = this.Driver.GetElements(this.offerData.Format(position)).Select(el => el.Text).ToList();
-            details.Add(this.Driver.GetElement(this.offerStatus.Format(position)).Text);
-            return details;
+            return new List<string>()
+            {
+                this.Driver.GetElement(this.offerData.Format(position)).Text,
+                this.Driver.GetElement(this.offerStatus.Format(position)).Text,
+                this.Driver.GetElement(this.offerPrice.Format(position)).Text
+            };
         }
 
         public ViewRequirementPage OpenViewingActions(int position)

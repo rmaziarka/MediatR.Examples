@@ -34,7 +34,8 @@ module Antares.Requirement.View {
             rentRange: <Attributes.IRangeControlSchema>{
                 minControlId: "rent-min",
                 maxControlId: "rent-max",
-                translationKey: "REQUIREMENT.VIEW.RENT_WEEKLY"
+                translationKey: "REQUIREMENT.VIEW.RENT_WEEKLY",
+                unit: "GBP"
             }
         }
 

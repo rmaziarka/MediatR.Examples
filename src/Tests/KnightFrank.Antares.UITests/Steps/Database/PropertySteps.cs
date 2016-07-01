@@ -56,7 +56,10 @@
             address.AddressFormId = addressFormId;
             address.CountryId = countryId;
             address.Line1 = string.Empty;
-            address.Line3 = StringExtension.GenerateMaxAlphanumericString(20);
+            if (address.Line3 == null)
+            {
+                address.Line3 = StringExtension.GenerateMaxAlphanumericString(20);
+            }
 
             var property = new Property
             {

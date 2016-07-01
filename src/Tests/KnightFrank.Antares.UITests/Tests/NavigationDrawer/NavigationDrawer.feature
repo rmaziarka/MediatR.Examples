@@ -18,6 +18,8 @@ Scenario: Navigate through navigation drawer and check application
 		And Property form on create property page should be displayed
 	When User clicks search link in drawer submenu
 	Then Search form on search property page should be displayed
+	When User selects Activities menu item
+	Then Drawer Activities submenu should be displayed
 	When User selects Requirements menu item
 		And User clicks create button in drawer submenu
 	Then Drawer Requirements submenu should be displayed

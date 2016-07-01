@@ -20,11 +20,11 @@
         private readonly ElementLocator newApplicantButton = new ElementLocator(Locator.CssSelector, "button[ng-click *= 'showContactList']");
         private readonly ElementLocator applicantsList = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'requirement.contacts']");
         // Basic information
-        private readonly ElementLocator requirementType = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator requirementType = new ElementLocator(Locator.Id, "type");
         private readonly ElementLocator requirementDescription = new ElementLocator(Locator.Id, "description");
         // Rent requirements
-        private readonly ElementLocator rentWeeklyMin = new ElementLocator(Locator.Id, string.Empty);
-        private readonly ElementLocator rentWeeklyMax = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator rentWeeklyMin = new ElementLocator(Locator.Name, "min");
+        private readonly ElementLocator rentWeeklyMax = new ElementLocator(Locator.Name, "max");
 
         public CreateRequirementPage(DriverContext driverContext) : base(driverContext)
         {
@@ -45,6 +45,7 @@
         public CreateRequirementPage SelectRequirementType(string text)
         {
             this.Driver.GetElement<Select>(this.requirementType).SelectByText(text);
+            this.Driver.WaitForAngularToFinish();
             return this;
         }
 
@@ -95,5 +96,16 @@
             this.Driver.WaitUntilElementIsNoLongerFound(this.panel, BaseConfiguration.MediumTimeout);
             return this;
         }
+    }
+
+    internal class RequirementData
+    {
+        public string Type { get; set; }
+
+        public string Description { get; set; }
+
+        public string RentMin { get; set; }
+
+        public string RentMax { get; set; }
     }
 }
