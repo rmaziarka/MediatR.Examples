@@ -67,5 +67,6 @@ module Antares.Activity.Commands {
         accessDetails: Dto.IActivityAccessDetails;
         pitchingThreats: string;
         attendees: Business.UpdateActivityAttendeeResource[];
+        appraisalMeeting: ActivityAppraisalMeetingCommandPart;
     }
 }

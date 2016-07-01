@@ -116,7 +116,7 @@ module Antares {
                         return false;
                     });
                     spyOn(controller.kfMessageService, 'showErrorByCode');
-                    
+
                     // act
                     controller.save();
 
@@ -130,7 +130,7 @@ module Antares {
                     spyOn(controller, 'departmentIsRelatedWithNegotiator').and.returnValue(false);
                     spyOn($state, 'go').and.callFake(() => { });
 
-                })
+                });
 
                 describe('for edit mode', () => {
                     var deferred: ng.IDeferred<any>;
@@ -150,7 +150,7 @@ module Antares {
                             requestData = activityCommand;
                             return deferred.promise;
                         });
-                    })
+                    });
 
                     it('then correct data is sent to API', () => {
                         // act
@@ -172,7 +172,7 @@ module Antares {
                         // assert
                         expect($state.go).toHaveBeenCalledWith('app.activity-view', { id: activityFromService.id });
                     });
-                })
+                });
 
                 describe('for add mode', () => {
                     var deferred: ng.IDeferred<any>;
@@ -195,7 +195,7 @@ module Antares {
                         });
 
                         spyOn(latestViewsProvider, 'addView').and.callFake(() => { });
-                    })
+                    });
 
                     it('then correct data is sent to API', () => {
                         // act
@@ -226,7 +226,7 @@ module Antares {
                         // assert
                         expect(latestViewsProvider.addView).toHaveBeenCalled();
                     });
-                })
+                });
 
                 var expectCorrectRequest = (requestData: Antares.Activity.Commands.IActivityBaseCommand, activity: Business.Activity) => {
                     expect(requestData.activityStatusId).toEqual(activity.activityStatusId);
@@ -239,6 +239,9 @@ module Antares {
                     expect(requestData.pitchingThreats).toEqual(activity.pitchingThreats);
                     expect(requestData.accessDetails.keyNumber).toEqual(activity.accessDetails.keyNumber);
                     expect(requestData.accessDetails.accessArrangements).toEqual(activity.accessDetails.accessArrangements);
+                    expect(moment(requestData.appraisalMeeting.start).toDate()).toEqual(activity.appraisalMeeting.activityAppraisalMeetingStart);
+                    expect(moment(requestData.appraisalMeeting.end).toDate()).toEqual(activity.appraisalMeeting.activityAppraisalMeetingEnd);
+                    expect(requestData.appraisalMeeting.invitationText).toEqual(activity.appraisalMeeting.invitationText);
 
                     expect(requestData.secondaryNegotiators.map((negotiator) => negotiator.userId)).toEqual(activity.secondaryNegotiator.map((negotiator) => negotiator.userId));
                 }
