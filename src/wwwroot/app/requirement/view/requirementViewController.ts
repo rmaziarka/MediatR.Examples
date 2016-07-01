@@ -55,9 +55,7 @@ module Antares.Requirement.View {
                 });
 
             this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
-                this.isOfferAddPanelVisible = Enums.SidePanelState.Closed;
-                this.isOfferEditPreviewPanelVisible = Enums.SidePanelState.Closed;
-                this.hidePanels();
+                this.hideNewPanels();
             });
 
             this.eventAggregator.with(this).subscribe(Offer.OfferAddedSidePanelEvent, (msg: Offer.OfferAddedSidePanelEvent) =>{
@@ -262,7 +260,7 @@ module Antares.Requirement.View {
         }
 
         showOfferPreviewPanel = (offer: Dto.IOffer) =>{
-            if (!this.isOfferEditPreviewPanelVisible) {
+            if (this.isOfferEditPreviewPanelVisible != Enums.SidePanelState.Opened) {
                 this.hidePanels();
             }
             this.selectedOffer = offer;
