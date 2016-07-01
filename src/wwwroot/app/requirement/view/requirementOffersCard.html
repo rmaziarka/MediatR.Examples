@@ -1,5 +1,11 @@
-<div class="card-item">{{::cvm.item.activity.property.address.getAddressText()}}</div>
+<div class="card-item">
+    <address-form-view
+        address="cvm.item.activity.property.address"
+        template-url="'app/common/components/addressForm/addressFormView/templates/propertyInlineAddressForm.html'"
+        address-type="property">
+    </address-form-view>
+</div>
 
 <div class="card-info">
-    <span class="offer-status offer-status-{{cvm.item.statusId | dynamicTranslate | lowercase}}">{{cvm.item.statusId | dynamicTranslate}}</span><span class="offer-price">{{cvm.item.price}} GBP</span>
+    <span class="offer-status offer-status-{{cvm.item.statusId | dynamicTranslate | lowercase}}">{{cvm.item.statusId | dynamicTranslate}}</span><span class="offer-price">{{(cvm.item.pricePerWeek || cvm.item.price) | number: 2: true}} {{'GBP' | translate}}</span>
 </div>
