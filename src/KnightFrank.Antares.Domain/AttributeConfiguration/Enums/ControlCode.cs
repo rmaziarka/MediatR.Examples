@@ -23,6 +23,10 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         SellingReason,
         PitchingThreats,
         KeyNumber,
-        AccessArrangements
+        AccessArrangements,
+        AppraisalMeeting,
+        AppraisalMeetingDate,
+        AppraisalMeetingAttendees,
+        AppraisalMeetingInvitation
     }
 }

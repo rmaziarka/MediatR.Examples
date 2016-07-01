@@ -1,16 +1,12 @@
 /// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares {
-    import Business = Common.Models.Business;
-    import RangeAttributeController = Common.Component.RangeAttributeController
     import EditableDateController = Antares.Common.Component.EditableDateController
-    import runDescribe = TestHelpers.runDescribe;
 
     describe('Given editable data component is loaded', () => {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
             compile: ng.ICompileService,
-            state: ng.ui.IStateService,
             assertValidator: TestHelpers.AssertValidators,
             controller: EditableDateController,
             callDateToTest: any,
@@ -30,7 +26,7 @@ module Antares {
                 compile = $compile;
                 callDateToTest = moment().format('DD-MM-YYYY');
 
-                var mockedEditableDateComponent = '<editable-date selected-date="callDate" is-required="true" on-save=""></editable-date>';
+                var mockedEditableDateComponent = '<editable-date selected-date="callDate" is-required="true" can-be-edited="true" on-save=""></editable-date>';
                 scope['callDate'] = callDateToTest;
 
                 element = compile(mockedEditableDateComponent)(scope);
@@ -75,7 +71,7 @@ module Antares {
 
                 callDateToTest = moment().format('DD-MM-YYYY');
 
-                var mockedEditableDateComponent = '<editable-date selected-date="callDate" is-required="true" ng-model="date" on-save="fakeMethod()"></editable-date>';
+                var mockedEditableDateComponent = '<editable-date selected-date="callDate" is-required="true" ng-model="date" can-be-edited="true" on-save="fakeMethod()"></editable-date>';
                 scope['callDate'] = callDateToTest;
                 scope['date'] = callDateToTest;
 

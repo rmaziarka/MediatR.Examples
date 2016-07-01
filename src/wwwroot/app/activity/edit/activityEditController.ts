@@ -19,7 +19,7 @@ module Antares.Activity {
         private departmentsController: Antares.Attributes.ActivityDepartmentsEditControlController;
         public standardDepartmentType: Dto.IEnumTypeItem;
 
-        public isPropertyPreviewPanelVisible: boolean = false;
+        public isPropertyPreviewPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
 
         public availableAttendeeUsers: Business.User[];
         public availableAttendeeContacts: Business.Contact[];
@@ -129,6 +129,10 @@ module Antares.Activity {
             }
         }
 
+        configAppraisalMeetingDateMocked :any = {
+            appraisalMeetingDate:  {start:  { active:  true, required:  true  }, end:  { active:  true, required:  true  }  } 
+        }
+
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService,
@@ -140,11 +144,11 @@ module Antares.Activity {
             private enumProvider: Providers.EnumProvider) {
 
             this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
-                this.isPropertyPreviewPanelVisible = false;
+                this.isPropertyPreviewPanelVisible = Enums.SidePanelState.Closed;
             });
 
             this.eventAggregator.with(this).subscribe(Attributes.OpenPropertyPrewiewPanelEvent, (event: Antares.Attributes.OpenPropertyPrewiewPanelEvent) => {
-                this.isPropertyPreviewPanelVisible = true;
+                this.isPropertyPreviewPanelVisible = Enums.SidePanelState.Opened;
             });
         }
 

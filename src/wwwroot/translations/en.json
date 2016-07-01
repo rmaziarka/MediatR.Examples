@@ -29,6 +29,7 @@
     "NAVIGATIONDRAWER": {
       "RECENTPROPERTIES": "Recent",
       "RECENTACTIVITIES": "Recent",
+      "RECENTCOMPANIES": "Recent",
       "RECENTREQUIREMENTS": "Recent"
     },
     "MAKEOFFER": "Make an offer",
@@ -193,6 +194,10 @@
     }
   },
   "ACTIVITY": {
+    "COMMON": {
+      "ADDITIONAL_INFORMATION": "Additional information",
+      "PITCHING_THREATS" : "Pitching threats"
+    },
     "LIST": {
       "ACTIVITIES": "Activities",
       "NO_ITEMS": "No activities yet"
@@ -211,7 +216,7 @@
       "BASIC_INFORMATION": "Basic information",
       "ADDITIONAL_INFORMATION": {
         "ADDITIONAL_INFORMATION": "Additional information",
-        "ACCESS_DETAILS":  "Access details"
+        "ACCESS_DETAILS": "Access details"
       },
       "STATUS": "Status",
       "PROPERTY": "Property",
@@ -233,9 +238,12 @@
       "PITCHING_THREATS": "Pitching threats",
       "ACCESS_ARRANGEMENTS": "Access arrangements",
       "APPRAISAL_MEETING": {
+        "DATE": "Date",
+        "START": "Start time:",
+        "END": "End time:",
         "APPRAISAL_MEETING": "Appraisal meeting",
         "INVITATION_TEXT": "Invitation text",
-        "ATTENDEES":  "Attendees"
+        "ATTENDEES": "Attendees"
       }
     },
     "PREVIEW": {
@@ -249,7 +257,10 @@
       "ACTIVITY_DETAILS": "Activity details"
     },
     "VIEW": {
+      "BASIC_INFORMATION": "Basic information",
+      "DETAILS": "Details",
       "VIEW_ACTIVITY": "View activity",
+      "APPRAISAL_MEETING": "Appraisal meeting",
       "PROPERTY": "Property",
       "VENDORS": "Vendors",
       "NO_VENDORS": "No vendors defined",
@@ -263,11 +274,16 @@
         "ASKING_PRICE": "Asking price",
         "SHORT_LET_PRICE_PER_WEEK": "Short Let Price Per Week"
       },
-      "VIEWINGS": "Viewings",
+
+      "RECENT_FILES": "Recent files",
       "VIEWING_DETAILS": "Viewing details",
+      "NEGOTIATORS_DEPARTMENTS": "Negotiators & Departments",
       "NO_VIEWINGS": "No viewings",
       "OFFERS": "Offers",
-      "OFFERPREVIEW": "Offer preview"
+      "OFFERPREVIEW": "Offer preview",
+      "OVERVIEW": "Overview",
+      "SUMMARY": "Summary",
+      "VIEWINGS": "Viewings"
     }
   },
   "NEGOTIATORS": {
@@ -304,7 +320,11 @@
       "PARKINGSPACES": "Parking spaces",
       "AREA": "Area",
       "LANDAREA": "Land area",
-      "DESCRIPTION": "Description"
+      "DESCRIPTION": "Requirement description",
+      "TYPE": "Requirement type",
+      "BASIC_INFORMATION": "Basic information",
+      "RENT_REQUIREMENTS": "Rent requirements",
+      "RENT_WEEKLY":  "Rent (weekly)"
     },
     "VIEW": {
       "REQUIREMENT_DETAILS": "Requirement details",
@@ -330,7 +350,11 @@
       "SELECTACTIVITY": "Select activity",
       "OFFERPREVIEW": "Offer preview",
       "OFFERDETAILS": "Offer details",
-      "NEWOFFER": "New offer"
+      "NEWOFFER": "New offer",
+      "TYPE": "Requirement type",
+      "BASIC_INFORMATION": "Basic information",
+      "RENT_REQUIREMENTS": "Rent requirements",
+      "RENT_WEEKLY": "Rent (weekly)"
     }
   },
   "NOTES": {

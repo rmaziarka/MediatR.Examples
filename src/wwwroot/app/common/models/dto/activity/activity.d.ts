@@ -19,5 +19,12 @@ declare module Antares.Common.Models.Dto {
         shortLetPricePerWeek?: number;
         sourceId: string;
         sellingReasonId: string;
+        appraisalMeeting: IActivityAppraisalMeeting;
+        accessDetails: IActivityAccessDetails;
+    }
+
+    interface IActivityAccessDetails {
+        keyNumber: string;
+        accessArrangements: string;
     }
 }

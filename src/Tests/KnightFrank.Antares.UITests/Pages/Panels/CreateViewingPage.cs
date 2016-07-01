@@ -9,7 +9,7 @@
 
     public class CreateViewingPage : ProjectPageBase
     {
-        private readonly ElementLocator attendee = new ElementLocator(Locator.XPath, "//*[contains(@class, 'slide-in')]//div[contains(@ng-repeat, 'attendee')]//label[contains(text(), '{0}')]");
+        private readonly ElementLocator attendee = new ElementLocator(Locator.XPath, "//*[contains(@class, 'slide-in')]//div[contains(@ng-repeat, 'attendee')]//label[contains(., '{0}')]");
         private readonly ElementLocator date = new ElementLocator(Locator.CssSelector, ".slide-in #viewing-date");
         private readonly ElementLocator endTime = new ElementLocator(Locator.CssSelector, ".slide-in #end-time input");
         private readonly ElementLocator invitationText = new ElementLocator(Locator.CssSelector, ".slide-in #invitation-text");

@@ -16,6 +16,11 @@
 
     public class ActivityControlsConfiguration : ControlsConfigurationPerTwoTypes<PropertyType, ActivityType>
     {
+        public ActivityControlsConfiguration()
+        {
+            this.Init();
+        }
+
         public override void DefineControls()
         {
             this.DefineControlsForCreateAndEdit();
@@ -51,6 +56,14 @@
             this.AddControl(PageType.Details, ControlCode.SourceDescription, Field<Activity>.Create(x => x.SourceDescription));
             this.AddControl(PageType.Details, ControlCode.SellingReason, Field<Activity>.Create(x => x.SellingReasonId, x => x.SellingReason));
             this.AddControl(PageType.Details, ControlCode.PitchingThreats, Field<Activity>.Create(x => x.PitchingThreats));
+            this.AddControl(PageType.Details, ControlCode.AppraisalMeeting,
+                new List<IField>
+                {
+                    Field<Activity>.Create(x => x.AppraisalMeeting.AppraisalMeetingStart),
+                    Field<Activity>.Create(x => x.AppraisalMeeting.AppraisalMeetingEnd),
+                    Field<Activity>.Create(x => x.ActivityAttendees),
+                    Field<Activity>.Create(x => x.AppraisalMeeting.InvitationText)
+                });
         }
 
         private void DefineControlsForCreateAndEdit()
@@ -76,6 +89,14 @@
                 this.AddControl(pageType, ControlCode.PitchingThreats, Field<ActivityCommandBase>.Create(x => x.PitchingThreats));
                 this.AddControl(pageType, ControlCode.KeyNumber, Field<ActivityCommandBase>.Create(x => x.KeyNumber));
                 this.AddControl(pageType, ControlCode.AccessArrangements, Field<ActivityCommandBase>.Create(x => x.AccessArrangements));
+                this.AddControl(pageType, ControlCode.AppraisalMeetingDate,
+                    new List<IField>
+                    {
+                        Field<ActivityCommandBase>.Create(x => x.AppraisalMeeting.Start).Required(),
+                        Field<ActivityCommandBase>.Create(x => x.AppraisalMeeting.End).Required()
+                    });
+                this.AddControl(pageType, ControlCode.AppraisalMeetingAttendees, Field<ActivityCommandBase>.Create(x => x.AppraisalMeeting.Attendees).ExternalCollectionValidator(new UpdateActivityAttendeeValidator()));
+                this.AddControl(pageType, ControlCode.AppraisalMeetingInvitation, Field<ActivityCommandBase>.Create(x => x.AppraisalMeeting.InvitationText));
             }
         }
 
@@ -121,16 +142,27 @@
             this.Use(new[] { ControlCode.Offers, ControlCode.Viewings, ControlCode.Attachments, ControlCode.Property },
                 this.ForAll(PageType.Details));
 
+            this.Use(ControlCode.AppraisalMeeting, this.When(allResidentials, PageType.Details));
+
             this.Use(ControlCode.ShortLetPricePerWeek,
                 this.When(openMarketLetting, PageType.Details, PageType.Create, PageType.Update));
 
             this.Use(new[] { ControlCode.AskingPrice, ControlCode.SellingReason },
                 this.When(residentialSale, PageType.Details, PageType.Create, PageType.Update));
 
-            this.Use(new[] { ControlCode.Source, ControlCode.SourceDescription, ControlCode.PitchingThreats },
+            this.Use(
+                new[]
+                {
+                    ControlCode.Source, ControlCode.SourceDescription, ControlCode.PitchingThreats
+                },
                 this.When(allResidentials, PageType.Details, PageType.Create, PageType.Update));
 
-            this.Use(new[] { ControlCode.KeyNumber, ControlCode.AccessArrangements },
+            this.Use(
+                new[]
+                {
+                    ControlCode.KeyNumber, ControlCode.AccessArrangements, ControlCode.AppraisalMeetingDate,
+                    ControlCode.AppraisalMeetingInvitation, ControlCode.AppraisalMeetingAttendees
+                },
                 this.When(allResidentials, PageType.Create, PageType.Update));
         }
     }

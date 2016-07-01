@@ -5,6 +5,12 @@
     height: 0;
     width: 0;
   }
+
+  &.form-control-timepicker {
+    border: 0;
+    height: auto;
+    padding: 0;
+  }
 }
 
 .form-control-feedback {
@@ -57,7 +63,7 @@ label,
   overflow: hidden;
   position: relative;
 
-  input[type=file] {
+  input[type="file"] {
     background: transparent;
     cursor: inherit;
     display: block;

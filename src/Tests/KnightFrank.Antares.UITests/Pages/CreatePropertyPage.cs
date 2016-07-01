@@ -35,9 +35,9 @@
         private readonly ElementLocator minFunctionRooms = new ElementLocator(Locator.Id, "minFunctionRooms");
         private readonly ElementLocator maxFunctionRooms = new ElementLocator(Locator.Id, "maxFunctionRooms");
         // Property characteristics
-        private readonly ElementLocator characteristic = new ElementLocator(Locator.XPath, "//label[contains(text(),'{0}')]/input");
-        private readonly ElementLocator characteristicCommentIcon = new ElementLocator(Locator.XPath, "//label[contains(text(),'{0}')]/following-sibling::button");
-        private readonly ElementLocator characteristicComment = new ElementLocator(Locator.XPath, "//label[contains(text(),'{0}')]/following-sibling::input");
+        private readonly ElementLocator characteristic = new ElementLocator(Locator.XPath, "//label[contains(.,'{0}')]/input");
+        private readonly ElementLocator characteristicCommentIcon = new ElementLocator(Locator.XPath, "//label[contains(.,'{0}')]/following-sibling::button");
+        private readonly ElementLocator characteristicComment = new ElementLocator(Locator.XPath, "//label[contains(.,'{0}')]/following-sibling::input");
 
         public CreatePropertyPage(DriverContext driverContext) : base(driverContext)
         {

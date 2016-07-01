@@ -4,6 +4,12 @@ module Antares {
     import NavigationDrawerController = Common.Component.NavigationDrawerController;
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import LatestListEntry = Common.Models.Dto.ILatestListEntry;
+    import AngularStatic = angular.IAngularStatic;
+
+    var pageObjectElements = {
+        recentRoot: '.recent',
+        recentItem: '.recent-item'
+    };
 
     describe('Given navigation drawer component loaded 10 elements', () => {
 
@@ -15,11 +21,6 @@ module Antares {
         var latestViews: LatestListEntry[] = [];
 
         var mockedPropertyNagivationDrawerComponent = '<navigation-drawer type="property"></navigation-drawer>';
-
-        var pageObjectElements = {
-            recentRoot: '.recent',
-            recentItem: '.recent-item'
-        };
 
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
@@ -66,6 +67,38 @@ module Antares {
             expect(expectedUrl).toEqual(latestViews[0].url);
             expect(expectedName).toEqual(latestViews[0].name);
         });
+    });
 
+    describe("There is a navigation drawer for company type", () => {
+        var mockedCompanyNagivationDrawerComponent = '<navigation-drawer type="company"></navigation-drawer>';
+
+        var element: ng.IAugmentedJQuery;
+
+        beforeEach(inject((
+            // arrange
+            $rootScope: ng.IRootScopeService,
+            latestViewsProvider: LatestViewsProvider,
+            $compile: ng.ICompileService) => {
+
+            const scope = $rootScope.$new();
+
+            latestViewsProvider.companies = [<LatestListEntry>{
+                id: "37fea3ab-5829-e611-84bb-34e6d744328",
+                name: "c1"
+            }];
+
+            // act
+            element = $compile(mockedCompanyNagivationDrawerComponent)(scope);
+            scope.$apply();
+        }));
+
+        it('Recent companies list is available through navigation-drawer', () => {
+            var recentItems = element
+                .find(pageObjectElements.recentRoot)
+                .find(pageObjectElements.recentItem);
+
+            // assert
+            expect(recentItems.length).toBe(1);
+        });
     });
 }

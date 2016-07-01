@@ -5,14 +5,8 @@
 
     using MediatR;
 
-    public class ActivityCommandBase : IRequest<Guid>
+    public abstract class ActivityCommandBase : IRequest<Guid>
     {
-        public ActivityCommandBase()
-        {
-            this.SecondaryNegotiators = new List<UpdateActivityUser>();
-            this.ContactIds = new List<Guid>();
-        }
-
         public Guid ActivityStatusId { get; set; }
 
         public decimal? MarketAppraisalPrice { get; set; }
@@ -29,11 +23,11 @@
 
         public UpdateActivityUser LeadNegotiator { get; set; }
 
-        public IList<UpdateActivityUser> SecondaryNegotiators { get; set; }
+        public IList<UpdateActivityUser> SecondaryNegotiators { get; set; } = new List<UpdateActivityUser>();
 
-        public IList<UpdateActivityDepartment> Departments { get; set; }
+        public IList<UpdateActivityDepartment> Departments { get; set; } = new List<UpdateActivityDepartment>();
 
-        public IList<Guid> ContactIds { get; set; }
+        public IList<Guid> ContactIds { get; set; } = new List<Guid>();
 
         public Guid SourceId { get; set; }
 
@@ -46,5 +40,7 @@
         public string KeyNumber { get; set; }
 
         public string AccessArrangements { get; set; }
+
+        public UpdateActivityAppraisalMeeting AppraisalMeeting { get; set; } = new UpdateActivityAppraisalMeeting();
     }
 }

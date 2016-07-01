@@ -11,12 +11,6 @@
 
     public class Activity : BaseAuditableEntity
     {
-        public Activity()
-        {
-            this.AccessDetails = new ActivityAccessDetails();
-            this.AppraisalMeeting = new ActivityAppraisalMeeting();
-        }
-
         public Guid PropertyId { get; set; }
 
         public virtual Property Property { get; set; }
@@ -29,7 +23,7 @@
 
         public ActivityType ActivityType { get; set; }
 
-        public virtual ICollection<Contact> Contacts { get; set; }
+        public virtual ICollection<Contact> Contacts { get; set; } = new List<Contact>();
 
         public decimal? AgreedInitialMarketingPrice { get; set; }
 
@@ -64,9 +58,9 @@
 
         public string PitchingThreats { get; set; }
 
-        public ActivityAccessDetails AccessDetails { get; set; }
+        public ActivityAccessDetails AccessDetails { get; set; } = new ActivityAccessDetails();
 
-        public ActivityAppraisalMeeting AppraisalMeeting { get; set; }
+        public ActivityAppraisalMeeting AppraisalMeeting { get; set; } = new ActivityAppraisalMeeting();
 
         public virtual ICollection<ActivityAttendee> ActivityAttendees { get; set; } = new List<ActivityAttendee>();
 

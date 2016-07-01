@@ -19,10 +19,10 @@ module Antares.Activity.Commands {
         sourceId: string = '';
         sourceDescription: string = '';
         sellingReasonId: string = '';
-        keyNumber: string = '';
-        accessArrangements: string = '';
         attendees: Business.UpdateActivityAttendeeResource[];
-        pitchningThreats: string = '';
+        pitchingThreats: string = '';
+        appraisalMeeting: ActivityAppraisalMeetingCommandPart = null;
+        accessDetails: Dto.IActivityAccessDetails = null;
 
         constructor(activity: Business.Activity){
             this.activityStatusId = activity.activityStatusId;
@@ -35,14 +35,17 @@ module Antares.Activity.Commands {
             this.sourceId = activity.sourceId;
             this.sourceDescription = activity.sourceDescription;
             this.sellingReasonId = activity.sellingReasonId;
-            this.pitchningThreats = activity.pitchningThreats;
-            this.keyNumber = activity.keyNumber;
-            this.accessArrangements = activity.accessArrangements;
+            this.pitchingThreats = activity.pitchingThreats;
             this.leadNegotiator = new ActivityUserCommandPart(activity.leadNegotiator);
             this.secondaryNegotiators = activity.secondaryNegotiator.map((n: Business.ActivityUser) => new ActivityUserCommandPart(n));
             this.departments = activity.activityDepartments.map((d: Business.ActivityDepartment) => new ActivityDepartmentCommandPart(d));
             this.contactIds = activity.contacts.map((c: Business.Contact) => c.id);
             this.attendees = activity.attendees.map((a: Dto.IActivityAttendee) => new Business.UpdateActivityAttendeeResource(a));
+            this.appraisalMeeting = new ActivityAppraisalMeetingCommandPart(activity.appraisalMeeting);
+            this.accessDetails = {
+                accessArrangements: activity.accessDetails.accessArrangements,
+                keyNumber: activity.accessDetails.keyNumber
+            }
         }
     }
     
@@ -61,9 +64,8 @@ module Antares.Activity.Commands {
         sourceId: string;
         sourceDescription: string;
         sellingReasonId: string;
-        keyNumber: string;
-        accessArrangements: string;
-        pitchningThreats: string;
+        accessDetails: Dto.IActivityAccessDetails;
+        pitchingThreats: string;
         attendees: Business.UpdateActivityAttendeeResource[];
     }
 }

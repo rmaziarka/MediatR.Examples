@@ -130,7 +130,7 @@ module Antares {
 
             // act
             scope.$apply();
-            button.click();
+            controller.createCompany();
             $http.flush();
 
             // asserts

@@ -1,4 +1,5 @@
 <div class="row section-row" ng-if="vm.config" id="{{vm.schema.controlId}}">
-    <div class="col-xs-5" translate="{{vm.schema.translationKey}}" ng-if="vm.schema.translationKey"></div>
-    <div class="col-xs-7"   id="{{vm.schema.controlId}}">{{vm.ngModel | dynamicTranslate}} </div>
+    <div class="col-xs-5" ng-if="vm.schema.translationKey"><label translate="{{vm.schema.translationKey}}"></label></div>
+    <div class="col-xs-7" id="{{vm.schema.controlId}}">{{vm.ngModel | dynamicTranslate}} </div>
 </div>
+

@@ -4,6 +4,7 @@ module Antares {
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
     import IActivityViewConfig = Antares.Activity.IActivityViewConfig;
+
     describe('Given activity route controller', () =>{
         var scope: ng.IScope;
         var controllerProvider: ng.IControllerService;

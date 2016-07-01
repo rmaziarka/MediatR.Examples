@@ -15,11 +15,11 @@ module Antares.Core {
                 subscribe: <T extends Event>(type: { new (): T; }, callback: IEventHandler<T>) => {
                     var listener = this.subscribe(type, callback);
 
-                    var $destroy = controller.$destroy;
-                    controller.$destroy = () => {
+                    var $onDestroy = controller.$onDestroy;
+                    controller.$onDestroy = () => {
                         listener();
-                        if ($destroy)
-                            $destroy();
+                        if ($onDestroy)
+                            $onDestroy();
                     }
                 }
             };

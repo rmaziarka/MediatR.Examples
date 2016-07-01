@@ -236,9 +236,9 @@ module Antares {
                     expect(requestData.leadNegotiator.userId).toEqual(activity.leadNegotiator.userId);
                     expect(requestData.sellingReasonId).toEqual(activity.sellingReasonId);
                     expect(requestData.sourceId).toEqual(activity.sourceId);
-                    expect(requestData.pitchningThreats).toEqual(activity.pitchningThreats);
-                    expect(requestData.keyNumber).toEqual(activity.keyNumber);
-                    expect(requestData.accessArrangements).toEqual(activity.accessArrangements);
+                    expect(requestData.pitchingThreats).toEqual(activity.pitchingThreats);
+                    expect(requestData.accessDetails.keyNumber).toEqual(activity.accessDetails.keyNumber);
+                    expect(requestData.accessDetails.accessArrangements).toEqual(activity.accessDetails.accessArrangements);
 
                     expect(requestData.secondaryNegotiators.map((negotiator) => negotiator.userId)).toEqual(activity.secondaryNegotiator.map((negotiator) => negotiator.userId));
                 }
@@ -285,24 +285,24 @@ module Antares {
         describe('should subscribe to events', () => {
             it('when close side panel event then property view panel should be closed', () => {
                 // arrange
-                controller.isPropertyPreviewPanelVisible = true;
+                controller.isPropertyPreviewPanelVisible = Enums.SidePanelState.Opened;
 
                 // act
                 eventAggregator.publish(new Common.Component.CloseSidePanelEvent());
 
                 // assert
-                expect(controller.isPropertyPreviewPanelVisible).toBeFalsy();
+                expect(controller.isPropertyPreviewPanelVisible).toBe(Enums.SidePanelState.Closed);
             });
 
             it('when open property prewiew panel event then property view panel should be opened', () => {
                 // arrange
-                controller.isPropertyPreviewPanelVisible = false;
+                controller.isPropertyPreviewPanelVisible = Enums.SidePanelState.Closed;
 
                 // act
                 eventAggregator.publish(new Attributes.OpenPropertyPrewiewPanelEvent());
 
                 // assert
-                expect(controller.isPropertyPreviewPanelVisible).toBeTruthy();
+                expect(controller.isPropertyPreviewPanelVisible).toBe(Enums.SidePanelState.Opened);
             });
         });
     });

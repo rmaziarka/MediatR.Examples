@@ -60,6 +60,8 @@
     <script src="app/common/core/services/dateTime/validDateRangeService.js"></script>
     <script src="app/common/core/services/registry/componentRegistryService.js"></script>
     <script src="app/common/models/business/activity/activity.js"></script>
+    <script src="app/common/models/business/activity/activityAccessDetails.js"></script>
+    <script src="app/common/models/business/activity/activityAppraisalMeeting.js"></script>
     <script src="app/common/models/business/activity/activityDepartment.js"></script>
     <script src="app/common/models/business/activity/activityQueryResult.js"></script>
     <script src="app/common/models/business/activity/activityUser.js"></script>
@@ -122,6 +124,7 @@
     <script src="app/common/models/enums/negotiatorTypeEnum.js"></script>
     <script src="app/common/models/enums/ownershipTypeEnum.js"></script>
     <script src="app/common/models/enums/pageTypeEnum.js"></script>
+    <script src="app/common/models/enums/sidePanelState.js"></script>
     <script src="app/common/components/base/kfSidePanel/baseSidePanelController.js"></script>
     <script src="app/common/components/base/kfSidePanel/busySidePanelEvent.js"></script>
     <script src="app/common/components/base/kfSidePanel/closeSidePanelEvent.js"></script>
@@ -139,6 +142,8 @@
     <script src="app/common/components/attachment/events/attachmentSavedEvent.js"></script>
     <script src="app/common/components/attachment/manager/attachmentsManagerComponent.js"></script>
     <script src="app/common/components/attachment/manager/attachmentsManagerController.js"></script>
+    <script src="app/common/components/attachment/manager/openAttachmentPreviewPanelEvent.js"></script>
+    <script src="app/common/components/attachment/manager/openAttachmentUploadPanelEvent.js"></script>
     <script src="app/common/components/attachment/previewCard/attachmentPreviewCardComponent.js"></script>
     <script src="app/common/components/attachment/previewCard/attachmentPreviewCardController.js"></script>
     <script src="app/common/components/attachment/previewPanel/attachmentPreviewPanelComponent.js"></script>
@@ -238,6 +243,7 @@
     <script src="app/activity/edit/activityEditComponent.js"></script>
     <script src="app/activity/edit/activityEditController.js"></script>
     <script src="app/activity/edit/command/activityAddCommand.js"></script>
+    <script src="app/activity/edit/command/activityAppraisalMeetingCommandPart.js"></script>
     <script src="app/activity/edit/command/activityDepartmentCommandPart.js"></script>
     <script src="app/activity/edit/command/activityEditCommand.js"></script>
     <script src="app/activity/edit/command/activityUserCommandPart.js"></script>
@@ -255,6 +261,11 @@
     <script src="app/app.module.config.js"></script>
     <script src="app/app.route.js"></script>
     <script src="app/appController.js"></script>
+    <script src="app/attributes/activityAppraisalMeeting/activityAppraisalMeetingViewControlComponent.js"></script>
+    <script src="app/attributes/activityAppraisalMeeting/activityAppraisalMeetingViewControlController.js"></script>
+    <script src="app/attributes/activityAppraisalMeeting/viewActivityAttendeeModel.js"></script>
+    <script src="app/attributes/activityAppraisalMeetingDate/activityAppraisalMeetingDateEditControlComponent.js"></script>
+    <script src="app/attributes/activityAppraisalMeetingDate/activityAppraisalMeetingDateEditControlController.js"></script>
     <script src="app/attributes/activityAttendees/activityAttendeesEditControlComponent.js"></script>
     <script src="app/attributes/activityAttendees/activityAttendeesEditControlController.js"></script>
     <script src="app/attributes/activityAttendees/editActivityAttendeeModel.js"></script>
@@ -285,10 +296,15 @@
     <script src="app/attributes/activityVendors/activityVendorsViewControlComponent.js"></script>
     <script src="app/attributes/activityVendors/activityVendorsViewControlController.js"></script>
     <script src="app/attributes/date/dateEditControlComponent.js"></script>
+    <script src="app/attributes/date/dateViewControlComponent.js"></script>
     <script src="app/attributes/enumItem/enumItemEditControlComponent.js"></script>
     <script src="app/attributes/enumItem/enumItemEditControlController.js"></script>
     <script src="app/attributes/enumItem/enumItemViewControlComponent.js"></script>
     <script src="app/attributes/enumItem/enumItemViewControlController.js"></script>
+    <script src="app/attributes/offer/offerViewControlComponent.js"></script>
+    <script src="app/attributes/offer/offerViewControlConfig.js"></script>
+    <script src="app/attributes/offer/offerViewControlController.js"></script>
+    <script src="app/attributes/offer/openOfferPreviewPanelEvent.js"></script>
     <script src="app/attributes/offerDates/offerCompletionDateControlConfig.js"></script>
     <script src="app/attributes/offerDates/offerExchangeDateControlConfig.js"></script>
     <script src="app/attributes/offerDates/offerOfferDateControlConfig.js"></script>
@@ -297,12 +313,22 @@
     <script src="app/attributes/property/openPropertyPreviewPanelEvent.js"></script>
     <script src="app/attributes/property/propertyViewControlComponent.js"></script>
     <script src="app/attributes/property/propertyViewControlController.js"></script>
+    <script src="app/attributes/rangeControl/rangeEditControlComponent.js"></script>
+    <script src="app/attributes/rangeControl/rangeViewControlComponent.js"></script>
+    <script src="app/attributes/rangeControl/rangeViewControlController.js"></script>
     <script src="app/attributes/text/textAreaEditControlComponent.js"></script>
+    <script src="app/attributes/text/textAreaViewControlComponent.js"></script>
     <script src="app/attributes/text/textEditControlComponent.js"></script>
     <script src="app/attributes/text/textEditControlController.js"></script>
+    <script src="app/attributes/text/textViewControlComponent.js"></script>
+    <script src="app/attributes/viewing/openViewingPreviewPanelEvent.js"></script>
+    <script src="app/attributes/viewing/viewingViewControlComponent.js"></script>
+    <script src="app/attributes/viewing/viewingViewControlConfig.js"></script>
+    <script src="app/attributes/viewing/viewingViewControlController.js"></script>
     <script src="app/company/add/companyAddComponent.js"></script>
     <script src="app/company/add/companyAddController.js"></script>
     <script src="app/company/company.route.js"></script>
+    <script src="app/company/companyRouteController.js"></script>
     <script src="app/company/edit/companyEditComponent.js"></script>
     <script src="app/company/edit/companyEditController.js"></script>
     <script src="app/company/view/companyViewComponent.js"></script>
@@ -322,6 +348,10 @@
     <script src="app/offer/offer.route.js"></script>
     <script src="app/offer/preview/offerPreviewComponent.js"></script>
     <script src="app/offer/preview/offerPreviewController.js"></script>
+    <script src="app/offer/previewCard/offerPreviewCardComponent.js"></script>
+    <script src="app/offer/previewCard/offerPreviewCardController.js"></script>
+    <script src="app/offer/previewPanel/offerPreviewPanelComponent.js"></script>
+    <script src="app/offer/previewPanel/offerPreviewPanelController.js"></script>
     <script src="app/offer/view/offerViewComponents.js"></script>
     <script src="app/offer/view/offerViewController.js"></script>
     <script src="app/ownership/add/ownershipAddComponent.js"></script>
@@ -370,6 +400,10 @@
     <script src="app/viewing/add/viewingAddController.js"></script>
     <script src="app/viewing/preview/viewingPreviewComponent.js"></script>
     <script src="app/viewing/preview/viewingPreviewController.js"></script>
+    <script src="app/viewing/previewCard/viewingPreviewCardComponent.js"></script>
+    <script src="app/viewing/previewCard/viewingPreviewCardController.js"></script>
+    <script src="app/viewing/previewPanel/viewingPreviewPanelComponent.js"></script>
+    <script src="app/viewing/previewPanel/viewingPreviewPanelController.js"></script>
     <!-- endinject -->
     <!-- inject:templates:js -->
     <!-- endinject -->

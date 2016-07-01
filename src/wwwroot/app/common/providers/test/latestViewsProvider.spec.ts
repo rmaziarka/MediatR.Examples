@@ -9,6 +9,7 @@ module Antares {
     import LatestViewResultItem = Common.Models.Dto.ILatestViewResultItem;
     import Address = Common.Models.Business.Address;
     import Contact = Common.Models.Business.Contact;
+    import Company = Common.Models.Business.Company;
 
     describe('latestViewsProvider', () => {
         var
@@ -95,6 +96,7 @@ module Antares {
                 spyOn(provider, 'loadProperties');
                 spyOn(provider, 'loadActivities');
                 spyOn(provider, 'loadRequirements');
+                spyOn(provider, 'loadCompanies');
 
                 // act 
                 provider.loadLatestData(result);
@@ -110,6 +112,10 @@ module Antares {
 
             it('then loadRequirements method should be called with http result data', () => {
                 expect(provider.loadRequirements).toHaveBeenCalledWith(result.data);
+            });
+
+            it('then loadCompanies method should be called with http result data', () => {
+                expect(provider.loadCompanies).toHaveBeenCalledWith(result.data);
             });
         });
 
@@ -318,6 +324,64 @@ module Antares {
                 //assert
                 var listActivity = provider.activities[0];
                 expect(listActivity.name).toBe('-');
+            });
+        });
+
+        describe('when loadCompanies is called with latest views', () => {
+
+            beforeEach(inject(($state: angular.ui.IState) => {
+                // arrange 
+                spyOn($state, 'href')
+                    .and.callFake((state: string, obj: any) => {
+                        return state + obj.id;
+                    });
+            }));
+
+            it('if there is no company views then companies field is undefined', () => {
+                //arrange
+                var views: LatestViewResultItem[] = [];
+
+                //act
+                provider.loadCompanies(views);
+
+                //assert
+                expect(provider.companies).toBeUndefined();
+            });
+
+            it('if there are three company views then companies field should contains three entries', () => {
+                //arrange
+                var companyViews = LatestViewGenerator.generateCompanyList(3);
+                var views = [
+                    companyViews
+                ];
+
+                //act
+                provider.loadCompanies(views);
+
+                //assert
+                expect(provider.companies.length).toBe(3);
+            });
+
+            it('if activity company is fulfiled then entry should contain all data', () => {
+                //arrange
+                var companyViews = LatestViewGenerator.generateCompanyList(1);
+                var views = [
+                    companyViews
+                ];
+
+                //act
+                provider.loadCompanies(views);
+
+                //assert
+                var companyView = companyViews.list[0];
+                var expectedId = companyView.id;
+                var expectedName = new Company(companyView.data).name;
+                var expectedUrl = "app.company-view" + expectedId;
+
+                var listCompany = provider.companies[0];
+                expect(listCompany.id).toBe(expectedId);
+                expect(listCompany.name).toBe(expectedName);
+                expect(listCompany.url).toBe(expectedUrl);
             });
         });
     });
