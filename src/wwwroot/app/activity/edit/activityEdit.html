@@ -66,19 +66,19 @@
                 <fieldset>
                     <h3 class="page-header" translate="ACTIVITY.EDIT.ADDITIONAL_INFORMATION.ADDITIONAL_INFORMATION"></h3>
                     <h5 class="page-header" translate="ACTIVITY.EDIT.ADDITIONAL_INFORMATION.ACCESS_DETAILS"></h5>
-                    <text-edit-control ng-model="vm.activity.keyNumber" config="vm.config.keyNumber" schema="vm.keyNumberSchema"></text-edit-control>
-                    <textarea-edit-control ng-model="vm.activity.accessArrangements" config="vm.config.accessArrangements" schema="vm.accessArrangementsSchema"></textarea-edit-control>
+                    <text-edit-control ng-model="vm.activity.accessDetails.keyNumber" config="vm.config.keyNumber" schema="vm.keyNumberSchema"></text-edit-control>
+                    <textarea-edit-control ng-model="vm.activity.accessDetails.accessArrangements" config="vm.config.accessArrangements" schema="vm.accessArrangementsSchema"></textarea-edit-control>
                 </fieldset>
             </section>
         </div>
 
         <div class="col-md-4">
             <h3 class="page-header" translate="ACTIVITY.EDIT.APPRAISAL_MEETING.APPRAISAL_MEETING"></h3>
-            <activity-appraisal-meeting-date-edit-control config="vm.configAppraisalMeetingDateMocked.appraisalMeetingDate"
-                                                     appraisal-meeting-start="vm.activity.appraisalMeeting.activityAppraisalMeetingStart"
-                                                     appraisal-meeting-end="vm.activity.appraisalMeeting.activityAppraisalMeetingEnd"></activity-appraisal-meeting-date-edit-control>
-            <activity-attendees-edit-control users="vm.availableAttendeeUsers" contacts="vm.availableAttendeeContacts" attendees="vm.activity.attendees" config="vm.config.appraisalMeetingAttendees"></activity-attendees-edit-control>
-            <textarea-edit-control ng-model="vm.activity.appraisalMeeting.invitationText" config="vm.config.appraisalMeetingInvitation" schema="vm.invitationTextSchema"></textarea-edit-control>
+            <activity-appraisal-meeting-date-edit-control config="vm.config.appraisalMeetingDate"
+                                                     appraisal-meeting-start="vm.activity.appraisalMeeting.appraisalMeetingStart"
+                                                     appraisal-meeting-end="vm.activity.appraisalMeeting.appraisalMeetingEnd"></activity-appraisal-meeting-date-edit-control>
+            <activity-attendees-edit-control users="vm.availableAttendeeUsers" contacts="vm.availableAttendeeContacts" attendees="vm.activity.appraisalMeetingAttendees" config="vm.config.appraisalMeetingAttendees"></activity-attendees-edit-control>
+            <textarea-edit-control ng-model="vm.activity.appraisalMeeting.appraisalMeetingInvitationText" config="vm.config.appraisalMeetingInvitation" schema="vm.invitationTextSchema"></textarea-edit-control>
         </div>
         <div class="col-md-12">
             <div class="form-group">

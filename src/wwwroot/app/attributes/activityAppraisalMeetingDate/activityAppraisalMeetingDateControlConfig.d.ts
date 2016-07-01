@@ -2,7 +2,7 @@
 
 declare module Antares.Attributes {
     interface IActivityAppraisalMeetingDateControlConfig extends Antares.Common.Models.Dto.IControlConfig {
-        start: Antares.Common.Models.Dto.IFieldConfig;
-        end: Antares.Common.Models.Dto.IFieldConfig;
+        appraisalMeetingStart: Antares.Common.Models.Dto.IFieldConfig;
+        appraisalMeetingEnd: Antares.Common.Models.Dto.IFieldConfig;
     }
 }

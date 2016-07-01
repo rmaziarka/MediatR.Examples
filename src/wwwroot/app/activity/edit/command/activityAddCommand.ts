@@ -4,11 +4,12 @@ module Antares.Activity.Commands {
     import Business = Common.Models.Business;
     
     export class ActivityAddCommand extends ActivityBaseCommand implements IActivityAddCommand {
+        id: string = null;
         propertyId: string;
 
-        constructor(activity: Business.Activity, propertyId: string) {
+        constructor(activity: Activity.ActivityEditModel) {
             super(activity);
-            this.propertyId = propertyId;
+            this.propertyId = activity.propertyId;
         }
     }
     

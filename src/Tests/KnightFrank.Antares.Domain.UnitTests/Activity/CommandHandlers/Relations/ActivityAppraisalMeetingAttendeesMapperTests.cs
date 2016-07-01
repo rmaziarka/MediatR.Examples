@@ -38,7 +38,7 @@
         {
             // Arrange
             var command = new UpdateActivityCommand();
-            command.AppraisalMeeting.Attendees =
+            command.AppraisalMeetingAttendeesList =
                 Enumerable.Range(0, attendeesInCommand)
                           .Select(
                               i =>
@@ -47,7 +47,7 @@
                                       : new UpdateActivityAttendee { ContactId = Guid.NewGuid() })
                           .ToList();
             var activity = fixture.Create<Activity>();
-            activity.ActivityAttendees =
+            activity.AppraisalMeetingAttendees =
                 Enumerable.Range(0, existingAttendees)
                           .Select(
                               i =>
@@ -56,14 +56,14 @@
                                       : new ActivityAttendee { ContactId = Guid.NewGuid() })
                           .ToList();
             activity.ActivityUsers =
-                command.AppraisalMeeting.Attendees.Where(x => x.UserId.HasValue).Select(x =>
+                command.AppraisalMeetingAttendeesList.Where(x => x.UserId.HasValue).Select(x =>
                 {
                     var user = fixture.Create<ActivityUser>();
                     user.UserId = x.UserId.Value;
                     return user;
                 }).ToList();
             activity.Contacts =
-                command.AppraisalMeeting.Attendees.Where(x => x.ContactId.HasValue).Select(x =>
+                command.AppraisalMeetingAttendeesList.Where(x => x.ContactId.HasValue).Select(x =>
                 {
                     var contact = fixture.Create<Contact>();
                     contact.Id = x.ContactId.Value;
@@ -74,9 +74,9 @@
             mapper.ValidateAndAssign(command, activity);
 
             // Assert
-            activity.ActivityAttendees.Select(x => new { x.UserId, x.ContactId })
+            activity.AppraisalMeetingAttendees.Select(x => new { x.UserId, x.ContactId })
                     .Should()
-                    .BeEquivalentTo(command.AppraisalMeeting.Attendees.Select(x => new { x.UserId, x.ContactId }));
+                    .BeEquivalentTo(command.AppraisalMeetingAttendeesList.Select(x => new { x.UserId, x.ContactId }));
         }
     }
 }

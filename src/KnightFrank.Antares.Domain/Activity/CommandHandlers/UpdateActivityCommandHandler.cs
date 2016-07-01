@@ -65,7 +65,9 @@
                 this.activityRepository.GetWithInclude(
                     x => x.Id == message.Id,
                     x => x.ActivityUsers,
+                    x => x.Contacts,
                     x => x.ActivityDepartments,
+                    x => x.AppraisalMeetingAttendees,
                     x => x.Property.PropertyType,
                     x => x.Property.Address,
                     x => x.ActivityType).SingleOrDefault();

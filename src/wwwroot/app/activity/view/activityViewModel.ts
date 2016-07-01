@@ -1,7 +1,7 @@
-/// <reference path="../../../../typings/_all.d.ts" />
+/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Common.Models.Business {
-    export class Activity implements Dto.IActivity {
+    export class ActivityViewModel  {
         id: string = '';
         propertyId: string = '';
         activityStatusId: string = '';
@@ -23,14 +23,13 @@ module Antares.Common.Models.Business {
         offers: Offer[];
         askingPrice: number = null;
         shortLetPricePerWeek: number = null;
-        sourceId: string = null;
-        sellingReasonId: string = null;
-        appraisalMeetingStart: string = null;
-        appraisalMeetingEnd: string = null;
-        appraisalMeetingInvitationText: string = null;
-        keyNumber: string = null;
-        accessArrangements: string = null;
-        appraisalMeetingAttendees: Dto.IActivityAttendee[];
+        sourceId: string = '';
+        sourceDescription: string = '';
+        sellingReasonId: string = '';
+        pitchingThreats: string = '';
+        appraisalMeetingAttendees: Dto.IActivityAttendee[] = [];
+        appraisalMeeting: Business.ActivityAppraisalMeeting;
+        accessDetails: Business.ActivityAccessDetails = null;
 
         constructor(activity?: Dto.IActivity) {
             if (activity) {
@@ -68,10 +67,17 @@ module Antares.Common.Models.Business {
                 if (activity.offers) {
                     this.offers = activity.offers.map((item) => new Offer(item));
                 }
+
+                this.appraisalMeetingAttendees = activity.appraisalMeetingAttendees;
+                this.appraisalMeeting = new Business.ActivityAppraisalMeeting(activity.appraisalMeetingStart, activity.appraisalMeetingEnd, activity.appraisalMeetingInvitationText);
+                this.accessDetails = new Business.ActivityAccessDetails(activity.keyNumber, activity.accessArrangements);
             }
 
             this.secondaryNegotiator = this.secondaryNegotiator || [];
+            this.appraisalMeetingAttendees = this.appraisalMeetingAttendees || [];
             this.leadNegotiator = this.leadNegotiator || new ActivityUser();
+            this.appraisalMeeting = this.appraisalMeeting || new Business.ActivityAppraisalMeeting();
+            this.accessDetails = this.accessDetails || new Business.ActivityAccessDetails(null, null);
         }
 
         groupViewings(viewings: Viewing[]) {

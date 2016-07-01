@@ -6,27 +6,12 @@ module Antares.TestHelpers {
     import Enums = Common.Models.Enums;
 
     export class ActivityAppraisalMeetingGenerator {
-        public static generateDto(): Dto.IActivityAppraisalMeeting{
-
-            var activityAppraisalMeeting: Dto.IActivityAppraisalMeeting = {
-                activityAppraisalMeetingStart: moment().toString(),
-                activityAppraisalMeetingEnd: moment().toString(),
-                invitationText: StringGenerator.generate()
-        }
-
-            return activityAppraisalMeeting;
-        }
-
-        public static generateManyDtos(n: number): Dto.IActivityAppraisalMeeting[] {
-            return _.times(n, () => { return ActivityAppraisalMeetingGenerator.generateDto()});
-        }
-
         public static generateMany(n: number): Business.ActivityAppraisalMeeting[] {
-            return _.map<Dto.IActivityAppraisalMeeting, Business.ActivityAppraisalMeeting>(ActivityAppraisalMeetingGenerator.generateManyDtos(n), (aam: Dto.IActivityAppraisalMeeting) => { return new Business.ActivityAppraisalMeeting(aam); });
+            return _.times(n, () => { return ActivityAppraisalMeetingGenerator.generate() });
         }
 
         public static generate(): Business.ActivityAppraisalMeeting {
-            return new Business.ActivityAppraisalMeeting(ActivityAppraisalMeetingGenerator.generateDto());
+            return new Business.ActivityAppraisalMeeting(moment().toString(), moment().toString(), StringGenerator.generate());
         }
     }
 }

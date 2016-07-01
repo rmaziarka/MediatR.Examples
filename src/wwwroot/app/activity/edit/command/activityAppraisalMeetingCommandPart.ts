@@ -10,9 +10,9 @@ module Antares.Activity.Commands {
 
         constructor(appraisalMeeting?: Business.ActivityAppraisalMeeting) {
             if (appraisalMeeting) {
-                this.start = moment(appraisalMeeting.activityAppraisalMeetingStart).toDate().toUTCString();
-                this.end = moment(appraisalMeeting.activityAppraisalMeetingEnd).toDate().toUTCString();
-                this.invitationText = appraisalMeeting.invitationText;
+                this.start = moment(appraisalMeeting.appraisalMeetingStart).toDate().toUTCString();
+                this.end = moment(appraisalMeeting.appraisalMeetingEnd).toDate().toUTCString();
+                this.invitationText = appraisalMeeting.appraisalMeetingInvitationText;
             }
         }
     }

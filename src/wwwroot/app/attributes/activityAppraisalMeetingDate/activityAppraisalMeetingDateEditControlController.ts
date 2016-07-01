@@ -21,7 +21,7 @@ module Antares.Attributes {
         }
 
         isRequired() {
-            return this.config.start.required || this.config.end.required;
+            return this.config.appraisalMeetingStart.required || this.config.appraisalMeetingEnd.required;
         }
 
         onChange() {
