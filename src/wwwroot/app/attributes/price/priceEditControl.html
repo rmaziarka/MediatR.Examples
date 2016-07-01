@@ -7,7 +7,7 @@
                     <input ng-model="vm.ngModel"
                            id="{{vm.schema.controlId}}" ng-required="vm.config[vm.schema.fieldName].required" ng-disabled="!vm.config[vm.schema.fieldName].active"
                            name="price" class="form-control" type="number" number-greater-than="0" />
-                    <div class="input-group-addon">GBP</div>
+                    <div class="input-group-addon" translate="{{vm.schema.suffix || 'GBP'}}"></div>
                 </div>
                 <div ng-messages="vm[vm.schema.formName].price.$error" ng-show="vm[vm.schema.formName].$submitted || vm[vm.schema.formName].price.$dirty">
                     <p name="numberGreaterThanValidationError" ng-message="numberGreaterThan" class="help-block with-errors" translate="FORM.NUMBER_HAS_TO_BE_GREATER_THAN" translate-values="{value: 0}"></p>
