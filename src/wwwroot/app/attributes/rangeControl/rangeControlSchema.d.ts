@@ -4,6 +4,7 @@ declare module Antares.Attributes {
     interface IRangeControlSchema {
         minControlId: string,
         maxControlId: string,
+        formName: string,
         translationKey: string;
     }
 }
