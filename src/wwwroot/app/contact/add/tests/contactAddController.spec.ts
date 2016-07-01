@@ -74,6 +74,12 @@ module Antares {
             expect(result.length).toBe(5);
         });
 
+        it('when get contact titles is called with specified other string then no titles is returend', () => {
+            var result = controller.getContactTitles('other title');
+
+            expect(result.length).toBe(0);
+        });
+
         it('when get contact titles is called with specified string then matched locale specific titles returned', () => {
             var result = controller.getContactTitles('Mrs');
 
@@ -86,10 +92,11 @@ module Antares {
             expect(result.length).toBe(1);
         });
 
-        it('when get contact titles is called with specified string then matched locale specific titles returned ordered alpabetically', () => {
-            var result = controller.getContactTitles('M');
+        it('when get contact titles is called with specified string then matched locale specific titles returned ordered alpabetically', () =>{
+            var typedValue = 'a';
+            var result = controller.getContactTitles(typedValue);
 
-            var filteredTitles = returnedValue.data.filter((items) => { return items.locale.isoCode === 'en' });
+            var filteredTitles = returnedValue.data.filter((items) => { return items.title.toLowerCase().indexOf(typedValue.toLowerCase()) > -1;  });
             var sortedTitles = _.sortBy(filteredTitles, (item) => item.title).map((items) => items.title);
 
             expect(result).toEqual(sortedTitles);
