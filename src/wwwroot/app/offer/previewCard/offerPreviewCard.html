@@ -20,7 +20,7 @@
             <enum-item-view-control ng-model="vm.offer.statusId" config="vm.config.offer_Status" schema="vm.controlSchemas.status"></enum-item-view-control>
             <price-view-control price="vm.offer.price" config="vm.config.offer_Price" schema="vm.controlSchemas.price"></price-view-control>
             <price-view-control price="vm.offer.pricePerWeek" config="vm.config.offer_PricePerWeek" schema="vm.controlSchemas.pricePerWeek"></price-view-control>
-            <date-view-control ng-model="vm.offer.offerDate" config="vm.config.offer_OfferDate" schema="vm.controlSchemas.offerDate"></date-view-control>
+            <date-view-control date="vm.offer.offerDate" config="vm.config.offer_OfferDate" schema="vm.controlSchemas.offerDate"></date-view-control>
         </div>
 
         <div class="section-details">
@@ -37,8 +37,8 @@
         </div>
 
         <div class="section-details">
-            <date-view-control ng-model="vm.offer.exchangeDate" config="vm.config.offer_ExchangeDate" schema="vm.controlSchemas.exchangeDate"></date-view-control>
-            <date-view-control ng-model="vm.offer.completionDate" config="vm.config.offer_CompletionDate" schema="vm.controlSchemas.completionDate"></date-view-control>
+            <date-view-control date="vm.offer.exchangeDate" config="vm.config.offer_ExchangeDate" schema="vm.controlSchemas.exchangeDate"></date-view-control>
+            <date-view-control date="vm.offer.completionDate" config="vm.config.offer_CompletionDate" schema="vm.controlSchemas.completionDate"></date-view-control>
         </div>
 
     </side-panel-content>
