@@ -5,7 +5,7 @@ module Antares.Attribues {
         templateUrl: 'app/attributes/text/textViewControl.html',
         controllerAs: 'vm',
         bindings: {
-            ngModel: '<',
+            text: '<',
             config: '<',
             schema: '<'
         }
