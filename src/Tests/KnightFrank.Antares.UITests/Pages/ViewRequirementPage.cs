@@ -21,7 +21,7 @@
         private readonly ElementLocator requirementType = new ElementLocator(Locator.Id, "requirement-preview-type");
         private readonly ElementLocator requirementDescription = new ElementLocator(Locator.CssSelector, "requirement-description-preview-control .ng-binding");
         // Rent
-        private readonly ElementLocator rent = new ElementLocator(Locator.Id, string.Empty);
+        private readonly ElementLocator rent = new ElementLocator(Locator.CssSelector, ".range-value");
         // Applicants
         private readonly ElementLocator applicants = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'contacts'] div");
         // Location
@@ -42,7 +42,7 @@
         private readonly ElementLocator offerActions = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .card-menu-button");
         private readonly ElementLocator offerStatus = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .offer-status");
         private readonly ElementLocator offerPrice = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .offer-price");
-        private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type(1) address-form-view");
+        private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) address-form-view");
         private readonly ElementLocator editOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showOfferEditPanel'] li");
         private readonly ElementLocator detailsOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showOfferDetailsView'] li");
         // Attachments
@@ -161,9 +161,11 @@
 
         public List<string> GetOfferDetails(int position)
         {
+            List<string> list = this.Driver.GetElement(this.offerData.Format(position)).GetTextContent().Split(',').ToList();
+            string data = string.Join(" ", list).Trim();
             return new List<string>()
             {
-                this.Driver.GetElement(this.offerData.Format(position)).Text,
+                data,
                 this.Driver.GetElement(this.offerStatus.Format(position)).Text,
                 this.Driver.GetElement(this.offerPrice.Format(position)).Text
             };

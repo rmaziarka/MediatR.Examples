@@ -23,7 +23,7 @@ Scenario: Create residential sale requirement
 		And Requirement location details on view requirement page are same as the following
 			| Line2        | Postcode | City   |
 			| Upper Ground | SE1 9PP  | London |
-		And Requirement details on view requirement page are same as the following
+		And Sale requirement details on view requirement page are same as the following
 			| Type             | Description |
 			| Residential Sale | Description |
 		And Requirement applicants on view requirement page are same as the following
@@ -53,7 +53,7 @@ Scenario: Create residential letting requirement
 		And Requirement location details on view requirement page are same as the following
 			| Line2        | Postcode | City   |
 			| Lower Ground | ES1 P9P  | London |
-		And Requirement details on view requirement page are same as the following
+		And Letting requirement details on view requirement page are same as the following
 			| Type                | Description | RentMin | RentMax |
 			| Residential Letting | Description | 1000    | 2000    |
 		And Requirement applicants on view requirement page are same as the following

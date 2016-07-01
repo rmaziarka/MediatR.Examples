@@ -257,7 +257,7 @@
                 () => Assert.Equal(expectedDetails.City, details["City"]));
         }
 
-        [Then(@"Sale Requirement details on view requirement page are same as the following")]
+        [Then(@"Sale requirement details on view requirement page are same as the following")]
         public void CheckSaleRequirementDetails(Table table)
         {
             var expectedDetails = table.CreateInstance<RequirementData>();
@@ -267,16 +267,15 @@
                 () => Assert.Equal(expectedDetails.Type, this.page.RequirementType));
         }
 
-        [Then(@"Requirement details on view requirement page are same as the following")]
+        [Then(@"Letting requirement details on view requirement page are same as the following")]
         public void CheckLettingRequirementDetails(Table table)
         {
             var expectedDetails = table.CreateInstance<RequirementData>();
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Description, this.page.RequirementDescription),
-                () => Assert.Equal(expectedDetails.Type, this.page.RequirementType));
-
-                //TODO () => Assert.Equal(expectedDetails.RentMin + " - " + expectedDetails.RentMax + " GBP", this.page.Rent
+                () => Assert.Equal(expectedDetails.Type, this.page.RequirementType),
+                () => Assert.Equal(int.Parse(expectedDetails.RentMin).ToString("N0") + "-" + int.Parse(expectedDetails.RentMax).ToString("N0") + " GBP", this.page.Rent));
         }
 
         [Then(@"Requirement applicants on view requirement page are same as the following")]

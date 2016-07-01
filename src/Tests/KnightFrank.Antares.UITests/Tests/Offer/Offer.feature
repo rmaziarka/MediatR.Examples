@@ -115,7 +115,7 @@ Scenario: Create residential sale offer on requirement
 	Then New offer should be created and displayed on view requirement page
 		And Offer details on 1 position on view requirement page are same as the following
 			| Details                                                                 | Offer  | Status |
-			| 13John Soane’s house,Lincoln’s Inn Fields,WC2A 3BP,London,London county | 100000 | NEW    |
+			| 13John Soane’s house Lincoln’s Inn Fields WC2A 3BP London London county | 100000 | NEW    |
 	#Finish test when details are available
 	#When User clicks 1 offer details on view requirement page
 	#Then Offer details on view requirement page are same as the following
