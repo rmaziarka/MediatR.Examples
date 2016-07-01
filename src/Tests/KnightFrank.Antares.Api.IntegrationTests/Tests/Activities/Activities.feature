@@ -29,6 +29,8 @@ Scenario: Create Activity
 			| ActivityStatus         | PreAppraisal     |
 			| ActivityUserType       | LeadNegotiator   |
 			| ActivityDepartmentType | Managing         |
+			| ActivitySource         | DirectEmail      |
+			| ActivitySellingReason  | Relocation       |
 		And Property exists in database
 			| PropertyType | Division    |
 			| House        | Residential |

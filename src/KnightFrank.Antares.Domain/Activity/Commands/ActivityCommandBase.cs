@@ -29,11 +29,11 @@
 
         public IList<Guid> ContactIds { get; set; } = new List<Guid>();
 
-        public Guid SourceId { get; set; }
+        public Guid? SourceId { get; set; }
 
         public string SourceDescription { get; set; }
 
-        public Guid SellingReasonId { get; set; }
+        public Guid? SellingReasonId { get; set; }
 
         public string PitchingThreats { get; set; }
 
