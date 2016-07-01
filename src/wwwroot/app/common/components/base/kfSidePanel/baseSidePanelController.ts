@@ -27,7 +27,12 @@ module Antares.Common.Component {
                     this.panelHidden();
                 }
             }
+
+            this.onChanges(changesObj);
         }
+
+        protected onChanges = (obj: any) =>{
+        };
     }
 
     interface IBaseSidePanelChange {

@@ -217,12 +217,6 @@ module Antares.Requirement.View {
             this.viewingPreviewPanelVisible = false;
         }
 
-        showOfferPreview = (offer: Common.Models.Business.Offer) =>{
-            this.selectedOffer = offer;
-            this.showPanel(this.components.panels.offerPreview);
-            this.offerPreviewPanelVisible = true;
-        }
-
         saveViewing(){
             this.saveViewingBusy = true;
             this.components.viewingAdd()
@@ -261,9 +255,10 @@ module Antares.Requirement.View {
         }
 
         showOfferPreviewPanel = (offer: Dto.IOffer) =>{
-            if (this.isOfferEditPreviewPanelVisible != Enums.SidePanelState.Opened) {
+            if (this.isOfferEditPreviewPanelVisible !== Enums.SidePanelState.Opened) {
                 this.hidePanels();
             }
+
             this.selectedOffer = offer;
             this.isOfferEditPreviewPanelVisible = Enums.SidePanelState.Opened;
             this.offerPanelMode = OfferPanelMode.Preview;

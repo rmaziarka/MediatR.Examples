@@ -46,6 +46,12 @@ module Antares.Offer {
                 }
             }
 
+            protected onChanges = (obj: any) => {
+                if (obj.offer && obj.offer.currentValue) {
+                    this.resetState();
+                }
+            }
+
             panelShown = () => {
                 this.backToPreview = this.mode === OfferPanelMode.Preview;
                 this.resetState();

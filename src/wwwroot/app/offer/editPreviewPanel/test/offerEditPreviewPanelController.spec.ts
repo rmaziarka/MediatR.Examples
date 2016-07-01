@@ -3,7 +3,6 @@ module Antares {
     import Business = Common.Models.Business;
     import Enums = Common.Models.Enums;
     import Component = Offer.Component;
-    import TestHelpers = Antares.TestHelpers;
 
     describe('Given OfferEditPreviewPanelController', () => {
         var
@@ -13,16 +12,13 @@ module Antares {
 
         var timeout: any;
 
-        beforeEach(inject(function (
-            $q: ng.IQService,
-            $timeout: ng.ITimeoutService,
-            $controller: any) {
+        beforeEach(inject(($q: ng.IQService, $timeout: ng.ITimeoutService, $controller: any) =>{
 
             timeout = $timeout;
 
             var getOfferMock = (pageType: Enums.PageTypeEnum, requirementTypeId: string, offerTypeId: string, entity: any): ng.IPromise<any> => {
                 var deferred = $q.defer();
-                timeout(function () {
+                timeout(() =>{
                     deferred.resolve();
                 });
                 return deferred.promise;
@@ -30,7 +26,7 @@ module Antares {
 
             var updateOfferMock = (offer: Business.Offer): ng.IPromise<any> => {
                 var deferred = $q.defer();
-                timeout(function () {
+                timeout(() =>{
                     deferred.resolve();
                 });
                 return deferred.promise;
@@ -59,13 +55,15 @@ module Antares {
 
         }));
 
-        describe('when panelShow in Preview Mode', () => {
+        describe('when panelShow in Preview Mode', () =>{
 
-            var controller: Component.OfferEditPreviewPanelController;
+            var controller: Component.OfferEditPreviewPanelController,
+                resetState: jasmine.Spy;
 
-            beforeEach(inject(function () {
+            beforeEach(inject(() =>{
                 controller = createController(Component.OfferPanelMode.Preview);
                 spyOn(controller['configService'], 'getOffer').and.callThrough();
+                resetState = spyOn(controller, 'resetState').and.callThrough();
                 controller.panelShown();
                 timeout.flush();
             }));
@@ -76,17 +74,20 @@ module Antares {
                 expect(controller.isPreviewCardVisible).toBeTruthy();
                 expect(controller.isEditCardVisible).toBeFalsy();
                 expect(controller['configService'].getOffer).toHaveBeenCalledWith(Enums.PageTypeEnum.Preview, requirement.requirementTypeId, offer.offerTypeId, offer);
+                expect(resetState).toHaveBeenCalled();
             });
 
         });
 
         describe('when panelShow in Edit Mode', () => {
 
-            var controller: Component.OfferEditPreviewPanelController;
+            var controller: Component.OfferEditPreviewPanelController,
+                resetState: jasmine.Spy;
 
-            beforeEach(inject(function () {
+            beforeEach(inject(() =>{
                 controller = createController(Component.OfferPanelMode.Edit);
                 spyOn(controller['configService'], 'getOffer').and.callThrough();
+                resetState = spyOn(controller, 'resetState').and.callThrough();
                 controller.panelShown();
                 timeout.flush();
             }));
@@ -97,6 +98,7 @@ module Antares {
                 expect(controller.isPreviewCardVisible).toBeFalsy();
                 expect(controller.isEditCardVisible).toBeTruthy();
                 expect(controller['configService'].getOffer).toHaveBeenCalledWith(Enums.PageTypeEnum.Update, requirement.requirementTypeId, offer.offerTypeId, offer);
+                expect(resetState).toHaveBeenCalled();
             });
 
         });
@@ -105,7 +107,7 @@ module Antares {
 
             var controller: Component.OfferEditPreviewPanelController;
 
-            beforeEach(inject(function () {
+            beforeEach(inject(() =>{
                 controller = createController(Component.OfferPanelMode.Preview);
                 spyOn(controller['configService'], 'getOffer').and.callThrough();
                 spyOn(controller['offerService'], 'updateOffer').and.callThrough();
@@ -131,7 +133,7 @@ module Antares {
 
             var controller: Component.OfferEditPreviewPanelController;
 
-            beforeEach(inject(function () {
+            beforeEach(inject(() =>{
                 controller = createController(Component.OfferPanelMode.Edit);
                 spyOn(controller['offerService'], 'updateOffer').and.callThrough();
                 spyOn(controller['eventAggregator'], 'publish');
@@ -145,7 +147,7 @@ module Antares {
             it('then should updated ', () => {
                 expect(controller['offerService'].updateOffer).toHaveBeenCalledWith(offer);
                 expect(controller['eventAggregator'].publish).toHaveBeenCalledTimes(2);
-                expect(controller['eventAggregator'].publish).toHaveBeenCalledWith(new Antares.Common.Component.CloseSidePanelEvent());
+                expect(controller['eventAggregator'].publish).toHaveBeenCalledWith(new Common.Component.CloseSidePanelEvent());
             });
         });
 
