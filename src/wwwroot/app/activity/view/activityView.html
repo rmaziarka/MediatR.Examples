@@ -41,18 +41,16 @@
                     </div>
                     <div class="col-md-3">
                         <section id="activity-view-viewings">
-                    <viewing-view-control is-panel-visible="avvm.isViewingPreviewPanelVisible" viewings="avvm.activity.viewingsByDay" config="avvm.config.viewings"></viewing-view-control>
-                                                    {{::group.viewings[0].startDate | date : 'dd-MM-yyyy'}}
-                                                </time>
+                            <viewing-view-control is-panel-visible="avvm.isViewingPreviewPanelVisible" viewings="avvm.activity.viewingsByDay" config="avvm.config.viewings"></viewing-view-control>
                         </section>
-                <attachments-manager title="{{'ACTIVITY.VIEW.RECENT_FILES' | translate}}" data="avvm.attachmentManagerData" on-save-attachment-for-entity="avvm.saveAttachment(attachment)"></attachments-manager>
+                <attachments-manager title="{{'ACTIVITY.VIEW.RECENT_FILES' | translate}}" files-number-limit="5" data="avvm.attachmentManagerData" on-save-attachment-for-entity="avvm.saveAttachment(attachment)"></attachments-manager>
                     </div>
                     <div class="col-md-6">
                         <section>
-                    <offer-view-control is-panel-visible="avvm.isOfferPreviewPanelVisible" 
-                        config="avvm.config.offers" 
-                        offers="avvm.activity.offers">
-                    </offer-view-control>
+                            <offer-view-control is-panel-visible="avvm.isOfferPreviewPanelVisible"
+                                                config="avvm.config.offers"
+                                                offers="avvm.activity.offers">
+                            </offer-view-control>
                         </section>
                     </div>
                 </div>
