@@ -13,7 +13,7 @@ module Antares.Activity {
 
         public standardDepartmentType: Dto.IEnumTypeItem;
 
-        public isPropertyPreviewPanelVisible: boolean = false;
+        public isPropertyPreviewPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
 
         private departmentErrorMessageCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.MESSAGE';
         private departmentErrorTitleCode: string = 'DEPARTMENTS.COMMON.NEWDEPARTMENTISNOTRELATEDWITHNEGOTIATORERROR.TITLE';
@@ -63,11 +63,11 @@ module Antares.Activity {
 
 
             this.eventAggregator.with(this).subscribe(Common.Component.CloseSidePanelEvent, () => {
-                this.isPropertyPreviewPanelVisible = false;
+                this.isPropertyPreviewPanelVisible = Enums.SidePanelState.Closed;
             });
 
             this.eventAggregator.with(this).subscribe(Attributes.OpenPropertyPrewiewPanelEvent, (event: Antares.Attributes.OpenPropertyPrewiewPanelEvent) => {
-                this.isPropertyPreviewPanelVisible = true;
+                this.isPropertyPreviewPanelVisible = Enums.SidePanelState.Opened;
             });
         }
 

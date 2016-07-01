@@ -1,4 +1,4 @@
-﻿/// <reference path="../../typings/_all.d.ts" />
+/// <reference path="../../typings/_all.d.ts" />
 
 module Antares.Offer {
     import Dto = Common.Models.Dto;
