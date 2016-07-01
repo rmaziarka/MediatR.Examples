@@ -14,6 +14,7 @@ module Antares {
         var pageObjectSelectors = {
             titleSelector: 'input#title',
             titleSectionSelector: '#title-section',
+            searchComponentCancelButton: 'input[type=button]',
             firstNameSelector: 'input#first-name',
             lastNameSelector: 'input#last-name',
             mailingFormalSalutationSelector: 'input#mailing-formal-salutation',
@@ -110,6 +111,12 @@ module Antares {
                 assertValidator = new TestHelpers.AssertValidators(element, scope);
             }));
 
+            it('then cancel button is not diaplyed', () => {
+                var searchComponentCancelButtonElement = element.find(pageObjectSelectors.searchComponentCancelButton);
+
+                expect(searchComponentCancelButtonElement.length).toBe(0);
+            });
+
             it('when title value is missing then validation should no pass', () => {
                 assertValidator.assertInputOnlyRequiredValidator(null, false, pageObjectSelectors.titleSelector);
             });
@@ -118,9 +125,9 @@ module Antares {
                 assertValidator.assertRequiredValidator('Miss', true, pageObjectSelectors.titleSelector);
             });
 
-            it('when title value has max length then validation should no pass', () => {
+            it('when title value has max length then validation should pass', () => {
                 var maxLength = 128;
-                assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.titleSelector, pageObjectSelectors.titleSectionSelector);
+                assertValidator.assertMaxLengthValidator(maxLength, true, pageObjectSelectors.titleSelector);
             });
 
             it('when title value is too long then validation should no pass', () => {
