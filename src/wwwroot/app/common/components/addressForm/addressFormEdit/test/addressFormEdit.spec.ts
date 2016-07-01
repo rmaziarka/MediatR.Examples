@@ -209,7 +209,7 @@ module Antares {
                 // compile
                 scope['address'] = addressMock;
                 scope['templateUrl'] = 'app/common/components/addressForm/addressFormEdit/templates/propertyAddressForm.html';
-                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address"  template-url="templateUrl"></address-form-edit>')(scope);
+                element = compile('<address-form-edit entity-type-code="' + "'Property'" + '" address="address"  template-url="templateUrl" config="config"></address-form-edit>')(scope);
                 scope.$apply();
                 controller = element.controller('addressFormEdit');
                 assertValidator = new TestHelpers.AssertValidators(element, scope);
@@ -235,6 +235,25 @@ module Antares {
 
             it('when value matches pattern then invalid format message should not be displayed', () => {
                 assertValidator.assertPatternValidator('xyz', true, pageObjectSelectors.fieldCSelector);
+            });
+
+            describe('when configuration template is being used', () => {
+                it('when config is being passed address form is displayed', () => {
+                    var configMock = TestHelpers.ConfigGenerator.generateRequirementAddConfig();
+                    scope['templateUrl'] = 'app/common/components/addressForm/addressFormEdit/templates/requirementAddressForm.html';
+                    scope['config'] = configMock;
+                    scope.$apply();
+
+                    var formAddress = element.find('#form-address');
+                    expect(formAddress.length).toEqual(1);
+                });
+                it('when config is missing address form is not displayed', () => {
+                    scope['templateUrl'] = 'app/common/components/addressForm/addressFormEdit/templates/requirementAddressForm.html';
+                    scope.$apply();
+
+                    var formAddress = element.find('#form-address');
+                    expect(formAddress.length).toEqual(0);
+                });
             });
         });
     });
