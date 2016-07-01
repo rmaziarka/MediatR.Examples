@@ -31,11 +31,12 @@
 
         public virtual ICollection<Contact> Contacts { get; set; }
 
-        public decimal? MarketAppraisalPrice { get; set; }
+        public decimal? AgreedInitialMarketingPrice { get; set; }
 
-        public decimal? RecommendedPrice { get; set; }
+        // ReSharper disable once InconsistentNaming
+        public decimal? KFValuationPrice { get; set; }
 
-        public decimal? VendorEstimatedPrice { get; set; }
+        public decimal? VendorValuationPrice { get; set; }
 
         public decimal? ShortLetPricePerWeek { get; set; }
 
@@ -69,7 +70,10 @@
 
         public virtual ICollection<ActivityAttendee> ActivityAttendees { get; set; } = new List<ActivityAttendee>();
 
-        public ActivityCharges ActivityCharges { get; set; } = new ActivityCharges();
+        public decimal? ServiceChargeAmount { get; set; }
+        public string ServiceChargeNote { get; set; }
+        public decimal? GroundRentAmount { get; set; }
+        public string GroundRentNote { get; set; }
 
         public string OtherCondition { get; set; }
 
@@ -80,5 +84,19 @@
         public Guid? DecorationId { get; set; }
 
         public virtual EnumTypeItem Decoration { get; set; }
+
+        // ReSharper disable once InconsistentNaming
+        public decimal? ShortKFValuationPrice { get; set; }
+
+        public decimal? ShortVendorValuationPrice { get; set; }
+
+        public decimal? ShortAgreedInitialMarketingPrice { get; set; }
+
+        // ReSharper disable once InconsistentNaming
+        public decimal? LongKFValuationPrice { get; set; }
+
+        public decimal? LongVendorValuationPrice { get; set; }
+
+        public decimal? LongAgreedInitialMarketingPrice { get; set; }
     }
 }

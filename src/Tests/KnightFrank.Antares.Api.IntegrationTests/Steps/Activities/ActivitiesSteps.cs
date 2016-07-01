@@ -192,9 +192,9 @@
                 Id = updateActivityCommand.Id,
                 ActivityStatusId = updateActivityCommand.ActivityStatusId,
                 ActivityTypeId = updateActivityCommand.ActivityTypeId,
-                MarketAppraisalPrice = updateActivityCommand.MarketAppraisalPrice,
-                RecommendedPrice = updateActivityCommand.RecommendedPrice,
-                VendorEstimatedPrice = updateActivityCommand.VendorEstimatedPrice
+                AgreedInitialMarketingPrice = updateActivityCommand.MarketAppraisalPrice,
+                KFValuationPrice = updateActivityCommand.RecommendedPrice,
+                VendorValuationPrice = updateActivityCommand.VendorEstimatedPrice
             };
 
             this.scenarioContext["Activity"] = activityFromDatabase;
