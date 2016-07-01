@@ -31,7 +31,7 @@ module Antares.Offer {
                 formName: "offerPriceControlForm",
                 controlId: "offer-price",
                 translationKey: "OFFER.EDIT.OFFER",
-                fieldName: "offerPrice"
+                fieldName: "price"
             },
             pricePerWeek: <Attributes.IPriceEditControlSchema>{
                 formName: "offerPricePerWeekControlForm",
