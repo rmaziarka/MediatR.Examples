@@ -14,6 +14,7 @@ module Antares.Contact {
 
         // fields
         public editContactForm: ng.IFormController | any; // injected from the view
+        public defaultSalutationFormatId: string = "";
 
         public searchOptions: Common.Component.SearchOptions = new Common.Component.SearchOptions({ minLength: 0, isEditable: true, nullOnSelect: false, showCancelButton: false, isRequired: true, maxLength: 128 });
 
@@ -34,10 +35,13 @@ module Antares.Contact {
             //todo - move to computed field: (editContactForm.$submitted || editContactForm.title.$dirty) && editContactForm.title.$invalid
         }
 
-        $onInit = () => {
+        $onInit() {
+            this.defaultSalutationFormatId = this.userData.salutationFormatId;
             this.contactTitleService.get().then((contactTitles) => {
                 this.contactTitles = contactTitles.data;
             });
+
+            this.selectedTitle = this.contact.title;
         }
 
         public getContactTitles = (typedTitle: string) => {
@@ -86,19 +90,15 @@ module Antares.Contact {
 
         public contactTitleSelect = (contactTitle: string) => {
             this.selectedTitle = contactTitle;
-            this.setSalutations();
         }
-
-        setSalutations = () => {
-
-        }
-
+        
         public cancelEdit(){
             this.redirectToView();
         }
      
         public save(){
             const editedContact: Dto.IContact = angular.copy(this.contact);
+            editedContact.title = this.selectedTitle;
 
             const contactResource = this.dataAccessService.getContactResource();
 
