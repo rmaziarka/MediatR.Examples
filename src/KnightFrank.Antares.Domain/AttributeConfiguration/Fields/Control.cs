@@ -54,6 +54,12 @@
             this.isHiddenDelegate = alwaysCompiled;
         }
 
+        public void SetReadonly()
+        {
+            this.IsReadonlyExpression = always;
+            this.isReadonlyDelegate = alwaysCompiled;
+        }
+
         public void SetFieldHiddenRule(LambdaExpression fieldExpression, LambdaExpression expression)
         {
             this.SetFieldExpression(fieldExpression, expression, false);
