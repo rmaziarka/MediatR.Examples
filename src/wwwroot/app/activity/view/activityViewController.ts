@@ -109,7 +109,7 @@ module Antares.Activity.View {
             this.setInitialState();
         }
 
-        public setInitialState = () => {
+        private setInitialState = () => {
             this.isPropertyPreviewPanelVisible = Enums.SidePanelState.Untouched;
             this.isAttachmentsUploadPanelVisible = Enums.SidePanelState.Untouched;
             this.isAttachmentsPreviewPanelVisible = Enums.SidePanelState.Untouched;
@@ -127,7 +127,7 @@ module Antares.Activity.View {
             return this.selectedTabIndex === 1;
         }
         
-        hidePanels = () => {
+        private hidePanels = () => {
             this.isPropertyPreviewPanelVisible = Enums.SidePanelState.Closed;
             this.isAttachmentsUploadPanelVisible = Enums.SidePanelState.Closed;
             this.isAttachmentsPreviewPanelVisible = Enums.SidePanelState.Closed;
