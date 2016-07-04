@@ -5,6 +5,7 @@
 
     using KnightFrank.Antares.Dal.Model.Address;
     using KnightFrank.Antares.Dal.Model.Attachment;
+    using KnightFrank.Antares.Dal.Model.Company;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Offer;
 
@@ -35,5 +36,13 @@
         public decimal? RentMin  { get; set; }
 
         public decimal? RentMax  { get; set; }
+
+        public Guid? SolicitorId { get; set; }
+
+        public virtual Contact Solicitor { get; set; }
+
+        public Guid? SolicitorCompanyId { get; set; }
+
+        public virtual Company SolicitorCompany { get; set; }
     }
 }

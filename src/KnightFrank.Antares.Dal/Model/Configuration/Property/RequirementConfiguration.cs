@@ -31,6 +31,16 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property
                 });
 
             this.HasRequired(x => x.RequirementType);
+            
+            this.HasOptional(p => p.Solicitor)
+                .WithMany()
+                .HasForeignKey(p => p.SolicitorId)
+                .WillCascadeOnDelete(false);
+
+            this.HasOptional(p => p.SolicitorCompany)
+                .WithMany()
+                .HasForeignKey(p => p.SolicitorCompanyId)
+                .WillCascadeOnDelete(false);
         }
     }
 }

@@ -45,6 +45,16 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
                     cs.MapLeftKey("ActivityId");
                     cs.MapRightKey("AttachmentId");
                 });
+
+            this.HasOptional(p => p.Solicitor)
+                .WithMany()
+                .HasForeignKey(p => p.SolicitorId)
+                .WillCascadeOnDelete(false);
+
+            this.HasOptional(p => p.SolicitorCompany)
+                .WithMany()
+                .HasForeignKey(p => p.SolicitorCompanyId)
+                .WillCascadeOnDelete(false);
         }
     }
 }
