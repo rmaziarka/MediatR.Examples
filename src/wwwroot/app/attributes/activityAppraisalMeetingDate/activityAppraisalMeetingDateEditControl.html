@@ -5,7 +5,7 @@
                 <div class="form-group" show-errors>
                     <label ng-class="{'required': vm.isRequired()}" for="meeting-date" translate="ACTIVITY.EDIT.APPRAISAL_MEETING.DATE"></label>
                     <div class="input-group">
-                        <input type="text" name="meetingDate" class="form-control" ng-model="vm.meetingDate" uib-datepicker-popup="dd-MM-yyyy" ng-change="vm.onChange()"
+                        <input type="text" name="meetingDate" class="form-control" ng-model="vm.meetingDate" uib-datepicker-popup="dd-MM-yyyy" ng-change="vm.onDatesChanged()"
                                 is-open="vm.meetingDateOpen" close-text="Close" placeholder="dd-mm-yyyy" ng-required="vm.isRequired()" date-greater-than="{{vm.today}}"/>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="vm.openMeetingDate()"><i class="fa fa-calendar"></i></button>
@@ -21,7 +21,7 @@
             <div class="col-xs-4">
                 <div class="form-group" ng-class="{'has-error': (activityAppraisalMeetingDateControlForm.$submitted || activityAppraisalMeetingDateControlForm.meetingStartTime.$dirty) && activityAppraisalMeetingDateControlForm.meetingStartTime.$invalid}">
                     <label ng-class="{'required': vm.isRequired()}" for="meeting-start-time" translate="ACTIVITY.EDIT.APPRAISAL_MEETING.START"></label>
-                    <fm-timepicker id="meeting-start-time" fm-format="'HH:mm'" name="meetingStartTime" class="form-control form-control-timepicker" ng-change="vm.onChange()"
+                    <fm-timepicker id="meeting-start-time" fm-format="'HH:mm'" name="meetingStartTime" class="form-control form-control-timepicker" ng-change="vm.onDatesChanged()"
                                    ng-model="vm.meetingStartTime" fm-style="dropdown" ng-required="vm.isRequired()" time-lower-than="{{vm.meetingEndTime}}">
                     </fm-timepicker>
                     <div ng-messages="activityAppraisalMeetingDateControlForm.meetingStartTime.$error"
@@ -34,7 +34,7 @@
             <div class="col-xs-4">
                 <div class="form-group" ng-class="{'has-error': (activityAppraisalMeetingDateControlForm.$submitted || activityAppraisalMeetingDateControlForm.meetingEndTime.$dirty) && activityAppraisalMeetingDateControlForm.meetingEndTime.$invalid}">
                     <label ng-class="{'required': vm.isRequired()}" for="meeting-end-time" translate="ACTIVITY.EDIT.APPRAISAL_MEETING.END"></label>
-                    <fm-timepicker id="meeting-end-time" fm-format="'HH:mm'" name="meetingEndTime" class="form-control form-control-timepicker" ng-change="vm.onChange()"
+                    <fm-timepicker id="meeting-end-time" fm-format="'HH:mm'" name="meetingEndTime" class="form-control form-control-timepicker" ng-change="vm.onDatesChanged()"
                                    ng-model="vm.meetingEndTime" fm-style="dropdown" ng-required="vm.isRequired()" time-greater-than="{{vm.meetingStartTime}}">
                     </fm-timepicker>
                     <div ng-messages="activityAppraisalMeetingDateControlForm.meetingEndTime.$error"

@@ -11,20 +11,21 @@ module Antares.Attributes {
         meetingDateOpen: boolean = false;
 
         today: Date = new Date();
-        meetingDate: Date = new Date();
+        meetingDate: Date;
         meetingStartTime: moment.Moment;
         meetingEndTime: moment.Moment;
 
         constructor() {
-            this.meetingStartTime = moment();
-            this.meetingEndTime = moment().add(1, 'hours');
+            this.meetingDate = this.appraisalMeetingStart ? moment(this.appraisalMeetingStart).toDate() : moment(this.today).toDate();
+            this.meetingStartTime = this.appraisalMeetingStart ? moment(this.appraisalMeetingStart) : moment(this.today);
+            this.meetingEndTime = this.appraisalMeetingEnd ? moment(this.appraisalMeetingEnd) : moment(this.today).add(1, 'hours');
         }
 
         isRequired() {
             return this.config.appraisalMeetingStart.required || this.config.appraisalMeetingEnd.required;
         }
 
-        onChange() {
+        onDatesChanged() {
             this.appraisalMeetingStart = this.combineDateWithTime(this.meetingDate, moment(this.meetingStartTime).toDate());
             this.appraisalMeetingEnd = this.combineDateWithTime(this.meetingDate, moment(this.meetingEndTime).toDate());
         }
