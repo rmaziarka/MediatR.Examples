@@ -206,11 +206,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Tests\Preferences\Preferences.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Preferences.feature</DependentUpon>
-    </Compile>
     <Compile Include="Tests\Property\Property.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -282,10 +277,6 @@
     <None Include="Tests\Property\Attachments.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Attachments.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Tests\Preferences\Preferences.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>Preferences.feature.cs</LastGenOutput>
     </None>
     <None Include="Tests\Property\Property.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
