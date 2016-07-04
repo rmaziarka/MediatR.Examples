@@ -7,7 +7,8 @@ module Antares.Attributes {
             bindings: {
                 ngModel: '=',
 				config:'<',
-				schema:'<'
+                schema: '<',
+                precision: '<'
             }
     });
 }
