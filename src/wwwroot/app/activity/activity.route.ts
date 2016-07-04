@@ -53,23 +53,8 @@ module Antares.Activity {
                             activity.activityTypeId,
                             activity);
                     },
-                    config: (editConfig: IActivityEditConfig, viewConfig: IActivityViewConfig) => {
-                        var config: IActivityEditConfig = <IActivityEditConfig>({});
-
-                        Object.keys(editConfig)
-                            .forEach((key: string) => {
-                                config[key] = editConfig[key];
-                            });
-
-                        Object.keys(viewConfig)
-                            .forEach((key: string) => {
-                                if (config[key]) {
-                                    return;
-                                }
-
-                                config[key] = viewConfig[key];
-                            });
-                        return config;
+                    config: (editConfig: IActivityEditConfig, viewConfig: IActivityViewConfig, activityConfigUtils: ActivityConfigUtils) =>{
+                        return activityConfigUtils.merge(editConfig, viewConfig);
                     }
                 }
             })

@@ -354,7 +354,7 @@ module Antares {
                     // act
                     controller.$onInit();
 
-                    var twoWeeksFromToday = moment().add('week', 2);
+                    var twoWeeksFromToday = moment().add(2, 'week');
                     var callDate = moment(controller.activity.leadNegotiator.callDate);
 
                     expect(callDate.day).toBe(twoWeeksFromToday.day);

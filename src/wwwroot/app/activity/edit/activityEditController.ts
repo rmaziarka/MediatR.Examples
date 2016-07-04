@@ -11,7 +11,7 @@ module Antares.Activity {
     }
 
     export class ActivityEditController {
-        public config: IActivityEditConfig;
+        public config: IActivityConfig;
         public activity: ActivityEditModel;
         public userData: Dto.IUserData;
 
@@ -130,14 +130,16 @@ module Antares.Activity {
             }
         }
 
-        configAppraisalMeetingDateMocked :any = {
-            appraisalMeetingDate:  {start:  { active:  true, required:  true  }, end:  { active:  true, required:  true  }  } 
+        configAppraisalMeetingDateMocked: any = {
+            appraisalMeetingDate: { start: { active: true, required: true }, end: { active: true, required: true } }
         }
 
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService,
+            private $q: ng.IQService,
             public kfMessageService: Services.KfMessageService,
+            private activityConfigUtils: ActivityConfigUtils,
             private configService: Services.ConfigService,
             private activityService: Activity.ActivityService,
             private latestViewsProvider: Providers.LatestViewsProvider,
@@ -187,9 +189,16 @@ module Antares.Activity {
                 pageTypeEnum = Enums.PageTypeEnum.Update;
             }
 
-            this.configService
-                .getActivity(pageTypeEnum, this.activity.property.propertyTypeId, activity.activityTypeId, entity)
-                .then((newConfig: IActivityEditConfig) => this.config = newConfig);
+            var addEditConfig = this.configService
+                .getActivity(pageTypeEnum, this.activity.property.propertyTypeId, activity.activityTypeId, entity);
+
+            var detailsConfig = this.configService
+                .getActivity(Enums.PageTypeEnum.Details, this.activity.property.propertyTypeId, activity.activityTypeId, entity);
+
+            this.$q.all([addEditConfig, detailsConfig])
+                .then((configs: IActivityConfig[]) => {
+                    this.config = this.activityConfigUtils.merge(configs[0], configs[1]);
+                });
         }
 
         public save = () => {
@@ -324,7 +333,7 @@ module Antares.Activity {
             this.activity.leadNegotiator.user.lastName = this.userData.lastName;
             this.activity.leadNegotiator.user.departmentId = this.userData.department.id;
 
-            this.activity.leadNegotiator.callDate = moment().add('week', 2).toDate();
+            this.activity.leadNegotiator.callDate = moment().add(2, 'week').toDate();
         }
 
         private setDefaultDepartment = () => {
