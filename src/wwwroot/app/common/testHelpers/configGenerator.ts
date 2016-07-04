@@ -96,14 +96,6 @@ module Antares.TestHelpers {
             return config;
         }
 
-		public static generateTextControlConfig(): Attributes.ITextControlConfig {
-            var config: Attributes.ITextControlConfig = {
-                textArea: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
-            };
-
-            return config;
-        }
-
         public static generateActivityAskingPriceConfig(): Attributes.IActivityAskingPriceControlConfig {
             var config: Attributes.IActivityAskingPriceControlConfig = {
                 askingPrice: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()

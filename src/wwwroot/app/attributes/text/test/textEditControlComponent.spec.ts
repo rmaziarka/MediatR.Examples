@@ -1,20 +1,20 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares {
-    describe('Given text area edit control', () => {
+    describe('Given text edit control', () => {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery,
             assertValidator: TestHelpers.AssertValidators;
 
-        var textAreaModelMock: string = '';
+        var textModelMock: string = '';
         var configMock: any = {
             active: true,
-            textArea: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
+            text: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
         };
         var schemaMock: Attributes.ITextEditControlSchema = {
-            controlId: 'text-area-id',
-            translationKey: 'textAreaTranslationKey',
-            fieldName: 'textArea',
+            controlId: 'text-id',
+            translationKey: 'textTranslationKey',
+            fieldName: 'text',
             formName: 'formName'
         };
 
@@ -27,8 +27,8 @@ module Antares {
             $compile: ng.ICompileService) => {
 
             scope = $rootScope.$new();
-            scope['vm'] = { ngModel: textAreaModelMock, config: configMock, schema: schemaMock };
-            element = $compile('<textarea-edit-control ng-model="vm.ngModel" config="vm.config" schema="vm.schema"></textarea-edit-control>')(scope);
+            scope['vm'] = { ngModel: textModelMock, config: configMock, schema: schemaMock };
+            element = $compile('<text-edit-control ng-model="vm.ngModel" config="vm.config" schema="vm.schema"></text-edit-control>')(scope);
             scope.$apply();
 
             assertValidator = new TestHelpers.AssertValidators(element, scope);
@@ -40,17 +40,9 @@ module Antares {
                 expect(controlElement.length).toBe(1);
             });
 
-            it('and text is longer than 4000 characters then validation is displayed', () => {
-                assertValidator.assertMaxLengthValidator(4001, false, pageObjectSelectors.control);
-            });
-
-            it('and text is 4000 characters long then validation is not displayed', () => {
-                assertValidator.assertMaxLengthValidator(4000, true, pageObjectSelectors.control);
-            });
-
             describe('when control value is required from config', () => {
                 beforeEach(() => {
-                    configMock.textArea.required = true;
+                    configMock.text.required = true;
                     scope.$apply();
                 });
 
@@ -65,7 +57,7 @@ module Antares {
 
             describe('when control value is not required from config', () => {
                 beforeEach(() => {
-                    configMock.textArea.required = false;
+                    configMock.text.required = false;
                     scope.$apply();
                 });
 

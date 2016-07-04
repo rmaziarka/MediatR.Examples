@@ -1,18 +1,18 @@
 ﻿/// <reference path="../../../typings/_all.d.ts" />
 
 module Antares {
-    describe('Given text area view control', () =>{
+    describe('Given text view control', () => {
         var scope: ng.IScope,
             element: ng.IAugmentedJQuery;
 
-        var textAreaModelMock: any = {};
+        var textModelMock: any = {};
         var configMock: any = {
             active: true,
-            textArea: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
+            text: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
         };
         var schemaMock: Attributes.ITextControlSchema = {
-            controlId: 'text-area-id',
-            translationKey: 'textAreaTranslationKey'
+            controlId: 'text-id',
+            translationKey: 'textTranslationKey'
         };
 
         var pageObjectSelectors = {
@@ -24,8 +24,8 @@ module Antares {
             $compile: ng.ICompileService) => {
 
             scope = $rootScope.$new();
-            scope['vm'] = { ngModel: textAreaModelMock, config: configMock, schema: schemaMock };
-            element = $compile('<textarea-view-control ng-model="vm.ngModel" config="vm.config" schema="vm.schema"></textarea-view-control>')(scope);
+            scope['vm'] = { ngModel: textModelMock, config: configMock, schema: schemaMock };
+            element = $compile('<text-view-control ng-model="vm.ngModel" config="vm.config" schema="vm.schema"></text-view-control>')(scope);
             scope.$apply();
         }));
 
