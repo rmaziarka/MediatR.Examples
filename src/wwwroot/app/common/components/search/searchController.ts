@@ -7,6 +7,7 @@ module Antares.Common.Component {
         public onSelectItem: <T>($item: T) => void;
         public onChangeValue: <T>($item: T) => void;
         public onCancel: () => void;
+        public initialValue: string;
         public itemTemplateUrl: string;
         public searchPlaceholder: string;
 
@@ -15,6 +16,12 @@ module Antares.Common.Component {
         public searchName: string;
         public options: SearchOptions;
         public selectedItem: any;
+
+        public $onInit = () =>{
+            if (this.initialValue) {
+                this.selectedItem = this.initialValue;
+            }
+        }
 
         public select = <T>($item: T) => {
             if (this.onSelectItem)

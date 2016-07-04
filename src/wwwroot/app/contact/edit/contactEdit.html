@@ -19,6 +19,7 @@
                                             on-change-value="vm.contactTitleSelect"
                                             load-items="vm.getContactTitles"
                                             options="vm.searchOptions"
+                                            initial-value="vm.contact.title"
                                             item-template-url="app/contact/titleComponent/contactTitleSearchTemplate.html"></search>
 
                                     <div ng-messages="editContactForm.title.$error" ng-show="editContactForm.$submitted || editContactForm.title.$dirty">
