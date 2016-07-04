@@ -3,9 +3,7 @@
         <h2 class="page-header" translate="ACTIVITY.VIEW.VIEW_ACTIVITY"></h2>
         <div id="activity-view-well" class="well">
             <button type="button" class="btn btn-default pull-right" ng-click="avvm.goToEdit()"><i class="fa fa-pencil"></i> <span translate="COMMON.EDIT"></span></button>
-            <div>
-                <span id="createdDate">{{avvm.activity.createdDate | date : 'dd-MM-yyyy'}}</span>
-            </div>
+            <div>{{ avvm.activity.property.address.getAddressText() }}</div>
             <div>
                 <span id="activityType">{{avvm.activity.activityTypeId | dynamicTranslate}}</span>,
                 <span id="activityStatus">{{avvm.activity.activityStatusId | dynamicTranslate}}</span>
