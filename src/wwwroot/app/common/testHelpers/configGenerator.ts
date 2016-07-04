@@ -98,7 +98,6 @@ module Antares.TestHelpers {
 
 		public static generateTextControlConfig(): Attributes.ITextControlConfig {
             var config: Attributes.ITextControlConfig = {
-                active: true,
                 textArea: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
             };
 

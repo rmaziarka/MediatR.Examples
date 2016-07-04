@@ -5,6 +5,7 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
     using System.Linq;
 
     using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
@@ -12,13 +13,14 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
     public class ActivityAppraisalMeetingAttendeesMapper : IActivityReferenceMapper<ActivityAttendee>
     {
         private readonly ICollectionValidator collectionValidator;
-
         private readonly IGenericRepository<ActivityAttendee> activityAttendeeRepository;
+        private IEntityValidator entityValidator;
 
-        public ActivityAppraisalMeetingAttendeesMapper(ICollectionValidator collectionValidator, IGenericRepository<ActivityAttendee> activityAttendeeRepository)
+        public ActivityAppraisalMeetingAttendeesMapper(ICollectionValidator collectionValidator, IGenericRepository<ActivityAttendee> activityAttendeeRepository, IEntityValidator entityValidator)
         {
             this.collectionValidator = collectionValidator;
             this.activityAttendeeRepository = activityAttendeeRepository;
+            this.entityValidator = entityValidator;
         }
 
         public void ValidateAndAssign(ActivityCommandBase message, Activity activity)
@@ -35,7 +37,8 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
             List<Guid> contactsIds =
                 message.AppraisalMeetingAttendeesList.Where(x => x.ContactId.HasValue).Select(x => x.ContactId.Value).ToList();
 
-            this.Validate(activity, usersIds, contactsIds);
+            this.ValidateUsers(usersIds);
+            this.ValidateContacts(activity, contactsIds);
 
             activity.AppraisalMeetingAttendees
                     .Where(x => IsRemovedFromExistingList(x, usersIds, contactsIds))
@@ -72,16 +75,20 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
                    activityAttendee.ContactId.HasValue && !contactsIds.Contains(activityAttendee.ContactId.Value);
         }
 
-        private void Validate(Activity activity, List<Guid> usersIds, List<Guid> contactsIds)
-        {
-            this.ValidateCollection(usersIds, activity.ActivityUsers.Select(x => x.UserId).ToList());
-            this.ValidateCollection(contactsIds, activity.Contacts.Select(x => x.Id).ToList());
-        }
-
-        private void ValidateCollection(List<Guid> newIds, List<Guid> existingIds)
+        private void ValidateUsers(List<Guid> newIds)
         {
             if (newIds.Count > 0)
             {
+                this.collectionValidator.CollectionIsUnique(newIds, ErrorMessage.Activity_AppraisalMeetingAttendees_Not_Unique);
+                this.entityValidator.EntitiesExist<User>(newIds);
+            }
+        }
+
+        private void ValidateContacts(Activity activity, List<Guid> newIds)
+        {
+            if (newIds.Count > 0)
+            {
+                List<Guid> existingIds = activity.Contacts.Select(x => x.Id).ToList();
                 this.collectionValidator.CollectionIsUnique(newIds, ErrorMessage.Activity_AppraisalMeetingAttendees_Not_Unique);
                 this.collectionValidator.CollectionContainsAll(
                     existingIds,

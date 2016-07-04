@@ -13,8 +13,9 @@ module Antares.Attributes {
 
         // controller 
         availableAttendees: Models.EditActivityAttendeeModel[];
+        activityAttendeesForm: ng.IFormController;
 
-        constructor() {
+        constructor(private $scope: ng.IScope) {
             this.attendees = this.attendees ? this.attendees : [];
             this.users = this.users ? this.users : [];
             this.contacts = this.contacts ? this.contacts : [];
@@ -23,8 +24,17 @@ module Antares.Attributes {
         }
 
         $onChanges = (changesObj: any) => {
-            this.availableAttendees = this.getAvailableAttendees();
-            this.updateSelectedAttendeesFromSelectedList();
+            // set form to pristine when form is rendered when config is set
+            if (changesObj.config && changesObj.config.currentValue != changesObj.config.previousValue) {
+                if (this.activityAttendeesForm) {
+                    this.activityAttendeesForm.$setPristine();
+                }
+            }
+
+            if ((changesObj.users && !changesObj.users.isFirstChange()) || (changesObj.contacts && !changesObj.contacts.isFirstChange())) {
+                this.availableAttendees = this.getAvailableAttendees();
+                this.updateSelectedAttendeesFromSelectedList();
+            }
         }
 
         public getAvailableAttendees = (): Models.EditActivityAttendeeModel[] => {
