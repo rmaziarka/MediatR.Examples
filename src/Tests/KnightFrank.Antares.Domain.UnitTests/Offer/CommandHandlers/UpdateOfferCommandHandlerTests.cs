@@ -55,6 +55,7 @@
             [Frozen] Mock<IEnumTypeItemValidator> enumTypeValidator,
             [Frozen] Mock<IGenericRepository<Offer>> offerRepository,
             [Frozen] Mock<IGenericRepository<Dal.Model.Enum.EnumType>> enumTypeRepository,
+            [Frozen] Mock<IAttributeValidator<Tuple<Domain.Common.Enums.OfferType, Domain.Common.Enums.RequirementType>>> attributeValidator,
             [Frozen] Mock<IEntityMapper<Offer>> offerEntityMapper,
             UpdateOfferCommand command,
             UpdateOfferCommandHandler handler,
@@ -82,6 +83,9 @@
             offerEntityMapper.Setup(
                 m => m.MapAllowedValues(command, offer, PageType.Update)).Returns(offer);
 
+            attributeValidator.Setup(
+                av => av.Validate(PageType.Update, It.IsAny<Tuple<Domain.Common.Enums.OfferType, Domain.Common.Enums.RequirementType>>(), command));
+
             // Act
             Guid offerId = handler.Handle(command);
 
@@ -91,6 +95,8 @@
             enumTypeValidator.Verify(x => x.ItemExists(EnumType.OfferStatus, command.StatusId), Times.Once);
             offerRepository.Verify(r => r.Save(), Times.Once());
             offerEntityMapper.Verify(m => m.MapAllowedValues(It.IsAny<UpdateOfferCommand>(), It.IsAny<Offer>(), It.IsAny<PageType>()), Times.Once);
+            attributeValidator.Verify(
+                av => av.Validate(PageType.Update, It.IsAny<Tuple<Domain.Common.Enums.OfferType, Domain.Common.Enums.RequirementType>>(), command));
         }
 
 
