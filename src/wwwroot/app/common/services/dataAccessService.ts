@@ -229,6 +229,13 @@ module Antares.Services {
             return <Antares.Common.Models.Resources.IDepartmentUserResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/users?partialName=:partialName&take=:take&:excludedIds[]');
         }
+
+         getCurrentUserResource(): Resources.ICurrentUserResourceClass{
+                return <Resources.ICurrentUserResourceClass>
+                    this.$resource(this.appConfig.rootUrl + '/api/users/:id', null, {
+                        update: this.updateAction
+                    });
+            }   
     }
 
     angular.module('app').service('dataAccessService', DataAccessService);

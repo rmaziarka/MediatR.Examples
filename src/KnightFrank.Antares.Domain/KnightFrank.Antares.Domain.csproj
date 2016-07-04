@@ -287,10 +287,17 @@
     <Compile Include="Property\Commands\CreatePropertyAttachmentCommand.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementAttachmentCommandHandler.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementAttachmentCommand.cs" />
+    <Compile Include="User\CommandHandlers\UpdateUserCommandHandler.cs" />
+    <Compile Include="User\Commands\UserCommandProfile.cs" />
+    <Compile Include="User\Commands\UpdateUserCommand.cs" />
+    <Compile Include="User\Commands\UpdateUserCommandValidator.cs" />
+    <Compile Include="User\Queries\UserQuery.cs" />
     <Compile Include="User\Queries\UsersQuery.cs" />
     <Compile Include="Contact\Queries\ContactQueryValidator.cs" />
     <Compile Include="Contact\Queries\ContactsQuery.cs" />
+    <Compile Include="User\Queries\UserQueryValidator.cs" />
     <Compile Include="User\Queries\UsersQueryValidator.cs" />
+    <Compile Include="User\QueryHandlers\UserQueryHandler.cs" />
     <Compile Include="User\QueryHandlers\UsersQueryHandler.cs" />
     <Compile Include="Contact\QueryHandlers\ContactsQueryHandler.cs" />
     <Compile Include="DomainModule.cs" />

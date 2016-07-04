@@ -8,7 +8,7 @@ module Antares.Property {
     export class PropertyEditController extends Core.WithPanelsBaseController {
         public entityTypeCode: string = 'Property';
         public property: Business.Property;
-        public userData: Dto.IUserData;
+        public userData: Dto.ICurrentUser;
 
         components: any;
         componentIds: any;
@@ -59,7 +59,7 @@ module Antares.Property {
         loadPropertyTypes = () => {
             this.propertyResource
                 .getPropertyTypes({
-                    countryCode: this.userData.country, divisionCode: this.property.division.code, localeCode: 'en'
+                    countryCode: this.userData.country.isoCode, divisionCode: this.property.division.code, localeCode: 'en'
                 }, null)
                 .$promise
                 .then((propertyTypes: any) => {

@@ -318,7 +318,7 @@ module Antares {
             var deferred: ng.IDeferred<any>;
             var activityFromService: Dto.IActivity;
             var activity: Activity.ActivityEditModel;
-            var userData: Dto.IUserData;
+            var userData: Dto.ICurrentUser;
 
             beforeEach(() => {
                 // arrange

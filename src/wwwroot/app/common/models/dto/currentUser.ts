@@ -1,13 +1,13 @@
 ﻿declare module Antares.Common.Models.Dto {
-    interface IUserData {
+    interface ICurrentUser {
         id: string;
         firstName: string;
         lastName: string;
-        name: string;
         email: string;
-        country: string;
+        country: ICountry;
         division: IEnumTypeItem;
         roles: string[];
-        department: IDepartment;
+        salutationFormatId: string;
+        department: Dto.IDepartment;
     }
 }

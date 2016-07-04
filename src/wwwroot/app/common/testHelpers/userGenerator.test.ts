@@ -19,18 +19,18 @@ module Antares.TestHelpers {
             return angular.extend(user, specificData || {});
         }
 
-        public static generateUserDataDto(): Dto.IUserData {
+        public static generateUserDataDto(): Dto.ICurrentUser {
             var department: Dto.IDepartment = TestHelpers.DepartmentGenerator.generateDto();
 
-            var userData: Dto.IUserData = {
+            var userData: Dto.ICurrentUser = {
                 id: StringGenerator.generate(),
                 firstName: StringGenerator.generate(),
                 lastName: StringGenerator.generate(),
-                name: StringGenerator.generate(),
                 email: StringGenerator.generate(),
-                country: StringGenerator.generate(),
+                country: null,
                 division: null,
                 roles: [],
+                salutationFormatId: null,
                 department: department
             }
 

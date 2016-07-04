@@ -24,7 +24,7 @@ module Antares.Property.View {
 
         ownershipsCartListOrder: CartListOrder = new CartListOrder('purchaseDate', true, true);
         activitiesCartListOrder: CartListOrder = new CartListOrder('createdDate', true);
-        userData: Dto.IUserData;
+        userData: Dto.ICurrentUser;
         property: Business.PropertyView;
 
         savePropertyActivityBusy: boolean = false;

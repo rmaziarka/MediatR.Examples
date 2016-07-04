@@ -13,7 +13,7 @@ module Antares.Activity {
     export class ActivityEditController {
         public config: IActivityConfig;
         public activity: ActivityEditModel;
-        public userData: Dto.IUserData;
+        public userData: Dto.ICurrentUser;
 
         public enumTypeActivityStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityStatus;
         private departmentsController: Antares.Attributes.ActivityDepartmentsEditControlController;

@@ -83,6 +83,12 @@ declare module Antares.Common.Models {
         interface IDepartmentUserResource extends ng.resource.IResource<Dto.IUser> {
         }
 
+        interface IDepartmentUserResource extends ng.resource.IResource<Dto.IUser> {
+        }
+
+        interface ICurrentUserResource extends ng.resource.IResource<Dto.ICurrentUser> {
+        }
+
         // *** IResourceClass extensions ***
 
         // - common -
@@ -177,5 +183,9 @@ declare module Antares.Common.Models {
             query(): ng.resource.IResourceArray<IDepartmentUserResource>;
             query(params: IDepartmentUserResourceParameters): ng.resource.IResourceArray<IDepartmentUserResource>;
         }
+
+         interface ICurrentUserResourceClass extends Resources.IBaseResourceClass<Resources.ICurrentUserResource> {
+
+       }
     }
 }

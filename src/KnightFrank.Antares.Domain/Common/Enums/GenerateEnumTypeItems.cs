@@ -21,9 +21,10 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,
 	 	Enquiries,
+        SalutationFormat,
 	 	ActivitySource,
 	 	ActivitySellingReason,
-	 }
+    }
 
 	
 	public enum EntityType
