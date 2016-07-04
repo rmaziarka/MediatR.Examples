@@ -46,9 +46,6 @@
         <div class="col-md-4">
             <fieldset id="activity-edit-prices">
                 <h3 class="page-header" translate="ACTIVITY.EDIT.PRICES.PRICES"></h3>
-                <price-edit-control config="vm.config.marketAppraisalPrice" schema="vm.controlSchemas.marketAppraisalPrice" ng-model='vm.activity.marketAppraisalPrice'></price-edit-control>
-                <price-edit-control config="vm.config.recommendedPrice" schema="vm.controlSchemas.recommendedPrice" ng-model='vm.activity.recommendedPrice'></price-edit-control>
-                <price-edit-control config="vm.config.vendorEstimatedPrice" schema="vm.controlSchemas.vendorEstimatedPrice" ng-model='vm.activity.vendorEstimatedPrice'></price-edit-control>
                 <price-edit-control config="vm.config.askingPrice" schema="vm.controlSchemas.askingPrice" ng-model='vm.activity.askingPrice'></price-edit-control>
                 <price-edit-control config="vm.config.shortLetPricePerWeek" schema="vm.controlSchemas.shortLetPricePerWeek" ng-model='vm.activity.shortLetPricePerWeek'></price-edit-control>
             </fieldset>
@@ -71,13 +68,61 @@
                     <textarea-edit-control ng-model="vm.activity.accessDetails.accessArrangements" config="vm.config.accessArrangements" schema="vm.accessArrangementsSchema"></textarea-edit-control>
                 </fieldset>
             </section>
+            <section id="other-info" ng-if="vm.config.decoration">
+                <fieldset>
+                    <h3 class="page-header" translate="ACTIVITY.EDIT.OTHER.OTHER"></h3>
+                    <enum-item-edit-control ng-model="vm.activity.decorationId" config="vm.config.decoration" schema="vm.activityDecorationSchema"></enum-item-edit-control>
+                </fieldset>
+            </section>
         </div>
 
         <div class="col-md-4">
+            <fieldset id="activity-edit-prices" ng-if="vm.config.kfValuationPrice && vm.config.vendorValuationPrice && vm.config.agreedInitialMarketingPrice">
+                <h3 class="page-header" translate="ACTIVITY.EDIT.VALUATION_INFO.VALUATION_INFORMATION"></h3>
+                <div class="row">
+                    <div class="col-xs-4"><price-edit-control config="vm.config.kfValuationPrice" schema="vm.kfValuationPriceSchema" ng-model='vm.activity.kfValuationPrice'></price-edit-control>
+                    </div>
+                    <div class="col-xs-4"><price-edit-control config="vm.config.vendorValuationPrice" schema="vm.vendorValuationPriceSchema" ng-model='vm.activity.vendorValuationPrice'></price-edit-control>
+                    </div>
+                    <div class="col-xs-4"><price-edit-control config="vm.config.agreedInitialMarketingPrice" schema="vm.agreedInitialMarketingPriceSchema" ng-model='vm.activity.agreedInitialMarketingPrice'></price-edit-control>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset id="activity-edit-short-long-prices">
+                <h3 class="page-header" translate="ACTIVITY.EDIT.VALUATION_INFO.VALUATION_INFORMATION"></h3>
+                <h4 class="page-header" translate="ACTIVITY.EDIT.VALUATION_INFO.KF_VALUTATION"></h4>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <price-edit-control config="vm.config.shortKfValuationPrice" schema="vm.shortKfValuationPriceSchema" ng-model='vm.activity.shortKfValuationPrice'></price-edit-control>
+                    </div>
+                    <div class="col-xs-6">
+                        <price-edit-control config="vm.config.longKfValuationPrice" schema="vm.longKfValuationPriceSchema" ng-model='vm.activity.longKfValuationPrice'></price-edit-control>
+                    </div>
+                </div>
+                <h4 class="page-header" translate="ACTIVITY.EDIT.VALUATION_INFO.VENDOR_VALUATION"></h4>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <price-edit-control config="vm.config.shortVendorValuationPrice" schema="vm.shortVendorValuationPriceSchema" ng-model='vm.activity.shortVendorValuationPrice'></price-edit-control>
+                    </div>
+                    <div class="col-xs-6">
+                        <price-edit-control config="vm.config.longVendorValuationPrice" schema="vm.longVendorValuationPriceSchema" ng-model='vm.activity.longVendorValuationPrice'></price-edit-control>
+                    </div>
+                </div>
+                <h4 class="page-header" translate="ACTIVITY.EDIT.VALUATION_INFO.AGREED_INITIAL_MARKETING_PRICE"></h4>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <price-edit-control config="vm.config.shortAgreedInitialMarketingPrice" schema="vm.shortAgreedInitialMarketingPriceFormSchema" ng-model='vm.activity.shortAgreedInitialMarketingPrice'></price-edit-control>
+                    </div>
+                    <div class="col-xs-6">
+                        <price-edit-control config="vm.config.longAgreedInitialMarketingPrice" schema="vm.longAgreedInitialMarketingPriceFormSchema" ng-model='vm.activity.longAgreedInitialMarketingPrice'></price-edit-control>
+                    </div>
+                    
+                </div>
+            </fieldset>
             <h3 class="page-header" translate="ACTIVITY.EDIT.APPRAISAL_MEETING.APPRAISAL_MEETING"></h3>
             <activity-appraisal-meeting-date-edit-control config="vm.config.appraisalMeetingDate"
-                                                     appraisal-meeting-start="vm.activity.appraisalMeeting.appraisalMeetingStart"
-                                                     appraisal-meeting-end="vm.activity.appraisalMeeting.appraisalMeetingEnd"></activity-appraisal-meeting-date-edit-control>
+                                                          appraisal-meeting-start="vm.activity.appraisalMeeting.appraisalMeetingStart"
+                                                          appraisal-meeting-end="vm.activity.appraisalMeeting.appraisalMeetingEnd"></activity-appraisal-meeting-date-edit-control>
             <activity-attendees-edit-control users="vm.availableAttendeeUsers" contacts="vm.availableAttendeeContacts" attendees="vm.activity.appraisalMeetingAttendees" config="vm.config.appraisalMeetingAttendees"></activity-attendees-edit-control>
             <textarea-edit-control ng-model="vm.activity.appraisalMeeting.appraisalMeetingInvitationText" config="vm.config.appraisalMeetingInvitation" schema="vm.invitationTextSchema"></textarea-edit-control>
         </div>

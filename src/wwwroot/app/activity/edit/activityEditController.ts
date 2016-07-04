@@ -29,25 +29,7 @@ module Antares.Activity {
         private defaultActivityStatusCode: string = 'PreAppraisal';
 
         //controls
-        controlSchemas: any = {
-            marketAppraisalPrice: {
-                formName: "marketAppraisalPriceControlForm",
-                controlId: "market-appraisal-price",
-                translationKey: "ACTIVITY.EDIT.PRICES.MARKET_APPRAISAL_PRICE",
-                fieldName: "marketAppraisalPrice"
-            },
-            recommendedPrice: {
-                formName: "recommendedPriceControlForm",
-                controlId: "recommended-price",
-                translationKey: "ACTIVITY.EDIT.PRICES.RECOMMENDED_PRICE",
-                fieldName: "recommendedPrice"
-            },
-            vendorEstimatedPrice: {
-                formName: "vendorEstimatedPriceControlForm",
-                controlId: "vendor-estimated-price",
-                translationKey: "ACTIVITY.EDIT.PRICES.VENDOR_ESTIMATED_PRICE",
-                fieldName: "vendorEstimatedPrice"
-            },
+        controlSchemas: any = {           
             askingPrice: {
                 formName: "askingPriceControlForm",
                 controlId: "asking-price",
@@ -129,6 +111,78 @@ module Antares.Activity {
             formName: 'invitationTextForm'
         }
 
+        activityDecorationSchema: Antares.Attributes.IEnumItemEditControlSchema = {
+            controlId: 'decorationId',
+            translationKey: 'ACTIVITY.EDIT.OTHER.DECORATION',
+            fieldName: 'decorationId',
+            formName: 'decorationForm',
+            enumTypeCode: Dto.EnumTypeCode.Decoration
+        }
+
+        kfValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'kfValuationPrice',
+            translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.KF_VALUTATION',
+            formName: 'kfValuationPriceForm',
+            fieldName: 'kfValuationPrice'
+        }
+
+        vendorValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'vendorValuationPrice',
+            translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.VENDOR_VALUATION',
+            formName: 'vendorValuationPriceForm',
+            fieldName: 'vendorValuationPrice'
+        }
+
+        agreedInitialMarketingPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'agreedInitialMarketingPrice',
+            translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.AGREED_INITIAL_MARKETING_PRICE',
+            formName: 'agreedInitialMarketingPriceForm',
+            fieldName: 'agreedInitialMarketingPrice'
+        }
+
+
+        shortKfValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'shortKfValuationPrice',
+            translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.SHORT_LET',
+            formName: 'shortKfValuationPriceForm',
+            fieldName: 'shortKfValuationPrice'
+        }
+
+        shortVendorValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'shortVendorValuationPrice',
+            translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.SHORT_LET',
+            formName: 'shortVendorValuationPriceForm',
+            fieldName: 'shortVendorValuationPrice'
+        }
+
+        shortAgreedInitialMarketingPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'shortAgreedInitialMarketingPrice',
+            translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.SHORT_LET',
+            formName: 'shortAgreedInitialMarketingPriceForm',
+            fieldName: 'shortAgreedInitialMarketingPrice'
+        }
+
+        longKfValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'longKfValuationPrice',
+            translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.LONG_LET',
+            formName: 'longKfValuationPriceForm',
+            fieldName: 'longKfValuationPrice'
+        }
+
+        longVendorValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'longVendorValuationPrice',
+            translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.LONG_LET',
+            formName: 'longVendorValuationPriceForm',
+            fieldName: 'longVendorValuationPrice'
+        }
+
+        longAgreedInitialMarketingPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'longAgreedInitialMarketingPrice',
+            translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.LONG_LET',
+            formName: 'longAgreedInitialMarketingPriceForm',
+            fieldName: 'longAgreedInitialMarketingPrice'
+        }
+
         configMocked: any = {
             attendees: {
                 attendees: {
@@ -194,7 +248,7 @@ module Antares.Activity {
                 entity = new Commands.ActivityEditCommand(this.activity);
                 pageTypeEnum = Enums.PageTypeEnum.Update;
             }
-
+            
             this.configService
                 .getActivity(pageTypeEnum, this.activity.property.propertyTypeId, activity.activityTypeId, entity)
                 .then((newConfig: IActivityEditConfig) => this.config = newConfig);

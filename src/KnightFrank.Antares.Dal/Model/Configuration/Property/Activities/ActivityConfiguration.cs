@@ -26,7 +26,7 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
             this.Property(o => o.AgreedInitialMarketingPrice)
                 .IsMoney();
 
-            this.Property(o => o.KFValuationPrice)
+            this.Property(o => o.KfValuationPrice)
                 .IsMoney();
 
             this.Property(o => o.VendorValuationPrice)
@@ -80,11 +80,11 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
 
             this.HasOptional(a => a.Decoration).WithMany().HasForeignKey(s => s.DecorationId).WillCascadeOnDelete(false);
 
-            this.Property(x => x.ShortKFValuationPrice).IsMoney();
+            this.Property(x => x.ShortKfValuationPrice).IsMoney();
             this.Property(x => x.ShortVendorValuationPrice).IsMoney();
             this.Property(x => x.ShortAgreedInitialMarketingPrice).IsMoney();
 
-            this.Property(x => x.LongKFValuationPrice).IsMoney();
+            this.Property(x => x.LongKfValuationPrice).IsMoney();
             this.Property(x => x.LongVendorValuationPrice).IsMoney();
             this.Property(x => x.LongAgreedInitialMarketingPrice).IsMoney();
         }

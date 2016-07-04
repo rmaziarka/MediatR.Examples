@@ -54,22 +54,19 @@
 
         public Guid? DecorationId { get; set; }
 
-        // ReSharper disable once InconsistentNaming
-        public decimal? KFValuationPrice { get; set; }
+        public decimal? KfValuationPrice { get; set; }
 
         public decimal? VendorValuationPrice { get; set; }
 
         public decimal? AgreedInitialMarketingPrice { get; set; }
 
-        // ReSharper disable once InconsistentNaming
-        public decimal? ShortKFValuationPrice { get; set; }
+        public decimal? ShortKfValuationPrice { get; set; }
 
         public decimal? ShortVendorValuationPrice { get; set; }
 
         public decimal? ShortAgreedInitialMarketingPrice { get; set; }
 
-        // ReSharper disable once InconsistentNaming
-        public decimal? LongKFValuationPrice { get; set; }
+        public decimal? LongKfValuationPrice { get; set; }
 
         public decimal? LongVendorValuationPrice { get; set; }
 

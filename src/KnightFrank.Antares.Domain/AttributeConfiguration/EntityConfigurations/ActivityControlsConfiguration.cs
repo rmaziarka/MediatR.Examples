@@ -80,13 +80,13 @@
             this.AddControl(PageType.Details, ControlCode.OtherCondition, Field<Activity>.Create(x=>x.OtherCondition));
             this.AddControl(PageType.Details, ControlCode.DisposalType, Field<Activity>.Create(x=>x.DisposalTypeId, x=>x.DisposalType));
             this.AddControl(PageType.Details, ControlCode.Decoration, Field<Activity>.Create(x => x.DecorationId, x => x.Decoration));
-            this.AddControl(PageType.Details, ControlCode.KFValuationPrice, Field<Activity>.Create(x => x.KFValuationPrice));
+            this.AddControl(PageType.Details, ControlCode.KfValuationPrice, Field<Activity>.Create(x => x.KfValuationPrice));
             this.AddControl(PageType.Details, ControlCode.VendorValuationPrice, Field<Activity>.Create(x => x.VendorValuationPrice));
             this.AddControl(PageType.Details, ControlCode.AgreedInitialMarketingPrice, Field<Activity>.Create(x => x.AgreedInitialMarketingPrice));
-            this.AddControl(PageType.Details, ControlCode.ShortKFValuationPrice, Field<Activity>.Create(x => x.ShortKFValuationPrice));
+            this.AddControl(PageType.Details, ControlCode.ShortKfValuationPrice, Field<Activity>.Create(x => x.ShortKfValuationPrice));
             this.AddControl(PageType.Details, ControlCode.ShortVendorValuationPrice, Field<Activity>.Create(x => x.ShortVendorValuationPrice));
             this.AddControl(PageType.Details, ControlCode.ShortAgreedInitialMarketingPrice, Field<Activity>.Create(x => x.ShortAgreedInitialMarketingPrice));
-            this.AddControl(PageType.Details, ControlCode.LongKFValuationPrice, Field<Activity>.Create(x => x.LongKFValuationPrice));
+            this.AddControl(PageType.Details, ControlCode.LongKfValuationPrice, Field<Activity>.Create(x => x.LongKfValuationPrice));
             this.AddControl(PageType.Details, ControlCode.LongVendorValuationPrice, Field<Activity>.Create(x => x.LongVendorValuationPrice));
             this.AddControl(PageType.Details, ControlCode.LongAgreedInitialMarketingPrice, Field<Activity>.Create(x => x.LongAgreedInitialMarketingPrice));
 
@@ -130,13 +130,13 @@
                 this.AddControl(pageType, ControlCode.OtherCondition, Field<ActivityCommandBase>.Create(x => x.OtherCondition));
                 this.AddControl(pageType, ControlCode.DisposalType, Field<ActivityCommandBase>.Create(x => x.DisposalTypeId).Required());
                 this.AddControl(pageType, ControlCode.Decoration, Field<ActivityCommandBase>.Create(x => x.DecorationId));
-                this.AddControl(pageType, ControlCode.KFValuationPrice, Field<ActivityCommandBase>.Create(x => x.KFValuationPrice).Required());
+                this.AddControl(pageType, ControlCode.KfValuationPrice, Field<ActivityCommandBase>.Create(x => x.KfValuationPrice).Required());
                 this.AddControl(pageType, ControlCode.VendorValuationPrice, Field<ActivityCommandBase>.Create(x => x.VendorValuationPrice));
                 this.AddControl(pageType, ControlCode.AgreedInitialMarketingPrice, Field<ActivityCommandBase>.Create(x => x.AgreedInitialMarketingPrice));
-                this.AddControl(pageType, ControlCode.ShortKFValuationPrice, Field<ActivityCommandBase>.Create(x => x.ShortKFValuationPrice).Required());
+                this.AddControl(pageType, ControlCode.ShortKfValuationPrice, Field<ActivityCommandBase>.Create(x => x.ShortKfValuationPrice).Required());
                 this.AddControl(pageType, ControlCode.ShortVendorValuationPrice, Field<ActivityCommandBase>.Create(x => x.ShortVendorValuationPrice));
                 this.AddControl(pageType, ControlCode.ShortAgreedInitialMarketingPrice, Field<ActivityCommandBase>.Create(x => x.ShortAgreedInitialMarketingPrice));
-                this.AddControl(pageType, ControlCode.LongKFValuationPrice, Field<ActivityCommandBase>.Create(x => x.LongKFValuationPrice).Required());
+                this.AddControl(pageType, ControlCode.LongKfValuationPrice, Field<ActivityCommandBase>.Create(x => x.LongKfValuationPrice).Required());
                 this.AddControl(pageType, ControlCode.LongVendorValuationPrice, Field<ActivityCommandBase>.Create(x => x.LongVendorValuationPrice));
                 this.AddControl(pageType, ControlCode.LongAgreedInitialMarketingPrice, Field<ActivityCommandBase>.Create(x => x.LongAgreedInitialMarketingPrice));
             }
@@ -253,7 +253,7 @@
             this.Use(
                 new List<ControlCode>
                 {
-                                ControlCode.KFValuationPrice,
+                                ControlCode.KfValuationPrice,
                                 ControlCode.VendorValuationPrice,
                                 ControlCode.AgreedInitialMarketingPrice
                 },
@@ -264,14 +264,14 @@
             this.Use(
                 new List<ControlCode>
                 {
-                                ControlCode.ShortKFValuationPrice,
+                                ControlCode.ShortKfValuationPrice,
                                 ControlCode.ShortVendorValuationPrice,
                                 ControlCode.ShortAgreedInitialMarketingPrice,
-                                ControlCode.LongKFValuationPrice,
+                                ControlCode.LongKfValuationPrice,
                                 ControlCode.LongVendorValuationPrice,
                                 ControlCode.LongAgreedInitialMarketingPrice
                 },
-                this.When(residentialSale, PageType.Details, PageType.Create, PageType.Update))
+                this.When(openMarketLetting, PageType.Details, PageType.Create, PageType.Update))
                 .ReadonlyWhen<UpdateActivityCommand>(x => x.ActivityStatusId != activityStatusMarketAppraisal)
                 .HiddenWhen<UpdateActivityCommand>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
         }
