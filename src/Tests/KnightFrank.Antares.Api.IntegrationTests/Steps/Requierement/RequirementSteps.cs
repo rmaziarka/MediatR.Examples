@@ -117,11 +117,10 @@
             this.scenarioContext.Set(details, "Location");
         }
 
-        [When(@"User creates following requirement using api")]
-        public void CreateRequirementWithApi(Table table)
+        [When(@"User creates (\w+) requirement using api")]
+        public void CreateRequirementWithApi(string requirementType)
         {
             var contacts = this.scenarioContext.Get<List<Contact>>("Contacts");
-            string requirementType = table.Rows[0]["RequirementType"];
 
             var requirement = new CreateRequirementCommand
             {
@@ -129,15 +128,21 @@
                 Address = this.scenarioContext.Get<CreateOrUpdateAddress>("Location"),
                 Description = StringExtension.GenerateMaxAlphanumericString(4000),
                 RequirementTypeId = this.fixture.DataContext.RequirementTypes.Single(rt => rt.EnumCode.Equals(requirementType)).Id,
-                RentMin = 1000,
-                RentMax = 2000
             };
+
+            switch (requirementType)
+            {
+                case nameof(RequirementType.ResidentialLetting):
+                    requirement.RentMin = 1000;
+                    requirement.RentMax = 2000;
+                    break;
+            }
 
             this.PostRequirement(requirement);
         }
 
-        [When(@"User creates requirement with mandatory fields using api")]
-        public void CreateRequirementWithMandatoryFieldsWithApi()
+        [When(@"User creates (\w+) requirement with mandatory fields using api")]
+        public void CreateRequirementWithMandatoryFieldsWithApi(string requirementType)
         {
             var contacts = this.scenarioContext.Get<List<Contact>>("Contacts");
 
@@ -154,7 +159,7 @@
                 },
                 RequirementTypeId =
                     this.fixture.DataContext.RequirementTypes.First(
-                        rt => rt.EnumCode.Equals(nameof(RequirementType.ResidentialLetting))).Id
+                        rt => rt.EnumCode.Equals(requirementType)).Id
             };
 
             this.PostRequirement(requirement);
