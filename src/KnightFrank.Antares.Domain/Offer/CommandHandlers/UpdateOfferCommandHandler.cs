@@ -63,9 +63,9 @@
 
             this.entityValidator.EntityExists(offer, message.Id);
             this.entityValidator.EntityExists<Contact>(message.ApplicantSolicitorId);
-            this.entityValidator.EntityExists<Company>( message.ApplicantSolicitorCompanyId);
+            this.entityValidator.EntityExists<Company>(message.ApplicantSolicitorCompanyId);
             this.entityValidator.EntityExists<Contact>(message.VendorSolicitorId);
-            this.entityValidator.EntityExists<Company>( message.VendorSolicitorCompanyId);
+            this.entityValidator.EntityExists<Company>(message.VendorSolicitorCompanyId);
 
             // ReSharper disable once PossibleNullReferenceException
             var offerType = EnumExtensions.ParseEnum<OfferType>(offer.OfferType.EnumCode);
