@@ -102,6 +102,16 @@
             return controlFields;
         }
 
+        public static IList<Tuple<Control, IList<IField>>> Readonly(this IList<Tuple<Control, IList<IField>>> controlFields)
+        {
+            foreach (Tuple<Control, IList<IField>> tuple in controlFields)
+            {
+                tuple.Item1.SetReadonly();
+            }
+
+            return controlFields;
+        }
+
         public static IList<Tuple<Control, IList<IField>>> ReadonlyWhen<TEntity>(this IList<Tuple<Control, IList<IField>>> controlFields, Expression<Func<TEntity, bool>> expression )
         {
             IEnumerable<Tuple<Control, IList<IField>>> controlsForCurrentType = 
