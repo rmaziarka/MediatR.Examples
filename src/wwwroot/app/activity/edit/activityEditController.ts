@@ -97,7 +97,8 @@ module Antares.Activity {
             controlId: 'keyNumberId',
             translationKey: 'ACTIVITY.EDIT.KEY_NUMBER',
             fieldName: 'keyNumber',
-            formName: 'keyNumberForm'
+            formName: 'keyNumberForm',
+            maxLength: 128
         }
 
         pitchingThreatsSchema: Antares.Attributes.ITextEditControlSchema = {
