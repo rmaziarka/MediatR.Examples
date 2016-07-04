@@ -8,6 +8,10 @@ module Antares.Offer {
     import PubSub = Core.PubSub;
     import CloseSidePanelEvent = Antares.Common.Component.CloseSidePanelEvent;
     import Enums = Common.Models.Enums;
+    import OpenCompanyContactEditPanelEvent = Antares.Attributes.OpenCompanyContactEditPanelEvent;
+    import CompanyContactType = Antares.Common.Models.Enums.CompanyContactType;
+    import ICompanyContactEditControlSchema = Antares.Attributes.ICompanyContactEditControlSchema;
+    import CompanyContactConnection = Antares.Common.Models.Business.CompanyContactRelation;
 
     export class OfferEditController extends Core.WithPanelsBaseController {
         public offer: Business.Offer;
@@ -19,6 +23,20 @@ module Antares.Offer {
         public enumTypeSearchStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.SearchStatus;
         public enumTypeEnquiriesStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.Enquiries;
         public enumTypeOfferStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.OfferStatus;
+        public companyContactType = Antares.Common.Models.Enums.CompanyContactType;
+
+        private schemas = {
+            broker: <ICompanyContactEditControlSchema>{
+                formName: 'brokerForm',
+                controlId: 'broker',
+                translationKey: 'OFFER.EDIT.BROKER',
+                emptyTranslationKey: 'OFFER.EDIT.NO_BROKER'
+            }
+        };
+
+        private config = {
+            broker: {}
+        };
 
         sidePanelSelectedCompanyContacts: Business.CompanyContact[];
 
@@ -37,7 +55,10 @@ module Antares.Offer {
         exchangeDateOpen: boolean = false;
         completionDateOpen: boolean = false;
         isCompanyContactAddPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isBrokerEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         contactToSelect: string = '';
+
+        brokerCompanyContact: CompanyContactConnection = null;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -52,14 +73,39 @@ module Antares.Offer {
             private pubSub: PubSub,
             private eventAggregator: Core.EventAggregator,
             private appConfig: Common.Models.IAppConfig) {
+
             super(componentRegistry, $scope);
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
             eventAggregator.with(this).subscribe(CloseSidePanelEvent, this.companyContactPanelClosed);
+            eventAggregator.with(this).subscribe(OpenCompanyContactEditPanelEvent, this.openCompanyContactEditPanel);
+
             this.offerOriginal = angular.copy(this.offer);
+
+            this.createCompanyContacts();
+        }
+
+        private createCompanyContacts() {
+            if (this.offer.broker) {
+                this.brokerCompanyContact = new CompanyContactConnection(this.offer.broker, this.offer.brokerCompany);
+            }
+            
         }
 
         companyContactPanelClosed = () => {
             this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Closed;
+            this.isBrokerEditPanelVisible = Enums.SidePanelState.Closed;
+        }
+
+        openCompanyContactEditPanel = (event: OpenCompanyContactEditPanelEvent) => {
+            this.hidePanels();
+
+            switch (event.type) {
+                case CompanyContactType.Broker:
+                    this.isBrokerEditPanelVisible = Enums.SidePanelState.Opened;
+                    break;
+
+                    // TODO: Add other company contact types
+            }
         }
 
         showBrokerSelectPanel = () => {
@@ -287,6 +333,9 @@ module Antares.Offer {
             if (this.offerAccepted() === false) {
                 this.restoreOfferProgressSummary();
             }
+
+            this.offer.brokerId = this.brokerCompanyContact.contact.id;
+            this.offer.brokerCompanyId = this.brokerCompanyContact.company.id;
 
             this.offer.offerDate = Core.DateTimeUtils.createDateAsUtc(this.offer.offerDate);
             this.offer.exchangeDate = Core.DateTimeUtils.createDateAsUtc(this.offer.exchangeDate);

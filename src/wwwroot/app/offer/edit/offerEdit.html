@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <h2 class="page-header" translate="OFFER.EDIT.EDIT_OFFER"></h2>
     </div>
-    <form ng-submit="vm.editOfferForm.$valid && vm.save()" name="vm.editOfferForm" id="editOfferForm" method="post" novalidate>
+    <form ng-submit="vm.editOfferForm.isFormValid() && vm.save()" name="vm.editOfferForm" id="editOfferForm" method="post" novalidate>
         <div class="col-md-4">
             <section id="section-vendor">
                 <h3 class="page-header" translate="OFFER.VIEW.VENDOR"></h3>
@@ -260,23 +260,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <h5 translate="OFFER.EDIT.BROKER"></h5>
-                    <button id="edit-broker" type="button" class="btn btn-default" ng-click="vm.showBrokerSelectPanel()">
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </button>
-                </div>
-                <list-no-items ng-if="!vm.offer.broker">
-                    <p class="help-block" id="no-contacts-help-block" ng-show="vm.editOfferForm.$submitted === false" translate="OFFER.EDIT.NO_BROKER"></p>
-                </list-no-items>
-                <div id="broker" class="row" ng-if="!!vm.offer.broker">
-                    <div class="col-md-6">
-                        <card-list-item class="offer-broker">
-                            <card show-context-menu="false" card-template-url="'app/offer/view/offerContactCard.html'" item="vm.offer.broker">
-                            </card>
-                        </card-list-item>
-                    </div>
-                </div>
+                <company-contact-edit-control schema="vm.schemas.broker"
+                                              config="vm.config.broker"
+                                              type="vm.companyContactType.Broker"
+                                              company-contact="vm.brokerCompanyContact"
+                                              is-panel-visible="vm.isBrokerEditPanelVisible">
+                </company-contact-edit-control>
                 <div class="form-group">
                     <h5 translate="OFFER.EDIT.LENDER"></h5>
                     <button id="edit-lender" type="button" class="btn btn-default" ng-click="vm.showLenderSelectPanel()">
