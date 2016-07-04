@@ -10,6 +10,8 @@
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property;
     using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Commands;
     using KnightFrank.Antares.Domain.Requirement.CommandHandlers;
@@ -32,6 +34,7 @@
             [Frozen] Mock<IGenericRepository<RequirementType>> requirementTypeRepository,
             [Frozen] Mock<IGenericRepository<Contact>> contactRepository,
             [Frozen] Mock<IAddressValidator> addressValidator,
+            [Frozen] Mock<IAttributeValidator<Tuple<Domain.Common.Enums.RequirementType>>> attributeValidator,
             CreateRequirementCommand command,
             CreateRequirementCommandHandler commandHandler,
             IFixture fixture)
@@ -55,6 +58,7 @@
             requirementRepository.VerifyAll();
             requirementTypeRepository.Verify(x => x.GetById(It.IsAny<Guid>()), Times.Once());
             contactRepository.VerifyAll();
+            attributeValidator.Verify(x => x.Validate(It.IsAny<PageType>(), It.IsAny<Tuple<Domain.Common.Enums.RequirementType>>(), It.IsAny<CreateRequirementCommand>()), Times.Once);
             addressValidator.Verify(x => x.Validate(It.IsAny<CreateOrUpdateAddress>()), Times.Once());
         }
 

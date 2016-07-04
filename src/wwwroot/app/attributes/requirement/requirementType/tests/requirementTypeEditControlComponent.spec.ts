@@ -7,7 +7,8 @@ module Antares {
         var scope: ng.IScope,
             compile: ng.ICompileService,
             element: ng.IAugmentedJQuery,
-            controller: RequirementTypeEditControlController;
+            controller: RequirementTypeEditControlController,
+            assertValidator: TestHelpers.AssertValidators;
         
         var typeChangedMock = () =>{
             var i = 1;
@@ -47,7 +48,12 @@ module Antares {
             element = compile(mockedComponentHtml)(scope);
             scope.$apply();
             controller = element.controller('requirementTypeEditControl');
+            assertValidator = new TestHelpers.AssertValidators(element, scope);
         }));
+
+        it('when requirement type is required then validation message should be displayed', () => {
+            assertValidator.assertRequiredValidator(null, false, pageObjectSelector.type);
+        });
 
         describe('when select value is change', () => {
             it('then on change method is called', () =>{

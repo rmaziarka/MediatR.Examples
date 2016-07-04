@@ -17,7 +17,8 @@
                         <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.description.$dirty) && addRequirementForm.description.$invalid}">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <requirement-description-edit-control ng-model="vm.requirement.description" config="vm.config.requirement_Description" />
+                                    <!-- TODO - user generic description control-->
+                                    <requirement-description-edit-control ng-model="vm.requirement.description" config="vm.config.requirement_Description"/>
                                 </div>
                             </div>
                         </div>
