@@ -48,9 +48,9 @@
         {
             var contact = table.CreateInstance<Contact>();
 
-            this.page.SetTitle(contact.Title)
-                .SetFirstName(contact.FirstName)
-                .SetLastName(contact.LastName);
+            this.page.SetFirstName(contact.FirstName)
+                .SetLastName(contact.LastName)
+                .SetTitle(contact.Title);
         }
 
         [When(@"User clicks save contact button on create contact page")]
