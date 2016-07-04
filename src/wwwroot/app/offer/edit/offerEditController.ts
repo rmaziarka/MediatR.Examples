@@ -122,6 +122,59 @@ module Antares.Offer {
                 controlId : "offer-special-conditions",
                 translationKey : "OFFER.EDIT.SPECIAL_CONDITIONS",
                 fieldName : "specialConditions"
+            },
+            mortgageStatus: <Attributes.IEnumItemEditControlSchema>{
+                formName: "mortgageStatusControlForm",
+                controlId: "offer-mortgage-status",
+                translationKey: "OFFER.EDIT.MORTGAGE_STATUS",
+                fieldName: "mortgageStatusId",
+                enumTypeCode: Dto.EnumTypeCode.MortgageStatus
+            },
+            mortgageSurveyStatus: <Attributes.IEnumItemEditControlSchema>{
+                formName: "mortgageSurveyStatusControlForm",
+                controlId: "offer-mortgage-survey-status",
+                translationKey: "OFFER.EDIT.MORTGAGE_SURVEY_STATUS",
+                fieldName: "mortgageSurveyStatusId",
+                enumTypeCode: Dto.EnumTypeCode.MortgageSurveyStatus
+            },
+            additionalSurveyStatus: <Attributes.IEnumItemEditControlSchema>{
+                formName: "additionalSurveyStatusControlForm",
+                controlId: "offer-additional-survey-status",
+                translationKey: "OFFER.EDIT.ADDITIONAL_SURVEY_STATUS",
+                fieldName: "additionalSurveyStatusId",
+                enumTypeCode: Dto.EnumTypeCode.AdditionalSurveyStatus
+            },
+            searchStatus: <Attributes.IEnumItemEditControlSchema>{
+                formName: "searchStatusControlForm",
+                controlId: "offer-search-status",
+                translationKey: "OFFER.EDIT.SEARCH_STATUS",
+                fieldName: "searchStatusId",
+                enumTypeCode: Dto.EnumTypeCode.SearchStatus
+            },
+            enquiries: <Attributes.IEnumItemEditControlSchema>{
+                formName: "enquiriesControlForm",
+                controlId: "offer-enquiries",
+                translationKey: "OFFER.EDIT.ENQUIRIES",
+                fieldName: "enquiriesId",
+                enumTypeCode: Dto.EnumTypeCode.Enquiries
+            },
+            mortgageSurveyDate: <Attributes.IDateEditControlSchema>{
+                formName: "mortgageSurveyDateControlForm",
+                controlId: "offer-mortgage-survey-date",
+                translationKey: "OFFER.EDIT.MORTGAGE_SURVEY_DATE",
+                fieldName: "mortgageSurveyDate"
+            },
+            additionalSurveyDate: <Attributes.IDateEditControlSchema>{
+                formName: "additionalSurveyDateControlForm",
+                controlId: "offer-additional-survey-date",
+                translationKey: "OFFER.EDIT.ADDITIONAL_SURVEY_DATE",
+                fieldName: "additionalSurveyDate"
+            },
+            progressComment: <Attributes.ITextEditControlSchema>{
+                formName: "progressCommentControlForm",
+                controlId: "offer-progress-comment",
+                translationKey: "OFFER.EDIT.COMMENT",
+                fieldName: "progressComment"
             }
         };
 
@@ -157,6 +210,25 @@ module Antares.Offer {
             
         }
 
+        isMortgageDetailsSectionVisible = () =>{
+            return this.config.offer_Broker
+                || this.config.offer_Lender
+                || this.config.offer_MortgageSurveyDate
+                || this.config.offer_Surveyor;
+        }
+
+        isProgressSummarySectionVisible = () =>{
+            return this.config.offer_MortgageStatus
+                || this.config.offer_MortgageSurveyStatus
+                || this.config.offer_SearchStatus
+                || this.config.offer_Enquiries
+                || this.config.offer_ContractApproved;
+        }
+
+        isAdditionalSurveySectionVisible = () =>{
+            return this.config.offer_AdditionalSurveyor
+                || this.config.offer_AdditionalSurveyDate;
+        }
         companyContactPanelClosed = () => {
             this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Closed;
             this.isBrokerEditPanelVisible = Enums.SidePanelState.Closed;
@@ -393,7 +465,7 @@ module Antares.Offer {
             }
 
             this.offer.brokerId = this.brokerCompanyContact && this.brokerCompanyContact.contact.id;
-            this.offer.brokerCompanyId = this.brokerCompanyContact && this.brokerCompanyContact.company.id;
+            this.offer.brokerCompanyId = this.brokerCompanyContact && this.brokerCompanyContact.company.id; 
 
             this.offer.offerDate = Core.DateTimeUtils.createDateAsUtc(this.offer.offerDate);
             this.offer.exchangeDate = Core.DateTimeUtils.createDateAsUtc(this.offer.exchangeDate);
