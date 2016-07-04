@@ -16,7 +16,7 @@
                         <enum-item-edit-control ng-model="vm.activity.activityStatusId"
                                                 config="vm.config.activityStatus"
                                                 schema="vm.activityStatusSchema"
-                                                on-selected-item-changed="vm.activityStatusChanged(activityStatusId)"></enum-item-edit-control>
+                                                on-selected-item-changed="vm.activityStatusChanged(id)"></enum-item-edit-control>
                     </div>
                 </div>
             </div>
@@ -56,6 +56,7 @@
                 <fieldset id="activity-edit-basic">
                     <h3 class="page-header" translate="ACTIVITY.EDIT.BASIC_INFORMATION"></h3>
                     <property-view-control property="vm.activity.property" is-panel-visible="vm.isPropertyPreviewPanelVisible" config="vm.config.property"></property-view-control>
+                    <enum-item-edit-control ng-model="vm.activity.disposalTypeId" config="vm.config.disposalType" schema="vm.activityDisposalTypeSchema"></enum-item-edit-control>
                     <enum-item-edit-control ng-model="vm.activity.sourceId" config="vm.config.source" schema="vm.activitySourceSchema"></enum-item-edit-control>
                     <textarea-edit-control ng-model="vm.activity.sourceDescription" config="vm.config.sourceDescription" schema="vm.activitySourceDescriptionSchema"></textarea-edit-control>
                     <enum-item-edit-control ng-model="vm.activity.sellingReasonId" config="vm.config.sellingReason" schema="vm.activitySellingReasonSchema"></enum-item-edit-control>

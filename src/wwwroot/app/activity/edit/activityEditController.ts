@@ -70,6 +70,14 @@ module Antares.Activity {
             enumTypeCode: Dto.EnumTypeCode.ActivitySource
         }
 
+        activityDisposalTypeSchema: Antares.Attributes.IEnumItemEditControlSchema = {
+            controlId: 'disposalTypeId',
+            translationKey: 'ACTIVITY.EDIT.DISPOSAL_TYPE',
+            fieldName: 'disposalTypeId',
+            formName: 'disposalTypeForm',
+            enumTypeCode: Dto.EnumTypeCode.DisposalType
+        }
+
         activityStatusSchema: Antares.Attributes.IEnumItemEditControlSchema = {
             controlId: 'activityStatusId',
             translationKey: 'ACTIVITY.EDIT.STATUS',
@@ -169,7 +177,8 @@ module Antares.Activity {
             this.reloadConfig(this.activity);
         }
 
-        public activityStatusChanged = (activityStatusId: string) => {
+        public activityStatusChanged = (id: string) =>{
+            
             this.reloadConfig(this.activity);
         }
 

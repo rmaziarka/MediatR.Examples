@@ -23,6 +23,8 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 	 	Enquiries,
 	 	ActivitySource,
 	 	ActivitySellingReason,
+	 	DisposalType,
+	 	Decoration,
 	 }
 
 	
@@ -185,6 +187,21 @@ namespace KnightFrank.Antares.Domain.Common.Enums
 		RegularPropertyValueAppraisal,
 		Relocation,
 		Retiring,
-		SurpliceToTequirement,
+		SurpliceToRequirement,
+	}
+
+	public enum DisposalType
+	{
+		PrivateTreaty,
+		FormalTender,
+		AuctionSpecificToResidential,
+	}
+
+	public enum Decoration
+	{
+		Unmodernised,
+		Fair,
+		Good,
+		VeryGood,
 	}
 }

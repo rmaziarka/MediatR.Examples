@@ -214,9 +214,19 @@
                 this.When(allResidentials, PageType.Create, PageType.Update));
 
             this.Use(new List<ControlCode> { ControlCode.DisposalType },
-                this.When(residentialSale, PageType.Details, PageType.Create, PageType.Update))
-                .ReadonlyWhen<UpdateActivityCommand>(x =>x.ActivityStatusId != activityStatusMarketAppraisal)
-                .HiddenWhen<UpdateActivityCommand>(x =>x.ActivityStatusId != activityStatusMarketAppraisal);
+                this.When(residentialSale, PageType.Create))
+                .ReadonlyWhen<CreateActivityCommand>(x => x.ActivityStatusId != activityStatusMarketAppraisal)
+                .HiddenWhen<CreateActivityCommand>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
+
+            this.Use(new List<ControlCode> { ControlCode.DisposalType },
+                this.When(residentialSale, PageType.Update))
+                .ReadonlyWhen<UpdateActivityCommand>(x => x.ActivityStatusId != activityStatusMarketAppraisal)
+                .HiddenWhen<UpdateActivityCommand>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
+
+            this.Use(new List<ControlCode> { ControlCode.DisposalType },
+                this.When(residentialSale, PageType.Details))
+                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal)
+                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
 
             this.Use(
                 new List<ControlCode>
