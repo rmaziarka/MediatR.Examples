@@ -9,12 +9,6 @@
     {
         public Guid ActivityStatusId { get; set; }
 
-        public decimal? MarketAppraisalPrice { get; set; }
-
-        public decimal? RecommendedPrice { get; set; }
-
-        public decimal? VendorEstimatedPrice { get; set; }
-
         public decimal? ShortLetPricePerWeek { get; set; }
 
         public decimal? AskingPrice { get; set; }
@@ -42,5 +36,37 @@
         public string AccessArrangements { get; set; }
 
         public UpdateActivityAppraisalMeeting AppraisalMeeting { get; set; } = new UpdateActivityAppraisalMeeting();
+
+        public decimal? ServiceChargeAmount { get; set; }
+        public string ServiceChargeNote { get; set; }
+        public decimal? GroundRentAmount { get; set; }
+        public string GroundRentNote { get; set; }
+
+        public string OtherCondition { get; set; }
+
+        public Guid? DisposalTypeId { get; set; }
+
+        public Guid? DecorationId { get; set; }
+
+        // ReSharper disable once InconsistentNaming
+        public decimal? KFValuationPrice { get; set; }
+
+        public decimal? VendorValuationPrice { get; set; }
+
+        public decimal? AgreedInitialMarketingPrice { get; set; }
+
+        // ReSharper disable once InconsistentNaming
+        public decimal? ShortKFValuationPrice { get; set; }
+
+        public decimal? ShortVendorValuationPrice { get; set; }
+
+        public decimal? ShortAgreedInitialMarketingPrice { get; set; }
+
+        // ReSharper disable once InconsistentNaming
+        public decimal? LongKFValuationPrice { get; set; }
+
+        public decimal? LongVendorValuationPrice { get; set; }
+
+        public decimal? LongAgreedInitialMarketingPrice { get; set; }
     }
 }

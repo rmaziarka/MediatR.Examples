@@ -12,9 +12,10 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         AskingPrice,
         ShortLetPricePerWeek,
         CreationDate,
-        MarketAppraisalPrice,
-        RecommendedPrice,
-        VendorEstimatedPrice,
+        // ReSharper disable once InconsistentNaming
+        KFValuationPrice,
+        VendorValuationPrice,
+        AgreedInitialMarketingPrice,
         Offers,
         Viewings,
         Attachments,
@@ -27,6 +28,21 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         AppraisalMeeting,
         AppraisalMeetingDate,
         AppraisalMeetingAttendees,
-        AppraisalMeetingInvitation
+        AppraisalMeetingInvitation,
+        ServiceChargeAmount,
+        ServiceChargeNote,
+        GroundRentAmount,
+        GroundRentNote,
+        OtherCondition,
+        DisposalType,
+        Decoration,
+        // ReSharper disable once InconsistentNaming
+        ShortKFValuationPrice,
+        ShortVendorValuationPrice,
+        ShortAgreedInitialMarketingPrice,
+        // ReSharper disable once InconsistentNaming
+        LongKFValuationPrice,
+        LongVendorValuationPrice,
+        LongAgreedInitialMarketingPrice,
     }
 }
