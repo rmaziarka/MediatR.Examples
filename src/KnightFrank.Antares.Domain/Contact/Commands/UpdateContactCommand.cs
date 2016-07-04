@@ -1,6 +1,8 @@
 ﻿namespace KnightFrank.Antares.Domain.Contact.Commands
 {
     using System;
+    using System.Collections.Generic;
+
     using MediatR;
 
     public class UpdateContactCommand : IRequest<Guid> 
@@ -36,5 +38,9 @@
         public string EventEnvelopeSalutation { get; set; }
 
         public Guid? DefaultEventSalutationId { get; set; }
+
+        public ContactUserCommand LeadNegotiator { get; set; }
+
+        public IList<ContactUserCommand> SecondaryNegotiators { get; set; }
     }
 }
