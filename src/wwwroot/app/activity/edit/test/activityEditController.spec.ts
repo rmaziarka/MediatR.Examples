@@ -230,9 +230,6 @@ module Antares {
 
                 var expectCorrectRequest = (requestData: Antares.Activity.Commands.IActivityBaseCommand, activity: Activity.ActivityEditModel) => {
                     expect(requestData.activityStatusId).toEqual(activity.activityStatusId);
-                    expect(requestData.marketAppraisalPrice).toEqual(activity.marketAppraisalPrice);
-                    expect(requestData.recommendedPrice).toEqual(activity.recommendedPrice);
-                    expect(requestData.vendorEstimatedPrice).toEqual(activity.vendorEstimatedPrice);
                     expect(requestData.leadNegotiator.userId).toEqual(activity.leadNegotiator.userId);
                     expect(requestData.sellingReasonId).toEqual(activity.sellingReasonId);
                     expect(requestData.sourceId).toEqual(activity.sourceId);

@@ -218,6 +218,13 @@
         "ADDITIONAL_INFORMATION": "Additional information",
         "ACCESS_DETAILS": "Access details"
       },
+      "CHARGES": {
+        "CHARGES": "Charges",
+        "SERVICE_CHARGE": "Service charge",
+        "GROUND_RENT": "Ground rent",
+        "SERVICE_CHARGE_NOTE": "Service charge note",
+        "GROUND_RENT_NOTE": "Ground rent note"
+      },
       "DISPOSAL_TYPE": "Disposal type",
       "STATUS": "Status",
       "PROPERTY": "Property",
@@ -227,6 +234,10 @@
       "OTHER": {
         "OTHER": "Other",
         "DECORATION": "Decoration"
+      },
+      "OTHER_CONDITIONS": {
+        "OTHER_CONDITIONS": "Other conditions",
+        "RESTRICTIONS": "Restrictions"
       },
       "PRICES": {
         "PRICES": "Valuation prices",
@@ -242,7 +253,8 @@
         "AGREED_INITIAL_MARKETING_PRICE": "Agreed Initial Marketing Price",
         "VENDOR_VALUATION": "Vendor Valuation",
         "SHORT_LET": "Short let",
-        "LONG_LET": "Long let" 
+        "LONG_LET": "Long let",
+        "SUFFIX": "GBP / week"
       },
       "SOURCE": "Source",
       "SOURCE_DESCRIPTION": "Source - description",

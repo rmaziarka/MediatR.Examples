@@ -23,9 +23,7 @@ module Antares.Common.Models.Business {
                 this.id = activity.id;
                 this.activityTypeId = activity.activityTypeId;
                 this.activityStatusId = activity.activityStatusId;
-                this.marketAppraisalPrice = activity.marketAppraisalPrice;
-                this.recommendedPrice = activity.recommendedPrice;
-                this.vendorEstimatedPrice = activity.vendorEstimatedPrice;
+                this.activityStatusId = activity.activityStatusId;
                 //this.leadNegotiator = new UpdateActivityUserResource(activity.leadNegotiator);
                 this.secondaryNegotiators = _.map(activity.secondaryNegotiator, (activityUser: Business.ActivityUser) => new UpdateActivityUserResource(activityUser));
                 this.departments = _.map(activity.activityDepartments, (department: Business.ActivityDepartment) => new UpdateActivityDepartmentResource(department));

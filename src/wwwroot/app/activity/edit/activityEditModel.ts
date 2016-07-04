@@ -41,6 +41,7 @@ module Antares.Activity  {
         longAgreedInitialMarketingPrice: number = null;
         longVendorValuationPrice: number = null;
         disposalTypeId: string = '';
+        decorationId: string = '';
         serviceChargeAmount: number = null;
         serviceChargeNote: string = '';
         groundRentAmount: number = null;

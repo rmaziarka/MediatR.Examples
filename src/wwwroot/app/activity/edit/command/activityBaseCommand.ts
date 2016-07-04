@@ -26,12 +26,25 @@ module Antares.Activity.Commands {
         appraisalMeetingInvitationText: string = '';
         keyNumber: string = '';
         accessArrangements: string = '';
+        kfValuationPrice: number = null;
+        agreedInitialMarketingPrice: number = null;
+        vendorValuationPrice: number = null;
+        shortKfValuationPrice: number = null;
+        shortAgreedInitialMarketingPrice: number = null;
+        shortVendorValuationPrice: number = null;
+        longKfValuationPrice: number = null;
+        longAgreedInitialMarketingPrice: number = null;
+        longVendorValuationPrice: number = null;
+        disposalTypeId: string = '';
+        decorationId: string = '';
+        serviceChargeAmount: number = null;
+        serviceChargeNote: string = '';
+        groundRentAmount: number = null;
+        groundRentNote: string = '';
+        otherCondition: string = '';
 
         constructor(activity: Activity.ActivityEditModel) {
             this.activityStatusId = activity.activityStatusId;
-            this.marketAppraisalPrice = activity.marketAppraisalPrice;
-            this.recommendedPrice = activity.recommendedPrice;
-            this.vendorEstimatedPrice = activity.vendorEstimatedPrice;
             this.shortLetPricePerWeek = activity.shortLetPricePerWeek;
             this.askingPrice = activity.askingPrice;
             this.activityTypeId = activity.activityTypeId;
@@ -50,14 +63,28 @@ module Antares.Activity.Commands {
             this.appraisalMeetingInvitationText = activity.appraisalMeeting.appraisalMeetingInvitationText;
             this.keyNumber = activity.accessDetails.keyNumber;
             this.accessArrangements = activity.accessDetails.accessArrangements;
+            this.kfValuationPrice = activity.kfValuationPrice;
+            this.agreedInitialMarketingPrice = activity.agreedInitialMarketingPrice;
+            this.vendorValuationPrice = activity.vendorValuationPrice;
+            this.shortKfValuationPrice = activity.shortKfValuationPrice;
+            this.shortAgreedInitialMarketingPrice = activity.shortAgreedInitialMarketingPrice;
+            this.shortVendorValuationPrice = activity.shortVendorValuationPrice;
+            this.longKfValuationPrice = activity.longKfValuationPrice;
+            this.longAgreedInitialMarketingPrice = activity.longAgreedInitialMarketingPrice;
+            this.longVendorValuationPrice = activity.longVendorValuationPrice;
+            this.disposalTypeId = activity.disposalTypeId;
+            this.decorationId = activity.decorationId;
+            this.serviceChargeAmount = activity.serviceChargeAmount;
+            this.serviceChargeNote = activity.serviceChargeNote;
+            this.groundRentAmount = activity.groundRentAmount;
+            this.groundRentNote = activity.groundRentNote;
+            this.otherCondition = activity.otherCondition;
+
         }
     }
     
     export interface IActivityBaseCommand {
         activityStatusId: string;
-        marketAppraisalPrice: number;
-        recommendedPrice: number;
-        vendorEstimatedPrice: number;
         shortLetPricePerWeek: number;
         askingPrice: number;
         activityTypeId: string;
@@ -74,5 +101,21 @@ module Antares.Activity.Commands {
         keyNumber: string;
         accessArrangements: string;
         pitchingThreats: string;
+        kfValuationPrice: number;
+        agreedInitialMarketingPrice: number;
+        vendorValuationPrice: number;
+        shortKfValuationPrice: number;
+        shortAgreedInitialMarketingPrice: number;
+        shortVendorValuationPrice: number;
+        longKfValuationPrice: number;
+        longAgreedInitialMarketingPrice: number;
+        longVendorValuationPrice: number;
+        disposalTypeId: string;
+        decorationId: string;
+        serviceChargeAmount: number;
+        serviceChargeNote: string;
+        groundRentAmount: number;
+        groundRentNote: string;
+        otherCondition: string;
     }
 }

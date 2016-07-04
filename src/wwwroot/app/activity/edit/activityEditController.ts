@@ -141,46 +141,87 @@ module Antares.Activity {
         }
 
 
-        shortKfValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+        shortKfValuationPriceSchema = {
             controlId: 'shortKfValuationPrice',
             translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.SHORT_LET',
             formName: 'shortKfValuationPriceForm',
-            fieldName: 'shortKfValuationPrice'
+            fieldName: 'shortKfValuationPrice',
+            suffix: 'ACTIVITY.EDIT.VALUATION_INFO.SUFFIX'
         }
 
-        shortVendorValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+        shortVendorValuationPriceSchema = {
             controlId: 'shortVendorValuationPrice',
             translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.SHORT_LET',
             formName: 'shortVendorValuationPriceForm',
-            fieldName: 'shortVendorValuationPrice'
+            fieldName: 'shortVendorValuationPrice',
+            suffix: 'ACTIVITY.EDIT.VALUATION_INFO.SUFFIX'
         }
 
-        shortAgreedInitialMarketingPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+        shortAgreedInitialMarketingPriceSchema = {
             controlId: 'shortAgreedInitialMarketingPrice',
             translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.SHORT_LET',
             formName: 'shortAgreedInitialMarketingPriceForm',
-            fieldName: 'shortAgreedInitialMarketingPrice'
+            fieldName: 'shortAgreedInitialMarketingPrice',
+            suffix: 'ACTIVITY.EDIT.VALUATION_INFO.SUFFIX'
         }
 
-        longKfValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+        longKfValuationPriceSchema = {
             controlId: 'longKfValuationPrice',
             translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.LONG_LET',
             formName: 'longKfValuationPriceForm',
-            fieldName: 'longKfValuationPrice'
+            fieldName: 'longKfValuationPrice',
+            suffix: 'ACTIVITY.EDIT.VALUATION_INFO.SUFFIX'
         }
 
-        longVendorValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+        longVendorValuationPriceSchema = {
             controlId: 'longVendorValuationPrice',
             translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.LONG_LET',
             formName: 'longVendorValuationPriceForm',
-            fieldName: 'longVendorValuationPrice'
+            fieldName: 'longVendorValuationPrice',
+            suffix: 'ACTIVITY.EDIT.VALUATION_INFO.SUFFIX'
         }
 
-        longAgreedInitialMarketingPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
+        longAgreedInitialMarketingPriceSchema = {
             controlId: 'longAgreedInitialMarketingPrice',
             translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.LONG_LET',
             formName: 'longAgreedInitialMarketingPriceForm',
-            fieldName: 'longAgreedInitialMarketingPrice'
+            fieldName: 'longAgreedInitialMarketingPrice',
+            suffix: 'ACTIVITY.EDIT.VALUATION_INFO.SUFFIX'
+        }
+
+        serviceChargeAmountSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'serviceChargeAmount',
+            translationKey: 'ACTIVITY.EDIT.CHARGES.SERVICE_CHARGE',
+            formName: 'serviceChargeAmountForm',
+            fieldName: 'serviceChargeAmount'
+        }
+
+        serviceChargeNoteSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'serviceChargeNote',
+            translationKey: 'ACTIVITY.EDIT.CHARGES.SERVICE_CHARGE_NOTE',
+            fieldName: 'serviceChargeNote',
+            formName: 'serviceChargeNoteForm'
+        }
+
+        groundRentAmountSchema: Antares.Attributes.IPriceEditControlSchema = {
+            controlId: 'groundRentAmount',
+            translationKey: 'ACTIVITY.EDIT.CHARGES.GROUND_RENT',
+            formName: 'groundRentAmountForm',
+            fieldName: 'groundRentAmount'
+        }
+
+        groundRentNoteSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'groundRentNote',
+            translationKey: 'ACTIVITY.EDIT.CHARGES.GROUND_RENT_NOTE',
+            fieldName: 'groundRentNote',
+            formName: 'groundRentNoteForm'
+        }
+
+        otherConditionSchema: Antares.Attributes.ITextEditControlSchema = {
+            controlId: 'otherCondition',
+            translationKey: 'ACTIVITY.EDIT.OTHER_CONDITIONS.RESTRICTIONS',
+            fieldName: 'otherCondition',
+            formName: 'otherConditionForm'
         }
 
         configMocked: any = {
