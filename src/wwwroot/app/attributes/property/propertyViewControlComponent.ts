@@ -8,7 +8,8 @@ module Antares.Attributes {
         bindings: {
             property: '<',
             config: '<',
-            isPanelVisible: '<'
+            isPanelVisible: '<',
+            hideHeader: '<'
         }
     });
 }

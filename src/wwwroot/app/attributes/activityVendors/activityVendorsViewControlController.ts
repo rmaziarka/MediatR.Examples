@@ -8,6 +8,7 @@ module Antares.Attributes {
         // binding
         vendorContacts: Business.Contact[];
         config: IActivityVendorsControlConfig;
+        hideHeader: boolean = false;
     }
 
     angular.module('app').controller('ActivityVendorsViewControlController', ActivityVendorsViewControlController);

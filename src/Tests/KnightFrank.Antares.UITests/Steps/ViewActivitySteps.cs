@@ -123,6 +123,18 @@
             }
         }
 
+        [When(@"User switches to details tab on view activity page")]
+        public void SwitchToDetailsTab()
+        {
+            this.page.OpenDetailsTab();
+        }
+
+        [When(@"User switchs to overview tab on view activity page")]
+        public void SwitchToOverviewTab()
+        {
+            this.page.OpenOverviewTab();
+        }
+
         [Then(@"Activity attachment (.*) should be downloaded")]
         public void ThenAttachmentShouldBeDownloaded(string attachmentName)
         {
@@ -202,7 +214,9 @@
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Name, this.page.ViewingDetails.Details),
-                () => Assert.Equal(expectedDetails.Date + ", " + expectedDetails.StartTime + " - " + expectedDetails.EndTime, this.page.ViewingDetails.Date),
+                () =>
+                    Assert.Equal(expectedDetails.Date + ", " + expectedDetails.StartTime + " - " + expectedDetails.EndTime,
+                        this.page.ViewingDetails.Date),
                 () => Assert.Equal(expectedDetails.Negotiator, this.page.ViewingDetails.Negotiator),
                 () => Assert.Equal(attendees, this.page.ViewingDetails.Attendees),
                 () => Assert.Equal(expectedDetails.InvitationText, this.page.ViewingDetails.InvitationText),
