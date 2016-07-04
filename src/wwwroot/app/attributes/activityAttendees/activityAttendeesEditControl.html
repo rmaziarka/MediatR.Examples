@@ -1,5 +1,5 @@
 ﻿<ng-form name="activityAttendeesForm" ng-if="vm.config">
-    <h5 class="page-header" translate="ACTIVITY.EDIT.APPRAISAL_MEETING.ATTENDEES"></h5>
+    <h4 class="page-header" translate="ACTIVITY.EDIT.APPRAISAL_MEETING.ATTENDEES"></h4>
     <div class="form-group">
         <div class="checkbox" ng-repeat="person in vm.availableAttendees">
             <label><input type="checkbox" ng-model="person.isSelected" ng-disabled="!vm.config.appraisalMeetingAttendeesList.active" ng-change="vm.onAttendeeSelected(person)">{{person.getName()}}</label>

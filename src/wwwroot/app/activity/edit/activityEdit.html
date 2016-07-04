@@ -7,21 +7,21 @@
                 <label translate="ACTIVITY.EDIT.ACTIVITY_TITLE"></label>
                 <div>{{ vm.activity.property.address.getAddressText() }}</div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3 col-lg-2">
                         <activity-type-edit-control property-type-id="vm.activity.property.propertyTypeId" ng-model="vm.activity.activityTypeId" config="vm.config.activityType"
                                                     on-activity-type-changed="vm.activityTypeChanged(activityTypeId)">
                         </activity-type-edit-control>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-3 col-lg-2">
                         <enum-item-edit-control ng-model="vm.activity.activityStatusId"
-                                                config="vm.config.activityStatus"
-                                                schema="vm.activityStatusSchema"
-                                                on-selected-item-changed="vm.activityStatusChanged(activityStatusId)"></enum-item-edit-control>
+                            config="vm.config.activityStatus"
+                            schema="vm.activityStatusSchema"
+                            on-selected-item-changed="vm.activityStatusChanged(activityStatusId)"></enum-item-edit-control>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6 col-lg-4">
             <section id="activity-edit-vendors">
                 <activity-vendors-edit-control contacts="vm.activity.contacts" config="vm.config.vendors"></activity-vendors-edit-control>
             </section>
@@ -44,7 +44,7 @@
                                                    department-is-related-with-negotiator="vm.departmentIsRelatedWithNegotiator(department)"></activity-departments-edit-control>
             </section>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6 col-lg-4">
             <fieldset id="activity-edit-prices">
                 <h3 class="page-header" translate="ACTIVITY.EDIT.PRICES.PRICES"></h3>
                 <price-edit-control config="vm.config.marketAppraisalPrice" schema="vm.controlSchemas.marketAppraisalPrice" ng-model='vm.activity.marketAppraisalPrice'></price-edit-control>
@@ -66,14 +66,14 @@
             <section id="activity-additional-info">
                 <fieldset>
                     <h3 class="page-header" translate="ACTIVITY.EDIT.ADDITIONAL_INFORMATION.ADDITIONAL_INFORMATION"></h3>
-                    <h5 class="page-header" translate="ACTIVITY.EDIT.ADDITIONAL_INFORMATION.ACCESS_DETAILS"></h5>
+                    <h4 class="page-header" translate="ACTIVITY.EDIT.ADDITIONAL_INFORMATION.ACCESS_DETAILS"></h4>
                     <text-edit-control ng-model="vm.activity.accessDetails.keyNumber" config="vm.config.keyNumber" schema="vm.keyNumberSchema"></text-edit-control>
                     <textarea-edit-control ng-model="vm.activity.accessDetails.accessArrangements" config="vm.config.accessArrangements" schema="vm.accessArrangementsSchema"></textarea-edit-control>
                 </fieldset>
             </section>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-6 col-lg-4">
             <h3 class="page-header" translate="ACTIVITY.EDIT.APPRAISAL_MEETING.APPRAISAL_MEETING"></h3>
             <activity-appraisal-meeting-date-edit-control config="vm.config.appraisalMeetingDate"
                                                      appraisal-meeting-start="vm.activity.appraisalMeeting.appraisalMeetingStart"
