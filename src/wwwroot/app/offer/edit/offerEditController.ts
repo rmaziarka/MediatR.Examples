@@ -43,8 +43,13 @@ module Antares.Offer {
         additionalSurveyDateOpen: boolean = false;
         exchangeDateOpen: boolean = false;
         completionDateOpen: boolean = false;
+
         isCompanyContactAddPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         isBrokerEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isLenderEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isSurveyorEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isAdditionalSurveyorEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+
         contactToSelect: string = '';
 
         brokerCompanyContact: CompanyContactConnection = null;
@@ -55,6 +60,24 @@ module Antares.Offer {
                 controlId: 'broker',
                 translationKey: 'OFFER.EDIT.BROKER',
                 emptyTranslationKey: 'OFFER.EDIT.NO_BROKER'
+            },
+            lender: <ICompanyContactEditControlSchema>{
+                formName: 'lenderForm',
+                controlId: 'lender',
+                translationKey: 'OFFER.EDIT.LENDER',
+                emptyTranslationKey: 'OFFER.EDIT.NO_LENDER'
+            },
+            surveyor: <ICompanyContactEditControlSchema>{
+                formName: 'surveyorForm',
+                controlId: 'surveyor',
+                translationKey: 'OFFER.EDIT.SURVEYOR',
+                emptyTranslationKey: 'OFFER.EDIT.NO_SURVEYOR'
+            },
+            additionalSurveyor: <ICompanyContactEditControlSchema>{
+                formName: 'additionalSurveyorForm',
+                controlId: 'additionalSurveyor',
+                translationKey: 'OFFER.EDIT.SURVEYOR',
+                emptyTranslationKey: 'OFFER.EDIT.NO_SURVEYOR'
             },
             status : <Attributes.IEnumItemEditControlSchema>{
                 formName : "offerStatusControlForm",
@@ -369,8 +392,8 @@ module Antares.Offer {
                 this.restoreOfferProgressSummary();
             }
 
-            this.offer.brokerId = this.brokerCompanyContact.contact.id;
-            this.offer.brokerCompanyId = this.brokerCompanyContact.company.id;
+            this.offer.brokerId = this.brokerCompanyContact && this.brokerCompanyContact.contact.id;
+            this.offer.brokerCompanyId = this.brokerCompanyContact && this.brokerCompanyContact.company.id;
 
             this.offer.offerDate = Core.DateTimeUtils.createDateAsUtc(this.offer.offerDate);
             this.offer.exchangeDate = Core.DateTimeUtils.createDateAsUtc(this.offer.exchangeDate);

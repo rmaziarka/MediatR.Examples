@@ -26,9 +26,13 @@ module Antares {
             negotiator: '#offer-edit-negotiator-details',
             negotiatorSection: '#offer-edit-negotiator-section'
         };
-
-        var offerMock = TestHelpers.OfferGenerator.generate();
         
+        var offerMock = TestHelpers.OfferGenerator.generate();
+
+        beforeEach(angular.mock.module(($provide: angular.auto.IProvideService) => {
+            $provide.decorator('formDirective', Common.Decorators.FormDecorator.decoratorFunction);
+        }));    
+
         beforeEach(() => {
             angular.mock.module(($provide: any) => {
                 $provide.factory('enumItemEditControlDirective', () => { return {}; });
