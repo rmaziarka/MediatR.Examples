@@ -348,6 +348,8 @@ module Antares.Activity {
 
             var managingTypeEnumItems: Dto.IEnumItem[] = this.enumProvider.enums.activityDepartmentType.filter((enumItem: Dto.IEnumItem) => { return enumItem.code === Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Managing]; });
             defaultDepartment.departmentTypeId = managingTypeEnumItems[0].id;
+            defaultDepartment.departmentType.id = managingTypeEnumItems[0].id;
+            defaultDepartment.departmentType.code = Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Managing];
 
             this.activity.activityDepartments.push(defaultDepartment);
         }
