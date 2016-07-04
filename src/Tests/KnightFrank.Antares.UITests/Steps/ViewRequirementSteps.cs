@@ -122,8 +122,8 @@
                 .WaitForSidePanelToShow();
         }
 
-        [When(@"User clicks edit activity button on view requirement page")]
-        public void ClickEditActivity()
+        [When(@"User clicks edit viewing button on view requirement page")]
+        public void ClickEditViewing()
         {
             this.page.ViewingDetails.EditViewing();
         }
