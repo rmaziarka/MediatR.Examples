@@ -6,11 +6,14 @@ module Antares.Offer {
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
     import PubSub = Core.PubSub;
-    import CloseSidePanelEvent = Antares.Common.Component.CloseSidePanelEvent;
+    import CloseSidePanelEvent = Common.Component.CloseSidePanelEvent;
     import Enums = Common.Models.Enums;
 
     export class OfferEditController extends Core.WithPanelsBaseController {
-        public offer: Business.Offer;
+        // bindings
+        offer: Business.Offer;
+        config: IOfferEditConfig;
+
         public offerOriginal: Business.Offer;
 
         public enumTypeMortgageStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.MortgageStatus;
@@ -31,7 +34,6 @@ module Antares.Offer {
 
         editOfferForm: any;
 
-        offerDateOpen: boolean = false;
         mortgageSurveyDateOpen: boolean = false;
         additionalSurveyDateOpen: boolean = false;
         exchangeDateOpen: boolean = false;
@@ -39,9 +41,56 @@ module Antares.Offer {
         isCompanyContactAddPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         contactToSelect: string = '';
 
+        // controls
+        controlSchemas: any = {
+            status : <Attributes.IEnumItemEditControlSchema>{
+                formName : "offerStatusControlForm",
+                controlId : "offer-status",
+                translationKey : "OFFER.EDIT.STATUS",
+                fieldName : "statusId",
+                enumTypeCode : Dto.EnumTypeCode.OfferStatus
+            },
+            price : <Attributes.IPriceEditControlSchema>{
+                formName : "offerPriceControlForm",
+                controlId : "offer-price",
+                translationKey : "OFFER.EDIT.OFFER",
+                fieldName : "price"
+            },
+            pricePerWeek : <Attributes.IPriceEditControlSchema>{
+                formName : "offerPricePerWeekControlForm",
+                controlId : "offer-price-per-week",
+                translationKey : "OFFER.EDIT.OFFER",
+                fieldName : "pricePerWeek",
+                suffix : "OFFER.EDIT.OFFER_PER_WEEK"
+            },
+            offerDate : <Attributes.IDateEditControlSchema>{
+                formName : "offerDateControlForm",
+                controlId : "offer-date",
+                translationKey : "OFFER.EDIT.OFFER_DATE",
+                fieldName : "offerDate"
+            },
+            exchangeDate : <Attributes.IDateEditControlSchema>{
+                formName : "exchangeDateControlForm",
+                controlId : "offer-exchange-date",
+                translationKey : "OFFER.EDIT.EXCHANGE_DATE",
+                fieldName : "exchangeDate"
+            },
+            completionDate : <Attributes.IDateEditControlSchema>{
+                formName : "completionDateControlForm",
+                controlId : "offer-completion-date",
+                translationKey : "OFFER.EDIT.COMPLETION_DATE",
+                fieldName : "completionDate"
+            },
+            specialConditions : <Attributes.ITextEditControlSchema>{
+                formName : "specialConfitionsControlForm",
+                controlId : "offer-special-conditions",
+                translationKey : "OFFER.EDIT.SPECIAL_CONDITIONS",
+                fieldName : "specialConditions"
+            }
+        };
+
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
-            private dataAccessService: Services.DataAccessService,
             private enumService: Services.EnumService,
             private $state: ng.ui.IStateService,
             private $window: ng.IWindowService,
@@ -51,7 +100,9 @@ module Antares.Offer {
             private latestViewsProvider: LatestViewsProvider,
             private pubSub: PubSub,
             private eventAggregator: Core.EventAggregator,
-            private appConfig: Common.Models.IAppConfig) {
+            private appConfig: Common.Models.IAppConfig,
+            private configService: Services.ConfigService,
+            private offerService: Services.OfferService) {
             super(componentRegistry, $scope);
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
             eventAggregator.with(this).subscribe(CloseSidePanelEvent, this.companyContactPanelClosed);
@@ -178,10 +229,6 @@ module Antares.Offer {
             });
         }
 
-        openOfferDate() {
-            this.offerDateOpen = true;
-        }
-
         openMortgageSurveyDate() {
             this.mortgageSurveyDateOpen = true;
         }
@@ -280,10 +327,6 @@ module Antares.Offer {
         }
 
         save() {
-            if (!this.isDataValid()) {
-                return this.$q.reject();
-            }
-
             if (this.offerAccepted() === false) {
                 this.restoreOfferProgressSummary();
             }
@@ -294,12 +337,7 @@ module Antares.Offer {
             this.offer.mortgageSurveyDate = Core.DateTimeUtils.createDateAsUtc(this.offer.mortgageSurveyDate);
             this.offer.additionalSurveyDate = Core.DateTimeUtils.createDateAsUtc(this.offer.additionalSurveyDate);
 
-            var offerResource = this.dataAccessService.getOfferResource();
-            var updateOffer: Dto.IOffer = angular.copy(this.offer);
-
-            return offerResource
-                .update(updateOffer)
-                .$promise
+            this.offerService.updateOffer(this.offer)
                 .then((offer: Dto.IOffer) => {
                     this.$state
                         .go('app.offer-view', offer)
@@ -326,6 +364,17 @@ module Antares.Offer {
                     activityPreviewPanel: () => { return this.componentRegistry.get(this.componentIds.activityPreviewSidePanelId) }
                 }
             };
+        }
+
+        offerStatusChanged = () => {
+            this.reloadConfig();
+        }
+
+        reloadConfig = () => {
+            this.configService.getOffer(Enums.PageTypeEnum.Update, this.offer.requirement.requirementTypeId, this.offer.offerTypeId, this.offer)
+                .then((newConfig: IOfferEditConfig) => {
+                    this.config = newConfig;
+                });
         }
     }
 

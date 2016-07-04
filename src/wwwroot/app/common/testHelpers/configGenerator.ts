@@ -83,6 +83,20 @@ module Antares.TestHelpers {
             return config;
         }
 
+        public static generateOfferEditConfig(): Offer.IOfferEditConfig {
+            var config: Offer.IOfferAddPanelConfig = {
+                statusId: ConfigGenerator.generateOfferStatusIdConfig(),
+                completionDate: ConfigGenerator.generateOfferCompletionDateConfig(),
+                exchangeDate: ConfigGenerator.generateOfferExchangeDateConfig(),
+                offerDate: ConfigGenerator.generateOfferOfferDateConfig(),
+                price: ConfigGenerator.generateOfferPriceConfig(),
+                pricePerWeek: ConfigGenerator.generateOfferPricePerWeekConfig(),
+                specialConditions: ConfigGenerator.generateOfferSpecialConditionsConfig()
+            };
+
+            return config;
+        }
+
         public static generateActivityStatusEditConfig(): Attributes.IActivityStatusEditControlConfig {
             var config: Attributes.IActivityStatusEditControlConfig = {
                 active: true,

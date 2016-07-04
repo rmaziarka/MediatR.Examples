@@ -34,112 +34,25 @@
         <div class="col-md-4">
             <section>
                 <h3 class="page-header" translate="OFFER.EDIT.BASIC_INFORMATION"></h3>
-                <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.selectedStatus.$dirty) && vm.editOfferForm.selectedStatus.$invalid}">
-                    <label class="required" for="offer-statusId" translate="OFFER.ADD.STATUS"></label>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <enum-select id="offer-status"
-                                         required="true"
-                                         name="selectedStatus"
-                                         ng-model="vm.offer.statusId"
-                                         enum-type-code="{{vm.enumTypeOfferStatus}}"></enum-select>
-                            <div ng-messages="vm.editOfferForm.selectedStatus.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.selectedStatus.$dirty">
-                                <div ng-messages-include="app/common/views/errorMessages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.price.$dirty) && vm.editOfferForm.price.$invalid}">
-                    <label for="offer-price" class="required" translate="OFFER.ADD.OFFER"></label>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="input-group">
-                                <input id="offer-price" class="form-control" type="number" ng-model="vm.offer.price" name="price" required number-greater-than="0" number-precision="0">
-                                <div class="input-group-addon">GBP</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div ng-messages="vm.editOfferForm.price.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.price.$dirty">
-                        <p name="numberGreaterThanValidationError" ng-message="numberGreaterThan" class="help-block with-errors" translate="FORM.NUMBER_HAS_TO_BE_GREATER_THAN" translate-value-value="0"></p>
-                        <p name="numberPrecisionValidationError" ng-message="numberPrecision" class="help-block with-errors" translate="FORM.NUMBER_HAS_TO_BE_INTEGER"></p>
-                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
-                    </div>
-                </div>
-
-                <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.offerDate.$dirty) && vm.editOfferForm.offerDate.$invalid}">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label class="required" for="offer-date" translate="OFFER.ADD.OFFER_DATE"></label>
-                            <div class="input-group">
-                                <input type="text" id="offer-date" name="offerDate" class="form-control" ng-model="vm.offer.offerDate" uib-datepicker-popup="dd-MM-yyyy"
-                                       is-open="vm.offerDateOpen" close-text="Close" placeholder="dd-mm-yyyy" required date-lower-than="{{ vm.offer.createdDate }}" />
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="vm.openOfferDate()"><i class="fa fa-calendar"></i></button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div ng-messages="vm.editOfferForm.offerDate.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.offerDate.$dirty">
+                <enum-item-edit-control ng-model="vm.offer.statusId" config="vm.config.offer_Status" schema="vm.controlSchemas.status" on-selected-item-changed="vm.offerStatusChanged()"></enum-item-edit-control>
+                <price-edit-control ng-model="vm.offer.price" config="vm.config.offer_Price" schema="vm.controlSchemas.price"></price-edit-control>
+                <price-edit-control ng-model="vm.offer.pricePerWeek" config="vm.config.offer_PricePerWeek" schema="vm.controlSchemas.pricePerWeek"></price-edit-control>
+                <date-edit-control ng-model="vm.offer.offerDate" config="vm.config.offer_OfferDate" schema="vm.controlSchemas.offerDate" lower-than="vm.offer.createdDate">
+                    <override-errors>
                         <p name="dateLowerThanValidationError" ng-message="dateLowerThan" class="help-block with-errors" translate="FORM.DATE_CAN_NOT_BE_GREATER_THEN_CREATE_DATE"></p>
-                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
-                    </div>
-                </div>
-
-                <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.specialConditions.$dirty) && vm.editOfferForm.specialConditions.$invalid}">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="invitation-text" translate="OFFER.ADD.SPECIAL_CONDITIONS"></label>
-                            <span class="pull-right character-limit">{{vm.editOfferForm.specialConditions.$viewValue.length || 0}}/4000</span>
-                            <textarea class="form-control" rows="6" ng-model="vm.offer.specialConditions" name="specialConditions" kf-max-count="4000"></textarea>
-                        </div>
-                    </div>
-                    <div ng-messages="vm.editOfferForm.specialConditions.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.specialConditions.$dirty">
-                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
-                    </div>
-                </div>
-
-                <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.exchangeDate.$dirty) && vm.editOfferForm.exchangeDate.$invalid}">
-                    <label for="offer-proposed-exchange-date" translate="OFFER.ADD.EXCHANGE_DATE"></label>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="input-group">
-                                <input type="text" id="offer-proposed-exchange-date" class="form-control" placeholder="dd-mm-yyyy" uib-datepicker-popup="dd-MM-yyyy"
-                                       is-open="vm.exchangeDateOpen" close-text="Close" ng-model="vm.offer.exchangeDate" name="exchangeDate" date-greater-than="{{ vm.offer.createdDate }}">
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="vm.openExchangeDate()">
-                                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div ng-messages="vm.editOfferForm.exchangeDate.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.exchangeDate.$dirty">
+                    </override-errors>
+                </date-edit-control>
+                <textarea-edit-control ng-model="vm.offer.specialConditions" config="vm.config.offer_SpecialConditions" schema="vm.controlSchemas.specialConditions" rows="6"></textarea-edit-control>
+                <date-edit-control ng-model="vm.offer.exchangeDate" config="vm.config.offer_ExchangeDate" schema="vm.controlSchemas.exchangeDate" greater-than="vm.offer.createdDate">
+                    <override-errors>
                         <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CAN_NOT_BE_LOWER_THEN_CREATE_DATE"></p>
-                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
-                    </div>
-                </div>
-
-                <div class="form-group" ng-class="{'has-error': (vm.editOfferForm.$submitted || vm.editOfferForm.completionDate.$dirty) && vm.editOfferForm.completionDate.$invalid}">
-                    <label for="proposed-completion-date" translate="OFFER.ADD.COMPLETION_DATE"></label>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="input-group">
-                                <input type="text" id="proposed-completion-date" class="form-control" placeholder="dd-mm-yyyy" uib-datepicker-popup="dd-MM-yyyy"
-                                       is-open="vm.completionDateOpen" close-text="Close" ng-model="vm.offer.completionDate" name="completionDate" date-greater-than="{{ vm.offer.createdDate }}">
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="vm.openCompletionDate()">
-                                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div ng-messages="vm.editOfferForm.completionDate.$error" ng-show="vm.editOfferForm.$submitted || vm.editOfferForm.completionDate.$dirty">
+                    </override-errors>
+                </date-edit-control>
+                <date-edit-control ng-model="vm.offer.completionDate" config="vm.config.offer_CompletionDate" schema="vm.controlSchemas.completionDate" greater-than="vm.offer.createdDate">
+                    <override-errors>
                         <p name="dateGreaterThanValidationError" ng-message="dateGreaterThan" class="help-block with-errors" translate="FORM.DATE_CAN_NOT_BE_LOWER_THEN_CREATE_DATE"></p>
-                        <div ng-messages-include="app/common/views/errorMessages.html"></div>
-                    </div>
-                </div>
+                    </override-errors>
+                </date-edit-control>
 
                 <div class="row">
                     <div class="col-md-6">
