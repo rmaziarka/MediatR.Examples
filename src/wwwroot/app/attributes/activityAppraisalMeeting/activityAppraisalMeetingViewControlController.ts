@@ -6,7 +6,7 @@ module Antares.Attributes {
 
     export class ActivityAppraisalMeetingViewControlController {
         // binding
-        appraisalMeeting: any;
+        appraisalMeeting: Business.ActivityAppraisalMeeting;
         attendees: Dto.IActivityAttendee[];
         config: IActivityAppraisalMeetingViewControlConfig;
 
