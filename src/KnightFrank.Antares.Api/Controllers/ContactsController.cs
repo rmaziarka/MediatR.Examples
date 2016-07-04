@@ -93,7 +93,7 @@
         /// <returns></returns>
         [HttpPut]
         [Route("")]
-        public Contact UpdateCompany(UpdateContactCommand command)
+        public Contact UpdateContact(UpdateContactCommand command)
         {
             Guid contactId = this.mediator.Send(command);
 
