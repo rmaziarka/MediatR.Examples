@@ -96,7 +96,16 @@ module Antares.TestHelpers {
             return config;
         }
 
-		public static generateActivityAskingPriceConfig(): Attributes.IActivityAskingPriceControlConfig {
+		public static generateTextControlConfig(): Attributes.ITextControlConfig {
+            var config: Attributes.ITextControlConfig = {
+                active: true,
+                textArea: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
+            };
+
+            return config;
+        }
+
+        public static generateActivityAskingPriceConfig(): Attributes.IActivityAskingPriceControlConfig {
             var config: Attributes.IActivityAskingPriceControlConfig = {
                 askingPrice: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
             };
