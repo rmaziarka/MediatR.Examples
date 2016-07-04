@@ -1,4 +1,4 @@
-﻿<div class="row section-row" ng-if="::vm.config" id="{{::vm.schema.controlId}}-section">
-    <div class="col-xs-6 section-title" translate="{{::vm.schema.translationKey}}" ng-if="::vm.schema.translationKey"></div>
-    <div class="col-xs-6" id="{{::vm.schema.controlId}}">{{vm.text}}</div>
+﻿<div class="row section-row" ng-if="vm.config" id="{{vm.schema.controlId}}-section">
+    <div class="col-xs-6 section-title" translate="{{vm.schema.translationKey}}" ng-if="vm.schema.translationKey"></div>
+    <div class="col-xs-6" id="{{vm.schema.controlId}}">{{vm.text}}</div>
 </div>
