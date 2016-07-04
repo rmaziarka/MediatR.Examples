@@ -9,6 +9,7 @@
     using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Property;
+    using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
     using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
@@ -61,9 +62,10 @@
             Offer offer,
             OfferType offerType,
             Requirement requirement,
-            RequirementType requirementType)
+            RequirementType requirementType,
+            Activity activity)
         {
-            this.SetupOffer(command.Id, offer, offerType, requirement, requirementType);
+            this.SetupOffer(command.Id, offer, offerType, requirement, requirementType, activity);
             offer.CreatedDate = DateTime.Now;
             command.OfferDate = DateTime.Now.AddDays(-1);
             command.ExchangeDate = DateTime.Now.AddDays(1);
@@ -91,9 +93,11 @@
             enumTypeValidator.Verify(x => x.ItemExists(EnumType.OfferStatus, command.StatusId), Times.Once);
             offerRepository.Verify(r => r.Save(), Times.Once());
             offerEntityMapper.Verify(m => m.MapAllowedValues(It.IsAny<UpdateOfferCommand>(), It.IsAny<Offer>(), It.IsAny<PageType>()), Times.Once);
+            entityValidator.Verify(x => x.EntityExists<Contact>(command.ApplicantSolicitorId));
+            entityValidator.Verify(x => x.EntityExists<Dal.Model.Company.Company>(command.ApplicantSolicitorCompanyId));
+            entityValidator.Verify(x => x.EntityExists<Contact>(command.VendorSolicitorId));
+            entityValidator.Verify(x => x.EntityExists<Dal.Model.Company.Company>(command.VendorSolicitorCompanyId));
         }
-
-
 
         [Theory]
         [AutoMoqData]
@@ -108,9 +112,10 @@
             Offer offer,
             OfferType offerType,
             Requirement requirement,
-            RequirementType requirementType)
+            RequirementType requirementType,
+            Activity activity)
         {
-            this.SetupOffer(command.Id, offer, offerType, requirement, requirementType);
+            this.SetupOffer(command.Id, offer, offerType, requirement, requirementType, activity);
             offer.CreatedDate = DateTime.Now;
             command.OfferDate = DateTime.Now.AddDays(-1);
             command.ExchangeDate = DateTime.Now.AddDays(1);
@@ -170,9 +175,10 @@
             Offer offer,
             OfferType offerType,
             Requirement requirement,
-            RequirementType requirementType)
+            RequirementType requirementType,
+            Activity activity)
         {
-            this.SetupOffer(command.Id, offer, offerType, requirement, requirementType);
+            this.SetupOffer(command.Id, offer, offerType, requirement, requirementType, activity);
             offer.CreatedDate = DateTime.Now;
             command.OfferDate = DateTime.Now.AddDays(-1);
             command.ExchangeDate = DateTime.Now.AddDays(1);
@@ -204,7 +210,7 @@
             offerRepository.Verify(r => r.Save(), Times.Once());
         }
 
-        private void SetupOffer(Guid offerId, Offer offer, OfferType offerType, Requirement requirement, RequirementType requirementType)
+        private void SetupOffer(Guid offerId, Offer offer, OfferType offerType, Requirement requirement, RequirementType requirementType, Activity activity)
         {
             requirementType.EnumCode = Domain.Common.Enums.RequirementType.ResidentialLetting.ToString();
             requirement.RequirementType = requirementType;
@@ -212,6 +218,7 @@
             offerType.EnumCode = Domain.Common.Enums.OfferType.ResidentialLetting.ToString();
             offer.OfferType = offerType;
             offer.Id = offerId;
+            offer.Activity = activity;
         }
     }
 }

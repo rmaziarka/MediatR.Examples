@@ -57,5 +57,13 @@
         public DateTime? AdditionalSurveyDate { get; set; }
 
         public string ProgressComment { get; set; }
+
+        public Guid? VendorSolicitorId { get; set; }
+
+        public Guid? VendorSolicitorCompanyId { get; set; }
+
+        public Guid? ApplicantSolicitorId { get; set; }
+
+        public Guid? ApplicantSolicitorCompanyId { get; set; }
     }
 }
