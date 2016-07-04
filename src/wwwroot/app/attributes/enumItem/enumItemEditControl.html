@@ -10,9 +10,9 @@
                         ng-disabled="!vm.config[vm.schema.fieldName].active"
                         ng-model="vm.ngModel"
                         ng-change="vm.changeSelectedItem()">
-                        <option value="" translate="COMMON.SELECTEMPTYVALUE"></option>
-                        <option ng-repeat="item in vm.getEnumItems() track by item.id" value="{{item.id}}">{{item.id | dynamicTranslate}}</option>
-                    </select>
+                    <option ng-if="!vm.hideEmptyValue" value="" translate="COMMON.SELECTEMPTYVALUE"></option>
+                    <option ng-repeat="item in vm.getEnumItems() track by item.id" value="{{item.id}}">{{item.id | dynamicTranslate}}</option>
+                </select>
                     <div ng-messages="vm[vm.schema.formName].enumItem.$error" ng-show="vm[vm.schema.formName].$submitted || vm[vm.schema.formName].enumItem.$dirty">
                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                     </div>
