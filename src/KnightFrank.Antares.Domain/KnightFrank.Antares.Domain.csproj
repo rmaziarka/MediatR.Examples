@@ -260,6 +260,7 @@
     <Compile Include="LatestView\Commands\LatestViewCommandProfile.cs" />
     <Compile Include="LatestView\DataProviders\ActivityLatestViewDataProvider.cs" />
     <Compile Include="LatestView\DataProviders\BaseLatestViewDataProvider.cs" />
+    <Compile Include="LatestView\DataProviders\ContactLatestViewDataProvider.cs" />
     <Compile Include="LatestView\DataProviders\EntityLatestViews.cs" />
     <Compile Include="LatestView\DataProviders\ILatestViewDataProvider.cs" />
     <Compile Include="LatestView\DataProviders\CompanyLatestViewDataProvider.cs" />

@@ -15,7 +15,8 @@ module Antares.Common.Component
             onCancel: '<',
             loadItems: '<',
             itemTemplateUrl: '@',
-            searchPlaceholder: '@'
+            searchPlaceholder: '@',
+            initialValue: '<'
         }
     });
 }
