@@ -313,8 +313,8 @@
                 () => Assert.Equal(expectedDetails.Time, actualDetails[2]));
         }
 
-        [Then(@"Offer details on (.*) position on view requirement page are same as the following")]
-        public void CheckOffer(int position, Table table)
+        [Then(@"Sale offer details on (.*) position on view requirement page are same as the following")]
+        public void CheckSaleOffer(int position, Table table)
         {
             var expectedDetails = table.CreateInstance<OfferData>();
             List<string> actualDetails = this.page.GetOfferDetails(position);
@@ -322,6 +322,18 @@
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Details, actualDetails[0]),
                 () => Assert.Equal(int.Parse(expectedDetails.Offer).ToString("N0") + " GBP", actualDetails[2]),
+                () => Assert.Equal(expectedDetails.Status, actualDetails[1]));
+        }
+
+        [Then(@"Letting offer details on (.*) position on view requirement page are same as the following")]
+        public void CheckLettingOffer(int position, Table table)
+        {
+            var expectedDetails = table.CreateInstance<OfferData>();
+            List<string> actualDetails = this.page.GetOfferDetails(position);
+
+            Verify.That(this.driverContext,
+                () => Assert.Equal(expectedDetails.Details, actualDetails[0]),
+                () => Assert.Equal(int.Parse(expectedDetails.OfferPerWeek).ToString("N0") + " GBP / week", actualDetails[2]),
                 () => Assert.Equal(expectedDetails.Status, actualDetails[1]));
         }
 
@@ -355,7 +367,7 @@
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Details, this.page.OfferPreview.Details),
                 () => Assert.Equal(expectedDetails.Status, this.page.OfferPreview.Status),
-                () => Assert.Equal(expectedDetails.Offer, this.page.OfferPreview.Offer),
+                () => Assert.Equal(int.Parse(expectedDetails.Offer).ToString("N0") + " GBP", this.page.OfferPreview.Offer),
                 () => Assert.Equal(expectedDetails.OfferDate, this.page.OfferPreview.Date),
                 () => Assert.Equal(expectedDetails.SpecialConditions, this.page.OfferPreview.SpecialConditions),
                 () => Assert.Equal(expectedDetails.Negotiator, this.page.OfferPreview.Negotiator),
@@ -377,7 +389,7 @@
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Details, this.page.OfferPreview.Details),
                 () => Assert.Equal(expectedDetails.Status, this.page.OfferPreview.Status),
-                () => Assert.Equal(expectedDetails.Offer, this.page.OfferPreview.OfferPerWeek),
+                () => Assert.Equal(int.Parse(expectedDetails.OfferPerWeek).ToString("N0") + " GBP / week", this.page.OfferPreview.OfferPerWeek),
                 () => Assert.Equal(expectedDetails.OfferDate, this.page.OfferPreview.Date),
                 () => Assert.Equal(expectedDetails.SpecialConditions, this.page.OfferPreview.SpecialConditions),
                 () => Assert.Equal(expectedDetails.Negotiator, this.page.OfferPreview.Negotiator),

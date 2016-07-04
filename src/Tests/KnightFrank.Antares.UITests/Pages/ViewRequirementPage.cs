@@ -42,7 +42,7 @@
         private readonly ElementLocator offerActions = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .card-menu-button");
         private readonly ElementLocator offerStatus = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .offer-status");
         private readonly ElementLocator offerPrice = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .offer-price");
-        private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) address-form-view");
+        private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) address-form-view .ng-binding");
         private readonly ElementLocator editOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showOfferEditPanel'] li");
         private readonly ElementLocator detailsOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showOfferDetailsView'] li");
         // Attachments
@@ -161,7 +161,10 @@
 
         public List<string> GetOfferDetails(int position)
         {
-            List<string> list = this.Driver.GetElement(this.offerData.Format(position)).GetTextContent().Split(',').ToList();
+            List<string> list =
+                this.Driver.GetElements(this.offerData.Format(position), element => element.Enabled)
+                    .Select(el => el.GetTextContent())
+                    .ToList();
             string data = string.Join(" ", list).Trim();
             return new List<string>()
             {
