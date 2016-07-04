@@ -13,9 +13,12 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
     {
         private readonly ICollectionValidator collectionValidator;
 
-        public ActivityAppraisalMeetingAttendeesMapper(ICollectionValidator collectionValidator)
+        private readonly IGenericRepository<ActivityAttendee> activityAttendeeRepository;
+
+        public ActivityAppraisalMeetingAttendeesMapper(ICollectionValidator collectionValidator, IGenericRepository<ActivityAttendee> activityAttendeeRepository)
         {
             this.collectionValidator = collectionValidator;
+            this.activityAttendeeRepository = activityAttendeeRepository;
         }
 
         public void ValidateAndAssign(ActivityCommandBase message, Activity activity)
@@ -37,7 +40,7 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
             activity.AppraisalMeetingAttendees
                     .Where(x => IsRemovedFromExistingList(x, usersIds, contactsIds))
                     .ToList()
-                    .ForEach(x => activity.AppraisalMeetingAttendees.Remove(x));
+                    .ForEach(x => this.activityAttendeeRepository.Delete(x));
 
             usersIds.Where(id => IsNewlyAddedUser(id, activity.AppraisalMeetingAttendees))
                     .ToList()

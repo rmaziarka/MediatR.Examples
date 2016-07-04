@@ -40,12 +40,15 @@
             int existingDepartments,
             int departmentsInCommand,
             [Frozen] Mock<IGenericRepository<Department>> departmentRepository,
+            [Frozen] Mock<IGenericRepository<ActivityDepartment>> activityDepartmentRepository,
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<ICollectionValidator> collectionValidator,
             ActivityDepartmentsMapper mapper,
             IFixture fixture)
         {
             // Arrange
+            int expectedDeletesCount = existingDepartments;
+
             var command = new UpdateActivityCommand();
             command.Departments =
                 Enumerable.Range(0, departmentsInCommand)
@@ -56,11 +59,17 @@
                               return department;
                           })
                           .ToList();
+
             var activity = fixture.Create<Activity>();
             activity.ActivityDepartments =
                 Enumerable.Range(0, existingDepartments).Select(i => fixture.Create<ActivityDepartment>()).ToList();
+
             departmentRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Department, bool>>>()))
                                 .Returns(command.Departments.Select(x => new Department { Id = x.DepartmentId }));
+
+            activityDepartmentRepository.Setup(x => x.Delete(It.IsAny<ActivityDepartment>()))
+                                        .Callback<ActivityDepartment>(x => activity.ActivityDepartments.Remove(x));
+
             this.SetupEnumTypeItemRepository(enumTypeItemRepository, fixture);
 
             // Act
@@ -70,6 +79,8 @@
             activity.ActivityDepartments.Select(x => new { x.DepartmentId, x.DepartmentTypeId })
                     .Should()
                     .BeEquivalentTo(command.Departments.Select(x => new { x.DepartmentId, x.DepartmentTypeId }));
+
+            activityDepartmentRepository.Verify(x=> x.Delete(It.IsAny<ActivityDepartment>()), Times.Exactly(expectedDeletesCount));
         }
 
         [Theory]

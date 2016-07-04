@@ -15,12 +15,17 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
     public class ActivityDepartmentsMapper : IActivityReferenceMapper<ActivityDepartment>
     {
         private readonly ICollectionValidator collectionValidator;
+        private readonly IGenericRepository<ActivityDepartment> activityDepartmentRepository;
         private readonly IGenericRepository<Department> departmentRepository;
         private readonly IGenericRepository<EnumTypeItem> enumTypeItemRepository;
 
-        public ActivityDepartmentsMapper(IGenericRepository<Department> departmentRepository,
-            IGenericRepository<EnumTypeItem> enumTypeItemRepository, ICollectionValidator collectionValidator)
+        public ActivityDepartmentsMapper(
+            IGenericRepository<ActivityDepartment> activityDepartmentRepository,
+            IGenericRepository<Department> departmentRepository,
+            IGenericRepository<EnumTypeItem> enumTypeItemRepository,
+            ICollectionValidator collectionValidator)
         {
+            this.activityDepartmentRepository = activityDepartmentRepository;
             this.departmentRepository = departmentRepository;
             this.enumTypeItemRepository = enumTypeItemRepository;
             this.collectionValidator = collectionValidator;
@@ -33,7 +38,7 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
             activity.ActivityDepartments
                     .Where(x => IsRemovedFromExistingList(x, departmentsIds))
                     .ToList()
-                    .ForEach(x => activity.ActivityDepartments.Remove(x));
+                    .ForEach(x => this.activityDepartmentRepository.Delete(x));
 
             foreach (UpdateActivityDepartment messageDepartment in message.Departments)
             {

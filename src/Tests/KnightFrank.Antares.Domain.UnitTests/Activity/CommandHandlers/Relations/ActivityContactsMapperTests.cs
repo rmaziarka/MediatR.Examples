@@ -41,6 +41,8 @@
             IFixture fixture)
         {
             // Arrange
+            int expectedDeletesCount = contactsInCommand != 0 ? existingContacts : 0;
+
             List<Guid> contactsIds = Enumerable.Range(0, contactsInCommand).Select(i => Guid.NewGuid()).ToList();
             var command = new UpdateActivityCommand { ContactIds = contactsIds };
             var activity = fixture.Create<Activity>();
@@ -50,11 +52,15 @@
             contactRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<Contact, bool>>>()))
                              .Returns(newContacts);
 
+            contactRepository.Setup(x => x.Delete(It.IsAny<Contact>())).Callback<Contact>(x => activity.Contacts.Remove(x));
+
             // Act
             mapper.ValidateAndAssign(command, activity);
 
             // Assert
             activity.Contacts.Should().BeEquivalentTo(newContacts);
+
+            contactRepository.Verify(x => x.Delete(It.IsAny<Contact>()), Times.Exactly(expectedDeletesCount));
         }
     }
 }

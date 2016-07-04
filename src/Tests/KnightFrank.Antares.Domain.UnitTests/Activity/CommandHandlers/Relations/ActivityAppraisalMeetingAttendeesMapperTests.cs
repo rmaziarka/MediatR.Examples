@@ -7,6 +7,7 @@
 
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Property.Activities;
+    using KnightFrank.Antares.Dal.Repository;
     using KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations;
     using KnightFrank.Antares.Domain.Activity.Commands;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
@@ -32,11 +33,19 @@
         public void Given_ValidCommand_When_Handling_Then_ShouldAssignAttendees(
             int existingAttendees,
             int attendeesInCommand,
+            [Frozen] Mock<IGenericRepository<ActivityAttendee>> activityAttendeeRepository,
             [Frozen] Mock<ICollectionValidator> collectionValidator,
             ActivityAppraisalMeetingAttendeesMapper mapper,
             IFixture fixture)
         {
             // Arrange
+            var activity = fixture.Create<Activity>();
+
+            activityAttendeeRepository.Setup(x => x.Delete(It.IsAny<ActivityAttendee>()))
+                                      .Callback<ActivityAttendee>(x => activity.AppraisalMeetingAttendees.Remove(x));
+
+            int expectedDeletesCount = attendeesInCommand != 0 ? existingAttendees : 0;
+
             var command = new UpdateActivityCommand();
             command.AppraisalMeetingAttendeesList =
                 Enumerable.Range(0, attendeesInCommand)
@@ -46,7 +55,7 @@
                                       ? new UpdateActivityAttendee { UserId = Guid.NewGuid() }
                                       : new UpdateActivityAttendee { ContactId = Guid.NewGuid() })
                           .ToList();
-            var activity = fixture.Create<Activity>();
+
             activity.AppraisalMeetingAttendees =
                 Enumerable.Range(0, existingAttendees)
                           .Select(
@@ -55,6 +64,7 @@
                                       ? new ActivityAttendee { UserId = Guid.NewGuid() }
                                       : new ActivityAttendee { ContactId = Guid.NewGuid() })
                           .ToList();
+
             activity.ActivityUsers =
                 command.AppraisalMeetingAttendeesList.Where(x => x.UserId.HasValue).Select(x =>
                 {
@@ -62,6 +72,7 @@
                     user.UserId = x.UserId.Value;
                     return user;
                 }).ToList();
+
             activity.Contacts =
                 command.AppraisalMeetingAttendeesList.Where(x => x.ContactId.HasValue).Select(x =>
                 {
@@ -77,6 +88,8 @@
             activity.AppraisalMeetingAttendees.Select(x => new { x.UserId, x.ContactId })
                     .Should()
                     .BeEquivalentTo(command.AppraisalMeetingAttendeesList.Select(x => new { x.UserId, x.ContactId }));
+
+            activityAttendeeRepository.Verify(x => x.Delete(It.IsAny<ActivityAttendee>()), Times.Exactly(expectedDeletesCount));
         }
     }
 }

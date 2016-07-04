@@ -40,19 +40,24 @@
             int existingUsers,
             int secondaryNegotiatorsCount,
             [Frozen] Mock<IGenericRepository<User>> userRepository,
+            [Frozen] Mock<IGenericRepository<ActivityUser>> activityUserRepository,
             [Frozen] Mock<IGenericRepository<EnumTypeItem>> enumTypeItemRepository,
             [Frozen] Mock<ICollectionValidator> collectionValidator,
             ActivityUsersMapper mapper,
             IFixture fixture)
         {
             // Arrange
+            int expectedDeletesCount = existingUsers;
+            
             var r = new Random();
             var command = new UpdateActivityCommand();
+
             command.LeadNegotiator = new UpdateActivityUser
             {
                 UserId = Guid.NewGuid(),
                 CallDate = DateTime.UtcNow.Date.AddDays(r.Next(1, 20))
             };
+
             command.SecondaryNegotiators =
                 Enumerable.Range(0, secondaryNegotiatorsCount)
                           .Select(
@@ -63,13 +68,20 @@
                                       CallDate = DateTime.UtcNow.Date.AddDays(r.Next(1, 20))
                                   })
                           .ToList();
+
             List<UpdateActivityUser> allNegotiators = new[] { command.LeadNegotiator }.Union(command.SecondaryNegotiators).ToList();
 
             var activity = fixture.Create<Activity>();
+
             activity.ActivityUsers =
                 Enumerable.Range(0, existingUsers).Select(i => fixture.Create<ActivityUser>()).ToList();
+
             userRepository.Setup(x => x.FindBy(It.IsAny<Expression<Func<User, bool>>>()))
                           .Returns(allNegotiators.Select(x => new User { Id = x.UserId }));
+
+            activityUserRepository.Setup(x => x.Delete(It.IsAny<ActivityUser>()))
+                                  .Callback<ActivityUser>(x => activity.ActivityUsers.Remove(x));
+
             this.SetupEnumTypeRepository(enumTypeItemRepository, fixture);
 
             // Act
@@ -79,6 +91,8 @@
             activity.ActivityUsers.Select(x => new { x.UserId, x.CallDate })
                     .Should()
                     .BeEquivalentTo(allNegotiators.Select(x => new { x.UserId, x.CallDate }));
+
+            activityUserRepository.Verify(x=> x.Delete(It.IsAny<ActivityUser>()), Times.Exactly(expectedDeletesCount));
         }
 
         [Theory]
