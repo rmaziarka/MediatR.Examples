@@ -10,6 +10,7 @@ module Antares.Attributes {
         public config: any;
         public onSelectedItemChanged: (obj: { id: string }) => void;
         public schema: IEnumItemEditControlSchema;
+        public hideEmptyValue: boolean;
 
         // controller
         private allEnumItems: Dto.IEnumItem[] = [];

@@ -61,9 +61,19 @@
                 .HasForeignKey(p => p.BrokerId)
                 .WillCascadeOnDelete(false);
 
+            this.HasOptional(p => p.BrokerCompany)
+                .WithMany()
+                .HasForeignKey(p => p.BrokerCompanyId)
+                .WillCascadeOnDelete(false);
+
             this.HasOptional(p => p.Lender)
                 .WithMany()
                 .HasForeignKey(p => p.LenderId)
+                .WillCascadeOnDelete(false);
+
+            this.HasOptional(p => p.LenderCompany)
+                .WithMany()
+                .HasForeignKey(p => p.LenderCompanyId)
                 .WillCascadeOnDelete(false);
 
             this.HasOptional(p => p.Surveyor)
@@ -71,9 +81,19 @@
                 .HasForeignKey(p => p.SurveyorId)
                 .WillCascadeOnDelete(false);
 
+            this.HasOptional(p => p.SurveyorCompany)
+                .WithMany()
+                .HasForeignKey(p => p.SurveyorCompanyId)
+                .WillCascadeOnDelete(false);
+
             this.HasOptional(p => p.AdditionalSurveyor)
                 .WithMany()
                 .HasForeignKey(p => p.AdditionalSurveyorId)
+                .WillCascadeOnDelete(false);
+
+            this.HasOptional(p => p.AdditionalSurveyorCompany)
+                .WithMany()
+                .HasForeignKey(p => p.AdditionalSurveyorCompanyId)
                 .WillCascadeOnDelete(false);
 
             this.Property(x => x.SpecialConditions).HasMaxLength(4000);
