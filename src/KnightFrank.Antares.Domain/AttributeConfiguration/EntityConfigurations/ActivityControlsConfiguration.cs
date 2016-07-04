@@ -78,9 +78,9 @@
             this.AddControl(PageType.Details, ControlCode.OtherCondition, Field<Activity>.Create(x=>x.OtherCondition));
             this.AddControl(PageType.Details, ControlCode.DisposalType, Field<Activity>.Create(x=>x.DisposalTypeId, x=>x.DisposalType));
             this.AddControl(PageType.Details, ControlCode.Decoration, Field<Activity>.Create(x => x.DecorationId, x => x.Decoration));
-            this.AddControl(PageType.Details, ControlCode.KFValuationPrice, Field<Activity>.Create(x => x.ShortKFValuationPrice));
-            this.AddControl(PageType.Details, ControlCode.VendorValuationPrice, Field<Activity>.Create(x => x.ShortVendorValuationPrice));
-            this.AddControl(PageType.Details, ControlCode.AgreedInitialMarketingPrice, Field<Activity>.Create(x => x.ShortAgreedInitialMarketingPrice));
+            this.AddControl(PageType.Details, ControlCode.KFValuationPrice, Field<Activity>.Create(x => x.KFValuationPrice));
+            this.AddControl(PageType.Details, ControlCode.VendorValuationPrice, Field<Activity>.Create(x => x.VendorValuationPrice));
+            this.AddControl(PageType.Details, ControlCode.AgreedInitialMarketingPrice, Field<Activity>.Create(x => x.AgreedInitialMarketingPrice));
             this.AddControl(PageType.Details, ControlCode.ShortKFValuationPrice, Field<Activity>.Create(x => x.ShortKFValuationPrice));
             this.AddControl(PageType.Details, ControlCode.ShortVendorValuationPrice, Field<Activity>.Create(x => x.ShortVendorValuationPrice));
             this.AddControl(PageType.Details, ControlCode.ShortAgreedInitialMarketingPrice, Field<Activity>.Create(x => x.ShortAgreedInitialMarketingPrice));
@@ -128,9 +128,9 @@
                 this.AddControl(pageType, ControlCode.OtherCondition, Field<ActivityCommandBase>.Create(x => x.OtherCondition));
                 this.AddControl(pageType, ControlCode.DisposalType, Field<ActivityCommandBase>.Create(x => x.DisposalTypeId).Required());
                 this.AddControl(pageType, ControlCode.Decoration, Field<ActivityCommandBase>.Create(x => x.DecorationId));
-                this.AddControl(pageType, ControlCode.KFValuationPrice, Field<ActivityCommandBase>.Create(x => x.ShortKFValuationPrice).Required());
-                this.AddControl(pageType, ControlCode.VendorValuationPrice, Field<ActivityCommandBase>.Create(x => x.ShortVendorValuationPrice));
-                this.AddControl(pageType, ControlCode.AgreedInitialMarketingPrice, Field<ActivityCommandBase>.Create(x => x.ShortAgreedInitialMarketingPrice));
+                this.AddControl(pageType, ControlCode.KFValuationPrice, Field<ActivityCommandBase>.Create(x => x.KFValuationPrice).Required());
+                this.AddControl(pageType, ControlCode.VendorValuationPrice, Field<ActivityCommandBase>.Create(x => x.VendorValuationPrice));
+                this.AddControl(pageType, ControlCode.AgreedInitialMarketingPrice, Field<ActivityCommandBase>.Create(x => x.AgreedInitialMarketingPrice));
                 this.AddControl(pageType, ControlCode.ShortKFValuationPrice, Field<ActivityCommandBase>.Create(x => x.ShortKFValuationPrice).Required());
                 this.AddControl(pageType, ControlCode.ShortVendorValuationPrice, Field<ActivityCommandBase>.Create(x => x.ShortVendorValuationPrice));
                 this.AddControl(pageType, ControlCode.ShortAgreedInitialMarketingPrice, Field<ActivityCommandBase>.Create(x => x.ShortAgreedInitialMarketingPrice));
