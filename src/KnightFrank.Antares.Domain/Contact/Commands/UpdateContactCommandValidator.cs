@@ -33,6 +33,10 @@
             this.RuleFor(x => x.EventPersonalSalutation).Length(0, 128);
             this.RuleFor(x => x.EventEnvelopeSalutation).Length(0, 128);
             this.RuleFor(x => x.DefaultEventSalutationId).Must(this.IsValidDefaultEventSalutationId);
+
+            this.RuleFor(x => x.LeadNegotiator).NotNull().SetValidator(new ContactUserValidator());
+            this.RuleFor(x => x.SecondaryNegotiators).SetCollectionValidator(new ContactUserValidator());
+
         }
 
         private bool IsValidDefaultMailingSalutationId(Guid? enumItemId)

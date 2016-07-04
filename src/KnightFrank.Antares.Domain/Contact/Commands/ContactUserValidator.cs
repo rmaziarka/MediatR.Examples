@@ -8,6 +8,5 @@
         {
             this.RuleFor(x => x.UserId).NotEmpty();
         }
-
     }
 }
