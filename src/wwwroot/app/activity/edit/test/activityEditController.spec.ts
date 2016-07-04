@@ -242,8 +242,8 @@ module Antares {
                     expect(requestData.pitchingThreats).toEqual(activity.pitchingThreats);
                     expect(requestData.keyNumber).toEqual(activity.accessDetails.keyNumber);
                     expect(requestData.accessArrangements).toEqual(activity.accessDetails.accessArrangements);
-                    expect(moment(requestData.appraisalMeetingStart).toDate()).toEqual(activity.appraisalMeeting.appraisalMeetingStart);
-                    expect(moment(requestData.appraisalMeetingEnd).toDate()).toEqual(activity.appraisalMeeting.appraisalMeetingEnd);
+                    expect(requestData.appraisalMeetingStart).toEqual(Core.DateTimeUtils.createDateAsUtc(activity.appraisalMeeting.appraisalMeetingStart));
+                    expect(requestData.appraisalMeetingEnd).toEqual(Core.DateTimeUtils.createDateAsUtc(activity.appraisalMeeting.appraisalMeetingEnd));
                     expect(requestData.appraisalMeetingInvitationText).toEqual(activity.appraisalMeeting.appraisalMeetingInvitationText);
 
                     expect(requestData.appraisalMeetingAttendeesList.map((attendee: Business.UpdateActivityAttendeeResource) => attendee.userId)).toEqual(activity.appraisalMeetingAttendees.map((attendee: Dto.IActivityAttendee) => attendee.userId));

@@ -12,9 +12,9 @@ namespace KnightFrank.Antares.Dal.Model.Configuration.Property.Activities
     
     public class ActivityAppraisalMeeting
     {
-        public DateTimeOffset? AppraisalMeetingStart { get; set; }
+        public DateTime? AppraisalMeetingStart { get; set; }
 
-        public DateTimeOffset? AppraisalMeetingEnd { get; set; }
+        public DateTime? AppraisalMeetingEnd { get; set; }
         
         public string InvitationText { get; set; }
     }
