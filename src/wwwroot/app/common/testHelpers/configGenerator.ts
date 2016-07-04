@@ -33,6 +33,24 @@ module Antares.TestHelpers {
             return config;
         }
 
+        public static generateOfferAdditionalSurveyDateConfig(): Attributes.IOfferAdditionalSurveyDateControlConfig {
+            var config: Attributes.IOfferAdditionalSurveyDateControlConfig = {
+                active: true,
+                additionalSurveyDate: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferMortgageSurveyDateConfig(): Attributes.IOfferMortgageSurveyDateControlConfig {
+            var config: Attributes.IOfferMortgageSurveyDateControlConfig = {
+                active: true,
+                mortgageSurveyDate: null
+            }
+
+            return config;
+        }
+
         public static generateOfferStatusIdConfig(): Attributes.IOfferStatusControlConfig {
             var config: Attributes.IOfferStatusControlConfig = {
                 active: true,
@@ -68,31 +86,116 @@ module Antares.TestHelpers {
 
             return config;
         }
-        
+
+        public static generateOfferBrokerConfig(): Attributes.IOfferBrokerControlConfig {
+            var config: Attributes.IOfferBrokerControlConfig = {
+                active: true,
+                brokerId: null
+            }
+
+            return config;
+        }
+        public static generateOfferAdditionalSurveyorConfig(): Attributes.IOfferAdditionalSurveyorControlConfig {
+            var config: Attributes.IOfferAdditionalSurveyorControlConfig = {
+                active: true,
+                additionalSurveyorId: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferLenderConfig(): Attributes.IOfferLenderControlConfig {
+            var config: Attributes.IOfferLenderControlConfig = {
+                active: true,
+                lenderId: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferSurveyorConfig(): Attributes.IOfferSurveyorControlConfig {
+            var config: Attributes.IOfferSurveyorControlConfig = {
+                active: true,
+                surveyorId: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferContractApprovedConfig(): Attributes.IOfferContractApprovedControlConfig {
+            var config: Attributes.IOfferContractApprovedControlConfig = {
+                active: true,
+                contractApproved: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferEnquiriesConfig(): Attributes.IOfferEnquiriesControlConfig {
+            var config: Attributes.IOfferEnquiriesControlConfig = {
+                active: true,
+                enquiriesId: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferMortgageStatusConfig(): Attributes.IOfferMortgageStatusControlConfig {
+            var config: Attributes.IOfferMortgageStatusControlConfig = {
+                active: true,
+                mortgageStatusId: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferMortgageSurveyStatusConfig(): Attributes.IOfferMortgageSurveyStatusControlConfig {
+            var config: Attributes.IOfferMortgageSurveyStatusControlConfig = {
+                active: true,
+                mortgageSurveyStatusId: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferSearchStatusConfig(): Attributes.IOfferSearchStatusControlConfig {
+            var config: Attributes.IOfferSearchStatusControlConfig = {
+                active: true,
+                searchStatusId: null
+            }
+
+            return config;
+        }
         public static generateOfferAddPanelConfig(): Offer.IOfferAddPanelConfig{
             var config: Offer.IOfferAddPanelConfig = {
-                statusId: ConfigGenerator.generateOfferStatusIdConfig(),
-                completionDate: ConfigGenerator.generateOfferCompletionDateConfig(),
-                exchangeDate: ConfigGenerator.generateOfferExchangeDateConfig(),
-                offerDate: ConfigGenerator.generateOfferOfferDateConfig(),
-                price: ConfigGenerator.generateOfferPriceConfig(),
-                pricePerWeek: ConfigGenerator.generateOfferPricePerWeekConfig(),
-                specialConditions: ConfigGenerator.generateOfferSpecialConditionsConfig()
+                offer_StatusId: ConfigGenerator.generateOfferStatusIdConfig(),
+                offer_CompletionDate: ConfigGenerator.generateOfferCompletionDateConfig(),
+                offer_ExchangeDate: ConfigGenerator.generateOfferExchangeDateConfig(),
+                offer_OfferDate: ConfigGenerator.generateOfferOfferDateConfig(),
+                offer_Price: ConfigGenerator.generateOfferPriceConfig(),
+                offer_PricePerWeek: ConfigGenerator.generateOfferPricePerWeekConfig(),
+                offer_SpecialConditions: ConfigGenerator.generateOfferSpecialConditionsConfig()
             };
 
             return config;
         }
 
-        public static generateOfferEditConfig(): Offer.IOfferEditConfig {
-            var config: Offer.IOfferAddPanelConfig = {
-                statusId: ConfigGenerator.generateOfferStatusIdConfig(),
-                completionDate: ConfigGenerator.generateOfferCompletionDateConfig(),
-                exchangeDate: ConfigGenerator.generateOfferExchangeDateConfig(),
-                offerDate: ConfigGenerator.generateOfferOfferDateConfig(),
-                price: ConfigGenerator.generateOfferPriceConfig(),
-                pricePerWeek: ConfigGenerator.generateOfferPricePerWeekConfig(),
-                specialConditions: ConfigGenerator.generateOfferSpecialConditionsConfig()
-            };
+        public static generateOfferEditConfig(): Offer.IOfferEditConfig{
+            var addPanelConfig: Offer.IOfferAddPanelConfig = ConfigGenerator.generateOfferAddPanelConfig();
+            var config = <Offer.IOfferEditConfig>{};
+            angular.extend(config, addPanelConfig, {
+                offer_AdditionalSurveyDate : ConfigGenerator.generateOfferAdditionalSurveyDateConfig(),
+                offer_MortgageSurveyDate : ConfigGenerator.generateOfferMortgageSurveyDateConfig(),
+                offer_Broker: ConfigGenerator.generateOfferBrokerConfig(),
+                offer_AdditionalSurveyor: ConfigGenerator.generateOfferAdditionalSurveyorConfig(),
+                offer_ContractApproved: ConfigGenerator.generateOfferContractApprovedConfig(),
+                offer_Enquiries: ConfigGenerator.generateOfferEnquiriesConfig(),
+                offer_Lender: ConfigGenerator.generateOfferLenderConfig(),
+                offer_MortgageStatus: ConfigGenerator.generateOfferMortgageStatusConfig(),
+                offer_MortgageSurveyStatus: ConfigGenerator.generateOfferMortgageSurveyStatusConfig(),
+                offer_SearchStatus: ConfigGenerator.generateOfferSearchStatusConfig(),
+                offer_Surveyor: ConfigGenerator.generateOfferSurveyorConfig()
+            });
 
             return config;
         }
