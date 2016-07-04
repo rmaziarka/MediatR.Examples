@@ -19,7 +19,7 @@ module Antares.Requirement.View {
         loadingActivities: boolean = false;
         saveViewingBusy: boolean = false;
         addEditOfferBusy: boolean = false;
-        userData: Dto.IUserData;
+        userData: Dto.ICurrentUser;
         selectedOffer: Dto.IOffer;
         selectedViewing: Dto.IViewing;
         attachmentManagerData: Attachment.IAttachmentsManagerData;

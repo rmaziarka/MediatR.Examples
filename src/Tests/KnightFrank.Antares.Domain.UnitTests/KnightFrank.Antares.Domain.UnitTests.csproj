@@ -167,6 +167,10 @@
     <Compile Include="Offer\Handler\OfferProgressStatusHelperTests.cs" />
     <Compile Include="Property\CommandHandlers\CreatePropertyAttachmentCommandHandlerTests.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementAttachmentCommandHandlerTests.cs" />
+    <Compile Include="User\CommandHandlers\UpdateUserCommandHandlerTests.cs" />
+    <Compile Include="User\Commands\UpdateUserCommandValidatorTests.cs" />
+    <Compile Include="User\Queries\UserQueryValidatorTests.cs" />
+    <Compile Include="User\QueryHandlers\UserQueryHandlerTests.cs" />
     <Compile Include="Viewing\CommandHandlers\CreateViewingCommandHandlerTests.cs" />
     <Compile Include="Viewing\CommandHandlers\UpdateViewingCommandHandlerTests.cs" />
     <Compile Include="Viewing\Commands\UpdateViewingCommandValidatorTests.cs" />

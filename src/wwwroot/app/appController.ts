@@ -3,7 +3,7 @@
 module Antares {
     export class AppController {
 
-        constructor(public userData: Antares.Common.Models.Dto.IUserData) {
+        constructor(public userData: Antares.Common.Models.Dto.ICurrentUser) {
         }
 
     }

@@ -15,6 +15,16 @@
             this.Property(p => p.LastName).HasMaxLength(40);
 
             this.HasMany(p => p.Roles).WithMany(p => p.Users);
+
+            this.HasOptional(x => x.SalutationFormat)
+             .WithMany()
+             .HasForeignKey(x => x.SalutationFormatId)
+             .WillCascadeOnDelete(false);
+
+            this.HasRequired(x => x.Division)
+          .WithMany()
+          .HasForeignKey(x => x.DivisionId)
+          .WillCascadeOnDelete(false);
         }
     }
 }

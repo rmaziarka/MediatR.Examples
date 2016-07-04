@@ -1,6 +1,7 @@
 ﻿{
   "COMMON": {
     "APPLY": "Apply",
+    "PREFERENCES": "Preferences",
     "VIEW": "View",
     "SAVE": "Save",
     "EDIT": "Edit",
@@ -460,5 +461,9 @@
         "MESSAGE": "You’re trying to add one or more new departments without negotiators assigned to them. Please select a negotiator for each of those departments or remove the departments"
       }
     }
+  },
+  "PREFERENCES": {
+    "HEADER": "Preferences",
+    "PREFERRED_SALUTATION": "Preferred salutation (envelope)"
   }
 }

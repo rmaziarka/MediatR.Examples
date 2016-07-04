@@ -13,7 +13,7 @@ module Antares.Property {
         private propertyTypes: any[];
         private divisions: EnumTypeItem[];
         private attributes: Dto.IAttribute[];
-        public userData: Dto.IUserData;
+        public userData: Dto.ICurrentUser;
 
         constructor(
             componentRegistry: Core.Service.ComponentRegistry,
@@ -60,7 +60,7 @@ module Antares.Property {
         loadPropertyTypes = () => {
             this.propertyResource
                 .getPropertyTypes({
-                    countryCode: this.userData.country, divisionCode: this.property.division.code, localeCode: 'en'
+                    countryCode: this.userData.country.isoCode, divisionCode: this.property.division.code, localeCode: 'en'
                 }, null)
                 .$promise
                 .then((propertyTypes: any) => {
