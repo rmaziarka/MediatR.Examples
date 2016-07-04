@@ -6,6 +6,7 @@ declare module Antares.Common.Models.Dto {
         clientCarePageUrl: string;   
         clientCareStatusId: string;
         clientCareStatus: Dto.IEnumTypeItem;
-        contacts: IContact[];        
+        contacts: IContact[];   
+        companiesContacts: ICompanyContact[];     
     }
 }

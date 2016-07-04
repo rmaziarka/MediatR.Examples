@@ -20,14 +20,6 @@
                 .WithMany()
                 .HasForeignKey(x => x.ClientCareStatusId)
                 .WillCascadeOnDelete(false);
-
-            this.HasMany(p => p.Contacts)
-                .WithMany()
-                .Map(cs =>
-                {
-                    cs.MapLeftKey("CompanyId");
-                    cs.MapRightKey("ContactId");
-                });
         }
     }
 }

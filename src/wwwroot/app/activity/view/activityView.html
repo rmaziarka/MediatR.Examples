@@ -45,67 +45,18 @@
                     <price-view-control config="avvm.config.shortLetPricePerWeek" price='avvm.activity.shortLetPricePerWeek' schema="avvm.controlSchemas.shortLetPricePerWeek"></price-view-control>
                 </section>
                 <section id="activity-view-viewings">
-                    <h3 class="page-header" translate="ACTIVITY.VIEW.VIEWINGS"></h3>
-                    <card-list id="viewings-list">
-                        <card-list-no-items ng-show="avvm.activity.viewings.length === 0">
-                            <p class="help-block" translate="ACTIVITY.VIEW.NO_VIEWINGS"></p>
-                        </card-list-no-items>
-                        <card-list-item ng-repeat="group in avvm.activity.viewingsByDay | orderBy: '-day'">
-                            <card-list-group class="viewing-group">
-                                <card-list-group-header>
-                                    <h5>
-                                        <time>{{::group.viewings[0].startDate | date : 'dd-MM-yyyy'}}</time>
-                                    </h5>
-                                </card-list-group-header>
-                                <card-list-group-item ng-repeat="viewing in group.viewings | orderBy: '-startDate' track by viewing.id">
-                                    <card class="viewing-item" card-template-url="'app/activity/view/activityViewingsCard.html'" item="viewing" show-item-details="avvm.showViewingPreview">
-                                    </card>
-                                </card-list-group-item>
-                            </card-list-group>
-                        </card-list-item>
-                    </card-list>
+                    <viewing-view-control is-panel-visible="avvm.isViewingPreviewPanelVisible" viewings="avvm.activity.viewingsByDay" config="avvm.config.viewings"></viewing-view-control>
                 </section>
-                <attachments-manager entity-id="avvm.activity.id" enum-document-type="{{avvm.enumTypeActivityDocumentType}}" entity-type="{{avvm.entityType}}" attachments="avvm.activity.attachments" on-save-attachment-for-entity="avvm.saveAttachment(attachment)"></attachments-manager>
+                <attachments-manager data="avvm.attachmentManagerData" on-save-attachment-for-entity="avvm.saveAttachment(attachment)"></attachments-manager>
             </div>
             <div class="col-md-4">
                 <section>
-                    <h3 class="page-header" translate="ACTIVITY.VIEW.OFFERS"></h3>
-                    <card-list-item class="activity-view-offers" ng-repeat="offer in avvm.activity.offers | orderBy: '-createdDate' | enumSorter: 'OfferStatus':'statusId' track by offer.id + offer.statusId + offer.offerDate">
-                        <card card-template-url="'app/activity/view/activityOffersCard.html'" item="offer" show-item-details="avvm.showOfferPreview"
-                              display-new-control="true" show-context-menu="true">
-                            <card-context-menu>
-                                <context-menu-item type="details" item="offer" action="avvm.navigateToOfferView"></context-menu-item>
-                            </card-context-menu>
-                        </card>
-                    </card-list-item>
+                    <offer-view-control is-panel-visible="avvm.isOfferPreviewPanelVisible" 
+                        config="avvm.config.offers" 
+                        offers="avvm.activity.offers">
+                    </offer-view-control>
                 </section>
             </div>
         </div>
     </div>
 </div>
-
-<side-panel component-id="avvm.componentIds.previewViewingSidePanelId" id="viewing-panel">
-    <side-panel-header>
-        <h3 translate="ACTIVITY.VIEW.VIEWING_DETAILS"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <viewing-preview component-id="avvm.componentIds.viewingPreviewId" viewing="avvm.selectedViewing">
-            <viewing-preview-custom-item>
-                <requirement-card requirement="avvm.selectedViewing.requirement" />
-            </viewing-preview-custom-item>
-        </viewing-preview>
-    </side-panel-content>
-</side-panel>
-
-<side-panel component-id="avvm.componentIds.offerPreviewSidePanelId">
-    <side-panel-header>
-        <h3 translate="ACTIVITY.VIEW.OFFERPREVIEW"></h3>
-    </side-panel-header>
-    <side-panel-content>
-        <offer-preview component-id="avvm.componentIds.offerPreviewId" offer="avvm.selectedOffer">
-            <offer-preview-custom-item>
-                <requirement-card requirement="avvm.selectedOffer.requirement" />
-            </offer-preview-custom-item>
-        </offer-preview>
-    </side-panel-content>
-</side-panel>
