@@ -323,7 +323,8 @@
       "TYPE": "Requirement type",
       "BASIC_INFORMATION": "Basic information",
       "RENT_REQUIREMENTS": "Rent requirements",
-      "RENT_WEEKLY": "Rent (weekly)"
+      "RENT_WEEKLY": "Rent (weekly)",
+      "OFFER_PER_WEEK": "GBP / week"
     }
   },
   "NOTES": {
