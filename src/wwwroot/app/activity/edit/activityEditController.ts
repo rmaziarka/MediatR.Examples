@@ -159,8 +159,8 @@ module Antares.Activity {
             this.setLeadNegotiator();
             this.setDefaultDepartment();
 
-            this.availableAttendeeUsers = this.getAvailableAttendeeUsers();
-            this.availableAttendeeContacts = this.getAvailableAttendeeContacts();
+            this.refreshAvailableAttendeeUsers();
+            this.refreshAvailableAttendeeContacts();
         }
 
         public activityTypeChanged = (activityTypeId: string) => {
@@ -228,8 +228,12 @@ module Antares.Activity {
         }
 
         public onNegotiatorAdded = (user: Dto.IUser) => {
-            this.availableAttendeeUsers = this.getAvailableAttendeeUsers();
+            this.refreshAvailableAttendeeUsers();
             this.addDepartment(user.department);
+        }
+
+        public onNegotiatorRemoved = () => {
+            this.refreshAvailableAttendeeUsers();
         }
 
         public departmentIsRelatedWithNegotiator = (department: Business.Department) => {
@@ -245,11 +249,19 @@ module Antares.Activity {
             return this.pageMode === PageMode.Edit;
         }
 
-        public getAvailableAttendeeUsers = (): Business.User[] => {
+        private refreshAvailableAttendeeUsers = () => {
+            this.availableAttendeeUsers = this.getAvailableAttendeeUsers();
+        }
+
+        private refreshAvailableAttendeeContacts = () => {
+            this.availableAttendeeContacts = this.activity.contacts;
+        }
+
+        private getAvailableAttendeeUsers = (): Business.User[] => {
 
             var users: Business.User[] = [];
 
-            this.activity.secondaryNegotiator.map((n: Business.ActivityUser) => {
+            users = this.activity.secondaryNegotiator.map((n: Business.ActivityUser) => {
                 return n.user;
             }) || [];
 
@@ -258,10 +270,6 @@ module Antares.Activity {
             }
 
             return users;
-        }
-
-        public getAvailableAttendeeContacts = (): Business.Contact[] => {
-            return this.activity.contacts;
         }
 
         private get pageMode(): PageMode {
@@ -314,6 +322,8 @@ module Antares.Activity {
             this.activity.leadNegotiator.user.firstName = this.userData.firstName;
             this.activity.leadNegotiator.user.lastName = this.userData.lastName;
             this.activity.leadNegotiator.user.departmentId = this.userData.department.id;
+
+            this.activity.leadNegotiator.callDate = moment().add('week', 2).toDate();
         }
 
         private setDefaultDepartment = () => {

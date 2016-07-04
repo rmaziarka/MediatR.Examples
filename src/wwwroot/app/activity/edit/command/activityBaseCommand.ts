@@ -64,6 +64,7 @@ module Antares.Activity.Commands {
         leadNegotiator: ActivityUserCommandPart;
         secondaryNegotiators: ActivityUserCommandPart[];
         departments: IActivityDepartmentCommandPart[];
+        appraisalMeetingAttendeesList: Business.UpdateActivityAttendeeResource[];
         contactIds: string[];
         sourceId: string;
         sourceDescription: string;

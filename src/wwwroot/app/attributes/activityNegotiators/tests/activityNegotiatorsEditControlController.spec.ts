@@ -48,7 +48,9 @@ module Antares {
                     $dirty: false
                 }
             }
+
             controller.onNegotiatorAdded = () => { };
+            controller.onNegotiatorRemoved = () => { };
         }));
 
         describe('when editLeadNegotiator is called', () => {

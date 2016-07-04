@@ -11,6 +11,7 @@ module Antares.Attributes {
             leadNegotiator: '=' ,
             secondaryNegotiators: '=',
             onNegotiatorAdded: '&',
+            onNegotiatorRemoved: '&',
             config: '<'
         }
     });
