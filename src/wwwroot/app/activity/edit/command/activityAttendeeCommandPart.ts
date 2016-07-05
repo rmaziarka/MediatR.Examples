@@ -1,7 +1,9 @@
-﻿/// <reference path="../../../../typings/_all.d.ts" />
+﻿/// <reference path="../../../typings/_all.d.ts" />
 
-module Antares.Common.Models.Business {
-    export class UpdateActivityAttendeeResource {
+module Antares.Activity.Commands {
+    import Dto = Common.Models.Dto;
+
+    export class ActivityAttendeeCommandPart {
         userId: string = '';
         contactId: string = '';
 

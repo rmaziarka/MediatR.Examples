@@ -19,7 +19,7 @@ module Antares.Activity.Commands {
         sourceId: string = null;
         sourceDescription: string = '';
         sellingReasonId: string = '';
-        appraisalMeetingAttendeesList: Business.UpdateActivityAttendeeResource[];
+        appraisalMeetingAttendeesList: ActivityAttendeeCommandPart[];
         pitchingThreats: string = '';
         appraisalMeetingStart: Date = null;
         appraisalMeetingEnd: Date = null;
@@ -43,7 +43,7 @@ module Antares.Activity.Commands {
             this.secondaryNegotiators = activity.secondaryNegotiator.map((n: Business.ActivityUser) => new ActivityUserCommandPart(n));
             this.departments = activity.activityDepartments.map((d: Business.ActivityDepartment) => new ActivityDepartmentCommandPart(d));
             this.contactIds = activity.contacts.map((c: Business.Contact) => c.id);
-            this.appraisalMeetingAttendeesList = activity.appraisalMeetingAttendees.map((a: Dto.IActivityAttendee) => new Business.UpdateActivityAttendeeResource(a));
+            this.appraisalMeetingAttendeesList = activity.appraisalMeetingAttendees.map((a: Dto.IActivityAttendee) => new ActivityAttendeeCommandPart(a));
 
             this.appraisalMeetingStart = activity.appraisalMeeting.appraisalMeetingStart ? Core.DateTimeUtils.createDateAsUtc(activity.appraisalMeeting.appraisalMeetingStart) : null;
             this.appraisalMeetingEnd = activity.appraisalMeeting.appraisalMeetingEnd ? Core.DateTimeUtils.createDateAsUtc(activity.appraisalMeeting.appraisalMeetingEnd) : null;
@@ -64,7 +64,7 @@ module Antares.Activity.Commands {
         leadNegotiator: ActivityUserCommandPart;
         secondaryNegotiators: ActivityUserCommandPart[];
         departments: IActivityDepartmentCommandPart[];
-        appraisalMeetingAttendeesList: Business.UpdateActivityAttendeeResource[];
+        appraisalMeetingAttendeesList: ActivityAttendeeCommandPart[];
         contactIds: string[];
         sourceId: string;
         sourceDescription: string;
