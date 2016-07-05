@@ -105,7 +105,7 @@ Scenario: Update contact
 			| AD2                   | secondary            | John      | Smith    |
 	When User updates latests contact with following data
 		| FirstName | LastName | Title | MailingFormalSalutation | MailingSemiformalSalutation | MailingEnvelopeSalutation |
-		| Johny     | Johny    | Mr    | Sir                     | Mr Johny                    | Mr Johny                  |
+		|           | Johny    | Mr    | Sir                     | Mr Johny                    | Mr Johny                  |
 	Then User should get OK http status code
 		And Updated contact should be saved in data base
 
