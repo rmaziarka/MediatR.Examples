@@ -266,7 +266,7 @@
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Details, actualDetails[0]),
-                () => Assert.Equal(expectedDetails.Offer, actualDetails[1]),
+                () => Assert.Equal(expectedDetails.Offer + " GBP", actualDetails[1]),
                 () => Assert.Equal(expectedDetails.Status, actualDetails[2]));
         }
 

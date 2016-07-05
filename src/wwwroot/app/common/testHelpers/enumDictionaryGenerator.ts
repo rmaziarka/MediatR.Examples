@@ -14,18 +14,19 @@ module Antares.TestHelpers {
                 division: EnumDictionaryGenerator.generateEnums(Enums.Division),
                 entityType: EnumDictionaryGenerator.generateEnums(Enums.EntityType),
                 offerStatus: EnumDictionaryGenerator.generateEnums(Enums.OfferStatus),
-                ownershipType: EnumDictionaryGenerator.generateEnums(Enums.OwnershipType)
+                ownershipType: EnumDictionaryGenerator.generateEnums(Enums.OwnershipType),
+                salutationFormat: EnumDictionaryGenerator.generateEnums(Enums.SalutationFormat)
             }
             return enumDictionary;
         }
 
-        public static generateEnums(enumType: any): Dto.IEnumItem[]{
+        public static generateEnums(enumType: any): Dto.IEnumItem[] {
             var enums: Dto.IEnumItem[] = [];
             for (var enumMember in enumType) {
                 if (enumType.hasOwnProperty(enumMember)) {
                     enums.push({
-                        id : EnumDictionaryGenerator.makeRandom('id'),
-                        code : enumType[enumMember]
+                        id: EnumDictionaryGenerator.makeRandom('id'),
+                        code: enumType[enumMember]
                     });
                 }
             }

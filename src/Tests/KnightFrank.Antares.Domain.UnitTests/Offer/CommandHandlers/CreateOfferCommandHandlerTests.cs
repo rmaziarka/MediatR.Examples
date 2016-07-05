@@ -11,6 +11,8 @@
     using KnightFrank.Antares.Dal.Model.Property.Activities;
     using KnightFrank.Antares.Dal.Model.User;
     using KnightFrank.Antares.Dal.Repository;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Common;
+    using KnightFrank.Antares.Domain.AttributeConfiguration.Enums;
     using KnightFrank.Antares.Domain.Common.BusinessValidators;
     using KnightFrank.Antares.Domain.Common.Enums;
     using KnightFrank.Antares.Domain.Offer.CommandHandlers;
@@ -56,6 +58,8 @@
             [Frozen] Mock<IGenericRepository<EnumType>> enumTypeRepository,
             [Frozen] Mock<IGenericRepository<Requirement>> requirementRepository,
             [Frozen] Mock<IGenericRepository<OfferType>> offerTypeRepository,
+            [Frozen] Mock<IAttributeValidator<Tuple<Domain.Common.Enums.OfferType, Domain.Common.Enums.RequirementType>>> attributeValidator,
+            [Frozen] Mock<IEntityMapper<Offer>> offerEntityMapper,
             Requirement requirement,
             RequirementType requirementType,
             OfferType offerType,
@@ -70,7 +74,9 @@
             offerRepository.Setup(r => r.Add(It.IsAny<Offer>())).Returns((Offer a) => a);
             requirementRepository.Setup(r => r.GetWithInclude(It.IsAny<Expression<Func<Requirement, bool>>>(), It.IsAny<Expression<Func<Requirement, object>>[]>())).Returns(new List<Requirement> { requirement });
             offerTypeRepository.Setup(r => r.FindBy(It.IsAny<Expression<Func<OfferType, bool>>>())).Returns(new[] { offerType });
-
+            attributeValidator.Setup(
+                av => av.Validate(PageType.Create, It.IsAny<Tuple<Domain.Common.Enums.OfferType, Domain.Common.Enums.RequirementType>>(), command));
+            offerEntityMapper.Setup(x => x.MapAllowedValues(command, It.IsAny<Offer>(), PageType.Create));
             enumTypeRepository
                 .Setup(x => x.GetWithInclude(It.IsAny<Expression<Func<EnumType, bool>>>(), It.IsAny<Expression<Func<EnumType, object>>>()))
                 .Returns(new List<EnumType> { this.acceptedEnumType});
@@ -86,6 +92,9 @@
             offerRepository.Verify(r => r.Save(), Times.Once());
             requirementRepository.Verify(r => r.GetWithInclude(It.IsAny<Expression<Func<Requirement, bool>>>(), It.IsAny<Expression<Func<Requirement, object>>[]>()), Times.Once());
             offerTypeRepository.Verify(r => r.FindBy(It.IsAny<Expression<Func<OfferType, bool>>>()), Times.Once());
+            attributeValidator.Verify(
+                av => av.Validate(PageType.Create, It.IsAny<Tuple<Domain.Common.Enums.OfferType, Domain.Common.Enums.RequirementType>>(), command));
+            offerEntityMapper.Verify(x => x.MapAllowedValues(command, It.IsAny<Offer>(), PageType.Create));
         }
     }
 }

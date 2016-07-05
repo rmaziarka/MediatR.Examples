@@ -69,7 +69,6 @@ module Antares {
             }));
 
             it('then should prepare preview view', () => {
-                expect(controller.backToPreview).toBeTruthy();
                 expect(controller.cardPristine).toBeDefined();
                 expect(controller.isPreviewCardVisible).toBeTruthy();
                 expect(controller.isEditCardVisible).toBeFalsy();

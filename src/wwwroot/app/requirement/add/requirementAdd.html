@@ -2,10 +2,10 @@
     <div class="col-md-12">
 
         <h2 class="page-header" translate="REQUIREMENT.ADD.ADD_REQUIREMENT"></h2>
-        <form ng-submit="addRequirementForm.$valid && vm.save()" name="addRequirementForm" id="addRequirementForm" method="post"
+        <form ng-submit="addRequirementForm.isFormValid() && vm.save()" name="addRequirementForm" id="addRequirementForm" method="post"
               novalidate>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6 col-lg-3">
                     <fieldset>
                         <h3 class="page-header" translate="REQUIREMENT.ADD.BASIC_INFORMATION"></h3><div class="form-group">
                             <div class="row">
@@ -17,7 +17,8 @@
                         <div class="form-group" ng-class="{'has-error': (addRequirementForm.$submitted || addRequirementForm.description.$dirty) && addRequirementForm.description.$invalid}">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <requirement-description-edit-control ng-model="vm.requirement.description" config="vm.config.requirement_Description" />
+                                    <!-- TODO - user generic description control-->
+                                    <requirement-description-edit-control ng-model="vm.requirement.description" config="vm.config.requirement_Description"/>
                                 </div>
                             </div>
                         </div>
@@ -32,7 +33,7 @@
                                            template-url="'app/common/components/addressForm/addressFormEdit/templates/requirementAddressForm.html'"></address-form-edit>
                     </fieldset>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6 col-lg-3">
                     <section>
                         <h3 class="page-header" translate="REQUIREMENT.ADD.APPLICANT"></h3>
                         <div class="form-group">

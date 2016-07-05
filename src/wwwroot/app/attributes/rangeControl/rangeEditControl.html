@@ -2,7 +2,7 @@
     <fieldset>
         <label for={{vm.schema.minControlId}}>{{vm.schema.translationKey | translate}}</label>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-xs-6 col-md-4 col-lg-5">
                 <div class="form-group" ng-class="{'has-error': (vm[vm.schema.formName].$submitted || vm[vm.schema.formName].min.$dirty) && vm[vm.schema.formName].min.$invalid}">
                     <div class="input-group">
                         <input type="number" min="1" max="{{vm.max}}" class="form-control" name="min" id="{{vm.schema.minControlId}}" ng-model="vm.min" placeholder="min">
@@ -13,7 +13,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-xs-6 col-md-4 col-lg-5">
                 <div class="form-group" ng-class="{'has-error': (vm[vm.schema.formName].$submitted || vm[vm.schema.formName].max.$dirty) && vm[vm.schema.formName].max.$invalid}">
                     <div class="input-group">
                         <input type="number" min="1" class="form-control" name="max" ng-model="vm.max" placeholder="max" id="{{vm.schema.maxControlId}}">
