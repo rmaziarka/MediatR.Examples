@@ -20,8 +20,9 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         Offers,
         Viewings,
         Attachments,
+        #endregion
 
-        #region Requirement
+        #region Requirement ControlCode
 
         Requirement_RequirementType,
         Requirement_Description,
@@ -32,8 +33,6 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         Requirement_Viewings,
         Requirement_Attachments,
         Requirement_CreationDate,
-
-        #endregion
 
         #endregion
 
@@ -68,6 +67,8 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.Enums
         Offer_ProgressComment,
         Offer_CreatedDate,
         Offer_LastModifiedDate,
+        Offer_Vendor_Solicitor,
+        Offer_Applicant_Solicitor
         #endregion
     }
 }

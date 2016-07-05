@@ -75,6 +75,16 @@
             this.AddControl(PageType.Update, ControlCode.Offer_MortgageSurveyDate, Field<UpdateOfferCommand>.Create(x => x.MortgageSurveyDate));
             this.AddControl(PageType.Update, ControlCode.Offer_AdditionalSurveyDate, Field<UpdateOfferCommand>.Create(x => x.AdditionalSurveyDate));
             this.AddControl(PageType.Update, ControlCode.Offer_ProgressComment, Field<UpdateOfferCommand>.CreateText(x => x.ProgressComment, 4000));
+            this.AddControl(PageType.Update, ControlCode.Offer_Vendor_Solicitor, new IField[]
+            {
+                Field<UpdateOfferCommand>.Create(x => x.VendorSolicitorId),
+                Field<UpdateOfferCommand>.Create(x => x.VendorSolicitorCompanyId)
+            });
+            this.AddControl(PageType.Update, ControlCode.Offer_Applicant_Solicitor, new IField[]
+            {
+                Field<UpdateOfferCommand>.Create(x => x.ApplicantSolicitorId),
+                Field<UpdateOfferCommand>.Create(x => x.ApplicantSolicitorCompanyId)
+            });
         }
 
         private void DefineControlsForDetails()
@@ -111,8 +121,17 @@
             this.AddControl(PageType.Details, ControlCode.Offer_Negotiator, Field<Offer>.Create(x => x.NegotiatorId, x => x.Negotiator));
             this.AddControl(PageType.Details, ControlCode.Offer_CreatedDate, Field<Offer>.Create(x => x.CreatedDate));
             this.AddControl(PageType.Details, ControlCode.Offer_LastModifiedDate, Field<Offer>.Create(x => x.LastModifiedDate));
-        }
 
+            this.AddControl(PageType.Details, ControlCode.Offer_Vendor_Solicitor,
+                Field<Offer>.Create(x => x.Activity.SolicitorId, x => x.Activity.Solicitor).Concat(
+                Field<Offer>.Create(x => x.Activity.SolicitorCompanyId, x => x.Activity.SolicitorCompany)).ToList()
+            );
+
+            this.AddControl(PageType.Details, ControlCode.Offer_Applicant_Solicitor,
+                Field<Offer>.Create(x => x.Requirement.SolicitorId, x => x.Requirement.Solicitor).Concat(
+                Field<Offer>.Create(x => x.Requirement.SolicitorCompanyId, x => x.Requirement.SolicitorCompany)).ToList()
+            );
+        }
 
         private void DefineControlsForPreview()
         {
@@ -180,7 +199,9 @@
                     ControlCode.Offer_MortgageLoanToValue,
                     ControlCode.Offer_MortgageSurveyDate,
                     ControlCode.Offer_AdditionalSurveyDate,
-                    ControlCode.Offer_ProgressComment
+                    ControlCode.Offer_ProgressComment,
+                    ControlCode.Offer_Vendor_Solicitor,
+                    ControlCode.Offer_Applicant_Solicitor
                 },
                 this.When(OfferType.ResidentialSale, RequirementType.ResidentialSale, PageType.Update, PageType.Details));
 
