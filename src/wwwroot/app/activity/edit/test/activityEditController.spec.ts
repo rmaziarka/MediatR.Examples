@@ -280,14 +280,68 @@ module Antares {
 
                 // assert
                 expect(controller.activity.activityDepartments.length).toBe(2);
-
                 var addedActivityDepartment = controller.activity.activityDepartments[1];
-
                 expect(addedActivityDepartment.departmentId).toBe(user.department.id);
                 expect(addedActivityDepartment.activityId).toBe(controller.activity.id);
                 expect(addedActivityDepartment.departmentType).toBe(controller.standardDepartmentType);
                 expect(addedActivityDepartment.departmentTypeId).toBe(controller.standardDepartmentType.id);
             });
+        });
+
+        describe('when negotiator list has changed', () => {
+            type TestCase = [Common.Models.Enums.NegotiatorTypeEnum]; //[NegotiatorTypeEnum]
+            runDescribe('and new ')
+                .data<TestCase>([
+                    [Common.Models.Enums.NegotiatorTypeEnum.LeadNegotiator],
+                    [Common.Models.Enums.NegotiatorTypeEnum.SecondaryNegotiator]
+                ])
+                .dataIt((data: TestCase) =>
+                    `${data[0]} is added then they should be added to available attendees user list`)
+                .run((data: TestCase) => {
+                    // arrange
+                    var activityUser: Business.ActivityUser = TestHelpers.ActivityUserGenerator.generate(data[0]);
+
+                    controller.activity.activityDepartments = [TestHelpers.ActivityDepartmentGenerator.generate()];
+                    controller.standardDepartmentType = TestHelpers.EnumTypeItemGenerator.generateDto();
+
+                    // act
+                    if (data[0] === Common.Models.Enums.NegotiatorTypeEnum.SecondaryNegotiator) {
+                        controller.activity.secondaryNegotiator.push(activityUser);
+                    }
+                    else if (data[0] === Common.Models.Enums.NegotiatorTypeEnum.LeadNegotiator) {
+                        controller.activity.leadNegotiator = activityUser;
+                    }
+                    controller.onNegotiatorAdded(activityUser.user);
+
+                    // assert
+                    var addedUser = _.find(controller.availableAttendeeUsers, (attendee: Business.User) => { return attendee.id === activityUser.user.id });
+
+                    expect(addedUser).toBeTruthy();
+                });
+
+            runDescribe('and existing ')
+                .data<TestCase>([
+                    [Common.Models.Enums.NegotiatorTypeEnum.LeadNegotiator],
+                    [Common.Models.Enums.NegotiatorTypeEnum.SecondaryNegotiator]
+                ])
+                .dataIt((data: TestCase) =>
+                    `${data[0]} is removed then they should be removed from available attendees user list`)
+                .run((data: TestCase) => {
+                    // arrange
+                    var activityUser: Business.ActivityUser = TestHelpers.ActivityUserGenerator.generate(data[0]);
+
+                    controller.activity.activityDepartments = [TestHelpers.ActivityDepartmentGenerator.generate()];
+                    controller.standardDepartmentType = TestHelpers.EnumTypeItemGenerator.generateDto();
+                    controller.availableAttendeeUsers = [activityUser.user];
+
+                    // act
+                    controller.onNegotiatorRemoved();
+
+                    // assert
+                    var addedUser = _.find(controller.availableAttendeeUsers, (attendee: Business.User) => { return attendee.id === activityUser.user.id });
+
+                    expect(addedUser).toBeFalsy();
+                });
         });
 
         describe('should subscribe to events', () => {
@@ -312,6 +366,53 @@ module Antares {
                 // assert
                 expect(controller.isPropertyPreviewPanelVisible).toBe(Enums.SidePanelState.Opened);
             });
+        });
+
+        describe('when in edit mode', () => {
+            var deferred: ng.IDeferred<any>;
+            var activityFromService: Dto.IActivity;
+            var activity: Activity.ActivityEditModel;
+            var userData: Dto.ICurrentUser;
+
+            beforeEach(() => {
+                // arrange
+                activity = TestHelpers.ActivityGenerator.generateActivityEdit();
+                controller.activity = activity;
+                controller.userData = userData;
+
+                enumProvider.enums = <Dto.IEnumDictionary>{
+                    activityDepartmentType: [
+                        { id: TestHelpers.StringGenerator.generate(), code: Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Standard] },
+                        { id: TestHelpers.StringGenerator.generate(), code: Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Managing] }
+                    ]
+                };
+            });
+
+            describe('when initializing', () => {
+                it('then correct lead negotiator should be set', () => {
+                    // act
+                    controller.$onInit();
+
+                    expect(controller.activity.leadNegotiator).not.toBeNull();
+                    expect(controller.activity.leadNegotiator.user.firstName).toBe(activity.leadNegotiator.user.firstName);
+                    expect(controller.activity.leadNegotiator.user.lastName).toBe(activity.leadNegotiator.user.lastName);
+                    expect(controller.activity.leadNegotiator.user.id).toBe(activity.leadNegotiator.user.id);
+                    expect(controller.activity.leadNegotiator.user.departmentId).toBe(activity.leadNegotiator.user.departmentId);
+                });
+
+                it('then correct call date should be set', () => {
+                    // act
+                    controller.$onInit();
+
+                    var callDate = moment(controller.activity.leadNegotiator.callDate);
+                    var expectedCallDate = moment(activity.leadNegotiator.callDate);
+
+                    expect(callDate.day).toBe(expectedCallDate.day);
+                    expect(callDate.month).toBe(expectedCallDate.month);
+                    expect(callDate.year).toBe(expectedCallDate.year);
+                });
+            });
+
         });
 
         describe('when in add mode', () => {
