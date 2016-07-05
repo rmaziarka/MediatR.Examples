@@ -64,23 +64,13 @@
                             <p class="help-block" translate="PROPERTY.LIST.NO_ITEMS"></p>
                         </card-list-no-items>
                         <card-list-item ng-repeat="ownership in vm.property.ownerships | orderBy: vm.ownershipsCartListOrder.name : vm.ownershipsCartListOrder.descending : vm.ownershipsCartListOrder.nullOnEnd track by ownership.id">
-                            <!-- example on how to use new version of component -->
-                            <!--<card show-context-menu="true" show-item-details="vm.showOwnershipView" display-new-control="true"
-                                      card-template-url="'app/property/view/propertyOwnershipCard.html'" item="ownership">
-
-                                <card-context-menu>
-                                    <context-menu-item type="edit" item="ownership" action="vm.showContactList"></context-menu-item>
-                                    <context-menu-item type="delete" item="ownership" action="vm.showContactList"></context-menu-item>
-                                </card-context-menu>
-
-                            </card>-->
                             <card show-item-details="vm.showOwnershipView" card-template-url="'app/property/view/propertyOwnershipCard.html'" item="ownership">
                             </card>
                         </card-list-item>
                     </card-list>
                 </section>
                 <section>
-                    <card-list id="card-list-activities" show-item-add="vm.showActivityAdd" is-item-add-disabled="vm.savePropertyActivityBusy">
+                    <card-list id="card-list-activities" show-item-add="vm.goToActivityAdd" is-item-add-disabled="vm.savePropertyActivityBusy">
                         <card-list-header>
                             <h3 class="page-header" translate="ACTIVITY.LIST.ACTIVITIES"></h3>
                         </card-list-header>
@@ -175,14 +165,7 @@
     </side-panel-footer>
 </side-panel>
 
-<activity-add-panel is-visible="vm.isActivityAddPanelVisible" 
-property-type-Id="vm.property.propertyTypeId" property-id="vm.property.id"
-    ownerships="vm.property.ownerships">
-</activity-add-panel>
-
-<activity-preview-panel 
-is-visible="vm.isActivityPreviewPanelVisible" 
-property-type-id="vm.property.propertyTypeId" 
-activity='vm.selectedActivity'>
-
+<activity-preview-panel is-visible="vm.isActivityPreviewPanelVisible" 
+                        property-type-id="vm.property.propertyTypeId" 
+                        activity='vm.selectedActivity'>
 </activity-preview-panel>

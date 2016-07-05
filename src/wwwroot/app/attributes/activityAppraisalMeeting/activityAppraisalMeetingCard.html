@@ -1,0 +1,6 @@
+<div class="card-item">
+    {{:: cvm.item.getAttendees()}}
+</div>
+<div class="card-info">
+    {{::cvm.item.appraisalMeeting.appraisalMeetingStart | date : 'HH:mm'}} - {{::cvm.item.appraisalMeeting.appraisalMeetingEnd | date : 'HH:mm'}}
+</div>

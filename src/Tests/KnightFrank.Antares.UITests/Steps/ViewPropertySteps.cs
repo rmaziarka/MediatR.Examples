@@ -20,6 +20,8 @@
 
     using Xunit;
 
+    using Attachment = KnightFrank.Antares.UITests.Pages.ViewActivityPage.Attachment;
+
     [Binding]
     public class ViewPropertySteps
     {
@@ -54,7 +56,7 @@
         [When(@"User clicks add activites button on view property page")]
         public void ClickAddActivityButton()
         {
-            this.page.AddActivity().WaitForSidePanelToShow();
+            this.page.AddActivity();
         }
 
         [When(@"User clicks edit property button on view property page")]
@@ -86,25 +88,6 @@
         public void OpenViewActivityPage()
         {
             this.page.ActivityPreview.WaitForDetailsToLoad().ClickViewActivity();
-        }
-
-        [When(@"User selects (.*) activity type on create activity page")]
-        public void SelectActivityType(string type)
-        {
-            this.page.Activity.SelectActivityType(type).WaitForDetailsToLoad();
-        }
-
-        [When(@"User selects (.*) activity status on create activity page")]
-        public void SelectActivityStatus(string status)
-        {
-            this.page.Activity.SelectActivityStatus(status).WaitForDetailsToLoad();
-        }
-
-        [When(@"User clicks save button on create activity page")]
-        public void ClickSaveButtonOnActivityPanel()
-        {
-            this.page.Activity.SaveActivity();
-            this.page.WaitForSidePanelToHide();
         }
 
         [When(@"User fills in ownership details on view property page")]
@@ -285,16 +268,6 @@
         public void CheckIfViewPropertyPresent()
         {
             Assert.True(this.page.IsViewPropertyFormPresent());
-        }
-
-        [Then(@"Activity details are set on create activity page")]
-        public void CheckActivityDetailsonActivityPanel(Table table)
-        {
-            var details = table.CreateInstance<ActivityDetails>();
-
-            Verify.That(this.driverContext,
-                () => Assert.Equal(details.Vendor, this.page.Activity.ActivityVendor),
-                () => Assert.Equal(details.Status, this.page.Activity.ActivityStatus));
         }
 
         [Then(@"Characteristics are displayed on view property page")]

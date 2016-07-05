@@ -8,5 +8,6 @@
         division: IEnumTypeItem;
         roles: string[];
         salutationFormatId: string;
+        department: Dto.IDepartment;
     }
 }

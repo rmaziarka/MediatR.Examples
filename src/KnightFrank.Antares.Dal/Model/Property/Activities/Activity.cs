@@ -5,6 +5,7 @@
 
     using KnightFrank.Antares.Dal.Model.Attachment;
     using KnightFrank.Antares.Dal.Model.Company;
+    using KnightFrank.Antares.Dal.Model.Configuration.Property.Activities;
     using KnightFrank.Antares.Dal.Model.Contacts;
     using KnightFrank.Antares.Dal.Model.Offer;
     using KnightFrank.Antares.Dal.Model.Enum;
@@ -23,7 +24,7 @@
 
         public ActivityType ActivityType { get; set; }
 
-        public virtual ICollection<Contact> Contacts { get; set; }
+        public virtual ICollection<Contact> Contacts { get; set; } = new List<Contact>();
 
         public decimal? MarketAppraisalPrice { get; set; }
 
@@ -52,5 +53,29 @@
         public Guid? SolicitorCompanyId { get; set; }
 
         public virtual Company SolicitorCompany { get; set; }
+
+        public Guid? SourceId { get; set; }
+
+        public virtual EnumTypeItem Source { get; set; }
+
+        public string SourceDescription { get; set; }
+
+        public Guid? SellingReasonId { get; set; }
+
+        public virtual EnumTypeItem SellingReason { get; set; }
+
+        public string PitchingThreats { get; set; }
+
+        public string KeyNumber { get; set; }
+
+        public string AccessArrangements { get; set; }
+
+        public DateTime? AppraisalMeetingStart { get; set; }
+
+        public DateTime? AppraisalMeetingEnd { get; set; }
+
+        public string AppraisalMeetingInvitationText { get; set; }
+
+        public virtual ICollection<ActivityAttendee> AppraisalMeetingAttendees { get; set; } = new List<ActivityAttendee>();
     }
 }

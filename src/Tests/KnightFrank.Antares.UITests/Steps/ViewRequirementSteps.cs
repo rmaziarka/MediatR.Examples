@@ -21,6 +21,8 @@
 
     using Xunit;
 
+    using Attachment = KnightFrank.Antares.UITests.Pages.ViewActivityPage.Attachment;
+
     [Binding]
     public class ViewRequirementSteps
     {

@@ -19,7 +19,7 @@
 
         public User Handle(UserQuery query)
         {
-            return this.userRepository.Get()
+            return this.userRepository.GetWithInclude(x => x.Department)
                  .SingleOrDefault(a => a.Id == query.Id);
         }
     }

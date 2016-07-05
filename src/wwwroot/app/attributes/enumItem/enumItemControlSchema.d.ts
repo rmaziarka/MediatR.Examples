@@ -4,6 +4,5 @@ declare module Antares.Attributes {
     interface IEnumItemControlSchema {
         controlId: string,
         translationKey: string;
-        enumTypeCode: Common.Models.Dto.EnumTypeCode;
     }
 }

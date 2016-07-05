@@ -14,6 +14,7 @@ module Antares.Attributes {
     export class ActivityNegotiatorsEditControlController {
         // bindings
         onNegotiatorAdded: (obj: { user: Dto.IUser }) => void;
+        onNegotiatorRemoved: () => void;
         config: IActivityDepartmentsViewControlConfig;
 
         public activityId: string;
@@ -78,6 +79,8 @@ module Antares.Attributes {
 
         public deleteSecondaryNegotiator = (activityUser: Business.ActivityUser) => {
             _.remove(this.secondaryNegotiators, (itm) => itm.userId === activityUser.userId);
+
+            this.onNegotiatorRemoved();
         }
 
         public cancelAddSecondaryNegotiator = () => {

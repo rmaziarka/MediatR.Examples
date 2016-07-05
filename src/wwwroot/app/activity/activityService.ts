@@ -2,7 +2,6 @@
 
 module Antares.Activity {
     import Dto = Common.Models.Dto;
-    import Business = Common.Models.Business;
 
     export class ActivityService {
         private url: string = '/api/activities/';
@@ -12,8 +11,13 @@ module Antares.Activity {
             private appConfig: Common.Models.IAppConfig)
         { }
 
-        addActivity = (activity: AddPanel.ActivityAddPanelCommand): ng.IHttpPromise<Dto.IActivity> => {
-            return this.$http.post(this.appConfig.rootUrl + this.url, activity)
+        addActivity = (activityCommand: Commands.ActivityAddCommand): ng.IHttpPromise<Dto.IActivity> => {
+            return this.$http.post(this.appConfig.rootUrl + this.url, activityCommand)
+                .then<Dto.IActivity>((result: ng.IHttpPromiseCallbackArg<Dto.IActivity>) => result.data);
+        }
+
+        updateActivity = (activityCommand: Commands.ActivityEditCommand): ng.IHttpPromise<Dto.IActivity> => {
+            return this.$http.put(this.appConfig.rootUrl + this.url, activityCommand)
                 .then<Dto.IActivity>((result: ng.IHttpPromiseCallbackArg<Dto.IActivity>) => result.data);
         }
     }

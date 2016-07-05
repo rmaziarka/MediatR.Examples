@@ -1,7 +1,7 @@
 /// <reference path="../../../../typings/_all.d.ts" />
 
 module Antares.Common.Models.Business {
-    export class Activity implements Dto.IActivity{
+    export class Activity implements Dto.IActivity {
         id: string = '';
         propertyId: string = '';
         activityStatusId: string = '';
@@ -26,13 +26,21 @@ module Antares.Common.Models.Business {
         solicitor: Contact = null;
         solicitorCompany: Company = null;
         solicitorContactCompany: CompanyContactRelation = null;
+        sourceId: string = null;
+        sellingReasonId: string = null;
+        appraisalMeetingStart: string = null;
+        appraisalMeetingEnd: string = null;
+        appraisalMeetingInvitationText: string = null;
+        keyNumber: string = null;
+        accessArrangements: string = null;
+        appraisalMeetingAttendees: Dto.IActivityAttendee[];
 
         constructor(activity?: Dto.IActivity) {
             if (activity) {
                 angular.extend(this, activity);
                 this.createdDate = Core.DateTimeUtils.convertDateToUtc(activity.createdDate);
                 if (activity.contacts) {
-                    this.contacts = activity.contacts.map((contact: Dto.IContact) =>{ return new Contact(contact) });
+                    this.contacts = activity.contacts.map((contact: Dto.IContact) => { return new Contact(contact) });
                 }
                 this.property = new PreviewProperty(activity.property);
 
@@ -70,6 +78,8 @@ module Antares.Common.Models.Business {
                     this.solicitorContactCompany = new CompanyContactRelation(this.solicitor, this.solicitorCompany);
                 }
 
+            this.secondaryNegotiator = this.secondaryNegotiator || [];
+            this.leadNegotiator = this.leadNegotiator || new ActivityUser();
             }
         }
 

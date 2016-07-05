@@ -10,7 +10,7 @@
     {
         private readonly ElementLocator detailsLink = new ElementLocator(Locator.CssSelector, ".slide-in side-panel-content > .section-details:first-of-type a");
         private readonly ElementLocator details = new ElementLocator(Locator.CssSelector, ".slide-in #activity-details");
-        private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, ".slide-in #offer-status .ng-binding");
+        private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, "#offer-status.ng-binding");
         private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, ".slide-in #offer-price");
         private readonly ElementLocator offerPerWeek = new ElementLocator(Locator.CssSelector, ".slide-in #offer-price-per-week");
         private readonly ElementLocator offerDate = new ElementLocator(Locator.CssSelector, ".slide-in #offer-date");
@@ -51,7 +51,7 @@
 
         public OfferPreviewPage ClickDetailsLink()
         {
-            this.Driver.Click(this.detailsLink);
+            this.Driver.ClickWithJs(this.detailsLink);
             return this;
         }
 

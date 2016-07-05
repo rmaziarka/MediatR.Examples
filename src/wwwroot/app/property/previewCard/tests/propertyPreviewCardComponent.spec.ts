@@ -8,7 +8,7 @@ module Antares.Property.Preview {
             element: ng.IAugmentedJQuery,
             controller: Preview.PropertyPreviewCardController,
             $http: ng.IHttpBackendService,
-            propertyMock = TestHelpers.PropertyGenerator.generate();
+            propertyMock = TestHelpers.PropertyGenerator.generatePropertyPreview();
 
         beforeEach(inject((
             $rootScope: ng.IRootScopeService,
