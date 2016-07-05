@@ -214,7 +214,23 @@
                 this.When(allResidentials, PageType.Create, PageType.Update));
 
             this.Use(new List<ControlCode> { ControlCode.DisposalType },
-                this.When(residentialSale, PageType.Create, PageType.Update, PageType.Details))
+                this.When(residentialSale, PageType.Create, PageType.Update))
+                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal)
+                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
+
+            this.Use(new List<ControlCode> { ControlCode.DisposalType },
+               this.When(residentialSale, PageType.Details))
+               .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
+
+            this.Use(
+                new List<ControlCode>
+                {
+                    ControlCode.ServiceChargeAmount,
+                    ControlCode.ServiceChargeNote,
+                    ControlCode.GroundRentAmount,
+                    ControlCode.GroundRentNote
+                },
+                this.When(longLeaseholdSale, PageType.Create, PageType.Update))
                 .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal)
                 .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
 
@@ -226,7 +242,16 @@
                     ControlCode.GroundRentAmount,
                     ControlCode.GroundRentNote
                 },
-                this.When(longLeaseholdSale, PageType.Details, PageType.Create, PageType.Update))
+                this.When(longLeaseholdSale, PageType.Details))
+                .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
+
+            this.Use(
+                new List<ControlCode>
+                {
+                    ControlCode.OtherCondition,
+                    ControlCode.Decoration
+                },
+                this.When(allResidentials, PageType.Create, PageType.Update))
                 .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal)
                 .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
 
@@ -236,7 +261,17 @@
                     ControlCode.OtherCondition,
                     ControlCode.Decoration
                 },
-                this.When(allResidentials, PageType.Details, PageType.Create, PageType.Update))
+                this.When(allResidentials, PageType.Details))
+                .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
+
+            this.Use(
+                new List<ControlCode>
+                {
+                                ControlCode.KfValuationPrice,
+                                ControlCode.VendorValuationPrice,
+                                ControlCode.AgreedInitialMarketingPrice
+                },
+                this.When(residentialSale, PageType.Create, PageType.Update))
                 .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal)
                 .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
 
@@ -247,7 +282,20 @@
                                 ControlCode.VendorValuationPrice,
                                 ControlCode.AgreedInitialMarketingPrice
                 },
-                this.When(residentialSale, PageType.Details, PageType.Create, PageType.Update))
+                this.When(residentialSale, PageType.Details))
+                .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
+
+            this.Use(
+                new List<ControlCode>
+                {
+                                ControlCode.ShortKfValuationPrice,
+                                ControlCode.ShortVendorValuationPrice,
+                                ControlCode.ShortAgreedInitialMarketingPrice,
+                                ControlCode.LongKfValuationPrice,
+                                ControlCode.LongVendorValuationPrice,
+                                ControlCode.LongAgreedInitialMarketingPrice
+                },
+                this.When(openMarketLetting, PageType.Create, PageType.Update))
                 .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal)
                 .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
 
@@ -261,9 +309,8 @@
                                 ControlCode.LongVendorValuationPrice,
                                 ControlCode.LongAgreedInitialMarketingPrice
                 },
-                this.When(openMarketLetting, PageType.Details, PageType.Create, PageType.Update))
-                .ReadonlyWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal)
-                .HiddenWhen<ActivityCommandBase>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
+                this.When(openMarketLetting, PageType.Details))
+                .HiddenWhen<Activity>(x => x.ActivityStatusId != activityStatusMarketAppraisal);
         }
     }
 }
