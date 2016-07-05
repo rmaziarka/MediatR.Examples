@@ -59,9 +59,6 @@ module Antares.Offer {
         surveyorCompanyContact: CompanyContactConnection = null;
         additionalSurveyorCompanyContact: CompanyContactConnection = null;
 
-        vendorSolicitorCompanyContact: CompanyContactConnection = null;
-        applicantSolicitorCompanyContact: CompanyContactConnection = null;
-
         // controls
         controlSchemas: any = {
             vendorSolicitor: <ICompanyContactEditControlSchema>{
@@ -253,14 +250,6 @@ module Antares.Offer {
             if (this.offer.additionalSurveyor) {
                 this.additionalSurveyorCompanyContact = new CompanyContactConnection(this.offer.additionalSurveyor, this.offer.additionalSurveyorCompany);
             }
-
-            if (this.offer.activity && this.offer.activity.solicitor) {
-                this.vendorSolicitorCompanyContact = new CompanyContactConnection(this.offer.activity.solicitor, this.offer.activity.solicitorCompany);
-            }
-
-            if (this.offer.requirement && this.offer.requirement.solicitor) {
-                this.applicantSolicitorCompanyContact = new CompanyContactConnection(this.offer.requirement.solicitor, this.offer.requirement.solicitorCompany);
-            }
         }
 
         isMortgageDetailsSectionVisible = () => {
@@ -430,8 +419,6 @@ module Antares.Offer {
             updateofferCommand.setLenderCompanyContact(this.lenderCompanyContact);
             updateofferCommand.setSurveyorCompanyContact(this.surveyorCompanyContact);
             updateofferCommand.setAdditionalSurveyorCompanyContact(this.additionalSurveyorCompanyContact);
-            updateofferCommand.setVendorSolicitorCompanyContact(this.vendorSolicitorCompanyContact);
-            updateofferCommand.setApplicantSolicitorCompanyContact(this.applicantSolicitorCompanyContact);
         }
 
         save() {

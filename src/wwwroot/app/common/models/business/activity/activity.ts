@@ -25,6 +25,7 @@ module Antares.Common.Models.Business {
         shortLetPricePerWeek: number = null;
         solicitor: Contact = null;
         solicitorCompany: Company = null;
+        solicitorContactCompany: CompanyContactRelation = null;
 
         constructor(activity?: Dto.IActivity) {
             if (activity) {
@@ -63,13 +64,12 @@ module Antares.Common.Models.Business {
                     this.offers = activity.offers.map((item) => new Offer(item));
                 }
 
-                if (activity.solicitor) {
+                if (activity.solicitor && activity.solicitorCompany) {
                     this.solicitor = new Contact(activity.solicitor);
+                    this.solicitorCompany = new Company(activity.solicitorCompany);
+                    this.solicitorContactCompany = new CompanyContactRelation(this.solicitor, this.solicitorCompany);
                 }
 
-                if (activity.solicitorCompany) {
-                    this.solicitorCompany = new Company(activity.solicitorCompany);
-                }
             }
         }
 

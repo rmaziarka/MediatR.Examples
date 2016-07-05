@@ -62,10 +62,10 @@ module Antares.Common.Models.Business {
             this.additionalSurveyDate = Core.DateTimeUtils.createDateAsUtc(model.additionalSurveyDate);
             this.progressComment = model.progressComment;
 
-            this.vendorSolicitorId = model.activity && model.activity.solicitor ? model.activity.solicitor.id : null;
-            this.vendorSolicitorCompanyId = model.activity && model.activity.solicitorCompany ? model.activity.solicitorCompany.id : null;
-            this.applicantSolicitorId = model.requirement && model.requirement.solicitor ? model.requirement.solicitor.id : null;
-            this.applicantSolicitorCompanyId = model.requirement && model.requirement.solicitorCompany ? model.requirement.solicitorCompany.id : null;
+            this.vendorSolicitorId = model.activity && model.activity.solicitorContactCompany && model.activity.solicitorContactCompany.contact ? model.activity.solicitorContactCompany.contact.id : null;
+            this.vendorSolicitorCompanyId = model.activity && model.activity.solicitorContactCompany && model.activity.solicitorContactCompany.company ? model.activity.solicitorContactCompany.company.id : null;
+            this.applicantSolicitorId = model.requirement && model.requirement.solicitorContactCompany && model.requirement.solicitorContactCompany.contact ? model.requirement.solicitorContactCompany.contact.id : null;
+            this.applicantSolicitorCompanyId = model.requirement && model.requirement.solicitorContactCompany && model.requirement.solicitorContactCompany.company ? model.requirement.solicitorContactCompany.company.id : null;
         }
 
         public setBrokerCompanyContact = (companyContact: Business.CompanyContactRelation) => {
@@ -86,16 +86,6 @@ module Antares.Common.Models.Business {
         public setAdditionalSurveyorCompanyContact = (companyContact: Business.CompanyContactRelation) => {
             this.additionalSurveyorId = companyContact && companyContact.contact.id;
             this.additionalSurveyorCompanyId = companyContact && companyContact.company.id;
-        }
-
-        public setVendorSolicitorCompanyContact = (companyContact: Business.CompanyContactRelation) => {
-            this.vendorSolicitorId = companyContact && companyContact.contact.id;
-            this.vendorSolicitorCompanyId = companyContact && companyContact.company.id;
-        }
-
-        public setApplicantSolicitorCompanyContact = (companyContact: Business.CompanyContactRelation) => {
-            this.applicantSolicitorId = companyContact && companyContact.contact.id;
-            this.applicantSolicitorCompanyId = companyContact && companyContact.company.id;
         }
 
     }
