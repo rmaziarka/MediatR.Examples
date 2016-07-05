@@ -137,15 +137,7 @@
 
         <section>
             <h3 class="page-header" translate="OFFER.VIEW.OTHER_DETAILS"></h3>
-            <div id="comment" class="section-details">
-                <h5 translate="OFFER.VIEW.COMMENT"></h5>
-                <div ng-if="vm.offer.progressComment">
-                    <p>{{::vm.offer.progressComment}}</p>
-                </div>
-                <div ng-if="!vm.offer.progressComment">
-                    <p>-</p>
-                </div>
-            </div>
+            <textarea-view-control text="vm.offer.progressComment" config="vm.config.offer_ProgressComment" schema="vm.controlSchemas.progressComment"></textarea-view-control>
         </section>
     </div>
 </div>

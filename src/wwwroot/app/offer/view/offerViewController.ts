@@ -127,6 +127,11 @@ module Antares.Component {
                 controlId : "additional-survey-date",
                 translationKey : "OFFER.VIEW.ADDITIONAL_SURVEY_DATE",
                 fieldName : "additionalSurveyDate"
+            },
+            progressComment: <Attributes.ITextControlSchema>{
+                controlId: "offer-progress-comment",
+                translationKey: "OFFER.VIEW.COMMENT",
+                fieldName: "progressComment"
             }
         };
 
