@@ -92,5 +92,26 @@ module Antares.TestHelpers {
         public static generateManyCompanyListItems(n: number): Dto.ILatestViewData[] {
             return _.times(n, LatestViewGenerator.generateCompanyListItem);
         }
+
+        public static generateContactList(listLength: number): Dto.ILatestViewResultItem {
+            var item: Dto.ILatestViewResultItem = {
+                entityTypeCode: 'Contact',
+                list: LatestViewGenerator.generateManyContactListItems(listLength)
+            };
+
+            return item;
+        }
+
+        public static generateContactListItem(): Dto.ILatestViewData {
+            return {
+                id: LatestViewGenerator.makeRandom('id'),
+                createDate: moment().days(1),
+                data: ContactGenerator.generate()
+            }
+        }
+
+        public static generateManyContactListItems(n: number): Dto.ILatestViewData[] {
+            return _.times(n, LatestViewGenerator.generateContactListItem);
+        }
     }
 }

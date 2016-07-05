@@ -10,7 +10,7 @@ module Antares.Contact {
   
         // bindings
         public contact: Dto.IContact;
-        userData: Dto.ICurrentUser; //todo is required?
+        userData: Dto.ICurrentUser;
 
         // fields
         public editContactForm: ng.IFormController | any; // injected from the view
@@ -24,15 +24,9 @@ module Antares.Contact {
 
         constructor(
             private dataAccessService: Services.DataAccessService,
-            private enumService: Services.EnumService,
-            private $scope: ng.IScope,
-            private $q: ng.IQService,
             private $state: ng.ui.IStateService,
-            private contactTitleService: Services.ContactTitleService) {//todo!remove unused params
-
-            //this.contactResource = dataAccessService.getContactResource();
-
-            //todo - move to computed field: (editContactForm.$submitted || editContactForm.title.$dirty) && editContactForm.title.$invalid
+            private kfMessageService: Services.KfMessageService,
+            private contactTitleService: Services.ContactTitleService) {
         }
 
         $onInit() {
@@ -107,9 +101,10 @@ module Antares.Contact {
                 .$promise
                 .then((contact: Dto.IContact) => {
                     this.editContactForm.$setPristine();
-                    this.redirectToView();
+                    this.redirectToView()
+                        .then(() => this.kfMessageService.showSuccessByCode('CONTACT.EDIT.CONTACT_EDIT_SUCCESS'));;
                 }, (response: any) => {
-                    // todo show errors
+                    this.kfMessageService.showErrors(response);
                 });
         }
 
