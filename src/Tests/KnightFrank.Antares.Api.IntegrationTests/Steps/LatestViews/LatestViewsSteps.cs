@@ -138,6 +138,24 @@
             this.scenarioContext["CompaniesId"] = companiesId;
         }
 
+        [Given(@"Contact is added to latest views")]
+        public void AddContactToLatestViews()
+        {
+            Guid contactId = this.scenarioContext.Get<List<Contact>>("Contacts")[0].Id;
+           
+            var details = new LatestView
+            {
+                CreatedDate = this.date,
+                UserId = this.fixture.DataContext.Users.First().Id,
+                EntityId = contactId,
+                EntityType = EntityTypeEnum.Contact
+            };
+
+            this.fixture.DataContext.LatestView.Add(details);
+            this.fixture.DataContext.SaveChanges();
+            this.scenarioContext["ContactId"] = contactId;
+        }
+
         [When(@"User adds (.*) to latest viewed entities using api")]
         public void CreateLatestView(string entity)
         {
@@ -160,6 +178,10 @@
                 case "company":
                     details.EntityId = this.scenarioContext.Get<Company>("Company").Id;
                     details.EntityType = EntityTypeEnum.Company;
+                    break;
+                case "contact":
+                    details.EntityId = this.scenarioContext.Get<List<Contact>>("Contacts")[0].Id;
+                    details.EntityType = EntityTypeEnum.Contact;
                     break;
             }
 
@@ -370,6 +392,29 @@
             latestView.EntityTypeString.Should().Be(entityTypeCode);
             latestView.EntityId.Should().Be(entityId);
             latestView.EntityType.Should().Be(EntityTypeEnum.Activity);
+        }
+
+        [Then(@"Retrieved latest view should contain Contact entity")]
+        public void CheckLatestsViewedContact()
+        {
+            const string entityTypeCode = nameof(EntityTypeEnum.Contact);
+            Guid entityId = this.scenarioContext.Get<List<Contact>>("Contacts")[0].Id;
+            
+
+            LatestViewQueryResultItem response =
+                JsonConvert.DeserializeObject<List<LatestViewQueryResultItem>>(this.scenarioContext.GetResponseContent()).Single();
+
+            response.EntityTypeCode.Should().Be(entityTypeCode);
+
+            List<LatestViewData> data = response.List.ToList();
+            data.Should().HaveCount(1);
+
+            LatestView latestView = this.fixture.DataContext.LatestView.Single();
+
+            latestView.CreatedDate.Should().Be(data.Single().CreatedDate);
+            latestView.EntityTypeString.Should().Be(entityTypeCode);
+            latestView.EntityId.Should().Be(entityId);
+            latestView.EntityType.Should().Be(EntityTypeEnum.Contact);
         }
 
         [Then(@"Retrieved latest view should contain Requirement entity")]

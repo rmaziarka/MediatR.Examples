@@ -64,5 +64,11 @@
         {
             Assert.True(this.page.IsViewContactFormPresent());
         }
+
+        [When(@"User navigates to Edit Contact page")]
+        public void OpenEditContactPage()
+        {
+            this.page.OpenEditContactPage();
+        }
     }
 }

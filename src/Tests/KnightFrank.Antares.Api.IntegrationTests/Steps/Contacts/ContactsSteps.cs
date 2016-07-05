@@ -75,17 +75,15 @@
         }
 
         [Given(@"User creates contact using api with max length all fields")]
-        public void CreateContactsWithMaxAllFields(Table table)
+        public void CreateContactsWithMaxAllFields()
         {
             const int max = 128;
 
-            string defaultMailingSalutation = table.Rows[0]["MailingSalutation"];
             Guid defaultMailingSalutationId =
-                this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[defaultMailingSalutation];
+                this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["MailingSemiformal"];
 
-            string defaultEventSalutation = table.Rows[0]["EventSalutation"];
             Guid defaultEventSalutationId =
-                this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[defaultEventSalutation];
+                this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")["EventSemiformal"];
 
             //get negotiator ids
             Guid leadNegotiatorId = this.GetCurrentUserId();
@@ -157,7 +155,9 @@
         [When(@"User retrieves contact details for (.*) id")]
         public void GetContactDetailsUsingId(string contactId)
         {
-            contactId = contactId.Equals("latest") ? this.scenarioContext.Get<List<Contact>>("Contacts")[0].Id.ToString() : Guid.NewGuid().ToString();
+            contactId = contactId.Equals("latest")
+                ? this.scenarioContext.Get<List<Contact>>("Contacts")[0].Id.ToString()
+                : Guid.NewGuid().ToString();
 
             string requestUrl = $"{ApiUrl}/{contactId}";
             HttpResponseMessage response = this.fixture.SendGetRequest(requestUrl);
@@ -212,6 +212,7 @@
 
             Guid leadNegotiatorUserTypeId = this.fixture.DataContext.EnumTypeItems.Single(
                 i => i.EnumType.Code.Equals(nameof(UserType)) && i.Code.Equals(nameof(UserType.LeadNegotiator))).Id;
+
             expectedContact.ContactUsers.First(x => x.UserTypeId == leadNegotiatorUserTypeId)
                            .UserId.ShouldBeEquivalentTo(contact.LeadNegotiator.UserId);
         }
@@ -326,10 +327,14 @@
             var response = JsonConvert.DeserializeObject<Contact>(this.scenarioContext.GetResponseContent());
             Contact contact = this.fixture.DataContext.Contacts.Single(x => x.Id.Equals(this.updateContact.Id));
             contact.ShouldBeEquivalentTo(response, opt => opt
-            .Excluding(x => x.ContactUsers) 
-            .Excluding(x => x.CompaniesContacts));
-        }
+                .Excluding(x => x.ContactUsers)
+                .Excluding(x => x.CompaniesContacts));
 
+            contact.ContactUsers.Should()
+                   .Equal(response.ContactUsers,
+                       (c1, c2) =>
+                           c1.UserId.Equals(c2.UserId) && c1.UserTypeId.Equals(c2.UserTypeId) && c1.ContactId.Equals(c2.ContactId));
+        }
 
         private void CreateContactWithApi(CreateContactCommand contactCommand)
         {
