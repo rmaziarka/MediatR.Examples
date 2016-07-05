@@ -114,34 +114,6 @@ module Antares {
                     assertValidator.assertShowElement(false, pageObjectSelector.noSecondaryNegotiators);
                 });
             });
-
-            describe('when property division is set to \'Commercial\'', () => {
-                it('then all component\'s headers should contain \'Surveyor\'', () => {
-                    var division = _.find(divisionCodes, (division) =>  division.id === 'commmercialId');
-                    controller.labelTranslationKey = division.code;
-                    scope.$apply();
-
-                    var mainHeader: ng.IAugmentedJQuery = element.find(pageObjectSelector.componentSorveyorMainHeader);
-                    var subHeaders: ng.IAugmentedJQuery = element.find(pageObjectSelector.componentSorveyorSubHeaders);
-
-                    expect(mainHeader.text()).toContain(division.code);;
-                    _.each(subHeaders, (header) => expect(header.innerText).toContain(division.code));
-                });
-            });
-
-            describe('when property division is set to \'Residential\'', () => {
-                it('then all component\'s headers should contain \'Negotiator\'', () => {
-                    var division = _.find(divisionCodes, (division) =>  division.id === 'residentialId');
-                    controller.labelTranslationKey = division.code;
-                    scope.$apply();
-
-                    var mainHeader: ng.IAugmentedJQuery = element.find(pageObjectSelector.componentNegotiatorMainHeader);
-                    var subHeaders: ng.IAugmentedJQuery = element.find(pageObjectSelector.componentNegotiatorSubHeaders);
-
-                    expect(mainHeader.text()).toContain(division.code);
-                    _.each(subHeaders, (header) => expect(header.innerText).toContain(division.code));
-                });
-            });
         });
     });
 }

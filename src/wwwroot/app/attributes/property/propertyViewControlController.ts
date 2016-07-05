@@ -8,6 +8,7 @@ module Antares.Attributes {
         // bindings
         property: PreviewProperty;
         config: IPropertyViewControlConfig;
+        hideHeader: boolean = false;
         isPanelVisible: boolean;
 
         constructor(private eventAggregator: Core.EventAggregator) {
