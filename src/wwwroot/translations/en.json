@@ -442,6 +442,7 @@
       "CONTRACT_APPROVED": "Contract approved",
       "MORTGAGE_DETAILS": "Mortgage details",
       "MORTGAGE_LOAN_TO_VALUE": "Mortgage loan to value",
+      "SOLICITOR": "Solicitor",
       "BROKER": "Broker",
       "LENDER": "Lender",
       "MORTGAGE_SURVEY_DATE": "Mortgage survey date",
@@ -455,6 +456,7 @@
       "NO_BROKER": "Broker contact not specified yet",
       "NO_LENDER": "Lender contact not specified yet",
       "NO_SURVEYOR": "Surveyor contact not specified yet",
+      "NO_SOLICITOR": "Solicitor contact not specified yet",
       "LOAN_TO_VALUE_MUST_BE_GREATER_THAN_ZERO": "Value must not be less than zero",
       "LOAN_TO_VALUE_MUST_BE_LESS_OR_EQUAL_200": "Value must be less or equal 200",
       "DATE_CAN_NOT_BE_LOWER_THAN_OFFER_DATE": "Given date can not be earlier than offer date"

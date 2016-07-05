@@ -23,6 +23,8 @@ module Antares.Common.Models.Business {
         offers: Offer[];
         askingPrice: number = null;
         shortLetPricePerWeek: number = null;
+        solicitor: Contact = null;
+        solicitorCompany: Company = null;
 
         constructor(activity?: Dto.IActivity) {
             if (activity) {
@@ -59,6 +61,14 @@ module Antares.Common.Models.Business {
 
                 if (activity.offers) {
                     this.offers = activity.offers.map((item) => new Offer(item));
+                }
+
+                if (activity.solicitor) {
+                    this.solicitor = new Contact(activity.solicitor);
+                }
+
+                if (activity.solicitorCompany) {
+                    this.solicitorCompany = new Company(activity.solicitorCompany);
                 }
             }
         }

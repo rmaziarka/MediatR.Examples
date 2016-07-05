@@ -19,5 +19,7 @@
         offers?: IOffer[];
 
         attachments: IAttachment[];
+        solicitor: IContact;
+        solicitorCompany: ICompany;
     }
 }

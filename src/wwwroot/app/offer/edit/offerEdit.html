@@ -16,6 +16,12 @@
                         </card-context-menu>
                     </card>
                 </card-list-item>
+                <company-contact-edit-control schema="vm.controlSchemas.vendorSolicitor"
+                                              config="vm.config.offer_Vendor_Solicitor"
+                                              type="vm.companyContactType.VendorSolicitor"
+                                              company-contact="vm.vendorSolicitorCompanyContact"
+                                              is-panel-visible="vm.isVendorSolicitorEditPanelVisible">
+                </company-contact-edit-control>
             </section>
             <section id="section-applicant">
                 <h3 class="page-header" translate="OFFER.VIEW.APPLICANT"></h3>
@@ -29,6 +35,12 @@
                         </card-context-menu>
                     </card>
                 </card-list-item>
+                <company-contact-edit-control schema="vm.controlSchemas.applicantSolicitor"
+                                              config="vm.config.offer_Applicant_Solicitor"
+                                              type="vm.companyContactType.ApplicantSolicitor"
+                                              company-contact="vm.applicantSolicitorCompanyContact"
+                                              is-panel-visible="vm.isApplicantSolicitorEditPanelVisible">
+                </company-contact-edit-control>
             </section>
         </div>
         <div class="col-md-4">
