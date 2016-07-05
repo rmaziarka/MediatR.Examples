@@ -54,7 +54,8 @@
 
             this.page.SelectActivityStatus(details.ActivityStatus)
                 .SetShortLetPricePerWeek(details.ShortLetPricePerWeek)
-                .SetAskingPrice(details.AskingPrice);
+                .SetAskingPrice(details.AskingPrice)
+                .SetKfValuationPricePerWeek(details.KfValuationPricePerWeek);
         }
 
         [When(@"User fills in KF Valuation (.*) on edit activity page")]

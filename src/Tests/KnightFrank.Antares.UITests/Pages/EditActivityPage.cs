@@ -20,6 +20,9 @@
         private readonly ElementLocator shortLetPricePerWeek = new ElementLocator(Locator.Id, "short-let-price-per-week");
         private readonly ElementLocator kfValuation = new ElementLocator(Locator.CssSelector, "#kfValuationPrice");
         private readonly ElementLocator dispsalType = new ElementLocator(Locator.Id, "disposalTypeId");
+
+        private readonly ElementLocator shortKfValuationPrice = new ElementLocator(Locator.Id, "shortKfValuationPrice");
+        private readonly ElementLocator longKfValuationPrice = new ElementLocator(Locator.Id, "longKfValuationPrice");
         // Locators for negotiators
         private readonly ElementLocator editLeadNegotiator = new ElementLocator(Locator.Id, "lead-edit-btn");
         private readonly ElementLocator searchLeadNegotator = new ElementLocator(Locator.CssSelector, "#lead-search input");
@@ -68,6 +71,13 @@
         public EditActivityPage SetShortLetPricePerWeek(string price)
         {
             this.Driver.SendKeys(this.shortLetPricePerWeek, price);
+            return this;
+        }
+
+        public EditActivityPage SetKfValuationPricePerWeek(string price)
+        {
+            this.Driver.SendKeys(this.shortKfValuationPrice, price);
+            this.Driver.SendKeys(this.longKfValuationPrice, price);
             return this;
         }
 
@@ -160,6 +170,8 @@
         public string AskingPrice { get; set; }
 
         public string ShortLetPricePerWeek { get; set; }
+
+        public string KfValuationPricePerWeek { get; set; }
     }
 
     public class Negotiator
