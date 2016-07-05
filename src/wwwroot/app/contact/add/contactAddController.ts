@@ -9,14 +9,14 @@ module Antares.Contact {
 
     export class ContactAddController {
         public config: Attributes.IContactNegotiatorsControlConfig;
-        public contact: Antares.Common.Models.Dto.IContact = new Business.Contact();
-         
-        public searchOptions: Common.Component.SearchOptions = new Common.Component.SearchOptions({ minLength: 0, isEditable: true, nullOnSelect: false, showCancelButton: false, isRequired: true, maxLength: 128  });
+        public contact = new Business.Contact();
+
+        public searchOptions: Common.Component.SearchOptions = new Common.Component.SearchOptions({ minLength: 0, isEditable: true, nullOnSelect: false, showCancelButton: false, isRequired: true, maxLength: 128 });
 
         userData: Dto.ICurrentUser;
         mailingSalutationFormat: Dto.EnumTypeCode = Dto.EnumTypeCode.MailingSalutation;
         eventSalutationFormat: Dto.EnumTypeCode = Dto.EnumTypeCode.EventSalutation;
-      
+
         private currentUserResource: Common.Models.Resources.ICurrentUserResourceClass;
 
         defaultSalutationFormat: string = "";
@@ -49,42 +49,71 @@ module Antares.Contact {
                 this.contactTitles = contactTitles.data;
             });
 
-            this.setDefaultLeadNegotiator(this.userData,this.contact);
-           
-        }
-     
-        setDefaultLeadNegotiator = (currentUser:Dto.ICurrentUser, contact:Dto.IContact) =>{ 
-           var  defaultUser: Dto.IUser = {
-               id : currentUser.id,
-               firstName : currentUser.firstName,
-               lastName : currentUser.lastName,
-               departmentId : "",
-               department : null
-           }
+            var defaultLeadNegotiator = this.setDefaultLeadNegotiator(this.userData, this.contact);
+            this.contact.leadNegotiator = defaultLeadNegotiator;
 
-        
+        }
+
+        setDefaultLeadNegotiator = (currentUser: Dto.ICurrentUser, contact: Dto.IContact): any => {
+            var defaultUser: Dto.IUser = {
+                id: currentUser.id,
+                firstName: currentUser.firstName,
+                lastName: currentUser.lastName,
+                departmentId: "",
+                department: null
+            }
 
             var defaultLeadNegotiator = new Business.ContactUser();
             defaultLeadNegotiator.user = new Business.User(<Dto.IUser>defaultUser);
             defaultLeadNegotiator.contactId = this.contact.id;
             defaultLeadNegotiator.userId = this.userData.id;
-            contact.leadNegotiator = defaultLeadNegotiator;
+
+            return defaultLeadNegotiator;
+
         }
+
         public getContactTitles = (typedTitle: string) => {
-
-            var locale = this.userData.locale.isoCode;
-            var items: IContactTitle[];
-
             if (typedTitle) {
-                items = this.contactTitles.filter((item) => { return item.title.toLowerCase().indexOf(typedTitle.toLowerCase()) > -1; }); // Filter by entered text (regardless of locale)
-                items = _.sortBy(items, item => [item.title]); // Order alpabetically
+                return this.handleTypedTitle(typedTitle);
+            } else {
+                return this.handleEmptyTitle();
             }
-            else {
-                items = this.contactTitles.filter((item) => { return item.locale.isoCode.toLowerCase().indexOf(locale.toLowerCase()) > -1; }); // Filter by current locale
-                items = _.sortBy(items, item => [item.priority || Number.POSITIVE_INFINITY, item.title]); // Order by priority (if null, set to infinity to place last), then alpabetically
-            }
+        }
 
-            return items.map((item) => item.title);
+        private handleTypedTitle = (typedTitle: string) => {
+            var localeContactTitles = this.filterByTypedTitle(this.contactTitles, typedTitle);
+            var sortedLocaleContactTitles = this.sortContactTitlesAlpabetically(localeContactTitles);
+
+            return sortedLocaleContactTitles.map((item) => item.title);
+        }
+
+        private filterByTypedTitle = (contactTitles: IContactTitle[], typedTitle: string) => {
+            return contactTitles.filter((item) => {
+                return item.title.toLowerCase().indexOf(typedTitle.toLowerCase()) > -1; //Regardless of locale
+            });
+        }
+
+        private sortContactTitlesAlpabetically = (contactTitles: IContactTitle[]) => {
+            return _.sortBy(contactTitles, item => item.title);
+        }
+
+        private handleEmptyTitle = () => {
+            var localeContactTitles = this.filterByCurrentLocale(this.contactTitles);
+            var sortedLocaleContactTitles = this.sortContactTitleByPriorityThenAlphabetically(localeContactTitles);
+
+            return sortedLocaleContactTitles.map((item) => item.title);
+        }
+
+        private filterByCurrentLocale = (contactTitles: IContactTitle[]) => {
+            var locale = this.userData.locale.isoCode;
+
+            return contactTitles.filter((item) => {
+                return item.locale.isoCode.toLowerCase().indexOf(locale.toLowerCase()) > -1;
+            });
+        }
+
+        private sortContactTitleByPriorityThenAlphabetically = (contactTitles: IContactTitle[]) => {
+            return _.sortBy(contactTitles, item => [item.priority || Number.POSITIVE_INFINITY, item.title]); // if null, set to infinity to place last
         }
 
         public contactTitleSelect = (contactTitle: string) => {
@@ -139,7 +168,7 @@ module Antares.Contact {
                 (((title || "") + " " + (this.contact.firstName || "")).trim() + " " + (this.contact.lastName || "")).trim());
         }
 
-        public save(){
+        public save() {
             this.contact.defaultMailingSalutationId = this.defaultMailingSalutationId != null ? this.defaultMailingSalutationId : "";
             this.contact.defaultEventSalutationId = this.defaultEventSalutationId != null ? this.defaultEventSalutationId : "";
 
@@ -149,7 +178,7 @@ module Antares.Contact {
 
             this.contactResource.save(this.contact)
                 .$promise
-                .then((contact: Dto.IContact) =>{
+                .then((contact: Dto.IContact) => {
                     this.contact = new Business.Contact();
                     var form = this.$scope["addContactForm"];
                     form.$setPristine();

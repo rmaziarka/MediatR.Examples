@@ -10,11 +10,12 @@
     public class CreateContactPage : ProjectPageBase
     {
         private readonly ElementLocator contactForm = new ElementLocator(Locator.Id, "addContactForm");
-        private readonly ElementLocator saveButton = new ElementLocator(Locator.CssSelector, "#addContactForm button");
+        private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "saveBtn");
         // Contact
         private readonly ElementLocator firstName = new ElementLocator(Locator.Id, "first-name");
         private readonly ElementLocator lastName = new ElementLocator(Locator.Id, "last-name");
-        private readonly ElementLocator title = new ElementLocator(Locator.CssSelector, "#contact-title-search input");
+        private readonly ElementLocator title = new ElementLocator(Locator.Id, "title");
+        private readonly ElementLocator titleDropdown = new ElementLocator(Locator.XPath, "(//ul[@class='dropdown-menu ng-isolate-scope']//span[starts-with(., '{0}')])[1]");
         // Salutation
         private readonly ElementLocator salutationsMailingsDropdown = new ElementLocator(Locator.CssSelector, "#default-mailing-salutation-id select");
         private readonly ElementLocator mailingsFormalInput = new ElementLocator(Locator.Id, "mailing-formal-salutation");
@@ -46,6 +47,9 @@
         public CreateContactPage SetTitle(string text)
         {
             this.Driver.SendKeys(this.title, text);
+            this.Driver.WaitForAngularToFinish();
+            this.Driver.WaitForElementToBeDisplayed(this.titleDropdown.Format(text), BaseConfiguration.MediumTimeout);
+            this.Driver.Click(this.titleDropdown.Format(text));
             return this;
         }
 

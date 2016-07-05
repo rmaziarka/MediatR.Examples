@@ -2,7 +2,6 @@
 
 module Antares {
     import Business = Common.Models.Business;
-    import Dto = Common.Models.Dto;
     import NegotiatorsController = Antares.Attributes.ContactNegotiatorsEditControlController;
 	
     interface IScope extends ng.IScope {

@@ -176,8 +176,7 @@ module Antares {
                             eventPersonalSalutation: '',
                             eventEnvelopeSalutation: '',
                             defaultEventSalutationId: '',
-                            leadNegotiator: TestHelpers.ContactUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator),
-                            secondaryNegotiators: []},
+							contactUsers: []},
                         <Dto.IContact>{
                             id: 'Contact2', firstName: 'Amy', lastName: 'Test2', title: 'Mrs',
                             mailingFormalSalutation: '',
@@ -192,8 +191,7 @@ module Antares {
                             eventPersonalSalutation: '',
                             eventEnvelopeSalutation: '',
                             defaultEventSalutationId: '',
-                            leadNegotiator: TestHelpers.ContactUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator),
-                            secondaryNegotiators: []}
+                            contactUsers:[]}
                     ]
                 });
                 activityMock.createdDate = date1Mock;
@@ -233,8 +231,8 @@ module Antares {
                 activityStatusId: '456',
                 activityTypeId: '456',
                 contacts: [
-                    <Dto.IContact>{ id: 'Contact1', firstName: 'John', lastName: 'Test1', title: 'Mr', leadNegotiator: TestHelpers.ContactUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator)},
-                    <Dto.IContact>{ id: 'Contact2', firstName: 'Amy', lastName: 'Test2', title: 'Mrs', leadNegotiator: TestHelpers.ContactUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator) }
+                    <Dto.IContact>{ id: 'Contact1', firstName: 'John', lastName: 'Test1', title: 'Mr', contactUsers: []},
+                    <Dto.IContact>{ id: 'Contact2', firstName: 'Amy', lastName: 'Test2', title: 'Mrs', contactUsers: []}
                 ]
             });
             activity2Mock.createdDate = date2Mock;
@@ -325,9 +323,9 @@ module Antares {
                 var contactListController: ContactListController = element.find('contact-list').controller('contactList');
                 contactListController.isLoading = false;
                 contactListController.contacts = [
-                    new Business.Contact(<Dto.IContact>{ firstName: 'Vernon', lastName: 'Vaughn', title: 'Mr', leadNegotiator: TestHelpers.ContactUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator)}),
-                    new Business.Contact(<Dto.IContact>{ firstName: 'Julie', lastName: 'Lerman', title: 'Mrs', leadNegotiator: TestHelpers.ContactUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator) }),
-                    new Business.Contact(<Dto.IContact>{ firstName: 'Mark', lastName: 'Rendle', title: 'Mr', leadNegotiator: TestHelpers.ContactUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator) })
+                    new Business.Contact(<Dto.IContact>{ firstName : 'Vernon', lastName : 'Vaughn', title : 'Mr', contactUsers : [] }),
+                    new Business.Contact(<Dto.IContact>{ firstName : 'Julie', lastName : 'Lerman', title : 'Mrs', contactUsers : [] }),
+                    new Business.Contact(<Dto.IContact>{ firstName : 'Mark', lastName : 'Rendle', title : 'Mr', contactUsers : [] })
                 ];
 
                 scope.$apply();
@@ -366,8 +364,7 @@ module Antares {
                     eventPersonalSalutation: '',
                     eventEnvelopeSalutation: '',
                     defaultEventSalutationId: '',
-                    leadNegotiator: TestHelpers.ContactUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator),
-                    secondaryNegotiators: []},
+                    contactUsers: []},
                 {
                     id: '78fbd602-5cd6-456e-a7e5-996d5ae2bbe5', firstName: 'Mark', lastName: 'Rendle', title: 'Mr',
                     mailingFormalSalutation: '',
@@ -382,8 +379,7 @@ module Antares {
                     eventPersonalSalutation: '',
                     eventEnvelopeSalutation: '',
                     defaultEventSalutationId: '',
-                    leadNegotiator: TestHelpers.ContactUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator),
-                    secondaryNegotiators: []}
+                    contactUsers:[]}
             ];
 
             var contacts2: Dto.IContact[] = [
@@ -401,8 +397,7 @@ module Antares {
                     eventPersonalSalutation: '',
                     eventEnvelopeSalutation: '',
                     defaultEventSalutationId: '',
-                    leadNegotiator: TestHelpers.ContactUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator),
-                    secondaryNegotiators: []},
+					contactUsers: []},
                 {
                     id: '78fbd602-5cd6-456e-a7e5-996d5ae2bbe5', firstName: 'Ian', lastName: 'Cooper', title: 'Mr',
                     mailingFormalSalutation: '',
@@ -417,8 +412,7 @@ module Antares {
                     eventPersonalSalutation: '',
                     eventEnvelopeSalutation: '',
                     defaultEventSalutationId: '',
-                    leadNegotiator: TestHelpers.ContactUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator),
-                    secondaryNegotiators: []}
+					contactUsers: []}
             ];
 
             var ownerships: Dto.IOwnership[] = [

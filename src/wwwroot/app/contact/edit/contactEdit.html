@@ -1,18 +1,24 @@
 ﻿<div class="row">
     <div class="col-md-12">
         <h2 class="page-header" translate="CONTACT.EDIT_CONTACT"></h2>
-
-        <div class="row">
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <form ng-submit="vm.editContactForm.$valid && vm.save()" name="vm.editContactForm" id="editContactForm" method="post" novalidate>
+        <form ng-submit="vm.editContactForm.$valid && vm.save()" name="vm.editContactForm" id="editContactForm" method="post" novalidate>
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-3">
+                    <h3 class="page-header" translate="CONTACT.BASIC_INFORMATION"></h3>
                     <fieldset>
                         <div id="title-section" class="form-group" ng-class="{'has-error': (vm.editContactForm.$submitted || vm.editContactForm.title.$dirty) && vm.editContactForm.title.$invalid}">
                             <div class="row">
                                 <div class="col-md-5">
-                                    <label for="title" class="required" translate="CONTACT.TITLE"></label>
+                                    <label class="required" for="title" translate="CONTACT.TITLE"></label>
 
-                                    <!-- TODO: change into search form -->
-                                    <input id="title" name="title" type="text" class="form-control" ng-maxlength="128" ng-model="vm.contact.title" autocomplete="off">
+                                    <search search-id="title"
+                                            search-name="title"
+                                            on-select-item="vm.contactTitleSelect"
+                                            on-change-value="vm.contactTitleSelect"
+                                            load-items="vm.getContactTitles"
+                                            options="vm.searchOptions"
+                                            initial-value="vm.contact.title"
+                                            item-template-url="app/contact/titleComponent/contactTitleSearchTemplate.html"></search>
 
                                     <div ng-messages="vm.editContactForm.title.$error" ng-show="vm.editContactForm.$submitted || vm.editContactForm.title.$dirty">
                                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
@@ -24,7 +30,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <label for="first-name" translate="CONTACT.FIRSTNAME"></label>
-                                    <input type="text" class="form-control" id="first-name" name="firstName" ng-maxlength="128" ng-model="vm.contact.firstName" ng-change="vm.setSalutations()" autocomplete="off">
+                                    <input type="text" class="form-control" id="first-name" name="firstName" ng-maxlength="128" ng-model="vm.contact.firstName" autocomplete="off">
                                     <div ng-messages="vm.editContactForm.firstName.$error" ng-show="vm.editContactForm.$submitted || vm.editContactForm.firstName.$dirty">
                                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                                     </div>
@@ -35,7 +41,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <label class="required" for="last-name" translate="CONTACT.LASTNAME"></label>
-                                    <input type="text" class="form-control" id="last-name" name="lastName" required ng-maxlength="128" ng-model="vm.contact.lastName" ng-change="vm.setSalutations()" autocomplete="off">
+                                    <input type="text" class="form-control" id="last-name" name="lastName" required ng-maxlength="128" ng-model="vm.contact.lastName" autocomplete="off">
                                     <div ng-messages="vm.editContactForm.lastName.$error" ng-show="vm.editContactForm.$submitted || vm.editContactForm.lastName.$dirty">
                                         <div ng-messages-include="app/common/views/errorMessages.html"></div>
                                     </div>
@@ -43,15 +49,20 @@
                             </div>
                         </div>
                     </fieldset>
-
-                    <div class="form-group">
-                        <button class="btn btn-default" type="button" ng-click="vm.cancelEdit()">
-                            <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
-                        </button>
-                        <button type="submit" class="btn btn-primary" id="saveBtn"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
-                    </div>
-                </form>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-3">
+                    <h3 class="page-header" translate="CONTACT.SALUTATION.SALUTATIONS"></h3>
+                    <edit-salutations contact="vm.contact" first-name="vm.contact.firstName" last-name="vm.contact.lastName" title="vm.selectedTitle"
+                                      default-salutation-format-id="vm.defaultSalutationFormatId"/>
+                </div>
             </div>
-        </div>
+
+            <div class="form-group">
+                <button class="btn btn-default" type="button" ng-click="vm.cancelEdit()">
+                    <i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span>
+                </button>
+                <button type="submit" class="btn btn-primary" id="saveBtn"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
+            </div>
+        </form>
     </div>
 </div>

@@ -51,7 +51,7 @@ namespace KnightFrank.Antares.Domain.AttributeConfiguration.EntityConfigurations
 
                 foreach (KeyValuePair<Tuple<PageType, ControlCode>, Tuple<Control, IList<IField>>> control in notConfiguredControls)
                 {
-                    this.Use(control.Value.Item1.ControlCode, new List<Tuple<TKey, PageType>> { controlPageConfiguration.Key }).Hidden();
+                    this.Use(control.Value.Item1.ControlCode, new List<Tuple<TKey, PageType>> { controlPageConfiguration.Key }).Hidden().Readonly();
                 }
 
                 foreach (Tuple<Control, IList<IField>> controlConfiguraiton in controlPageConfiguration.Value)

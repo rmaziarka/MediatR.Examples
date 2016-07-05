@@ -20,18 +20,28 @@ module Antares.Common.Models.Business {
         eventEnvelopeSalutation: string;
         defaultEventSalutationId: string;
         company: Business.Company = null;
-        leadNegotiator: ContactUser;
-        secondaryNegotiators: ContactUser[];
+        leadNegotiator: ContactUser=null;
+        secondaryNegotiators: ContactUser[] = [];
+		contactUsers: ContactUser[] = [];
 
         constructor(contact?: Dto.IContact, company?: Dto.ICompany) {
             angular.extend(this, contact);
-			if (company) {
+	        if (contact) {
+		        var contactleadNegotiator = _.find(contact.contactUsers,
+		        (user: Dto.IContactUser) => user.userType.code === Enums.NegotiatorTypeEnum[Enums.NegotiatorTypeEnum.LeadNegotiator]);
+		        this.leadNegotiator = new ContactUser(contactleadNegotiator);
+
+		        this.secondaryNegotiators = _.filter(contact.contactUsers,
+					(user: Dto.IContactUser) => user.userType.code === Enums.NegotiatorTypeEnum[Enums.NegotiatorTypeEnum.SecondaryNegotiator])
+			        .map((user: Dto.IContactUser) => new ContactUser(user));
+	        }
+	        if (company) {
 				this.company = new Business.Company(company);
 			}
         }
 
         public getName() {
-            return this.firstName + ' ' + this.lastName;
+            return "".concat(this.firstName || "", " ", this.lastName).trim();
         }
     }
 }

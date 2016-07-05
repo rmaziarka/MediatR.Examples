@@ -29,8 +29,7 @@ module Antares {
                 eventPersonalSalutation: '',
                 eventEnvelopeSalutation: '',
                 defaultEventSalutationId: '',
-                leadNegotiator: TestHelpers.ContactUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator),
-                secondaryNegotiators:[]
+                contactUsers:[]
             },
             {
                 id: '2',
@@ -49,8 +48,7 @@ module Antares {
                 eventPersonalSalutation: '',
                 eventEnvelopeSalutation: '',
                 defaultEventSalutationId: '',
-                leadNegotiator: TestHelpers.ContactUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator),
-                secondaryNegotiators: []
+				contactUsers: []
             }
         ];
 
