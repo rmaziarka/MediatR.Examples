@@ -68,10 +68,11 @@
                     <textarea-edit-control ng-model="vm.activity.accessDetails.accessArrangements" config="vm.config.accessArrangements" schema="vm.accessArrangementsSchema"></textarea-edit-control>
                 </fieldset>
             </section>
-            <section id="other-info" ng-if="vm.config.decoration">
+            <section id="other-info" ng-if="vm.config.decoration && vm.config.otherCondition">
                 <fieldset>
                     <h3 class="page-header" translate="ACTIVITY.COMMON.OTHER"></h3>
                     <enum-item-edit-control ng-model="vm.activity.decorationId" config="vm.config.decoration" schema="vm.activityDecorationSchema"></enum-item-edit-control>
+                    <textarea-edit-control ng-model="vm.activity.otherCondition" config="vm.config.otherCondition" schema="vm.otherConditionSchema"></textarea-edit-control>
                 </fieldset>
             </section>
         </div>
@@ -137,10 +138,6 @@
                         <textarea-edit-control ng-model="vm.activity.groundRentNote" config="vm.config.groundRentNote" schema="vm.groundRentNoteSchema"></textarea-edit-control>
                     </div>
                 </div>
-            </fieldset>
-            <fieldset id="activity-edit-other-conditions" ng-if="vm.config.otherCondition">
-                <h3 class="page-header" translate="ACTIVITY.COMMON.OTHER_CONDITIONS"></h3>
-                <textarea-edit-control ng-model="vm.activity.otherCondition" config="vm.config.otherCondition" schema="vm.otherConditionSchema"></textarea-edit-control>
             </fieldset>
             <h3 class="page-header" translate="ACTIVITY.EDIT.APPRAISAL_MEETING.APPRAISAL_MEETING"></h3>
             <activity-appraisal-meeting-date-edit-control config="vm.config.appraisalMeetingDate"

@@ -219,7 +219,7 @@ module Antares.Activity {
 
         otherConditionSchema: Antares.Attributes.ITextEditControlSchema = {
             controlId: 'otherCondition',
-            translationKey: 'ACTIVITY.COMMON.RESTRICTIONS',
+            translationKey: 'ACTIVITY.COMMON.OTHER_CONDITIONS',
             fieldName: 'otherCondition',
             formName: 'otherConditionForm'
         }
