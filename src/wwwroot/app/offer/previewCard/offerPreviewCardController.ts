@@ -9,6 +9,12 @@ module Antares.Offer {
         offer: Dto.IOffer;
         onEdit: () => void;
 
+        constructor(
+            private $state: ng.ui.IStateService,
+            private appConfig: Common.Models.IAppConfig,
+            private $window: ng.IWindowService) {
+        }
+
         // controls
         controlSchemas: any = {
             status: <Attributes.IEnumItemControlSchema> {
@@ -45,6 +51,11 @@ module Antares.Offer {
 
         edit = () => {
             this.onEdit();
+        }
+
+        navigateToActivity = (activity: Dto.IActivity) => {
+            var activityViewUrl = this.appConfig.appRootUrl + this.$state.href('app.activity-view', { id: activity.id }, { absolute: false });
+            this.$window.open(activityViewUrl, '_blank');
         }
     }
 

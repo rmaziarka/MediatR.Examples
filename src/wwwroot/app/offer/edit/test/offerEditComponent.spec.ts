@@ -31,6 +31,7 @@ module Antares {
 
         beforeEach(angular.mock.module(($provide: angular.auto.IProvideService) => {
             $provide.decorator('formDirective', Common.Decorators.FormDecorator.decoratorFunction);
+            $provide.factory('addressFormViewDirective', () => { return {}; });
         }));    
 
         beforeEach(() => {

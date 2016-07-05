@@ -8,5 +8,5 @@
 <div class="card-info">
     <span class="offer-status offer-status-{{cvm.item.statusId | dynamicTranslate | lowercase}}">{{cvm.item.statusId | dynamicTranslate}}</span>
     <span class="offer-price" ng-if="cvm.item.price != null">{{cvm.item.price | number: 2: true}} {{'GBP' | translate}}</span>
-    <span class="offer-price" ng-if="cvm.item.pricePerWeek !== null">{{cvm.item.pricePerWeek | number: 2: true }} {{'REQUIREMENT.VIEW.OFFER_PER_WEEK' | translate}}</div>
+    <span class="offer-price" ng-if="cvm.item.pricePerWeek !== null">{{cvm.item.pricePerWeek | number: 2: true }} {{'REQUIREMENT.VIEW.OFFER_PER_WEEK' | translate}}</span>
 </div>

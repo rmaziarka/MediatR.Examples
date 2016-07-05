@@ -14,9 +14,9 @@
             <h3 class="page-header" translate="OFFER.VIEW.VENDOR"></h3>
 
             <h5 translate="OFFER.PREVIEW.ACTIVITY"></h5>
-            <card-list-item class="requirement-view-offers">
+            <card-list-item class="offer-view-activity">
                 <card show-context-menu="true" show-item-details="vm.showActivityPreview" display-new-control="true"
-                      card-template-url="'app/offer/view/offerVendorCard.html'" item="vm.offer">
+                      card-template-url="'app/offer/view/offerActivityCard.html'" item="vm.offer">
                     <card-context-menu>
                         <context-menu-item type="details" item="vm.offer.activity" action="vm.navigateToActivity"></context-menu-item>
                     </card-context-menu>
@@ -31,7 +31,7 @@
             <h3 class="page-header" translate="OFFER.VIEW.APPLICANT"></h3>
 
             <h5 translate="VIEWING.ADD.REQUIREMENT"></h5>
-            <card-list-item class="requirement-view-offers">
+            <card-list-item class="offer-view-requirement">
                 <card show-context-menu="true" display-new-control="true"
                       card-template-url="'app/offer/view/offerRequirementCard.html'" item="vm.offer">
                     <card-context-menu>
