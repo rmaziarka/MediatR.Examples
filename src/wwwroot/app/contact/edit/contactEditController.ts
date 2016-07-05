@@ -9,8 +9,9 @@ module Antares.Contact {
     export class ContactEditController {
   
         // bindings
-        public contact: Dto.IContact;
-        userData: Dto.ICurrentUser;
+		public contact:Business.Contact;
+        userData: Dto.ICurrentUser; //todo is required?
+
 
         // fields
         public editContactForm: ng.IFormController | any; // injected from the view
@@ -95,7 +96,7 @@ module Antares.Contact {
             editedContact.title = this.selectedTitle;
 
             const contactResource = this.dataAccessService.getContactResource();
-
+			
             return contactResource
                 .update(editedContact)
                 .$promise

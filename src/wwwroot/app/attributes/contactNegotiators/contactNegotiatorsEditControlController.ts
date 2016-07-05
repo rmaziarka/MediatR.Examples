@@ -14,7 +14,7 @@ module Antares.Attributes {
         // bindings
         public contactId: string; 
         public leadNegotiator: Business.ContactUser;
-        public secondaryNegotiators: Business.ContactUser[] = [];
+        public secondaryNegotiators: Business.ContactUser[];
 
         public isLeadNegotiatorInEditMode: boolean = false;
         public isSecondaryNegotiatorsInEditMode: boolean = false;

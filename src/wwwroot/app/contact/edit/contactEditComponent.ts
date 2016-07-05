@@ -6,7 +6,7 @@ module Antares.Contact {
         controllerAs: 'vm',
         controller: 'ContactEditController',
         bindings: {
-            contact: '<',  
+            contact: '=',  
             userData: '<'
         }
     });
