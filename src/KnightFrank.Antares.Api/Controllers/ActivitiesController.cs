@@ -83,9 +83,11 @@
         /// <returns>Activity entity collection</returns>
         [HttpGet]
         [Route("")]
-        public IEnumerable<ActivitiesQueryResult> GetActivities()
+        public IEnumerable<ActivitiesQueryResult> GetActivities([FromUri(Name = "")]ActivitiesFilterQuery query)
         {
-            return this.mediator.Send(new ActivitiesQuery());
+            if(query == null)
+                query = new ActivitiesFilterQuery();
+            return this.mediator.Send(query);
         }
 
         /// <summary>

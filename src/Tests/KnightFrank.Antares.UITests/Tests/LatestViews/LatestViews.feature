@@ -104,12 +104,12 @@ Scenario: Display latest viewed activities
 			| 10-01-2015   | 10000000 |
 		And Property Freehold Sale activity is defined
 		And Requirement for GB is created in database
-			| MinPrice | MaxPrice |
-			| 100000   | 500000   |
+			| Type             | Description |
+			| Residential Sale | Description |
 		And Viewing for requirement is defined
 		And Offer for requirement is defined
-			| Status |
-			| New    |
+			| Type             | Status |
+			| Residential Sale | New    |
 	When User navigates to view offer page with id
 		And User clicks activity details on view offer page
 	Then Latest 3 activities should contain following data
@@ -143,6 +143,9 @@ Scenario: Display latest viewed requirements
 		And User selects contacts on create requirement page
 			| FirstName | Surname  |
 			| Triss     | Merigold |
+		And User fills in sale requirement details on create requirement page
+			| Type             | Description |
+			| Residential Sale | Description |
 		And User fills in location details on create requirement page
 			| Country        | Line2    | Postcode | City   |
 			| United Kingdom | Gower St | WC1E 6BT | London |
@@ -156,8 +159,8 @@ Scenario: Display latest viewed requirements
 		| Dr    | Van       | Wilder  |
 		| Sir   | Van       | Wilder  |
 		And Requirement for GB is created in database
-			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
-			| 100000   | 500000   | 2           | 3           | 2                 | 4                 | 1            | 3            | 2                | 2                | 90000   | 150000  | 200000      | 300000      | Note        |
+			| Type                | Description |
+			| Residential Letting | Description |
 	When User navigates to view requirement page with id
 	Then Latest 2 requirements should contain following data
 		| LatestData             |

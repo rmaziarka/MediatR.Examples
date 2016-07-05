@@ -1,27 +1,35 @@
 ﻿Feature: Requirement 
 
 @Requirements
-Scenario: Create requirement
+Scenario Outline: Create requirement
 	Given User gets GB address form for Requirement and country details
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
 	When User sets locations details for the requirement with max length fields
-		And User creates following requirement using api
- 			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description |
- 			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | max         |
+		And User creates <type> requirement using api
 	Then User should get OK http status code
 		And Requirement should be the same as added
 
+	Examples: 
+	| type               |
+	| ResidentialLetting |
+	| ResidentialSale    |
+
 @Requirements
-Scenario: Create requirement with mandatory fields
+Scenario Outline: Create requirement with mandatory fields
 	Given User gets GB address form for Requirement and country details
 		And Contacts exists in database
 			| FirstName | Surname | Title  |
 			| Tomasz    | Bien    | Mister |
-	When User creates requirement with mandatory fields using api
+	When User creates <type> requirement with mandatory fields using api
 	Then User should get OK http status code
 		And Requirement should be the same as added
+
+	Examples: 
+	| type               |
+	| ResidentialLetting |
+	| ResidentialSale    |
 		
 @Requirements
 Scenario Outline: Create requirement without data
@@ -33,8 +41,8 @@ Scenario Outline: Create requirement without data
 		| Postcode | City   | Line2   |
 		| 1234     | London | Big Ben |
 		And User creates following requirement without <data> using api
-			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description            |
-			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | RequirementDescription |
+			| Description            | RentMin | RentMax |
+			| RequirementDescription | 10      | 20      |
 	Then User should get BadRequest http status code
 
 	Examples: 
@@ -42,6 +50,7 @@ Scenario Outline: Create requirement without data
 	| contact      |
 	| country      |
 	| address form |
+	| type         |
 
 @Requirements
 Scenario: Create requirement with invalid contact
@@ -50,26 +59,31 @@ Scenario: Create requirement with invalid contact
 		| Postcode | City   | Line2   |
 		| 1234     | London | Big Ben |
 		And User creates following requirement with invalid contact using api			
-			| MinPrice | MaxPrice | MinBedrooms | MaxBedrooms | MinReceptionRooms | MaxReceptionRooms | MinBathrooms | MaxBathrooms | MinParkingSpaces | MaxParkingSpaces | MinArea | MaxArea | MinLandArea | MaxLandArea | Description            |
-			| 1000000  | 4000000  | 1           | 5           | 0                 | 2                 | 1            | 3            | 1                | 2                | 1200    | 2000    | 10000       | 20000       | RequirementDescription |
+			| Description            | RentMin | RentMax |
+			| RequirementDescription | 10      | 20      |
 	Then User should get BadRequest http status code
 
 @Requirements
-Scenario: Get requirement
+Scenario Outline: Get requirement
 	Given Contacts exists in database
 		| Title  | FirstName | Surname |
 		| Mister | Tomasz    | Bien    |
-		And Requirement exists in database
+		And Requirement of type <type> exists in database
 	When User retrieves requirement for latest id
 	Then User should get OK http status code
 		And Requirement should be the same as added
 
+	Examples: 
+	| type               |
+	| ResidentialLetting |
+	| ResidentialSale    |
+
 @Requirements
-Scenario: Get requirement with notes
+Scenario Outline: Get requirement with notes
 	Given Contacts exists in database
 		| Title  | FirstName | Surname |
 		| Mister | Tomasz    | Bien    |
-		And Requirement exists in database
+		And Requirement of type <type> exists in database
 		And Requirement notes exists in database
 			| Description |
 			| Note1       |
@@ -78,8 +92,13 @@ Scenario: Get requirement with notes
 	Then User should get OK http status code
 		And Notes should be the same as added
 
+	Examples: 
+	| type               |
+	| ResidentialLetting |
+	| ResidentialSale    |
+
 @Requirements
-Scenario: Get requirement with offer and viewing
+Scenario Outline: Get requirement with offer and viewing
 	Given Property exists in database
 		| PropertyType | Division    |
 		| House        | Residential |
@@ -89,7 +108,7 @@ Scenario: Get requirement with offer and viewing
 		And Contacts exists in database
 			| Title  | FirstName | Surname |
 			| Mister | Tomasz    | Bien    |
-		And Requirement exists in database
+		And Requirement of type <type> exists in database
 		And Offer with New status exists in database
 		And Viewing exists in database
 	When User retrieves requirement for latest id
@@ -97,8 +116,13 @@ Scenario: Get requirement with offer and viewing
 		And Offer details in requirement should be the same as added
 		And Viewing details in requirement should be the same as added
 
+	Examples: 
+	| type               |
+	| ResidentialLetting |
+	| ResidentialSale    |
+
 @Requirements
-Scenario Outline: Get residential sales requirement with invalid data		
+Scenario Outline: Get requirement with invalid data		
 	When User retrieves requirement for <id> id
 	Then User should get <statusCode> http status code
 

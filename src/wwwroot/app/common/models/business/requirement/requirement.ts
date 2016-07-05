@@ -5,10 +5,13 @@ module Antares.Common.Models.Business {
         [index: string]: any;
 
         id: string = '';
+        requirementTypeId: string = '';
         createDate: Date = null;
         contacts: Contact[] = [];
         address: Address = new Address();
         description: string;
+        rentMin: number = null;
+        rentMax: number = null;
         requirementNotes: RequirementNote[] = [];
         viewingsByDay: ViewingGroup[];
         viewings: Viewing[];

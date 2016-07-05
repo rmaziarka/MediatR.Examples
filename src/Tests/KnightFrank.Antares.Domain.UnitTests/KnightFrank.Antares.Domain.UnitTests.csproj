@@ -136,8 +136,17 @@
     <Compile Include="Attachments\Commands\CreateEntityAttachmentCommandValidatorTests.cs" />
     <Compile Include="Attachments\Queries\AttachmentQueryValidatorTests.cs" />
     <Compile Include="Attachments\QueryHandlers\AttachmentQueryHandlerTests.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\RequirementCreateControlsConfigurationItem.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\RequirementDetailsControlsConfigurationItem.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\BaseControlsConfigurationTests.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerThreeTypesItem.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerTwoTypesItem.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerOneTypeItem.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ActivityControlsConfigurationItem.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\RequirementControlsConfigurationTests.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ActivityControlsConfigurationTests.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\OfferControlsConfigurationFixture.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\OfferControlsConfigurationTests.cs" />
     <Compile Include="BaseTestClassFixture.cs" />
     <Compile Include="AutoConfiguredMoqDataAttribute.cs" />
     <Compile Include="Characteristic\Queries\CharacteristicGroupsQueryValidatorTests.cs" />
@@ -149,6 +158,7 @@
     <Compile Include="Common\BusinessValidators\EntityValidatorTests.cs" />
     <Compile Include="Common\BusinessValidators\EnumTypeItemValidatorTests.cs" />
     <Compile Include="Common\Enums\EnumParserTests.cs" />
+    <Compile Include="Common\Extension\ArrayExtension.cs" />
     <Compile Include="Common\Validator\ActivityStatusValidatorTests.cs" />
     <Compile Include="Common\Validator\LocaleValidatorTests.cs" />
     <Compile Include="Company\CommandHandlers\UpdateCompanyCommandHandlerTests.cs" />
@@ -162,8 +172,6 @@
     <Compile Include="LatestView\Commands\CreateLatestViewCommandValidatorTests.cs" />
     <Compile Include="Offer\CommandHandlers\UpdateOfferCommandHandlerTests.cs" />
     <Compile Include="Offer\CommandHandlers\CreateOfferCommandHandlerTests.cs" />
-    <Compile Include="Offer\Commands\UpdateOfferCommandValidatorTests.cs" />
-    <Compile Include="Offer\Commands\CreateOfferCommandValidatorTests.cs" />
     <Compile Include="Offer\Handler\OfferProgressStatusHelperTests.cs" />
     <Compile Include="Property\CommandHandlers\CreatePropertyAttachmentCommandHandlerTests.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementAttachmentCommandHandlerTests.cs" />
@@ -207,7 +215,6 @@
     <Compile Include="Requirement\Commands\CreateRequirementCommandHandlerTests.cs" />
     <Compile Include="Contact\Commands\CreateContactCommandValidatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Requirement\Commands\CreateRequirementCommandValidatorTests.cs" />
     <Compile Include="Resource\Queries\ResourceLocalisedQueryDomainValidatorTests.cs" />
     <Compile Include="Resource\Queries\ResourceLocalisedQueryValidatorTests.cs" />
     <Compile Include="Resource\QueryHandlers\ResourceLocalisedQueryHandlerTests.cs" />

@@ -34,7 +34,7 @@
         public static Field<TEntity, TProperty?> LessThanOrEqualTo<TEntity, TProperty>(this Field<TEntity, TProperty?> field, Expression<Func<TEntity, TProperty?>> limit)
            where TProperty : struct, IComparable, IComparable<TProperty>
         {
-            field.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(field.Selector).LessThanOrEqualTo(limit)));
+            field.InnerField.AddValidator(new EntityValidator<TEntity>(v => v.RuleFor(field.Selector).LessThanOrEqualTo(limit).When(x => limit.Compile().Invoke(x).HasValue)));
             return field;
         }
 

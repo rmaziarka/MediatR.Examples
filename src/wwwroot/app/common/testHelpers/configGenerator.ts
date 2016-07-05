@@ -6,10 +6,91 @@ module Antares.TestHelpers {
     import Enums = Common.Models.Enums;
 
     export class ConfigGenerator {
+        public static generateOfferOfferDateConfig(): Attributes.IOfferOfferDateControlConfig{
+            var config: Attributes.IOfferOfferDateControlConfig = {
+                active : true,
+                offerDate : null
+            }
+
+            return config;
+        }
+
+        public static generateOfferExchangeDateConfig(): Attributes.IOfferExchangeDateControlConfig {
+            var config: Attributes.IOfferExchangeDateControlConfig = {
+                active: true,
+                exchangeDate: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferCompletionDateConfig(): Attributes.IOfferCompletionDateControlConfig {
+            var config: Attributes.IOfferCompletionDateControlConfig = {
+                active: true,
+                completionDate: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferStatusIdConfig(): Attributes.IOfferStatusControlConfig {
+            var config: Attributes.IOfferStatusControlConfig = {
+                active: true,
+                statusId: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferPriceConfig(): Attributes.IOfferPriceControlConfig {
+            var config: Attributes.IOfferPriceControlConfig = {
+                active: true,
+                price: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferPricePerWeekConfig(): Attributes.IOfferPricePerWeekControlConfig {
+            var config: Attributes.IOfferPricePerWeekControlConfig = {
+                active: true,
+                pricePerWeek: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferSpecialConditionsConfig(): Attributes.IOfferSpecialConditionsControlConfig {
+            var config: Attributes.IOfferSpecialConditionsControlConfig = {
+                active: true,
+                specialConditions: null
+            }
+
+            return config;
+        }
+        
+        public static generateOfferAddPanelConfig(): Offer.IOfferAddPanelConfig{
+            var config: Offer.IOfferAddPanelConfig = {
+                statusId: ConfigGenerator.generateOfferStatusIdConfig(),
+                completionDate: ConfigGenerator.generateOfferCompletionDateConfig(),
+                exchangeDate: ConfigGenerator.generateOfferExchangeDateConfig(),
+                offerDate: ConfigGenerator.generateOfferOfferDateConfig(),
+                price: ConfigGenerator.generateOfferPriceConfig(),
+                pricePerWeek: ConfigGenerator.generateOfferPricePerWeekConfig(),
+                specialConditions: ConfigGenerator.generateOfferSpecialConditionsConfig()
+            };
+
+            return config;
+        }
+
         public static generateActivityStatusEditConfig(): Attributes.IActivityStatusEditControlConfig {
             var config: Attributes.IActivityStatusEditControlConfig = {
                 active: true,
-                activityStatusId: null
+                activityStatusId: {
+                    active: true,
+                    required: true,
+                    allowedCodes: null
+                }
             };
 
             return config;
@@ -49,8 +130,8 @@ module Antares.TestHelpers {
                 activityType: ConfigGenerator.generateActivityTypeEditConfig(),
                 landlords: ConfigGenerator.generateActivityLandlordsConfig(),
                 vendors: ConfigGenerator.generateActivityVendorsConfig(),
-				askingPrice: ConfigGenerator.generateActivityAskingPriceConfig(),
-				shortLetPricePerWeek: ConfigGenerator.generateActivityShortLetPricePerWeekControlConfig()
+                askingPrice: ConfigGenerator.generateActivityAskingPriceConfig(),
+                shortLetPricePerWeek: ConfigGenerator.generateActivityShortLetPricePerWeekControlConfig()
             };
 
             return config;
@@ -72,7 +153,7 @@ module Antares.TestHelpers {
             return config;
         }
 
-		public static generateActivityAskingPriceConfig(): Attributes.IActivityAskingPriceControlConfig {
+        public static generateActivityAskingPriceConfig(): Attributes.IActivityAskingPriceControlConfig {
             var config: Attributes.IActivityAskingPriceControlConfig = {
                 active: true,
                 askingPrice: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
@@ -81,7 +162,7 @@ module Antares.TestHelpers {
             return config;
         }
 
-		public static generateActivityShortLetPricePerWeekControlConfig(): Attributes.IActivityShortLetPricePerWeekControlConfig {
+        public static generateActivityShortLetPricePerWeekControlConfig(): Attributes.IActivityShortLetPricePerWeekControlConfig {
             var config: Attributes.IActivityShortLetPricePerWeekControlConfig = {
                 active: true,
                 shortLetPricePerWeek: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
@@ -124,6 +205,50 @@ module Antares.TestHelpers {
             };
 
             return angular.extend(config, specificData || {});
+        }
+
+        public static generateRequirementDescriptionAddConfig(): Attributes.IRequirementDescriptionEditControlConfig {
+            var fieldConfig: Attributes.IRequirementDescriptionEditFieldConfig = {
+                active: true,
+                required: null
+            };
+
+            var config: Attributes.IRequirementDescriptionEditControlConfig = {
+                description: fieldConfig,
+                active: true
+            }
+
+            return config;
+        }
+
+        public static generateRequirementAddConfig(): Requirement.IRequirementAddConfig {
+            var config: Requirement.IRequirementAddConfig = {
+                requirementType: null,
+                requirement_Description: ConfigGenerator.generateRequirementDescriptionAddConfig()
+            };
+
+            return config;
+        }
+
+        public static generateRequirementViewConfig(): Requirement.IRequirementViewConfig {
+            var config: Requirement.IRequirementViewConfig = {
+                requirementType: null,
+                requirement_Description: ConfigGenerator.generateRequirementDescriptionAddConfig()
+            };
+
+            return config;
+        }
+
+        public static generateRequirementTypeEditConfig(): Attributes.IRequirementTypeEditControlConfig {
+            var config: Attributes.IRequirementTypeEditControlConfig = {
+                active: true,
+                requirementTypeId: {
+                    required: true,
+                    active: true
+                }
+            };
+
+            return config;
         }
     }
 }

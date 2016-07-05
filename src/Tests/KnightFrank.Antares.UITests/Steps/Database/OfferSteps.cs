@@ -13,6 +13,8 @@
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
 
+    using OfferType = KnightFrank.Antares.Domain.Common.Enums.OfferType;
+
     [Binding]
     public class OfferSteps
     {
@@ -32,9 +34,12 @@
 
         [Given(@"Offer for requirement is defined")]
         [When(@"Offer for requirement is defined")]
-        public void CreateViewing(Table table)
+        public void CreateOffer(Table table)
         {
             var details = table.CreateInstance<OfferData>();
+            OfferType offerType = details.Type.Equals("Residential Sale") ? OfferType.ResidentialSale : OfferType.ResidentialLetting;
+
+            Guid offerTypeId = this.dataContext.OfferTypes.First(ot => ot.EnumCode.Equals(offerType.ToString())).Id;
             Guid statusId =
                 this.dataContext.EnumTypeItems.Single(
                     i => i.EnumType.Code.Equals(nameof(OfferStatus)) && i.Code.Equals(details.Status)).Id;
@@ -46,7 +51,6 @@
                 //TODO improve selecting negotiator
                 NegotiatorId = this.dataContext.Users.First().Id,
                 ActivityId = activityId,
-                Price = 1000,
                 CompletionDate = DateTime.UtcNow,
                 ExchangeDate = DateTime.UtcNow,
                 OfferDate = DateTime.UtcNow,
@@ -54,8 +58,18 @@
                 LastModifiedDate = DateTime.UtcNow,
                 RequirementId = requirementId,
                 SpecialConditions = "Text",
-                StatusId = statusId
+                StatusId = statusId,
+                OfferTypeId = offerTypeId
             };
+
+            if (offerType.Equals(OfferType.ResidentialSale))
+            {
+                offer.Price = 1000;
+            }
+            else
+            {
+                offer.PricePerWeek = 1000;
+            }
 
             this.dataContext.Offer.Add(offer);
             this.dataContext.SaveChanges();

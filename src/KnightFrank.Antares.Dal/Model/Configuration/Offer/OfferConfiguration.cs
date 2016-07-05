@@ -6,6 +6,11 @@
     {
         public OfferConfiguration()
         {
+            this.HasRequired(x => x.OfferType)
+                .WithMany()
+                .HasForeignKey(x => x.OfferTypeId)
+                .WillCascadeOnDelete(false);
+
             this.HasRequired(x => x.Status)
                 .WithMany()
                 .HasForeignKey(x => x.StatusId)
@@ -81,7 +86,11 @@
 
             this.Property(o => o.Price)
                 .IsMoney()
-                .IsRequired();
+                .IsOptional();
+
+            this.Property(o => o.PricePerWeek)
+                .IsMoney()
+                .IsOptional();
 
             this.Property(x => x.OfferDate)
                 .IsRequired();
