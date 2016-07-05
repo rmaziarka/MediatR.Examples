@@ -24,7 +24,6 @@
         private readonly ICollectionValidator collectionValidator;
         private readonly IEntityValidator entityValidator;
         private readonly IGenericRepository<EnumTypeItem> enumTypeItemRepository;
-        private readonly IEnumTypeItemValidator enumTypeItemValidator;
 
         public UpdateContactCommandHandler(
             IGenericRepository<Contact> contactRepository,
@@ -32,21 +31,18 @@
             IGenericRepository<ContactUser> contactUserRepository,
             IEntityValidator entityValidator,
             ICollectionValidator collectionValidator,
-            IEnumTypeItemValidator enumTypeItemValidator,
             IGenericRepository<EnumTypeItem> enumTypeItemRepository)
         {
             this.contactRepository = contactRepository;
             this.collectionValidator = collectionValidator;
             this.entityValidator = entityValidator;
             this.userRepository = userRepository;
-            this.enumTypeItemValidator = enumTypeItemValidator;
             this.enumTypeItemRepository = enumTypeItemRepository;
             this.contactUserRepository = contactUserRepository;
         }
 
         public Guid Handle(UpdateContactCommand command)
         {
-            //Contact contact = this.contactRepository.GetById(command.Id);
             Contact contact = this.contactRepository.GetWithInclude(x => x.Id == command.Id,
                  x => x.ContactUsers)
                  .SingleOrDefault();
@@ -109,8 +105,7 @@
         {
             List<ContactUser> existingNegotiators = contact.ContactUsers.ToList();
 
-            commandNegotiators.Where(n => IsNewlyAddedToExistingList(n, existingNegotiators))
-                                                  .ToList();
+            commandNegotiators.Where(n => IsNewlyAddedToExistingList(n, existingNegotiators)).ToList();
 
             commandNegotiators.Where(n => IsUpdated(n, existingNegotiators))
                               .Select(n => new { newNegotiator = n, oldNegotiator = GetOldContactUser(n, existingNegotiators) })
