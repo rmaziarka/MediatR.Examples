@@ -118,5 +118,127 @@ module Antares {
 
             expect(controller.setSalutations).toHaveBeenCalled();
         });
+
+        ///// mailing semi formal salutation
+
+        it('when title and first name and last name are entered then mailing semi formal salutation is updated correctly', () => {
+            controller.selectedTitle = 'Mr';
+            controller.contact.firstName = 'John';
+            controller.contact.lastName = 'Smith';
+
+            controller.setSalutations();
+
+            expect(controller.contact.mailingSemiformalSalutation).toEqual('Mr Smith');
+        });
+
+        it('when only first name and last name are entered then mailing semi formal salutation is updated correctly', () => {
+            controller.selectedTitle = '';
+            controller.contact.firstName = 'John';
+            controller.contact.lastName = 'Smith';
+
+            controller.setSalutations();
+
+            expect(controller.contact.mailingSemiformalSalutation).toEqual('Smith');
+        });
+
+        it('when only title and first name are entered then mailing semi formal salutation is updated correctly', () => {
+            controller.selectedTitle = 'Mr';
+            controller.contact.firstName = 'John';
+            controller.contact.lastName = '';
+
+            controller.setSalutations();
+
+            expect(controller.contact.mailingSemiformalSalutation).toEqual('Mr');
+        });
+
+        ///// mailing informal salutation
+
+        it('when multi-character first name is entered then mailing informal salutation is updated correctly', () => {
+            controller.selectedTitle = 'Mr';
+            controller.contact.firstName = 'John';
+            controller.contact.lastName = 'Smith';
+
+            controller.setSalutations();
+
+            expect(controller.contact.mailingInformalSalutation).toEqual('John');
+        });
+
+        it('when single-character first name is entered then mailing informal salutation is updated correctly', () => {
+            controller.selectedTitle = 'Mr';
+            controller.contact.firstName = 'J';
+            controller.contact.lastName = 'Smith';
+
+            controller.setSalutations();
+
+            expect(controller.contact.mailingInformalSalutation).toEqual('Mr Smith');
+        });
+
+        ///// mailing formal salutation
+
+        it('when mr is entered as a title then mailing formal salutation is updated correctly', () => {
+            controller.selectedTitle = 'Mr';
+            controller.contact.firstName = 'John';
+            controller.contact.lastName = 'Smith';
+
+            controller.setSalutations();
+
+            expect(controller.contact.mailingFormalSalutation).toEqual('Sir');
+        });
+
+        it('when mrs is entered as a title then mailing formal salutation is updated correctly', () => {
+            controller.selectedTitle = 'Mrs';
+            controller.contact.firstName = 'Jane';
+            controller.contact.lastName = 'Smith';
+
+            controller.setSalutations();
+
+            expect(controller.contact.mailingFormalSalutation).toEqual('Madam');
+        });
+
+        it('when dr is entered as a title then mailing formal salutation is updated correctly', () => {
+            controller.selectedTitle = 'Dr';
+            controller.contact.firstName = 'John';
+            controller.contact.lastName = 'Smith';
+
+            controller.setSalutations();
+
+            expect(controller.contact.mailingFormalSalutation).toEqual('Dr Smith');
+        });
+
+        ///// mailing envelope salutation
+
+        it('when mr is entered as a title and salutation preference is esq then mailing envelope salutation is updated correctly', () => {
+            controller.selectedTitle = 'Mr';
+            controller.contact.firstName = 'John';
+            controller.contact.lastName = 'Smith';
+            controller.defaultSalutationFormat = 'JohnSmithEsq';
+
+            controller.setSalutations();
+
+            expect(controller.contact.mailingEnvelopeSalutation).toEqual('John Smith, Esq');
+        });
+
+        it('when mrs is entered as a title and salutation preference is esq then mailing envelope salutation is updated correctly', () => {
+            controller.selectedTitle = 'Mrs';
+            controller.contact.firstName = 'Jane';
+            controller.contact.lastName = 'Smith';
+            controller.defaultSalutationFormat = 'JohnSmithEsq';
+
+            controller.setSalutations();
+
+            expect(controller.contact.mailingEnvelopeSalutation).toEqual('Mrs Jane Smith');
+        });
+
+        it('when mr is entered as a title and salutation preference is not esq then mailing envelope salutation is updated correctly', () => {
+            controller.selectedTitle = 'Mr';
+            controller.contact.firstName = 'John';
+            controller.contact.lastName = 'Smith';
+            controller.defaultSalutationFormat = 'MrJohnSmith';
+
+            controller.setSalutations();
+
+            expect(controller.contact.mailingEnvelopeSalutation).toEqual('Mr John Smith');
+        });
+
     });
 }
