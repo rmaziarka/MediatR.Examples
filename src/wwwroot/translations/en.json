@@ -17,6 +17,8 @@
     "FILEISUPLOADING": "File is uploading ...",
     "REQUIREMENT": "Requirement",
     "ACTIVITY": "Activity",
+    "YES": "Yes",
+    "NO": "No",
     "MENU": {
       "CREATE": "Create",
       "CONTACTS": "Contacts",

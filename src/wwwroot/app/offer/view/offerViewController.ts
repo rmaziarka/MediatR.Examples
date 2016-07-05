@@ -4,7 +4,7 @@ module Antares.Component {
     import Business = Common.Models.Business;
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
-	import Dto = Common.Models.Dto;
+    import Dto = Common.Models.Dto;
     import OfferViewConfig = Offer.IOfferViewConfig;
 
     export class OfferViewController extends Core.WithPanelsBaseController {
@@ -21,6 +21,12 @@ module Antares.Component {
                 controlId: "mortgage-loan-to-value",
                 translationKey: "OFFER.VIEW.MORTGAGE_LOAN_TO_VALUE",
                 fieldName: "mortgageLoanToValue"
+            },
+            contractApproved: <Attributes.IRadioButtonsViewControlSchema>{
+                formName: "offerContractApprovedControlForm",
+                fieldName: "offerContractApproved",
+                translationKey: "OFFER.VIEW.CONTRACT_APPROVED",
+                templateUrl: "app/attributes/radioButtons/templates/radioButtonsViewBoolean.html"
             }
         };
 
@@ -31,15 +37,15 @@ module Antares.Component {
             private latestViewsProvider: LatestViewsProvider,
             private enumService: Services.EnumService) {
             super(componentRegistry, $scope);
-			this.enumService.getEnumPromise().then(this.onEnumLoaded);
+            this.enumService.getEnumPromise().then(this.onEnumLoaded);
         }
 
-        navigateToActivity = (ativity: Business.Activity) =>{
+        navigateToActivity = (ativity: Business.Activity) => {
             this.$state.go('app.activity-view', { id: ativity.id });
         }
 
         navigateToRequirement = (requirement: Business.Requirement) => {
-            this.$state.go('app.requirement-view', { id: requirement.id});
+            this.$state.go('app.requirement-view', { id: requirement.id });
         }
 
         showActivityPreview = (offer: Common.Models.Business.Offer) => {
@@ -57,7 +63,7 @@ module Antares.Component {
 
         defineComponentIds() {
             this.componentIds = {
-                activityPreviewSidePanelId : 'viewOffer:activityPreviewSidePanelComponent'
+                activityPreviewSidePanelId: 'viewOffer:activityPreviewSidePanelComponent'
             };
         }
 
@@ -67,15 +73,15 @@ module Antares.Component {
             };
         }
 
-		onEnumLoaded = (result: any) => {
+        onEnumLoaded = (result: any) => {
             this.offerStatuses = result[Dto.EnumTypeCode.OfferStatus];
         }
 
-		isOfferNew = (): boolean => {
-            var selectedOfferStatus: Common.Models.Dto.IEnumItem = _.find(this.offerStatuses, (status:  Common.Models.Dto.IEnumItem) => status.id === this.offer.statusId);
+        isOfferNew = (): boolean => {
+            var selectedOfferStatus: Common.Models.Dto.IEnumItem = _.find(this.offerStatuses, (status: Common.Models.Dto.IEnumItem) => status.id === this.offer.statusId);
             if (selectedOfferStatus) {
-	            return selectedOfferStatus.code ===
-		            Common.Models.Enums.OfferStatus[Common.Models.Enums.OfferStatus.New];
+                return selectedOfferStatus.code ===
+                    Common.Models.Enums.OfferStatus[Common.Models.Enums.OfferStatus.New];
             }
 
             return false;

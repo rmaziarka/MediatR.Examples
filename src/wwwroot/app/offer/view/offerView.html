@@ -115,10 +115,9 @@
                     <div class="col-xs-4 section-title" translate="OFFER.VIEW.ENQUIRIES"></div>
                     <div class="col-xs-8"><span id="enquiries" class="status status-{{::vm.offer.enquiriesId | enumClass}}">{{::vm.offer.enquiriesId | dynamicTranslate}}</span></div>
                 </div>
-                <div class="section-row row">
-                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.CONTRACT_APPROVED"></div>
-                    <div class="col-xs-8"><span id="contract-approved" class="status" ng-class="{'status-no': !vm.offer.contractApproved, 'status-yes': vm.offer.contractApproved}"></span></div>
-                </div>
+                <radio-buttons-view-control id="contact-approved" config="vm.config.offer_ContractApproved" ng-model="vm.offer.contractApproved"
+                                            schema="vm.controlSchemas.contractApproved">
+                </radio-buttons-view-control>
             </div>
         </section>
 
