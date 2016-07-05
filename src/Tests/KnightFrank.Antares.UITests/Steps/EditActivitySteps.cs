@@ -57,6 +57,18 @@
                 .SetAskingPrice(details.AskingPrice);
         }
 
+        [When(@"User fills in KF Valuation (.*) on edit activity page")]
+        public void WhenUserFillsInKfValuationOnEditActivityPage(string kfValuation)
+        {
+            this.page.FillKfValuation(kfValuation);
+        }
+
+        [When(@"User selects (.*) disposal type on edit activity page")]
+        public void WhenUserSelectsDisposalTypeOnEditActivityPage(string disposalType)
+        {
+            this.page.SelectDisposalType(disposalType);
+        }
+
         [When(@"User clicks save button on edit activity page")]
         public void SaveActivty()
         {

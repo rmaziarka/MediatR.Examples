@@ -40,7 +40,8 @@ Scenario: Create activity
 		And User sets appraisal meeting date as tomorrow date on create activity page
 		And User sets start time at 10:00 and end time at 12:00 on create activity page
 		And User selects Sarah Chatto from attendees on create activity page
-		And User fills in invitation text Text on create activity page 
+		And User fills in invitation text Text on create activity page
+		 
 	When User clicks save button on create activity page
 	Then Activity details should be displayed on view activity page
 		| ActivityTitle             | Status        | Type          |
@@ -82,6 +83,8 @@ Scenario: Edit activity
 		And User edits activity details on edit activity page
 			| ActivityStatus   | AskingPrice |
 			| Market appraisal | 4000        |
+		And User fills in KF Valuation 500 on edit activity page
+		And User selects Private Treaty disposal type on edit activity page
 		And User changes lead negotiator to Adam Williams on edit activity page
         And User adds secondary negotiators on edit activity page
             | Name            |

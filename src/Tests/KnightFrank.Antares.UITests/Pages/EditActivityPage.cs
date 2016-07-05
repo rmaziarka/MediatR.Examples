@@ -18,6 +18,8 @@
         // Valuation prices
         private readonly ElementLocator askingPrice = new ElementLocator(Locator.Id, "asking-price");
         private readonly ElementLocator shortLetPricePerWeek = new ElementLocator(Locator.Id, "short-let-price-per-week");
+        private readonly ElementLocator kfValuation = new ElementLocator(Locator.CssSelector, "#kfValuationPrice");
+        private readonly ElementLocator dispsalType = new ElementLocator(Locator.Id, "disposalTypeId");
         // Locators for negotiators
         private readonly ElementLocator editLeadNegotiator = new ElementLocator(Locator.Id, "lead-edit-btn");
         private readonly ElementLocator searchLeadNegotator = new ElementLocator(Locator.CssSelector, "#lead-search input");
@@ -27,6 +29,7 @@
         private readonly ElementLocator secondaryNegotiatorActions = new ElementLocator(Locator.CssSelector, "#activity-edit-negotiators card-list-item:nth-of-type({0}) .card-menu-button");
         private readonly ElementLocator deleteSecondaryNegotiator = new ElementLocator(Locator.CssSelector, "#activity-edit-negotiators card-list-item:nth-of-type({0}) [action *= 'deleteSecondaryNegotiator']");
         private readonly ElementLocator setSecondaryNegotiatorAsLead = new ElementLocator(Locator.CssSelector, "#activity-edit-negotiators card-list-item:nth-of-type({0}) [action *= 'switchToLeadNegotiator']");
+
         private readonly ElementLocator negotiator = new ElementLocator(Locator.XPath, "//section[@id = 'activity-edit-negotiators']//span[contains(., '{0}')]");
         private readonly ElementLocator leadNegotiatorNextCall = new ElementLocator(Locator.Id, "lead-call-date");
         private readonly ElementLocator secondaryNegotiatorNextCall = new ElementLocator(Locator.CssSelector, "#card-list-negotiators card-list-item{0} input");
@@ -75,6 +78,12 @@
             return new ViewActivityPage(this.DriverContext);
         }
 
+        internal EditActivityPage SelectDisposalType(string disposalType)
+        {
+            this.Driver.GetElement<Select>(this.dispsalType).SelectByText(disposalType);
+            return this;
+        }
+
         public EditActivityPage SetLeadNegotiator(string leadNegotiator)
         {
             this.Driver.Click(this.editLeadNegotiator);
@@ -83,6 +92,13 @@
             this.Driver.Click(this.negotiator.Format(leadNegotiator));
             return this;
         }
+
+        public EditActivityPage FillKfValuation(string kfValuation)
+        {
+            this.Driver.SendKeys(this.kfValuation, kfValuation);
+            return this;
+        }
+
 
         public EditActivityPage SetSecondaryNegotiator(Negotiator secondaryNegotiator)
         {
