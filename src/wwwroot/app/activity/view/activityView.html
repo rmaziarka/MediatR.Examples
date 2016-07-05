@@ -117,7 +117,7 @@
                         <div id="other-info" ng-if="avvm.config.decoration && avvm.config.otherCondition">
                             <h3 class="page-header" translate="ACTIVITY.COMMON.OTHER"></h3>
                             <enum-item-view-control ng-model="avvm.activity.decorationId" config="avvm.config.decoration" schema="avvm.activityDecorationSchema"></enum-item-view-control>
-                            <textarea-view-control ng-model="avvm.activity.otherCondition" config="avvm.config.otherCondition" schema="avvm.otherConditionSchema"></textarea-view-control>
+                            <textarea-view-control text="avvm.activity.otherCondition" config="avvm.config.otherCondition" schema="avvm.otherConditionSchema"></textarea-view-control>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -147,9 +147,9 @@
                         <div id="activity-view-charges" ng-if="avvm.config.serviceChargeAmount && avvm.config.serviceChargeNote && avvm.config.groundRentAmount && avvm.config.groundRentNote">
                             <h3 class="page-header" translate="ACTIVITY.COMMON.CHARGES"></h3>
                             <price-view-control price="avvm.activity.serviceChargeAmount" config="avvm.config.serviceChargeAmount" schema="avvm.serviceChargeAmountSchema"></price-view-control>
-                            <textarea-view-control ng-model="avvm.activity.serviceChargeNote" config="avvm.config.serviceChargeNote" schema="avvm.serviceChargeNoteSchema"></textarea-view-control>
+                            <textarea-view-control text="avvm.activity.serviceChargeNote" config="avvm.config.serviceChargeNote" schema="avvm.serviceChargeNoteSchema"></textarea-view-control>
                             <price-view-control price="avvm.activity.groundRentAmount" config="avvm.config.groundRentAmount" schema="avvm.groundRentAmountSchema"></price-view-control>
-                            <textarea-view-control ng-model="avvm.activity.groundRentNote" config="avvm.config.groundRentNote" schema="avvm.groundRentNoteSchema"></textarea-view-control>
+                            <textarea-view-control text="avvm.activity.groundRentNote" config="avvm.config.groundRentNote" schema="avvm.groundRentNoteSchema"></textarea-view-control>
                 </div>
                     </div>
                 </div>

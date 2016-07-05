@@ -72,6 +72,9 @@
                     x => x.Property.Address,
                     x => x.ActivityType).SingleOrDefault();
 
+            activity.ActivityTypeId = message.ActivityTypeId;
+            activity.ActivityType = this.activityTypeRepository.GetById(message.ActivityTypeId);
+
             this.entityValidator.EntityExists(activity, message.Id);
 
             this.ValidateMessage(message, activity);
