@@ -5,7 +5,11 @@ module Antares.Activity {
         public merge(...configs: IActivityConfig[]) {
             var resultConfig: IActivityConfig = <IActivityConfig>({});
 
-            configs.forEach((config: IActivityConfig) =>{
+            configs.forEach((config: IActivityConfig) => {
+                if (!config) {
+                    return;
+                }
+
                 Object.keys(config)
                     .forEach((key: string) => {
                         if (resultConfig[key]) {
@@ -15,7 +19,7 @@ module Antares.Activity {
                         resultConfig[key] = config[key];
                     });
             });
-            
+
             return resultConfig;
         }
     }
