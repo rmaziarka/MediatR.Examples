@@ -1,0 +1,12 @@
+<div class="section-details" ng-if="vm.config" id="{{vm.schema.controlId}}-section">
+    <div class="section-row row">
+        <div class="col-xs-12">
+            <h5>{{vm.schema.translationKey | translate}}</h5>
+            <p ng-if="!vm.companyContact" class="help-block" id="no-contacts-help-block">{{vm.schema.emptyTranslationKey | translate}}</p>
+            <card-list-item id="{{vm.schema.controlId}}" ng-if="vm.companyContact">
+                <card show-context-menu="false" card-template-url="'app/attributes/companyContact/companyContactCard.html'" item="vm.companyContact">
+                </card>
+            </card-list-item>
+        </div>
+    </div>
+</div>
