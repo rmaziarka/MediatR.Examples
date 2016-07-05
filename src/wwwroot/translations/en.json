@@ -425,6 +425,7 @@
       "CONTRACT_APPROVED": "Contract approved",
       "MORTGAGE_DETAILS": "Mortgage details",
       "MORTGAGE_LOAN_TO_VALUE": "Mortgage loan to value",
+      "SOLICITOR": "Solicitor",
       "BROKER": "Broker",
       "LENDER": "Lender",
       "MORTGAGE_SURVEY_DATE": "Mortgage survey date",
@@ -433,7 +434,8 @@
       "ADDITIONAL_SURVEY_DATE": "Additional survey date",
       "OTHER_DETAILS": "Other details",
       "COMMENT": "Comment",
-      "DATE": "Date"
+      "DATE": "Date",
+      "NO_SOLICITOR": "Solicitor contact not specified"
     },
     "EDIT": {
       "EDIT_OFFER": "Edit offer",
