@@ -43,11 +43,14 @@ module Antares.Offer {
         additionalSurveyDateOpen: boolean = false;
         exchangeDateOpen: boolean = false;
         completionDateOpen: boolean = false;
-        
+
+        isCompanyContactAddPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         isBrokerEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         isLenderEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         isSurveyorEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         isAdditionalSurveyorEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isVendorSolicitorEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        isApplicantSolicitorEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
 
         contactToSelect: string = '';
 
@@ -56,8 +59,23 @@ module Antares.Offer {
         surveyorCompanyContact: CompanyContactConnection = null;
         additionalSurveyorCompanyContact: CompanyContactConnection = null;
 
+        vendorSolicitorCompanyContact: CompanyContactConnection = null;
+        applicantSolicitorCompanyContact: CompanyContactConnection = null;
+
         // controls
         controlSchemas: any = {
+            vendorSolicitor: <ICompanyContactEditControlSchema>{
+                formName: 'vendorSolicitorForm',
+                controlId: 'vendorSolicitor',
+                translationKey: 'OFFER.EDIT.SOLICITOR',
+                emptyTranslationKey: 'OFFER.EDIT.NO_SOLICITOR'
+            },
+            applicantSolicitor: <ICompanyContactEditControlSchema>{
+                formName: 'applicantSolicitorForm',
+                controlId: 'applicantSolicitor',
+                translationKey: 'OFFER.EDIT.SOLICITOR',
+                emptyTranslationKey: 'OFFER.EDIT.NO_SOLICITOR'
+            },
             broker: <ICompanyContactEditControlSchema>{
                 formName: 'brokerForm',
                 controlId: 'broker',
@@ -235,16 +253,24 @@ module Antares.Offer {
             if (this.offer.additionalSurveyor) {
                 this.additionalSurveyorCompanyContact = new CompanyContactConnection(this.offer.additionalSurveyor, this.offer.additionalSurveyorCompany);
             }
+
+            if (this.offer.activity && this.offer.activity.solicitor) {
+                this.vendorSolicitorCompanyContact = new CompanyContactConnection(this.offer.activity.solicitor, this.offer.activity.solicitorCompany);
+            }
+
+            if (this.offer.requirement && this.offer.requirement.solicitor) {
+                this.applicantSolicitorCompanyContact = new CompanyContactConnection(this.offer.requirement.solicitor, this.offer.requirement.solicitorCompany);
+            }
         }
 
-        isMortgageDetailsSectionVisible = () =>{
+        isMortgageDetailsSectionVisible = () => {
             return this.config.offer_Broker
                 || this.config.offer_Lender
                 || this.config.offer_MortgageSurveyDate
                 || this.config.offer_Surveyor;
         }
 
-        isProgressSummarySectionVisible = () =>{
+        isProgressSummarySectionVisible = () => {
             return this.config.offer_MortgageStatus
                 || this.config.offer_MortgageSurveyStatus
                 || this.config.offer_SearchStatus
@@ -252,7 +278,7 @@ module Antares.Offer {
                 || this.config.offer_ContractApproved;
         }
 
-        isAdditionalSurveySectionVisible = () =>{
+        isAdditionalSurveySectionVisible = () => {
             return this.config.offer_AdditionalSurveyor
                 || this.config.offer_AdditionalSurveyDate;
         }
@@ -261,11 +287,28 @@ module Antares.Offer {
             this.hideNewPanels();
         }
 
-        hideNewPanels = () => {
+        hideNewPanels = () =>{
+        }
+
+        isOtherDetailsSectionVisible = () => {
+            return this.config.offer_ProgressComment;
+        }
+
+        isProgressAndMortgageSectionVisible = () =>{
+            return this.isMortgageDetailsSectionVisible()
+                || this.isAdditionalSurveySectionVisible()
+                || this.isProgressSummarySectionVisible()
+                || this.isOtherDetailsSectionVisible();
+        }
+
+        companyContactPanelClosed = () => {
+            this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Closed;
             this.isBrokerEditPanelVisible = Enums.SidePanelState.Closed;
             this.isLenderEditPanelVisible = Enums.SidePanelState.Closed;
             this.isSurveyorEditPanelVisible = Enums.SidePanelState.Closed;
             this.isAdditionalSurveyorEditPanelVisible = Enums.SidePanelState.Closed;
+            this.isVendorSolicitorEditPanelVisible = Enums.SidePanelState.Closed;
+            this.isApplicantSolicitorEditPanelVisible = Enums.SidePanelState.Closed;
         }
 
         openCompanyContactEditPanel = (event: OpenCompanyContactEditPanelEvent) => {
@@ -283,6 +326,12 @@ module Antares.Offer {
                     break;
                 case CompanyContactType.AdditionalSurveyor:
                     this.isAdditionalSurveyorEditPanelVisible = Enums.SidePanelState.Opened;
+                    break;
+                case CompanyContactType.VendorSolicitor:
+                    this.isVendorSolicitorEditPanelVisible = Enums.SidePanelState.Opened;
+                    break;
+                case CompanyContactType.ApplicantSolicitor:
+                    this.isApplicantSolicitorEditPanelVisible = Enums.SidePanelState.Opened;
                     break;
             }
         }
@@ -376,63 +425,20 @@ module Antares.Offer {
             }
         }
 
-        restoreOfferProgressSummary = () => {
-            this.offer.mortgageStatusId = this.offerOriginal.mortgageStatusId;
-            this.offer.mortgageSurveyStatusId = this.offerOriginal.mortgageSurveyStatusId;
-            this.offer.additionalSurveyStatusId = this.offerOriginal.additionalSurveyStatusId;
-            this.offer.searchStatusId = this.offerOriginal.searchStatusId;
-            this.offer.enquiriesId = this.offerOriginal.enquiriesId;
-            this.offer.contractApproved = this.offerOriginal.contractApproved;
-
-            this.offer.mortgageLoanToValue = this.offerOriginal.mortgageLoanToValue;
-
-            this.offer.brokerId = this.offerOriginal.brokerId;
-            this.offer.brokerCompanyId = this.offerOriginal.brokerCompanyId;
-
-            this.offer.lenderId = this.offerOriginal.lenderId;
-            this.offer.lenderCompanyId = this.offerOriginal.lenderCompanyId;
-
-            this.offer.mortgageSurveyDate = this.offerOriginal.mortgageSurveyDate;
-
-            this.offer.surveyorId = this.offerOriginal.surveyorId;
-            this.offer.surveyorCompanyId = this.offerOriginal.surveyorCompanyId;
-
-            this.offer.additionalSurveyDate = this.offerOriginal.additionalSurveyDate;
-
-            this.offer.additionalSurveyorId = this.offerOriginal.additionalSurveyorId;
-            this.offer.additionalSurveyorCompanyId = this.offerOriginal.additionalSurveyorCompanyId;
-
-            this.offer.progressComment = this.offerOriginal.progressComment;
-        }
-
-        setCompanyContactData = () =>{
-            this.offer.brokerId = this.brokerCompanyContact && this.brokerCompanyContact.contact.id;
-            this.offer.brokerCompanyId = this.brokerCompanyContact && this.brokerCompanyContact.company.id; 
-
-            this.offer.lenderId = this.lenderCompanyContact && this.lenderCompanyContact.contact.id;
-            this.offer.lenderCompanyId = this.lenderCompanyContact && this.lenderCompanyContact.company.id; 
-
-            this.offer.surveyorId = this.surveyorCompanyContact && this.surveyorCompanyContact.contact.id;
-            this.offer.surveyorCompanyId = this.surveyorCompanyContact && this.surveyorCompanyContact.company.id; 
-
-            this.offer.additionalSurveyorId = this.additionalSurveyorCompanyContact && this.additionalSurveyorCompanyContact.contact.id;
-            this.offer.additionalSurveyorCompanyId = this.additionalSurveyorCompanyContact && this.additionalSurveyorCompanyContact.company.id; 
+        setCompanyContactData = (updateofferCommand: Business.UpdateOfferCommand) =>{
+            updateofferCommand.setBrokerCompanyContact(this.brokerCompanyContact);
+            updateofferCommand.setLenderCompanyContact(this.lenderCompanyContact);
+            updateofferCommand.setSurveyorCompanyContact(this.surveyorCompanyContact);
+            updateofferCommand.setAdditionalSurveyorCompanyContact(this.additionalSurveyorCompanyContact);
+            updateofferCommand.setVendorSolicitorCompanyContact(this.vendorSolicitorCompanyContact);
+            updateofferCommand.setApplicantSolicitorCompanyContact(this.applicantSolicitorCompanyContact);
         }
 
         save() {
-            if (this.offerAccepted() === false) {
-                this.restoreOfferProgressSummary();
-            }
+            var updateofferCommand = new Business.UpdateOfferCommand(this.offer);
+            this.setCompanyContactData(updateofferCommand);
 
-            this.setCompanyContactData();
-
-            this.offer.offerDate = Core.DateTimeUtils.createDateAsUtc(this.offer.offerDate);
-            this.offer.exchangeDate = Core.DateTimeUtils.createDateAsUtc(this.offer.exchangeDate);
-            this.offer.completionDate = Core.DateTimeUtils.createDateAsUtc(this.offer.completionDate);
-            this.offer.mortgageSurveyDate = Core.DateTimeUtils.createDateAsUtc(this.offer.mortgageSurveyDate);
-            this.offer.additionalSurveyDate = Core.DateTimeUtils.createDateAsUtc(this.offer.additionalSurveyDate);
-
-            this.offerService.updateOffer(this.offer)
+            this.offerService.updateOffer(updateofferCommand)
                 .then((offer: Dto.IOffer) => {
                     this.$state
                         .go('app.offer-view', offer)
@@ -461,7 +467,8 @@ module Antares.Offer {
             };
         }
 
-        offerStatusChanged = () => {
+        offerStatusChanged = (id: string) =>{
+            this.offer.statusId = id;
             this.reloadConfig();
         }
 

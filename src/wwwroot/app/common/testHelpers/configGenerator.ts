@@ -1,10 +1,6 @@
 /// <reference path="../../typings/_all.d.ts" />
 
 module Antares.TestHelpers {
-    import Dto = Common.Models.Dto;
-    import Business = Common.Models.Business;
-    import Enums = Common.Models.Enums;
-
     export class ConfigGenerator {
         public static generateOfferOfferDateConfig(): Attributes.IOfferOfferDateControlConfig{
             var config: Attributes.IOfferOfferDateControlConfig = {
@@ -82,6 +78,15 @@ module Antares.TestHelpers {
             var config: Attributes.IOfferSpecialConditionsControlConfig = {
                 active: true,
                 specialConditions: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferCommentConfig(): Attributes.IOfferProgressCommentControlConfig {
+            var config: Attributes.IOfferProgressCommentControlConfig = {
+                active: true,
+                progressComment: null
             }
 
             return config;
@@ -194,7 +199,8 @@ module Antares.TestHelpers {
                 offer_MortgageStatus: ConfigGenerator.generateOfferMortgageStatusConfig(),
                 offer_MortgageSurveyStatus: ConfigGenerator.generateOfferMortgageSurveyStatusConfig(),
                 offer_SearchStatus: ConfigGenerator.generateOfferSearchStatusConfig(),
-                offer_Surveyor: ConfigGenerator.generateOfferSurveyorConfig()
+                offer_Surveyor: ConfigGenerator.generateOfferSurveyorConfig(),
+                offer_Comment: ConfigGenerator.generateOfferCommentConfig()
             });
 
             return config;

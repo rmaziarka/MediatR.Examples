@@ -18,7 +18,9 @@ module Antares.TestHelpers {
                 property: PropertyGenerator.generateDto(),
                 propertyId: StringGenerator.generate(),
                 activityUsers: [ActivityUserGenerator.generateDto(Enums.NegotiatorTypeEnum.LeadNegotiator)],
-                activityDepartments: []
+                activityDepartments: [],
+                solicitor: <Dto.IContact>{},
+                solicitorCompany: <Dto.ICompany>{}
             }
 
             return angular.extend(activity, specificData || {});
