@@ -43,16 +43,50 @@ module Antares.Component {
                 emptyTranslationKey: 'OFFER.EDIT.NO_SURVEYOR'
             },
             mortgageLoanToValue: <Attributes.IPercentNumberControlSchema>{
-                formName: "mortgageLoanToValueControlForm",
                 controlId: "mortgage-loan-to-value",
                 translationKey: "OFFER.VIEW.MORTGAGE_LOAN_TO_VALUE",
                 fieldName: "mortgageLoanToValue"
             },
             contractApproved: <Attributes.IRadioButtonsViewControlSchema>{
-                formName: "offerContractApprovedControlForm",
                 fieldName: "offerContractApproved",
                 translationKey: "OFFER.VIEW.CONTRACT_APPROVED",
                 templateUrl: "app/attributes/radioButtons/templates/radioButtonsViewBoolean.html"
+            },
+            status: <Attributes.IEnumItemControlSchema>{
+                controlId: "offer-status",
+                translationKey: "OFFER.VIEW.STATUS",
+                enumTypeCode: Dto.EnumTypeCode.OfferStatus
+            },
+            price: <Attributes.IPriceControlSchema>{
+                controlId: "offer-price",
+                translationKey: "OFFER.VIEW.OFFER",
+                fieldName: "price"
+            },
+            pricePerWeek: <Attributes.IPriceControlSchema>{
+                controlId: "offer-price-per-week",
+                translationKey: "OFFER.VIEW.OFFER",
+                fieldName: "pricePerWeek",
+                suffix: "OFFER.EDIT.OFFER_PER_WEEK"
+            },
+            offerDate: <Attributes.IDateControlSchema>{
+                controlId: "offer-date",
+                translationKey: "OFFER.VIEW.OFFER_DATE",
+                fieldName: "offerDate"
+            },
+            exchangeDate: <Attributes.IDateControlSchema>{
+                controlId: "offer-exchange-date",
+                translationKey: "OFFER.VIEW.EXCHANGE_DATE",
+                fieldName: "exchangeDate"
+            },
+            completionDate: <Attributes.IDateControlSchema>{
+                controlId: "offer-completion-date",
+                translationKey: "OFFER.VIEW.COMPLETION_DATE",
+                fieldName: "completionDate"
+            },
+            specialConditions: <Attributes.ITextControlSchema>{
+                controlId: "offer-special-conditions",
+                translationKey: "OFFER.VIEW.SPECIAL_CONDITIONS",
+                fieldName: "specialConditions"
             }
         };
 
