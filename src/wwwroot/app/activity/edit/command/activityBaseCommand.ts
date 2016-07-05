@@ -21,8 +21,8 @@ module Antares.Activity.Commands {
         sellingReasonId: string = '';
         appraisalMeetingAttendeesList: Business.UpdateActivityAttendeeResource[];
         pitchingThreats: string = '';
-        appraisalMeetingStart: string = null;
-        appraisalMeetingEnd: string = null;
+        appraisalMeetingStart: Date = null;
+        appraisalMeetingEnd: Date = null;
         appraisalMeetingInvitationText: string = '';
         keyNumber: string = '';
         accessArrangements: string = '';
@@ -58,8 +58,8 @@ module Antares.Activity.Commands {
             this.contactIds = activity.contacts.map((c: Business.Contact) => c.id);
             this.appraisalMeetingAttendeesList = activity.appraisalMeetingAttendees.map((a: Dto.IActivityAttendee) => new Business.UpdateActivityAttendeeResource(a));
 
-            this.appraisalMeetingStart = activity.appraisalMeeting.appraisalMeetingStart ? moment(activity.appraisalMeeting.appraisalMeetingStart).toDate().toUTCString() : null;
-            this.appraisalMeetingEnd = activity.appraisalMeeting.appraisalMeetingEnd ? moment(activity.appraisalMeeting.appraisalMeetingEnd).toDate().toUTCString() : null;
+            this.appraisalMeetingStart = activity.appraisalMeeting.appraisalMeetingStart ? Core.DateTimeUtils.createDateAsUtc(activity.appraisalMeeting.appraisalMeetingStart) : null;
+            this.appraisalMeetingEnd = activity.appraisalMeeting.appraisalMeetingEnd ? Core.DateTimeUtils.createDateAsUtc(activity.appraisalMeeting.appraisalMeetingEnd) : null;
             this.appraisalMeetingInvitationText = activity.appraisalMeeting.appraisalMeetingInvitationText;
             this.keyNumber = activity.accessDetails.keyNumber;
             this.accessArrangements = activity.accessDetails.accessArrangements;
@@ -91,12 +91,13 @@ module Antares.Activity.Commands {
         leadNegotiator: ActivityUserCommandPart;
         secondaryNegotiators: ActivityUserCommandPart[];
         departments: IActivityDepartmentCommandPart[];
+        appraisalMeetingAttendeesList: Business.UpdateActivityAttendeeResource[];
         contactIds: string[];
         sourceId: string;
         sourceDescription: string;
         sellingReasonId: string;
-        appraisalMeetingStart: string;
-        appraisalMeetingEnd: string;
+        appraisalMeetingStart: Date;
+        appraisalMeetingEnd: Date;
         appraisalMeetingInvitationText: string;
         keyNumber: string;
         accessArrangements: string;

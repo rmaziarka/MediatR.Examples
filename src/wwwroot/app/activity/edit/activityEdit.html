@@ -7,21 +7,21 @@
                 <label translate="ACTIVITY.EDIT.ACTIVITY_TITLE"></label>
                 <div>{{ vm.activity.property.address.getAddressText() }}</div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3 col-lg-2">
                         <activity-type-edit-control property-type-id="vm.activity.property.propertyTypeId" ng-model="vm.activity.activityTypeId" config="vm.config.activityType"
                                                     on-activity-type-changed="vm.activityTypeChanged(activityTypeId)">
                         </activity-type-edit-control>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-3 col-lg-2">
                         <enum-item-edit-control ng-model="vm.activity.activityStatusId"
-                                                config="vm.config.activityStatus"
-                                                schema="vm.activityStatusSchema"
-                                                on-selected-item-changed="vm.activityStatusChanged(id)"></enum-item-edit-control>
+                            config="vm.config.activityStatus"
+                            schema="vm.activityStatusSchema"
+                            on-selected-item-changed="vm.activityStatusChanged(id)"></enum-item-edit-control>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6 col-lg-4">
             <section id="activity-edit-vendors">
                 <activity-vendors-edit-control contacts="vm.activity.contacts" config="vm.config.vendors"></activity-vendors-edit-control>
             </section>
@@ -33,6 +33,7 @@
                                                    activity-id="vm.activity.id"
                                                    config="vm.config.negotiators"
                                                    on-negotiator-added="vm.onNegotiatorAdded(user)"
+                                                   on-negotiator-removed="vm.onNegotiatorRemoved()"
                                                    lead-negotiator="vm.activity.leadNegotiator"
                                                    secondary-negotiators="vm.activity.secondaryNegotiator"></activity-negotiators-edit-control>
             </section>
@@ -43,7 +44,7 @@
                                                    department-is-related-with-negotiator="vm.departmentIsRelatedWithNegotiator(department)"></activity-departments-edit-control>
             </section>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6 col-lg-4">
             <fieldset id="activity-edit-prices">
                 <h3 class="page-header" translate="ACTIVITY.EDIT.PRICES.PRICES"></h3>
                 <price-edit-control config="vm.config.askingPrice" schema="vm.controlSchemas.askingPrice" ng-model='vm.activity.askingPrice'></price-edit-control>
@@ -63,7 +64,7 @@
             <section id="activity-additional-info">
                 <fieldset>
                     <h3 class="page-header" translate="ACTIVITY.EDIT.ADDITIONAL_INFORMATION.ADDITIONAL_INFORMATION"></h3>
-                    <h5 class="page-header" translate="ACTIVITY.EDIT.ADDITIONAL_INFORMATION.ACCESS_DETAILS"></h5>
+                    <h4 class="page-header" translate="ACTIVITY.EDIT.ADDITIONAL_INFORMATION.ACCESS_DETAILS"></h4>
                     <text-edit-control ng-model="vm.activity.accessDetails.keyNumber" config="vm.config.keyNumber" schema="vm.keyNumberSchema"></text-edit-control>
                     <textarea-edit-control ng-model="vm.activity.accessDetails.accessArrangements" config="vm.config.accessArrangements" schema="vm.accessArrangementsSchema"></textarea-edit-control>
                 </fieldset>
@@ -77,15 +78,18 @@
             </section>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-6 col-lg-4">
             <fieldset id="activity-edit-prices" ng-if="vm.config.kfValuationPrice && vm.config.vendorValuationPrice && vm.config.agreedInitialMarketingPrice">
                 <h3 class="page-header" translate="ACTIVITY.COMMON.VALUATION_INFORMATION"></h3>
                 <div class="row">
-                    <div class="col-xs-4"><price-edit-control config="vm.config.kfValuationPrice" schema="vm.kfValuationPriceSchema" ng-model='vm.activity.kfValuationPrice'></price-edit-control>
+                    <div class="col-xs-4">
+                        <price-edit-control config="vm.config.kfValuationPrice" schema="vm.kfValuationPriceSchema" ng-model='vm.activity.kfValuationPrice'></price-edit-control>
                     </div>
-                    <div class="col-xs-4"><price-edit-control config="vm.config.vendorValuationPrice" schema="vm.vendorValuationPriceSchema" ng-model='vm.activity.vendorValuationPrice'></price-edit-control>
+                    <div class="col-xs-4">
+                        <price-edit-control config="vm.config.vendorValuationPrice" schema="vm.vendorValuationPriceSchema" ng-model='vm.activity.vendorValuationPrice'></price-edit-control>
                     </div>
-                    <div class="col-xs-4"><price-edit-control config="vm.config.agreedInitialMarketingPrice" schema="vm.agreedInitialMarketingPriceSchema" ng-model='vm.activity.agreedInitialMarketingPrice'></price-edit-control>
+                    <div class="col-xs-4">
+                        <price-edit-control config="vm.config.agreedInitialMarketingPrice" schema="vm.agreedInitialMarketingPriceSchema" ng-model='vm.activity.agreedInitialMarketingPrice'></price-edit-control>
                     </div>
                 </div>
             </fieldset>
@@ -149,7 +153,7 @@
         <div class="col-md-12">
             <div class="form-group">
                 <div>
-                    <button id="activity-edit-cancel" type="button" class="btn btn-default" ng-click="vm.cancel()"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
+                    <button id="activity-edit-cancel" type="button" class="btn btn-default" ng-click="vm.cancel()" ng-if="vm.isEditMode()"><i class="fa fa-ban"></i> <span translate="COMMON.CANCEL"></span></button>
                     <button id="activity-edit-save" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <span translate="COMMON.SAVE"></span></button>
                 </div>
             </div>

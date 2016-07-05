@@ -1,8 +1,13 @@
-﻿<ng-form name="activityAttendeesForm" ng-if="vm.config">
-    <h5 class="page-header" translate="ACTIVITY.EDIT.APPRAISAL_MEETING.ATTENDEES"></h5>
+﻿<ng-form name="vm.activityAttendeesForm" ng-if="vm.config">
+    <h4 class="page-header" translate="ACTIVITY.EDIT.APPRAISAL_MEETING.ATTENDEES"></h4>
     <div class="form-group">
         <div class="checkbox" ng-repeat="person in vm.availableAttendees">
             <label><input type="checkbox" ng-model="person.isSelected" ng-disabled="!vm.config.appraisalMeetingAttendeesList.active" ng-change="vm.onAttendeeSelected(person)">{{person.getName()}}</label>
         </div>
+    </div>
+    <list-not-empty ng-model="vm.attendees" name="numberOfAttendees"></list-not-empty>
+    <div ng-class="{'has-error': (vm.activityAttendeesForm.$submitted || vm.activityAttendeesForm.numberOfAttendees.$dirty) && vm.activityAttendeesForm.numberOfAttendees.$invalid}"
+         ng-messages="vm.activityAttendeesForm.numberOfAttendees.$error" ng-show="vm.activityAttendeesForm.$submitted || vm.activityAttendeesForm.numberOfAttendees.$dirty">
+        <p name="listNotEmptyValidationError" ng-message="listNotEmpty" class="help-block with-errors" translate="FORM.LIST_OF_ATTENDEES_SHOULD_NOT_BE_EMPTY"></p>
     </div>
 </ng-form>

@@ -39,7 +39,7 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
 
             foreach (Contact contactToDelete in activity.Contacts.Where(x => message.ContactIds.Contains(x.Id) == false).ToList())
             {
-                activity.Contacts.Remove(contactToDelete);
+                this.contactRepository.Delete(contactToDelete);
             }
 
             foreach (Contact contactToAdd in messageContacts.Where(x => activity.Contacts.Select(c => c.Id).Contains(x.Id) == false))

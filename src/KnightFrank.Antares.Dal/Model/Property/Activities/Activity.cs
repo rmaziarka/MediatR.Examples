@@ -61,9 +61,9 @@
 
         public string AccessArrangements { get; set; }
 
-        public DateTimeOffset? AppraisalMeetingStart { get; set; }
+        public DateTime? AppraisalMeetingStart { get; set; }
 
-        public DateTimeOffset? AppraisalMeetingEnd { get; set; }
+        public DateTime? AppraisalMeetingEnd { get; set; }
 
         public string AppraisalMeetingInvitationText { get; set; }
 

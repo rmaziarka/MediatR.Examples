@@ -6,7 +6,7 @@
                 <div class="input-group">
                     <input ng-model="vm.ngModel"
                            id="{{vm.schema.controlId}}" ng-required="vm.config[vm.schema.fieldName].required" ng-disabled="!vm.config[vm.schema.fieldName].active"
-                           name="price" class="form-control" type="number" number-greater-than="0" />
+                           name="price" class="form-control" type="number" number-greater-than="0" number-precision="vm.precision || 0"/>
                     <div class="input-group-addon" translate="{{vm.schema.suffix || 'GBP'}}"></div>
                 </div>
                 <div ng-messages="vm[vm.schema.formName].price.$error" ng-show="vm[vm.schema.formName].$submitted || vm[vm.schema.formName].price.$dirty">

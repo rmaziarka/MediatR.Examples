@@ -5,7 +5,7 @@ module Antares.Attributes {
         templateUrl:'app/attributes/date/dateViewControl.html',
             controllerAs: 'vm',
             bindings: {
-                ngModel: '<',
+                date: '<',
                 config:'<',
                 schema: '<'
             }

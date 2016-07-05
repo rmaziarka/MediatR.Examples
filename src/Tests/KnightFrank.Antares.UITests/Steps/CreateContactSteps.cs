@@ -69,5 +69,12 @@
         {
             Assert.True(new CreateContactPage(this.driverContext).IsContactFormPresent());
         }
+
+        [Then(@"User is taken to the contact add page")]
+        public void UserIsTakenToTheContactAddPage()
+        {
+            Assert.True(new CreateContactPage(this.driverContext).CheckIfContactAddPage());
+        }
+
     }
 }

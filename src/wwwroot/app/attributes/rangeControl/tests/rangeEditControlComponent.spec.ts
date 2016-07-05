@@ -15,9 +15,10 @@ module Antares {
         {
             minControlId : "rent-min",
             maxControlId : "rent-max",
-            translationKey: "KEY",
-            formName: "formName"
-        };
+            translationKey : "KEY",
+            formName : "formName",
+            unit : null
+    };
 
         var pageObjectSelectors = {
             min : '#' + schemaMock.minControlId,

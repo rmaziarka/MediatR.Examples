@@ -7,7 +7,7 @@ module Antares.Property.View.Details {
 
     export class PropertyDetailsController {
         property: Business.Property;
-        userData: Dto.IUserData;
+        userData: Dto.ICurrentUser;
     }
 
     angular.module('app').controller('propertyDetailsController', PropertyDetailsController);

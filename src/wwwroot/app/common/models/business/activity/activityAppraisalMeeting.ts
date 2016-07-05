@@ -7,8 +7,8 @@ module Antares.Common.Models.Business {
         appraisalMeetingInvitationText: string;
 
         constructor(activityAppraisalMeetingStart?: Date | string, activityAppraisalMeetingEnd?: Date | string, invitationText?: string) {
-            this.appraisalMeetingStart = activityAppraisalMeetingStart ? moment(activityAppraisalMeetingStart).toDate() : '';
-            this.appraisalMeetingEnd = activityAppraisalMeetingEnd ? moment(activityAppraisalMeetingEnd).toDate() : '';
+            this.appraisalMeetingStart = activityAppraisalMeetingStart ? Antares.Core.DateTimeUtils.convertDateToUtc(activityAppraisalMeetingStart) : '';
+            this.appraisalMeetingEnd = activityAppraisalMeetingEnd ? Antares.Core.DateTimeUtils.convertDateToUtc(activityAppraisalMeetingEnd) : '';
             this.appraisalMeetingInvitationText = invitationText;
         }
     }

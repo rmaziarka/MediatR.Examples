@@ -11,9 +11,9 @@ module Antares.Activity {
     }
 
     export class ActivityEditController {
-        public config: IActivityEditConfig;
+        public config: IActivityConfig;
         public activity: ActivityEditModel;
-        public userData: Dto.IUserData;
+        public userData: Dto.ICurrentUser;
 
         public enumTypeActivityStatus: Dto.EnumTypeCode = Dto.EnumTypeCode.ActivityStatus;
         private departmentsController: Antares.Attributes.ActivityDepartmentsEditControlController;
@@ -87,7 +87,8 @@ module Antares.Activity {
             controlId: 'keyNumberId',
             translationKey: 'ACTIVITY.EDIT.KEY_NUMBER',
             fieldName: 'keyNumber',
-            formName: 'keyNumberForm'
+            formName: 'keyNumberForm',
+            maxLength: 128
         }
 
         pitchingThreatsSchema: Antares.Attributes.ITextEditControlSchema = {
@@ -239,7 +240,9 @@ module Antares.Activity {
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService,
+            private $q: ng.IQService,
             public kfMessageService: Services.KfMessageService,
+            private activityConfigUtils: ActivityConfigUtils,
             private configService: Services.ConfigService,
             private activityService: Activity.ActivityService,
             private latestViewsProvider: Providers.LatestViewsProvider,
@@ -262,8 +265,8 @@ module Antares.Activity {
             this.setLeadNegotiator();
             this.setDefaultDepartment();
 
-            this.availableAttendeeUsers = this.getAvailableAttendeeUsers();
-            this.availableAttendeeContacts = this.getAvailableAttendeeContacts();
+            this.refreshAvailableAttendeeUsers();
+            this.refreshAvailableAttendeeContacts();
         }
 
         public activityTypeChanged = (activityTypeId: string) => {
@@ -289,10 +292,17 @@ module Antares.Activity {
                 entity = new Commands.ActivityEditCommand(this.activity);
                 pageTypeEnum = Enums.PageTypeEnum.Update;
             }
-            
-            this.configService
-                .getActivity(pageTypeEnum, this.activity.property.propertyTypeId, activity.activityTypeId, entity)
-                .then((newConfig: IActivityEditConfig) => this.config = newConfig);
+
+            var addEditConfig = this.configService
+                .getActivity(pageTypeEnum, this.activity.property.propertyTypeId, activity.activityTypeId, entity);
+
+            var detailsConfig = this.configService
+                .getActivity(Enums.PageTypeEnum.Details, this.activity.property.propertyTypeId, activity.activityTypeId, entity);
+
+            this.$q.all([addEditConfig, detailsConfig])
+                .then((configs: IActivityConfig[]) => {
+                    this.config = this.activityConfigUtils.merge(configs[0], configs[1]);
+                });
         }
 
         public save = () => {
@@ -332,8 +342,12 @@ module Antares.Activity {
         }
 
         public onNegotiatorAdded = (user: Dto.IUser) => {
-            this.availableAttendeeUsers = this.getAvailableAttendeeUsers();
+            this.refreshAvailableAttendeeUsers();
             this.addDepartment(user.department);
+        }
+
+        public onNegotiatorRemoved = () => {
+            this.refreshAvailableAttendeeUsers();
         }
 
         public departmentIsRelatedWithNegotiator = (department: Business.Department) => {
@@ -349,11 +363,19 @@ module Antares.Activity {
             return this.pageMode === PageMode.Edit;
         }
 
-        public getAvailableAttendeeUsers = (): Business.User[] => {
+        private refreshAvailableAttendeeUsers = () => {
+            this.availableAttendeeUsers = this.getAvailableAttendeeUsers();
+        }
+
+        private refreshAvailableAttendeeContacts = () => {
+            this.availableAttendeeContacts = this.activity.contacts;
+        }
+
+        private getAvailableAttendeeUsers = (): Business.User[] => {
 
             var users: Business.User[] = [];
 
-            this.activity.secondaryNegotiator.map((n: Business.ActivityUser) => {
+            users = this.activity.secondaryNegotiator.map((n: Business.ActivityUser) => {
                 return n.user;
             }) || [];
 
@@ -362,10 +384,6 @@ module Antares.Activity {
             }
 
             return users;
-        }
-
-        public getAvailableAttendeeContacts = (): Business.Contact[] => {
-            return this.activity.contacts;
         }
 
         private get pageMode(): PageMode {
@@ -418,6 +436,8 @@ module Antares.Activity {
             this.activity.leadNegotiator.user.firstName = this.userData.firstName;
             this.activity.leadNegotiator.user.lastName = this.userData.lastName;
             this.activity.leadNegotiator.user.departmentId = this.userData.department.id;
+
+            this.activity.leadNegotiator.callDate = moment().add(2, 'week').toDate();
         }
 
         private setDefaultDepartment = () => {
@@ -432,6 +452,8 @@ module Antares.Activity {
 
             var managingTypeEnumItems: Dto.IEnumItem[] = this.enumProvider.enums.activityDepartmentType.filter((enumItem: Dto.IEnumItem) => { return enumItem.code === Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Managing]; });
             defaultDepartment.departmentTypeId = managingTypeEnumItems[0].id;
+            defaultDepartment.departmentType.id = managingTypeEnumItems[0].id;
+            defaultDepartment.departmentType.code = Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Managing];
 
             this.activity.activityDepartments.push(defaultDepartment);
         }

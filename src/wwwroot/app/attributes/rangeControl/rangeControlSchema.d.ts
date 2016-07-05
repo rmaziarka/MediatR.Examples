@@ -5,6 +5,7 @@ declare module Antares.Attributes {
         minControlId: string,
         maxControlId: string,
         formName: string,
+        unit: string,
         translationKey: string;
     }
 }

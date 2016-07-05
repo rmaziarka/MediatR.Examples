@@ -16,12 +16,19 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
     {
         private readonly IGenericRepository<User> userRepository;
         private readonly IGenericRepository<EnumTypeItem> enumTypeItemRepository;
+        private readonly IGenericRepository<ActivityUser> activityUserRepository;
+
         private readonly ICollectionValidator collectionValidator;
 
-        public ActivityUsersMapper(IGenericRepository<User> userRepository, IGenericRepository<EnumTypeItem> enumTypeItemRepository, ICollectionValidator collectionValidator)
+        public ActivityUsersMapper(
+            IGenericRepository<User> userRepository, 
+            IGenericRepository<EnumTypeItem> enumTypeItemRepository, 
+            IGenericRepository<ActivityUser> activityUserRepository,
+            ICollectionValidator collectionValidator)
         {
             this.userRepository = userRepository;
             this.enumTypeItemRepository = enumTypeItemRepository;
+            this.activityUserRepository = activityUserRepository;
             this.collectionValidator = collectionValidator;
         }
 
@@ -47,7 +54,7 @@ namespace KnightFrank.Antares.Domain.Activity.CommandHandlers.Relations
             activity.ActivityUsers
                 .Where(x => IsRemovedFromExistingList(x, negotiatorsIds))
                 .ToList()
-                .ForEach(x => activity.ActivityUsers.Remove(x));
+                .ForEach(x => this.activityUserRepository.Delete(x));
 
             foreach (var negotiator in negotiators)
             {

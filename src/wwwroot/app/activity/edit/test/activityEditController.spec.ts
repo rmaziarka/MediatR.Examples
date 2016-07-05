@@ -18,6 +18,7 @@ module Antares {
             $q: ng.IQService,
             $scope: ng.IScope,
             activityService: Activity.ActivityService,
+            enumProvider: Providers.EnumProvider,
             latestViewsProvider: Providers.LatestViewsProvider;
 
         var leadNegotiatorMock = TestHelpers.ActivityUserGenerator.generate(Enums.NegotiatorTypeEnum.LeadNegotiator);
@@ -29,6 +30,7 @@ module Antares {
             $controller: ng.IControllerService,
             _$state_: ng.ui.IStateService,
             $httpBackend: ng.IHttpBackendService,
+            _enumProvider_: Providers.EnumProvider,
             _$q_: ng.IQService,
             _activityService_: Activity.ActivityService,
             _latestViewsProvider_: Providers.LatestViewsProvider) => {
@@ -41,6 +43,7 @@ module Antares {
             activityService = _activityService_;
             $q = _$q_;
             latestViewsProvider = _latestViewsProvider_;
+            enumProvider = _enumProvider_;
 
             $scope = $rootScope.$new();
             controller = <ActivityEditController>$controller('ActivityEditController', { $scope: $scope });
@@ -236,10 +239,12 @@ module Antares {
                     expect(requestData.pitchingThreats).toEqual(activity.pitchingThreats);
                     expect(requestData.keyNumber).toEqual(activity.accessDetails.keyNumber);
                     expect(requestData.accessArrangements).toEqual(activity.accessDetails.accessArrangements);
-                    expect(moment(requestData.appraisalMeetingStart).toDate()).toEqual(activity.appraisalMeeting.appraisalMeetingStart);
-                    expect(moment(requestData.appraisalMeetingEnd).toDate()).toEqual(activity.appraisalMeeting.appraisalMeetingEnd);
+                    expect(requestData.appraisalMeetingStart).toEqual(Core.DateTimeUtils.createDateAsUtc(activity.appraisalMeeting.appraisalMeetingStart));
+                    expect(requestData.appraisalMeetingEnd).toEqual(Core.DateTimeUtils.createDateAsUtc(activity.appraisalMeeting.appraisalMeetingEnd));
                     expect(requestData.appraisalMeetingInvitationText).toEqual(activity.appraisalMeeting.appraisalMeetingInvitationText);
 
+                    expect(requestData.appraisalMeetingAttendeesList.map((attendee: Business.UpdateActivityAttendeeResource) => attendee.userId)).toEqual(activity.appraisalMeetingAttendees.map((attendee: Dto.IActivityAttendee) => attendee.userId));
+                    expect(requestData.appraisalMeetingAttendeesList.map((attendee: Business.UpdateActivityAttendeeResource) => attendee.contactId)).toEqual(activity.appraisalMeetingAttendees.map((attendee: Dto.IActivityAttendee) => attendee.contactId));
                     expect(requestData.secondaryNegotiators.map((negotiator) => negotiator.userId)).toEqual(activity.secondaryNegotiator.map((negotiator) => negotiator.userId));
                 }
             });
@@ -304,6 +309,57 @@ module Antares {
                 // assert
                 expect(controller.isPropertyPreviewPanelVisible).toBe(Enums.SidePanelState.Opened);
             });
+        });
+
+        describe('when in add mode', () => {
+            var deferred: ng.IDeferred<any>;
+            var activityFromService: Dto.IActivity;
+            var activity: Activity.ActivityEditModel;
+            var userData: Dto.ICurrentUser;
+
+            beforeEach(() => {
+                // arrange
+                userData = TestHelpers.UserGenerator.generateUserDataDto();
+                activity = TestHelpers.ActivityGenerator.generateActivityEdit();
+
+                activity.id = null;
+                controller.activity = activity;
+                controller.userData = userData;
+
+                enumProvider.enums = <Dto.IEnumDictionary>{
+                    activityDepartmentType: [
+                        { id: TestHelpers.StringGenerator.generate(), code: Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Standard] },
+                        { id: TestHelpers.StringGenerator.generate(), code: Enums.DepartmentTypeEnum[Enums.DepartmentTypeEnum.Managing] }
+                    ]
+                };
+            });
+
+            describe('when initializing', () => {
+                it('then current user should be set as lead negotiator', () => {
+                    // act
+                    controller.$onInit();
+
+                    expect(controller.activity.leadNegotiator).not.toBeNull();
+                    expect(controller.activity.leadNegotiator.user.firstName).toBe(userData.firstName);
+                    expect(controller.activity.leadNegotiator.user.lastName).toBe(userData.lastName);
+                    expect(controller.activity.leadNegotiator.user.lastName).toBe(userData.lastName);
+                    expect(controller.activity.leadNegotiator.user.id).toBe(userData.id);
+                    expect(controller.activity.leadNegotiator.user.departmentId).toBe(userData.department.id);
+                });
+
+                it('then call date for lead negotiator should be set 2 weeks from today', () => {
+                    // act
+                    controller.$onInit();
+
+                    var twoWeeksFromToday = moment().add(2, 'week');
+                    var callDate = moment(controller.activity.leadNegotiator.callDate);
+
+                    expect(callDate.day).toBe(twoWeeksFromToday.day);
+                    expect(callDate.month).toBe(twoWeeksFromToday.month);
+                    expect(callDate.year).toBe(twoWeeksFromToday.year);
+                });
+            });
+
         });
     });
 }

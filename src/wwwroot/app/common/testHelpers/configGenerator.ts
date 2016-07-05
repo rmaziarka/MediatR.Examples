@@ -96,7 +96,7 @@ module Antares.TestHelpers {
             return config;
         }
 
-		public static generateActivityAskingPriceConfig(): Attributes.IActivityAskingPriceControlConfig {
+        public static generateActivityAskingPriceConfig(): Attributes.IActivityAskingPriceControlConfig {
             var config: Attributes.IActivityAskingPriceControlConfig = {
                 askingPrice: Antares.TestHelpers.ConfigGenerator.generateFieldConfig()
             };
