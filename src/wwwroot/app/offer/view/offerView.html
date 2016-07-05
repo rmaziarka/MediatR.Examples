@@ -82,26 +82,11 @@
         <section>
             <h3 class="page-header" translate="OFFER.VIEW.PROGRESS_SUMMARY"></h3>
             <div class="section-details">
-                <div class="section-row row">
-                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.MORTGAGE_STATUS"></div>
-                    <div class="col-xs-8"><span id="offer-mortgage-status" class="status status-{{::vm.offer.mortgageStatusId | enumClass}}">{{::vm.offer.mortgageStatusId | dynamicTranslate}}</span></div>
-                </div>
-                <div class="section-row row">
-                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.MORTGAGE_SURVEY_STATUS"></div>
-                    <div class="col-xs-8"><span id="mortgage-survey-status" class="status status-{{::vm.offer.mortgageSurveyStatusId | enumClass}}">{{::vm.offer.mortgageSurveyStatusId | dynamicTranslate}}</span></div>
-                </div>
-                <div class="section-row row">
-                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.ADDITIONAL_SURVEY_STATUS"></div>
-                    <div class="col-xs-8"><span id="additional-survey-status" class="status status-{{::vm.offer.additionalSurveyStatusId | enumClass}}">{{::vm.offer.additionalSurveyStatusId | dynamicTranslate}}</span></div>
-                </div>
-                <div class="section-row row">
-                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.SEARCH_STATUS"></div>
-                    <div class="col-xs-8"><span id="search-status" class="status status-{{::vm.offer.searchStatusId | enumClass}}">{{::vm.offer.searchStatusId | dynamicTranslate}}</span></div>
-                </div>
-                <div class="section-row row">
-                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.ENQUIRIES"></div>
-                    <div class="col-xs-8"><span id="enquiries" class="status status-{{::vm.offer.enquiriesId | enumClass}}">{{::vm.offer.enquiriesId | dynamicTranslate}}</span></div>
-                </div>
+                <enum-item-view-control ng-model="vm.offer.mortgageStatusId" show-status-icon="true" config="vm.config.offer_MortgageStatus" schema="vm.controlSchemas.mortgageStatus"></enum-item-view-control>
+                <enum-item-view-control ng-model="vm.offer.mortgageSurveyStatusId" show-status-icon="true" config="vm.config.offer_MortgageSurveyStatus" schema="vm.controlSchemas.mortgageSurveyStatus"></enum-item-view-control>
+                <enum-item-view-control ng-model="vm.offer.additionalSurveyStatusId" show-status-icon="true" config="vm.config.offer_AdditionalSurveyStatus" schema="vm.controlSchemas.additionalSurveyStatus"></enum-item-view-control>
+                <enum-item-view-control ng-model="vm.offer.searchStatusId" show-status-icon="true" config="vm.config.offer_SearchStatus" schema="vm.controlSchemas.searchStatus"></enum-item-view-control>
+                <enum-item-view-control ng-model="vm.offer.enquiriesId" show-status-icon="true" config="vm.config.offer_Enquiries" schema="vm.controlSchemas.enquiries"></enum-item-view-control>
                 <radio-buttons-view-control id="contact-approved" config="vm.config.offer_ContractApproved" ng-model="vm.offer.contractApproved"
                                             schema="vm.controlSchemas.contractApproved">
                 </radio-buttons-view-control>
@@ -111,9 +96,7 @@
         <section>
             <h3 class="page-header" translate="OFFER.VIEW.MORTGAGE_DETAILS"></h3>
             <div class="section-details">
-                <div class="section-row row">
-                    <percent-number-view-control value="vm.offer.mortgageLoanToValue" config="vm.config.offer_MortgageLoanToValue" schema="vm.controlSchemas.mortgageLoanToValue"></percent-number-view-control>
-                </div>
+                <percent-number-view-control value="vm.offer.mortgageLoanToValue" config="vm.config.offer_MortgageLoanToValue" schema="vm.controlSchemas.mortgageLoanToValue"></percent-number-view-control>
             </div>
             <div class="section-details">
                 <company-contact-view-control schema="vm.controlSchemas.broker"
@@ -128,16 +111,9 @@
                 </company-contact-view-control>
             </div>
 
+
             <div class="section-details">
-                <div class="section-row row">
-                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.MORTGAGE_SURVEY_DATE"></div>
-                    <div ng-if="vm.offer.mortgageSurveyDate">
-                        <div class="col-xs-8 mortgage-survey-date"><time>{{::vm.offer.mortgageSurveyDate | date : 'dd-MM-yyyy'}}</time></div>
-                    </div>
-                    <div ng-if="!vm.offer.mortgageSurveyDate">
-                        <div class="col-xs-8 mortgage-survey-date">-</div>
-                    </div>
-                </div>
+                <date-view-control date="vm.offer.mortgageSurveyDate" config="vm.config.offer_MortgageSurveyDate" schema="vm.controlSchemas.mortgageSurveyDate"></date-view-control> 
             </div>
 
             <div class="section-details">
@@ -150,20 +126,7 @@
 
         <section>
             <h3 class="page-header" translate="OFFER.VIEW.ADDITIONAL_SURVEY"></h3>
-            <div class="section-details">
-                <div class="section-row row">
-                    <div class="col-xs-4 section-title" translate="OFFER.VIEW.DATE"></div>
-                    <div ng-if="vm.offer.additionalSurveyDate">
-                        <div class="col-xs-8 additional-survey-date">
-                            <time>{{::vm.offer.additionalSurveyDate | date : 'dd-MM-yyyy'}}</time>
-                        </div>
-                    </div>
-                    <div ng-if="!vm.offer.additionalSurveyDate">
-                        <div class="col-xs-8 additional-survey-date">-</div>
-                    </div>
-                </div>
-            </div>
-
+            <date-view-control date="vm.offer.additionalSurveyDate" config="vm.config.offer_AdditionalSurveyDate" schema="vm.controlSchemas.additionalSurveyDate"></date-view-control> 
             <div class="section-details">
                 <company-contact-view-control schema="vm.controlSchemas.additionalSurveyor"
                                               config="vm.config.offer_AdditionalSurveyor"

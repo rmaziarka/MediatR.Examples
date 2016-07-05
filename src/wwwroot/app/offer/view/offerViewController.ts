@@ -92,6 +92,41 @@ module Antares.Component {
                 controlId: "offer-special-conditions",
                 translationKey: "OFFER.VIEW.SPECIAL_CONDITIONS",
                 fieldName: "specialConditions"
+            },
+            mortgageStatus: <Attributes.IEnumItemControlSchema>{
+                controlId: "offer-mortgage-status",
+                translationKey: "OFFER.VIEW.MORTGAGE_STATUS",
+                enumTypeCode: Dto.EnumTypeCode.MortgageStatus
+            },
+            mortgageSurveyStatus: <Attributes.IEnumItemControlSchema>{
+                controlId: "offer-mortgage-survey-status",
+                translationKey: "OFFER.VIEW.MORTGAGE_SURVEY_STATUS",
+                enumTypeCode: Dto.EnumTypeCode.MortgageSurveyStatus
+            },
+            additionalSurveyStatus: <Attributes.IEnumItemControlSchema>{
+                controlId: "offer-additional-survey-status",
+                translationKey: "OFFER.VIEW.ADDITIONAL_SURVEY_STATUS",
+                enumTypeCode: Dto.EnumTypeCode.AdditionalSurveyStatus
+            },
+            searchStatus: <Attributes.IEnumItemControlSchema>{
+                controlId: "offer-search-status",
+                translationKey: "OFFER.VIEW.SEARCH_STATUS",
+                enumTypeCode: Dto.EnumTypeCode.SearchStatus
+            },
+            enquiries: <Attributes.IEnumItemControlSchema>{
+                controlId: "offer-enquiries",
+                translationKey: "OFFER.VIEW.ENQUIRIES",
+                enumTypeCode: Dto.EnumTypeCode.Enquiries
+            },
+            mortgageSurveyDate: <Attributes.IDateControlSchema>{
+                controlId: "mortgage-survey-date",
+                translationKey: "OFFER.VIEW.MORTGAGE_SURVEY_DATE",
+                fieldName: "mortgageSurveyDate"
+            },
+            additionalSurveyDate: <Attributes.IDateControlSchema>{
+                controlId : "additional-survey-date",
+                translationKey : "OFFER.VIEW.ADDITIONAL_SURVEY_DATE",
+                fieldName : "additionalSurveyDate"
             }
         };
 
