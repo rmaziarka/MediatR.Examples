@@ -17,6 +17,20 @@ Scenario: Create contact
 		And Mailings salutations details on view contact page are same as the following
 			| DefaultMailingSalutation | MailingFormalSalutation | MailingSemiformalSalutation | MailingInformalSalutation | MailingPersonalSalutation | MailingEnvelopeSalutation |
 			| Semiformal               | Sir                     | Mr Macarthur                | Alan                      |                           | Mr Alan Macarthur         |
+	When User navigates to Edit Contact page
+	Then Edit contact page should be displayed
+	    And User edits contact's details on edit contact page
+			| FirstName | LastName  | Title |
+			| Joseph    | MaGregor  | Sir   |
+		And User clicks save button on edit contact page
+	Then View contact page should be displayed
+		And Contact details on view contact page are same as the following
+			| FirstName | LastName  | Title |
+			| Joseph    | MaGregor  | Sir   |
+		And Mailings salutations details on view contact page are same as the following
+			| DefaultMailingSalutation | MailingFormalSalutation | MailingSemiformalSalutation | MailingInformalSalutation | MailingPersonalSalutation | MailingEnvelopeSalutation |
+			| Semiformal               | Sir MaGregor            | Sir MaGregor                | Joseph                    |                           | Sir Joseph MaGregor       |
+
 
 @Contact
 Scenario Outline: Contact Salutations 

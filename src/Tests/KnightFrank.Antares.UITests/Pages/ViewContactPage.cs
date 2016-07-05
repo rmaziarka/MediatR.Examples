@@ -1,5 +1,7 @@
 ﻿namespace KnightFrank.Antares.UITests.Pages
 {
+    using KnightFrank.Antares.UITests.Extensions;
+
     using Objectivity.Test.Automation.Common;
     using Objectivity.Test.Automation.Common.Extensions;
     using Objectivity.Test.Automation.Common.Types;
@@ -8,6 +10,7 @@
     {
         private readonly ElementLocator name = new ElementLocator(Locator.Id, "name");
         private readonly ElementLocator viewContactForm = new ElementLocator(Locator.CssSelector, "contact-view > div");
+        private readonly ElementLocator editButton = new ElementLocator(Locator.Id, "contact-edit-btn");
         // Salutations
         private readonly ElementLocator defaultSalutation = new ElementLocator(Locator.Id, "defaultMailingSalutation");
         private readonly ElementLocator formal = new ElementLocator(Locator.Id, "mailingFormalSalutation");
@@ -37,6 +40,11 @@
         public bool IsViewContactFormPresent()
         {
             return this.Driver.IsElementPresent(this.viewContactForm, BaseConfiguration.MediumTimeout);
+        }
+
+        public void OpenEditContactPage()
+        {
+            this.Driver.Click(this.editButton);
         }
     }
 }
