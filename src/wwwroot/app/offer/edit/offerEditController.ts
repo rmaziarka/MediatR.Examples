@@ -43,7 +43,8 @@ module Antares.Offer {
         additionalSurveyDateOpen: boolean = false;
         exchangeDateOpen: boolean = false;
         completionDateOpen: boolean = false;
-        
+
+        isCompanyContactAddPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         isBrokerEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         isLenderEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         isSurveyorEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
@@ -261,7 +262,8 @@ module Antares.Offer {
             this.hideNewPanels();
         }
 
-        hideNewPanels = () => {
+        hideNewPanels = () =>{
+        }
 
         isOtherDetailsSectionVisible = () => {
             return this.config.offer_ProgressComment;
