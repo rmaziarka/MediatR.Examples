@@ -8,9 +8,9 @@ module Antares.Services {
         constructor(private $http: ng.IHttpService, private appConfig: Common.Models.IAppConfig) {
         }
 
-        getUserData(): ng.IPromise<Dto.IUserData> {
-            return this.$http.get<Dto.IUserData>(this.appConfig.rootUrl + "/api/users/data")
-                .then<Dto.IUserData>((result: ng.IHttpPromiseCallbackArg<Dto.IUserData>) => result.data);
+        getCurrentUser(): ng.IPromise<Dto.ICurrentUser> {
+            return this.$http.get<Dto.ICurrentUser>(this.appConfig.rootUrl + "/api/users/current")
+                .then<Dto.ICurrentUser>((result: ng.IHttpPromiseCallbackArg<Dto.ICurrentUser>) => result.data);
         }
     }
 

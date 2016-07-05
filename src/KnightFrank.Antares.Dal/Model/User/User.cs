@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
 
+    using KnightFrank.Antares.Dal.Model.Enum;
     using KnightFrank.Antares.Dal.Model.Resource;
 
     public class User : BaseEntity
@@ -32,5 +33,14 @@
         public virtual Locale Locale { get; set; }
 
         public virtual ICollection<Role> Roles { get; set; }
+
+        public Guid? SalutationFormatId { get; set; }
+
+        public EnumTypeItem SalutationFormat { get; set; }
+
+        public Guid DivisionId { get; set; }
+
+        public virtual EnumTypeItem Division { get; set; }
+
     }
 }

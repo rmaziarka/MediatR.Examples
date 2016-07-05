@@ -28,7 +28,7 @@ module Antares {
             }
         };
 
-        describe('and attachments are loaded', () =>{
+        describe('and attachments are loaded', () => {
             var entityId = 'testEntityId',
                 entityType = Enums.EntityTypeEnum.Property,
                 entityDocumentType = Dto.EnumTypeCode.PropertyDocumentType;
@@ -165,7 +165,35 @@ module Antares {
                 });
             });
 
-            var recreateManagerData = () =>{
+            describe('and limited to 1',
+                () => {
+                    beforeEach(() => {
+                        element =
+                            compile('<attachments-manager data="data" files-number-limit="1"></attachments-manager>')(scope);
+
+                        controller = element.controller('attachmentsManager');
+                    });
+
+                    it('when existing 2 attachments then card component must show 1 item', () => {
+                        // arrange / act
+                        attachments = TestHelpers.AttachmentGenerator.generateMany(2);
+                        recreateManagerData();
+                        scope.$apply();
+
+                        // assert
+                        var cardListElement = element.find(pageObjectSelectors.attachments.list),
+                            cardListNoItemsElement = cardListElement.find('card-list-no-items'),
+                            cardListItemElement = cardListElement.find('card-list-item'),
+                            cardListItemCardElement = cardListItemElement.find('card');
+
+                        expect(cardListNoItemsElement.hasClass('ng-hide')).toBeTruthy();
+                        expect(cardListItemElement.length).toBe(1);
+                        expect(cardListItemCardElement.length).toBe(1);
+
+                    });
+                });
+
+            var recreateManagerData = () => {
                 scope.data = {
                     entityId: entityId,
                     entityType: entityType,

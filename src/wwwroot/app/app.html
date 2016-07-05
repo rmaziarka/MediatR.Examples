@@ -6,6 +6,15 @@
             </span>
         </button>
         <img class="logo" src="images/kf_logo_white.svg" width="103" height="38" alt="Logo Knight Frank">
+
+        <div class="topbar-menu btn-group pull-right" uib-dropdown>
+            <button id="topbar-menu-button" type="button" class="topbar-menu-button btn" uib-dropdown-toggle ng-disabled="disabled">
+                <i class="user-icon fa fa-user" aria-hidden="true"></i> <span class="username">{{appVm.userData.firstName}} {{appVm.userData.lastName}}</span> <i class="arrow-icon fa fa-chevron-down"></i>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="topbar-menu-button">
+                <li role="menuitem"><a ui-sref="app.preferences"><i class="dropdown-menu-icon fa fa-cog" aria-hidden="true"></i> <span translate="COMMON.PREFERENCES"></span></a></li>
+            </ul>
+        </div>
     </header>
 
     <nav class="drawer">

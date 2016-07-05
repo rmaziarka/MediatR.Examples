@@ -23,7 +23,7 @@ module Antares.Attributes {
             this.publishOpenEvent();
         };
 
-        publishOpenEvent = () =>{
+        private publishOpenEvent = () =>{
             this.eventAggregator.publish(new OpenViewingPreviewPanelEvent());
         }
     }

@@ -2,6 +2,7 @@
 
 .topbar {
   background-color: $color-mine-shaft;
+  font-family: $font-lato;
   height: $header-height;
   left: 0;
   position: fixed;
@@ -20,5 +21,93 @@
     left: 18px;
     position: relative;
     top: -3px;
+  }
+}
+
+.topbar-menu {
+  position: relative;
+  right: 20px;
+  top: 10px;
+
+  .topbar-menu-button {
+    background-color: $color-mine-shaft;
+    border: 1px solid $color-dove-gray;
+    color: $color-white;
+    padding: 8px 20px;
+
+    &:hover,
+    &:focus {
+      box-shadow: none;
+      color: $color-white;
+    }
+
+    .user-icon {
+      color: $color-dove-gray;
+      font-size: 18px;
+    }
+
+    .arrow-icon {
+      font-size: 12px;
+      transition: all 0.1s ease;
+      vertical-align: 2px;
+    }
+  }
+
+  .username {
+    font: {
+      size: 15px;
+      weight: 700;
+    }
+    line-height: 1;
+    margin: 0 17px 0 21px;
+    white-space: nowrap;
+  }
+
+  .dropdown-menu {
+    background-color: $color-mine-shaft;
+    border: 1px solid $color-dove-gray;
+    box-shadow: none;
+    margin: 0;
+    min-width: 235px;
+    padding: 0;
+    top: 47px;
+
+    a {
+      color: $color-white;
+      font: {
+        size: 14px;
+        weight: 700;
+      }
+      letter-spacing: 4px;
+      line-height: 1;
+      padding: 20px;
+      text-transform: uppercase;
+
+      &:hover,
+      &:focus,
+      &:active {
+        background-color: inherit;
+        color: $color-white;
+      }
+    }
+
+    .dropdown-menu-icon {
+      color: $color-dove-gray;
+      font-size: 18px;
+      vertical-align: middle;
+    }
+  }
+
+  &.open {
+    .topbar-menu-button {
+      border-bottom: 0;
+      max-height: 48px;
+      padding-bottom: 20px;
+      z-index: 1001;
+
+      .arrow-icon {
+        transform: rotateX(180deg);
+      }
+    }
   }
 }

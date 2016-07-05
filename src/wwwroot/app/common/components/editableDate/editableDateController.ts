@@ -6,20 +6,32 @@ module Antares.Common.Component {
         public selectedDate: Date;
         public isRequired: boolean = false;
         public onSave: () => (date: Date) => ng.IPromise<any>;
+        public canBeEdited: boolean;
 
         // component data
-        public inEditMode: boolean;
         public isDatePickerOpen: boolean = false;
         public date: Date;
-
         public today: Date = new Date();
+
+        private inEditMode: boolean;
 
         constructor() {
             this.inEditMode = false;
             this.date = this.selectedDate;
         }
 
+        $onChanges = (changesObj: any) => {
+            if (changesObj
+                .canBeEdited &&
+                changesObj.canBeEdited.currentValue !== changesObj.canBeEdited.previousValue) {
+                if (changesObj.canBeEdited.currentValue === false) {
+                    this.inEditMode = false;
+                }
+            }
+        }
+
         public openEditMode = () => {
+            this.date = this.selectedDate;
             this.inEditMode = true;
         }
 
@@ -30,7 +42,6 @@ module Antares.Common.Component {
         }
 
         public cancel = () => {
-            this.date = this.selectedDate;
             this.inEditMode = false;
         }
 
@@ -39,7 +50,11 @@ module Antares.Common.Component {
         }
 
         public isBeforeToday = () => {
-            return moment(this.date).isBefore(this.today, 'day');
+            return moment(this.selectedDate).isBefore(this.today, 'day');
+        }
+
+        public isInEditMode = () => {
+            return this.inEditMode && this.canBeEdited;;
         }
     }
 

@@ -6,16 +6,17 @@ module Antares.Common.Models.Dto {
         ActivityType = <any>'activityType',
         Division = <any>'division',
         ActivityDocumentType = <any>'activityDocumentType',
+        ActivityDepartmentType = <any>'activityDepartmentType',
         PropertyDocumentType = <any>'propertyDocumentType',
         RequirementDocumentType = <any>'requirementDocumentType',
         RequirementType = <any>'requirementType',
         OfferStatus = <any>'offerStatus',
         MortgageStatus = <any>'mortgageStatus',
         MortgageSurveyStatus = <any>'mortgageSurveyStatus',
-        ActivityDepartmentType = <any>'activityDepartmentType',
         ClientCareStatus = <any>'clientCareStatus',
         AdditionalSurveyStatus = <any>'additionalSurveyStatus',
         SearchStatus = <any>'searchStatus',
-        Enquiries = <any>'enquiries'
+        Enquiries = <any>'enquiries',
+        SalutationFormat = <any>'salutationFormat'
     }
 }
