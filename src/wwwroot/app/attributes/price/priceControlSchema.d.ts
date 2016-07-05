@@ -4,5 +4,6 @@ declare module Antares.Attributes {
     interface IPriceControlSchema {
         controlId: string,
 		translationKey: string;
+        suffix?: string;
     }
 }

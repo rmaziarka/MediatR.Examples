@@ -31,6 +31,12 @@ module Antares.Common.Models.Business {
         keyNumber: string = null;
         accessArrangements: string = null;
         appraisalMeetingAttendees: Dto.IActivityAttendee[];
+        shortKFValuationPrice: number;
+        shortVendorValuationPrice: number;
+        shortAgreedInitialMarketingPrice: number;
+        longKFValuationPrice: number;
+        longVendorValuationPrice: number;
+        longAgreedInitialMarketingPrice: number;        
 
         constructor(activity?: Dto.IActivity) {
             if (activity) {

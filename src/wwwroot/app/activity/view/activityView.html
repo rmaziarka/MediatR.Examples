@@ -38,8 +38,7 @@
                     <div class="col-md-3">
                         <viewing-view-control is-panel-visible="avvm.isViewingPreviewPanelVisible" viewings="avvm.activity.viewingsByDay" config="avvm.config.viewings"></viewing-view-control>
                         <section>
-                            <activity-appraisal-meeting-view-control config="avvm.config.appraisalMeeting"
-                                                                     appraisal-meeting="avvm.activity.appraisalMeeting"
+                            <activity-appraisal-meeting-view-control config="avvm.config.appraisalMeeting" appraisal-meeting="avvm.activity.appraisalMeeting"
                                                                      attendees="avvm.activity.appraisalMeetingAttendees"></activity-appraisal-meeting-view-control>
                         </section>
                         <attachments-manager header="ACTIVITY.VIEW.RECENT_FILES" files-number-limit="5" data="avvm.attachmentManagerData" on-save-attachment-for-entity="avvm.saveAttachment(attachment)"></attachments-manager>
@@ -90,7 +89,8 @@
                         <section id="activity-view-property">
                             <property-view-control property="avvm.activity.property" is-panel-visible="avvm.isPropertyPreviewPanelVisible" config="avvm.config.property"></property-view-control>
                         </section>
-
+                        <enum-item-view-control ng-model="avvm.activity.disposalTypeId" config="avvm.config.disposalType" schema="avvm.activityDisposalTypeSchema"></enum-item-view-control>
+                        
                         <enum-item-view-control config="avvm.config.source"
                                                 ng-model="avvm.activity.sourceId"
                                                 schema="avvm.activitySourceSchema"></enum-item-view-control>
@@ -114,7 +114,43 @@
                                                text="avvm.activity.accessDetails.accessArrangements"
                                                schema="avvm.activityAccessArrangementsSchema"></textarea-view-control>
  
+                        <div id="other-info" ng-if="avvm.config.decoration && avvm.config.otherCondition">
+                            <h3 class="page-header" translate="ACTIVITY.COMMON.OTHER"></h3>
+                            <enum-item-view-control ng-model="avvm.activity.decorationId" config="avvm.config.decoration" schema="avvm.activityDecorationSchema"></enum-item-view-control>
+                            <textarea-view-control ng-model="avvm.activity.otherCondition" config="avvm.config.otherCondition" schema="avvm.otherConditionSchema"></textarea-view-control>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="activity-view-prices" ng-if="avvm.config.kfValuationPrice && avvm.config.vendorValuationPrice && avvm.config.agreedInitialMarketingPrice">
+                            <h3 class="page-header" translate="ACTIVITY.COMMON.VALUATION_INFORMATION"></h3>
+                            <price-view-control config="avvm.config.kfValuationPrice" schema="avvm.kfValuationPriceSchema" price="avvm.activity.kfValuationPrice"></price-view-control>
+                            <price-view-control config="avvm.config.vendorValuationPrice" schema="avvm.vendorValuationPriceSchema" price="avvm.activity.vendorValuationPrice"></price-view-control>
+                            <price-view-control config="avvm.config.agreedInitialMarketingPrice" schema="avvm.agreedInitialMarketingPriceSchema" price="avvm.activity.agreedInitialMarketingPrice"></price-view-control>
+                        </div>
+                        <div id="activity-view-short-long-prices" ng-if="avvm.config.shortKfValuationPrice && avvm.config.longKfValuationPrice && avvm.config.shortVendorValuationPrice && avvm.config.longVendorValuationPrice && avvm.config.shortAgreedInitialMarketingPrice && avvm.config.longAgreedInitialMarketingPrice">
+                            <h3 class="page-header" translate="ACTIVITY.COMMON.VALUATION_INFORMATION"></h3>
 
+                            <h4 class="page-header" translate="ACTIVITY.COMMON.KF_VALUTATION"></h4>
+                            <price-view-control config="avvm.config.shortKfValuationPrice" schema="avvm.shortKfValuationPriceSchema" price='avvm.activity.shortKfValuationPrice'></price-view-control>
+                            <price-view-control config="avvm.config.longKfValuationPrice" schema="avvm.longKfValuationPriceSchema" price='avvm.activity.longKfValuationPrice'></price-view-control>
+
+                            <h4 class="page-header" translate="ACTIVITY.COMMON.VENDOR_VALUATION"></h4>
+                            <price-view-control config="avvm.config.shortVendorValuationPrice" schema="avvm.shortVendorValuationPriceSchema" price='avvm.activity.shortVendorValuationPrice'></price-view-control>
+                            <price-view-control config="avvm.config.longVendorValuationPrice" schema="avvm.longVendorValuationPriceSchema" price='avvm.activity.longVendorValuationPrice'></price-view-control>
+
+                            <h4 class="page-header" translate="ACTIVITY.COMMON.AGREED_INITIAL_MARKETING_PRICE"></h4>
+                            <price-view-control config="avvm.config.shortAgreedInitialMarketingPrice" schema="avvm.shortAgreedInitialMarketingPriceSchema"
+                                price='avvm.activity.shortAgreedInitialMarketingPrice'></price-view-control>
+                            <price-view-control config="avvm.config.longAgreedInitialMarketingPrice" schema="avvm.longAgreedInitialMarketingPriceSchema"
+                                price='avvm.activity.longAgreedInitialMarketingPrice'></price-view-control>
+                    </div>
+                        <div id="activity-view-charges" ng-if="avvm.config.serviceChargeAmount && avvm.config.serviceChargeNote && avvm.config.groundRentAmount && avvm.config.groundRentNote">
+                            <h3 class="page-header" translate="ACTIVITY.COMMON.CHARGES"></h3>
+                            <price-view-control price="avvm.activity.serviceChargeAmount" config="avvm.config.serviceChargeAmount" schema="avvm.serviceChargeAmountSchema"></price-view-control>
+                            <textarea-view-control ng-model="avvm.activity.serviceChargeNote" config="avvm.config.serviceChargeNote" schema="avvm.serviceChargeNoteSchema"></textarea-view-control>
+                            <price-view-control price="avvm.activity.groundRentAmount" config="avvm.config.groundRentAmount" schema="avvm.groundRentAmountSchema"></price-view-control>
+                            <textarea-view-control ng-model="avvm.activity.groundRentNote" config="avvm.config.groundRentNote" schema="avvm.groundRentNoteSchema"></textarea-view-control>
+                </div>
                     </div>
                 </div>
             </uib-tab>

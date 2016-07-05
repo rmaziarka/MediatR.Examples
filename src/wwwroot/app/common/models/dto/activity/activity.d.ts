@@ -25,5 +25,11 @@ declare module Antares.Common.Models.Dto {
         keyNumber: string;
         accessArrangements: string;
         appraisalMeetingAttendees: Dto.IActivityAttendee[];
+        shortKFValuationPrice?: number;
+        shortVendorValuationPrice?: number;
+        shortAgreedInitialMarketingPrice?: number;
+        longKFValuationPrice?: number;
+        longVendorValuationPrice?: number;
+        longAgreedInitialMarketingPrice?: number;
     }
 }
