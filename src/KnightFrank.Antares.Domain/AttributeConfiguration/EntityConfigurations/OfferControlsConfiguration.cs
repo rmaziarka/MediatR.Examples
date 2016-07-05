@@ -61,14 +61,26 @@
             this.AddControl(PageType.Update, ControlCode.Offer_MortgageSurveyStatus, Field<UpdateOfferCommand>.Create(x => x.MortgageSurveyStatusId));
             this.AddControl(PageType.Update, ControlCode.Offer_MortgageStatus, Field<UpdateOfferCommand>.Create(x => x.MortgageStatusId));
             this.AddControl(PageType.Update, ControlCode.Offer_AdditionalSurveyStatus, Field<UpdateOfferCommand>.Create(x => x.AdditionalSurveyStatusId));
-            this.AddControl(PageType.Update, ControlCode.Offer_Broker, Field<UpdateOfferCommand>.Create(x => x.BrokerId));
-            this.AddControl(PageType.Update, ControlCode.Offer_BrokerCompany, Field<UpdateOfferCommand>.Create(x => x.BrokerCompanyId));
-            this.AddControl(PageType.Update, ControlCode.Offer_Lender, Field<UpdateOfferCommand>.Create(x => x.LenderId));
-            this.AddControl(PageType.Update, ControlCode.Offer_LenderCompany, Field<UpdateOfferCommand>.Create(x => x.LenderCompanyId));
-            this.AddControl(PageType.Update, ControlCode.Offer_Surveyor, Field<UpdateOfferCommand>.Create(x => x.SurveyorId));
-            this.AddControl(PageType.Update, ControlCode.Offer_SurveyorCompany, Field<UpdateOfferCommand>.Create(x => x.SurveyorCompanyId));
-            this.AddControl(PageType.Update, ControlCode.Offer_AdditionalSurveyor, Field<UpdateOfferCommand>.Create(x => x.AdditionalSurveyorId));
-            this.AddControl(PageType.Update, ControlCode.Offer_AdditionalSurveyorCompany, Field<UpdateOfferCommand>.Create(x => x.AdditionalSurveyorCompanyId));
+            this.AddControl(PageType.Update, ControlCode.Offer_Broker, new IField[]
+            {
+                Field<UpdateOfferCommand>.Create(x => x.BrokerId),
+                Field<UpdateOfferCommand>.Create(x => x.BrokerCompanyId)
+            });
+            this.AddControl(PageType.Update, ControlCode.Offer_Lender, new IField[]
+            {
+                Field<UpdateOfferCommand>.Create(x => x.LenderId),
+                Field<UpdateOfferCommand>.Create(x => x.LenderCompanyId)
+            });
+            this.AddControl(PageType.Update, ControlCode.Offer_Surveyor, new IField[]
+            {
+                Field<UpdateOfferCommand>.Create(x => x.SurveyorId),
+                Field<UpdateOfferCommand>.Create(x => x.SurveyorCompanyId)
+            });
+            this.AddControl(PageType.Update, ControlCode.Offer_AdditionalSurveyor, new IField[]
+            {
+                Field<UpdateOfferCommand>.Create(x => x.AdditionalSurveyorId),
+                Field<UpdateOfferCommand>.Create(x => x.AdditionalSurveyorCompanyId)
+            });
             this.AddControl(PageType.Update, ControlCode.Offer_Enquiries, Field<UpdateOfferCommand>.Create(x => x.EnquiriesId));
             this.AddControl(PageType.Update, ControlCode.Offer_ContractApproved, Field<UpdateOfferCommand>.Create(x => x.ContractApproved));
             this.AddControl(PageType.Update, ControlCode.Offer_MortgageLoanToValue, Field<UpdateOfferCommand>.Create(x => x.MortgageLoanToValue).GreaterThanOrEqualTo(0).LessThanOrEqualTo(200));
@@ -101,14 +113,23 @@
             this.AddControl(PageType.Details, ControlCode.Offer_MortgageStatus, Field<Offer>.Create(x => x.MortgageStatusId, x => x.MortgageStatus));
             this.AddControl(PageType.Details, ControlCode.Offer_MortgageSurveyStatus, Field<Offer>.Create(x => x.MortgageSurveyStatusId, x => x.MortgageSurveyStatus));
             this.AddControl(PageType.Details, ControlCode.Offer_AdditionalSurveyStatus, Field<Offer>.Create(x => x.AdditionalSurveyStatusId, x => x.AdditionalSurveyStatus));
-            this.AddControl(PageType.Details, ControlCode.Offer_Broker, Field<Offer>.Create(x => x.BrokerId, x => x.Broker));
-            this.AddControl(PageType.Details, ControlCode.Offer_BrokerCompany, Field<Offer>.Create(x => x.BrokerCompanyId, x => x.BrokerCompany));
-            this.AddControl(PageType.Details, ControlCode.Offer_Lender, Field<Offer>.Create(x => x.LenderId, x => x.Lender));
-            this.AddControl(PageType.Details, ControlCode.Offer_LenderCompany, Field<Offer>.Create(x => x.LenderCompanyId, x => x.LenderCompany));
-            this.AddControl(PageType.Details, ControlCode.Offer_Surveyor, Field<Offer>.Create(x => x.SurveyorId, x => x.Surveyor));
-            this.AddControl(PageType.Details, ControlCode.Offer_SurveyorCompany, Field<Offer>.Create(x => x.SurveyorCompanyId, x => x.SurveyorCompany));
-            this.AddControl(PageType.Details, ControlCode.Offer_AdditionalSurveyor, Field<Offer>.Create(x => x.AdditionalSurveyorId, x => x.AdditionalSurveyor));
-            this.AddControl(PageType.Details, ControlCode.Offer_AdditionalSurveyorCompany, Field<Offer>.Create(x => x.AdditionalSurveyorCompanyId, x => x.AdditionalSurveyorCompany));
+
+            this.AddControl(PageType.Details, ControlCode.Offer_Broker,
+                Field<Offer>.Create(x => x.BrokerId, x => x.Broker).Concat(
+                Field<Offer>.Create(x => x.BrokerCompanyId, x => x.BrokerCompany)).ToList()
+            );
+            this.AddControl(PageType.Details, ControlCode.Offer_Lender,
+                Field<Offer>.Create(x => x.LenderId, x => x.Lender).Concat(
+                Field<Offer>.Create(x => x.LenderCompanyId, x => x.LenderCompany)).ToList()
+            );
+            this.AddControl(PageType.Details, ControlCode.Offer_Surveyor,
+                Field<Offer>.Create(x => x.SurveyorId, x => x.Surveyor).Concat(
+                Field<Offer>.Create(x => x.SurveyorCompanyId, x => x.SurveyorCompany)).ToList()
+            );
+            this.AddControl(PageType.Details, ControlCode.Offer_AdditionalSurveyor,
+                Field<Offer>.Create(x => x.AdditionalSurveyorId, x => x.AdditionalSurveyor).Concat(
+                Field<Offer>.Create(x => x.AdditionalSurveyorCompanyId, x => x.AdditionalSurveyorCompany)).ToList()
+            );
             this.AddControl(PageType.Details, ControlCode.Offer_Enquiries, Field<Offer>.Create(x => x.EnquiriesId, x => x.Enquiries));
             this.AddControl(PageType.Details, ControlCode.Offer_ContractApproved, Field<Offer>.Create(x => x.ContractApproved));
             this.AddControl(PageType.Details, ControlCode.Offer_MortgageLoanToValue, Field<Offer>.Create(x => x.MortgageLoanToValue));
@@ -187,13 +208,9 @@
                     ControlCode.Offer_MortgageSurveyStatus,
                     ControlCode.Offer_AdditionalSurveyStatus,
                     ControlCode.Offer_Broker,
-                    ControlCode.Offer_BrokerCompany,
                     ControlCode.Offer_Lender,
-                    ControlCode.Offer_LenderCompany,
                     ControlCode.Offer_Surveyor,
-                    ControlCode.Offer_SurveyorCompany,
                     ControlCode.Offer_AdditionalSurveyor,
-                    ControlCode.Offer_AdditionalSurveyorCompany,
                     ControlCode.Offer_Enquiries,
                     ControlCode.Offer_ContractApproved,
                     ControlCode.Offer_MortgageLoanToValue,
@@ -213,13 +230,9 @@
                     ControlCode.Offer_MortgageSurveyStatus,
                     ControlCode.Offer_AdditionalSurveyStatus,
                     ControlCode.Offer_Broker,
-                    ControlCode.Offer_BrokerCompany,
                     ControlCode.Offer_Lender,
-                    ControlCode.Offer_LenderCompany,
                     ControlCode.Offer_Surveyor,
-                    ControlCode.Offer_SurveyorCompany,
                     ControlCode.Offer_AdditionalSurveyor,
-                    ControlCode.Offer_AdditionalSurveyorCompany,
                     ControlCode.Offer_Enquiries,
                     ControlCode.Offer_ContractApproved,
                     ControlCode.Offer_MortgageLoanToValue,
