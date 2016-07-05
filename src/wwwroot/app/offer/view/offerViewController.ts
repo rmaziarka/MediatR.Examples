@@ -6,7 +6,6 @@ module Antares.Component {
     import EntityType = Common.Models.Enums.EntityTypeEnum;
     import Dto = Common.Models.Dto;
     import OfferViewConfig = Offer.IOfferViewConfig;
-    import CompanyContactConnection = Antares.Common.Models.Business.CompanyContactRelation;
 
     export class OfferViewController extends Core.WithPanelsBaseController {
         // bindings
@@ -182,14 +181,35 @@ module Antares.Component {
             this.offerStatuses = result[Dto.EnumTypeCode.OfferStatus];
         }
 
-        isOfferNew = (): boolean => {
-            var selectedOfferStatus: Common.Models.Dto.IEnumItem = _.find(this.offerStatuses, (status: Common.Models.Dto.IEnumItem) => status.id === this.offer.statusId);
-            if (selectedOfferStatus) {
-                return selectedOfferStatus.code ===
-                    Common.Models.Enums.OfferStatus[Common.Models.Enums.OfferStatus.New];
-            }
+        isMortgageDetailsSectionVisible = () => {
+            return this.config.offer_Broker
+                || this.config.offer_Lender
+                || this.config.offer_MortgageSurveyDate
+                || this.config.offer_Surveyor;
+        }
 
-            return false;
+        isProgressSummarySectionVisible = () => {
+            return this.config.offer_MortgageStatus
+                || this.config.offer_MortgageSurveyStatus
+                || this.config.offer_SearchStatus
+                || this.config.offer_Enquiries
+                || this.config.offer_ContractApproved;
+        }
+
+        isAdditionalSurveySectionVisible = () => {
+            return this.config.offer_AdditionalSurveyor
+                || this.config.offer_AdditionalSurveyDate;
+        }
+
+        isOtherDetailsSectionVisible = () => {
+            return this.config.offer_ProgressComment;
+        }
+
+        isProgressAndMortgageSectionVisible = () => {
+            return this.isMortgageDetailsSectionVisible() ||
+                this.isAdditionalSurveySectionVisible() ||
+                this.isProgressSummarySectionVisible() ||
+                this.isOtherDetailsSectionVisible();
         }
     }
 

@@ -188,7 +188,7 @@ module Antares.TestHelpers {
         public static generateOfferEditConfig(): Offer.IOfferEditConfig{
             var addPanelConfig: Offer.IOfferAddPanelConfig = ConfigGenerator.generateOfferAddPanelConfig();
             var config = <Offer.IOfferEditConfig>{};
-            angular.extend(config, addPanelConfig, {
+            angular.extend(config, addPanelConfig, <Offer.IOfferEditConfig> {
                 offer_AdditionalSurveyDate : ConfigGenerator.generateOfferAdditionalSurveyDateConfig(),
                 offer_MortgageSurveyDate : ConfigGenerator.generateOfferMortgageSurveyDateConfig(),
                 offer_Broker: ConfigGenerator.generateOfferBrokerConfig(),
@@ -200,8 +200,34 @@ module Antares.TestHelpers {
                 offer_MortgageSurveyStatus: ConfigGenerator.generateOfferMortgageSurveyStatusConfig(),
                 offer_SearchStatus: ConfigGenerator.generateOfferSearchStatusConfig(),
                 offer_Surveyor: ConfigGenerator.generateOfferSurveyorConfig(),
-                offer_Comment: ConfigGenerator.generateOfferCommentConfig()
+                offer_ProgressComment: ConfigGenerator.generateOfferCommentConfig()
             });
+
+            return config;
+        }
+
+        public static generateOfferViewConfig(): Offer.IOfferViewConfig {
+            var config = <Offer.IOfferViewConfig> {
+                offer_StatusId: ConfigGenerator.generateOfferStatusIdConfig(),
+                offer_CompletionDate: ConfigGenerator.generateOfferCompletionDateConfig(),
+                offer_ExchangeDate: ConfigGenerator.generateOfferExchangeDateConfig(),
+                offer_OfferDate: ConfigGenerator.generateOfferOfferDateConfig(),
+                offer_Price: ConfigGenerator.generateOfferPriceConfig(),
+                offer_PricePerWeek: ConfigGenerator.generateOfferPricePerWeekConfig(),
+                offer_SpecialConditions: ConfigGenerator.generateOfferSpecialConditionsConfig(),
+                offer_AdditionalSurveyDate: ConfigGenerator.generateOfferAdditionalSurveyDateConfig(),
+                offer_MortgageSurveyDate: ConfigGenerator.generateOfferMortgageSurveyDateConfig(),
+                offer_Broker: ConfigGenerator.generateOfferBrokerConfig(),
+                offer_AdditionalSurveyor: ConfigGenerator.generateOfferAdditionalSurveyorConfig(),
+                offer_ContractApproved: ConfigGenerator.generateOfferContractApprovedConfig(),
+                offer_Enquiries: ConfigGenerator.generateOfferEnquiriesConfig(),
+                offer_Lender: ConfigGenerator.generateOfferLenderConfig(),
+                offer_MortgageStatus: ConfigGenerator.generateOfferMortgageStatusConfig(),
+                offer_MortgageSurveyStatus: ConfigGenerator.generateOfferMortgageSurveyStatusConfig(),
+                offer_SearchStatus: ConfigGenerator.generateOfferSearchStatusConfig(),
+                offer_Surveyor: ConfigGenerator.generateOfferSurveyorConfig(),
+                offer_ProgressComment: ConfigGenerator.generateOfferCommentConfig()
+            };
 
             return config;
         }

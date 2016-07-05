@@ -8,7 +8,7 @@ declare module Antares.Offer {
         offer_Lender: Attributes.IOfferLenderControlConfig;
         offer_Surveyor: Attributes.IOfferSurveyorControlConfig;
         offer_MortgageStatus: Attributes.IOfferMortgageStatusControlConfig;
-        offer_MortgageSurveyStatus: Attributes.IOfferMortgageSurveyDateControlConfig;
+        offer_MortgageSurveyStatus: Attributes.IOfferMortgageSurveyStatusControlConfig;
         offer_SearchStatus: Attributes.IOfferSearchStatusControlConfig;
         offer_Enquiries: Attributes.IOfferEnquiriesControlConfig;
         offer_ContractApproved: Attributes.IOfferContractApprovedControlConfig;

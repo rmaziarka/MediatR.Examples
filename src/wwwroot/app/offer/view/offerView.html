@@ -78,9 +78,9 @@
             </div>
         </section>
     </div>
-    <div class="col-md-4" id="offer-progress-section" ng-if="!vm.isOfferNew()">
+    <div class="col-md-4" id="offer-progress-section" ng-if="vm.isProgressAndMortgageSectionVisible()">
         <section>
-            <h3 class="page-header" translate="OFFER.VIEW.PROGRESS_SUMMARY"></h3>
+            <h3 class="page-header" translate="OFFER.VIEW.PROGRESS_SUMMARY" ng-if="vm.isProgressSummarySectionVisible()"></h3>
             <div class="section-details">
                 <enum-item-view-control ng-model="vm.offer.mortgageStatusId" show-status-icon="true" config="vm.config.offer_MortgageStatus" schema="vm.controlSchemas.mortgageStatus"></enum-item-view-control>
                 <enum-item-view-control ng-model="vm.offer.mortgageSurveyStatusId" show-status-icon="true" config="vm.config.offer_MortgageSurveyStatus" schema="vm.controlSchemas.mortgageSurveyStatus"></enum-item-view-control>
@@ -93,7 +93,7 @@
             </div>
         </section>
 
-        <section>
+        <section ng-if="vm.isMortgageDetailsSectionVisible()">
             <h3 class="page-header" translate="OFFER.VIEW.MORTGAGE_DETAILS"></h3>
             <div class="section-details">
                 <percent-number-view-control value="vm.offer.mortgageLoanToValue" config="vm.config.offer_MortgageLoanToValue" schema="vm.controlSchemas.mortgageLoanToValue"></percent-number-view-control>
@@ -124,7 +124,7 @@
             </div>
         </section>
 
-        <section>
+        <section ng-if="vm.isAdditionalSurveySectionVisible()">
             <h3 class="page-header" translate="OFFER.VIEW.ADDITIONAL_SURVEY"></h3>
             <date-view-control date="vm.offer.additionalSurveyDate" config="vm.config.offer_AdditionalSurveyDate" schema="vm.controlSchemas.additionalSurveyDate"></date-view-control> 
             <div class="section-details">
@@ -135,7 +135,7 @@
             </div>
         </section>
 
-        <section>
+        <section ng-if="vm.isOtherDetailsSectionVisible()">
             <h3 class="page-header" translate="OFFER.VIEW.OTHER_DETAILS"></h3>
             <textarea-view-control text="vm.offer.progressComment" config="vm.config.offer_ProgressComment" schema="vm.controlSchemas.progressComment"></textarea-view-control>
         </section>

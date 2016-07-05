@@ -49,10 +49,11 @@ module Antares {
 			state = $state;
             scope = $rootScope.$new();
             scope["offer"] = offerMock;
+            scope["config"] = TestHelpers.ConfigGenerator.generateOfferViewConfig();
 
             enumService.setEnum(Dto.EnumTypeCode.OfferStatus.toString(), offerStatuses);
 
-            element = compile('<offer-view offer="offer"></offer-view>')(scope);
+            element = compile('<offer-view offer="offer" config="config"></offer-view>')(scope);
             scope.$apply();
 			
 			controller = element.controller('offerView');
@@ -132,31 +133,5 @@ module Antares {
                 expect($http.flush).not.toThrow();
             });
         });
-
-		describe('when offer status is other than New', () =>{
-            beforeEach(() =>{
-				offerMock.statusId = _.find(offerStatuses, (status:  Common.Models.Dto.IEnumItem) => status.code === "Accepted").id;
-                scope['offer'] = offerMock;
-                scope.$apply();
-            });
-
-            it('then progress section is rendered', () => {
-                var progressSection = element.find(pageObjectSelectors.progressSection);
-                expect(progressSection.length).toBe(1);
-            });
-		});
-
-		describe('when offer status is New', () =>{
-            beforeEach(() =>{
-				offerMock.statusId = _.find(offerStatuses, (status:  Common.Models.Dto.IEnumItem) => status.code === "New").id;
-                scope['offer'] = offerMock;
-                scope.$apply();
-            });
-
-            it('then progress section is not rendered', () => {
-                var progressSection = element.find(pageObjectSelectors.progressSection);
-                expect(progressSection.length).toBe(0);
-            });
-		});
     });
 }
