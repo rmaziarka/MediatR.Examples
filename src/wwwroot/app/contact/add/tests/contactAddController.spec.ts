@@ -56,7 +56,9 @@ module Antares {
             scope = $rootScope.$new();
             scope["enumService"] = enumService;
             scope["userData"] = <Dto.ICurrentUser>{
-                id: '1234',
+                id : '1234',
+                firstName: 'Test',
+                lastName: 'User',
                 division: <Dto.IEnumTypeItem>{ id: 'enumId', code: 'code' },
                 salutationFormatId: '1',
                 locale: <Dto.ILocale>{ id: '', isoCode: 'en' }
@@ -67,6 +69,12 @@ module Antares {
 
             controller = element.controller("contactAdd");
         }));
+
+        it('when controller is first loaded then lead negotiator is set to the current user', () => {
+            expect(controller.contact.leadNegotiator.user.id).toBe('1234');
+            expect(controller.contact.leadNegotiator.user.firstName).toBe('Test');
+            expect(controller.contact.leadNegotiator.user.lastName).toBe('User');
+        });
 
         it('when get contact titles is called with blank string then only locale specific titles returned', () => {
             var result = controller.getContactTitles('');
