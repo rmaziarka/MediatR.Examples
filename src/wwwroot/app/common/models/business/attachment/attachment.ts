@@ -4,11 +4,11 @@ module Antares.Common.Models.Business {
     declare var filesize: Filesize.IFilesize;
 
     export class Attachment {
-        id: string = '';
-        fileName: string = '';
-        documentTypeId: string = '';
+        id: string = null;
+        fileName: string = null;
+        documentTypeId: string = null;
         size: number = null;
-        externalDocumentId: string = '';
+        externalDocumentId: string = null;
         createdDate: Date = null;
         user: User = null;
 
