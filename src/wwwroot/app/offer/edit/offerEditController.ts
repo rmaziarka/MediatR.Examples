@@ -237,14 +237,14 @@ module Antares.Offer {
             }
         }
 
-        isMortgageDetailsSectionVisible = () =>{
+        isMortgageDetailsSectionVisible = () => {
             return this.config.offer_Broker
                 || this.config.offer_Lender
                 || this.config.offer_MortgageSurveyDate
                 || this.config.offer_Surveyor;
         }
 
-        isProgressSummarySectionVisible = () =>{
+        isProgressSummarySectionVisible = () => {
             return this.config.offer_MortgageStatus
                 || this.config.offer_MortgageSurveyStatus
                 || this.config.offer_SearchStatus
@@ -252,7 +252,7 @@ module Antares.Offer {
                 || this.config.offer_ContractApproved;
         }
 
-        isAdditionalSurveySectionVisible = () =>{
+        isAdditionalSurveySectionVisible = () => {
             return this.config.offer_AdditionalSurveyor
                 || this.config.offer_AdditionalSurveyDate;
         }
@@ -262,6 +262,20 @@ module Antares.Offer {
         }
 
         hideNewPanels = () => {
+
+        isOtherDetailsSectionVisible = () => {
+            return this.config.offer_ProgressComment;
+        }
+
+        isProgressAndMortgageSectionVisible = () =>{
+            return this.isMortgageDetailsSectionVisible()
+                || this.isAdditionalSurveySectionVisible()
+                || this.isProgressSummarySectionVisible()
+                || this.isOtherDetailsSectionVisible();
+        }
+
+        companyContactPanelClosed = () => {
+            this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Closed;
             this.isBrokerEditPanelVisible = Enums.SidePanelState.Closed;
             this.isLenderEditPanelVisible = Enums.SidePanelState.Closed;
             this.isSurveyorEditPanelVisible = Enums.SidePanelState.Closed;
@@ -376,35 +390,6 @@ module Antares.Offer {
             }
         }
 
-        restoreOfferProgressSummary = () => {
-            this.offer.mortgageStatusId = this.offerOriginal.mortgageStatusId;
-            this.offer.mortgageSurveyStatusId = this.offerOriginal.mortgageSurveyStatusId;
-            this.offer.additionalSurveyStatusId = this.offerOriginal.additionalSurveyStatusId;
-            this.offer.searchStatusId = this.offerOriginal.searchStatusId;
-            this.offer.enquiriesId = this.offerOriginal.enquiriesId;
-            this.offer.contractApproved = this.offerOriginal.contractApproved;
-
-            this.offer.mortgageLoanToValue = this.offerOriginal.mortgageLoanToValue;
-
-            this.offer.brokerId = this.offerOriginal.brokerId;
-            this.offer.brokerCompanyId = this.offerOriginal.brokerCompanyId;
-
-            this.offer.lenderId = this.offerOriginal.lenderId;
-            this.offer.lenderCompanyId = this.offerOriginal.lenderCompanyId;
-
-            this.offer.mortgageSurveyDate = this.offerOriginal.mortgageSurveyDate;
-
-            this.offer.surveyorId = this.offerOriginal.surveyorId;
-            this.offer.surveyorCompanyId = this.offerOriginal.surveyorCompanyId;
-
-            this.offer.additionalSurveyDate = this.offerOriginal.additionalSurveyDate;
-
-            this.offer.additionalSurveyorId = this.offerOriginal.additionalSurveyorId;
-            this.offer.additionalSurveyorCompanyId = this.offerOriginal.additionalSurveyorCompanyId;
-
-            this.offer.progressComment = this.offerOriginal.progressComment;
-        }
-
         setCompanyContactData = () =>{
             this.offer.brokerId = this.brokerCompanyContact && this.brokerCompanyContact.contact.id;
             this.offer.brokerCompanyId = this.brokerCompanyContact && this.brokerCompanyContact.company.id; 
@@ -420,10 +405,6 @@ module Antares.Offer {
         }
 
         save() {
-            if (this.offerAccepted() === false) {
-                this.restoreOfferProgressSummary();
-            }
-
             this.setCompanyContactData();
 
             this.offer.offerDate = Core.DateTimeUtils.createDateAsUtc(this.offer.offerDate);
@@ -461,7 +442,8 @@ module Antares.Offer {
             };
         }
 
-        offerStatusChanged = () => {
+        offerStatusChanged = (id: string) =>{
+            this.offer.statusId = id;
             this.reloadConfig();
         }
 

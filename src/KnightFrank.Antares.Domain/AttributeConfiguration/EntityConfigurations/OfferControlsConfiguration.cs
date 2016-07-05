@@ -241,6 +241,7 @@
                     ControlCode.Offer_ProgressComment
                 },
                 this.When(OfferType.ResidentialLetting, RequirementType.ResidentialLetting, PageType.Update, PageType.Details))
+                .HiddenWhen<UpdateOfferCommand>(x => x.StatusId != offerStatusAccepted)
                 .ReadonlyWhen<UpdateOfferCommand>(x => x.StatusId != offerStatusAccepted);
 
             this.Use(
