@@ -129,28 +129,16 @@
                 </div>
             </div>
             <div class="section-details">
-                <div class="section-row row">
-                    <div class="col-xs-12">
-                        <h5 translate="OFFER.VIEW.BROKER"></h5>
-                        <p ng-if="!vm.offer.broker" class="help-block" id="no-contacts-help-block" translate="OFFER.EDIT.NO_BROKER"></p>
-                        <card-list-item class="offer-broker" ng-if="!!vm.offer.broker">
-                            <card show-context-menu="false" card-template-url="'app/offer/view/offerContactCard.html'" item="vm.offer.broker">
-                            </card>
-                        </card-list-item>
-                    </div>
-                </div>
+                <company-contact-view-control schema="vm.controlSchemas.broker"
+                                              config="vm.config.offer_Broker"
+                                              company-contact="vm.brokerCompanyContact">
+                </company-contact-view-control>
             </div>
             <div class="section-details">
-                <div class="section-row row">
-                    <div class="col-xs-12">
-                        <h5 translate="OFFER.VIEW.LENDER"></h5>
-                        <p ng-if="!vm.offer.lender" class="help-block" id="no-contacts-help-block" translate="OFFER.EDIT.NO_LENDER"></p>
-                        <card-list-item class="offer-lender" ng-if="!!vm.offer.lender">
-                            <card show-context-menu="false" card-template-url="'app/offer/view/offerContactCard.html'" item="vm.offer.lender">
-                            </card>
-                        </card-list-item>
-                    </div>
-                </div>
+                <company-contact-view-control schema="vm.controlSchemas.lender"
+                                              config="vm.config.offer_Lender"
+                                              company-contact="vm.lenderCompanyContact">
+                </company-contact-view-control>
             </div>
 
             <div class="section-details">
@@ -166,16 +154,10 @@
             </div>
 
             <div class="section-details">
-                <div class="section-row row">
-                    <div class="col-xs-12">
-                        <h5 translate="OFFER.VIEW.SURVEYOR"></h5>
-                        <p ng-if="!vm.offer.surveyor" class="help-block" id="no-contacts-help-block" translate="OFFER.EDIT.NO_SURVEYOR"></p>
-                        <card-list-item class="offer-surveyor" ng-if="!!vm.offer.surveyor">
-                            <card show-context-menu="false" card-template-url="'app/offer/view/offerContactCard.html'" item="vm.offer.surveyor">
-                            </card>
-                        </card-list-item>
-                    </div>
-                </div>
+                <company-contact-view-control schema="vm.controlSchemas.surveyor"
+                                              config="vm.config.offer_Surveyor"
+                                              company-contact="vm.surveyorCompanyContact">
+                </company-contact-view-control>
             </div>
         </section>
 
@@ -196,16 +178,10 @@
             </div>
 
             <div class="section-details">
-                <div class="section-row row">
-                    <div class="col-xs-12">
-                        <h5 translate="OFFER.VIEW.SURVEYOR"></h5>
-                        <p ng-if="!vm.offer.additionalSurveyor" class="help-block" id="no-contacts-help-block" translate="OFFER.EDIT.NO_SURVEYOR"></p>
-                        <card-list-item class="offer-additional-surveyor" ng-if="!!vm.offer.additionalSurveyor">
-                            <card show-context-menu="false" card-template-url="'app/offer/view/offerContactCard.html'" item="vm.offer.additionalSurveyor">
-                            </card>
-                        </card-list-item>
-                    </div>
-                </div>
+                <company-contact-view-control schema="vm.controlSchemas.additionalSurveyor"
+                                              config="vm.config.offer_AdditionalSurveyor"
+                                              company-contact="vm.additionalSurveyorCompanyContact">
+                </company-contact-view-control>
             </div>
         </section>
 

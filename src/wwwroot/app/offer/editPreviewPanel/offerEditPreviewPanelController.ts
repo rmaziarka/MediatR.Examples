@@ -70,15 +70,13 @@ module Antares.Offer {
                 this.config = newConfig;
             }
 
-            save = (offer: Dto.IOffer) => {
+            save = (offer: Business.Offer) => {
                 this.isBusy = true;
                 this.busyLabelKey = 'OFFER.ADD.SAVING_OFFER_IN_PROGRESS';
 
-                offer.offerDate = Core.DateTimeUtils.createDateAsUtc(offer.offerDate);
-                offer.exchangeDate = Core.DateTimeUtils.createDateAsUtc(offer.exchangeDate);
-                offer.completionDate = Core.DateTimeUtils.createDateAsUtc(offer.completionDate);
+                var updateOfferCommand = new Business.UpdateOfferCommand(offer);
 
-                this.offerService.updateOffer(offer).then((offerDto: Dto.IOffer) => {
+                this.offerService.updateOffer(updateOfferCommand).then((offerDto: Dto.IOffer) => {
                     this.eventAggregator.publish(new Offer.OfferUpdatedSidePanelEvent(offerDto));
                     this.offer = new Business.Offer(offerDto);
                     this.closeEdit();

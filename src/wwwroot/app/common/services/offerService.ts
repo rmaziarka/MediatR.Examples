@@ -17,7 +17,7 @@ module Antares.Services {
                 .then<Dto.IOffer>((result: ng.IHttpPromiseCallbackArg<Dto.IOffer>) => result.data);
         }
 
-        updateOffer = (offerCommand: Dto.IOffer): ng.IPromise<Dto.IOffer> => {
+        updateOffer = (offerCommand: Business.UpdateOfferCommand): ng.IPromise<Dto.IOffer> => {
             return this.$http.put(this.appConfig.rootUrl + this.url, offerCommand)
                 .then<Dto.IOffer>((result: ng.IHttpPromiseCallbackArg<Dto.IOffer>) => result.data);
         }

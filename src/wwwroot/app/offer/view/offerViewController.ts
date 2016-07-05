@@ -6,6 +6,7 @@ module Antares.Component {
     import EntityType = Common.Models.Enums.EntityTypeEnum;
     import Dto = Common.Models.Dto;
     import OfferViewConfig = Offer.IOfferViewConfig;
+    import CompanyContactConnection = Antares.Common.Models.Business.CompanyContactRelation;
 
     export class OfferViewController extends Core.WithPanelsBaseController {
         // bindings
@@ -14,8 +15,33 @@ module Antares.Component {
 
         private offerStatuses: Common.Models.Dto.IEnumItem[];
 
+        brokerCompanyContact: CompanyContactConnection = null;
+        lenderCompanyContact: CompanyContactConnection = null;
+        surveyorCompanyContact: CompanyContactConnection = null;
+        additionalSurveyorCompanyContact: CompanyContactConnection = null;
+
         // controls
         controlSchemas: any = {
+            broker: <Attributes.ICompanyContactViewControlSchema>{
+                controlId: 'broker',
+                translationKey: 'OFFER.EDIT.BROKER',
+                emptyTranslationKey: 'OFFER.EDIT.NO_BROKER'
+            },
+            lender: <Attributes.ICompanyContactViewControlSchema>{
+                controlId: 'lender',
+                translationKey: 'OFFER.EDIT.LENDER',
+                emptyTranslationKey: 'OFFER.EDIT.NO_LENDER'
+            },
+            surveyor: <Attributes.ICompanyContactViewControlSchema>{
+                controlId: 'surveyor',
+                translationKey: 'OFFER.EDIT.SURVEYOR',
+                emptyTranslationKey: 'OFFER.EDIT.NO_SURVEYOR'
+            },
+            additionalSurveyor: <Attributes.ICompanyContactViewControlSchema>{
+                controlId: 'additionalSurveyor',
+                translationKey: 'OFFER.EDIT.SURVEYOR',
+                emptyTranslationKey: 'OFFER.EDIT.NO_SURVEYOR'
+            },
             mortgageLoanToValue: <Attributes.IPercentNumberControlSchema>{
                 formName: "mortgageLoanToValueControlForm",
                 controlId: "mortgage-loan-to-value",
@@ -38,6 +64,23 @@ module Antares.Component {
             private enumService: Services.EnumService) {
             super(componentRegistry, $scope);
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
+
+            this.createCompanyContacts();
+        }
+
+        private createCompanyContacts() {
+            if (this.offer.broker) {
+                this.brokerCompanyContact = new CompanyContactConnection(this.offer.broker, this.offer.brokerCompany);
+            }
+            if (this.offer.lender) {
+                this.lenderCompanyContact = new CompanyContactConnection(this.offer.lender, this.offer.lenderCompany);
+            }
+            if (this.offer.surveyor) {
+                this.surveyorCompanyContact = new CompanyContactConnection(this.offer.surveyor, this.offer.surveyorCompany);
+            }
+            if (this.offer.additionalSurveyor) {
+                this.additionalSurveyorCompanyContact = new CompanyContactConnection(this.offer.additionalSurveyor, this.offer.additionalSurveyorCompany);
+            }
         }
 
         navigateToActivity = (ativity: Business.Activity) => {

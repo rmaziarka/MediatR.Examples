@@ -24,7 +24,7 @@ module Antares {
                 return deferred.promise;
             };
 
-            var updateOfferMock = (offer: Business.Offer): ng.IPromise<any> => {
+            var updateOfferMock = (updateOfferCommand: Business.UpdateOfferCommand): ng.IPromise<any> => {
                 var deferred = $q.defer();
                 timeout(() =>{
                     deferred.resolve();
@@ -122,7 +122,7 @@ module Antares {
             }));
 
             it('then should updated ', () => {
-                expect(controller['offerService'].updateOffer).toHaveBeenCalledWith(offer);
+                expect(controller['offerService'].updateOffer).toHaveBeenCalledWith(jasmine.any(Business.UpdateOfferCommand));
                 expect(controller['eventAggregator'].publish).toHaveBeenCalledTimes(1);
                 expect(controller.mode).toEqual(Component.OfferPanelMode.Preview);
             });
@@ -145,7 +145,7 @@ module Antares {
             }));
 
             it('then should updated ', () => {
-                expect(controller['offerService'].updateOffer).toHaveBeenCalledWith(offer);
+                expect(controller['offerService'].updateOffer).toHaveBeenCalledWith(jasmine.any(Business.UpdateOfferCommand));
                 expect(controller['eventAggregator'].publish).toHaveBeenCalledTimes(2);
                 expect(controller['eventAggregator'].publish).toHaveBeenCalledWith(new Common.Component.CloseSidePanelEvent());
             });
