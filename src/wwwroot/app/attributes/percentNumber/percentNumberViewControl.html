@@ -1,6 +1,6 @@
-﻿<ng-form name="vm.{{vm.schema.formName}}" ng-if="vm.config">
+﻿<div class="row section-row" ng-if="vm.config">
+    <div class="col-xs-6 section-title" translate="{{vm.schema.translationKey}}"></div>
     <fieldset>
-        <div class="col-xs-4 section-title" translate="{{vm.schema.translationKey}}"></div>
         <div ng-if="vm.value !== null">
             <div>{{vm.value}}%</div>
         </div>
@@ -8,4 +8,4 @@
             <div>-</div>
         </div>
     </fieldset>
-</ng-form>
+</div>

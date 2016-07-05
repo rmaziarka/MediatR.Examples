@@ -108,6 +108,7 @@ Scenario Outline: Get requirement with offer and viewing
 		And Contacts exists in database
 			| Title  | FirstName | Surname |
 			| Mister | Tomasz    | Bien    |
+		And Company exists in database
 		And Requirement of type <type> exists in database
 		And Offer with New status exists in database
 		And Viewing exists in database
