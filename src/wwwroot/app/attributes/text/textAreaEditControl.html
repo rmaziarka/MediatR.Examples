@@ -11,7 +11,8 @@
                           name="text"
                           ng-required="vm.config[vm.schema.fieldName].required"
                           class="form-control"
-                          type="text"></textarea>
+                          type="text"> 
+                </textarea>
                 <div ng-messages="vm[vm.schema.formName].text.$error" ng-show="vm[vm.schema.formName].$submitted || vm[vm.schema.formName].text.$dirty">
                     <div ng-messages-include="app/common/views/errorMessages.html"></div>
                 </div>

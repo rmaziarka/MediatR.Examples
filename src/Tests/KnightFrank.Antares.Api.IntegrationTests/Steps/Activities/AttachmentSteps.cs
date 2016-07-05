@@ -24,7 +24,7 @@
     {
         private const string ApiUrl = "/api/activities/{0}/attachments";
         private readonly BaseTestClassFixture fixture;
-
+        private readonly DateTime date = DateTime.UtcNow;
         private readonly ScenarioContext scenarioContext;
 
         public AttachmentSteps(BaseTestClassFixture fixture, ScenarioContext scenarioContext)
@@ -43,8 +43,8 @@
             var attachment = table.CreateInstance<Attachment>();
 
             attachment.DocumentTypeId = this.scenarioContext.Get<Dictionary<string, Guid>>("EnumDictionary")[documentType];
-            attachment.CreatedDate = DateTime.Now;
-            attachment.LastModifiedDate = DateTime.Now;
+            attachment.CreatedDate = this.date;
+            attachment.LastModifiedDate = this.date;
             attachment.UserId = this.fixture.DataContext.Users.First().Id;
 
             Guid activityId = this.scenarioContext.Get<Activity>("Activity").Id;

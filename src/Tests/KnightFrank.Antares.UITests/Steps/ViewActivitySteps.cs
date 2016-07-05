@@ -177,7 +177,7 @@
             var details = table.CreateInstance<EditActivityDetails>();
             Verify.That(this.driverContext,
                 () => Assert.Equal(details.ActivityStatus, this.page.Status),
-                () => Assert.Equal(int.Parse(details.AskingPrice).ToString("N2") + " GBP", this.page.AskingPrice));
+                () => Assert.Equal(int.Parse(details.AskingPrice).ToString("N0") + " GBP", this.page.AskingPrice));
         }
 
         [Then(@"Attachment should be displayed on view activity page")]
@@ -280,7 +280,7 @@
 
             Verify.That(this.driverContext,
                 () => Assert.Equal(expectedDetails.Details, actualDetails[0]),
-                () => Assert.Equal(expectedDetails.Offer, actualDetails[1]),
+                () => Assert.Equal(expectedDetails.Offer + " GBP", actualDetails[1]),
                 () => Assert.Equal(expectedDetails.Status, actualDetails[2]));
         }
 

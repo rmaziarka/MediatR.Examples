@@ -18,30 +18,37 @@
         private readonly ElementLocator viewRequirementForm = new ElementLocator(Locator.CssSelector, "requirement-view > div");
         private readonly ElementLocator panel = new ElementLocator(Locator.CssSelector, ".side-panel.slide-in");
         private readonly ElementLocator loadingIndicator = new ElementLocator(Locator.CssSelector, "[ng-show *= 'isLoading']");
-        private readonly ElementLocator locationRequirementsDetails = new ElementLocator(Locator.XPath, "//*[contains(@translate, 'LOCATION')]/..//span");
-        private readonly ElementLocator propertyRequirementsDetails = new ElementLocator(Locator.XPath, "//*[contains(@translate, 'BASIC_REQUIREMENTS')]/..//div[contains(@class, 'ng-binding')]");
-        private readonly ElementLocator propertyRequirementsDetailsDescription = new ElementLocator(Locator.XPath, "//*[contains(@translate, 'DESCRIPTION')]/../p");
-        private readonly ElementLocator requirementApplicants = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'contacts'] div");
         private readonly ElementLocator requirementDate = new ElementLocator(Locator.CssSelector, "span[translate *= 'CREATEDDATE'] ~ span");
+        // Basic information
+        private readonly ElementLocator requirementType = new ElementLocator(Locator.Id, "requirement-preview-type");
+        private readonly ElementLocator requirementDescription = new ElementLocator(Locator.CssSelector, "requirement-description-preview-control .ng-binding");
+        // Rent
+        private readonly ElementLocator rent = new ElementLocator(Locator.CssSelector, ".range-value");
+        // Applicants
+        private readonly ElementLocator applicants = new ElementLocator(Locator.CssSelector, "div[ng-repeat *= 'contacts'] div");
+        // Location
+        private readonly ElementLocator locationRequirements = new ElementLocator(Locator.XPath, "//*[contains(@translate, 'LOCATION')]/..//span");
         // Notes
-        private readonly ElementLocator notesButton = new ElementLocator(Locator.Id, "notes-button");
+        private readonly ElementLocator addNotes = new ElementLocator(Locator.Id, "notes-button");
         private readonly ElementLocator notesNumber = new ElementLocator(Locator.CssSelector, "#notes-button .ng-binding");
         // Viewings
-        private readonly ElementLocator addViewings = new ElementLocator(Locator.CssSelector, "#viewings-list button");
+        private readonly ElementLocator addViewing = new ElementLocator(Locator.CssSelector, "#viewings-list button");
         private readonly ElementLocator viewings = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item .card");
         private readonly ElementLocator viewing = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .card-body");
         private readonly ElementLocator viewingData = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .ng-binding");
         private readonly ElementLocator viewingActions = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) .card-menu-button");
-        private readonly ElementLocator createOffer = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) [action *= 'showAddOfferPanel']");
         // Offers
+        private readonly ElementLocator addOffer = new ElementLocator(Locator.CssSelector, "#viewings-list card-list-item:nth-of-type({0}) [action *= 'showAddOfferPanel']");
         private readonly ElementLocator offers = new ElementLocator(Locator.CssSelector, ".requirement-view-offers .card-body");
         private readonly ElementLocator offer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .card-body");
         private readonly ElementLocator offerActions = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .card-menu-button");
         private readonly ElementLocator offerStatus = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .offer-status");
-        private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .ng-binding");
-        private readonly ElementLocator editOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showEditOfferPanel'] li");
+        private readonly ElementLocator offerPrice = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) .offer-price");
+        private readonly ElementLocator offerData = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) address-form-view .ng-binding");
+        private readonly ElementLocator editOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showOfferEditPanel'] li");
         private readonly ElementLocator detailsOffer = new ElementLocator(Locator.CssSelector, ".requirement-view-offers:nth-of-type({0}) [action *= 'showOfferDetailsView'] li");
-        private readonly ElementLocator addAttachmentButton = new ElementLocator(Locator.CssSelector, "#card-list-attachments button");
+        // Attachments
+        private readonly ElementLocator addAttachment = new ElementLocator(Locator.CssSelector, "#card-list-attachments button");
         private readonly ElementLocator attachmentFileTitle = new ElementLocator(Locator.CssSelector, "#card-list-attachments div[id *= 'attachment-data'");
         private readonly ElementLocator attachmentDate = new ElementLocator(Locator.CssSelector, "#card-list-attachments time[id *= 'attachment-created-date']");
         private readonly ElementLocator attachmentType = new ElementLocator(Locator.CssSelector, "#card-list-attachments span[id *= 'attachment-type']");
@@ -70,7 +77,13 @@
 
         public string CreateDate => this.Driver.GetElement(this.requirementDate).Text;
 
-        public List<string> Applicants => this.Driver.GetElements(this.requirementApplicants).Select(el => el.Text).ToList();
+        public List<string> Applicants => this.Driver.GetElements(this.applicants).Select(el => el.Text).ToList();
+
+        public string RequirementType => this.Driver.GetElement(this.requirementType).Text;
+
+        public string RequirementDescription => this.Driver.GetElement(this.requirementDescription).Text;
+
+        public string Rent => this.Driver.GetElement(this.rent).Text;
 
         public Attachment AttachmentDetails => new Attachment
         {
@@ -104,7 +117,7 @@
 
         public Dictionary<string, string> GetLocationRequirements()
         {
-            List<string> locationDetails = this.Driver.GetElements(this.locationRequirementsDetails).Select(el => el.Text).ToList();
+            List<string> locationDetails = this.Driver.GetElements(this.locationRequirements).Select(el => el.Text).ToList();
 
             List<string> keys = locationDetails.Select(el => el).Where((el, index) => index % 2 == 0).ToList();
             List<string> values = locationDetails.Select(el => el).Where((el, index) => index % 2 != 0).ToList();
@@ -113,24 +126,9 @@
                        .ToDictionary(pair => pair.Item1, pair => pair.Item2);
         }
 
-        public Dictionary<string, string> GetPropertyRequirements()
-        {
-            List<string> propertyDetails = this.Driver.GetElements(this.propertyRequirementsDetails).Select(el => el.Text).ToList();
-
-            List<string> keys = propertyDetails.Select(el => el).Where((el, index) => index % 2 == 0).ToList();
-            List<string> values = propertyDetails.Select(el => el).Where((el, index) => index % 2 != 0).ToList();
-
-            Dictionary<string, string> details =
-                keys.Zip(values, Tuple.Create)
-                    .ToDictionary(pair => pair.Item1, pair => pair.Item2);
-            details.Add("Requirement description", this.Driver.GetElement(this.propertyRequirementsDetailsDescription).Text);
-
-            return details;
-        }
-
         public ViewRequirementPage OpenNotes()
         {
-            this.Driver.Click(this.notesButton);
+            this.Driver.Click(this.addNotes);
             return this;
         }
 
@@ -142,7 +140,7 @@
 
         public ViewRequirementPage AddViewings()
         {
-            this.Driver.Click(this.addViewings);
+            this.Driver.Click(this.addViewing);
             return this;
         }
 
@@ -165,9 +163,17 @@
 
         public List<string> GetOfferDetails(int position)
         {
-            List<string> details = this.Driver.GetElements(this.offerData.Format(position)).Select(el => el.Text).ToList();
-            details.Add(this.Driver.GetElement(this.offerStatus.Format(position)).Text);
-            return details;
+            List<string> list =
+                this.Driver.GetElements(this.offerData.Format(position), element => element.Enabled)
+                    .Select(el => el.GetTextContent())
+                    .ToList();
+            string data = string.Join(" ", list).Trim();
+            return new List<string>()
+            {
+                data,
+                this.Driver.GetElement(this.offerStatus.Format(position)).Text,
+                this.Driver.GetElement(this.offerPrice.Format(position)).Text
+            };
         }
 
         public ViewRequirementPage OpenViewingActions(int position)
@@ -184,7 +190,7 @@
 
         public ViewRequirementPage CreateOffer(int position)
         {
-            this.Driver.Click(this.createOffer.Format(position));
+            this.Driver.Click(this.addOffer.Format(position));
             return this;
         }
 
@@ -221,7 +227,7 @@
 
         public ViewRequirementPage OpenAttachFilePanel()
         {
-            this.Driver.Click(this.addAttachmentButton);
+            this.Driver.Click(this.addAttachment);
             return this;
         }
 

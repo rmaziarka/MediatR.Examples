@@ -6,7 +6,8 @@ module Antares.Requirement.View {
         controllerAs: 'vm',
         controller: 'requirementViewController',
         bindings: {
-            requirement: '<'
+            requirement: '<',
+            config: '<'
         }
     });
 }

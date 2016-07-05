@@ -4,8 +4,12 @@ module Antares.Common.Component {
     'use strict';
 
     import Business = Common.Models.Business;
+    import AddressFormViewControlConfig = Attributes.IAddressFormViewControlConfig;
 
     export class AddressFormViewController {
+        // bindings 
+        public config: AddressFormViewControlConfig;
+
         addressForm: Business.AddressForm;
         address: Business.Address;
         templateUrl: string;

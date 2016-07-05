@@ -8,7 +8,9 @@ module Antares.Common.Component {
         bindings: {
             userCountryCode: '<',
             entityTypeCode: '<',
-            address: '='
+            address: '=',
+            templateUrl: '<',
+            config: '<'
         }
     });
 }

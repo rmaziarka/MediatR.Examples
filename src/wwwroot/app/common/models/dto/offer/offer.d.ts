@@ -4,7 +4,9 @@
         activityId: string;
         requirementId: string;
         statusId: string;
+        offerTypeId: string;
         price: number;
+        pricePerWeek: number;
         offerDate: Date;
         exchangeDate?: Date;
         completionDate?: Date;

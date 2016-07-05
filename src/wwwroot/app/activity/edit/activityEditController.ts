@@ -11,7 +11,7 @@ module Antares.Activity {
     }
 
     export class ActivityEditController {
-        public config: IActivityConfig;
+        public config: IActivityEditConfig;
         public activity: ActivityEditModel;
         public userData: Dto.ICurrentUser;
 
@@ -121,7 +121,7 @@ module Antares.Activity {
             fieldName: 'appraisalMeetingInvitationText',
             formName: 'invitationTextForm'
         }
-        
+
         constructor(
             private dataAccessService: Services.DataAccessService,
             private $state: ng.ui.IStateService,
@@ -185,7 +185,7 @@ module Antares.Activity {
 
             this.$q.all([addEditConfig, detailsConfig])
                 .then((configs: IActivityConfig[]) => {
-                    this.config = this.activityConfigUtils.merge(configs[0], configs[1]);
+                    this.config = <IActivityEditConfig>this.activityConfigUtils.merge(configs[0], configs[1]);
                 });
         }
 
@@ -362,6 +362,25 @@ module Antares.Activity {
             activityDepartment.departmentTypeId = this.standardDepartmentType.id;
 
             return activityDepartment;
+        }
+
+        public isValuationPricesSectionVisible = (): Boolean => {
+            return this.config != null && (this.config.marketAppraisalPrice != null || this.config.recommendedPrice != null ||
+                this.config.vendorEstimatedPrice != null || this.config.askingPrice != null || this.config.shortLetPricePerWeek != null);
+        }
+
+        public isBasicInformationSectionVisible = (): Boolean => {
+            return this.config != null && (this.config.property != null || this.config.source != null ||
+                this.config.sourceDescription != null || this.config.sellingReason != null || this.config.pitchingThreats != null);
+        }
+
+        public isAdditionalInformationSectionVisible = (): Boolean => {
+            return this.config != null && (this.config.keyNumber != null || this.config.accessArrangements != null);
+        }
+
+        public isAppraisalMeetingSectionVisible = (): Boolean => {
+            return this.config != null && (this.config.appraisalMeetingDate != null ||
+                this.config.appraisalMeetingAttendees != null || this.config.appraisalMeetingInvitation != null);
         }
     }
 

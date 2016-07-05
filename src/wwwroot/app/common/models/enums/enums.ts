@@ -21,6 +21,7 @@ module Antares.Common.Models.Enums
 	 	AdditionalSurveyStatus,
 	 	SearchStatus,
 	 	Enquiries,
+	 	SalutationFormat,
 	 	ActivitySource,
 	 	ActivitySellingReason,
 	 }
@@ -143,6 +144,12 @@ module Antares.Common.Models.Enums
 		Complete,
 	}
 
+	export enum SalutationFormat
+	{
+		MrJohnSmith,
+		JohnSmithEsq,
+	}
+
 	export enum ActivitySource
 	{
 		KFContactsRegister,
@@ -185,6 +192,6 @@ module Antares.Common.Models.Enums
 		RegularPropertyValueAppraisal,
 		Relocation,
 		Retiring,
-		SurpliceToTequirement,
+		SurpliceToRequirement,
 	}
 }

@@ -15,6 +15,10 @@
 
     public class Offer : BaseEntity, IAuditableEntity
     {
+        public Guid OfferTypeId { get; set; }
+
+        public virtual OfferType OfferType { get; set; }
+
         public Guid StatusId { get; set; }
 
         public EnumTypeItem Status { get; set; }
@@ -87,7 +91,9 @@
 
         public int? MortgageLoanToValue { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
+
+        public decimal? PricePerWeek { get; set; }
 
         public DateTime OfferDate { get; set; }
 
