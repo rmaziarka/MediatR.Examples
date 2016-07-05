@@ -54,7 +54,7 @@ module Antares.Activity {
 
         activityDisposalTypeSchema: Antares.Attributes.IEnumItemEditControlSchema = {
             controlId: 'disposalTypeId',
-            translationKey: 'ACTIVITY.EDIT.DISPOSAL_TYPE',
+            translationKey: 'ACTIVITY.COMMON.DISPOSAL_TYPE',
             fieldName: 'disposalTypeId',
             formName: 'disposalTypeForm',
             enumTypeCode: Dto.EnumTypeCode.DisposalType
@@ -113,7 +113,7 @@ module Antares.Activity {
 
         activityDecorationSchema: Antares.Attributes.IEnumItemEditControlSchema = {
             controlId: 'decorationId',
-            translationKey: 'ACTIVITY.EDIT.OTHER.DECORATION',
+            translationKey: 'ACTIVITY.COMMON.DECORATION',
             fieldName: 'decorationId',
             formName: 'decorationForm',
             enumTypeCode: Dto.EnumTypeCode.Decoration
@@ -121,21 +121,21 @@ module Antares.Activity {
 
         kfValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
             controlId: 'kfValuationPrice',
-            translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.KF_VALUTATION',
+            translationKey: 'ACTIVITY.COMMON.KF_VALUTATION',
             formName: 'kfValuationPriceForm',
             fieldName: 'kfValuationPrice'
         }
 
         vendorValuationPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
             controlId: 'vendorValuationPrice',
-            translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.VENDOR_VALUATION',
+            translationKey: 'ACTIVITY.COMMON.VENDOR_VALUATION',
             formName: 'vendorValuationPriceForm',
             fieldName: 'vendorValuationPrice'
         }
 
         agreedInitialMarketingPriceSchema: Antares.Attributes.IPriceEditControlSchema = {
             controlId: 'agreedInitialMarketingPrice',
-            translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.AGREED_INITIAL_MARKETING_PRICE',
+            translationKey: 'ACTIVITY.COMMON.AGREED_INITIAL_MARKETING_PRICE',
             formName: 'agreedInitialMarketingPriceForm',
             fieldName: 'agreedInitialMarketingPrice'
         }
@@ -143,83 +143,83 @@ module Antares.Activity {
 
         shortKfValuationPriceSchema = {
             controlId: 'shortKfValuationPrice',
-            translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.SHORT_LET',
+            translationKey: 'ACTIVITY.COMMON.SHORT_LET',
             formName: 'shortKfValuationPriceForm',
             fieldName: 'shortKfValuationPrice',
-            suffix: 'ACTIVITY.EDIT.VALUATION_INFO.SUFFIX'
+            suffix: 'ACTIVITY.COMMON.SUFFIX'
         }
 
         shortVendorValuationPriceSchema = {
             controlId: 'shortVendorValuationPrice',
-            translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.SHORT_LET',
+            translationKey: 'ACTIVITY.COMMON.SHORT_LET',
             formName: 'shortVendorValuationPriceForm',
             fieldName: 'shortVendorValuationPrice',
-            suffix: 'ACTIVITY.EDIT.VALUATION_INFO.SUFFIX'
+            suffix: 'ACTIVITY.COMMON.SUFFIX'
         }
 
         shortAgreedInitialMarketingPriceSchema = {
             controlId: 'shortAgreedInitialMarketingPrice',
-            translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.SHORT_LET',
+            translationKey: 'ACTIVITY.COMMON.SHORT_LET',
             formName: 'shortAgreedInitialMarketingPriceForm',
             fieldName: 'shortAgreedInitialMarketingPrice',
-            suffix: 'ACTIVITY.EDIT.VALUATION_INFO.SUFFIX'
+            suffix: 'ACTIVITY.COMMON.SUFFIX'
         }
 
         longKfValuationPriceSchema = {
             controlId: 'longKfValuationPrice',
-            translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.LONG_LET',
+            translationKey: 'ACTIVITY.COMMON.LONG_LET',
             formName: 'longKfValuationPriceForm',
             fieldName: 'longKfValuationPrice',
-            suffix: 'ACTIVITY.EDIT.VALUATION_INFO.SUFFIX'
+            suffix: 'ACTIVITY.COMMON.SUFFIX'
         }
 
         longVendorValuationPriceSchema = {
             controlId: 'longVendorValuationPrice',
-            translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.LONG_LET',
+            translationKey: 'ACTIVITY.COMMON.LONG_LET',
             formName: 'longVendorValuationPriceForm',
             fieldName: 'longVendorValuationPrice',
-            suffix: 'ACTIVITY.EDIT.VALUATION_INFO.SUFFIX'
+            suffix: 'ACTIVITY.COMMON.SUFFIX'
         }
 
         longAgreedInitialMarketingPriceSchema = {
             controlId: 'longAgreedInitialMarketingPrice',
-            translationKey: 'ACTIVITY.EDIT.VALUATION_INFO.LONG_LET',
+            translationKey: 'ACTIVITY.COMMON.LONG_LET',
             formName: 'longAgreedInitialMarketingPriceForm',
             fieldName: 'longAgreedInitialMarketingPrice',
-            suffix: 'ACTIVITY.EDIT.VALUATION_INFO.SUFFIX'
+            suffix: 'ACTIVITY.COMMON.SUFFIX'
         }
 
         serviceChargeAmountSchema: Antares.Attributes.IPriceEditControlSchema = {
             controlId: 'serviceChargeAmount',
-            translationKey: 'ACTIVITY.EDIT.CHARGES.SERVICE_CHARGE',
+            translationKey: 'ACTIVITY.COMMON.SERVICE_CHARGE',
             formName: 'serviceChargeAmountForm',
             fieldName: 'serviceChargeAmount'
         }
 
         serviceChargeNoteSchema: Antares.Attributes.ITextEditControlSchema = {
             controlId: 'serviceChargeNote',
-            translationKey: 'ACTIVITY.EDIT.CHARGES.SERVICE_CHARGE_NOTE',
+            translationKey: 'ACTIVITY.COMMON.SERVICE_CHARGE_NOTE',
             fieldName: 'serviceChargeNote',
             formName: 'serviceChargeNoteForm'
         }
 
         groundRentAmountSchema: Antares.Attributes.IPriceEditControlSchema = {
             controlId: 'groundRentAmount',
-            translationKey: 'ACTIVITY.EDIT.CHARGES.GROUND_RENT',
+            translationKey: 'ACTIVITY.COMMON.GROUND_RENT',
             formName: 'groundRentAmountForm',
             fieldName: 'groundRentAmount'
         }
 
         groundRentNoteSchema: Antares.Attributes.ITextEditControlSchema = {
             controlId: 'groundRentNote',
-            translationKey: 'ACTIVITY.EDIT.CHARGES.GROUND_RENT_NOTE',
+            translationKey: 'ACTIVITY.COMMON.GROUND_RENT_NOTE',
             fieldName: 'groundRentNote',
             formName: 'groundRentNoteForm'
         }
 
         otherConditionSchema: Antares.Attributes.ITextEditControlSchema = {
             controlId: 'otherCondition',
-            translationKey: 'ACTIVITY.EDIT.OTHER_CONDITIONS.RESTRICTIONS',
+            translationKey: 'ACTIVITY.COMMON.RESTRICTIONS',
             fieldName: 'otherCondition',
             formName: 'otherConditionForm'
         }

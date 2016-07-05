@@ -195,8 +195,26 @@
   },
   "ACTIVITY": {
     "COMMON": {
+      "ACCESS_DETAILS": "Access details",
       "ADDITIONAL_INFORMATION": "Additional information",
-      "PITCHING_THREATS" : "Pitching threats"
+      "AGREED_INITIAL_MARKETING_PRICE": "Agreed Initial Marketing Price",
+      "CHARGES": "Charges",
+      "DECORATION": "Decoration",
+      "DISPOSAL_TYPE": "Disposal type",
+      "GROUND_RENT": "Ground rent",
+      "GROUND_RENT_NOTE": "Ground rent note",
+      "KF_VALUTATION": "KF Valuation",
+      "LONG_LET": "Long let",
+      "OTHER": "Other",
+      "OTHER_CONDITIONS": "Other conditions",
+      "PITCHING_THREATS": "Pitching threats",
+      "RESTRICTIONS": "Restrictions",
+      "SERVICE_CHARGE": "Service charge",
+      "SERVICE_CHARGE_NOTE": "Service charge note",
+      "SHORT_LET": "Short let",
+      "SUFFIX": "GBP / week",
+      "VALUATION_INFORMATION": "Valuation information",
+      "VENDOR_VALUATION": "Vendor Valuation"
     },
     "LIST": {
       "ACTIVITIES": "Activities",
@@ -218,27 +236,12 @@
         "ADDITIONAL_INFORMATION": "Additional information",
         "ACCESS_DETAILS": "Access details"
       },
-      "CHARGES": {
-        "CHARGES": "Charges",
-        "SERVICE_CHARGE": "Service charge",
-        "GROUND_RENT": "Ground rent",
-        "SERVICE_CHARGE_NOTE": "Service charge note",
-        "GROUND_RENT_NOTE": "Ground rent note"
-      },
       "DISPOSAL_TYPE": "Disposal type",
       "STATUS": "Status",
       "PROPERTY": "Property",
       "VENDORS": "Vendors",
       "LANDLORDS": "Landlords",
       "NO_VENDORS": "No vendors defined",
-      "OTHER": {
-        "OTHER": "Other",
-        "DECORATION": "Decoration"
-      },
-      "OTHER_CONDITIONS": {
-        "OTHER_CONDITIONS": "Other conditions",
-        "RESTRICTIONS": "Restrictions"
-      },
       "PRICES": {
         "PRICES": "Valuation prices",
         "MARKET_APPRAISAL_PRICE": "Market appraisal price",
@@ -246,15 +249,6 @@
         "VENDOR_ESTIMATED_PRICE": "Vendor estimated price",
         "ASKING_PRICE": "Asking price",
         "SHORT_LET_PRICE_PER_WEEK": "Short Let Price Per Week"
-      },
-      "VALUATION_INFO": {
-        "VALUATION_INFORMATION": "Valuation information",
-        "KF_VALUTATION": "KF Valuation",
-        "AGREED_INITIAL_MARKETING_PRICE": "Agreed Initial Marketing Price",
-        "VENDOR_VALUATION": "Vendor Valuation",
-        "SHORT_LET": "Short let",
-        "LONG_LET": "Long let",
-        "SUFFIX": "GBP / week"
       },
       "SOURCE": "Source",
       "SOURCE_DESCRIPTION": "Source - description",

@@ -70,7 +70,7 @@
             </section>
             <section id="other-info" ng-if="vm.config.decoration">
                 <fieldset>
-                    <h3 class="page-header" translate="ACTIVITY.EDIT.OTHER.OTHER"></h3>
+                    <h3 class="page-header" translate="ACTIVITY.COMMON.OTHER"></h3>
                     <enum-item-edit-control ng-model="vm.activity.decorationId" config="vm.config.decoration" schema="vm.activityDecorationSchema"></enum-item-edit-control>
                 </fieldset>
             </section>
@@ -78,7 +78,7 @@
 
         <div class="col-md-4">
             <fieldset id="activity-edit-prices" ng-if="vm.config.kfValuationPrice && vm.config.vendorValuationPrice && vm.config.agreedInitialMarketingPrice">
-                <h3 class="page-header" translate="ACTIVITY.EDIT.VALUATION_INFO.VALUATION_INFORMATION"></h3>
+                <h3 class="page-header" translate="ACTIVITY.COMMON.VALUATION_INFORMATION"></h3>
                 <div class="row">
                     <div class="col-xs-4"><price-edit-control config="vm.config.kfValuationPrice" schema="vm.kfValuationPriceSchema" ng-model='vm.activity.kfValuationPrice'></price-edit-control>
                     </div>
@@ -89,8 +89,8 @@
                 </div>
             </fieldset>
             <fieldset id="activity-edit-short-long-prices" ng-if="vm.config.shortKfValuationPrice && vm.config.longKfValuationPrice && vm.config.shortVendorValuationPrice && vm.config.longVendorValuationPrice && vm.config.shortAgreedInitialMarketingPrice && vm.config.longAgreedInitialMarketingPrice">
-                <h3 class="page-header" translate="ACTIVITY.EDIT.VALUATION_INFO.VALUATION_INFORMATION"></h3>
-                <h4 class="page-header" translate="ACTIVITY.EDIT.VALUATION_INFO.KF_VALUTATION"></h4>
+                <h3 class="page-header" translate="ACTIVITY.COMMON.VALUATION_INFORMATION"></h3>
+                <h4 class="page-header" translate="ACTIVITY.COMMON.KF_VALUTATION"></h4>
                 <div class="row">
                     <div class="col-xs-6">
                         <price-edit-control config="vm.config.shortKfValuationPrice" schema="vm.shortKfValuationPriceSchema" ng-model='vm.activity.shortKfValuationPrice'></price-edit-control>
@@ -99,7 +99,7 @@
                         <price-edit-control config="vm.config.longKfValuationPrice" schema="vm.longKfValuationPriceSchema" ng-model='vm.activity.longKfValuationPrice'></price-edit-control>
                     </div>
                 </div>
-                <h4 class="page-header" translate="ACTIVITY.EDIT.VALUATION_INFO.VENDOR_VALUATION"></h4>
+                <h4 class="page-header" translate="ACTIVITY.COMMON.VENDOR_VALUATION"></h4>
                 <div class="row">
                     <div class="col-xs-6">
                         <price-edit-control config="vm.config.shortVendorValuationPrice" schema="vm.shortVendorValuationPriceSchema" ng-model='vm.activity.shortVendorValuationPrice'></price-edit-control>
@@ -108,7 +108,7 @@
                         <price-edit-control config="vm.config.longVendorValuationPrice" schema="vm.longVendorValuationPriceSchema" ng-model='vm.activity.longVendorValuationPrice'></price-edit-control>
                     </div>
                 </div>
-                <h4 class="page-header" translate="ACTIVITY.EDIT.VALUATION_INFO.AGREED_INITIAL_MARKETING_PRICE"></h4>
+                <h4 class="page-header" translate="ACTIVITY.COMMON.AGREED_INITIAL_MARKETING_PRICE"></h4>
                 <div class="row">
                     <div class="col-xs-6">
                         <price-edit-control config="vm.config.shortAgreedInitialMarketingPrice" schema="vm.shortAgreedInitialMarketingPriceSchema" ng-model='vm.activity.shortAgreedInitialMarketingPrice'></price-edit-control>
@@ -120,7 +120,7 @@
                 </div>
             </fieldset>
             <fieldset id="activity-edit-charges" ng-if="vm.config.serviceChargeAmount && vm.config.serviceChargeAmount && vm.config.groundRentAmount && vm.config.groundRentNote">
-                <h3 class="page-header" translate="ACTIVITY.EDIT.CHARGES.CHARGES"></h3>
+                <h3 class="page-header" translate="ACTIVITY.COMMON.CHARGES"></h3>
                 <div class="row">
                     <div class="col-xs-4">
                         <price-edit-control config="vm.config.serviceChargeAmount" schema="vm.serviceChargeAmountSchema" ng-model="vm.activity.serviceChargeAmount"></price-edit-control>
@@ -139,7 +139,7 @@
                 </div>
             </fieldset>
             <fieldset id="activity-edit-other-conditions" ng-if="vm.config.otherCondition">
-                <h3 class="page-header" translate="ACTIVITY.EDIT.OTHER_CONDITIONS.OTHER_CONDITIONS"></h3>
+                <h3 class="page-header" translate="ACTIVITY.COMMON.OTHER_CONDITIONS"></h3>
                 <textarea-edit-control ng-model="vm.activity.otherCondition" config="vm.config.otherCondition" schema="vm.otherConditionSchema"></textarea-edit-control>
             </fieldset>
             <h3 class="page-header" translate="ACTIVITY.EDIT.APPRAISAL_MEETING.APPRAISAL_MEETING"></h3>
