@@ -2,11 +2,11 @@
 
 module Antares.Common.Models.Business {
     export class Company implements Dto.ICompany {
-        id: string = '';
-        name: string = '';    
-        websiteUrl: string = '';
-        clientCarePageUrl: string = '';
-        clientCareStatusId: string = '';
+        id: string = null;
+        name: string = null;    
+        websiteUrl: string = null;
+        clientCarePageUrl: string = null;
+        clientCareStatusId: string = null;
         clientCareStatus: Business.EnumTypeItem;
         contacts: Contact[] = [];
         companiesContacts: Models.Dto.ICompanyContact[];

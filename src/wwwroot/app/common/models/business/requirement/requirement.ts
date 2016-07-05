@@ -4,8 +4,8 @@ module Antares.Common.Models.Business {
     export class Requirement implements Dto.IRequirement {
         [index: string]: any;
 
-        id: string = '';
-        requirementTypeId: string = '';
+        id: string = null;
+        requirementTypeId: string = null;
         createDate: Date = null;
         contacts: Contact[] = [];
         address: Address = new Address();
