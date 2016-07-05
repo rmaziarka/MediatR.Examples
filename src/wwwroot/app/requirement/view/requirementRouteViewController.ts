@@ -5,13 +5,15 @@ module Antares.Property {
     import Business = Common.Models.Business;
     import LatestViewsProvider = Providers.LatestViewsProvider;
     import EntityType = Common.Models.Enums.EntityTypeEnum;
+    import RequirementViewConfig = Requirement.IRequirementViewConfig;
 
     export class RequirementRouteViewController {
 
-        constructor(private $scope: ng.IScope, requirement: Dto.IRequirement, private latestViewsProvider: LatestViewsProvider) {
+        constructor(private $scope: ng.IScope, requirement: Dto.IRequirement, config: RequirementViewConfig, private latestViewsProvider: LatestViewsProvider) {
             var requirementViewModel = new Business.Requirement(requirement);
 
             $scope['requirement'] = requirementViewModel;
+            $scope['config'] = config;
             this.saveRecentViewedRequirement(requirementViewModel.id);
         }
 

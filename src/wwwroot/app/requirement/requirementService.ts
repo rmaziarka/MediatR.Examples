@@ -16,6 +16,12 @@ module Antares.Requirement {
 
             return this.$http.post(this.appConfig.rootUrl + url, requirementAttachment);
         }
+
+        getRequirementTypes = (countryCode: string): ng.IHttpPromise<Array<Dto.IRequirementTypeQueryResult>> => {
+            var url = `${this.apiUrl}/types?countryCode=${countryCode}`;
+
+            return this.$http.get(this.appConfig.rootUrl + url);
+        }
     }
 
     angular.module('app').service('requirementService', RequirementService);

@@ -3,8 +3,13 @@
 module Antares.Common.Component {
     import Dto = Common.Models.Dto;
     import Business = Common.Models.Business;
+    import AddressFormEditControlConfig = Attributes.IAddressFormEditControlConfig;
 
     export class AddressFormEditController {
+        // bindings 
+        public config: AddressFormEditControlConfig;
+        templateUrl: string;
+
         public userCountryCode: string;
         public entityTypeCode: string;
         public address: Business.Address;

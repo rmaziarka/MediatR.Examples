@@ -6,7 +6,8 @@ module Antares.Requirement {
         controllerAs: 'vm',
         controller: 'requirementAddController',
         bindings: {
-            userData: '<'
+            userData: '<',
+            config: '<'
         }
     });
 }

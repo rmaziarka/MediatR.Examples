@@ -25,8 +25,8 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
+    <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
@@ -102,6 +102,7 @@
     <Compile Include="Activity\Commands\UpdateActivityCommand.cs" />
     <Compile Include="Activity\Queries\ActivitiesQuery.cs" />
     <Compile Include="Activity\Queries\ActivityQuery.cs" />
+    <Compile Include="Activity\Queries\ActivitiesFilterQuery.cs" />
     <Compile Include="Activity\Queries\ActivityTypeQueryValidator.cs" />
     <Compile Include="Activity\Queries\ActivityQueryValidator.cs" />
     <Compile Include="Activity\Queries\ActivityTypeQuery.cs" />
@@ -172,12 +173,16 @@
     <Compile Include="AttributeConfiguration\Common\Extensions\TypeExtensions.cs" />
     <Compile Include="AttributeConfiguration\Common\IAttributeValidator.cs" />
     <Compile Include="AttributeConfiguration\Common\IEntityMapper.cs" />
+    <Compile Include="AttributeConfiguration\Common\RequirementEntityMapper.cs" />
+    <Compile Include="AttributeConfiguration\Common\OfferEntityMapper.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ActivityControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\BaseControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerOneType.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerThreeTypes.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\ControlsConfigurationPerTwoTypes.cs" />
     <Compile Include="AttributeConfiguration\EntityConfigurations\IControlsConfiguration.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\RequirementControlsConfiguration.cs" />
+    <Compile Include="AttributeConfiguration\EntityConfigurations\OfferControlsConfiguration.cs" />
     <Compile Include="AttributeConfiguration\Enums\ControlCode.cs" />
     <Compile Include="AttributeConfiguration\Enums\PageType.cs" />
     <Compile Include="AttributeConfiguration\Fields\Control.cs" />
@@ -208,6 +213,7 @@
     <Compile Include="Common\Commands\CreateOrUpdateAddress.cs" />
     <Compile Include="Common\Commands\CreateOrUpdateAddressValidator.cs" />
     <Compile Include="Common\Enums\DivisionEnum.cs" />
+    <Compile Include="Common\Enums\EnumMapper.cs" />
     <Compile Include="Common\Enums\EnumParser.cs" />
     <Compile Include="Common\Enums\GenerateEnumTypeItems.cs">
       <AutoGen>True</AutoGen>
@@ -224,6 +230,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PropertyType.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Enums\RequirementType.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RequirementType.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Enums\OfferType.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OfferType.tt</DependentUpon>
     </Compile>
     <Compile Include="Common\NinjectInstanceResolver.cs" />
     <Compile Include="Common\INinjectInstanceResolver.cs" />
@@ -274,20 +290,25 @@
     <Compile Include="LatestView\QueryResults\LatestViewQueryResultItem.cs" />
     <Compile Include="Offer\CommandHandlers\UpdateOfferCommandHandler.cs" />
     <Compile Include="Offer\CommandHandlers\CreateOfferCommandHandler.cs" />
-    <Compile Include="Offer\Commands\UpdateOfferCommandValidator.cs" />
+    <Compile Include="Common\Validator\DateInFutureValidator.cs" />
+    <Compile Include="Common\Validator\DateInPastValidator.cs" />
     <Compile Include="Offer\Commands\UpdateOfferCommand.cs" />
     <Compile Include="Offer\Commands\CreateOfferCommand.cs" />
-    <Compile Include="Offer\Commands\OfferCommandProfile.cs" />
-    <Compile Include="Offer\Commands\CreateOfferCommandValidator.cs" />
     <Compile Include="Offer\OfferHelpers\IOfferProgressStatusHelper.cs" />
     <Compile Include="Offer\OfferHelpers\OfferProgressStatusHelper.cs" />
     <Compile Include="Offer\Queries\OfferQuery.cs" />
     <Compile Include="Offer\Queries\OfferQueryValidator.cs" />
+    <Compile Include="Offer\Queries\OfferTypeQuery.cs" />
     <Compile Include="Offer\QueryHandlers\OfferQueryHandler.cs" />
+    <Compile Include="Offer\QueryHandlers\OfferTypeQueryHandler.cs" />
+    <Compile Include="Offer\QueryResults\OfferTypeQueryResult.cs" />
     <Compile Include="Property\CommandHandlers\CreatePropertyAttachmentCommandHandler.cs" />
     <Compile Include="Property\Commands\CreatePropertyAttachmentCommand.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementAttachmentCommandHandler.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementAttachmentCommand.cs" />
+    <Compile Include="Requirement\Queries\RequirementTypeQuery.cs" />
+    <Compile Include="Requirement\QueryHandlers\RequirementTypeQueryHandler.cs" />
+    <Compile Include="Requirement\QueryResults\RequirementTypeQueryResult.cs" />
     <Compile Include="User\CommandHandlers\UpdateUserCommandHandler.cs" />
     <Compile Include="User\Commands\UserCommandProfile.cs" />
     <Compile Include="User\Commands\UpdateUserCommand.cs" />
@@ -378,7 +399,6 @@
     <Compile Include="RequirementNote\Queries\RequirementNoteQueryValidator.cs" />
     <Compile Include="RequirementNote\QueryHandlers\RequirementNoteQueryHandler.cs" />
     <Compile Include="Requirement\CommandHandlers\CreateRequirementCommandHandler.cs" />
-    <Compile Include="Requirement\Commands\CreateRequirementCommandValidator.cs" />
     <Compile Include="Requirement\Commands\CreateRequirementCommand.cs" />
     <Compile Include="Requirement\Commands\RequirementCommandProfile.cs" />
     <Compile Include="Ownership\Queries\OwnershipByIdQuery.cs" />
@@ -431,6 +451,14 @@
     <Content Include="Common\Enums\PropertyType.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PropertyType.cs</LastGenOutput>
+    </Content>
+    <Content Include="Common\Enums\RequirementType.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RequirementType.cs</LastGenOutput>
+    </Content>
+    <Content Include="Common\Enums\OfferType.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>OfferType.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup />

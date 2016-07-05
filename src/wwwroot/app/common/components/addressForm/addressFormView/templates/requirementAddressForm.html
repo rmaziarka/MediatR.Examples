@@ -1,9 +1,9 @@
-﻿<div ng-repeat="row in vm.addressForm.addressFieldRows | orderBy: 'rowOrder'" class="row section-row addr-row">
+﻿<div ng-if="vm.config" ng-repeat="row in vm.addressForm.addressFieldRows | orderBy: 'rowOrder'" class="row section-row addr-row">
     <div ng-repeat="field in row | orderBy: 'columnOrder'" class="addr-column">
-        <div class="col-xs-6 addr-label" ng-show="vm.address[field.name]">
+        <div class="col-xs-5 addr-label" ng-show="vm.address[field.name]">
             <span translate={{field.labelKey}}></span>
         </div>
-        <div class="col-xs-6 addr-value" ng-show="vm.address[field.name]">
+        <div class="col-xs-7 addr-value" ng-show="vm.address[field.name]">
             <span>{{vm.address[field.name]}}</span>
         </div>
     </div>

@@ -79,6 +79,16 @@ module Antares.Services {
             }
         };
 
+        private getActivitiesForRequirementAction: ng.resource.IActionDescriptor = {
+            url: this.appConfig.rootUrl + '/api/activities?countryCode=:countryCode&requirementTypeId=:requirementTypeId',
+            method: 'GET',
+            isArray: true,
+            params: {
+                countryCode: '@countryCode',
+                requirementTypeId: '@requirementTypeId'
+            }
+        };
+
         private getAttributesAction: ng.resource.IActionDescriptor = {
             url: this.appConfig.rootUrl + '/api/properties/attributes?countryId=:countryId&propertyTypeId=:propertyTypeId',
             method: 'GET',
@@ -101,6 +111,15 @@ module Antares.Services {
             }
         };
 
+        private getRequirementTypesAction: ng.resource.IActionDescriptor = {
+            url: this.appConfig.rootUrl + '/api/requirements/types?countryCode=:countryCode',
+            method: 'GET',
+            isArray: true,
+            params: {
+                countryCode: '@countryCode'
+            }
+        };
+
         getCompanyResource(): Resources.ICompanyResourceClass{
             return <Resources.ICompanyResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/companies/:id', null, {
@@ -120,7 +139,9 @@ module Antares.Services {
 
         getRequirementResource(): Resources.IRequirementResourceClass {
             return <Resources.IRequirementResourceClass>
-                this.$resource(this.appConfig.rootUrl + '/api/requirements/:id');
+                this.$resource(this.appConfig.rootUrl + '/api/requirements/:id', null, {
+                    getRequirementTypes: this.getRequirementTypesAction
+                });
         }
 
         getViewingResource(): Resources.IViewingResourceClass {
@@ -182,7 +203,8 @@ module Antares.Services {
             return <Resources.IActivityResourceClass>
                 this.$resource(this.appConfig.rootUrl + '/api/activities/:id', null, {
                     update: this.updateAction,
-                    getActivityTypes: this.getActivityTypesAction
+                    getActivityTypes: this.getActivityTypesAction,
+                    getActivitiesForRequirement: this.getActivitiesForRequirementAction
                 });
         }
 

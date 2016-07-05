@@ -14,7 +14,7 @@
     public class EditActivityPage : ProjectPageBase
     {
         private readonly ElementLocator saveButton = new ElementLocator(Locator.Id, "activity-edit-save");
-        private readonly ElementLocator status = new ElementLocator(Locator.CssSelector, "activity-status-control #status");
+        private readonly ElementLocator status = new ElementLocator(Locator.Id, "activityStatusId");
         // Valuation prices
         private readonly ElementLocator askingPrice = new ElementLocator(Locator.Id, "asking-price");
         private readonly ElementLocator shortLetPricePerWeek = new ElementLocator(Locator.Id, "short-let-price-per-week");

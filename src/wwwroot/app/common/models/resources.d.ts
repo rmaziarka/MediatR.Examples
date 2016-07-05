@@ -103,11 +103,12 @@ declare module Antares.Common.Models {
         }
 
         interface ICompanyResourceClass extends Resources.IBaseResourceClass<Resources.ICompanyResource> {
-          
+
         }
 
         interface IActivityResourceClass extends Resources.IBaseResourceClass<Resources.IActivityResource> {
             getActivityTypes(params: any, ownership: any): ng.resource.IResource<Dto.IActivityTypeQueryResult[]>;
+            getActivitiesForRequirement(params: any, ownership: any): ng.resource.IResource<Dto.IActivityTypeQueryResult[]>;
         }
 
         interface IActivityUserResourceClass extends Resources.IBaseResourceClass<Resources.IActivityUserResource> {
@@ -121,6 +122,7 @@ declare module Antares.Common.Models {
         }
 
         interface IRequirementResourceClass extends Resources.IBaseResourceClass<Resources.IRequirementResource> {
+            getRequirementTypes(params: any): ng.resource.IResource<Dto.IRequirementTypeQueryResult[]>;
         }
 
         interface IViewingResourceClass extends Resources.IBaseResourceClass<Resources.IViewingResource> {

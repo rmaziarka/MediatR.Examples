@@ -2,17 +2,17 @@
     export class Address implements Dto.IAddress {
         [key: string]: any;
 
-        id: string = '';
-        countryId: string = '';
-        addressFormId: string = '';
-        propertyName: string = '';
-        propertyNumber: string = '';
-        line1: string = '';
-        line2: string = '';
-        line3: string = '';
-        postcode: string = '';
-        city: string = '';
-        county: string = '';
+        id: string = null;
+        countryId: string = null;
+        addressFormId: string = null;
+        propertyName: string = null;
+        propertyNumber: string = null;
+        line1: string = null;
+        line2: string = null;
+        line3: string = null;
+        postcode: string = null;
+        city: string = null;
+        county: string = null;
 
         constructor(address?: Dto.IAddress){
             if (address) {
@@ -21,16 +21,16 @@
         }
 
         public clear = (): void =>{
-            this.countryId = '';
-            this.addressFormId = '';
-            this.propertyName = '';
-            this.propertyNumber = '';
-            this.line1 = '';
-            this.line2 = '';
-            this.line3 = '';
-            this.postcode = '';
-            this.city = '';
-            this.county = '';
+            this.countryId = null;
+            this.addressFormId = null;
+            this.propertyName = null;
+            this.propertyNumber = null;
+            this.line1 = null;
+            this.line2 = null;
+            this.line3 = null;
+            this.postcode = null;
+            this.city = null;
+            this.county = null;
         }
 
         public getAddressText = (): string =>{

@@ -35,6 +35,7 @@
         /// <returns>Viewing.</returns>
         [HttpPost]
         [Route("")]
+        [DataShaping]
         public Viewing CreateViewing(CreateViewingCommand command)
         {
             Guid viewingId = this.mediator.Send(command);
@@ -49,6 +50,7 @@
         /// <returns>Viewing.</returns>
         [HttpGet]
         [Route("{id}")]
+        [DataShaping]
         public Viewing GetViewingById(Guid id)
         {
             Viewing viewing = this.mediator.Send(new ViewingQuery { Id = id });
@@ -68,6 +70,7 @@
         /// <returns></returns>
         [HttpPut]
         [Route("")]
+        [DataShaping]
         public Viewing UpdateViewing(UpdateViewingCommand command)
         {
             Guid viewingId = this.mediator.Send(command);

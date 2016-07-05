@@ -25,7 +25,7 @@
             }
             else
             {
-                this.Driver.Click(this.addArea);
+                this.Driver.ClickWithJs(this.addArea);
                 this.Driver.SendKeys(this.name.Format(place), areaName);
                 this.Driver.SendKeys(this.size.Format(place), areaSize);
             }

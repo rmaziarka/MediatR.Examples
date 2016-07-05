@@ -23,6 +23,8 @@
 
     using Xunit;
 
+    using RequirementType = KnightFrank.Antares.Domain.Common.Enums.RequirementType;
+
     [Binding]
     public class RequirementSteps : IClassFixture<BaseTestClassFixture>
     {
@@ -41,11 +43,14 @@
             this.scenarioContext = scenarioContext;
         }
 
-        [Given(@"Requirement exists in database")]
-        public void RequirementExistsInDatabase()
+        [Given(@"Requirement of type (.*) exists in database")]
+        public void RequirementExistsInDatabase(string requirementType)
         {
             const string countryCode = "GB";
             Guid countryId = this.fixture.DataContext.Countries.Single(x => x.IsoCode.Equals(countryCode)).Id;
+            Guid requirementTypeId =
+                this.fixture.DataContext.RequirementTypes.Single(
+                    rt => rt.EnumCode.Equals(requirementType)).Id;
             Guid enumTypeItemId =
                 this.fixture.DataContext.EnumTypeItems.Single(
                     e => e.EnumType.Code.Equals(nameof(EntityType)) && e.Code.Equals(nameof(EntityType.Requirement))).Id;
@@ -69,22 +74,17 @@
                 CreateDate = this.date,
                 Contacts = contacts,
                 Address = address,
-                MinArea = 1,
-                MaxArea = 2,
-                MinBathrooms = 1,
-                MaxBathrooms = 2,
-                MinBedrooms = 1,
-                MaxBedrooms = 2,
-                MinLandArea = 1,
-                MaxLandArea = 2,
-                MinPrice = 1,
-                MaxPrice = 2,
-                MinParkingSpaces = 1,
-                MaxParkingSpaces = 2,
-                MinReceptionRooms = 1,
-                MaxReceptionRooms = 2,
-                Description = StringExtension.GenerateMaxAlphanumericString(4000)
+                Description = StringExtension.GenerateMaxAlphanumericString(4000),
+                RequirementTypeId = requirementTypeId
             };
+
+            switch (requirementType)
+            {
+                case nameof(RequirementType.ResidentialLetting):
+                    requirement.RentMin = 1000;
+                    requirement.RentMax = 2000;
+                    break;
+            }
 
             this.fixture.DataContext.Requirements.Add(requirement);
             this.fixture.DataContext.SaveChanges();
@@ -117,32 +117,33 @@
             this.scenarioContext.Set(details, "Location");
         }
 
-        [When(@"User creates following requirement using api")]
-        public void CreateRequirementWithApi(Table table)
+        [When(@"User creates (\w+) requirement using api")]
+        public void CreateRequirementWithApi(string requirementType)
         {
-            string requestUrl = $"{ApiUrl}";
-
             var contacts = this.scenarioContext.Get<List<Contact>>("Contacts");
-            var requirement = table.CreateInstance<CreateRequirementCommand>();
 
-            requirement.CreateDate = DateTime.Now;
-            requirement.ContactIds = contacts.Select(contact => contact.Id).ToList();
-
-            requirement.Address = this.scenarioContext.Get<CreateOrUpdateAddress>("Location");
-            if (requirement.Description.ToLower().Equals("max"))
+            var requirement = new CreateRequirementCommand
             {
-                requirement.Description = StringExtension.GenerateMaxAlphanumericString(4000);
+                ContactIds = contacts.Select(contact => contact.Id).ToList(),
+                Address = this.scenarioContext.Get<CreateOrUpdateAddress>("Location"),
+                Description = StringExtension.GenerateMaxAlphanumericString(4000),
+                RequirementTypeId = this.fixture.DataContext.RequirementTypes.Single(rt => rt.EnumCode.Equals(requirementType)).Id,
+            };
+
+            switch (requirementType)
+            {
+                case nameof(RequirementType.ResidentialLetting):
+                    requirement.RentMin = 1000;
+                    requirement.RentMax = 2000;
+                    break;
             }
 
-            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
-            this.scenarioContext.SetHttpResponseMessage(response);
+            this.PostRequirement(requirement);
         }
 
-        [When(@"User creates requirement with mandatory fields using api")]
-        public void CreateRequirementWithMandatoryFieldsWithApi()
+        [When(@"User creates (\w+) requirement with mandatory fields using api")]
+        public void CreateRequirementWithMandatoryFieldsWithApi(string requirementType)
         {
-            string requestUrl = $"{ApiUrl}";
-
             var contacts = this.scenarioContext.Get<List<Contact>>("Contacts");
 
             var requirement = new CreateRequirementCommand
@@ -155,23 +156,26 @@
                     Postcode = string.Empty,
                     AddressFormId = this.scenarioContext.Get<Guid>("AddressFormId"),
                     CountryId = this.scenarioContext.Get<Guid>("CountryId")
-                }
+                },
+                RequirementTypeId =
+                    this.fixture.DataContext.RequirementTypes.First(
+                        rt => rt.EnumCode.Equals(requirementType)).Id
             };
 
-            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
-            this.scenarioContext.SetHttpResponseMessage(response);
+            this.PostRequirement(requirement);
         }
 
-        [When(@"User creates following requirement without (contact|address form|country) using api")]
-        public void UserCreatesFollowingRequirementWithoutAddressForm(string missingData, Table table)
+        [When(@"User creates following requirement without (contact|address form|country|type) using api")]
+        public void CreateRequirementWithoutData(string missingData, Table table)
         {
-            string requestUrl = $"{ApiUrl}";
-
             var contacts = this.scenarioContext.Get<List<Contact>>("Contacts");
             var requirement = table.CreateInstance<CreateRequirementCommand>();
             var location = this.scenarioContext.Get<CreateOrUpdateAddress>("Location");
 
-            requirement.CreateDate = DateTime.Now;
+            requirement.RequirementTypeId = missingData.Equals("type")
+                ? Guid.NewGuid()
+                : this.fixture.DataContext.RequirementTypes.First(
+                    rt => rt.EnumCode.Equals(nameof(RequirementType.ResidentialLetting))).Id;
 
             if (!missingData.Equals("contact"))
             {
@@ -204,28 +208,25 @@
                 requirement.Address = location;
             }
 
-            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
-            this.scenarioContext.SetHttpResponseMessage(response);
+            this.PostRequirement(requirement);
         }
 
         [When(@"User creates following requirement with invalid contact using api")]
         public void CreateRequirementWithInvalidContact(Table table)
         {
-            string requestUrl = $"{ApiUrl}";
-
             var requirement = table.CreateInstance<CreateRequirementCommand>();
 
-            requirement.CreateDate = DateTime.Now;
             requirement.ContactIds = new List<Guid> { Guid.NewGuid() };
-
             requirement.Address = this.scenarioContext.Get<CreateOrUpdateAddress>("Location");
+            requirement.RequirementTypeId =
+                this.fixture.DataContext.RequirementTypes.First(
+                    rt => rt.EnumCode.Equals(nameof(RequirementType.ResidentialLetting))).Id;
 
-            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, requirement);
-            this.scenarioContext.SetHttpResponseMessage(response);
+            this.PostRequirement(requirement);
         }
 
         [When(@"User retrieves requirement for (.*) id")]
-        public void WhenUserRetrievesRequirementForId(string id)
+        public void GetRequirement(string id)
         {
             if (id.Equals("latest"))
             {
@@ -247,9 +248,25 @@
             AssertionOptions.AssertEquivalencyUsing(options =>
                 options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation)).WhenTypeIs<DateTime>());
 
-            expectedRequirement.ShouldBeEquivalentTo(currentRequirement, opt => opt.
-                Excluding(req => req.Address.Country).
-                Excluding(req => req.Address.AddressForm));
+            expectedRequirement.ShouldBeEquivalentTo(currentRequirement,
+                opt =>
+                    opt.Excluding(req => req.Address.Country)
+                       .Excluding(req => req.Address.AddressForm)
+                       .Excluding(req => req.RequirementType)
+
+                        // TODO temporary excluded until data shaping way of Collection assingnging will be decided (null or empty list)
+                       .Excluding(req => req.Offers)
+                       .Excluding(req => req.Attachments)
+                       .Excluding(req => req.Viewings)
+                       .Excluding(req => req.RequirementNotes));
+        }
+
+        private void PostRequirement(CreateRequirementCommand command)
+        {
+            string requestUrl = $"{ApiUrl}";
+
+            HttpResponseMessage response = this.fixture.SendPostRequest(requestUrl, command);
+            this.scenarioContext.SetHttpResponseMessage(response);
         }
     }
 }

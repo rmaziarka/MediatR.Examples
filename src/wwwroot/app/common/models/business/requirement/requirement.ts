@@ -4,11 +4,14 @@ module Antares.Common.Models.Business {
     export class Requirement implements Dto.IRequirement {
         [index: string]: any;
 
-        id: string = '';
+        id: string = null;
+        requirementTypeId: string = null;
         createDate: Date = null;
         contacts: Contact[] = [];
         address: Address = new Address();
         description: string;
+        rentMin: number = null;
+        rentMax: number = null;
         requirementNotes: RequirementNote[] = [];
         viewingsByDay: ViewingGroup[];
         viewings: Viewing[];

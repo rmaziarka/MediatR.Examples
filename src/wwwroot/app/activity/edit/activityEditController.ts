@@ -498,6 +498,24 @@ module Antares.Activity {
 
             return activityDepartment;
         }
+
+        public isValuationPricesSectionVisible = (): Boolean => {
+            return this.config != null && (this.config.askingPrice != null || this.config.shortLetPricePerWeek != null);
+        }
+
+        public isBasicInformationSectionVisible = (): Boolean => {
+            return this.config != null && (this.config.property != null || this.config.disposalType != null || this.config.source != null ||
+                this.config.sourceDescription != null || this.config.sellingReason != null || this.config.pitchingThreats != null);
+        }
+
+        public isAdditionalInformationSectionVisible = (): Boolean => {
+            return this.config != null && (this.config.keyNumber != null || this.config.accessArrangements != null);
+        }
+
+        public isAppraisalMeetingSectionVisible = (): Boolean => {
+            return this.config != null && (this.config.appraisalMeetingDate != null ||
+                this.config.appraisalMeetingAttendees != null || this.config.appraisalMeetingInvitation != null);
+        }
     }
 
     angular.module('app').controller('ActivityEditController', ActivityEditController);

@@ -79,6 +79,8 @@
     <Compile Include="Model\Configuration\BaseAuditableEntityConfiguration.cs" />
     <Compile Include="Model\Configuration\Company\CompanyContactConfiguration.cs" />
     <Compile Include="Model\Configuration\LatestView\LatestViewConfiguration.cs" />
+    <Compile Include="Model\Configuration\Offer\OfferTypeLocalisedConfiguration.cs" />
+    <Compile Include="Model\Configuration\Offer\OfferTypeConfiguration.cs" />
     <Compile Include="Model\Configuration\Offer\OfferConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\Activities\ActivityAccessDetails.cs" />
     <Compile Include="Model\Configuration\Property\Activities\ActivityAppraisalMeeting.cs" />
@@ -97,6 +99,8 @@
     <Compile Include="Model\Configuration\Property\PropertyAreaBreakdownConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\PropertyCharacteristicConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\RequirementNoteConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\RequirementTypeConfiguration.cs" />
+    <Compile Include="Model\Configuration\Property\RequirementTypeLocalisedConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\ViewingConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\PropertyAttributeFormConfiguration.cs" />
     <Compile Include="Model\Configuration\Property\PropertyAttributeFormDefinitionConfiguration.cs" />
@@ -128,6 +132,8 @@
     <Compile Include="Model\Enum\EnumLocalised.cs" />
     <Compile Include="Model\Enum\EnumType.cs" />
     <Compile Include="Model\Enum\EnumTypeItem.cs" />
+    <Compile Include="Model\Offer\OfferTypeLocalised.cs" />
+    <Compile Include="Model\Offer\OfferType.cs" />
     <Compile Include="Model\Offer\Offer.cs" />
     <Compile Include="Model\Property\Activities\ActivityAttendee.cs" />
     <Compile Include="Model\Property\Activities\ActivityTypeLocalised.cs" />
@@ -143,6 +149,8 @@
     <Compile Include="Model\Property\Characteristics\CharacteristicLocalised.cs" />
     <Compile Include="Model\Property\PropertyAreaBreakdown.cs" />
     <Compile Include="Model\Property\PropertyCharacteristic.cs" />
+    <Compile Include="Model\Property\RequirementType.cs" />
+    <Compile Include="Model\Property\RequirementTypeLocalised.cs" />
     <Compile Include="Model\Property\Viewing.cs" />
     <Compile Include="Model\Property\RequirementNote.cs" />
     <Compile Include="Model\Property\Activities\Activity.cs" />

@@ -123,8 +123,8 @@
     "DATE_CANNOT_BE_IN_PAST": "Date cannot be in the past",
     "DATE_CANNOT_BE_IN_FUTURE": "Date cannot be in the future",
     "NUMBER_HAS_TO_BE_INTEGER": "Only integer values are allowed",
-    "DATE_CAN_NOT_BE_LOWER_THEN_CREATE_DATE": "Given date can not be earlier then create date",
-    "DATE_CAN_NOT_BE_GREATER_THEN_CREATE_DATE": "Given date can not be greater then create date"
+    "DATE_CAN_NOT_BE_LOWER_THEN_CREATE_DATE": "Given date can not be earlier than create date",
+    "DATE_CAN_NOT_BE_GREATER_THEN_CREATE_DATE": "Given date can not be greater than create date"
   },
   "PROPERTY": {
     "AREA": "Property area",
@@ -380,7 +380,8 @@
       "TYPE": "Requirement type",
       "BASIC_INFORMATION": "Basic information",
       "RENT_REQUIREMENTS": "Rent requirements",
-      "RENT_WEEKLY": "Rent (weekly)"
+      "RENT_WEEKLY": "Rent (weekly)",
+      "OFFER_PER_WEEK": "GBP / week"
     }
   },
   "NOTES": {
@@ -433,9 +434,12 @@
       "EXCHANGE_DATE": "Proposed exchange date",
       "COMPLETION_DATE": "Proposed completion date",
       "VIEW": "View",
-      "SAVING_OFFER_IN_PROGRESS": "Saving offer ..."
+      "SAVING_OFFER_IN_PROGRESS": "Saving offer ...",
+      "NEW_OFFER": "New offer",
+      "OFFER_PER_WEEK": "GBP / week"
     },
     "PREVIEW": {
+      "PREVIEW": "Offer preview",
       "ACTIVITY": "Activity",
       "STATUS": "Status",
       "OFFER": "Offer",
@@ -443,7 +447,8 @@
       "SPECIAL_CONDITIONS": "Special conditions",
       "NEGOTIATOR": "Negotiator",
       "EXCHANGE_DATE": "Proposed exchange date",
-      "COMPLETION_DATE": "Proposed completion date"
+      "COMPLETION_DATE": "Proposed completion date",
+      "OFFER_PER_WEEK": "GBP / week"
     },
     "VIEW": {
       "VIEW_OFFER": "View offer",
@@ -476,6 +481,7 @@
       "BASIC_INFORMATION": "Basic information",
       "STATUS": "Status",
       "OFFER": "Offer",
+      "OFFER_PER_WEEK": "GBP / week",
       "OFFER_DATE": "Offer date",
       "SPECIAL_CONDITIONS": "Special conditions",
       "NEGOTIATOR": "Negotiator",

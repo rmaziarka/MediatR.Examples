@@ -478,7 +478,92 @@ module Antares {
                     expect(callDate.year).toBe(twoWeeksFromToday.year);
                 });
             });
+        });
 
+        describe('when isValuationPricesSectionVisible is called', () => {
+            type TestCase = [any, any, boolean];
+            runDescribe('with specific config')
+                .data<TestCase>([
+                    [{}, {}, true],
+                    [null, {}, true],
+                    [{}, null, true],
+                    [null, null, false]])
+                .dataIt((data: TestCase) =>
+                    `where askingPrice is ${data[0]} and shortLetPricePerWeek is ${data[1]} then isValuationPricesSectionVisible must return ${data[2]}`)
+                .run((data: TestCase) => {
+                    controller.config.askingPrice = data[0];
+                    controller.config.shortLetPricePerWeek = data[1];
+
+                    // act & assert
+                    expect(controller.isValuationPricesSectionVisible()).toBe(data[2]);
+                });
+        });
+
+        describe('when isBasicInformationSectionVisible is called', () => {
+            type TestCase = [any, any, any, any, any, any, boolean];
+            runDescribe('with specific config')
+                .data<TestCase>([
+                    [{}, {}, {}, {}, {}, {}, true],
+                    [null, {}, {}, {}, {}, {}, true],
+                    [{}, null, {}, {}, {}, {}, true],
+                    [{}, {}, null, {}, {}, {}, true],
+                    [{}, {}, {}, null, {}, {}, true],
+                    [{}, {}, {}, {}, null, {}, true],
+                    [{}, {}, {}, {}, {}, null, true],
+                    [null, null, null, null, null, null, false]])
+                .dataIt((data: TestCase) =>
+                    `where property is ${data[0]} and source is ${data[1]} and sourceDescription is ${data[2]} and sellingReason is ${data[3]} and pitchingThreats is ${data[4]} and disposalType is ${data[5]} then isBasicInformationSectionVisible must return ${data[6]}`)
+                .run((data: TestCase) => {
+                    controller.config.property = data[0];
+                    controller.config.source = data[1];
+                    controller.config.sourceDescription = data[2];
+                    controller.config.sellingReason = data[3];
+                    controller.config.pitchingThreats = data[4];
+                    controller.config.disposalType = data[5];
+                    
+                    // act & assert
+                    expect(controller.isBasicInformationSectionVisible()).toBe(data[6]);
+                });
+        });
+
+        describe('when isAdditionalInformationSectionVisible is called', () => {
+            type TestCase = [any, any, boolean];
+            runDescribe('with specific config')
+                .data<TestCase>([
+                    [{}, {}, true],
+                    [null, {}, true],
+                    [{}, null, true],
+                    [null, null, false]])
+                .dataIt((data: TestCase) =>
+                    `where keyNumber is ${data[0]} and accessArrangements is ${data[1]} then isAdditionalInformationSectionVisible must return ${data[2]}`)
+                .run((data: TestCase) => {
+                    controller.config.keyNumber = data[0];
+                    controller.config.accessArrangements = data[1];
+
+                    // act & assert
+                    expect(controller.isAdditionalInformationSectionVisible()).toBe(data[2]);
+                });
+        });
+
+        describe('when isAppraisalMeetingSectionVisible is called', () => {
+            type TestCase = [any, any, any, boolean];
+            runDescribe('with specific config')
+                .data<TestCase>([
+                    [{}, {}, {}, true],
+                    [null, {}, {}, true],
+                    [{}, null, {}, true],
+                    [{}, {}, null, true],
+                    [null, null, null, false]])
+                .dataIt((data: TestCase) =>
+                    `where appraisalMeetingDate is ${data[0]} and appraisalMeetingAttendees is ${data[1]} and appraisalMeetingInvitation is ${data[2]} then isAppraisalMeetingSectionVisible must return ${data[3]}`)
+                .run((data: TestCase) => {
+                    controller.config.appraisalMeetingDate = data[0];
+                    controller.config.appraisalMeetingAttendees = data[1];
+                    controller.config.appraisalMeetingInvitation = data[2];
+
+                    // act & assert
+                    expect(controller.isAppraisalMeetingSectionVisible()).toBe(data[3]);
+                });
         });
 
         describe('when isOtherSectionVisible is called', () => {

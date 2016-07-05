@@ -30,6 +30,52 @@ module Antares.TestHelpers {
             return config;
         }
 
+        public static generateOfferStatusIdConfig(): Attributes.IOfferStatusControlConfig {
+            var config: Attributes.IOfferStatusControlConfig = {
+                statusId: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferPriceConfig(): Attributes.IOfferPriceControlConfig {
+            var config: Attributes.IOfferPriceControlConfig = {
+                price: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferPricePerWeekConfig(): Attributes.IOfferPricePerWeekControlConfig {
+            var config: Attributes.IOfferPricePerWeekControlConfig = {
+                pricePerWeek: null
+            }
+
+            return config;
+        }
+
+        public static generateOfferSpecialConditionsConfig(): Attributes.IOfferSpecialConditionsControlConfig {
+            var config: Attributes.IOfferSpecialConditionsControlConfig = {
+                specialConditions: null
+            }
+
+            return config;
+        }
+        
+        public static generateOfferAddPanelConfig(): Offer.IOfferAddPanelConfig{
+            var config: Offer.IOfferAddPanelConfig = {
+                statusId: ConfigGenerator.generateOfferStatusIdConfig(),
+                completionDate: ConfigGenerator.generateOfferCompletionDateConfig(),
+                exchangeDate: ConfigGenerator.generateOfferExchangeDateConfig(),
+                offerDate: ConfigGenerator.generateOfferOfferDateConfig(),
+                price: ConfigGenerator.generateOfferPriceConfig(),
+                pricePerWeek: ConfigGenerator.generateOfferPricePerWeekConfig(),
+                specialConditions: ConfigGenerator.generateOfferSpecialConditionsConfig()
+            };
+
+            return config;
+        }
+
         public static generateActivityStatusEditConfig(): Attributes.IActivityStatusEditControlConfig {
             var config: Attributes.IActivityStatusEditControlConfig = {
                 activityStatusId: {
@@ -104,7 +150,17 @@ module Antares.TestHelpers {
                 longAgreedInitialMarketingPrice: {},
                 longKfValuationPrice: {},
                 longVendorValuationPrice: {},
-                otherCondition: {}
+                otherCondition: {},
+                source: {},
+                sourceDescription: {},
+                sellingReason: {},
+                pitchingThreats: {},
+                keyNumber: {},
+                accessArrangements: {},
+                appraisalMeetingDate: {},
+                appraisalMeetingAttendees: {},
+                appraisalMeetingInvitation: {},
+                disposalType: {}
             };
 
             return config;
@@ -157,6 +213,48 @@ module Antares.TestHelpers {
             };
 
             return angular.extend(config, specificData || {});
+        }
+
+        public static generateRequirementDescriptionAddConfig(): Attributes.IRequirementDescriptionEditControlConfig {
+            var fieldConfig: Attributes.IRequirementDescriptionEditFieldConfig = {
+                active: true,
+                required: null
+            };
+
+            var config: Attributes.IRequirementDescriptionEditControlConfig = {
+                description: fieldConfig,
+            }
+
+            return config;
+        }
+
+        public static generateRequirementAddConfig(): Requirement.IRequirementAddConfig {
+            var config: Requirement.IRequirementAddConfig = {
+                requirementType: null,
+                requirement_Description: ConfigGenerator.generateRequirementDescriptionAddConfig()
+            };
+
+            return config;
+        }
+
+        public static generateRequirementViewConfig(): Requirement.IRequirementViewConfig {
+            var config: Requirement.IRequirementViewConfig = {
+                requirementType: null,
+                requirement_Description: ConfigGenerator.generateRequirementDescriptionAddConfig()
+            };
+
+            return config;
+        }
+
+        public static generateRequirementTypeEditConfig(): Attributes.IRequirementTypeEditControlConfig {
+            var config: Attributes.IRequirementTypeEditControlConfig = {
+                requirementTypeId: {
+                    required: true,
+                    active: true
+                }
+            };
+
+            return config;
         }
     }
 }

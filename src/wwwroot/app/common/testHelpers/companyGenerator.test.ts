@@ -15,7 +15,7 @@ module Antares.TestHelpers {
                 clientCareStatusId: CompanyGenerator.makeRandom('clientCareStatusId'),
                 clientCareStatus: <Dto.IEnumTypeItem>{},
                 contacts: ContactGenerator.generateMany(3),
-                companiesContacts:[]
+                companiesContacts: []
             }
 
             return company;
