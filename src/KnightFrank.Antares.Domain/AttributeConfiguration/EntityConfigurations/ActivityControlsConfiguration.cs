@@ -149,8 +149,7 @@
                 .FindBy(x => x.EnumType.Code == EnumType.ActivityStatus.ToString() && x.Code == ActivityStatus.MarketAppraisal.ToString())
                 .Select(x => x.Id)
                 .Single();
-
-
+            
             List<Tuple<PropertyType, ActivityType>> openMarketLetting =
                 new[]
                 {
