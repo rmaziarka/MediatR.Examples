@@ -11,7 +11,7 @@ module Antares.Activity {
     }
 
     export class ActivityEditController {
-        public config: IActivityConfig;
+        public config: IActivityEditConfig;
         public activity: ActivityEditModel;
         public userData: Dto.ICurrentUser;
 
@@ -384,6 +384,25 @@ module Antares.Activity {
             }
 
             return users;
+        }
+
+        public isOtherSectionVisible = (): Boolean => {
+            return this.config.decoration != null && this.config.otherCondition != null;
+        }
+
+        public isValuationInfoSectionVisible = (): Boolean => {
+            return this.config.kfValuationPrice != null && this.config.vendorValuationPrice != null &&
+                this.config.agreedInitialMarketingPrice != null;
+        }
+
+        public isValuationInfoShortLongSectionVisible = (): Boolean => {
+            return this.config.shortKfValuationPrice != null && this.config.longKfValuationPrice != null &&
+                this.config.shortVendorValuationPrice != null && this.config.longVendorValuationPrice != null &&
+                this.config.shortAgreedInitialMarketingPrice != null && this.config.longAgreedInitialMarketingPrice != null;
+        }
+
+        public isChargesSectionVisible = (): Boolean => {
+            return this.config.serviceChargeAmount != null && this.config.groundRentAmount != null && this.config.groundRentNote != null;
         }
 
         private get pageMode(): PageMode {
