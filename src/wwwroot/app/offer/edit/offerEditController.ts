@@ -54,11 +54,6 @@ module Antares.Offer {
 
         contactToSelect: string = '';
 
-        brokerCompanyContact: CompanyContactConnection = null;
-        lenderCompanyContact: CompanyContactConnection = null;
-        surveyorCompanyContact: CompanyContactConnection = null;
-        additionalSurveyorCompanyContact: CompanyContactConnection = null;
-
         // controls
         controlSchemas: any = {
             vendorSolicitor: <ICompanyContactEditControlSchema>{
@@ -233,23 +228,6 @@ module Antares.Offer {
             eventAggregator.with(this).subscribe(OpenCompanyContactEditPanelEvent, this.openCompanyContactEditPanel);
 
             this.offerOriginal = angular.copy(this.offer);
-
-            this.createCompanyContacts();
-        }
-
-        private createCompanyContacts() {
-            if (this.offer.broker) {
-                this.brokerCompanyContact = new CompanyContactConnection(this.offer.broker, this.offer.brokerCompany);
-            }
-            if (this.offer.lender) {
-                this.lenderCompanyContact = new CompanyContactConnection(this.offer.lender, this.offer.lenderCompany);
-            }
-            if (this.offer.surveyor) {
-                this.surveyorCompanyContact = new CompanyContactConnection(this.offer.surveyor, this.offer.surveyorCompany);
-            }
-            if (this.offer.additionalSurveyor) {
-                this.additionalSurveyorCompanyContact = new CompanyContactConnection(this.offer.additionalSurveyor, this.offer.additionalSurveyorCompany);
-            }
         }
 
         isMortgageDetailsSectionVisible = () => {
@@ -276,21 +254,7 @@ module Antares.Offer {
             this.hideNewPanels();
         }
 
-        hideNewPanels = () =>{
-        }
-
-        isOtherDetailsSectionVisible = () => {
-            return this.config.offer_ProgressComment;
-        }
-
-        isProgressAndMortgageSectionVisible = () =>{
-            return this.isMortgageDetailsSectionVisible()
-                || this.isAdditionalSurveySectionVisible()
-                || this.isProgressSummarySectionVisible()
-                || this.isOtherDetailsSectionVisible();
-        }
-
-        companyContactPanelClosed = () => {
+        hideNewPanels = () => {
             this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Closed;
             this.isBrokerEditPanelVisible = Enums.SidePanelState.Closed;
             this.isLenderEditPanelVisible = Enums.SidePanelState.Closed;
@@ -298,6 +262,17 @@ module Antares.Offer {
             this.isAdditionalSurveyorEditPanelVisible = Enums.SidePanelState.Closed;
             this.isVendorSolicitorEditPanelVisible = Enums.SidePanelState.Closed;
             this.isApplicantSolicitorEditPanelVisible = Enums.SidePanelState.Closed;
+        }
+
+        isOtherDetailsSectionVisible = () => {
+            return this.config.offer_ProgressComment;
+        }
+
+        isProgressAndMortgageSectionVisible = () =>{
+            return this.isMortgageDetailsSectionVisible() ||
+                this.isAdditionalSurveySectionVisible() ||
+                this.isProgressSummarySectionVisible() ||
+                this.isOtherDetailsSectionVisible();
         }
 
         openCompanyContactEditPanel = (event: OpenCompanyContactEditPanelEvent) => {
@@ -414,16 +389,8 @@ module Antares.Offer {
             }
         }
 
-        setCompanyContactData = (updateofferCommand: Business.UpdateOfferCommand) =>{
-            updateofferCommand.setBrokerCompanyContact(this.brokerCompanyContact);
-            updateofferCommand.setLenderCompanyContact(this.lenderCompanyContact);
-            updateofferCommand.setSurveyorCompanyContact(this.surveyorCompanyContact);
-            updateofferCommand.setAdditionalSurveyorCompanyContact(this.additionalSurveyorCompanyContact);
-        }
-
         save() {
             var updateofferCommand = new Business.UpdateOfferCommand(this.offer);
-            this.setCompanyContactData(updateofferCommand);
 
             this.offerService.updateOffer(updateofferCommand)
                 .then((offer: Dto.IOffer) => {

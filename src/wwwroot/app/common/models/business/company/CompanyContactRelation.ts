@@ -2,7 +2,7 @@
 
 module Antares.Common.Models.Business {
     export class CompanyContactRelation {
-        constructor(public contact: Dto.IContact, public company: Dto.ICompany) {
+        constructor(public contact: Contact, public company: Company) {
         }
     }
 }

@@ -66,26 +66,15 @@ module Antares.Common.Models.Business {
             this.vendorSolicitorCompanyId = model.activity && model.activity.solicitorContactCompany && model.activity.solicitorContactCompany.company ? model.activity.solicitorContactCompany.company.id : null;
             this.applicantSolicitorId = model.requirement && model.requirement.solicitorContactCompany && model.requirement.solicitorContactCompany.contact ? model.requirement.solicitorContactCompany.contact.id : null;
             this.applicantSolicitorCompanyId = model.requirement && model.requirement.solicitorContactCompany && model.requirement.solicitorContactCompany.company ? model.requirement.solicitorContactCompany.company.id : null;
-        }
 
-        public setBrokerCompanyContact = (companyContact: Business.CompanyContactRelation) => {
-            this.brokerId = companyContact && companyContact.contact.id;
-            this.brokerCompanyId = companyContact && companyContact.company.id;
-        }
-
-        public setLenderCompanyContact = (companyContact: Business.CompanyContactRelation) => {
-            this.lenderId = companyContact && companyContact.contact.id;
-            this.lenderCompanyId = companyContact && companyContact.company.id;
-        }
-
-        public setSurveyorCompanyContact = (companyContact: Business.CompanyContactRelation) => {
-            this.surveyorId = companyContact && companyContact.contact.id;
-            this.surveyorCompanyId = companyContact && companyContact.company.id;
-        }
-
-        public setAdditionalSurveyorCompanyContact = (companyContact: Business.CompanyContactRelation) => {
-            this.additionalSurveyorId = companyContact && companyContact.contact.id;
-            this.additionalSurveyorCompanyId = companyContact && companyContact.company.id;
+            this.brokerId = model.brokerCompanyContact && model.brokerCompanyContact.contact.id;
+            this.brokerCompanyId = model.brokerCompanyContact && model.brokerCompanyContact.company.id;
+            this.lenderId = model.lenderCompanyContact && model.lenderCompanyContact.contact.id;
+            this.lenderCompanyId = model.lenderCompanyContact && model.lenderCompanyContact.company.id;
+            this.surveyorId = model.surveyorCompanyContact && model.surveyorCompanyContact.contact.id;
+            this.surveyorCompanyId = model.surveyorCompanyContact && model.surveyorCompanyContact.company.id;
+            this.additionalSurveyorId = model.additionalSurveyorCompanyContact && model.additionalSurveyorCompanyContact.contact.id;
+            this.additionalSurveyorCompanyId = model.additionalSurveyorCompanyContact && model.additionalSurveyorCompanyContact.company.id;
         }
 
     }

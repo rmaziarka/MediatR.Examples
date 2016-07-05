@@ -15,11 +15,6 @@ module Antares.Component {
 
         private offerStatuses: Common.Models.Dto.IEnumItem[];
 
-        brokerCompanyContact: CompanyContactConnection = null;
-        lenderCompanyContact: CompanyContactConnection = null;
-        surveyorCompanyContact: CompanyContactConnection = null;
-        additionalSurveyorCompanyContact: CompanyContactConnection = null;
-
         // controls
         controlSchemas: any = {
             broker: <Attributes.ICompanyContactViewControlSchema>{
@@ -98,23 +93,6 @@ module Antares.Component {
             private enumService: Services.EnumService) {
             super(componentRegistry, $scope);
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
-
-            this.createCompanyContacts();
-        }
-
-        private createCompanyContacts() {
-            if (this.offer.broker) {
-                this.brokerCompanyContact = new CompanyContactConnection(this.offer.broker, this.offer.brokerCompany);
-            }
-            if (this.offer.lender) {
-                this.lenderCompanyContact = new CompanyContactConnection(this.offer.lender, this.offer.lenderCompany);
-            }
-            if (this.offer.surveyor) {
-                this.surveyorCompanyContact = new CompanyContactConnection(this.offer.surveyor, this.offer.surveyorCompany);
-            }
-            if (this.offer.additionalSurveyor) {
-                this.additionalSurveyorCompanyContact = new CompanyContactConnection(this.offer.additionalSurveyor, this.offer.additionalSurveyorCompany);
-            }
         }
 
         navigateToActivity = (ativity: Business.Activity) => {
