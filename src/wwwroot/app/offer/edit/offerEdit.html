@@ -114,23 +114,12 @@
                                               company-contact="vm.brokerCompanyContact"
                                               is-panel-visible="vm.isBrokerEditPanelVisible">
                 </company-contact-edit-control>
-                <div class="form-group">
-                    <h5 translate="OFFER.EDIT.LENDER"></h5>
-                    <button id="edit-lender" type="button" class="btn btn-default" ng-click="vm.showLenderSelectPanel()">
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </button>
-                </div>
-                <list-no-items ng-if="!vm.offer.lender">
-                    <p class="help-block" id="no-contacts-help-block" ng-show="vm.editOfferForm.$submitted === false" translate="OFFER.EDIT.NO_LENDER"></p>
-                </list-no-items>
-                <div id="lender" class="row" ng-if="!!vm.offer.lender">
-                    <div class="col-md-6">
-                        <card-list-item class="offer-lender">
-                            <card show-context-menu="false" card-template-url="'app/offer/view/offerContactCard.html'" item="vm.offer.lender">
-                            </card>
-                        </card-list-item>
-                    </div>
-                </div>
+                <company-contact-edit-control schema="vm.controlSchemas.lender"
+                                              config="vm.config.offer_Lender"
+                                              type="vm.companyContactType.Lender"
+                                              company-contact="vm.lenderCompanyContact"
+                                              is-panel-visible="vm.isLenderEditPanelVisible">
+                </company-contact-edit-control>
 
                 <date-edit-control ng-model="vm.offer.mortgageSurveyDate" config="vm.config.offer_MortgageSurveyDate" schema="vm.controlSchemas.mortgageSurveyDate" greater-than="vm.offer.offerDate">
                     <override-errors>
@@ -138,23 +127,12 @@
                     </override-errors>
                 </date-edit-control>
 
-                <div class="form-group">
-                    <h5 translate="OFFER.EDIT.SURVEYOR"></h5>
-                    <button id="edit-surveyor" type="button" class="btn btn-default" ng-click="vm.showSurveyorSelectPanel()">
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </button>
-                </div>
-                <list-no-items ng-if="!vm.offer.surveyor">
-                    <p class="help-block" id="no-contacts-help-block" ng-show="vm.editOfferForm.$submitted === false" translate="OFFER.EDIT.NO_SURVEYOR"></p>
-                </list-no-items>
-                <div id="surveyor" class="row" ng-if="!!vm.offer.surveyor">
-                    <div class="col-md-6">
-                        <card-list-item class="offer-surveyor">
-                            <card show-context-menu="false" card-template-url="'app/offer/view/offerContactCard.html'" item="vm.offer.surveyor">
-                            </card>
-                        </card-list-item>
-                    </div>
-                </div>
+                <company-contact-edit-control schema="vm.controlSchemas.surveyor"
+                                              config="vm.config.offer_Surveyor"
+                                              type="vm.companyContactType.Surveyor"
+                                              company-contact="vm.surveyorCompanyContact"
+                                              is-panel-visible="vm.isSurveyorEditPanelVisible">
+                </company-contact-edit-control>
             </section>
 
             <section ng-if="vm.isAdditionalSurveySectionVisible()">
@@ -165,23 +143,12 @@
                     </override-errors>
                 </date-edit-control>
                
-                <div class="form-group">
-                    <h5 translate="OFFER.EDIT.SURVEYOR"></h5>
-                    <button id="edit-additional-surveyor" type="button" class="btn btn-default" ng-click="vm.showAdditionalSurveyorSelectPanel()">
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </button>
-                </div>
-                <list-no-items ng-if="!vm.offer.additionalSurveyor">
-                    <p class="help-block" id="no-contacts-help-block" ng-show="vm.editOfferForm.$submitted === false" translate="OFFER.EDIT.NO_SURVEYOR"></p>
-                </list-no-items>
-                <div id="additional-surveyor" class="row" ng-if="!!vm.offer.additionalSurveyor">
-                    <div class="col-md-6">
-                        <card-list-item class="offer-additional-surveyor">
-                            <card show-context-menu="false" card-template-url="'app/offer/view/offerContactCard.html'" item="vm.offer.additionalSurveyor">
-                            </card>
-                        </card-list-item>
-                    </div>
-                </div>
+                <company-contact-edit-control schema="vm.controlSchemas.additionalSurveyor"
+                                              config="vm.config.offer_AdditionalSurveyor"
+                                              type="vm.companyContactType.AdditionalSurveyor"
+                                              company-contact="vm.additionalSurveyorCompanyContact"
+                                              is-panel-visible="vm.isAdditionalSurveyorEditPanelVisible">
+                </company-contact-edit-control>
             </section>
 
             <section ng-if="vm.config.offer_ProgressComment">
@@ -247,7 +214,3 @@
         </div>
     </side-panel-content>
 </side-panel>
-
-<company-contacts-add-panel is-visible="vm.isCompanyContactAddPanelVisible" on-save="vm.onContactSelected" allow-multiple-select="false"
-                            initialy-selected-company-contacts="vm.sidePanelSelectedCompanyContacts">
-</company-contacts-add-panel>

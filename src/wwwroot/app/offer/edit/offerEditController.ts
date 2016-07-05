@@ -43,8 +43,7 @@ module Antares.Offer {
         additionalSurveyDateOpen: boolean = false;
         exchangeDateOpen: boolean = false;
         completionDateOpen: boolean = false;
-
-        isCompanyContactAddPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
+        
         isBrokerEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         isLenderEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
         isSurveyorEditPanelVisible: Enums.SidePanelState = Enums.SidePanelState.Untouched;
@@ -53,6 +52,10 @@ module Antares.Offer {
         contactToSelect: string = '';
 
         brokerCompanyContact: CompanyContactConnection = null;
+        lenderCompanyContact: CompanyContactConnection = null;
+        surveyorCompanyContact: CompanyContactConnection = null;
+        additionalSurveyorCompanyContact: CompanyContactConnection = null;
+
         // controls
         controlSchemas: any = {
             broker: <ICompanyContactEditControlSchema>{
@@ -195,7 +198,9 @@ module Antares.Offer {
 
             super(componentRegistry, $scope);
             this.enumService.getEnumPromise().then(this.onEnumLoaded);
-            eventAggregator.with(this).subscribe(CloseSidePanelEvent, this.companyContactPanelClosed);
+            eventAggregator.with(this).subscribe(CloseSidePanelEvent, () =>{
+                this.hidePanels();
+            });
             eventAggregator.with(this).subscribe(OpenCompanyContactEditPanelEvent, this.openCompanyContactEditPanel);
 
             this.offerOriginal = angular.copy(this.offer);
@@ -207,7 +212,15 @@ module Antares.Offer {
             if (this.offer.broker) {
                 this.brokerCompanyContact = new CompanyContactConnection(this.offer.broker, this.offer.brokerCompany);
             }
-            
+            if (this.offer.lender) {
+                this.lenderCompanyContact = new CompanyContactConnection(this.offer.lender, this.offer.lenderCompany);
+            }
+            if (this.offer.surveyor) {
+                this.surveyorCompanyContact = new CompanyContactConnection(this.offer.surveyor, this.offer.surveyorCompany);
+            }
+            if (this.offer.additionalSurveyor) {
+                this.additionalSurveyorCompanyContact = new CompanyContactConnection(this.offer.additionalSurveyor, this.offer.additionalSurveyorCompany);
+            }
         }
 
         isMortgageDetailsSectionVisible = () =>{
@@ -229,9 +242,16 @@ module Antares.Offer {
             return this.config.offer_AdditionalSurveyor
                 || this.config.offer_AdditionalSurveyDate;
         }
-        companyContactPanelClosed = () => {
-            this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Closed;
+        
+        onOldPanelsHidden = () =>{
+            this.hideNewPanels();
+        }
+
+        hideNewPanels = () => {
             this.isBrokerEditPanelVisible = Enums.SidePanelState.Closed;
+            this.isLenderEditPanelVisible = Enums.SidePanelState.Closed;
+            this.isSurveyorEditPanelVisible = Enums.SidePanelState.Closed;
+            this.isAdditionalSurveyorEditPanelVisible = Enums.SidePanelState.Closed;
         }
 
         openCompanyContactEditPanel = (event: OpenCompanyContactEditPanelEvent) => {
@@ -241,106 +261,18 @@ module Antares.Offer {
                 case CompanyContactType.Broker:
                     this.isBrokerEditPanelVisible = Enums.SidePanelState.Opened;
                     break;
-
-                    // TODO: Add other company contact types
-            }
-        }
-
-        showBrokerSelectPanel = () => {
-            this.contactToSelect = 'Broker';
-            this.sidePanelSelectedCompanyContacts = [new Business.CompanyContact(null, this.offer.broker, this.offer.brokerCompany)];
-
-            this.hidePanels();
-            this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Opened;
-        }
-
-        showLenderSelectPanel = () => {
-            this.contactToSelect = 'Lender';
-            this.sidePanelSelectedCompanyContacts = [new Business.CompanyContact(null, this.offer.lender, this.offer.lenderCompany)];
-
-            this.hidePanels();
-            this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Opened;
-        }
-
-        showSurveyorSelectPanel = () => {
-            this.contactToSelect = 'Surveyor';
-            this.sidePanelSelectedCompanyContacts = [new Business.CompanyContact(null, this.offer.surveyor, this.offer.surveyorCompany)];
-
-            this.hidePanels();
-            this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Opened;
-        }
-
-        showAdditionalSurveyorSelectPanel = () => {
-            this.contactToSelect = 'AadditionalSurveyor';
-            this.sidePanelSelectedCompanyContacts = [new Business.CompanyContact(null, this.offer.additionalSurveyor, this.offer.additionalSurveyorCompany)];
-
-            this.hidePanels();
-            this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Opened;
-        }
-
-        onContactSelected = (companyContact: Business.CompanyContact[]) => {
-            switch (this.contactToSelect) {
-                case 'Broker':
-                    if (companyContact.length > 0) {
-                        this.offer.broker = new Business.Contact(companyContact[0].contact, companyContact[0].company);
-                        this.offer.brokerId = companyContact[0].contact.id;
-                        this.offer.brokerCompany = companyContact[0].company;
-                        this.offer.brokerCompanyId = companyContact[0].company.id;
-                    }
-                    else {
-                        this.offer.broker = null;
-                        this.offer.brokerId = null;
-                        this.offer.brokerCompany = null;
-                        this.offer.brokerCompanyId = null;
-                    }
+                case CompanyContactType.Lender:
+                    this.isLenderEditPanelVisible = Enums.SidePanelState.Opened;
                     break;
-                case 'Lender':
-                    if (companyContact.length > 0) {
-                        this.offer.lender = new Business.Contact(companyContact[0].contact, companyContact[0].company);
-                        this.offer.lenderId = companyContact[0].contact.id;
-                        this.offer.lenderCompany = companyContact[0].company;
-                        this.offer.lenderCompanyId = companyContact[0].company.id;
-                    }
-                    else {
-                        this.offer.lender = null;
-                        this.offer.lenderId = null;
-                        this.offer.lenderCompany = null;
-                        this.offer.lenderCompanyId = null;
-                    }
+                case CompanyContactType.Surveyor:
+                    this.isSurveyorEditPanelVisible = Enums.SidePanelState.Opened;
                     break;
-                case 'Surveyor':
-                    if (companyContact.length > 0) {
-                        this.offer.surveyor = new Business.Contact(companyContact[0].contact, companyContact[0].company);
-                        this.offer.surveyorId = companyContact[0].contact.id;
-                        this.offer.surveyorCompany = companyContact[0].company;
-                        this.offer.surveyorCompanyId = companyContact[0].company.id;
-                    }
-                    else {
-                        this.offer.surveyor = null;
-                        this.offer.surveyorId = null;
-                        this.offer.surveyorCompany = null;
-                        this.offer.surveyorCompanyId = null;
-                    }
-                    break;
-                case 'AadditionalSurveyor':
-                    if (companyContact.length > 0) {
-                        this.offer.additionalSurveyor = new Business.Contact(companyContact[0].contact, companyContact[0].company);
-                        this.offer.additionalSurveyorId = companyContact[0].contact.id;
-                        this.offer.additionalSurveyorCompany = companyContact[0].company;
-                        this.offer.additionalSurveyorCompanyId = companyContact[0].company.id;
-                    }
-                    else {
-                        this.offer.additionalSurveyor = null;
-                        this.offer.additionalSurveyorId = null;
-                        this.offer.additionalSurveyorCompany = null;
-                        this.offer.additionalSurveyorCompanyId = null;
-                    }
+                case CompanyContactType.AdditionalSurveyor:
+                    this.isAdditionalSurveyorEditPanelVisible = Enums.SidePanelState.Opened;
                     break;
             }
-
-            this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Closed;
         }
-
+        
         navigateToActivity = (activity: Business.Activity) => {
             var activityViewUrl = this.appConfig.appRootUrl + this.$state.href('app.activity-view', { id: activity.id }, { absolute: false });
             this.$window.open(activityViewUrl, '_blank');
@@ -353,7 +285,7 @@ module Antares.Offer {
 
         // TODO: refactor activity preview panel to new one
         showActivityPreview = (offer: Common.Models.Business.Offer) =>{
-            this.isCompanyContactAddPanelVisible = Enums.SidePanelState.Closed;
+            this.hidePanels();
             this.showPanel(this.components.panels.activityPreviewPanel);
 
             this.latestViewsProvider.addView({
@@ -459,13 +391,26 @@ module Antares.Offer {
             this.offer.progressComment = this.offerOriginal.progressComment;
         }
 
+        setCompanyContactData = () =>{
+            this.offer.brokerId = this.brokerCompanyContact && this.brokerCompanyContact.contact.id;
+            this.offer.brokerCompanyId = this.brokerCompanyContact && this.brokerCompanyContact.company.id; 
+
+            this.offer.lenderId = this.lenderCompanyContact && this.lenderCompanyContact.contact.id;
+            this.offer.lenderCompanyId = this.lenderCompanyContact && this.lenderCompanyContact.company.id; 
+
+            this.offer.surveyorId = this.surveyorCompanyContact && this.surveyorCompanyContact.contact.id;
+            this.offer.surveyorCompanyId = this.surveyorCompanyContact && this.surveyorCompanyContact.company.id; 
+
+            this.offer.additionalSurveyorId = this.additionalSurveyorCompanyContact && this.additionalSurveyorCompanyContact.contact.id;
+            this.offer.additionalSurveyorCompanyId = this.additionalSurveyorCompanyContact && this.additionalSurveyorCompanyContact.company.id; 
+        }
+
         save() {
             if (this.offerAccepted() === false) {
                 this.restoreOfferProgressSummary();
             }
 
-            this.offer.brokerId = this.brokerCompanyContact && this.brokerCompanyContact.contact.id;
-            this.offer.brokerCompanyId = this.brokerCompanyContact && this.brokerCompanyContact.company.id; 
+            this.setCompanyContactData();
 
             this.offer.offerDate = Core.DateTimeUtils.createDateAsUtc(this.offer.offerDate);
             this.offer.exchangeDate = Core.DateTimeUtils.createDateAsUtc(this.offer.exchangeDate);
