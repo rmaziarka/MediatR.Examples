@@ -42,10 +42,29 @@ Scenario: Create latest viewed company
 	Then User should get OK http status code
 		And Retrieved latest view should contain Company entity
 
+
+@LatestViews
+Scenario: Create latest viewed contacts
+	Given Contacts exists in database
+			| FirstName | LastName | Title  | MailingFormalSalutation | MailingSemiformalSalutation | MailingEnvelopeSalutation |
+			| Tomasz    | Bien     | Mister | Sir                     | Mr Bien                     | Mr Bien                   |
+	When User adds Contact to latest viewed entities using api
+	Then User should get OK http status code
+		And Retrieved latest view should contain Contact entity
+
 @LatestViews
 Scenario: Create latest view using invalid entity type
 	When User creates latest view using invalid entity type
 	Then User should get BadRequest http status code
+
+@LatestViews
+Scenario: Get latest viewed contacts
+	Given Contacts exists in database
+		| FirstName | LastName | Title  | MailingFormalSalutation | MailingSemiformalSalutation | MailingEnvelopeSalutation |
+		| Tomasz    | Bien     | Mister | Sir                     | Mr Bien                     | Mr Bien                   |
+		And Contact is added to latest views
+	When User gets latest viewed entities
+	Then User should get OK http status code
 
 @LatestViews
 Scenario: Get latest viewed properties
