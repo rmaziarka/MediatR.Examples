@@ -19,7 +19,8 @@ module Antares {
             $scope: ng.IScope,
             activityService: Activity.ActivityService,
             enumProvider: Providers.EnumProvider,
-            latestViewsProvider: Providers.LatestViewsProvider;
+            latestViewsProvider: Providers.LatestViewsProvider,
+            obj = 'an object';
 
         var leadNegotiatorMock = TestHelpers.ActivityUserGenerator.generate(Enums.NegotiatorTypeEnum.LeadNegotiator);
         var secondaryNegotiatorsMock = TestHelpers.ActivityUserGenerator.generateMany(3, Enums.NegotiatorTypeEnum.SecondaryNegotiator);
@@ -480,22 +481,91 @@ module Antares {
 
         });
 
-        describe('when isOtherSectionVisible is called', () =>{
+        describe('when isOtherSectionVisible is called', () => {
             type TestCase = [any, any, boolean];
-            runDescribe('with specific config')
+            runDescribe('with specific config and the following parameters')
                 .data<TestCase>([
-                    [{}, {}, true],
-                    [{}, null, false],
-                    [null, {}, false],
+                    [obj, obj, true],
+                    [obj, null, false],
+                    [null, obj, false],
                     [null, null, false]])
                 .dataIt((data: TestCase) =>
-                    `where decoration is ${data[0]} and otherCondition is ${data[1]} then isOtherSectionVisible must return ${data[2]}`)
+                    `where 1st is ${data[0]} and 2nd is ${data[1]} then isOtherSectionVisible must return ${data[2]}`)
                 .run((data: TestCase) => {
                     controller.config.decoration = data[0];
                     controller.config.otherCondition = data[1];
 
                     // act & assert
                     expect(controller.isOtherSectionVisible()).toBe(data[2]);
+                });
+        });
+
+        describe('when isValuationInfoSectionVisible is called', () => {
+            type TestCase = [any, any, any, boolean];
+            runDescribe('with specific config and the following parameters')
+                .data<TestCase>([
+                    [obj, obj, obj, true],
+                    [null, obj, obj, false],
+                    [obj, null, obj, false],
+                    [obj, obj, null, false],
+                    [null, null, null, false]])
+                .dataIt((data: TestCase) =>
+                    `where 1st is ${data[0]} and 2nd is ${data[1]} and 3rd is ${data[2]} then isValuationInfoSectionVisible must return ${data[3]}`)
+                .run((data: TestCase) => {
+                    controller.config.kfValuationPrice = data[0];
+                    controller.config.vendorValuationPrice = data[1];
+                    controller.config.agreedInitialMarketingPrice = data[2];
+
+                    // act & assert
+                    expect(controller.isValuationInfoSectionVisible()).toBe(data[3]);
+                });
+        });
+
+        describe('when isValuationInfoShortLongSectionVisible is called', () => {
+            type TestCase = [any, any, any, any, any, any, boolean];
+            runDescribe('with specific config and the following parameters')
+                .data<TestCase>([
+                    [obj, obj, obj, obj, obj, obj, true],
+                    [null, obj, obj, obj, obj, obj, false],
+                    [obj, null, obj, obj, obj, obj, false],
+                    [obj, obj, null, obj, obj, obj, false],
+                    [obj, obj, obj, null, obj, obj, false],
+                    [obj, obj, obj, obj, null, obj, false],
+                    [obj, obj, obj, obj, obj, null, false],
+                    [null, null, null, null, null, null, false]])
+                .dataIt((data: TestCase) =>
+                    `where 1st is ${data[0]} and 2nd is ${data[1]} and 3rd is ${data[2]} and 4th is ${data[3]} and 5th is ${data[4]} and 6th is ${data[5]} then isValuationInfoShortLongSectionVisible must return ${data[6]}`)
+                .run((data: TestCase) => {
+                    controller.config.shortKfValuationPrice = data[0];
+                    controller.config.longKfValuationPrice = data[1];
+                    controller.config.shortVendorValuationPrice = data[2];
+                    controller.config.longVendorValuationPrice = data[3];
+                    controller.config.shortAgreedInitialMarketingPrice = data[4];
+                    controller.config.longAgreedInitialMarketingPrice = data[5];
+
+                    // act & assert
+                    expect(controller.isValuationInfoShortLongSectionVisible()).toBe(data[6]);
+                });
+        });
+
+        describe('when isChargesSectionVisible is called', () => {
+            type TestCase = [any, any, any, boolean];
+            runDescribe('with specific config and the following parameters')
+                .data<TestCase>([
+                    [obj, obj, obj, true],
+                    [null, obj, obj, false],
+                    [obj, null, obj, false],
+                    [obj, obj, null, false],
+                    [null, null, null, false]])
+                .dataIt((data: TestCase) =>
+                    `where 1st is ${data[0]} and 2nd is ${data[1]} and 3rd is ${data[2]} then isChargesSectionVisible must return ${data[3]}`)
+                .run((data: TestCase) => {
+                    controller.config.serviceChargeAmount = data[0];
+                    controller.config.groundRentAmount = data[1];
+                    controller.config.groundRentNote = data[2];
+
+                    // act & assert
+                    expect(controller.isChargesSectionVisible()).toBe(data[3]);
                 });
         });
     });
