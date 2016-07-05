@@ -26,7 +26,7 @@ module Antares.Contact {
 
         private contactTitles: IContactTitle[];
 
-        private selectedTitle: string;
+        public selectedTitle: string;
 
         private contactResource: Common.Models.Resources.IBaseResourceClass<Common.Models.Resources.IContactResource>;
 
